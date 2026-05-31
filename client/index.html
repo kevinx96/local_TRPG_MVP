@@ -3,11 +3,42 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Local TRPG</title>
+    <title>Local TRPG — 冒険の書</title>
+    <meta name="description" content="ローカルLLMで動くテーブルトークRPG。没入感ある物語体験。" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
-    <main class="shell">
+
+    <!-- ═══════ START SCREEN ═══════ -->
+    <div id="startScreen" class="start-screen">
+      <div class="start-bg"></div>
+      <div class="start-content">
+        <div class="start-sigil">
+          <svg viewBox="0 0 120 120" width="120" height="120" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="60" cy="60" r="56" opacity=".4"/>
+            <circle cx="60" cy="60" r="42" opacity=".25"/>
+            <polygon points="60,12 68,44 100,44 74,62 82,94 60,76 38,94 46,62 20,44 52,44" opacity=".6"/>
+          </svg>
+        </div>
+        <h1 class="start-title">LOCAL TRPG</h1>
+        <p class="start-subtitle">ローカルLLMが紡ぐ、あなただけの冒険</p>
+        <div class="start-form">
+          <label for="heroNameInput" class="start-label">勇者の名前</label>
+          <input id="heroNameInput" type="text" class="start-input" value="アルス" placeholder="名前を入力..." maxlength="20" />
+          <button id="startButton" type="button" class="start-btn">
+            <span class="start-btn-text">冒険を始める</span>
+            <span class="start-btn-loading" style="display:none">物語を紡いでいます…</span>
+          </button>
+        </div>
+        <p id="backendStatus" class="start-backend">接続確認中…</p>
+      </div>
+    </div>
+
+    <!-- ═══════ GAME SCREEN ═══════ -->
+    <main id="gameScreen" class="shell" style="display:none">
       <section class="stage" aria-label="場面">
         <div id="background" class="background-placeholder">
           <div class="sigil">TRPG</div>
@@ -22,58 +53,81 @@
       </section>
 
       <section class="layout">
+        <!-- ── Character Panel ── -->
         <aside class="sidebar" aria-label="キャラクター">
           <div id="portrait" class="portrait-placeholder"></div>
-          <h2 id="characterName">アルス</h2>
+          <h2 id="characterName" class="char-name-display">アルス</h2>
           <p id="characterDescription">世界を救うため旅立つ若き勇者。</p>
+
           <div class="meters">
             <div class="meter-row">
-              <span>HP</span>
-              <div class="meter"><i id="hpBar"></i></div>
+              <span class="meter-label">HP</span>
+              <div class="meter hp-meter"><i id="hpBar"></i></div>
               <strong id="hpText">20/20</strong>
             </div>
             <div class="meter-row">
-              <span>MP</span>
-              <div class="meter"><i id="mpBar"></i></div>
+              <span class="meter-label">MP</span>
+              <div class="meter mp-meter"><i id="mpBar"></i></div>
               <strong id="mpText">8/8</strong>
             </div>
             <div class="meter-row">
-              <span>SP</span>
-              <div class="meter"><i id="spBar"></i></div>
+              <span class="meter-label">SP</span>
+              <div class="meter sp-meter"><i id="spBar"></i></div>
               <strong id="spText">10/10</strong>
             </div>
           </div>
+
+          <div class="gold-row">
+            <span class="gold-label">GOLD</span>
+            <strong id="goldText">0</strong>
+          </div>
+
           <h3>所持品</h3>
           <ul id="inventory" class="inventory"></ul>
+
           <h3>最近の判定</h3>
           <ul id="diceLog" class="dice-log"></ul>
         </aside>
 
+        <!-- ── Play Area ── -->
         <section class="play-area" aria-label="セッション">
           <div class="toolbar">
             <div>
               <p class="eyebrow">ローカルGM</p>
               <strong id="backendInfo">接続設定を確認中</strong>
             </div>
-            <select id="diceSelect" aria-label="判定ダイス">
-              <option value="1d20">1d20</option>
-              <option value="2d6">2d6</option>
-              <option value="1d100">1d100</option>
-            </select>
           </div>
+
           <div id="messages" class="messages" aria-live="polite"></div>
+
+          <!-- ── Choices Area ── -->
+          <div id="choicesArea" class="choices-area" style="display:none">
+            <p class="choices-heading">行動を選択してください</p>
+            <div id="choicesList" class="choices-list"></div>
+          </div>
+
+          <!-- ── Free Input ── -->
           <form id="turnForm" class="turn-form">
-            <textarea id="playerInput" rows="3" placeholder="行動を入力..." required></textarea>
-            <button id="sendButton" type="submit">送信</button>
+            <div class="input-wrapper">
+              <textarea id="playerInput" rows="2" placeholder="自分で行動を入力…"></textarea>
+              <button id="sendButton" type="submit" title="送信">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 2L11 13"/>
+                  <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+                </svg>
+              </button>
+            </div>
           </form>
         </section>
 
+        <!-- ── System Panel ── -->
         <aside class="system-panel" aria-label="システムログ">
           <h2>システム</h2>
           <ul id="systemLogs"></ul>
         </aside>
       </section>
     </main>
+
     <script src="/static/app.js"></script>
   </body>
 </html>

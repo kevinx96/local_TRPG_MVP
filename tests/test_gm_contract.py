@@ -1,6 +1,6 @@
 import unittest
 
-from host.gm_contract import STATE_MARKER, split_visible_and_json
+from host.gm_contract import STATE_MARKER, get_fallback_choices, split_visible_and_json
 
 
 class GmContractTests(unittest.TestCase):
@@ -23,6 +23,102 @@ class GmContractTests(unittest.TestCase):
 
         self.assertEqual(visible, "普通の文章だけ")
         self.assertIsNone(payload)
+        self.assertIsNotNone(warning)
+
+    def test_internal_prompt_and_inline_choices_are_hidden(self):
+        text = (
+            "王の間。国王は重々しく使命を告げた。\n\n"
+            "次の選択肢:\n"
+            "1. 「薬草」でHPを回復し、情報収集へ向かう。\n"
+            "2. 支度金50ゴールドで道具屋で買い物をする。\n"
+            "3. スライムの森に赴く。\n\n"
+            "GM本文の後には次のJSON形式で状態を出力してください。"
+            f"\n{STATE_MARKER}\n"
+            '{"gm_text":"王の間。国王は重々しく使命を告げた。",'
+            '"system_log":"","state_delta":{},'
+            '"choices":[{"text":"国王に詳しい話を聞く","preview":"","risk":"判定不要"}]}'
+        )
+
+        visible, payload, warning = split_visible_and_json(text)
+
+        self.assertEqual(visible, "王の間。国王は重々しく使命を告げた。")
+        self.assertNotIn("GM本文", visible)
+        self.assertNotIn("次の選択肢", visible)
+        self.assertEqual(payload["choices"][0]["text"], "「薬草」でHPを回復し、情報収集へ向かう")
+        self.assertIsNone(warning)
+
+    def test_recovers_choice_cards_when_json_is_missing(self):
+        text = (
+            "GM:\n\n"
+            "霧の深い廊下が続いている。\n\n"
+            "以下の選択肢から行動を選んでください。\n\n"
+            "1. 扉を調べる。\n"
+            "2. 仲間に話しかける。\n"
+            "3. 慎重に先へ進む。\n"
+        )
+
+        visible, payload, warning = split_visible_and_json(text)
+
+        self.assertEqual(visible, "霧の深い廊下が続いている。")
+        self.assertIsNotNone(payload)
+        self.assertEqual(
+            [choice["text"] for choice in payload["choices"]],
+            ["扉を調べる", "仲間に話しかける", "慎重に先へ進む"],
+        )
+        self.assertIsNotNone(warning)
+
+    def test_text_choices_override_incomplete_json_choices(self):
+        text = (
+            "森の入口に暗い道が続いている。\n\n"
+            "以下の選択肢から行動を選んでください。\n\n"
+            "1. 王の間で情報収集\n"
+            "2. スライムの森に足を踏み入れる\n"
+            f"\n{STATE_MARKER}\n"
+            '{"gm_text":"森の入口に暗い道が続いている。",'
+            '"state_delta":{},'
+            '"choices":[{"text":"城外の麓の村へ向かう"}]}'
+        )
+
+        visible, payload, warning = split_visible_and_json(text)
+
+        self.assertEqual(visible, "森の入口に暗い道が続いている。")
+        self.assertEqual(
+            [choice["text"] for choice in payload["choices"]],
+            ["王の間で情報収集", "スライムの森に足を踏み入れる"],
+        )
+        self.assertIsNone(warning)
+
+    def test_fallback_choices_are_story_specific(self):
+        self.assertEqual(
+            get_fallback_choices("第1章：王の間")[2]["text"],
+            "城を出てスライムの森へ向かう",
+        )
+        self.assertEqual(
+            get_fallback_choices("第3章：麓の村")[2]["text"],
+            "竜の谷へ向かう",
+        )
+
+    def test_recovers_multiline_numbered_choices(self):
+        text = (
+            "次に、どうする？\n"
+            "行動を選択してください\n\n"
+            "1\n"
+            "鉄の剣でスライムを攻撃する\n"
+            "戦闘チュートリアルを進めます\n"
+            "1d20判定が必要（DC10）\n\n"
+            "2\n"
+            "森を抜けて麓の村へ向かう\n"
+            "第3章へ進みます\n"
+            "判定不要\n"
+        )
+
+        visible, payload, warning = split_visible_and_json(text)
+
+        self.assertEqual(visible, "")
+        self.assertEqual(
+            [choice["text"] for choice in payload["choices"]],
+            ["鉄の剣でスライムを攻撃する", "森を抜けて麓の村へ向かう"],
+        )
         self.assertIsNotNone(warning)
 
 
