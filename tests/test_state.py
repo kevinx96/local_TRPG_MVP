@@ -54,6 +54,16 @@ class StateTests(unittest.TestCase):
 
         self.assertNotIn("scenario_prompt", public)
 
+    def test_create_session_adds_opening_message(self):
+        scenario = self.tmp_path / "opening.txt"
+        scenario.write_text("あなたはGMです。", encoding="utf-8")
+
+        public = state.create_session(str(scenario))
+
+        self.assertEqual(public["messages"][0]["role"], "assistant")
+        self.assertEqual(public["messages"][0]["speaker"], "GM")
+        self.assertIn("最初の行動", public["messages"][0]["text"])
+
 
 if __name__ == "__main__":
     unittest.main()

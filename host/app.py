@@ -2,15 +2,15 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from .gm_contract import STATE_MARKER, build_gm_contract_prompt, split_visible_and_json
-from .llm_client import LLMClientError, debug_log, stream_chat_completion
+from .llm_client import LLMClientError, chat_completion, debug_log
 from .state import (
     HOST_ROOT,
     PROJECT_ROOT,
@@ -77,7 +77,7 @@ def api_get_session(session_id: str) -> dict[str, Any]:
 
 
 @app.post("/api/sessions/{session_id}/turn")
-def api_turn(session_id: str, request: TurnRequest) -> StreamingResponse:
+def api_turn(session_id: str, request: TurnRequest) -> dict[str, Any]:
     if not request.text.strip():
         raise HTTPException(status_code=400, detail="入力が空です。")
     try:
@@ -85,19 +85,15 @@ def api_turn(session_id: str, request: TurnRequest) -> StreamingResponse:
     except FileNotFoundError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
 
-    return StreamingResponse(
-        _turn_events(session, request),
-        media_type="application/x-ndjson; charset=utf-8",
-    )
+    return _run_turn(session, request)
 
 
-def _turn_events(session: dict[str, Any], request: TurnRequest) -> Iterator[str]:
+def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
     add_player_message(session, request.text.strip(), request.speaker)
     latest_roll = roll_dice(session, request.dice)
     config = load_config()
     messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
     full_response = ""
-    visible_streamed = ""
     debug_enabled = bool(config.get("debug_llm", True))
 
     if debug_enabled:
@@ -108,22 +104,13 @@ def _turn_events(session: dict[str, Any], request: TurnRequest) -> Iterator[str]
         )
 
     try:
-        chunks = stream_chat_completion(config, messages)
-        for visible_chunk, raw_chunk in _visible_chunks(chunks):
-            full_response += raw_chunk
-            if visible_chunk:
-                visible_streamed += visible_chunk
-                yield _event("token", visible_chunk)
+        full_response = chat_completion(config, messages)
     except LLMClientError as exc:
         if debug_enabled:
             debug_log(f"LLM failure; demo_fallback={config.get('demo_fallback_on_error', True)} error={exc}")
         if not config.get("demo_fallback_on_error", True):
-            yield _event("error", f"LLM接続エラー: {exc}")
-            return
+            raise HTTPException(status_code=502, detail=f"LLM接続エラー: {exc}") from exc
         full_response = _demo_response(request.text, latest_roll, str(exc))
-        visible_text, _, _ = split_visible_and_json(full_response)
-        visible_streamed = visible_text
-        yield _event("token", visible_text)
 
     visible_text, payload, warning = split_visible_and_json(full_response)
     if debug_enabled:
@@ -132,9 +119,7 @@ def _turn_events(session: dict[str, Any], request: TurnRequest) -> Iterator[str]
             f"raw_chars={len(full_response)} visible_chars={len(visible_text)} "
             f"json_ok={payload is not None} warning={warning!r}"
         )
-    if not visible_streamed and visible_text:
-        yield _event("token", visible_text)
-    apply_gm_payload(session, visible_text or visible_streamed, payload, warning)
+    apply_gm_payload(session, visible_text, payload, warning)
     save_session(session)
     if debug_enabled:
         debug_log(
@@ -142,37 +127,7 @@ def _turn_events(session: dict[str, Any], request: TurnRequest) -> Iterator[str]
             f"session={session['id']} messages={len(session['messages'])} "
             f"logs={len(session['system_logs'])} dice={len(session['dice_log'])}"
         )
-    yield _event("state", public_session(session))
-
-
-def _visible_chunks(chunks: Iterator[str]) -> Iterator[tuple[str, str]]:
-    buffer = ""
-    marker_seen = False
-    guard = max(0, len(STATE_MARKER) - 1)
-    for chunk in chunks:
-        if marker_seen:
-            yield "", chunk
-            continue
-        buffer += chunk
-        marker_index = buffer.find(STATE_MARKER)
-        if marker_index != -1:
-            visible = buffer[:marker_index]
-            remainder = buffer[marker_index:]
-            marker_seen = True
-            buffer = ""
-            yield visible, visible + remainder
-            continue
-        if len(buffer) > guard:
-            visible = buffer[:-guard] if guard else buffer
-            buffer = buffer[-guard:] if guard else ""
-            yield visible, visible
-    if buffer:
-        yield buffer, buffer
-
-
-def _event(kind: str, payload: Any) -> str:
-    return json.dumps({"type": kind, "payload": payload}, ensure_ascii=False) + "\n"
-
+    return public_session(session)
 
 def _demo_response(player_text: str, roll: dict[str, Any], error: str) -> str:
     gm_text = (

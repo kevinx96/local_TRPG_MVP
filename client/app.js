@@ -1,6 +1,5 @@
 const state = {
   sessionId: null,
-  currentAssistant: null,
 };
 
 const els = {
@@ -60,7 +59,7 @@ async function submitTurn(event) {
   if (!text || !state.sessionId) return;
   els.input.value = "";
   addMessage("user", "プレイヤー", text);
-  state.currentAssistant = addMessage("assistant", "GM", "");
+  els.sendButton.textContent = "処理中";
   setBusy(true);
   try {
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
@@ -71,42 +70,12 @@ async function submitTurn(event) {
     if (!response.ok || !response.body) {
       throw new Error(await response.text());
     }
-    await readNdjsonStream(response.body);
+    renderSession(await response.json());
   } catch (error) {
-    appendAssistantText(`\nエラー: ${error.message}`);
+    addMessage("assistant", "GM", `エラー: ${error.message}`);
   } finally {
-    state.currentAssistant = null;
+    els.sendButton.textContent = "送信";
     setBusy(false);
-  }
-}
-
-async function readNdjsonStream(body) {
-  const reader = body.getReader();
-  const decoder = new TextDecoder();
-  let buffer = "";
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-    const lines = buffer.split("\n");
-    buffer = lines.pop() || "";
-    for (const line of lines) {
-      if (!line.trim()) continue;
-      handleEvent(JSON.parse(line));
-    }
-  }
-  if (buffer.trim()) handleEvent(JSON.parse(buffer));
-}
-
-function handleEvent(event) {
-  if (event.type === "token") {
-    appendAssistantText(event.payload);
-  }
-  if (event.type === "state") {
-    renderSession(event.payload);
-  }
-  if (event.type === "error") {
-    appendAssistantText(`\n${event.payload}`);
   }
 }
 
@@ -171,14 +140,6 @@ function addMessage(role, speaker, text) {
   els.messages.append(node);
   els.messages.scrollTop = els.messages.scrollHeight;
   return textNode;
-}
-
-function appendAssistantText(text) {
-  if (!state.currentAssistant) {
-    state.currentAssistant = addMessage("assistant", "GM", "");
-  }
-  state.currentAssistant.textContent += text;
-  els.messages.scrollTop = els.messages.scrollHeight;
 }
 
 async function fetchJson(url, options) {
