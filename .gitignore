@@ -23,6 +23,7 @@ llama-gguf-split.exe
 # Local secrets and API keys
 .env
 *.env
+host/local_config.json
 host/auto_tagger.py
 host/gemini_api_key.*
 *gemini*api*key*

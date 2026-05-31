@@ -110,9 +110,7 @@ def _chat_completion_once(
         "stream": False,
     }
     _apply_response_format(payload, config)
-    headers = {"Content-Type": "application/json"}
-    api_key = backend.get("api_key") or "local"
-    headers["Authorization"] = f"Bearer {api_key}"
+    headers = _request_headers(backend)
     timeout = int(config.get("request_timeout_seconds", 1800))
     url = f"{base_url}/chat/completions"
 
@@ -139,7 +137,19 @@ def _chat_completion_once(
                 hint = _backend_diagnostic_hint(base_url)
                 if hint:
                     debug_log(hint)
+                remote_hint = _remote_gateway_hint(response.text)
+                if remote_hint:
+                    debug_log(remote_hint)
+                forbidden_hint = _remote_forbidden_hint(response.status_code, response.text, base_url)
+                if forbidden_hint:
+                    debug_log(forbidden_hint)
             response.raise_for_status()
+        unexpected_error = _unexpected_llm_body_error(response.text, response.headers.get("content-type", ""))
+        if unexpected_error:
+            if debug_enabled:
+                debug_log(unexpected_error)
+                debug_log(f"LLM unexpected body preview={response.text[:500]!r}")
+            raise LLMClientError(unexpected_error)
         content = _content_from_completion(response.text)
         if debug_enabled:
             debug_log(f"LLM completion received content_chars={len(content)}")
@@ -171,9 +181,7 @@ def _stream_chat_completion_once(
         "stream": True,
     }
     _apply_response_format(payload, config)
-    headers = {"Content-Type": "application/json"}
-    api_key = backend.get("api_key") or "local"
-    headers["Authorization"] = f"Bearer {api_key}"
+    headers = _request_headers(backend)
     timeout = int(config.get("request_timeout_seconds", 1800))
     url = f"{base_url}/chat/completions"
 
@@ -206,7 +214,22 @@ def _stream_chat_completion_once(
                     hint = _backend_diagnostic_hint(base_url)
                     if hint:
                         debug_log(hint)
+                    remote_hint = _remote_gateway_hint(response.text)
+                    if remote_hint:
+                        debug_log(remote_hint)
+                    forbidden_hint = _remote_forbidden_hint(response.status_code, response.text, base_url)
+                    if forbidden_hint:
+                        debug_log(forbidden_hint)
                 response.raise_for_status()
+            content_type = response.headers.get("content-type", "")
+            if "text/html" in content_type.lower():
+                body = response.text
+                unexpected_error = _unexpected_llm_body_error(body, content_type)
+                if unexpected_error:
+                    if debug_enabled:
+                        debug_log(unexpected_error)
+                        debug_log(f"LLM unexpected body preview={body[:500]!r}")
+                    raise LLMClientError(unexpected_error)
             chunk_count = 0
             content_chars = 0
             for raw_line in response.iter_lines(decode_unicode=False):
@@ -270,6 +293,40 @@ def _content_from_completion(text: str) -> str:
     return ""
 
 
+def _unexpected_llm_body_error(text: str, content_type: str) -> str:
+    lower_type = content_type.lower()
+    lower_text = text[:2000].lower()
+    if "cloudflare access" in lower_text or "sign in" in lower_text and "cloudflare" in lower_text:
+        return (
+            "Cloudflare Access returned a sign-in page instead of LLM JSON. "
+            "Add a Service Auth policy for this service token on the Access application."
+        )
+    if "text/html" in lower_type:
+        return "LLM backend returned HTML instead of OpenAI-compatible JSON."
+    return ""
+
+
+def _remote_gateway_hint(text: str) -> str:
+    lower_text = text[:2000].lower()
+    if "cloudflare" in lower_text and "502: bad gateway" in lower_text:
+        return (
+            "Cloudflare tunnel reached Access but could not reach the origin. "
+            "Check the tunnel Public Hostname service URL; for local Ollama it should usually be "
+            "`http://127.0.0.1:11434` or `http://localhost:11434`."
+        )
+    return ""
+
+
+def _remote_forbidden_hint(status_code: int, text: str, base_url: str) -> str:
+    if status_code == 403 and not text.strip() and "localhost" not in base_url and "127.0.0.1" not in base_url:
+        return (
+            "Remote Ollama returned an empty 403. If this is behind Cloudflare Tunnel, "
+            "set the Public Hostname HTTP Host Header to `localhost:11434` because Ollama rejects "
+            "requests whose Host header is the public domain."
+        )
+    return ""
+
+
 def _decode_sse_line(raw_line: Union[bytes, str]) -> str:
     if isinstance(raw_line, str):
         return raw_line
@@ -285,6 +342,18 @@ def _apply_response_format(payload: dict[str, Any], config: dict[str, Any]) -> N
         return
     if isinstance(response_format, dict):
         payload["response_format"] = response_format
+
+
+def _request_headers(backend: dict[str, Any]) -> dict[str, str]:
+    headers = {"Content-Type": "application/json"}
+    api_key = backend.get("api_key") or "local"
+    headers["Authorization"] = f"Bearer {api_key}"
+    extra_headers = backend.get("headers")
+    if isinstance(extra_headers, dict):
+        for key, value in extra_headers.items():
+            if isinstance(key, str) and key.strip() and value is not None:
+                headers[key.strip()] = str(value)
+    return headers
 
 
 def _message_role_summary(messages: list[dict[str, str]]) -> str:

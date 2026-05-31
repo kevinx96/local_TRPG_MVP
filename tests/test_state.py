@@ -1,7 +1,9 @@
 import json
+import os
 import unittest
 import uuid
 from pathlib import Path
+from unittest.mock import patch
 
 from host import state
 from host.gm_contract import split_visible_and_json
@@ -102,6 +104,27 @@ class StateTests(unittest.TestCase):
         self.assertEqual(session["current_scene"], "start")
         self.assertEqual(public["current_scene_title"], "広場")
         self.assertNotIn("scenario_pack", public)
+
+    def test_load_config_merges_local_config_and_env_base_url(self):
+        config_path = self.tmp_path / "config.json"
+        local_path = self.tmp_path / "local_config.json"
+        config_path.write_text(
+            json.dumps({
+                "active_backend": "ollama",
+                "backends": {"ollama": {"base_url": "http://localhost:11434/v1", "model": "local"}},
+            }),
+            encoding="utf-8",
+        )
+        local_path.write_text(
+            json.dumps({"backends": {"ollama": {"model": "remote-model"}}}),
+            encoding="utf-8",
+        )
+
+        with patch.dict(os.environ, {"TRPG_OLLAMA_BASE_URL": "https://ollama.example.com"}, clear=False):
+            config = state.load_config(config_path)
+
+        self.assertEqual(config["backends"]["ollama"]["model"], "remote-model")
+        self.assertEqual(config["backends"]["ollama"]["base_url"], "https://ollama.example.com/v1")
 
     def test_select_scenario_context_matches_keywords(self):
         public = state.create_session(str(self.write_pack()))

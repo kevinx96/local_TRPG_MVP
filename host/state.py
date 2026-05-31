@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import random
 import re
 import uuid
@@ -74,12 +75,58 @@ def utc_now() -> str:
 
 def load_config(path: Optional[Path] = None) -> dict[str, Any]:
     config_path = path or HOST_ROOT / "config.json"
-    return json.loads(config_path.read_text(encoding="utf-8"))
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    local_path = _local_config_path(config_path)
+    if local_path.exists():
+        _deep_update(config, json.loads(local_path.read_text(encoding="utf-8")))
+    _apply_config_env_overrides(config)
+    return config
 
 
 def save_config(config: dict[str, Any], path: Optional[Path] = None) -> None:
     config_path = path or HOST_ROOT / "config.json"
     config_path.write_text(json.dumps(config, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def _local_config_path(config_path: Path) -> Path:
+    env_path = os.environ.get("TRPG_LOCAL_CONFIG")
+    if env_path:
+        return resolve_local_path(env_path, default=config_path)
+    return config_path.with_name("local_config.json")
+
+
+def _apply_config_env_overrides(config: dict[str, Any]) -> None:
+    active_backend = os.environ.get("TRPG_ACTIVE_BACKEND")
+    if active_backend:
+        config["active_backend"] = active_backend.strip()
+
+    backend_name = str(config.get("active_backend") or "ollama")
+    backends = config.setdefault("backends", {})
+    backend = backends.setdefault(backend_name, {})
+    if not isinstance(backend, dict):
+        backend = {}
+        backends[backend_name] = backend
+
+    base_url = os.environ.get("TRPG_LLM_BASE_URL") or os.environ.get("TRPG_OLLAMA_BASE_URL")
+    if base_url:
+        backend["base_url"] = _normalize_openai_base_url(base_url)
+
+    model = os.environ.get("TRPG_LLM_MODEL") or os.environ.get("TRPG_OLLAMA_MODEL")
+    if model:
+        backend["model"] = model.strip()
+
+    fallbacks = os.environ.get("TRPG_LLM_FALLBACK_MODELS") or os.environ.get("TRPG_OLLAMA_FALLBACK_MODELS")
+    if fallbacks:
+        backend["fallback_models"] = [item.strip() for item in fallbacks.split(",") if item.strip()]
+
+    api_key = os.environ.get("TRPG_LLM_API_KEY") or os.environ.get("TRPG_OLLAMA_API_KEY")
+    if api_key:
+        backend["api_key"] = api_key
+
+
+def _normalize_openai_base_url(value: str) -> str:
+    url = value.strip().rstrip("/")
+    return url if url.endswith("/v1") else f"{url}/v1"
 
 
 def resolve_local_path(value: Optional[str], default: Path = DEFAULT_SCENARIO) -> Path:
