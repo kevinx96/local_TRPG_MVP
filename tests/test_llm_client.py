@@ -6,9 +6,9 @@ from host.llm_client import model_candidates
 class LLMClientTests(unittest.TestCase):
     def test_model_candidates_prefers_primary_then_fallbacks(self):
         backend = {
-            "model": "Llama-3-ELYZA-JP-8B-q4_k_m",
+            "model": "elyza-jp-8b-local",
             "fallback_models": [
-                "qwen2.5-7b-instruct-q4_k_m",
+                "qwen2.5-7b-instruct-local",
                 "qwen2.5:7b-instruct",
             ],
         }
@@ -16,26 +16,26 @@ class LLMClientTests(unittest.TestCase):
         self.assertEqual(
             model_candidates(backend),
             [
-                "Llama-3-ELYZA-JP-8B-q4_k_m",
-                "qwen2.5-7b-instruct-q4_k_m",
+                "elyza-jp-8b-local",
+                "qwen2.5-7b-instruct-local",
                 "qwen2.5:7b-instruct",
             ],
         )
 
     def test_model_candidates_removes_duplicates(self):
         backend = {
-            "model": "Llama-3-ELYZA-JP-8B-q4_k_m",
+            "model": "elyza-jp-8b-local",
             "fallback_models": [
-                "Llama-3-ELYZA-JP-8B-q4_k_m",
-                "qwen2.5-7b-instruct-q4_k_m",
+                "elyza-jp-8b-local",
+                "qwen2.5-7b-instruct-local",
             ],
         }
 
         self.assertEqual(
             model_candidates(backend),
             [
-                "Llama-3-ELYZA-JP-8B-q4_k_m",
-                "qwen2.5-7b-instruct-q4_k_m",
+                "elyza-jp-8b-local",
+                "qwen2.5-7b-instruct-local",
             ],
         )
 

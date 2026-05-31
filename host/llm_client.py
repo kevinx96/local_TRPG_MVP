@@ -122,7 +122,8 @@ def _stream_chat_completion_once(
                 response.raise_for_status()
             chunk_count = 0
             content_chars = 0
-            for line in response.iter_lines(decode_unicode=True):
+            for raw_line in response.iter_lines(decode_unicode=False):
+                line = _decode_sse_line(raw_line)
                 if not line:
                     continue
                 if line.startswith("data: "):
@@ -163,6 +164,12 @@ def _content_from_sse(line: str) -> str:
     if isinstance(message.get("content"), str):
         return message["content"]
     return ""
+
+
+def _decode_sse_line(raw_line: bytes | str) -> str:
+    if isinstance(raw_line, str):
+        return raw_line
+    return raw_line.decode("utf-8", errors="replace")
 
 
 def _backend_diagnostic_hint(base_url: str) -> str:

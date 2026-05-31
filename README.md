@@ -28,16 +28,23 @@ python -m host.run_server --reload
 - Ollama既定値: `http://localhost:11434/v1`
 - Koboldcpp例: `http://localhost:5001/v1`
 
-どちらもOpenAI互換の `/chat/completions` を使います。既定では `Llama-3-ELYZA-JP-8B-q4_k_m` を優先し、失敗した場合は qwen 系モデルへフォールバックします。
+どちらもOpenAI互換の `/chat/completions` を使います。既定では ELYZA JP 8B を優先し、失敗した場合は qwen 系モデルへフォールバックします。
 
 ```json
 {
-  "model": "Llama-3-ELYZA-JP-8B-q4_k_m",
+  "model": "elyza-jp-8b-local",
   "fallback_models": [
-    "qwen2.5-7b-instruct-q4_k_m",
+    "qwen2.5-7b-instruct-local",
     "qwen2.5:7b-instruct"
   ]
 }
+```
+
+Ollamaで同梱GGUFを使う場合は、最初にローカルモデルを登録します。
+
+```powershell
+python -m host.setup_ollama_models
+ollama list
 ```
 
 LLM通信のデバッグログは既定で有効です。
@@ -53,7 +60,7 @@ CMD/PowerShellには `[TRPG-DEBUG]` で始まるログが出ます。API keyは�
 Ollamaで `model not found` が出る場合は、先にGGUFモデルをOllamaへ登録するか、`host/config.json` の `model` / `fallback_models` を `ollama list` に出ている名前へ変更してください。Koboldcppを使う場合も同じ順序で ELYZA を優先し、qwen をfallbackとして試します。
 
 ```powershell
-ollama pull qwen2.5:7b-instruct
+python -m host.setup_ollama_models
 ollama list
 ```
 
