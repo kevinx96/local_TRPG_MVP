@@ -18,6 +18,8 @@ _INTERNAL_LINE_PATTERNS = (
     "JSON形式",
     "状態JSON",
     "TRPG_JSON",
+    "ゲーム状況は上記JSON",
+    "次のステップは何をしますか",
     STATE_MARKER,
     '"gm_text"',
     '"system_log"',
@@ -27,6 +29,9 @@ _INTERNAL_LINE_PATTERNS = (
     '"dice_dc"',
     "```",
 )
+_PROTOCOL_TAIL_RE = re.compile(r"^(?:JSON|状態JSON|出力JSON)\s*[:：]?\s*$", re.IGNORECASE)
+_THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.IGNORECASE | re.DOTALL)
+_UNCLOSED_THINK_RE = re.compile(r"<think>.*", re.IGNORECASE | re.DOTALL)
 
 
 def build_gm_contract_prompt() -> str:
@@ -67,6 +72,7 @@ def build_gm_contract_prompt() -> str:
         "```\n"
         "JSONのchoicesは必ず3つ含めてください。各選択肢のriskには「判定不要」「1d20判定（DC12）」「危険」などを書いてください。\n"
         "GM本文には「以下の選択肢」や番号付き選択肢を書かないでください。\n"
+        "GM本文には「JSON:」「現在あなたは」「次のステップは何をしますか」などの内部指示を書かないでください。\n"
         "JSON以外の補足をマーカーの後ろに書かないでください。"
     )
 
@@ -82,7 +88,8 @@ def build_opening_prompt(session: dict[str, Any]) -> str:
         "・その場にいるNPCの外見と最初の台詞\n"
         "・プレイヤーキャラクターの状況説明\n"
         "・GM本文は300文字以上で書いてください\n"
-        "・行動選択肢は本文に書かず、最後に必ず3つの行動選択肢を含むJSONを出力してください"
+        "・行動選択肢は本文に書かず、最後に必ず3つの行動選択肢を含むJSONを出力してください\n"
+        "・本文の最後に「どうしますか」「次のステップは何をしますか」「JSON:」などの進行指示や内部注釈を書かないでください"
     )
 
 
@@ -162,7 +169,7 @@ def split_visible_and_json(text: str) -> tuple[str, dict[str, Any] | None, str |
 
 def sanitize_visible_text(text: str) -> str:
     """Remove protocol instructions and inline choice lists from player-visible text."""
-    cleaned = text.replace(STATE_MARKER, "")
+    cleaned = _strip_thinking_text(text.replace(STATE_MARKER, ""))
     lines = cleaned.splitlines()
     kept: list[str] = []
     skipping_choices = False
@@ -178,6 +185,10 @@ def sanitize_visible_text(text: str) -> str:
             continue
 
         if _is_internal_protocol_line(stripped):
+            continue
+        if _PROTOCOL_TAIL_RE.match(stripped):
+            break
+        if _looks_like_action_prompt_leak(stripped):
             continue
         if _CHOICE_HEADING_RE.match(stripped):
             skipping_choices = True
@@ -285,6 +296,17 @@ def _payload_from_recovered_choices(choices: list[dict[str, str]]) -> dict[str, 
 
 def _is_internal_protocol_line(line: str) -> bool:
     return any(pattern in line for pattern in _INTERNAL_LINE_PATTERNS)
+
+
+def _looks_like_action_prompt_leak(line: str) -> bool:
+    if "次のステップ" in line or "何をしますか" in line:
+        return True
+    return line.startswith("では、") and "べきか" in line and "それとも" in line
+
+
+def _strip_thinking_text(text: str) -> str:
+    text = _THINK_BLOCK_RE.sub("", text)
+    return _UNCLOSED_THINK_RE.sub("", text)
 
 
 def _looks_like_json_line(line: str) -> bool:

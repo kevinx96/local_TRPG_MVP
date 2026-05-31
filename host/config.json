@@ -3,14 +3,17 @@
   "backends": {
     "ollama": {
       "base_url": "http://localhost:11434/v1",
-      "model": "qwen2.5-7b-instruct-local",
-      "fallback_models": [],
+      "model": "qwen3-swallow-8b-rl-local",
+      "fallback_models": [
+        "qwen2.5-7b-instruct-local"
+      ],
       "api_key": "ollama"
     },
     "koboldcpp": {
       "base_url": "http://localhost:5001/v1",
       "model": "elyza-jp-8b-local",
       "fallback_models": [
+        "qwen3-swallow-8b-rl-local",
         "qwen2.5-7b-instruct-local",
         "qwen2.5:7b-instruct"
       ],
