@@ -65,6 +65,89 @@ def stream_chat_completion(
     raise LLMClientError("LLM request failed before any model was attempted.")
 
 
+def chat_completion(
+    config: dict[str, Any],
+    messages: list[dict[str, str]],
+) -> str:
+    debug_enabled = bool(config.get("debug_llm", True))
+    backend = active_backend(config)
+    backend_name = config.get("active_backend", "ollama")
+    candidates = model_candidates(backend)
+    if not candidates:
+        raise LLMClientError("No LLM model configured.")
+
+    last_error: LLMClientError | None = None
+    for index, model in enumerate(candidates, start=1):
+        try:
+            return _chat_completion_once(config, backend, backend_name, model, messages, index, len(candidates))
+        except LLMClientError as exc:
+            last_error = exc
+            if debug_enabled and index < len(candidates):
+                debug_log(f"LLM model fallback triggered failed_model={model} next_model={candidates[index]}")
+    if last_error:
+        raise last_error
+    raise LLMClientError("LLM request failed before any model was attempted.")
+
+
+def _chat_completion_once(
+    config: dict[str, Any],
+    backend: dict[str, Any],
+    backend_name: str,
+    model: str,
+    messages: list[dict[str, str]],
+    attempt: int,
+    total_attempts: int,
+) -> str:
+    debug_enabled = bool(config.get("debug_llm", True))
+    base_url = str(backend.get("base_url", "")).rstrip("/")
+    if not base_url:
+        raise LLMClientError("LLM backend base_url is empty.")
+    payload = {
+        "model": model,
+        "messages": messages,
+        "temperature": config.get("temperature", 0.8),
+        "max_tokens": config.get("max_tokens", 900),
+        "stream": False,
+    }
+    headers = {"Content-Type": "application/json"}
+    api_key = backend.get("api_key") or "local"
+    headers["Authorization"] = f"Bearer {api_key}"
+    timeout = int(config.get("request_timeout_seconds", 120))
+    url = f"{base_url}/chat/completions"
+
+    if debug_enabled:
+        total_chars = sum(len(message.get("content", "")) for message in messages)
+        debug_log(
+            "LLM request "
+            f"backend={backend_name} url={url} model={model} attempt={attempt}/{total_attempts} "
+            f"messages={len(messages)} chars={total_chars} stream=False timeout={timeout}s"
+        )
+
+    try:
+        response = requests.post(url, headers=headers, json=payload, timeout=timeout)
+        if debug_enabled:
+            debug_log(
+                "LLM response headers "
+                f"status={response.status_code} content_type={response.headers.get('content-type', '')}"
+            )
+        if response.status_code >= 400:
+            preview = response.text[:1000]
+            if debug_enabled:
+                debug_log(f"LLM HTTP error body={preview!r}")
+                hint = _backend_diagnostic_hint(base_url)
+                if hint:
+                    debug_log(hint)
+            response.raise_for_status()
+        content = _content_from_completion(response.text)
+        if debug_enabled:
+            debug_log(f"LLM completion received content_chars={len(content)}")
+        return content
+    except requests.RequestException as exc:
+        if debug_enabled:
+            debug_log(f"LLM request exception={exc!r}")
+        raise LLMClientError(str(exc)) from exc
+
+
 def _stream_chat_completion_once(
     config: dict[str, Any],
     backend: dict[str, Any],
@@ -163,6 +246,23 @@ def _content_from_sse(line: str) -> str:
     message = choices[0].get("message") or {}
     if isinstance(message.get("content"), str):
         return message["content"]
+    return ""
+
+
+def _content_from_completion(text: str) -> str:
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise LLMClientError(f"Invalid LLM JSON response: {exc}") from exc
+    choices = data.get("choices") or []
+    if not choices:
+        return ""
+    message = choices[0].get("message") or {}
+    if isinstance(message.get("content"), str):
+        return message["content"]
+    text_value = choices[0].get("text")
+    if isinstance(text_value, str):
+        return text_value
     return ""
 
 

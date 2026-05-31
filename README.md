@@ -21,6 +21,8 @@ python -m host.run_server --no-browser
 python -m host.run_server --reload
 ```
 
+新規セッションを作成すると、GMの開場メッセージが自動で表示されます。プレイヤーはその案内に続けて最初の行動を入力します。GM応答は生成完了後にまとめて表示されます。
+
 ## LLM設定
 
 `host/config.json` の `active_backend` と `backends` を編集します。

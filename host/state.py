@@ -80,6 +80,7 @@ def create_session(
         "created_at": utc_now(),
         "updated_at": utc_now(),
     }
+    add_assistant_message(session, build_opening_message(session))
     save_session(session)
     return public_session(session)
 
@@ -131,6 +132,21 @@ def add_assistant_message(session: dict[str, Any], text: str, speaker: str = "GM
 def add_system_log(session: dict[str, Any], text: str) -> None:
     if text:
         session["system_logs"].append({"text": text, "created_at": utc_now()})
+
+
+def build_opening_message(session: dict[str, Any]) -> str:
+    character = session["character"]
+    title = session.get("scenario_title") or "TRPG"
+    name = character.get("name") or "冒険者"
+    inventory = "、".join(character.get("inventory") or [])
+    inventory_text = f"所持品は {inventory}。" if inventory else "所持品はまだありません。"
+    return (
+        f"セッション「{title}」を開始します。\n\n"
+        f"あなたは{name}。{character.get('description', '')}\n"
+        f"{inventory_text}\n\n"
+        "物語はここから始まります。周囲を観察する、誰かに話しかける、移動する、道具を使うなど、"
+        "最初の行動を入力してください。"
+    )
 
 
 def roll_dice(session: dict[str, Any], expression: str = "1d20") -> dict[str, Any]:
