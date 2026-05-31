@@ -215,10 +215,14 @@ button, select, textarea, input { font: inherit; }
   border-radius: var(--radius);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.03) inset;
   min-width: 240px;
-  animation: configSlideIn 0.25s ease-out;
+  /* Float above the gear icon without shifting it */
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: 0;
 }
 .config-panel.open .config-dropdown {
   display: flex;
+  animation: configSlideIn 0.25s ease-out;
 }
 
 .config-field {
