@@ -1,0 +1,184 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+from typing import Any, Iterator
+
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
+
+from .gm_contract import STATE_MARKER, build_gm_contract_prompt, split_visible_and_json
+from .llm_client import LLMClientError, stream_chat_completion
+from .state import (
+    HOST_ROOT,
+    PROJECT_ROOT,
+    add_player_message,
+    apply_gm_payload,
+    build_llm_messages,
+    create_session,
+    load_config,
+    load_session,
+    public_session,
+    roll_dice,
+    save_session,
+)
+
+
+CLIENT_ROOT = PROJECT_ROOT / "client"
+
+app = FastAPI(title="Local TRPG Host", version="0.1.0")
+app.mount("/static", StaticFiles(directory=CLIENT_ROOT), name="static")
+
+
+class CreateSessionRequest(BaseModel):
+    scenario_path: str | None = None
+    character: dict[str, Any] | None = None
+
+
+class TurnRequest(BaseModel):
+    text: str
+    speaker: str = "プレイヤー"
+    dice: str = "1d20"
+
+
+@app.get("/")
+def index() -> FileResponse:
+    return FileResponse(CLIENT_ROOT / "index.html")
+
+
+@app.get("/api/config")
+def config_info() -> dict[str, Any]:
+    config = load_config()
+    backend_name = config.get("active_backend", "ollama")
+    backend = (config.get("backends") or {}).get(backend_name, {})
+    return {
+        "active_backend": backend_name,
+        "base_url": backend.get("base_url"),
+        "model": backend.get("model"),
+    }
+
+
+@app.post("/api/sessions")
+def api_create_session(request: CreateSessionRequest) -> dict[str, Any]:
+    try:
+        return create_session(request.scenario_path, request.character)
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.get("/api/sessions/{session_id}")
+def api_get_session(session_id: str) -> dict[str, Any]:
+    try:
+        return public_session(load_session(session_id))
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@app.post("/api/sessions/{session_id}/turn")
+def api_turn(session_id: str, request: TurnRequest) -> StreamingResponse:
+    if not request.text.strip():
+        raise HTTPException(status_code=400, detail="入力が空です。")
+    try:
+        session = load_session(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+    return StreamingResponse(
+        _turn_events(session, request),
+        media_type="application/x-ndjson; charset=utf-8",
+    )
+
+
+def _turn_events(session: dict[str, Any], request: TurnRequest) -> Iterator[str]:
+    add_player_message(session, request.text.strip(), request.speaker)
+    latest_roll = roll_dice(session, request.dice)
+    config = load_config()
+    messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
+    full_response = ""
+    visible_streamed = ""
+
+    try:
+        chunks = stream_chat_completion(config, messages)
+        for visible_chunk, raw_chunk in _visible_chunks(chunks):
+            full_response += raw_chunk
+            if visible_chunk:
+                visible_streamed += visible_chunk
+                yield _event("token", visible_chunk)
+    except LLMClientError as exc:
+        if not config.get("demo_fallback_on_error", True):
+            yield _event("error", f"LLM接続エラー: {exc}")
+            return
+        full_response = _demo_response(request.text, latest_roll, str(exc))
+        visible_text, _, _ = split_visible_and_json(full_response)
+        visible_streamed = visible_text
+        yield _event("token", visible_text)
+
+    visible_text, payload, warning = split_visible_and_json(full_response)
+    if not visible_streamed and visible_text:
+        yield _event("token", visible_text)
+    apply_gm_payload(session, visible_text or visible_streamed, payload, warning)
+    save_session(session)
+    yield _event("state", public_session(session))
+
+
+def _visible_chunks(chunks: Iterator[str]) -> Iterator[tuple[str, str]]:
+    buffer = ""
+    marker_seen = False
+    guard = max(0, len(STATE_MARKER) - 1)
+    for chunk in chunks:
+        if marker_seen:
+            yield "", chunk
+            continue
+        buffer += chunk
+        marker_index = buffer.find(STATE_MARKER)
+        if marker_index != -1:
+            visible = buffer[:marker_index]
+            remainder = buffer[marker_index:]
+            marker_seen = True
+            buffer = ""
+            yield visible, visible + remainder
+            continue
+        if len(buffer) > guard:
+            visible = buffer[:-guard] if guard else buffer
+            buffer = buffer[-guard:] if guard else ""
+            yield visible, visible
+    if buffer:
+        yield buffer, buffer
+
+
+def _event(kind: str, payload: Any) -> str:
+    return json.dumps({"type": kind, "payload": payload}, ensure_ascii=False) + "\n"
+
+
+def _demo_response(player_text: str, roll: dict[str, Any], error: str) -> str:
+    gm_text = (
+        "接続中のローカルLLMから応答を取得できませんでした。"
+        "ただし、デモ進行として物語を続けます。\n\n"
+        f"あなたの行動「{player_text}」に対して、運命の出目は{roll['total']}。"
+        "周囲の空気が張りつめ、次の一手を促すように場面が静かに動き出します。"
+    )
+    payload = {
+        "gm_text": gm_text,
+        "system_log": f"デモ応答を使用しました。直近の判定: {roll['expression']} = {roll['total']}",
+        "state_delta": {
+            "hp_change": 0,
+            "mp_change": 0,
+            "sp_change": 0,
+            "inventory_add": [],
+            "inventory_remove": [],
+            "current_scene": None,
+            "background_image": None,
+            "character_image": None,
+        },
+        "choices": [],
+        "debug_error": error,
+    }
+    return gm_text + "\n" + STATE_MARKER + "\n" + json.dumps(payload, ensure_ascii=False)
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run("host.app:app", host="127.0.0.1", port=8000, reload=True)
