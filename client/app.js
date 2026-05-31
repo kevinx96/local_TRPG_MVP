@@ -137,7 +137,7 @@ async function startGame() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        scenario_path: "host/prompt/text/dragon_rpg.txt",
+        scenario_path: "host/prompt/processed/dragon_rpg.json",
         character: { 
           name: heroName,
           description: heroGender,
@@ -238,7 +238,7 @@ function renderSession(session) {
   const character = session.character;
 
   /* Scene */
-  if (els.sceneTitle) els.sceneTitle.textContent = session.current_scene || session.scenario_title || "開始";
+  if (els.sceneTitle) els.sceneTitle.textContent = session.current_scene_title || session.current_scene || session.scenario_title || "開始";
 
   if (els.background) {
     if (character.background_image) {

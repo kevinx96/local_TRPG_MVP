@@ -4,12 +4,16 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.tmp-test/
 .venv/
 venv/
 
 # Local runtime data
 host/saves/
-host/prompt/processed/
+host/prompt/processed/*
+!host/prompt/processed/
+!host/prompt/processed/dragon_rpg.json
+!host/prompt/processed/scenario_pack.schema.json
 
 # Large local model files
 host/models/

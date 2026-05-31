@@ -1,5 +1,6 @@
-import tempfile
 import unittest
+import uuid
+from pathlib import Path
 from zipfile import ZipFile
 
 from host.scenario_converter import (
@@ -11,12 +12,17 @@ from host.scenario_converter import (
 
 
 class ScenarioConverterTests(unittest.TestCase):
-    def test_extract_docx_text_with_unicode_path(self):
-        with tempfile.TemporaryDirectory() as temp_dir:
-            from pathlib import Path
+    def make_temp_dir(self) -> Path:
+        root = Path.cwd() / ".tmp-test"
+        root.mkdir(exist_ok=True)
+        path = root / f"converter-{uuid.uuid4().hex}"
+        path.mkdir()
+        return path
 
-            docx_path = Path(temp_dir) / "疯狂之馆(最终定稿) .docx"
-            xml = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    def test_extract_docx_text_with_unicode_path(self):
+        temp_dir = self.make_temp_dir()
+        docx_path = temp_dir / "疯狂之馆(最终定稿) .docx"
+        xml = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
   <w:body>
     <w:p><w:r><w:t>测试剧本</w:t></w:r></w:p>
@@ -24,10 +30,10 @@ class ScenarioConverterTests(unittest.TestCase):
   </w:body>
 </w:document>
 """
-            with ZipFile(docx_path, "w") as archive:
-                archive.writestr("word/document.xml", xml)
+        with ZipFile(docx_path, "w") as archive:
+            archive.writestr("word/document.xml", xml)
 
-            text = extract_docx_text_without_dependency(docx_path)
+        text = extract_docx_text_without_dependency(docx_path)
 
         self.assertIn("测试剧本", text)
         self.assertIn("第二段", text)
@@ -38,12 +44,10 @@ class ScenarioConverterTests(unittest.TestCase):
         self.assertEqual(parsed, {"title": "館", "rules": ["待つ"]})
 
     def test_fallback_scenario_renders_markdown(self):
-        with tempfile.TemporaryDirectory() as temp_dir:
-            from pathlib import Path
-
-            source = Path(temp_dir) / "sample.txt"
-            scenario = fallback_structured_scenario(source, "冒険が始まる。")
-            markdown = render_markdown(scenario)
+        temp_dir = self.make_temp_dir()
+        source = temp_dir / "sample.txt"
+        scenario = fallback_structured_scenario(source, "冒険が始まる。")
+        markdown = render_markdown(scenario)
 
         self.assertEqual(scenario["title"], "sample")
         self.assertIn("# sample", markdown)
