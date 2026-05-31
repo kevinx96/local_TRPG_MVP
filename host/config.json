@@ -4,9 +4,7 @@
     "ollama": {
       "base_url": "http://localhost:11434/v1",
       "model": "qwen2.5-7b-instruct-local",
-      "fallback_models": [
-        "elyza-jp-8b-local"
-      ],
+      "fallback_models": [],
       "api_key": "ollama"
     },
     "koboldcpp": {
