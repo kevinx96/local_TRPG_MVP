@@ -50,17 +50,66 @@ Edit `active_backend` and `backends` in `host/config.json`.
 - Ollama (default): `http://localhost:11434/v1`
 - Koboldcpp example: `http://localhost:5001/v1`
 
-Both use the OpenAI-compatible `/chat/completions` endpoint. The default priority model is ELYZA JP 8B, falling back to qwen variants.
+Both use the OpenAI-compatible `/chat/completions` endpoint. The current default priority model is qwen3, falling back to qwen2.5 and ELYZA JP 8B.
 
 ```json
 {
-  "model": "elyza-jp-8b-local",
+  "model": "qwen3-swallow-8b-rl-local",
   "fallback_models": [
     "qwen2.5-7b-instruct-local",
-    "qwen2.5:7b-instruct"
+    "elyza-jp-8b-local"
   ]
 }
 ```
+
+### Remote Ollama
+
+For a slow laptop, keep the game host/client local but point LLM calls to the main PC. Do not edit `host/config.json` for machine-specific settings; create `host/local_config.json` instead. It is ignored by git.
+
+```json
+{
+  "backends": {
+    "ollama": {
+      "base_url": "https://ollama.your-domain.com/v1",
+      "model": "qwen3-swallow-8b-rl-local",
+      "fallback_models": [
+        "qwen2.5-7b-instruct-local",
+        "elyza-jp-8b-local"
+      ],
+      "api_key": "ollama"
+    }
+  }
+}
+```
+
+Environment variables can override this without editing files:
+
+```powershell
+$env:TRPG_OLLAMA_BASE_URL = "https://ollama.your-domain.com"
+$env:TRPG_OLLAMA_MODEL = "qwen3-swallow-8b-rl-local"
+python -m host.run_server
+```
+
+Recommended remote setup:
+
+1. On the main PC, make Ollama listen beyond localhost by setting `OLLAMA_HOST=127.0.0.1:11434` for a local Cloudflare Tunnel target, or `OLLAMA_HOST=0.0.0.0:11434` if you are using a private VPN such as Tailscale.
+2. With your Cloudflare domain, create a Cloudflare Tunnel from `https://ollama.your-domain.com` to `http://127.0.0.1:11434` on the main PC.
+3. Protect the tunnel with Cloudflare Access or a service token. Do not expose Ollama publicly without access control.
+4. On the slow laptop, set `host/local_config.json` or `TRPG_OLLAMA_BASE_URL` to the Cloudflare Tunnel URL.
+
+If Cloudflare reaches Ollama but every request returns an empty `403`, Ollama is rejecting the public-domain `Host` header. If your Cloudflare dashboard exposes `HTTP Host Header`, set it to `localhost:11434`. If that option is not visible, run the bundled local proxy on the main PC:
+
+```powershell
+python -m host.ollama_tunnel_proxy
+```
+
+Then change the Cloudflare Tunnel service URL to:
+
+```text
+http://localhost:11435
+```
+
+The public game client still uses `https://ollama.your-domain.com/v1`; only the Cloudflare origin service URL changes.
 
 ### Registering GGUF Models with Ollama
 
