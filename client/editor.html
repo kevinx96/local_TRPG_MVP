@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scenario Editor</title>
+    <link rel="stylesheet" href="/static/editor.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <strong>Scenario Editor</strong>
+        <span id="dirtyBadge" class="dirty-badge">saved</span>
+      </div>
+      <div class="filebar">
+        <select id="scenarioSelect" aria-label="选择剧本"></select>
+        <input id="filenameInput" type="text" spellcheck="false" aria-label="文件名" />
+        <button id="newButton" type="button">新建</button>
+        <button id="duplicateButton" type="button">复制</button>
+        <button id="saveButton" type="button" class="primary">保存</button>
+      </div>
+      <div id="statusText" class="status">loading</div>
+    </header>
+
+    <main class="editor-shell">
+      <nav class="section-nav" aria-label="编辑区">
+        <button data-section="meta" type="button">基本信息</button>
+        <button data-section="rules" type="button">规则</button>
+        <button data-section="scenes" type="button">场景</button>
+        <button data-section="locations" type="button">地点</button>
+        <button data-section="npcs" type="button">NPC</button>
+        <button data-section="items" type="button">道具</button>
+        <button data-section="clues" type="button">线索</button>
+        <button data-section="fallback" type="button">全局选项</button>
+        <button data-section="json" type="button">JSON</button>
+      </nav>
+
+      <section class="record-list">
+        <div class="list-head">
+          <h1 id="listTitle">场景</h1>
+          <button id="addRecordButton" type="button">添加</button>
+        </div>
+        <div id="recordList" class="records"></div>
+      </section>
+
+      <section id="editorPane" class="editor-pane" aria-live="polite"></section>
+    </main>
+
+    <script src="/static/editor.js"></script>
+  </body>
+</html>
