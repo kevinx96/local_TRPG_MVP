@@ -8,6 +8,24 @@ from pathlib import Path
 HOST_ROOT = Path(__file__).resolve().parent
 MODEL_ROOT = HOST_ROOT / "models"
 
+QWEN_CHAT_TEMPLATE = (
+    "{{ if .System }}<|im_start|>system\n{{ .System }}<|im_end|>\n{{ end }}"
+    "{{ range .Messages }}<|im_start|>{{ .Role }}\n{{ .Content }}<|im_end|>\n{{ end }}"
+    "<|im_start|>assistant\n"
+)
+
+QWEN3_NO_THINK_TEMPLATE = (
+    "{{ if .System }}<|im_start|>system\n{{ .System }}<|im_end|>\n{{ end }}"
+    "{{ range .Messages }}<|im_start|>{{ .Role }}\n"
+    "{{ .Content }}{{ if eq .Role \"user\" }} /no_think{{ end }}<|im_end|>\n{{ end }}"
+    "<|im_start|>assistant\n<think>\n\n</think>\n\n"
+)
+
+QWEN_CHAT_PARAMETERS = [
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+]
+
 MODEL_SPECS = [
     {
         "name": "elyza-jp-8b-local",
@@ -19,15 +37,15 @@ MODEL_SPECS = [
         "path": MODEL_ROOT / "qwen2.5-7b-instruct-q4_k_m.gguf",
         "split_path": MODEL_ROOT / "qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf",
         "system": "あなたは日本語TRPGのゲームマスターです。自然な日本語で簡潔に応答してください。",
-        "template": (
-            "{{ if .System }}<|im_start|>system\n{{ .System }}<|im_end|>\n{{ end }}"
-            "{{ range .Messages }}<|im_start|>{{ .Role }}\n{{ .Content }}<|im_end|>\n{{ end }}"
-            "<|im_start|>assistant\n"
-        ),
-        "parameters": [
-            "PARAMETER stop <|im_start|>",
-            "PARAMETER stop <|im_end|>",
-        ],
+        "template": QWEN_CHAT_TEMPLATE,
+        "parameters": QWEN_CHAT_PARAMETERS,
+    },
+    {
+        "name": "qwen3-swallow-8b-rl-local",
+        "path": MODEL_ROOT / "Qwen3-Swallow-8B-RL-v0.2-Q4_K_M.gguf",
+        "system": "あなたは日本語TRPGのゲームマスターです。自然な日本語で簡潔に応答してください。",
+        "template": QWEN3_NO_THINK_TEMPLATE,
+        "parameters": QWEN_CHAT_PARAMETERS,
     },
 ]
 

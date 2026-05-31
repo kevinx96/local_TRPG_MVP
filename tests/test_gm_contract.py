@@ -1,6 +1,6 @@
 import unittest
 
-from host.gm_contract import STATE_MARKER, get_fallback_choices, split_visible_and_json
+from host.gm_contract import STATE_MARKER, get_fallback_choices, sanitize_visible_text, split_visible_and_json
 
 
 class GmContractTests(unittest.TestCase):
@@ -120,6 +120,27 @@ class GmContractTests(unittest.TestCase):
             ["鉄の剣でスライムを攻撃する", "森を抜けて麓の村へ向かう"],
         )
         self.assertIsNotNone(warning)
+
+    def test_protocol_tail_after_json_label_is_hidden(self):
+        text = (
+            "白い石造りの城。国王は使命を告げた。\n\n"
+            "では、まずは支度金を得てから任務に臨むべきか？それとも邪竜の弱点を探ることから始めるべき？\n"
+            " JSON:\n"
+            "現在あなたは「Gundam」。ゲーム状況は上記JSON内に示しています。次のステップは何をしますか？"
+        )
+
+        visible, payload, warning = split_visible_and_json(text)
+
+        self.assertEqual(visible, "白い石造りの城。国王は使命を告げた。")
+        self.assertIsNone(payload)
+        self.assertIsNotNone(warning)
+
+    def test_thinking_blocks_are_hidden(self):
+        self.assertEqual(
+            sanitize_visible_text("<think>\ninternal planning\n</think>\n城門が開いた。"),
+            "城門が開いた。",
+        )
+        self.assertEqual(sanitize_visible_text("導入。\n<think>\ninternal planning"), "導入。")
 
 
 if __name__ == "__main__":
