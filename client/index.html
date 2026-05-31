@@ -26,22 +26,31 @@
         <h1 class="start-title">LOCAL TRPG</h1>
         <p class="start-subtitle">ローカルLLMが紡ぐ、あなただけの冒険</p>
         <div class="start-form">
-          <label for="backendSelect" class="start-label">バックエンド</label>
-          <select id="backendSelect" class="start-select">
-            <option value="ollama">Ollama</option>
-          </select>
-          <label for="modelSelect" class="start-label">モデル</label>
-          <select id="modelSelect" class="start-select">
-            <option value="qwen2.5-7b-instruct-local">qwen2.5-7b-instruct-local</option>
-          </select>
           <label for="heroNameInput" class="start-label">勇者の名前</label>
           <input id="heroNameInput" type="text" class="start-input" value="アルス" placeholder="名前を入力..." maxlength="20" />
+          
+          <label class="start-label">勇者の性別</label>
+          <div class="start-gender-select" style="display: flex; gap: 15px; color: var(--text);">
+            <label style="cursor: pointer;"><input type="radio" name="heroGender" value="男勇者" checked> 男</label>
+            <label style="cursor: pointer;"><input type="radio" name="heroGender" value="女勇者"> 女</label>
+          </div>
+
           <button id="startButton" type="button" class="start-btn">
             <span class="start-btn-text">冒険を始める</span>
             <span class="start-btn-loading" style="display:none">物語を紡いでいます…</span>
           </button>
         </div>
         <p id="backendStatus" class="start-backend">接続確認中…</p>
+      </div>
+
+      <!-- Config corner -->
+      <div class="start-config-corner">
+        <select id="backendSelect" class="start-select">
+          <option value="ollama">Ollama</option>
+        </select>
+        <select id="modelSelect" class="start-select">
+          <option value="qwen2.5-7b-instruct-local">qwen2.5-7b-instruct-local</option>
+        </select>
       </div>
     </div>
 
@@ -64,12 +73,13 @@
         <button id="menuToggleBtn" type="button" class="gal-icon-btn">MENU</button>
       </div>
 
+      <!-- Choices -->
+      <div id="choicesArea" class="gal-choices-area" style="display:none">
+        <div id="choicesList" class="choices-list"></div>
+      </div>
+
       <!-- Bottom UI Area -->
       <div class="gal-bottom-area">
-        <!-- Choices -->
-        <div id="choicesArea" class="gal-choices-area" style="display:none">
-          <div id="choicesList" class="choices-list"></div>
-        </div>
 
         <!-- Dialogue Box -->
         <div id="dialogueBox" class="gal-dialogue-box" role="button" tabindex="0">

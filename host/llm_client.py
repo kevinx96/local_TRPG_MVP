@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import sys
-from typing import Any, Iterable
+from typing import Any, Iterable, Optional, Union
 
 import requests
 
@@ -51,7 +51,7 @@ def stream_chat_completion(
     if not candidates:
         raise LLMClientError("No LLM model configured.")
 
-    last_error: LLMClientError | None = None
+    last_error: Optional[LLMClientError] = None
     for index, model in enumerate(candidates, start=1):
         try:
             yield from _stream_chat_completion_once(config, backend, backend_name, model, messages, index, len(candidates))
@@ -76,7 +76,7 @@ def chat_completion(
     if not candidates:
         raise LLMClientError("No LLM model configured.")
 
-    last_error: LLMClientError | None = None
+    last_error: Optional[LLMClientError] = None
     for index, model in enumerate(candidates, start=1):
         try:
             return _chat_completion_once(config, backend, backend_name, model, messages, index, len(candidates))
@@ -266,7 +266,7 @@ def _content_from_completion(text: str) -> str:
     return ""
 
 
-def _decode_sse_line(raw_line: bytes | str) -> str:
+def _decode_sse_line(raw_line: Union[bytes, str]) -> str:
     if isinstance(raw_line, str):
         return raw_line
     return raw_line.decode("utf-8", errors="replace")

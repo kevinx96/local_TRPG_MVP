@@ -8,7 +8,7 @@ import sys
 import tempfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional, Union
 from zipfile import ZipFile
 
 
@@ -17,7 +17,7 @@ PROCESSED_DIR = HOST_ROOT / "prompt" / "processed"
 GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-flash-latest")
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: Optional[list[str]] = None) -> int:
     parser = argparse.ArgumentParser(description="TRPGシナリオを日本語GMプロンプトへ変換します。")
     parser.add_argument("source", help="入力ファイル。txt/docx/pdf/doc をサポートします。")
     parser.add_argument("--out-dir", default=str(PROCESSED_DIR), help="出力先ディレクトリ。")
@@ -232,7 +232,7 @@ def render_markdown(scenario: dict[str, Any]) -> str:
     return "\n".join(lines).strip() + "\n"
 
 
-def parse_json_response(text: str) -> dict[str, Any] | None:
+def parse_json_response(text: str) -> Optional[dict[str, Any]]:
     cleaned = re.sub(r"^```(?:json)?|```$", "", text.strip(), flags=re.IGNORECASE | re.MULTILINE).strip()
     candidates = [cleaned]
     start = cleaned.find("{")

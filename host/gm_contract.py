@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import re
-from typing import Any
+from typing import Any, Optional, Union
 
 
 STATE_MARKER = "---TRPG_JSON---"
@@ -138,7 +138,7 @@ def get_fallback_choices(scene: str) -> list[dict[str, str]]:
     return FALLBACK_CHOICES_BY_SCENE["default"]
 
 
-def split_visible_and_json(text: str) -> tuple[str, dict[str, Any] | None, str | None]:
+def split_visible_and_json(text: str) -> tuple[str, Optional[dict[str, Any]], Optional[str]]:
     if STATE_MARKER in text:
         visible_raw, raw_json = text.split(STATE_MARKER, 1)
         text_choices = extract_text_choices(visible_raw)
@@ -284,7 +284,7 @@ def _merge_recovered_choices(payload: dict[str, Any], choices: list[dict[str, st
         payload["choices"] = choices
 
 
-def _payload_from_recovered_choices(choices: list[dict[str, str]]) -> dict[str, Any] | None:
+def _payload_from_recovered_choices(choices: list[dict[str, str]]) -> Optional[dict[str, Any]]:
     if not choices:
         return None
     return {
@@ -343,7 +343,7 @@ def _strip_speaker_prefix(line: str, kept: list[str]) -> str:
     return _SPEAKER_PREFIX_RE.sub("", line, count=1)
 
 
-def _parse_json_object(text: str) -> dict[str, Any] | None:
+def _parse_json_object(text: str) -> Optional[dict[str, Any]]:
     cleaned = _strip_json_fence(text).strip()
     candidates = [cleaned]
     extracted = _extract_last_json_object(cleaned)
@@ -365,7 +365,7 @@ def _strip_json_fence(text: str) -> str:
     return match.group(1) if match else text
 
 
-def _extract_last_json_object(text: str) -> str | None:
+def _extract_last_json_object(text: str) -> Optional[str]:
     end = text.rfind("}")
     if end == -1:
         return None

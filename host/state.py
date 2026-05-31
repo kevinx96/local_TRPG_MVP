@@ -7,7 +7,7 @@ import uuid
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional, Union
 
 
 HOST_ROOT = Path(__file__).resolve().parent
@@ -81,17 +81,17 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def load_config(path: Path | None = None) -> dict[str, Any]:
+def load_config(path: Optional[Path] = None) -> dict[str, Any]:
     config_path = path or HOST_ROOT / "config.json"
     return json.loads(config_path.read_text(encoding="utf-8"))
 
 
-def save_config(config: dict[str, Any], path: Path | None = None) -> None:
+def save_config(config: dict[str, Any], path: Optional[Path] = None) -> None:
     config_path = path or HOST_ROOT / "config.json"
     config_path.write_text(json.dumps(config, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
-def resolve_local_path(value: str | None, default: Path = DEFAULT_SCENARIO) -> Path:
+def resolve_local_path(value: Optional[str], default: Path = DEFAULT_SCENARIO) -> Path:
     if not value:
         return default
     candidate = Path(value)
@@ -107,8 +107,8 @@ def read_scenario_prompt(path: Path) -> str:
 
 
 def create_session(
-    scenario_path: str | None = None,
-    character_overrides: dict[str, Any] | None = None,
+    scenario_path: Optional[str] = None,
+    character_overrides: Optional[dict[str, Any]] = None,
 ) -> dict[str, Any]:
     path = resolve_local_path(scenario_path)
     scenario_text = read_scenario_prompt(path)
@@ -231,8 +231,8 @@ def roll_dice(session: dict[str, Any], expression: str = "1d20") -> dict[str, An
 def apply_gm_payload(
     session: dict[str, Any],
     gm_text: str,
-    payload: dict[str, Any] | None,
-    parse_warning: str | None = None,
+    payload: Optional[dict[str, Any]],
+    parse_warning: Optional[str] = None,
 ) -> None:
     from .gm_contract import get_fallback_choices
 
@@ -371,7 +371,7 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
         session["current_scene"] = delta["current_scene"].strip()
 
 
-def _enrich_item(item: dict[str, Any]) -> dict[str, str | int]:
+def _enrich_item(item: dict[str, Any]) -> dict[str, Union[str, int]]:
     """Ensure an item dict has name, description, effect, quantity — using catalog fallback."""
     name = str(item.get("name", "不明"))
     catalog_entry = DEFAULT_ITEM_CATALOG.get(name, {})
@@ -523,7 +523,7 @@ def _latest_player_text(session: dict[str, Any]) -> str:
     return ""
 
 
-def _scene_from_keywords(text: str) -> str | None:
+def _scene_from_keywords(text: str) -> Optional[str]:
     if any(keyword in text for keyword in ("竜の谷", "邪竜", "イグニス", "最終決戦")):
         return "第4章：竜の谷"
     if any(keyword in text for keyword in ("麓の村", "村の長老", "長老", "道具屋", "村へ")):
@@ -539,7 +539,7 @@ def _wants_to_advance(player_text: str) -> bool:
     return any(keyword in player_text for keyword in ("先へ進", "進む", "出発", "城を出", "向かう", "足を踏み入れる"))
 
 
-def _next_story_scene(current_scene: str) -> str | None:
+def _next_story_scene(current_scene: str) -> Optional[str]:
     ordered = [
         "第1章：王の間",
         "第2章：スライムの森",
