@@ -25,6 +25,21 @@ def active_backend(config: dict[str, Any]) -> dict[str, Any]:
     return backend
 
 
+def model_candidates(backend: dict[str, Any]) -> list[str]:
+    candidates: list[str] = []
+    primary = backend.get("model")
+    if isinstance(primary, str) and primary.strip():
+        candidates.append(primary.strip())
+    fallbacks = backend.get("fallback_models") or []
+    if isinstance(fallbacks, str):
+        fallbacks = [fallbacks]
+    if isinstance(fallbacks, list):
+        for fallback in fallbacks:
+            if isinstance(fallback, str) and fallback.strip() and fallback.strip() not in candidates:
+                candidates.append(fallback.strip())
+    return candidates
+
+
 def stream_chat_completion(
     config: dict[str, Any],
     messages: list[dict[str, str]],
@@ -32,11 +47,39 @@ def stream_chat_completion(
     debug_enabled = bool(config.get("debug_llm", True))
     backend = active_backend(config)
     backend_name = config.get("active_backend", "ollama")
+    candidates = model_candidates(backend)
+    if not candidates:
+        raise LLMClientError("No LLM model configured.")
+
+    last_error: LLMClientError | None = None
+    for index, model in enumerate(candidates, start=1):
+        try:
+            yield from _stream_chat_completion_once(config, backend, backend_name, model, messages, index, len(candidates))
+            return
+        except LLMClientError as exc:
+            last_error = exc
+            if debug_enabled and index < len(candidates):
+                debug_log(f"LLM model fallback triggered failed_model={model} next_model={candidates[index]}")
+    if last_error:
+        raise last_error
+    raise LLMClientError("LLM request failed before any model was attempted.")
+
+
+def _stream_chat_completion_once(
+    config: dict[str, Any],
+    backend: dict[str, Any],
+    backend_name: str,
+    model: str,
+    messages: list[dict[str, str]],
+    attempt: int,
+    total_attempts: int,
+) -> Iterable[str]:
+    debug_enabled = bool(config.get("debug_llm", True))
     base_url = str(backend.get("base_url", "")).rstrip("/")
     if not base_url:
         raise LLMClientError("LLM backend base_url is empty.")
     payload = {
-        "model": backend.get("model"),
+        "model": model,
         "messages": messages,
         "temperature": config.get("temperature", 0.8),
         "max_tokens": config.get("max_tokens", 900),
@@ -52,7 +95,7 @@ def stream_chat_completion(
         total_chars = sum(len(message.get("content", "")) for message in messages)
         debug_log(
             "LLM request "
-            f"backend={backend_name} url={url} model={payload['model']} "
+            f"backend={backend_name} url={url} model={model} attempt={attempt}/{total_attempts} "
             f"messages={len(messages)} chars={total_chars} stream=True timeout={timeout}s"
         )
 

@@ -28,7 +28,19 @@ python -m host.run_server --reload
 - Ollama既定値: `http://localhost:11434/v1`
 - Koboldcpp例: `http://localhost:5001/v1`
 
-どちらもOpenAI互換の `/chat/completions` を使います。LLM通信のデバッグログは既定で有効です。
+どちらもOpenAI互換の `/chat/completions` を使います。既定では `Llama-3-ELYZA-JP-8B-q4_k_m` を優先し、失敗した場合は qwen 系モデルへフォールバックします。
+
+```json
+{
+  "model": "Llama-3-ELYZA-JP-8B-q4_k_m",
+  "fallback_models": [
+    "qwen2.5-7b-instruct-q4_k_m",
+    "qwen2.5:7b-instruct"
+  ]
+}
+```
+
+LLM通信のデバッグログは既定で有効です。
 
 ```json
 {
@@ -38,7 +50,7 @@ python -m host.run_server --reload
 
 CMD/PowerShellには `[TRPG-DEBUG]` で始まるログが出ます。API keyは出力しません。
 
-Ollamaで `model not found` が出る場合は、先にモデルを取得するか、`host/config.json` の `model` を `ollama list` に出ている名前へ変更してください。
+Ollamaで `model not found` が出る場合は、先にGGUFモデルをOllamaへ登録するか、`host/config.json` の `model` / `fallback_models` を `ollama list` に出ている名前へ変更してください。Koboldcppを使う場合も同じ順序で ELYZA を優先し、qwen をfallbackとして試します。
 
 ```powershell
 ollama pull qwen2.5:7b-instruct
@@ -60,10 +72,3 @@ Gemini API key は環境変数 `GEMINI_API_KEY`、または `host/gemini_api_key
 ```powershell
 python -m unittest discover -s tests
 ```
-
-## Gitに入れないもの
-
-- `host/models/` と `*.gguf`
-- `host/saves/`
-- `host/prompt/processed/`
-- Gemini API key を含むローカルファイル

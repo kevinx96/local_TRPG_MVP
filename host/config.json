@@ -3,12 +3,20 @@
   "backends": {
     "ollama": {
       "base_url": "http://localhost:11434/v1",
-      "model": "qwen2.5:7b-instruct",
+      "model": "Llama-3-ELYZA-JP-8B-q4_k_m",
+      "fallback_models": [
+        "qwen2.5-7b-instruct-q4_k_m",
+        "qwen2.5:7b-instruct"
+      ],
       "api_key": "ollama"
     },
     "koboldcpp": {
       "base_url": "http://localhost:5001/v1",
-      "model": "local-model",
+      "model": "Llama-3-ELYZA-JP-8B-q4_k_m",
+      "fallback_models": [
+        "qwen2.5-7b-instruct-q4_k_m",
+        "qwen2.5:7b-instruct"
+      ],
       "api_key": "koboldcpp"
     }
   },
