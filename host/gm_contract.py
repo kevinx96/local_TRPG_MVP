@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import re
-from typing import Any, Optional, Union
+from typing import Any, Optional
 
 
 STATE_MARKER = "---TRPG_JSON---"
@@ -35,107 +35,60 @@ _UNCLOSED_THINK_RE = re.compile(r"<think>.*", re.IGNORECASE | re.DOTALL)
 
 
 def build_gm_contract_prompt() -> str:
-    """Return the system prompt that tells the LLM how to behave as GM.
-
-    Kept concise so that small (7-8B) local models can follow reliably.
-    """
+    """Return a scenario-agnostic system prompt for local GM models."""
     return (
-        "あなたはTRPGのゲームマスター（GM）です。自然な日本語で応答してください。\n"
-        "プレイヤーの行動を代行せず、状況描写のあとにプレイヤーの行動を待ってください。\n\n"
-        "【応答ルール】\n"
-        "・GM本文は200文字以上で、場面を五感で描写し、NPCの台詞は「」で囲んでください。\n"
-        "・ダイスの種類はGMが決定します（通常判定1d20、スキル2d6、確率1d100）。\n"
-        "・行動選択肢は本文に書かず、JSONのchoicesにだけ3つ入れてください。\n"
-        "・state_delta.current_sceneには現在の章名を毎回入れてください。\n"
-        "・アイテム追加時は name, description, effect を含めてください。\n\n"
-        "【応答形式】\n"
-        "まずGM本文を書き、最後に次のJSON形式で状態を出力してください。\n"
-        f"GM本文の後に改行して {STATE_MARKER} を書き、続けてJSONを書いてください。\n\n"
+        "あなたはTRPGのゲームマスター（GM）です。自然な日本語で簡潔に進行してください。\n"
+        "シナリオコンテキスト、現在のゲーム状態、直近の会話だけを根拠にしてください。\n"
+        "プレイヤーの行動を勝手に決定せず、結果・状況・NPCの反応を描写して次の行動を待ってください。\n\n"
+        "【GM本文】\n"
+        "・GM本文は場面を五感で描写し、NPCの台詞は「」で囲んでください。\n"
+        "・GM本文には番号付き選択肢や『以下の選択肢』を書かないでください。\n"
+        "・GM本文には『JSON:』『現在あなたは』『次のステップは何をしますか』などの内部指示を書かないでください。\n\n"
+        "【状態更新】\n"
+        "・ダイス種別はGMが必要に応じて決めてください（例: 1d20, 2d6, 1d100）。\n"
+        "・state_delta.current_scene は、場面が変わった時だけ scene id または scene title を入れてください。\n"
+        "・アイテム追加時は name, description, effect, quantity をできるだけ含めてください。\n"
+        "・行動選択肢は JSON の choices にだけ3つ入れてください。\n\n"
+        "【出力形式】\n"
+        "まずGM本文を書き、その後に改行して "
+        f"{STATE_MARKER} を書き、続けてJSONだけを書いてください。\n"
+        "JSON以外の補足をマーカーの後ろに書かないでください。\n\n"
         "```\n"
         f"{STATE_MARKER}\n"
         "{\n"
         '  "gm_text": "GM本文と同じ",\n'
-        '  "system_log": "判定結果の短い説明",\n'
+        '  "system_log": "判定や状態変化の短い説明",\n'
         '  "dice_type": "1d20",\n'
         '  "dice_dc": 10,\n'
         '  "state_delta": {\n'
-        '    "hp_change": 0, "mp_change": 0, "sp_change": 0, "gold_change": 0,\n'
-        '    "inventory_add": [], "inventory_remove": [],\n'
+        '    "hp_change": 0,\n'
+        '    "mp_change": 0,\n'
+        '    "sp_change": 0,\n'
+        '    "gold_change": 0,\n'
+        '    "inventory_add": [],\n'
+        '    "inventory_remove": [],\n'
         '    "current_scene": null\n'
         "  },\n"
         '  "choices": [\n'
-        '    {"text": "行動内容", "preview": "予想結果", "risk": "リスク説明"},\n'
-        '    {"text": "行動内容", "preview": "予想結果", "risk": "リスク説明"},\n'
-        '    {"text": "行動内容", "preview": "予想結果", "risk": "リスク説明"}\n'
+        '    {"text": "行動内容", "preview": "予想される展開", "risk": "判定不要"},\n'
+        '    {"text": "行動内容", "preview": "予想される展開", "risk": "1d20判定（DC12）"},\n'
+        '    {"text": "行動内容", "preview": "予想される展開", "risk": "危険"}\n'
         "  ]\n"
         "}\n"
-        "```\n"
-        "JSONのchoicesは必ず3つ含めてください。各選択肢のriskには「判定不要」「1d20判定（DC12）」「危険」などを書いてください。\n"
-        "GM本文には「以下の選択肢」や番号付き選択肢を書かないでください。\n"
-        "GM本文には「JSON:」「現在あなたは」「次のステップは何をしますか」などの内部指示を書かないでください。\n"
-        "JSON以外の補足をマーカーの後ろに書かないでください。"
+        "```"
     )
 
 
 def build_opening_prompt(session: dict[str, Any]) -> str:
-    """Return a user-role prompt that asks the GM to generate an immersive opening."""
     character = session["character"]
     name = character.get("name") or "冒険者"
     return (
         f"ゲームを開始してください。プレイヤーキャラクターの名前は「{name}」です。\n"
-        "シナリオの最初の場面を豊かに描写してください：\n"
-        "・場面の詳細な情景描写（建物、光、音、空気の匂いなど）\n"
-        "・その場にいるNPCの外見と最初の台詞\n"
-        "・プレイヤーキャラクターの状況説明\n"
-        "・GM本文は300文字以上で書いてください\n"
-        "・行動選択肢は本文に書かず、最後に必ず3つの行動選択肢を含むJSONを出力してください\n"
-        "・本文の最後に「どうしますか」「次のステップは何をしますか」「JSON:」などの進行指示や内部注釈を書かないでください"
+        "シナリオコンテキストに基づき、最初の場面を豊かに描写してください。\n"
+        "GM本文は300文字以上。場面の空気、近くにいる人物、PCの現在位置と状況を含めてください。\n"
+        "行動選択肢は本文に書かず、最後のJSON choicesに3つだけ入れてください。\n"
+        "本文の最後に『どうしますか』『次のステップは何をしますか』『JSON:』などの進行指示を書かないでください。"
     )
-
-
-# ── Fallback choices when the model doesn't provide any ──
-
-FALLBACK_CHOICES_BY_SCENE: dict[str, list[dict[str, str]]] = {
-    "default": [
-        {"text": "国王に邪竜の詳しい情報を聞く", "preview": "旅の目的と邪竜の手がかりを確認します", "risk": "判定不要"},
-        {"text": "支度金と装備を確認する", "preview": "所持金、薬草、装備を整理します", "risk": "判定不要"},
-        {"text": "城を出てスライムの森へ向かう", "preview": "第2章へ進みます", "risk": "1d20判定が必要（DC10）"},
-    ],
-    "王の間": [
-        {"text": "国王に邪竜の詳しい情報を聞く", "preview": "邪竜イグニスと竜の谷について聞きます", "risk": "判定不要"},
-        {"text": "支度金と装備を確認する", "preview": "50ゴールド、薬草、装備を確認します", "risk": "判定不要"},
-        {"text": "城を出てスライムの森へ向かう", "preview": "第2章へ進みます", "risk": "1d20判定が必要（DC10）"},
-    ],
-    "森": [
-        {"text": "鉄の剣でスライムを攻撃する", "preview": "戦闘チュートリアルを進めます", "risk": "1d20判定が必要（DC10）"},
-        {"text": "薬草を使って態勢を整える", "preview": "HPを回復して安全を確保します", "risk": "判定不要"},
-        {"text": "森を抜けて麓の村へ向かう", "preview": "第3章へ進みます", "risk": "判定不要"},
-    ],
-    "村": [
-        {"text": "長老に邪竜の弱点を聞く", "preview": "冷気の弱点について情報を得ます", "risk": "判定不要"},
-        {"text": "道具屋で氷の護符を買う", "preview": "50ゴールドで冷気の護符を入手します", "risk": "判定不要"},
-        {"text": "竜の谷へ向かう", "preview": "第4章へ進みます", "risk": "危険"},
-    ],
-    "竜の谷": [
-        {"text": "氷の護符を掲げて攻撃する", "preview": "邪竜の弱点を狙います", "risk": "1d20判定が必要（DC12）"},
-        {"text": "鉄の剣で正面から斬り込む", "preview": "危険だが直接ダメージを狙います", "risk": "危険"},
-        {"text": "防御して火炎の息に備える", "preview": "次の被害を抑えます", "risk": "判定不要"},
-    ],
-    "帰還": [
-        {"text": "王都へ帰還する", "preview": "エンディングを迎えます", "risk": "判定不要"},
-        {"text": "冒険の記録を確認する", "preview": "旅の成果を振り返ります", "risk": "判定不要"},
-        {"text": "新たな旅に備える", "preview": "次の冒険へ余韻を残します", "risk": "判定不要"},
-    ],
-}
-
-
-def get_fallback_choices(scene: str) -> list[dict[str, str]]:
-    """Pick fallback choices based on the current scene name."""
-    scene_lower = scene.lower() if scene else ""
-    for keyword, choices in FALLBACK_CHOICES_BY_SCENE.items():
-        if keyword != "default" and keyword in scene_lower:
-            return choices
-    return FALLBACK_CHOICES_BY_SCENE["default"]
 
 
 def split_visible_and_json(text: str) -> tuple[str, Optional[dict[str, Any]], Optional[str]]:
@@ -153,7 +106,6 @@ def split_visible_and_json(text: str) -> tuple[str, Optional[dict[str, Any]], Op
             visible = sanitize_visible_text(str(parsed.get("gm_text", "")))
         return visible, parsed, None
 
-    # Try to parse the whole thing as JSON (model might output only JSON)
     parsed = _parse_json_object(text)
     if parsed is not None:
         parsed = _normalize_payload(parsed)
@@ -168,7 +120,6 @@ def split_visible_and_json(text: str) -> tuple[str, Optional[dict[str, Any]], Op
 
 
 def sanitize_visible_text(text: str) -> str:
-    """Remove protocol instructions and inline choice lists from player-visible text."""
     cleaned = _strip_thinking_text(text.replace(STATE_MARKER, ""))
     lines = cleaned.splitlines()
     kept: list[str] = []
@@ -215,7 +166,6 @@ def sanitize_visible_text(text: str) -> str:
 
 
 def extract_text_choices(text: str) -> list[dict[str, str]]:
-    """Recover numbered choices from visible text when the JSON block is missing or broken."""
     choices: list[dict[str, str]] = []
     in_choice_block = False
     choice_block_seen_number = False
@@ -246,31 +196,25 @@ def extract_text_choices(text: str) -> list[dict[str, str]]:
                 choices.append({"text": choice_text, "preview": "", "risk": ""})
             pending_number = False
             continue
-        if in_choice_block and stripped and not choice_block_seen_number:
-            continue
         if in_choice_block and stripped:
             continue
-        if not stripped:
-            continue
-
     return choices[:5]
 
 
 def _normalize_payload(payload: dict[str, Any]) -> dict[str, Any]:
-    """Handle alternate key names that small models might use."""
-    # scenario_text → gm_text (old format compatibility)
     if "scenario_text" in payload and "gm_text" not in payload:
         payload["gm_text"] = payload.pop("scenario_text")
 
-    # hp_change at top level → state_delta.hp_change
     if "state_delta" not in payload:
         payload["state_delta"] = {}
     delta = payload["state_delta"]
+    if not isinstance(delta, dict):
+        payload["state_delta"] = {}
+        delta = payload["state_delta"]
     for key in ("hp_change", "mp_change", "sp_change", "gold", "gold_change",
                 "inventory_add", "inventory_remove", "current_scene"):
         if key in payload and key not in delta:
             delta[key] = payload.pop(key)
-
     return payload
 
 
@@ -287,11 +231,7 @@ def _merge_recovered_choices(payload: dict[str, Any], choices: list[dict[str, st
 def _payload_from_recovered_choices(choices: list[dict[str, str]]) -> Optional[dict[str, Any]]:
     if not choices:
         return None
-    return {
-        "system_log": "",
-        "state_delta": {},
-        "choices": choices,
-    }
+    return {"system_log": "", "state_delta": {}, "choices": choices}
 
 
 def _is_internal_protocol_line(line: str) -> bool:
@@ -321,8 +261,8 @@ def _looks_like_choice_line(line: str) -> bool:
         return False
     content = match.group(2)
     choice_markers = (
-        "する", "向かう", "進む", "聞く", "探索", "調べる", "使う", "話す",
-        "出発", "購入", "訪ねる", "収集", "踏み入れる", "入る", "戻る",
+        "する", "向かう", "進む", "聞く", "探す", "調べる", "使う", "話す",
+        "出発", "購入", "訪ねる", "収集", "入る", "戻る", "攻撃", "確認",
     )
     return any(marker in content for marker in choice_markers) or content.startswith("「")
 
