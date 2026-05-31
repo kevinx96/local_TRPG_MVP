@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 from typing import Any, Optional
 
 from fastapi import FastAPI, HTTPException
@@ -10,8 +11,9 @@ from pydantic import BaseModel
 
 from .gm_contract import STATE_MARKER, build_gm_contract_prompt, build_opening_prompt, split_visible_and_json
 from .llm_client import LLMClientError, chat_completion, debug_log
-from .scenario_context import fallback_choices_for_session, scenario_context_debug, scene_title, select_scenario_context
+from .scenario_context import fallback_choices_for_session, normalize_scenario_pack, scenario_context_debug, scene_title, select_scenario_context
 from .state import (
+    HOST_ROOT,
     PROJECT_ROOT,
     add_player_message,
     apply_gm_payload,
@@ -27,6 +29,8 @@ from .state import (
 
 
 CLIENT_ROOT = PROJECT_ROOT / "client"
+PROCESSED_SCENARIO_DIR = HOST_ROOT / "prompt" / "processed"
+SCENARIO_SCHEMA_FILENAME = "scenario_pack.schema.json"
 
 app = FastAPI(title="Local TRPG Host", version="0.2.0")
 app.mount("/static", StaticFiles(directory=CLIENT_ROOT), name="static")
@@ -42,9 +46,23 @@ class TurnRequest(BaseModel):
     speaker: str = "プレイヤー"
 
 
+class ScenarioSaveRequest(BaseModel):
+    scenario: dict[str, Any]
+
+
+class ScenarioCreateRequest(BaseModel):
+    filename: str
+    scenario: dict[str, Any]
+
+
 @app.get("/")
 def index() -> FileResponse:
     return FileResponse(CLIENT_ROOT / "index.html")
+
+
+@app.get("/editor")
+def editor() -> FileResponse:
+    return FileResponse(CLIENT_ROOT / "editor.html")
 
 
 @app.get("/api/config")
@@ -86,6 +104,108 @@ def api_update_config(request: UpdateConfigRequest) -> dict[str, Any]:
 def _configured_model_candidates(backend: dict[str, Any]) -> list[str]:
     candidates = [backend.get("model"), *(backend.get("fallback_models") or [])]
     return [str(model) for index, model in enumerate(candidates) if model and model not in candidates[:index]]
+
+
+@app.get("/api/scenarios")
+def api_list_scenarios() -> dict[str, Any]:
+    scenarios = []
+    PROCESSED_SCENARIO_DIR.mkdir(parents=True, exist_ok=True)
+    for path in sorted(PROCESSED_SCENARIO_DIR.glob("*.json"), key=lambda item: item.name.lower()):
+        if path.name == SCENARIO_SCHEMA_FILENAME:
+            continue
+        summary = _scenario_summary(path)
+        if summary:
+            scenarios.append(summary)
+    return {"scenarios": scenarios}
+
+
+@app.post("/api/scenarios")
+def api_create_scenario(request: ScenarioCreateRequest) -> dict[str, Any]:
+    path = _resolve_scenario_editor_path(request.filename, must_exist=False)
+    if path.exists():
+        raise HTTPException(status_code=409, detail="Scenario file already exists.")
+    _validate_editor_scenario(request.scenario)
+    _write_scenario_json(path, request.scenario)
+    return api_get_scenario(path.name)
+
+
+@app.get("/api/scenarios/{filename}")
+def api_get_scenario(filename: str) -> dict[str, Any]:
+    path = _resolve_scenario_editor_path(filename)
+    try:
+        scenario = json.loads(path.read_text(encoding="utf-8-sig"))
+    except json.JSONDecodeError as exc:
+        raise HTTPException(status_code=400, detail=f"Scenario JSON is invalid: {exc}") from exc
+    if not isinstance(scenario, dict):
+        raise HTTPException(status_code=400, detail="Scenario JSON must be an object.")
+    return {"filename": path.name, "scenario": scenario, "summary": _scenario_summary(path)}
+
+
+@app.put("/api/scenarios/{filename}")
+def api_save_scenario(filename: str, request: ScenarioSaveRequest) -> dict[str, Any]:
+    path = _resolve_scenario_editor_path(filename)
+    _validate_editor_scenario(request.scenario)
+    _write_scenario_json(path, request.scenario)
+    return api_get_scenario(path.name)
+
+
+def _scenario_summary(path: Path) -> Optional[dict[str, Any]]:
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8-sig"))
+        if not isinstance(raw, dict):
+            return None
+        pack = normalize_scenario_pack(raw, path)
+    except Exception:
+        return {
+            "filename": path.name,
+            "title": path.stem,
+            "summary": "Invalid JSON",
+            "initial_scene": "",
+            "scene_count": 0,
+            "modified_at": path.stat().st_mtime,
+            "valid": False,
+        }
+    meta = pack.get("meta", {})
+    return {
+        "filename": path.name,
+        "title": meta.get("title") or path.stem,
+        "summary": meta.get("summary") or "",
+        "initial_scene": meta.get("initial_scene") or "",
+        "scene_count": len(pack.get("scenes") or []),
+        "modified_at": path.stat().st_mtime,
+        "valid": True,
+    }
+
+
+def _resolve_scenario_editor_path(filename: str, must_exist: bool = True) -> Path:
+    safe_name = Path(filename).name
+    if not safe_name or safe_name != filename or safe_name == SCENARIO_SCHEMA_FILENAME:
+        raise HTTPException(status_code=400, detail="Invalid scenario filename.")
+    if not safe_name.lower().endswith(".json"):
+        raise HTTPException(status_code=400, detail="Scenario filename must end with .json.")
+    root = PROCESSED_SCENARIO_DIR.resolve()
+    path = (root / safe_name).resolve()
+    if path.parent != root:
+        raise HTTPException(status_code=400, detail="Invalid scenario path.")
+    if must_exist and not path.exists():
+        raise HTTPException(status_code=404, detail="Scenario file not found.")
+    return path
+
+
+def _validate_editor_scenario(scenario: dict[str, Any]) -> None:
+    try:
+        normalize_scenario_pack(scenario)
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"Scenario pack is invalid: {exc}") from exc
+    if not isinstance(scenario.get("meta"), dict):
+        raise HTTPException(status_code=400, detail="Scenario pack requires a meta object.")
+    if not isinstance(scenario.get("scenes"), list) or not scenario["scenes"]:
+        raise HTTPException(status_code=400, detail="Scenario pack requires at least one scene.")
+
+
+def _write_scenario_json(path: Path, scenario: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(scenario, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 @app.post("/api/sessions")
