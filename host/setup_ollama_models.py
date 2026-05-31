@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import subprocess
-import tempfile
 from pathlib import Path
 
 
@@ -17,8 +16,18 @@ MODEL_SPECS = [
     },
     {
         "name": "qwen2.5-7b-instruct-local",
-        "path": MODEL_ROOT / "qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf",
+        "path": MODEL_ROOT / "qwen2.5-7b-instruct-q4_k_m.gguf",
+        "split_path": MODEL_ROOT / "qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf",
         "system": "あなたは日本語TRPGのゲームマスターです。自然な日本語で簡潔に応答してください。",
+        "template": (
+            "{{ if .System }}<|im_start|>system\n{{ .System }}<|im_end|>\n{{ end }}"
+            "{{ range .Messages }}<|im_start|>{{ .Role }}\n{{ .Content }}<|im_end|>\n{{ end }}"
+            "<|im_start|>assistant\n"
+        ),
+        "parameters": [
+            "PARAMETER stop <|im_start|>",
+            "PARAMETER stop <|im_end|>",
+        ],
     },
 ]
 
@@ -46,25 +55,36 @@ def main() -> int:
 def register_model(spec: dict[str, object]) -> None:
     name = str(spec["name"])
     model_path = Path(spec["path"])
+    split_path = Path(spec["split_path"]) if spec.get("split_path") else None
     if not model_path.exists():
+        if split_path and split_path.exists():
+            print(
+                f"[TRPG] Skip split GGUF for {name}: {split_path.name}\n"
+                f"[TRPG] Merge the split files first, then place the merged file at:\n"
+                f"[TRPG]   {model_path}\n"
+                f"[TRPG] Example with llama.cpp:\n"
+                f"[TRPG]   llama-gguf-split --merge \"{split_path}\" \"{model_path}\""
+            )
+            return
         print(f"[TRPG] Skip missing GGUF for {name}: {model_path}")
         return
 
-    with tempfile.TemporaryDirectory() as temp_dir:
-        modelfile = Path(temp_dir) / "Modelfile"
-        modelfile.write_text(
-            "\n".join(
-                [
-                    f"FROM {model_path.as_posix()}",
-                    f'SYSTEM """{spec["system"]}"""',
-                    "PARAMETER temperature 0.8",
-                    "",
-                ]
-            ),
-            encoding="utf-8",
-        )
+    modelfile = MODEL_ROOT / f"Modelfile.{name}"
+    lines = [f"FROM {model_path.as_posix()}"]
+    if spec.get("template"):
+        lines.append(f'TEMPLATE """{spec["template"]}"""')
+    lines.append(f'SYSTEM """{spec["system"]}"""')
+    lines.extend(spec.get("parameters") or [])
+    lines.extend(["PARAMETER temperature 0.8", ""])
+    modelfile.write_text("\n".join(lines), encoding="utf-8")
+    try:
         print(f"[TRPG] Registering {name} from {model_path.name}")
         subprocess.run(["ollama", "create", name, "-f", str(modelfile)], check=True)
+    finally:
+        try:
+            modelfile.unlink()
+        except OSError:
+            print(f"[TRPG] Warning: could not remove temporary Modelfile: {modelfile}")
 
 
 def list_ollama_models() -> list[str]:
