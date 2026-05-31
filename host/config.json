@@ -15,5 +15,6 @@
   "request_timeout_seconds": 120,
   "temperature": 0.8,
   "max_tokens": 900,
+  "debug_llm": true,
   "demo_fallback_on_error": true
 }
