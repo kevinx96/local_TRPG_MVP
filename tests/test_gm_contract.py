@@ -20,6 +20,22 @@ class GmContractTests(unittest.TestCase):
         self.assertEqual(payload["choices"][0]["text"], "扉を調べる")
         self.assertIsNone(warning)
 
+    def test_split_pure_structured_json(self):
+        text = (
+            '{"gm_text":"城門が静かに開いた。",'
+            '"system_log":"なし",'
+            '"dice_type":"1d20",'
+            '"state_delta":{"current_scene":"forest"},'
+            '"choices":[{"text":"森へ進む","preview":"先へ進む","risk":"判定不要"}]}'
+        )
+
+        visible, payload, warning = split_visible_and_json(text)
+
+        self.assertEqual(visible, "城門が静かに開いた。")
+        self.assertEqual(payload["state_delta"]["current_scene"], "forest")
+        self.assertEqual(payload["choices"][0]["text"], "森へ進む")
+        self.assertIsNone(warning)
+
     def test_split_visible_and_json_falls_back_to_plain_text(self):
         visible, payload, warning = split_visible_and_json("普通の文章だけです。")
 

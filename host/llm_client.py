@@ -109,6 +109,7 @@ def _chat_completion_once(
         "max_tokens": config.get("max_tokens", 900),
         "stream": False,
     }
+    _apply_response_format(payload, config)
     headers = {"Content-Type": "application/json"}
     api_key = backend.get("api_key") or "local"
     headers["Authorization"] = f"Bearer {api_key}"
@@ -117,10 +118,11 @@ def _chat_completion_once(
 
     if debug_enabled:
         total_chars = sum(len(message.get("content", "")) for message in messages)
+        role_summary = _message_role_summary(messages)
         debug_log(
             "LLM request "
             f"backend={backend_name} url={url} model={model} attempt={attempt}/{total_attempts} "
-            f"messages={len(messages)} chars={total_chars} stream=False timeout={timeout}s"
+            f"messages={len(messages)} roles={role_summary} chars={total_chars} stream=False timeout={timeout}s"
         )
 
     try:
@@ -168,6 +170,7 @@ def _stream_chat_completion_once(
         "max_tokens": config.get("max_tokens", 900),
         "stream": True,
     }
+    _apply_response_format(payload, config)
     headers = {"Content-Type": "application/json"}
     api_key = backend.get("api_key") or "local"
     headers["Authorization"] = f"Bearer {api_key}"
@@ -176,10 +179,11 @@ def _stream_chat_completion_once(
 
     if debug_enabled:
         total_chars = sum(len(message.get("content", "")) for message in messages)
+        role_summary = _message_role_summary(messages)
         debug_log(
             "LLM request "
             f"backend={backend_name} url={url} model={model} attempt={attempt}/{total_attempts} "
-            f"messages={len(messages)} chars={total_chars} stream=True timeout={timeout}s"
+            f"messages={len(messages)} roles={role_summary} chars={total_chars} stream=True timeout={timeout}s"
         )
 
     try:
@@ -270,6 +274,25 @@ def _decode_sse_line(raw_line: Union[bytes, str]) -> str:
     if isinstance(raw_line, str):
         return raw_line
     return raw_line.decode("utf-8", errors="replace")
+
+
+def _apply_response_format(payload: dict[str, Any], config: dict[str, Any]) -> None:
+    response_format = config.get("response_format")
+    if response_format is None:
+        return
+    if response_format == "json_object":
+        payload["response_format"] = {"type": "json_object"}
+        return
+    if isinstance(response_format, dict):
+        payload["response_format"] = response_format
+
+
+def _message_role_summary(messages: list[dict[str, str]]) -> str:
+    counts: dict[str, int] = {}
+    for message in messages:
+        role = str(message.get("role") or "unknown")
+        counts[role] = counts.get(role, 0) + 1
+    return ",".join(f"{role}:{counts[role]}" for role in sorted(counts))
 
 
 def _backend_diagnostic_hint(base_url: str) -> str:

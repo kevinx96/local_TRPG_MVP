@@ -1,6 +1,6 @@
 import unittest
 
-from host.llm_client import model_candidates
+from host.llm_client import _apply_response_format, _message_role_summary, model_candidates
 
 
 class LLMClientTests(unittest.TestCase):
@@ -38,6 +38,22 @@ class LLMClientTests(unittest.TestCase):
                 "qwen2.5-7b-instruct-local",
             ],
         )
+
+    def test_message_role_summary(self):
+        self.assertEqual(
+            _message_role_summary([
+                {"role": "system", "content": "a"},
+                {"role": "assistant", "content": "b"},
+                {"role": "user", "content": "c"},
+                {"role": "system", "content": "d"},
+            ]),
+            "assistant:1,system:2,user:1",
+        )
+
+    def test_apply_response_format_json_object(self):
+        payload = {}
+        _apply_response_format(payload, {"response_format": "json_object"})
+        self.assertEqual(payload["response_format"], {"type": "json_object"})
 
 
 if __name__ == "__main__":
