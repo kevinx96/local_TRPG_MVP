@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from .gm_contract import STATE_MARKER, build_gm_contract_prompt, split_visible_and_json
-from .llm_client import LLMClientError, stream_chat_completion
+from .llm_client import LLMClientError, debug_log, stream_chat_completion
 from .state import (
     HOST_ROOT,
     PROJECT_ROOT,
@@ -98,6 +98,14 @@ def _turn_events(session: dict[str, Any], request: TurnRequest) -> Iterator[str]
     messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
     full_response = ""
     visible_streamed = ""
+    debug_enabled = bool(config.get("debug_llm", True))
+
+    if debug_enabled:
+        debug_log(
+            "Turn start "
+            f"session={session['id']} speaker={request.speaker!r} "
+            f"text_len={len(request.text.strip())} dice={latest_roll['expression']} total={latest_roll['total']}"
+        )
 
     try:
         chunks = stream_chat_completion(config, messages)
@@ -107,6 +115,8 @@ def _turn_events(session: dict[str, Any], request: TurnRequest) -> Iterator[str]
                 visible_streamed += visible_chunk
                 yield _event("token", visible_chunk)
     except LLMClientError as exc:
+        if debug_enabled:
+            debug_log(f"LLM failure; demo_fallback={config.get('demo_fallback_on_error', True)} error={exc}")
         if not config.get("demo_fallback_on_error", True):
             yield _event("error", f"LLM接続エラー: {exc}")
             return
@@ -116,10 +126,22 @@ def _turn_events(session: dict[str, Any], request: TurnRequest) -> Iterator[str]
         yield _event("token", visible_text)
 
     visible_text, payload, warning = split_visible_and_json(full_response)
+    if debug_enabled:
+        debug_log(
+            "Turn model result "
+            f"raw_chars={len(full_response)} visible_chars={len(visible_text)} "
+            f"json_ok={payload is not None} warning={warning!r}"
+        )
     if not visible_streamed and visible_text:
         yield _event("token", visible_text)
     apply_gm_payload(session, visible_text or visible_streamed, payload, warning)
     save_session(session)
+    if debug_enabled:
+        debug_log(
+            "Turn saved "
+            f"session={session['id']} messages={len(session['messages'])} "
+            f"logs={len(session['system_logs'])} dice={len(session['dice_log'])}"
+        )
     yield _event("state", public_session(session))
 
 
@@ -179,6 +201,6 @@ def _demo_response(player_text: str, roll: dict[str, Any], error: str) -> str:
 
 
 if __name__ == "__main__":
-    import uvicorn
+    from .run_server import main
 
-    uvicorn.run("host.app:app", host="127.0.0.1", port=8000, reload=True)
+    main()

@@ -6,10 +6,20 @@
 
 ```powershell
 python -m pip install -r requirements.txt
-python -m uvicorn host.app:app --host 127.0.0.1 --port 8000 --reload
+python -m host.run_server
 ```
 
-ブラウザで `http://127.0.0.1:8000` を開きます。
+起動するとブラウザで `http://127.0.0.1:8000/` を自動的に開きます。自動起動したくない場合:
+
+```powershell
+python -m host.run_server --no-browser
+```
+
+開発中に自動リロードしたい場合:
+
+```powershell
+python -m host.run_server --reload
+```
 
 ## LLM設定
 
@@ -18,7 +28,22 @@ python -m uvicorn host.app:app --host 127.0.0.1 --port 8000 --reload
 - Ollama既定値: `http://localhost:11434/v1`
 - Koboldcpp例: `http://localhost:5001/v1`
 
-どちらもOpenAI互換の `/chat/completions` を使います。
+どちらもOpenAI互換の `/chat/completions` を使います。LLM通信のデバッグログは既定で有効です。
+
+```json
+{
+  "debug_llm": true
+}
+```
+
+CMD/PowerShellには `[TRPG-DEBUG]` で始まるログが出ます。API keyは出力しません。
+
+Ollamaで `model not found` が出る場合は、先にモデルを取得するか、`host/config.json` の `model` を `ollama list` に出ている名前へ変更してください。
+
+```powershell
+ollama pull qwen2.5:7b-instruct
+ollama list
+```
 
 ## シナリオ変換
 
