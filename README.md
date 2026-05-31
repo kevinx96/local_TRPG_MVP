@@ -1,5 +1,9 @@
 # Local LLM TRPG MVP
 
+## Python version
+
+Use Python 3.9 or newer. The server is tested with FastAPI/Pydantic on Python 3.9+; arm64 users should prefer a native arm64 Python/Conda environment and then install dependencies with `python -m pip install -r requirements.txt`.
+
 ローカルLLMをGMとして使う、日本語TRPGクライアントの最小実装です。HostはFastAPIでゲーム状態、セーブ、ダイス、OpenAI互換LLM呼び出しを管理し、Clientはブラウザで動きます。
 
 ## セットアップ

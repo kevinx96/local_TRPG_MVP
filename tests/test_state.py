@@ -139,6 +139,31 @@ class StateTests(unittest.TestCase):
         names = [i["name"] for i in session["character"]["inventory"]]
         self.assertNotIn("薬草", names)
 
+    def test_system_logs_are_state_events_not_protocol_warnings(self):
+        scenario = self.tmp_path / "logs.txt"
+        scenario.write_text("テスト", encoding="utf-8")
+
+        public = state.create_session(str(scenario))
+        session = state.load_session(public["id"])
+        state.apply_gm_payload(
+            session,
+            "国王は支度金と薬草を手渡した。",
+            {
+                "state_delta": {
+                    "hp_change": -2,
+                    "gold_change": 50,
+                    "inventory_add": [{"name": "薬草", "quantity": 1}],
+                },
+            },
+            "GM応答のJSONを解析できませんでした。",
+        )
+
+        logs = [entry["text"] for entry in state.public_session(session)["system_logs"]]
+        self.assertIn("HPが2減少しました。", logs)
+        self.assertIn("50ゴールドを獲得しました。", logs)
+        self.assertIn("薬草 x1を入手しました。", logs)
+        self.assertNotIn("GM応答のJSONを解析できませんでした。", logs)
+
     def test_choices_normalization(self):
         """Choices should be normalized to have text/preview/risk."""
         scenario = self.tmp_path / "ch.txt"
@@ -181,6 +206,15 @@ class StateTests(unittest.TestCase):
         )
 
         self.assertEqual(session["character"]["gold"], 60)
+
+        session["character"]["gold"] = 0
+        state.apply_gm_payload(
+            session,
+            "国王から支度金として50goldを受け取った。",
+            {"state_delta": {"gold_change": 0}},
+        )
+
+        self.assertEqual(session["character"]["gold"], 50)
 
     def test_advance_choice_infers_next_scene(self):
         scenario = self.tmp_path / "advance.txt"

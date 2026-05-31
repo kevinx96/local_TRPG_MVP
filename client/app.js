@@ -4,6 +4,8 @@
 
 const state = {
   sessionId: null,
+  pendingChoices: [],
+  choicesRevealed: false,
 };
 
 /* ── DOM References ── */
@@ -11,6 +13,8 @@ const els = {
   /* Start screen */
   startScreen:     document.querySelector("#startScreen"),
   gameScreen:      document.querySelector("#gameScreen"),
+  backendSelect:   document.querySelector("#backendSelect"),
+  modelSelect:     document.querySelector("#modelSelect"),
   heroNameInput:   document.querySelector("#heroNameInput"),
   startButton:     document.querySelector("#startButton"),
   startBtnText:    document.querySelector(".start-btn-text"),
@@ -18,18 +22,31 @@ const els = {
   backendStatus:   document.querySelector("#backendStatus"),
 
   /* Game screen */
-  newSessionButton:    document.querySelector("#newSessionButton"),
-  sceneTitle:          document.querySelector("#sceneTitle"),
-  backendInfo:         document.querySelector("#backendInfo"),
-  messages:            document.querySelector("#messages"),
-  form:                document.querySelector("#turnForm"),
-  input:               document.querySelector("#playerInput"),
-  sendButton:          document.querySelector("#sendButton"),
-  characterName:       document.querySelector("#characterName"),
+  background:      document.querySelector("#background"),
+  portrait:        document.querySelector("#portrait"),
+  menuToggleBtn:   document.querySelector("#menuToggleBtn"),
+  dialogueBox:     document.querySelector("#dialogueBox"),
+  speakerName:     document.querySelector("#speakerName"),
+  messageText:     document.querySelector("#messageText"),
+  logToggleBtn:    document.querySelector("#logToggleBtn"),
+  inputToggleBtn:  document.querySelector("#inputToggleBtn"),
+  logOverlay:      document.querySelector("#logOverlay"),
+  menuOverlay:     document.querySelector("#menuOverlay"),
+  logCloseBtn:     document.querySelector("#logCloseBtn"),
+  menuCloseBtn:    document.querySelector("#menuCloseBtn"),
+  newSessionButton:document.querySelector("#newSessionButton"),
+  sceneTitle:      document.querySelector("#sceneTitle"),
+  backendInfo:     document.querySelector("#backendInfo"),
+  messages:        document.querySelector("#messages"),
+  form:            document.querySelector("#turnForm"),
+  input:           document.querySelector("#playerInput"),
+  sendButton:      document.querySelector("#sendButton"),
+  clickIndicator:  document.querySelector("#clickIndicator"),
+  characterName:   document.querySelector("#characterName"),
   characterDescription:document.querySelector("#characterDescription"),
-  inventory:           document.querySelector("#inventory"),
-  diceLog:             document.querySelector("#diceLog"),
-  systemLogs:          document.querySelector("#systemLogs"),
+  inventory:       document.querySelector("#inventory"),
+  diceLog:         document.querySelector("#diceLog"),
+  systemLogs:      document.querySelector("#systemLogs"),
   hpBar:  document.querySelector("#hpBar"),
   mpBar:  document.querySelector("#mpBar"),
   spBar:  document.querySelector("#spBar"),
@@ -40,6 +57,8 @@ const els = {
   choicesArea: document.querySelector("#choicesArea"),
   choicesList: document.querySelector("#choicesList"),
 };
+
+let cachedConfig = null;
 
 /* ═══════════════════════════════════════════════════
    INIT
@@ -52,13 +71,47 @@ async function init() {
 async function loadConfig() {
   try {
     const config = await fetchJson("/api/config");
+    cachedConfig = config;
+
+    if (els.backendSelect && config.backends) {
+      els.backendSelect.innerHTML = "";
+      for (const key of Object.keys(config.backends)) {
+        const opt = document.createElement("option");
+        opt.value = key;
+        opt.textContent = key.toUpperCase();
+        if (key === config.active_backend) opt.selected = true;
+        els.backendSelect.appendChild(opt);
+      }
+    }
+    populateModelSelect(config);
+
     const info = `${config.active_backend} / ${config.model}`;
-    els.backendInfo.textContent = info;
-    els.backendStatus.textContent = `✓ ${info}`;
+    if (els.backendInfo) els.backendInfo.textContent = info;
+    if (els.backendStatus) els.backendStatus.textContent = `✓ ${info}`;
   } catch {
-    els.backendInfo.textContent = "設定を取得できません";
-    els.backendStatus.textContent = "⚠ バックエンドに接続できません";
+    if (els.backendInfo) els.backendInfo.textContent = "設定を取得できません";
+    if (els.backendStatus) els.backendStatus.textContent = "⚠ バックエンドに接続できません";
   }
+}
+
+function populateModelSelect(config) {
+  if (!els.modelSelect || !config.backends) return;
+  const backendName = els.backendSelect?.value || config.active_backend;
+  const backend = config.backends[backendName] || {};
+  const models = uniqueList([backend.model, ...(backend.fallback_models || [])]);
+
+  els.modelSelect.innerHTML = "";
+  for (const model of models) {
+    const opt = document.createElement("option");
+    opt.value = model;
+    opt.textContent = model;
+    if (backendName === config.active_backend && model === config.model) opt.selected = true;
+    els.modelSelect.appendChild(opt);
+  }
+}
+
+function uniqueList(values) {
+  return values.filter((value, index, array) => value && array.indexOf(value) === index);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -67,8 +120,18 @@ async function loadConfig() {
 
 async function startGame() {
   const heroName = els.heroNameInput.value.trim() || "アルス";
+  const backend = els.backendSelect ? els.backendSelect.value : "ollama";
+  const model = els.modelSelect ? els.modelSelect.value : "";
   setStartBusy(true);
   try {
+    // Update config first
+    await fetch("/api/config", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ active_backend: backend, model })
+    });
+    await loadConfig();
+
     const session = await fetchJson("/api/sessions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -99,6 +162,8 @@ function setStartBusy(busy) {
 /* New session from game screen */
 async function newSession() {
   /* Show start screen again */
+  state.pendingChoices = [];
+  state.choicesRevealed = false;
   els.gameScreen.style.display = "none";
   els.startScreen.style.display = "";
   els.messages.innerHTML = "";
@@ -116,6 +181,7 @@ async function submitTurn(event) {
   els.input.value = "";
   addMessage("user", "プレイヤー", text);
   hideChoices();
+  clearPendingChoices();
   setBusy(true);
   try {
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
@@ -139,6 +205,7 @@ async function submitChoice(choiceText) {
   if (!choiceText || !state.sessionId) return;
   addMessage("user", "プレイヤー", choiceText);
   hideChoices();
+  clearPendingChoices();
   setBusy(true);
   try {
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
@@ -166,11 +233,28 @@ function renderSession(session) {
   const character = session.character;
 
   /* Scene */
-  els.sceneTitle.textContent = session.current_scene || session.scenario_title || "開始";
+  if (els.sceneTitle) els.sceneTitle.textContent = session.current_scene || session.scenario_title || "開始";
+
+  if (els.background) {
+    if (character.background_image) {
+      els.background.style.backgroundImage = `url(${character.background_image})`;
+    } else {
+      els.background.style.backgroundImage = "";
+    }
+  }
+
+  if (els.portrait) {
+    if (character.character_image) {
+      els.portrait.src = character.character_image;
+      els.portrait.style.display = "";
+    } else {
+      els.portrait.style.display = "none";
+    }
+  }
 
   /* Character info */
-  els.characterName.textContent = character.name || "冒険者";
-  els.characterDescription.textContent = character.description || "";
+  if (els.characterName) els.characterName.textContent = character.name || "冒険者";
+  if (els.characterDescription) els.characterDescription.textContent = character.description || "";
 
   /* Meters */
   renderMeter("hp", character);
@@ -201,7 +285,7 @@ function renderSession(session) {
   renderMessages(session.messages || []);
 
   /* Choices */
-  renderChoices(session.choices || []);
+  setPendingChoices(session.choices || []);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -301,11 +385,40 @@ function renderChoices(choices) {
   }
 
   els.choicesArea.style.display = "";
+  els.dialogueBox.classList.remove("choices-ready");
+  if (els.clickIndicator) els.clickIndicator.style.display = "none";
 }
 
 function hideChoices() {
   els.choicesArea.style.display = "none";
   els.choicesList.innerHTML = "";
+}
+
+function setPendingChoices(choices) {
+  state.pendingChoices = Array.isArray(choices) ? choices : [];
+  state.choicesRevealed = false;
+  hideChoices();
+  updateDialogueAdvanceState();
+}
+
+function clearPendingChoices() {
+  state.pendingChoices = [];
+  state.choicesRevealed = false;
+  updateDialogueAdvanceState();
+}
+
+function revealPendingChoices() {
+  if (state.choicesRevealed || !state.pendingChoices.length) return;
+  state.choicesRevealed = true;
+  renderChoices(state.pendingChoices);
+}
+
+function updateDialogueAdvanceState() {
+  const hasChoices = state.pendingChoices.length > 0 && !state.choicesRevealed;
+  els.dialogueBox.classList.toggle("choices-ready", hasChoices);
+  if (els.clickIndicator) {
+    els.clickIndicator.style.display = hasChoices ? "" : "none";
+  }
 }
 
 function classifyRisk(risk) {
@@ -344,8 +457,15 @@ function addMessage(role, speaker, text) {
   textNode.textContent = text || "";
 
   node.append(speakerNode, textNode);
-  els.messages.append(node);
-  els.messages.scrollTop = els.messages.scrollHeight;
+  if (els.messages) {
+    els.messages.append(node);
+    els.messages.scrollTop = els.messages.scrollHeight;
+  }
+
+  // Update galgame dialog box
+  if (els.speakerName) els.speakerName.textContent = speaker || (role === "user" ? "プレイヤー" : "GM");
+  if (els.messageText) els.messageText.textContent = text || "";
+
   return textNode;
 }
 
@@ -396,6 +516,29 @@ function escapeHtml(text) {
 els.form.addEventListener("submit", submitTurn);
 els.startButton.addEventListener("click", startGame);
 els.newSessionButton.addEventListener("click", newSession);
+if (els.backendSelect) {
+  els.backendSelect.addEventListener("change", () => {
+    if (cachedConfig) populateModelSelect(cachedConfig);
+  });
+}
+
+// Galgame Overlay Toggles
+if (els.menuToggleBtn) els.menuToggleBtn.addEventListener("click", () => els.menuOverlay.style.display = "");
+if (els.menuCloseBtn) els.menuCloseBtn.addEventListener("click", () => els.menuOverlay.style.display = "none");
+if (els.logToggleBtn) els.logToggleBtn.addEventListener("click", () => els.logOverlay.style.display = "");
+if (els.logCloseBtn) els.logCloseBtn.addEventListener("click", () => els.logOverlay.style.display = "none");
+if (els.inputToggleBtn) els.inputToggleBtn.addEventListener("click", () => {
+  els.form.style.display = els.form.style.display === "none" ? "" : "none";
+});
+if (els.dialogueBox) {
+  els.dialogueBox.addEventListener("click", revealPendingChoices);
+  els.dialogueBox.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      revealPendingChoices();
+    }
+  });
+}
 
 /* Allow Enter (without Shift) in name input to start */
 els.heroNameInput.addEventListener("keydown", (e) => {

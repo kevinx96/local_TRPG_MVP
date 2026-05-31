@@ -66,9 +66,15 @@ DEFAULT_CHARACTER: dict[str, Any] = {
         {"name": "薬草", "description": "森で採れる癒しの薬草。苦い味がするが、傷を癒す力がある。", "effect": "HPを10回復", "quantity": 1},
     ],
     "equipment": ["鉄の剣", "革の鎧"],
-    "background_image": "",
-    "character_image": "",
+    "background_image": "/static/images/bg_dragon_rpg.png",
+    "character_image": "/static/images/char_male_hero.png",
 }
+
+
+PROTOCOL_WARNING_LOGS = (
+    "GM応答のJSONを解析できませんでした。",
+    "GM応答に状態JSONが含まれていませんでした。",
+)
 
 
 def utc_now() -> str:
@@ -78,6 +84,11 @@ def utc_now() -> str:
 def load_config(path: Path | None = None) -> dict[str, Any]:
     config_path = path or HOST_ROOT / "config.json"
     return json.loads(config_path.read_text(encoding="utf-8"))
+
+
+def save_config(config: dict[str, Any], path: Path | None = None) -> None:
+    config_path = path or HOST_ROOT / "config.json"
+    config_path.write_text(json.dumps(config, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
 def resolve_local_path(value: str | None, default: Path = DEFAULT_SCENARIO) -> Path:
@@ -166,6 +177,10 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
         public["choices"] = recovered_choices
     elif _choices_match_known_fallback(public.get("choices"), FALLBACK_CHOICES_BY_SCENE):
         public["choices"] = get_fallback_choices(str(public.get("current_scene") or ""))
+    public["system_logs"] = [
+        log for log in public.get("system_logs", [])
+        if not _is_protocol_warning_log(str(log.get("text", "")))
+    ]
     return public
 
 
@@ -196,6 +211,10 @@ def add_system_log(session: dict[str, Any], text: str) -> None:
         session["system_logs"].append({"text": text, "created_at": utc_now()})
 
 
+def _is_protocol_warning_log(text: str) -> bool:
+    return text in PROTOCOL_WARNING_LOGS
+
+
 def roll_dice(session: dict[str, Any], expression: str = "1d20") -> dict[str, Any]:
     count, sides = _parse_dice_expression(expression)
     rolls = [random.randint(1, sides) for _ in range(count)]
@@ -219,8 +238,6 @@ def apply_gm_payload(
 
     if gm_text.strip():
         add_assistant_message(session, gm_text)
-    if parse_warning:
-        add_system_log(session, parse_warning)
 
     if not payload:
         # Model didn't return JSON — still provide fallback choices
@@ -282,6 +299,7 @@ def _choices_match_known_fallback(raw: Any, fallback_groups: dict[str, list[dict
 def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
     character = session["character"]
     for stat in ("hp", "mp", "sp"):
+        before = int(character.get(stat, 0))
         change_key = f"{stat}_change"
         set_key = stat
         if change_key in delta and isinstance(delta[change_key], (int, float)):
@@ -290,11 +308,25 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
             character[stat] = int(delta[set_key])
         max_key = f"max_{stat}"
         character[stat] = max(0, min(int(character.get(max_key, character[stat])), int(character[stat])))
+        actual_change = int(character[stat]) - before
+        if actual_change > 0:
+            add_system_log(session, f"{stat.upper()}が{actual_change}回復しました。")
+        elif actual_change < 0:
+            add_system_log(session, f"{stat.upper()}が{abs(actual_change)}減少しました。")
 
     if "gold_change" in delta and isinstance(delta["gold_change"], (int, float)):
+        before = int(character.get("gold", 0))
         character["gold"] = max(0, int(character.get("gold", 0)) + int(delta["gold_change"]))
+        actual_change = int(character["gold"]) - before
+        if actual_change > 0:
+            add_system_log(session, f"{actual_change}ゴールドを獲得しました。")
+        elif actual_change < 0:
+            add_system_log(session, f"{abs(actual_change)}ゴールドを消費しました。")
     if "gold" in delta and isinstance(delta["gold"], (int, float)):
+        before = int(character.get("gold", 0))
         character["gold"] = max(0, int(delta["gold"]))
+        if int(character["gold"]) != before:
+            add_system_log(session, f"所持金が{int(character['gold'])}ゴールドになりました。")
 
     for item in _as_item_list(delta.get("inventory_add")):
         item_name = item["name"] if isinstance(item, dict) else item
@@ -312,19 +344,24 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
             enriched = _enrich_item(item if isinstance(item, dict) else {"name": item})
             enriched["quantity"] = add_qty
             character["inventory"].append(enriched)
+        add_system_log(session, f"{item_name} x{add_qty}を入手しました。")
 
     for item in _as_text_list(delta.get("inventory_remove")):
+        removed_qty = 0
         new_inv = []
         for existing in character["inventory"]:
             ename = existing.get("name") if isinstance(existing, dict) else existing
             if ename == item and isinstance(existing, dict):
                 existing["quantity"] = existing.get("quantity", 1) - 1
+                removed_qty += 1
                 if existing["quantity"] > 0:
                     new_inv.append(existing)
                 # else: quantity reached 0, drop the item
             else:
                 new_inv.append(existing)
         character["inventory"] = new_inv
+        if removed_qty:
+            add_system_log(session, f"{item} x{removed_qty}を失いました。")
 
     for image_key in ("background_image", "character_image"):
         if isinstance(delta.get(image_key), str):
@@ -436,15 +473,23 @@ def _as_text_list(value: Any) -> list[str]:
 
 
 def _infer_state_delta_from_text(gm_text: str, session: dict[str, Any], delta: dict[str, Any]) -> None:
-    if "gold" in delta or "gold_change" in delta:
+    explicit_gold = delta.get("gold")
+    explicit_gold_change = delta.get("gold_change")
+    if isinstance(explicit_gold, (int, float)):
+        return
+    if isinstance(explicit_gold_change, (int, float)) and int(explicit_gold_change) != 0:
         return
     character = session.get("character", {})
     if int(character.get("gold", 0)) > 0:
         return
-    gain_markers = ("与える", "与え", "受け取", "受け取り", "手渡", "預け", "獲得", "入手", "差し出")
+    gain_markers = (
+        "与える", "与え", "受け取", "受け取り", "手渡", "預け", "獲得", "入手", "差し出",
+        "得る", "もら", "渡", "give", "gave", "given", "receive", "received", "reward",
+        "给", "給", "获得", "獲得", "收到", "得到", "奖励",
+    )
     if not any(marker in gm_text for marker in gain_markers):
         return
-    match = re.search(r"(\d+)\s*ゴールド", gm_text)
+    match = re.search(r"(\d+)\s*(?:ゴールド|gold|g|金貨|金币|金幣)", gm_text, re.IGNORECASE)
     if match:
         delta["gold_change"] = int(match.group(1))
 

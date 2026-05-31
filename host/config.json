@@ -3,10 +3,9 @@
   "backends": {
     "ollama": {
       "base_url": "http://localhost:11434/v1",
-      "model": "elyza-jp-8b-local",
+      "model": "qwen2.5-7b-instruct-local",
       "fallback_models": [
-        "qwen2.5-7b-instruct-local",
-        "qwen2.5:7b-instruct"
+        "elyza-jp-8b-local"
       ],
       "api_key": "ollama"
     },
@@ -20,7 +19,7 @@
       "api_key": "koboldcpp"
     }
   },
-  "request_timeout_seconds": 120,
+  "request_timeout_seconds": 1800,
   "temperature": 0.8,
   "max_tokens": 2048,
   "debug_llm": true,

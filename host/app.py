@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -23,6 +23,7 @@ from .state import (
     public_session,
     roll_dice,
     save_session,
+    save_config,
 )
 
 
@@ -33,8 +34,8 @@ app.mount("/static", StaticFiles(directory=CLIENT_ROOT), name="static")
 
 
 class CreateSessionRequest(BaseModel):
-    scenario_path: str | None = None
-    character: dict[str, Any] | None = None
+    scenario_path: Optional[str] = None
+    character: Optional[dict[str, Any]] = None
 
 
 class TurnRequest(BaseModel):
@@ -56,7 +57,35 @@ def config_info() -> dict[str, Any]:
         "active_backend": backend_name,
         "base_url": backend.get("base_url"),
         "model": backend.get("model"),
+        "backends": config.get("backends", {}),
     }
+
+
+class UpdateConfigRequest(BaseModel):
+    active_backend: str
+    model: Optional[str] = None
+
+@app.put("/api/config")
+def api_update_config(request: UpdateConfigRequest) -> dict[str, Any]:
+    config = load_config()
+    backends = config.get("backends", {})
+    if request.active_backend not in backends:
+        raise HTTPException(status_code=400, detail="Invalid backend selected.")
+    config["active_backend"] = request.active_backend
+    backend = backends[request.active_backend]
+    if request.model:
+        candidates = _configured_model_candidates(backend)
+        if request.model not in candidates:
+            raise HTTPException(status_code=400, detail="Invalid model selected.")
+        backend["model"] = request.model
+        backend["fallback_models"] = [model for model in candidates if model != request.model]
+    save_config(config)
+    return config_info()
+
+
+def _configured_model_candidates(backend: dict[str, Any]) -> list[str]:
+    candidates = [backend.get("model"), *(backend.get("fallback_models") or [])]
+    return [str(model) for index, model in enumerate(candidates) if model and model not in candidates[:index]]
 
 
 @app.post("/api/sessions")

@@ -112,7 +112,7 @@ def _chat_completion_once(
     headers = {"Content-Type": "application/json"}
     api_key = backend.get("api_key") or "local"
     headers["Authorization"] = f"Bearer {api_key}"
-    timeout = int(config.get("request_timeout_seconds", 120))
+    timeout = int(config.get("request_timeout_seconds", 1800))
     url = f"{base_url}/chat/completions"
 
     if debug_enabled:
@@ -171,7 +171,7 @@ def _stream_chat_completion_once(
     headers = {"Content-Type": "application/json"}
     api_key = backend.get("api_key") or "local"
     headers["Authorization"] = f"Bearer {api_key}"
-    timeout = int(config.get("request_timeout_seconds", 120))
+    timeout = int(config.get("request_timeout_seconds", 1800))
     url = f"{base_url}/chat/completions"
 
     if debug_enabled:
