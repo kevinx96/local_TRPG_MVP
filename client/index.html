@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Local TRPG</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="stage" aria-label="場面">
+        <div id="background" class="background-placeholder">
+          <div class="sigil">TRPG</div>
+        </div>
+        <div class="stage-overlay">
+          <div>
+            <p class="eyebrow">現在の場面</p>
+            <h1 id="sceneTitle">開始準備</h1>
+          </div>
+          <button id="newSessionButton" type="button">新規セッション</button>
+        </div>
+      </section>
+
+      <section class="layout">
+        <aside class="sidebar" aria-label="キャラクター">
+          <div id="portrait" class="portrait-placeholder"></div>
+          <h2 id="characterName">アルス</h2>
+          <p id="characterDescription">世界を救うため旅立つ若き勇者。</p>
+          <div class="meters">
+            <div class="meter-row">
+              <span>HP</span>
+              <div class="meter"><i id="hpBar"></i></div>
+              <strong id="hpText">20/20</strong>
+            </div>
+            <div class="meter-row">
+              <span>MP</span>
+              <div class="meter"><i id="mpBar"></i></div>
+              <strong id="mpText">8/8</strong>
+            </div>
+            <div class="meter-row">
+              <span>SP</span>
+              <div class="meter"><i id="spBar"></i></div>
+              <strong id="spText">10/10</strong>
+            </div>
+          </div>
+          <h3>所持品</h3>
+          <ul id="inventory" class="inventory"></ul>
+          <h3>最近の判定</h3>
+          <ul id="diceLog" class="dice-log"></ul>
+        </aside>
+
+        <section class="play-area" aria-label="セッション">
+          <div class="toolbar">
+            <div>
+              <p class="eyebrow">ローカルGM</p>
+              <strong id="backendInfo">接続設定を確認中</strong>
+            </div>
+            <select id="diceSelect" aria-label="判定ダイス">
+              <option value="1d20">1d20</option>
+              <option value="2d6">2d6</option>
+              <option value="1d100">1d100</option>
+            </select>
+          </div>
+          <div id="messages" class="messages" aria-live="polite"></div>
+          <form id="turnForm" class="turn-form">
+            <textarea id="playerInput" rows="3" placeholder="行動を入力..." required></textarea>
+            <button id="sendButton" type="submit">送信</button>
+          </form>
+        </section>
+
+        <aside class="system-panel" aria-label="システムログ">
+          <h2>システム</h2>
+          <ul id="systemLogs"></ul>
+        </aside>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
