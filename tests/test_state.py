@@ -167,6 +167,34 @@ class StateTests(unittest.TestCase):
         self.assertIn("シナリオコンテキスト", messages[1]["content"])
         self.assertIn("古い形式のシナリオ本文です。", messages[1]["content"])
 
+    def test_build_llm_messages_uses_short_history_and_memory_summary(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        for index in range(4):
+            state.add_player_message(session, f"行動{index}")
+            state.add_assistant_message(session, f"結果{index}")
+
+        messages = state.build_llm_messages(session, {"expression": "1d20", "rolls": [10], "total": 10}, "contract")
+
+        roles = [message["role"] for message in messages]
+        self.assertEqual(roles.count("user"), 2)
+        self.assertEqual(roles.count("assistant"), 2)
+        self.assertTrue(any("これまでの会話要約" in message["content"] for message in messages if message["role"] == "system"))
+        self.assertFalse(any("行動0" in message["content"] for message in messages if message["role"] != "system"))
+
+    def test_build_llm_messages_includes_player_action_history(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "国王に話を聞く")
+        state.add_assistant_message(session, "国王は頷いた。")
+        state.add_player_message(session, "森へ向かう")
+
+        messages = state.build_llm_messages(session, {"expression": "1d20", "rolls": [10], "total": 10}, "contract")
+        action_history = next(message["content"] for message in messages if "プレイヤー行動履歴" in message["content"])
+
+        self.assertIn("1. 国王に話を聞く", action_history)
+        self.assertIn("2. 森へ向かう", action_history)
+
     def test_public_session_sanitizes_saved_assistant_text(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
@@ -217,6 +245,30 @@ class StateTests(unittest.TestCase):
         state.apply_gm_payload(session, "薬草を使った。", {"state_delta": {"inventory_remove": ["薬草"]}})
         names = [i["name"] for i in session["character"]["inventory"]]
         self.assertNotIn("薬草", names)
+
+    def test_malformed_inventory_add_is_ignored_or_normalized(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+
+        state.apply_gm_payload(
+            session,
+            "道具を受け取った。",
+            {
+                "state_delta": {
+                    "inventory_add": [
+                        {},
+                        {"name": ""},
+                        {"item": "氷の護符", "quantity": "2"},
+                        {"item_name": "古い鍵"},
+                    ],
+                },
+            },
+        )
+
+        inventory = {item["name"]: item["quantity"] for item in session["character"]["inventory"]}
+        self.assertEqual(inventory["氷の護符"], 2)
+        self.assertEqual(inventory["古い鍵"], 1)
+        self.assertNotIn("", inventory)
 
     def test_system_logs_are_state_events_not_protocol_warnings(self):
         public = state.create_session(str(self.write_pack()))

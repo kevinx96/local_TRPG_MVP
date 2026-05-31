@@ -24,6 +24,13 @@
   "request_timeout_seconds": 1800,
   "temperature": 0.8,
   "max_tokens": 2048,
+  "response_format": "json_object",
+  "prompting": {
+    "history_messages": 4,
+    "memory_max_chars": 1200,
+    "action_history_max": 40,
+    "action_history_item_chars": 80
+  },
   "debug_llm": true,
   "demo_fallback_on_error": true
 }

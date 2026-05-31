@@ -289,8 +289,8 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
             add_system_log(session, f"所持金が{int(character['gold'])}ゴールドになりました。")
 
     for item in _as_item_list(delta.get("inventory_add")):
-        item_name = item["name"] if isinstance(item, dict) else item
-        add_qty = int(item.get("quantity", 1)) if isinstance(item, dict) else 1
+        item_name = str(item["name"]).strip()
+        add_qty = _safe_quantity(item.get("quantity"), 1)
         existing = next(
             (inv_item for inv_item in character["inventory"] if (inv_item.get("name") if isinstance(inv_item, dict) else inv_item) == item_name),
             None,
@@ -330,17 +330,24 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
 
 
 def _enrich_item(item: dict[str, Any]) -> dict[str, Union[str, int]]:
-    name = str(item.get("name", "不明"))
+    name = _item_name_from_dict(item) or "不明"
     catalog_entry = DEFAULT_ITEM_CATALOG.get(name, {})
     return {
         "name": name,
         "description": str(item.get("description") or catalog_entry.get("description", "")),
         "effect": str(item.get("effect") or catalog_entry.get("effect", "")),
-        "quantity": int(item.get("quantity", 1)),
+        "quantity": _safe_quantity(item.get("quantity"), 1),
     }
 
 
 def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], contract_prompt: str) -> list[dict[str, str]]:
+    config = load_config()
+    prompting = config.get("prompting") if isinstance(config.get("prompting"), dict) else {}
+    history_messages = _bounded_int(prompting.get("history_messages"), default=4, minimum=0, maximum=12)
+    memory_max_chars = _bounded_int(prompting.get("memory_max_chars"), default=1200, minimum=0, maximum=4000)
+    action_history_max = _bounded_int(prompting.get("action_history_max"), default=40, minimum=0, maximum=200)
+    action_history_item_chars = _bounded_int(prompting.get("action_history_item_chars"), default=80, minimum=20, maximum=240)
+
     character = session["character"]
     player_text = _latest_player_text(session)
     scenario_context = select_scenario_context(session, player_text)
@@ -370,7 +377,15 @@ def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], con
         {"role": "system", "content": "シナリオコンテキスト:\n" + json.dumps(scenario_context, ensure_ascii=False)},
         {"role": "system", "content": "現在のゲーム状態:\n" + state_summary},
     ]
-    for message in session["messages"][-12:]:
+    memory_summary = _conversation_memory_summary(session, keep_last=history_messages, max_chars=memory_max_chars)
+    if memory_summary:
+        messages.append({"role": "system", "content": "これまでの会話要約:\n" + memory_summary})
+    action_history = _player_action_history(session, max_items=action_history_max, item_chars=action_history_item_chars)
+    if action_history:
+        messages.append({"role": "system", "content": "プレイヤー行動履歴:\n" + action_history})
+
+    recent_messages = session["messages"][-history_messages:] if history_messages else []
+    for message in recent_messages:
         role = "assistant" if message["role"] == "assistant" else "user"
         messages.append({"role": role, "content": f"{message['speaker']}: {message['text']}"})
     return messages
@@ -382,6 +397,59 @@ def _deep_update(target: dict[str, Any], source: dict[str, Any]) -> None:
             _deep_update(target[key], value)
         else:
             target[key] = value
+
+
+def _conversation_memory_summary(session: dict[str, Any], keep_last: int, max_chars: int) -> str:
+    if max_chars <= 0:
+        return ""
+    messages = session.get("messages", [])
+    if not isinstance(messages, list) or len(messages) <= keep_last:
+        return ""
+    older_messages = messages[:-keep_last] if keep_last else messages
+    lines: list[str] = []
+    for message in older_messages[-8:]:
+        if not isinstance(message, dict):
+            continue
+        speaker = str(message.get("speaker") or message.get("role") or "不明")
+        text = _one_line(str(message.get("text") or ""), limit=140)
+        if text:
+            lines.append(f"- {speaker}: {text}")
+    summary = "\n".join(lines)
+    if len(summary) <= max_chars:
+        return summary
+    return summary[-max_chars:].lstrip()
+
+
+def _player_action_history(session: dict[str, Any], max_items: int, item_chars: int) -> str:
+    if max_items <= 0:
+        return ""
+    actions: list[str] = []
+    for message in session.get("messages", []):
+        if not isinstance(message, dict) or message.get("role") != "user":
+            continue
+        text = _one_line(str(message.get("text") or ""), limit=item_chars)
+        if text:
+            actions.append(text)
+    if not actions:
+        return ""
+    recent_actions = actions[-max_items:]
+    start_index = len(actions) - len(recent_actions) + 1
+    return "\n".join(f"{index}. {text}" for index, text in enumerate(recent_actions, start=start_index))
+
+
+def _one_line(text: str, limit: int) -> str:
+    cleaned = re.sub(r"\s+", " ", text).strip()
+    if len(cleaned) <= limit:
+        return cleaned
+    return cleaned[: max(0, limit - 1)].rstrip() + "…"
+
+
+def _bounded_int(value: Any, default: int, minimum: int, maximum: int) -> int:
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError):
+        parsed = default
+    return max(minimum, min(maximum, parsed))
 
 
 def _normalize_character(character: dict[str, Any]) -> None:
@@ -403,16 +471,51 @@ def _ensure_item_object(item: Any) -> dict[str, Union[str, int]]:
     return _enrich_item({"name": name})
 
 
-def _as_item_list(value: Any) -> list[Any]:
+def _as_item_list(value: Any) -> list[dict[str, Any]]:
     if value is None:
         return []
     if isinstance(value, str):
-        return [value] if value.strip() else []
+        return [{"name": value.strip()}] if value.strip() else []
     if isinstance(value, dict):
-        return [value]
+        normalized = _normalize_item_delta(value)
+        return [normalized] if normalized else []
     if isinstance(value, list):
-        return [item for item in value if item]
+        items: list[dict[str, Any]] = []
+        for item in value:
+            if isinstance(item, str) and item.strip():
+                items.append({"name": item.strip()})
+            elif isinstance(item, dict):
+                normalized = _normalize_item_delta(item)
+                if normalized:
+                    items.append(normalized)
+        return items
     return []
+
+
+def _normalize_item_delta(item: dict[str, Any]) -> Optional[dict[str, Any]]:
+    name = _item_name_from_dict(item)
+    if not name:
+        return None
+    normalized = dict(item)
+    normalized["name"] = name
+    normalized["quantity"] = _safe_quantity(item.get("quantity"), 1)
+    return normalized
+
+
+def _item_name_from_dict(item: dict[str, Any]) -> str:
+    for key in ("name", "item_name", "item", "title", "label", "id"):
+        value = item.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return ""
+
+
+def _safe_quantity(value: Any, default: int = 1) -> int:
+    try:
+        quantity = int(value)
+    except (TypeError, ValueError):
+        quantity = default
+    return max(1, quantity)
 
 
 def _as_text_list(value: Any) -> list[str]:
