@@ -527,6 +527,21 @@ if (els.backendSelect) {
   });
 }
 
+// Config gear panel toggle
+const configPanel = document.querySelector("#configPanel");
+const configToggle = document.querySelector("#configToggle");
+if (configToggle && configPanel) {
+  configToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    configPanel.classList.toggle("open");
+  });
+  document.addEventListener("click", (e) => {
+    if (!configPanel.contains(e.target)) {
+      configPanel.classList.remove("open");
+    }
+  });
+}
+
 // Galgame Overlay Toggles
 if (els.menuToggleBtn) els.menuToggleBtn.addEventListener("click", () => els.menuOverlay.style.display = "");
 if (els.menuCloseBtn) els.menuCloseBtn.addEventListener("click", () => els.menuOverlay.style.display = "none");
