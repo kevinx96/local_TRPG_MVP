@@ -13,13 +13,27 @@ def main() -> None:
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--reload", action="store_true")
     parser.add_argument("--no-browser", action="store_true")
+    parser.add_argument(
+        "--graceful-shutdown-timeout",
+        type=int,
+        default=1,
+        help="Seconds to wait for in-flight requests during shutdown.",
+    )
     args = parser.parse_args()
 
     url = f"http://{args.host}:{args.port}/"
     if not args.no_browser:
-        threading.Timer(1.0, _open_browser, args=(url,)).start()
+        timer = threading.Timer(1.0, _open_browser, args=(url,))
+        timer.daemon = True
+        timer.start()
     print(f"[TRPG] Host starting at {url}", flush=True)
-    uvicorn.run("host.app:app", host=args.host, port=args.port, reload=args.reload)
+    uvicorn.run(
+        "host.app:app",
+        host=args.host,
+        port=args.port,
+        reload=args.reload,
+        timeout_graceful_shutdown=args.graceful_shutdown_timeout,
+    )
 
 
 def _open_browser(url: str) -> None:

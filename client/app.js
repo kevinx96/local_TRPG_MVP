@@ -120,6 +120,7 @@ function uniqueList(values) {
 
 async function startGame() {
   const heroName = els.heroNameInput.value.trim() || "アルス";
+  const heroGender = document.querySelector('input[name="heroGender"]:checked')?.value || "男勇者";
   const backend = els.backendSelect ? els.backendSelect.value : "ollama";
   const model = els.modelSelect ? els.modelSelect.value : "";
   setStartBusy(true);
@@ -137,7 +138,11 @@ async function startGame() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         scenario_path: "host/prompt/text/dragon_rpg.txt",
-        character: { name: heroName },
+        character: { 
+          name: heroName,
+          description: heroGender,
+          character_image: heroGender === "女勇者" ? "/static/images/char_female_hero.png" : "/static/images/char_male_hero.png"
+        },
       }),
     });
     state.sessionId = session.id;
