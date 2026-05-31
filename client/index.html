@@ -26,6 +26,14 @@
         <h1 class="start-title">LOCAL TRPG</h1>
         <p class="start-subtitle">ローカルLLMが紡ぐ、あなただけの冒険</p>
         <div class="start-form">
+          <label for="backendSelect" class="start-label">バックエンド</label>
+          <select id="backendSelect" class="start-select">
+            <option value="ollama">Ollama</option>
+          </select>
+          <label for="modelSelect" class="start-label">モデル</label>
+          <select id="modelSelect" class="start-select">
+            <option value="qwen2.5-7b-instruct-local">qwen2.5-7b-instruct-local</option>
+          </select>
           <label for="heroNameInput" class="start-label">勇者の名前</label>
           <input id="heroNameInput" type="text" class="start-input" value="アルス" placeholder="名前を入力..." maxlength="20" />
           <button id="startButton" type="button" class="start-btn">
@@ -37,95 +45,93 @@
       </div>
     </div>
 
-    <!-- ═══════ GAME SCREEN ═══════ -->
-    <main id="gameScreen" class="shell" style="display:none">
-      <section class="stage" aria-label="場面">
-        <div id="background" class="background-placeholder">
-          <div class="sigil">TRPG</div>
+    <!-- ═══════ GAME SCREEN (GALGAME LAYOUT) ═══════ -->
+    <main id="gameScreen" class="galgame-shell" style="display:none">
+      <!-- Background Layer -->
+      <div id="background" class="gal-bg"></div>
+
+      <!-- Sprite Layer -->
+      <div id="spriteLayer" class="gal-sprite-layer">
+        <img id="portrait" class="gal-sprite" src="" style="display:none;" />
+      </div>
+
+      <!-- Top Overlay -->
+      <div class="gal-top-overlay">
+        <div class="scene-info">
+          <p class="eyebrow">現在の場面</p>
+          <h1 id="sceneTitle">開始準備</h1>
         </div>
-        <div class="stage-overlay">
-          <div>
-            <p class="eyebrow">現在の場面</p>
-            <h1 id="sceneTitle">開始準備</h1>
-          </div>
-          <button id="newSessionButton" type="button">新規セッション</button>
+        <button id="menuToggleBtn" type="button" class="gal-icon-btn">MENU</button>
+      </div>
+
+      <!-- Bottom UI Area -->
+      <div class="gal-bottom-area">
+        <!-- Choices -->
+        <div id="choicesArea" class="gal-choices-area" style="display:none">
+          <div id="choicesList" class="choices-list"></div>
         </div>
-      </section>
 
-      <section class="layout">
-        <!-- ── Character Panel ── -->
-        <aside class="sidebar" aria-label="キャラクター">
-          <div id="portrait" class="portrait-placeholder"></div>
-          <h2 id="characterName" class="char-name-display">アルス</h2>
-          <p id="characterDescription">世界を救うため旅立つ若き勇者。</p>
+        <!-- Dialogue Box -->
+        <div id="dialogueBox" class="gal-dialogue-box" role="button" tabindex="0">
+          <div id="speakerName" class="gal-speaker">GM</div>
+          <div id="messageText" class="gal-message-text"></div>
+          <div id="clickIndicator" class="gal-click-indicator">▼</div>
+        </div>
 
-          <div class="meters">
-            <div class="meter-row">
-              <span class="meter-label">HP</span>
-              <div class="meter hp-meter"><i id="hpBar"></i></div>
-              <strong id="hpText">20/20</strong>
+        <!-- Input Form -->
+        <form id="turnForm" class="gal-turn-form" style="display:none;">
+          <textarea id="playerInput" rows="1" placeholder="自分で行動を入力…"></textarea>
+          <button id="sendButton" type="submit">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 2L11 13"/>
+              <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+            </svg>
+          </button>
+        </form>
+
+        <!-- Bottom Menu Bar -->
+        <div class="gal-menu-bar">
+          <button id="logToggleBtn" type="button" class="gal-menu-btn">LOG</button>
+          <button id="inputToggleBtn" type="button" class="gal-menu-btn">入力</button>
+          <button id="newSessionButton" type="button" class="gal-menu-btn">新規</button>
+          <span id="backendInfo" class="backend-info-sm">設定確認中</span>
+        </div>
+      </div>
+
+      <!-- Overlays (Hidden by default) -->
+      <!-- Backlog Overlay -->
+      <div id="logOverlay" class="gal-overlay" style="display:none">
+        <div class="gal-overlay-header">
+          <h2>BACKLOG</h2>
+          <button id="logCloseBtn" type="button" class="gal-close-btn">×</button>
+        </div>
+        <div id="messages" class="messages" aria-live="polite"></div>
+      </div>
+
+      <!-- System/Character Menu Overlay -->
+      <div id="menuOverlay" class="gal-overlay" style="display:none">
+        <div class="gal-overlay-header">
+          <h2>SYSTEM MENU</h2>
+          <button id="menuCloseBtn" type="button" class="gal-close-btn">×</button>
+        </div>
+        <div class="gal-menu-content">
+          <aside class="sidebar">
+            <h2 id="characterName" class="char-name-display">アルス</h2>
+            <p id="characterDescription">世界を救うため旅立つ若き勇者。</p>
+            <div class="meters">
+              <div class="meter-row"><span class="meter-label">HP</span><div class="meter hp-meter"><i id="hpBar"></i></div><strong id="hpText">20/20</strong></div>
+              <div class="meter-row"><span class="meter-label">MP</span><div class="meter mp-meter"><i id="mpBar"></i></div><strong id="mpText">8/8</strong></div>
+              <div class="meter-row"><span class="meter-label">SP</span><div class="meter sp-meter"><i id="spBar"></i></div><strong id="spText">10/10</strong></div>
             </div>
-            <div class="meter-row">
-              <span class="meter-label">MP</span>
-              <div class="meter mp-meter"><i id="mpBar"></i></div>
-              <strong id="mpText">8/8</strong>
-            </div>
-            <div class="meter-row">
-              <span class="meter-label">SP</span>
-              <div class="meter sp-meter"><i id="spBar"></i></div>
-              <strong id="spText">10/10</strong>
-            </div>
-          </div>
-
-          <div class="gold-row">
-            <span class="gold-label">GOLD</span>
-            <strong id="goldText">0</strong>
-          </div>
-
-          <h3>所持品</h3>
-          <ul id="inventory" class="inventory"></ul>
-
-          <h3>最近の判定</h3>
-          <ul id="diceLog" class="dice-log"></ul>
-        </aside>
-
-        <!-- ── Play Area ── -->
-        <section class="play-area" aria-label="セッション">
-          <div class="toolbar">
-            <div>
-              <p class="eyebrow">ローカルGM</p>
-              <strong id="backendInfo">接続設定を確認中</strong>
-            </div>
-          </div>
-
-          <div id="messages" class="messages" aria-live="polite"></div>
-
-          <!-- ── Choices Area ── -->
-          <div id="choicesArea" class="choices-area" style="display:none">
-            <p class="choices-heading">行動を選択してください</p>
-            <div id="choicesList" class="choices-list"></div>
-          </div>
-
-          <!-- ── Free Input ── -->
-          <form id="turnForm" class="turn-form">
-            <div class="input-wrapper">
-              <textarea id="playerInput" rows="2" placeholder="自分で行動を入力…"></textarea>
-              <button id="sendButton" type="submit" title="送信">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 2L11 13"/>
-                  <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
-                </svg>
-              </button>
-            </div>
-          </form>
-        </section>
-
-        <!-- ── System Panel ── -->
-        <aside class="system-panel" aria-label="システムログ">
-          <h2>システム</h2>
-          <ul id="systemLogs"></ul>
-        </aside>
-      </section>
+            <div class="gold-row"><span class="gold-label">GOLD</span><strong id="goldText">0</strong></div>
+            <h3>所持品</h3><ul id="inventory" class="inventory"></ul>
+            <h3>最近の判定</h3><ul id="diceLog" class="dice-log"></ul>
+          </aside>
+          <aside class="system-panel">
+            <h2>システムログ</h2><ul id="systemLogs"></ul>
+          </aside>
+        </div>
+      </div>
     </main>
 
     <script src="/static/app.js"></script>
