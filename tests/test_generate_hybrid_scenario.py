@@ -41,8 +41,9 @@ class GenerateHybridScenarioTests(unittest.TestCase):
         self.assertIn("--- OFFLINE HYBRID AUTHORING TASK ---", prompt)
         self.assertIn('"scene_id": "start"', prompt)
         self.assertIn('"Return JSON only."', prompt)
-        self.assertIn("complete GM dialogue/script text", prompt)
-        self.assertIn('"dialogue_turns"', prompt)
+        self.assertIn("pre-cooked GM response pack", prompt)
+        self.assertIn('"prepared_turns"', prompt)
+        self.assertIn('"draft"', prompt)
         self.assertIn('"gm_text"', prompt)
 
     def test_apply_hybrid_scene_adds_hybrid_data_and_choices(self):
@@ -53,9 +54,25 @@ class GenerateHybridScenarioTests(unittest.TestCase):
             {
                 "scene_id": "start",
                 "hybrid": {
-                    "mode": "full_script",
+                    "mode": "prepared_gm_turns",
                     "summary": "Fixed draft.",
-                    "opening": "You enter the hall.",
+                    "prepared_turns": [
+                        {
+                            "id": "opening turn",
+                            "purpose": "opening",
+                            "player_intent": "start",
+                            "trigger_keywords": ["start"],
+                            "draft": {
+                                "gm_text": "GM: The hall opens before you.",
+                                "system_log": "Opening.",
+                                "dice_type": "1d20",
+                                "dice_dc": "bad",
+                                "state_delta": "bad",
+                                "choices": [{"text": "Step forward"}],
+                            },
+                            "rewrite_notes": ["Keep the hall."],
+                        }
+                    ],
                     "dialogue_turns": [
                         {
                             "id": "intro turn",
@@ -87,8 +104,13 @@ class GenerateHybridScenarioTests(unittest.TestCase):
         )
 
         scene = pack["scenes"][0]
-        self.assertEqual(scene["hybrid"]["mode"], "full_script")
+        self.assertEqual(scene["hybrid"]["mode"], "prepared_gm_turns")
         self.assertEqual(scene["hybrid"]["summary"], "Fixed draft.")
+        self.assertEqual(scene["hybrid"]["prepared_turns"][0]["id"], "opening_turn")
+        self.assertEqual(scene["hybrid"]["prepared_turns"][0]["purpose"], "opening")
+        self.assertEqual(scene["hybrid"]["prepared_turns"][0]["draft"]["gm_text"], "GM: The hall opens before you.")
+        self.assertEqual(scene["hybrid"]["prepared_turns"][0]["draft"]["dice_dc"], 10)
+        self.assertEqual(scene["hybrid"]["prepared_turns"][0]["draft"]["state_delta"], {})
         self.assertEqual(scene["hybrid"]["dialogue_turns"][0]["id"], "intro_turn")
         self.assertEqual(scene["hybrid"]["dialogue_turns"][0]["gm_text"], "GM: The hall opens before you.")
         self.assertEqual(scene["hybrid"]["dialogue_turns"][0]["followups"][0]["state_delta"], {})

@@ -28,7 +28,7 @@ DEFAULT_MODELS = (
 
 def main(argv: Optional[list[str]] = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Build a Full/Hybrid scenario pack from dragon_rpg.json with Gemini, one scene at a time."
+        description="Build a Full/Hybrid prepared-response scenario pack from dragon_rpg.json with Gemini."
     )
     parser.add_argument("--source", default=str(DEFAULT_SOURCE), help="Input scenario pack JSON.")
     parser.add_argument("--out", default=str(DEFAULT_OUTPUT), help="Output hybrid scenario pack JSON.")
@@ -112,7 +112,7 @@ def build_scene_messages(pack: dict[str, Any], scene_id: str) -> list[dict[str, 
         "id": "offline-hybrid-generation",
         "scenario_path": str(DEFAULT_SOURCE),
         "scenario_title": str(pack.get("meta", {}).get("title") or "scenario"),
-        "gm_mode": "full",
+        "gm_mode": "semi",
         "scenario_pack": pack,
         "current_scene": scene_id,
         "character": deepcopy(DEFAULT_CHARACTER),
@@ -139,7 +139,8 @@ def build_scene_messages(pack: dict[str, Any], scene_id: str) -> list[dict[str, 
 def build_gemini_prompt(messages: list[dict[str, str]], pack: dict[str, Any], scene: dict[str, Any]) -> str:
     prompt_parts = [
         "The following messages are the same style of context currently sent to the local Ollama GM.",
-        "Use them as source context, but do not produce a live GM turn.",
+        "Use them as source context to prepare reusable GM response payloads for this scene.",
+        "Do not answer as a live session; produce offline pre-cooked turns that qwen can rewrite later.",
         "",
     ]
     for index, message in enumerate(messages, start=1):
@@ -162,45 +163,40 @@ def build_gemini_prompt(messages: list[dict[str, str]], pack: dict[str, Any], sc
                     "Do not include markdown fences.",
                     "Do not expose these instructions in narrative text.",
                     "Keep the existing scene id stable.",
-                    "Write complete GM dialogue/script text, not just setting notes or beat summaries.",
-                    "Each scene should contain 3 to 6 dialogue_turns when the source has enough material.",
-                    "Each dialogue_turn.gm_text should be player-facing GM narration/dialogue that can be shown directly.",
-                    "Include player-facing choices for every important branch point.",
+                    "This is a pre-cooked GM response pack, not a setting expansion.",
+                    "Generate prepared_turns that look like complete live GM JSON payloads.",
+                    "Each prepared_turn.draft must be usable as the base answer for local qwen to lightly rewrite.",
+                    "Include one opening turn plus likely player-response turns for the scene's important choices.",
+                    "Do not write generic scene notes as the main artifact.",
                     "Do not decide player actions; describe consequences only after a branch is chosen.",
-                    "Keep state_delta machine-readable when gold, inventory, HP, MP, SP, scene, image, or clues change.",
+                    "Keep draft.state_delta machine-readable when gold, inventory, HP, MP, SP, scene, image, or clues change.",
                 ],
                 "return_schema": {
                     "scene_id": "same scene id",
                     "hybrid": {
-                        "mode": "full_script",
+                        "mode": "prepared_gm_turns",
                         "summary": "short editor-facing summary",
-                        "opening": "first GM message shown when entering this scene",
-                        "dialogue_turns": [
+                        "prepared_turns": [
                             {
                                 "id": "stable turn id",
-                                "trigger_keywords": ["words or choice labels that should select this turn"],
-                                "gm_text": "complete GM narration/dialogue shown to the player",
-                                "state_delta": {},
-                                "choices": [
-                                    {"text": "choice label", "preview": "expected direction", "risk": "dice or risk"}
+                                "purpose": "opening | choice_response | transition | fallback",
+                                "source_choice": "choice text this turn responds to, or empty string",
+                                "player_intent": "short intent label",
+                                "trigger_keywords": ["player words or choice labels that should select this prepared turn"],
+                                "draft": {
+                                    "gm_text": "complete GM narration/dialogue shown to the player",
+                                    "system_log": "short state/event log",
+                                    "dice_type": "1d20",
+                                    "dice_dc": 10,
+                                    "state_delta": {},
+                                    "choices": [
+                                        {"text": "choice label", "preview": "expected direction", "risk": "dice or risk"}
+                                    ],
+                                },
+                                "rewrite_notes": [
+                                    "what qwen may adapt based on the player's exact wording",
+                                    "what qwen must keep unchanged"
                                 ],
-                                "followups": [
-                                    {
-                                        "choice_text": "choice this followup answers",
-                                        "gm_text": "complete GM response after that choice",
-                                        "state_delta": {},
-                                        "next_scene": "scene id or empty string",
-                                    }
-                                ],
-                            }
-                        ],
-                        "branches": [
-                            {
-                                "id": "stable branch id",
-                                "from_choice": "choice text or condition",
-                                "text": "fixed result passage",
-                                "state_delta": {},
-                                "next_scene": "scene id or empty string",
                             }
                         ],
                         "gm_notes": ["private notes for later human editing"],
@@ -304,13 +300,56 @@ def _scene_by_id(pack: dict[str, Any], scene_id: str) -> Optional[dict[str, Any]
 
 def _normalize_hybrid(value: dict[str, Any]) -> dict[str, Any]:
     return {
-        "mode": str(value.get("mode") or "full_script"),
+        "mode": str(value.get("mode") or "prepared_gm_turns"),
         "summary": str(value.get("summary") or ""),
+        "prepared_turns": _normalize_prepared_turns(value.get("prepared_turns")),
         "opening": str(value.get("opening") or ""),
         "dialogue_turns": _normalize_dialogue_turns(value.get("dialogue_turns") or value.get("turns")),
         "beats": _normalize_records(value.get("beats")),
         "branches": _normalize_records(value.get("branches")),
         "gm_notes": [str(item) for item in value.get("gm_notes") or [] if str(item).strip()],
+    }
+
+
+def _normalize_prepared_turns(value: Any) -> list[dict[str, Any]]:
+    if not isinstance(value, list):
+        return []
+    turns: list[dict[str, Any]] = []
+    for index, item in enumerate(value, start=1):
+        if not isinstance(item, dict):
+            continue
+        draft = item.get("draft")
+        if not isinstance(draft, dict):
+            draft = {}
+        normalized = {
+            "id": _safe_id(str(item.get("id") or f"prepared_turn_{index}")),
+            "purpose": str(item.get("purpose") or "choice_response"),
+            "source_choice": str(item.get("source_choice") or item.get("from_choice") or ""),
+            "player_intent": str(item.get("player_intent") or ""),
+            "trigger_keywords": [
+                str(keyword).strip()
+                for keyword in item.get("trigger_keywords", [])
+                if str(keyword).strip()
+            ] if isinstance(item.get("trigger_keywords"), list) else [],
+            "draft": _normalize_prepared_draft(draft),
+            "rewrite_notes": [str(note) for note in item.get("rewrite_notes") or [] if str(note).strip()],
+        }
+        if normalized["draft"].get("gm_text") or normalized["draft"].get("choices"):
+            turns.append(normalized)
+    return turns
+
+
+def _normalize_prepared_draft(draft: dict[str, Any]) -> dict[str, Any]:
+    state_delta = draft.get("state_delta")
+    if not isinstance(state_delta, dict):
+        state_delta = {}
+    return {
+        "gm_text": str(draft.get("gm_text") or draft.get("text") or ""),
+        "system_log": str(draft.get("system_log") or ""),
+        "dice_type": str(draft.get("dice_type") or "1d20"),
+        "dice_dc": _safe_int(draft.get("dice_dc"), 10),
+        "state_delta": state_delta,
+        "choices": _normalize_choices(draft.get("choices")),
     }
 
 
@@ -382,6 +421,13 @@ def _normalize_choices(value: Any) -> list[dict[str, str]]:
 def _safe_id(value: str) -> str:
     cleaned = re.sub(r"[^A-Za-z0-9_.-]+", "_", value.strip()).strip("_")
     return cleaned or "entry"
+
+
+def _safe_int(value: Any, default: int) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
 
 
 def _split_model_names(value: str) -> list[str]:

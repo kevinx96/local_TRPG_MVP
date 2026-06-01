@@ -16,6 +16,7 @@ from .scenario_context import (
     load_scenario_pack,
     resolve_scene_id,
     scene_title,
+    select_hybrid_context,
     select_scenario_context,
 )
 
@@ -396,6 +397,9 @@ def _enrich_item(item: dict[str, Any]) -> dict[str, Union[str, int]]:
 
 
 def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], contract_prompt: str) -> list[dict[str, str]]:
+    if session.get("gm_mode") == "full":
+        return _build_hybrid_llm_messages(session, latest_roll, contract_prompt)
+
     config = load_config()
     prompting = config.get("prompting") if isinstance(config.get("prompting"), dict) else {}
     history_messages = _bounded_int(prompting.get("history_messages"), default=4, minimum=0, maximum=12)
@@ -445,6 +449,57 @@ def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], con
         role = "assistant" if message["role"] == "assistant" else "user"
         messages.append({"role": role, "content": f"{message['speaker']}: {message['text']}"})
     return messages
+
+
+def _build_hybrid_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], contract_prompt: str) -> list[dict[str, str]]:
+    character = session["character"]
+    player_text = _latest_player_text(session)
+    opening = str(latest_roll.get("expression") or "") == "opening"
+    hybrid_context = select_hybrid_context(session, player_text, opening=opening)
+    state_summary = _current_state_summary(session, character, latest_roll)
+    messages: list[dict[str, str]] = [
+        {"role": "system", "content": contract_prompt},
+        {
+            "role": "system",
+            "content": (
+                "FULL/HYBRID MODE\n"
+                "Use the prepared_turn.draft as the base GM response. "
+                "Lightly rewrite gm_text to match the player's exact wording and current state. "
+                "Keep draft.state_delta, dice_type, dice_dc, and choices unless the player's action clearly requires a small adjustment. "
+                "Return only the normal GM JSON object.\n"
+                + json.dumps(hybrid_context, ensure_ascii=False)
+            ),
+        },
+        {"role": "system", "content": "CURRENT GAME STATE\n" + state_summary},
+    ]
+    if player_text:
+        messages.append({"role": "user", "content": f"Player action: {player_text}"})
+    return messages
+
+
+def _current_state_summary(session: dict[str, Any], character: dict[str, Any], latest_roll: dict[str, Any]) -> str:
+    inventory_summary = [(i["name"] if isinstance(i, dict) else i) for i in character.get("inventory", [])]
+    return json.dumps(
+        {
+            "gm_mode": session.get("gm_mode", "semi"),
+            "current_scene": session["current_scene"],
+            "current_scene_title": scene_title(session),
+            "character": {
+                "name": character.get("name"),
+                "hp": character.get("hp"),
+                "max_hp": character.get("max_hp"),
+                "mp": character.get("mp"),
+                "max_mp": character.get("max_mp"),
+                "sp": character.get("sp"),
+                "max_sp": character.get("max_sp"),
+                "gold": character.get("gold", 0),
+                "inventory": inventory_summary,
+                "equipment": character.get("equipment", []),
+            },
+            "latest_dice_roll": latest_roll,
+        },
+        ensure_ascii=False,
+    )
 
 
 def _deep_update(target: dict[str, Any], source: dict[str, Any]) -> None:

@@ -11,7 +11,15 @@ from pydantic import BaseModel
 
 from .gm_contract import STATE_MARKER, build_gm_contract_prompt, build_opening_prompt, split_visible_and_json
 from .llm_client import LLMClientError, chat_completion, debug_log
-from .scenario_context import fallback_choices_for_session, normalize_scenario_pack, scenario_context_debug, scene_title, select_scenario_context
+from .scenario_context import (
+    fallback_choices_for_session,
+    hybrid_context_debug,
+    normalize_scenario_pack,
+    scenario_context_debug,
+    scene_title,
+    select_hybrid_context,
+    select_scenario_context,
+)
 from .state import (
     HOST_ROOT,
     PROJECT_ROOT,
@@ -262,12 +270,12 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
 
     latest_roll = {"expression": "opening", "rolls": [], "total": 0}
     messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
-    opening_prompt = build_opening_prompt(session)
+    opening_prompt = _opening_prompt_for_mode(session)
     messages.append({"role": "user", "content": opening_prompt})
 
     if debug_enabled:
         debug_log(f"Opening generation start session={session['id']}")
-        context_debug = scenario_context_debug(select_scenario_context(session, ""))
+        context_debug = _context_debug_for_mode(session, "", opening=True)
         debug_log(
             "Opening scenario context "
             f"chars={context_debug['chars']} scene={context_debug['scene']} "
@@ -314,7 +322,7 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
 
     if debug_enabled:
         dice_dc = session.get("next_dice_dc", 10)
-        context_debug = scenario_context_debug(select_scenario_context(session, request.text.strip()))
+        context_debug = _context_debug_for_mode(session, request.text.strip(), opening=False)
         debug_log(
             "Turn start "
             f"session={session['id']} speaker={request.speaker!r} "
@@ -352,6 +360,27 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             f"logs={len(session['system_logs'])} dice={len(session['dice_log'])}"
         )
     return public_session(session)
+
+
+def _opening_prompt_for_mode(session: dict[str, Any]) -> str:
+    if session.get("gm_mode") == "full":
+        return (
+            "Use the prepared opening turn in FULL/HYBRID MODE as the base. "
+            "Rewrite it only enough to fit the current character name and state. "
+            "Return only the normal GM JSON object."
+        )
+    return build_opening_prompt(session)
+
+
+def _context_debug_for_mode(session: dict[str, Any], player_text: str, opening: bool = False) -> dict[str, Any]:
+    if session.get("gm_mode") == "full":
+        debug = hybrid_context_debug(select_hybrid_context(session, player_text, opening=opening))
+        return {
+            "chars": debug["chars"],
+            "scene": debug["scene"],
+            "matches": {"prepared_turn": [str(debug.get("prepared_turn") or "")], "purpose": [str(debug.get("purpose") or "")]},
+        }
+    return scenario_context_debug(select_scenario_context(session, player_text))
 
 
 def _demo_opening(session: dict[str, Any], error: str) -> str:

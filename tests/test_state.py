@@ -260,6 +260,55 @@ class StateTests(unittest.TestCase):
         fallback = state.create_session(str(self.write_pack()), gm_mode="unknown")
         self.assertEqual(fallback["gm_mode"], "semi")
 
+    def test_full_mode_uses_prepared_turn_context(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["scenes"][0]["hybrid"] = {
+            "mode": "prepared_gm_turns",
+            "prepared_turns": [
+                {
+                    "id": "opening",
+                    "purpose": "opening",
+                    "trigger_keywords": ["開始"],
+                    "draft": {
+                        "gm_text": "GM opening draft.",
+                        "system_log": "opening",
+                        "dice_type": "1d20",
+                        "dice_dc": 10,
+                        "state_delta": {},
+                        "choices": [{"text": "鍛冶屋へ向かう", "preview": "", "risk": ""}],
+                    },
+                },
+                {
+                    "id": "forge_response",
+                    "purpose": "choice_response",
+                    "source_choice": "鍛冶屋へ向かう",
+                    "trigger_keywords": ["鍛冶屋"],
+                    "draft": {
+                        "gm_text": "GM forge draft.",
+                        "system_log": "forge",
+                        "dice_type": "1d20",
+                        "dice_dc": 12,
+                        "state_delta": {"current_scene": "start"},
+                        "choices": [{"text": "剣を修理する", "preview": "", "risk": ""}],
+                    },
+                },
+            ],
+        }
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path), gm_mode="full")
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "鍛冶屋へ向かう")
+
+        messages = state.build_llm_messages(session, {"expression": "1d20", "rolls": [7], "total": 7}, "contract")
+        combined = "\n".join(message["content"] for message in messages)
+
+        self.assertIn("FULL/HYBRID MODE", messages[1]["content"])
+        self.assertIn('"id": "forge_response"', combined)
+        self.assertIn("GM forge draft.", combined)
+        self.assertNotIn('"matched"', combined)
+        self.assertEqual(len(messages), 4)
+
     def test_inventory_items_are_objects(self):
         public = state.create_session(str(self.write_pack()))
 
