@@ -62,6 +62,10 @@
                   "mode": { "type": "string" },
                   "summary": { "type": "string" },
                   "opening": { "type": "string" },
+                  "prepared_turns": {
+                    "type": "array",
+                    "items": { "$ref": "#/$defs/prepared_turn" }
+                  },
                   "dialogue_turns": {
                     "type": "array",
                     "items": { "$ref": "#/$defs/dialogue_turn" }
@@ -166,6 +170,41 @@
               "next_scene": { "type": "string" }
             }
           }
+        }
+      }
+    },
+    "prepared_turn": {
+      "type": "object",
+      "required": ["id", "draft"],
+      "additionalProperties": true,
+      "properties": {
+        "id": { "type": "string" },
+        "purpose": { "type": "string" },
+        "source_choice": { "type": "string" },
+        "player_intent": { "type": "string" },
+        "trigger_keywords": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "draft": {
+          "type": "object",
+          "required": ["gm_text"],
+          "additionalProperties": true,
+          "properties": {
+            "gm_text": { "type": "string" },
+            "system_log": { "type": "string" },
+            "dice_type": { "type": "string" },
+            "dice_dc": { "type": "integer" },
+            "state_delta": { "type": "object" },
+            "choices": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/choice" }
+            }
+          }
+        },
+        "rewrite_notes": {
+          "type": "array",
+          "items": { "type": "string" }
         }
       }
     }

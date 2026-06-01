@@ -139,6 +139,67 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
     return context
 
 
+def select_hybrid_context(session: dict[str, Any], player_text: str = "", opening: bool = False) -> dict[str, Any]:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return {}
+
+    current_scene = str(session.get("current_scene") or pack.get("meta", {}).get("initial_scene") or DEFAULT_SCENE_ID)
+    scene = find_scene(pack, current_scene) or (pack.get("scenes") or [{}])[0]
+    prepared_turn = select_hybrid_prepared_turn(session, player_text, opening=opening)
+    return {
+        "meta": pack.get("meta", {}),
+        "rules": pack.get("rules", []),
+        "current_scene": {
+            "id": scene.get("id"),
+            "title": scene.get("title"),
+            "description": scene.get("description"),
+            "goals": scene.get("goals", []),
+        },
+        "prepared_turn": prepared_turn,
+        "fallback_choices": fallback_choices_for_scene(pack, current_scene),
+    }
+
+
+def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", opening: bool = False) -> dict[str, Any]:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return {}
+    current_scene = str(session.get("current_scene") or pack.get("meta", {}).get("initial_scene") or DEFAULT_SCENE_ID)
+    scene = find_scene(pack, current_scene)
+    if not scene:
+        return {}
+    hybrid = scene.get("hybrid") if isinstance(scene.get("hybrid"), dict) else {}
+    prepared_turns = hybrid.get("prepared_turns") if isinstance(hybrid.get("prepared_turns"), list) else []
+    if not prepared_turns:
+        return _legacy_dialogue_turn_as_prepared(hybrid, opening)
+
+    if opening:
+        for turn in prepared_turns:
+            if _turn_purpose(turn) == "opening":
+                return deepcopy(turn)
+        return deepcopy(prepared_turns[0]) if prepared_turns else {}
+
+    searchable_text = " ".join(
+        part
+        for part in (
+            player_text,
+            _latest_user_text(session),
+            _latest_assistant_text(session),
+            str(scene.get("title", "")),
+        )
+        if part
+    )
+    scored = [(_prepared_turn_score(turn, searchable_text), index, turn) for index, turn in enumerate(prepared_turns)]
+    scored.sort(key=lambda item: (item[0], -item[1]), reverse=True)
+    if scored and scored[0][0] > 0:
+        return deepcopy(scored[0][2])
+    for turn in prepared_turns:
+        if _turn_purpose(turn) != "opening":
+            return deepcopy(turn)
+    return deepcopy(prepared_turns[0]) if prepared_turns else {}
+
+
 def fallback_choices_for_session(session: dict[str, Any]) -> list[dict[str, str]]:
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
@@ -186,6 +247,16 @@ def scenario_context_debug(context: dict[str, Any]) -> dict[str, Any]:
         "chars": len(json.dumps(context, ensure_ascii=False)),
         "scene": (context.get("current_scene") or {}).get("id") if isinstance(context.get("current_scene"), dict) else "",
         "matches": {key: [str(item.get("id") or item.get("name") or item.get("title")) for item in value] for key, value in matched.items()},
+    }
+
+
+def hybrid_context_debug(context: dict[str, Any]) -> dict[str, Any]:
+    prepared = context.get("prepared_turn") if isinstance(context.get("prepared_turn"), dict) else {}
+    return {
+        "chars": len(json.dumps(context, ensure_ascii=False)),
+        "scene": (context.get("current_scene") or {}).get("id") if isinstance(context.get("current_scene"), dict) else "",
+        "prepared_turn": prepared.get("id", ""),
+        "purpose": prepared.get("purpose", ""),
     }
 
 
@@ -259,6 +330,55 @@ def _latest_user_text(session: dict[str, Any]) -> str:
         if message.get("role") == "user":
             return str(message.get("text") or "")
     return ""
+
+
+def _latest_assistant_text(session: dict[str, Any]) -> str:
+    for message in reversed(session.get("messages", [])):
+        if message.get("role") == "assistant":
+            return str(message.get("text") or "")
+    return ""
+
+
+def _turn_purpose(turn: Any) -> str:
+    return str(turn.get("purpose") or "").strip().lower() if isinstance(turn, dict) else ""
+
+
+def _prepared_turn_score(turn: Any, text: str) -> int:
+    if not isinstance(turn, dict) or not text:
+        return 0
+    needles = []
+    needles.extend(_as_text_list(turn.get("trigger_keywords")))
+    needles.append(str(turn.get("source_choice") or ""))
+    needles.append(str(turn.get("player_intent") or ""))
+    draft = turn.get("draft") if isinstance(turn.get("draft"), dict) else {}
+    for choice in normalize_choices(draft.get("choices")):
+        needles.append(choice["text"])
+    return sum(1 for needle in needles if needle and needle in text)
+
+
+def _legacy_dialogue_turn_as_prepared(hybrid: dict[str, Any], opening: bool) -> dict[str, Any]:
+    turns = hybrid.get("dialogue_turns") if isinstance(hybrid.get("dialogue_turns"), list) else []
+    if not turns:
+        return {}
+    source = turns[0]
+    if not isinstance(source, dict):
+        return {}
+    return {
+        "id": str(source.get("id") or ("opening" if opening else "legacy_turn")),
+        "purpose": "opening" if opening else "choice_response",
+        "source_choice": "",
+        "player_intent": "",
+        "trigger_keywords": _as_text_list(source.get("trigger_keywords")),
+        "draft": {
+            "gm_text": str(source.get("gm_text") or source.get("text") or hybrid.get("opening") or ""),
+            "system_log": "",
+            "dice_type": "1d20",
+            "dice_dc": 10,
+            "state_delta": source.get("state_delta") if isinstance(source.get("state_delta"), dict) else {},
+            "choices": normalize_choices(source.get("choices")),
+        },
+        "rewrite_notes": ["Legacy dialogue_turn converted to prepared_turn for compatibility."],
+    }
 
 
 def _as_list(value: Any) -> list[Any]:
