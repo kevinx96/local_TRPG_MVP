@@ -15,6 +15,7 @@ const els = {
   gameScreen:      document.querySelector("#gameScreen"),
   backendSelect:   document.querySelector("#backendSelect"),
   modelSelect:     document.querySelector("#modelSelect"),
+  gmModeInputs:    document.querySelectorAll('input[name="gmMode"]'),
   heroNameInput:   document.querySelector("#heroNameInput"),
   startButton:     document.querySelector("#startButton"),
   startBtnText:    document.querySelector(".start-btn-text"),
@@ -65,6 +66,7 @@ let cachedConfig = null;
    ═══════════════════════════════════════════════════ */
 
 async function init() {
+  restoreGmMode();
   await loadConfig();
 }
 
@@ -123,6 +125,8 @@ async function startGame() {
   const heroGender = document.querySelector('input[name="heroGender"]:checked')?.value || "男勇者";
   const backend = els.backendSelect ? els.backendSelect.value : "ollama";
   const model = els.modelSelect ? els.modelSelect.value : "";
+  const gmMode = document.querySelector('input[name="gmMode"]:checked')?.value || "semi";
+  localStorage.setItem("trpg.gmMode", gmMode);
   setStartBusy(true);
   try {
     // Update config first
@@ -138,6 +142,7 @@ async function startGame() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         scenario_path: "host/prompt/processed/dragon_rpg.json",
+        gm_mode: gmMode,
         character: { 
           name: heroName,
           description: heroGender,
@@ -154,6 +159,13 @@ async function startGame() {
     els.backendStatus.textContent = `エラー: ${err.message}`;
   } finally {
     setStartBusy(false);
+  }
+}
+
+function restoreGmMode() {
+  const saved = localStorage.getItem("trpg.gmMode") || "semi";
+  for (const input of els.gmModeInputs || []) {
+    input.checked = input.value === saved;
   }
 }
 
@@ -524,6 +536,11 @@ els.newSessionButton.addEventListener("click", newSession);
 if (els.backendSelect) {
   els.backendSelect.addEventListener("change", () => {
     if (cachedConfig) populateModelSelect(cachedConfig);
+  });
+}
+for (const input of els.gmModeInputs || []) {
+  input.addEventListener("change", () => {
+    if (input.checked) localStorage.setItem("trpg.gmMode", input.value);
   });
 }
 

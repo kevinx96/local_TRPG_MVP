@@ -38,6 +38,7 @@ app.mount("/static", StaticFiles(directory=CLIENT_ROOT), name="static")
 
 class CreateSessionRequest(BaseModel):
     scenario_path: Optional[str] = None
+    gm_mode: Optional[str] = None
     character: Optional[dict[str, Any]] = None
 
 
@@ -211,7 +212,7 @@ def _write_scenario_json(path: Path, scenario: dict[str, Any]) -> None:
 @app.post("/api/sessions")
 def api_create_session(request: CreateSessionRequest) -> dict[str, Any]:
     try:
-        session_public = create_session(request.scenario_path, request.character)
+        session_public = create_session(request.scenario_path, request.character, request.gm_mode)
         session = load_session(session_public["id"])
         if session.get("needs_opening"):
             return _run_opening(session)
