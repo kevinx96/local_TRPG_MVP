@@ -410,28 +410,7 @@ def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], con
     character = session["character"]
     player_text = _latest_player_text(session)
     scenario_context = select_scenario_context(session, player_text)
-    inventory_summary = [(i["name"] if isinstance(i, dict) else i) for i in character.get("inventory", [])]
-    state_summary = json.dumps(
-        {
-            "gm_mode": session.get("gm_mode", "semi"),
-            "current_scene": session["current_scene"],
-            "current_scene_title": scene_title(session),
-            "character": {
-                "name": character.get("name"),
-                "hp": character.get("hp"),
-                "max_hp": character.get("max_hp"),
-                "mp": character.get("mp"),
-                "max_mp": character.get("max_mp"),
-                "sp": character.get("sp"),
-                "max_sp": character.get("max_sp"),
-                "gold": character.get("gold", 0),
-                "inventory": inventory_summary,
-                "equipment": character.get("equipment", []),
-            },
-            "latest_dice_roll": latest_roll,
-        },
-        ensure_ascii=False,
-    )
+    state_summary = _current_state_summary(session, character, latest_roll)
     messages: list[dict[str, str]] = [
         {"role": "system", "content": contract_prompt},
         {"role": "system", "content": "シナリオコンテキスト:\n" + json.dumps(scenario_context, ensure_ascii=False)},
@@ -462,18 +441,18 @@ def _build_hybrid_llm_messages(session: dict[str, Any], latest_roll: dict[str, A
         {
             "role": "system",
             "content": (
-                "FULL/HYBRID MODE\n"
-                "Use the prepared_turn.draft as the base GM response. "
-                "Lightly rewrite gm_text to match the player's exact wording and current state. "
-                "Keep draft.state_delta, dice_type, dice_dc, and choices unless the player's action clearly requires a small adjustment. "
-                "Return only the normal GM JSON object.\n"
+                "【FULL/HYBRIDモード】\n"
+                "prepared_turn.draft をGM応答のベースとして使用してください。\n"
+                "gm_text はプレイヤーの発言と現在の状態に合わせて自然に書き換えてください。\n"
+                "draft.state_delta, dice_type, dice_dc, choices はプレイヤーの行動が明らかに結果と異なる場合のみ調整してください。\n"
+                "出力は通常のGM JSONオブジェクト1つだけにしてください。\n\n"
                 + json.dumps(hybrid_context, ensure_ascii=False)
             ),
         },
-        {"role": "system", "content": "CURRENT GAME STATE\n" + state_summary},
+        {"role": "system", "content": "現在のゲーム状態:\n" + state_summary},
     ]
     if player_text:
-        messages.append({"role": "user", "content": f"Player action: {player_text}"})
+        messages.append({"role": "user", "content": f"プレイヤー: {player_text}"})
     return messages
 
 
