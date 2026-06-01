@@ -238,6 +238,17 @@ class StateTests(unittest.TestCase):
         self.assertEqual(len(public["messages"]), 0)
         self.assertEqual(public["current_scene"], "start")
 
+    def test_create_session_stores_gm_mode(self):
+        public = state.create_session(str(self.write_pack()), gm_mode="full")
+        session = state.load_session(public["id"])
+        messages = state.build_llm_messages(session, {"expression": "opening", "rolls": [], "total": 0}, "contract")
+
+        self.assertEqual(public["gm_mode"], "full")
+        self.assertIn('"gm_mode": "full"', messages[2]["content"])
+
+        fallback = state.create_session(str(self.write_pack()), gm_mode="unknown")
+        self.assertEqual(fallback["gm_mode"], "semi")
+
     def test_inventory_items_are_objects(self):
         public = state.create_session(str(self.write_pack()))
 

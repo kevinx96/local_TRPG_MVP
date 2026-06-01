@@ -146,6 +146,7 @@ def read_scenario_prompt(path: Path) -> str:
 def create_session(
     scenario_path: Optional[str] = None,
     character_overrides: Optional[dict[str, Any]] = None,
+    gm_mode: Optional[str] = None,
 ) -> dict[str, Any]:
     path = resolve_local_path(scenario_path)
     scenario_pack = load_scenario_pack(path)
@@ -163,6 +164,7 @@ def create_session(
         "id": uuid.uuid4().hex,
         "scenario_path": str(path),
         "scenario_title": str(meta.get("title") or path.stem),
+        "gm_mode": _normalize_gm_mode(gm_mode),
         "scenario_pack": scenario_pack,
         "current_scene": str(meta.get("initial_scene") or "start"),
         "character": character,
@@ -178,6 +180,11 @@ def create_session(
     }
     save_session(session)
     return public_session(session)
+
+
+def _normalize_gm_mode(value: Optional[str]) -> str:
+    mode = str(value or "semi").strip().lower()
+    return mode if mode in {"semi", "full"} else "semi"
 
 
 def load_session(session_id: str) -> dict[str, Any]:
@@ -401,6 +408,7 @@ def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], con
     inventory_summary = [(i["name"] if isinstance(i, dict) else i) for i in character.get("inventory", [])]
     state_summary = json.dumps(
         {
+            "gm_mode": session.get("gm_mode", "semi"),
             "current_scene": session["current_scene"],
             "current_scene_title": scene_title(session),
             "character": {
