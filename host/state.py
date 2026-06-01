@@ -84,8 +84,9 @@ def load_config(path: Optional[Path] = None) -> dict[str, Any]:
 
 
 def save_config(config: dict[str, Any], path: Optional[Path] = None) -> None:
-    config_path = path or HOST_ROOT / "config.json"
-    config_path.write_text(json.dumps(config, indent=2, ensure_ascii=False), encoding="utf-8")
+    base_config_path = path or HOST_ROOT / "config.json"
+    target_path = base_config_path if path else _local_config_path(base_config_path)
+    target_path.write_text(json.dumps(config, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
 def _local_config_path(config_path: Path) -> Path:

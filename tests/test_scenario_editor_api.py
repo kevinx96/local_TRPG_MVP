@@ -76,6 +76,33 @@ class ScenarioEditorApiTests(unittest.TestCase):
             app_module.api_create_scenario(app_module.ScenarioCreateRequest(filename="bad.json", scenario={"meta": {}}))
         self.assertEqual(caught.exception.status_code, 400)
 
+    def test_config_info_does_not_expose_backend_secrets(self):
+        original_load_config = app_module.load_config
+        app_module.load_config = lambda: {
+            "active_backend": "ollama",
+            "backends": {
+                "ollama": {
+                    "base_url": "https://ollama.example.com/v1",
+                    "model": "qwen",
+                    "fallback_models": ["elyza"],
+                    "api_key": "secret-key",
+                    "headers": {
+                        "CF-Access-Client-Id": "client-id",
+                        "CF-Access-Client-Secret": "client-secret",
+                    },
+                }
+            },
+        }
+        try:
+            config = app_module.config_info()
+        finally:
+            app_module.load_config = original_load_config
+
+        backend = config["backends"]["ollama"]
+        self.assertEqual(backend["model"], "qwen")
+        self.assertNotIn("api_key", backend)
+        self.assertNotIn("headers", backend)
+
 
 if __name__ == "__main__":
     unittest.main()

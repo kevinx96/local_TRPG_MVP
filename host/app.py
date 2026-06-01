@@ -75,7 +75,7 @@ def config_info() -> dict[str, Any]:
         "active_backend": backend_name,
         "base_url": backend.get("base_url"),
         "model": backend.get("model"),
-        "backends": config.get("backends", {}),
+        "backends": _public_backends(config.get("backends", {})),
     }
 
 
@@ -105,6 +105,21 @@ def api_update_config(request: UpdateConfigRequest) -> dict[str, Any]:
 def _configured_model_candidates(backend: dict[str, Any]) -> list[str]:
     candidates = [backend.get("model"), *(backend.get("fallback_models") or [])]
     return [str(model) for index, model in enumerate(candidates) if model and model not in candidates[:index]]
+
+
+def _public_backends(backends: Any) -> dict[str, dict[str, Any]]:
+    if not isinstance(backends, dict):
+        return {}
+    public: dict[str, dict[str, Any]] = {}
+    for name, backend in backends.items():
+        if not isinstance(backend, dict):
+            continue
+        public[str(name)] = {
+            "base_url": backend.get("base_url"),
+            "model": backend.get("model"),
+            "fallback_models": backend.get("fallback_models") or [],
+        }
+    return public
 
 
 @app.get("/api/scenarios")
