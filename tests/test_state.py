@@ -105,6 +105,17 @@ class StateTests(unittest.TestCase):
         self.assertEqual(public["current_scene_title"], "広場")
         self.assertNotIn("scenario_pack", public)
 
+    def test_scenario_pack_preserves_meta_extensions(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["meta"]["hybrid_mode"] = "full"
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        self.assertEqual(session["scenario_pack"]["meta"]["hybrid_mode"], "full")
+
     def test_load_config_merges_local_config_and_env_base_url(self):
         config_path = self.tmp_path / "config.json"
         local_path = self.tmp_path / "local_config.json"
