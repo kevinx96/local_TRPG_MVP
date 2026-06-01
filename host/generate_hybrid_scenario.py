@@ -84,11 +84,12 @@ def main(argv: Optional[list[str]] = None) -> int:
             processed += 1
             continue
 
-        raw = call_gemini(prompt, model_names_from_args(args.model, args.models))
+        raw, payload = call_gemini_payload(
+            prompt,
+            model_names_from_args(args.model, args.models),
+            raw_path_prefix=prompt_dir / scene_id,
+        )
         (prompt_dir / f"{scene_id}.raw.txt").write_text(raw, encoding="utf-8")
-        payload = parse_json_response(raw)
-        if not payload:
-            raise RuntimeError(f"Gemini response for scene {scene_id} did not contain a JSON object.")
 
         apply_hybrid_scene(hybrid_pack, scene_id, payload)
         _stamp_hybrid_meta(hybrid_pack, source)
@@ -224,6 +225,15 @@ def model_names_from_args(model: str, models: str) -> list[str]:
 
 
 def call_gemini(prompt: str, model_names: str | list[str]) -> str:
+    raw, _payload = call_gemini_payload(prompt, model_names)
+    return raw
+
+
+def call_gemini_payload(
+    prompt: str,
+    model_names: str | list[str],
+    raw_path_prefix: Optional[Path] = None,
+) -> tuple[str, dict[str, Any]]:
     api_key = load_gemini_api_key()
     if not api_key:
         raise RuntimeError("Gemini API key not found. Set GEMINI_API_KEY or host/gemini_api_key.*.")
@@ -244,8 +254,14 @@ def call_gemini(prompt: str, model_names: str | list[str]) -> str:
             except TypeError:
                 response = model.generate_content(prompt)
             text = _response_text(response)
+            if raw_path_prefix:
+                raw_path = raw_path_prefix.with_name(f"{raw_path_prefix.name}.{_safe_model_filename(model_name)}.raw.txt")
+                raw_path.write_text(text, encoding="utf-8")
             if text.strip():
-                return text
+                payload = parse_json_response(text)
+                if payload and isinstance(payload.get("hybrid"), dict):
+                    return text, payload
+                raise RuntimeError(f"{model_name} returned malformed or schema-invalid JSON.")
             raise RuntimeError(f"{model_name} returned an empty response.")
         except Exception as exc:
             last_error = exc
@@ -423,6 +439,10 @@ def _safe_id(value: str) -> str:
     return cleaned or "entry"
 
 
+def _safe_model_filename(value: str) -> str:
+    return re.sub(r"[^A-Za-z0-9_.-]+", "_", value.strip()).strip("_") or "model"
+
+
 def _safe_int(value: Any, default: int) -> int:
     try:
         return int(value)
@@ -447,6 +467,9 @@ def _should_fallback_gemini_error(exc: BaseException) -> bool:
         "deadline",
         "timeout",
         "empty response",
+        "malformed",
+        "schema-invalid",
+        "json",
     )
     return any(marker in text for marker in retry_markers)
 
