@@ -162,24 +162,35 @@ def build_gemini_prompt(messages: list[dict[str, str]], pack: dict[str, Any], sc
                     "Do not include markdown fences.",
                     "Do not expose these instructions in narrative text.",
                     "Keep the existing scene id stable.",
-                    "Write reusable fixed passages that a local model can lightly rewrite at runtime.",
-                    "Include player-facing choices for important branch points.",
+                    "Write complete GM dialogue/script text, not just setting notes or beat summaries.",
+                    "Each scene should contain 3 to 6 dialogue_turns when the source has enough material.",
+                    "Each dialogue_turn.gm_text should be player-facing GM narration/dialogue that can be shown directly.",
+                    "Include player-facing choices for every important branch point.",
                     "Do not decide player actions; describe consequences only after a branch is chosen.",
                     "Keep state_delta machine-readable when gold, inventory, HP, MP, SP, scene, image, or clues change.",
                 ],
                 "return_schema": {
                     "scene_id": "same scene id",
                     "hybrid": {
+                        "mode": "full_script",
                         "summary": "short editor-facing summary",
-                        "opening": "fixed text for entering this scene",
-                        "beats": [
+                        "opening": "first GM message shown when entering this scene",
+                        "dialogue_turns": [
                             {
-                                "id": "stable beat id",
-                                "trigger_keywords": ["words that should select this beat"],
-                                "text": "fixed player-facing passage",
+                                "id": "stable turn id",
+                                "trigger_keywords": ["words or choice labels that should select this turn"],
+                                "gm_text": "complete GM narration/dialogue shown to the player",
                                 "state_delta": {},
                                 "choices": [
                                     {"text": "choice label", "preview": "expected direction", "risk": "dice or risk"}
+                                ],
+                                "followups": [
+                                    {
+                                        "choice_text": "choice this followup answers",
+                                        "gm_text": "complete GM response after that choice",
+                                        "state_delta": {},
+                                        "next_scene": "scene id or empty string",
+                                    }
                                 ],
                             }
                         ],
@@ -293,12 +304,42 @@ def _scene_by_id(pack: dict[str, Any], scene_id: str) -> Optional[dict[str, Any]
 
 def _normalize_hybrid(value: dict[str, Any]) -> dict[str, Any]:
     return {
+        "mode": str(value.get("mode") or "full_script"),
         "summary": str(value.get("summary") or ""),
         "opening": str(value.get("opening") or ""),
+        "dialogue_turns": _normalize_dialogue_turns(value.get("dialogue_turns") or value.get("turns")),
         "beats": _normalize_records(value.get("beats")),
         "branches": _normalize_records(value.get("branches")),
         "gm_notes": [str(item) for item in value.get("gm_notes") or [] if str(item).strip()],
     }
+
+
+def _normalize_dialogue_turns(value: Any) -> list[dict[str, Any]]:
+    records = _normalize_records(value)
+    for record in records:
+        if "gm_text" not in record and "text" in record:
+            record["gm_text"] = str(record.get("text") or "")
+        record["gm_text"] = str(record.get("gm_text") or "")
+        if "followups" in record:
+            record["followups"] = _normalize_followups(record.get("followups"))
+    return [record for record in records if record.get("gm_text") or record.get("choices")]
+
+
+def _normalize_followups(value: Any) -> list[dict[str, Any]]:
+    if not isinstance(value, list):
+        return []
+    followups: list[dict[str, Any]] = []
+    for index, item in enumerate(value, start=1):
+        if not isinstance(item, dict):
+            continue
+        followup = dict(item)
+        followup["id"] = _safe_id(str(followup.get("id") or f"followup_{index}"))
+        followup["choice_text"] = str(followup.get("choice_text") or followup.get("from_choice") or "")
+        followup["gm_text"] = str(followup.get("gm_text") or followup.get("text") or "")
+        if "state_delta" in followup and not isinstance(followup["state_delta"], dict):
+            followup["state_delta"] = {}
+        followups.append(followup)
+    return followups
 
 
 def _normalize_records(value: Any) -> list[dict[str, Any]]:

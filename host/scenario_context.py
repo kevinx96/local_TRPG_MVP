@@ -60,7 +60,8 @@ def legacy_text_pack(path: Path) -> dict[str, Any]:
 
 def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) -> dict[str, Any]:
     meta_raw = raw.get("meta") if isinstance(raw.get("meta"), dict) else {}
-    meta = {
+    meta = {key: deepcopy(value) for key, value in meta_raw.items()}
+    meta.update({
         "title": str(meta_raw.get("title") or raw.get("title") or (path.stem if path else "scenario")),
         "summary": str(meta_raw.get("summary") or raw.get("summary") or ""),
         "language": str(meta_raw.get("language") or raw.get("language") or "ja"),
@@ -69,7 +70,7 @@ def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) ->
             or (raw.get("initial_state_hints") or {}).get("current_scene")
             or DEFAULT_SCENE_ID
         ),
-    }
+    })
     scenes = _normalize_records(raw.get("scenes"), default_id=DEFAULT_SCENE_ID)
     if not scenes:
         scenes = [

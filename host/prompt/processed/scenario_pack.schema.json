@@ -54,6 +54,31 @@
               "fallback_choices": {
                 "type": "array",
                 "items": { "$ref": "#/$defs/choice" }
+              },
+              "hybrid": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "mode": { "type": "string" },
+                  "summary": { "type": "string" },
+                  "opening": { "type": "string" },
+                  "dialogue_turns": {
+                    "type": "array",
+                    "items": { "$ref": "#/$defs/dialogue_turn" }
+                  },
+                  "beats": {
+                    "type": "array",
+                    "items": { "$ref": "#/$defs/record" }
+                  },
+                  "branches": {
+                    "type": "array",
+                    "items": { "$ref": "#/$defs/record" }
+                  },
+                  "gm_notes": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
               }
             }
           }
@@ -112,6 +137,37 @@
           }
         }
       ]
+    },
+    "dialogue_turn": {
+      "type": "object",
+      "required": ["id"],
+      "additionalProperties": true,
+      "properties": {
+        "id": { "type": "string" },
+        "trigger_keywords": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "gm_text": { "type": "string" },
+        "state_delta": { "type": "object" },
+        "choices": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/choice" }
+        },
+        "followups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "choice_text": { "type": "string" },
+              "gm_text": { "type": "string" },
+              "state_delta": { "type": "object" },
+              "next_scene": { "type": "string" }
+            }
+          }
+        }
+      }
     }
   }
 }
