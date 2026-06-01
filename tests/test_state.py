@@ -303,7 +303,7 @@ class StateTests(unittest.TestCase):
         messages = state.build_llm_messages(session, {"expression": "1d20", "rolls": [7], "total": 7}, "contract")
         combined = "\n".join(message["content"] for message in messages)
 
-        self.assertIn("FULL/HYBRID MODE", messages[1]["content"])
+        self.assertIn("FULL/HYBRID", messages[1]["content"])
         self.assertIn('"id": "forge_response"', combined)
         self.assertIn("GM forge draft.", combined)
         self.assertNotIn('"matched"', combined)

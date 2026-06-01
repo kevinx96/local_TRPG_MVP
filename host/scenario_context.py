@@ -129,13 +129,22 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
             if _record_matches(record, searchable_text) or str(record.get("id", "")) in explicit_ids
         ][:6]
 
-    context = {
+    context: dict[str, Any] = {
         "meta": pack.get("meta", {}),
         "rules": pack.get("rules", []),
         "current_scene": _public_record(scene),
         "matched": matched,
         "fallback_choices": fallback_choices_for_scene(pack, current_scene),
     }
+    # Semi mode: inject hybrid hints if available so the LLM has narrative scaffolding
+    hybrid = scene.get("hybrid") if isinstance(scene.get("hybrid"), dict) else None
+    if hybrid:
+        prepared = select_hybrid_prepared_turn(session, player_text, opening=not bool(player_text))
+        if prepared and isinstance(prepared.get("draft"), dict):
+            hint_text = str(prepared["draft"].get("gm_text") or "")[:600]
+            if hint_text:
+                context["narrative_hint"] = hint_text
+                context["hint_choices"] = prepared["draft"].get("choices", [])
     return context
 
 
@@ -346,14 +355,27 @@ def _turn_purpose(turn: Any) -> str:
 def _prepared_turn_score(turn: Any, text: str) -> int:
     if not isinstance(turn, dict) or not text:
         return 0
-    needles = []
-    needles.extend(_as_text_list(turn.get("trigger_keywords")))
-    needles.append(str(turn.get("source_choice") or ""))
-    needles.append(str(turn.get("player_intent") or ""))
+    score = 0
+    # Exact choice-text match gets highest priority (+10)
+    source_choice = str(turn.get("source_choice") or "").strip()
+    if source_choice and source_choice == text.strip():
+        score += 10
+    elif source_choice and source_choice in text:
+        score += 3
+    # Keyword matches
+    for keyword in _as_text_list(turn.get("trigger_keywords")):
+        if keyword in text:
+            score += 2
+    # Player intent
+    intent = str(turn.get("player_intent") or "")
+    if intent and intent in text:
+        score += 1
+    # Draft choice text matches (weaker signal)
     draft = turn.get("draft") if isinstance(turn.get("draft"), dict) else {}
     for choice in normalize_choices(draft.get("choices")):
-        needles.append(choice["text"])
-    return sum(1 for needle in needles if needle and needle in text)
+        if choice["text"] in text:
+            score += 1
+    return score
 
 
 def _legacy_dialogue_turn_as_prepared(hybrid: dict[str, Any], opening: bool) -> dict[str, Any]:
