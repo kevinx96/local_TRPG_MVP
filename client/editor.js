@@ -159,6 +159,21 @@ function render() {
 
 function renderList() {
   const section = state.section;
+  if (section === "hybrid") {
+    els.addRecordButton.style.display = "none";
+    els.listTitle.textContent = "Hybrid prepared turns";
+    const scenes = state.scenario.scenes || [];
+    els.recordList.innerHTML = scenes
+      .map((scene, index) => {
+        const count = scene.hybrid?.prepared_turns?.length || 0;
+        const title = scene.title || scene.id || `Scene ${index + 1}`;
+        return `<button class="record-row ${index === state.selectedIndex ? "active" : ""}" data-index="${index}" type="button">
+          <strong>${escapeHtml(title)}</strong><span>${escapeHtml(scene.id || "")} · ${count} turns</span>
+        </button>`;
+      })
+      .join("");
+    return;
+  }
   const group = GROUPS[section];
   els.addRecordButton.style.display = group ? "" : "none";
   els.listTitle.textContent = group ? group.label : sectionLabel(section);
@@ -182,6 +197,7 @@ function renderEditor() {
   if (state.section === "meta") return renderMeta();
   if (state.section === "rules") return renderStringList("rules", "规则");
   if (state.section === "fallback") return renderChoices("fallback_choices", state.scenario.fallback_choices || [], "全局 fallback choices");
+  if (state.section === "hybrid") return renderHybridEditor();
   if (state.section === "json") return renderJsonEditor();
   return renderRecordEditor(state.section);
 }
@@ -258,6 +274,55 @@ function renderChoices(path, choices, title) {
   </div>`;
 }
 
+function renderHybridEditor() {
+  const scene = state.scenario.scenes[state.selectedIndex];
+  if (!scene) {
+    els.editorPane.innerHTML = `<div class="editor-form"><p class="summary-line">No scene selected.</p></div>`;
+    return;
+  }
+  ensureHybridShape(scene);
+  const basePath = `scenes.${state.selectedIndex}.hybrid`;
+  const turns = scene.hybrid.prepared_turns || [];
+  els.editorPane.innerHTML = `<div class="editor-form">
+    <h2>Hybrid prepared turns · ${escapeHtml(scene.title || scene.id || "")}</h2>
+    <div class="form-grid">
+      ${field("Mode", `${basePath}.mode`, scene.hybrid.mode || "prepared_gm_turns")}
+      <label class="wide">Summary<textarea data-path="${basePath}.summary">${escapeHtml(scene.hybrid.summary || "")}</textarea></label>
+    </div>
+    <h3 class="section-title">Prepared GM turns</h3>
+    <div class="prepared-turn-list">
+      ${turns.map((turn, index) => preparedTurnMarkup(basePath, turn, index)).join("")}
+    </div>
+    <button data-add-prepared-turn="${basePath}.prepared_turns" type="button">Add prepared turn</button>
+  </div>`;
+}
+
+function preparedTurnMarkup(basePath, turn, index) {
+  const path = `${basePath}.prepared_turns.${index}`;
+  const draft = turn.draft || {};
+  return `<section class="prepared-turn">
+    <div class="prepared-turn-head">
+      <h4>${escapeHtml(turn.id || `turn_${index + 1}`)}</h4>
+      <button class="danger" data-remove-prepared-turn="${basePath}.prepared_turns" data-index="${index}" type="button">Remove</button>
+    </div>
+    <div class="form-grid">
+      ${field("ID", `${path}.id`, turn.id || "")}
+      ${field("Purpose", `${path}.purpose`, turn.purpose || "choice_response")}
+      ${field("Source choice", `${path}.source_choice`, turn.source_choice || "")}
+      ${field("Player intent", `${path}.player_intent`, turn.player_intent || "")}
+      ${field("Trigger keywords", `${path}.trigger_keywords`, toCsv(turn.trigger_keywords || []), true)}
+      <label class="wide">GM text<textarea data-path="${path}.draft.gm_text">${escapeHtml(draft.gm_text || "")}</textarea></label>
+      <label class="wide">System log<textarea data-path="${path}.draft.system_log">${escapeHtml(draft.system_log || "")}</textarea></label>
+      ${field("Dice type", `${path}.draft.dice_type`, draft.dice_type || "1d20")}
+      ${field("Dice DC", `${path}.draft.dice_dc`, draft.dice_dc ?? 10, false, true)}
+      <label class="wide">State delta JSON<textarea data-json-path="${path}.draft.state_delta" spellcheck="false">${escapeHtml(JSON.stringify(draft.state_delta || {}, null, 2))}</textarea></label>
+      ${field("Rewrite notes", `${path}.rewrite_notes`, toCsv(turn.rewrite_notes || []), true)}
+    </div>
+    <h4 class="mini-title">Choices</h4>
+    ${choicesMarkup(`${path}.draft.choices`, draft.choices || [])}
+  </section>`;
+}
+
 function renderJsonEditor() {
   els.editorPane.innerHTML = `<div class="editor-form">
     <textarea id="rawJsonInput" class="raw-json" spellcheck="false">${escapeHtml(JSON.stringify(state.scenario, null, 2))}</textarea>
@@ -267,8 +332,23 @@ function renderJsonEditor() {
 
 function handleEditorInput(event) {
   const target = event.target;
+  if (target.dataset.jsonPath) {
+    markDirty();
+    if (event.type !== "change") return;
+    try {
+      setByPath(state.scenario, target.dataset.jsonPath, JSON.parse(target.value || "{}"));
+      setStatus("json applied");
+    } catch (error) {
+      setStatus(`Invalid JSON: ${error.message}`, true);
+    }
+    return;
+  }
   if (target.dataset.path) {
-    const value = target.dataset.csv === "true" ? fromCsv(target.value) : target.value;
+    let value = target.dataset.csv === "true" ? fromCsv(target.value) : target.value;
+    if (target.dataset.number === "true") {
+      const parsed = Number(target.value);
+      value = Number.isFinite(parsed) ? parsed : target.value;
+    }
     setByPath(state.scenario, target.dataset.path, value);
     if (target.dataset.path.endsWith(".id")) syncInitialSceneAfterIdEdit();
     markDirty();
@@ -311,6 +391,19 @@ function handleEditorClick(event) {
     choices.splice(Number(target.dataset.index), 1);
     markDirty();
     renderEditor();
+  }
+  if (target.dataset.addPreparedTurn) {
+    const turns = getByPath(state.scenario, target.dataset.addPreparedTurn, []);
+    setByPath(state.scenario, target.dataset.addPreparedTurn, turns);
+    turns.push(newPreparedTurn(turns.length + 1));
+    markDirty();
+    render();
+  }
+  if (target.dataset.removePreparedTurn) {
+    const turns = getByPath(state.scenario, target.dataset.removePreparedTurn, []);
+    turns.splice(Number(target.dataset.index), 1);
+    markDirty();
+    render();
   }
   if (target.dataset.removeRecord) {
     const group = target.dataset.removeRecord;
@@ -363,8 +456,51 @@ function ensureShape(scenario) {
   scenario.fallback_choices = normalizeChoices(scenario.fallback_choices);
   scenario.scenes.forEach((scene) => {
     scene.fallback_choices = normalizeChoices(scene.fallback_choices);
+    if (scene.hybrid) ensureHybridShape(scene);
   });
   return scenario;
+}
+
+function ensureHybridShape(scene) {
+  scene.hybrid = scene.hybrid && typeof scene.hybrid === "object" ? scene.hybrid : {};
+  scene.hybrid.mode ||= "prepared_gm_turns";
+  scene.hybrid.summary ||= "";
+  scene.hybrid.prepared_turns = Array.isArray(scene.hybrid.prepared_turns) ? scene.hybrid.prepared_turns : [];
+  scene.hybrid.prepared_turns.forEach((turn, index) => {
+    turn.id ||= `prepared_turn_${index + 1}`;
+    turn.purpose ||= index === 0 ? "opening" : "choice_response";
+    turn.source_choice ||= "";
+    turn.player_intent ||= "";
+    turn.trigger_keywords = Array.isArray(turn.trigger_keywords) ? turn.trigger_keywords : [];
+    turn.rewrite_notes = Array.isArray(turn.rewrite_notes) ? turn.rewrite_notes : [];
+    turn.draft = turn.draft && typeof turn.draft === "object" ? turn.draft : {};
+    turn.draft.gm_text ||= "";
+    turn.draft.system_log ||= "";
+    turn.draft.dice_type ||= "1d20";
+    turn.draft.dice_dc = Number.isFinite(Number(turn.draft.dice_dc)) ? Number(turn.draft.dice_dc) : 10;
+    turn.draft.state_delta = turn.draft.state_delta && typeof turn.draft.state_delta === "object" ? turn.draft.state_delta : {};
+    turn.draft.choices = normalizeChoices(turn.draft.choices);
+  });
+  return scene.hybrid;
+}
+
+function newPreparedTurn(index) {
+  return {
+    id: `prepared_turn_${index}`,
+    purpose: index === 1 ? "opening" : "choice_response",
+    source_choice: "",
+    player_intent: "",
+    trigger_keywords: [],
+    draft: {
+      gm_text: "",
+      system_log: "",
+      dice_type: "1d20",
+      dice_dc: 10,
+      state_delta: {},
+      choices: [],
+    },
+    rewrite_notes: [],
+  };
 }
 
 function normalizeChoices(value) {
@@ -399,17 +535,18 @@ function choicesMarkup(path, choices) {
   </div>`;
 }
 
-function field(label, path, value, csv = false) {
-  return `<label>${escapeHtml(label)}<input data-path="${path}" data-csv="${csv ? "true" : "false"}" value="${escapeAttr(value)}" /></label>`;
+function field(label, path, value, csv = false, number = false) {
+  return `<label>${escapeHtml(label)}<input data-path="${path}" data-csv="${csv ? "true" : "false"}" data-number="${number ? "true" : "false"}" value="${escapeAttr(value)}" /></label>`;
 }
 
 function sectionLabel(section) {
-  return ({ meta: "基本信息", rules: "规则", fallback: "全局选项", json: "JSON" })[section] || section;
+  return ({ meta: "基本信息", rules: "规则", hybrid: "Hybrid", fallback: "全局选项", json: "JSON" })[section] || section;
 }
 
 function summaryForSection(section) {
   if (section === "meta") return "编辑标题、摘要、语言和起始场景。";
   if (section === "rules") return `${state.scenario.rules.length} 条规则`;
+  if (section === "hybrid") return `${state.scenario.scenes.length} scenes with editable prepared turns`;
   if (section === "fallback") return `${state.scenario.fallback_choices.length} 个全局选项`;
   if (section === "json") return "直接编辑完整 JSON。";
   return "";

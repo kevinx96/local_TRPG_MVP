@@ -262,6 +262,34 @@ label {
   text-transform: uppercase;
 }
 
+.prepared-turn-list {
+  display: grid;
+  gap: 14px;
+}
+
+.prepared-turn {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: var(--panel);
+}
+
+.prepared-turn-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.prepared-turn h4,
+.mini-title {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+}
+
 .raw-json {
   min-height: calc(100vh - 190px);
   font-family: Consolas, "Cascadia Mono", monospace;
