@@ -126,6 +126,7 @@ class GenerateHybridScenarioTests(unittest.TestCase):
 
     def test_should_fallback_on_quota_errors(self):
         self.assertTrue(_should_fallback_gemini_error(RuntimeError("429 RESOURCE_EXHAUSTED quota exceeded")))
+        self.assertTrue(_should_fallback_gemini_error(RuntimeError("model returned malformed JSON")))
         self.assertFalse(_should_fallback_gemini_error(RuntimeError("invalid API key")))
 
 
