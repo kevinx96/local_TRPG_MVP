@@ -260,6 +260,19 @@ class StateTests(unittest.TestCase):
         fallback = state.create_session(str(self.write_pack()), gm_mode="unknown")
         self.assertEqual(fallback["gm_mode"], "semi")
 
+    def test_full_mode_prefers_sibling_hybrid_pack(self):
+        semi_path = self.write_pack()
+        hybrid_path = semi_path.with_name("scenario_hybrid.json")
+        hybrid = json.loads(semi_path.read_text(encoding="utf-8"))
+        hybrid["meta"]["title"] = "Hybrid pack"
+        hybrid_path.write_text(json.dumps(hybrid, ensure_ascii=False), encoding="utf-8")
+
+        public = state.create_session(str(semi_path), gm_mode="full")
+        session = state.load_session(public["id"])
+
+        self.assertEqual(Path(session["scenario_path"]).name, "scenario_hybrid.json")
+        self.assertEqual(public["scenario_title"], "Hybrid pack")
+
     def test_full_mode_uses_prepared_turn_context(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))

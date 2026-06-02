@@ -150,7 +150,8 @@ def create_session(
     character_overrides: Optional[dict[str, Any]] = None,
     gm_mode: Optional[str] = None,
 ) -> dict[str, Any]:
-    path = resolve_local_path(scenario_path)
+    normalized_gm_mode = _normalize_gm_mode(gm_mode)
+    path = _scenario_path_for_gm_mode(resolve_local_path(scenario_path), normalized_gm_mode)
     scenario_pack = load_scenario_pack(path)
     character = deepcopy(DEFAULT_CHARACTER)
     if character_overrides:
@@ -166,7 +167,7 @@ def create_session(
         "id": uuid.uuid4().hex,
         "scenario_path": str(path),
         "scenario_title": str(meta.get("title") or path.stem),
-        "gm_mode": _normalize_gm_mode(gm_mode),
+        "gm_mode": normalized_gm_mode,
         "scenario_pack": scenario_pack,
         "current_scene": str(meta.get("initial_scene") or "start"),
         "character": character,
@@ -187,6 +188,13 @@ def create_session(
 def _normalize_gm_mode(value: Optional[str]) -> str:
     mode = str(value or "semi").strip().lower()
     return mode if mode in {"semi", "full"} else "semi"
+
+
+def _scenario_path_for_gm_mode(path: Path, gm_mode: str) -> Path:
+    if gm_mode != "full" or path.stem.endswith("_hybrid"):
+        return path
+    hybrid_path = path.with_name(f"{path.stem}_hybrid{path.suffix}")
+    return hybrid_path.resolve() if hybrid_path.exists() else path
 
 
 def load_session(session_id: str) -> dict[str, Any]:
@@ -442,9 +450,11 @@ def _build_hybrid_llm_messages(session: dict[str, Any], latest_roll: dict[str, A
             "role": "system",
             "content": (
                 "【FULL/HYBRIDモード】\n"
-                "prepared_turn.draft をGM応答のベースとして使用してください。\n"
-                "gm_text はプレイヤーの発言と現在の状態に合わせて自然に書き換えてください。\n"
+                "prepared_turn.draft を完成済みのGM応答として扱ってください。\n"
+                "gm_text は原則として draft.gm_text を維持し、プレイヤー名・直前の発言・現在状態に矛盾する最小部分だけを書き換えてください。\n"
+                "ユーザーが名前を入力しただけ、または開始操作だけの場合は、文体・出来事・NPC台詞・報酬内容を変えないでください。\n"
                 "draft.state_delta, dice_type, dice_dc, choices はプレイヤーの行動が明らかに結果と異なる場合のみ調整してください。\n"
+                "新しい展開、未指定のアイテム、未指定の選択肢を追加しないでください。\n"
                 "出力は通常のGM JSONオブジェクト1つだけにしてください。\n\n"
                 + json.dumps(hybrid_context, ensure_ascii=False)
             ),

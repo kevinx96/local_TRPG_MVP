@@ -365,8 +365,9 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
 def _opening_prompt_for_mode(session: dict[str, Any]) -> str:
     if session.get("gm_mode") == "full":
         return (
-            "FULL/HYBRIDモードのprepared openingターンをベースにしてください。"
-            "キャラクター名と現在の状態に合わせて最小限だけ書き換えてください。"
+            "FULL/HYBRIDモードのprepared openingターンを完成済みのGM応答として扱ってください。"
+            "キャラクター名など現在状態に矛盾する最小部分だけを書き換えてください。"
+            "開始時は文体・出来事・NPC台詞・報酬内容・選択肢を原則として変えないでください。"
             "出力はGM JSONオブジェクト1つだけにしてください。"
         )
     return build_opening_prompt(session)
