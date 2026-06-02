@@ -156,8 +156,9 @@ def select_hybrid_context(session: dict[str, Any], player_text: str = "", openin
     current_scene = str(session.get("current_scene") or pack.get("meta", {}).get("initial_scene") or DEFAULT_SCENE_ID)
     scene = find_scene(pack, current_scene) or (pack.get("scenes") or [{}])[0]
     prepared_turn = select_hybrid_prepared_turn(session, player_text, opening=opening)
+    meta = pack.get("meta", {})
     return {
-        "meta": pack.get("meta", {}),
+        "meta": meta,
         "rules": pack.get("rules", []),
         "current_scene": {
             "id": scene.get("id"),
@@ -165,7 +166,7 @@ def select_hybrid_context(session: dict[str, Any], player_text: str = "", openin
             "description": scene.get("description"),
             "goals": scene.get("goals", []),
         },
-        "prepared_turn": prepared_turn,
+        "prepared_turn": _prepared_turn_for_llm(prepared_turn, str(meta.get("language") or "")),
         "fallback_choices": fallback_choices_for_scene(pack, current_scene),
     }
 
@@ -267,6 +268,36 @@ def hybrid_context_debug(context: dict[str, Any]) -> dict[str, Any]:
         "prepared_turn": prepared.get("id", ""),
         "purpose": prepared.get("purpose", ""),
     }
+
+
+def _prepared_turn_for_llm(turn: Any, language: str = "") -> dict[str, Any]:
+    if not isinstance(turn, dict):
+        return {}
+    draft = turn.get("draft") if isinstance(turn.get("draft"), dict) else {}
+    result: dict[str, Any] = {
+        "draft": {
+            "gm_text": draft.get("gm_text", ""),
+            "system_log": draft.get("system_log", ""),
+            "dice_type": draft.get("dice_type", "null"),
+            "dice_dc": draft.get("dice_dc", 0),
+            "state_delta": draft.get("state_delta", {}),
+            "choices": draft.get("choices", []),
+        },
+    }
+    notes = _as_text_list(turn.get("rewrite_notes"))
+    if language.lower().startswith("ja"):
+        notes = [note for note in notes if _contains_japanese(note)]
+    if notes:
+        result["rewrite_notes"] = notes
+    return result
+
+
+def _contains_japanese(text: str) -> bool:
+    return any(
+        "\u3040" <= char <= "\u30ff"
+        or "\u3400" <= char <= "\u9fff"
+        for char in text
+    )
 
 
 def find_scene(pack: dict[str, Any], scene_id_or_title: str) -> Optional[dict[str, Any]]:

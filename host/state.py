@@ -455,6 +455,7 @@ def _build_hybrid_llm_messages(session: dict[str, Any], latest_roll: dict[str, A
                 "ユーザーが名前を入力しただけ、または開始操作だけの場合は、文体・出来事・NPC台詞・報酬内容を変えないでください。\n"
                 "draft.state_delta, dice_type, dice_dc, choices はプレイヤーの行動が明らかに結果と異なる場合のみ調整してください。\n"
                 "新しい展開、未指定のアイテム、未指定の選択肢を追加しないでください。\n"
+                "gm_text, system_log, choices は日本語だけで出力してください。英語のIDや補助語を本文へコピーしないでください。\n"
                 "出力は通常のGM JSONオブジェクト1つだけにしてください。\n\n"
                 + json.dumps(hybrid_context, ensure_ascii=False)
             ),

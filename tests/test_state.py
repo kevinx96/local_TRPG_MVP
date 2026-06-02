@@ -297,6 +297,7 @@ class StateTests(unittest.TestCase):
                     "purpose": "choice_response",
                     "source_choice": "鍛冶屋へ向かう",
                     "trigger_keywords": ["鍛冶屋"],
+                    "rewrite_notes": ["Keep this English note out of the LLM context."],
                     "draft": {
                         "gm_text": "GM forge draft.",
                         "system_log": "forge",
@@ -317,8 +318,10 @@ class StateTests(unittest.TestCase):
         combined = "\n".join(message["content"] for message in messages)
 
         self.assertIn("FULL/HYBRID", messages[1]["content"])
-        self.assertIn('"id": "forge_response"', combined)
         self.assertIn("GM forge draft.", combined)
+        self.assertNotIn("trigger_keywords", combined)
+        self.assertNotIn("Keep this English note", combined)
+        self.assertNotIn("forge_response", combined)
         self.assertNotIn('"matched"', combined)
         self.assertEqual(len(messages), 4)
 

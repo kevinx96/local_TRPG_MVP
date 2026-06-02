@@ -1,9 +1,15 @@
 import unittest
 
-from host.gm_contract import STATE_MARKER, sanitize_visible_text, split_visible_and_json
+from host.gm_contract import STATE_MARKER, build_gm_contract_prompt, sanitize_visible_text, split_visible_and_json
 
 
 class GmContractTests(unittest.TestCase):
+    def test_contract_requires_japanese_output(self):
+        prompt = build_gm_contract_prompt()
+
+        self.assertIn("出力言語は日本語だけ", prompt)
+        self.assertIn("英語", prompt)
+
     def test_split_visible_and_json_with_marker(self):
         text = (
             "城門が静かに開いた。\n"
