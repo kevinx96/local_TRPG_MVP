@@ -126,6 +126,9 @@ async function startGame() {
   const backend = els.backendSelect ? els.backendSelect.value : "ollama";
   const model = els.modelSelect ? els.modelSelect.value : "";
   const gmMode = document.querySelector('input[name="gmMode"]:checked')?.value || "semi";
+  const scenarioPath = gmMode === "full"
+    ? "host/prompt/processed/dragon_rpg_hybrid.json"
+    : "host/prompt/processed/dragon_rpg.json";
   localStorage.setItem("trpg.gmMode", gmMode);
   setStartBusy(true);
   try {
@@ -141,7 +144,7 @@ async function startGame() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        scenario_path: "host/prompt/processed/dragon_rpg.json",
+        scenario_path: scenarioPath,
         gm_mode: gmMode,
         character: { 
           name: heroName,
