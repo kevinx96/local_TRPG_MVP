@@ -74,6 +74,52 @@ def editor() -> FileResponse:
     return FileResponse(CLIENT_ROOT / "editor.html")
 
 
+def _ollama_proxy_info() -> tuple[str, dict[str, str]]:
+    """Return (proxy_base_url, extra_headers) for the Ollama backend."""
+    config = load_config()
+    backend = (config.get("backends") or {}).get("ollama", {})
+    base = backend.get("base_url", "http://localhost:11434/v1")
+    # Remove the /v1 (or /v1/) suffix to get the root proxy address
+    if base.rstrip("/").endswith("/v1"):
+        base = base.rstrip("/")[:-3]
+    headers = backend.get("headers") or {}
+    return base.rstrip("/"), {str(k): str(v) for k, v in headers.items()}
+
+
+@app.post("/api/ollama/shutdown")
+def api_ollama_shutdown() -> dict[str, Any]:
+    """Relay shutdown request to the Ollama tunnel proxy."""
+    import requests as _requests
+
+    proxy_base, headers = _ollama_proxy_info()
+    proxy_url = proxy_base + "/api/shutdown"
+    headers["Content-Type"] = "application/json"
+    try:
+        resp = _requests.post(
+            proxy_url,
+            json={"delay_seconds": 30},
+            headers=headers,
+            timeout=10,
+        )
+        return resp.json()
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"无法连接 Ollama 机器: {exc}") from exc
+
+
+@app.get("/api/ollama/shutdown/ping")
+def api_ollama_shutdown_ping() -> dict[str, Any]:
+    """Check if the Ollama tunnel proxy is reachable."""
+    import requests as _requests
+
+    proxy_base, headers = _ollama_proxy_info()
+    proxy_url = proxy_base + "/api/shutdown/ping"
+    try:
+        resp = _requests.get(proxy_url, headers=headers, timeout=5)
+        return resp.json()
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Ollama 机器不可达: {exc}") from exc
+
+
 @app.get("/api/config")
 def config_info() -> dict[str, Any]:
     config = load_config()

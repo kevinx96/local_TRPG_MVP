@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import argparse
+import json
+import subprocess
 import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
@@ -32,11 +34,64 @@ def build_proxy_handler(
     class OllamaTunnelProxyHandler(BaseHTTPRequestHandler):
         server_version = "TRPGOllamaTunnelProxy/0.1"
 
+        # ── Shutdown interception ──────────────────────────────
+
+        def _is_shutdown_post(self) -> bool:
+            return self.command == "POST" and self.path.rstrip("/") == "/api/shutdown"
+
+        def _is_shutdown_ping(self) -> bool:
+            return self.command == "GET" and self.path.rstrip("/") == "/api/shutdown/ping"
+
+        def _send_json(self, code: int, obj: dict[str, Any]) -> None:
+            payload = json.dumps(obj, ensure_ascii=False).encode()
+            self.send_response(code)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(payload)))
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.end_headers()
+            self.wfile.write(payload)
+
+        def _handle_shutdown(self) -> None:
+            body = self._read_body()
+            try:
+                data = json.loads(body) if body else {}
+            except json.JSONDecodeError:
+                data = {}
+            delay = max(0, min(int(data.get("delay_seconds", 30)), 3600))
+
+            if sys.platform == "win32":
+                cmd = ["shutdown", "/s", "/t", str(delay)]
+            else:
+                cmd = ["shutdown", "-h", f"+{max(1, delay // 60)}"]
+
+            self.log_message("SHUTDOWN requested  delay=%ds  cmd=%s", delay, " ".join(cmd))
+            try:
+                subprocess.run(cmd, check=True)
+            except Exception as exc:
+                self._send_json(500, {"status": "error", "message": f"关机命令执行失败: {exc}"})
+                return
+            self._send_json(200, {
+                "status": "ok",
+                "message": f"系统将在 {delay} 秒后关机",
+                "platform": sys.platform,
+            })
+
+        def _handle_shutdown_ping(self) -> None:
+            self._send_json(200, {"status": "ok", "platform": sys.platform})
+
+        # ── HTTP method dispatchers ────────────────────────────
+
         def do_GET(self) -> None:
-            self._proxy()
+            if self._is_shutdown_ping():
+                self._handle_shutdown_ping()
+            else:
+                self._proxy()
 
         def do_POST(self) -> None:
-            self._proxy()
+            if self._is_shutdown_post():
+                self._handle_shutdown()
+            else:
+                self._proxy()
 
         def do_PUT(self) -> None:
             self._proxy()
@@ -45,7 +100,15 @@ def build_proxy_handler(
             self._proxy()
 
         def do_OPTIONS(self) -> None:
-            self._proxy()
+            # Support CORS preflight for /api/shutdown
+            if "/api/shutdown" in self.path:
+                self.send_response(204)
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+                self.send_header("Access-Control-Allow-Headers", "Content-Type")
+                self.end_headers()
+            else:
+                self._proxy()
 
         def log_message(self, format: str, *args: Any) -> None:
             print(f"[OLLAMA-PROXY] {self.address_string()} - {format % args}", file=sys.stderr, flush=True)
@@ -64,7 +127,10 @@ def build_proxy_handler(
                     timeout=timeout_seconds,
                 )
             except requests.RequestException as exc:
-                self.send_error(502, f"Ollama proxy upstream error: {exc}")
+                # send_error uses latin-1 for the status line, which crashes
+                # on non-ASCII chars (e.g. Chinese Windows error messages).
+                safe_msg = str(exc).encode("ascii", "replace").decode("ascii")
+                self.send_error(502, f"Ollama proxy upstream error: {safe_msg}")
                 return
 
             self.send_response(upstream.status_code)
