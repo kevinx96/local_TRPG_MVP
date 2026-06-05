@@ -98,6 +98,17 @@ def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) ->
     }
     for group in ENTITY_GROUPS:
         pack[group] = _normalize_records(raw.get(group))
+    if isinstance(raw.get("attribute_defs"), list):
+        pack["attribute_defs"] = [
+            {"id": str(a.get("id", "")), "name": str(a.get("name", "")), "initial_value": _safe_number(a.get("initial_value"), 8)}
+            for a in raw["attribute_defs"] if isinstance(a, dict) and a.get("id")
+        ]
+    else:
+        pack["attribute_defs"] = []
+    if isinstance(raw.get("characters"), list):
+        pack["characters"] = [_normalize_character_record(c) for c in raw["characters"] if isinstance(c, dict)]
+    else:
+        pack["characters"] = []
     return pack
 
 
@@ -442,3 +453,35 @@ def _as_list(value: Any) -> list[Any]:
 
 def _as_text_list(value: Any) -> list[str]:
     return [str(item).strip() for item in _as_list(value) if str(item).strip()]
+
+
+def _safe_number(value: Any, default: int = 0) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _normalize_character_record(raw: dict[str, Any]) -> dict[str, Any]:
+    record: dict[str, Any] = {
+        "id": str(raw.get("id", "")),
+        "name": str(raw.get("name", "")),
+        "default_name": str(raw.get("default_name") or raw.get("name") or ""),
+        "description": str(raw.get("description", "")),
+        "image": str(raw.get("image", "")) if raw.get("image") else "",
+    }
+    if raw.get("image_female"):
+        record["image_female"] = str(raw["image_female"])
+    for stat in ("hp", "max_hp", "mp", "max_mp", "sp", "max_sp", "gold"):
+        record[stat] = _safe_number(raw.get(stat), 0)
+    attrs = raw.get("attributes")
+    record["attributes"] = {str(k): _safe_number(v, 0) for k, v in attrs.items()} if isinstance(attrs, dict) else {}
+    if isinstance(raw.get("inventory"), list):
+        record["inventory"] = deepcopy(raw["inventory"])
+    else:
+        record["inventory"] = []
+    if isinstance(raw.get("equipment"), list):
+        record["equipment"] = _as_text_list(raw["equipment"])
+    else:
+        record["equipment"] = []
+    return record

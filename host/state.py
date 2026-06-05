@@ -46,6 +46,7 @@ DEFAULT_ITEM_CATALOG: dict[str, dict[str, str]] = {
 DEFAULT_CHARACTER: dict[str, Any] = {
     "name": "アルス",
     "description": "世界を救うため旅立つ若き冒険者。",
+    "character_id": "",
     "hp": 20,
     "max_hp": 20,
     "mp": 8,
@@ -53,6 +54,7 @@ DEFAULT_CHARACTER: dict[str, Any] = {
     "sp": 10,
     "max_sp": 10,
     "gold": 0,
+    "attributes": {},
     "inventory": [
         {"name": "鉄の剣", "description": DEFAULT_ITEM_CATALOG["鉄の剣"]["description"], "effect": DEFAULT_ITEM_CATALOG["鉄の剣"]["effect"], "quantity": 1},
         {"name": "革の鎧", "description": DEFAULT_ITEM_CATALOG["革の鎧"]["description"], "effect": DEFAULT_ITEM_CATALOG["革の鎧"]["effect"], "quantity": 1},
@@ -68,6 +70,8 @@ PROTOCOL_WARNING_LOGS = (
     "GM応答のJSONを解析できませんでした。",
     "GM応答に状態JSONが含まれていませんでした。",
 )
+
+_DICE_ATTR_RE = re.compile(r"^(\d+d\d+)(?:\+(\w+))?$", re.IGNORECASE)
 
 
 def utc_now() -> str:
@@ -149,11 +153,20 @@ def create_session(
     scenario_path: Optional[str] = None,
     character_overrides: Optional[dict[str, Any]] = None,
     gm_mode: Optional[str] = None,
+    character_id: Optional[str] = None,
 ) -> dict[str, Any]:
     normalized_gm_mode = _normalize_gm_mode(gm_mode)
     path = _scenario_path_for_gm_mode(resolve_local_path(scenario_path), normalized_gm_mode)
     scenario_pack = load_scenario_pack(path)
     character = deepcopy(DEFAULT_CHARACTER)
+
+    if character_id:
+        char_template = _find_character_in_pack(scenario_pack, character_id)
+        if char_template:
+            character = _character_from_template(char_template)
+        else:
+            character["character_id"] = character_id
+
     if character_overrides:
         if "name" in character_overrides:
             character["name"] = character_overrides["name"]
@@ -256,9 +269,27 @@ def _is_protocol_warning_log(text: str) -> bool:
 
 
 def roll_dice(session: dict[str, Any], expression: str = "1d20") -> dict[str, Any]:
-    count, sides = _parse_dice_expression(expression)
+    expr = str(expression or "").strip() or "1d20"
+    dice_part = expr
+    attr_key = ""
+    dice_match = _DICE_ATTR_RE.match(expr)
+    if dice_match:
+        dice_part = dice_match.group(1)
+        attr_key = dice_match.group(2) or ""
+    count, sides = _parse_dice_expression(dice_part)
     rolls = [random.randint(1, sides) for _ in range(count)]
-    entry = {"expression": expression, "rolls": rolls, "total": sum(rolls), "created_at": utc_now()}
+    base_total = sum(rolls)
+    attr_mod = 0
+    if attr_key:
+        character = session.get("character", {})
+        attrs = character.get("attributes", {}) if isinstance(character.get("attributes"), dict) else {}
+        attr_mod = int(attrs.get(attr_key, 0))
+    total = base_total + attr_mod
+    entry: dict[str, Any] = {"expression": expr, "rolls": rolls, "total": total, "created_at": utc_now()}
+    if attr_key:
+        entry["base_total"] = base_total
+        entry["attr_mod"] = attr_mod
+        entry["attr_key"] = attr_key
     session["dice_log"].append(entry)
     return entry
 
@@ -387,6 +418,19 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
         if isinstance(delta.get(image_key), str):
             character[image_key] = delta[image_key]
 
+    attr_changes = delta.get("attribute_changes")
+    if isinstance(attr_changes, dict):
+        attrs = character.setdefault("attributes", {})
+        for attr_key, attr_change in attr_changes.items():
+            if isinstance(attr_change, (int, float)):
+                before = int(attrs.get(attr_key, 0))
+                attrs[attr_key] = before + int(attr_change)
+                actual_change = int(attrs[attr_key]) - before
+                if actual_change > 0:
+                    add_system_log(session, f"{attr_key}が{actual_change}上昇しました。")
+                elif actual_change < 0:
+                    add_system_log(session, f"{attr_key}が{abs(actual_change)}減少しました。")
+
     if isinstance(delta.get("current_scene"), str) and delta["current_scene"].strip():
         pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else None
         current_scene = delta["current_scene"].strip()
@@ -476,6 +520,7 @@ def _current_state_summary(session: dict[str, Any], character: dict[str, Any], l
             "current_scene_title": scene_title(session),
             "character": {
                 "name": character.get("name"),
+                "character_id": character.get("character_id", ""),
                 "hp": character.get("hp"),
                 "max_hp": character.get("max_hp"),
                 "mp": character.get("mp"),
@@ -483,6 +528,7 @@ def _current_state_summary(session: dict[str, Any], character: dict[str, Any], l
                 "sp": character.get("sp"),
                 "max_sp": character.get("max_sp"),
                 "gold": character.get("gold", 0),
+                "attributes": character.get("attributes", {}),
                 "inventory": inventory_summary,
                 "equipment": character.get("equipment", []),
             },
@@ -560,6 +606,12 @@ def _normalize_character(character: dict[str, Any]) -> None:
         character[stat] = max(0, min(character[max_key], int(character.get(stat, character[max_key]))))
     character["equipment"] = _as_text_list(character.get("equipment"))
     character["gold"] = max(0, int(character.get("gold", 0)))
+    character["character_id"] = str(character.get("character_id") or "")
+    attrs = character.get("attributes") if isinstance(character.get("attributes"), dict) else {}
+    character["attributes"] = {
+        str(key): int(value) if isinstance(value, (int, float)) else 0
+        for key, value in attrs.items()
+    }
     raw_inv = character.get("inventory", [])
     if isinstance(raw_inv, list):
         character["inventory"] = [_ensure_item_object(i) for i in raw_inv]
@@ -570,6 +622,37 @@ def _ensure_item_object(item: Any) -> dict[str, Union[str, int]]:
         return _enrich_item(item)
     name = str(item).strip() if item else "不明"
     return _enrich_item({"name": name})
+
+
+def _find_character_in_pack(pack: dict[str, Any], character_id: str) -> Optional[dict[str, Any]]:
+    characters = pack.get("characters")
+    if not isinstance(characters, list):
+        return None
+    for char in characters:
+        if isinstance(char, dict) and str(char.get("id")) == character_id:
+            return char
+    return None
+
+
+def _character_from_template(template: dict[str, Any]) -> dict[str, Any]:
+    character = deepcopy(DEFAULT_CHARACTER)
+    character["character_id"] = str(template.get("id", ""))
+    character["name"] = str(template.get("default_name") or template.get("name") or character["name"])
+    character["description"] = str(template.get("description") or character["description"])
+    if template.get("image") or template.get("character_image"):
+        character["character_image"] = str(template.get("image") or template.get("character_image") or "")
+    for stat in ("hp", "max_hp", "mp", "max_mp", "sp", "max_sp", "gold"):
+        if isinstance(template.get(stat), (int, float)):
+            character[stat] = int(template[stat])
+    attrs = template.get("attributes")
+    if isinstance(attrs, dict):
+        character["attributes"] = {str(k): int(v) if isinstance(v, (int, float)) else 0 for k, v in attrs.items()}
+    if isinstance(template.get("inventory"), list):
+        character["inventory"] = deepcopy(template["inventory"])
+    if isinstance(template.get("equipment"), list):
+        character["equipment"] = _as_text_list(template["equipment"])
+    _normalize_character(character)
+    return character
 
 
 def _as_item_list(value: Any) -> list[dict[str, Any]]:

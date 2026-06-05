@@ -50,6 +50,9 @@ def build_gm_contract_prompt() -> str:
         "・gm_text には『JSON:』『現在あなたは』『次のステップは何をしますか』などの内部指示を書かないでください。\n\n"
         "【状態更新】\n"
         "・ダイス種別はGMが必要に応じて決めてください（例: 1d20, 2d6, 1d100）。\n"
+        "・属性判定が必要な場合は dice_type に属性idを付加してください（例: 1d20+str で筋力判定）。\n"
+        "・キャラクターの属性値が自動でダイス結果に加算されます。空の場合は通常の 1d20 として扱われます。\n"
+        "・state_delta.attribute_changes で属性値の増減を反映できます（例: {\"str\": -2, \"dex\": +1}）。\n"
         "・state_delta.current_scene は、場面が変わった時だけ scene id または scene title を入れてください。\n"
         "・アイテム追加時は name, description, effect, quantity をできるだけ含めてください。\n"
         "・行動選択肢は choices にだけ3つ入れてください。choices.text, choices.preview, choices.risk も日本語にしてください。\n\n"
@@ -65,13 +68,14 @@ def build_gm_contract_prompt() -> str:
         '    "mp_change": 0,\n'
         '    "sp_change": 0,\n'
         '    "gold_change": 0,\n'
+        '    "attribute_changes": {},\n'
         '    "inventory_add": [],\n'
         '    "inventory_remove": [],\n'
         '    "current_scene": null\n'
         "  },\n"
         '  "choices": [\n'
         '    {"text": "行動内容", "preview": "予想される展開", "risk": "判定不要"},\n'
-        '    {"text": "行動内容", "preview": "予想される展開", "risk": "1d20判定（DC12）"},\n'
+        '    {"text": "行動内容", "preview": "予想される展開", "risk": "1d20+str判定（DC12）"},\n'
         '    {"text": "行動内容", "preview": "予想される展開", "risk": "危険"}\n'
         "  ]\n"
         "}"

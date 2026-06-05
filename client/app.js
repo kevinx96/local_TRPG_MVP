@@ -6,6 +6,11 @@ const state = {
   sessionId: null,
   pendingChoices: [],
   choicesRevealed: false,
+  selectedCharacterId: "hero",
+  selectedCharacterImage: "/static/images/char_male_hero.png",
+  selectedCharacter: null,
+  expandedCharacterId: "",
+  scenarioPath: "host/prompt/processed/dragon_rpg.json",
 };
 
 /* ── DOM References ── */
@@ -16,7 +21,10 @@ const els = {
   backendSelect:   document.querySelector("#backendSelect"),
   modelSelect:     document.querySelector("#modelSelect"),
   gmModeInputs:    document.querySelectorAll('input[name="gmMode"]'),
+  scenarioSelect:  document.querySelector("#scenarioSelect"),
+  characterCards:  document.querySelector("#characterCards"),
   heroNameInput:   document.querySelector("#heroNameInput"),
+  genderSelect:    document.querySelector("#genderSelect"),
   startButton:     document.querySelector("#startButton"),
   startBtnText:    document.querySelector(".start-btn-text"),
   startBtnLoading: document.querySelector(".start-btn-loading"),
@@ -68,6 +76,7 @@ let cachedConfig = null;
 async function init() {
   restoreGmMode();
   await loadConfig();
+  await loadScenarios();
 }
 
 async function loadConfig() {
@@ -120,15 +129,139 @@ function uniqueList(values) {
    START SCREEN → SESSION CREATION
    ═══════════════════════════════════════════════════ */
 
+async function loadScenarios() {
+  try {
+    const data = await fetchJson("/api/scenarios");
+    const scenarios = data.scenarios || [];
+    els.scenarioSelect.innerHTML = scenarios
+      .map((s) => `<option value="${escapeHtml(s.filename)}">${escapeHtml(s.title || s.filename)}</option>`)
+      .join("");
+    const preferred = scenarios.find((s) => s.filename === "dragon_rpg.json") || scenarios[0];
+    if (preferred) {
+      els.scenarioSelect.value = preferred.filename;
+      await onScenarioChange();
+    }
+    els.scenarioSelect.addEventListener("change", onScenarioChange);
+  } catch (err) {
+    els.backendStatus.textContent = `剧本加载失败: ${err.message}`;
+  }
+}
+
+async function onScenarioChange() {
+  const filename = els.scenarioSelect.value;
+  if (!filename) return;
+  try {
+    const data = await fetchJson(`/api/scenarios/${encodeURIComponent(filename)}`);
+    const characters = data.scenario?.characters || [];
+    state.scenarioPath = `host/prompt/processed/${filename}`;
+    state.expandedCharacterId = "";
+    renderCharacterCards(characters);
+  } catch (err) {
+    els.characterCards.innerHTML = `<p class="start-backend">角色加载失败</p>`;
+  }
+}
+
+function renderCharacterCards(characters) {
+  if (!characters.length) {
+    state.selectedCharacterId = "";
+    state.selectedCharacterImage = "";
+    state.selectedCharacter = null;
+    state.expandedCharacterId = "";
+    els.heroNameInput.value = "";
+    els.genderSelect.style.display = "none";
+    els.characterCards.innerHTML = `<p class="start-backend">本剧本暂无角色定义</p>`;
+    return;
+  }
+  const selectedId = characters.some((char) => char.id === state.selectedCharacterId)
+    ? state.selectedCharacterId
+    : characters[0].id;
+  const expandedId = characters.some((char) => char.id === state.expandedCharacterId)
+    ? state.expandedCharacterId
+    : "";
+  els.characterCards.innerHTML = characters.map((char) => {
+    const attrs = char.attributes || {};
+    const attrText = Object.entries(attrs)
+      .map(([k, v]) => `<span class="char-attr">${escapeHtml(k)} ${v}</span>`)
+      .join("");
+    const inventoryText = (char.inventory || [])
+      .map((item) => `${item.name || ""}${item.quantity ? ` x${item.quantity}` : ""}`)
+      .filter(Boolean)
+      .map((text) => `<span class="char-chip">${escapeHtml(text)}</span>`)
+      .join("");
+    const equipmentText = (char.equipment || [])
+      .map((text) => `<span class="char-chip">${escapeHtml(text)}</span>`)
+      .join("");
+    const isSelected = char.id === selectedId;
+    const isExpanded = char.id === expandedId;
+    const img = char.image || "";
+    return `<button class="char-card ${isSelected ? "selected" : ""} ${isExpanded ? "expanded" : ""}" data-char-id="${escapeAttr(char.id)}" type="button" aria-expanded="${isExpanded ? "true" : "false"}">
+      <div class="char-card-summary">
+        <strong>${escapeHtml(char.name || char.id)}</strong>
+        <span class="char-card-chevron">⌄</span>
+      </div>
+      <div class="char-card-details" ${isExpanded ? "" : "hidden"}>
+        <div class="char-card-img" style="background-image:url('${escapeAttr(img)}')"></div>
+        <div class="char-card-info">
+          <span class="char-card-stats">HP ${char.hp}/${char.max_hp} MP ${char.mp}/${char.max_mp} SP ${char.sp}/${char.max_sp}</span>
+          ${char.description ? `<p class="char-card-desc">${escapeHtml(char.description)}</p>` : ""}
+          <div class="char-card-attrs">${attrText}</div>
+          ${equipmentText ? `<div class="char-card-line"><span>装備</span><div>${equipmentText}</div></div>` : ""}
+          ${inventoryText ? `<div class="char-card-line"><span>所持</span><div>${inventoryText}</div></div>` : ""}
+        </div>
+      </div>
+    </button>`;
+  }).join("");
+
+  document.querySelectorAll(".char-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      const charId = card.dataset.charId;
+      const char = characters.find((c) => c.id === charId);
+      if (char) selectCharacter(char, { expanded: state.expandedCharacterId !== charId });
+    });
+  });
+  const selected = characters.find((char) => char.id === selectedId) || characters[0];
+  selectCharacter(selected, { render: false });
+}
+
+function selectCharacter(char, options = {}) {
+  state.selectedCharacterId = char.id;
+  state.selectedCharacter = char;
+  els.heroNameInput.value = char.default_name || char.name || "";
+  if (char.id === "hero") {
+    els.genderSelect.style.display = "flex";
+    updateHeroImage(char);
+  } else {
+    els.genderSelect.style.display = "none";
+    state.selectedCharacterImage = char.image || "";
+  }
+  if (Object.prototype.hasOwnProperty.call(options, "expanded")) {
+    state.expandedCharacterId = options.expanded ? char.id : "";
+  }
+  if (options.render === false) return;
+  document.querySelectorAll(".char-card").forEach((card) => {
+    const selected = card.dataset.charId === char.id;
+    const expanded = card.dataset.charId === state.expandedCharacterId;
+    card.classList.toggle("selected", selected);
+    card.classList.toggle("expanded", expanded);
+    card.setAttribute("aria-expanded", expanded ? "true" : "false");
+    const details = card.querySelector(".char-card-details");
+    if (details) details.hidden = !expanded;
+  });
+}
+
+function updateHeroImage(char) {
+  const gender = document.querySelector('input[name="heroGender"]:checked')?.value || "男勇者";
+  state.selectedCharacterImage = gender === "女勇者" && char.image_female
+    ? char.image_female
+    : char.image || "";
+}
+
 async function startGame() {
   const heroName = els.heroNameInput.value.trim() || "アルス";
-  const heroGender = document.querySelector('input[name="heroGender"]:checked')?.value || "男勇者";
   const backend = els.backendSelect ? els.backendSelect.value : "ollama";
   const model = els.modelSelect ? els.modelSelect.value : "";
   const gmMode = document.querySelector('input[name="gmMode"]:checked')?.value || "semi";
-  const scenarioPath = gmMode === "full"
-    ? "host/prompt/processed/dragon_rpg_hybrid.json"
-    : "host/prompt/processed/dragon_rpg.json";
+  const scenarioPath = state.scenarioPath;
   localStorage.setItem("trpg.gmMode", gmMode);
   setStartBusy(true);
   try {
@@ -140,17 +273,18 @@ async function startGame() {
     });
     await loadConfig();
 
+    const charPayload = {
+      name: heroName,
+      character_image: state.selectedCharacterImage,
+    };
     const session = await fetchJson("/api/sessions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         scenario_path: scenarioPath,
         gm_mode: gmMode,
-        character: { 
-          name: heroName,
-          description: heroGender,
-          character_image: heroGender === "女勇者" ? "/static/images/char_female_hero.png" : "/static/images/char_male_hero.png"
-        },
+        character_id: state.selectedCharacterId,
+        character: charPayload,
       }),
     });
     state.sessionId = session.id;
@@ -529,6 +663,10 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+function escapeAttr(value) {
+  return escapeHtml(value).replaceAll('"', "&quot;");
+}
+
 /* ═══════════════════════════════════════════════════
    EVENT BINDINGS
    ═══════════════════════════════════════════════════ */
@@ -544,6 +682,17 @@ if (els.backendSelect) {
 for (const input of els.gmModeInputs || []) {
   input.addEventListener("change", () => {
     if (input.checked) localStorage.setItem("trpg.gmMode", input.value);
+  });
+}
+for (const input of document.querySelectorAll('input[name="heroGender"]')) {
+  input.addEventListener("change", () => {
+    if (state.selectedCharacterId === "hero" && state.selectedCharacter) {
+      const char = state.selectedCharacter;
+      const image = input.value === "女勇者" && char.image_female
+        ? char.image_female
+        : char.image || "";
+      state.selectedCharacterImage = image;
+    }
   });
 }
 

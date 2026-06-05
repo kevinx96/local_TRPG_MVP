@@ -329,6 +329,22 @@ label {
   color: var(--muted);
 }
 
+.attr-grid {
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+}
+
+.item-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.item-row input {
+  flex: 1;
+  min-width: 0;
+}
+
 @media (max-width: 980px) {
   .topbar {
     height: auto;

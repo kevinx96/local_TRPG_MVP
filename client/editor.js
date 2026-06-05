@@ -4,6 +4,8 @@ const GROUPS = {
   npcs: { label: "NPC", titleKey: "name" },
   items: { label: "道具", titleKey: "name" },
   clues: { label: "线索", titleKey: "title" },
+  attribute_defs: { label: "属性定义", titleKey: "name" },
+  characters: { label: "角色", titleKey: "name" },
 };
 
 const state = {
@@ -105,6 +107,8 @@ function newScenario() {
     npcs: [],
     items: [],
     clues: [],
+    attribute_defs: [],
+    characters: [],
     fallback_choices: [],
   });
   state.section = "meta";
@@ -199,6 +203,8 @@ function renderEditor() {
   if (state.section === "fallback") return renderChoices("fallback_choices", state.scenario.fallback_choices || [], "全局 fallback choices");
   if (state.section === "hybrid") return renderHybridEditor();
   if (state.section === "json") return renderJsonEditor();
+  if (state.section === "attribute_defs") return renderAttributeDefsEditor();
+  if (state.section === "characters") return renderCharactersEditor();
   return renderRecordEditor(state.section);
 }
 
@@ -264,6 +270,89 @@ function renderRecordEditor(section) {
     ${itemFields}
     ${sceneFields}
     <button class="danger" data-remove-record="${section}" data-index="${state.selectedIndex}" type="button">删除${escapeHtml(group.label)}</button>
+  </div>`;
+}
+
+function renderAttributeDefsEditor() {
+  const records = state.scenario.attribute_defs || [];
+  const record = records[state.selectedIndex];
+  if (!record) {
+    els.editorPane.innerHTML = `<div class="editor-form"><p class="summary-line">还没有属性定义。</p></div>`;
+    return;
+  }
+  els.editorPane.innerHTML = `<div class="editor-form">
+    <div class="form-grid">
+      ${field("ID", `attribute_defs.${state.selectedIndex}.id`, record.id || "")}
+      ${field("名称", `attribute_defs.${state.selectedIndex}.name`, record.name || "")}
+      ${field("初始数值", `attribute_defs.${state.selectedIndex}.initial_value`, record.initial_value ?? 8, false, true)}
+    </div>
+    <button class="danger" data-remove-record="attribute_defs" data-index="${state.selectedIndex}" type="button">删除属性定义</button>
+  </div>`;
+}
+
+function renderCharactersEditor() {
+  const records = state.scenario.characters || [];
+  const record = records[state.selectedIndex];
+  if (!record) {
+    els.editorPane.innerHTML = `<div class="editor-form"><p class="summary-line">还没有角色。</p></div>`;
+    return;
+  }
+  const basePath = `characters.${state.selectedIndex}`;
+  const attrDefs = state.scenario.attribute_defs || [];
+  const attrs = record.attributes || {};
+  const attrInputs = attrDefs.map((def, ai) => {
+    const attrId = def.id || "";
+    const attrName = def.name || attrId || "";
+    const value = attrs[attrId] ?? def.initial_value ?? 8;
+    return field(attrName, `${basePath}.attributes.${escapeHtml(attrId)}`, value, false, true);
+  }).join("");
+
+  const inventory = record.inventory || [];
+  const inventoryRows = inventory.map((item, ii) => `<div class="item-row">
+    <input data-inv-path="${basePath}.inventory" data-inv-field="name" data-index="${ii}" value="${escapeAttr(item.name || "")}" placeholder="名称" />
+    <input data-inv-path="${basePath}.inventory" data-inv-field="description" data-index="${ii}" value="${escapeAttr(item.description || "")}" placeholder="描述" />
+    <input data-inv-path="${basePath}.inventory" data-inv-field="effect" data-index="${ii}" value="${escapeAttr(item.effect || "")}" placeholder="效果" />
+    <input data-inv-path="${basePath}.inventory" data-inv-field="quantity" data-index="${ii}" value="${escapeAttr(item.quantity ?? 1)}" placeholder="数量" style="width:60px" />
+    <button class="danger" data-remove-inv="${basePath}.inventory" data-index="${ii}" type="button">删除</button>
+  </div>`).join("");
+
+  const equip = Array.isArray(record.equipment) ? record.equipment : [];
+  const equipRows = equip.map((eq, ei) => `<div class="line-row">
+    <input data-eq-path="${basePath}.equipment" data-index="${ei}" value="${escapeAttr(eq)}" />
+    <button class="danger" data-remove-eq="${basePath}.equipment" data-index="${ei}" type="button">删除</button>
+  </div>`).join("");
+
+  els.editorPane.innerHTML = `<div class="editor-form">
+    <h2>${escapeHtml(record.name || record.id || "新角色")}</h2>
+    <div class="form-grid">
+      ${field("ID", `${basePath}.id`, record.id || "")}
+      ${field("角色名", `${basePath}.name`, record.name || "")}
+      ${field("预设名称", `${basePath}.default_name`, record.default_name || "")}
+      <label class="wide">描述<textarea data-path="${basePath}.description">${escapeHtml(record.description || "")}</textarea></label>
+      ${field("头像路径", `${basePath}.image`, record.image || "")}
+      ${field("女性头像路径", `${basePath}.image_female`, record.image_female || "")}
+    </div>
+    <h3 class="section-title">基本属性</h3>
+    <div class="form-grid">
+      ${field("HP", `${basePath}.hp`, record.hp ?? 20, false, true)}
+      ${field("Max HP", `${basePath}.max_hp`, record.max_hp ?? 20, false, true)}
+      ${field("MP", `${basePath}.mp`, record.mp ?? 8, false, true)}
+      ${field("Max MP", `${basePath}.max_mp`, record.max_mp ?? 8, false, true)}
+      ${field("SP", `${basePath}.sp`, record.sp ?? 10, false, true)}
+      ${field("Max SP", `${basePath}.max_sp`, record.max_sp ?? 10, false, true)}
+      ${field("GOLD", `${basePath}.gold`, record.gold ?? 0, false, true)}
+    </div>
+    <h3 class="section-title">能力值</h3>
+    <div class="form-grid attr-grid">
+      ${attrInputs || '<p class="summary-line">请先在「属性定义」中添加属性。</p>'}
+    </div>
+    <h3 class="section-title">初始背包</h3>
+    <div class="line-list">${inventoryRows}</div>
+    <button data-add-inv="${basePath}.inventory" type="button">添加道具</button>
+    <h3 class="section-title">初始装备</h3>
+    <div class="line-list">${equipRows}</div>
+    <button data-add-eq="${basePath}.equipment" type="button">添加装备</button>
+    <button class="danger" data-remove-record="characters" data-index="${state.selectedIndex}" type="button" style="margin-top:16px">删除角色</button>
   </div>`;
 }
 
@@ -358,6 +447,24 @@ function handleEditorInput(event) {
     state.scenario[target.dataset.list][Number(target.dataset.index)] = target.value;
     markDirty();
   }
+  if (target.dataset.invPath) {
+    const items = getByPath(state.scenario, target.dataset.invPath, []);
+    const idx = Number(target.dataset.index);
+    if (items[idx]) {
+      let val = target.value;
+      if (target.dataset.invField === "quantity") {
+        const parsed = Number(val);
+        val = Number.isFinite(parsed) ? parsed : val;
+      }
+      items[idx][target.dataset.invField] = val;
+      markDirty();
+    }
+  }
+  if (target.dataset.eqPath) {
+    const eqs = getByPath(state.scenario, target.dataset.eqPath, []);
+    eqs[Number(target.dataset.index)] = target.value;
+    markDirty();
+  }
   if (target.dataset.choicePath) {
     const choices = getByPath(state.scenario, target.dataset.choicePath, []);
     const choice = choices[Number(target.dataset.index)];
@@ -405,6 +512,32 @@ function handleEditorClick(event) {
     markDirty();
     render();
   }
+  if (target.dataset.addInv) {
+    const items = getByPath(state.scenario, target.dataset.addInv, []);
+    setByPath(state.scenario, target.dataset.addInv, items);
+    items.push({ name: "", description: "", effect: "", quantity: 1 });
+    markDirty();
+    renderEditor();
+  }
+  if (target.dataset.removeInv) {
+    const items = getByPath(state.scenario, target.dataset.removeInv, []);
+    items.splice(Number(target.dataset.index), 1);
+    markDirty();
+    renderEditor();
+  }
+  if (target.dataset.addEq) {
+    const eqs = getByPath(state.scenario, target.dataset.addEq, []);
+    setByPath(state.scenario, target.dataset.addEq, eqs);
+    eqs.push("");
+    markDirty();
+    renderEditor();
+  }
+  if (target.dataset.removeEq) {
+    const eqs = getByPath(state.scenario, target.dataset.removeEq, []);
+    eqs.splice(Number(target.dataset.index), 1);
+    markDirty();
+    renderEditor();
+  }
   if (target.dataset.removeRecord) {
     const group = target.dataset.removeRecord;
     state.scenario[group].splice(Number(target.dataset.index), 1);
@@ -434,6 +567,24 @@ function addCurrentRecord() {
   if (section === "scenes") {
     Object.assign(record, { goals: [], location_ids: [], npc_ids: [], item_ids: [], clue_ids: [], fallback_choices: [] });
   }
+  if (section === "attribute_defs") {
+    record.initial_value = 8;
+  }
+  if (section === "characters") {
+    Object.assign(record, {
+      default_name: "",
+      description: "",
+      image: "",
+      image_female: "",
+      hp: 20, max_hp: 20,
+      mp: 8, max_mp: 8,
+      sp: 10, max_sp: 10,
+      gold: 0,
+      attributes: {},
+      inventory: [],
+      equipment: [],
+    });
+  }
   state.scenario[section].push(record);
   state.selectedIndex = state.scenario[section].length - 1;
   markDirty();
@@ -448,6 +599,25 @@ function ensureShape(scenario) {
   scenario.rules = Array.isArray(scenario.rules) ? scenario.rules : [];
   Object.keys(GROUPS).forEach((key) => {
     scenario[key] = Array.isArray(scenario[key]) ? scenario[key] : [];
+  });
+  scenario.attribute_defs.forEach((def) => {
+    if (def.initial_value == null) def.initial_value = 8;
+  });
+  scenario.characters.forEach((char) => {
+    char.default_name ||= "";
+    char.description ||= "";
+    char.image ||= "";
+    char.image_female ||= "";
+    char.hp = Number.isFinite(Number(char.hp)) ? Number(char.hp) : 20;
+    char.max_hp = Number.isFinite(Number(char.max_hp)) ? Number(char.max_hp) : char.hp;
+    char.mp = Number.isFinite(Number(char.mp)) ? Number(char.mp) : 8;
+    char.max_mp = Number.isFinite(Number(char.max_mp)) ? Number(char.max_mp) : char.mp;
+    char.sp = Number.isFinite(Number(char.sp)) ? Number(char.sp) : 10;
+    char.max_sp = Number.isFinite(Number(char.max_sp)) ? Number(char.max_sp) : char.sp;
+    char.gold = Number.isFinite(Number(char.gold)) ? Number(char.gold) : 0;
+    char.attributes = char.attributes && typeof char.attributes === "object" ? char.attributes : {};
+    char.inventory = Array.isArray(char.inventory) ? char.inventory : [];
+    char.equipment = Array.isArray(char.equipment) ? char.equipment : [];
   });
   if (!scenario.scenes.length) {
     scenario.scenes.push({ id: "start", title: "开始", description: "", keywords: [], goals: [], fallback_choices: [] });
@@ -540,7 +710,7 @@ function field(label, path, value, csv = false, number = false) {
 }
 
 function sectionLabel(section) {
-  return ({ meta: "基本信息", rules: "规则", hybrid: "Hybrid", fallback: "全局选项", json: "JSON" })[section] || section;
+  return ({ meta: "基本信息", rules: "规则", hybrid: "Hybrid", fallback: "全局选项", json: "JSON", attribute_defs: "属性定义", characters: "角色" })[section] || section;
 }
 
 function summaryForSection(section) {
@@ -548,6 +718,8 @@ function summaryForSection(section) {
   if (section === "rules") return `${state.scenario.rules.length} 条规则`;
   if (section === "hybrid") return `${state.scenario.scenes.length} scenes with editable prepared turns`;
   if (section === "fallback") return `${state.scenario.fallback_choices.length} 个全局选项`;
+  if (section === "attribute_defs") return `${state.scenario.attribute_defs.length} 个属性定义`;
+  if (section === "characters") return `${state.scenario.characters.length} 个角色`;
   if (section === "json") return "直接编辑完整 JSON。";
   return "";
 }

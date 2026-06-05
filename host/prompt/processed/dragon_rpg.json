@@ -211,5 +211,87 @@
       "description": "イグニスは炎に強いが、冷気を帯びた攻撃に弱い。",
       "keywords": ["弱点", "冷気", "氷", "イグニス"]
     }
+  ],
+  "attribute_defs": [
+    {"id": "str", "name": "筋力", "initial_value": 8},
+    {"id": "dex", "name": "敏捷", "initial_value": 8},
+    {"id": "int", "name": "知力", "initial_value": 8},
+    {"id": "wis", "name": "感知", "initial_value": 8},
+    {"id": "con", "name": "耐久", "initial_value": 8}
+  ],
+  "characters": [
+    {
+      "id": "hero",
+      "name": "勇者",
+      "default_name": "アルス",
+      "description": "王国に選ばれし若き冒険者。バランスの取れた能力を持つ。",
+      "image": "/static/images/char_male_hero.png",
+      "image_female": "/static/images/char_female_hero.png",
+      "hp": 20, "max_hp": 20,
+      "mp": 8, "max_mp": 8,
+      "sp": 10, "max_sp": 10,
+      "gold": 0,
+      "attributes": {"str": 12, "dex": 10, "int": 8, "wis": 8, "con": 10},
+      "inventory": [
+        {"name": "鉄の剣", "description": "冒険者向けの標準的な剣。", "effect": "通常攻撃に使用", "quantity": 1},
+        {"name": "革の鎧", "description": "なめした革で作られた軽量の鎧。", "effect": "被ダメージを軽減", "quantity": 1},
+        {"name": "薬草", "description": "傷を癒す薬草。", "effect": "HPを10回復", "quantity": 1}
+      ],
+      "equipment": ["鉄の剣", "革の鎧"]
+    },
+    {
+      "id": "cleric",
+      "name": "僧侶",
+      "default_name": "マリア",
+      "description": "神聖魔法を操る癒し手。HPとMPが高く、知力に優れる。",
+      "image": "/static/images/char_cleric.png",
+      "hp": 18, "max_hp": 18,
+      "mp": 14, "max_mp": 14,
+      "sp": 8, "max_sp": 8,
+      "gold": 0,
+      "attributes": {"str": 6, "dex": 8, "int": 14, "wis": 12, "con": 8},
+      "inventory": [
+        {"name": "聖なる杖", "description": "神聖魔法を増幅する杖。", "effect": "回復魔法の効果+2", "quantity": 1},
+        {"name": "ローブ", "description": "僧侶の簡素な衣。", "effect": "魔法防御を少し高める", "quantity": 1},
+        {"name": "薬草", "description": "傷を癒す薬草。", "effect": "HPを10回復", "quantity": 2}
+      ],
+      "equipment": ["聖なる杖", "ローブ"]
+    },
+    {
+      "id": "mage",
+      "name": "魔法使い",
+      "default_name": "リリィ",
+      "description": "攻撃魔法を極めた学者。MPが非常に高く、知力に長ける。",
+      "image": "/static/images/char_mage.png",
+      "hp": 12, "max_hp": 12,
+      "mp": 20, "max_mp": 20,
+      "sp": 6, "max_sp": 6,
+      "gold": 0,
+      "attributes": {"str": 4, "dex": 8, "int": 16, "wis": 10, "con": 6},
+      "inventory": [
+        {"name": "魔導書", "description": "古代の魔法が記された書物。", "effect": "攻撃魔法の威力+3", "quantity": 1},
+        {"name": "魔法のローブ", "description": "魔力を帯びた上質なローブ。", "effect": "MP消費-1", "quantity": 1},
+        {"name": "薬草", "description": "傷を癒す薬草。", "effect": "HPを10回復", "quantity": 1}
+      ],
+      "equipment": ["魔導書", "魔法のローブ"]
+    },
+    {
+      "id": "thief",
+      "name": "盗賊",
+      "default_name": "シオン",
+      "description": "影に生きる敏捷の達人。素早さと器用さに優れる。",
+      "image": "/static/images/char_thief.png",
+      "hp": 14, "max_hp": 14,
+      "mp": 6, "max_mp": 6,
+      "sp": 14, "max_sp": 14,
+      "gold": 0,
+      "attributes": {"str": 8, "dex": 16, "int": 10, "wis": 6, "con": 8},
+      "inventory": [
+        {"name": "ダガー", "description": "軽量で扱いやすい短剣。", "effect": "素早い連続攻撃が可能", "quantity": 1},
+        {"name": "革の鎧", "description": "動きやすさを重視した軽装鎧。", "effect": "被ダメージを軽減", "quantity": 1},
+        {"name": "盗賊道具", "description": "鍵開けや罠解除に使う道具一式。", "effect": "探索・解除判定+2", "quantity": 1}
+      ],
+      "equipment": ["ダガー", "革の鎧"]
+    }
   ]
 }
