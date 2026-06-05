@@ -260,6 +260,9 @@ class StateTests(unittest.TestCase):
         fallback = state.create_session(str(self.write_pack()), gm_mode="unknown")
         self.assertEqual(fallback["gm_mode"], "semi")
 
+        positional = state.create_session(str(self.write_pack()), None, "full")
+        self.assertEqual(positional["gm_mode"], "full")
+
     def test_full_mode_prefers_sibling_hybrid_pack(self):
         semi_path = self.write_pack()
         hybrid_path = semi_path.with_name("scenario_hybrid.json")
@@ -339,6 +342,38 @@ class StateTests(unittest.TestCase):
     def test_character_name_override(self):
         public = state.create_session(str(self.write_pack()), {"name": "エリス"})
         self.assertEqual(public["character"]["name"], "エリス")
+
+    def test_create_session_uses_character_template(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["characters"] = [
+            {
+                "id": "mage",
+                "name": "魔法使い",
+                "default_name": "リリィ",
+                "description": "知力に長ける。",
+                "image": "/static/images/char_mage.png",
+                "hp": 12,
+                "max_hp": 12,
+                "mp": 20,
+                "max_mp": 20,
+                "sp": 6,
+                "max_sp": 6,
+                "attributes": {"int": 16},
+                "inventory": [{"name": "魔導書", "quantity": 1}],
+                "equipment": ["魔導書"],
+            }
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+
+        public = state.create_session(str(path), character_id="mage")
+        character = public["character"]
+
+        self.assertEqual(character["character_id"], "mage")
+        self.assertEqual(character["name"], "リリィ")
+        self.assertEqual(character["character_image"], "/static/images/char_mage.png")
+        self.assertEqual(character["attributes"]["int"], 16)
+        self.assertEqual(character["inventory"][0]["name"], "魔導書")
 
     def test_item_quantity_increment_and_decrement(self):
         public = state.create_session(str(self.write_pack()))

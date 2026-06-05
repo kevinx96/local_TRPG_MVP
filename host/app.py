@@ -47,6 +47,7 @@ app.mount("/static", StaticFiles(directory=CLIENT_ROOT), name="static")
 class CreateSessionRequest(BaseModel):
     scenario_path: Optional[str] = None
     gm_mode: Optional[str] = None
+    character_id: Optional[str] = None
     character: Optional[dict[str, Any]] = None
 
 
@@ -281,7 +282,12 @@ def _write_scenario_json(path: Path, scenario: dict[str, Any]) -> None:
 @app.post("/api/sessions")
 def api_create_session(request: CreateSessionRequest) -> dict[str, Any]:
     try:
-        session_public = create_session(request.scenario_path, request.character, request.gm_mode)
+        session_public = create_session(
+            request.scenario_path,
+            request.character,
+            gm_mode=request.gm_mode,
+            character_id=request.character_id,
+        )
         session = load_session(session_public["id"])
         if session.get("needs_opening"):
             return _run_opening(session)
@@ -452,6 +458,7 @@ def _demo_opening(session: dict[str, Any], error: str) -> str:
             "mp_change": 0,
             "sp_change": 0,
             "gold_change": 0,
+            "attribute_changes": {},
             "inventory_add": [],
             "inventory_remove": [],
             "current_scene": None,
@@ -481,6 +488,7 @@ def _demo_response(session: dict[str, Any], player_text: str, roll: dict[str, An
             "mp_change": 0,
             "sp_change": 0,
             "gold_change": 0,
+            "attribute_changes": {},
             "inventory_add": [],
             "inventory_remove": [],
             "current_scene": None,

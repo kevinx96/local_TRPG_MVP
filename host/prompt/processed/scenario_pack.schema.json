@@ -105,6 +105,48 @@
       "type": "array",
       "items": { "$ref": "#/$defs/record" }
     },
+    "attribute_defs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "additionalProperties": true,
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "initial_value": { "type": "number", "default": 8 }
+        }
+      }
+    },
+    "characters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "additionalProperties": true,
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "default_name": { "type": "string" },
+          "description": { "type": "string" },
+          "image": { "type": "string" },
+          "image_female": { "type": "string" },
+          "hp": { "type": "integer" },
+          "max_hp": { "type": "integer" },
+          "mp": { "type": "integer" },
+          "max_mp": { "type": "integer" },
+          "sp": { "type": "integer" },
+          "max_sp": { "type": "integer" },
+          "gold": { "type": "integer" },
+          "attributes": {
+            "type": "object",
+            "additionalProperties": { "type": "number" }
+          },
+          "inventory": { "type": "array" },
+          "equipment": { "type": "array" }
+        }
+      }
+    },
     "fallback_choices": {
       "type": "array",
       "items": { "$ref": "#/$defs/choice" }
