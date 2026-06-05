@@ -130,6 +130,34 @@ label {
   text-overflow: ellipsis;
 }
 
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.shutdown-btn {
+  background: rgba(231, 111, 111, 0.12);
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 6px 14px;
+  white-space: nowrap;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.shutdown-btn:hover:not(:disabled) {
+  background: rgba(231, 111, 111, 0.25);
+  box-shadow: 0 0 12px rgba(231, 111, 111, 0.3);
+}
+
+.shutdown-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .editor-shell {
   height: calc(100vh - 64px);
   display: grid;

@@ -19,7 +19,10 @@
         <button id="duplicateButton" type="button">复制</button>
         <button id="saveButton" type="button" class="primary">保存</button>
       </div>
-      <div id="statusText" class="status">loading</div>
+      <div class="topbar-right">
+        <div id="statusText" class="status">loading</div>
+        <button id="shutdownButton" type="button" class="shutdown-btn" title="远程关闭 Ollama 机器">⏻ 关机 Ollama</button>
+      </div>
     </header>
 
     <main class="editor-shell">
@@ -48,5 +51,39 @@
     </main>
 
     <script src="/static/editor.js"></script>
+    <script>
+      (function () {
+        const btn = document.getElementById('shutdownButton');
+        if (!btn) return;
+        btn.addEventListener('click', async () => {
+          const ok = confirm(
+            '⚠️ 确定要远程关闭 Ollama 机器吗？\n\n'
+            + '该电脑将在 30 秒后关机，\n'
+            + '可以在 Ollama 机器上运行 "shutdown /a" 来取消。'
+          );
+          if (!ok) return;
+          btn.disabled = true;
+          btn.textContent = '⏳ 关机中…';
+          try {
+            const res = await fetch('/api/ollama/shutdown', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+            });
+            const data = await res.json();
+            if (res.ok) {
+              btn.textContent = '✅ ' + data.message;
+            } else {
+              alert('关机失败: ' + (data.detail || res.statusText));
+              btn.textContent = '⏻ 关机 Ollama';
+              btn.disabled = false;
+            }
+          } catch (err) {
+            alert('请求失败: ' + err.message);
+            btn.textContent = '⏻ 关机 Ollama';
+            btn.disabled = false;
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
