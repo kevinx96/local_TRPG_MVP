@@ -193,7 +193,7 @@ Access the visual editor at `http://127.0.0.1:8000/editor`. All scenario JSON fi
 | 基本信息 (Meta) | Title, language, summary, initial scene |
 | 规则 (Rules) | GM behavioral rules |
 | 场景 (Scenes) | Scene definitions, goals, location bindings, next scenes |
-| Hybrid | Prepared GM turns for Full mode (drafts with dice, choices, rewrite notes) |
+| Hybrid | Prepared GM turns for Semi mode (drafts with dice, choices, rewrite notes) |
 | 地点 (Locations) | Locations with linked NPCs, items, clues, enemies |
 | NPC | Character definitions |
 | 道具 (Items) | Items with effects |
@@ -265,8 +265,8 @@ Enemy example (`dragon_rpg.json`):
 
 | Mode | Description |
 |------|-------------|
-| **Semi** (default) | LLM receives scene context (locations, NPCs, items, enemies, clues) and improvises freely. |
-| **Full** | LLM receives pre-cooked prepared turns (generated via Gemini) and lightly rewrites them for consistency. Uses `*_hybrid.json` scenario packs. |
+| **Semi** (default) | LLM receives pre-cooked prepared turns (generated via Gemini) and lightly rewrites them for consistency. Uses `*_hybrid.json` scenario packs when available; if the current turn has no prepared draft, it falls back to normal scene context. |
+| **Full** | LLM receives scene context (locations, NPCs, items, enemies, clues) and generates the GM response more freely. |
 
 Select mode from the start screen config panel.
 

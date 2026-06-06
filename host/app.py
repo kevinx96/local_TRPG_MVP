@@ -13,6 +13,7 @@ from .gm_contract import STATE_MARKER, build_gm_contract_prompt, build_opening_p
 from .llm_client import LLMClientError, chat_completion, debug_log
 from .scenario_context import (
     fallback_choices_for_session,
+    has_hybrid_prepared_turn,
     hybrid_context_debug,
     normalize_scenario_pack,
     scenario_context_debug,
@@ -425,9 +426,9 @@ def _visible_text_from_payload(visible_text: str, payload: Optional[dict[str, An
 
 
 def _opening_prompt_for_mode(session: dict[str, Any]) -> str:
-    if session.get("gm_mode") == "full":
+    if session.get("gm_mode") == "semi" and has_hybrid_prepared_turn(session, "", opening=True):
         return (
-            "FULL/HYBRIDモードのprepared openingターンを完成済みのGM応答として扱ってください。"
+            "SEMI/HYBRIDモードのprepared openingターンを完成済みのGM応答として扱ってください。"
             "キャラクター名など現在状態に矛盾する最小部分だけを書き換えてください。"
             "開始時は文体・出来事・NPC台詞・報酬内容・選択肢を原則として変えないでください。"
             "gm_text, system_log, choices は日本語だけで出力してください。英語を混ぜないでください。"
@@ -437,7 +438,7 @@ def _opening_prompt_for_mode(session: dict[str, Any]) -> str:
 
 
 def _context_debug_for_mode(session: dict[str, Any], player_text: str, opening: bool = False) -> dict[str, Any]:
-    if session.get("gm_mode") == "full":
+    if session.get("gm_mode") == "semi" and has_hybrid_prepared_turn(session, player_text, opening=opening):
         debug = hybrid_context_debug(select_hybrid_context(session, player_text, opening=opening))
         return {
             "chars": debug["chars"],

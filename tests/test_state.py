@@ -109,13 +109,13 @@ class StateTests(unittest.TestCase):
     def test_scenario_pack_preserves_meta_extensions(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
-        raw["meta"]["hybrid_mode"] = "full"
+        raw["meta"]["hybrid_mode"] = "semi"
         path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
 
         public = state.create_session(str(path))
         session = state.load_session(public["id"])
 
-        self.assertEqual(session["scenario_pack"]["meta"]["hybrid_mode"], "full")
+        self.assertEqual(session["scenario_pack"]["meta"]["hybrid_mode"], "semi")
 
     def test_load_config_merges_local_config_and_env_base_url(self):
         config_path = self.tmp_path / "config.json"
@@ -345,20 +345,33 @@ class StateTests(unittest.TestCase):
         positional = state.create_session(str(self.write_pack()), None, "full")
         self.assertEqual(positional["gm_mode"], "full")
 
-    def test_full_mode_prefers_sibling_hybrid_pack(self):
+    def test_semi_mode_prefers_sibling_hybrid_pack(self):
         semi_path = self.write_pack()
         hybrid_path = semi_path.with_name("scenario_hybrid.json")
         hybrid = json.loads(semi_path.read_text(encoding="utf-8"))
         hybrid["meta"]["title"] = "Hybrid pack"
         hybrid_path.write_text(json.dumps(hybrid, ensure_ascii=False), encoding="utf-8")
 
-        public = state.create_session(str(semi_path), gm_mode="full")
+        public = state.create_session(str(semi_path), gm_mode="semi")
         session = state.load_session(public["id"])
 
         self.assertEqual(Path(session["scenario_path"]).name, "scenario_hybrid.json")
         self.assertEqual(public["scenario_title"], "Hybrid pack")
 
-    def test_full_mode_uses_prepared_turn_context(self):
+    def test_full_mode_keeps_original_pack_when_hybrid_sibling_exists(self):
+        full_path = self.write_pack()
+        hybrid_path = full_path.with_name("scenario_hybrid.json")
+        hybrid = json.loads(full_path.read_text(encoding="utf-8"))
+        hybrid["meta"]["title"] = "Hybrid pack"
+        hybrid_path.write_text(json.dumps(hybrid, ensure_ascii=False), encoding="utf-8")
+
+        public = state.create_session(str(full_path), gm_mode="full")
+        session = state.load_session(public["id"])
+
+        self.assertEqual(Path(session["scenario_path"]).name, "scenario.json")
+        self.assertNotEqual(public["scenario_title"], "Hybrid pack")
+
+    def test_semi_mode_uses_prepared_turn_context(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
         raw["scenes"][0]["hybrid"] = {
@@ -395,20 +408,47 @@ class StateTests(unittest.TestCase):
             ],
         }
         path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
-        public = state.create_session(str(path), gm_mode="full")
+        public = state.create_session(str(path), gm_mode="semi")
         session = state.load_session(public["id"])
         state.add_player_message(session, "鍛冶屋へ向かう")
 
         messages = state.build_llm_messages(session, {"expression": "1d20", "rolls": [7], "total": 7}, "contract")
         combined = "\n".join(message["content"] for message in messages)
 
-        self.assertIn("FULL/HYBRID", messages[1]["content"])
+        self.assertIn("SEMI/HYBRID", messages[1]["content"])
         self.assertIn("GM forge draft.", combined)
         self.assertNotIn("trigger_keywords", combined)
         self.assertNotIn("Keep this English note", combined)
         self.assertNotIn("forge_response", combined)
         self.assertNotIn('"matched"', combined)
         self.assertEqual(len(messages), 4)
+
+    def test_full_mode_ignores_prepared_turn_hints(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["scenes"][0]["hybrid"] = {
+            "mode": "prepared_gm_turns",
+            "prepared_turns": [
+                {
+                    "id": "opening",
+                    "purpose": "opening",
+                    "draft": {
+                        "gm_text": "GM prepared draft should not appear.",
+                        "choices": [{"text": "Prepared choice", "preview": "", "risk": ""}],
+                    },
+                }
+            ],
+        }
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path), gm_mode="full")
+        session = state.load_session(public["id"])
+
+        messages = state.build_llm_messages(session, {"expression": "opening", "rolls": [], "total": 0}, "contract")
+        combined = "\n".join(message["content"] for message in messages)
+
+        self.assertNotIn("SEMI/HYBRID", combined)
+        self.assertNotIn("GM prepared draft should not appear.", combined)
+        self.assertNotIn("Prepared choice", combined)
 
     def test_inventory_items_are_objects(self):
         public = state.create_session(str(self.write_pack()))
