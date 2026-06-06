@@ -12,6 +12,7 @@ from typing import Any, Optional, Union
 
 from .scenario_context import (
     fallback_choices_for_session,
+    has_hybrid_prepared_turn,
     infer_scene_from_text,
     load_scenario_pack,
     resolve_scene_id,
@@ -205,7 +206,7 @@ def _normalize_gm_mode(value: Optional[str]) -> str:
 
 
 def _scenario_path_for_gm_mode(path: Path, gm_mode: str) -> Path:
-    if gm_mode != "full" or path.stem.endswith("_hybrid"):
+    if gm_mode != "semi" or path.stem.endswith("_hybrid"):
         return path
     hybrid_path = path.with_name(f"{path.stem}_hybrid{path.suffix}")
     return hybrid_path.resolve() if hybrid_path.exists() else path
@@ -455,7 +456,7 @@ def _enrich_item(item: dict[str, Any]) -> dict[str, Union[str, int]]:
 
 
 def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], contract_prompt: str) -> list[dict[str, str]]:
-    if session.get("gm_mode") == "full":
+    if _should_use_hybrid_messages(session, latest_roll):
         return _build_hybrid_llm_messages(session, latest_roll, contract_prompt)
 
     config = load_config()
@@ -488,6 +489,13 @@ def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], con
     return messages
 
 
+def _should_use_hybrid_messages(session: dict[str, Any], latest_roll: dict[str, Any]) -> bool:
+    if session.get("gm_mode") != "semi":
+        return False
+    opening = str(latest_roll.get("expression") or "") == "opening"
+    return has_hybrid_prepared_turn(session, _latest_player_text(session), opening=opening)
+
+
 def _build_hybrid_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], contract_prompt: str) -> list[dict[str, str]]:
     character = session["character"]
     player_text = _latest_player_text(session)
@@ -499,7 +507,7 @@ def _build_hybrid_llm_messages(session: dict[str, Any], latest_roll: dict[str, A
         {
             "role": "system",
             "content": (
-                "【FULL/HYBRIDモード】\n"
+                "【SEMI/HYBRIDモード】\n"
                 "prepared_turn.draft を完成済みのGM応答として扱ってください。\n"
                 "gm_text は原則として draft.gm_text を維持し、プレイヤー名・直前の発言・現在状態に矛盾する最小部分だけを書き換えてください。\n"
                 "ユーザーが名前を入力しただけ、または開始操作だけの場合は、文体・出来事・NPC台詞・報酬内容を変えないでください。\n"

@@ -28,7 +28,7 @@ DEFAULT_MODELS = (
 
 def main(argv: Optional[list[str]] = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Build a Full/Hybrid prepared-response scenario pack from dragon_rpg.json with Gemini."
+        description="Build a Semi/Hybrid prepared-response scenario pack from dragon_rpg.json with Gemini."
     )
     parser.add_argument("--source", default=str(DEFAULT_SOURCE), help="Input scenario pack JSON.")
     parser.add_argument("--out", default=str(DEFAULT_OUTPUT), help="Output hybrid scenario pack JSON.")
@@ -121,7 +121,7 @@ def build_scene_messages(pack: dict[str, Any], scene_id: str) -> list[dict[str, 
             {
                 "role": "user",
                 "speaker": "Player",
-                "text": "Prepare the fixed Full/Hybrid script material for this scene.",
+                "text": "Prepare the fixed Semi/Hybrid script material for this scene.",
                 "created_at": _now(),
             }
         ],
@@ -155,7 +155,7 @@ def build_gemini_prompt(messages: list[dict[str, str]], pack: dict[str, Any], sc
     prompt_parts.append(
         json.dumps(
             {
-                "task": "Expand one scene into editable Full/Hybrid script material for a TRPG scenario pack.",
+                "task": "Expand one scene into editable Semi/Hybrid script material for a TRPG scenario pack.",
                 "language": pack.get("meta", {}).get("language", "ja"),
                 "scene_id": scene.get("id"),
                 "scene_title": scene.get("title") or scene_title({"scenario_pack": pack, "current_scene": scene.get("id")}),
@@ -302,7 +302,7 @@ def _load_or_seed_output(source_pack: dict[str, Any], output: Path) -> dict[str,
 
 def _stamp_hybrid_meta(pack: dict[str, Any], source: Path) -> None:
     meta = pack.setdefault("meta", {})
-    meta["hybrid_mode"] = "full"
+    meta["hybrid_mode"] = "semi"
     meta["hybrid_source"] = str(source)
     meta["hybrid_updated_at"] = _now()
 
