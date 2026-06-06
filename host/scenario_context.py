@@ -174,7 +174,7 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
     }
     # Semi mode: inject hybrid hints if available so the LLM has narrative scaffolding
     hybrid = scene.get("hybrid") if isinstance(scene.get("hybrid"), dict) else None
-    if hybrid:
+    if session.get("gm_mode") == "semi" and hybrid:
         prepared = select_hybrid_prepared_turn(session, player_text, opening=not bool(player_text))
         if prepared and isinstance(prepared.get("draft"), dict):
             hint_text = str(prepared["draft"].get("gm_text") or "")[:600]
@@ -205,6 +205,16 @@ def select_hybrid_context(session: dict[str, Any], player_text: str = "", openin
         "prepared_turn": _prepared_turn_for_llm(prepared_turn, str(meta.get("language") or "")),
         "fallback_choices": fallback_choices_for_scene(pack, current_scene),
     }
+
+
+def has_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", opening: bool = False) -> bool:
+    prepared = select_hybrid_prepared_turn(session, player_text, opening=opening)
+    draft = prepared.get("draft") if isinstance(prepared.get("draft"), dict) else {}
+    return bool(
+        str(draft.get("gm_text") or "").strip()
+        or str(draft.get("system_log") or "").strip()
+        or draft.get("choices")
+    )
 
 
 def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", opening: bool = False) -> dict[str, Any]:
