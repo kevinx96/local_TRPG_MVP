@@ -26,19 +26,21 @@
         <h1 class="start-title">LOCAL TRPG</h1>
         <p class="start-subtitle">ローカルLLMが紡ぐ、あなただけの冒険</p>
         <div class="start-form">
-          <label for="scenarioSelect" class="start-label">剧本</label>
-          <select id="scenarioSelect" class="start-input" aria-label="选择剧本"></select>
+          <label for="scenarioSelect" class="start-label">シナリオ</label>
+          <select id="scenarioSelect" class="start-input" aria-label="シナリオを選択"></select>
 
-          <label class="start-label">角色</label>
+          <label class="start-label">キャラクター</label>
           <div id="characterCards" class="char-cards"></div>
 
-          <label for="heroNameInput" class="start-label">名称</label>
+          <label for="heroNameInput" class="start-label">名前</label>
           <input id="heroNameInput" type="text" class="start-input" value="アルス" placeholder="名前を入力..." maxlength="20" />
           
-          <label class="start-label">性別</label>
-          <div id="genderSelect" class="start-gender-select" style="display: flex; gap: 15px; color: var(--text);">
-            <label style="cursor: pointer;"><input type="radio" name="heroGender" value="男勇者" checked> 男</label>
-            <label style="cursor: pointer;"><input type="radio" name="heroGender" value="女勇者"> 女</label>
+          <div id="genderSection" style="display:none">
+            <label class="start-label">性別</label>
+            <div id="genderSelect" class="start-gender-select" style="display: flex; gap: 15px; color: var(--text);">
+              <label style="cursor: pointer;"><input type="radio" name="heroGender" value="男勇者" checked> 男</label>
+              <label style="cursor: pointer;"><input type="radio" name="heroGender" value="女勇者"> 女</label>
+            </div>
           </div>
 
           <button id="startButton" type="button" class="start-btn">
