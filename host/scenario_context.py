@@ -135,7 +135,6 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
             _latest_user_text(session),
             str(scene.get("id", "")),
             str(scene.get("title", "")),
-            str(scene.get("description", "")),
         )
         if part
     )

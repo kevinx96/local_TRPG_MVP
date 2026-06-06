@@ -650,6 +650,7 @@ button, select, textarea, input { font: inherit; }
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
+  transform-origin: center;
   width: 90%;
   max-width: 600px;
   z-index: 20;
@@ -659,7 +660,7 @@ button, select, textarea, input { font: inherit; }
   border-radius: var(--radius);
   border: 1px solid var(--gold-dim);
   box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-  animation: slideIn 0.4s ease-out;
+  animation: choicesModalIn 0.22s ease-out;
 }
 
 .gal-bottom-area {
@@ -920,6 +921,10 @@ button, select, textarea, input { font: inherit; }
 /* ANIMATIONS */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes choicesModalIn {
+  from { opacity: 0; transform: translate(-50%, calc(-50% + 10px)) scale(.98); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
 @keyframes choicesIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
 @keyframes pulse { 0%, 100% { opacity: .7; transform: scale(1); } 50% { opacity: .5; transform: scale(1.05); } }
