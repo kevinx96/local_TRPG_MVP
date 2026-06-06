@@ -55,6 +55,7 @@ DEFAULT_CHARACTER: dict[str, Any] = {
     "max_sp": 10,
     "gold": 0,
     "attributes": {},
+    "skills": [],
     "inventory": [
         {"name": "鉄の剣", "description": DEFAULT_ITEM_CATALOG["鉄の剣"]["description"], "effect": DEFAULT_ITEM_CATALOG["鉄の剣"]["effect"], "quantity": 1},
         {"name": "革の鎧", "description": DEFAULT_ITEM_CATALOG["革の鎧"]["description"], "effect": DEFAULT_ITEM_CATALOG["革の鎧"]["effect"], "quantity": 1},
@@ -227,10 +228,15 @@ def save_session(session: dict[str, Any]) -> None:
 
 
 def public_session(session: dict[str, Any]) -> dict[str, Any]:
+    scene_context = select_scenario_context(session, "")
+    matched = scene_context.get("matched") if isinstance(scene_context, dict) else {}
+    enemies = matched.get("enemies") if isinstance(matched, dict) else []
     public = deepcopy(session)
     public.pop("scenario_prompt", None)
     public.pop("scenario_pack", None)
     public["current_scene_title"] = scene_title(session)
+    public["enemies"] = enemies if isinstance(enemies, list) else []
+    public["in_combat"] = bool(public["enemies"])
 
     from .gm_contract import extract_text_choices, sanitize_visible_text
 
@@ -529,6 +535,7 @@ def _current_state_summary(session: dict[str, Any], character: dict[str, Any], l
                 "max_sp": character.get("max_sp"),
                 "gold": character.get("gold", 0),
                 "attributes": character.get("attributes", {}),
+                "skills": character.get("skills", []),
                 "inventory": inventory_summary,
                 "equipment": character.get("equipment", []),
             },
@@ -612,6 +619,8 @@ def _normalize_character(character: dict[str, Any]) -> None:
         str(key): int(value) if isinstance(value, (int, float)) else 0
         for key, value in attrs.items()
     }
+    if not isinstance(character.get("skills"), list):
+        character["skills"] = []
     raw_inv = character.get("inventory", [])
     if isinstance(raw_inv, list):
         character["inventory"] = [_ensure_item_object(i) for i in raw_inv]
@@ -651,6 +660,8 @@ def _character_from_template(template: dict[str, Any]) -> dict[str, Any]:
         character["inventory"] = deepcopy(template["inventory"])
     if isinstance(template.get("equipment"), list):
         character["equipment"] = _as_text_list(template["equipment"])
+    if isinstance(template.get("skills"), list):
+        character["skills"] = deepcopy(template["skills"])
     _normalize_character(character)
     return character
 

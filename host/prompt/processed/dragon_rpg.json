@@ -37,10 +37,21 @@
         "邪竜と竜の谷について情報を得る",
         "出発の準備を整える"
       ],
-      "keywords": ["王の間", "王城", "国王", "謁見", "支度金", "王座"],
-      "location_ids": ["castle", "forge"],
-      "npc_ids": ["king"],
-      "item_ids": ["herb", "iron_sword"],
+      "keywords": [
+        "王の間",
+        "王城",
+        "国王",
+        "謁見",
+        "支度金",
+        "王座"
+      ],
+      "location_ids": [
+        "castle",
+        "forge"
+      ],
+      "next_scene_ids": [
+        "dark_forest"
+      ],
       "fallback_choices": [
         {
           "text": "国王に邪竜の詳しい話を聞く",
@@ -53,18 +64,37 @@
           "risk": "判定不要"
         },
         {
-          "text": "城を出てスライムの森へ向かう",
+          "text": "城を出て闇の森へ向かう",
           "preview": "第2章へ進みます",
           "risk": "1d20判定（DC10）"
         }
-      ]
+      ],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "summary": "",
+        "prepared_turns": []
+      }
     },
     {
-      "id": "slime_forest",
-      "title": "第2章：スライムの森",
+      "id": "dark_forest",
+      "title": "第2章：闇の森",
       "description": "湿った森。木漏れ日とぬかるんだ足元。弱いスライムが現れ、戦闘のチュートリアルになる。",
-      "goals": ["スライムとの初戦闘を処理する", "森を抜けて麓の村へ向かう"],
-      "keywords": ["スライム", "森", "木漏れ日", "戦闘"],
+      "goals": [
+        "スライムとの初戦闘を処理する",
+        "森を抜けて麓の村へ向かう"
+      ],
+      "keywords": [
+        "スライム",
+        "森",
+        "木漏れ日",
+        "戦闘"
+      ],
+      "location_ids": [
+        "dark_forest_loc"
+      ],
+      "next_scene_ids": [
+        "village"
+      ],
       "fallback_choices": [
         {
           "text": "鉄の剣でスライムを攻撃する",
@@ -77,7 +107,7 @@
           "risk": "判定不要"
         },
         {
-          "text": "森を抜けて麓の村へ向かう",
+          "text": "城を出て闇の森へ向かう",
           "preview": "第3章へ進みます",
           "risk": "判定不要"
         }
@@ -87,11 +117,24 @@
       "id": "village",
       "title": "第3章：麓の村",
       "description": "山麓の小さな村。長老は邪竜が冷気に弱いと語り、道具屋では氷の護符を扱っている。",
-      "goals": ["邪竜の弱点を知る", "氷の護符を入手する"],
-      "keywords": ["麓の村", "村", "長老", "道具屋", "氷の護符"],
-      "location_ids": ["village_shop"],
-      "npc_ids": ["elder", "shopkeeper"],
-      "item_ids": ["ice_charm"],
+      "goals": [
+        "邪竜の弱点を知る",
+        "氷の護符を入手する"
+      ],
+      "keywords": [
+        "麓の村",
+        "村",
+        "長老",
+        "道具屋",
+        "氷の護符"
+      ],
+      "location_ids": [
+        "village_shop",
+        "village"
+      ],
+      "next_scene_ids": [
+        "dragon_valley"
+      ],
       "fallback_choices": [
         {
           "text": "長老に邪竜の弱点を聞く",
@@ -114,8 +157,20 @@
       "id": "dragon_valley",
       "title": "第4章：竜の谷",
       "description": "黒い岩肌と硫黄の匂いが漂う谷。邪竜イグニスが炎の息を吐き、翼の影で空を覆う。",
-      "goals": ["邪竜イグニスを倒す", "王国へ帰還する"],
-      "keywords": ["竜の谷", "邪竜", "イグニス", "最終決戦"],
+      "goals": [
+        "邪竜イグニスを倒す",
+        "王国へ帰還する"
+      ],
+      "keywords": [
+        "竜の谷",
+        "邪竜",
+        "イグニス",
+        "最終決戦"
+      ],
+      "location_ids": [
+        "dragon_valley_loc"
+      ],
+      "next_scene_ids": [],
       "fallback_choices": [
         {
           "text": "氷の護符を掲げて攻撃する",
@@ -140,19 +195,95 @@
       "id": "castle",
       "title": "アルテリア王城",
       "description": "白い石造りの古城。王国の政治と軍事の中心。",
-      "keywords": ["城", "王城", "アルテリア", "王座"]
+      "keywords": [
+        "城",
+        "王城",
+        "アルテリア",
+        "王座"
+      ],
+      "npc_ids": [
+        "king"
+      ],
+      "item_ids": [
+        "herb",
+        "iron_sword"
+      ]
     },
     {
       "id": "forge",
       "title": "王城の鍛造屋",
       "description": "城内にある小さな鍛造屋。旅立つ者の武具を点検し、簡単な修理をしてくれる。",
-      "keywords": ["鍛造屋", "鍛冶屋", "forge", "武具", "修理"]
+      "keywords": [
+        "鍛造屋",
+        "鍛冶屋",
+        "forge",
+        "武具",
+        "修理"
+      ],
+      "npc_ids": [
+        "blacksmith"
+      ]
     },
     {
       "id": "village_shop",
       "title": "麓の村の道具屋",
       "description": "旅人向けの道具屋。薬草、護符、保存食を扱っている。",
-      "keywords": ["道具屋", "店", "買う", "護符"]
+      "keywords": [
+        "道具屋",
+        "店",
+        "買う",
+        "護符"
+      ],
+      "npc_ids": [
+        "shopkeeper"
+      ],
+      "item_ids": [
+        "ice_charm"
+      ]
+    },
+    {
+      "id": "village",
+      "title": "麓の村",
+      "description": "山麓に広がる静かな村。長老が古い伝承を語り継いでいる。",
+      "keywords": [
+        "村",
+        "麓",
+        "長老"
+      ],
+      "npc_ids": [
+        "elder"
+      ],
+      "clue_ids": [
+        "dragon_weakness"
+      ]
+    },
+    {
+      "id": "dark_forest_loc",
+      "title": "闇の森",
+      "description": "湿った薄暗い森。弱い魔物が潜んでいる。",
+      "keywords": [
+        "森",
+        "闇",
+        "木漏れ日",
+        "ぬかるみ"
+      ],
+      "enemy_ids": [
+        "slime"
+      ]
+    },
+    {
+      "id": "dragon_valley_loc",
+      "title": "竜の谷",
+      "description": "黒い岩肌と硫黄の匂いが漂う荒涼たる谷。",
+      "keywords": [
+        "谷",
+        "竜",
+        "硫黄",
+        "岩"
+      ],
+      "enemy_ids": [
+        "ignis"
+      ]
     }
   ],
   "npcs": [
@@ -160,25 +291,48 @@
       "id": "king",
       "name": "国王エドワード",
       "description": "白髪の老王。邪竜復活に深い責任を感じている。",
-      "keywords": ["国王", "エドワード", "王"]
+      "keywords": [
+        "国王",
+        "エドワード",
+        "王"
+      ]
     },
     {
       "id": "blacksmith",
       "name": "鍛冶師ローベルト",
       "description": "無口だが腕のいい鍛冶師。鉄の剣の手入れと簡単な強化を請け負う。",
-      "keywords": ["鍛冶師", "ローベルト", "鍛造屋", "鍛冶屋"]
+      "keywords": [
+        "鍛冶師",
+        "ローベルト",
+        "鍛造屋",
+        "鍛冶屋"
+      ]
     },
     {
       "id": "elder",
       "name": "村の長老",
       "description": "古い伝承を知る老人。邪竜は冷気を嫌うと語る。",
-      "keywords": ["長老", "老人", "伝承"]
+      "keywords": [
+        "長老",
+        "老人",
+        "伝承"
+      ]
     },
     {
       "id": "shopkeeper",
       "name": "道具屋の店主",
       "description": "商売熱心な店主。氷の護符を50ゴールドで売る。",
-      "keywords": ["店主", "道具屋", "商人"]
+      "keywords": [
+        "店主",
+        "道具屋",
+        "商人"
+      ]
+    },
+    {
+      "id": "general",
+      "description": "",
+      "keywords": [],
+      "name": "NPC 5"
     }
   ],
   "items": [
@@ -187,21 +341,32 @@
       "name": "鉄の剣",
       "description": "冒険者向けの標準的な剣。",
       "effect": "通常攻撃に使用",
-      "keywords": ["鉄の剣", "剣", "武器"]
+      "keywords": [
+        "鉄の剣",
+        "剣",
+        "武器"
+      ]
     },
     {
       "id": "herb",
       "name": "薬草",
       "description": "傷を癒す薬草。",
       "effect": "HPを10回復",
-      "keywords": ["薬草", "回復"]
+      "keywords": [
+        "薬草",
+        "回復"
+      ]
     },
     {
       "id": "ice_charm",
       "name": "氷の護符",
       "description": "冷気の力を宿した護符。",
       "effect": "邪竜の弱点を突く",
-      "keywords": ["氷の護符", "護符", "冷気"]
+      "keywords": [
+        "氷の護符",
+        "護符",
+        "冷気"
+      ]
     }
   ],
   "clues": [
@@ -209,15 +374,120 @@
       "id": "dragon_weakness",
       "title": "邪竜の弱点",
       "description": "イグニスは炎に強いが、冷気を帯びた攻撃に弱い。",
-      "keywords": ["弱点", "冷気", "氷", "イグニス"]
+      "keywords": [
+        "弱点",
+        "冷気",
+        "氷",
+        "イグニス"
+      ]
+    }
+  ],
+  "enemies": [
+    {
+      "id": "slime",
+      "name": "スライム",
+      "description": "森に潜む弱い魔物。チュートリアル用の敵。",
+      "hp": 5,
+      "max_hp": 5,
+      "mp": 0,
+      "max_mp": 0,
+      "sp": 0,
+      "max_sp": 0,
+      "attributes": {
+        "str": 4,
+        "dex": 2,
+        "int": 1,
+        "wis": 1,
+        "con": 4
+      },
+      "skills": [],
+      "image": ""
+    },
+    {
+      "id": "ignis",
+      "name": "邪竜イグニス",
+      "description": "王国を脅かす紅き邪竜。炎の息を吐き、圧倒的な力を持つ。冷気に弱い。",
+      "hp": 30,
+      "max_hp": 30,
+      "mp": 15,
+      "max_mp": 15,
+      "sp": 10,
+      "max_sp": 10,
+      "attributes": {
+        "str": 18,
+        "dex": 8,
+        "int": 12,
+        "wis": 6,
+        "con": 16
+      },
+      "skills": [
+        {
+          "name": "炎の息",
+          "description": "灼熱の炎を広範囲に吐き出す。",
+          "effect": "全体に2d6ダメージ",
+          "dice_type": "2d6+str",
+          "cost": 5,
+          "cost_type": "mp"
+        },
+        {
+          "name": "尻尾攻撃",
+          "description": "巨大な尾で薙ぎ払う。",
+          "effect": "1d20+str判定、単体ダメージ",
+          "dice_type": "1d20+str",
+          "cost": 0
+        }
+      ],
+      "image": ""
+    }
+  ],
+  "combat_choices": [
+    {
+      "text": "武器で攻撃する",
+      "preview": "装備中の武器で敵に攻撃します",
+      "risk": "1d6判定"
+    },
+    {
+      "text": "技能を使う",
+      "preview": "習得している技能を選択します",
+      "risk": "技能により変動"
+    },
+    {
+      "text": "道具を使う",
+      "preview": "所持品から回復薬などを使います",
+      "risk": "判定不要"
+    },
+    {
+      "text": "逃走を試みる",
+      "preview": "戦闘からの離脱を試みます",
+      "risk": "1d20+dex判定（DC14）"
     }
   ],
   "attribute_defs": [
-    {"id": "str", "name": "筋力", "initial_value": 8},
-    {"id": "dex", "name": "敏捷", "initial_value": 8},
-    {"id": "int", "name": "知力", "initial_value": 8},
-    {"id": "wis", "name": "感知", "initial_value": 8},
-    {"id": "con", "name": "耐久", "initial_value": 8}
+    {
+      "id": "str",
+      "name": "筋力",
+      "initial_value": 8
+    },
+    {
+      "id": "dex",
+      "name": "敏捷",
+      "initial_value": 8
+    },
+    {
+      "id": "int",
+      "name": "知力",
+      "initial_value": 8
+    },
+    {
+      "id": "wis",
+      "name": "感知",
+      "initial_value": 8
+    },
+    {
+      "id": "con",
+      "name": "耐久",
+      "initial_value": 8
+    }
   ],
   "characters": [
     {
@@ -227,17 +497,60 @@
       "description": "王国に選ばれし若き冒険者。バランスの取れた能力を持つ。",
       "image": "/static/images/char_male_hero.png",
       "image_female": "/static/images/char_female_hero.png",
-      "hp": 20, "max_hp": 20,
-      "mp": 8, "max_mp": 8,
-      "sp": 10, "max_sp": 10,
+      "hp": 20,
+      "max_hp": 20,
+      "mp": 8,
+      "max_mp": 8,
+      "sp": 10,
+      "max_sp": 10,
       "gold": 0,
-      "attributes": {"str": 12, "dex": 10, "int": 8, "wis": 8, "con": 10},
+      "attributes": {
+        "str": 12,
+        "dex": 5,
+        "int": 5,
+        "wis": 5,
+        "con": 10
+      },
       "inventory": [
-        {"name": "鉄の剣", "description": "冒険者向けの標準的な剣。", "effect": "通常攻撃に使用", "quantity": 1},
-        {"name": "革の鎧", "description": "なめした革で作られた軽量の鎧。", "effect": "被ダメージを軽減", "quantity": 1},
-        {"name": "薬草", "description": "傷を癒す薬草。", "effect": "HPを10回復", "quantity": 1}
+        {
+          "name": "鉄の剣",
+          "description": "冒険者向けの標準的な剣。",
+          "effect": "通常攻撃に使用",
+          "quantity": 1
+        },
+        {
+          "name": "革の鎧",
+          "description": "なめした革で作られた軽量の鎧。",
+          "effect": "被ダメージを軽減(-1)",
+          "quantity": 1
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復",
+          "quantity": 1
+        }
       ],
-      "equipment": ["鉄の剣", "革の鎧"]
+      "equipment": [
+        "鉄の剣",
+        "革の鎧"
+      ],
+      "skills": [
+        {
+          "name": "渾身斬り",
+          "description": "気合を込めた全力の一撃。",
+          "effect": "1d4+str判定",
+          "dice_type": "1d4+str",
+          "cost": 3,
+          "cost_type": "sp"
+        },
+        {
+          "name": "防御",
+          "description": "盾を構えて次の攻撃に備える。",
+          "effect": "次の被ダメージを半減",
+          "cost": 0
+        }
+      ]
     },
     {
       "id": "cleric",
@@ -245,17 +558,62 @@
       "default_name": "マリア",
       "description": "神聖魔法を操る癒し手。HPとMPが高く、知力に優れる。",
       "image": "/static/images/char_cleric.png",
-      "hp": 18, "max_hp": 18,
-      "mp": 14, "max_mp": 14,
-      "sp": 8, "max_sp": 8,
+      "hp": 18,
+      "max_hp": 18,
+      "mp": 14,
+      "max_mp": 14,
+      "sp": 8,
+      "max_sp": 8,
       "gold": 0,
-      "attributes": {"str": 6, "dex": 8, "int": 14, "wis": 12, "con": 8},
+      "attributes": {
+        "str": 6,
+        "dex": 8,
+        "int": 14,
+        "wis": 12,
+        "con": 15
+      },
       "inventory": [
-        {"name": "聖なる杖", "description": "神聖魔法を増幅する杖。", "effect": "回復魔法の効果+2", "quantity": 1},
-        {"name": "ローブ", "description": "僧侶の簡素な衣。", "effect": "魔法防御を少し高める", "quantity": 1},
-        {"name": "薬草", "description": "傷を癒す薬草。", "effect": "HPを10回復", "quantity": 2}
+        {
+          "name": "聖なる杖",
+          "description": "神聖魔法を増幅する杖。",
+          "effect": "回復魔法の効果+2",
+          "quantity": 1
+        },
+        {
+          "name": "ローブ",
+          "description": "僧侶の簡素な衣。",
+          "effect": "回復魔法消費-1",
+          "quantity": 1
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復",
+          "quantity": 2
+        }
       ],
-      "equipment": ["聖なる杖", "ローブ"]
+      "equipment": [
+        "聖なる杖",
+        "ローブ"
+      ],
+      "skills": [
+        {
+          "name": "治癒の祈り",
+          "description": "聖なる祈りで傷を癒す。",
+          "effect": "HPを1d6+知力回復",
+          "dice_type": "1d6+int",
+          "cost": 4,
+          "cost_type": "mp"
+        },
+        {
+          "name": "聖なる守護",
+          "description": "聖光の盾で味方を守る。",
+          "effect": "次の攻撃ダメージを無効化",
+          "cost": 6,
+          "cost_type": "mp"
+        }
+      ],
+      "image_female": ""
     },
     {
       "id": "mage",
@@ -263,17 +621,63 @@
       "default_name": "リリィ",
       "description": "攻撃魔法を極めた学者。MPが非常に高く、知力に長ける。",
       "image": "/static/images/char_mage.png",
-      "hp": 12, "max_hp": 12,
-      "mp": 20, "max_mp": 20,
-      "sp": 6, "max_sp": 6,
+      "hp": 12,
+      "max_hp": 12,
+      "mp": 20,
+      "max_mp": 20,
+      "sp": 6,
+      "max_sp": 6,
       "gold": 0,
-      "attributes": {"str": 4, "dex": 8, "int": 16, "wis": 10, "con": 6},
+      "attributes": {
+        "str": 4,
+        "dex": 8,
+        "int": 16,
+        "wis": 10,
+        "con": 6
+      },
       "inventory": [
-        {"name": "魔導書", "description": "古代の魔法が記された書物。", "effect": "攻撃魔法の威力+3", "quantity": 1},
-        {"name": "魔法のローブ", "description": "魔力を帯びた上質なローブ。", "effect": "MP消費-1", "quantity": 1},
-        {"name": "薬草", "description": "傷を癒す薬草。", "effect": "HPを10回復", "quantity": 1}
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃魔法の威力+3",
+          "quantity": 1
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費-1",
+          "quantity": 1
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復",
+          "quantity": 1
+        }
       ],
-      "equipment": ["魔導書", "魔法のローブ"]
+      "equipment": [
+        "魔導書",
+        "魔法のローブ"
+      ],
+      "skills": [
+        {
+          "name": "火球",
+          "description": "灼熱の火球を放つ。",
+          "effect": "1d20+int判定、2d6ダメージ",
+          "dice_type": "1d20+int",
+          "cost": 5,
+          "cost_type": "mp"
+        },
+        {
+          "name": "氷の矢",
+          "description": "冷気の矢を放つ。",
+          "effect": "1d20+int判定、氷属性ダメージ",
+          "dice_type": "1d20+int",
+          "cost": 3,
+          "cost_type": "mp"
+        }
+      ],
+      "image_female": ""
     },
     {
       "id": "thief",
@@ -281,17 +685,63 @@
       "default_name": "シオン",
       "description": "影に生きる敏捷の達人。素早さと器用さに優れる。",
       "image": "/static/images/char_thief.png",
-      "hp": 14, "max_hp": 14,
-      "mp": 6, "max_mp": 6,
-      "sp": 14, "max_sp": 14,
+      "hp": 14,
+      "max_hp": 14,
+      "mp": 6,
+      "max_mp": 6,
+      "sp": 14,
+      "max_sp": 14,
       "gold": 0,
-      "attributes": {"str": 8, "dex": 16, "int": 10, "wis": 6, "con": 8},
+      "attributes": {
+        "str": 8,
+        "dex": 16,
+        "int": 10,
+        "wis": 6,
+        "con": 8
+      },
       "inventory": [
-        {"name": "ダガー", "description": "軽量で扱いやすい短剣。", "effect": "素早い連続攻撃が可能", "quantity": 1},
-        {"name": "革の鎧", "description": "動きやすさを重視した軽装鎧。", "effect": "被ダメージを軽減", "quantity": 1},
-        {"name": "盗賊道具", "description": "鍵開けや罠解除に使う道具一式。", "effect": "探索・解除判定+2", "quantity": 1}
+        {
+          "name": "ダガー",
+          "description": "軽量で扱いやすい短剣。",
+          "effect": "素早い連続攻撃が可能",
+          "quantity": 1
+        },
+        {
+          "name": "革の鎧",
+          "description": "動きやすさを重視した軽装鎧。",
+          "effect": "被ダメージを軽減(-1)",
+          "quantity": 1
+        },
+        {
+          "name": "盗賊道具",
+          "description": "鍵開けや罠解除に使う道具一式。",
+          "effect": "探索・解除判定+2",
+          "quantity": 1
+        }
       ],
-      "equipment": ["ダガー", "革の鎧"]
+      "equipment": [
+        "ダガー",
+        "革の鎧"
+      ],
+      "skills": [
+        {
+          "name": "影隠れ",
+          "description": "影に溶けて気配を消す。",
+          "effect": "1d20+dex判定、発見されない",
+          "dice_type": "1d20+dex",
+          "cost": 2,
+          "cost_type": "sp"
+        },
+        {
+          "name": "急所突き",
+          "description": "敵の急所を正確に狙う。",
+          "effect": "1d20+dex判定、ダメージ2倍",
+          "dice_type": "1d20+dex",
+          "cost": 4,
+          "cost_type": "sp"
+        }
+      ],
+      "image_female": ""
     }
   ]
 }

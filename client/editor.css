@@ -318,6 +318,71 @@ label {
   font-size: 13px;
 }
 
+.skill-card {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: var(--panel);
+  margin-bottom: 10px;
+}
+
+.skill-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.skill-card-head strong {
+  color: var(--accent-2);
+  font-size: 13px;
+}
+
+.relation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.relation-picker {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: var(--panel);
+}
+
+.relation-picker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.relation-picker h4 {
+  margin: 0;
+  color: var(--accent-2);
+  font-size: 13px;
+}
+
+.relation-rows {
+  display: grid;
+  gap: 8px;
+}
+
+.relation-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.relation-row select {
+  min-width: 0;
+}
+
 .raw-json {
   min-height: calc(100vh - 190px);
   font-family: Consolas, "Cascadia Mono", monospace;
@@ -355,6 +420,7 @@ label {
   .filebar,
   .editor-shell,
   .form-grid,
+  .relation-grid,
   .choice-row {
     grid-template-columns: 1fr;
   }

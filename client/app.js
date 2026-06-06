@@ -45,6 +45,7 @@ const els = {
   menuCloseBtn:    document.querySelector("#menuCloseBtn"),
   newSessionButton:document.querySelector("#newSessionButton"),
   sceneTitle:      document.querySelector("#sceneTitle"),
+  enemyPanel:      document.querySelector("#enemyPanel"),
   backendInfo:     document.querySelector("#backendInfo"),
   messages:        document.querySelector("#messages"),
   form:            document.querySelector("#turnForm"),
@@ -418,6 +419,7 @@ function renderSession(session) {
 
   /* Inventory (item objects) */
   renderInventory(character.inventory || []);
+  renderEnemies(session.enemies || []);
 
   /* Dice log */
   renderList(
@@ -502,6 +504,41 @@ function renderInventory(items) {
   }
 }
 
+function renderEnemies(enemies) {
+  if (!els.enemyPanel) return;
+  if (!Array.isArray(enemies) || !enemies.length) {
+    els.enemyPanel.style.display = "none";
+    els.enemyPanel.innerHTML = "";
+    return;
+  }
+
+  els.enemyPanel.innerHTML = enemies.map((enemy) => {
+    const name = enemy.name || enemy.title || enemy.id || "敵";
+    const hp = Number(enemy.hp ?? 0);
+    const maxHp = Number(enemy.max_hp || hp || 1);
+    const percent = Math.max(0, Math.min(100, (hp / maxHp) * 100));
+    const skills = Array.isArray(enemy.skills)
+      ? enemy.skills.slice(0, 3).map((skill) => `<span>${escapeHtml(skillLabel(skill))}</span>`).join("")
+      : "";
+    return `<section class="enemy-card">
+      <div class="enemy-card-head">
+        <strong>${escapeHtml(name)}</strong>
+        <span>HP ${hp}/${maxHp}</span>
+      </div>
+      <div class="enemy-hp"><i style="width:${percent}%"></i></div>
+      ${enemy.description ? `<p>${escapeHtml(enemy.description)}</p>` : ""}
+      ${skills ? `<div class="enemy-skills">${skills}</div>` : ""}
+    </section>`;
+  }).join("");
+  els.enemyPanel.style.display = "";
+}
+
+function skillLabel(skill) {
+  if (typeof skill === "string") return skill;
+  if (skill && typeof skill === "object") return skill.name || skill.id || skill.description || "技能";
+  return "技能";
+}
+
 /* ═══════════════════════════════════════════════════
    CHOICES
    ═══════════════════════════════════════════════════ */
@@ -521,7 +558,7 @@ function renderChoices(choices) {
 
     const card = document.createElement("button");
     card.type = "button";
-    card.className = "choice-card";
+    card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""}`;
 
     const riskClass = classifyRisk(risk);
 
@@ -541,6 +578,11 @@ function renderChoices(choices) {
   els.choicesArea.style.display = "";
   els.dialogueBox.classList.remove("choices-ready");
   if (els.clickIndicator) els.clickIndicator.style.display = "none";
+}
+
+function isCombatChoice(text, preview, risk) {
+  const source = `${text} ${preview} ${risk}`;
+  return /攻撃|防御|回避|撤退|戦闘|敵|斬|剣|魔法|回復|ダメージ|1d20|DC\d+/i.test(source);
 }
 
 function hideChoices() {
