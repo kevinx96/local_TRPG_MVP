@@ -345,11 +345,13 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
         full_response = _demo_opening(session, str(exc))
 
     visible_text, payload, warning = split_visible_and_json(full_response)
+    visible_text = _visible_text_from_payload(visible_text, payload)
     if not visible_text.strip():
         if debug_enabled:
             debug_log("Opening model returned no player-visible text; using local fallback.")
         full_response = _demo_opening(session, "opening response had no player-visible text")
         visible_text, payload, warning = split_visible_and_json(full_response)
+        visible_text = _visible_text_from_payload(visible_text, payload)
     if debug_enabled:
         debug_log(
             "Opening model result "
@@ -397,6 +399,7 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
         full_response = _demo_response(session, request.text, latest_roll, str(exc))
 
     visible_text, payload, warning = split_visible_and_json(full_response)
+    visible_text = _visible_text_from_payload(visible_text, payload)
     if debug_enabled:
         debug_log(
             "Turn model result "
@@ -412,6 +415,13 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             f"logs={len(session['system_logs'])} dice={len(session['dice_log'])}"
         )
     return public_session(session)
+
+
+def _visible_text_from_payload(visible_text: str, payload: Optional[dict[str, Any]]) -> str:
+    if visible_text.strip() or not isinstance(payload, dict):
+        return visible_text
+    gm_text = payload.get("gm_text")
+    return str(gm_text or "")
 
 
 def _opening_prompt_for_mode(session: dict[str, Any]) -> str:

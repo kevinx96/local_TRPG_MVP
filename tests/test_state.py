@@ -5,6 +5,7 @@ import uuid
 from pathlib import Path
 from unittest.mock import patch
 
+from host import app as app_module
 from host import state
 from host.gm_contract import split_visible_and_json
 
@@ -148,6 +149,27 @@ class StateTests(unittest.TestCase):
         self.assertEqual([item["id"] for item in context["matched"]["items"]], ["iron_shield"])
         self.assertEqual(context["matched"]["clues"], [])
 
+    def test_scene_description_does_not_keyword_match_remote_enemies(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["scenes"][0]["description"] = "王は邪竜イグニスと竜の谷について語る。"
+        raw["locations"].append({
+            "id": "dragon_valley",
+            "title": "竜の谷",
+            "description": "遠い谷。",
+            "keywords": ["竜", "谷"],
+            "enemy_ids": ["ignis"],
+        })
+        raw["enemies"] = [{"id": "ignis", "name": "イグニス", "description": "紅き邪竜。"}]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        context = state.select_scenario_context(session, "")
+
+        self.assertEqual([item["id"] for item in context["matched"]["locations"]], ["forge"])
+        self.assertEqual(context["matched"]["enemies"], [])
+
     def test_model_choices_do_not_trigger_fallback(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
@@ -286,6 +308,28 @@ class StateTests(unittest.TestCase):
         self.assertTrue(public.get("needs_opening"))
         self.assertEqual(len(public["messages"]), 0)
         self.assertEqual(public["current_scene"], "start")
+
+    def test_opening_accepts_json_only_gm_text_without_demo_fallback(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        model_response = json.dumps(
+            {
+                "gm_text": "王の間に静かな緊張が満ちています。",
+                "system_log": "開幕シーンを開始しました。",
+                "state_delta": {},
+                "choices": [{"text": "国王に話を聞く", "preview": "", "risk": "判定不要"}],
+            },
+            ensure_ascii=False,
+        )
+
+        with patch.object(app_module, "load_config", return_value={"debug_llm": False, "demo_fallback_on_error": True}):
+            with patch.object(app_module, "chat_completion", return_value=model_response):
+                opened = app_module._run_opening(session)
+
+        self.assertEqual(opened["messages"][-1]["text"], "王の間に静かな緊張が満ちています。")
+        self.assertEqual(opened["system_logs"][-1]["text"], "開幕シーンを開始しました。")
+        self.assertEqual(opened["choices"][0]["text"], "国王に話を聞く")
+        self.assertFalse(any("デモモード" in log["text"] for log in opened["system_logs"]))
 
     def test_create_session_stores_gm_mode(self):
         public = state.create_session(str(self.write_pack()), gm_mode="full")

@@ -9,6 +9,7 @@ const state = {
   selectedCharacterId: "hero",
   selectedCharacterImage: "/static/images/char_male_hero.png",
   selectedCharacter: null,
+  characters: [],
   expandedCharacterId: "",
   scenarioPath: "host/prompt/processed/dragon_rpg.json",
 };
@@ -163,10 +164,12 @@ async function onScenarioChange() {
 }
 
 function renderCharacterCards(characters) {
+  state.characters = Array.isArray(characters) ? characters : [];
   if (!characters.length) {
     state.selectedCharacterId = "";
     state.selectedCharacterImage = "";
     state.selectedCharacter = null;
+    state.characters = [];
     state.expandedCharacterId = "";
     els.heroNameInput.value = "";
     els.genderSelect.style.display = "none";
@@ -263,6 +266,9 @@ async function startGame() {
   const model = els.modelSelect ? els.modelSelect.value : "";
   const gmMode = document.querySelector('input[name="gmMode"]:checked')?.value || "semi";
   const scenarioPath = state.scenarioPath;
+  const selectedCharacter = currentSelectedCharacter();
+  const characterId = selectedCharacter?.id || state.selectedCharacterId;
+  const characterImage = characterImageForStart(selectedCharacter);
   localStorage.setItem("trpg.gmMode", gmMode);
   setStartBusy(true);
   try {
@@ -276,7 +282,7 @@ async function startGame() {
 
     const charPayload = {
       name: heroName,
-      character_image: state.selectedCharacterImage,
+      character_image: characterImage,
     };
     const session = await fetchJson("/api/sessions", {
       method: "POST",
@@ -284,7 +290,7 @@ async function startGame() {
       body: JSON.stringify({
         scenario_path: scenarioPath,
         gm_mode: gmMode,
-        character_id: state.selectedCharacterId,
+        character_id: characterId,
         character: charPayload,
       }),
     });
@@ -298,6 +304,28 @@ async function startGame() {
   } finally {
     setStartBusy(false);
   }
+}
+
+function currentSelectedCharacter() {
+  const selectedCardId = document.querySelector(".char-card.selected")?.dataset.charId || state.selectedCharacterId;
+  const selected = state.characters.find((char) => char.id === selectedCardId)
+    || state.characters.find((char) => char.id === state.selectedCharacterId)
+    || state.selectedCharacter;
+  if (selected) {
+    state.selectedCharacterId = selected.id;
+    state.selectedCharacter = selected;
+  }
+  return selected || null;
+}
+
+function characterImageForStart(char) {
+  if (!char) return state.selectedCharacterImage || "";
+  if (char.id === "hero") {
+    updateHeroImage(char);
+    return state.selectedCharacterImage || char.image || "";
+  }
+  state.selectedCharacterImage = char.image || "";
+  return state.selectedCharacterImage;
 }
 
 function restoreGmMode() {
