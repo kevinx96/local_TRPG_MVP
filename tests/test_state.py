@@ -188,6 +188,44 @@ class StateTests(unittest.TestCase):
         self.assertEqual(session["choices"][0]["text"], "鍛冶屋へ向かう")
         self.assertTrue(any("choices fallback: model did not provide choices." in log["text"] for log in session["system_logs"]))
 
+    def test_public_session_exposes_current_scene_enemies(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["enemy_ids"] = ["slime"]
+        raw["enemies"] = [
+            {
+                "id": "slime",
+                "name": "Slime",
+                "description": "A weak training enemy.",
+                "hp": 5,
+                "max_hp": 5,
+                "skills": [{"name": "Body Slam"}],
+            }
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+
+        public = state.create_session(str(path))
+
+        self.assertTrue(public["in_combat"])
+        self.assertEqual(public["enemies"][0]["id"], "slime")
+        self.assertNotIn("scenario_pack", public)
+
+    def test_combat_fallback_choices_win_when_scene_has_enemies(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["enemy_ids"] = ["slime"]
+        raw["enemies"] = [{"id": "slime", "name": "Slime", "hp": 5, "max_hp": 5}]
+        raw["combat_choices"] = [
+            {"text": "Attack the slime", "preview": "Start combat", "risk": "1d20 (DC10)"}
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        state.apply_gm_payload(session, "A slime blocks the road.", {"state_delta": {}})
+
+        self.assertEqual(session["choices"][0]["text"], "Attack the slime")
+
     def test_legacy_txt_scenario_still_builds_context(self):
         scenario = self.tmp_path / "legacy.txt"
         scenario.write_text("古い形式のシナリオ本文です。", encoding="utf-8")

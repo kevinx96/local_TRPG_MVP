@@ -14,6 +14,7 @@ DEFAULT_FALLBACK_CHOICES = [
 ]
 
 ENTITY_GROUPS = ("locations", "npcs", "items", "clues")
+_ENTITY_ID_KEYS = {"npcs": "npc_ids", "items": "item_ids", "clues": "clue_ids", "enemies": "enemy_ids"}
 
 
 def load_scenario_pack(path: Path) -> dict[str, Any]:
@@ -98,6 +99,14 @@ def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) ->
     }
     for group in ENTITY_GROUPS:
         pack[group] = _normalize_records(raw.get(group))
+    if isinstance(raw.get("enemies"), list):
+        pack["enemies"] = [_normalize_enemy_record(e) for e in raw["enemies"] if isinstance(e, dict)]
+    else:
+        pack["enemies"] = []
+    if isinstance(raw.get("combat_choices"), list):
+        pack["combat_choices"] = normalize_choices(raw["combat_choices"])
+    else:
+        pack["combat_choices"] = []
     if isinstance(raw.get("attribute_defs"), list):
         pack["attribute_defs"] = [
             {"id": str(a.get("id", "")), "name": str(a.get("name", "")), "initial_value": _safe_number(a.get("initial_value"), 8)}
@@ -132,13 +141,30 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
     )
 
     matched: dict[str, list[dict[str, Any]]] = {}
+    # Collect explicit entity IDs from the current scene's locations
+    location_ids = _as_text_list(scene.get("location_ids"))
+    explicit_entity_ids: dict[str, set[str]] = {group: set() for group in (*ENTITY_GROUPS, "enemies")}
+    explicit_entity_ids["locations"].update(location_ids)
+    for group, id_key in _ENTITY_ID_KEYS.items():
+        for eid in _as_text_list(scene.get(id_key)):
+            explicit_entity_ids[group].add(eid)
+    for loc in pack.get("locations", []):
+        if str(loc.get("id", "")) in location_ids:
+            for group, id_key in _ENTITY_ID_KEYS.items():
+                for eid in _as_text_list(loc.get(id_key)):
+                    explicit_entity_ids[group].add(eid)
     for group in ENTITY_GROUPS:
-        explicit_ids = _as_text_list(scene.get(f"{group[:-1]}_ids") or scene.get(f"{group}_ids"))
         matched[group] = [
             _public_record(record)
             for record in pack.get(group, [])
-            if _record_matches(record, searchable_text) or str(record.get("id", "")) in explicit_ids
+            if _record_matches(record, searchable_text) or str(record.get("id", "")) in explicit_entity_ids.get(group, set())
         ][:6]
+    # Enemies are matched separately since they have a different record structure
+    matched["enemies"] = [
+        _public_record(record)
+        for record in pack.get("enemies", [])
+        if _record_matches(record, searchable_text) or str(record.get("id", "")) in explicit_entity_ids.get("enemies", set())
+    ][:6]
 
     context: dict[str, Any] = {
         "meta": pack.get("meta", {}),
@@ -230,11 +256,26 @@ def fallback_choices_for_session(session: dict[str, Any]) -> list[dict[str, str]
 
 def fallback_choices_for_scene(pack: dict[str, Any], scene_id: str) -> list[dict[str, str]]:
     scene = find_scene(pack, scene_id)
+    if _scene_has_enemies(pack, scene):
+        combat = normalize_choices(pack.get("combat_choices"))
+        if combat:
+            return combat
     if scene:
         choices = normalize_choices(scene.get("fallback_choices") or scene.get("choice_seeds"))
         if choices:
             return choices
     return normalize_choices(pack.get("fallback_choices")) or deepcopy(DEFAULT_FALLBACK_CHOICES)
+
+
+def _scene_has_enemies(pack: dict[str, Any], scene: Optional[dict[str, Any]]) -> bool:
+    if not scene:
+        return False
+    location_ids = _as_text_list(scene.get("location_ids")) if scene else []
+    for loc in pack.get("locations", []):
+        if str(loc.get("id", "")) in location_ids:
+            if _as_text_list(loc.get("enemy_ids")):
+                return True
+    return False
 
 
 def resolve_scene_id(pack: dict[str, Any], value: str) -> str:
@@ -372,6 +413,7 @@ def _public_record(record: dict[str, Any]) -> dict[str, Any]:
     allowed = (
         "id", "title", "name", "description", "summary", "goals", "keywords",
         "fallback_choices", "preview", "risk", "effect",
+        "hp", "max_hp", "mp", "max_mp", "sp", "max_sp", "attributes", "skills",
     )
     return {key: deepcopy(record[key]) for key in allowed if key in record}
 
@@ -484,4 +526,26 @@ def _normalize_character_record(raw: dict[str, Any]) -> dict[str, Any]:
         record["equipment"] = _as_text_list(raw["equipment"])
     else:
         record["equipment"] = []
+    if isinstance(raw.get("skills"), list):
+        record["skills"] = deepcopy(raw["skills"])
+    else:
+        record["skills"] = []
+    return record
+
+
+def _normalize_enemy_record(raw: dict[str, Any]) -> dict[str, Any]:
+    record: dict[str, Any] = {
+        "id": str(raw.get("id", "")),
+        "name": str(raw.get("name", "")),
+        "description": str(raw.get("description", "")),
+        "image": str(raw.get("image", "")) if raw.get("image") else "",
+    }
+    for stat in ("hp", "max_hp", "mp", "max_mp", "sp", "max_sp"):
+        record[stat] = _safe_number(raw.get(stat), 0)
+    attrs = raw.get("attributes")
+    record["attributes"] = {str(k): _safe_number(v, 0) for k, v in attrs.items()} if isinstance(attrs, dict) else {}
+    if isinstance(raw.get("skills"), list):
+        record["skills"] = deepcopy(raw["skills"])
+    else:
+        record["skills"] = []
     return record
