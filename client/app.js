@@ -25,6 +25,7 @@ const els = {
   scenarioSelect:  document.querySelector("#scenarioSelect"),
   characterCards:  document.querySelector("#characterCards"),
   heroNameInput:   document.querySelector("#heroNameInput"),
+  genderSection:   document.querySelector("#genderSection"),
   genderSelect:    document.querySelector("#genderSelect"),
   startButton:     document.querySelector("#startButton"),
   startBtnText:    document.querySelector(".start-btn-text"),
@@ -145,7 +146,7 @@ async function loadScenarios() {
     }
     els.scenarioSelect.addEventListener("change", onScenarioChange);
   } catch (err) {
-    els.backendStatus.textContent = `剧本加载失败: ${err.message}`;
+    els.backendStatus.textContent = `シナリオの読み込みに失敗しました: ${err.message}`;
   }
 }
 
@@ -159,7 +160,7 @@ async function onScenarioChange() {
     state.expandedCharacterId = "";
     renderCharacterCards(characters);
   } catch (err) {
-    els.characterCards.innerHTML = `<p class="start-backend">角色加载失败</p>`;
+    els.characterCards.innerHTML = `<p class="start-backend">キャラクターの読み込みに失敗しました</p>`;
   }
 }
 
@@ -173,7 +174,7 @@ function renderCharacterCards(characters) {
     state.expandedCharacterId = "";
     els.heroNameInput.value = "";
     els.genderSelect.style.display = "none";
-    els.characterCards.innerHTML = `<p class="start-backend">本剧本暂无角色定义</p>`;
+    els.characterCards.innerHTML = `<p class="start-backend">このシナリオにキャラクター定義がありません</p>`;
     return;
   }
   const selectedId = characters.some((char) => char.id === state.selectedCharacterId)
@@ -232,10 +233,10 @@ function selectCharacter(char, options = {}) {
   state.selectedCharacter = char;
   els.heroNameInput.value = char.default_name || char.name || "";
   if (char.id === "hero") {
-    els.genderSelect.style.display = "flex";
+    els.genderSection.style.display = "";
     updateHeroImage(char);
   } else {
-    els.genderSelect.style.display = "none";
+    els.genderSection.style.display = "none";
     state.selectedCharacterImage = char.image || "";
   }
   if (Object.prototype.hasOwnProperty.call(options, "expanded")) {
