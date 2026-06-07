@@ -171,6 +171,26 @@ class StateTests(unittest.TestCase):
         self.assertEqual([item["id"] for item in context["matched"]["locations"]], ["forge"])
         self.assertEqual(context["matched"]["enemies"], [])
 
+    def test_full_mode_caps_matched_context_records(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"] = [
+            {
+                "id": f"market_{index}",
+                "title": f"市場{index}",
+                "description": "装備を扱う店。",
+                "keywords": ["市場"],
+            }
+            for index in range(6)
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path), gm_mode="full")
+        session = state.load_session(public["id"])
+
+        context = state.select_scenario_context(session, "市場を調べる")
+
+        self.assertEqual(len(context["matched"]["locations"]), 3)
+
     def test_model_choices_do_not_trigger_fallback(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
@@ -210,6 +230,36 @@ class StateTests(unittest.TestCase):
 
         self.assertEqual(session["choices"][0]["text"], "鍛冶屋へ向かう")
         self.assertTrue(any("choices fallback: model did not provide choices." in log["text"] for log in session["system_logs"]))
+
+    def test_failed_roll_fallback_removes_repeated_check_choice(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "鍛冶屋へ向かう")
+        session["next_dice_dc"] = 15
+        session["dice_log"].append({"expression": "1d20", "rolls": [7], "total": 7, "created_at": state.utc_now()})
+
+        state.apply_gm_payload(session, "鍛冶師は首を横に振り、有用な助言を与えなかった。", {"state_delta": {}})
+
+        self.assertEqual(session["choices"][0]["text"], "助言を受け流して別の準備に移る")
+        self.assertNotIn("鍛冶屋へ向かう", [choice["text"] for choice in session["choices"]])
+
+    def test_failed_roll_malformed_json_does_not_keep_useful_hint(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "鍛冶師に秘密の助言を求める")
+        session["next_dice_dc"] = 15
+        session["dice_log"].append({"expression": "1d20", "rolls": [7], "total": 7, "created_at": state.utc_now()})
+        visible, payload, warning = split_visible_and_json(
+            '{"gm_text":"鍛冶師は曖昧に笑う。近隣の洞窟に古代文字があるはずだ。",'
+            '"choices":[{"option":"途中で切れた"'
+        )
+
+        state.apply_gm_payload(session, visible, payload, warning)
+
+        latest_gm = session["messages"][-1]["text"]
+        self.assertIn("確かな戦術情報や新しい手がかりは得られなかった", latest_gm)
+        self.assertNotIn("洞窟", latest_gm)
+        self.assertNotIn("鍛冶師に秘密の助言を求める", [choice["text"] for choice in session["choices"]])
 
     def test_public_session_exposes_current_scene_enemies(self):
         path = self.write_pack()
@@ -276,6 +326,21 @@ class StateTests(unittest.TestCase):
         self.assertEqual(roles.count("assistant"), 2)
         self.assertTrue(any("これまでの会話要約" in message["content"] for message in messages if message["role"] == "system"))
         self.assertFalse(any("行動0" in message["content"] for message in messages if message["role"] != "system"))
+
+    def test_full_mode_caps_history_for_small_models(self):
+        public = state.create_session(str(self.write_pack()), gm_mode="full")
+        session = state.load_session(public["id"])
+        for index in range(4):
+            state.add_player_message(session, f"行動{index}")
+            state.add_assistant_message(session, f"結果{index}")
+
+        messages = state.build_llm_messages(session, {"expression": "1d20", "rolls": [10], "total": 10}, "contract")
+
+        roles = [message["role"] for message in messages]
+        self.assertEqual(roles.count("user"), 1)
+        self.assertEqual(roles.count("assistant"), 1)
+        self.assertFalse(any("行動1" in message["content"] for message in messages if message["role"] != "system"))
+        self.assertTrue(any("これまでの会話要約" in message["content"] for message in messages if message["role"] == "system"))
 
     def test_build_llm_messages_includes_player_action_history(self):
         public = state.create_session(str(self.write_pack()))
@@ -609,13 +674,16 @@ class StateTests(unittest.TestCase):
                 "choices": [
                     "単純な文字列の選択",
                     {"text": "構造化選択", "preview": "結果", "risk": "危険"},
+                    {"option": "短いoption選択", "risk": "判定不要"},
                 ],
             },
         )
 
-        self.assertEqual(len(session["choices"]), 2)
+        self.assertEqual(len(session["choices"]), 3)
         self.assertEqual(session["choices"][0]["text"], "単純な文字列の選択")
         self.assertEqual(session["choices"][1]["risk"], "危険")
+        self.assertEqual(session["choices"][2]["text"], "短いoption選択")
+        self.assertEqual(session["choices"][2]["preview"], "")
 
     def test_gold_delta_and_text_inference(self):
         public = state.create_session(str(self.write_pack()))

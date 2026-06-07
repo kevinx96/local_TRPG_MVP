@@ -9,6 +9,9 @@ class GmContractTests(unittest.TestCase):
 
         self.assertIn("出力言語は日本語だけ", prompt)
         self.assertIn("英語", prompt)
+        self.assertIn("70〜220字", prompt)
+        self.assertIn("choices.preview は省略可", prompt)
+        self.assertIn("JSON全体を閉じることを最優先", prompt)
 
     def test_split_visible_and_json_with_marker(self):
         text = (
@@ -41,6 +44,50 @@ class GmContractTests(unittest.TestCase):
         self.assertEqual(payload["state_delta"]["current_scene"], "forest")
         self.assertEqual(payload["choices"][0]["text"], "森へ進む")
         self.assertIsNone(warning)
+
+    def test_split_structured_json_accepts_common_gm_text_aliases(self):
+        text = (
+            '{"narration":"王の間に朝の光が差し込む。",'
+            '"log":"導入開始。",'
+            '"state":{"gold_change":50},'
+            '"options":[{"text":"国王に話を聞く"}]}'
+        )
+
+        visible, payload, warning = split_visible_and_json(text)
+
+        self.assertEqual(visible, "王の間に朝の光が差し込む。")
+        self.assertEqual(payload["gm_text"], "王の間に朝の光が差し込む。")
+        self.assertEqual(payload["system_log"], "導入開始。")
+        self.assertEqual(payload["state_delta"]["gold_change"], 50)
+        self.assertEqual(payload["choices"][0]["text"], "国王に話を聞く")
+        self.assertIsNone(warning)
+
+    def test_split_structured_json_unwraps_nested_response_content(self):
+        text = (
+            '{"response":{"content":"鍛冶場に火花が散る。",'
+            '"choices":[{"text":"剣を点検する"}]}}'
+        )
+
+        visible, payload, warning = split_visible_and_json(text)
+
+        self.assertEqual(visible, "鍛冶場に火花が散る。")
+        self.assertEqual(payload["gm_text"], "鍛冶場に火花が散る。")
+        self.assertEqual(payload["choices"][0]["text"], "剣を点検する")
+        self.assertIsNone(warning)
+
+    def test_split_malformed_json_recovers_gm_text(self):
+        text = (
+            '{"gm_mode":"full","current_scene":"throne_room",'
+            '"gm_text":"将軍は鼻で笑い、曖昧な助言だけを返した。\\n有用な情報は得られない。",'
+            '"choices":[{"option":"途中で切れた"'
+        )
+
+        visible, payload, warning = split_visible_and_json(text)
+
+        self.assertEqual(visible, "将軍は鼻で笑い、曖昧な助言だけを返した。\n有用な情報は得られない。")
+        self.assertEqual(payload["gm_text"], visible)
+        self.assertEqual(payload["state_delta"], {})
+        self.assertIsNotNone(warning)
 
     def test_split_visible_and_json_falls_back_to_plain_text(self):
         visible, payload, warning = split_visible_and_json("普通の文章だけです。")

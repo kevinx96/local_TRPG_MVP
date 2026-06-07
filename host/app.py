@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import re
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
@@ -40,6 +42,7 @@ from .state import (
 
 CLIENT_ROOT = PROJECT_ROOT / "client"
 PROCESSED_SCENARIO_DIR = HOST_ROOT / "prompt" / "processed"
+DEBUG_COMPLETION_DIR = HOST_ROOT / "debug" / "completions"
 SCENARIO_SCHEMA_FILENAME = "scenario_pack.schema.json"
 
 app = FastAPI(title="Local TRPG Host", version="0.2.0")
@@ -337,21 +340,29 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
         )
 
     full_response = ""
+    completion_source = "llm"
     t0 = time.time()
     try:
         full_response = chat_completion(config, messages)
     except LLMClientError as exc:
+        completion_source = "demo_fallback"
         if debug_enabled:
             debug_log(f"Opening LLM failure; demo_fallback={config.get('demo_fallback_on_error', True)} error={exc}")
         if not config.get("demo_fallback_on_error", True):
             raise HTTPException(status_code=502, detail=f"LLM接続エラー: {exc}") from exc
         full_response = _demo_opening(session, str(exc))
+    if debug_enabled and full_response:
+        completion_path = _save_completion_debug(session, "opening", full_response, completion_source)
+        debug_log(f"Opening completion saved path={completion_path}")
 
     visible_text, payload, warning = split_visible_and_json(full_response)
     visible_text = _visible_text_from_payload(visible_text, payload)
     if not visible_text.strip():
         if debug_enabled:
-            debug_log("Opening model returned no player-visible text; using local fallback.")
+            debug_log(
+                "Opening model returned no player-visible text; using local fallback. "
+                f"payload_keys={_payload_keys(payload)} raw_preview={_raw_preview(full_response)}"
+            )
         full_response = _demo_opening(session, "opening response had no player-visible text")
         visible_text, payload, warning = split_visible_and_json(full_response)
         visible_text = _visible_text_from_payload(visible_text, payload)
@@ -394,17 +405,27 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
         )
 
     t0 = time.time()
+    completion_source = "llm"
     try:
         full_response = chat_completion(config, messages)
     except LLMClientError as exc:
+        completion_source = "demo_fallback"
         if debug_enabled:
             debug_log(f"LLM failure; demo_fallback={config.get('demo_fallback_on_error', True)} error={exc}")
         if not config.get("demo_fallback_on_error", True):
             raise HTTPException(status_code=502, detail=f"LLM接続エラー: {exc}") from exc
         full_response = _demo_response(session, request.text, latest_roll, str(exc))
+    if debug_enabled and full_response:
+        completion_path = _save_completion_debug(session, "turn", full_response, completion_source)
+        debug_log(f"Turn completion saved path={completion_path}")
 
     visible_text, payload, warning = split_visible_and_json(full_response)
     visible_text = _visible_text_from_payload(visible_text, payload)
+    if debug_enabled and not visible_text.strip():
+        debug_log(
+            "Turn model returned no player-visible text. "
+            f"payload_keys={_payload_keys(payload)} raw_preview={_raw_preview(full_response)}"
+        )
     if debug_enabled:
         elapsed_ms = (time.time() - t0) * 1000
         debug_log(
@@ -428,6 +449,43 @@ def _visible_text_from_payload(visible_text: str, payload: Optional[dict[str, An
         return visible_text
     gm_text = payload.get("gm_text")
     return str(gm_text or "")
+
+
+def _payload_keys(payload: Optional[dict[str, Any]]) -> list[str]:
+    if not isinstance(payload, dict):
+        return []
+    return sorted(str(key) for key in payload.keys())[:20]
+
+
+def _raw_preview(text: str, limit: int = 320) -> str:
+    compact = re.sub(r"\s+", " ", text).strip()
+    return compact[:limit]
+
+
+def _save_completion_debug(session: dict[str, Any], phase: str, completion: str, source: str) -> str:
+    DEBUG_COMPLETION_DIR.mkdir(parents=True, exist_ok=True)
+    created_at = datetime.now(timezone.utc)
+    timestamp = created_at.strftime("%Y%m%dT%H%M%S%fZ")
+    session_id = re.sub(r"[^A-Za-z0-9_-]+", "_", str(session.get("id") or "unknown"))[:64]
+    safe_phase = re.sub(r"[^A-Za-z0-9_-]+", "_", phase)[:32]
+    safe_source = re.sub(r"[^A-Za-z0-9_-]+", "_", source)[:32]
+    path = DEBUG_COMPLETION_DIR / f"{timestamp}_{session_id}_{safe_phase}_{safe_source}.json"
+    path.write_text(
+        json.dumps(
+            {
+                "session_id": session.get("id"),
+                "phase": phase,
+                "source": source,
+                "created_at": created_at.isoformat(),
+                "chars": len(completion),
+                "completion": completion,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    return str(path)
 
 
 def _opening_prompt_for_mode(session: dict[str, Any]) -> str:

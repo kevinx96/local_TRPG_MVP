@@ -308,11 +308,15 @@ def apply_gm_payload(
     payload: Optional[dict[str, Any]],
     parse_warning: Optional[str] = None,
 ) -> None:
+    current_dice_dc = session.get("next_dice_dc", 0)
+    roll_failed = _latest_roll_failed(session, current_dice_dc)
+    if roll_failed and _should_coerce_failed_roll_text(gm_text, payload, parse_warning):
+        gm_text = _failed_roll_text(session)
     if gm_text.strip():
         add_assistant_message(session, gm_text)
 
     if not payload:
-        session["choices"] = fallback_choices_for_session(session)
+        session["choices"] = _fallback_choices_after_model_failure(session, current_dice_dc)
         add_system_log(session, "choices fallback: model returned no usable JSON.")
         return
 
@@ -342,7 +346,7 @@ def apply_gm_payload(
         add_system_log(session, "choices fallback: model choices were empty after normalization.")
     else:
         add_system_log(session, "choices fallback: model did not provide choices.")
-    session["choices"] = fallback_choices_for_session(session)
+    session["choices"] = _fallback_choices_after_model_failure(session, current_dice_dc)
 
 
 def _normalize_choices(raw: list[Any]) -> list[dict[str, str]]:
@@ -351,7 +355,7 @@ def _normalize_choices(raw: list[Any]) -> list[dict[str, str]]:
         if isinstance(item, str) and item.strip():
             choices.append({"text": item.strip(), "preview": "", "risk": ""})
         elif isinstance(item, dict):
-            text = str(item.get("text", "")).strip()
+            text = str(item.get("text") or item.get("option") or item.get("action") or item.get("label") or "").strip()
             if text:
                 choices.append({
                     "text": text,
@@ -359,6 +363,58 @@ def _normalize_choices(raw: list[Any]) -> list[dict[str, str]]:
                     "risk": str(item.get("risk", "")),
                 })
     return choices[:5]
+
+
+def _fallback_choices_after_model_failure(session: dict[str, Any], current_dice_dc: Any = None) -> list[dict[str, str]]:
+    choices = fallback_choices_for_session(session)
+    if not _latest_roll_failed(session, current_dice_dc):
+        return choices
+    failed_action = _latest_player_text(session).strip()
+    filtered = [
+        choice for choice in choices
+        if str(choice.get("text") or "").strip() != failed_action
+    ]
+    recovery = {
+        "text": "助言を受け流して別の準備に移る",
+        "preview": "判定に失敗したため、有用な助言は得られませんでした",
+        "risk": "判定不要",
+    }
+    return [recovery, *filtered][:5]
+
+
+def _should_coerce_failed_roll_text(gm_text: str, payload: Optional[dict[str, Any]], parse_warning: Optional[str]) -> bool:
+    if parse_warning:
+        return True
+    if not gm_text.strip():
+        return True
+    if not isinstance(payload, dict):
+        return True
+    raw_choices = payload.get("choices")
+    return not (isinstance(raw_choices, list) and _normalize_choices(raw_choices))
+
+
+def _failed_roll_text(session: dict[str, Any]) -> str:
+    action = _latest_player_text(session).strip() or "その行動"
+    character_name = str(session.get("character", {}).get("name") or "冒険者")
+    return (
+        f"{character_name}は「{action}」を試みたが、判定は届かなかった。"
+        "相手は言葉を濁し、断片的で矛盾した話しか返さない。"
+        "確かな戦術情報や新しい手がかりは得られなかった。"
+    )
+
+
+def _latest_roll_failed(session: dict[str, Any], current_dice_dc: Any = None) -> bool:
+    dice_log = session.get("dice_log")
+    if not isinstance(dice_log, list) or not dice_log:
+        return False
+    latest = dice_log[-1]
+    if not isinstance(latest, dict):
+        return False
+    dc = current_dice_dc if current_dice_dc is not None else session.get("next_dice_dc", 0)
+    if not isinstance(dc, (int, float)) or int(dc) <= 0:
+        return False
+    total = latest.get("total")
+    return isinstance(total, (int, float)) and int(total) < int(dc)
 
 
 def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
@@ -470,6 +526,11 @@ def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], con
     memory_max_chars = _bounded_int(prompting.get("memory_max_chars"), default=1200, minimum=0, maximum=4000)
     action_history_max = _bounded_int(prompting.get("action_history_max"), default=40, minimum=0, maximum=200)
     action_history_item_chars = _bounded_int(prompting.get("action_history_item_chars"), default=80, minimum=20, maximum=240)
+    if session.get("gm_mode") == "full":
+        history_messages = min(history_messages, 2)
+        memory_max_chars = min(memory_max_chars, 600)
+        action_history_max = min(action_history_max, 20)
+        action_history_item_chars = min(action_history_item_chars, 60)
 
     character = session["character"]
     player_text = _latest_player_text(session)

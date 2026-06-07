@@ -140,6 +140,7 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
     )
 
     matched: dict[str, list[dict[str, Any]]] = {}
+    max_matched = 3 if session.get("gm_mode") == "full" else 6
     # Collect explicit entity IDs from the current scene's locations
     location_ids = _as_text_list(scene.get("location_ids"))
     explicit_entity_ids: dict[str, set[str]] = {group: set() for group in (*ENTITY_GROUPS, "enemies")}
@@ -157,13 +158,13 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
             _public_record(record)
             for record in pack.get(group, [])
             if _record_matches(record, searchable_text) or str(record.get("id", "")) in explicit_entity_ids.get(group, set())
-        ][:6]
+        ][:max_matched]
     # Enemies are matched separately since they have a different record structure
     matched["enemies"] = [
         _public_record(record)
         for record in pack.get("enemies", [])
         if _record_matches(record, searchable_text) or str(record.get("id", "")) in explicit_entity_ids.get("enemies", set())
-    ][:6]
+    ][:max_matched]
 
     context: dict[str, Any] = {
         "meta": pack.get("meta", {}),
