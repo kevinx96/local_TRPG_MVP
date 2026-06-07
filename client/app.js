@@ -17,6 +17,7 @@ const state = {
   diceAnimationTimer: null,
   nextDiceDc: 0,
   nextDiceType: "1d20",
+  character: null,
 };
 
 /* ── DOM References ── */
@@ -479,6 +480,7 @@ function renderSession(session) {
   state.sessionId = session.id;
   state.nextDiceDc = Number(session.next_dice_dc || 0);
   state.nextDiceType = session.next_dice_type || "1d20";
+  state.character = session.character || null;
   const character = session.character;
 
   /* Scene */
@@ -638,19 +640,6 @@ function skillLabel(skill) {
    DICE FEEDBACK
    ═══════════════════════════════════════════════════ */
 
-function startDiceRollAnimation() {
-  if (!els.diceBanner || !els.diceRollFace || !els.diceBannerText) return;
-  stopDiceRollAnimation();
-  els.diceBanner.style.display = "";
-  els.diceBanner.classList.add("rolling");
-  els.diceBanner.classList.remove("success", "failure", "neutral");
-  els.diceBannerText.textContent = "判定中…";
-  els.diceRollFace.textContent = "?";
-  state.diceAnimationTimer = window.setInterval(() => {
-    els.diceRollFace.textContent = String(1 + Math.floor(Math.random() * 20));
-  }, 80);
-}
-
 function stopDiceRollAnimation() {
   if (state.diceAnimationTimer) {
     window.clearInterval(state.diceAnimationTimer);
@@ -686,17 +675,6 @@ function diceSignature(roll) {
   return [roll.expression || "", rolls, roll.total ?? "", roll.dc ?? "", roll.success ?? ""].join("|");
 }
 
-function shouldAnimateDiceForAction(actionText) {
-  const choice = state.pendingChoices.find((item) => {
-    const text = typeof item === "string" ? item : (item.text || "");
-    return text === actionText;
-  });
-  const risk = choice && typeof choice === "object" ? String(choice.risk || "") : "";
-  if (risk.includes("判定不要")) return false;
-  if (/DC\s*\d+|1d\d+|判定/i.test(risk)) return true;
-  return Number(state.nextDiceDc || 0) > 0;
-}
-
 function rollLocalDice(actionText) {
   const choice = state.pendingChoices.find((item) => {
     const text = typeof item === "string" ? item : (item.text || "");
@@ -714,15 +692,25 @@ function rollLocalDice(actionText) {
   const risk = String(choice.risk || "");
   if (risk.includes("判定不要")) return null;
   if (!(/DC\s*\d+|1d\d+|判定/i.test(risk)) && Number(state.nextDiceDc || 0) <= 0) return null;
-  const diceMatch = risk.match(/(\d+)d(\d+)/i);
+  const diceMatch = risk.match(/(\d+)d(\d+(?:\+[A-Za-z_][A-Za-z0-9_]*)?)/i);
   const count = diceMatch ? parseInt(diceMatch[1], 10) : 1;
-  const sides = diceMatch ? parseInt(diceMatch[2], 10) : 20;
+  const dicePart = diceMatch ? diceMatch[2].split("+")[0] : "20";
+  const sides = parseInt(dicePart, 10) || 20;
   const dcMatch = risk.match(/DC\s*(\d+)/i);
   const dc = dcMatch ? parseInt(dcMatch[1], 10) : (Number(state.nextDiceDc || 0) || 10);
   const rolls = Array.from({ length: count }, () => 1 + Math.floor(Math.random() * sides));
-  const total = rolls.reduce((a, b) => a + b, 0);
-  const expr = diceMatch ? diceMatch[0] : (state.nextDiceType || "1d20");
-  return { expression: expr, rolls, total, dc, success: total >= dc };
+  const baseTotal = rolls.reduce((a, b) => a + b, 0);
+  const attrKey = diceMatch ? resolveAttrKey(diceMatch[2]) : null;
+  const attrMod = attrKey ? getAttrValue(attrKey) : 0;
+  const total = baseTotal + attrMod;
+  const expr = diceMatch ? diceMatch[2] : (state.nextDiceType || "1d20");
+  const result = { expression: expr, rolls, total, dc, success: total >= dc };
+  if (attrKey) {
+    result.base_total = baseTotal;
+    result.attr_mod = attrMod;
+    result.attr_key = attrKey;
+  }
+  return result;
 }
 
 function isCheckRoll(roll) {

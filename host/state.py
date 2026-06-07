@@ -277,6 +277,13 @@ def _is_protocol_warning_log(text: str) -> bool:
     return text in PROTOCOL_WARNING_LOGS
 
 
+def _safe_int(val: Any, default: int = 0) -> int:
+    try:
+        return int(val)
+    except (TypeError, ValueError):
+        return default
+
+
 def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None, client_rolls: Optional[list[int]] = None) -> dict[str, Any]:
     expr = str(expression or "").strip() or "1d20"
     dice_part = expr
@@ -286,7 +293,7 @@ def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[in
         dice_part = dice_match.group(1)
         attr_key = _canonical_attr_key(dice_match.group(2) or "")
     count, sides = _parse_dice_expression(dice_part)
-    if client_rolls and isinstance(client_rolls, list) and len(client_rolls) == count and all(1 <= int(r) <= sides for r in client_rolls):
+    if client_rolls and isinstance(client_rolls, list) and len(client_rolls) == count and all(isinstance(r, (int, float)) and 1 <= int(r) <= sides for r in client_rolls):
         rolls = [int(r) for r in client_rolls]
     else:
         rolls = [random.randint(1, sides) for _ in range(count)]
@@ -495,10 +502,15 @@ def _attr_value(attrs: dict[str, Any], attr_key: str) -> int:
         value = attrs.get(key)
         if isinstance(value, (int, float)):
             return int(value)
+        if isinstance(value, str):
+            try:
+                return int(value)
+            except ValueError:
+                continue
     return 0
 
 
-def _fallback_choices_after_model_failure(session: dict[str, Any], current_dice_dc: Any = None) -> list[dict[str, str]]:
+def _fallback_choices_after_model_failure(session: dict[str, Any], current_dice_dc: Any = None) -> list[dict[str, Any]]:
     choices = fallback_choices_for_session(session)
     if not _latest_roll_failed(session, current_dice_dc):
         return choices
