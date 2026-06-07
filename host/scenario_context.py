@@ -141,37 +141,42 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
 
     matched: dict[str, list[dict[str, Any]]] = {}
     max_matched = 3 if session.get("gm_mode") == "full" else 6
-    # Collect explicit entity IDs from the current scene's locations
     location_ids = _as_text_list(scene.get("location_ids"))
     explicit_entity_ids: dict[str, set[str]] = {group: set() for group in (*ENTITY_GROUPS, "enemies")}
-    explicit_entity_ids["locations"].update(location_ids)
     for group, id_key in _ENTITY_ID_KEYS.items():
         for eid in _as_text_list(scene.get(id_key)):
             explicit_entity_ids[group].add(eid)
-    for loc in pack.get("locations", []):
-        if str(loc.get("id", "")) in location_ids:
-            for group, id_key in _ENTITY_ID_KEYS.items():
-                for eid in _as_text_list(loc.get(id_key)):
-                    explicit_entity_ids[group].add(eid)
+    for loc_id in location_ids:
+        explicit_entity_ids["locations"].add(loc_id)
+    for location in pack.get("locations", []):
+        if not isinstance(location, dict) or str(location.get("id", "")) not in location_ids:
+            continue
+        for group, id_key in _ENTITY_ID_KEYS.items():
+            for eid in _as_text_list(location.get(id_key)):
+                explicit_entity_ids[group].add(eid)
     for group in ENTITY_GROUPS:
-        matched[group] = [
-            _public_record(record)
-            for record in pack.get(group, [])
-            if _record_matches(record, searchable_text) or str(record.get("id", "")) in explicit_entity_ids.get(group, set())
-        ][:max_matched]
-    # Enemies are matched separately since they have a different record structure
-    matched["enemies"] = [
-        _public_record(record)
-        for record in pack.get("enemies", [])
-        if _record_matches(record, searchable_text) or str(record.get("id", "")) in explicit_entity_ids.get("enemies", set())
-    ][:max_matched]
+        matched[group] = _matched_records(
+            pack,
+            group,
+            searchable_text,
+            explicit_entity_ids.get(group, set()),
+            max_matched,
+            slim_location=(group == "locations"),
+        )
+    matched["enemies"] = _matched_records(
+        pack,
+        "enemies",
+        searchable_text,
+        explicit_entity_ids.get("enemies", set()),
+        max_matched,
+    )
 
     context: dict[str, Any] = {
         "meta": pack.get("meta", {}),
         "rules": pack.get("rules", []),
-        "current_scene": _public_record(scene),
+        "current_scene": _trim_record(_public_record(scene)),
         "matched": matched,
-        "fallback_choices": fallback_choices_for_scene(pack, current_scene),
+        "fallback_choices": _trim_choices(fallback_choices_for_scene(pack, current_scene)),
     }
     # Semi mode: inject hybrid hints if available so the LLM has narrative scaffolding
     hybrid = scene.get("hybrid") if isinstance(scene.get("hybrid"), dict) else None
@@ -201,7 +206,6 @@ def select_hybrid_context(
     meta = pack.get("meta", {})
     context = {
         "meta": meta,
-        "rules": pack.get("rules", []),
         "current_scene": {
             "id": scene.get("id"),
             "title": scene.get("title"),
@@ -209,7 +213,7 @@ def select_hybrid_context(
             "goals": scene.get("goals", []),
         },
         "prepared_turn": _prepared_turn_for_llm(prepared_turn, str(meta.get("language") or "")),
-        "fallback_choices": fallback_choices_for_scene(pack, current_scene),
+        "fallback_choices": _trim_choices(fallback_choices_for_scene(pack, current_scene)),
     }
     if include_debug:
         context["_debug"] = {
@@ -427,13 +431,79 @@ def _record_matches(record: dict[str, Any], text: str) -> bool:
     return any(needle and needle in text for needle in needles)
 
 
+def _matched_records(
+    pack: dict[str, Any],
+    group: str,
+    searchable_text: str,
+    explicit_ids: set[str],
+    limit: int,
+    slim_location: bool = False,
+) -> list[dict[str, Any]]:
+    explicit_matches: list[dict[str, Any]] = []
+    keyword_matches: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    records = pack.get(group, [])
+    if not isinstance(records, list):
+        return []
+
+    for record in records:
+        if not isinstance(record, dict):
+            continue
+        record_id = str(record.get("id", ""))
+        if record_id in explicit_ids:
+            explicit_matches.append(_trim_record(_public_record(record), slim_location))
+            seen.add(record_id)
+
+    for record in records:
+        if not isinstance(record, dict):
+            continue
+        record_id = str(record.get("id", ""))
+        if record_id not in seen and _record_matches(record, searchable_text):
+            keyword_matches.append(_trim_record(_public_record(record), slim_location))
+            seen.add(record_id)
+
+    effective_limit = max(limit, len(explicit_matches))
+    return [*explicit_matches, *keyword_matches][:effective_limit]
+
+
+def _trim_record(record: dict[str, Any], slim_location: bool = False) -> dict[str, Any]:
+    trimmed: dict[str, Any] = {}
+    for key in ("id", "title", "name", "effect"):
+        if key in record and record[key]:
+            trimmed[key] = record[key]
+    if not slim_location and "description" in record and record["description"]:
+        trimmed["description"] = record["description"]
+    if "goals" in record and record["goals"]:
+        trimmed["goals"] = record["goals"]
+    for key in ("hp", "max_hp", "mp", "max_mp", "sp", "max_sp"):
+        if key in record:
+            trimmed[key] = record[key]
+    if "attributes" in record and record["attributes"]:
+        trimmed["attributes"] = record["attributes"]
+    if "skills" in record and record["skills"]:
+        trimmed["skills"] = [
+            {k: v for k, v in skill.items() if k in ("name", "effect", "dice_type", "cost", "cost_type")}
+            for skill in record["skills"]
+        ]
+    if "fallback_choices" in record and record["fallback_choices"]:
+        trimmed["fallback_choices"] = _trim_choices(record["fallback_choices"])
+    return trimmed
+
+
+def _trim_choices(choices: list[dict[str, str]]) -> list[dict[str, str]]:
+    return [{"text": c.get("text", ""), "risk": c.get("risk", "")} for c in choices if c.get("text")]
+
+
 def _public_record(record: dict[str, Any]) -> dict[str, Any]:
     allowed = (
         "id", "title", "name", "description", "summary", "goals", "keywords",
         "fallback_choices", "preview", "risk", "effect",
         "hp", "max_hp", "mp", "max_mp", "sp", "max_sp", "attributes", "skills",
     )
-    return {key: deepcopy(record[key]) for key in allowed if key in record}
+    result = {key: deepcopy(record[key]) for key in allowed if key in record}
+    result.pop("keywords", None)
+    result.pop("preview", None)
+    return result
 
 
 def _latest_user_text(session: dict[str, Any]) -> str:

@@ -403,7 +403,7 @@ class StateTests(unittest.TestCase):
         messages = state.build_llm_messages(session, {"expression": "opening", "rolls": [], "total": 0}, "contract")
 
         self.assertEqual(public["gm_mode"], "full")
-        self.assertIn('"gm_mode": "full"', messages[2]["content"])
+        self.assertIn('"current_scene": "start"', messages[2]["content"])
 
         fallback = state.create_session(str(self.write_pack()), gm_mode="unknown")
         self.assertEqual(fallback["gm_mode"], "semi")
@@ -684,6 +684,35 @@ class StateTests(unittest.TestCase):
         self.assertEqual(session["choices"][1]["risk"], "危険")
         self.assertEqual(session["choices"][2]["text"], "短いoption選択")
         self.assertEqual(session["choices"][2]["preview"], "")
+
+    def test_roll_dice_records_dc_and_success(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+
+        with patch("host.state.random.randint", return_value=1):
+            roll = state.roll_dice(session, "1d20", dc=2)
+
+        self.assertEqual(roll["dc"], 2)
+        self.assertFalse(roll["success"])
+        self.assertEqual(session["dice_log"][-1]["dc"], 2)
+
+    def test_choice_risk_overrides_dice_settings_for_turn(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+        session["choices"] = [
+            {"text": "罠を避けて進む", "risk": "1d20+dex判定（DC14）"},
+            {"text": "休む", "risk": "判定不要"},
+        ]
+
+        dice_type, dice_dc = app_module._dice_settings_for_turn(session, "罠を避けて進む")
+        safe_type, safe_dc = app_module._dice_settings_for_turn(session, "休む")
+
+        self.assertEqual(dice_type, "1d20+dex")
+        self.assertEqual(dice_dc, 14)
+        self.assertEqual(safe_type, "1d20")
+        self.assertEqual(safe_dc, 0)
 
     def test_gold_delta_and_text_inference(self):
         public = state.create_session(str(self.write_pack()))
