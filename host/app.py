@@ -326,7 +326,7 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
     debug_enabled = bool(config.get("debug_llm", True))
 
     latest_roll = {"expression": "opening", "rolls": [], "total": 0}
-    messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
+    messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt(opening=True))
     opening_prompt = _opening_prompt_for_mode(session)
     messages.append({"role": "user", "content": opening_prompt})
 
@@ -382,15 +382,14 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
 def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
     add_player_message(session, request.text.strip(), request.speaker)
 
-    dice_type = session.get("next_dice_type", "1d20")
-    latest_roll = roll_dice(session, dice_type)
+    dice_type, dice_dc = _dice_settings_for_turn(session, request.text.strip())
+    latest_roll = roll_dice(session, dice_type, int(dice_dc) if isinstance(dice_dc, (int, float)) else None)
 
     config = load_config()
     messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
     debug_enabled = bool(config.get("debug_llm", True))
 
     if debug_enabled:
-        dice_dc = session.get("next_dice_dc", 10)
         context_debug = _context_debug_for_mode(session, request.text.strip(), opening=False)
         debug_log(
             "Turn start "
@@ -442,6 +441,41 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             f"logs={len(session['system_logs'])} dice={len(session['dice_log'])}"
         )
     return public_session(session)
+
+
+def _dice_settings_for_turn(session: dict[str, Any], action_text: str) -> tuple[str, int]:
+    dice_type = str(session.get("next_dice_type") or "1d20")
+    dice_dc = int(session.get("next_dice_dc", 10) or 0)
+    choice = _matching_choice(session.get("choices"), action_text)
+    if not choice:
+        return dice_type, dice_dc
+
+    risk = str(choice.get("risk") or "")
+    if "判定不要" in risk:
+        return dice_type, 0
+
+    expr_match = re.search(r"(\d+d\d+(?:\+[A-Za-z_][A-Za-z0-9_]*)?)", risk, re.IGNORECASE)
+    if expr_match:
+        dice_type = expr_match.group(1)
+
+    dc_match = re.search(r"DC\s*(\d+)", risk, re.IGNORECASE)
+    if dc_match:
+        dice_dc = int(dc_match.group(1))
+    elif "判定" in risk and dice_dc <= 0:
+        dice_dc = 10
+    return dice_type, dice_dc
+
+
+def _matching_choice(raw_choices: Any, action_text: str) -> Optional[dict[str, Any]]:
+    if not isinstance(raw_choices, list) or not action_text:
+        return None
+    normalized_action = action_text.strip()
+    for choice in raw_choices:
+        if not isinstance(choice, dict):
+            continue
+        if str(choice.get("text") or "").strip() == normalized_action:
+            return choice
+    return None
 
 
 def _visible_text_from_payload(visible_text: str, payload: Optional[dict[str, Any]]) -> str:

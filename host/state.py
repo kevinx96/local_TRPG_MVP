@@ -276,7 +276,7 @@ def _is_protocol_warning_log(text: str) -> bool:
     return text in PROTOCOL_WARNING_LOGS
 
 
-def roll_dice(session: dict[str, Any], expression: str = "1d20") -> dict[str, Any]:
+def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None) -> dict[str, Any]:
     expr = str(expression or "").strip() or "1d20"
     dice_part = expr
     attr_key = ""
@@ -294,6 +294,10 @@ def roll_dice(session: dict[str, Any], expression: str = "1d20") -> dict[str, An
         attr_mod = int(attrs.get(attr_key, 0))
     total = base_total + attr_mod
     entry: dict[str, Any] = {"expression": expr, "rolls": rolls, "total": total, "created_at": utc_now()}
+    if isinstance(dc, int):
+        entry["dc"] = dc
+        if dc > 0:
+            entry["success"] = total >= dc
     if attr_key:
         entry["base_total"] = base_total
         entry["attr_mod"] = attr_mod
@@ -526,6 +530,7 @@ def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], con
     memory_max_chars = _bounded_int(prompting.get("memory_max_chars"), default=1200, minimum=0, maximum=4000)
     action_history_max = _bounded_int(prompting.get("action_history_max"), default=40, minimum=0, maximum=200)
     action_history_item_chars = _bounded_int(prompting.get("action_history_item_chars"), default=80, minimum=20, maximum=240)
+    context_max_chars = _bounded_int(prompting.get("context_max_chars"), default=3500, minimum=500, maximum=8000)
     if session.get("gm_mode") == "full":
         history_messages = min(history_messages, 2)
         memory_max_chars = min(memory_max_chars, 600)
@@ -536,9 +541,11 @@ def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], con
     player_text = _latest_player_text(session)
     scenario_context = select_scenario_context(session, player_text)
     state_summary = _current_state_summary(session, character, latest_roll)
+    context_json = json.dumps(scenario_context, ensure_ascii=False)
+    context_json = _trim_context_to_budget(context_json, context_max_chars)
     messages: list[dict[str, str]] = [
         {"role": "system", "content": contract_prompt},
-        {"role": "system", "content": "シナリオコンテキスト:\n" + json.dumps(scenario_context, ensure_ascii=False)},
+        {"role": "system", "content": "シナリオコンテキスト:\n" + context_json},
         {"role": "system", "content": "現在のゲーム状態:\n" + state_summary},
     ]
     memory_summary = _conversation_memory_summary(session, keep_last=history_messages, max_chars=memory_max_chars)
@@ -592,15 +599,16 @@ def _build_hybrid_llm_messages(session: dict[str, Any], latest_roll: dict[str, A
 
 
 def _current_state_summary(session: dict[str, Any], character: dict[str, Any], latest_roll: dict[str, Any]) -> str:
-    inventory_summary = [(i["name"] if isinstance(i, dict) else i) for i in character.get("inventory", [])]
+    inventory_summary = [i["name"] if isinstance(i, dict) else i for i in character.get("inventory", [])]
+    skills_summary = [
+        {"name": s.get("name", ""), "cost": s.get("cost", 0), "cost_type": s.get("cost_type", "")}
+        for s in character.get("skills", []) if isinstance(s, dict)
+    ]
     return json.dumps(
         {
-            "gm_mode": session.get("gm_mode", "semi"),
             "current_scene": session["current_scene"],
-            "current_scene_title": scene_title(session),
             "character": {
                 "name": character.get("name"),
-                "character_id": character.get("character_id", ""),
                 "hp": character.get("hp"),
                 "max_hp": character.get("max_hp"),
                 "mp": character.get("mp"),
@@ -609,13 +617,13 @@ def _current_state_summary(session: dict[str, Any], character: dict[str, Any], l
                 "max_sp": character.get("max_sp"),
                 "gold": character.get("gold", 0),
                 "attributes": character.get("attributes", {}),
-                "skills": character.get("skills", []),
+                "skills": skills_summary if skills_summary else None,
                 "inventory": inventory_summary,
-                "equipment": character.get("equipment", []),
             },
             "latest_dice_roll": latest_roll,
         },
         ensure_ascii=False,
+        default=lambda _: None,
     )
 
 
@@ -678,6 +686,34 @@ def _bounded_int(value: Any, default: int, minimum: int, maximum: int) -> int:
     except (TypeError, ValueError):
         parsed = default
     return max(minimum, min(maximum, parsed))
+
+
+def _trim_context_to_budget(context_json: str, max_chars: int) -> str:
+    if len(context_json) <= max_chars:
+        return context_json
+    try:
+        ctx = json.loads(context_json)
+    except json.JSONDecodeError:
+        return context_json[:max_chars]
+    if isinstance(ctx.get("matched"), dict):
+        groups = list(ctx["matched"].items())
+        groups.sort(key=lambda item: len(item[1]) if isinstance(item[1], list) else 0, reverse=True)
+        removed = []
+        for key, value in groups:
+            if len(ctx["matched"]) <= 1:
+                break
+            del ctx["matched"][key]
+            removed.append(key)
+            if len(json.dumps(ctx, ensure_ascii=False)) <= max_chars:
+                break
+        if len(json.dumps(ctx, ensure_ascii=False)) > max_chars:
+            for key in removed:
+                ctx["matched"][key] = []
+    if isinstance(ctx.get("rules"), list):
+        ctx.pop("rules", None)
+    ctx.pop("source_path", None)
+    result = json.dumps(ctx, ensure_ascii=False)
+    return result[:max_chars] if len(result) > max_chars else result
 
 
 def _normalize_character(character: dict[str, Any]) -> None:

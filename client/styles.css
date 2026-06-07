@@ -695,6 +695,64 @@ button, select, textarea, input { font: inherit; }
   box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 0 3px var(--gold-glow);
 }
 
+.gal-dice-banner {
+  width: min(100%, 1000px);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(12, 13, 15, 0.78);
+  border: 1px solid rgba(212, 169, 75, 0.45);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  padding: 8px 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.42);
+  backdrop-filter: blur(8px);
+}
+
+.dice-roll-face {
+  width: 34px;
+  height: 34px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(212, 169, 75, 0.16);
+  border: 1px solid rgba(212, 169, 75, 0.65);
+  color: var(--gold);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.dice-banner-text {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.gal-dice-banner.rolling .dice-roll-face {
+  animation: dicePulse 0.32s ease-in-out infinite alternate;
+}
+
+.gal-dice-banner.success {
+  border-color: rgba(74, 222, 128, 0.65);
+}
+.gal-dice-banner.success .dice-roll-face {
+  color: #78e08f;
+  border-color: rgba(74, 222, 128, 0.75);
+  background: rgba(74, 222, 128, 0.14);
+}
+
+.gal-dice-banner.failure {
+  border-color: rgba(248, 113, 113, 0.68);
+}
+.gal-dice-banner.failure .dice-roll-face {
+  color: #ff8b8b;
+  border-color: rgba(248, 113, 113, 0.78);
+  background: rgba(248, 113, 113, 0.14);
+}
+
 .gal-speaker {
   position: absolute;
   top: -15px;
@@ -928,6 +986,7 @@ button, select, textarea, input { font: inherit; }
 @keyframes choicesIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
 @keyframes pulse { 0%, 100% { opacity: .7; transform: scale(1); } 50% { opacity: .5; transform: scale(1.05); } }
+@keyframes dicePulse { from { transform: scale(0.95) rotate(-8deg); } to { transform: scale(1.06) rotate(8deg); } }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {

@@ -12,6 +12,9 @@ const state = {
   characters: [],
   expandedCharacterId: "",
   scenarioPath: "host/prompt/processed/dragon_rpg.json",
+  lastDiceLogLength: 0,
+  diceAnimationTimer: null,
+  nextDiceDc: 0,
 };
 
 /* ── DOM References ── */
@@ -39,6 +42,9 @@ const els = {
   dialogueBox:     document.querySelector("#dialogueBox"),
   speakerName:     document.querySelector("#speakerName"),
   messageText:     document.querySelector("#messageText"),
+  diceBanner:      document.querySelector("#diceBanner"),
+  diceBannerText:  document.querySelector("#diceBannerText"),
+  diceRollFace:    document.querySelector(".dice-roll-face"),
   logToggleBtn:    document.querySelector("#logToggleBtn"),
   inputToggleBtn:  document.querySelector("#inputToggleBtn"),
   logOverlay:      document.querySelector("#logOverlay"),
@@ -348,6 +354,10 @@ async function newSession() {
   /* Show start screen again */
   state.pendingChoices = [];
   state.choicesRevealed = false;
+  state.lastDiceLogLength = 0;
+  state.nextDiceDc = 0;
+  stopDiceRollAnimation();
+  hideDiceBanner();
   els.gameScreen.style.display = "none";
   els.startScreen.style.display = "";
   els.messages.innerHTML = "";
@@ -362,10 +372,12 @@ async function submitTurn(event) {
   event.preventDefault();
   const text = els.input.value.trim();
   if (!text || !state.sessionId) return;
+  const animateDice = shouldAnimateDiceForAction(text);
   els.input.value = "";
   addMessage("user", "プレイヤー", text);
   hideChoices();
   clearPendingChoices();
+  if (animateDice) startDiceRollAnimation();
   setBusy(true);
   try {
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
@@ -378,6 +390,7 @@ async function submitTurn(event) {
     }
     renderSession(await response.json());
   } catch (error) {
+    stopDiceRollAnimation();
     addMessage("assistant", "GM", `エラー: ${error.message}`);
   } finally {
     setBusy(false);
@@ -387,9 +400,11 @@ async function submitTurn(event) {
 /* Submit a choice as a turn */
 async function submitChoice(choiceText) {
   if (!choiceText || !state.sessionId) return;
+  const animateDice = shouldAnimateDiceForAction(choiceText);
   addMessage("user", "プレイヤー", choiceText);
   hideChoices();
   clearPendingChoices();
+  if (animateDice) startDiceRollAnimation();
   setBusy(true);
   try {
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
@@ -402,6 +417,7 @@ async function submitChoice(choiceText) {
     }
     renderSession(await response.json());
   } catch (error) {
+    stopDiceRollAnimation();
     addMessage("assistant", "GM", `エラー: ${error.message}`);
   } finally {
     setBusy(false);
@@ -414,6 +430,7 @@ async function submitChoice(choiceText) {
 
 function renderSession(session) {
   state.sessionId = session.id;
+  state.nextDiceDc = Number(session.next_dice_dc || 0);
   const character = session.character;
 
   /* Scene */
@@ -451,6 +468,7 @@ function renderSession(session) {
   renderEnemies(session.enemies || []);
 
   /* Dice log */
+  renderLatestDiceResult(session.dice_log || []);
   renderList(
     els.diceLog,
     (session.dice_log || []).slice(-5).reverse().map(
@@ -566,6 +584,96 @@ function skillLabel(skill) {
   if (typeof skill === "string") return skill;
   if (skill && typeof skill === "object") return skill.name || skill.id || skill.description || "技能";
   return "技能";
+}
+
+/* ═══════════════════════════════════════════════════
+   DICE FEEDBACK
+   ═══════════════════════════════════════════════════ */
+
+function startDiceRollAnimation() {
+  if (!els.diceBanner || !els.diceRollFace || !els.diceBannerText) return;
+  stopDiceRollAnimation();
+  els.diceBanner.style.display = "";
+  els.diceBanner.classList.add("rolling");
+  els.diceBanner.classList.remove("success", "failure", "neutral");
+  els.diceBannerText.textContent = "判定中…";
+  els.diceRollFace.textContent = "?";
+  state.diceAnimationTimer = window.setInterval(() => {
+    els.diceRollFace.textContent = String(1 + Math.floor(Math.random() * 20));
+  }, 80);
+}
+
+function stopDiceRollAnimation() {
+  if (state.diceAnimationTimer) {
+    window.clearInterval(state.diceAnimationTimer);
+    state.diceAnimationTimer = null;
+  }
+  if (els.diceBanner) els.diceBanner.classList.remove("rolling");
+}
+
+function hideDiceBanner() {
+  if (els.diceBanner) els.diceBanner.style.display = "none";
+}
+
+function renderLatestDiceResult(diceLog) {
+  if (!Array.isArray(diceLog) || !diceLog.length) {
+    state.lastDiceLogLength = 0;
+    stopDiceRollAnimation();
+    hideDiceBanner();
+    return;
+  }
+  const latest = diceLog[diceLog.length - 1];
+  const hasNewRoll = diceLog.length !== state.lastDiceLogLength || state.diceAnimationTimer;
+  state.lastDiceLogLength = diceLog.length;
+  if (!hasNewRoll) return;
+  if (!isCheckRoll(latest)) {
+    stopDiceRollAnimation();
+    hideDiceBanner();
+    return;
+  }
+  showDiceResult(latest);
+}
+
+function shouldAnimateDiceForAction(actionText) {
+  const choice = state.pendingChoices.find((item) => {
+    const text = typeof item === "string" ? item : (item.text || "");
+    return text === actionText;
+  });
+  const risk = choice && typeof choice === "object" ? String(choice.risk || "") : "";
+  if (risk.includes("判定不要")) return false;
+  if (/DC\s*\d+|1d\d+|判定/i.test(risk)) return true;
+  return Number(state.nextDiceDc || 0) > 0;
+}
+
+function isCheckRoll(roll) {
+  return Number(roll?.dc || 0) > 0;
+}
+
+function showDiceResult(roll) {
+  if (!els.diceBanner || !els.diceRollFace || !els.diceBannerText || !roll) return;
+  stopDiceRollAnimation();
+  const rolls = Array.isArray(roll.rolls) ? roll.rolls : [];
+  const total = Number(roll.total ?? 0);
+  const dc = Number(roll.dc ?? 0);
+  const hasCheck = dc > 0;
+  const success = roll.success === true || (hasCheck && total >= dc);
+  els.diceBanner.style.display = "";
+  els.diceBanner.classList.toggle("success", hasCheck && success);
+  els.diceBanner.classList.toggle("failure", hasCheck && !success);
+  els.diceBanner.classList.toggle("neutral", !hasCheck);
+  els.diceRollFace.textContent = String(total);
+
+  const parts = [`${roll.expression || "判定"}: ${rolls.join(" + ") || total}`];
+  if (typeof roll.attr_mod === "number" && roll.attr_mod !== 0) {
+    const sign = roll.attr_mod > 0 ? "+" : "";
+    parts.push(`${sign}${roll.attr_mod}`);
+  }
+  parts.push(`= ${total}`);
+  if (hasCheck) {
+    parts.push(` / DC${dc}`);
+    parts.push(success ? "成功" : "失敗");
+  }
+  els.diceBannerText.textContent = parts.join(" ");
 }
 
 /* ═══════════════════════════════════════════════════
