@@ -484,7 +484,7 @@ def _trim_record(record: dict[str, Any], slim_location: bool = False) -> dict[st
     if "skills" in record and record["skills"]:
         trimmed["skills"] = [
             {k: v for k, v in skill.items() if k in ("name", "effect", "dice_type", "cost", "cost_type")}
-            for skill in record["skills"]
+            for skill in record["skills"] if isinstance(skill, dict)
         ]
     if "fallback_choices" in record and record["fallback_choices"]:
         trimmed["fallback_choices"] = _trim_choices(record["fallback_choices"])
