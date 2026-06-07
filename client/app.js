@@ -81,6 +81,52 @@ const els = {
 
 let cachedConfig = null;
 
+function choiceDebug(event, detail = {}) {
+  const payload = {
+    ...detail,
+    sessionId: state.sessionId,
+    pendingChoices: state.pendingChoices.length,
+    revealed: state.choicesRevealed,
+    choicesAreaDisplay: els.choicesArea ? getComputedStyle(els.choicesArea).display : "",
+  };
+  console.debug("[TRPG-CHOICE-DEBUG]", event, payload);
+  try {
+    fetch("/api/client-debug", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event, detail: payload }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    /* Debug logging must never break gameplay. */
+  }
+}
+
+function choiceLayoutDebug() {
+  const firstCard = els.choicesList?.querySelector(".choice-card");
+  if (!firstCard) return {};
+  const rect = firstCard.getBoundingClientRect();
+  const x = Math.round(rect.left + rect.width / 2);
+  const y = Math.round(rect.top + rect.height / 2);
+  const top = document.elementFromPoint(x, y);
+  return {
+    firstCardRect: {
+      left: Math.round(rect.left),
+      top: Math.round(rect.top),
+      width: Math.round(rect.width),
+      height: Math.round(rect.height),
+    },
+    topElementAtFirstCardCenter: top ? {
+      tag: top.tagName,
+      id: top.id || "",
+      className: String(top.className || ""),
+      text: (top.textContent || "").trim().slice(0, 80),
+    } : null,
+    choicesAreaZIndex: els.choicesArea ? getComputedStyle(els.choicesArea).zIndex : "",
+    choicesAreaPointerEvents: els.choicesArea ? getComputedStyle(els.choicesArea).pointerEvents : "",
+  };
+}
+
 function ensureDiceBannerElement() {
   const existingBanner = document.querySelector("#diceBanner");
   if (existingBanner) {
@@ -444,8 +490,16 @@ async function submitTurn(event) {
 }
 
 async function submitChoice(choiceText) {
+  choiceDebug("submit-choice-start", { choiceText });
   if (!choiceText || !state.sessionId) return;
-  const diceResult = rollLocalDice(choiceText);
+  let diceResult;
+  try {
+    diceResult = rollLocalDice(choiceText);
+  } catch (err) {
+    choiceDebug("submit-choice-dice-error", { choiceText, error: err.message });
+    diceResult = null;
+  }
+  choiceDebug("submit-choice-dice", { choiceText, diceResult });
   addMessage("user", "プレイヤー", choiceText);
   hideChoices();
   clearPendingChoices();
@@ -465,6 +519,7 @@ async function submitChoice(choiceText) {
     }
     renderSession(await response.json());
   } catch (error) {
+    choiceDebug("submit-choice-error", { choiceText, error: error.message });
     stopDiceRollAnimation();
     addMessage("assistant", "GM", `エラー: ${error.message}`);
   } finally {
@@ -675,6 +730,30 @@ function diceSignature(roll) {
   return [roll.expression || "", rolls, roll.total ?? "", roll.dc ?? "", roll.success ?? ""].join("|");
 }
 
+const ATTR_KEY_MAP = {
+  str: "str", strength: "str", 筋力: "str",
+  dex: "dex", dexterity: "dex", 敏捷: "dex", 器用: "dex",
+  con: "con", constitution: "con", 耐久: "con", 体力: "con",
+  int: "int", intelligence: "int", 知力: "int", 知性: "int",
+  wis: "wis", wisdom: "wis", 判断: "wis", 精神: "wis",
+  cha: "cha", charisma: "cha", 魅力: "cha",
+};
+
+function resolveAttrKey(diceExpr) {
+  if (!diceExpr || typeof diceExpr !== "string") return null;
+  const plusIdx = diceExpr.indexOf("+");
+  if (plusIdx < 0) return null;
+  const raw = diceExpr.slice(plusIdx + 1).trim().toLowerCase();
+  return ATTR_KEY_MAP[raw] || raw;
+}
+
+function getAttrValue(attrKey) {
+  if (!attrKey || !state.character) return 0;
+  const attrs = state.character.attributes || state.character.stats || {};
+  const val = attrs[attrKey] ?? attrs[attrKey.toUpperCase()] ?? 0;
+  return typeof val === "number" ? val : parseInt(val, 10) || 0;
+}
+
 function rollLocalDice(actionText) {
   const choice = state.pendingChoices.find((item) => {
     const text = typeof item === "string" ? item : (item.text || "");
@@ -749,6 +828,15 @@ function showDiceResult(roll) {
    ═══════════════════════════════════════════════════ */
 
 function renderChoices(choices) {
+  choiceDebug("render-choices-start", {
+    count: Array.isArray(choices) ? choices.length : 0,
+    choices: Array.isArray(choices) ? choices.map((choice) => ({
+      text: typeof choice === "string" ? choice : (choice.text || ""),
+      risk: typeof choice === "object" ? (choice.risk || "") : "",
+      enabled: typeof choice === "object" && choice.enabled === false ? false : true,
+      disabledReason: typeof choice === "object" ? (choice.disabled_reason || "") : "",
+    })) : [],
+  });
   if (!choices || !choices.length) {
     hideChoices();
     return;
@@ -766,29 +854,53 @@ function renderChoices(choices) {
     const card = document.createElement("button");
     card.type = "button";
     card.disabled = !enabled;
+    card.dataset.choiceIndex = String(i);
+    card.dataset.choiceText = text;
     card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""} ${enabled ? "" : "disabled-choice"}`;
 
     const riskClass = classifyRisk(risk);
 
-    card.innerHTML = `
-      <div class="choice-number">${i + 1}</div>
-      <div class="choice-body">
-        <div class="choice-text">${escapeHtml(text)}</div>
-        ${preview ? `<div class="choice-preview">${escapeHtml(preview)}</div>` : ''}
-        ${risk ? `<span class="choice-risk ${riskClass}">${escapeHtml(risk)}</span>` : ''}
-        ${disabledReason ? `<span class="choice-disabled-reason">${escapeHtml(disabledReason)}</span>` : ''}
-      </div>
-    `;
+    const numberDiv = document.createElement("div");
+    numberDiv.className = "choice-number";
+    numberDiv.textContent = String(i + 1);
 
-    if (enabled) {
-      card.addEventListener("click", () => submitChoice(text));
+    const textDiv = document.createElement("div");
+    textDiv.className = "choice-text";
+    textDiv.textContent = text;
+
+    const bodyDiv = document.createElement("div");
+    bodyDiv.className = "choice-body";
+    bodyDiv.appendChild(textDiv);
+
+    if (preview) {
+      const previewDiv = document.createElement("div");
+      previewDiv.className = "choice-preview";
+      previewDiv.textContent = preview;
+      bodyDiv.appendChild(previewDiv);
     }
+    if (risk) {
+      const riskSpan = document.createElement("span");
+      riskSpan.className = `choice-risk ${riskClass}`;
+      riskSpan.textContent = risk;
+      bodyDiv.appendChild(riskSpan);
+    }
+    if (disabledReason) {
+      const reasonSpan = document.createElement("span");
+      reasonSpan.className = "choice-disabled-reason";
+      reasonSpan.textContent = disabledReason;
+      bodyDiv.appendChild(reasonSpan);
+    }
+
+    card.appendChild(numberDiv);
+    card.appendChild(bodyDiv);
+
     els.choicesList.append(card);
   }
 
   els.choicesArea.style.display = "";
   els.dialogueBox.classList.remove("choices-ready");
   if (els.clickIndicator) els.clickIndicator.style.display = "none";
+  choiceDebug("render-choices-visible", choiceLayoutDebug());
 }
 
 function isCombatChoice(text, preview, risk) {
@@ -815,9 +927,30 @@ function clearPendingChoices() {
 }
 
 function revealPendingChoices() {
+  choiceDebug("reveal-choices", {
+    blocked: state.choicesRevealed || !state.pendingChoices.length,
+  });
   if (state.choicesRevealed || !state.pendingChoices.length) return;
   state.choicesRevealed = true;
   renderChoices(state.pendingChoices);
+}
+
+function handleChoiceListClick(event) {
+  const card = event.target.closest(".choice-card");
+  choiceDebug("choice-click", {
+    targetTag: event.target?.tagName || "",
+    targetClass: String(event.target?.className || ""),
+    hasCard: Boolean(card),
+    cardDisabled: Boolean(card?.disabled),
+    cardIndex: card?.dataset.choiceIndex || "",
+    cardText: card?.dataset.choiceText || "",
+    layout: choiceLayoutDebug(),
+  });
+  if (!card || !els.choicesList.contains(card) || card.disabled) return;
+  const index = Number.parseInt(card.dataset.choiceIndex || "", 10);
+  const choice = Number.isInteger(index) ? state.pendingChoices[index] : null;
+  const text = card.dataset.choiceText || (typeof choice === "string" ? choice : (choice && typeof choice === "object" ? choice.text : ""));
+  if (text) submitChoice(text);
 }
 
 function updateDialogueAdvanceState() {
@@ -972,6 +1105,7 @@ if (els.logCloseBtn) els.logCloseBtn.addEventListener("click", () => els.logOver
 if (els.inputToggleBtn) els.inputToggleBtn.addEventListener("click", () => {
   els.form.style.display = els.form.style.display === "none" ? "" : "none";
 });
+if (els.choicesList) els.choicesList.addEventListener("click", handleChoiceListClick);
 if (els.dialogueBox) {
   els.dialogueBox.addEventListener("click", revealPendingChoices);
   els.dialogueBox.addEventListener("keydown", (event) => {

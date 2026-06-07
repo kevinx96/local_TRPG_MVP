@@ -170,6 +170,30 @@ class StateTests(unittest.TestCase):
 
         self.assertEqual([item["id"] for item in context["matched"]["locations"]], ["forge"])
         self.assertEqual(context["matched"]["enemies"], [])
+        self.assertFalse(public["in_combat"])
+        self.assertEqual(public["enemies"], [])
+
+    def test_public_session_does_not_expose_keyword_matched_remote_enemies(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"].append({
+            "id": "dragon_valley",
+            "title": "竜の谷",
+            "description": "遠い谷。",
+            "keywords": ["竜", "谷", "イグニス"],
+            "enemy_ids": ["ignis"],
+        })
+        raw["enemies"] = [{"id": "ignis", "name": "イグニス", "description": "紅き邪竜。"}]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+        session["messages"].append({"role": "assistant", "speaker": "GM", "text": "イグニスの情報を聞いた。"})
+        session["choices"] = [{"text": "イグニスについて聞く", "preview": "", "risk": "判定不要"}]
+
+        public = state.public_session(session)
+
+        self.assertFalse(public["in_combat"])
+        self.assertEqual(public["enemies"], [])
 
     def test_full_mode_caps_matched_context_records(self):
         path = self.write_pack()

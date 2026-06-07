@@ -73,6 +73,11 @@ class ScenarioCreateRequest(BaseModel):
     scenario: dict[str, Any]
 
 
+class ClientDebugRequest(BaseModel):
+    event: str
+    detail: dict[str, Any] = {}
+
+
 @app.get("/")
 def index() -> FileResponse:
     return FileResponse(
@@ -87,6 +92,15 @@ def editor() -> FileResponse:
         CLIENT_ROOT / "editor.html",
         headers={"Cache-Control": "no-store, max-age=0", "Pragma": "no-cache"},
     )
+
+
+@app.post("/api/client-debug")
+def api_client_debug(request: ClientDebugRequest) -> dict[str, bool]:
+    detail = json.dumps(request.detail, ensure_ascii=False, default=str)
+    if len(detail) > 1200:
+        detail = detail[:1200] + "...(truncated)"
+    debug_log(f"Client choice debug event={request.event} detail={detail}")
+    return {"ok": True}
 
 
 def _ollama_proxy_info() -> tuple[str, dict[str, str]]:
@@ -470,7 +484,7 @@ def _dice_settings_for_turn(session: dict[str, Any], action_text: str) -> tuple[
     dice_dc = int(session.get("next_dice_dc", 10) or 0)
     choice = _matching_choice(session.get("choices"), action_text)
     if not choice:
-        return dice_type, dice_dc
+        return dice_type, max(dice_dc, 10)
 
     risk = str(choice.get("risk") or "")
     if "判定不要" in risk:
