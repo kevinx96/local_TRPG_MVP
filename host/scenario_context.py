@@ -392,6 +392,7 @@ def normalize_choices(raw: Any) -> list[dict[str, str]]:
                     "text": text,
                     "preview": str(item.get("preview") or ""),
                     "risk": str(item.get("risk") or ""),
+                    **({"requirements": deepcopy(item["requirements"])} if "requirements" in item else {}),
                 })
     return choices[:5]
 
@@ -490,8 +491,16 @@ def _trim_record(record: dict[str, Any], slim_location: bool = False) -> dict[st
     return trimmed
 
 
-def _trim_choices(choices: list[dict[str, str]]) -> list[dict[str, str]]:
-    return [{"text": c.get("text", ""), "risk": c.get("risk", "")} for c in choices if c.get("text")]
+def _trim_choices(choices: list[dict[str, str]]) -> list[dict[str, Any]]:
+    trimmed = []
+    for choice in choices:
+        if not choice.get("text"):
+            continue
+        item: dict[str, Any] = {"text": choice.get("text", ""), "risk": choice.get("risk", "")}
+        if "requirements" in choice:
+            item["requirements"] = deepcopy(choice["requirements"])
+        trimmed.append(item)
+    return trimmed
 
 
 def _public_record(record: dict[str, Any]) -> dict[str, Any]:

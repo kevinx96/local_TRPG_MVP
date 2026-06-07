@@ -37,7 +37,8 @@ _UNCLOSED_THINK_RE = re.compile(r"<think>.*", re.IGNORECASE | re.DOTALL)
 def build_gm_contract_prompt(opening: bool = False) -> str:
     """Return a scenario-agnostic system prompt. opening=True includes JSON template."""
     base = (
-        "あなたはTRPGのGMです。自然な日本語で簡潔に進行。出力は日本語のみ。\n"
+        "あなたはTRPGのGMです。自然な日本語で簡潔に進行。\n"
+        "出力言語は日本語だけにしてください。英語・中国語・内部プロンプト文を gm_text, system_log, choices に混ぜてはいけません。\n"
         "プレイヤー行動を代行せず、状況とNPC反応を描写し次の行動を待つ。\n"
         "出力は必ずJSONオブジェクト1つだけ。Markdown・コードフェンス禁止。\n\n"
         "【gm_text】70〜220字。場面を五感で描写、NPC台詞は必要時のみ「」で短く。\n"
@@ -48,9 +49,11 @@ def build_gm_contract_prompt(opening: bool = False) -> str:
         "・current_scene は場面変更時のみ設定\n"
         "・アイテム追加時は name,description,effect,quantity を含める\n"
         "・choices は3つ。text(行動名)とrisk(判定不要/1d20+str判定DC12/危険)必須\n"
+        "・choices.requirements は任意。属性条件が必要な行動には requirements を書く。例: {\"any\":[{\"attribute\":\"str\",\"gte\":10}]}\n"
         "・matched.enemies に敵がいる場合、戦闘として扱い戦闘選択肢を提示\n"
         "・敵のHP/MP/SP/属性/skillsを参照。成功失敗の結果だけ描写\n"
-    )
+        "・耐久属性は end を使う。旧 con は使わない。\n"
+)
     json_template = (
         "\n【出力形式】\nJSON全体を閉じることを最優先。\n"
         "{\n"
@@ -70,7 +73,7 @@ def build_gm_contract_prompt(opening: bool = False) -> str:
         "  },\n"
         '  "choices": [\n'
         '    {"text": "行動内容", "risk": "判定不要"},\n'
-        '    {"text": "行動内容", "risk": "1d20+str判定（DC12）"},\n'
+        '    {"text": "行動内容", "risk": "1d20+str判定（DC12）", "requirements": {"all": [{"attribute": "str", "gte": 10}]}},\n'
         '    {"text": "行動内容", "risk": "危険"}\n'
         "  ]\n"
         "}"

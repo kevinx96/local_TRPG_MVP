@@ -28,8 +28,10 @@ from .state import (
     HOST_ROOT,
     PROJECT_ROOT,
     add_player_message,
+    add_system_log,
     apply_gm_payload,
     build_llm_messages,
+    choice_requirement_status,
     create_session,
     load_config,
     load_session,
@@ -59,6 +61,7 @@ class CreateSessionRequest(BaseModel):
 class TurnRequest(BaseModel):
     text: str
     speaker: str = "プレイヤー"
+    client_dice: Optional[dict[str, Any]] = None
 
 
 class ScenarioSaveRequest(BaseModel):
@@ -72,12 +75,18 @@ class ScenarioCreateRequest(BaseModel):
 
 @app.get("/")
 def index() -> FileResponse:
-    return FileResponse(CLIENT_ROOT / "index.html")
+    return FileResponse(
+        CLIENT_ROOT / "index.html",
+        headers={"Cache-Control": "no-store, max-age=0", "Pragma": "no-cache"},
+    )
 
 
 @app.get("/editor")
 def editor() -> FileResponse:
-    return FileResponse(CLIENT_ROOT / "editor.html")
+    return FileResponse(
+        CLIENT_ROOT / "editor.html",
+        headers={"Cache-Control": "no-store, max-age=0", "Pragma": "no-cache"},
+    )
 
 
 def _ollama_proxy_info() -> tuple[str, dict[str, str]]:
@@ -380,10 +389,23 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
 
 
 def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
-    add_player_message(session, request.text.strip(), request.speaker)
+    action_text = request.text.strip()
+    choice = _matching_choice(session.get("choices"), action_text)
+    if choice:
+        enabled, reason = choice_requirement_status(choice, session.get("character", {}))
+        if not enabled:
+            add_system_log(session, reason or "この行動は条件を満たしていません。")
+            save_session(session)
+            return public_session(session)
 
-    dice_type, dice_dc = _dice_settings_for_turn(session, request.text.strip())
-    latest_roll = roll_dice(session, dice_type, int(dice_dc) if isinstance(dice_dc, (int, float)) else None)
+    add_player_message(session, action_text, request.speaker)
+
+    dice_type, dice_dc = _dice_settings_for_turn(session, action_text)
+    client_dice = request.client_dice
+    if isinstance(client_dice, dict) and isinstance(client_dice.get("rolls"), list) and len(client_dice["rolls"]) > 0:
+        latest_roll = roll_dice(session, dice_type, int(dice_dc) if isinstance(dice_dc, (int, float)) else None, client_rolls=client_dice["rolls"])
+    else:
+        latest_roll = roll_dice(session, dice_type, int(dice_dc) if isinstance(dice_dc, (int, float)) else None)
 
     config = load_config()
     messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
