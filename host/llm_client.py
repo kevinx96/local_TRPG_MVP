@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import sys
+import time
 from typing import Any, Iterable, Optional, Union
 
 import requests
@@ -124,11 +125,14 @@ def _chat_completion_once(
         )
 
     try:
+        start_time = time.time()
         response = requests.post(url, headers=headers, json=payload, timeout=timeout)
+        ttfb_ms = (time.time() - start_time) * 1000
         if debug_enabled:
             debug_log(
                 "LLM response headers "
-                f"status={response.status_code} content_type={response.headers.get('content-type', '')}"
+                f"status={response.status_code} content_type={response.headers.get('content-type', '')} "
+                f"ttfb_ms={ttfb_ms:.0f}"
             )
         if response.status_code >= 400:
             preview = response.text[:1000]
@@ -152,7 +156,8 @@ def _chat_completion_once(
             raise LLMClientError(unexpected_error)
         content = _content_from_completion(response.text)
         if debug_enabled:
-            debug_log(f"LLM completion received content_chars={len(content)}")
+            total_ms = (time.time() - start_time) * 1000
+            debug_log(f"LLM completion received content_chars={len(content)} ttfb_ms={ttfb_ms:.0f} total_ms={total_ms:.0f}")
         return content
     except requests.RequestException as exc:
         if debug_enabled:
@@ -195,6 +200,7 @@ def _stream_chat_completion_once(
         )
 
     try:
+        start_time = time.time()
         with requests.post(
             url,
             headers=headers,
@@ -202,10 +208,12 @@ def _stream_chat_completion_once(
             stream=True,
             timeout=timeout,
         ) as response:
+            ttfb_ms = (time.time() - start_time) * 1000
             if debug_enabled:
                 debug_log(
                     "LLM response headers "
-                    f"status={response.status_code} content_type={response.headers.get('content-type', '')}"
+                    f"status={response.status_code} content_type={response.headers.get('content-type', '')} "
+                    f"ttfb_ms={ttfb_ms:.0f}"
                 )
             if response.status_code >= 400:
                 preview = response.text[:1000]
@@ -252,7 +260,8 @@ def _stream_chat_completion_once(
                 elif debug_enabled:
                     debug_log(f"LLM stream line without content={line[:300]!r}")
             if debug_enabled:
-                debug_log(f"LLM stream complete chunks={chunk_count} content_chars={content_chars}")
+                total_ms = (time.time() - start_time) * 1000
+                debug_log(f"LLM stream complete chunks={chunk_count} content_chars={content_chars} ttfb_ms={ttfb_ms:.0f} total_ms={total_ms:.0f}")
     except requests.RequestException as exc:
         if debug_enabled:
             debug_log(f"LLM request exception={exc!r}")
