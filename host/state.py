@@ -230,9 +230,7 @@ def save_session(session: dict[str, Any]) -> None:
 
 
 def public_session(session: dict[str, Any]) -> dict[str, Any]:
-    scene_context = select_scenario_context(session, "")
-    matched = scene_context.get("matched") if isinstance(scene_context, dict) else {}
-    enemies = matched.get("enemies") if isinstance(matched, dict) else []
+    enemies = _current_scene_enemies(session)
     public = deepcopy(session)
     public.pop("scenario_prompt", None)
     public.pop("scenario_pack", None)
@@ -260,6 +258,28 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     return public
 
 
+def _current_scene_enemies(session: dict[str, Any]) -> list[dict[str, Any]]:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return []
+    scene = find_scene(pack, str(session.get("current_scene") or ""))
+    if not scene:
+        return []
+
+    enemy_ids = set(_as_text_list(scene.get("enemy_ids")))
+    location_ids = _as_text_list(scene.get("location_ids"))
+    for location in pack.get("locations", []):
+        if not isinstance(location, dict) or str(location.get("id") or "") not in location_ids:
+            continue
+        enemy_ids.update(_as_text_list(location.get("enemy_ids")))
+
+    enemies = []
+    for enemy in pack.get("enemies", []):
+        if isinstance(enemy, dict) and str(enemy.get("id") or "") in enemy_ids:
+            enemies.append(deepcopy(enemy))
+    return enemies
+
+
 def add_player_message(session: dict[str, Any], text: str, speaker: str = "プレイヤー") -> None:
     session["messages"].append({"role": "user", "speaker": speaker, "text": text, "created_at": utc_now()})
 
@@ -284,6 +304,14 @@ def _safe_int(val: Any, default: int = 0) -> int:
         return default
 
 
+def _valid_client_roll(val: Any, sides: int) -> bool:
+    try:
+        n = int(val)
+        return 1 <= n <= sides
+    except (TypeError, ValueError):
+        return False
+
+
 def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None, client_rolls: Optional[list[int]] = None) -> dict[str, Any]:
     expr = str(expression or "").strip() or "1d20"
     dice_part = expr
@@ -293,7 +321,7 @@ def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[in
         dice_part = dice_match.group(1)
         attr_key = _canonical_attr_key(dice_match.group(2) or "")
     count, sides = _parse_dice_expression(dice_part)
-    if client_rolls and isinstance(client_rolls, list) and len(client_rolls) == count and all(isinstance(r, (int, float)) and 1 <= int(r) <= sides for r in client_rolls):
+    if client_rolls and isinstance(client_rolls, list) and len(client_rolls) == count and all(_valid_client_roll(r, sides) for r in client_rolls):
         rolls = [int(r) for r in client_rolls]
     else:
         rolls = [random.randint(1, sides) for _ in range(count)]
@@ -860,9 +888,8 @@ def _trim_context_to_budget(context_json: str, max_chars: int) -> str:
                 break
             del ctx["matched"][key]
             removed.append(key)
-            if len(json.dumps(ctx, ensure_ascii=False)) <= max_chars:
-                break
-        if len(json.dumps(ctx, ensure_ascii=False)) > max_chars:
+        serialized = json.dumps(ctx, ensure_ascii=False)
+        if len(serialized) > max_chars:
             for key in removed:
                 ctx["matched"][key] = []
     if isinstance(ctx.get("rules"), list):
