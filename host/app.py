@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 from typing import Any, Optional
 
@@ -336,6 +337,7 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
         )
 
     full_response = ""
+    t0 = time.time()
     try:
         full_response = chat_completion(config, messages)
     except LLMClientError as exc:
@@ -354,10 +356,11 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
         visible_text, payload, warning = split_visible_and_json(full_response)
         visible_text = _visible_text_from_payload(visible_text, payload)
     if debug_enabled:
+        elapsed_ms = (time.time() - t0) * 1000
         debug_log(
             "Opening model result "
             f"raw_chars={len(full_response)} visible_chars={len(visible_text)} "
-            f"json_ok={payload is not None} warning={warning!r}"
+            f"json_ok={payload is not None} warning={warning!r} elapsed_ms={elapsed_ms:.0f}"
         )
     apply_gm_payload(session, visible_text, payload, warning)
     session["needs_opening"] = False
@@ -390,6 +393,7 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             f"matches={context_debug['matches']}"
         )
 
+    t0 = time.time()
     try:
         full_response = chat_completion(config, messages)
     except LLMClientError as exc:
@@ -402,10 +406,11 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
     visible_text, payload, warning = split_visible_and_json(full_response)
     visible_text = _visible_text_from_payload(visible_text, payload)
     if debug_enabled:
+        elapsed_ms = (time.time() - t0) * 1000
         debug_log(
             "Turn model result "
             f"raw_chars={len(full_response)} visible_chars={len(visible_text)} "
-            f"json_ok={payload is not None} warning={warning!r}"
+            f"json_ok={payload is not None} warning={warning!r} elapsed_ms={elapsed_ms:.0f}"
         )
     apply_gm_payload(session, visible_text, payload, warning)
     save_session(session)
