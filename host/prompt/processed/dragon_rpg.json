@@ -8,9 +8,15 @@
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
     "調査や戦闘の後は、次に進める行動選択肢を必ず提示する。",
-    "支度金やアイテムを渡した場合は state_delta に反映する。"
+    "支度金やアイテムを渡した場合は state_delta に反映する。",
+    "戦闘中、SPは毎ターン開始時に最大SPの半分を回復する。戦闘勝利後、HPとMPは全回復する。"
   ],
   "fallback_choices": [
+    {
+      "text": "将軍ドラコに助言を求める",
+      "preview": "実用的な戦術情報が得られるかもしれません",
+      "risk": "筋力または耐久が10以上で1d20判定（DC15）"
+    },
     {
       "text": "周囲を詳しく調べる",
       "preview": "手がかりや危険を発見できるかもしれません",
@@ -31,7 +37,7 @@
     {
       "id": "throne_room",
       "title": "第1章：王の間",
-      "description": "白い石造りの王城。赤い絨毯、古い柱、王座に座る国王エドワード。国王は邪竜イグニス討伐を依頼し、支度金50ゴールドと薬草を渡す。",
+      "description": "白い石造りの王城。赤い絨毯、古い柱、王座に座る国王エドワード。その傍らには剣聖と称される将軍ドラコが立っている。国王は邪竜イグニス討伐を依頼し、支度金50ゴールドと薬草を渡す。",
       "goals": [
         "国王から使命を受ける",
         "邪竜と竜の谷について情報を得る",
@@ -53,6 +59,11 @@
         "dark_forest"
       ],
       "fallback_choices": [
+        {
+          "text": "将軍ドラコに助言を求める",
+          "preview": "実用的な戦術情報が得られるかもしれません",
+          "risk": "筋力または耐久が10以上で1d20判定（DC15）"
+        },
         {
           "text": "国王に邪竜の詳しい話を聞く",
           "preview": "旅の目的と手がかりを確認できます",
@@ -102,9 +113,9 @@
           "risk": "1d20判定（DC10）"
         },
         {
-          "text": "薬草を使って態勢を整える",
-          "preview": "HPを回復して安全を確保します",
-          "risk": "判定不要"
+          "text": "スライムを迂回して森を抜ける",
+          "preview": "戦闘を避けて先へ進みます",
+          "risk": "1d20+dex判定（DC25）失敗時スライムが先手攻撃"
         },
         {
           "text": "城を出て闇の森へ向かう",
@@ -202,12 +213,15 @@
         "王座"
       ],
       "npc_ids": [
-        "king"
+        "king",
+        "general"
       ],
       "item_ids": [
         "herb",
         "iron_sword"
-      ]
+      ],
+      "clue_ids": [],
+      "enemy_ids": []
     },
     {
       "id": "forge",
@@ -222,7 +236,10 @@
       ],
       "npc_ids": [
         "blacksmith"
-      ]
+      ],
+      "item_ids": [],
+      "clue_ids": [],
+      "enemy_ids": []
     },
     {
       "id": "village_shop",
@@ -239,7 +256,9 @@
       ],
       "item_ids": [
         "ice_charm"
-      ]
+      ],
+      "clue_ids": [],
+      "enemy_ids": []
     },
     {
       "id": "village",
@@ -255,7 +274,9 @@
       ],
       "clue_ids": [
         "dragon_weakness"
-      ]
+      ],
+      "item_ids": [],
+      "enemy_ids": []
     },
     {
       "id": "dark_forest_loc",
@@ -269,7 +290,10 @@
       ],
       "enemy_ids": [
         "slime"
-      ]
+      ],
+      "npc_ids": [],
+      "item_ids": [],
+      "clue_ids": []
     },
     {
       "id": "dragon_valley_loc",
@@ -283,7 +307,10 @@
       ],
       "enemy_ids": [
         "ignis"
-      ]
+      ],
+      "npc_ids": [],
+      "item_ids": [],
+      "clue_ids": []
     }
   ],
   "npcs": [
@@ -330,16 +357,20 @@
     },
     {
       "id": "general",
-      "description": "",
-      "keywords": [],
-      "name": "NPC 5"
+      "name": "将軍ドラコ",
+      "description": "剣聖と称される将軍、国王の護衛を務める。",
+      "keywords": [
+        "剣聖",
+        "将軍",
+        "ドラコ"
+      ]
     }
   ],
   "items": [
     {
       "id": "iron_sword",
       "name": "鉄の剣",
-      "description": "冒険者向けの標準的な剣。",
+      "description": "一見質素な一振りの剣……",
       "effect": "通常攻撃に使用",
       "keywords": [
         "鉄の剣",
@@ -407,10 +438,10 @@
       "id": "ignis",
       "name": "邪竜イグニス",
       "description": "王国を脅かす紅き邪竜。炎の息を吐き、圧倒的な力を持つ。冷気に弱い。",
-      "hp": 30,
-      "max_hp": 30,
-      "mp": 15,
-      "max_mp": 15,
+      "hp": 300,
+      "max_hp": 300,
+      "mp": 150,
+      "max_mp": 150,
       "sp": 10,
       "max_sp": 10,
       "attributes": {
@@ -514,7 +545,7 @@
       "inventory": [
         {
           "name": "鉄の剣",
-          "description": "冒険者向けの標準的な剣。",
+          "description": "一見質素な一振りの剣……",
           "effect": "通常攻撃に使用",
           "quantity": 1
         },
@@ -539,15 +570,15 @@
         {
           "name": "渾身斬り",
           "description": "気合を込めた全力の一撃。",
-          "effect": "1d4+str判定",
+          "effect": "1d4+str判定ダメージ",
           "dice_type": "1d4+str",
           "cost": 3,
           "cost_type": "sp"
         },
         {
-          "name": "防御",
-          "description": "盾を構えて次の攻撃に備える。",
-          "effect": "次の被ダメージを半減",
+          "name": "神聖の庇護",
+          "description": "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。",
+          "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
           "cost": 0
         }
       ]
@@ -600,15 +631,15 @@
         {
           "name": "治癒の祈り",
           "description": "聖なる祈りで傷を癒す。",
-          "effect": "HPを1d6+知力回復",
+          "effect": "HPを1d6+知力/4回復",
           "dice_type": "1d6+int",
           "cost": 4,
           "cost_type": "mp"
         },
         {
           "name": "聖なる守護",
-          "description": "聖光の盾で味方を守る。",
-          "effect": "次の攻撃ダメージを無効化",
+          "description": "聖光の盾で味方を守る。致死ダメージも耐え抜く。",
+          "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
           "cost": 6,
           "cost_type": "mp"
         }
@@ -618,7 +649,7 @@
     {
       "id": "mage",
       "name": "魔法使い",
-      "default_name": "リリィ",
+      "default_name": "ゴウダン",
       "description": "攻撃魔法を極めた学者。MPが非常に高く、知力に長ける。",
       "image": "/static/images/char_mage.png",
       "hp": 12,
@@ -663,16 +694,16 @@
         {
           "name": "火球",
           "description": "灼熱の火球を放つ。",
-          "effect": "1d20+int判定、2d6ダメージ",
-          "dice_type": "1d20+int",
+          "effect": "int判定ダメージ、ｈｐ１００％に対して、1d6追加ダメージを与える",
+          "dice_type": "int+1d6",
           "cost": 5,
           "cost_type": "mp"
         },
         {
           "name": "氷の矢",
           "description": "冷気の矢を放つ。",
-          "effect": "1d20+int判定、氷属性ダメージ",
-          "dice_type": "1d20+int",
+          "effect": "int/2ダメージ，ｈｐ5０％以下に対して，1d6追加ダメージを与える",
+          "dice_type": "int/2+1d6",
           "cost": 3,
           "cost_type": "mp"
         }
@@ -682,7 +713,7 @@
     {
       "id": "thief",
       "name": "盗賊",
-      "default_name": "シオン",
+      "default_name": "ファング",
       "description": "影に生きる敏捷の達人。素早さと器用さに優れる。",
       "image": "/static/images/char_thief.png",
       "hp": 14,
@@ -726,8 +757,8 @@
       "skills": [
         {
           "name": "影隠れ",
-          "description": "影に溶けて気配を消す。",
-          "effect": "1d20+dex判定、発見されない",
+          "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
+          "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
           "dice_type": "1d20+dex",
           "cost": 2,
           "cost_type": "sp"
@@ -735,8 +766,8 @@
         {
           "name": "急所突き",
           "description": "敵の急所を正確に狙う。",
-          "effect": "1d20+dex判定、ダメージ2倍",
-          "dice_type": "1d20+dex",
+          "effect": "3d6判定ダメージ",
+          "dice_type": "3d6",
           "cost": 4,
           "cost_type": "sp"
         }

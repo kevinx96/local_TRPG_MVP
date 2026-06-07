@@ -8,6 +8,7 @@ from unittest.mock import patch
 from host import app as app_module
 from host import state
 from host.gm_contract import split_visible_and_json
+from host.scenario_context import hybrid_context_debug
 
 
 class StateTests(unittest.TestCase):
@@ -421,7 +422,46 @@ class StateTests(unittest.TestCase):
         self.assertNotIn("Keep this English note", combined)
         self.assertNotIn("forge_response", combined)
         self.assertNotIn('"matched"', combined)
+        self.assertNotIn("_debug", combined)
         self.assertEqual(len(messages), 4)
+
+        llm_context = state.select_hybrid_context(session, "鍛冶屋へ向かう")
+        debug_context = state.select_hybrid_context(session, "鍛冶屋へ向かう", include_debug=True)
+        debug = hybrid_context_debug(debug_context)
+
+        self.assertNotIn("_debug", llm_context)
+        self.assertEqual(debug["prepared_turn"], "forge_response")
+        self.assertEqual(debug["purpose"], "choice_response")
+
+    def test_hybrid_turn_matching_ignores_stale_assistant_text(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["scenes"][0]["hybrid"] = {
+            "mode": "prepared_gm_turns",
+            "prepared_turns": [
+                {
+                    "id": "dragon_info",
+                    "purpose": "choice_response",
+                    "source_choice": "国王に邪竜の詳しい話を聞く",
+                    "trigger_keywords": ["イグニス", "弱点"],
+                    "draft": {
+                        "gm_text": "イグニスの弱点は冷気だ。",
+                        "choices": [{"text": "城内の鍛造屋へ向かう", "preview": "", "risk": ""}],
+                    },
+                }
+            ],
+        }
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path), gm_mode="semi")
+        session = state.load_session(public["id"])
+        state.add_assistant_message(session, "イグニスの弱点は冷気だ。")
+        state.add_player_message(session, "城内の鍛造屋へ向かう")
+
+        messages = state.build_llm_messages(session, {"expression": "1d20", "rolls": [7], "total": 7}, "contract")
+        combined = "\n".join(message["content"] for message in messages)
+
+        self.assertNotIn("SEMI/HYBRID", combined)
+        self.assertIn("シナリオコンテキスト", messages[1]["content"])
 
     def test_full_mode_ignores_prepared_turn_hints(self):
         path = self.write_pack()
@@ -599,6 +639,48 @@ class StateTests(unittest.TestCase):
 
         self.assertEqual(session["current_scene"], "forest")
         self.assertEqual(session["choices"][0]["text"], "森へ進む")
+
+    def test_gm_text_enemy_mention_does_not_infer_remote_scene(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["scenes"][0]["next_scene_ids"] = ["forest"]
+        raw["scenes"].append({
+            "id": "dragon_valley",
+            "title": "竜の谷",
+            "description": "イグニスが待つ谷。",
+            "keywords": ["イグニス", "竜の谷"],
+            "fallback_choices": [{"text": "戦う", "preview": "", "risk": "危険"}],
+        })
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "鍛造屋へ向かう")
+        state.apply_gm_payload(
+            session,
+            "鍛冶場の扉を開けると、鍛冶師はイグニスの弱点は冷気だと告げた。",
+            {"state_delta": {}, "choices": [{"text": "準備を続ける", "preview": "", "risk": ""}]},
+        )
+
+        self.assertEqual(session["current_scene"], "start")
+
+    def test_disallowed_scene_delta_is_ignored_when_next_scenes_are_defined(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["scenes"][0]["next_scene_ids"] = ["forest"]
+        raw["scenes"].append({
+            "id": "dragon_valley",
+            "title": "竜の谷",
+            "description": "イグニスが待つ谷。",
+            "keywords": ["イグニス", "竜の谷"],
+        })
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        state.apply_gm_payload(session, "鍛冶師は氷の短剣を渡した。", {"state_delta": {"current_scene": "dragon_valley"}})
+
+        self.assertEqual(session["current_scene"], "start")
+        self.assertTrue(any("不正な場面遷移を無視しました: dragon_valley" in log["text"] for log in session["system_logs"]))
 
 
 if __name__ == "__main__":

@@ -184,7 +184,12 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
     return context
 
 
-def select_hybrid_context(session: dict[str, Any], player_text: str = "", opening: bool = False) -> dict[str, Any]:
+def select_hybrid_context(
+    session: dict[str, Any],
+    player_text: str = "",
+    opening: bool = False,
+    include_debug: bool = False,
+) -> dict[str, Any]:
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return {}
@@ -193,7 +198,7 @@ def select_hybrid_context(session: dict[str, Any], player_text: str = "", openin
     scene = find_scene(pack, current_scene) or (pack.get("scenes") or [{}])[0]
     prepared_turn = select_hybrid_prepared_turn(session, player_text, opening=opening)
     meta = pack.get("meta", {})
-    return {
+    context = {
         "meta": meta,
         "rules": pack.get("rules", []),
         "current_scene": {
@@ -205,6 +210,12 @@ def select_hybrid_context(session: dict[str, Any], player_text: str = "", openin
         "prepared_turn": _prepared_turn_for_llm(prepared_turn, str(meta.get("language") or "")),
         "fallback_choices": fallback_choices_for_scene(pack, current_scene),
     }
+    if include_debug:
+        context["_debug"] = {
+            "prepared_turn": str(prepared_turn.get("id") or "") if isinstance(prepared_turn, dict) else "",
+            "purpose": str(prepared_turn.get("purpose") or "") if isinstance(prepared_turn, dict) else "",
+        }
+    return context
 
 
 def has_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", opening: bool = False) -> bool:
@@ -241,8 +252,6 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
         for part in (
             player_text,
             _latest_user_text(session),
-            _latest_assistant_text(session),
-            str(scene.get("title", "")),
         )
         if part
     )
@@ -250,10 +259,7 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
     scored.sort(key=lambda item: (item[0], -item[1]), reverse=True)
     if scored and scored[0][0] > 0:
         return deepcopy(scored[0][2])
-    for turn in prepared_turns:
-        if _turn_purpose(turn) != "opening":
-            return deepcopy(turn)
-    return deepcopy(prepared_turns[0]) if prepared_turns else {}
+    return {}
 
 
 def fallback_choices_for_session(session: dict[str, Any]) -> list[dict[str, str]]:
@@ -323,11 +329,13 @@ def scenario_context_debug(context: dict[str, Any]) -> dict[str, Any]:
 
 def hybrid_context_debug(context: dict[str, Any]) -> dict[str, Any]:
     prepared = context.get("prepared_turn") if isinstance(context.get("prepared_turn"), dict) else {}
+    debug = context.get("_debug") if isinstance(context.get("_debug"), dict) else {}
+    llm_context = {key: value for key, value in context.items() if key != "_debug"}
     return {
-        "chars": len(json.dumps(context, ensure_ascii=False)),
+        "chars": len(json.dumps(llm_context, ensure_ascii=False)),
         "scene": (context.get("current_scene") or {}).get("id") if isinstance(context.get("current_scene"), dict) else "",
-        "prepared_turn": prepared.get("id", ""),
-        "purpose": prepared.get("purpose", ""),
+        "prepared_turn": debug.get("prepared_turn") or prepared.get("id", ""),
+        "purpose": debug.get("purpose") or prepared.get("purpose", ""),
     }
 
 
@@ -463,11 +471,6 @@ def _prepared_turn_score(turn: Any, text: str) -> int:
     intent = str(turn.get("player_intent") or "")
     if intent and intent in text:
         score += 1
-    # Draft choice text matches (weaker signal)
-    draft = turn.get("draft") if isinstance(turn.get("draft"), dict) else {}
-    for choice in normalize_choices(draft.get("choices")):
-        if choice["text"] in text:
-            score += 1
     return score
 
 

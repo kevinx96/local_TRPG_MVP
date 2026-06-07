@@ -439,7 +439,7 @@ def _opening_prompt_for_mode(session: dict[str, Any]) -> str:
 
 def _context_debug_for_mode(session: dict[str, Any], player_text: str, opening: bool = False) -> dict[str, Any]:
     if session.get("gm_mode") == "semi" and has_hybrid_prepared_turn(session, player_text, opening=opening):
-        debug = hybrid_context_debug(select_hybrid_context(session, player_text, opening=opening))
+        debug = hybrid_context_debug(select_hybrid_context(session, player_text, opening=opening, include_debug=True))
         return {
             "chars": debug["chars"],
             "scene": debug["scene"],
