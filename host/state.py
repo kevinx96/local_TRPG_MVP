@@ -12,6 +12,7 @@ from typing import Any, Optional, Union
 
 from .scenario_context import (
     fallback_choices_for_session,
+    find_scene,
     has_hybrid_prepared_turn,
     infer_scene_from_text,
     load_scenario_pack,
@@ -441,7 +442,11 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
     if isinstance(delta.get("current_scene"), str) and delta["current_scene"].strip():
         pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else None
         current_scene = delta["current_scene"].strip()
-        session["current_scene"] = resolve_scene_id(pack, current_scene) if pack else current_scene
+        resolved_scene = resolve_scene_id(pack, current_scene) if pack else current_scene
+        if _scene_transition_allowed(session, resolved_scene):
+            session["current_scene"] = resolved_scene
+        else:
+            add_system_log(session, f"不正な場面遷移を無視しました: {resolved_scene}")
 
 
 def _enrich_item(item: dict[str, Any]) -> dict[str, Union[str, int]]:
@@ -749,9 +754,29 @@ def _infer_scene_delta_from_text(gm_text: str, session: dict[str, Any], delta: d
     if isinstance(delta.get("current_scene"), str) and delta["current_scene"].strip():
         return
     player_text = _latest_player_text(session)
-    explicit_scene = infer_scene_from_text(session, player_text) or infer_scene_from_text(session, gm_text)
+    explicit_scene = infer_scene_from_text(session, player_text)
     if explicit_scene:
         delta["current_scene"] = explicit_scene
+
+
+def _scene_transition_allowed(session: dict[str, Any], target_scene: str) -> bool:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return True
+    target = find_scene(pack, target_scene)
+    if not target:
+        return False
+    current_scene_id = str(session.get("current_scene") or "")
+    if str(target.get("id") or "") == current_scene_id:
+        return True
+    current_scene = find_scene(pack, current_scene_id)
+    if not current_scene:
+        return True
+    next_scene_ids = _as_text_list(current_scene.get("next_scene_ids"))
+    if not next_scene_ids:
+        return True
+    allowed = {resolve_scene_id(pack, scene_id) for scene_id in next_scene_ids}
+    return str(target.get("id") or "") in allowed
 
 
 def _latest_player_text(session: dict[str, Any]) -> str:
