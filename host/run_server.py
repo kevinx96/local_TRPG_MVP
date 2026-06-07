@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import threading
+import time
 import webbrowser
 
 import uvicorn
@@ -22,8 +23,9 @@ def main() -> None:
     args = parser.parse_args()
 
     url = f"http://{args.host}:{args.port}/"
+    browser_url = f"{url}?_trpg_reload={int(time.time())}"
     if not args.no_browser:
-        timer = threading.Timer(1.0, _open_browser, args=(url,))
+        timer = threading.Timer(1.0, _open_browser, args=(browser_url,))
         timer.daemon = True
         timer.start()
     print(f"[TRPG] Host starting at {url}", flush=True)

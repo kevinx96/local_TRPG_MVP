@@ -8,6 +8,7 @@ from unittest.mock import patch
 from host import app as app_module
 from host import state
 from host.gm_contract import split_visible_and_json
+from host.scenario_context import hybrid_context_debug
 
 
 class StateTests(unittest.TestCase):
@@ -169,6 +170,50 @@ class StateTests(unittest.TestCase):
 
         self.assertEqual([item["id"] for item in context["matched"]["locations"]], ["forge"])
         self.assertEqual(context["matched"]["enemies"], [])
+        self.assertFalse(public["in_combat"])
+        self.assertEqual(public["enemies"], [])
+
+    def test_public_session_does_not_expose_keyword_matched_remote_enemies(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"].append({
+            "id": "dragon_valley",
+            "title": "竜の谷",
+            "description": "遠い谷。",
+            "keywords": ["竜", "谷", "イグニス"],
+            "enemy_ids": ["ignis"],
+        })
+        raw["enemies"] = [{"id": "ignis", "name": "イグニス", "description": "紅き邪竜。"}]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+        session["messages"].append({"role": "assistant", "speaker": "GM", "text": "イグニスの情報を聞いた。"})
+        session["choices"] = [{"text": "イグニスについて聞く", "preview": "", "risk": "判定不要"}]
+
+        public = state.public_session(session)
+
+        self.assertFalse(public["in_combat"])
+        self.assertEqual(public["enemies"], [])
+
+    def test_full_mode_caps_matched_context_records(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"] = [
+            {
+                "id": f"market_{index}",
+                "title": f"市場{index}",
+                "description": "装備を扱う店。",
+                "keywords": ["市場"],
+            }
+            for index in range(6)
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path), gm_mode="full")
+        session = state.load_session(public["id"])
+
+        context = state.select_scenario_context(session, "市場を調べる")
+
+        self.assertEqual(len(context["matched"]["locations"]), 3)
 
     def test_model_choices_do_not_trigger_fallback(self):
         public = state.create_session(str(self.write_pack()))
@@ -209,6 +254,53 @@ class StateTests(unittest.TestCase):
 
         self.assertEqual(session["choices"][0]["text"], "鍛冶屋へ向かう")
         self.assertTrue(any("choices fallback: model did not provide choices." in log["text"] for log in session["system_logs"]))
+
+    def test_failed_roll_fallback_removes_repeated_check_choice(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "鍛冶屋へ向かう")
+        session["next_dice_dc"] = 15
+        session["dice_log"].append({"expression": "1d20", "rolls": [7], "total": 7, "created_at": state.utc_now()})
+
+        state.apply_gm_payload(session, "鍛冶師は首を横に振り、有用な助言を与えなかった。", {"state_delta": {}})
+
+        self.assertEqual(session["choices"][0]["text"], "助言を受け流して別の準備に移る")
+        self.assertNotIn("鍛冶屋へ向かう", [choice["text"] for choice in session["choices"]])
+
+    def test_failed_roll_text_avoids_mechanical_terms(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "\u5c06\u8ecd\u30c9\u30e9\u30b3\u306b\u52a9\u8a00\u3092\u6c42\u3081\u308b")
+        session["next_dice_dc"] = 15
+        session["dice_log"].append({"expression": "1d20", "rolls": [5], "total": 5, "dc": 15, "success": False, "created_at": state.utc_now()})
+
+        state.apply_gm_payload(
+            session,
+            "\u30a2\u30eb\u30b9\u306f\u300c\u5c06\u8ecd\u30c9\u30e9\u30b3\u306b\u52a9\u8a00\u3092\u6c42\u3081\u308b\u300d\u3092\u8a66\u307f\u305f\u304c\u3001\u5224\u5b9a\u306f\u5c4a\u304b\u306a\u304b\u3063\u305f\u3002",
+            {"state_delta": {}, "choices": [{"text": "\u5225\u306e\u6e96\u5099\u306b\u79fb\u308b", "risk": "\u5224\u5b9a\u4e0d\u8981"}]},
+        )
+
+        latest_gm = session["messages"][-1]["text"]
+        self.assertNotIn("\u5224\u5b9a", latest_gm)
+        self.assertIn("\u78ba\u304b\u306a\u624b\u304c\u304b\u308a\u306f\u5f97\u3089\u308c\u306a\u304b\u3063\u305f", latest_gm)
+
+    def test_failed_roll_malformed_json_does_not_keep_useful_hint(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "鍛冶師に秘密の助言を求める")
+        session["next_dice_dc"] = 15
+        session["dice_log"].append({"expression": "1d20", "rolls": [7], "total": 7, "created_at": state.utc_now()})
+        visible, payload, warning = split_visible_and_json(
+            '{"gm_text":"鍛冶師は曖昧に笑う。近隣の洞窟に古代文字があるはずだ。",'
+            '"choices":[{"option":"途中で切れた"'
+        )
+
+        state.apply_gm_payload(session, visible, payload, warning)
+
+        latest_gm = session["messages"][-1]["text"]
+        self.assertIn("確かな手がかりは得られなかった", latest_gm)
+        self.assertNotIn("洞窟", latest_gm)
+        self.assertNotIn("鍛冶師に秘密の助言を求める", [choice["text"] for choice in session["choices"]])
 
     def test_public_session_exposes_current_scene_enemies(self):
         path = self.write_pack()
@@ -276,6 +368,21 @@ class StateTests(unittest.TestCase):
         self.assertTrue(any("これまでの会話要約" in message["content"] for message in messages if message["role"] == "system"))
         self.assertFalse(any("行動0" in message["content"] for message in messages if message["role"] != "system"))
 
+    def test_full_mode_caps_history_for_small_models(self):
+        public = state.create_session(str(self.write_pack()), gm_mode="full")
+        session = state.load_session(public["id"])
+        for index in range(4):
+            state.add_player_message(session, f"行動{index}")
+            state.add_assistant_message(session, f"結果{index}")
+
+        messages = state.build_llm_messages(session, {"expression": "1d20", "rolls": [10], "total": 10}, "contract")
+
+        roles = [message["role"] for message in messages]
+        self.assertEqual(roles.count("user"), 1)
+        self.assertEqual(roles.count("assistant"), 1)
+        self.assertFalse(any("行動1" in message["content"] for message in messages if message["role"] != "system"))
+        self.assertTrue(any("これまでの会話要約" in message["content"] for message in messages if message["role"] == "system"))
+
     def test_build_llm_messages_includes_player_action_history(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
@@ -337,7 +444,7 @@ class StateTests(unittest.TestCase):
         messages = state.build_llm_messages(session, {"expression": "opening", "rolls": [], "total": 0}, "contract")
 
         self.assertEqual(public["gm_mode"], "full")
-        self.assertIn('"gm_mode": "full"', messages[2]["content"])
+        self.assertIn('"current_scene": "start"', messages[2]["content"])
 
         fallback = state.create_session(str(self.write_pack()), gm_mode="unknown")
         self.assertEqual(fallback["gm_mode"], "semi")
@@ -421,7 +528,46 @@ class StateTests(unittest.TestCase):
         self.assertNotIn("Keep this English note", combined)
         self.assertNotIn("forge_response", combined)
         self.assertNotIn('"matched"', combined)
+        self.assertNotIn("_debug", combined)
         self.assertEqual(len(messages), 4)
+
+        llm_context = state.select_hybrid_context(session, "鍛冶屋へ向かう")
+        debug_context = state.select_hybrid_context(session, "鍛冶屋へ向かう", include_debug=True)
+        debug = hybrid_context_debug(debug_context)
+
+        self.assertNotIn("_debug", llm_context)
+        self.assertEqual(debug["prepared_turn"], "forge_response")
+        self.assertEqual(debug["purpose"], "choice_response")
+
+    def test_hybrid_turn_matching_ignores_stale_assistant_text(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["scenes"][0]["hybrid"] = {
+            "mode": "prepared_gm_turns",
+            "prepared_turns": [
+                {
+                    "id": "dragon_info",
+                    "purpose": "choice_response",
+                    "source_choice": "国王に邪竜の詳しい話を聞く",
+                    "trigger_keywords": ["イグニス", "弱点"],
+                    "draft": {
+                        "gm_text": "イグニスの弱点は冷気だ。",
+                        "choices": [{"text": "城内の鍛造屋へ向かう", "preview": "", "risk": ""}],
+                    },
+                }
+            ],
+        }
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path), gm_mode="semi")
+        session = state.load_session(public["id"])
+        state.add_assistant_message(session, "イグニスの弱点は冷気だ。")
+        state.add_player_message(session, "城内の鍛造屋へ向かう")
+
+        messages = state.build_llm_messages(session, {"expression": "1d20", "rolls": [7], "total": 7}, "contract")
+        combined = "\n".join(message["content"] for message in messages)
+
+        self.assertNotIn("SEMI/HYBRID", combined)
+        self.assertIn("シナリオコンテキスト", messages[1]["content"])
 
     def test_full_mode_ignores_prepared_turn_hints(self):
         path = self.write_pack()
@@ -497,6 +643,23 @@ class StateTests(unittest.TestCase):
         self.assertEqual(character["attributes"]["int"], 16)
         self.assertEqual(character["inventory"][0]["name"], "魔導書")
 
+    def test_legacy_con_attribute_normalizes_to_end(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["characters"] = [
+            {
+                "id": "guard",
+                "name": "Guard",
+                "attributes": {"con": 12, "end": 10},
+            }
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+
+        public = state.create_session(str(path), character_id="guard")
+
+        self.assertEqual(public["character"]["attributes"]["end"], 12)
+        self.assertNotIn("con", public["character"]["attributes"])
+
     def test_item_quantity_increment_and_decrement(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
@@ -569,13 +732,91 @@ class StateTests(unittest.TestCase):
                 "choices": [
                     "単純な文字列の選択",
                     {"text": "構造化選択", "preview": "結果", "risk": "危険"},
+                    {"option": "短いoption選択", "risk": "判定不要"},
                 ],
             },
         )
 
-        self.assertEqual(len(session["choices"]), 2)
+        self.assertEqual(len(session["choices"]), 3)
         self.assertEqual(session["choices"][0]["text"], "単純な文字列の選択")
         self.assertEqual(session["choices"][1]["risk"], "危険")
+        self.assertEqual(session["choices"][2]["text"], "短いoption選択")
+        self.assertEqual(session["choices"][2]["preview"], "")
+
+    def test_roll_dice_records_dc_and_success(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+
+        with patch("host.state.random.randint", return_value=1):
+            roll = state.roll_dice(session, "1d20", dc=2)
+
+        self.assertEqual(roll["dc"], 2)
+        self.assertFalse(roll["success"])
+        self.assertEqual(session["dice_log"][-1]["dc"], 2)
+
+    def test_choice_risk_overrides_dice_settings_for_turn(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+        session["choices"] = [
+            {"text": "罠を避けて進む", "risk": "1d20+dex判定（DC14）"},
+            {"text": "休む", "risk": "判定不要"},
+        ]
+
+        dice_type, dice_dc = app_module._dice_settings_for_turn(session, "罠を避けて進む")
+        safe_type, safe_dc = app_module._dice_settings_for_turn(session, "休む")
+
+        self.assertEqual(dice_type, "1d20+dex")
+        self.assertEqual(dice_dc, 14)
+        self.assertEqual(safe_type, "1d20")
+        self.assertEqual(safe_dc, 0)
+
+    def test_choice_risk_requirement_disables_when_attribute_too_low(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"str": 8, "end": 9}
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+        action = "\u5c06\u8ecd\u30c9\u30e9\u30b3\u306b\u52a9\u8a00\u3092\u6c42\u3081\u308b"
+        session["choices"] = [
+            {"text": action, "risk": "\u7b4b\u529b\u307e\u305f\u306f\u8010\u4e45\u304c10\u4ee5\u4e0a\u30671d20\u5224\u5b9a\uff08DC15\uff09"},
+        ]
+
+        dice_type, dice_dc = app_module._dice_settings_for_turn(session, action)
+        public_choices = state.public_session(session)["choices"]
+
+        self.assertEqual(dice_type, "1d20")
+        self.assertEqual(dice_dc, 15)
+        self.assertFalse(public_choices[0]["enabled"])
+        self.assertIn("\u8010\u4e45", public_choices[0]["disabled_reason"])
+
+    def test_choice_risk_requirement_allows_end_attribute(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"str": 8, "end": 10}
+        session["choices"] = [
+            {"text": "\u52a9\u8a00\u3092\u6c42\u3081\u308b", "risk": "\u7b4b\u529b\u307e\u305f\u306f\u8010\u4e45\u304c10\u4ee5\u4e0a\u30671d20\u5224\u5b9a\uff08DC15\uff09"},
+        ]
+
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertTrue(choice["enabled"])
+        self.assertNotIn("disabled_reason", choice)
+
+    def test_disabled_choice_is_not_sent_to_llm(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"str": 8, "end": 9}
+        session["choices"] = [
+            {"text": "\u52a9\u8a00\u3092\u6c42\u3081\u308b", "risk": "\u7b4b\u529b\u307e\u305f\u306f\u8010\u4e45\u304c10\u4ee5\u4e0a\u30671d20\u5224\u5b9a\uff08DC15\uff09"},
+        ]
+
+        result = app_module._run_turn(session, app_module.TurnRequest(text="\u52a9\u8a00\u3092\u6c42\u3081\u308b"))
+
+        self.assertEqual(session["messages"], [])
+        self.assertEqual(session["dice_log"], [])
+        self.assertFalse(result["choices"][0]["enabled"])
 
     def test_gold_delta_and_text_inference(self):
         public = state.create_session(str(self.write_pack()))
@@ -599,6 +840,48 @@ class StateTests(unittest.TestCase):
 
         self.assertEqual(session["current_scene"], "forest")
         self.assertEqual(session["choices"][0]["text"], "森へ進む")
+
+    def test_gm_text_enemy_mention_does_not_infer_remote_scene(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["scenes"][0]["next_scene_ids"] = ["forest"]
+        raw["scenes"].append({
+            "id": "dragon_valley",
+            "title": "竜の谷",
+            "description": "イグニスが待つ谷。",
+            "keywords": ["イグニス", "竜の谷"],
+            "fallback_choices": [{"text": "戦う", "preview": "", "risk": "危険"}],
+        })
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "鍛造屋へ向かう")
+        state.apply_gm_payload(
+            session,
+            "鍛冶場の扉を開けると、鍛冶師はイグニスの弱点は冷気だと告げた。",
+            {"state_delta": {}, "choices": [{"text": "準備を続ける", "preview": "", "risk": ""}]},
+        )
+
+        self.assertEqual(session["current_scene"], "start")
+
+    def test_disallowed_scene_delta_is_ignored_when_next_scenes_are_defined(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["scenes"][0]["next_scene_ids"] = ["forest"]
+        raw["scenes"].append({
+            "id": "dragon_valley",
+            "title": "竜の谷",
+            "description": "イグニスが待つ谷。",
+            "keywords": ["イグニス", "竜の谷"],
+        })
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        state.apply_gm_payload(session, "鍛冶師は氷の短剣を渡した。", {"state_delta": {"current_scene": "dragon_valley"}})
+
+        self.assertEqual(session["current_scene"], "start")
+        self.assertTrue(any("不正な場面遷移を無視しました: dragon_valley" in log["text"] for log in session["system_logs"]))
 
 
 if __name__ == "__main__":

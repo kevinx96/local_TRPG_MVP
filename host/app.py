@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import json
+import re
+import time
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
@@ -25,8 +28,10 @@ from .state import (
     HOST_ROOT,
     PROJECT_ROOT,
     add_player_message,
+    add_system_log,
     apply_gm_payload,
     build_llm_messages,
+    choice_requirement_status,
     create_session,
     load_config,
     load_session,
@@ -39,6 +44,7 @@ from .state import (
 
 CLIENT_ROOT = PROJECT_ROOT / "client"
 PROCESSED_SCENARIO_DIR = HOST_ROOT / "prompt" / "processed"
+DEBUG_COMPLETION_DIR = HOST_ROOT / "debug" / "completions"
 SCENARIO_SCHEMA_FILENAME = "scenario_pack.schema.json"
 
 app = FastAPI(title="Local TRPG Host", version="0.2.0")
@@ -55,6 +61,7 @@ class CreateSessionRequest(BaseModel):
 class TurnRequest(BaseModel):
     text: str
     speaker: str = "プレイヤー"
+    client_dice: Optional[dict[str, Any]] = None
 
 
 class ScenarioSaveRequest(BaseModel):
@@ -66,14 +73,34 @@ class ScenarioCreateRequest(BaseModel):
     scenario: dict[str, Any]
 
 
+class ClientDebugRequest(BaseModel):
+    event: str
+    detail: dict[str, Any] = {}
+
+
 @app.get("/")
 def index() -> FileResponse:
-    return FileResponse(CLIENT_ROOT / "index.html")
+    return FileResponse(
+        CLIENT_ROOT / "index.html",
+        headers={"Cache-Control": "no-store, max-age=0", "Pragma": "no-cache"},
+    )
 
 
 @app.get("/editor")
 def editor() -> FileResponse:
-    return FileResponse(CLIENT_ROOT / "editor.html")
+    return FileResponse(
+        CLIENT_ROOT / "editor.html",
+        headers={"Cache-Control": "no-store, max-age=0", "Pragma": "no-cache"},
+    )
+
+
+@app.post("/api/client-debug")
+def api_client_debug(request: ClientDebugRequest) -> dict[str, bool]:
+    detail = json.dumps(request.detail, ensure_ascii=False, default=str)
+    if len(detail) > 1200:
+        detail = detail[:1200] + "...(truncated)"
+    debug_log(f"Client choice debug event={request.event} detail={detail}")
+    return {"ok": True}
 
 
 def _ollama_proxy_info() -> tuple[str, dict[str, str]]:
@@ -322,7 +349,7 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
     debug_enabled = bool(config.get("debug_llm", True))
 
     latest_roll = {"expression": "opening", "rolls": [], "total": 0}
-    messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
+    messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt(opening=True))
     opening_prompt = _opening_prompt_for_mode(session)
     messages.append({"role": "user", "content": opening_prompt})
 
@@ -336,28 +363,38 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
         )
 
     full_response = ""
+    completion_source = "llm"
+    t0 = time.time()
     try:
         full_response = chat_completion(config, messages)
     except LLMClientError as exc:
+        completion_source = "demo_fallback"
         if debug_enabled:
             debug_log(f"Opening LLM failure; demo_fallback={config.get('demo_fallback_on_error', True)} error={exc}")
         if not config.get("demo_fallback_on_error", True):
             raise HTTPException(status_code=502, detail=f"LLM接続エラー: {exc}") from exc
         full_response = _demo_opening(session, str(exc))
+    if debug_enabled and full_response:
+        completion_path = _save_completion_debug(session, "opening", full_response, completion_source)
+        debug_log(f"Opening completion saved path={completion_path}")
 
     visible_text, payload, warning = split_visible_and_json(full_response)
     visible_text = _visible_text_from_payload(visible_text, payload)
     if not visible_text.strip():
         if debug_enabled:
-            debug_log("Opening model returned no player-visible text; using local fallback.")
+            debug_log(
+                "Opening model returned no player-visible text; using local fallback. "
+                f"payload_keys={_payload_keys(payload)} raw_preview={_raw_preview(full_response)}"
+            )
         full_response = _demo_opening(session, "opening response had no player-visible text")
         visible_text, payload, warning = split_visible_and_json(full_response)
         visible_text = _visible_text_from_payload(visible_text, payload)
     if debug_enabled:
+        elapsed_ms = (time.time() - t0) * 1000
         debug_log(
             "Opening model result "
             f"raw_chars={len(full_response)} visible_chars={len(visible_text)} "
-            f"json_ok={payload is not None} warning={warning!r}"
+            f"json_ok={payload is not None} warning={warning!r} elapsed_ms={elapsed_ms:.0f}"
         )
     apply_gm_payload(session, visible_text, payload, warning)
     session["needs_opening"] = False
@@ -366,17 +403,29 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
 
 
 def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
-    add_player_message(session, request.text.strip(), request.speaker)
+    action_text = request.text.strip()
+    choice = _matching_choice(session.get("choices"), action_text)
+    if choice:
+        enabled, reason = choice_requirement_status(choice, session.get("character", {}))
+        if not enabled:
+            add_system_log(session, reason or "この行動は条件を満たしていません。")
+            save_session(session)
+            return public_session(session)
 
-    dice_type = session.get("next_dice_type", "1d20")
-    latest_roll = roll_dice(session, dice_type)
+    add_player_message(session, action_text, request.speaker)
+
+    dice_type, dice_dc = _dice_settings_for_turn(session, action_text)
+    client_dice = request.client_dice
+    if isinstance(client_dice, dict) and isinstance(client_dice.get("rolls"), list) and len(client_dice["rolls"]) > 0:
+        latest_roll = roll_dice(session, dice_type, int(dice_dc) if isinstance(dice_dc, (int, float)) else None, client_rolls=client_dice["rolls"])
+    else:
+        latest_roll = roll_dice(session, dice_type, int(dice_dc) if isinstance(dice_dc, (int, float)) else None)
 
     config = load_config()
     messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
     debug_enabled = bool(config.get("debug_llm", True))
 
     if debug_enabled:
-        dice_dc = session.get("next_dice_dc", 10)
         context_debug = _context_debug_for_mode(session, request.text.strip(), opening=False)
         debug_log(
             "Turn start "
@@ -390,22 +439,34 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             f"matches={context_debug['matches']}"
         )
 
+    t0 = time.time()
+    completion_source = "llm"
     try:
         full_response = chat_completion(config, messages)
     except LLMClientError as exc:
+        completion_source = "demo_fallback"
         if debug_enabled:
             debug_log(f"LLM failure; demo_fallback={config.get('demo_fallback_on_error', True)} error={exc}")
         if not config.get("demo_fallback_on_error", True):
             raise HTTPException(status_code=502, detail=f"LLM接続エラー: {exc}") from exc
         full_response = _demo_response(session, request.text, latest_roll, str(exc))
+    if debug_enabled and full_response:
+        completion_path = _save_completion_debug(session, "turn", full_response, completion_source)
+        debug_log(f"Turn completion saved path={completion_path}")
 
     visible_text, payload, warning = split_visible_and_json(full_response)
     visible_text = _visible_text_from_payload(visible_text, payload)
+    if debug_enabled and not visible_text.strip():
+        debug_log(
+            "Turn model returned no player-visible text. "
+            f"payload_keys={_payload_keys(payload)} raw_preview={_raw_preview(full_response)}"
+        )
     if debug_enabled:
+        elapsed_ms = (time.time() - t0) * 1000
         debug_log(
             "Turn model result "
             f"raw_chars={len(full_response)} visible_chars={len(visible_text)} "
-            f"json_ok={payload is not None} warning={warning!r}"
+            f"json_ok={payload is not None} warning={warning!r} elapsed_ms={elapsed_ms:.0f}"
         )
     apply_gm_payload(session, visible_text, payload, warning)
     save_session(session)
@@ -418,11 +479,83 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
     return public_session(session)
 
 
+def _dice_settings_for_turn(session: dict[str, Any], action_text: str) -> tuple[str, int]:
+    dice_type = str(session.get("next_dice_type") or "1d20")
+    dice_dc = int(session.get("next_dice_dc", 10) or 0)
+    choice = _matching_choice(session.get("choices"), action_text)
+    if not choice:
+        return dice_type, max(dice_dc, 10)
+
+    risk = str(choice.get("risk") or "")
+    if "判定不要" in risk:
+        return dice_type, 0
+
+    expr_match = re.search(r"(\d+d\d+(?:\+[A-Za-z_][A-Za-z0-9_]*)?)", risk, re.IGNORECASE)
+    if expr_match:
+        dice_type = expr_match.group(1)
+
+    dc_match = re.search(r"DC\s*(\d+)", risk, re.IGNORECASE)
+    if dc_match:
+        dice_dc = int(dc_match.group(1))
+    elif "判定" in risk and dice_dc <= 0:
+        dice_dc = 10
+    return dice_type, dice_dc
+
+
+def _matching_choice(raw_choices: Any, action_text: str) -> Optional[dict[str, Any]]:
+    if not isinstance(raw_choices, list) or not action_text:
+        return None
+    normalized_action = action_text.strip()
+    for choice in raw_choices:
+        if not isinstance(choice, dict):
+            continue
+        if str(choice.get("text") or "").strip() == normalized_action:
+            return choice
+    return None
+
+
 def _visible_text_from_payload(visible_text: str, payload: Optional[dict[str, Any]]) -> str:
     if visible_text.strip() or not isinstance(payload, dict):
         return visible_text
     gm_text = payload.get("gm_text")
     return str(gm_text or "")
+
+
+def _payload_keys(payload: Optional[dict[str, Any]]) -> list[str]:
+    if not isinstance(payload, dict):
+        return []
+    return sorted(str(key) for key in payload.keys())[:20]
+
+
+def _raw_preview(text: str, limit: int = 320) -> str:
+    compact = re.sub(r"\s+", " ", text).strip()
+    return compact[:limit]
+
+
+def _save_completion_debug(session: dict[str, Any], phase: str, completion: str, source: str) -> str:
+    DEBUG_COMPLETION_DIR.mkdir(parents=True, exist_ok=True)
+    created_at = datetime.now(timezone.utc)
+    timestamp = created_at.strftime("%Y%m%dT%H%M%S%fZ")
+    session_id = re.sub(r"[^A-Za-z0-9_-]+", "_", str(session.get("id") or "unknown"))[:64]
+    safe_phase = re.sub(r"[^A-Za-z0-9_-]+", "_", phase)[:32]
+    safe_source = re.sub(r"[^A-Za-z0-9_-]+", "_", source)[:32]
+    path = DEBUG_COMPLETION_DIR / f"{timestamp}_{session_id}_{safe_phase}_{safe_source}.json"
+    path.write_text(
+        json.dumps(
+            {
+                "session_id": session.get("id"),
+                "phase": phase,
+                "source": source,
+                "created_at": created_at.isoformat(),
+                "chars": len(completion),
+                "completion": completion,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    return str(path)
 
 
 def _opening_prompt_for_mode(session: dict[str, Any]) -> str:
@@ -439,7 +572,7 @@ def _opening_prompt_for_mode(session: dict[str, Any]) -> str:
 
 def _context_debug_for_mode(session: dict[str, Any], player_text: str, opening: bool = False) -> dict[str, Any]:
     if session.get("gm_mode") == "semi" and has_hybrid_prepared_turn(session, player_text, opening=opening):
-        debug = hybrid_context_debug(select_hybrid_context(session, player_text, opening=opening))
+        debug = hybrid_context_debug(select_hybrid_context(session, player_text, opening=opening, include_debug=True))
         return {
             "chars": debug["chars"],
             "scene": debug["scene"],

@@ -12,6 +12,12 @@ const state = {
   characters: [],
   expandedCharacterId: "",
   scenarioPath: "host/prompt/processed/dragon_rpg.json",
+  lastDiceLogLength: 0,
+  lastDiceSignature: "",
+  diceAnimationTimer: null,
+  nextDiceDc: 0,
+  nextDiceType: "1d20",
+  character: null,
 };
 
 /* ── DOM References ── */
@@ -39,6 +45,9 @@ const els = {
   dialogueBox:     document.querySelector("#dialogueBox"),
   speakerName:     document.querySelector("#speakerName"),
   messageText:     document.querySelector("#messageText"),
+  diceBanner:      document.querySelector("#diceBanner"),
+  diceBannerText:  document.querySelector("#diceBannerText"),
+  diceRollFace:    document.querySelector(".dice-roll-face"),
   logToggleBtn:    document.querySelector("#logToggleBtn"),
   inputToggleBtn:  document.querySelector("#inputToggleBtn"),
   logOverlay:      document.querySelector("#logOverlay"),
@@ -72,11 +81,95 @@ const els = {
 
 let cachedConfig = null;
 
+function choiceDebug(event, detail = {}) {
+  const payload = {
+    ...detail,
+    sessionId: state.sessionId,
+    pendingChoices: state.pendingChoices.length,
+    revealed: state.choicesRevealed,
+    choicesAreaDisplay: els.choicesArea ? getComputedStyle(els.choicesArea).display : "",
+  };
+  console.debug("[TRPG-CHOICE-DEBUG]", event, payload);
+  try {
+    fetch("/api/client-debug", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event, detail: payload }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    /* Debug logging must never break gameplay. */
+  }
+}
+
+function choiceLayoutDebug() {
+  const firstCard = els.choicesList?.querySelector(".choice-card");
+  if (!firstCard) return {};
+  const rect = firstCard.getBoundingClientRect();
+  const x = Math.round(rect.left + rect.width / 2);
+  const y = Math.round(rect.top + rect.height / 2);
+  const top = document.elementFromPoint(x, y);
+  return {
+    firstCardRect: {
+      left: Math.round(rect.left),
+      top: Math.round(rect.top),
+      width: Math.round(rect.width),
+      height: Math.round(rect.height),
+    },
+    topElementAtFirstCardCenter: top ? {
+      tag: top.tagName,
+      id: top.id || "",
+      className: String(top.className || ""),
+      text: (top.textContent || "").trim().slice(0, 80),
+    } : null,
+    choicesAreaZIndex: els.choicesArea ? getComputedStyle(els.choicesArea).zIndex : "",
+    choicesAreaPointerEvents: els.choicesArea ? getComputedStyle(els.choicesArea).pointerEvents : "",
+  };
+}
+
+function ensureDiceBannerElement() {
+  const existingBanner = document.querySelector("#diceBanner");
+  if (existingBanner) {
+    els.diceBanner = existingBanner;
+    els.diceBannerText = existingBanner.querySelector("#diceBannerText") || document.querySelector("#diceBannerText");
+    els.diceRollFace = existingBanner.querySelector(".dice-roll-face") || document.querySelector(".dice-roll-face");
+    return;
+  }
+
+  const dialogueBox = els.dialogueBox || document.querySelector("#dialogueBox");
+  if (!dialogueBox) return;
+  const bottomArea = dialogueBox.closest(".gal-bottom-area") || dialogueBox.parentElement;
+  if (!bottomArea) return;
+
+  const banner = document.createElement("div");
+  banner.id = "diceBanner";
+  banner.className = "gal-dice-banner";
+  banner.style.display = "none";
+  banner.setAttribute("aria-live", "polite");
+
+  const face = document.createElement("span");
+  face.className = "dice-roll-face";
+  face.textContent = "?";
+  banner.appendChild(face);
+
+  const text = document.createElement("span");
+  text.id = "diceBannerText";
+  text.className = "dice-banner-text";
+  text.textContent = "判定中...";
+  banner.appendChild(text);
+
+  bottomArea.insertBefore(banner, dialogueBox);
+  els.diceBanner = banner;
+  els.diceBannerText = text;
+  els.diceRollFace = face;
+}
+
 /* ═══════════════════════════════════════════════════
    INIT
    ═══════════════════════════════════════════════════ */
 
 async function init() {
+  ensureDiceBannerElement();
   restoreGmMode();
   await loadConfig();
   await loadScenarios();
@@ -348,6 +441,12 @@ async function newSession() {
   /* Show start screen again */
   state.pendingChoices = [];
   state.choicesRevealed = false;
+  state.lastDiceLogLength = 0;
+  state.lastDiceSignature = "";
+  state.nextDiceDc = 0;
+  state.nextDiceType = "1d20";
+  stopDiceRollAnimation();
+  hideDiceBanner();
   els.gameScreen.style.display = "none";
   els.startScreen.style.display = "";
   els.messages.innerHTML = "";
@@ -362,46 +461,66 @@ async function submitTurn(event) {
   event.preventDefault();
   const text = els.input.value.trim();
   if (!text || !state.sessionId) return;
+  const diceResult = rollLocalDice(text);
   els.input.value = "";
   addMessage("user", "プレイヤー", text);
   hideChoices();
   clearPendingChoices();
+  hideDiceBanner();
+  if (diceResult) showDiceResult(diceResult);
   setBusy(true);
   try {
+    const body = { text };
+    if (diceResult) body.client_dice = { rolls: diceResult.rolls };
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
+      body: JSON.stringify(body),
     });
     if (!response.ok || !response.body) {
       throw new Error(await response.text());
     }
     renderSession(await response.json());
   } catch (error) {
+    stopDiceRollAnimation();
     addMessage("assistant", "GM", `エラー: ${error.message}`);
   } finally {
     setBusy(false);
   }
 }
 
-/* Submit a choice as a turn */
 async function submitChoice(choiceText) {
+  choiceDebug("submit-choice-start", { choiceText });
   if (!choiceText || !state.sessionId) return;
+  let diceResult;
+  try {
+    diceResult = rollLocalDice(choiceText);
+  } catch (err) {
+    choiceDebug("submit-choice-dice-error", { choiceText, error: err.message });
+    diceResult = null;
+  }
+  choiceDebug("submit-choice-dice", { choiceText, diceResult });
   addMessage("user", "プレイヤー", choiceText);
   hideChoices();
   clearPendingChoices();
+  hideDiceBanner();
+  if (diceResult) showDiceResult(diceResult);
   setBusy(true);
   try {
+    const body = { text: choiceText };
+    if (diceResult) body.client_dice = { rolls: diceResult.rolls };
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: choiceText }),
+      body: JSON.stringify(body),
     });
     if (!response.ok) {
       throw new Error(await response.text());
     }
     renderSession(await response.json());
   } catch (error) {
+    choiceDebug("submit-choice-error", { choiceText, error: error.message });
+    stopDiceRollAnimation();
     addMessage("assistant", "GM", `エラー: ${error.message}`);
   } finally {
     setBusy(false);
@@ -414,6 +533,9 @@ async function submitChoice(choiceText) {
 
 function renderSession(session) {
   state.sessionId = session.id;
+  state.nextDiceDc = Number(session.next_dice_dc || 0);
+  state.nextDiceType = session.next_dice_type || "1d20";
+  state.character = session.character || null;
   const character = session.character;
 
   /* Scene */
@@ -451,6 +573,7 @@ function renderSession(session) {
   renderEnemies(session.enemies || []);
 
   /* Dice log */
+  renderLatestDiceResult(session.dice_log || []);
   renderList(
     els.diceLog,
     (session.dice_log || []).slice(-5).reverse().map(
@@ -569,10 +692,151 @@ function skillLabel(skill) {
 }
 
 /* ═══════════════════════════════════════════════════
+   DICE FEEDBACK
+   ═══════════════════════════════════════════════════ */
+
+function stopDiceRollAnimation() {
+  if (state.diceAnimationTimer) {
+    window.clearInterval(state.diceAnimationTimer);
+    state.diceAnimationTimer = null;
+  }
+  if (els.diceBanner) els.diceBanner.classList.remove("rolling");
+}
+
+function hideDiceBanner() {
+  if (els.diceBanner) els.diceBanner.style.display = "none";
+}
+
+function renderLatestDiceResult(diceLog) {
+  if (!Array.isArray(diceLog) || !diceLog.length) {
+    state.lastDiceLogLength = 0;
+    state.lastDiceSignature = "";
+    return;
+  }
+  const latest = diceLog[diceLog.length - 1];
+  const signature = diceSignature(latest);
+  const hasNewRoll = diceLog.length !== state.lastDiceLogLength || signature !== state.lastDiceSignature;
+  state.lastDiceLogLength = diceLog.length;
+  state.lastDiceSignature = signature;
+  if (!hasNewRoll) return;
+  if (isCheckRoll(latest)) {
+    showDiceResult(latest);
+  }
+}
+
+function diceSignature(roll) {
+  if (!roll || typeof roll !== "object") return "";
+  const rolls = Array.isArray(roll.rolls) ? roll.rolls.join(",") : "";
+  return [roll.expression || "", rolls, roll.total ?? "", roll.dc ?? "", roll.success ?? ""].join("|");
+}
+
+const ATTR_KEY_MAP = {
+  str: "str", strength: "str", 筋力: "str",
+  dex: "dex", dexterity: "dex", 敏捷: "dex", 器用: "dex",
+  con: "con", constitution: "con", 耐久: "con", 体力: "con",
+  int: "int", intelligence: "int", 知力: "int", 知性: "int",
+  wis: "wis", wisdom: "wis", 判断: "wis", 精神: "wis",
+  cha: "cha", charisma: "cha", 魅力: "cha",
+};
+
+function resolveAttrKey(diceExpr) {
+  if (!diceExpr || typeof diceExpr !== "string") return null;
+  const plusIdx = diceExpr.indexOf("+");
+  if (plusIdx < 0) return null;
+  const raw = diceExpr.slice(plusIdx + 1).trim().toLowerCase();
+  return ATTR_KEY_MAP[raw] || raw;
+}
+
+function getAttrValue(attrKey) {
+  if (!attrKey || !state.character) return 0;
+  const attrs = state.character.attributes || state.character.stats || {};
+  const val = attrs[attrKey] ?? attrs[attrKey.toUpperCase()] ?? 0;
+  return typeof val === "number" ? val : parseInt(val, 10) || 0;
+}
+
+function rollLocalDice(actionText) {
+  const choice = state.pendingChoices.find((item) => {
+    const text = typeof item === "string" ? item : (item.text || "");
+    return text === actionText;
+  });
+  if (!choice || typeof choice !== "object") {
+    if (Number(state.nextDiceDc || 0) > 0) {
+      const sides = parseInt(String(state.nextDiceType || "1d20").replace(/.*d/i, ""), 10) || 20;
+      const rolls = [1 + Math.floor(Math.random() * sides)];
+      const total = rolls.reduce((a, b) => a + b, 0);
+      return { expression: state.nextDiceType || "1d20", rolls, total, dc: state.nextDiceDc, success: total >= state.nextDiceDc };
+    }
+    return null;
+  }
+  const risk = String(choice.risk || "");
+  if (risk.includes("判定不要")) return null;
+  if (!(/DC\s*\d+|1d\d+|判定/i.test(risk)) && Number(state.nextDiceDc || 0) <= 0) return null;
+  const diceMatch = risk.match(/(\d+)d(\d+(?:\+[A-Za-z_][A-Za-z0-9_]*)?)/i);
+  const count = diceMatch ? parseInt(diceMatch[1], 10) : 1;
+  const dicePart = diceMatch ? diceMatch[2].split("+")[0] : "20";
+  const sides = parseInt(dicePart, 10) || 20;
+  const dcMatch = risk.match(/DC\s*(\d+)/i);
+  const dc = dcMatch ? parseInt(dcMatch[1], 10) : (Number(state.nextDiceDc || 0) || 10);
+  const rolls = Array.from({ length: count }, () => 1 + Math.floor(Math.random() * sides));
+  const baseTotal = rolls.reduce((a, b) => a + b, 0);
+  const attrKey = diceMatch ? resolveAttrKey(diceMatch[2]) : null;
+  const attrMod = attrKey ? getAttrValue(attrKey) : 0;
+  const total = baseTotal + attrMod;
+  const expr = diceMatch ? diceMatch[2] : (state.nextDiceType || "1d20");
+  const result = { expression: expr, rolls, total, dc, success: total >= dc };
+  if (attrKey) {
+    result.base_total = baseTotal;
+    result.attr_mod = attrMod;
+    result.attr_key = attrKey;
+  }
+  return result;
+}
+
+function isCheckRoll(roll) {
+  return Number(roll?.dc || 0) > 0;
+}
+
+function showDiceResult(roll) {
+  if (!els.diceBanner || !els.diceRollFace || !els.diceBannerText || !roll) return;
+  stopDiceRollAnimation();
+  const rolls = Array.isArray(roll.rolls) ? roll.rolls : [];
+  const total = Number(roll.total ?? 0);
+  const dc = Number(roll.dc ?? 0);
+  const hasCheck = dc > 0;
+  const success = roll.success === true || (hasCheck && total >= dc);
+  els.diceBanner.style.display = "";
+  els.diceBanner.classList.toggle("success", hasCheck && success);
+  els.diceBanner.classList.toggle("failure", hasCheck && !success);
+  els.diceBanner.classList.toggle("neutral", !hasCheck);
+  els.diceRollFace.textContent = String(total);
+
+  const parts = [`${roll.expression || "判定"}: ${rolls.join(" + ") || total}`];
+  if (typeof roll.attr_mod === "number" && roll.attr_mod !== 0) {
+    const sign = roll.attr_mod > 0 ? "+" : "";
+    parts.push(`${sign}${roll.attr_mod}`);
+  }
+  parts.push(`= ${total}`);
+  if (hasCheck) {
+    parts.push(` / DC${dc}`);
+    parts.push(success ? "成功" : "失敗");
+  }
+  els.diceBannerText.textContent = parts.join(" ");
+}
+
+/* ═══════════════════════════════════════════════════
    CHOICES
    ═══════════════════════════════════════════════════ */
 
 function renderChoices(choices) {
+  choiceDebug("render-choices-start", {
+    count: Array.isArray(choices) ? choices.length : 0,
+    choices: Array.isArray(choices) ? choices.map((choice) => ({
+      text: typeof choice === "string" ? choice : (choice.text || ""),
+      risk: typeof choice === "object" ? (choice.risk || "") : "",
+      enabled: typeof choice === "object" && choice.enabled === false ? false : true,
+      disabledReason: typeof choice === "object" ? (choice.disabled_reason || "") : "",
+    })) : [],
+  });
   if (!choices || !choices.length) {
     hideChoices();
     return;
@@ -584,29 +848,59 @@ function renderChoices(choices) {
     const text = typeof choice === "string" ? choice : (choice.text || "");
     const preview = typeof choice === "object" ? (choice.preview || "") : "";
     const risk = typeof choice === "object" ? (choice.risk || "") : "";
+    const enabled = typeof choice === "object" && choice.enabled === false ? false : true;
+    const disabledReason = typeof choice === "object" ? (choice.disabled_reason || "") : "";
 
     const card = document.createElement("button");
     card.type = "button";
-    card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""}`;
+    card.disabled = !enabled;
+    card.dataset.choiceIndex = String(i);
+    card.dataset.choiceText = text;
+    card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""} ${enabled ? "" : "disabled-choice"}`;
 
     const riskClass = classifyRisk(risk);
 
-    card.innerHTML = `
-      <div class="choice-number">${i + 1}</div>
-      <div class="choice-body">
-        <div class="choice-text">${escapeHtml(text)}</div>
-        ${preview ? `<div class="choice-preview">${escapeHtml(preview)}</div>` : ''}
-        ${risk ? `<span class="choice-risk ${riskClass}">${escapeHtml(risk)}</span>` : ''}
-      </div>
-    `;
+    const numberDiv = document.createElement("div");
+    numberDiv.className = "choice-number";
+    numberDiv.textContent = String(i + 1);
 
-    card.addEventListener("click", () => submitChoice(text));
+    const textDiv = document.createElement("div");
+    textDiv.className = "choice-text";
+    textDiv.textContent = text;
+
+    const bodyDiv = document.createElement("div");
+    bodyDiv.className = "choice-body";
+    bodyDiv.appendChild(textDiv);
+
+    if (preview) {
+      const previewDiv = document.createElement("div");
+      previewDiv.className = "choice-preview";
+      previewDiv.textContent = preview;
+      bodyDiv.appendChild(previewDiv);
+    }
+    if (risk) {
+      const riskSpan = document.createElement("span");
+      riskSpan.className = `choice-risk ${riskClass}`;
+      riskSpan.textContent = risk;
+      bodyDiv.appendChild(riskSpan);
+    }
+    if (disabledReason) {
+      const reasonSpan = document.createElement("span");
+      reasonSpan.className = "choice-disabled-reason";
+      reasonSpan.textContent = disabledReason;
+      bodyDiv.appendChild(reasonSpan);
+    }
+
+    card.appendChild(numberDiv);
+    card.appendChild(bodyDiv);
+
     els.choicesList.append(card);
   }
 
   els.choicesArea.style.display = "";
   els.dialogueBox.classList.remove("choices-ready");
   if (els.clickIndicator) els.clickIndicator.style.display = "none";
+  choiceDebug("render-choices-visible", choiceLayoutDebug());
 }
 
 function isCombatChoice(text, preview, risk) {
@@ -633,9 +927,30 @@ function clearPendingChoices() {
 }
 
 function revealPendingChoices() {
+  choiceDebug("reveal-choices", {
+    blocked: state.choicesRevealed || !state.pendingChoices.length,
+  });
   if (state.choicesRevealed || !state.pendingChoices.length) return;
   state.choicesRevealed = true;
   renderChoices(state.pendingChoices);
+}
+
+function handleChoiceListClick(event) {
+  const card = event.target.closest(".choice-card");
+  choiceDebug("choice-click", {
+    targetTag: event.target?.tagName || "",
+    targetClass: String(event.target?.className || ""),
+    hasCard: Boolean(card),
+    cardDisabled: Boolean(card?.disabled),
+    cardIndex: card?.dataset.choiceIndex || "",
+    cardText: card?.dataset.choiceText || "",
+    layout: choiceLayoutDebug(),
+  });
+  if (!card || !els.choicesList.contains(card) || card.disabled) return;
+  const index = Number.parseInt(card.dataset.choiceIndex || "", 10);
+  const choice = Number.isInteger(index) ? state.pendingChoices[index] : null;
+  const text = card.dataset.choiceText || (typeof choice === "string" ? choice : (choice && typeof choice === "object" ? choice.text : ""));
+  if (text) submitChoice(text);
 }
 
 function updateDialogueAdvanceState() {
@@ -790,6 +1105,7 @@ if (els.logCloseBtn) els.logCloseBtn.addEventListener("click", () => els.logOver
 if (els.inputToggleBtn) els.inputToggleBtn.addEventListener("click", () => {
   els.form.style.display = els.form.style.display === "none" ? "" : "none";
 });
+if (els.choicesList) els.choicesList.addEventListener("click", handleChoiceListClick);
 if (els.dialogueBox) {
   els.dialogueBox.addEventListener("click", revealPendingChoices);
   els.dialogueBox.addEventListener("keydown", (event) => {

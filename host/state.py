@@ -12,6 +12,7 @@ from typing import Any, Optional, Union
 
 from .scenario_context import (
     fallback_choices_for_session,
+    find_scene,
     has_hybrid_prepared_turn,
     infer_scene_from_text,
     load_scenario_pack,
@@ -229,9 +230,7 @@ def save_session(session: dict[str, Any]) -> None:
 
 
 def public_session(session: dict[str, Any]) -> dict[str, Any]:
-    scene_context = select_scenario_context(session, "")
-    matched = scene_context.get("matched") if isinstance(scene_context, dict) else {}
-    enemies = matched.get("enemies") if isinstance(matched, dict) else []
+    enemies = _current_scene_enemies(session)
     public = deepcopy(session)
     public.pop("scenario_prompt", None)
     public.pop("scenario_pack", None)
@@ -251,11 +250,34 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
             message["text"] = sanitize_visible_text(original_text)
     if recovered_choices and len(recovered_choices) > len(public.get("choices") or []):
         public["choices"] = recovered_choices
+    public["choices"] = annotate_choices_for_character(public.get("choices"), public.get("character", {}))
     public["system_logs"] = [
         log for log in public.get("system_logs", [])
         if not _is_protocol_warning_log(str(log.get("text", "")))
     ]
     return public
+
+
+def _current_scene_enemies(session: dict[str, Any]) -> list[dict[str, Any]]:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return []
+    scene = find_scene(pack, str(session.get("current_scene") or ""))
+    if not scene:
+        return []
+
+    enemy_ids = set(_as_text_list(scene.get("enemy_ids")))
+    location_ids = _as_text_list(scene.get("location_ids"))
+    for location in pack.get("locations", []):
+        if not isinstance(location, dict) or str(location.get("id") or "") not in location_ids:
+            continue
+        enemy_ids.update(_as_text_list(location.get("enemy_ids")))
+
+    enemies = []
+    for enemy in pack.get("enemies", []):
+        if isinstance(enemy, dict) and str(enemy.get("id") or "") in enemy_ids:
+            enemies.append(deepcopy(enemy))
+    return enemies
 
 
 def add_player_message(session: dict[str, Any], text: str, speaker: str = "プレイヤー") -> None:
@@ -275,24 +297,46 @@ def _is_protocol_warning_log(text: str) -> bool:
     return text in PROTOCOL_WARNING_LOGS
 
 
-def roll_dice(session: dict[str, Any], expression: str = "1d20") -> dict[str, Any]:
+def _safe_int(val: Any, default: int = 0) -> int:
+    try:
+        return int(val)
+    except (TypeError, ValueError):
+        return default
+
+
+def _valid_client_roll(val: Any, sides: int) -> bool:
+    try:
+        n = int(val)
+        return 1 <= n <= sides
+    except (TypeError, ValueError):
+        return False
+
+
+def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None, client_rolls: Optional[list[int]] = None) -> dict[str, Any]:
     expr = str(expression or "").strip() or "1d20"
     dice_part = expr
     attr_key = ""
     dice_match = _DICE_ATTR_RE.match(expr)
     if dice_match:
         dice_part = dice_match.group(1)
-        attr_key = dice_match.group(2) or ""
+        attr_key = _canonical_attr_key(dice_match.group(2) or "")
     count, sides = _parse_dice_expression(dice_part)
-    rolls = [random.randint(1, sides) for _ in range(count)]
+    if client_rolls and isinstance(client_rolls, list) and len(client_rolls) == count and all(_valid_client_roll(r, sides) for r in client_rolls):
+        rolls = [int(r) for r in client_rolls]
+    else:
+        rolls = [random.randint(1, sides) for _ in range(count)]
     base_total = sum(rolls)
     attr_mod = 0
     if attr_key:
         character = session.get("character", {})
         attrs = character.get("attributes", {}) if isinstance(character.get("attributes"), dict) else {}
-        attr_mod = int(attrs.get(attr_key, 0))
+        attr_mod = _attr_value(attrs, attr_key)
     total = base_total + attr_mod
     entry: dict[str, Any] = {"expression": expr, "rolls": rolls, "total": total, "created_at": utc_now()}
+    if isinstance(dc, int):
+        entry["dc"] = dc
+        if dc > 0:
+            entry["success"] = total >= dc
     if attr_key:
         entry["base_total"] = base_total
         entry["attr_mod"] = attr_mod
@@ -307,11 +351,15 @@ def apply_gm_payload(
     payload: Optional[dict[str, Any]],
     parse_warning: Optional[str] = None,
 ) -> None:
+    current_dice_dc = session.get("next_dice_dc", 0)
+    roll_failed = _latest_roll_failed(session, current_dice_dc)
+    if roll_failed and _should_coerce_failed_roll_text(gm_text, payload, parse_warning):
+        gm_text = _failed_roll_text(session)
     if gm_text.strip():
         add_assistant_message(session, gm_text)
 
     if not payload:
-        session["choices"] = fallback_choices_for_session(session)
+        session["choices"] = _fallback_choices_after_model_failure(session, current_dice_dc)
         add_system_log(session, "choices fallback: model returned no usable JSON.")
         return
 
@@ -341,23 +389,220 @@ def apply_gm_payload(
         add_system_log(session, "choices fallback: model choices were empty after normalization.")
     else:
         add_system_log(session, "choices fallback: model did not provide choices.")
-    session["choices"] = fallback_choices_for_session(session)
+    session["choices"] = _fallback_choices_after_model_failure(session, current_dice_dc)
 
 
-def _normalize_choices(raw: list[Any]) -> list[dict[str, str]]:
+def _normalize_choices(raw: list[Any]) -> list[dict[str, Any]]:
     choices = []
     for item in raw:
         if isinstance(item, str) and item.strip():
             choices.append({"text": item.strip(), "preview": "", "risk": ""})
         elif isinstance(item, dict):
-            text = str(item.get("text", "")).strip()
+            text = str(item.get("text") or item.get("option") or item.get("action") or item.get("label") or "").strip()
             if text:
                 choices.append({
                     "text": text,
                     "preview": str(item.get("preview", "")),
                     "risk": str(item.get("risk", "")),
+                    **({"requirements": deepcopy(item["requirements"])} if "requirements" in item else {}),
                 })
     return choices[:5]
+
+
+def annotate_choices_for_character(raw_choices: Any, character: dict[str, Any]) -> list[dict[str, Any]]:
+    choices: list[dict[str, Any]] = []
+    for item in raw_choices if isinstance(raw_choices, list) else []:
+        choice = {"text": str(item), "preview": "", "risk": ""} if isinstance(item, str) else deepcopy(item)
+        if not isinstance(choice, dict):
+            continue
+        enabled, reason = choice_requirement_status(choice, character)
+        choice["enabled"] = enabled
+        if reason:
+            choice["disabled_reason"] = reason
+        else:
+            choice.pop("disabled_reason", None)
+        choices.append(choice)
+    return choices
+
+
+def choice_requirement_status(choice: dict[str, Any], character: dict[str, Any]) -> tuple[bool, str]:
+    requirements = choice.get("requirements")
+    if requirements is None:
+        requirements = _requirements_from_risk(str(choice.get("risk") or ""))
+    if not requirements:
+        return True, ""
+
+    attrs = character.get("attributes", {}) if isinstance(character.get("attributes"), dict) else {}
+    if isinstance(requirements, list):
+        passed = all(_requirement_passes(req, attrs) for req in requirements)
+        return (True, "") if passed else (False, _requirement_reason(requirements, "all"))
+    if not isinstance(requirements, dict):
+        return True, ""
+    if isinstance(requirements.get("any"), list):
+        reqs = requirements["any"]
+        passed = any(_requirement_passes(req, attrs) for req in reqs)
+        return (True, "") if passed else (False, _requirement_reason(reqs, "any"))
+    if isinstance(requirements.get("all"), list):
+        reqs = requirements["all"]
+        passed = all(_requirement_passes(req, attrs) for req in reqs)
+        return (True, "") if passed else (False, _requirement_reason(reqs, "all"))
+    passed = _requirement_passes(requirements, attrs)
+    return (True, "") if passed else (False, _requirement_reason([requirements], "all"))
+
+
+def _requirements_from_risk(risk: str) -> dict[str, Any]:
+    threshold_match = re.search(r"(\d+)\s*(?:以上|or higher|以上で)", risk, re.IGNORECASE)
+    if not threshold_match:
+        return {}
+    threshold = int(threshold_match.group(1))
+    attr_keys = _attribute_keys_from_text(risk)
+    if not attr_keys:
+        return {}
+    if "または" in risk or "or" in risk.lower() or "/" in risk:
+        return {"any": [{"attribute": key, "gte": threshold} for key in attr_keys]}
+    return {"all": [{"attribute": key, "gte": threshold} for key in attr_keys]}
+
+
+def _attribute_keys_from_text(text: str) -> list[str]:
+    keyword_map = {
+        "str": ("\u7b4b\u529b", "strength"),
+        "dex": ("\u654f\u6377", "\u5668\u7528", "dexterity"),
+        "int": ("\u77e5\u529b", "\u77e5\u6027", "intelligence"),
+        "wis": ("\u5224\u65ad", "\u77e5\u6075", "\u77e5\u6167", "wisdom"),
+        "end": ("\u8010\u4e45", "\u4f53\u529b", "endurance", "con"),
+        "cha": ("\u9b45\u529b", "charisma"),
+    }
+    lower = text.lower()
+    keys: list[str] = []
+    for key, keywords in keyword_map.items():
+        if re.search(rf"\b{re.escape(key)}\b", lower) or any(keyword in lower for keyword in keywords):
+            keys.append(key)
+    return [key for index, key in enumerate(keys) if key not in keys[:index]]
+
+
+def _requirement_passes(requirement: Any, attrs: dict[str, Any]) -> bool:
+    if not isinstance(requirement, dict):
+        return True
+    attr_key = _canonical_attr_key(str(requirement.get("attribute") or requirement.get("attr") or ""))
+    if not attr_key:
+        return True
+    value = _attr_value(attrs, attr_key)
+    if isinstance(requirement.get("gte"), (int, float)):
+        return value >= int(requirement["gte"])
+    if isinstance(requirement.get("min"), (int, float)):
+        return value >= int(requirement["min"])
+    if isinstance(requirement.get("gt"), (int, float)):
+        return value > int(requirement["gt"])
+    return True
+
+
+def _requirement_reason(requirements: list[Any], mode: str) -> str:
+    labels = [_requirement_label(req) for req in requirements if isinstance(req, dict)]
+    labels = [label for label in labels if label]
+    if not labels:
+        return "\u6761\u4ef6\u3092\u6e80\u305f\u3057\u3066\u3044\u307e\u305b\u3093"
+    joiner = "\u307e\u305f\u306f" if mode == "any" else "\u3068"
+    return f"{joiner.join(labels)}\u304c\u5fc5\u8981"
+
+
+def _requirement_label(requirement: dict[str, Any]) -> str:
+    attr_key = _canonical_attr_key(str(requirement.get("attribute") or requirement.get("attr") or ""))
+    if not attr_key:
+        return ""
+    label_map = {"str": "\u7b4b\u529b", "dex": "\u654f\u6377", "int": "\u77e5\u529b", "wis": "\u5224\u65ad", "end": "\u8010\u4e45", "cha": "\u9b45\u529b"}
+    threshold = requirement.get("gte", requirement.get("min", requirement.get("gt", "")))
+    suffix = f"{int(threshold)}\u4ee5\u4e0a" if isinstance(threshold, (int, float)) else ""
+    return f"{label_map.get(attr_key, attr_key)}{suffix}"
+
+
+def _canonical_attr_key(key: str) -> str:
+    mapping = {"con": "end", "endurance": "end", "\u8010\u4e45": "end", "\u4f53\u529b": "end", "\u7b4b\u529b": "str"}
+    return mapping.get(key.strip().lower(), key.strip().lower())
+
+
+def _attr_value(attrs: dict[str, Any], attr_key: str) -> int:
+    keys = [attr_key]
+    if attr_key == "end":
+        keys.append("con")
+    elif attr_key == "con":
+        keys.append("end")
+    for key in keys:
+        value = attrs.get(key)
+        if isinstance(value, (int, float)):
+            return int(value)
+        if isinstance(value, str):
+            try:
+                return int(value)
+            except ValueError:
+                continue
+    return 0
+
+
+def _fallback_choices_after_model_failure(session: dict[str, Any], current_dice_dc: Any = None) -> list[dict[str, Any]]:
+    choices = fallback_choices_for_session(session)
+    if not _latest_roll_failed(session, current_dice_dc):
+        return choices
+    failed_action = _latest_player_text(session).strip()
+    filtered = [
+        choice for choice in choices
+        if str(choice.get("text") or "").strip() != failed_action
+    ]
+    recovery = {
+        "text": "助言を受け流して別の準備に移る",
+        "preview": "判定に失敗したため、有用な助言は得られませんでした",
+        "risk": "判定不要",
+    }
+    return [recovery, *filtered][:5]
+
+
+def _should_coerce_failed_roll_text(gm_text: str, payload: Optional[dict[str, Any]], parse_warning: Optional[str]) -> bool:
+    if parse_warning:
+        return True
+    if not gm_text.strip():
+        return True
+    if not isinstance(payload, dict):
+        return True
+    if _looks_like_mechanical_roll_text(gm_text):
+        return True
+    raw_choices = payload.get("choices")
+    return not (isinstance(raw_choices, list) and _normalize_choices(raw_choices))
+
+
+def _looks_like_mechanical_roll_text(text: str) -> bool:
+    lowered = text.lower()
+    patterns = (
+        "判定は届かなかった",
+        "判定に失敗",
+        "dc",
+        "1d20",
+        "roll",
+        "dice",
+    )
+    return any(pattern in lowered for pattern in patterns)
+
+
+def _failed_roll_text(session: dict[str, Any]) -> str:
+    action = _latest_player_text(session).strip() or "その行動"
+    character_name = str(session.get("character", {}).get("name") or "冒険者")
+    return (
+        f"{character_name}は「{action}」についてさらに踏み込んだ。"
+        "しかし相手は表情を曇らせ、言葉を選ぶばかりで核心には触れない。"
+        "返ってきたのは噂と曖昧な忠告だけで、確かな手がかりは得られなかった。"
+    )
+
+
+def _latest_roll_failed(session: dict[str, Any], current_dice_dc: Any = None) -> bool:
+    dice_log = session.get("dice_log")
+    if not isinstance(dice_log, list) or not dice_log:
+        return False
+    latest = dice_log[-1]
+    if not isinstance(latest, dict):
+        return False
+    dc = current_dice_dc if current_dice_dc is not None else session.get("next_dice_dc", 0)
+    if not isinstance(dc, (int, float)) or int(dc) <= 0:
+        return False
+    total = latest.get("total")
+    return isinstance(total, (int, float)) and int(total) < int(dc)
 
 
 def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
@@ -441,7 +686,11 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
     if isinstance(delta.get("current_scene"), str) and delta["current_scene"].strip():
         pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else None
         current_scene = delta["current_scene"].strip()
-        session["current_scene"] = resolve_scene_id(pack, current_scene) if pack else current_scene
+        resolved_scene = resolve_scene_id(pack, current_scene) if pack else current_scene
+        if _scene_transition_allowed(session, resolved_scene):
+            session["current_scene"] = resolved_scene
+        else:
+            add_system_log(session, f"不正な場面遷移を無視しました: {resolved_scene}")
 
 
 def _enrich_item(item: dict[str, Any]) -> dict[str, Union[str, int]]:
@@ -465,14 +714,22 @@ def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], con
     memory_max_chars = _bounded_int(prompting.get("memory_max_chars"), default=1200, minimum=0, maximum=4000)
     action_history_max = _bounded_int(prompting.get("action_history_max"), default=40, minimum=0, maximum=200)
     action_history_item_chars = _bounded_int(prompting.get("action_history_item_chars"), default=80, minimum=20, maximum=240)
+    context_max_chars = _bounded_int(prompting.get("context_max_chars"), default=3500, minimum=500, maximum=8000)
+    if session.get("gm_mode") == "full":
+        history_messages = min(history_messages, 2)
+        memory_max_chars = min(memory_max_chars, 600)
+        action_history_max = min(action_history_max, 20)
+        action_history_item_chars = min(action_history_item_chars, 60)
 
     character = session["character"]
     player_text = _latest_player_text(session)
     scenario_context = select_scenario_context(session, player_text)
     state_summary = _current_state_summary(session, character, latest_roll)
+    context_json = json.dumps(scenario_context, ensure_ascii=False)
+    context_json = _trim_context_to_budget(context_json, context_max_chars)
     messages: list[dict[str, str]] = [
         {"role": "system", "content": contract_prompt},
-        {"role": "system", "content": "シナリオコンテキスト:\n" + json.dumps(scenario_context, ensure_ascii=False)},
+        {"role": "system", "content": "シナリオコンテキスト:\n" + context_json},
         {"role": "system", "content": "現在のゲーム状態:\n" + state_summary},
     ]
     memory_summary = _conversation_memory_summary(session, keep_last=history_messages, max_chars=memory_max_chars)
@@ -526,15 +783,16 @@ def _build_hybrid_llm_messages(session: dict[str, Any], latest_roll: dict[str, A
 
 
 def _current_state_summary(session: dict[str, Any], character: dict[str, Any], latest_roll: dict[str, Any]) -> str:
-    inventory_summary = [(i["name"] if isinstance(i, dict) else i) for i in character.get("inventory", [])]
+    inventory_summary = [i["name"] if isinstance(i, dict) else i for i in character.get("inventory", [])]
+    skills_summary = [
+        {"name": s.get("name", ""), "cost": s.get("cost", 0), "cost_type": s.get("cost_type", "")}
+        for s in character.get("skills", []) if isinstance(s, dict)
+    ]
     return json.dumps(
         {
-            "gm_mode": session.get("gm_mode", "semi"),
             "current_scene": session["current_scene"],
-            "current_scene_title": scene_title(session),
             "character": {
                 "name": character.get("name"),
-                "character_id": character.get("character_id", ""),
                 "hp": character.get("hp"),
                 "max_hp": character.get("max_hp"),
                 "mp": character.get("mp"),
@@ -543,13 +801,13 @@ def _current_state_summary(session: dict[str, Any], character: dict[str, Any], l
                 "max_sp": character.get("max_sp"),
                 "gold": character.get("gold", 0),
                 "attributes": character.get("attributes", {}),
-                "skills": character.get("skills", []),
+                "skills": skills_summary if skills_summary else None,
                 "inventory": inventory_summary,
-                "equipment": character.get("equipment", []),
             },
             "latest_dice_roll": latest_roll,
         },
         ensure_ascii=False,
+        default=lambda _: None,
     )
 
 
@@ -614,6 +872,33 @@ def _bounded_int(value: Any, default: int, minimum: int, maximum: int) -> int:
     return max(minimum, min(maximum, parsed))
 
 
+def _trim_context_to_budget(context_json: str, max_chars: int) -> str:
+    if len(context_json) <= max_chars:
+        return context_json
+    try:
+        ctx = json.loads(context_json)
+    except json.JSONDecodeError:
+        return context_json[:max_chars]
+    if isinstance(ctx.get("matched"), dict):
+        groups = list(ctx["matched"].items())
+        groups.sort(key=lambda item: len(item[1]) if isinstance(item[1], list) else 0, reverse=True)
+        removed = []
+        for key, value in groups:
+            if len(ctx["matched"]) <= 1:
+                break
+            del ctx["matched"][key]
+            removed.append(key)
+        serialized = json.dumps(ctx, ensure_ascii=False)
+        if len(serialized) > max_chars:
+            for key in removed:
+                ctx["matched"][key] = []
+    if isinstance(ctx.get("rules"), list):
+        ctx.pop("rules", None)
+    ctx.pop("source_path", None)
+    result = json.dumps(ctx, ensure_ascii=False)
+    return result[:max_chars] if len(result) > max_chars else result
+
+
 def _normalize_character(character: dict[str, Any]) -> None:
     for stat in ("hp", "mp", "sp"):
         max_key = f"max_{stat}"
@@ -623,10 +908,7 @@ def _normalize_character(character: dict[str, Any]) -> None:
     character["gold"] = max(0, int(character.get("gold", 0)))
     character["character_id"] = str(character.get("character_id") or "")
     attrs = character.get("attributes") if isinstance(character.get("attributes"), dict) else {}
-    character["attributes"] = {
-        str(key): int(value) if isinstance(value, (int, float)) else 0
-        for key, value in attrs.items()
-    }
+    character["attributes"] = _normalize_attribute_map(attrs)
     if not isinstance(character.get("skills"), list):
         character["skills"] = []
     raw_inv = character.get("inventory", [])
@@ -663,7 +945,7 @@ def _character_from_template(template: dict[str, Any]) -> dict[str, Any]:
             character[stat] = int(template[stat])
     attrs = template.get("attributes")
     if isinstance(attrs, dict):
-        character["attributes"] = {str(k): int(v) if isinstance(v, (int, float)) else 0 for k, v in attrs.items()}
+        character["attributes"] = _normalize_attribute_map(attrs)
     if isinstance(template.get("inventory"), list):
         character["inventory"] = deepcopy(template["inventory"])
     if isinstance(template.get("equipment"), list):
@@ -672,6 +954,15 @@ def _character_from_template(template: dict[str, Any]) -> dict[str, Any]:
         character["skills"] = deepcopy(template["skills"])
     _normalize_character(character)
     return character
+
+
+def _normalize_attribute_map(attrs: dict[str, Any]) -> dict[str, int]:
+    normalized: dict[str, int] = {}
+    for key, value in attrs.items():
+        canonical = _canonical_attr_key(str(key))
+        parsed = int(value) if isinstance(value, (int, float)) else 0
+        normalized[canonical] = max(parsed, normalized.get(canonical, parsed))
+    return normalized
 
 
 def _as_item_list(value: Any) -> list[dict[str, Any]]:
@@ -749,9 +1040,29 @@ def _infer_scene_delta_from_text(gm_text: str, session: dict[str, Any], delta: d
     if isinstance(delta.get("current_scene"), str) and delta["current_scene"].strip():
         return
     player_text = _latest_player_text(session)
-    explicit_scene = infer_scene_from_text(session, player_text) or infer_scene_from_text(session, gm_text)
+    explicit_scene = infer_scene_from_text(session, player_text)
     if explicit_scene:
         delta["current_scene"] = explicit_scene
+
+
+def _scene_transition_allowed(session: dict[str, Any], target_scene: str) -> bool:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return True
+    target = find_scene(pack, target_scene)
+    if not target:
+        return False
+    current_scene_id = str(session.get("current_scene") or "")
+    if str(target.get("id") or "") == current_scene_id:
+        return True
+    current_scene = find_scene(pack, current_scene_id)
+    if not current_scene:
+        return True
+    next_scene_ids = _as_text_list(current_scene.get("next_scene_ids"))
+    if not next_scene_ids:
+        return True
+    allowed = {resolve_scene_id(pack, scene_id) for scene_id in next_scene_ids}
+    return str(target.get("id") or "") in allowed
 
 
 def _latest_player_text(session: dict[str, Any]) -> str:

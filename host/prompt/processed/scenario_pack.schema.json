@@ -201,10 +201,47 @@
           "properties": {
             "text": { "type": "string" },
             "preview": { "type": "string" },
-            "risk": { "type": "string" }
+            "risk": { "type": "string" },
+            "requirements": { "$ref": "#/$defs/choice_requirements" },
+            "enabled": { "type": "boolean" },
+            "disabled_reason": { "type": "string" }
           }
         }
       ]
+    },
+    "choice_requirements": {
+      "oneOf": [
+        { "$ref": "#/$defs/attribute_requirement" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/attribute_requirement" }
+        },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "any": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/attribute_requirement" }
+            },
+            "all": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/attribute_requirement" }
+            }
+          }
+        }
+      ]
+    },
+    "attribute_requirement": {
+      "type": "object",
+      "required": ["attribute"],
+      "additionalProperties": true,
+      "properties": {
+        "attribute": { "type": "string" },
+        "gte": { "type": "number" },
+        "min": { "type": "number" },
+        "gt": { "type": "number" }
+      }
     },
     "dialogue_turn": {
       "type": "object",
