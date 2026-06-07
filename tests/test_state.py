@@ -243,6 +243,23 @@ class StateTests(unittest.TestCase):
         self.assertEqual(session["choices"][0]["text"], "助言を受け流して別の準備に移る")
         self.assertNotIn("鍛冶屋へ向かう", [choice["text"] for choice in session["choices"]])
 
+    def test_failed_roll_text_avoids_mechanical_terms(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "\u5c06\u8ecd\u30c9\u30e9\u30b3\u306b\u52a9\u8a00\u3092\u6c42\u3081\u308b")
+        session["next_dice_dc"] = 15
+        session["dice_log"].append({"expression": "1d20", "rolls": [5], "total": 5, "dc": 15, "success": False, "created_at": state.utc_now()})
+
+        state.apply_gm_payload(
+            session,
+            "\u30a2\u30eb\u30b9\u306f\u300c\u5c06\u8ecd\u30c9\u30e9\u30b3\u306b\u52a9\u8a00\u3092\u6c42\u3081\u308b\u300d\u3092\u8a66\u307f\u305f\u304c\u3001\u5224\u5b9a\u306f\u5c4a\u304b\u306a\u304b\u3063\u305f\u3002",
+            {"state_delta": {}, "choices": [{"text": "\u5225\u306e\u6e96\u5099\u306b\u79fb\u308b", "risk": "\u5224\u5b9a\u4e0d\u8981"}]},
+        )
+
+        latest_gm = session["messages"][-1]["text"]
+        self.assertNotIn("\u5224\u5b9a", latest_gm)
+        self.assertIn("\u78ba\u304b\u306a\u624b\u304c\u304b\u308a\u306f\u5f97\u3089\u308c\u306a\u304b\u3063\u305f", latest_gm)
+
     def test_failed_roll_malformed_json_does_not_keep_useful_hint(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
@@ -257,7 +274,7 @@ class StateTests(unittest.TestCase):
         state.apply_gm_payload(session, visible, payload, warning)
 
         latest_gm = session["messages"][-1]["text"]
-        self.assertIn("確かな戦術情報や新しい手がかりは得られなかった", latest_gm)
+        self.assertIn("確かな手がかりは得られなかった", latest_gm)
         self.assertNotIn("洞窟", latest_gm)
         self.assertNotIn("鍛冶師に秘密の助言を求める", [choice["text"] for choice in session["choices"]])
 
@@ -602,6 +619,23 @@ class StateTests(unittest.TestCase):
         self.assertEqual(character["attributes"]["int"], 16)
         self.assertEqual(character["inventory"][0]["name"], "魔導書")
 
+    def test_legacy_con_attribute_normalizes_to_end(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["characters"] = [
+            {
+                "id": "guard",
+                "name": "Guard",
+                "attributes": {"con": 12, "end": 10},
+            }
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+
+        public = state.create_session(str(path), character_id="guard")
+
+        self.assertEqual(public["character"]["attributes"]["end"], 12)
+        self.assertNotIn("con", public["character"]["attributes"])
+
     def test_item_quantity_increment_and_decrement(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
@@ -713,6 +747,52 @@ class StateTests(unittest.TestCase):
         self.assertEqual(dice_dc, 14)
         self.assertEqual(safe_type, "1d20")
         self.assertEqual(safe_dc, 0)
+
+    def test_choice_risk_requirement_disables_when_attribute_too_low(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"str": 8, "end": 9}
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+        action = "\u5c06\u8ecd\u30c9\u30e9\u30b3\u306b\u52a9\u8a00\u3092\u6c42\u3081\u308b"
+        session["choices"] = [
+            {"text": action, "risk": "\u7b4b\u529b\u307e\u305f\u306f\u8010\u4e45\u304c10\u4ee5\u4e0a\u30671d20\u5224\u5b9a\uff08DC15\uff09"},
+        ]
+
+        dice_type, dice_dc = app_module._dice_settings_for_turn(session, action)
+        public_choices = state.public_session(session)["choices"]
+
+        self.assertEqual(dice_type, "1d20")
+        self.assertEqual(dice_dc, 15)
+        self.assertFalse(public_choices[0]["enabled"])
+        self.assertIn("\u8010\u4e45", public_choices[0]["disabled_reason"])
+
+    def test_choice_risk_requirement_allows_end_attribute(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"str": 8, "end": 10}
+        session["choices"] = [
+            {"text": "\u52a9\u8a00\u3092\u6c42\u3081\u308b", "risk": "\u7b4b\u529b\u307e\u305f\u306f\u8010\u4e45\u304c10\u4ee5\u4e0a\u30671d20\u5224\u5b9a\uff08DC15\uff09"},
+        ]
+
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertTrue(choice["enabled"])
+        self.assertNotIn("disabled_reason", choice)
+
+    def test_disabled_choice_is_not_sent_to_llm(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"str": 8, "end": 9}
+        session["choices"] = [
+            {"text": "\u52a9\u8a00\u3092\u6c42\u3081\u308b", "risk": "\u7b4b\u529b\u307e\u305f\u306f\u8010\u4e45\u304c10\u4ee5\u4e0a\u30671d20\u5224\u5b9a\uff08DC15\uff09"},
+        ]
+
+        result = app_module._run_turn(session, app_module.TurnRequest(text="\u52a9\u8a00\u3092\u6c42\u3081\u308b"))
+
+        self.assertEqual(session["messages"], [])
+        self.assertEqual(session["dice_log"], [])
+        self.assertFalse(result["choices"][0]["enabled"])
 
     def test_gold_delta_and_text_inference(self):
         public = state.create_session(str(self.write_pack()))

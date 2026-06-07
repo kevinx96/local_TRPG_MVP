@@ -926,6 +926,16 @@ button, select, textarea, input { font: inherit; }
 .choice-card.combat-choice { border-color: rgba(224,85,85,.42); }
 .choice-card.combat-choice:hover { border-color: var(--red); box-shadow: -4px 0 0 var(--red); }
 .choice-card.combat-choice .choice-number { background: var(--red-dim); color: var(--red); }
+.choice-card.disabled-choice,
+.choice-card.disabled-choice:hover {
+  cursor: not-allowed;
+  opacity: .52;
+  transform: none;
+  border-color: var(--line);
+  background: rgba(20, 22, 24, 0.72);
+  box-shadow: none;
+}
+.choice-card.disabled-choice .choice-number { background: rgba(255,255,255,.06); color: var(--muted); }
 .choice-number { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--gold-dim); color: var(--gold); font-size: 13px; font-weight: 900; }
 .choice-body { min-width: 0; }
 .choice-text { font-weight: 700; font-size: 14px; color: var(--text); }
@@ -934,6 +944,7 @@ button, select, textarea, input { font: inherit; }
 .choice-risk.safe { background: var(--green-dim); color: var(--green); }
 .choice-risk.check { background: var(--blue-dim); color: var(--blue); }
 .choice-risk.danger { background: var(--red-dim); color: var(--red); }
+.choice-disabled-reason { display: block; margin-top: 6px; font-size: 11px; color: var(--muted); font-weight: 700; }
 
 .meters { display: grid; gap: 10px; margin: 16px 0; }
 .meter-row { display: grid; grid-template-columns: 30px 1fr 54px; align-items: center; gap: 8px; font-size: 13px; }

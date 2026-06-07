@@ -13,8 +13,10 @@ const state = {
   expandedCharacterId: "",
   scenarioPath: "host/prompt/processed/dragon_rpg.json",
   lastDiceLogLength: 0,
+  lastDiceSignature: "",
   diceAnimationTimer: null,
   nextDiceDc: 0,
+  nextDiceType: "1d20",
 };
 
 /* ── DOM References ── */
@@ -78,11 +80,49 @@ const els = {
 
 let cachedConfig = null;
 
+function ensureDiceBannerElement() {
+  const existingBanner = document.querySelector("#diceBanner");
+  if (existingBanner) {
+    els.diceBanner = existingBanner;
+    els.diceBannerText = existingBanner.querySelector("#diceBannerText") || document.querySelector("#diceBannerText");
+    els.diceRollFace = existingBanner.querySelector(".dice-roll-face") || document.querySelector(".dice-roll-face");
+    return;
+  }
+
+  const dialogueBox = els.dialogueBox || document.querySelector("#dialogueBox");
+  if (!dialogueBox) return;
+  const bottomArea = dialogueBox.closest(".gal-bottom-area") || dialogueBox.parentElement;
+  if (!bottomArea) return;
+
+  const banner = document.createElement("div");
+  banner.id = "diceBanner";
+  banner.className = "gal-dice-banner";
+  banner.style.display = "none";
+  banner.setAttribute("aria-live", "polite");
+
+  const face = document.createElement("span");
+  face.className = "dice-roll-face";
+  face.textContent = "?";
+  banner.appendChild(face);
+
+  const text = document.createElement("span");
+  text.id = "diceBannerText";
+  text.className = "dice-banner-text";
+  text.textContent = "判定中...";
+  banner.appendChild(text);
+
+  bottomArea.insertBefore(banner, dialogueBox);
+  els.diceBanner = banner;
+  els.diceBannerText = text;
+  els.diceRollFace = face;
+}
+
 /* ═══════════════════════════════════════════════════
    INIT
    ═══════════════════════════════════════════════════ */
 
 async function init() {
+  ensureDiceBannerElement();
   restoreGmMode();
   await loadConfig();
   await loadScenarios();
@@ -355,7 +395,9 @@ async function newSession() {
   state.pendingChoices = [];
   state.choicesRevealed = false;
   state.lastDiceLogLength = 0;
+  state.lastDiceSignature = "";
   state.nextDiceDc = 0;
+  state.nextDiceType = "1d20";
   stopDiceRollAnimation();
   hideDiceBanner();
   els.gameScreen.style.display = "none";
@@ -372,18 +414,21 @@ async function submitTurn(event) {
   event.preventDefault();
   const text = els.input.value.trim();
   if (!text || !state.sessionId) return;
-  const animateDice = shouldAnimateDiceForAction(text);
+  const diceResult = rollLocalDice(text);
   els.input.value = "";
   addMessage("user", "プレイヤー", text);
   hideChoices();
   clearPendingChoices();
-  if (animateDice) startDiceRollAnimation();
+  hideDiceBanner();
+  if (diceResult) showDiceResult(diceResult);
   setBusy(true);
   try {
+    const body = { text };
+    if (diceResult) body.client_dice = { rolls: diceResult.rolls };
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
+      body: JSON.stringify(body),
     });
     if (!response.ok || !response.body) {
       throw new Error(await response.text());
@@ -397,20 +442,22 @@ async function submitTurn(event) {
   }
 }
 
-/* Submit a choice as a turn */
 async function submitChoice(choiceText) {
   if (!choiceText || !state.sessionId) return;
-  const animateDice = shouldAnimateDiceForAction(choiceText);
+  const diceResult = rollLocalDice(choiceText);
   addMessage("user", "プレイヤー", choiceText);
   hideChoices();
   clearPendingChoices();
-  if (animateDice) startDiceRollAnimation();
+  hideDiceBanner();
+  if (diceResult) showDiceResult(diceResult);
   setBusy(true);
   try {
+    const body = { text: choiceText };
+    if (diceResult) body.client_dice = { rolls: diceResult.rolls };
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: choiceText }),
+      body: JSON.stringify(body),
     });
     if (!response.ok) {
       throw new Error(await response.text());
@@ -431,6 +478,7 @@ async function submitChoice(choiceText) {
 function renderSession(session) {
   state.sessionId = session.id;
   state.nextDiceDc = Number(session.next_dice_dc || 0);
+  state.nextDiceType = session.next_dice_type || "1d20";
   const character = session.character;
 
   /* Scene */
@@ -618,20 +666,24 @@ function hideDiceBanner() {
 function renderLatestDiceResult(diceLog) {
   if (!Array.isArray(diceLog) || !diceLog.length) {
     state.lastDiceLogLength = 0;
-    stopDiceRollAnimation();
-    hideDiceBanner();
+    state.lastDiceSignature = "";
     return;
   }
   const latest = diceLog[diceLog.length - 1];
-  const hasNewRoll = diceLog.length !== state.lastDiceLogLength || state.diceAnimationTimer;
+  const signature = diceSignature(latest);
+  const hasNewRoll = diceLog.length !== state.lastDiceLogLength || signature !== state.lastDiceSignature;
   state.lastDiceLogLength = diceLog.length;
+  state.lastDiceSignature = signature;
   if (!hasNewRoll) return;
-  if (!isCheckRoll(latest)) {
-    stopDiceRollAnimation();
-    hideDiceBanner();
-    return;
+  if (isCheckRoll(latest)) {
+    showDiceResult(latest);
   }
-  showDiceResult(latest);
+}
+
+function diceSignature(roll) {
+  if (!roll || typeof roll !== "object") return "";
+  const rolls = Array.isArray(roll.rolls) ? roll.rolls.join(",") : "";
+  return [roll.expression || "", rolls, roll.total ?? "", roll.dc ?? "", roll.success ?? ""].join("|");
 }
 
 function shouldAnimateDiceForAction(actionText) {
@@ -643,6 +695,34 @@ function shouldAnimateDiceForAction(actionText) {
   if (risk.includes("判定不要")) return false;
   if (/DC\s*\d+|1d\d+|判定/i.test(risk)) return true;
   return Number(state.nextDiceDc || 0) > 0;
+}
+
+function rollLocalDice(actionText) {
+  const choice = state.pendingChoices.find((item) => {
+    const text = typeof item === "string" ? item : (item.text || "");
+    return text === actionText;
+  });
+  if (!choice || typeof choice !== "object") {
+    if (Number(state.nextDiceDc || 0) > 0) {
+      const sides = parseInt(String(state.nextDiceType || "1d20").replace(/.*d/i, ""), 10) || 20;
+      const rolls = [1 + Math.floor(Math.random() * sides)];
+      const total = rolls.reduce((a, b) => a + b, 0);
+      return { expression: state.nextDiceType || "1d20", rolls, total, dc: state.nextDiceDc, success: total >= state.nextDiceDc };
+    }
+    return null;
+  }
+  const risk = String(choice.risk || "");
+  if (risk.includes("判定不要")) return null;
+  if (!(/DC\s*\d+|1d\d+|判定/i.test(risk)) && Number(state.nextDiceDc || 0) <= 0) return null;
+  const diceMatch = risk.match(/(\d+)d(\d+)/i);
+  const count = diceMatch ? parseInt(diceMatch[1], 10) : 1;
+  const sides = diceMatch ? parseInt(diceMatch[2], 10) : 20;
+  const dcMatch = risk.match(/DC\s*(\d+)/i);
+  const dc = dcMatch ? parseInt(dcMatch[1], 10) : (Number(state.nextDiceDc || 0) || 10);
+  const rolls = Array.from({ length: count }, () => 1 + Math.floor(Math.random() * sides));
+  const total = rolls.reduce((a, b) => a + b, 0);
+  const expr = diceMatch ? diceMatch[0] : (state.nextDiceType || "1d20");
+  return { expression: expr, rolls, total, dc, success: total >= dc };
 }
 
 function isCheckRoll(roll) {
@@ -692,10 +772,13 @@ function renderChoices(choices) {
     const text = typeof choice === "string" ? choice : (choice.text || "");
     const preview = typeof choice === "object" ? (choice.preview || "") : "";
     const risk = typeof choice === "object" ? (choice.risk || "") : "";
+    const enabled = typeof choice === "object" && choice.enabled === false ? false : true;
+    const disabledReason = typeof choice === "object" ? (choice.disabled_reason || "") : "";
 
     const card = document.createElement("button");
     card.type = "button";
-    card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""}`;
+    card.disabled = !enabled;
+    card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""} ${enabled ? "" : "disabled-choice"}`;
 
     const riskClass = classifyRisk(risk);
 
@@ -705,10 +788,13 @@ function renderChoices(choices) {
         <div class="choice-text">${escapeHtml(text)}</div>
         ${preview ? `<div class="choice-preview">${escapeHtml(preview)}</div>` : ''}
         ${risk ? `<span class="choice-risk ${riskClass}">${escapeHtml(risk)}</span>` : ''}
+        ${disabledReason ? `<span class="choice-disabled-reason">${escapeHtml(disabledReason)}</span>` : ''}
       </div>
     `;
 
-    card.addEventListener("click", () => submitChoice(text));
+    if (enabled) {
+      card.addEventListener("click", () => submitChoice(text));
+    }
     els.choicesList.append(card);
   }
 

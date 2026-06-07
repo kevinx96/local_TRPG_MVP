@@ -103,6 +103,11 @@ class ScenarioEditorApiTests(unittest.TestCase):
         self.assertNotIn("api_key", backend)
         self.assertNotIn("headers", backend)
 
+    def test_html_entrypoints_are_not_cached(self):
+        for response in (app_module.index(), app_module.editor()):
+            self.assertEqual(response.headers.get("Cache-Control"), "no-store, max-age=0")
+            self.assertEqual(response.headers.get("Pragma"), "no-cache")
+
 
 if __name__ == "__main__":
     unittest.main()

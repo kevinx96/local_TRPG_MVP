@@ -252,6 +252,7 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
             message["text"] = sanitize_visible_text(original_text)
     if recovered_choices and len(recovered_choices) > len(public.get("choices") or []):
         public["choices"] = recovered_choices
+    public["choices"] = annotate_choices_for_character(public.get("choices"), public.get("character", {}))
     public["system_logs"] = [
         log for log in public.get("system_logs", [])
         if not _is_protocol_warning_log(str(log.get("text", "")))
@@ -276,22 +277,25 @@ def _is_protocol_warning_log(text: str) -> bool:
     return text in PROTOCOL_WARNING_LOGS
 
 
-def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None) -> dict[str, Any]:
+def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None, client_rolls: Optional[list[int]] = None) -> dict[str, Any]:
     expr = str(expression or "").strip() or "1d20"
     dice_part = expr
     attr_key = ""
     dice_match = _DICE_ATTR_RE.match(expr)
     if dice_match:
         dice_part = dice_match.group(1)
-        attr_key = dice_match.group(2) or ""
+        attr_key = _canonical_attr_key(dice_match.group(2) or "")
     count, sides = _parse_dice_expression(dice_part)
-    rolls = [random.randint(1, sides) for _ in range(count)]
+    if client_rolls and isinstance(client_rolls, list) and len(client_rolls) == count and all(1 <= int(r) <= sides for r in client_rolls):
+        rolls = [int(r) for r in client_rolls]
+    else:
+        rolls = [random.randint(1, sides) for _ in range(count)]
     base_total = sum(rolls)
     attr_mod = 0
     if attr_key:
         character = session.get("character", {})
         attrs = character.get("attributes", {}) if isinstance(character.get("attributes"), dict) else {}
-        attr_mod = int(attrs.get(attr_key, 0))
+        attr_mod = _attr_value(attrs, attr_key)
     total = base_total + attr_mod
     entry: dict[str, Any] = {"expression": expr, "rolls": rolls, "total": total, "created_at": utc_now()}
     if isinstance(dc, int):
@@ -353,7 +357,7 @@ def apply_gm_payload(
     session["choices"] = _fallback_choices_after_model_failure(session, current_dice_dc)
 
 
-def _normalize_choices(raw: list[Any]) -> list[dict[str, str]]:
+def _normalize_choices(raw: list[Any]) -> list[dict[str, Any]]:
     choices = []
     for item in raw:
         if isinstance(item, str) and item.strip():
@@ -365,8 +369,133 @@ def _normalize_choices(raw: list[Any]) -> list[dict[str, str]]:
                     "text": text,
                     "preview": str(item.get("preview", "")),
                     "risk": str(item.get("risk", "")),
+                    **({"requirements": deepcopy(item["requirements"])} if "requirements" in item else {}),
                 })
     return choices[:5]
+
+
+def annotate_choices_for_character(raw_choices: Any, character: dict[str, Any]) -> list[dict[str, Any]]:
+    choices: list[dict[str, Any]] = []
+    for item in raw_choices if isinstance(raw_choices, list) else []:
+        choice = {"text": str(item), "preview": "", "risk": ""} if isinstance(item, str) else deepcopy(item)
+        if not isinstance(choice, dict):
+            continue
+        enabled, reason = choice_requirement_status(choice, character)
+        choice["enabled"] = enabled
+        if reason:
+            choice["disabled_reason"] = reason
+        else:
+            choice.pop("disabled_reason", None)
+        choices.append(choice)
+    return choices
+
+
+def choice_requirement_status(choice: dict[str, Any], character: dict[str, Any]) -> tuple[bool, str]:
+    requirements = choice.get("requirements")
+    if requirements is None:
+        requirements = _requirements_from_risk(str(choice.get("risk") or ""))
+    if not requirements:
+        return True, ""
+
+    attrs = character.get("attributes", {}) if isinstance(character.get("attributes"), dict) else {}
+    if isinstance(requirements, list):
+        passed = all(_requirement_passes(req, attrs) for req in requirements)
+        return (True, "") if passed else (False, _requirement_reason(requirements, "all"))
+    if not isinstance(requirements, dict):
+        return True, ""
+    if isinstance(requirements.get("any"), list):
+        reqs = requirements["any"]
+        passed = any(_requirement_passes(req, attrs) for req in reqs)
+        return (True, "") if passed else (False, _requirement_reason(reqs, "any"))
+    if isinstance(requirements.get("all"), list):
+        reqs = requirements["all"]
+        passed = all(_requirement_passes(req, attrs) for req in reqs)
+        return (True, "") if passed else (False, _requirement_reason(reqs, "all"))
+    passed = _requirement_passes(requirements, attrs)
+    return (True, "") if passed else (False, _requirement_reason([requirements], "all"))
+
+
+def _requirements_from_risk(risk: str) -> dict[str, Any]:
+    threshold_match = re.search(r"(\d+)\s*(?:以上|or higher|以上で)", risk, re.IGNORECASE)
+    if not threshold_match:
+        return {}
+    threshold = int(threshold_match.group(1))
+    attr_keys = _attribute_keys_from_text(risk)
+    if not attr_keys:
+        return {}
+    if "または" in risk or "or" in risk.lower() or "/" in risk:
+        return {"any": [{"attribute": key, "gte": threshold} for key in attr_keys]}
+    return {"all": [{"attribute": key, "gte": threshold} for key in attr_keys]}
+
+
+def _attribute_keys_from_text(text: str) -> list[str]:
+    keyword_map = {
+        "str": ("\u7b4b\u529b", "strength"),
+        "dex": ("\u654f\u6377", "\u5668\u7528", "dexterity"),
+        "int": ("\u77e5\u529b", "\u77e5\u6027", "intelligence"),
+        "wis": ("\u5224\u65ad", "\u77e5\u6075", "\u77e5\u6167", "wisdom"),
+        "end": ("\u8010\u4e45", "\u4f53\u529b", "endurance", "con"),
+        "cha": ("\u9b45\u529b", "charisma"),
+    }
+    lower = text.lower()
+    keys: list[str] = []
+    for key, keywords in keyword_map.items():
+        if re.search(rf"\b{re.escape(key)}\b", lower) or any(keyword in lower for keyword in keywords):
+            keys.append(key)
+    return [key for index, key in enumerate(keys) if key not in keys[:index]]
+
+
+def _requirement_passes(requirement: Any, attrs: dict[str, Any]) -> bool:
+    if not isinstance(requirement, dict):
+        return True
+    attr_key = _canonical_attr_key(str(requirement.get("attribute") or requirement.get("attr") or ""))
+    if not attr_key:
+        return True
+    value = _attr_value(attrs, attr_key)
+    if isinstance(requirement.get("gte"), (int, float)):
+        return value >= int(requirement["gte"])
+    if isinstance(requirement.get("min"), (int, float)):
+        return value >= int(requirement["min"])
+    if isinstance(requirement.get("gt"), (int, float)):
+        return value > int(requirement["gt"])
+    return True
+
+
+def _requirement_reason(requirements: list[Any], mode: str) -> str:
+    labels = [_requirement_label(req) for req in requirements if isinstance(req, dict)]
+    labels = [label for label in labels if label]
+    if not labels:
+        return "\u6761\u4ef6\u3092\u6e80\u305f\u3057\u3066\u3044\u307e\u305b\u3093"
+    joiner = "\u307e\u305f\u306f" if mode == "any" else "\u3068"
+    return f"{joiner.join(labels)}\u304c\u5fc5\u8981"
+
+
+def _requirement_label(requirement: dict[str, Any]) -> str:
+    attr_key = _canonical_attr_key(str(requirement.get("attribute") or requirement.get("attr") or ""))
+    if not attr_key:
+        return ""
+    label_map = {"str": "\u7b4b\u529b", "dex": "\u654f\u6377", "int": "\u77e5\u529b", "wis": "\u5224\u65ad", "end": "\u8010\u4e45", "cha": "\u9b45\u529b"}
+    threshold = requirement.get("gte", requirement.get("min", requirement.get("gt", "")))
+    suffix = f"{int(threshold)}\u4ee5\u4e0a" if isinstance(threshold, (int, float)) else ""
+    return f"{label_map.get(attr_key, attr_key)}{suffix}"
+
+
+def _canonical_attr_key(key: str) -> str:
+    mapping = {"con": "end", "endurance": "end", "\u8010\u4e45": "end", "\u4f53\u529b": "end", "\u7b4b\u529b": "str"}
+    return mapping.get(key.strip().lower(), key.strip().lower())
+
+
+def _attr_value(attrs: dict[str, Any], attr_key: str) -> int:
+    keys = [attr_key]
+    if attr_key == "end":
+        keys.append("con")
+    elif attr_key == "con":
+        keys.append("end")
+    for key in keys:
+        value = attrs.get(key)
+        if isinstance(value, (int, float)):
+            return int(value)
+    return 0
 
 
 def _fallback_choices_after_model_failure(session: dict[str, Any], current_dice_dc: Any = None) -> list[dict[str, str]]:
@@ -393,17 +522,32 @@ def _should_coerce_failed_roll_text(gm_text: str, payload: Optional[dict[str, An
         return True
     if not isinstance(payload, dict):
         return True
+    if _looks_like_mechanical_roll_text(gm_text):
+        return True
     raw_choices = payload.get("choices")
     return not (isinstance(raw_choices, list) and _normalize_choices(raw_choices))
+
+
+def _looks_like_mechanical_roll_text(text: str) -> bool:
+    lowered = text.lower()
+    patterns = (
+        "判定は届かなかった",
+        "判定に失敗",
+        "dc",
+        "1d20",
+        "roll",
+        "dice",
+    )
+    return any(pattern in lowered for pattern in patterns)
 
 
 def _failed_roll_text(session: dict[str, Any]) -> str:
     action = _latest_player_text(session).strip() or "その行動"
     character_name = str(session.get("character", {}).get("name") or "冒険者")
     return (
-        f"{character_name}は「{action}」を試みたが、判定は届かなかった。"
-        "相手は言葉を濁し、断片的で矛盾した話しか返さない。"
-        "確かな戦術情報や新しい手がかりは得られなかった。"
+        f"{character_name}は「{action}」についてさらに踏み込んだ。"
+        "しかし相手は表情を曇らせ、言葉を選ぶばかりで核心には触れない。"
+        "返ってきたのは噂と曖昧な忠告だけで、確かな手がかりは得られなかった。"
     )
 
 
@@ -725,10 +869,7 @@ def _normalize_character(character: dict[str, Any]) -> None:
     character["gold"] = max(0, int(character.get("gold", 0)))
     character["character_id"] = str(character.get("character_id") or "")
     attrs = character.get("attributes") if isinstance(character.get("attributes"), dict) else {}
-    character["attributes"] = {
-        str(key): int(value) if isinstance(value, (int, float)) else 0
-        for key, value in attrs.items()
-    }
+    character["attributes"] = _normalize_attribute_map(attrs)
     if not isinstance(character.get("skills"), list):
         character["skills"] = []
     raw_inv = character.get("inventory", [])
@@ -765,7 +906,7 @@ def _character_from_template(template: dict[str, Any]) -> dict[str, Any]:
             character[stat] = int(template[stat])
     attrs = template.get("attributes")
     if isinstance(attrs, dict):
-        character["attributes"] = {str(k): int(v) if isinstance(v, (int, float)) else 0 for k, v in attrs.items()}
+        character["attributes"] = _normalize_attribute_map(attrs)
     if isinstance(template.get("inventory"), list):
         character["inventory"] = deepcopy(template["inventory"])
     if isinstance(template.get("equipment"), list):
@@ -774,6 +915,15 @@ def _character_from_template(template: dict[str, Any]) -> dict[str, Any]:
         character["skills"] = deepcopy(template["skills"])
     _normalize_character(character)
     return character
+
+
+def _normalize_attribute_map(attrs: dict[str, Any]) -> dict[str, int]:
+    normalized: dict[str, int] = {}
+    for key, value in attrs.items():
+        canonical = _canonical_attr_key(str(key))
+        parsed = int(value) if isinstance(value, (int, float)) else 0
+        normalized[canonical] = max(parsed, normalized.get(canonical, parsed))
+    return normalized
 
 
 def _as_item_list(value: Any) -> list[dict[str, Any]]:

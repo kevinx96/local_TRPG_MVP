@@ -6,10 +6,12 @@ from host.gm_contract import STATE_MARKER, build_gm_contract_prompt, sanitize_vi
 class GmContractTests(unittest.TestCase):
     def test_contract_requires_japanese_output(self):
         prompt = build_gm_contract_prompt()
-        self.assertIn("出力は日本語のみ", prompt)
+        self.assertIn("日本語だけ", prompt)
         self.assertIn("70〜220字", prompt)
         self.assertIn("dice_type", prompt)
         self.assertIn("state_delta.attribute_changes", prompt)
+        self.assertIn("choices.requirements", prompt)
+        self.assertIn("requirements", prompt)
 
     def test_contract_opening_includes_json_template(self):
         prompt = build_gm_contract_prompt(opening=True)

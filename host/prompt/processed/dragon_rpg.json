@@ -1,4 +1,4 @@
-{
+﻿{
   "meta": {
     "title": "紅き邪竜イグニス",
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
@@ -429,7 +429,7 @@
         "dex": 2,
         "int": 1,
         "wis": 1,
-        "con": 4
+        "end": 4
       },
       "skills": [],
       "image": ""
@@ -449,7 +449,7 @@
         "dex": 8,
         "int": 12,
         "wis": 6,
-        "con": 16
+        "end": 16
       },
       "skills": [
         {
@@ -500,7 +500,7 @@
       "initial_value": 8
     },
     {
-      "id": "dex",
+      "id": "agi",
       "name": "敏捷",
       "initial_value": 8
     },
@@ -510,12 +510,12 @@
       "initial_value": 8
     },
     {
-      "id": "wis",
+      "id": "char",
       "name": "感知",
       "initial_value": 8
     },
     {
-      "id": "con",
+      "id": "end",
       "name": "耐久",
       "initial_value": 8
     }
@@ -540,7 +540,7 @@
         "dex": 5,
         "int": 5,
         "wis": 5,
-        "con": 10
+        "end": 10
       },
       "inventory": [
         {
@@ -601,7 +601,7 @@
         "dex": 8,
         "int": 14,
         "wis": 12,
-        "con": 15
+        "end": 15
       },
       "inventory": [
         {
@@ -664,7 +664,7 @@
         "dex": 8,
         "int": 16,
         "wis": 10,
-        "con": 6
+        "end": 6
       },
       "inventory": [
         {
@@ -728,7 +728,7 @@
         "dex": 16,
         "int": 10,
         "wis": 6,
-        "con": 8
+        "end": 8
       },
       "inventory": [
         {
