@@ -300,7 +300,15 @@ def _scene_has_enemies(pack: dict[str, Any], scene: Optional[dict[str, Any]]) ->
 
 def resolve_scene_id(pack: dict[str, Any], value: str) -> str:
     scene = find_scene(pack, value)
-    return str(scene.get("id")) if scene else value
+    if scene:
+        return str(scene.get("id"))
+    for s in pack.get("scenes", []):
+        if not isinstance(s, dict):
+            continue
+        loc_ids = _as_text_list(s.get("location_ids"))
+        if value in loc_ids or value.replace("_loc", "") in loc_ids:
+            return str(s.get("id"))
+    return value
 
 
 def infer_scene_from_text(session: dict[str, Any], text: str) -> Optional[str]:
@@ -310,6 +318,15 @@ def infer_scene_from_text(session: dict[str, Any], text: str) -> Optional[str]:
     for scene in pack.get("scenes", []):
         if _record_matches(scene, text):
             return str(scene.get("id"))
+    for scene in pack.get("scenes", []):
+        for loc_id in _as_text_list(scene.get("location_ids", [])):
+            loc = None
+            for location in pack.get("locations", []):
+                if isinstance(location, dict) and str(location.get("id", "")) == loc_id:
+                    loc = location
+                    break
+            if loc and _record_matches(loc, text):
+                return str(scene.get("id"))
     return None
 
 

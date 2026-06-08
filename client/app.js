@@ -5,6 +5,7 @@
 const state = {
   sessionId: null,
   pendingChoices: [],
+  choiceStack: [],
   choicesRevealed: false,
   selectedCharacterId: "hero",
   selectedCharacterImage: "/static/images/char_male_hero.png",
@@ -440,6 +441,7 @@ function setStartBusy(busy) {
 async function newSession() {
   /* Show start screen again */
   state.pendingChoices = [];
+  state.choiceStack = [];
   state.choicesRevealed = false;
   state.lastDiceLogLength = 0;
   state.lastDiceSignature = "";
@@ -755,7 +757,11 @@ function getAttrValue(attrKey) {
 }
 
 function rollLocalDice(actionText) {
-  const choice = state.pendingChoices.find((item) => {
+  const allChoices = [...state.pendingChoices, ...state.choiceStack.flat()];
+  const choice = allChoices.find((item) => {
+    const text = typeof item === "string" ? item : (item.text || "");
+    return text === actionText;
+  }) || state.pendingChoices.find((item) => {
     const text = typeof item === "string" ? item : (item.text || "");
     return text === actionText;
   });
@@ -835,6 +841,7 @@ function renderChoices(choices) {
       risk: typeof choice === "object" ? (choice.risk || "") : "",
       enabled: typeof choice === "object" && choice.enabled === false ? false : true,
       disabledReason: typeof choice === "object" ? (choice.disabled_reason || "") : "",
+      hasChildren: typeof choice === "object" && Array.isArray(choice.children) && choice.children.length > 0,
     })) : [],
   });
   if (!choices || !choices.length) {
@@ -843,6 +850,28 @@ function renderChoices(choices) {
   }
 
   els.choicesList.innerHTML = "";
+  const hasParentStack = state.choiceStack.length > 0;
+
+  if (hasParentStack) {
+    const backCard = document.createElement("button");
+    backCard.type = "button";
+    backCard.className = "choice-card choice-back";
+    backCard.dataset.choiceIndex = "-1";
+    backCard.dataset.choiceText = "__back__";
+    const numberDiv = document.createElement("div");
+    numberDiv.className = "choice-number";
+    numberDiv.innerHTML = "&#9664;";
+    const textDiv = document.createElement("div");
+    textDiv.className = "choice-text";
+    textDiv.textContent = "戻る";
+    const bodyDiv = document.createElement("div");
+    bodyDiv.className = "choice-body";
+    bodyDiv.appendChild(textDiv);
+    backCard.appendChild(numberDiv);
+    backCard.appendChild(bodyDiv);
+    els.choicesList.append(backCard);
+  }
+
   for (let i = 0; i < choices.length; i++) {
     const choice = choices[i];
     const text = typeof choice === "string" ? choice : (choice.text || "");
@@ -850,13 +879,19 @@ function renderChoices(choices) {
     const risk = typeof choice === "object" ? (choice.risk || "") : "";
     const enabled = typeof choice === "object" && choice.enabled === false ? false : true;
     const disabledReason = typeof choice === "object" ? (choice.disabled_reason || "") : "";
+    const hasChildren = typeof choice === "object" && Array.isArray(choice.children) && choice.children.length > 0;
 
     const card = document.createElement("button");
     card.type = "button";
     card.disabled = !enabled;
     card.dataset.choiceIndex = String(i);
     card.dataset.choiceText = text;
-    card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""} ${enabled ? "" : "disabled-choice"}`;
+    if (hasChildren) {
+      card.dataset.choiceParent = "true";
+      card.className = `choice-card choice-group ${enabled ? "" : "disabled-choice"}`;
+    } else {
+      card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""} ${enabled ? "" : "disabled-choice"}`;
+    }
 
     const riskClass = classifyRisk(risk);
 
@@ -872,13 +907,24 @@ function renderChoices(choices) {
     bodyDiv.className = "choice-body";
     bodyDiv.appendChild(textDiv);
 
-    if (preview) {
+    if (preview && !hasChildren) {
       const previewDiv = document.createElement("div");
       previewDiv.className = "choice-preview";
       previewDiv.textContent = preview;
       bodyDiv.appendChild(previewDiv);
     }
-    if (risk) {
+    if (hasChildren) {
+      const hintSpan = document.createElement("span");
+      hintSpan.className = "choice-group-hint";
+      hintSpan.textContent = Array.isArray(choice.children) ? `${choice.children.length}件` : "";
+      bodyDiv.appendChild(hintSpan);
+    } else if (preview) {
+      const previewDiv = document.createElement("div");
+      previewDiv.className = "choice-preview";
+      previewDiv.textContent = preview;
+      bodyDiv.appendChild(previewDiv);
+    }
+    if (risk && !hasChildren) {
       const riskSpan = document.createElement("span");
       riskSpan.className = `choice-risk ${riskClass}`;
       riskSpan.textContent = risk;
@@ -915,6 +961,7 @@ function hideChoices() {
 
 function setPendingChoices(choices) {
   state.pendingChoices = Array.isArray(choices) ? choices : [];
+  state.choiceStack = [];
   state.choicesRevealed = false;
   hideChoices();
   updateDialogueAdvanceState();
@@ -922,6 +969,7 @@ function setPendingChoices(choices) {
 
 function clearPendingChoices() {
   state.pendingChoices = [];
+  state.choiceStack = [];
   state.choicesRevealed = false;
   updateDialogueAdvanceState();
 }
@@ -944,11 +992,34 @@ function handleChoiceListClick(event) {
     cardDisabled: Boolean(card?.disabled),
     cardIndex: card?.dataset.choiceIndex || "",
     cardText: card?.dataset.choiceText || "",
+    cardParent: card?.dataset.choiceParent || "",
     layout: choiceLayoutDebug(),
   });
   if (!card || !els.choicesList.contains(card) || card.disabled) return;
+
+  if (card.dataset.choiceText === "__back__") {
+    if (state.choiceStack.length > 0) {
+      const previous = state.choiceStack.pop();
+      state.pendingChoices = previous;
+      state.choicesRevealed = true;
+      renderChoices(state.pendingChoices);
+    }
+    return;
+  }
+
   const index = Number.parseInt(card.dataset.choiceIndex || "", 10);
   const choice = Number.isInteger(index) ? state.pendingChoices[index] : null;
+  if (!choice || typeof choice !== "object") return;
+
+  const hasChildren = Array.isArray(choice.children) && choice.children.length > 0;
+  if (hasChildren) {
+    state.choiceStack.push(state.pendingChoices);
+    state.pendingChoices = choice.children;
+    state.choicesRevealed = true;
+    renderChoices(state.pendingChoices);
+    return;
+  }
+
   const text = card.dataset.choiceText || (typeof choice === "string" ? choice : (choice && typeof choice === "object" ? choice.text : ""));
   if (text) submitChoice(text);
 }
