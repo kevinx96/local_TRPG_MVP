@@ -186,6 +186,7 @@ def create_session(
         "gm_mode": normalized_gm_mode,
         "scenario_pack": scenario_pack,
         "current_scene": str(meta.get("initial_scene") or "start"),
+        "current_location": _resolve_initial_location(scenario_pack, str(meta.get("initial_scene") or "start")),
         "character": character,
         "messages": [],
         "system_logs": [],
@@ -199,6 +200,15 @@ def create_session(
     }
     save_session(session)
     return public_session(session)
+
+
+def _resolve_initial_location(pack: dict[str, Any], scene_id: str) -> str:
+    scene = find_scene(pack, scene_id)
+    if scene:
+        loc_ids = [str(lid) for lid in (scene.get("location_ids") or []) if lid]
+        if loc_ids:
+            return loc_ids[0]
+    return scene_id
 
 
 def _normalize_gm_mode(value: Optional[str]) -> str:
@@ -417,9 +427,6 @@ def _normalize_choices(raw: list[Any]) -> list[dict[str, Any]]:
 
 
 def _restore_choice_children_from_scenario(choices: list[dict[str, Any]], session: dict[str, Any]) -> None:
-    has_children = any(isinstance(c, dict) and "children" in c for c in choices)
-    if has_children:
-        return
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return
@@ -446,6 +453,9 @@ def _restore_choice_children_from_scenario(choices: list[dict[str, Any]], sessio
     used_parents: set[str] = set()
     for choice in choices:
         text = choice.get("text", "") if isinstance(choice, dict) else str(choice)
+        if isinstance(choice, dict) and "children" in choice:
+            reconstructed.append(choice)
+            continue
         matched_parent = False
         for parent_text, parent_choice in parent_map.items():
             if parent_text in used_parents:
@@ -493,33 +503,54 @@ def choice_requirement_status(choice: dict[str, Any], character: dict[str, Any])
 
     attrs = character.get("attributes", {}) if isinstance(character.get("attributes"), dict) else {}
     if isinstance(requirements, list):
-        passed = all(_requirement_passes(req, attrs) for req in requirements)
-        return (True, "") if passed else (False, _requirement_reason(requirements, "all"))
+        passed = all(_requirement_passes(req, attrs, character) for req in requirements)
+        return (True, "") if passed else (False, _requirement_reason(requirements, "all", character))
     if not isinstance(requirements, dict):
         return True, ""
     if isinstance(requirements.get("any"), list):
         reqs = requirements["any"]
-        passed = any(_requirement_passes(req, attrs) for req in reqs)
-        return (True, "") if passed else (False, _requirement_reason(reqs, "any"))
+        passed = any(_requirement_passes(req, attrs, character) for req in reqs)
+        return (True, "") if passed else (False, _requirement_reason(reqs, "any", character))
     if isinstance(requirements.get("all"), list):
         reqs = requirements["all"]
-        passed = all(_requirement_passes(req, attrs) for req in reqs)
-        return (True, "") if passed else (False, _requirement_reason(reqs, "all"))
-    passed = _requirement_passes(requirements, attrs)
-    return (True, "") if passed else (False, _requirement_reason([requirements], "all"))
+        passed = all(_requirement_passes(req, attrs, character) for req in reqs)
+        return (True, "") if passed else (False, _requirement_reason(reqs, "all", character))
+    passed = _requirement_passes(requirements, attrs, character)
+    return (True, "") if passed else (False, _requirement_reason([requirements], "all", character))
 
 
 def _requirements_from_risk(risk: str) -> dict[str, Any]:
+    if not risk:
+        return {}
+    char_req = _character_id_from_risk(risk)
     threshold_match = re.search(r"(\d+)\s*(?:以上|or higher|以上で)", risk, re.IGNORECASE)
     if not threshold_match:
-        return {}
+        return char_req
     threshold = int(threshold_match.group(1))
     attr_keys = _attribute_keys_from_text(risk)
     if not attr_keys:
-        return {}
+        return char_req
+    attr_req: dict[str, Any]
     if "または" in risk or "or" in risk.lower() or "/" in risk:
-        return {"any": [{"attribute": key, "gte": threshold} for key in attr_keys]}
-    return {"all": [{"attribute": key, "gte": threshold} for key in attr_keys]}
+        attr_req = {"any": [{"attribute": key, "gte": threshold} for key in attr_keys]}
+    else:
+        attr_req = {"all": [{"attribute": key, "gte": threshold} for key in attr_keys]}
+    if char_req:
+        return {"all": [char_req, *attr_req.get("all", attr_req.get("any", []))]}
+    return attr_req
+
+
+def _character_id_from_risk(risk: str) -> dict[str, Any]:
+    char_map = {
+        "勇者": "hero",
+        "僧侶": "cleric",
+        "魔法使い": "mage",
+        "盗賊": "thief",
+    }
+    for name, char_id in char_map.items():
+        if name in risk and ("のみ" in risk or "必要" in risk):
+            return {"character_id": char_id}
+    return {}
 
 
 def _attribute_keys_from_text(text: str) -> list[str]:
@@ -539,8 +570,13 @@ def _attribute_keys_from_text(text: str) -> list[str]:
     return [key for index, key in enumerate(keys) if key not in keys[:index]]
 
 
-def _requirement_passes(requirement: Any, attrs: dict[str, Any]) -> bool:
+def _requirement_passes(requirement: Any, attrs: dict[str, Any], character: dict[str, Any]) -> bool:
     if not isinstance(requirement, dict):
+        return True
+    if "character_id" in requirement:
+        char_id = str(character.get("id") or character.get("character_id") or "")
+        if str(requirement["character_id"]) != char_id:
+            return False
         return True
     attr_key = _canonical_attr_key(str(requirement.get("attribute") or requirement.get("attr") or ""))
     if not attr_key:
@@ -555,22 +591,26 @@ def _requirement_passes(requirement: Any, attrs: dict[str, Any]) -> bool:
     return True
 
 
-def _requirement_reason(requirements: list[Any], mode: str) -> str:
+def _requirement_reason(requirements: list[Any], mode: str, character: dict[str, Any]) -> str:
     labels = [_requirement_label(req) for req in requirements if isinstance(req, dict)]
     labels = [label for label in labels if label]
     if not labels:
-        return "\u6761\u4ef6\u3092\u6e80\u305f\u3057\u3066\u3044\u307e\u305b\u3093"
-    joiner = "\u307e\u305f\u306f" if mode == "any" else "\u3068"
-    return f"{joiner.join(labels)}\u304c\u5fc5\u8981"
+        return "条件を満たしていません"
+    joiner = "または" if mode == "any" else "と"
+    return f"{joiner.join(labels)}が必要"
 
 
 def _requirement_label(requirement: dict[str, Any]) -> str:
+    if "character_id" in requirement:
+        char_id = str(requirement["character_id"])
+        char_names = {"hero": "勇者のみ", "cleric": "僧侶のみ", "mage": "魔法使いのみ", "thief": "盗賊のみ"}
+        return char_names.get(char_id, f"キャラクター({char_id})のみ")
     attr_key = _canonical_attr_key(str(requirement.get("attribute") or requirement.get("attr") or ""))
     if not attr_key:
         return ""
-    label_map = {"str": "\u7b4b\u529b", "dex": "\u654f\u6377", "int": "\u77e5\u529b", "wis": "\u5224\u65ad", "end": "\u8010\u4e45", "cha": "\u9b45\u529b"}
+    label_map = {"str": "筋力", "dex": "敏捷", "int": "知力", "wis": "判断", "end": "耐久", "cha": "魅力"}
     threshold = requirement.get("gte", requirement.get("min", requirement.get("gt", "")))
-    suffix = f"{int(threshold)}\u4ee5\u4e0a" if isinstance(threshold, (int, float)) else ""
+    suffix = f"{int(threshold)}以上" if isinstance(threshold, (int, float)) else ""
     return f"{label_map.get(attr_key, attr_key)}{suffix}"
 
 
@@ -850,6 +890,7 @@ def _current_state_summary(session: dict[str, Any], character: dict[str, Any], l
     return json.dumps(
         {
             "current_scene": session["current_scene"],
+            "current_location": session.get("current_location", ""),
             "character": {
                 "name": character.get("name"),
                 "hp": character.get("hp"),
@@ -1102,6 +1143,58 @@ def _infer_scene_delta_from_text(gm_text: str, session: dict[str, Any], delta: d
     explicit_scene = infer_scene_from_text(session, player_text)
     if explicit_scene:
         delta["current_scene"] = explicit_scene
+
+
+def auto_transition_scene(session: dict[str, Any], action_text: str) -> None:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict) or not action_text:
+        return
+    current_loc = str(session.get("current_location") or "")
+    location = _find_location_record(pack, current_loc)
+    if not location:
+        return
+    best_score = 0
+    best_location = None
+    for connected_id in _as_text_list(location.get("connected_location_ids")):
+        target = _find_location_record(pack, connected_id)
+        if not target:
+            continue
+        score = _location_match_score(action_text, target)
+        if score > best_score:
+            best_score = score
+            best_location = connected_id
+    if not best_location:
+        return
+    session["current_location"] = best_location
+    _sync_scene_from_location(session, pack, best_location)
+
+
+def _sync_scene_from_location(session: dict[str, Any], pack: dict[str, Any], location_id: str) -> None:
+    for scene in pack.get("scenes", []):
+        if not isinstance(scene, dict):
+            continue
+        location_ids = _as_text_list(scene.get("location_ids"))
+        if location_id in location_ids:
+            session["current_scene"] = str(scene.get("id") or "")
+            return
+
+
+def _location_match_score(text: str, location: dict[str, Any]) -> int:
+    score = 0
+    for needle in [str(location.get("id", "")), str(location.get("title", "")), str(location.get("name", ""))]:
+        if needle and needle in text:
+            score += len(needle)
+    for needle in _as_text_list(location.get("keywords")):
+        if needle and needle in text:
+            score += len(needle) * 2
+    return score
+
+
+def _find_location_record(pack: dict[str, Any], location_id: str) -> Optional[dict[str, Any]]:
+    for loc in pack.get("locations", []):
+        if isinstance(loc, dict) and str(loc.get("id") or "") == location_id:
+            return loc
+    return None
 
 
 def _scene_transition_allowed(session: dict[str, Any], target_scene: str) -> bool:

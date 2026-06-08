@@ -30,6 +30,7 @@ from .state import (
     add_player_message,
     add_system_log,
     apply_gm_payload,
+    auto_transition_scene,
     build_llm_messages,
     choice_requirement_status,
     create_session,
@@ -413,6 +414,8 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             return public_session(session)
 
     add_player_message(session, action_text, request.speaker)
+
+    auto_transition_scene(session, action_text)
 
     dice_type, dice_dc = _dice_settings_for_turn(session, action_text)
     client_dice = request.client_dice

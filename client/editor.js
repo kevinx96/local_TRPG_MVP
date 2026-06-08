@@ -169,13 +169,13 @@ function renderList() {
   if (section === "hybrid") {
     els.addRecordButton.style.display = "none";
     els.listTitle.textContent = "Hybrid prepared turns";
-    const scenes = state.scenario.scenes || [];
-    els.recordList.innerHTML = scenes
-      .map((scene, index) => {
-        const count = scene.hybrid?.prepared_turns?.length || 0;
-        const title = scene.title || scene.id || `Scene ${index + 1}`;
+    const locations = state.scenario.locations || [];
+    els.recordList.innerHTML = locations
+      .map((loc, index) => {
+        const count = loc.hybrid?.prepared_turns?.length || 0;
+        const title = loc.title || loc.id || `Location ${index + 1}`;
         return `<button class="record-row ${index === state.selectedIndex ? "active" : ""}" data-index="${index}" type="button">
-          <strong>${escapeHtml(title)}</strong><span>${escapeHtml(scene.id || "")} · ${count} turns</span>
+          <strong>${escapeHtml(title)}</strong><span>${escapeHtml(loc.id || "")} · ${count} turns</span>
         </button>`;
       })
       .join("");
@@ -257,14 +257,12 @@ function renderRecordEditor(section) {
     <label class="wide">描述<textarea data-path="${section}.${state.selectedIndex}.description">${escapeHtml(record.description || "")}</textarea></label>
     ${field("关键词，用逗号分隔", `${section}.${state.selectedIndex}.keywords`, toCsv(record.keywords || []), true)}
   </div>`;
-  const sceneFields = section === "scenes" ? `<h3 class="section-title">场景节点</h3>
+  const sceneFields = section === "scenes" ? `<h3 class="section-title">场景设定</h3>
     <div class="form-grid">
       ${field("目标，用逗号分隔", `${section}.${state.selectedIndex}.goals`, toCsv(record.goals || []), true)}
-      ${field("可命中地点 IDs", `${section}.${state.selectedIndex}.location_ids`, toCsv(record.location_ids || []), true)}
+      ${field("绑定地点 IDs", `${section}.${state.selectedIndex}.location_ids`, toCsv(record.location_ids || []), true)}
       ${field("后续场景 IDs", `${section}.${state.selectedIndex}.next_scene_ids`, toCsv(record.next_scene_ids || []), true)}
-    </div>
-    <h3 class="section-title">节点 fallback choices</h3>
-    ${choicesMarkup(`${section}.${state.selectedIndex}.fallback_choices`, record.fallback_choices || [])}` : "";
+    </div>` : "";
   const itemFields = section === "items" ? `<h3 class="section-title">道具效果</h3>
     <label>效果<textarea data-path="${section}.${state.selectedIndex}.effect">${escapeHtml(record.effect || "")}</textarea></label>` : "";
   const locationFields = section === "locations" ? `<h3 class="section-title">关联实体</h3>
@@ -273,7 +271,11 @@ function renderRecordEditor(section) {
       ${relationPicker("道具", `${section}.${state.selectedIndex}.item_ids`, record.item_ids || [], state.scenario.items || [])}
       ${relationPicker("线索", `${section}.${state.selectedIndex}.clue_ids`, record.clue_ids || [], state.scenario.clues || [])}
       ${relationPicker("敌人", `${section}.${state.selectedIndex}.enemy_ids`, record.enemy_ids || [], state.scenario.enemies || [])}
-    </div>` : "";
+    </div>
+    <h3 class="section-title">可达地点 IDs</h3>
+    ${field("用逗号分隔", `locations.${state.selectedIndex}.connected_location_ids`, toCsv(record.connected_location_ids || []), true)}
+    <h3 class="section-title">地点选项</h3>
+    ${choicesMarkup(`locations.${state.selectedIndex}.choices`, record.choices || [])}` : "";
   els.editorPane.innerHTML = `<div class="editor-form">
     ${common}
     ${itemFields}
@@ -422,19 +424,19 @@ function renderChoices(path, choices, title) {
 }
 
 function renderHybridEditor() {
-  const scene = state.scenario.scenes[state.selectedIndex];
-  if (!scene) {
-    els.editorPane.innerHTML = `<div class="editor-form"><p class="summary-line">No scene selected.</p></div>`;
+  const location = state.scenario.locations[state.selectedIndex];
+  if (!location) {
+    els.editorPane.innerHTML = `<div class="editor-form"><p class="summary-line">No location selected.</p></div>`;
     return;
   }
-  ensureHybridShape(scene);
-  const basePath = `scenes.${state.selectedIndex}.hybrid`;
-  const turns = scene.hybrid.prepared_turns || [];
+  ensureHybridShape(location);
+  const basePath = `locations.${state.selectedIndex}.hybrid`;
+  const turns = location.hybrid.prepared_turns || [];
   els.editorPane.innerHTML = `<div class="editor-form">
-    <h2>Hybrid prepared turns · ${escapeHtml(scene.title || scene.id || "")}</h2>
+    <h2>Hybrid prepared turns · ${escapeHtml(location.title || location.id || "")}</h2>
     <div class="form-grid">
-      ${field("Mode", `${basePath}.mode`, scene.hybrid.mode || "prepared_gm_turns")}
-      <label class="wide">Summary<textarea data-path="${basePath}.summary">${escapeHtml(scene.hybrid.summary || "")}</textarea></label>
+      ${field("Mode", `${basePath}.mode`, location.hybrid.mode || "prepared_gm_turns")}
+      <label class="wide">Summary<textarea data-path="${basePath}.summary">${escapeHtml(location.hybrid.summary || "")}</textarea></label>
     </div>
     <h3 class="section-title">Prepared GM turns</h3>
     <div class="prepared-turn-list">
@@ -697,10 +699,10 @@ function addCurrentRecord() {
   const record = { id: `${section.slice(0, -1)}_${next}`, description: "", keywords: [] };
   record[group.titleKey] = `${group.label} ${next}`;
   if (section === "scenes") {
-    Object.assign(record, { goals: [], location_ids: [], next_scene_ids: [], fallback_choices: [] });
+    Object.assign(record, { goals: [], location_ids: [], next_scene_ids: [] });
   }
   if (section === "locations") {
-    Object.assign(record, { npc_ids: [], item_ids: [], clue_ids: [], enemy_ids: [] });
+    Object.assign(record, { npc_ids: [], item_ids: [], clue_ids: [], enemy_ids: [], connected_location_ids: [], choices: [] });
   }
   if (section === "attribute_defs") {
     record.initial_value = 8;
@@ -780,7 +782,7 @@ function ensureShape(scenario) {
     enemy.skills = Array.isArray(enemy.skills) ? enemy.skills : [];
   });
   if (!scenario.scenes.length) {
-    scenario.scenes.push({ id: "start", title: "开始", description: "", keywords: [], goals: [], fallback_choices: [] });
+    scenario.scenes.push({ id: "start", title: "开始", description: "", keywords: [], goals: [] });
   }
   scenario.meta.initial_scene ||= scenario.scenes[0].id || "start";
   scenario.fallback_choices = normalizeChoices(scenario.fallback_choices);
@@ -789,14 +791,15 @@ function ensureShape(scenario) {
     scene.goals = Array.isArray(scene.goals) ? scene.goals : [];
     scene.location_ids = Array.isArray(scene.location_ids) ? scene.location_ids : [];
     scene.next_scene_ids = Array.isArray(scene.next_scene_ids) ? scene.next_scene_ids : [];
-    scene.fallback_choices = normalizeChoices(scene.fallback_choices);
-    if (scene.hybrid) ensureHybridShape(scene);
   });
   scenario.locations.forEach((location) => {
     location.npc_ids = Array.isArray(location.npc_ids) ? location.npc_ids : [];
     location.item_ids = Array.isArray(location.item_ids) ? location.item_ids : [];
     location.clue_ids = Array.isArray(location.clue_ids) ? location.clue_ids : [];
     location.enemy_ids = Array.isArray(location.enemy_ids) ? location.enemy_ids : [];
+    location.connected_location_ids = Array.isArray(location.connected_location_ids) ? location.connected_location_ids : [];
+    location.choices = normalizeChoices(location.choices);
+    if (location.hybrid) ensureHybridShape(location);
   });
   return scenario;
 }
@@ -965,7 +968,7 @@ function sectionLabel(section) {
 function summaryForSection(section) {
   if (section === "meta") return "编辑标题、摘要、语言和起始场景。";
   if (section === "rules") return `${state.scenario.rules.length} 条规则`;
-  if (section === "hybrid") return `${state.scenario.scenes.length} scenes with editable prepared turns`;
+  if (section === "hybrid") return `${state.scenario.locations.length} locations with editable prepared turns`;
   if (section === "fallback") return `${state.scenario.fallback_choices.length} 个全局选项`;
   if (section === "combat") return `${state.scenario.combat_choices.length} 个战斗选项`;
   if (section === "attribute_defs") return `${state.scenario.attribute_defs.length} 个属性定义`;

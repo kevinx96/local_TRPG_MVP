@@ -33,13 +33,13 @@ class GenerateHybridScenarioTests(unittest.TestCase):
         prompt = build_gemini_prompt(
             [{"role": "system", "content": "runtime contract"}, {"role": "user", "content": "latest turn"}],
             pack,
-            pack["scenes"][0],
+            {"id": "start", "title": "Start", "description": "", "keywords": []},
         )
 
         self.assertIn("--- SYSTEM MESSAGE 1 ---", prompt)
         self.assertIn("runtime contract", prompt)
         self.assertIn("--- OFFLINE HYBRID AUTHORING TASK ---", prompt)
-        self.assertIn('"scene_id": "start"', prompt)
+        self.assertIn('"location_id": "start"', prompt)
         self.assertIn('"Return JSON only."', prompt)
         self.assertIn("pre-cooked GM response pack", prompt)
         self.assertIn('"prepared_turns"', prompt)
