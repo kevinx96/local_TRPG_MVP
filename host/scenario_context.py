@@ -176,7 +176,7 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
         "rules": pack.get("rules", []),
         "current_scene": _trim_record(_public_record(scene)),
         "matched": matched,
-        "fallback_choices": _trim_choices(fallback_choices_for_scene(pack, current_scene)),
+        "fallback_choices": _trim_choices(_merged_choices_for_context(pack, current_scene, str(session.get("current_location") or ""))),
     }
     # Semi mode: inject hybrid hints if available so the LLM has narrative scaffolding
     hybrid = scene.get("hybrid") if isinstance(scene.get("hybrid"), dict) else None
@@ -202,6 +202,8 @@ def select_hybrid_context(
 
     current_scene = str(session.get("current_scene") or pack.get("meta", {}).get("initial_scene") or DEFAULT_SCENE_ID)
     scene = find_scene(pack, current_scene) or (pack.get("scenes") or [{}])[0]
+    location_id = str(session.get("current_location") or "")
+    location = _find_location_in_pack(pack, location_id) or {}
     prepared_turn = select_hybrid_prepared_turn(session, player_text, opening=opening)
     meta = pack.get("meta", {})
     context = {
@@ -212,8 +214,12 @@ def select_hybrid_context(
             "description": scene.get("description"),
             "goals": scene.get("goals", []),
         },
+        "current_location": {
+            "id": location.get("id"),
+            "title": location.get("title"),
+        },
         "prepared_turn": _prepared_turn_for_llm(prepared_turn, str(meta.get("language") or "")),
-        "fallback_choices": _trim_choices(fallback_choices_for_scene(pack, current_scene)),
+        "fallback_choices": _trim_choices(_merged_choices_for_context(pack, current_scene, location_id)),
     }
     if include_debug:
         context["_debug"] = {
@@ -237,11 +243,11 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return {}
-    current_scene = str(session.get("current_scene") or pack.get("meta", {}).get("initial_scene") or DEFAULT_SCENE_ID)
-    scene = find_scene(pack, current_scene)
-    if not scene:
+    location_id = str(session.get("current_location") or "")
+    location = _find_location_in_pack(pack, location_id)
+    if not location:
         return {}
-    hybrid = scene.get("hybrid") if isinstance(scene.get("hybrid"), dict) else {}
+    hybrid = location.get("hybrid") if isinstance(location.get("hybrid"), dict) else {}
     prepared_turns = hybrid.get("prepared_turns") if isinstance(hybrid.get("prepared_turns"), list) else []
     if not prepared_turns:
         return _legacy_dialogue_turn_as_prepared(hybrid, opening)
@@ -285,6 +291,29 @@ def fallback_choices_for_scene(pack: dict[str, Any], scene_id: str) -> list[dict
         if choices:
             return choices
     return normalize_choices(pack.get("fallback_choices")) or deepcopy(DEFAULT_FALLBACK_CHOICES)
+
+
+def _merged_choices_for_context(pack: dict[str, Any], scene_id: str, location_id: str) -> list[dict[str, Any]]:
+    if not location_id:
+        return _global_fallback_choices(pack)
+    location = _find_location_in_pack(pack, location_id)
+    if not location:
+        return _global_fallback_choices(pack)
+    location_choices = normalize_choices(location.get("choices") or [])
+    if location_choices:
+        return location_choices
+    return _global_fallback_choices(pack)
+
+
+def _global_fallback_choices(pack: dict[str, Any]) -> list[dict[str, Any]]:
+    return normalize_choices(pack.get("fallback_choices")) or deepcopy(DEFAULT_FALLBACK_CHOICES)
+
+
+def _find_location_in_pack(pack: dict[str, Any], location_id: str) -> Optional[dict[str, Any]]:
+    for loc in pack.get("locations", []):
+        if isinstance(loc, dict) and str(loc.get("id") or "") == location_id:
+            return loc
+    return None
 
 
 def _scene_has_enemies(pack: dict[str, Any], scene: Optional[dict[str, Any]]) -> bool:
@@ -395,8 +424,8 @@ def find_scene(pack: dict[str, Any], scene_id_or_title: str) -> Optional[dict[st
     return _find_scene(pack.get("scenes") or [], scene_id_or_title)
 
 
-def normalize_choices(raw: Any) -> list[dict[str, str]]:
-    choices: list[dict[str, str]] = []
+def normalize_choices(raw: Any) -> list[dict[str, Any]]:
+    choices: list[dict[str, Any]] = []
     for item in _as_list(raw):
         if isinstance(item, str):
             text = item.strip()
@@ -405,12 +434,16 @@ def normalize_choices(raw: Any) -> list[dict[str, str]]:
         elif isinstance(item, dict):
             text = str(item.get("text") or "").strip()
             if text:
-                choices.append({
+                choice: dict[str, Any] = {
                     "text": text,
                     "preview": str(item.get("preview") or ""),
                     "risk": str(item.get("risk") or ""),
-                    **({"requirements": deepcopy(item["requirements"])} if "requirements" in item else {}),
-                })
+                }
+                if "requirements" in item:
+                    choice["requirements"] = deepcopy(item["requirements"])
+                if "children" in item and isinstance(item["children"], list):
+                    choice["children"] = normalize_choices(item["children"])
+                choices.append(choice)
     return choices[:5]
 
 
@@ -514,8 +547,12 @@ def _trim_choices(choices: list[dict[str, str]]) -> list[dict[str, Any]]:
         if not choice.get("text"):
             continue
         item: dict[str, Any] = {"text": choice.get("text", ""), "risk": choice.get("risk", "")}
+        if choice.get("preview"):
+            item["preview"] = choice["preview"]
         if "requirements" in choice:
             item["requirements"] = deepcopy(choice["requirements"])
+        if "children" in choice and isinstance(choice.get("children"), list):
+            item["children"] = _trim_choices(choice["children"])
         trimmed.append(item)
     return trimmed
 
