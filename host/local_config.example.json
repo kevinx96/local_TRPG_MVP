@@ -5,6 +5,8 @@
       "model": "qwen3-swallow-8b-rl-local",
       "fallback_models": [
         "qwen2.5-7b-instruct-local",
+        "qwen2.5-3b-instruct-q8-0-local",
+        "qwen2.5-3b-instruct-q5-k-m-local",
         "elyza-jp-8b-local"
       ],
       "api_key": "ollama"
