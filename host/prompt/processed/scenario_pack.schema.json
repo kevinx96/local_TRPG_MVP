@@ -204,7 +204,11 @@
             "risk": { "type": "string" },
             "requirements": { "$ref": "#/$defs/choice_requirements" },
             "enabled": { "type": "boolean" },
-            "disabled_reason": { "type": "string" }
+            "disabled_reason": { "type": "string" },
+            "children": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/choice" }
+            }
           }
         }
       ]

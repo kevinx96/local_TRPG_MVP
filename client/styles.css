@@ -936,6 +936,13 @@ button, select, textarea, input { font: inherit; }
   box-shadow: none;
 }
 .choice-card.disabled-choice .choice-number { background: rgba(255,255,255,.06); color: var(--muted); }
+.choice-card.choice-group { border-color: rgba(100,180,255,.35); }
+.choice-card.choice-group:hover { border-color: var(--blue); box-shadow: -4px 0 0 var(--blue); }
+.choice-card.choice-group .choice-number { background: var(--blue-dim); color: var(--blue); }
+.choice-group-hint { display: inline-block; margin-top: 6px; padding: 2px 8px; font-size: 11px; font-weight: 700; border-radius: 4px; background: rgba(100,180,255,.15); color: var(--blue); }
+.choice-card.choice-back { border-color: var(--line); border-style: dashed; }
+.choice-card.choice-back:hover { border-color: var(--text-dim); background: var(--panel-2); box-shadow: none; transform: none; }
+.choice-card.choice-back .choice-number { background: rgba(255,255,255,.06); color: var(--muted); }
 .choice-number { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--gold-dim); color: var(--gold); font-size: 13px; font-weight: 900; }
 .choice-body { min-width: 0; }
 .choice-text { font-weight: 700; font-size: 14px; color: var(--text); }

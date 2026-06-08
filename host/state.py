@@ -384,6 +384,7 @@ def apply_gm_payload(
     if isinstance(raw_choices, list) and raw_choices:
         choices = _normalize_choices(raw_choices)
         if choices:
+            _restore_choice_children_from_scenario(choices, session)
             session["choices"] = choices
             return
         add_system_log(session, "choices fallback: model choices were empty after normalization.")
@@ -400,13 +401,69 @@ def _normalize_choices(raw: list[Any]) -> list[dict[str, Any]]:
         elif isinstance(item, dict):
             text = str(item.get("text") or item.get("option") or item.get("action") or item.get("label") or "").strip()
             if text:
-                choices.append({
+                choice: dict[str, Any] = {
                     "text": text,
                     "preview": str(item.get("preview", "")),
                     "risk": str(item.get("risk", "")),
                     **({"requirements": deepcopy(item["requirements"])} if "requirements" in item else {}),
-                })
+                }
+                children = item.get("children")
+                if isinstance(children, list) and children:
+                    normalized_children = _normalize_choices(children)
+                    if normalized_children:
+                        choice["children"] = normalized_children
+                choices.append(choice)
     return choices[:5]
+
+
+def _restore_choice_children_from_scenario(choices: list[dict[str, Any]], session: dict[str, Any]) -> None:
+    has_children = any(isinstance(c, dict) and "children" in c for c in choices)
+    if has_children:
+        return
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return
+    scene = find_scene(pack, str(session.get("current_scene") or ""))
+    if not isinstance(scene, dict):
+        return
+    fallback: list[Any] = scene.get("fallback_choices", [])
+    if not isinstance(fallback, list) or not fallback:
+        fallback = pack.get("fallback_choices", [])
+    if not isinstance(fallback, list):
+        return
+    normalized_fallback = _normalize_choices(fallback)
+    parent_map: dict[str, dict[str, Any]] = {}
+    child_to_parent: dict[str, str] = {}
+    for fc in normalized_fallback:
+        if isinstance(fc, dict) and "children" in fc and isinstance(fc["children"], list):
+            parent_map[fc["text"]] = fc
+            for child in fc["children"]:
+                if isinstance(child, dict):
+                    child_to_parent[child.get("text", "")] = fc["text"]
+    if not parent_map:
+        return
+    reconstructed: list[dict[str, Any]] = []
+    used_parents: set[str] = set()
+    for choice in choices:
+        text = choice.get("text", "") if isinstance(choice, dict) else str(choice)
+        matched_parent = False
+        for parent_text, parent_choice in parent_map.items():
+            if parent_text in used_parents:
+                continue
+            if text == parent_text:
+                reconstructed.append(deepcopy(parent_choice))
+                used_parents.add(parent_text)
+                matched_parent = True
+                break
+            if text in child_to_parent and child_to_parent[text] == parent_text:
+                reconstructed.append(deepcopy(parent_choice))
+                used_parents.add(parent_text)
+                matched_parent = True
+                break
+        if not matched_parent and text not in child_to_parent:
+            reconstructed.append(choice)
+    if used_parents:
+        choices[:] = reconstructed
 
 
 def annotate_choices_for_character(raw_choices: Any, character: dict[str, Any]) -> list[dict[str, Any]]:
@@ -421,6 +478,8 @@ def annotate_choices_for_character(raw_choices: Any, character: dict[str, Any]) 
             choice["disabled_reason"] = reason
         else:
             choice.pop("disabled_reason", None)
+        if "children" in choice and isinstance(choice["children"], list):
+            choice["children"] = annotate_choices_for_character(choice["children"], character)
         choices.append(choice)
     return choices
 

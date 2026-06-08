@@ -525,8 +525,17 @@ function handleEditorInput(event) {
   }
   if (target.dataset.choicePath) {
     const choices = getByPath(state.scenario, target.dataset.choicePath, []);
-    const choice = choices[Number(target.dataset.index)];
-    choice[target.dataset.choiceField] = target.value;
+    if (target.dataset.childIndex !== undefined) {
+      const parentIdx = Number(target.dataset.index);
+      const childIdx = Number(target.dataset.childIndex);
+      const parent = choices[parentIdx];
+      if (parent && Array.isArray(parent.children) && parent.children[childIdx]) {
+        parent.children[childIdx][target.dataset.choiceField] = target.value;
+      }
+    } else {
+      const choice = choices[Number(target.dataset.index)];
+      choice[target.dataset.choiceField] = target.value;
+    }
     markDirty();
   }
   if (target.dataset.relationPath) {
@@ -556,6 +565,39 @@ function handleEditorClick(event) {
     choices.push({ text: "", preview: "", risk: "" });
     markDirty();
     renderEditor();
+  }
+  if (target.dataset.removeChildChoice) {
+    const choices = getByPath(state.scenario, target.dataset.removeChildChoice, []);
+    const parent = choices[Number(target.dataset.parentIndex)];
+    if (parent && Array.isArray(parent.children)) {
+      parent.children.splice(Number(target.dataset.childIndex), 1);
+      if (parent.children.length === 0) delete parent.children;
+    }
+    markDirty();
+    renderEditor();
+  }
+  if (target.dataset.addChildChoice) {
+    const choices = getByPath(state.scenario, target.dataset.addChildChoice, []);
+    const parent = choices[Number(target.dataset.parentIndex)];
+    if (parent) {
+      if (!Array.isArray(parent.children)) parent.children = [];
+      parent.children.push({ text: "", preview: "", risk: "" });
+    }
+    markDirty();
+    renderEditor();
+  }
+  if (target.dataset.toggleChildren) {
+    const choices = getByPath(state.scenario, target.dataset.toggleChildren, []);
+    const parent = choices[Number(target.dataset.index)];
+    if (parent) {
+      if (Array.isArray(parent.children) && parent.children.length > 0) {
+        delete parent.children;
+      } else {
+        parent.children = [{ text: "", preview: "", risk: "" }];
+      }
+      markDirty();
+      renderEditor();
+    }
   }
   if (target.dataset.removeChoice) {
     const choices = getByPath(state.scenario, target.dataset.removeChoice, []);
@@ -806,11 +848,15 @@ function normalizeChoices(value) {
   return value
     .map((choice) => {
       if (typeof choice === "string") return { text: choice, preview: "", risk: "" };
-      return {
+      const normalized = {
         text: choice?.text || "",
         preview: choice?.preview || "",
         risk: choice?.risk || "",
       };
+      if (Array.isArray(choice?.children) && choice.children.length > 0) {
+        normalized.children = normalizeChoices(choice.children);
+      }
+      return normalized;
     });
 }
 
@@ -823,12 +869,31 @@ function syncInitialSceneAfterIdEdit() {
 
 function choicesMarkup(path, choices) {
   return `<div class="line-list">
-    ${choices.map((choice, index) => `<div class="choice-row">
-      <input data-choice-path="${path}" data-choice-field="text" data-index="${index}" value="${escapeAttr(choice.text || "")}" placeholder="text" />
-      <input data-choice-path="${path}" data-choice-field="preview" data-index="${index}" value="${escapeAttr(choice.preview || "")}" placeholder="preview" />
-      <input data-choice-path="${path}" data-choice-field="risk" data-index="${index}" value="${escapeAttr(choice.risk || "")}" placeholder="risk" />
-      <button class="danger" data-remove-choice="${path}" data-index="${index}" type="button">删除</button>
-    </div>`).join("")}
+    ${choices.map((choice, index) => {
+      const hasChildren = Array.isArray(choice.children) && choice.children.length > 0;
+      const childMarkup = hasChildren
+        ? `<div class="choice-children">
+            ${choice.children.map((child, ci) => `<div class="choice-row choice-child">
+              <input data-choice-path="${path}" data-choice-field="text" data-index="${index}" data-child-index="${ci}" value="${escapeAttr(child.text || "")}" placeholder="子选项 text" />
+              <input data-choice-path="${path}" data-choice-field="preview" data-index="${index}" data-child-index="${ci}" value="${escapeAttr(child.preview || "")}" placeholder="子选项 preview" />
+              <input data-choice-path="${path}" data-choice-field="risk" data-index="${index}" data-child-index="${ci}" value="${escapeAttr(child.risk || "")}" placeholder="子选项 risk" />
+              <button class="danger" data-remove-child-choice="${path}" data-parent-index="${index}" data-child-index="${ci}" type="button">删除</button>
+            </div>`).join("")}
+            <button data-add-child-choice="${path}" data-parent-index="${index}" type="button">添加子选项</button>
+          </div>`
+        : "";
+      const childToggle = `<button class="toggle-children" data-toggle-children="${path}" data-index="${index}" type="button">${hasChildren ? "收起子选项" : "添加子选项"}</button>`;
+      return `<div class="choice-group">
+        <div class="choice-row">
+          <input data-choice-path="${path}" data-choice-field="text" data-index="${index}" value="${escapeAttr(choice.text || "")}" placeholder="text" />
+          <input data-choice-path="${path}" data-choice-field="preview" data-index="${index}" value="${escapeAttr(choice.preview || "")}" placeholder="preview" />
+          <input data-choice-path="${path}" data-choice-field="risk" data-index="${index}" value="${escapeAttr(choice.risk || "")}" placeholder="risk" />
+          ${childToggle}
+          <button class="danger" data-remove-choice="${path}" data-index="${index}" type="button">删除</button>
+        </div>
+        ${hasChildren ? childMarkup : `<div class="choice-children collapsed" data-children-path="${path}" data-children-index="${index}"></div>`}
+      </div>`;
+    }).join("")}
     <button data-add-choice="${path}" type="button">添加选项</button>
   </div>`;
 }

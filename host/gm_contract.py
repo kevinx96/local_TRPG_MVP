@@ -50,6 +50,8 @@ def build_gm_contract_prompt(opening: bool = False) -> str:
         "・アイテム追加時は name,description,effect,quantity を含める\n"
         "・choices は3つ。text(行動名)とrisk(判定不要/1d20+str判定DC12/危険)必須\n"
         "・choices.requirements は任意。属性条件が必要な行動には requirements を書く。例: {\"any\":[{\"attribute\":\"str\",\"gte\":10}]}\n"
+        "・choices の一部に children を入れると、プレイヤーがその選択肢をクリックした時に子選択肢が展開される。親はGMに送られない。\n"
+        "・子供が場所やカテゴリの分岐なら children を使う。例: {\"text\":\"城へ向かう\",\"preview\":\"城内の施設へ\",\"risk\":\"判定不要\",\"children\":[{\"text\":\"鍛冶屋へ\",\"risk\":\"判定不要\"},{\"text\":\"謁見の間へ\",\"risk\":\"1d20判定（DC10）\"}]}\n"
         "・matched.enemies に敵がいる場合、戦闘として扱い戦闘選択肢を提示\n"
         "・敵のHP/MP/SP/属性/skillsを参照。成功失敗の結果だけ描写\n"
         "・耐久属性は end を使う。旧 con は使わない。\n"
@@ -74,7 +76,8 @@ def build_gm_contract_prompt(opening: bool = False) -> str:
         '  "choices": [\n'
         '    {"text": "行動内容", "risk": "判定不要"},\n'
         '    {"text": "行動内容", "risk": "1d20+str判定（DC12）", "requirements": {"all": [{"attribute": "str", "gte": 10}]}},\n'
-        '    {"text": "行動内容", "risk": "危険"}\n'
+        '    {"text": "行動内容", "risk": "危険"},\n'
+        '    {"text": "場所へ移動", "preview": "施設を選ぶ", "risk": "判定不要", "children": [{"text": "鍛冶屋へ", "risk": "判定不要"}, {"text": "商店へ", "risk": "判定不要"}]}\n'
         "  ]\n"
         "}"
     )
