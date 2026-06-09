@@ -83,10 +83,10 @@ def utc_now() -> str:
 
 def load_config(path: Optional[Path] = None) -> dict[str, Any]:
     config_path = path or HOST_ROOT / "config.json"
-    config = json.loads(config_path.read_text(encoding="utf-8"))
+    config = json.loads(config_path.read_text(encoding="utf-8-sig"))
     local_path = _local_config_path(config_path)
     if local_path.exists():
-        _deep_update(config, json.loads(local_path.read_text(encoding="utf-8")))
+        _deep_update(config, json.loads(local_path.read_text(encoding="utf-8-sig")))
     _apply_config_env_overrides(config)
     return config
 

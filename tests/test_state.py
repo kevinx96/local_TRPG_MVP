@@ -129,14 +129,15 @@ class StateTests(unittest.TestCase):
             encoding="utf-8",
         )
         local_path.write_text(
-            json.dumps({"backends": {"ollama": {"model": "remote-model"}}}),
-            encoding="utf-8",
+            json.dumps({"backends": {"ollama": {"model": "remote-model", "fallback_models": ["m2", "m3"]}}}),
+            encoding="utf-8-sig",
         )
 
         with patch.dict(os.environ, {"TRPG_OLLAMA_BASE_URL": "https://ollama.example.com"}, clear=False):
             config = state.load_config(config_path)
 
         self.assertEqual(config["backends"]["ollama"]["model"], "remote-model")
+        self.assertEqual(config["backends"]["ollama"]["fallback_models"], ["m2", "m3"])
         self.assertEqual(config["backends"]["ollama"]["base_url"], "https://ollama.example.com/v1")
 
     def test_select_scenario_context_matches_keywords(self):
