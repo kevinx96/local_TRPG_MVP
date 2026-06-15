@@ -23,6 +23,15 @@
         "qwen2.5:7b-instruct"
       ],
       "api_key": "koboldcpp"
+    },
+    "gemini": {
+      "type": "gemini",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "model": "gemini-3.1-flash-lite",
+      "fallback_models": [
+        "gemini-2.0-flash"
+      ],
+      "api_key": ""
     }
   },
   "request_timeout_seconds": 1800,
