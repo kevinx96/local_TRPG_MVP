@@ -482,7 +482,7 @@ class StateTests(unittest.TestCase):
     def test_semi_mode_uses_prepared_turn_context(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
-        raw["scenes"][0]["hybrid"] = {
+        raw["locations"][0]["hybrid"] = {
             "mode": "prepared_gm_turns",
             "prepared_turns": [
                 {
@@ -543,7 +543,7 @@ class StateTests(unittest.TestCase):
     def test_hybrid_turn_matching_ignores_stale_assistant_text(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
-        raw["scenes"][0]["hybrid"] = {
+        raw["locations"][0]["hybrid"] = {
             "mode": "prepared_gm_turns",
             "prepared_turns": [
                 {
@@ -573,7 +573,7 @@ class StateTests(unittest.TestCase):
     def test_full_mode_ignores_prepared_turn_hints(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
-        raw["scenes"][0]["hybrid"] = {
+        raw["locations"][0]["hybrid"] = {
             "mode": "prepared_gm_turns",
             "prepared_turns": [
                 {
