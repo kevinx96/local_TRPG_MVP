@@ -4,6 +4,7 @@ import json
 import sys
 import time
 from typing import Any, Iterable, Optional, Union
+from urllib.parse import quote
 
 import requests
 
@@ -99,6 +100,9 @@ def _chat_completion_once(
     attempt: int,
     total_attempts: int,
 ) -> str:
+    if _is_gemini_backend(backend_name, backend):
+        return _gemini_chat_completion_once(config, backend, backend_name, model, messages, attempt, total_attempts)
+
     debug_enabled = bool(config.get("debug_llm", True))
     base_url = str(backend.get("base_url", "")).rstrip("/")
     if not base_url:
@@ -174,6 +178,12 @@ def _stream_chat_completion_once(
     attempt: int,
     total_attempts: int,
 ) -> Iterable[str]:
+    if _is_gemini_backend(backend_name, backend):
+        content = _gemini_chat_completion_once(config, backend, backend_name, model, messages, attempt, total_attempts)
+        if content:
+            yield content
+        return
+
     debug_enabled = bool(config.get("debug_llm", True))
     base_url = str(backend.get("base_url", "")).rstrip("/")
     if not base_url:
@@ -266,6 +276,126 @@ def _stream_chat_completion_once(
         if debug_enabled:
             debug_log(f"LLM request exception={exc!r}")
         raise LLMClientError(str(exc)) from exc
+
+
+def _is_gemini_backend(backend_name: str, backend: dict[str, Any]) -> bool:
+    backend_type = str(backend.get("type") or "").strip().lower()
+    return backend_name.lower() == "gemini" or backend_type == "gemini"
+
+
+def _gemini_chat_completion_once(
+    config: dict[str, Any],
+    backend: dict[str, Any],
+    backend_name: str,
+    model: str,
+    messages: list[dict[str, str]],
+    attempt: int,
+    total_attempts: int,
+) -> str:
+    debug_enabled = bool(config.get("debug_llm", True))
+    api_key = _gemini_api_key(backend)
+    if not api_key:
+        raise LLMClientError("Gemini API key is empty. Set GEMINI_API_KEY or host/gemini_api_key.txt.")
+
+    base_url = str(backend.get("base_url") or "https://generativelanguage.googleapis.com/v1beta").rstrip("/")
+    timeout = int(config.get("request_timeout_seconds", 1800))
+    url = f"{base_url}/models/{quote(model, safe='')}:generateContent"
+    payload = _gemini_payload(messages, config)
+    params = {"key": api_key}
+
+    if debug_enabled:
+        total_chars = sum(len(message.get("content", "")) for message in messages)
+        role_summary = _message_role_summary(messages)
+        debug_log(
+            "LLM request "
+            f"backend={backend_name} url={base_url}/models/{model}:generateContent model={model} "
+            f"attempt={attempt}/{total_attempts} messages={len(messages)} roles={role_summary} "
+            f"chars={total_chars} stream=False timeout={timeout}s"
+        )
+
+    try:
+        start_time = time.time()
+        response = requests.post(url, params=params, headers={"Content-Type": "application/json"}, json=payload, timeout=timeout)
+        ttfb_ms = (time.time() - start_time) * 1000
+        if debug_enabled:
+            debug_log(
+                "LLM response headers "
+                f"status={response.status_code} content_type={response.headers.get('content-type', '')} "
+                f"ttfb_ms={ttfb_ms:.0f}"
+            )
+        if response.status_code >= 400:
+            preview = response.text[:1000]
+            if debug_enabled:
+                debug_log(f"LLM HTTP error body={preview!r}")
+            response.raise_for_status()
+        content = _content_from_gemini_response(response.text)
+        if debug_enabled:
+            total_ms = (time.time() - start_time) * 1000
+            debug_log(f"LLM completion received content_chars={len(content)} ttfb_ms={ttfb_ms:.0f} total_ms={total_ms:.0f}")
+        return content
+    except requests.RequestException as exc:
+        if debug_enabled:
+            debug_log(f"LLM request exception={exc!r}")
+        raise LLMClientError(str(exc)) from exc
+
+
+def _gemini_api_key(backend: dict[str, Any]) -> str:
+    api_key = str(backend.get("api_key") or "").strip()
+    if api_key:
+        return api_key
+    try:
+        from .scenario_converter import load_gemini_api_key
+    except Exception:
+        return ""
+    return load_gemini_api_key().strip()
+
+
+def _gemini_payload(messages: list[dict[str, str]], config: dict[str, Any]) -> dict[str, Any]:
+    system_parts: list[str] = []
+    contents: list[dict[str, Any]] = []
+    for message in messages:
+        role = str(message.get("role") or "user").strip().lower()
+        content = str(message.get("content") or "")
+        if not content:
+            continue
+        if role == "system":
+            system_parts.append(content)
+            continue
+        gemini_role = "model" if role in {"assistant", "model"} else "user"
+        contents.append({"role": gemini_role, "parts": [{"text": content}]})
+    if not contents:
+        contents.append({"role": "user", "parts": [{"text": "開始してください。"}]})
+
+    generation_config: dict[str, Any] = {
+        "temperature": config.get("temperature", 0.8),
+        "maxOutputTokens": config.get("max_tokens", 900),
+    }
+    if config.get("response_format") == "json_object":
+        generation_config["responseMimeType"] = "application/json"
+
+    payload: dict[str, Any] = {
+        "contents": contents,
+        "generationConfig": generation_config,
+    }
+    if system_parts:
+        payload["systemInstruction"] = {"parts": [{"text": "\n\n".join(system_parts)}]}
+    return payload
+
+
+def _content_from_gemini_response(text: str) -> str:
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise LLMClientError(f"Invalid Gemini JSON response: {exc}") from exc
+    if isinstance(data.get("error"), dict):
+        error = data["error"]
+        raise LLMClientError(str(error.get("message") or error))
+    candidates = data.get("candidates") or []
+    if not candidates:
+        return ""
+    parts = ((candidates[0].get("content") or {}).get("parts") or [])
+    texts = [part.get("text", "") for part in parts if isinstance(part, dict) and isinstance(part.get("text"), str)]
+    return "".join(texts)
 
 
 def _content_from_sse(line: str) -> str:
