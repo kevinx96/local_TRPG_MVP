@@ -484,10 +484,10 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
 
 def _dice_settings_for_turn(session: dict[str, Any], action_text: str) -> tuple[str, int]:
     dice_type = str(session.get("next_dice_type") or "1d20")
-    dice_dc = int(session.get("next_dice_dc", 10) or 0)
+    dice_dc = int(session.get("next_dice_dc", 0) or 0)
     choice = _matching_choice(session.get("choices"), action_text)
     if not choice:
-        return dice_type, max(dice_dc, 10)
+        return dice_type, max(dice_dc, 0)
 
     risk = str(choice.get("risk") or "")
     if "判定不要" in risk:
@@ -514,6 +514,9 @@ def _matching_choice(raw_choices: Any, action_text: str) -> Optional[dict[str, A
             continue
         if str(choice.get("text") or "").strip() == normalized_action:
             return choice
+        child_match = _matching_choice(choice.get("children"), normalized_action)
+        if child_match:
+            return child_match
     return None
 
 
