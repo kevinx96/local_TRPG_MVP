@@ -907,12 +907,6 @@ function renderChoices(choices) {
     bodyDiv.className = "choice-body";
     bodyDiv.appendChild(textDiv);
 
-    if (preview && !hasChildren) {
-      const previewDiv = document.createElement("div");
-      previewDiv.className = "choice-preview";
-      previewDiv.textContent = preview;
-      bodyDiv.appendChild(previewDiv);
-    }
     if (hasChildren) {
       const hintSpan = document.createElement("span");
       hintSpan.className = "choice-group-hint";
