@@ -773,6 +773,37 @@ class StateTests(unittest.TestCase):
         self.assertEqual(safe_type, "1d20")
         self.assertEqual(safe_dc, 0)
 
+    def test_child_choice_does_not_fall_back_to_default_dice_dc(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+        session["choices"] = [
+            {
+                "text": "\u57ce\u4e0b\u753a\u3092\u63a2\u7d22\u3059\u308b",
+                "risk": "\u5224\u5b9a\u4e0d\u8981",
+                "children": [
+                    {"text": "\u935b\u51b6\u5c4b\u3078\u5411\u304b\u3046", "risk": "\u5224\u5b9a\u4e0d\u8981"},
+                ],
+            }
+        ]
+
+        dice_type, dice_dc = app_module._dice_settings_for_turn(session, "\u935b\u51b6\u5c4b\u3078\u5411\u304b\u3046")
+
+        self.assertEqual(dice_type, "1d20")
+        self.assertEqual(dice_dc, 0)
+
+    def test_unmatched_action_does_not_create_default_dice_check(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+
+        dice_type, dice_dc = app_module._dice_settings_for_turn(session, "\u81ea\u7531\u5165\u529b")
+
+        self.assertEqual(dice_type, "1d20")
+        self.assertEqual(dice_dc, 0)
+
     def test_choice_risk_requirement_disables_when_attribute_too_low(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])

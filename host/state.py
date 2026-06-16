@@ -193,7 +193,7 @@ def create_session(
         "dice_log": [],
         "choices": [],
         "next_dice_type": "1d20",
-        "next_dice_dc": 10,
+        "next_dice_dc": 0,
         "needs_opening": True,
         "created_at": utc_now(),
         "updated_at": utc_now(),
@@ -377,10 +377,18 @@ def apply_gm_payload(
 
     dice_type = payload.get("dice_type")
     if isinstance(dice_type, str) and dice_type.strip():
-        session["next_dice_type"] = dice_type.strip()
+        normalized_dice_type = dice_type.strip()
+        if normalized_dice_type.lower() in {"null", "none", "no", "なし"}:
+            session["next_dice_type"] = "1d20"
+        else:
+            session["next_dice_type"] = normalized_dice_type
+    elif dice_type is None:
+        session["next_dice_type"] = "1d20"
     dice_dc = payload.get("dice_dc")
     if isinstance(dice_dc, (int, float)):
         session["next_dice_dc"] = int(dice_dc)
+    else:
+        session["next_dice_dc"] = 0
 
     state_delta = payload.get("state_delta") or {}
     if not isinstance(state_delta, dict):
