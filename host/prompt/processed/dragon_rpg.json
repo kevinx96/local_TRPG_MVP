@@ -191,6 +191,152 @@
           "preview": "第2章へ進みます",
           "risk": "1d20判定（DC10）"
         }
+      ],
+      "actions": [
+        {
+          "id": "ask_king_info",
+          "text": "国王に邪竜の詳しい話を聞く",
+          "preview": "旅の目的と手がかりを確認できます",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "国王に邪竜の詳しい話を聞く"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_king_info"
+            }
+          ]
+        },
+        {
+          "id": "ask_general_advice",
+          "text": "将軍ドラコに助言を求める",
+          "preview": "実用的な戦術情報が得られるかもしれません",
+          "risk": "筋力または耐久が10以上で1d20判定（DC15）",
+          "intent_keywords": [
+            "将軍ドラコに助言を求める"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 15
+          },
+          "success_effects": [
+            {
+              "set_flag": "got_general_advice"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "general_advice_failed"
+            }
+          ]
+        },
+        {
+          "id": "check_supplies",
+          "text": "支度金と装備を確認する",
+          "preview": "所持金、薬草、装備を整理します",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "支度金と装備を確認する"
+          ],
+          "effects": [
+            {
+              "set_flag": "checked_supplies"
+            }
+          ]
+        },
+        {
+          "id": "go_forge",
+          "text": "鍛冶屋へ向かう",
+          "preview": "武器の強化や購入",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鍛冶屋へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "forge"
+            }
+          ]
+        },
+        {
+          "id": "go_inn",
+          "text": "宿屋へ向かう",
+          "preview": "休息や情報収集",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "宿屋へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "inn"
+            }
+          ]
+        },
+        {
+          "id": "go_magic_shop",
+          "text": "魔法店へ向かう",
+          "preview": "魔法の品を購入",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "魔法店へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "magic_shop"
+            }
+          ]
+        },
+        {
+          "id": "go_item_shop",
+          "text": "道具屋へ向かう",
+          "preview": "アイテムを購入",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "道具屋へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "item_shop"
+            }
+          ]
+        },
+        {
+          "id": "go_alley",
+          "text": "路地裏へ向かう",
+          "preview": "怪しい場所を探索",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "路地裏へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "alley"
+            }
+          ]
+        },
+        {
+          "id": "go_dark_forest",
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "城を出て闇の森へ向かう"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "forest_departure_failed"
+            }
+          ]
+        }
       ]
     },
     {
@@ -242,21 +388,21 @@
                 ]
               }
             },
-        {
-          "text": "氷の護符を買う（50G）",
-          "preview": "邪竜の弱点を突く",
-          "risk": "判定不要",
-          "requirements": {
-            "all": [
-              {
-                "gold_gte": 50
-              },
-              {
-                "lacks_item": "氷の護符"
+            {
+              "text": "氷の護符を買う（50G）",
+              "preview": "邪竜の弱点を突く",
+              "risk": "判定不要",
+              "requirements": {
+                "all": [
+                  {
+                    "gold_gte": 50
+                  },
+                  {
+                    "lacks_item": "氷の護符"
+                  }
+                ]
               }
-            ]
-          }
-        }
+            }
           ]
         },
         {
@@ -281,6 +427,90 @@
           "text": "城を出て闇の森へ向かう",
           "preview": "第2章へ進みます",
           "risk": "1d20判定（DC10）"
+        }
+      ],
+      "actions": [
+        {
+          "id": "buy_equipment",
+          "text": "装備を買う",
+          "preview": "武具や護符を購入する",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "装備を買う"
+          ],
+          "effects": [
+            {
+              "set_flag": "checked_forge_equipment"
+            }
+          ]
+        },
+        {
+          "id": "ask_blacksmith_weakness",
+          "text": "邪竜を討つ方法を聞く",
+          "preview": "鍛冶師の知恵を借りる",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "邪竜を討つ方法を聞く"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_blacksmith_advice"
+            }
+          ]
+        },
+        {
+          "id": "show_sword_to_blacksmith",
+          "text": "鍛冶師に剣を見せる",
+          "preview": "勇者の剣について相談する（勇者のみ）",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鍛冶師に剣を見せる"
+          ],
+          "effects": [
+            {
+              "set_flag": "showed_hero_sword"
+            }
+          ],
+          "requirements": {
+            "character_id": "hero"
+          }
+        },
+        {
+          "id": "return_castle_from_forge",
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城に戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "castle"
+            }
+          ]
+        },
+        {
+          "id": "go_dark_forest",
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "城を出て闇の森へ向かう"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "forest_departure_failed"
+            }
+          ]
         }
       ]
     },
@@ -354,6 +584,87 @@
           "preview": "城内に戻る",
           "risk": "判定不要"
         }
+      ],
+      "actions": [
+        {
+          "id": "ask_ian",
+          "text": "イアンと会話する",
+          "preview": "宿屋の店主と話す",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "イアンと会話する"
+          ],
+          "effects": [
+            {
+              "set_flag": "talked_ian"
+            }
+          ]
+        },
+        {
+          "id": "ask_robin",
+          "text": "ロビンと会話する",
+          "preview": "女レンジャーと話す",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "ロビンと会話する"
+          ],
+          "effects": [
+            {
+              "set_flag": "talked_robin"
+            }
+          ]
+        },
+        {
+          "id": "invite_robin",
+          "text": "?????????",
+          "preview": "?????????",
+          "risk": "1d20+cha???DC12?",
+          "intent_keywords": [
+            "?????????"
+          ],
+          "roll": {
+            "dice_type": "1d20+cha",
+            "dc": 12
+          },
+          "success_effects": [
+            {
+              "set_flag": "recruited_robin"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "robin_refused"
+            }
+          ]
+        },
+        {
+          "id": "ask_robin_rumor",
+          "text": "?????",
+          "preview": "?????????",
+          "risk": "????",
+          "intent_keywords": [
+            "?????"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_robin_rumor"
+            }
+          ]
+        },
+        {
+          "id": "return_castle_from_inn",
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城に戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "castle"
+            }
+          ]
+        }
       ]
     },
     {
@@ -398,6 +709,105 @@
           "text": "城を出て闇の森へ向かう",
           "preview": "第2章へ進みます",
           "risk": "1d20判定（DC10）"
+        }
+      ],
+      "actions": [
+        {
+          "id": "buy_magic_scroll",
+          "text": "魔法の巻物を買う（30G）",
+          "preview": "一度だけ使える攻撃魔法",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "魔法の巻物を買う（30G）"
+          ],
+          "effects": [
+            {
+              "gold_change": -30
+            },
+            {
+              "add_item": {
+                "name": "?????",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "bought_magic_scroll"
+            }
+          ],
+          "requirements": {
+            "all": [
+              {
+                "gold_gte": 30
+              },
+              {
+                "lacks_item": "?????"
+              }
+            ]
+          },
+          "disabled_after": "bought_magic_scroll"
+        },
+        {
+          "id": "buy_mp_potion",
+          "text": "MP回復薬を買う（15G）",
+          "preview": "MPを10回復",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "MP回復薬を買う（15G）"
+          ],
+          "effects": [
+            {
+              "gold_change": -15
+            },
+            {
+              "add_item": {
+                "name": "MP???",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "bought_mp_potion"
+            }
+          ],
+          "requirements": {
+            "gold_gte": 15
+          }
+        },
+        {
+          "id": "return_castle_from_magic_shop",
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城に戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "castle"
+            }
+          ]
+        },
+        {
+          "id": "go_dark_forest",
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "城を出て闇の森へ向かう"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "forest_departure_failed"
+            }
+          ]
         }
       ]
     },
@@ -444,6 +854,91 @@
           "preview": "第2章へ進みます",
           "risk": "1d20判定（DC10）"
         }
+      ],
+      "actions": [
+        {
+          "id": "buy_herb",
+          "text": "薬草を買う（10G）",
+          "preview": "HPを10回復",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "薬草を買う（10G）"
+          ],
+          "effects": [
+            {
+              "gold_change": -10
+            },
+            {
+              "add_item": {
+                "name": "??",
+                "quantity": 1
+              }
+            }
+          ],
+          "requirements": {
+            "gold_gte": 10
+          }
+        },
+        {
+          "id": "buy_antidote",
+          "text": "解毒薬を買う（15G）",
+          "preview": "毒状態を回復",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "解毒薬を買う（15G）"
+          ],
+          "effects": [
+            {
+              "gold_change": -15
+            },
+            {
+              "add_item": {
+                "name": "???",
+                "quantity": 1
+              }
+            }
+          ],
+          "requirements": {
+            "gold_gte": 15
+          }
+        },
+        {
+          "id": "return_castle_from_item_shop",
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城に戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "castle"
+            }
+          ]
+        },
+        {
+          "id": "go_dark_forest",
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "城を出て闇の森へ向かう"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "forest_departure_failed"
+            }
+          ]
+        }
       ]
     },
     {
@@ -489,6 +984,91 @@
           "preview": "第2章へ進みます",
           "risk": "1d20判定（DC10）"
         }
+      ],
+      "actions": [
+        {
+          "id": "talk_suspicious_merchant",
+          "text": "怪しい商人に話しかける",
+          "preview": "珍しい品を扱っているかもしれない",
+          "risk": "1d20+cha判定（DC12）",
+          "intent_keywords": [
+            "怪しい商人に話しかける"
+          ],
+          "roll": {
+            "dice_type": "1d20+cha",
+            "dc": 12
+          },
+          "success_effects": [
+            {
+              "set_flag": "merchant_opened_up"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "merchant_distrust"
+            }
+          ]
+        },
+        {
+          "id": "search_alley",
+          "text": "路地裏を探索する",
+          "preview": "隠し通路や秘密の発見",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "路地裏を探索する"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "set_flag": "found_hidden_alley_clue"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "alley_search_failed"
+            }
+          ]
+        },
+        {
+          "id": "return_castle_from_alley",
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城に戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "castle"
+            }
+          ]
+        },
+        {
+          "id": "go_dark_forest",
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "城を出て闇の森へ向かう"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "forest_departure_failed"
+            }
+          ]
+        }
       ]
     },
     {
@@ -527,6 +1107,74 @@
           "preview": "第3章へ進みます",
           "risk": "判定不要"
         }
+      ],
+      "actions": [
+        {
+          "id": "attack_slime",
+          "text": "鉄の剣でスライムを攻撃する",
+          "preview": "戦闘チュートリアルを進めます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "鉄の剣でスライムを攻撃する"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "set_flag": "defeated_slime"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -2
+            },
+            {
+              "set_flag": "slime_counterattack"
+            }
+          ]
+        },
+        {
+          "id": "bypass_slime",
+          "text": "スライムを迂回して森を抜ける",
+          "preview": "戦闘を避けて先へ進みます",
+          "risk": "1d20+dex判定（DC25）失敗時スライムが先手攻撃",
+          "intent_keywords": [
+            "スライムを迂回して森を抜ける"
+          ],
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 25
+          },
+          "success_effects": [
+            {
+              "current_location": "village"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -2
+            },
+            {
+              "set_flag": "slime_ambush"
+            }
+          ]
+        },
+        {
+          "id": "go_village",
+          "text": "麓の村へ向かう",
+          "preview": "第3章へ進みます",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "麓の村へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "village"
+            }
+          ]
+        }
       ]
     },
     {
@@ -556,25 +1204,89 @@
           "preview": "冷気の弱点について情報を得ます",
           "risk": "判定不要"
         },
-      {
-        "text": "道具屋で氷の護符を買う",
-        "preview": "50ゴールドで冷気の護符を入手します",
-        "risk": "判定不要",
-        "requirements": {
-          "all": [
-            {
-              "gold_gte": 50
-            },
-            {
-              "lacks_item": "氷の護符"
-            }
-          ]
-        }
-      },
+        {
+          "text": "道具屋で氷の護符を買う",
+          "preview": "50ゴールドで冷気の護符を入手します",
+          "risk": "判定不要",
+          "requirements": {
+            "all": [
+              {
+                "gold_gte": 50
+              },
+              {
+                "lacks_item": "氷の護符"
+              }
+            ]
+          }
+        },
         {
           "text": "竜の谷へ向かう",
           "preview": "第4章へ進みます",
           "risk": "危険"
+        }
+      ],
+      "actions": [
+        {
+          "id": "ask_elder_weakness",
+          "text": "長老に邪竜の弱点を聞く",
+          "preview": "冷気の弱点について情報を得ます",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "長老に邪竜の弱点を聞く"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_dragon_weakness"
+            }
+          ]
+        },
+        {
+          "id": "buy_ice_amulet",
+          "text": "道具屋で氷の護符を買う",
+          "preview": "50ゴールドで冷気の護符を入手します",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "道具屋で氷の護符を買う"
+          ],
+          "effects": [
+            {
+              "gold_change": -50
+            },
+            {
+              "add_item": {
+                "name": "????",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "bought_ice_amulet"
+            }
+          ],
+          "requirements": {
+            "all": [
+              {
+                "gold_gte": 50
+              },
+              {
+                "lacks_item": "????"
+              }
+            ]
+          },
+          "disabled_after": "bought_ice_amulet"
+        },
+        {
+          "id": "go_dragon_valley",
+          "text": "竜の谷へ向かう",
+          "preview": "第4章へ進みます",
+          "risk": "危険",
+          "intent_keywords": [
+            "竜の谷へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "dragon_valley_loc"
+            }
+          ]
         }
       ]
     },
@@ -635,6 +1347,68 @@
           "preview": "次の被害を抑えます",
           "risk": "判定不要"
         }
+      ],
+      "actions": [
+        {
+          "id": "attack_ignis_with_ice_amulet",
+          "text": "氷の護符を掲げて攻撃する",
+          "preview": "邪竜の弱点を狙います",
+          "risk": "1d20判定（DC12）",
+          "intent_keywords": [
+            "氷の護符を掲げて攻撃する"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 12
+          },
+          "success_effects": [
+            {
+              "set_flag": "defeated_ignis"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -5
+            },
+            {
+              "set_flag": "ice_amulet_attack_failed"
+            }
+          ],
+          "requirements": {
+            "has_item": "????"
+          }
+        },
+        {
+          "id": "attack_ignis_with_sword",
+          "text": "鉄の剣で正面から斬り込む",
+          "preview": "危険ですが直接ダメージを狙います",
+          "risk": "危険",
+          "intent_keywords": [
+            "鉄の剣で正面から斬り込む"
+          ],
+          "effects": [
+            {
+              "hp_change": -6
+            },
+            {
+              "set_flag": "reckless_dragon_attack"
+            }
+          ]
+        },
+        {
+          "id": "defend_ignis_breath",
+          "text": "防御して炎の息に備える",
+          "preview": "次の被害を抑えます",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "防御して炎の息に備える"
+          ],
+          "effects": [
+            {
+              "set_flag": "defended_dragon_breath"
+            }
+          ]
+        }
       ]
     },
     {
@@ -666,6 +1440,36 @@
           "text": "闇の森へ戻る",
           "preview": "砦を離れる",
           "risk": "判定不要"
+        }
+      ],
+      "actions": [
+        {
+          "id": "attack_goblin",
+          "text": "ゴブリンを攻撃する",
+          "preview": "戦闘開始",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "ゴブリンを攻撃する"
+          ],
+          "effects": [
+            {
+              "set_flag": "fought_goblin"
+            }
+          ]
+        },
+        {
+          "id": "return_dark_forest_from_goblin_fort",
+          "text": "闇の森へ戻る",
+          "preview": "砦を離れる",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "闇の森へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ]
         }
       ]
     }

@@ -1,0 +1,4051 @@
+{
+  "meta": {
+    "title": "紅き邪竜イグニスsemi-new",
+    "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
+    "language": "ja",
+    "initial_scene": "throne_room",
+    "hybrid_mode": "semi",
+    "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
+    "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00"
+  },
+  "rules": [
+    "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
+    "調査や戦闘の後は、次に進める行動選択肢を必ず提示する。",
+    "支度金やアイテムを渡した場合は state_delta に反映する。",
+    "戦闘中、SPは毎ターン開始時に最大SPの半分を回復する。戦闘勝利後、HPとMPは全回復する。"
+  ],
+  "scenes": [
+    {
+      "id": "throne_room",
+      "title": "第1章：王の間",
+      "description": "白い石造りの王城。赤い絨毯、古い柱、王座に座る国王エドワード。その傍らには剣聖と称される将軍ドラコが立っている。国王は邪竜イグニス討伐を依頼し、支度金50ゴールドと薬草を渡す。",
+      "goals": [
+        "国王から使命を受ける",
+        "邪竜と竜の谷について情報を得る",
+        "出発の準備を整える"
+      ],
+      "keywords": [
+        "王の間",
+        "王城",
+        "国王",
+        "謁見",
+        "支度金",
+        "王座"
+      ],
+      "location_ids": [
+        "castle"
+      ],
+      "next_scene_ids": [
+        "castle_town",
+        "dark_forest"
+      ]
+    },
+    {
+      "id": "dark_forest",
+      "title": "第2章：闇の森",
+      "description": "湿った森。木漏れ日とぬかるんだ足元。弱いスライムが現れ、戦闘のチュートリアルになる。",
+      "goals": [
+        "スライムとの初戦闘を処理する",
+        "森を抜けて麓の村へ向かう"
+      ],
+      "keywords": [
+        "スライム",
+        "森",
+        "木漏れ日",
+        "戦闘"
+      ],
+      "location_ids": [
+        "dark_forest_loc"
+      ],
+      "next_scene_ids": [
+        "village"
+      ]
+    },
+    {
+      "id": "village",
+      "title": "第3章：麓の村",
+      "description": "山麓の小さな村。長老は邪竜が冷気に弱いと語り、道具屋では氷の護符を扱っている。",
+      "goals": [
+        "邪竜の弱点を知る",
+        "氷の護符を入手する"
+      ],
+      "keywords": [
+        "麓の村",
+        "村",
+        "長老",
+        "道具屋",
+        "氷の護符"
+      ],
+      "location_ids": [
+        "village"
+      ],
+      "next_scene_ids": [
+        "dragon_valley"
+      ]
+    },
+    {
+      "id": "dragon_valley",
+      "title": "第4章：竜の谷",
+      "description": "黒い岩肌と硫黄の匂いが漂う谷。邪竜イグニスが炎の息を吐き、翼の影で空を覆う。",
+      "goals": [
+        "邪竜イグニスを倒す",
+        "王国へ帰還する"
+      ],
+      "keywords": [
+        "竜の谷",
+        "邪竜",
+        "イグニス",
+        "最終決戦"
+      ],
+      "location_ids": [
+        "dragon_valley_loc"
+      ],
+      "next_scene_ids": []
+    }
+  ],
+  "fallback_choices": [
+    {
+      "text": "周囲を詳しく調べる",
+      "preview": "手がかりや危険を発見できるかもしれません",
+      "risk": "1d20判定（DC12）"
+    },
+    {
+      "text": "近くの人物に話を聞く",
+      "preview": "状況を整理できます",
+      "risk": "判定不要"
+    },
+    {
+      "text": "装備と持ち物を確認する",
+      "preview": "次の行動に備えます",
+      "risk": "判定不要"
+    }
+  ],
+  "locations": [
+    {
+      "id": "castle",
+      "title": "アルテリア王城",
+      "description": "白い石造りの古城。王国の政治と軍事の中心。目の前には国王エドワードと将軍ドラコがいる。",
+      "keywords": [
+        "城",
+        "王城",
+        "アルテリア",
+        "王座"
+      ],
+      "npc_ids": [
+        "king",
+        "general"
+      ],
+      "item_ids": [
+        "herb",
+        "iron_sword"
+      ],
+      "clue_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [
+        "forge",
+        "inn",
+        "magic_shop",
+        "item_shop",
+        "alley",
+        "dark_forest_loc"
+      ],
+      "choices": [
+        {
+          "text": "国王に邪竜の詳しい話を聞く",
+          "preview": "旅の目的と手がかりを確認できます",
+          "risk": "判定不要"
+        },
+        {
+          "text": "将軍ドラコに助言を求める",
+          "preview": "実用的な戦術情報が得られるかもしれません",
+          "risk": "筋力または耐久が10以上で1d20判定（DC15）"
+        },
+        {
+          "text": "支度金と装備を確認する",
+          "preview": "所持金、薬草、装備を整理します",
+          "risk": "判定不要"
+        },
+        {
+          "text": "城下町を探索する",
+          "preview": "鍛冶屋、宿屋、魔法店、道具屋、路地裏へ向かう",
+          "risk": "判定不要",
+          "children": [
+            {
+              "text": "鍛冶屋へ向かう",
+              "preview": "武器の強化や購入",
+              "risk": "判定不要"
+            },
+            {
+              "text": "宿屋へ向かう",
+              "preview": "休息や情報収集",
+              "risk": "判定不要"
+            },
+            {
+              "text": "魔法店へ向かう",
+              "preview": "魔法の品を購入",
+              "risk": "判定不要"
+            },
+            {
+              "text": "道具屋へ向かう",
+              "preview": "アイテムを購入",
+              "risk": "判定不要"
+            },
+            {
+              "text": "路地裏へ向かう",
+              "preview": "怪しい場所を探索",
+              "risk": "判定不要"
+            }
+          ]
+        },
+        {
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）"
+        }
+      ],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "summary": "国王から使命を受け、城下町へ出発するまでの主要分岐を網羅。",
+        "prepared_turns": [
+          {
+            "id": "turn_opening",
+            "purpose": "opening",
+            "source_choice": "",
+            "player_intent": "初期導入",
+            "trigger_keywords": [
+              "start",
+              "begin",
+              "はじめ"
+            ],
+            "draft": {
+              "gm_text": "静寂に包まれたアルテリア王城の王の間。重厚な扉が開かれ、あなたの足音が赤い絨毯に吸い込まれていく。王座に鎮座する国王エドワードは、深いため息をつきながらあなたを見据えた。「若き冒険者よ、我が国を脅かす邪竜イグニスを討ち果たしてくれ。報酬は約束しよう。今はまず、この支度金を受け取ってくれ」国王はそう言うと、手元に50ゴールドと薬草を置いた。",
+              "system_log": "シナリオ開始。支度金と薬草の付与。",
+              "dice_type": "null",
+              "dice_dc": 0,
+              "state_delta": {
+                "gold_change": 50,
+                "inventory_add": [
+                  "薬草"
+                ],
+                "current_scene": "throne_room"
+              },
+              "choices": [
+                {
+                  "text": "国王に邪竜の詳しい話を聞く",
+                  "preview": "旅の目的と手がかりを確認できます",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "将軍ドラコに助言を求める",
+                  "preview": "実用的な戦術情報が得られるかもしれません",
+                  "risk": "筋力または耐久が10以上で1d20判定（DC15）"
+                },
+                {
+                  "text": "支度金と装備を確認する",
+                  "preview": "所持金、薬草、装備を整理します",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "城下町を探索する",
+                  "preview": "鍛冶屋、宿屋、魔法店、道具屋、路地裏へ向かう",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "鍛冶屋へ向かう",
+                      "preview": "武器の強化や購入",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "宿屋へ向かう",
+                      "preview": "休息や情報収集",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "魔法店へ向かう",
+                      "preview": "魔法の品を購入",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "道具屋へ向かう",
+                      "preview": "アイテムを購入",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "路地裏へ向かう",
+                      "preview": "怪しい場所を探索",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "城を出て闇の森へ向かう",
+                  "preview": "第2章へ進みます",
+                  "risk": "1d20判定（DC10）"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "国王の威厳ある態度を維持してください。",
+              "支度金が付与された事実は変更しないでください。"
+            ]
+          },
+          {
+            "id": "turn_dragon_info",
+            "purpose": "choice_response",
+            "source_choice": "国王に邪竜の詳しい話を聞く",
+            "player_intent": "情報収集",
+            "trigger_keywords": [
+              "邪竜",
+              "イグニス",
+              "弱点"
+            ],
+            "draft": {
+              "gm_text": "「イグニスは炎を操る恐ろしい竜だ」と国王は杖を強く握りしめる。「だが、竜の谷の古文書によれば、奴は冷気を帯びた攻撃を極端に嫌うそうだ。氷の魔力を持つ武器か、その性質を突く工夫が必要になるだろう」。その言葉には、かつて多くの騎士たちが挑み、そして散った無念が滲んでいる。",
+              "system_log": "情報を取得：邪竜の弱点は冷気。",
+              "dice_type": "null",
+              "dice_dc": 0,
+              "state_delta": {},
+              "choices": [
+                {
+                  "text": "将軍ドラコに助言を求める",
+                  "preview": "実用的な戦術情報が得られるかもしれません",
+                  "risk": "筋力または耐久が10以上で1d20判定（DC15）"
+                },
+                {
+                  "text": "支度金と装備を確認する",
+                  "preview": "所持金、薬草、装備を整理します",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "城下町を探索する",
+                  "preview": "鍛冶屋、宿屋、魔法店、道具屋、路地裏へ向かう",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "鍛冶屋へ向かう",
+                      "preview": "武器の強化や購入",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "宿屋へ向かう",
+                      "preview": "休息や情報収集",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "魔法店へ向かう",
+                      "preview": "魔法の品を購入",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "道具屋へ向かう",
+                      "preview": "アイテムを購入",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "路地裏へ向かう",
+                      "preview": "怪しい場所を探索",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "城を出て闇の森へ向かう",
+                  "preview": "第2章へ進みます",
+                  "risk": "1d20判定（DC10）"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "冷気が弱点であるという情報を明確に伝えてください。",
+              "国王の悲壮感を強調してください。"
+            ],
+            "action_id": "ask_king_info",
+            "outcome": "neutral"
+          },
+          {
+            "id": "ask_general_success",
+            "purpose": "choice_response",
+            "source_choice": "将軍ドラコに助言を求める",
+            "player_intent": "将軍からアドバイスをもらう",
+            "trigger_keywords": [
+              "将軍",
+              "ドラコ",
+              "助言"
+            ],
+            "draft": {
+              "gm_text": "将軍ドラコはあなたの体格を一瞥し、満足げに頷いた。「見事だ。お前なら邪竜の猛攻にも耐えうるかもしれん。正面からの攻撃は無謀だが、奴のブレスの後に生じる隙を狙え。健闘を祈る」と実戦的な助言を与えてくれた。",
+              "system_log": "将軍ドラコから戦術的なアドバイスを得た。",
+              "dice_type": "1d20",
+              "dice_dc": 15,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "国王に邪竜の詳しい話を聞く",
+                  "preview": "旅の目的と手がかりを確認できます",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "支度金と装備を確認する",
+                  "preview": "所持金、薬草、装備を整理します",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "城下町を探索する",
+                  "preview": "鍛冶屋、宿屋、魔法店、道具屋、路地裏へ向かう",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "鍛冶屋へ向かう",
+                      "preview": "武器の強化や購入",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "宿屋へ向かう",
+                      "preview": "休息や情報収集",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "魔法店へ向かう",
+                      "preview": "魔法の品を購入",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "道具屋へ向かう",
+                      "preview": "アイテムを購入",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "路地裏へ向かう",
+                      "preview": "怪しい場所を探索",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "城を出て闇の森へ向かう",
+                  "preview": "第2章へ進みます",
+                  "risk": "1d20判定（DC10）"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "DC15成功時。"
+            ],
+            "action_id": "ask_general_advice",
+            "outcome": "success"
+          },
+          {
+            "id": "ask_general_fail",
+            "purpose": "choice_response",
+            "source_choice": "将軍ドラコに助言を求める",
+            "player_intent": "将軍からアドバイスをもらう",
+            "trigger_keywords": [
+              "将軍",
+              "ドラコ",
+              "助言"
+            ],
+            "draft": {
+              "gm_text": "将軍ドラコはあなたを一瞥し、鼻で笑った。「その程度の体では邪竜の息吹一つに耐えられまい。まずは己を鍛え直すことだ。私から教えることは何もない」",
+              "system_log": "将軍ドラコに助言を求めたが、拒絶された。",
+              "dice_type": "1d20",
+              "dice_dc": 15,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "国王に邪竜の詳しい話を聞く",
+                  "preview": "旅の目的と手がかりを確認できます",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "支度金と装備を確認する",
+                  "preview": "所持金、薬草、装備を整理します",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "城下町を探索する",
+                  "preview": "鍛冶屋、宿屋、魔法店、道具屋、路地裏へ向かう",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "鍛冶屋へ向かう",
+                      "preview": "武器の強化や購入",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "宿屋へ向かう",
+                      "preview": "休息や情報収集",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "魔法店へ向かう",
+                      "preview": "魔法の品を購入",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "道具屋へ向かう",
+                      "preview": "アイテムを購入",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "路地裏へ向かう",
+                      "preview": "怪しい場所を探索",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "城を出て闇の森へ向かう",
+                  "preview": "第2章へ進みます",
+                  "risk": "1d20判定（DC10）"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "DC15失敗時。"
+            ],
+            "action_id": "ask_general_advice",
+            "outcome": "failure"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "ask_king_info",
+          "text": "国王に邪竜の詳しい話を聞く",
+          "preview": "旅の目的と手がかりを確認できます",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "国王に邪竜の詳しい話を聞く"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_king_info"
+            }
+          ]
+        },
+        {
+          "id": "ask_general_advice",
+          "text": "将軍ドラコに助言を求める",
+          "preview": "実用的な戦術情報が得られるかもしれません",
+          "risk": "筋力または耐久が10以上で1d20判定（DC15）",
+          "intent_keywords": [
+            "将軍ドラコに助言を求める"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 15
+          },
+          "success_effects": [
+            {
+              "set_flag": "got_general_advice"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "general_advice_failed"
+            }
+          ]
+        },
+        {
+          "id": "check_supplies",
+          "text": "支度金と装備を確認する",
+          "preview": "所持金、薬草、装備を整理します",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "支度金と装備を確認する"
+          ],
+          "effects": [
+            {
+              "set_flag": "checked_supplies"
+            }
+          ]
+        },
+        {
+          "id": "go_forge",
+          "text": "鍛冶屋へ向かう",
+          "preview": "武器の強化や購入",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鍛冶屋へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "forge"
+            }
+          ]
+        },
+        {
+          "id": "go_inn",
+          "text": "宿屋へ向かう",
+          "preview": "休息や情報収集",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "宿屋へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "inn"
+            }
+          ]
+        },
+        {
+          "id": "go_magic_shop",
+          "text": "魔法店へ向かう",
+          "preview": "魔法の品を購入",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "魔法店へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "magic_shop"
+            }
+          ]
+        },
+        {
+          "id": "go_item_shop",
+          "text": "道具屋へ向かう",
+          "preview": "アイテムを購入",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "道具屋へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "item_shop"
+            }
+          ]
+        },
+        {
+          "id": "go_alley",
+          "text": "路地裏へ向かう",
+          "preview": "怪しい場所を探索",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "路地裏へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "alley"
+            }
+          ]
+        },
+        {
+          "id": "go_dark_forest",
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "城を出て闇の森へ向かう"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "forest_departure_failed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "forge",
+      "title": "王城の鍛冶屋",
+      "description": "城内の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。",
+      "keywords": [
+        "鍛冶屋",
+        "鍛造屋",
+        "ローベルト",
+        "武具",
+        "武器",
+        "防具",
+        "修理"
+      ],
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "item_ids": [
+        "adamantite_armor",
+        "ice_iron_greatsword"
+      ],
+      "clue_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [
+        "castle",
+        "inn",
+        "magic_shop",
+        "item_shop",
+        "alley",
+        "dark_forest_loc"
+      ],
+      "choices": [
+        {
+          "text": "装備を買う",
+          "preview": "武具や護符を購入する",
+          "risk": "判定不要",
+          "children": [
+            {
+              "text": "アダマンタイトの鎧を買う（20G）",
+              "preview": "被ダメージを軽減(-3)",
+              "risk": "判定不要"
+            },
+            {
+              "text": "氷の護符を買う（50G）",
+              "preview": "邪竜の弱点を突く",
+              "risk": "判定不要",
+              "requirements": {
+                "all": [
+                  {
+                    "gold_gte": 50
+                  },
+                  {
+                    "lacks_item": "氷の護符"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "text": "邪竜を討つ方法を聞く",
+          "preview": "鍛冶師の知恵を借りる",
+          "risk": "判定不要"
+        },
+        {
+          "text": "鍛冶師に剣を見せる",
+          "preview": "勇者の剣について相談する（勇者のみ）",
+          "risk": "判定不要",
+          "requirements": {
+            "character_id": "hero"
+          }
+        },
+        {
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要"
+        },
+        {
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）"
+        }
+      ],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "summary": "",
+        "prepared_turns": [
+          {
+            "id": "forge_opening",
+            "purpose": "opening",
+            "source_choice": "",
+            "player_intent": "鍛冶屋に入る",
+            "trigger_keywords": [
+              "入る",
+              "開始",
+              "鍛冶屋",
+              "到着"
+            ],
+            "draft": {
+              "gm_text": "城内の小さな鍛冶屋に足を踏み入れると、熱気と鉄を打つ音があなたを出迎えた。無骨だが腕の立つ鍛冶師ローベルトが、汗を拭いながらこちらを見ている。「武器の点検か？それとも新しい武具が要るのか？」",
+              "system_log": "鍛冶屋に入った。",
+              "dice_type": "null",
+              "dice_dc": 0,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": "forge"
+              },
+              "choices": [
+                {
+                  "text": "装備を買う",
+                  "preview": "武具や護符を購入する",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "アダマンタイトの鎧を買う（20G）",
+                      "preview": "被ダメージを軽減(-3)",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "attribute": "end",
+                            "gte": 8
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "text": "氷の護符を買う（50G）",
+                      "preview": "邪竜の弱点を突く",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "gold_gte": 50
+                          },
+                          {
+                            "lacks_item": "氷の護符"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "text": "邪竜を討つ方法を聞く",
+                  "preview": "鍛冶師の知恵を借りる",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "鍛冶師に剣を見せる",
+                  "preview": "勇者の剣について相談する（勇者のみ）",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "character_id": "hero"
+                  }
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "城を出て闇の森へ向かう",
+                  "preview": "第2章へ進みます",
+                  "risk": "1d20判定（DC10）"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "鍛冶屋の熱気とローベルトの無骨さを表現してください。"
+            ]
+          },
+          {
+            "id": "ask_blacksmith_dragon_weakness",
+            "purpose": "choice_response",
+            "source_choice": "邪竜を討つ方法を聞く",
+            "player_intent": "邪竜を倒すための助言を鍛冶師に求める",
+            "trigger_keywords": [
+              "邪竜",
+              "討つ方法",
+              "倒す方法",
+              "弱点"
+            ],
+            "draft": {
+              "gm_text": "鍛冶師ローベルトは手を止め、低い声で語り始めた。「通常の物理攻撃や炎は、あの邪竜イグニスには一切通用せん。だが、『氷の護符』の力を武器に纏わせれば、自身の攻撃を氷属性に変換できる。それなら奴にも傷を負わせられるはずだ」",
+              "system_log": "鍛冶師から、邪竜には通常の物理・炎攻撃が効かず、氷の護符で攻撃を氷属性にする必要があると聞いた。",
+              "dice_type": "1d20",
+              "dice_dc": 0,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "装備を買う",
+                  "preview": "武具や護符を購入する",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "アダマンタイトの鎧を買う（20G）",
+                      "preview": "被ダメージを軽減(-3)",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "氷の護符を買う（50G）",
+                      "preview": "邪竜の弱点を突く",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "gold_gte": 50
+                          },
+                          {
+                            "lacks_item": "氷の護符"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "text": "邪竜を討つ方法を聞く",
+                  "preview": "鍛冶師の知恵を借りる",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "鍛冶師に剣を見せる",
+                  "preview": "勇者の剣について相談する（勇者のみ）",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "character_id": "hero"
+                  }
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "城を出て闇の森へ向かう",
+                  "preview": "第2章へ進みます",
+                  "risk": "1d20判定（DC10）"
+                }
+              ]
+            },
+            "rewrite_notes": [],
+            "action_id": "ask_blacksmith_weakness",
+            "outcome": "neutral"
+          },
+          {
+            "id": "ask_activate_ice_charm",
+            "purpose": "choice_response",
+            "source_choice": "氷の護符の活性化を頼む",
+            "player_intent": "氷の護符の真の力を引き出してもらう",
+            "trigger_keywords": [
+              "活性化",
+              "護符",
+              "頼む"
+            ],
+            "draft": {
+              "gm_text": "ローベルトは受け取った氷の護符を炉にかざし、特殊な石で叩き始めた。青白い光が護符から溢れ出し、冷気が辺りに漂う。「よし、これで護符の力は完全に引き出された。どんな攻撃も氷の刃となって邪竜を切り裂くだろう」",
+              "system_log": "『氷の護符』を失い、『氷の護符(活性化済)』を獲得した。無属性ダメージが氷属性になり、邪竜に有効になる。",
+              "dice_type": "1d20",
+              "dice_dc": 0,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [
+                  {
+                    "name": "氷の護符(活性化済)",
+                    "description": "鍛冶師によって真の力を引き出された氷の護符。",
+                    "effect": "無属性ダメージを氷属性に変換し、邪竜に有効なダメージを与える",
+                    "quantity": 1
+                  }
+                ],
+                "inventory_remove": [
+                  {
+                    "name": "氷の護符",
+                    "quantity": 1
+                  }
+                ],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "装備を買う",
+                  "preview": "武具や護符を購入する",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "アダマンタイトの鎧を買う（20G）",
+                      "preview": "被ダメージを軽減(-3)",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "氷の護符を買う（50G）",
+                      "preview": "邪竜の弱点を突く",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "gold_gte": 50
+                          },
+                          {
+                            "lacks_item": "氷の護符"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "text": "邪竜を討つ方法を聞く",
+                  "preview": "鍛冶師の知恵を借りる",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "鍛冶師に剣を見せる",
+                  "preview": "勇者の剣について相談する（勇者のみ）",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "character_id": "hero"
+                  }
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "城を出て闇の森へ向かう",
+                  "preview": "第2章へ進みます",
+                  "risk": "1d20判定（DC10）"
+                }
+              ]
+            },
+            "rewrite_notes": [],
+            "action_id": "buy_ice_amulet",
+            "outcome": "neutral"
+          },
+          {
+            "id": "show_sword_to_blacksmith",
+            "purpose": "choice_response",
+            "source_choice": "鍛冶師に剣を見せる",
+            "player_intent": "勇者の剣を強化できないか相談する",
+            "trigger_keywords": [
+              "剣を見せる",
+              "勇者",
+              "剣"
+            ],
+            "draft": {
+              "gm_text": "ローベルトは君の鉄の剣をじっと見つめ、少し言葉を濁した。「お前の剣……氷の護符を埋め込むことはできるが、今の剣はボロボロすぎて耐えられん。俺が打った上質な剣に護符を融合させてやろう。護符の代金は要らん、その鉄の剣を置いていくならな」",
+              "system_log": "鍛冶師から、鉄の剣と引き換えに氷の護符を融合させた強力な剣を作ると提案された。",
+              "dice_type": "1d20",
+              "dice_dc": 0,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "装備を買う",
+                  "preview": "武具や護符を購入する",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "アダマンタイトの鎧を買う（20G）",
+                      "preview": "被ダメージを軽減(-3)",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "氷の護符を買う（50G）",
+                      "preview": "邪竜の弱点を突く",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "gold_gte": 50
+                          },
+                          {
+                            "lacks_item": "氷の護符"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "text": "邪竜を討つ方法を聞く",
+                  "preview": "鍛冶師の知恵を借りる",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "鍛冶師に剣を見せる",
+                  "preview": "勇者の剣について相談する（勇者のみ）",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "character_id": "hero"
+                  }
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "城を出て闇の森へ向かう",
+                  "preview": "第2章へ進みます",
+                  "risk": "1d20判定（DC10）"
+                }
+              ]
+            },
+            "rewrite_notes": [],
+            "action_id": "show_sword_to_blacksmith",
+            "outcome": "neutral"
+          },
+          {
+            "id": "accept_sword_fusion",
+            "purpose": "choice_response",
+            "source_choice": "提案を受け入れる",
+            "player_intent": "鉄の剣を渡し、氷鉄の大剣を作ってもらう",
+            "trigger_keywords": [
+              "受け入れる",
+              "提案",
+              "融合"
+            ],
+            "draft": {
+              "gm_text": "「よし、少し待っていろ」ローベルトは鉄の剣を受け取ると、奥から見事な大剣を取り出し、氷の護符を柄に埋め込んだ。目も眩むような青い輝きが剣を包み込む。「完成だ。名付けて『氷鉄の大剣』。邪竜の鱗も容易く貫き、お前の魔力に応じた追撃も発生する至高の品だ」",
+              "system_log": "『鉄の剣』を失い、『氷鉄の大剣』を獲得した。無属性ダメージが氷属性になり、全攻撃にINT依存の追加ダメージが発生する。",
+              "dice_type": "1d20",
+              "dice_dc": 0,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [
+                  {
+                    "name": "氷鉄の大剣",
+                    "description": "氷の護符と上質な剣を融合させた大剣。",
+                    "effect": "無属性ダメージを氷属性に変換。全攻撃にINT依存の追加ダメージ。",
+                    "quantity": 1
+                  }
+                ],
+                "inventory_remove": [
+                  {
+                    "name": "鉄の剣",
+                    "quantity": 1
+                  }
+                ],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "装備を買う",
+                  "preview": "武具や護符を購入する",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "アダマンタイトの鎧を買う（20G）",
+                      "preview": "被ダメージを軽減(-3)",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "氷の護符を買う（50G）",
+                      "preview": "邪竜の弱点を突く",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "gold_gte": 50
+                          },
+                          {
+                            "lacks_item": "氷の護符"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "text": "邪竜を討つ方法を聞く",
+                  "preview": "鍛冶師の知恵を借りる",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "鍛冶師に剣を見せる",
+                  "preview": "勇者の剣について相談する（勇者のみ）",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "character_id": "hero"
+                  }
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "城を出て闇の森へ向かう",
+                  "preview": "第2章へ進みます",
+                  "risk": "1d20判定（DC10）"
+                }
+              ]
+            },
+            "rewrite_notes": [],
+            "action_id": "show_sword_to_blacksmith",
+            "outcome": "neutral"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "buy_equipment",
+          "text": "装備を買う",
+          "preview": "武具や護符を購入する",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "装備を買う"
+          ],
+          "effects": [
+            {
+              "set_flag": "checked_forge_equipment"
+            }
+          ]
+        },
+        {
+          "id": "ask_blacksmith_weakness",
+          "text": "邪竜を討つ方法を聞く",
+          "preview": "鍛冶師の知恵を借りる",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "邪竜を討つ方法を聞く"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_blacksmith_advice"
+            }
+          ]
+        },
+        {
+          "id": "show_sword_to_blacksmith",
+          "text": "鍛冶師に剣を見せる",
+          "preview": "勇者の剣について相談する（勇者のみ）",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鍛冶師に剣を見せる"
+          ],
+          "effects": [
+            {
+              "set_flag": "showed_hero_sword"
+            }
+          ],
+          "requirements": {
+            "character_id": "hero"
+          }
+        },
+        {
+          "id": "return_castle_from_forge",
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城に戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "castle"
+            }
+          ]
+        },
+        {
+          "id": "go_dark_forest",
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "城を出て闇の森へ向かう"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "forest_departure_failed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "inn",
+      "title": "王城の宿屋",
+      "description": "冒険者や旅人が休息を取るための宿屋。暖かい食事と清潔な寝台がある。",
+      "keywords": [
+        "宿屋",
+        "休息",
+        "旅館",
+        "宿泊"
+      ],
+      "npc_ids": [
+        "ian",
+        "robin"
+      ],
+      "item_ids": [],
+      "clue_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [
+        "castle",
+        "forge",
+        "magic_shop",
+        "item_shop",
+        "alley",
+        "dark_forest_loc"
+      ],
+      "choices": [
+        {
+          "text": "イアンと会話する",
+          "preview": "宿屋の店主と話す",
+          "risk": "判定不要",
+          "children": [
+            {
+              "text": "強力な氷属性武器の伝説について聞く",
+              "preview": "伝説の武器の情報を得る",
+              "risk": "1d30判定（DC4）"
+            },
+            {
+              "text": "邪竜を倒すアドバイスを求める",
+              "preview": "イアンの意見を聞く",
+              "risk": "判定不要"
+            },
+            {
+              "text": "宿屋で一晩休む（1G）",
+              "preview": "夜まで休む",
+              "risk": "判定不要"
+            }
+          ]
+        },
+        {
+          "text": "ロビンと会話する",
+          "preview": "女レンジャーと話す",
+          "risk": "判定不要",
+          "children": [
+            {
+              "text": "パーティに勧誘する",
+              "preview": "ロビンを仲間に誘う",
+              "risk": "1d100+agi判定（DC60）"
+            },
+            {
+              "text": "噂話を聞く",
+              "preview": "ロビンから情報を得る",
+              "risk": "判定不要"
+            }
+          ]
+        },
+        {
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要"
+        }
+      ],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "summary": "",
+        "prepared_turns": [
+          {
+            "id": "inn_opening",
+            "purpose": "opening",
+            "source_choice": "",
+            "player_intent": "宿屋に入る",
+            "trigger_keywords": [
+              "入る",
+              "開始",
+              "宿屋",
+              "到着"
+            ],
+            "draft": {
+              "gm_text": "宿屋の扉を開けると、温かい食事の匂いと和やかな喧噪が包み込んできた。カウンターの奥では店主のイアンがグラスを磨いており、隅の席では闇の森を拠点とする女レンジャーのロビンがくつろいでいる。「いらっしゃい、休んでいくかい？」とイアンが声をかけてきた。",
+              "system_log": "宿屋に入った。",
+              "dice_type": "null",
+              "dice_dc": 0,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": "inn"
+              },
+              "choices": [
+                {
+                  "text": "イアンと会話する",
+                  "preview": "宿屋の店主と話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "強力な氷属性武器の伝説について聞く",
+                      "preview": "伝説の武器の情報を得る",
+                      "risk": "1d30判定（DC4）"
+                    },
+                    {
+                      "text": "邪竜を倒すアドバイスを求める",
+                      "preview": "イアンの意見を聞く",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "宿屋で一晩休む（1G）",
+                      "preview": "夜まで休む",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "ロビンと会話する",
+                  "preview": "女レンジャーと話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "パーティに勧誘する",
+                      "preview": "ロビンを仲間に誘う",
+                      "risk": "1d100+agi判定（DC60）"
+                    },
+                    {
+                      "text": "噂話を聞く",
+                      "preview": "ロビンから情報を得る",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "宿屋の温かい雰囲気と、イアン・ロビンの存在を伝えてください。"
+            ]
+          },
+          {
+            "id": "ask_ian_legend_success",
+            "purpose": "choice_response",
+            "source_choice": "強力な氷属性武器の伝説について聞く",
+            "player_intent": "強力な氷属性武器の伝説について聞く",
+            "trigger_keywords": [
+              "氷属性武器",
+              "伝説",
+              "イアン"
+            ],
+            "draft": {
+              "gm_text": "イアンは遠い目をし、過去に麓の村で語られていた伝説の「氷の太刀」について思い出しました。「詳しいことは村の長老に聞くといい」と助言してくれました。",
+              "system_log": "イアンから伝説の武器「氷の太刀」の情報を得た。",
+              "dice_type": "1d30",
+              "dice_dc": 4,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "すぐに麓の村へ向かう",
+                  "preview": "極めて危険",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "イアンと会話する",
+                  "preview": "宿屋の店主と話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "強力な氷属性武器の伝説について聞く",
+                      "preview": "伝説の武器の情報を得る",
+                      "risk": "1d30判定（DC4）"
+                    },
+                    {
+                      "text": "邪竜を倒すアドバイスを求める",
+                      "preview": "イアンの意見を聞く",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "宿屋で一晩休む（1G）",
+                      "preview": "夜まで休む",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "ロビンと会話する",
+                  "preview": "女レンジャーと話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "パーティに勧誘する",
+                      "preview": "ロビンを仲間に誘う",
+                      "risk": "1d100+agi判定（DC60）"
+                    },
+                    {
+                      "text": "噂話を聞く",
+                      "preview": "ロビンから情報を得る",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "1d30判定成功時に使用。"
+            ],
+            "action_id": "ask_ian",
+            "outcome": "success"
+          },
+          {
+            "id": "ask_ian_legend_fail",
+            "purpose": "choice_response",
+            "source_choice": "強力な氷属性武器の伝説について聞く",
+            "player_intent": "強力な氷属性武器の伝説について聞く",
+            "trigger_keywords": [
+              "氷属性武器",
+              "伝説",
+              "イアン"
+            ],
+            "draft": {
+              "gm_text": "イアンは過去の辛い記憶を思い出し、苦痛の表情を浮かべて口を閉ざしてしまいました。これ以上聞き出すことはできそうにありません。",
+              "system_log": "イアンは過去のトラウマにより回答を拒否した。",
+              "dice_type": "1d30",
+              "dice_dc": 4,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "イアンと会話する",
+                  "preview": "宿屋の店主と話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "強力な氷属性武器の伝説について聞く",
+                      "preview": "伝説の武器の情報を得る",
+                      "risk": "1d30判定（DC4）"
+                    },
+                    {
+                      "text": "邪竜を倒すアドバイスを求める",
+                      "preview": "イアンの意見を聞く",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "宿屋で一晩休む（1G）",
+                      "preview": "夜まで休む",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "ロビンと会話する",
+                  "preview": "女レンジャーと話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "パーティに勧誘する",
+                      "preview": "ロビンを仲間に誘う",
+                      "risk": "1d100+agi判定（DC60）"
+                    },
+                    {
+                      "text": "噂話を聞く",
+                      "preview": "ロビンから情報を得る",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "1d30判定失敗時に使用。"
+            ],
+            "action_id": "ask_ian",
+            "outcome": "failure"
+          },
+          {
+            "id": "ask_ian_advice",
+            "purpose": "choice_response",
+            "source_choice": "邪竜を倒すアドバイスを求める",
+            "player_intent": "邪竜討伐のアドバイスを求める",
+            "trigger_keywords": [
+              "邪竜",
+              "アドバイス",
+              "倒す"
+            ],
+            "draft": {
+              "gm_text": "イアンはため息をつき、「邪竜は過去に何度も倒されているが、また復活する。国王にとって討伐は定期的な仕事のようなものだ。国王の言う通りにするのが間違いないさ」と語りました。",
+              "system_log": "邪竜討伐に関するイアンのメタ的なアドバイスを聞いた。",
+              "dice_type": "1d20",
+              "dice_dc": 0,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "イアンと会話する",
+                  "preview": "宿屋の店主と話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "強力な氷属性武器の伝説について聞く",
+                      "preview": "伝説の武器の情報を得る",
+                      "risk": "1d30判定（DC4）"
+                    },
+                    {
+                      "text": "邪竜を倒すアドバイスを求める",
+                      "preview": "イアンの意見を聞く",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "宿屋で一晩休む（1G）",
+                      "preview": "夜まで休む",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "ロビンと会話する",
+                  "preview": "女レンジャーと話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "パーティに勧誘する",
+                      "preview": "ロビンを仲間に誘う",
+                      "risk": "1d100+agi判定（DC60）"
+                    },
+                    {
+                      "text": "噂話を聞く",
+                      "preview": "ロビンから情報を得る",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [],
+            "action_id": "ask_ian",
+            "outcome": "neutral"
+          },
+          {
+            "id": "inn_stay_night",
+            "purpose": "choice_response",
+            "source_choice": "宿屋で一晩休む（1G）",
+            "player_intent": "宿屋で夜を過ごす",
+            "trigger_keywords": [
+              "休む",
+              "一晩",
+              "宿屋"
+            ],
+            "draft": {
+              "gm_text": "夜が深まり、王城の店舗はすべて閉まりました。静寂に包まれた街で、夜の闇に乗じて行動することもできますが、どうしますか？",
+              "system_log": "夜になり、店舗が閉店した。",
+              "dice_type": "1d20",
+              "dice_dc": 0,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": -1,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "闇の森へ向かう（第2章）",
+                  "preview": "夜の森へ進む",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "路地裏へ向かう",
+                  "preview": "夜の路地を探索する",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "イアンと会話する",
+                  "preview": "宿屋の店主と話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "強力な氷属性武器の伝説について聞く",
+                      "preview": "伝説の武器の情報を得る",
+                      "risk": "1d30判定（DC4）"
+                    },
+                    {
+                      "text": "邪竜を倒すアドバイスを求める",
+                      "preview": "イアンの意見を聞く",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "宿屋で一晩休む（1G）",
+                      "preview": "夜まで休む",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "ロビンと会話する",
+                  "preview": "女レンジャーと話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "パーティに勧誘する",
+                      "preview": "ロビンを仲間に誘う",
+                      "risk": "1d100+agi判定（DC60）"
+                    },
+                    {
+                      "text": "噂話を聞く",
+                      "preview": "ロビンから情報を得る",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": []
+          },
+          {
+            "id": "invite_robin_success",
+            "purpose": "choice_response",
+            "source_choice": "パーティに勧誘する",
+            "player_intent": "ロビンを仲間にする",
+            "trigger_keywords": [
+              "パーティ",
+              "勧誘",
+              "ロビン"
+            ],
+            "draft": {
+              "gm_text": "ロビンは笑って頷きました。「同行してもいいわよ。でもその前に、私の手伝いをしてくれない？王国商人の荷物が闇の森のゴブリンに奪われたの。今すぐ一緒に取り返しに行きましょう」",
+              "system_log": "ロビンが同行に同意した。ただしゴブリン討伐の手伝いが条件となる。",
+              "dice_type": "1d100+agi",
+              "dice_dc": 60,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "引き受ける",
+                  "preview": "ロビンが同行し、ゴブリンの砦へ",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "イアンと会話する",
+                  "preview": "宿屋の店主と話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "強力な氷属性武器の伝説について聞く",
+                      "preview": "伝説の武器の情報を得る",
+                      "risk": "1d30判定（DC4）"
+                    },
+                    {
+                      "text": "邪竜を倒すアドバイスを求める",
+                      "preview": "イアンの意見を聞く",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "宿屋で一晩休む（1G）",
+                      "preview": "夜まで休む",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "ロビンと会話する",
+                  "preview": "女レンジャーと話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "パーティに勧誘する",
+                      "preview": "ロビンを仲間に誘う",
+                      "risk": "1d100+agi判定（DC60）"
+                    },
+                    {
+                      "text": "噂話を聞く",
+                      "preview": "ロビンから情報を得る",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "判定成功時に使用。引き受けるを選択すると直ちにgoblin_fortへ遷移し、ロビンが同行状態になる。"
+            ],
+            "action_id": "invite_robin",
+            "outcome": "success"
+          },
+          {
+            "id": "invite_robin_fail",
+            "purpose": "choice_response",
+            "source_choice": "パーティに勧誘する",
+            "player_intent": "ロビンを仲間にする",
+            "trigger_keywords": [
+              "パーティ",
+              "勧誘",
+              "ロビン"
+            ],
+            "draft": {
+              "gm_text": "ロビンは肩をすくめました。「悪いけど、今は忙しいの。また今度ね」",
+              "system_log": "ロビンの勧誘に失敗した。",
+              "dice_type": "1d100+agi",
+              "dice_dc": 60,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "イアンと会話する",
+                  "preview": "宿屋の店主と話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "強力な氷属性武器の伝説について聞く",
+                      "preview": "伝説の武器の情報を得る",
+                      "risk": "1d30判定（DC4）"
+                    },
+                    {
+                      "text": "邪竜を倒すアドバイスを求める",
+                      "preview": "イアンの意見を聞く",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "宿屋で一晩休む（1G）",
+                      "preview": "夜まで休む",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "ロビンと会話する",
+                  "preview": "女レンジャーと話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "パーティに勧誘する",
+                      "preview": "ロビンを仲間に誘う",
+                      "risk": "1d100+agi判定（DC60）"
+                    },
+                    {
+                      "text": "噂話を聞く",
+                      "preview": "ロビンから情報を得る",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "判定失敗時に使用。"
+            ],
+            "action_id": "invite_robin",
+            "outcome": "failure"
+          },
+          {
+            "id": "robin_rumor",
+            "purpose": "choice_response",
+            "source_choice": "噂話を聞く",
+            "player_intent": "ロビンから噂を聞く",
+            "trigger_keywords": [
+              "噂",
+              "話",
+              "ロビン"
+            ],
+            "draft": {
+              "gm_text": "ロビンは声を潜めて教えてくれました。「王城の路地裏には、夜の間だけ現れる謎の神秘的な商人がいるらしいわよ。珍しい品を扱ってるみたい」",
+              "system_log": "夜の路地裏に現れる神秘的な商人の噂を聞いた。",
+              "dice_type": "1d20",
+              "dice_dc": 0,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "イアンと会話する",
+                  "preview": "宿屋の店主と話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "強力な氷属性武器の伝説について聞く",
+                      "preview": "伝説の武器の情報を得る",
+                      "risk": "1d30判定（DC4）"
+                    },
+                    {
+                      "text": "邪竜を倒すアドバイスを求める",
+                      "preview": "イアンの意見を聞く",
+                      "risk": "判定不要"
+                    },
+                    {
+                      "text": "宿屋で一晩休む（1G）",
+                      "preview": "夜まで休む",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "ロビンと会話する",
+                  "preview": "女レンジャーと話す",
+                  "risk": "判定不要",
+                  "children": [
+                    {
+                      "text": "パーティに勧誘する",
+                      "preview": "ロビンを仲間に誘う",
+                      "risk": "1d100+agi判定（DC60）"
+                    },
+                    {
+                      "text": "噂話を聞く",
+                      "preview": "ロビンから情報を得る",
+                      "risk": "判定不要"
+                    }
+                  ]
+                },
+                {
+                  "text": "城に戻る",
+                  "preview": "城内に戻る",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [],
+            "action_id": "ask_robin_rumor",
+            "outcome": "neutral"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "ask_ian",
+          "text": "イアンと会話する",
+          "preview": "宿屋の店主と話す",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "イアンと会話する"
+          ],
+          "effects": [
+            {
+              "set_flag": "talked_ian"
+            }
+          ]
+        },
+        {
+          "id": "ask_robin",
+          "text": "ロビンと会話する",
+          "preview": "女レンジャーと話す",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "ロビンと会話する"
+          ],
+          "effects": [
+            {
+              "set_flag": "talked_robin"
+            }
+          ]
+        },
+        {
+          "id": "invite_robin",
+          "text": "?????????",
+          "preview": "?????????",
+          "risk": "1d20+cha???DC12?",
+          "intent_keywords": [
+            "?????????"
+          ],
+          "roll": {
+            "dice_type": "1d20+cha",
+            "dc": 12
+          },
+          "success_effects": [
+            {
+              "set_flag": "recruited_robin"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "robin_refused"
+            }
+          ]
+        },
+        {
+          "id": "ask_robin_rumor",
+          "text": "?????",
+          "preview": "?????????",
+          "risk": "????",
+          "intent_keywords": [
+            "?????"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_robin_rumor"
+            }
+          ]
+        },
+        {
+          "id": "return_castle_from_inn",
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城に戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "castle"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "magic_shop",
+      "title": "王城の魔法店",
+      "description": "薄暗い店内に古びた魔導書や魔法の品が並ぶ。店主は無口な老魔術師。",
+      "keywords": [
+        "魔法店",
+        "魔法",
+        "魔導書",
+        "魔具"
+      ],
+      "npc_ids": [],
+      "item_ids": [],
+      "clue_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [
+        "castle",
+        "forge",
+        "inn",
+        "item_shop",
+        "alley",
+        "dark_forest_loc"
+      ],
+      "choices": [
+        {
+          "text": "魔法の巻物を買う（30G）",
+          "preview": "一度だけ使える攻撃魔法",
+          "risk": "判定不要"
+        },
+        {
+          "text": "MP回復薬を買う（15G）",
+          "preview": "MPを10回復",
+          "risk": "判定不要"
+        },
+        {
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要"
+        },
+        {
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）"
+        }
+      ],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "summary": "",
+        "prepared_turns": []
+      },
+      "actions": [
+        {
+          "id": "buy_magic_scroll",
+          "text": "魔法の巻物を買う（30G）",
+          "preview": "一度だけ使える攻撃魔法",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "魔法の巻物を買う（30G）"
+          ],
+          "effects": [
+            {
+              "gold_change": -30
+            },
+            {
+              "add_item": {
+                "name": "?????",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "bought_magic_scroll"
+            }
+          ],
+          "requirements": {
+            "all": [
+              {
+                "gold_gte": 30
+              },
+              {
+                "lacks_item": "?????"
+              }
+            ]
+          },
+          "disabled_after": "bought_magic_scroll"
+        },
+        {
+          "id": "buy_mp_potion",
+          "text": "MP回復薬を買う（15G）",
+          "preview": "MPを10回復",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "MP回復薬を買う（15G）"
+          ],
+          "effects": [
+            {
+              "gold_change": -15
+            },
+            {
+              "add_item": {
+                "name": "MP???",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "bought_mp_potion"
+            }
+          ],
+          "requirements": {
+            "gold_gte": 15
+          }
+        },
+        {
+          "id": "return_castle_from_magic_shop",
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城に戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "castle"
+            }
+          ]
+        },
+        {
+          "id": "go_dark_forest",
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "城を出て闇の森へ向かう"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "forest_departure_failed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "item_shop",
+      "title": "王城の道具屋",
+      "description": "冒険に役立つ品々を扱う道具屋。薬草や旅の消耗品が揃っている。",
+      "keywords": [
+        "道具屋",
+        "店",
+        "アイテム",
+        "薬草"
+      ],
+      "npc_ids": [],
+      "item_ids": [],
+      "clue_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [
+        "castle",
+        "forge",
+        "inn",
+        "magic_shop",
+        "alley",
+        "dark_forest_loc"
+      ],
+      "choices": [
+        {
+          "text": "薬草を買う（10G）",
+          "preview": "HPを10回復",
+          "risk": "判定不要"
+        },
+        {
+          "text": "解毒薬を買う（15G）",
+          "preview": "毒状態を回復",
+          "risk": "判定不要"
+        },
+        {
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要"
+        },
+        {
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）"
+        }
+      ],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "summary": "",
+        "prepared_turns": []
+      },
+      "actions": [
+        {
+          "id": "buy_herb",
+          "text": "薬草を買う（10G）",
+          "preview": "HPを10回復",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "薬草を買う（10G）"
+          ],
+          "effects": [
+            {
+              "gold_change": -10
+            },
+            {
+              "add_item": {
+                "name": "??",
+                "quantity": 1
+              }
+            }
+          ],
+          "requirements": {
+            "gold_gte": 10
+          }
+        },
+        {
+          "id": "buy_antidote",
+          "text": "解毒薬を買う（15G）",
+          "preview": "毒状態を回復",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "解毒薬を買う（15G）"
+          ],
+          "effects": [
+            {
+              "gold_change": -15
+            },
+            {
+              "add_item": {
+                "name": "???",
+                "quantity": 1
+              }
+            }
+          ],
+          "requirements": {
+            "gold_gte": 15
+          }
+        },
+        {
+          "id": "return_castle_from_item_shop",
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城に戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "castle"
+            }
+          ]
+        },
+        {
+          "id": "go_dark_forest",
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "城を出て闇の森へ向かう"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "forest_departure_failed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alley",
+      "title": "王城の路地裏",
+      "description": "人通りの少ない薄暗い路地裏。怪しい商人や密売人が潜んでいる噂がある。",
+      "keywords": [
+        "路地裏",
+        "裏通り",
+        "怪しい",
+        "密売"
+      ],
+      "npc_ids": [],
+      "item_ids": [],
+      "clue_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [
+        "castle",
+        "forge",
+        "inn",
+        "magic_shop",
+        "item_shop",
+        "dark_forest_loc"
+      ],
+      "choices": [
+        {
+          "text": "怪しい商人に話しかける",
+          "preview": "珍しい品を扱っているかもしれない",
+          "risk": "1d20+cha判定（DC12）"
+        },
+        {
+          "text": "路地裏を探索する",
+          "preview": "隠し通路や秘密の発見",
+          "risk": "1d20判定（DC10）"
+        },
+        {
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要"
+        },
+        {
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）"
+        }
+      ],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "summary": "",
+        "prepared_turns": []
+      },
+      "actions": [
+        {
+          "id": "talk_suspicious_merchant",
+          "text": "怪しい商人に話しかける",
+          "preview": "珍しい品を扱っているかもしれない",
+          "risk": "1d20+cha判定（DC12）",
+          "intent_keywords": [
+            "怪しい商人に話しかける"
+          ],
+          "roll": {
+            "dice_type": "1d20+cha",
+            "dc": 12
+          },
+          "success_effects": [
+            {
+              "set_flag": "merchant_opened_up"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "merchant_distrust"
+            }
+          ]
+        },
+        {
+          "id": "search_alley",
+          "text": "路地裏を探索する",
+          "preview": "隠し通路や秘密の発見",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "路地裏を探索する"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "set_flag": "found_hidden_alley_clue"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "alley_search_failed"
+            }
+          ]
+        },
+        {
+          "id": "return_castle_from_alley",
+          "text": "城に戻る",
+          "preview": "城内に戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城に戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "castle"
+            }
+          ]
+        },
+        {
+          "id": "go_dark_forest",
+          "text": "城を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "城を出て闇の森へ向かう"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "forest_departure_failed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dark_forest_loc",
+      "title": "闇の森",
+      "description": "湿った薄暗い森。弱い魔物が潜んでいる。",
+      "keywords": [
+        "森",
+        "闇",
+        "木漏れ日",
+        "ぬかるみ"
+      ],
+      "enemy_ids": [
+        "slime"
+      ],
+      "npc_ids": [],
+      "item_ids": [],
+      "clue_ids": [],
+      "connected_location_ids": [
+        "castle",
+        "village"
+      ],
+      "choices": [
+        {
+          "text": "鉄の剣でスライムを攻撃する",
+          "preview": "戦闘チュートリアルを進めます",
+          "risk": "1d20判定（DC10）"
+        },
+        {
+          "text": "スライムを迂回して森を抜ける",
+          "preview": "戦闘を避けて先へ進みます",
+          "risk": "1d20+dex判定（DC25）失敗時スライムが先手攻撃"
+        },
+        {
+          "text": "麓の村へ向かう",
+          "preview": "第3章へ進みます",
+          "risk": "判定不要"
+        }
+      ],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "summary": "第2章「闇の森」におけるスライムとの遭遇、戦闘解決、麓の村への遷移を管理するプリセットターン群。",
+        "prepared_turns": [
+          {
+            "id": "dark_forest_opening",
+            "purpose": "opening",
+            "source_choice": "",
+            "player_intent": "enter_forest_encounter_slime",
+            "trigger_keywords": [
+              "森に入る",
+              "進む",
+              "探索する",
+              "闇の森へ向かう"
+            ],
+            "draft": {
+              "gm_text": "薄暗い「闇の森」に足を踏み入れると、湿った冷気が肌を刺します。行く手を塞ぐように、青く半透明の体が蠢くスライムが姿を現しました！戦闘の準備を整えてください。",
+              "system_log": "闇の森に進入。チュートリアル用の敵「スライム」と遭遇しました。",
+              "dice_type": "1d20",
+              "dice_dc": 10,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": "dark_forest"
+              },
+              "choices": [
+                {
+                  "text": "鉄の剣でスライムを攻撃する",
+                  "preview": "武器による標準的な物理攻撃",
+                  "risk": "1d20判定（DC10）"
+                },
+                {
+                  "text": "スライムを迂回して森を抜ける",
+                  "preview": "敏捷を活かした隠密行動",
+                  "risk": "1d20+dex判定（DC25）失敗時スライムが先手攻撃"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "プレイヤーの侵入時のロールプレイに応じて、森の雰囲気描写を軽く変更してよい。",
+              "スライムの出現描写、および初期選択肢のキー情報は変更しないでください。"
+            ]
+          },
+          {
+            "id": "dark_forest_attack_slime_success",
+            "purpose": "choice_response",
+            "source_choice": "鉄の剣でスライムを攻撃する",
+            "player_intent": "attack_slime_with_sword",
+            "trigger_keywords": [
+              "剣で攻撃",
+              "斬りつける",
+              "スライムを攻撃",
+              "戦う"
+            ],
+            "draft": {
+              "gm_text": "「てやあ！」アルスは鉄の剣を鋭く振り下ろしました！刃はスライムの核を正確に捉え、一撃でその体を霧散させました。スライムを撃破し、周囲に静寂が戻ります。戦闘の勝利により、消耗が回復しました！",
+              "system_log": "スライムを撃破。戦闘終了ルールに基づきHPとMPが全回復しました。",
+              "dice_type": "1d20",
+              "dice_dc": 10,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 10,
+                "attribute_changes": {},
+                "inventory_add": [
+                  {
+                    "name": "スライムの粘液",
+                    "description": "べたべたした青い液体。何かの役に立つかもしれない。",
+                    "effect": "クエスト用素材",
+                    "quantity": 1
+                  }
+                ],
+                "inventory_remove": [],
+                "current_scene": "dark_forest"
+              },
+              "choices": [
+                {
+                  "text": "森を抜けて麓の村へ向かう",
+                  "preview": "第2章クリア、次のシーンへ遷移する",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "ダイス結果が成功した場合にこのターンを適用する。",
+              "HP/MP全回復処理（勝利後ルール）を反映したstate_deltaを維持してください。"
+            ],
+            "action_id": "attack_slime",
+            "outcome": "success"
+          },
+          {
+            "id": "dark_forest_bypass_slime_fail",
+            "purpose": "choice_response",
+            "source_choice": "スライムを迂回して森を抜ける",
+            "player_intent": "bypass_slime",
+            "trigger_keywords": [
+              "迂回する",
+              "こっそり進む",
+              "逃げる",
+              "スルーする"
+            ],
+            "draft": {
+              "gm_text": "足音を殺して湿った泥を踏みしめながら迂回を試みます。しかし、ぬかるみに足を取られて派手な音を立ててしまいました！気づいたスライムが勢いよく飛びかかり、アルスの足を体当たりで打ち据えます！",
+              "system_log": "迂回判定に失敗。スライムから不意打ちを受けました。（ダメージ：2）",
+              "dice_type": "1d20+dex",
+              "dice_dc": 25,
+              "state_delta": {
+                "hp_change": -2,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": "dark_forest"
+              },
+              "choices": [
+                {
+                  "text": "鉄の剣でスライムを攻撃する",
+                  "preview": "体勢を立て直して反撃する",
+                  "risk": "1d20判定（DC10）"
+                },
+                {
+                  "text": "薬草を使用して回復する",
+                  "preview": "HPを回復し次の隙を伺う",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "DEX判定（DC25）の成否判定で失敗した場合に使用するターン。",
+              "スライムによる2ダメージのHP減少処理をstate_deltaに含めておいてください。"
+            ],
+            "action_id": "bypass_slime",
+            "outcome": "failure"
+          },
+          {
+            "id": "dark_forest_transition_to_village",
+            "purpose": "transition",
+            "source_choice": "森を抜けて麓の村へ向かう",
+            "player_intent": "move_to_village",
+            "trigger_keywords": [
+              "森を抜ける",
+              "村へ行く",
+              "進む",
+              "麓の村"
+            ],
+            "draft": {
+              "gm_text": "鬱蒼とした「闇の森」を抜けると、目の前にのどかな田園風景と小さな村が広がりました。ここが邪竜イグニスの情報を集めるための最初の足がかり、「麓の村」です。旅の疲れを癒やす場所を探しましょう。",
+              "system_log": "第2章「闇の森」をクリア。次のシーン「麓の村」に遷移しました。",
+              "dice_type": "1d20",
+              "dice_dc": 10,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": "village"
+              },
+              "choices": [
+                {
+                  "text": "村の酒場に入り情報を集める",
+                  "preview": "村の様子や邪竜の噂を調査する",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "宿屋で旅の支度を整える",
+                  "preview": "次の旅に備えて買い出しをする",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "森を無事脱出した後のシーン切り替え用ターン。",
+              "current_sceneを次の目的地である麓の村のID（village）に遷移させてください。"
+            ],
+            "action_id": "go_village",
+            "outcome": "neutral"
+          }
+        ],
+        "gm_notes": [
+          "戦闘チュートリアル用の簡単なスライムエンカウンターです。",
+          "迂回判定のDC25は極めて高いため、ほぼ失敗して戦闘へ誘導される仕組みになっています。"
+        ]
+      },
+      "actions": [
+        {
+          "id": "attack_slime",
+          "text": "鉄の剣でスライムを攻撃する",
+          "preview": "戦闘チュートリアルを進めます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "鉄の剣でスライムを攻撃する"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "set_flag": "defeated_slime"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -2
+            },
+            {
+              "set_flag": "slime_counterattack"
+            }
+          ]
+        },
+        {
+          "id": "bypass_slime",
+          "text": "スライムを迂回して森を抜ける",
+          "preview": "戦闘を避けて先へ進みます",
+          "risk": "1d20+dex判定（DC25）失敗時スライムが先手攻撃",
+          "intent_keywords": [
+            "スライムを迂回して森を抜ける"
+          ],
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 25
+          },
+          "success_effects": [
+            {
+              "current_location": "village"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -2
+            },
+            {
+              "set_flag": "slime_ambush"
+            }
+          ]
+        },
+        {
+          "id": "go_village",
+          "text": "麓の村へ向かう",
+          "preview": "第3章へ進みます",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "麓の村へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "village"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "village",
+      "title": "麓の村",
+      "description": "山麓に広がる静かな村。長老が古い伝承を語り継いでいる。",
+      "keywords": [
+        "村",
+        "麓",
+        "長老"
+      ],
+      "npc_ids": [
+        "elder"
+      ],
+      "clue_ids": [
+        "dragon_weakness"
+      ],
+      "item_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [
+        "village_shop",
+        "dragon_valley_loc"
+      ],
+      "choices": [
+        {
+          "text": "長老に邪竜の弱点を聞く",
+          "preview": "冷気の弱点について情報を得ます",
+          "risk": "判定不要"
+        },
+        {
+          "text": "道具屋で氷の護符を買う",
+          "preview": "50ゴールドで冷気の護符を入手します",
+          "risk": "判定不要",
+          "requirements": {
+            "all": [
+              {
+                "gold_gte": 50
+              },
+              {
+                "lacks_item": "氷の護符"
+              }
+            ]
+          }
+        },
+        {
+          "text": "竜の谷へ向かう",
+          "preview": "第4章へ進みます",
+          "risk": "危険"
+        }
+      ],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "summary": "第3章「麓の村」における、情報収集、道具屋での護符入手、竜の谷への出発をカバー。",
+        "prepared_turns": [
+          {
+            "id": "village_opening",
+            "purpose": "opening",
+            "source_choice": "",
+            "player_intent": "Enter the village and look around",
+            "trigger_keywords": [
+              "開始",
+              "村に到着",
+              "探索"
+            ],
+            "draft": {
+              "gm_text": "邪竜イグニスが潜む谷の麓にある小さな村に到着しました。冷たい風が吹き抜ける中、村人たちは怯えた様子で生活しています。邪竜に立ち向かう術を得るため、まずは情報を集めるか、旅の支度を整える必要があります。",
+              "system_log": "シーン「麓の村」が開始されました。",
+              "dice_type": "1d20",
+              "dice_dc": 10,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": "village"
+              },
+              "choices": [
+                {
+                  "text": "長老に邪竜の弱点を聞く",
+                  "preview": "村の長老から情報を得る",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "道具屋で氷の護符を買う",
+                  "preview": "冷気の護符を入手する",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "all": [
+                      {
+                        "gold_gte": 50
+                      },
+                      {
+                        "lacks_item": "氷の護符"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "竜の谷へ直接向かう",
+                  "preview": "危険だが急いで谷へ向かう",
+                  "risk": "危険"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "プレイヤーのこれまでの旅路や、現在の体力を描写に加味して調整してください。",
+              "選択肢の構成は変更しないでください。"
+            ]
+          },
+          {
+            "id": "visit_elder",
+            "purpose": "choice_response",
+            "source_choice": "長老に邪竜の弱点を聞く",
+            "player_intent": "Ask the elder about the dragon's weakness",
+            "trigger_keywords": [
+              "長老",
+              "弱点",
+              "話を聞く"
+            ],
+            "draft": {
+              "gm_text": "白髭を蓄えた長老は、あなたの決意を聞くと静かに頷きました。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」",
+              "system_log": "手がかり「邪竜の弱点」を獲得しました。",
+              "dice_type": "1d20",
+              "dice_dc": 10,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "道具屋へ向かう",
+                  "preview": "氷の護符を入手しに行く",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "竜の谷へ直接向かう",
+                  "preview": "氷の護符なしで谷へ向かう",
+                  "risk": "危険"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "長老の語り口をより年長者らしく、かつ簡潔に描写してください。"
+            ],
+            "action_id": "ask_elder_weakness",
+            "outcome": "neutral"
+          },
+          {
+            "id": "visit_shop",
+            "purpose": "choice_response",
+            "source_choice": "道具屋で氷の護符を買う",
+            "player_intent": "Buy the ice charm",
+            "trigger_keywords": [
+              "道具屋",
+              "護符",
+              "買う",
+              "氷"
+            ],
+            "draft": {
+              "gm_text": "道具屋の店主は愛想よく対応し、「氷の護符なら50ゴールドだ」と棚から冷気を帯びた護符を取り出しました。あなたは50ゴールドを支払い、氷の護符を手に入れました。護符は手に持つとひんやりと冷たく、不思議な力を感じます。",
+              "system_log": "氷の護符を50ゴールドで購入しました。",
+              "dice_type": "1d20",
+              "dice_dc": 10,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": -50,
+                "attribute_changes": {},
+                "inventory_add": [
+                  {
+                    "name": "氷の護符",
+                    "description": "冷気の力を宿した護符。",
+                    "effect": "邪竜の弱点を突く",
+                    "quantity": 1
+                  }
+                ],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "準備を整え、竜の谷へ向かう",
+                  "preview": "最後の決戦へ向かう",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "所持金が足りない場合は店主が代替案（クエストなど）を提示するバリエーションも可能です。"
+            ],
+            "action_id": "buy_ice_amulet",
+            "outcome": "neutral"
+          }
+        ],
+        "gm_notes": [
+          "氷の護符は第4章の邪竜イグニス戦において重要なキーアイテムです。"
+        ]
+      },
+      "actions": [
+        {
+          "id": "ask_elder_weakness",
+          "text": "長老に邪竜の弱点を聞く",
+          "preview": "冷気の弱点について情報を得ます",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "長老に邪竜の弱点を聞く"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_dragon_weakness"
+            }
+          ]
+        },
+        {
+          "id": "buy_ice_amulet",
+          "text": "道具屋で氷の護符を買う",
+          "preview": "50ゴールドで冷気の護符を入手します",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "道具屋で氷の護符を買う"
+          ],
+          "effects": [
+            {
+              "gold_change": -50
+            },
+            {
+              "add_item": {
+                "name": "????",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "bought_ice_amulet"
+            }
+          ],
+          "requirements": {
+            "all": [
+              {
+                "gold_gte": 50
+              },
+              {
+                "lacks_item": "????"
+              }
+            ]
+          },
+          "disabled_after": "bought_ice_amulet"
+        },
+        {
+          "id": "go_dragon_valley",
+          "text": "竜の谷へ向かう",
+          "preview": "第4章へ進みます",
+          "risk": "危険",
+          "intent_keywords": [
+            "竜の谷へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "dragon_valley_loc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "village_shop",
+      "title": "麓の村の道具屋",
+      "description": "旅人向けの道具屋。薬草、護符、保存食を扱っている。",
+      "keywords": [
+        "道具屋",
+        "店",
+        "買う",
+        "護符"
+      ],
+      "npc_ids": [
+        "shopkeeper"
+      ],
+      "item_ids": [
+        "ice_charm"
+      ],
+      "clue_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [
+        "village",
+        "dragon_valley_loc"
+      ],
+      "choices": [],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "summary": "",
+        "prepared_turns": []
+      }
+    },
+    {
+      "id": "dragon_valley_loc",
+      "title": "竜の谷",
+      "description": "黒い岩肌と硫黄の匂いが漂う荒涼たる谷。",
+      "keywords": [
+        "谷",
+        "竜",
+        "硫黄",
+        "岩"
+      ],
+      "enemy_ids": [
+        "ignis"
+      ],
+      "npc_ids": [],
+      "item_ids": [],
+      "clue_ids": [],
+      "connected_location_ids": [],
+      "choices": [
+        {
+          "text": "氷の護符を掲げて攻撃する",
+          "preview": "邪竜の弱点を狙います",
+          "risk": "1d20判定（DC12）"
+        },
+        {
+          "text": "鉄の剣で正面から斬り込む",
+          "preview": "危険ですが直接ダメージを狙います",
+          "risk": "危険"
+        },
+        {
+          "text": "防御して炎の息に備える",
+          "preview": "次の被害を抑えます",
+          "risk": "判定不要"
+        }
+      ],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "summary": "邪竜イグニスとの決戦における導入、および主要な3つの行動選択への返答。",
+        "prepared_turns": [
+          {
+            "id": "dragon_valley_opening",
+            "purpose": "opening",
+            "source_choice": "",
+            "player_intent": "enter scene and face ignis",
+            "trigger_keywords": [
+              "開始",
+              "突入",
+              "邪竜",
+              "現れる",
+              "対峙"
+            ],
+            "draft": {
+              "gm_text": "「グルルル…」硫黄の煙が立ち込める谷の奥から、紅き邪竜イグニスが巨大な翼を広げて姿を現します。その眼光は激しい怒りに燃え、口元からは凄まじい熱気が漏れ出ています。王国を脅かす邪悪なる存在を前に、いよいよ決戦の時です！",
+              "system_log": "邪竜イグニスとの戦闘開始。SP回復が発生。",
+              "dice_type": "1d20",
+              "dice_dc": 12,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": 0,
+                "sp_change": 0,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": "dragon_valley"
+              },
+              "choices": [
+                {
+                  "text": "氷の護符を掲げて攻撃する",
+                  "preview": "氷属性の弱点攻撃を試みる",
+                  "risk": "1d20判定（DC12）"
+                },
+                {
+                  "text": "鉄の剣で正面から斬り込む",
+                  "preview": "物理接近攻撃を行う",
+                  "risk": "危険"
+                },
+                {
+                  "text": "防御して炎の息に備える",
+                  "preview": "防御体勢を取りダメージを抑える",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "プレイヤーの装備やステータス状況を反映した軽微な修飾が可能です。",
+              "イグニスの圧倒的な存在感と緊張感描写は維持してください。"
+            ]
+          },
+          {
+            "id": "dragon_valley_ice_amulet",
+            "purpose": "choice_response",
+            "source_choice": "氷の護符を掲げて攻撃する",
+            "player_intent": "use ice magic/amulet",
+            "trigger_keywords": [
+              "氷の護符",
+              "氷",
+              "護符",
+              "冷気",
+              "弱点"
+            ],
+            "draft": {
+              "gm_text": "あなたが懐から氷の護符を掲げると、極寒の猛吹雪が吹き荒れ、イグニスの燃え盛る体を直撃します！「グオオオッ！？」邪竜は苦悶の声を上げ、その巨大な巨体を震わせました。冷気攻撃は見事に効果を発揮しているようです！",
+              "system_log": "氷の護符による弱点属性攻撃が命中、邪竜に大ダメージ。毎ターンのSP自動回復適用。",
+              "dice_type": "1d20+int",
+              "dice_dc": 12,
+              "state_delta": {
+                "hp_change": 0,
+                "mp_change": -2,
+                "sp_change": 5,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "冷気に怯んだ隙に、剣で追撃する",
+                  "preview": "物理追撃を行う",
+                  "risk": "1d20+str判定（DC12）"
+                },
+                {
+                  "text": "さらなる冷気魔力を溜めて攻撃する",
+                  "preview": "魔法攻撃を継続する",
+                  "risk": "1d20+int判定（DC14）"
+                },
+                {
+                  "text": "薬草を使って消耗を回復する",
+                  "preview": "HPを回復する",
+                  "risk": "判定不要"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "イグニスが冷気を苦手としている事実（ダメージ表現）は変えないでください。"
+            ],
+            "action_id": "attack_ignis_with_ice_amulet",
+            "outcome": "success"
+          },
+          {
+            "id": "dragon_valley_sword_attack",
+            "purpose": "choice_response",
+            "source_choice": "鉄の剣で正面から斬り込む",
+            "player_intent": "melee physical attack",
+            "trigger_keywords": [
+              "鉄の剣",
+              "斬り込む",
+              "正面",
+              "攻撃",
+              "斬る"
+            ],
+            "draft": {
+              "gm_text": "あなたは鉄の剣を強く握り締め、正面から邪竜の足元へと斬り込みます！しかし、イグニスは嘲笑うかのように巨大な尻尾を叩きつけてきました。硬い鱗に剣が弾かれ、凄まじい衝撃が体中に走り、吹き飛ばされます！",
+              "system_log": "正面からの物理攻撃は鱗に遮られ、反撃によりダメージを受ける。SP回復適用。",
+              "dice_type": "1d20+str",
+              "dice_dc": 14,
+              "state_delta": {
+                "hp_change": -5,
+                "mp_change": 0,
+                "sp_change": 5,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "すぐさま立ち上がり、薬草を口に含む",
+                  "preview": "HPを安全に回復する",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "氷の護符を取り出し、属性攻撃に切り替える",
+                  "preview": "弱点冷気攻撃に切り替え",
+                  "risk": "1d20判定（DC12）"
+                },
+                {
+                  "text": "邪竜の死角である背後へ回り込む",
+                  "preview": "回避を優先しながら移動する",
+                  "risk": "1d20+dex判定（DC13）"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "正面攻撃は有効ではないことをプレイヤーに伝えるためのターンです。"
+            ],
+            "action_id": "attack_ignis_with_sword",
+            "outcome": "neutral"
+          },
+          {
+            "id": "dragon_valley_defend",
+            "purpose": "choice_response",
+            "source_choice": "防御して炎の息に備える",
+            "player_intent": "defend against fire breath",
+            "trigger_keywords": [
+              "防御",
+              "守る",
+              "身を守る",
+              "備える"
+            ],
+            "draft": {
+              "gm_text": "あなたは素早く防御の姿勢を取り、盾を構えてイグニスの攻撃に備えます。次の瞬間、灼熱の炎の息があなたを包み込みましたが、防御のおかげで致命傷は避けられました。荒い息を吐く邪竜の前で、反撃の機会をうかがいます。",
+              "system_log": "防御行動により炎の息のダメージを半減。SP回復適用。",
+              "dice_type": "1d20",
+              "dice_dc": 12,
+              "state_delta": {
+                "hp_change": -3,
+                "mp_change": 0,
+                "sp_change": 5,
+                "gold_change": 0,
+                "attribute_changes": {},
+                "inventory_add": [],
+                "inventory_remove": [],
+                "current_scene": null
+              },
+              "choices": [
+                {
+                  "text": "防御の隙をついて、氷の護符で反撃する",
+                  "preview": "邪竜の弱点を突く",
+                  "risk": "1d20判定（DC12）"
+                },
+                {
+                  "text": "さらに防御を固め、仲間の支援を待つ",
+                  "preview": "継続防御で持久戦に持ち込む",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "退避用の煙玉を使い、態勢を立て直す",
+                  "preview": "道具を駆使して仕切り直す",
+                  "risk": "1d20+dex判定（DC10）"
+                }
+              ]
+            },
+            "rewrite_notes": [
+              "防御の効果（ダメージ半減）をプレイヤーにわかるように描写してください。"
+            ],
+            "action_id": "defend_ignis_breath",
+            "outcome": "neutral"
+          }
+        ],
+        "gm_notes": [
+          "イグニス戦は氷属性と正攻法の対比がテーマ。",
+          "防御も有効な選択肢であることを示す。"
+        ]
+      },
+      "actions": [
+        {
+          "id": "attack_ignis_with_ice_amulet",
+          "text": "氷の護符を掲げて攻撃する",
+          "preview": "邪竜の弱点を狙います",
+          "risk": "1d20判定（DC12）",
+          "intent_keywords": [
+            "氷の護符を掲げて攻撃する"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 12
+          },
+          "success_effects": [
+            {
+              "set_flag": "defeated_ignis"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -5
+            },
+            {
+              "set_flag": "ice_amulet_attack_failed"
+            }
+          ],
+          "requirements": {
+            "has_item": "????"
+          }
+        },
+        {
+          "id": "attack_ignis_with_sword",
+          "text": "鉄の剣で正面から斬り込む",
+          "preview": "危険ですが直接ダメージを狙います",
+          "risk": "危険",
+          "intent_keywords": [
+            "鉄の剣で正面から斬り込む"
+          ],
+          "effects": [
+            {
+              "hp_change": -6
+            },
+            {
+              "set_flag": "reckless_dragon_attack"
+            }
+          ]
+        },
+        {
+          "id": "defend_ignis_breath",
+          "text": "防御して炎の息に備える",
+          "preview": "次の被害を抑えます",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "防御して炎の息に備える"
+          ],
+          "effects": [
+            {
+              "set_flag": "defended_dragon_breath"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "goblin_fort",
+      "title": "ゴブリンの砦",
+      "description": "闇の森の奥深くにあるゴブリンの砦。奪われた王国商人の荷物が積まれている。",
+      "keywords": [
+        "ゴブリン",
+        "砦",
+        "闇の森"
+      ],
+      "npc_ids": [],
+      "item_ids": [],
+      "clue_ids": [],
+      "enemy_ids": [
+        "goblin"
+      ],
+      "connected_location_ids": [
+        "dark_forest_loc",
+        "inn"
+      ],
+      "choices": [
+        {
+          "text": "ゴブリンを攻撃する",
+          "preview": "戦闘開始",
+          "risk": "判定不要"
+        },
+        {
+          "text": "闇の森へ戻る",
+          "preview": "砦を離れる",
+          "risk": "判定不要"
+        }
+      ],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "summary": "",
+        "prepared_turns": []
+      },
+      "actions": [
+        {
+          "id": "attack_goblin",
+          "text": "ゴブリンを攻撃する",
+          "preview": "戦闘開始",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "ゴブリンを攻撃する"
+          ],
+          "effects": [
+            {
+              "set_flag": "fought_goblin"
+            }
+          ]
+        },
+        {
+          "id": "return_dark_forest_from_goblin_fort",
+          "text": "闇の森へ戻る",
+          "preview": "砦を離れる",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "闇の森へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "npcs": [
+    {
+      "id": "king",
+      "name": "国王エドワード",
+      "description": "白髪の老王。邪竜復活に深い責任を感じている。",
+      "keywords": [
+        "国王",
+        "エドワード",
+        "王"
+      ]
+    },
+    {
+      "id": "blacksmith",
+      "name": "鍛冶師ローベルト",
+      "description": "無口だが腕のいい鍛冶師。鉄の剣の手入れと簡単な強化を請け負う。",
+      "keywords": [
+        "鍛冶師",
+        "ローベルト",
+        "鍛造屋",
+        "鍛冶屋"
+      ]
+    },
+    {
+      "id": "elder",
+      "name": "村の長老",
+      "description": "古い伝承を知る老人。邪竜は冷気を嫌うと語る。",
+      "keywords": [
+        "長老",
+        "老人",
+        "伝承"
+      ]
+    },
+    {
+      "id": "shopkeeper",
+      "name": "道具屋の店主",
+      "description": "商売熱心な店主。氷の護符を50ゴールドで売る。",
+      "keywords": [
+        "店主",
+        "道具屋",
+        "商人"
+      ]
+    },
+    {
+      "id": "general",
+      "name": "将軍ドラコ",
+      "description": "剣聖と称される将軍、国王の護衛を務める。",
+      "keywords": [
+        "剣聖",
+        "将軍",
+        "ドラコ"
+      ]
+    },
+    {
+      "id": "ian",
+      "name": "店主イアン",
+      "description": "過去は麓の村の鍛冶屋だったが、今は王城の宿屋の店主として定住している。",
+      "keywords": [
+        "店主",
+        "イアン",
+        "宿屋"
+      ]
+    },
+    {
+      "id": "robin",
+      "name": "女レンジャー ロビン",
+      "description": "義賊として富裕層から盗み貧しい者を助ける女レンジャー。主に闇の森で活動する。（同行戦闘中、毎ターンランダムな単体に4d3ダメージを与える）",
+      "keywords": [
+        "ロビン",
+        "レンジャー",
+        "義賊"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "iron_sword",
+      "name": "鉄の剣",
+      "description": "一見質素な一振りの剣……",
+      "effect": "通常攻撃に使用",
+      "keywords": [
+        "鉄の剣",
+        "剣",
+        "武器"
+      ]
+    },
+    {
+      "id": "herb",
+      "name": "薬草",
+      "description": "傷を癒す薬草。",
+      "effect": "HPを10回復",
+      "keywords": [
+        "薬草",
+        "回復"
+      ]
+    },
+    {
+      "id": "ice_charm",
+      "name": "氷の護符",
+      "description": "冷気の力を宿した護符。",
+      "effect": "邪竜の弱点を突く",
+      "keywords": [
+        "氷の護符",
+        "護符",
+        "冷気"
+      ]
+    },
+    {
+      "id": "adamantite_armor",
+      "name": "アダマンタイトの鎧",
+      "description": "非常に硬い金属で作られた鎧。",
+      "effect": "被ダメージを軽減(-3)",
+      "keywords": [
+        "アダマンタイト",
+        "鎧",
+        "防具"
+      ]
+    },
+    {
+      "id": "ice_iron_greatsword",
+      "name": "氷鉄の大剣",
+      "description": "氷の護符と上質な剣を融合させた大剣。",
+      "effect": "無属性ダメージを氷属性に変換。全攻撃にINT依存の追加ダメージ。",
+      "keywords": [
+        "氷鉄の大剣",
+        "大剣",
+        "氷属性",
+        "武器"
+      ]
+    },
+    {
+      "id": "activated_ice_charm",
+      "name": "氷の護符(活性化済)",
+      "description": "鍛冶師によって真の力を引き出された氷の護符。",
+      "effect": "無属性ダメージを氷属性に変換し、邪竜に有効なダメージを与える",
+      "keywords": [
+        "氷の護符",
+        "活性化",
+        "氷属性"
+      ],
+      "title": "氷の護符(活性化済)"
+    },
+    {
+      "id": "ice_katana",
+      "name": "氷の太刀",
+      "description": "麓の村に伝わる伝説の強力な氷属性武器。",
+      "effect": "無属性ダメージを氷属性に変換。装備不要で毎ターン自動攻撃（1d50判定：20未満で全体攻撃、20以上でHPが最も高い敵単体へ攻撃）。邪竜に対しては毎ターン固定で50の単体ダメージ。",
+      "keywords": [
+        "氷の太刀",
+        "武器",
+        "氷属性",
+        "自動攻撃"
+      ]
+    }
+  ],
+  "clues": [
+    {
+      "id": "dragon_weakness",
+      "title": "邪竜の弱点",
+      "description": "イグニスは炎に強いが、冷気を帯びた攻撃に弱い。",
+      "keywords": [
+        "弱点",
+        "冷気",
+        "氷",
+        "イグニス"
+      ]
+    },
+    {
+      "id": "ice_katana_legend",
+      "title": "氷の太刀の伝説",
+      "description": "麓の村に伝わる伝説の強力な氷属性武器「氷の太刀」の線索。",
+      "keywords": [
+        "氷の太刀",
+        "伝説",
+        "武器",
+        "麓の村"
+      ]
+    }
+  ],
+  "enemies": [
+    {
+      "id": "slime",
+      "name": "スライム",
+      "description": "森に潜む弱い魔物。チュートリアル用の敵。",
+      "hp": 5,
+      "max_hp": 5,
+      "mp": 0,
+      "max_mp": 0,
+      "sp": 0,
+      "max_sp": 0,
+      "attributes": {
+        "str": 4,
+        "dex": 2,
+        "int": 1,
+        "wis": 1,
+        "end": 4
+      },
+      "skills": [],
+      "image": ""
+    },
+    {
+      "id": "ignis",
+      "name": "邪竜イグニス",
+      "description": "王国を脅かす紅き邪竜。炎の息を吐き、圧倒的な力を持つ。冷気に弱い。通常の物理攻撃や炎属性の攻撃ではダメージを与えられない。",
+      "hp": 300,
+      "max_hp": 300,
+      "mp": 150,
+      "max_mp": 150,
+      "sp": 10,
+      "max_sp": 10,
+      "attributes": {
+        "str": 18,
+        "dex": 8,
+        "int": 12,
+        "wis": 6,
+        "end": 16
+      },
+      "skills": [
+        {
+          "name": "炎の息",
+          "description": "灼熱の炎を広範囲に吐き出す。",
+          "effect": "全体に2d6ダメージ",
+          "dice_type": "2d6+str",
+          "cost": 5,
+          "cost_type": "mp"
+        },
+        {
+          "name": "尻尾攻撃",
+          "description": "巨大な尾で薙ぎ払う。",
+          "effect": "1d20+str判定、単体ダメージ",
+          "dice_type": "1d20+str",
+          "cost": 0
+        }
+      ],
+      "image": ""
+    },
+    {
+      "id": "goblin",
+      "name": "ゴブリン",
+      "description": "闇の森に住み着く小鬼。王国商人の荷物を奪った張本人。",
+      "hp": 15,
+      "max_hp": 15,
+      "mp": 0,
+      "max_mp": 0,
+      "sp": 5,
+      "max_sp": 5,
+      "attributes": {
+        "str": 6,
+        "dex": 8,
+        "int": 2,
+        "wis": 2,
+        "end": 6
+      },
+      "skills": [
+        {
+          "name": "引っ掻き",
+          "description": "鋭い爪で引っ掻く。",
+          "effect": "1d6+strダメージ",
+          "dice_type": "1d6+str",
+          "cost": 0
+        }
+      ],
+      "image": ""
+    }
+  ],
+  "combat_choices": [
+    {
+      "text": "武器で攻撃する",
+      "preview": "装備中の武器で敵に攻撃します",
+      "risk": "1d6判定"
+    },
+    {
+      "text": "技能を使う",
+      "preview": "習得している技能を選択します",
+      "risk": "技能により変動"
+    },
+    {
+      "text": "道具を使う",
+      "preview": "所持品から回復薬などを使います",
+      "risk": "判定不要"
+    },
+    {
+      "text": "逃走を試みる",
+      "preview": "戦闘からの離脱を試みます",
+      "risk": "1d20+dex判定（DC14）"
+    }
+  ],
+  "attribute_defs": [
+    {
+      "id": "str",
+      "name": "筋力",
+      "initial_value": 8
+    },
+    {
+      "id": "agi",
+      "name": "敏捷",
+      "initial_value": 8
+    },
+    {
+      "id": "int",
+      "name": "知力",
+      "initial_value": 8
+    },
+    {
+      "id": "char",
+      "name": "感知",
+      "initial_value": 8
+    },
+    {
+      "id": "end",
+      "name": "耐久",
+      "initial_value": 8
+    }
+  ],
+  "characters": [
+    {
+      "id": "hero",
+      "name": "勇者",
+      "default_name": "アルス",
+      "description": "王国に選ばれし若き冒険者。バランスの取れた能力を持つ。",
+      "image": "/static/images/char_male_hero.png",
+      "image_female": "/static/images/char_female_hero.png",
+      "hp": 20,
+      "max_hp": 20,
+      "mp": 8,
+      "max_mp": 8,
+      "sp": 10,
+      "max_sp": 10,
+      "gold": 0,
+      "attributes": {
+        "str": 12,
+        "dex": 5,
+        "int": 5,
+        "wis": 5,
+        "end": 10
+      },
+      "inventory": [
+        {
+          "name": "鉄の剣",
+          "description": "一見質素な一振りの剣……",
+          "effect": "通常攻撃に使用",
+          "quantity": 1
+        },
+        {
+          "name": "革の鎧",
+          "description": "なめした革で作られた軽量の鎧。",
+          "effect": "被ダメージを軽減(-1)",
+          "quantity": 1
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復",
+          "quantity": 1
+        }
+      ],
+      "equipment": [
+        "鉄の剣",
+        "革の鎧"
+      ],
+      "skills": [
+        {
+          "name": "渾身斬り",
+          "description": "気合を込めた全力の一撃。",
+          "effect": "1d4+str判定ダメージ",
+          "dice_type": "1d4+str",
+          "cost": 3,
+          "cost_type": "sp"
+        },
+        {
+          "name": "神聖の庇護",
+          "description": "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。",
+          "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "id": "cleric",
+      "name": "僧侶",
+      "default_name": "マリア",
+      "description": "神聖魔法を操る癒し手。HPとMPが高く、知力に優れる。",
+      "image": "/static/images/char_cleric.png",
+      "hp": 18,
+      "max_hp": 18,
+      "mp": 14,
+      "max_mp": 14,
+      "sp": 8,
+      "max_sp": 8,
+      "gold": 0,
+      "attributes": {
+        "str": 6,
+        "dex": 8,
+        "int": 14,
+        "wis": 12,
+        "end": 15
+      },
+      "inventory": [
+        {
+          "name": "聖なる杖",
+          "description": "神聖魔法を増幅する杖。",
+          "effect": "回復魔法の効果+2",
+          "quantity": 1
+        },
+        {
+          "name": "ローブ",
+          "description": "僧侶の簡素な衣。",
+          "effect": "回復魔法消費-1",
+          "quantity": 1
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復",
+          "quantity": 2
+        }
+      ],
+      "equipment": [
+        "聖なる杖",
+        "ローブ"
+      ],
+      "skills": [
+        {
+          "name": "治癒の祈り",
+          "description": "聖なる祈りで傷を癒す。",
+          "effect": "HPを1d6+知力/4回復",
+          "dice_type": "1d6+int",
+          "cost": 4,
+          "cost_type": "mp"
+        },
+        {
+          "name": "聖なる守護",
+          "description": "聖光の盾で味方を守る。致死ダメージも耐え抜く。",
+          "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+          "cost": 6,
+          "cost_type": "mp"
+        }
+      ],
+      "image_female": ""
+    },
+    {
+      "id": "mage",
+      "name": "魔法使い",
+      "default_name": "ゴウダン",
+      "description": "攻撃魔法を極めた学者。MPが非常に高く、知力に長ける。",
+      "image": "/static/images/char_mage.png",
+      "hp": 12,
+      "max_hp": 12,
+      "mp": 20,
+      "max_mp": 20,
+      "sp": 6,
+      "max_sp": 6,
+      "gold": 0,
+      "attributes": {
+        "str": 4,
+        "dex": 8,
+        "int": 16,
+        "wis": 10,
+        "end": 6
+      },
+      "inventory": [
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃魔法の威力+3",
+          "quantity": 1
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費-1",
+          "quantity": 1
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復",
+          "quantity": 1
+        }
+      ],
+      "equipment": [
+        "魔導書",
+        "魔法のローブ"
+      ],
+      "skills": [
+        {
+          "name": "火球",
+          "description": "灼熱の火球を放つ。",
+          "effect": "int判定ダメージ、ｈｐ１００％に対して、1d6追加ダメージを与える",
+          "dice_type": "int+1d6",
+          "cost": 5,
+          "cost_type": "mp"
+        },
+        {
+          "name": "氷の矢",
+          "description": "冷気の矢を放つ。",
+          "effect": "int/2ダメージ，ｈｐ5０％以下に対して，1d6追加ダメージを与える",
+          "dice_type": "int/2+1d6",
+          "cost": 3,
+          "cost_type": "mp"
+        }
+      ],
+      "image_female": ""
+    },
+    {
+      "id": "thief",
+      "name": "盗賊",
+      "default_name": "ファング",
+      "description": "影に生きる敏捷の達人。素早さと器用さに優れる。",
+      "image": "/static/images/char_thief.png",
+      "hp": 14,
+      "max_hp": 14,
+      "mp": 6,
+      "max_mp": 6,
+      "sp": 14,
+      "max_sp": 14,
+      "gold": 0,
+      "attributes": {
+        "str": 8,
+        "dex": 16,
+        "int": 10,
+        "wis": 6,
+        "end": 8
+      },
+      "inventory": [
+        {
+          "name": "ダガー",
+          "description": "軽量で扱いやすい短剣。",
+          "effect": "素早い連続攻撃が可能",
+          "quantity": 1
+        },
+        {
+          "name": "革の鎧",
+          "description": "動きやすさを重視した軽装鎧。",
+          "effect": "被ダメージを軽減(-1)",
+          "quantity": 1
+        },
+        {
+          "name": "盗賊道具",
+          "description": "鍵開けや罠解除に使う道具一式。",
+          "effect": "探索・解除判定+2",
+          "quantity": 1
+        }
+      ],
+      "equipment": [
+        "ダガー",
+        "革の鎧"
+      ],
+      "skills": [
+        {
+          "name": "影隠れ",
+          "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
+          "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
+          "dice_type": "1d20+dex",
+          "cost": 2,
+          "cost_type": "sp"
+        },
+        {
+          "name": "急所突き",
+          "description": "敵の急所を正確に狙う。",
+          "effect": "3d6判定ダメージ",
+          "dice_type": "3d6",
+          "cost": 4,
+          "cost_type": "sp"
+        }
+      ],
+      "image_female": ""
+    }
+  ]
+}
