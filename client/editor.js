@@ -218,6 +218,9 @@ function renderMeta() {
   const sceneOptions = state.scenario.scenes
     .map((scene) => `<option value="${escapeHtml(scene.id)}" ${scene.id === meta.initial_scene ? "selected" : ""}>${escapeHtml(scene.title || scene.id)}</option>`)
     .join("");
+  const actionFields = (section === "scenes" || section === "locations")
+    ? actionsJsonMarkup(`${section}.${state.selectedIndex}.actions`, record.actions || [])
+    : "";
   els.editorPane.innerHTML = `<div class="editor-form">
     <div class="form-grid">
       ${field("标题", "meta.title", meta.title || "")}
@@ -281,6 +284,7 @@ function renderRecordEditor(section) {
     ${itemFields}
     ${locationFields}
     ${sceneFields}
+    ${actionFields}
     <button class="danger" data-remove-record="${section}" data-index="${state.selectedIndex}" type="button">删除${escapeHtml(group.label)}</button>
   </div>`;
 }
@@ -456,6 +460,8 @@ function preparedTurnMarkup(basePath, turn, index) {
     </div>
     <div class="form-grid">
       ${field("ID", `${path}.id`, turn.id || "")}
+      ${field("Action ID", `${path}.action_id`, turn.action_id || "")}
+      ${field("Outcome", `${path}.outcome`, turn.outcome || "neutral")}
       ${field("Purpose", `${path}.purpose`, turn.purpose || "choice_response")}
       ${field("Source choice", `${path}.source_choice`, turn.source_choice || "")}
       ${field("Player intent", `${path}.player_intent`, turn.player_intent || "")}
@@ -470,6 +476,11 @@ function preparedTurnMarkup(basePath, turn, index) {
     <h4 class="mini-title">Choices</h4>
     ${choicesMarkup(`${path}.draft.choices`, draft.choices || [])}
   </section>`;
+}
+
+function actionsJsonMarkup(path, actions) {
+  return `<h3 class="section-title">Actions</h3>
+    <label class="wide">Action Graph JSON<textarea data-json-path="${path}" spellcheck="false">${escapeHtml(JSON.stringify(actions || [], null, 2))}</textarea></label>`;
 }
 
 function renderJsonEditor() {
@@ -791,6 +802,7 @@ function ensureShape(scenario) {
     scene.goals = Array.isArray(scene.goals) ? scene.goals : [];
     scene.location_ids = Array.isArray(scene.location_ids) ? scene.location_ids : [];
     scene.next_scene_ids = Array.isArray(scene.next_scene_ids) ? scene.next_scene_ids : [];
+    scene.actions = normalizeActions(scene.actions);
   });
   scenario.locations.forEach((location) => {
     location.npc_ids = Array.isArray(location.npc_ids) ? location.npc_ids : [];
@@ -799,6 +811,7 @@ function ensureShape(scenario) {
     location.enemy_ids = Array.isArray(location.enemy_ids) ? location.enemy_ids : [];
     location.connected_location_ids = Array.isArray(location.connected_location_ids) ? location.connected_location_ids : [];
     location.choices = normalizeChoices(location.choices);
+    location.actions = normalizeActions(location.actions);
     if (location.hybrid) ensureHybridShape(location);
   });
   return scenario;
@@ -811,6 +824,8 @@ function ensureHybridShape(scene) {
   scene.hybrid.prepared_turns = Array.isArray(scene.hybrid.prepared_turns) ? scene.hybrid.prepared_turns : [];
   scene.hybrid.prepared_turns.forEach((turn, index) => {
     turn.id ||= `prepared_turn_${index + 1}`;
+    turn.action_id ||= "";
+    turn.outcome ||= "";
     turn.purpose ||= index === 0 ? "opening" : "choice_response";
     turn.source_choice ||= "";
     turn.player_intent ||= "";
@@ -830,6 +845,8 @@ function ensureHybridShape(scene) {
 function newPreparedTurn(index) {
   return {
     id: `prepared_turn_${index}`,
+    action_id: "",
+    outcome: "",
     purpose: index === 1 ? "opening" : "choice_response",
     source_choice: "",
     player_intent: "",
@@ -852,15 +869,34 @@ function normalizeChoices(value) {
     .map((choice) => {
       if (typeof choice === "string") return { text: choice, preview: "", risk: "" };
       const normalized = {
+        ...(choice?.id ? { id: choice.id } : {}),
+        ...(choice?.action_id ? { action_id: choice.action_id } : {}),
         text: choice?.text || "",
         preview: choice?.preview || "",
         risk: choice?.risk || "",
       };
+      for (const key of ["intent_keywords", "requirements", "roll", "effects", "success_effects", "failure_effects", "once", "disabled_after", "prepared_turn_id"]) {
+        if (choice && choice[key] !== undefined) normalized[key] = choice[key];
+      }
       if (Array.isArray(choice?.children) && choice.children.length > 0) {
         normalized.children = normalizeChoices(choice.children);
       }
       return normalized;
     });
+}
+
+function normalizeActions(value) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((action) => action && typeof action === "object")
+    .map((action, index) => ({
+      ...action,
+      id: action.id || action.action_id || `action_${index + 1}`,
+      text: action.text || action.label || "",
+      preview: action.preview || "",
+      risk: action.risk || "",
+      intent_keywords: Array.isArray(action.intent_keywords) ? action.intent_keywords : [],
+    }));
 }
 
 function syncInitialSceneAfterIdEdit() {

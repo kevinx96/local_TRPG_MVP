@@ -177,6 +177,7 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
         "rules": pack.get("rules", []),
         "current_scene": _trim_record(_public_record(scene)),
         "matched": matched,
+        "available_actions": _trim_choices(current_action_choices(session)),
         "fallback_choices": _trim_choices(_merged_choices_for_context(pack, current_scene, str(session.get("current_location") or ""))),
     }
     # Semi mode: inject hybrid hints if available so the LLM has narrative scaffolding
@@ -220,6 +221,8 @@ def select_hybrid_context(
             "title": location.get("title"),
         },
         "prepared_turn": _prepared_turn_for_llm(prepared_turn, str(meta.get("language") or "")),
+        "action_result": session.get("last_action_result", {}),
+        "available_actions": _trim_choices(current_action_choices(session)),
         "fallback_choices": _trim_choices(_merged_choices_for_context(pack, current_scene, location_id)),
     }
     if include_debug:
@@ -259,6 +262,19 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
                 return deepcopy(turn)
         return deepcopy(prepared_turns[0]) if prepared_turns else {}
 
+    action_result = session.get("last_action_result") if isinstance(session.get("last_action_result"), dict) else {}
+    action_id = str(action_result.get("action_id") or "")
+    outcome = str(action_result.get("outcome") or "")
+    if action_id:
+        exact_matches = [
+            turn for turn in prepared_turns
+            if isinstance(turn, dict)
+            and str(turn.get("action_id") or turn.get("prepared_turn_id") or "") == action_id
+            and (not str(turn.get("outcome") or "") or str(turn.get("outcome") or "") == outcome)
+        ]
+        if exact_matches:
+            return deepcopy(exact_matches[0])
+
     searchable_text = player_text.strip() or _latest_user_text(session)
     latest_outcome = _latest_roll_outcome(session)
     scored = [
@@ -275,7 +291,31 @@ def fallback_choices_for_session(session: dict[str, Any]) -> list[dict[str, str]
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return deepcopy(DEFAULT_FALLBACK_CHOICES)
+    action_choices = current_action_choices(session)
+    if action_choices:
+        return action_choices
     return fallback_choices_for_scene(pack, str(session.get("current_scene") or ""))
+
+
+def current_actions_for_session(session: dict[str, Any]) -> list[dict[str, Any]]:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return []
+    current_scene = str(session.get("current_scene") or "")
+    location_id = str(session.get("current_location") or "")
+    scene = find_scene(pack, current_scene)
+    location = _find_location_in_pack(pack, location_id)
+    actions: list[dict[str, Any]] = []
+    for source in (scene, location):
+        if isinstance(source, dict):
+            actions.extend(normalize_actions(source.get("actions")))
+    if actions:
+        return _dedupe_actions(actions)
+    return []
+
+
+def current_action_choices(session: dict[str, Any]) -> list[dict[str, Any]]:
+    return [_action_as_choice(action) for action in current_actions_for_session(session)]
 
 
 def fallback_choices_for_scene(pack: dict[str, Any], scene_id: str) -> list[dict[str, str]]:
@@ -437,12 +477,76 @@ def normalize_choices(raw: Any) -> list[dict[str, Any]]:
                     "preview": str(item.get("preview") or ""),
                     "risk": str(item.get("risk") or ""),
                 }
+                for key in (
+                    "id", "action_id", "intent_keywords", "roll", "effects",
+                    "success_effects", "failure_effects", "once", "disabled_after",
+                    "prepared_turn_id", "outcome",
+                ):
+                    if key in item:
+                        choice[key] = deepcopy(item[key])
                 if "requirements" in item:
                     choice["requirements"] = deepcopy(item["requirements"])
                 if "children" in item and isinstance(item["children"], list):
                     choice["children"] = normalize_choices(item["children"])
                 choices.append(choice)
     return choices[:5]
+
+
+def normalize_actions(raw: Any) -> list[dict[str, Any]]:
+    actions: list[dict[str, Any]] = []
+    for index, item in enumerate(_as_list(raw)):
+        if isinstance(item, str):
+            text = item.strip()
+            if text:
+                actions.append({"id": f"action_{index + 1}", "text": text, "preview": "", "risk": ""})
+            continue
+        if not isinstance(item, dict):
+            continue
+        text = str(item.get("text") or item.get("label") or item.get("name") or "").strip()
+        action_id = str(item.get("id") or item.get("action_id") or "").strip()
+        if not text or not action_id:
+            continue
+        action = deepcopy(item)
+        action["id"] = action_id
+        action["text"] = text
+        action["preview"] = str(action.get("preview") or "")
+        action["risk"] = str(action.get("risk") or "")
+        action["intent_keywords"] = _as_text_list(action.get("intent_keywords") or action.get("keywords"))
+        actions.append(action)
+    return actions[:12]
+
+
+def _legacy_choice_as_action(choice: dict[str, Any], fallback_id: str) -> dict[str, Any]:
+    action = deepcopy(choice)
+    action["id"] = str(action.get("id") or action.get("action_id") or fallback_id)
+    action["action_id"] = action["id"]
+    action["intent_keywords"] = _as_text_list(action.get("intent_keywords"))
+    return action
+
+
+def _action_as_choice(action: dict[str, Any]) -> dict[str, Any]:
+    choice = deepcopy(action)
+    action_id = str(choice.get("id") or choice.get("action_id") or "")
+    choice["id"] = action_id
+    choice["action_id"] = action_id
+    if isinstance(choice.get("roll"), dict):
+        roll = choice["roll"]
+        dice = str(roll.get("dice_type") or roll.get("dice") or "1d20")
+        dc = roll.get("dc", roll.get("dice_dc", 0))
+        choice["risk"] = str(choice.get("risk") or (f"{dice}判定 (DC{int(dc)})" if isinstance(dc, (int, float)) and int(dc) > 0 else "判定不要"))
+    return choice
+
+
+def _dedupe_actions(actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[str] = set()
+    result: list[dict[str, Any]] = []
+    for action in actions:
+        action_id = str(action.get("id") or action.get("action_id") or "")
+        if not action_id or action_id in seen:
+            continue
+        seen.add(action_id)
+        result.append(action)
+    return result
 
 
 def _normalize_records(raw: Any, default_id: Optional[str] = None) -> list[dict[str, Any]]:
@@ -460,6 +564,10 @@ def _normalize_records(raw: Any, default_id: Optional[str] = None) -> list[dict[
             record["goals"] = _as_text_list(record.get("goals"))
         if "fallback_choices" in record or "choice_seeds" in record:
             record["fallback_choices"] = normalize_choices(record.get("fallback_choices") or record.get("choice_seeds"))
+        if "choices" in record:
+            record["choices"] = normalize_choices(record.get("choices"))
+        if "actions" in record:
+            record["actions"] = normalize_actions(record.get("actions"))
         records.append(record)
     return records
 
@@ -554,10 +662,15 @@ def _trim_choices(choices: list[dict[str, str]]) -> list[dict[str, Any]]:
         if not choice.get("text"):
             continue
         item: dict[str, Any] = {"text": choice.get("text", ""), "risk": choice.get("risk", "")}
+        for key in (
+            "id", "action_id", "intent_keywords", "roll", "effects",
+            "success_effects", "failure_effects", "requirements",
+            "once", "disabled_after", "prepared_turn_id", "outcome",
+        ):
+            if key in choice:
+                item[key] = deepcopy(choice[key])
         if choice.get("preview"):
             item["preview"] = choice["preview"]
-        if "requirements" in choice:
-            item["requirements"] = deepcopy(choice["requirements"])
         if "children" in choice and isinstance(choice.get("children"), list):
             item["children"] = _trim_choices(choice["children"])
         trimmed.append(item)
@@ -569,6 +682,7 @@ def _public_record(record: dict[str, Any]) -> dict[str, Any]:
         "id", "title", "name", "description", "summary", "goals", "keywords",
         "fallback_choices", "preview", "risk", "effect",
         "hp", "max_hp", "mp", "max_mp", "sp", "max_sp", "attributes", "skills",
+        "actions", "choices",
     )
     result = {key: deepcopy(record[key]) for key in allowed if key in record}
     result.pop("keywords", None)

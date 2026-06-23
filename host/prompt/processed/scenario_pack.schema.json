@@ -47,6 +47,10 @@
                 "type": "array",
                 "items": { "$ref": "#/$defs/choice" }
               },
+              "actions": {
+                "type": "array",
+                "items": { "$ref": "#/$defs/action" }
+              },
               "hybrid": {
                 "type": "object",
                 "additionalProperties": true,
@@ -188,6 +192,10 @@
         "keywords": {
           "type": "array",
           "items": { "type": "string" }
+        },
+        "actions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/action" }
         }
       }
     },
@@ -200,8 +208,30 @@
           "additionalProperties": true,
           "properties": {
             "text": { "type": "string" },
+            "id": { "type": "string" },
+            "action_id": { "type": "string" },
             "preview": { "type": "string" },
             "risk": { "type": "string" },
+            "intent_keywords": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "roll": { "$ref": "#/$defs/action_roll" },
+            "effects": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/action_effect" }
+            },
+            "success_effects": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/action_effect" }
+            },
+            "failure_effects": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/action_effect" }
+            },
+            "once": { "type": "string" },
+            "disabled_after": { "type": "string" },
+            "prepared_turn_id": { "type": "string" },
             "requirements": { "$ref": "#/$defs/choice_requirements" },
             "enabled": { "type": "boolean" },
             "disabled_reason": { "type": "string" },
@@ -213,12 +243,69 @@
         }
       ]
     },
+    "action": {
+      "type": "object",
+      "required": ["id", "text"],
+      "additionalProperties": true,
+      "properties": {
+        "id": { "type": "string" },
+        "text": { "type": "string" },
+        "preview": { "type": "string" },
+        "risk": { "type": "string" },
+        "intent_keywords": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "requirements": { "$ref": "#/$defs/choice_requirements" },
+        "roll": { "$ref": "#/$defs/action_roll" },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/action_effect" }
+        },
+        "success_effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/action_effect" }
+        },
+        "failure_effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/action_effect" }
+        },
+        "once": { "type": "string" },
+        "disabled_after": { "type": "string" },
+        "prepared_turn_id": { "type": "string" }
+      }
+    },
+    "action_roll": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "dice_type": { "type": "string" },
+        "dc": { "type": "integer" }
+      }
+    },
+    "action_effect": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "gold_change": { "type": "integer" },
+        "add_item": {},
+        "remove_item": {},
+        "inventory_add": { "type": "array" },
+        "inventory_remove": { "type": "array" },
+        "set_flag": { "type": "string" },
+        "unset_flag": { "type": "string" },
+        "current_scene": { "type": "string" },
+        "current_location": { "type": "string" },
+        "next_scene": { "type": "string" },
+        "next_location": { "type": "string" }
+      }
+    },
     "choice_requirements": {
       "oneOf": [
         { "$ref": "#/$defs/attribute_requirement" },
         {
           "type": "array",
-          "items": { "$ref": "#/$defs/attribute_requirement" }
+          "items": { "$ref": "#/$defs/choice_requirements" }
         },
         {
           "type": "object",
@@ -226,11 +313,11 @@
           "properties": {
             "any": {
               "type": "array",
-              "items": { "$ref": "#/$defs/attribute_requirement" }
+              "items": { "$ref": "#/$defs/choice_requirements" }
             },
             "all": {
               "type": "array",
-              "items": { "$ref": "#/$defs/attribute_requirement" }
+              "items": { "$ref": "#/$defs/choice_requirements" }
             }
           }
         }
@@ -283,6 +370,8 @@
       "additionalProperties": true,
       "properties": {
         "id": { "type": "string" },
+        "action_id": { "type": "string" },
+        "outcome": { "type": "string" },
         "purpose": { "type": "string" },
         "source_choice": { "type": "string" },
         "player_intent": { "type": "string" },

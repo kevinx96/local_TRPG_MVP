@@ -491,8 +491,8 @@ async function submitTurn(event) {
   }
 }
 
-async function submitChoice(choiceText) {
-  choiceDebug("submit-choice-start", { choiceText });
+async function submitChoice(choiceText, actionId = "") {
+  choiceDebug("submit-choice-start", { choiceText, actionId });
   if (!choiceText || !state.sessionId) return;
   let diceResult;
   try {
@@ -510,6 +510,7 @@ async function submitChoice(choiceText) {
   setBusy(true);
   try {
     const body = { text: choiceText };
+    if (actionId) body.action_id = actionId;
     if (diceResult) body.client_dice = { rolls: diceResult.rolls };
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
       method: "POST",
@@ -886,6 +887,7 @@ function renderChoices(choices) {
     card.disabled = !enabled;
     card.dataset.choiceIndex = String(i);
     card.dataset.choiceText = text;
+    card.dataset.actionId = typeof choice === "object" ? (choice.action_id || choice.id || "") : "";
     if (hasChildren) {
       card.dataset.choiceParent = "true";
       card.className = `choice-card choice-group ${enabled ? "" : "disabled-choice"}`;
@@ -987,6 +989,7 @@ function handleChoiceListClick(event) {
     cardIndex: card?.dataset.choiceIndex || "",
     cardText: card?.dataset.choiceText || "",
     cardParent: card?.dataset.choiceParent || "",
+    actionId: card?.dataset.actionId || "",
     layout: choiceLayoutDebug(),
   });
   if (!card || !els.choicesList.contains(card) || card.disabled) return;
@@ -1015,7 +1018,7 @@ function handleChoiceListClick(event) {
   }
 
   const text = card.dataset.choiceText || (typeof choice === "string" ? choice : (choice && typeof choice === "object" ? choice.text : ""));
-  if (text) submitChoice(text);
+  if (text) submitChoice(text, card.dataset.actionId || "");
 }
 
 function updateDialogueAdvanceState() {
