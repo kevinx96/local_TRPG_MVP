@@ -8,7 +8,7 @@ from unittest.mock import patch
 from host import app as app_module
 from host import state
 from host.gm_contract import split_visible_and_json
-from host.scenario_context import hybrid_context_debug
+from host.scenario_context import current_action_choices, hybrid_context_debug
 
 
 class StateTests(unittest.TestCase):
@@ -1253,15 +1253,42 @@ class StateTests(unittest.TestCase):
         self.assertEqual(session["character"]["gold"], 0)
         self.assertNotEqual(session["choices"][0]["text"], "bad")
 
+    def test_dragon_rpg_city_actions_stay_nested_under_city_group(self):
+        base_path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg.json"
+        public = state.create_session(str(base_path), gm_mode="full")
+        session = state.load_session(public["id"])
+        choices = current_action_choices(session)
+        choice_texts = [choice["text"] for choice in choices]
+
+        self.assertIn("城下町を探索する", choice_texts)
+        self.assertNotIn("鍛冶屋へ向かう", choice_texts)
+        city_choice = next(choice for choice in choices if choice.get("action_id") == "explore_castle_town")
+        self.assertEqual(
+            [child.get("action_id") for child in city_choice.get("children", [])],
+            ["go_forge", "go_inn", "go_magic_shop", "go_item_shop", "go_alley"],
+        )
+
+        action = state.resolve_action(session, action_id="go_forge")
+        self.assertIsNotNone(action)
+        self.assertEqual(action["text"], "鍛冶屋へ向かう")
+
     def test_dragon_rpg_hybrid_action_ids_exist_in_base_pack(self):
         base_path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg.json"
         hybrid_path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg_hybrid.json"
         base = json.loads(base_path.read_text(encoding="utf-8-sig"))
         hybrid = json.loads(hybrid_path.read_text(encoding="utf-8-sig"))
+
+        def iter_actions(actions):
+            for action in actions or []:
+                if not isinstance(action, dict):
+                    continue
+                yield action
+                yield from iter_actions(action.get("children"))
+
         action_ids = {
             action.get("id")
             for location in base.get("locations", [])
-            for action in location.get("actions", [])
+            for action in iter_actions(location.get("actions", []))
             if isinstance(action, dict) and action.get("id")
         }
         missing = [

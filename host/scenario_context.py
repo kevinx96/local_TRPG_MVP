@@ -512,6 +512,8 @@ def normalize_actions(raw: Any) -> list[dict[str, Any]]:
         action["preview"] = str(action.get("preview") or "")
         action["risk"] = str(action.get("risk") or "")
         action["intent_keywords"] = _as_text_list(action.get("intent_keywords") or action.get("keywords"))
+        if isinstance(action.get("children"), list):
+            action["children"] = normalize_actions(action["children"])
         actions.append(action)
     return actions[:12]
 
@@ -534,6 +536,8 @@ def _action_as_choice(action: dict[str, Any]) -> dict[str, Any]:
         dice = str(roll.get("dice_type") or roll.get("dice") or "1d20")
         dc = roll.get("dc", roll.get("dice_dc", 0))
         choice["risk"] = str(choice.get("risk") or (f"{dice}判定 (DC{int(dc)})" if isinstance(dc, (int, float)) and int(dc) > 0 else "判定不要"))
+    if isinstance(choice.get("children"), list):
+        choice["children"] = [_action_as_choice(child) for child in choice["children"] if isinstance(child, dict)]
     return choice
 
 
