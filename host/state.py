@@ -505,7 +505,7 @@ def annotate_choices_for_character(raw_choices: Any, character: dict[str, Any]) 
 def choice_requirement_status(choice: dict[str, Any], character: dict[str, Any]) -> tuple[bool, str]:
     requirements = choice.get("requirements")
     if requirements is None:
-        requirements = _requirements_from_risk(str(choice.get("risk") or ""))
+        requirements = _requirements_from_choice_text(choice)
     if not requirements:
         return True, ""
 
@@ -525,6 +525,14 @@ def choice_requirement_status(choice: dict[str, Any], character: dict[str, Any])
         return (True, "") if passed else (False, _requirement_reason(reqs, "all", character))
     passed = _requirement_passes(requirements, attrs, character)
     return (True, "") if passed else (False, _requirement_reason([requirements], "all", character))
+
+
+def _requirements_from_choice_text(choice: dict[str, Any]) -> dict[str, Any]:
+    source = " ".join(
+        str(choice.get(key) or "")
+        for key in ("text", "preview", "risk")
+    )
+    return _requirements_from_risk(source)
 
 
 def _requirements_from_risk(risk: str) -> dict[str, Any]:
@@ -586,6 +594,15 @@ def _requirement_passes(requirement: Any, attrs: dict[str, Any], character: dict
         if str(requirement["character_id"]) != char_id:
             return False
         return True
+    min_gold = requirement.get("gold_gte", requirement.get("min_gold"))
+    if isinstance(min_gold, (int, float)):
+        return int(character.get("gold", 0)) >= int(min_gold)
+    has_item = _requirement_item_name(requirement, ("has_item", "inventory_has", "requires_item"))
+    if has_item:
+        return has_item in _inventory_item_names(character)
+    lacks_item = _requirement_item_name(requirement, ("lacks_item", "not_item", "missing_item"))
+    if lacks_item:
+        return lacks_item not in _inventory_item_names(character)
     attr_key = _canonical_attr_key(str(requirement.get("attribute") or requirement.get("attr") or ""))
     if not attr_key:
         return True
@@ -613,6 +630,15 @@ def _requirement_label(requirement: dict[str, Any]) -> str:
         char_id = str(requirement["character_id"])
         char_names = {"hero": "勇者のみ", "cleric": "僧侶のみ", "mage": "魔法使いのみ", "thief": "盗賊のみ"}
         return char_names.get(char_id, f"キャラクター({char_id})のみ")
+    min_gold = requirement.get("gold_gte", requirement.get("min_gold"))
+    if isinstance(min_gold, (int, float)):
+        return f"{int(min_gold)}ゴールド以上"
+    has_item = _requirement_item_name(requirement, ("has_item", "inventory_has", "requires_item"))
+    if has_item:
+        return f"{has_item}所持"
+    lacks_item = _requirement_item_name(requirement, ("lacks_item", "not_item", "missing_item"))
+    if lacks_item:
+        return f"{lacks_item}未所持"
     attr_key = _canonical_attr_key(str(requirement.get("attribute") or requirement.get("attr") or ""))
     if not attr_key:
         return ""
@@ -620,6 +646,31 @@ def _requirement_label(requirement: dict[str, Any]) -> str:
     threshold = requirement.get("gte", requirement.get("min", requirement.get("gt", "")))
     suffix = f"{int(threshold)}以上" if isinstance(threshold, (int, float)) else ""
     return f"{label_map.get(attr_key, attr_key)}{suffix}"
+
+
+def _requirement_item_name(requirement: dict[str, Any], keys: tuple[str, ...]) -> str:
+    for key in keys:
+        value = requirement.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return ""
+
+
+def _inventory_item_names(character: dict[str, Any]) -> set[str]:
+    names: set[str] = set()
+    inventory = character.get("inventory")
+    if not isinstance(inventory, list):
+        return names
+    for item in inventory:
+        if isinstance(item, dict):
+            if int(item.get("quantity", 1) or 0) <= 0:
+                continue
+            name = str(item.get("name") or "").strip()
+        else:
+            name = str(item or "").strip()
+        if name:
+            names.add(name)
+    return names
 
 
 def _canonical_attr_key(key: str) -> str:

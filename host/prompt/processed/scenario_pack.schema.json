@@ -238,7 +238,6 @@
     },
     "attribute_requirement": {
       "type": "object",
-      "required": ["attribute"],
       "additionalProperties": true,
       "properties": {
         "attribute": { "type": "string" },

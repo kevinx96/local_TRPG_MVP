@@ -258,15 +258,12 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
                 return deepcopy(turn)
         return deepcopy(prepared_turns[0]) if prepared_turns else {}
 
-    searchable_text = " ".join(
-        part
-        for part in (
-            player_text,
-            _latest_user_text(session),
-        )
-        if part
-    )
-    scored = [(_prepared_turn_score(turn, searchable_text), index, turn) for index, turn in enumerate(prepared_turns)]
+    searchable_text = player_text.strip() or _latest_user_text(session)
+    latest_outcome = _latest_roll_outcome(session)
+    scored = [
+        (_prepared_turn_score(turn, searchable_text, latest_outcome), index, turn)
+        for index, turn in enumerate(prepared_turns)
+    ]
     scored.sort(key=lambda item: (item[0], -item[1]), reverse=True)
     if scored and scored[0][0] > 0:
         return deepcopy(scored[0][2])
@@ -587,7 +584,7 @@ def _turn_purpose(turn: Any) -> str:
     return str(turn.get("purpose") or "").strip().lower() if isinstance(turn, dict) else ""
 
 
-def _prepared_turn_score(turn: Any, text: str) -> int:
+def _prepared_turn_score(turn: Any, text: str, latest_outcome: str = "") -> int:
     if not isinstance(turn, dict) or not text:
         return 0
     score = 0
@@ -605,7 +602,41 @@ def _prepared_turn_score(turn: Any, text: str) -> int:
     intent = str(turn.get("player_intent") or "")
     if intent and intent in text:
         score += 1
+    turn_outcome = _turn_outcome_hint(turn)
+    if latest_outcome and turn_outcome:
+        score += 6 if latest_outcome == turn_outcome else -6
     return score
+
+
+def _latest_roll_outcome(session: dict[str, Any]) -> str:
+    dice_log = session.get("dice_log")
+    if not isinstance(dice_log, list) or not dice_log:
+        return ""
+    latest = dice_log[-1]
+    if not isinstance(latest, dict):
+        return ""
+    dc = latest.get("dc")
+    if not isinstance(dc, (int, float)) or int(dc) <= 0:
+        return ""
+    success = latest.get("success")
+    if isinstance(success, bool):
+        return "success" if success else "fail"
+    total = latest.get("total")
+    if isinstance(total, (int, float)):
+        return "success" if int(total) >= int(dc) else "fail"
+    return ""
+
+
+def _turn_outcome_hint(turn: dict[str, Any]) -> str:
+    source = " ".join(
+        str(turn.get(key) or "").lower()
+        for key in ("id", "purpose", "player_intent")
+    )
+    if any(token in source for token in ("success", "succeed", "passed", "成功")):
+        return "success"
+    if any(token in source for token in ("fail", "failed", "failure", "失敗")):
+        return "fail"
+    return ""
 
 
 def _legacy_dialogue_turn_as_prepared(hybrid: dict[str, Any], opening: bool) -> dict[str, Any]:

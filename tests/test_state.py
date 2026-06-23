@@ -570,6 +570,71 @@ class StateTests(unittest.TestCase):
         self.assertNotIn("SEMI/HYBRID", combined)
         self.assertIn("シナリオコンテキスト", messages[1]["content"])
 
+    def test_hybrid_turn_matching_uses_current_player_text_only(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["hybrid"] = {
+            "mode": "prepared_gm_turns",
+            "prepared_turns": [
+                {
+                    "id": "invite_robin_success",
+                    "purpose": "choice_response",
+                    "source_choice": "\u30d1\u30fc\u30c6\u30a3\u306b\u52e7\u8a98\u3059\u308b",
+                    "trigger_keywords": ["\u30d1\u30fc\u30c6\u30a3", "\u52e7\u8a98"],
+                    "draft": {"gm_text": "invite draft", "choices": []},
+                },
+                {
+                    "id": "robin_rumor",
+                    "purpose": "choice_response",
+                    "source_choice": "\u5642\u8a71\u3092\u805e\u304f",
+                    "trigger_keywords": ["\u5642", "\u8a71"],
+                    "draft": {"gm_text": "rumor draft", "choices": []},
+                },
+            ],
+        }
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path), gm_mode="semi")
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "\u30d1\u30fc\u30c6\u30a3\u306b\u52e7\u8a98\u3059\u308b")
+
+        context = state.select_hybrid_context(session, "\u5642\u8a71\u3092\u805e\u304f", include_debug=True)
+        debug = hybrid_context_debug(context)
+
+        self.assertEqual(debug["prepared_turn"], "robin_rumor")
+
+    def test_hybrid_turn_matching_prefers_failed_roll_draft(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["hybrid"] = {
+            "mode": "prepared_gm_turns",
+            "prepared_turns": [
+                {
+                    "id": "invite_robin_success",
+                    "purpose": "choice_response",
+                    "source_choice": "\u30d1\u30fc\u30c6\u30a3\u306b\u52e7\u8a98\u3059\u308b",
+                    "trigger_keywords": ["\u30d1\u30fc\u30c6\u30a3", "\u52e7\u8a98"],
+                    "draft": {"gm_text": "success draft", "choices": []},
+                },
+                {
+                    "id": "invite_robin_fail",
+                    "purpose": "choice_response",
+                    "source_choice": "\u30d1\u30fc\u30c6\u30a3\u306b\u52e7\u8a98\u3059\u308b",
+                    "trigger_keywords": ["\u30d1\u30fc\u30c6\u30a3", "\u52e7\u8a98"],
+                    "draft": {"gm_text": "fail draft", "choices": []},
+                },
+            ],
+        }
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path), gm_mode="semi")
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "\u30d1\u30fc\u30c6\u30a3\u306b\u52e7\u8a98\u3059\u308b")
+        session["dice_log"].append({"expression": "1d100", "rolls": [12], "total": 12, "dc": 60, "success": False})
+
+        context = state.select_hybrid_context(session, "\u30d1\u30fc\u30c6\u30a3\u306b\u52e7\u8a98\u3059\u308b", include_debug=True)
+        debug = hybrid_context_debug(context)
+
+        self.assertEqual(debug["prepared_turn"], "invite_robin_fail")
+
     def test_full_mode_ignores_prepared_turn_hints(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
@@ -835,6 +900,72 @@ class StateTests(unittest.TestCase):
 
         self.assertTrue(choice["enabled"])
         self.assertNotIn("disabled_reason", choice)
+
+    def test_choice_preview_character_requirement_disables_wrong_character(self):
+        public = state.create_session(str(self.write_pack()), character_id="thief")
+        session = state.load_session(public["id"])
+        session["choices"] = [
+            {
+                "text": "\u935b\u51b6\u5e2b\u306b\u5263\u3092\u898b\u305b\u308b",
+                "preview": "\u52c7\u8005\u306e\u5263\u306b\u3064\u3044\u3066\u76f8\u8ac7\u3059\u308b\uff08\u52c7\u8005\u306e\u307f\uff09",
+                "risk": "\u5224\u5b9a\u4e0d\u8981",
+            }
+        ]
+
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertFalse(choice["enabled"])
+        self.assertIn("\u52c7\u8005\u306e\u307f", choice["disabled_reason"])
+
+    def test_choice_inventory_and_gold_requirements_disable_purchase(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["gold"] = 0
+        session["character"]["inventory"].append({"name": "\u6c37\u306e\u8b77\u7b26", "quantity": 1})
+        session["choices"] = [
+            {
+                "text": "\u6c37\u306e\u8b77\u7b26\u3092\u8cb7\u3046\uff0850G\uff09",
+                "risk": "\u5224\u5b9a\u4e0d\u8981",
+                "requirements": {
+                    "all": [
+                        {"gold_gte": 50},
+                        {"lacks_item": "\u6c37\u306e\u8b77\u7b26"},
+                    ]
+                },
+            }
+        ]
+
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertFalse(choice["enabled"])
+        self.assertIn("50", choice["disabled_reason"])
+        self.assertIn("\u6c37\u306e\u8b77\u7b26", choice["disabled_reason"])
+
+    def test_disabled_scenario_choice_is_not_sent_to_llm_when_not_in_current_choices(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["gold"] = 0
+        session["character"]["inventory"].append({"name": "\u6c37\u306e\u8b77\u7b26", "quantity": 1})
+        session["choices"] = []
+        session["scenario_pack"]["locations"][0]["choices"] = [
+            {
+                "text": "\u6c37\u306e\u8b77\u7b26\u3092\u8cb7\u3046\uff0850G\uff09",
+                "risk": "\u5224\u5b9a\u4e0d\u8981",
+                "requirements": {
+                    "all": [
+                        {"gold_gte": 50},
+                        {"lacks_item": "\u6c37\u306e\u8b77\u7b26"},
+                    ]
+                },
+            }
+        ]
+
+        result = app_module._run_turn(session, app_module.TurnRequest(text="\u6c37\u306e\u8b77\u7b26\u3092\u8cb7\u3046\uff0850G\uff09"))
+
+        self.assertEqual(session["messages"], [])
+        self.assertEqual(session["dice_log"], [])
+        self.assertTrue(any("\u6c37\u306e\u8b77\u7b26" in log.get("text", "") for log in session["system_logs"]))
+        self.assertEqual(result["messages"], [])
 
     def test_disabled_choice_is_not_sent_to_llm(self):
         public = state.create_session(str(self.write_pack()))

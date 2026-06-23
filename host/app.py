@@ -412,6 +412,14 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             add_system_log(session, reason or "この行動は条件を満たしていません。")
             save_session(session)
             return public_session(session)
+    else:
+        scenario_choice = _matching_scenario_choice(session, action_text)
+        if scenario_choice:
+            enabled, reason = choice_requirement_status(scenario_choice, session.get("character", {}))
+            if not enabled:
+                add_system_log(session, reason or "この行動は条件を満たしていません。")
+                save_session(session)
+                return public_session(session)
 
     add_player_message(session, action_text, request.speaker)
 
@@ -517,6 +525,18 @@ def _matching_choice(raw_choices: Any, action_text: str) -> Optional[dict[str, A
         child_match = _matching_choice(choice.get("children"), normalized_action)
         if child_match:
             return child_match
+    return None
+
+
+def _matching_scenario_choice(session: dict[str, Any], action_text: str) -> Optional[dict[str, Any]]:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return None
+    location_id = str(session.get("current_location") or "")
+    for location in pack.get("locations", []):
+        if not isinstance(location, dict) or str(location.get("id") or "") != location_id:
+            continue
+        return _matching_choice(location.get("choices"), action_text)
     return None
 
 
