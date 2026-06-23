@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from copy import deepcopy
 from pathlib import Path
 from typing import Any, Optional
@@ -476,7 +477,16 @@ def _record_matches(record: dict[str, Any], text: str) -> bool:
         return False
     needles = [str(record.get("id", "")), str(record.get("title", "")), str(record.get("name", ""))]
     needles.extend(_as_text_list(record.get("keywords")))
-    return any(needle and needle in text for needle in needles)
+    return any(_text_contains_needle(text, needle) for needle in needles)
+
+
+def _text_contains_needle(text: str, needle: str) -> bool:
+    needle = str(needle or "").strip()
+    if not needle:
+        return False
+    if re.fullmatch(r"[A-Za-z0-9_][A-Za-z0-9_-]*", needle):
+        return re.search(rf"(?<![A-Za-z0-9_-]){re.escape(needle)}(?![A-Za-z0-9_-])", text, re.IGNORECASE) is not None
+    return needle in text
 
 
 def _matched_records(
@@ -592,15 +602,15 @@ def _prepared_turn_score(turn: Any, text: str, latest_outcome: str = "") -> int:
     source_choice = str(turn.get("source_choice") or "").strip()
     if source_choice and source_choice == text.strip():
         score += 10
-    elif source_choice and source_choice in text:
+    elif source_choice and _text_contains_needle(text, source_choice):
         score += 3
     # Keyword matches
     for keyword in _as_text_list(turn.get("trigger_keywords")):
-        if keyword in text:
+        if _text_contains_needle(text, keyword):
             score += 2
     # Player intent
     intent = str(turn.get("player_intent") or "")
-    if intent and intent in text:
+    if intent and _text_contains_needle(text, intent):
         score += 1
     turn_outcome = _turn_outcome_hint(turn)
     if latest_outcome and turn_outcome:

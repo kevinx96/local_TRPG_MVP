@@ -387,13 +387,23 @@ def _content_from_gemini_response(text: str) -> str:
         data = json.loads(text)
     except json.JSONDecodeError as exc:
         raise LLMClientError(f"Invalid Gemini JSON response: {exc}") from exc
+    if not isinstance(data, dict):
+        return ""
     if isinstance(data.get("error"), dict):
         error = data["error"]
         raise LLMClientError(str(error.get("message") or error))
-    candidates = data.get("candidates") or []
-    if not candidates:
+    candidates = data.get("candidates")
+    if not isinstance(candidates, list) or not candidates:
         return ""
-    parts = ((candidates[0].get("content") or {}).get("parts") or [])
+    candidate = candidates[0]
+    if not isinstance(candidate, dict):
+        return ""
+    content = candidate.get("content")
+    if not isinstance(content, dict):
+        return ""
+    parts = content.get("parts")
+    if not isinstance(parts, list):
+        return ""
     texts = [part.get("text", "") for part in parts if isinstance(part, dict) and isinstance(part.get("text"), str)]
     return "".join(texts)
 
