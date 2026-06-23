@@ -245,72 +245,92 @@
           ]
         },
         {
-          "id": "go_forge",
-          "text": "鍛冶屋へ向かう",
-          "preview": "武器の強化や購入",
+          "id": "explore_castle_town",
+          "text": "城下町を探索する",
+          "preview": "鍛冶屋、宿屋、魔法店、道具屋、路地裏へ向かう",
           "risk": "判定不要",
           "intent_keywords": [
-            "鍛冶屋へ向かう"
+            "城下町",
+            "街",
+            "町",
+            "探索",
+            "店",
+            "宿屋",
+            "鍛冶屋",
+            "魔法店",
+            "道具屋",
+            "路地裏"
           ],
-          "effects": [
+          "children": [
             {
-              "current_location": "forge"
-            }
-          ]
-        },
-        {
-          "id": "go_inn",
-          "text": "宿屋へ向かう",
-          "preview": "休息や情報収集",
-          "risk": "判定不要",
-          "intent_keywords": [
-            "宿屋へ向かう"
-          ],
-          "effects": [
+              "id": "go_forge",
+              "text": "鍛冶屋へ向かう",
+              "preview": "武器の強化や購入",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "鍛冶屋へ向かう"
+              ],
+              "effects": [
+                {
+                  "current_location": "forge"
+                }
+              ]
+            },
             {
-              "current_location": "inn"
-            }
-          ]
-        },
-        {
-          "id": "go_magic_shop",
-          "text": "魔法店へ向かう",
-          "preview": "魔法の品を購入",
-          "risk": "判定不要",
-          "intent_keywords": [
-            "魔法店へ向かう"
-          ],
-          "effects": [
+              "id": "go_inn",
+              "text": "宿屋へ向かう",
+              "preview": "休息や情報収集",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "宿屋へ向かう"
+              ],
+              "effects": [
+                {
+                  "current_location": "inn"
+                }
+              ]
+            },
             {
-              "current_location": "magic_shop"
-            }
-          ]
-        },
-        {
-          "id": "go_item_shop",
-          "text": "道具屋へ向かう",
-          "preview": "アイテムを購入",
-          "risk": "判定不要",
-          "intent_keywords": [
-            "道具屋へ向かう"
-          ],
-          "effects": [
+              "id": "go_magic_shop",
+              "text": "魔法店へ向かう",
+              "preview": "魔法の品を購入",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "魔法店へ向かう"
+              ],
+              "effects": [
+                {
+                  "current_location": "magic_shop"
+                }
+              ]
+            },
             {
-              "current_location": "item_shop"
-            }
-          ]
-        },
-        {
-          "id": "go_alley",
-          "text": "路地裏へ向かう",
-          "preview": "怪しい場所を探索",
-          "risk": "判定不要",
-          "intent_keywords": [
-            "路地裏へ向かう"
-          ],
-          "effects": [
+              "id": "go_item_shop",
+              "text": "道具屋へ向かう",
+              "preview": "アイテムを購入",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "道具屋へ向かう"
+              ],
+              "effects": [
+                {
+                  "current_location": "item_shop"
+                }
+              ]
+            },
             {
-              "current_location": "alley"
+              "id": "go_alley",
+              "text": "路地裏へ向かう",
+              "preview": "怪しい場所を探索",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "路地裏へ向かう"
+              ],
+              "effects": [
+                {
+                  "current_location": "alley"
+                }
+              ]
             }
           ]
         },

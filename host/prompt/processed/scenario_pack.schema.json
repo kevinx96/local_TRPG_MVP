@@ -272,7 +272,11 @@
         },
         "once": { "type": "string" },
         "disabled_after": { "type": "string" },
-        "prepared_turn_id": { "type": "string" }
+        "prepared_turn_id": { "type": "string" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/action" }
+        }
       }
     },
     "action_roll": {
