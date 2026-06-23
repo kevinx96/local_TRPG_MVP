@@ -941,6 +941,24 @@ class StateTests(unittest.TestCase):
         self.assertIn("50", choice["disabled_reason"])
         self.assertIn("\u6c37\u306e\u8b77\u7b26", choice["disabled_reason"])
 
+    def test_purchase_text_infers_inventory_and_gold_requirements(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["gold"] = 0
+        session["character"]["inventory"].append({"name": "\u6c37\u306e\u8b77\u7b26", "quantity": 1})
+        session["choices"] = [
+            {
+                "text": "\u6c37\u306e\u8b77\u7b26\u3092\u8cb7\u3046\uff0850G\uff09",
+                "risk": "\u5224\u5b9a\u4e0d\u8981",
+            }
+        ]
+
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertFalse(choice["enabled"])
+        self.assertIn("50", choice["disabled_reason"])
+        self.assertIn("\u6c37\u306e\u8b77\u7b26", choice["disabled_reason"])
+
     def test_disabled_scenario_choice_is_not_sent_to_llm_when_not_in_current_choices(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])

@@ -532,7 +532,30 @@ def _requirements_from_choice_text(choice: dict[str, Any]) -> dict[str, Any]:
         str(choice.get(key) or "")
         for key in ("text", "preview", "risk")
     )
-    return _requirements_from_risk(source)
+    explicit = _requirements_from_risk(source)
+    purchase_requirements = _purchase_requirements_from_text(source)
+    if explicit and purchase_requirements:
+        if isinstance(explicit.get("all"), list):
+            return {"all": [*explicit["all"], *purchase_requirements]}
+        return {"all": [explicit, *purchase_requirements]}
+    if purchase_requirements:
+        return {"all": purchase_requirements} if len(purchase_requirements) > 1 else purchase_requirements[0]
+    return explicit
+
+
+def _purchase_requirements_from_text(text: str) -> list[dict[str, Any]]:
+    if not any(token in text for token in ("買う", "購入")):
+        return []
+    requirements: list[dict[str, Any]] = []
+    gold_match = re.search(r"(\d+)\s*(?:G|g|ゴールド|gold)", text, re.IGNORECASE)
+    if gold_match:
+        requirements.append({"gold_gte": int(gold_match.group(1))})
+    item_match = re.search(r"(.+?)を(?:買う|購入)", text)
+    if item_match:
+        item_name = item_match.group(1).split("で")[-1].strip(" 　「」『』（）()")
+        if item_name:
+            requirements.append({"lacks_item": item_name})
+    return requirements
 
 
 def _requirements_from_risk(risk: str) -> dict[str, Any]:
