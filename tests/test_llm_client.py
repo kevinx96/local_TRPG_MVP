@@ -128,6 +128,12 @@ class LLMClientTests(unittest.TestCase):
 
         self.assertEqual(content, '{"gm_text":"ok"}')
 
+    def test_content_from_gemini_response_ignores_malformed_candidates(self):
+        self.assertEqual(_content_from_gemini_response('{"candidates":[null]}'), "")
+        self.assertEqual(_content_from_gemini_response('{"candidates":["bad"]}'), "")
+        self.assertEqual(_content_from_gemini_response('{"candidates":[{"content":null}]}'), "")
+        self.assertEqual(_content_from_gemini_response('{"candidates":[{"content":{"parts":"bad"}}]}'), "")
+
 
 if __name__ == "__main__":
     unittest.main()

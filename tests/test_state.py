@@ -151,6 +151,25 @@ class StateTests(unittest.TestCase):
         self.assertEqual([item["id"] for item in context["matched"]["items"]], ["iron_shield"])
         self.assertEqual(context["matched"]["clues"], [])
 
+    def test_select_scenario_context_uses_word_boundaries_for_ascii_keywords(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["npcs"].append({
+            "id": "innkeeper",
+            "name": "Inn Keeper",
+            "description": "Offers a room.",
+            "keywords": ["inn", "\u5bbf"],
+        })
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        english_context = state.select_scenario_context(session, "We discuss dinner in the valley.")
+        japanese_context = state.select_scenario_context(session, "\u5bbf\u5c4b\u3067\u60c5\u5831\u3092\u96c6\u3081\u308b")
+
+        self.assertNotIn("innkeeper", [item["id"] for item in english_context["matched"]["npcs"]])
+        self.assertIn("innkeeper", [item["id"] for item in japanese_context["matched"]["npcs"]])
+
     def test_scene_description_does_not_keyword_match_remote_enemies(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
@@ -900,6 +919,60 @@ class StateTests(unittest.TestCase):
 
         self.assertTrue(choice["enabled"])
         self.assertNotIn("disabled_reason", choice)
+
+    def test_choice_risk_character_requirement_preserves_attribute_or(self):
+        public = state.create_session(str(self.write_pack()), character_id="hero")
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"str": 8, "dex": 12}
+        session["choices"] = [
+            {
+                "text": "\u52c7\u8005\u306e\u5263\u3092\u6383\u3046",
+                "risk": "\u52c7\u8005\u306e\u307f\u3001\u7b4b\u529b\u307e\u305f\u306f\u654f\u6377\u304c10\u4ee5\u4e0a\u3067\u5224\u5b9a",
+            },
+        ]
+
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertTrue(choice["enabled"])
+
+        session["character"]["attributes"] = {"str": 8, "dex": 8}
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertFalse(choice["enabled"])
+        self.assertIn("\u7b4b\u529b", choice["disabled_reason"])
+        self.assertIn("\u654f\u6377", choice["disabled_reason"])
+        self.assertIn("\u307e\u305f\u306f", choice["disabled_reason"])
+
+    def test_explicit_nested_choice_requirements_are_recursive(self):
+        public = state.create_session(str(self.write_pack()), character_id="hero")
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"str": 8, "dex": 11}
+        session["choices"] = [
+            {
+                "text": "\u52c7\u8005\u306e\u8a66\u7df4\u3092\u53d7\u3051\u308b",
+                "risk": "\u5224\u5b9a",
+                "requirements": {
+                    "all": [
+                        {"character_id": "hero"},
+                        {
+                            "any": [
+                                {"attribute": "str", "gte": 10},
+                                {"attribute": "dex", "gte": 10},
+                            ]
+                        },
+                    ]
+                },
+            }
+        ]
+
+        choice = state.public_session(session)["choices"][0]
+        self.assertTrue(choice["enabled"])
+
+        session["character"]["attributes"] = {"str": 8, "dex": 8}
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertFalse(choice["enabled"])
+        self.assertIn("\u307e\u305f\u306f", choice["disabled_reason"])
 
     def test_choice_preview_character_requirement_disables_wrong_character(self):
         public = state.create_session(str(self.write_pack()), character_id="thief")

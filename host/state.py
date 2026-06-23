@@ -575,7 +575,7 @@ def _requirements_from_risk(risk: str) -> dict[str, Any]:
     else:
         attr_req = {"all": [{"attribute": key, "gte": threshold} for key in attr_keys]}
     if char_req:
-        return {"all": [char_req, *attr_req.get("all", attr_req.get("any", []))]}
+        return {"all": [char_req, attr_req]}
     return attr_req
 
 
@@ -612,6 +612,10 @@ def _attribute_keys_from_text(text: str) -> list[str]:
 def _requirement_passes(requirement: Any, attrs: dict[str, Any], character: dict[str, Any]) -> bool:
     if not isinstance(requirement, dict):
         return True
+    if isinstance(requirement.get("any"), list):
+        return any(_requirement_passes(req, attrs, character) for req in requirement["any"])
+    if isinstance(requirement.get("all"), list):
+        return all(_requirement_passes(req, attrs, character) for req in requirement["all"])
     if "character_id" in requirement:
         char_id = str(character.get("id") or character.get("character_id") or "")
         if str(requirement["character_id"]) != char_id:
@@ -649,6 +653,19 @@ def _requirement_reason(requirements: list[Any], mode: str, character: dict[str,
 
 
 def _requirement_label(requirement: dict[str, Any]) -> str:
+    if isinstance(requirement.get("any"), list):
+        labels = [_requirement_label(req) for req in requirement["any"] if isinstance(req, dict)]
+        labels = [label for label in labels if label]
+        if not labels:
+            return ""
+        joined = "または".join(labels)
+        return f"({joined})" if len(labels) > 1 else joined
+    if isinstance(requirement.get("all"), list):
+        labels = [_requirement_label(req) for req in requirement["all"] if isinstance(req, dict)]
+        labels = [label for label in labels if label]
+        if not labels:
+            return ""
+        return "と".join(labels)
     if "character_id" in requirement:
         char_id = str(requirement["character_id"])
         char_names = {"hero": "勇者のみ", "cleric": "僧侶のみ", "mage": "魔法使いのみ", "thief": "盗賊のみ"}
