@@ -315,7 +315,22 @@ def current_actions_for_session(session: dict[str, Any]) -> list[dict[str, Any]]
 
 
 def current_action_choices(session: dict[str, Any]) -> list[dict[str, Any]]:
-    return [_action_as_choice(action) for action in current_actions_for_session(session)]
+    choices = [_action_as_choice(action) for action in current_actions_for_session(session)]
+    flags = session.get("flags") if isinstance(session.get("flags"), dict) else {}
+    return _visible_action_choices(choices, flags)
+
+
+def _visible_action_choices(choices: list[dict[str, Any]], flags: dict[str, Any]) -> list[dict[str, Any]]:
+    visible: list[dict[str, Any]] = []
+    for choice in choices:
+        visible_flag = str(choice.get("visible_after") or "")
+        if visible_flag and not flags.get(visible_flag):
+            continue
+        item = deepcopy(choice)
+        if isinstance(item.get("children"), list):
+            item["children"] = _visible_action_choices(item["children"], flags)
+        visible.append(item)
+    return visible
 
 
 def fallback_choices_for_scene(pack: dict[str, Any], scene_id: str) -> list[dict[str, str]]:
@@ -669,7 +684,7 @@ def _trim_choices(choices: list[dict[str, str]]) -> list[dict[str, Any]]:
         for key in (
             "id", "action_id", "intent_keywords", "roll", "effects",
             "success_effects", "failure_effects", "requirements",
-            "once", "disabled_after", "prepared_turn_id", "outcome",
+            "once", "disabled_after", "visible_after", "prepared_turn_id", "outcome",
         ):
             if key in choice:
                 item[key] = deepcopy(choice[key])

@@ -1272,6 +1272,225 @@ class StateTests(unittest.TestCase):
         self.assertIsNotNone(action)
         self.assertEqual(action["text"], "鍛冶屋へ向かう")
 
+    def test_dragon_rpg_intro_actions_disable_after_use(self):
+        expected_once_flags = {
+            "ask_king_info": "heard_king_info",
+            "ask_general_advice": "asked_general_advice",
+            "check_supplies": "checked_supplies",
+        }
+
+        for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
+            with self.subTest(filename=filename):
+                path = state.HOST_ROOT / "prompt" / "processed" / filename
+                public = state.create_session(str(path), gm_mode="semi")
+                session = state.load_session(public["id"])
+
+                for action_id, once_flag in expected_once_flags.items():
+                    action = state.resolve_action(session, action_id=action_id)
+                    self.assertIsNotNone(action)
+                    self.assertEqual(action.get("once"), once_flag)
+                    roll = state.roll_dice(
+                        session,
+                        *state.action_dice_settings(action),
+                        client_rolls=[20],
+                    )
+                    state.apply_action_result(session, action, roll)
+
+                choices = {
+                    choice.get("action_id"): choice
+                    for choice in state.public_session(session)["choices"]
+                }
+                for action_id, once_flag in expected_once_flags.items():
+                    self.assertTrue(session["flags"].get(once_flag))
+                    self.assertFalse(choices[action_id]["enabled"])
+                    self.assertIn("完了済み", choices[action_id]["disabled_reason"])
+
+    def test_dragon_rpg_action_groups_and_story_once_flags(self):
+        expected_groups = {
+            "forge": {
+                "buy_equipment": ["buy_adamantite_armor", "buy_ice_amulet"],
+            },
+            "inn": {
+                "ask_ian": ["ask_ian_legend", "ask_ian_advice", "rest_at_inn"],
+                "ask_robin": ["invite_robin", "ask_robin_rumor"],
+            },
+        }
+        expected_once = {
+            "ask_king_info",
+            "ask_general_advice",
+            "check_supplies",
+            "ask_blacksmith_weakness",
+            "show_sword_to_blacksmith",
+            "accept_sword_fusion",
+            "ask_ian_legend",
+            "ask_ian_advice",
+            "invite_robin",
+            "ask_robin_rumor",
+            "talk_suspicious_merchant",
+            "search_alley",
+            "ask_elder_weakness",
+        }
+
+        for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
+            with self.subTest(filename=filename):
+                path = state.HOST_ROOT / "prompt" / "processed" / filename
+                pack = json.loads(path.read_text(encoding="utf-8-sig"))
+                locations = {location["id"]: location for location in pack["locations"]}
+
+                all_actions = {}
+                for location in locations.values():
+                    for action in self._iter_scenario_actions(location.get("actions")):
+                        all_actions[action["id"]] = action
+
+                for location_id, groups in expected_groups.items():
+                    top_actions = {
+                        action["id"]: action
+                        for action in locations[location_id].get("actions", [])
+                    }
+                    for group_id, child_ids in groups.items():
+                        self.assertEqual(
+                            [child.get("id") for child in top_actions[group_id].get("children", [])],
+                            child_ids,
+                        )
+
+                for action_id in expected_once:
+                    self.assertTrue(all_actions[action_id].get("once"), action_id)
+
+                show_sword = all_actions["show_sword_to_blacksmith"]
+                self.assertEqual(show_sword.get("requirements"), {"character_id": "hero"})
+
+                buy_armor = all_actions["buy_adamantite_armor"]
+                self.assertEqual(buy_armor.get("disabled_after"), "bought_adamantite_armor")
+                self.assertIn({"gold_change": -20}, buy_armor.get("effects", []))
+                self.assertIn(
+                    {"add_item": {"name": "アダマンタイトの鎧", "quantity": 1}},
+                    buy_armor.get("effects", []),
+                )
+
+    def test_dragon_rpg_action_groups_are_not_executable(self):
+        path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg_hybrid.json"
+        public = state.create_session(str(path), gm_mode="semi", character_id="hero")
+        session = state.load_session(public["id"])
+        session["current_location"] = "forge"
+
+        self.assertIsNone(state.resolve_action(session, action_id="buy_equipment"))
+        self.assertIsNone(state.resolve_action(session, action_text="装備を買う"))
+        self.assertIsNotNone(state.resolve_action(session, action_id="buy_adamantite_armor"))
+        self.assertIsNotNone(state.resolve_action(session, action_id="buy_ice_amulet"))
+
+    def test_dragon_rpg_forge_purchase_and_hero_choice_runtime(self):
+        path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg_hybrid.json"
+        public = state.create_session(str(path), gm_mode="semi", character_id="hero")
+        session = state.load_session(public["id"])
+        session["current_location"] = "forge"
+        session["character"]["gold"] = 50
+        session["character"]["attributes"]["end"] = 10
+        session["choices"] = current_action_choices(session)
+
+        public_choices = {
+            choice.get("action_id"): choice
+            for choice in state.public_session(session)["choices"]
+        }
+        self.assertTrue(public_choices["show_sword_to_blacksmith"]["enabled"])
+        self.assertEqual(
+            [child.get("action_id") for child in public_choices["buy_equipment"]["children"]],
+            ["buy_adamantite_armor", "buy_ice_amulet"],
+        )
+        self.assertNotIn("accept_sword_fusion", public_choices)
+        before_show_context = state.select_hybrid_context(session, include_debug=True)
+        self.assertNotIn(
+            "accept_sword_fusion",
+            {action.get("action_id") for action in before_show_context["available_actions"]},
+        )
+
+        show_sword = state.resolve_action(session, action_id="show_sword_to_blacksmith")
+        show_roll = state.roll_dice(
+            session,
+            *state.action_dice_settings(show_sword),
+            client_rolls=[10],
+        )
+        state.apply_action_result(session, show_sword, show_roll)
+        hybrid_context = state.select_hybrid_context(
+            session,
+            "鍛冶師に剣を見せる",
+            include_debug=True,
+        )
+        self.assertEqual(hybrid_context["_debug"]["prepared_turn"], "show_sword_to_blacksmith")
+        post_show_choices = {
+            choice.get("action_id"): choice
+            for choice in state.public_session(session)["choices"]
+        }
+        self.assertFalse(post_show_choices["show_sword_to_blacksmith"]["enabled"])
+        self.assertTrue(post_show_choices["accept_sword_fusion"]["enabled"])
+        self.assertIn(
+            "accept_sword_fusion",
+            {action.get("action_id") for action in hybrid_context["available_actions"]},
+        )
+
+        accept_fusion = state.resolve_action(session, action_id="accept_sword_fusion")
+        fusion_roll = state.roll_dice(
+            session,
+            *state.action_dice_settings(accept_fusion),
+            client_rolls=[10],
+        )
+        state.apply_action_result(session, accept_fusion, fusion_roll)
+        fusion_context = state.select_hybrid_context(
+            session,
+            "提案を受け入れる",
+            include_debug=True,
+        )
+        self.assertEqual(fusion_context["_debug"]["prepared_turn"], "accept_sword_fusion")
+        inventory_names = {item.get("name") for item in session["character"]["inventory"]}
+        self.assertNotIn("鉄の剣", inventory_names)
+        self.assertIn("氷鉄の大剣", inventory_names)
+
+        action = state.resolve_action(session, action_id="buy_adamantite_armor")
+        roll = state.roll_dice(session, *state.action_dice_settings(action), client_rolls=[10])
+        state.apply_action_result(session, action, roll)
+        self.assertEqual(session["character"]["gold"], 30)
+        self.assertTrue(
+            any(item.get("name") == "アダマンタイトの鎧" for item in session["character"]["inventory"])
+        )
+
+        mage_public = state.create_session(str(path), gm_mode="semi", character_id="mage")
+        mage = state.load_session(mage_public["id"])
+        mage["current_location"] = "forge"
+        mage["choices"] = current_action_choices(mage)
+        mage_choices = {
+            choice.get("action_id"): choice
+            for choice in state.public_session(mage)["choices"]
+        }
+        self.assertFalse(mage_choices["show_sword_to_blacksmith"]["enabled"])
+
+    def test_dragon_rpg_base_and_hybrid_actions_stay_aligned(self):
+        processed = state.HOST_ROOT / "prompt" / "processed"
+        base = json.loads((processed / "dragon_rpg.json").read_text(encoding="utf-8-sig"))
+        hybrid = json.loads((processed / "dragon_rpg_hybrid.json").read_text(encoding="utf-8-sig"))
+        base_actions = {location["id"]: location.get("actions", []) for location in base["locations"]}
+        hybrid_actions = {location["id"]: location.get("actions", []) for location in hybrid["locations"]}
+
+        self.assertEqual(base_actions, hybrid_actions)
+
+    def test_dragon_rpg_contains_no_ascii_question_mark_placeholders(self):
+        for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
+            with self.subTest(filename=filename):
+                path = state.HOST_ROOT / "prompt" / "processed" / filename
+                pack = json.loads(path.read_text(encoding="utf-8-sig"))
+                broken_paths = []
+
+                def find_broken(value, value_path="$"):
+                    if isinstance(value, dict):
+                        for key, item in value.items():
+                            find_broken(item, f"{value_path}.{key}")
+                    elif isinstance(value, list):
+                        for index, item in enumerate(value):
+                            find_broken(item, f"{value_path}[{index}]")
+                    elif isinstance(value, str) and "??" in value:
+                        broken_paths.append(value_path)
+
+                find_broken(pack)
+                self.assertEqual(broken_paths, [])
+
     def test_dragon_rpg_hybrid_action_ids_exist_in_base_pack(self):
         base_path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg.json"
         hybrid_path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg_hybrid.json"
@@ -1299,6 +1518,14 @@ class StateTests(unittest.TestCase):
         ]
 
         self.assertFalse(missing)
+
+    @staticmethod
+    def _iter_scenario_actions(actions):
+        for action in actions or []:
+            if not isinstance(action, dict):
+                continue
+            yield action
+            yield from StateTests._iter_scenario_actions(action.get("children"))
 
 
 if __name__ == "__main__":

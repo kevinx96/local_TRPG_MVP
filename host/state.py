@@ -279,6 +279,9 @@ def annotate_choices_for_session(raw_choices: Any, session: dict[str, Any]) -> l
         choice = {"text": str(item), "preview": "", "risk": ""} if isinstance(item, str) else deepcopy(item)
         if not isinstance(choice, dict):
             continue
+        visible_flag = str(choice.get("visible_after") or "")
+        if visible_flag and not flags.get(visible_flag):
+            continue
         disabled_flag = str(choice.get("disabled_after") or "")
         once_flag = str(choice.get("once") or "")
         if disabled_flag and flags.get(disabled_flag):
@@ -557,16 +560,20 @@ def choice_requirement_status(choice: dict[str, Any], character: dict[str, Any])
 
 
 def resolve_action(session: dict[str, Any], action_text: str = "", action_id: Optional[str] = None) -> Optional[dict[str, Any]]:
-    actions = current_actions_for_session(session)
+    actions = [
+        action
+        for action in _iter_actions(current_actions_for_session(session))
+        if not action.get("children")
+    ]
     wanted_id = str(action_id or "").strip()
     wanted_text = str(action_text or "").strip()
-    for action in _iter_actions(actions):
+    for action in actions:
         if wanted_id and wanted_id in (str(action.get("id") or ""), str(action.get("action_id") or "")):
             return deepcopy(action)
-    for action in _iter_actions(actions):
+    for action in actions:
         if wanted_text and wanted_text == str(action.get("text") or "").strip():
             return deepcopy(action)
-    for action in _iter_actions(actions):
+    for action in actions:
         if wanted_text and _action_keyword_matches(action, wanted_text):
             return deepcopy(action)
     return None
@@ -574,6 +581,9 @@ def resolve_action(session: dict[str, Any], action_text: str = "", action_id: Op
 
 def action_requirement_status(action: dict[str, Any], session: dict[str, Any]) -> tuple[bool, str]:
     flags = session.get("flags") if isinstance(session.get("flags"), dict) else {}
+    visible_flag = str(action.get("visible_after") or "")
+    if visible_flag and not flags.get(visible_flag):
+        return False, "この行動はまだ選択できません。"
     disabled_flag = str(action.get("disabled_after") or "")
     once_flag = str(action.get("once") or "")
     if disabled_flag and flags.get(disabled_flag):
@@ -1056,21 +1066,26 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
             character["inventory"].append(enriched)
         add_system_log(session, f"{item_name} x{add_qty}を入手しました。")
 
-    for item in _as_text_list(delta.get("inventory_remove")):
+    for item in _as_item_list(delta.get("inventory_remove")):
+        item_name = str(item["name"]).strip()
+        remaining = _safe_quantity(item.get("quantity"), 1)
         removed_qty = 0
         new_inv = []
         for existing in character["inventory"]:
             ename = existing.get("name") if isinstance(existing, dict) else existing
-            if ename == item and isinstance(existing, dict):
-                existing["quantity"] = int(existing.get("quantity", 1)) - 1
-                removed_qty += 1
-                if existing["quantity"] > 0:
+            if ename == item_name and remaining > 0:
+                existing_qty = int(existing.get("quantity", 1)) if isinstance(existing, dict) else 1
+                remove_qty = min(existing_qty, remaining)
+                remaining -= remove_qty
+                removed_qty += remove_qty
+                if isinstance(existing, dict) and existing_qty > remove_qty:
+                    existing["quantity"] = existing_qty - remove_qty
                     new_inv.append(existing)
             else:
                 new_inv.append(existing)
         character["inventory"] = new_inv
         if removed_qty:
-            add_system_log(session, f"{item} x{removed_qty}を失いました。")
+            add_system_log(session, f"{item_name} x{removed_qty}を失いました。")
 
     for image_key in ("background_image", "character_image"):
         if isinstance(delta.get(image_key), str):
