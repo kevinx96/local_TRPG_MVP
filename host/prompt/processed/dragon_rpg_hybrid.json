@@ -535,6 +535,7 @@
           "intent_keywords": [
             "国王に邪竜の詳しい話を聞く"
           ],
+          "once": "heard_king_info",
           "effects": [
             {
               "set_flag": "heard_king_info"
@@ -553,6 +554,7 @@
             "dice_type": "1d20",
             "dc": 15
           },
+          "once": "asked_general_advice",
           "success_effects": [
             {
               "set_flag": "got_general_advice"
@@ -572,6 +574,7 @@
           "intent_keywords": [
             "支度金と装備を確認する"
           ],
+          "once": "checked_supplies",
           "effects": [
             {
               "set_flag": "checked_supplies"
@@ -954,40 +957,35 @@
             "outcome": "neutral"
           },
           {
-            "id": "ask_activate_ice_charm",
+            "id": "buy_ice_amulet_at_forge",
             "purpose": "choice_response",
-            "source_choice": "氷の護符の活性化を頼む",
-            "player_intent": "氷の護符の真の力を引き出してもらう",
+            "source_choice": "氷の護符を買う（50G）",
+            "player_intent": "鍛冶屋で氷の護符を購入する",
             "trigger_keywords": [
-              "活性化",
-              "護符",
-              "頼む"
+              "氷の護符",
+              "買う",
+              "購入"
             ],
             "draft": {
-              "gm_text": "ローベルトは受け取った氷の護符を炉にかざし、特殊な石で叩き始めた。青白い光が護符から溢れ出し、冷気が辺りに漂う。「よし、これで護符の力は完全に引き出された。どんな攻撃も氷の刃となって邪竜を切り裂くだろう」",
-              "system_log": "『氷の護符』を失い、『氷の護符(活性化済)』を獲得した。無属性ダメージが氷属性になり、邪竜に有効になる。",
+              "gm_text": "ローベルトは棚から冷気を帯びた護符を取り出した。「邪竜の炎に挑むなら、こいつを持っていけ。代金は50ゴールドだ」あなたは代金を払い、氷の護符を受け取った。",
+              "system_log": "50ゴールドを支払い、『氷の護符』を購入した。",
               "dice_type": "1d20",
               "dice_dc": 0,
               "state_delta": {
                 "hp_change": 0,
                 "mp_change": 0,
                 "sp_change": 0,
-                "gold_change": 0,
+                "gold_change": -50,
                 "attribute_changes": {},
                 "inventory_add": [
                   {
-                    "name": "氷の護符(活性化済)",
-                    "description": "鍛冶師によって真の力を引き出された氷の護符。",
-                    "effect": "無属性ダメージを氷属性に変換し、邪竜に有効なダメージを与える",
-                    "quantity": 1
-                  }
-                ],
-                "inventory_remove": [
-                  {
                     "name": "氷の護符",
+                    "description": "冷気の力を宿した護符。",
+                    "effect": "邪竜の弱点を突く",
                     "quantity": 1
                   }
                 ],
+                "inventory_remove": [],
                 "current_scene": null
               },
               "choices": [
@@ -1220,7 +1218,7 @@
               ]
             },
             "rewrite_notes": [],
-            "action_id": "show_sword_to_blacksmith",
+            "action_id": "accept_sword_fusion",
             "outcome": "neutral"
           }
         ]
@@ -1234,9 +1232,78 @@
           "intent_keywords": [
             "装備を買う"
           ],
-          "effects": [
+          "children": [
             {
-              "set_flag": "checked_forge_equipment"
+              "id": "buy_adamantite_armor",
+              "text": "アダマンタイトの鎧を買う（20G）",
+              "preview": "被ダメージを軽減(-3)",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "アダマンタイトの鎧を買う"
+              ],
+              "requirements": {
+                "all": [
+                  {
+                    "attribute": "end",
+                    "gte": 8
+                  },
+                  {
+                    "gold_gte": 20
+                  },
+                  {
+                    "lacks_item": "アダマンタイトの鎧"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "gold_change": -20
+                },
+                {
+                  "add_item": {
+                    "name": "アダマンタイトの鎧",
+                    "quantity": 1
+                  }
+                },
+                {
+                  "set_flag": "bought_adamantite_armor"
+                }
+              ],
+              "disabled_after": "bought_adamantite_armor"
+            },
+            {
+              "id": "buy_ice_amulet",
+              "text": "氷の護符を買う（50G）",
+              "preview": "邪竜の弱点を突く",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "氷の護符を買う"
+              ],
+              "requirements": {
+                "all": [
+                  {
+                    "gold_gte": 50
+                  },
+                  {
+                    "lacks_item": "氷の護符"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "gold_change": -50
+                },
+                {
+                  "add_item": {
+                    "name": "氷の護符",
+                    "quantity": 1
+                  }
+                },
+                {
+                  "set_flag": "bought_ice_amulet"
+                }
+              ],
+              "disabled_after": "bought_ice_amulet"
             }
           ]
         },
@@ -1248,6 +1315,7 @@
           "intent_keywords": [
             "邪竜を討つ方法を聞く"
           ],
+          "once": "heard_blacksmith_advice",
           "effects": [
             {
               "set_flag": "heard_blacksmith_advice"
@@ -1262,6 +1330,7 @@
           "intent_keywords": [
             "鍛冶師に剣を見せる"
           ],
+          "once": "showed_hero_sword",
           "effects": [
             {
               "set_flag": "showed_hero_sword"
@@ -1270,6 +1339,49 @@
           "requirements": {
             "character_id": "hero"
           }
+        },
+        {
+          "id": "accept_sword_fusion",
+          "text": "鍛冶師の提案を受け入れる",
+          "preview": "鉄の剣を氷鉄の大剣へ作り替える",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鍛冶師の提案を受け入れる",
+            "提案を受け入れる",
+            "剣を融合する"
+          ],
+          "visible_after": "showed_hero_sword",
+          "once": "accepted_sword_fusion",
+          "requirements": {
+            "all": [
+              {
+                "character_id": "hero"
+              },
+              {
+                "has_item": "鉄の剣"
+              },
+              {
+                "lacks_item": "氷鉄の大剣"
+              }
+            ]
+          },
+          "effects": [
+            {
+              "remove_item": {
+                "name": "鉄の剣",
+                "quantity": 1
+              }
+            },
+            {
+              "add_item": {
+                "name": "氷鉄の大剣",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "accepted_sword_fusion"
+            }
+          ]
         },
         {
           "id": "return_castle_from_forge",
@@ -1542,7 +1654,7 @@
             "rewrite_notes": [
               "1d30判定成功時に使用。"
             ],
-            "action_id": "ask_ian",
+            "action_id": "ask_ian_legend",
             "outcome": "success"
           },
           {
@@ -1620,7 +1732,7 @@
             "rewrite_notes": [
               "1d30判定失敗時に使用。"
             ],
-            "action_id": "ask_ian",
+            "action_id": "ask_ian_legend",
             "outcome": "failure"
           },
           {
@@ -1696,7 +1808,7 @@
               ]
             },
             "rewrite_notes": [],
-            "action_id": "ask_ian",
+            "action_id": "ask_ian_advice",
             "outcome": "neutral"
           },
           {
@@ -1781,7 +1893,9 @@
                 }
               ]
             },
-            "rewrite_notes": []
+            "rewrite_notes": [],
+            "action_id": "rest_at_inn",
+            "outcome": "neutral"
           },
           {
             "id": "invite_robin_success",
@@ -2031,9 +2145,62 @@
           "intent_keywords": [
             "イアンと会話する"
           ],
-          "effects": [
+          "children": [
             {
-              "set_flag": "talked_ian"
+              "id": "ask_ian_legend",
+              "text": "強力な氷属性武器の伝説について聞く",
+              "preview": "伝説の武器の情報を得る",
+              "risk": "1d30判定（DC4）",
+              "intent_keywords": [
+                "強力な氷属性武器の伝説について聞く"
+              ],
+              "roll": {
+                "dice_type": "1d30",
+                "dc": 4
+              },
+              "once": "asked_ian_legend",
+              "success_effects": [
+                {
+                  "set_flag": "heard_ice_weapon_legend"
+                }
+              ],
+              "failure_effects": [
+                {
+                  "set_flag": "ian_legend_refused"
+                }
+              ]
+            },
+            {
+              "id": "ask_ian_advice",
+              "text": "邪竜を倒すアドバイスを求める",
+              "preview": "イアンの意見を聞く",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "邪竜を倒すアドバイスを求める"
+              ],
+              "once": "asked_ian_advice",
+              "effects": [
+                {
+                  "set_flag": "heard_ian_advice"
+                }
+              ]
+            },
+            {
+              "id": "rest_at_inn",
+              "text": "宿屋で一晩休む（1G）",
+              "preview": "夜まで休む",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "宿屋で一晩休む"
+              ],
+              "requirements": {
+                "gold_gte": 1
+              },
+              "effects": [
+                {
+                  "gold_change": -1
+                }
+              ]
             }
           ]
         },
@@ -2045,46 +2212,46 @@
           "intent_keywords": [
             "ロビンと会話する"
           ],
-          "effects": [
+          "children": [
             {
-              "set_flag": "talked_robin"
-            }
-          ]
-        },
-        {
-          "id": "invite_robin",
-          "text": "?????????",
-          "preview": "?????????",
-          "risk": "1d20+cha???DC12?",
-          "intent_keywords": [
-            "?????????"
-          ],
-          "roll": {
-            "dice_type": "1d20+cha",
-            "dc": 12
-          },
-          "success_effects": [
+              "id": "invite_robin",
+              "text": "パーティに勧誘する",
+              "preview": "ロビンを仲間に誘う",
+              "risk": "1d20+cha判定（DC12）",
+              "intent_keywords": [
+                "パーティに勧誘する",
+                "ロビンを仲間に誘う"
+              ],
+              "roll": {
+                "dice_type": "1d20+cha",
+                "dc": 12
+              },
+              "once": "invited_robin",
+              "success_effects": [
+                {
+                  "set_flag": "recruited_robin"
+                }
+              ],
+              "failure_effects": [
+                {
+                  "set_flag": "robin_refused"
+                }
+              ]
+            },
             {
-              "set_flag": "recruited_robin"
-            }
-          ],
-          "failure_effects": [
-            {
-              "set_flag": "robin_refused"
-            }
-          ]
-        },
-        {
-          "id": "ask_robin_rumor",
-          "text": "?????",
-          "preview": "?????????",
-          "risk": "????",
-          "intent_keywords": [
-            "?????"
-          ],
-          "effects": [
-            {
-              "set_flag": "heard_robin_rumor"
+              "id": "ask_robin_rumor",
+              "text": "噂話を聞く",
+              "preview": "ロビンから情報を得る",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "噂話を聞く"
+              ],
+              "once": "heard_robin_rumor",
+              "effects": [
+                {
+                  "set_flag": "heard_robin_rumor"
+                }
+              ]
             }
           ]
         },
@@ -2168,7 +2335,7 @@
             },
             {
               "add_item": {
-                "name": "?????",
+                "name": "魔法の巻物",
                 "quantity": 1
               }
             },
@@ -2182,7 +2349,7 @@
                 "gold_gte": 30
               },
               {
-                "lacks_item": "?????"
+                "lacks_item": "魔法の巻物"
               }
             ]
           },
@@ -2202,7 +2369,7 @@
             },
             {
               "add_item": {
-                "name": "MP???",
+                "name": "MP回復薬",
                 "quantity": 1
               }
             },
@@ -2317,7 +2484,7 @@
             },
             {
               "add_item": {
-                "name": "??",
+                "name": "薬草",
                 "quantity": 1
               }
             }
@@ -2340,7 +2507,7 @@
             },
             {
               "add_item": {
-                "name": "???",
+                "name": "解毒薬",
                 "quantity": 1
               }
             }
@@ -2446,6 +2613,7 @@
           "intent_keywords": [
             "怪しい商人に話しかける"
           ],
+          "once": "approached_suspicious_merchant",
           "roll": {
             "dice_type": "1d20+cha",
             "dc": 12
@@ -2469,6 +2637,7 @@
           "intent_keywords": [
             "路地裏を探索する"
           ],
+          "once": "searched_alley",
           "roll": {
             "dice_type": "1d20",
             "dc": 10
@@ -3038,6 +3207,7 @@
           "intent_keywords": [
             "長老に邪竜の弱点を聞く"
           ],
+          "once": "heard_dragon_weakness",
           "effects": [
             {
               "set_flag": "heard_dragon_weakness"
@@ -3058,7 +3228,7 @@
             },
             {
               "add_item": {
-                "name": "????",
+                "name": "氷の護符",
                 "quantity": 1
               }
             },
@@ -3072,7 +3242,7 @@
                 "gold_gte": 50
               },
               {
-                "lacks_item": "????"
+                "lacks_item": "氷の護符"
               }
             ]
           },
@@ -3396,7 +3566,7 @@
             }
           ],
           "requirements": {
-            "has_item": "????"
+            "has_item": "氷の護符"
           }
         },
         {

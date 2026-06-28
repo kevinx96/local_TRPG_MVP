@@ -231,6 +231,7 @@
             },
             "once": { "type": "string" },
             "disabled_after": { "type": "string" },
+            "visible_after": { "type": "string" },
             "prepared_turn_id": { "type": "string" },
             "requirements": { "$ref": "#/$defs/choice_requirements" },
             "enabled": { "type": "boolean" },
@@ -272,6 +273,7 @@
         },
         "once": { "type": "string" },
         "disabled_after": { "type": "string" },
+        "visible_after": { "type": "string" },
         "prepared_turn_id": { "type": "string" },
         "children": {
           "type": "array",

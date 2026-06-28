@@ -875,7 +875,7 @@ function normalizeChoices(value) {
         preview: choice?.preview || "",
         risk: choice?.risk || "",
       };
-      for (const key of ["intent_keywords", "requirements", "roll", "effects", "success_effects", "failure_effects", "once", "disabled_after", "prepared_turn_id"]) {
+      for (const key of ["intent_keywords", "requirements", "roll", "effects", "success_effects", "failure_effects", "once", "disabled_after", "visible_after", "prepared_turn_id"]) {
         if (choice && choice[key] !== undefined) normalized[key] = choice[key];
       }
       if (Array.isArray(choice?.children) && choice.children.length > 0) {
