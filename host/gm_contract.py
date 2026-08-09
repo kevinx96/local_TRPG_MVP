@@ -60,13 +60,14 @@ def build_gm_contract_prompt(opening: bool = False) -> str:
         "・子供が場所やカテゴリの分岐なら children を使う。例: {\"text\":\"城へ向かう\",\"preview\":\"城内の施設へ\",\"risk\":\"判定不要\",\"children\":[{\"text\":\"鍛冶屋へ\",\"risk\":\"判定不要\"},{\"text\":\"謁見の間へ\",\"risk\":\"1d20判定（DC10）\"}]}\n"
         "・戦闘の命中、ダメージ、敵行動、勝敗、報酬を生成しない。これらは戦闘エンジンだけが処理する。\n"
         "・resolved_action_result に combat_result がある場合、確定済みの数値と勝敗を変更せず戦闘後だけを描写する。\n"
+        "・system_log は常に空文字。ログはゲームエンジンが確定済みイベントから生成する。\n"
         "・耐久属性は end を使う。旧 con は使わない。\n"
 )
     json_template = (
         "\n【出力形式】\nJSON全体を閉じることを最優先。\n"
         "{\n"
         '  "gm_text": "70〜220字のGM本文",\n'
-        '  "system_log": "判定や状態変化の短い説明",\n'
+        '  "system_log": "",\n'
         '  "dice_type": "1d20",\n'
         '  "dice_dc": 10,\n'
         '  "state_delta": {\n'

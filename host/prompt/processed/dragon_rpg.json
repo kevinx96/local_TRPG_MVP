@@ -1821,6 +1821,22 @@
       ]
     },
     {
+      "id": "magic_scroll",
+      "name": "魔法の巻物",
+      "description": "封じられた攻撃魔法を一度だけ解放できる巻物。",
+      "effect": "2d6+int/2ダメージ / 命中率100% / arcane属性 / 消耗品",
+      "combat": { "kind": "damage", "damage": "2d6+int/2", "accuracy": 100, "element": "arcane", "consumable": true },
+      "keywords": ["魔法の巻物", "巻物", "攻撃魔法"]
+    },
+    {
+      "id": "mp_potion",
+      "name": "MP回復薬",
+      "description": "魔力を補う青い薬。",
+      "effect": "MPを10回復 / 消耗品",
+      "combat": { "kind": "restore", "resource": "mp", "amount": "10", "consumable": true },
+      "keywords": ["MP回復薬", "魔力", "回復薬"]
+    },
+    {
       "id": "ice_charm",
       "name": "氷の護符",
       "description": "冷気の力を宿した護符。",
@@ -2084,13 +2100,15 @@
         {
           "name": "鉄の剣",
           "description": "一見質素な一振りの剣……",
-          "effect": "通常攻撃に使用",
+          "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性",
+          "combat": { "kind": "weapon", "name": "鉄の剣", "damage": "1d8+str/3", "accuracy": 90, "element": "physical" },
           "quantity": 1
         },
         {
           "name": "革の鎧",
           "description": "なめした革で作られた軽量の鎧。",
-          "effect": "被ダメージを軽減(-1)",
+          "effect": "被ダメージを1軽減",
+          "combat": { "kind": "armor", "defense": 1 },
           "quantity": 1
         },
         {
@@ -2155,13 +2173,15 @@
         {
           "name": "聖なる杖",
           "description": "神聖魔法を増幅する杖。",
-          "effect": "回復魔法の効果+2",
+          "effect": "回復技能回復量+2",
+          "combat": { "kind": "equipment", "skill_healing_bonus": 2, "applies_to": ["heal"] },
           "quantity": 1
         },
         {
           "name": "ローブ",
           "description": "僧侶の簡素な衣。",
-          "effect": "回復魔法消費-1",
+          "effect": "MP消費を1軽減",
+          "combat": { "kind": "equipment", "cost_reduction": { "mp": 1 }, "applies_to": ["heal"] },
           "quantity": 1
         },
         {
@@ -2226,13 +2246,15 @@
         {
           "name": "魔導書",
           "description": "古代の魔法が記された書物。",
-          "effect": "攻撃魔法の威力+3",
+          "effect": "攻撃技能ダメージ+3",
+          "combat": { "kind": "equipment", "skill_damage_bonus": 3, "applies_to": ["attack"] },
           "quantity": 1
         },
         {
           "name": "魔法のローブ",
           "description": "魔力を帯びた上質なローブ。",
-          "effect": "MP消費-1",
+          "effect": "MP消費を1軽減",
+          "combat": { "kind": "equipment", "cost_reduction": { "mp": 1 } },
           "quantity": 1
         },
         {
@@ -2301,13 +2323,15 @@
         {
           "name": "ダガー",
           "description": "軽量で扱いやすい短剣。",
-          "effect": "素早い連続攻撃が可能",
+          "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+          "combat": { "kind": "weapon", "name": "ダガー", "damage": "1d6+dex/4", "accuracy": 95, "element": "physical" },
           "quantity": 1
         },
         {
           "name": "革の鎧",
           "description": "動きやすさを重視した軽装鎧。",
-          "effect": "被ダメージを軽減(-1)",
+          "effect": "被ダメージを1軽減",
+          "combat": { "kind": "armor", "defense": 1 },
           "quantity": 1
         },
         {

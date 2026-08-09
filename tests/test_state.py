@@ -458,31 +458,35 @@ class StateTests(unittest.TestCase):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
         for index in range(4):
-            state.add_player_message(session, f"行動{index}")
-            state.add_assistant_message(session, f"結果{index}")
+            state.add_player_message(session, f"action {index}")
+            state.add_assistant_message(session, f"result {index}")
+        state.apply_state_delta(session, {"hp_change": -1})
 
         messages = state.build_llm_messages(session, {"expression": "1d20", "rolls": [10], "total": 10}, "contract")
 
         roles = [message["role"] for message in messages]
         self.assertEqual(roles.count("user"), 2)
         self.assertEqual(roles.count("assistant"), 2)
-        self.assertTrue(any("これまでの会話要約" in message["content"] for message in messages if message["role"] == "system"))
-        self.assertFalse(any("行動0" in message["content"] for message in messages if message["role"] != "system"))
+        self.assertTrue(any(message["content"].startswith("確定済みイベント履歴:") for message in messages if message["role"] == "system"))
+        self.assertFalse(any("result 0" in message["content"] for message in messages if message["role"] == "system"))
+        self.assertFalse(any("action 0" in message["content"] for message in messages if message["role"] != "system"))
 
     def test_full_mode_caps_history_for_small_models(self):
         public = state.create_session(str(self.write_pack()), gm_mode="full")
         session = state.load_session(public["id"])
         for index in range(4):
-            state.add_player_message(session, f"行動{index}")
-            state.add_assistant_message(session, f"結果{index}")
+            state.add_player_message(session, f"action {index}")
+            state.add_assistant_message(session, f"result {index}")
+        state.apply_state_delta(session, {"mp_change": -1})
 
         messages = state.build_llm_messages(session, {"expression": "1d20", "rolls": [10], "total": 10}, "contract")
 
         roles = [message["role"] for message in messages]
         self.assertEqual(roles.count("user"), 1)
         self.assertEqual(roles.count("assistant"), 1)
-        self.assertFalse(any("行動1" in message["content"] for message in messages if message["role"] != "system"))
-        self.assertTrue(any("これまでの会話要約" in message["content"] for message in messages if message["role"] == "system"))
+        self.assertFalse(any("action 1" in message["content"] for message in messages if message["role"] != "system"))
+        self.assertTrue(any(message["content"].startswith("確定済みイベント履歴:") for message in messages if message["role"] == "system"))
+        self.assertTrue(any("FULLモード進行制御" in message["content"] for message in messages if message["role"] == "system"))
 
     def test_build_llm_messages_includes_player_action_history(self):
         public = state.create_session(str(self.write_pack()))
@@ -535,7 +539,7 @@ class StateTests(unittest.TestCase):
                 opened = app_module._run_opening(session)
 
         self.assertEqual(opened["messages"][-1]["text"], "王の間に静かな緊張が満ちています。")
-        self.assertEqual(opened["system_logs"][-1]["text"], "開幕シーンを開始しました。")
+        self.assertFalse(any("開幕シーンを開始しました。" in log["text"] for log in opened["system_logs"]))
         self.assertEqual(opened["choices"][0]["text"], "国王に話を聞く")
         self.assertFalse(any("デモモード" in log["text"] for log in opened["system_logs"]))
 
@@ -987,6 +991,40 @@ class StateTests(unittest.TestCase):
         self.assertIn("50ゴールドを獲得しました。", logs)
         self.assertIn("薬草 x1を入手しました。", logs)
         self.assertNotIn("GM応答のJSONを解析できませんでした。", logs)
+
+    def test_model_system_log_is_not_a_committed_state_event(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+
+        state.apply_gm_payload(
+            session,
+            "rest ended",
+            {"system_log": "HP and MP fully restored", "state_delta": {}, "choices": []},
+        )
+
+        public_logs = [entry["text"] for entry in state.public_session(session)["system_logs"]]
+        self.assertNotIn("HP and MP fully restored", public_logs)
+
+    def test_structured_memory_uses_engine_events_not_old_gm_claims(self):
+        public = state.create_session(str(self.write_pack()), gm_mode="full")
+        session = state.load_session(public["id"])
+        session["messages"] = [
+            {"role": "assistant", "speaker": "GM", "text": "HP and MP fully restored"},
+            {"role": "user", "speaker": "player", "text": "continue"},
+            {"role": "assistant", "speaker": "GM", "text": "the road continues"},
+        ]
+        state.apply_state_delta(session, {"mp_change": -3})
+
+        messages = state.build_llm_messages(
+            session,
+            {"expression": "1d20", "rolls": [10], "total": 10},
+            "contract",
+        )
+        memory = next(message["content"] for message in messages if message["content"].startswith("確定済みイベント履歴:"))
+
+        self.assertIn('"resource": "mp"', memory)
+        self.assertIn('"change": -3', memory)
+        self.assertNotIn("fully restored", memory)
 
     def test_choices_normalization(self):
         public = state.create_session(str(self.write_pack()))
