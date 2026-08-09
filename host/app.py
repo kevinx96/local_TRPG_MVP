@@ -37,6 +37,7 @@ from .scenario_context import (
 from .state import (
     HOST_ROOT,
     PROJECT_ROOT,
+    add_assistant_message,
     add_player_message,
     add_system_log,
     action_dice_settings,
@@ -50,10 +51,11 @@ from .state import (
     load_config,
     load_session,
     public_session,
-    resolve_action,
+    resolve_player_intent,
     roll_dice,
     save_config,
     save_session,
+    track_intent_resolution,
 )
 from .world_state import current_location_id
 
@@ -477,7 +479,35 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
     if combat_needs_resolution(session):
         raise HTTPException(status_code=409, detail="戦闘結果を確定してください。")
     action_text = request.text.strip()
-    resolved_action = resolve_action(session, action_text, request.action_id)
+    intent_resolution = resolve_player_intent(session, action_text, request.action_id)
+    intent_state = track_intent_resolution(session, intent_resolution, action_text)
+    intent_status = str(intent_resolution.get("status") or "unmatched")
+    resolved_action = intent_resolution.get("action") if intent_status == "resolved" else None
+    session["last_action_result"] = {}
+    if request.action_id and intent_status == "invalid_action_id":
+        add_system_log(session, "選択肢が古くなっています。現在の選択肢から選び直してください。")
+        session["choices"] = fallback_choices_for_session(session)
+        save_session(session)
+        return public_session(session)
+    if intent_status == "ambiguous":
+        add_player_message(session, action_text, request.speaker)
+        add_assistant_message(session, "その行動は複数の可能性に当てはまります。現在できる行動から、意図に近いものを選んでください。")
+        session["choices"] = fallback_choices_for_session(session)
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+        save_session(session)
+        return public_session(session)
+    if intent_status == "unmatched" and intent_state.get("phase") == "blocked":
+        add_player_message(session, action_text, request.speaker)
+        add_assistant_message(
+            session,
+            "その試みはここではこれ以上進展しません。現在できる行動から、次の一手を選んでください。",
+        )
+        session["choices"] = fallback_choices_for_session(session)
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+        save_session(session)
+        return public_session(session)
     if resolved_action:
         enabled, reason = action_requirement_status(resolved_action, session)
         if not enabled:
@@ -502,22 +532,25 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
 
     add_player_message(session, action_text, request.speaker)
 
-    if not resolved_action:
-        session["last_action_result"] = {}
-
     if resolved_action:
         dice_type, dice_dc = action_dice_settings(
             resolved_action,
-            str(session.get("next_dice_type") or "1d20"),
-            int(session.get("next_dice_dc", 0) or 0),
+            "1d20",
+            0,
         )
-    else:
+    elif intent_status == "legacy":
         dice_type, dice_dc = _dice_settings_for_turn(session, action_text)
-    client_dice = request.client_dice
-    if isinstance(client_dice, dict) and isinstance(client_dice.get("rolls"), list) and len(client_dice["rolls"]) > 0:
-        latest_roll = roll_dice(session, dice_type, int(dice_dc) if isinstance(dice_dc, (int, float)) else None, client_rolls=client_dice["rolls"])
     else:
-        latest_roll = roll_dice(session, dice_type, int(dice_dc) if isinstance(dice_dc, (int, float)) else None)
+        dice_type, dice_dc = "none", 0
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+    client_dice = request.client_dice
+    if int(dice_dc or 0) <= 0:
+        latest_roll = {"expression": dice_type, "rolls": [], "total": 0, "dc": 0}
+    elif isinstance(client_dice, dict) and isinstance(client_dice.get("rolls"), list) and len(client_dice["rolls"]) > 0:
+        latest_roll = roll_dice(session, dice_type, int(dice_dc), client_rolls=client_dice["rolls"])
+    else:
+        latest_roll = roll_dice(session, dice_type, int(dice_dc))
     action_result = apply_action_result(session, resolved_action, latest_roll) if resolved_action else {}
 
     config = load_config()
@@ -531,6 +564,10 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             f"session={session['id']} speaker={request.speaker!r} "
             f"text_len={len(request.text.strip())} dice={latest_roll['expression']} "
             f"total={latest_roll['total']} dc={dice_dc} "
+            f"intent_status={intent_status} intent_method={intent_state.get('method', '')} "
+            f"intent_confidence={intent_state.get('confidence', 0)} "
+            f"intent_candidates={intent_state.get('candidate_action_ids', [])} "
+            f"deviation_turn={intent_state.get('turns', 0)} "
             f"resolved_action_id={action_result.get('action_id', '')} outcome={action_result.get('outcome', '')}"
         )
         debug_log(
