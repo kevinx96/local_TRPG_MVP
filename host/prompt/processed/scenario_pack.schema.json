@@ -221,7 +221,38 @@
           "type": "array",
           "items": { "$ref": "#/$defs/action" }
         },
-        "combat": { "type": "object", "additionalProperties": true }
+        "combat": { "$ref": "#/$defs/item_combat" }
+      }
+    },
+    "item_combat": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "kind": { "enum": ["", "weapon", "armor", "equipment", "heal", "restore", "damage"] },
+        "name": { "type": "string" },
+        "damage": { "type": "string" },
+        "healing": { "type": "string" },
+        "resource": { "enum": ["hp", "mp", "sp"] },
+        "amount": { "type": ["string", "number"] },
+        "accuracy": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "element": { "type": "string" },
+        "defense": { "type": "integer", "minimum": 0 },
+        "consumable": { "type": "boolean" },
+        "cost_reduction": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "hp": { "type": "integer", "minimum": 0 },
+            "mp": { "type": "integer", "minimum": 0 },
+            "sp": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "skill_damage_bonus": { "type": "integer" },
+        "skill_healing_bonus": { "type": "integer" },
+        "applies_to": {
+          "type": "array",
+          "items": { "enum": ["attack", "heal", "defend", "status"] }
+        }
       }
     },
     "combat_rules": {

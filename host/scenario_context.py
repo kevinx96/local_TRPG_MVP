@@ -241,8 +241,6 @@ def has_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", ope
     draft = prepared.get("draft") if isinstance(prepared.get("draft"), dict) else {}
     return bool(
         str(draft.get("gm_text") or "").strip()
-        or str(draft.get("system_log") or "").strip()
-        or draft.get("choices")
     )
 
 
@@ -417,11 +415,6 @@ def _prepared_turn_for_llm(turn: Any, language: str = "") -> dict[str, Any]:
     result: dict[str, Any] = {
         "draft": {
             "gm_text": draft.get("gm_text", ""),
-            "system_log": draft.get("system_log", ""),
-            "dice_type": draft.get("dice_type", "null"),
-            "dice_dc": draft.get("dice_dc", 0),
-            "state_delta": draft.get("state_delta", {}),
-            "choices": draft.get("choices", []),
         },
     }
     notes = _as_text_list(turn.get("rewrite_notes"))

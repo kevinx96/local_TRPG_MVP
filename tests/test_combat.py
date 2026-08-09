@@ -9,6 +9,7 @@ from fastapi import HTTPException
 
 from host import app as app_module
 from host import combat, state
+from host.item_mechanics import item_mechanic_warning, structured_item_effect
 from host.scenario_context import current_action_choices
 
 
@@ -123,6 +124,105 @@ class CombatEngineTests(unittest.TestCase):
         self.assertEqual(session["character"]["mp"], 5)
         self.assertEqual(session["combat"]["enemies"][0]["hp"], 10)
 
+    def test_equipped_item_reduces_structured_skill_cost(self):
+        enemy = {
+            "id": "target",
+            "name": "target",
+            "hp": 20,
+            "max_hp": 20,
+            "combat": {"basic_attack": {"damage": "1", "accuracy": 0}},
+        }
+        character = {
+            "id": "mage",
+            "name": "mage",
+            "hp": 12,
+            "max_hp": 12,
+            "mp": 20,
+            "max_mp": 20,
+            "sp": 0,
+            "max_sp": 0,
+            "attributes": {"int": 12, "dex": 8, "end": 8},
+            "inventory": [{
+                "id": "mage_robe",
+                "name": "mage robe",
+                "quantity": 1,
+                "combat": {"kind": "equipment", "cost_reduction": {"mp": 1}},
+            }],
+            "equipment": ["mage robe"],
+            "skills": [{
+                "id": "ice_arrow",
+                "name": "ice arrow",
+                "kind": "attack",
+                "damage": "10",
+                "accuracy": 100,
+                "cost": 3,
+                "cost_type": "mp",
+            }],
+        }
+        session = self.create(enemy=enemy, character=character, combat_rules={"sp_regen_per_round": 0})
+
+        skill_action = next(action for action in combat.combat_actions(session) if action["id"] == "ice_arrow")
+        combat.perform_combat_action(session, "skill", action_id="ice_arrow", rng=random.Random(3))
+
+        self.assertEqual(skill_action["cost"], 2)
+        self.assertEqual(session["character"]["mp"], 18)
+
+    def test_structured_mp_restore_item_is_available_and_consumed(self):
+        enemy = {
+            "id": "target",
+            "name": "target",
+            "hp": 20,
+            "max_hp": 20,
+            "combat": {"basic_attack": {"damage": "1", "accuracy": 0}},
+        }
+        character = {
+            "id": "mage",
+            "name": "mage",
+            "hp": 12,
+            "max_hp": 12,
+            "mp": 2,
+            "max_mp": 20,
+            "sp": 0,
+            "max_sp": 0,
+            "attributes": {"int": 12, "dex": 8, "end": 8},
+            "inventory": [{
+                "id": "mp_potion",
+                "name": "MP potion",
+                "quantity": 1,
+                "combat": {"kind": "restore", "resource": "mp", "amount": "10", "consumable": True},
+            }],
+            "equipment": [],
+            "skills": [],
+        }
+        session = self.create(enemy=enemy, character=character, combat_rules={"sp_regen_per_round": 0})
+
+        item_action = next(action for action in combat.combat_actions(session) if action["id"] == "mp_potion")
+        combat.perform_combat_action(session, "item", action_id="mp_potion", rng=random.Random(3))
+
+        self.assertEqual(item_action["kind"], "restore")
+        self.assertEqual(session["character"]["mp"], 12)
+        self.assertFalse(any(item.get("id") == "mp_potion" for item in session["character"]["inventory"]))
+
+    def test_model_combat_log_cannot_claim_uncommitted_full_restore(self):
+        session = self.create()
+        with patch.object(app_module, "chat_completion") as completion:
+            combat.perform_combat_action(session, "attack", rng=random.Random(1))
+            delta = combat.consume_combat_state_delta(session)
+            state.apply_state_delta(session, delta)
+            completion.return_value = json.dumps({
+                "gm_text": "battle ended",
+                "system_log": "HP and MP fully restored",
+                "dice_type": "1d20",
+                "dice_dc": 0,
+                "state_delta": {},
+                "choices": [],
+            })
+            app_module._run_combat_resolution(session)
+
+        public_logs = [entry["text"] for entry in state.public_session(session)["system_logs"]]
+        self.assertNotIn("HP and MP fully restored", public_logs)
+        self.assertTrue(any(entry.get("kind") == "combat_resolved" for entry in session.get("event_log", [])))
+
     def test_flee_finishes_without_enemy_phase(self):
         session = self.create()
         before_hp = session["character"]["hp"]
@@ -173,7 +273,7 @@ class CombatEngineTests(unittest.TestCase):
         for section, fields in {
             "locations": ("enemy_ids", "combat"),
             "enemies": ("hp", "max_hp", "combat", "resistances", "rewards", "skills"),
-            "characters": ("combat", "skills"),
+            "characters": ("combat", "skills", "inventory", "equipment"),
         }.items():
             base_records = {record["id"]: record for record in base.get(section, []) if record.get("id")}
             hybrid_records = {record["id"]: record for record in hybrid.get(section, []) if record.get("id")}
@@ -213,6 +313,30 @@ class CombatEngineTests(unittest.TestCase):
         self.assertFalse(post_combat_by_id["attack_slime"]["enabled"])
         self.assertFalse(post_combat_by_id["bypass_slime"]["enabled"])
         self.assertNotEqual(post_combat_by_id["go_village"].get("enabled"), False)
+
+    def test_item_effect_text_is_derived_from_structured_mechanics(self):
+        robe = {
+            "name": "robe",
+            "description": "magic robe",
+            "effect": "untrusted prose claim",
+            "combat": {"kind": "equipment", "cost_reduction": {"mp": 1}},
+        }
+        unsupported = {"name": "mystery", "description": "does something", "effect": "power +99"}
+
+        self.assertEqual(structured_item_effect(robe), "MP消費を1軽減")
+        self.assertEqual(item_mechanic_warning(robe), "")
+        self.assertTrue(item_mechanic_warning(unsupported))
+
+    def test_dragon_scenario_shop_items_and_mage_robe_have_engine_mechanics(self):
+        pack = json.loads(Path("host/prompt/processed/dragon_rpg.json").read_text(encoding="utf-8-sig"))
+        items = {item["name"]: item for item in pack["items"]}
+        mage = next(character for character in pack["characters"] if character["id"] == "mage")
+        robe = next(item for item in mage["inventory"] if item["name"] == "魔法のローブ")
+
+        self.assertEqual(items["魔法の巻物"]["combat"]["kind"], "damage")
+        self.assertTrue(items["魔法の巻物"]["combat"]["consumable"])
+        self.assertEqual(items["MP回復薬"]["combat"], {"kind": "restore", "resource": "mp", "amount": "10", "consumable": True})
+        self.assertEqual(robe["combat"]["cost_reduction"]["mp"], 1)
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 import time
+from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
@@ -51,6 +52,7 @@ from .state import (
     load_config,
     load_session,
     public_session,
+    record_state_event,
     resolve_player_intent,
     roll_dice,
     save_config,
@@ -625,6 +627,33 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
 
 def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
     result = combat_result_for_llm(session)
+    player = result.get("player") if isinstance(result.get("player"), dict) else {}
+    outcome = str(result.get("outcome") or "")
+    outcome_label = {"victory": "勝利", "defeat": "敗北", "fled": "逃走"}.get(outcome, outcome)
+    event_text = (
+        f"戦闘に{outcome_label}しました。"
+        f" HP {player.get('hp', 0)}/{player.get('max_hp', 0)}、"
+        f"MP {player.get('mp', 0)}/{player.get('max_mp', 0)}、"
+        f"SP {player.get('sp', 0)}/{player.get('max_sp', 0)}。"
+    )
+    combat_event = record_state_event(
+        session,
+        "combat_resolved",
+        event_text,
+        {
+            "outcome": outcome,
+            "rounds": result.get("rounds"),
+            "player": player,
+            "enemies": result.get("enemies", []),
+        },
+    )
+    result.setdefault("committed_events", []).append({
+        "kind": combat_event["kind"],
+        "text": combat_event["text"],
+        "data": deepcopy(combat_event["data"]),
+    })
+    if isinstance(session.get("combat"), dict):
+        session["combat"]["result"] = deepcopy(result)
     clear_combat_after_resolution(session)
     session["last_action_result"] = {
         "action_id": f"combat:{result.get('combat_id', '')}",

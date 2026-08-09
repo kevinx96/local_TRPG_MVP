@@ -427,6 +427,41 @@ label {
   color: var(--muted);
 }
 
+.validation-warning {
+  margin: 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--danger);
+  background: rgba(224, 84, 84, 0.1);
+  color: #ffaaaa;
+  font-size: 12px;
+}
+
+.effect-preview {
+  display: block;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-soft);
+  border-radius: 5px;
+  background: var(--panel);
+  color: var(--accent-2);
+}
+
+.effect-preview.compact {
+  flex: 1;
+  min-height: 0;
+  font-size: 12px;
+}
+
+.inventory-item {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: var(--panel);
+}
+
 .attr-grid {
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
 }

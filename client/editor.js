@@ -139,6 +139,7 @@ async function saveScenario() {
     return;
   }
   const exists = state.files.some((item) => item.filename === filename);
+  synchronizeStructuredItemEffects(state.scenario);
   const url = exists ? `/api/scenarios/${encodeURIComponent(filename)}` : "/api/scenarios";
   const method = exists ? "PUT" : "POST";
   const body = exists ? { scenario: state.scenario } : { filename, scenario: state.scenario };
@@ -268,16 +269,29 @@ function renderRecordEditor(section) {
       ${field("绑定地点 IDs", `${section}.${state.selectedIndex}.location_ids`, toCsv(record.location_ids || []), true)}
       ${field("后续场景 IDs", `${section}.${state.selectedIndex}.next_scene_ids`, toCsv(record.next_scene_ids || []), true)}
     </div>` : "";
+  const generatedEffect = structuredItemEffect(record);
+  const mechanicWarning = itemMechanicWarning(record);
   const itemFields = section === "items" ? `<h3 class="section-title">道具效果</h3>
-    <label>效果<textarea data-path="${section}.${state.selectedIndex}.effect">${escapeHtml(record.effect || "")}</textarea></label>
+    ${mechanicWarning ? `<p class="validation-warning">${escapeHtml(mechanicWarning)}</p>` : ""}
+    <label class="wide">引擎生成效果<output class="effect-preview">${escapeHtml(generatedEffect || "未配置")}</output></label>
     <h3 class="section-title">战斗参数</h3>
     <div class="form-grid">
       ${field("战斗类型", `${section}.${state.selectedIndex}.combat.kind`, record.combat?.kind || "")}
       ${field("治疗公式", `${section}.${state.selectedIndex}.combat.healing`, record.combat?.healing || "")}
+      ${field("恢复资源 (hp/mp/sp)", `${section}.${state.selectedIndex}.combat.resource`, record.combat?.resource || "")}
+      ${field("恢复量/公式", `${section}.${state.selectedIndex}.combat.amount`, record.combat?.amount || "")}
       ${field("伤害公式", `${section}.${state.selectedIndex}.combat.damage`, record.combat?.damage || "")}
       ${field("命中率", `${section}.${state.selectedIndex}.combat.accuracy`, record.combat?.accuracy ?? 100, false, true)}
       ${field("元素", `${section}.${state.selectedIndex}.combat.element`, record.combat?.element || "physical")}
       ${field("装备防御", `${section}.${state.selectedIndex}.combat.defense`, record.combat?.defense ?? 0, false, true)}
+      ${field("MP 消耗减免", `${section}.${state.selectedIndex}.combat.cost_reduction.mp`, record.combat?.cost_reduction?.mp ?? 0, false, true)}
+      ${field("技能伤害加成", `${section}.${state.selectedIndex}.combat.skill_damage_bonus`, record.combat?.skill_damage_bonus ?? 0, false, true)}
+      ${field("技能治疗加成", `${section}.${state.selectedIndex}.combat.skill_healing_bonus`, record.combat?.skill_healing_bonus ?? 0, false, true)}
+      ${field("适用技能类型，逗号分隔", `${section}.${state.selectedIndex}.combat.applies_to`, toCsv(record.combat?.applies_to || []), true)}
+      <label>消耗品<select data-path="${section}.${state.selectedIndex}.combat.consumable" data-boolean="true">
+        <option value="true" ${["heal", "restore", "damage"].includes(record.combat?.kind) && record.combat?.consumable !== false ? "selected" : ""}>是</option>
+        <option value="false" ${!["heal", "restore", "damage"].includes(record.combat?.kind) || record.combat?.consumable === false ? "selected" : ""}>否</option>
+      </select></label>
     </div>` : "";
   const locationFields = section === "locations" ? `<h3 class="section-title">关联实体</h3>
     <div class="relation-grid">
@@ -388,12 +402,16 @@ function renderCharactersEditor() {
   }).join("");
 
   const inventory = record.inventory || [];
-  const inventoryRows = inventory.map((item, ii) => `<div class="item-row">
+  const inventoryRows = inventory.map((item, ii) => `<div class="inventory-item">
+    ${itemMechanicWarning(item) ? `<p class="validation-warning">${escapeHtml(itemMechanicWarning(item))}</p>` : ""}
+    <div class="item-row">
     <input data-inv-path="${basePath}.inventory" data-inv-field="name" data-index="${ii}" value="${escapeAttr(item.name || "")}" placeholder="名称" />
     <input data-inv-path="${basePath}.inventory" data-inv-field="description" data-index="${ii}" value="${escapeAttr(item.description || "")}" placeholder="描述" />
-    <input data-inv-path="${basePath}.inventory" data-inv-field="effect" data-index="${ii}" value="${escapeAttr(item.effect || "")}" placeholder="效果" />
+    <output class="effect-preview compact">${escapeHtml(structuredItemEffect(item) || "未配置机制")}</output>
     <input data-inv-path="${basePath}.inventory" data-inv-field="quantity" data-index="${ii}" value="${escapeAttr(item.quantity ?? 1)}" placeholder="数量" style="width:60px" />
     <button class="danger" data-remove-inv="${basePath}.inventory" data-index="${ii}" type="button">删除</button>
+    </div>
+    <label>战斗机制 JSON<textarea data-inv-json-path="${basePath}.inventory" data-index="${ii}" spellcheck="false">${escapeHtml(JSON.stringify(item.combat || {}, null, 2))}</textarea></label>
   </div>`).join("");
 
   const equip = Array.isArray(record.equipment) ? record.equipment : [];
@@ -555,14 +573,9 @@ function preparedTurnMarkup(basePath, turn, index) {
       ${field("Player intent", `${path}.player_intent`, turn.player_intent || "")}
       ${field("Trigger keywords", `${path}.trigger_keywords`, toCsv(turn.trigger_keywords || []), true)}
       <label class="wide">GM text<textarea data-path="${path}.draft.gm_text">${escapeHtml(draft.gm_text || "")}</textarea></label>
-      <label class="wide">System log<textarea data-path="${path}.draft.system_log">${escapeHtml(draft.system_log || "")}</textarea></label>
-      ${field("Dice type", `${path}.draft.dice_type`, draft.dice_type || "1d20")}
-      ${field("Dice DC", `${path}.draft.dice_dc`, draft.dice_dc ?? 10, false, true)}
-      <label class="wide">State delta JSON<textarea data-json-path="${path}.draft.state_delta" spellcheck="false">${escapeHtml(JSON.stringify(draft.state_delta || {}, null, 2))}</textarea></label>
+      <p class="summary-line wide">System log、判定、状态变化和选项由 Action Graph 与引擎生成；prepared turn 只编辑 GM text。</p>
       ${field("Rewrite notes", `${path}.rewrite_notes`, toCsv(turn.rewrite_notes || []), true)}
     </div>
-    <h4 class="mini-title">Choices</h4>
-    ${choicesMarkup(`${path}.draft.choices`, draft.choices || [])}
   </section>`;
 }
 
@@ -580,6 +593,20 @@ function renderJsonEditor() {
 
 function handleEditorInput(event) {
   const target = event.target;
+  if (target.dataset.invJsonPath) {
+    markDirty();
+    if (event.type !== "change") return;
+    try {
+      const items = getByPath(state.scenario, target.dataset.invJsonPath, []);
+      const item = items[Number(target.dataset.index)];
+      if (item) item.combat = JSON.parse(target.value || "{}");
+      setStatus("item mechanics applied");
+      renderEditor();
+    } catch (error) {
+      setStatus(`Invalid item combat JSON: ${error.message}`, true);
+    }
+    return;
+  }
   if (target.dataset.jsonPath) {
     markDirty();
     if (event.type !== "change") return;
@@ -604,6 +631,7 @@ function handleEditorInput(event) {
     if (target.dataset.path.endsWith(".id")) syncInitialSceneAfterIdEdit();
     markDirty();
     if (target.dataset.path.includes(".id") || target.dataset.path.includes(".title") || target.dataset.path.includes(".name")) renderList();
+    if (event.type === "change" && state.section === "items" && target.dataset.path.includes(".combat.")) renderEditor();
   }
   if (target.dataset.list) {
     state.scenario[target.dataset.list][Number(target.dataset.index)] = target.value;
@@ -904,6 +932,7 @@ function ensureShape(scenario) {
     scene.next_scene_ids = Array.isArray(scene.next_scene_ids) ? scene.next_scene_ids : [];
     scene.actions = normalizeActions(scene.actions);
   });
+  synchronizeStructuredItemEffects(scenario);
   scenario.locations.forEach((location) => {
     location.npc_ids = Array.isArray(location.npc_ids) ? location.npc_ids : [];
     location.item_ids = Array.isArray(location.item_ids) ? location.item_ids : [];
@@ -916,6 +945,58 @@ function ensureShape(scenario) {
     if (location.hybrid) ensureHybridShape(location);
   });
   return scenario;
+}
+
+function structuredItemEffect(item, catalog = state.scenario?.items || []) {
+  const source = catalog.find((candidate) => candidate !== item && (
+    (item?.id && candidate.id === item.id) || (item?.name && candidate.name === item.name)
+  ));
+  const mechanics = item?.combat || source?.combat;
+  const spec = mechanics && typeof mechanics === "object" ? mechanics : {};
+  const kind = String(spec.kind || "").toLowerCase();
+  const parts = [];
+  if (kind === "weapon") {
+    if (spec.damage) parts.push(`通常攻撃 ${spec.damage}ダメージ`);
+    if (spec.accuracy != null) parts.push(`命中率${Number(spec.accuracy)}%`);
+    if (spec.element) parts.push(`${spec.element}属性`);
+  } else if (kind === "armor") {
+    if (Number(spec.defense) > 0) parts.push(`被ダメージを${Number(spec.defense)}軽減`);
+  } else if (kind === "heal") {
+    const healing = spec.healing || spec.amount;
+    if (healing) parts.push(`HPを${healing}回復`);
+  } else if (kind === "restore") {
+    const resource = String(spec.resource || "mp").toUpperCase();
+    const amount = spec.amount || spec.formula;
+    if (["HP", "MP", "SP"].includes(resource) && amount) parts.push(`${resource}を${amount}回復`);
+  } else if (kind === "damage") {
+    if (spec.damage) parts.push(`${spec.damage}ダメージ`);
+    if (spec.accuracy != null) parts.push(`命中率${Number(spec.accuracy)}%`);
+    if (spec.element) parts.push(`${spec.element}属性`);
+  }
+  for (const resource of ["hp", "mp", "sp"]) {
+    const reduction = Number(spec.cost_reduction?.[resource] || 0);
+    if (reduction > 0) parts.push(`${resource.toUpperCase()}消費を${reduction}軽減`);
+  }
+  if (Number(spec.skill_damage_bonus)) parts.push(`攻撃技能ダメージ+${Number(spec.skill_damage_bonus)}`);
+  if (Number(spec.skill_healing_bonus)) parts.push(`回復技能回復量+${Number(spec.skill_healing_bonus)}`);
+  if (["heal", "restore", "damage"].includes(kind) && spec.consumable !== false) parts.push("消耗品");
+  return parts.join(" / ");
+}
+
+function itemMechanicWarning(item) {
+  const hasClaim = Boolean(String(item?.description || "").trim() || String(item?.effect || "").trim());
+  return hasClaim && !structuredItemEffect(item) ? "描述或效果存在，但引擎没有对应效果。" : "";
+}
+
+function synchronizeStructuredItemEffects(scenario) {
+  const catalog = scenario.items || [];
+  const sync = (item) => {
+    if (!item || typeof item !== "object") return;
+    const generated = structuredItemEffect(item, catalog);
+    if (generated) item.effect = generated;
+  };
+  (scenario.items || []).forEach(sync);
+  (scenario.characters || []).forEach((character) => (character.inventory || []).forEach(sync));
 }
 
 function mergeDefaults(value, defaults) {

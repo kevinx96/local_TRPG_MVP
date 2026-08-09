@@ -7,6 +7,13 @@ from copy import deepcopy
 from datetime import datetime, timezone
 from typing import Any, Optional
 
+from .item_mechanics import (
+    effective_ability,
+    effective_ability_cost,
+    item_combat_spec,
+    item_is_combat_usable,
+    structured_item_effect,
+)
 from .scenario_context import find_scene
 from .world_state import current_location_id, current_scene_id
 
@@ -93,6 +100,7 @@ def ensure_combat_started(session: dict[str, Any]) -> bool:
         "pending_resolution": False,
         "result": None,
         "created_at": utc_now(),
+        "event_cursor": len(session.get("event_log") or []),
     }
     session["choices"] = []
     _log(session, "system", "start", f"戦闘開始: {'、'.join(enemy['name'] for enemy in enemies)}")
@@ -167,7 +175,38 @@ def combat_result_for_llm(session: dict[str, Any]) -> dict[str, Any]:
     result = combat.get("result")
     if not isinstance(result, dict):
         raise CombatError("戦闘結果が不正です。")
-    return deepcopy(result)
+    resolved = deepcopy(result)
+    resolved.pop("rewards", None)
+    character = session.get("character") if isinstance(session.get("character"), dict) else {}
+    resolved["player"] = {
+        "name": character.get("name"),
+        "hp": character.get("hp"),
+        "max_hp": character.get("max_hp"),
+        "mp": character.get("mp"),
+        "max_mp": character.get("max_mp"),
+        "sp": character.get("sp"),
+        "max_sp": character.get("max_sp"),
+        "gold": character.get("gold", 0),
+        "inventory": [
+            {
+                "name": str(item.get("name") or ""),
+                "quantity": _safe_int(item.get("quantity"), 1),
+            }
+            for item in character.get("inventory", [])
+            if isinstance(item, dict) and str(item.get("name") or "")
+        ],
+    }
+    cursor = max(0, _safe_int(combat.get("event_cursor"), 0))
+    resolved["committed_events"] = [
+        {
+            "kind": str(event.get("kind") or ""),
+            "text": str(event.get("text") or ""),
+            "data": deepcopy(event.get("data") if isinstance(event.get("data"), dict) else {}),
+        }
+        for event in (session.get("event_log") or [])[cursor:]
+        if isinstance(event, dict)
+    ]
+    return resolved
 
 
 def clear_combat_after_resolution(session: dict[str, Any]) -> dict[str, Any]:
@@ -223,7 +262,7 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
         if not isinstance(skill, dict):
             continue
         skill_id = _entry_id(skill, "skill", index)
-        cost = max(0, _safe_int(skill.get("cost"), 0))
+        cost = effective_ability_cost(character, skill)
         cost_type = str(skill.get("cost_type") or "").lower()
         available = _safe_int(character.get(cost_type), 0) if cost_type in {"mp", "sp", "hp"} else cost
         enabled = available >= cost
@@ -240,15 +279,15 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
         })
     for index, item in enumerate(character.get("inventory") or []):
         normalized = item if isinstance(item, dict) else {"name": str(item), "quantity": 1}
-        spec = _item_combat_spec(normalized)
-        if not spec or _safe_int(normalized.get("quantity"), 1) <= 0:
+        spec = item_combat_spec(normalized)
+        if not item_is_combat_usable(normalized) or _safe_int(normalized.get("quantity"), 1) <= 0:
             continue
         item_id = _entry_id(normalized, "item", index)
         actions.append({
             "type": "item",
             "id": item_id,
             "name": str(normalized.get("name") or item_id),
-            "description": str(normalized.get("description") or normalized.get("effect") or ""),
+            "description": structured_item_effect(normalized),
             "quantity": _safe_int(normalized.get("quantity"), 1),
             "kind": spec.get("kind"),
             "enabled": True,
@@ -289,20 +328,21 @@ def _player_skill(session: dict[str, Any], skill_id: str, target_id: str, rng: A
     skill = _find_entry(character.get("skills"), skill_id, "skill")
     if not skill:
         raise CombatError("技能が見つかりません。")
-    _pay_cost(character, skill)
-    kind = _ability_kind(skill)
+    resolved_skill = effective_ability(character, skill)
+    _pay_cost(character, resolved_skill)
+    kind = _ability_kind(resolved_skill)
     if kind == "heal":
-        amount, detail = _roll_formula(str(skill.get("healing") or skill.get("dice_type") or "1d6+int/4"), character, rng)
+        amount, detail = _roll_formula(str(resolved_skill.get("healing") or resolved_skill.get("dice_type") or "1d6+int/4"), character, rng)
         healed = _heal_actor(character, amount)
-        _log(session, "player", "heal", f"{skill.get('name', '技能')}でHPを{healed}回復した。", {"amount": healed, "formula": detail})
+        _log(session, "player", "heal", f"{resolved_skill.get('name', '技能')}でHPを{healed}回復した。", {"amount": healed, "formula": detail})
     elif kind == "defend":
-        multiplier = float(skill.get("guard_multiplier", _combat_rules(session).get("defend_multiplier", 0.5)) or 0.5)
+        multiplier = float(resolved_skill.get("guard_multiplier", _combat_rules(session).get("defend_multiplier", 0.5)) or 0.5)
         session["combat"].setdefault("player_status", {})["guard_multiplier"] = max(0.0, min(1.0, multiplier))
-        session["combat"]["player_status"]["survive_at_one"] = bool(skill.get("survive_at_one", True))
-        _log(session, "player", "defend", f"{skill.get('name', '防御技能')}を使用し、守りを固めた。")
+        session["combat"]["player_status"]["survive_at_one"] = bool(resolved_skill.get("survive_at_one", True))
+        _log(session, "player", "defend", f"{resolved_skill.get('name', '防御技能')}を使用し、守りを固めた。")
     else:
         target = _target_enemy(session["combat"], target_id)
-        _resolve_attack(session, character, target, skill, "player", rng)
+        _resolve_attack(session, character, target, resolved_skill, "player", rng)
 
 
 def _player_item(session: dict[str, Any], item_id: str, target_id: str, rng: Any) -> None:
@@ -311,14 +351,27 @@ def _player_item(session: dict[str, Any], item_id: str, target_id: str, rng: Any
     item = _find_entry(inventory, item_id, "item")
     if not item:
         raise CombatError("道具が見つかりません。")
-    spec = _item_combat_spec(item)
-    if not spec:
+    spec = item_combat_spec(item)
+    if not item_is_combat_usable(item):
         raise CombatError("この道具は戦闘中に使用できません。")
     kind = str(spec.get("kind") or "heal")
     if kind == "heal":
         amount, detail = _roll_formula(str(spec.get("healing") or spec.get("formula") or "10"), character, rng)
         healed = _heal_actor(character, amount)
         _log(session, "player", "item", f"{item.get('name', '道具')}を使い、HPを{healed}回復した。", {"amount": healed, "formula": detail})
+    elif kind == "restore":
+        resource = str(spec.get("resource") or "mp").lower()
+        if resource not in {"hp", "mp", "sp"}:
+            raise CombatError("未対応の回復対象です。")
+        amount, detail = _roll_formula(str(spec.get("amount") or spec.get("formula") or "10"), character, rng)
+        restored = _restore_actor_resource(character, resource, amount)
+        _log(
+            session,
+            "player",
+            "item",
+            f"{item.get('name', '道具')}を使い、{resource.upper()}を{restored}回復した。",
+            {"resource": resource, "amount": restored, "formula": detail},
+        )
     elif kind == "damage":
         target = _target_enemy(session["combat"], target_id)
         _resolve_attack(session, character, target, spec, "player", rng, display_name=str(item.get("name") or "道具"))
@@ -547,14 +600,14 @@ def _choose_enemy_ability(enemy: dict[str, Any], session: dict[str, Any], rng: A
 def _pay_cost(actor: dict[str, Any], ability: dict[str, Any]) -> None:
     if not _can_pay_cost(actor, ability):
         raise CombatError("リソースが不足しています。")
-    cost = max(0, _safe_int(ability.get("cost"), 0))
+    cost = effective_ability_cost(actor, ability)
     cost_type = str(ability.get("cost_type") or "").lower()
     if cost and cost_type in {"hp", "mp", "sp"}:
         actor[cost_type] = max(0, _safe_int(actor.get(cost_type), 0) - cost)
 
 
 def _can_pay_cost(actor: dict[str, Any], ability: dict[str, Any]) -> bool:
-    cost = max(0, _safe_int(ability.get("cost"), 0))
+    cost = effective_ability_cost(actor, ability)
     cost_type = str(ability.get("cost_type") or "").lower()
     return not cost_type or cost_type not in {"hp", "mp", "sp"} or _safe_int(actor.get(cost_type), 0) >= cost
 
@@ -584,17 +637,6 @@ def _find_entry(entries: Any, wanted_id: str, prefix: str) -> Optional[dict[str,
 def _entry_id(entry: dict[str, Any], prefix: str, index: int) -> str:
     explicit = str(entry.get("id") or "").strip()
     return explicit or f"{prefix}_{index}"
-
-
-def _item_combat_spec(item: dict[str, Any]) -> dict[str, Any]:
-    if isinstance(item.get("combat"), dict):
-        spec = deepcopy(item["combat"])
-        return spec if str(spec.get("kind") or "") in {"heal", "damage"} else {}
-    effect = str(item.get("effect") or "")
-    heal_match = re.search(r"HP[^0-9]*(\d+)[^0-9]*(?:回復|heal)", effect, re.IGNORECASE)
-    if heal_match:
-        return {"kind": "heal", "healing": heal_match.group(1)}
-    return {}
 
 
 def _equipped_weapon_attack(character: dict[str, Any]) -> dict[str, Any]:
@@ -638,6 +680,13 @@ def _heal_actor(actor: dict[str, Any], amount: int) -> int:
     return _safe_int(actor.get("hp"), 0) - before
 
 
+def _restore_actor_resource(actor: dict[str, Any], resource: str, amount: int) -> int:
+    before = _safe_int(actor.get(resource), 0)
+    maximum = max(before, _safe_int(actor.get(f"max_{resource}"), before))
+    actor[resource] = min(maximum, before + max(0, amount))
+    return _safe_int(actor.get(resource), 0) - before
+
+
 def _actor_defense(actor: dict[str, Any]) -> int:
     combat = actor.get("combat") if isinstance(actor.get("combat"), dict) else {}
     explicit = _safe_int(combat.get("defense", actor.get("defense")), 0)
@@ -651,10 +700,6 @@ def _actor_defense(actor: dict[str, Any]) -> int:
         item_combat = item.get("combat") if isinstance(item.get("combat"), dict) else {}
         if isinstance(item_combat.get("defense"), (int, float)):
             derived += int(item_combat["defense"])
-            continue
-        match = re.search(r"(?:軽減|reduce)[^0-9]*(\d+)", str(item.get("effect") or ""), re.IGNORECASE)
-        if match:
-            derived += int(match.group(1))
     return max(0, explicit + derived)
 
 
