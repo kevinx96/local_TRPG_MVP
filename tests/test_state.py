@@ -825,6 +825,102 @@ class StateTests(unittest.TestCase):
         self.assertEqual(public["character"]["attributes"]["end"], 12)
         self.assertNotIn("con", public["character"]["attributes"])
 
+    def test_model_state_delta_rejects_unauthorized_fields_and_unknown_entities(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"str": 10, "int": 8, "end": 9}
+        starting_mp = session["character"]["mp"]
+
+        state.apply_gm_payload(
+            session,
+            "鍛冶師の助言を受け、少し疲れた。",
+            {
+                "state_delta": {
+                    "hp_change": -2,
+                    "gold": 999,
+                    "attribute_changes": {
+                        "int": 1,
+                        "con": 1,
+                        "mp": -3,
+                        "luck": 2,
+                    },
+                    "flags_set": ["boss_defeated"],
+                    "inventory_add": [
+                        {"id": "iron_shield", "name": "偽名", "quantity": 1},
+                        {"name": "存在しない秘宝", "quantity": 1},
+                    ],
+                    "current_location": "forest_gate",
+                },
+                "choices": [{"text": "準備を続ける", "risk": "判定不要"}],
+            },
+        )
+
+        attrs = session["character"]["attributes"]
+        inventory_names = [item["name"] for item in session["character"]["inventory"]]
+        self.assertEqual(session["character"]["hp"], 18)
+        self.assertEqual(session["character"]["mp"], starting_mp)
+        self.assertEqual(attrs["int"], 9)
+        self.assertEqual(attrs["end"], 10)
+        self.assertNotIn("mp", attrs)
+        self.assertNotIn("luck", attrs)
+        self.assertEqual(session["character"]["gold"], 0)
+        self.assertNotIn("boss_defeated", session["flags"])
+        self.assertIn("鉄の盾", inventory_names)
+        self.assertNotIn("偽名", inventory_names)
+        self.assertNotIn("存在しない秘宝", inventory_names)
+        self.assertEqual(state.current_location_id(session), "forge")
+        self.assertTrue(any("model state_delta rejected" in log["text"] for log in session["system_logs"]))
+
+    def test_model_state_delta_rejects_out_of_range_and_non_integer_values(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"str": 10, "end": 9}
+        before = {
+            key: session["character"][key]
+            for key in ("hp", "mp", "sp", "gold")
+        }
+
+        state.apply_gm_payload(
+            session,
+            "状態は変わらなかった。",
+            {
+                "state_delta": {
+                    "hp_change": session["character"]["max_hp"] + 1,
+                    "mp_change": -1.5,
+                    "sp_change": True,
+                    "gold_change": state.MODEL_MAX_GOLD_DELTA + 1,
+                },
+            },
+        )
+
+        self.assertEqual(
+            {key: session["character"][key] for key in before},
+            before,
+        )
+        log_text = "\n".join(log["text"] for log in session["system_logs"])
+        for key in ("hp_change", "mp_change", "sp_change", "gold_change"):
+            self.assertIn(key, log_text)
+
+    def test_model_attribute_aliases_cannot_stack_past_delta_limit(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"end": 9}
+
+        state.apply_gm_payload(
+            session,
+            "少しだけ持久力が増した。",
+            {
+                "state_delta": {
+                    "attribute_changes": {"con": 3, "endurance": 3},
+                },
+            },
+        )
+
+        self.assertEqual(session["character"]["attributes"]["end"], 12)
+        self.assertTrue(
+            any("attribute_changes.endurance" in log["text"] for log in session["system_logs"])
+        )
+
     def test_item_quantity_increment_and_decrement(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
@@ -841,7 +937,7 @@ class StateTests(unittest.TestCase):
         names = [i["name"] for i in session["character"]["inventory"]]
         self.assertNotIn("薬草", names)
 
-    def test_malformed_inventory_add_is_ignored_or_normalized(self):
+    def test_model_inventory_add_accepts_catalog_items_and_rejects_unknown_items(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
 
@@ -853,6 +949,7 @@ class StateTests(unittest.TestCase):
                     "inventory_add": [
                         {},
                         {"name": ""},
+                        {"id": "iron_shield", "name": "偽名", "quantity": 2},
                         {"item": "氷の護符", "quantity": "2"},
                         {"item_name": "古い鍵"},
                     ],
@@ -861,9 +958,12 @@ class StateTests(unittest.TestCase):
         )
 
         inventory = {item["name"]: item["quantity"] for item in session["character"]["inventory"]}
-        self.assertEqual(inventory["氷の護符"], 2)
-        self.assertEqual(inventory["古い鍵"], 1)
+        self.assertEqual(inventory["鉄の盾"], 2)
+        self.assertNotIn("偽名", inventory)
+        self.assertNotIn("氷の護符", inventory)
+        self.assertNotIn("古い鍵", inventory)
         self.assertNotIn("", inventory)
+        self.assertTrue(any("model state_delta rejected" in log["text"] for log in session["system_logs"]))
 
     def test_system_logs_are_state_events_not_protocol_warnings(self):
         public = state.create_session(str(self.write_pack()))

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 import random
 import re
@@ -80,6 +81,11 @@ PROTOCOL_WARNING_LOGS = (
     "GM応答のJSONを解析できませんでした。",
     "GM応答に状態JSONが含まれていませんでした。",
 )
+
+MODEL_RESOURCE_DELTA_KEYS = ("hp_change", "mp_change", "sp_change", "gold_change")
+MODEL_MAX_ATTRIBUTE_DELTA = 3
+MODEL_MAX_GOLD_DELTA = 10_000
+MODEL_MAX_ITEM_QUANTITY = 99
 
 _DICE_ATTR_RE = re.compile(r"^(\d+d\d+)(?:\+(\w+))?$", re.IGNORECASE)
 
@@ -444,7 +450,7 @@ def apply_gm_payload(
         add_system_log(session, "GM応答のstate_deltaが不正だったため無視しました。")
         return
     _infer_state_delta_from_text(gm_text, session, state_delta)
-    apply_state_delta(session, state_delta)
+    apply_state_delta(session, sanitize_model_state_delta(session, state_delta))
 
     raw_choices = payload.get("choices")
     if isinstance(raw_choices, list) and raw_choices:
@@ -663,6 +669,163 @@ def validate_model_payload_for_action(session: dict[str, Any], payload: Optional
         add_system_log(session, "model choices ignored: action engine rebuilt choices from current action surface.")
         sanitized["choices"] = []
     return sanitized
+
+
+def sanitize_model_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> dict[str, Any]:
+    """Allow only bounded, scenario-known model mutations outside resolved actions."""
+    sanitized: dict[str, Any] = {}
+    rejected: list[str] = []
+
+    for key in MODEL_RESOURCE_DELTA_KEYS:
+        if key not in delta:
+            continue
+        value = _strict_int(delta.get(key))
+        if value is None or not _model_resource_delta_allowed(session, key, value):
+            rejected.append(key)
+            continue
+        if value:
+            sanitized[key] = value
+
+    attr_changes = delta.get("attribute_changes")
+    if attr_changes is not None:
+        normalized_attrs, rejected_attrs = _validated_attribute_changes(
+            session,
+            attr_changes,
+            max_abs=MODEL_MAX_ATTRIBUTE_DELTA,
+        )
+        if normalized_attrs:
+            sanitized["attribute_changes"] = normalized_attrs
+        rejected.extend(f"attribute_changes.{key}" for key in rejected_attrs)
+
+    for key in ("inventory_add", "inventory_remove"):
+        if key not in delta:
+            continue
+        items, rejected_items = _validated_model_items(session, delta.get(key), removing=(key == "inventory_remove"))
+        if items:
+            sanitized[key] = items
+        rejected.extend(f"{key}.{name}" for name in rejected_items)
+
+    world_keys = [key for key in ("current_scene", "current_location") if delta.get(key)]
+    if world_keys:
+        add_system_log(session, "model world transition ignored: only the action engine may change position.")
+
+    supported = {*MODEL_RESOURCE_DELTA_KEYS, "attribute_changes", "inventory_add", "inventory_remove", "current_scene", "current_location"}
+    rejected.extend(str(key) for key in delta if key not in supported)
+    if rejected:
+        unique = list(dict.fromkeys(rejected))
+        add_system_log(session, "model state_delta rejected: " + ", ".join(unique))
+    return sanitized
+
+
+def _model_resource_delta_allowed(session: dict[str, Any], key: str, value: int) -> bool:
+    if key == "gold_change":
+        return abs(value) <= MODEL_MAX_GOLD_DELTA
+    stat = key.removesuffix("_change")
+    character = session.get("character") if isinstance(session.get("character"), dict) else {}
+    maximum = _strict_int(character.get(f"max_{stat}"))
+    return maximum is not None and maximum > 0 and abs(value) <= maximum
+
+
+def _validated_attribute_changes(
+    session: dict[str, Any],
+    raw_changes: Any,
+    *,
+    max_abs: Optional[int] = None,
+) -> tuple[dict[str, int], list[str]]:
+    if not isinstance(raw_changes, dict):
+        return {}, ["invalid"] if raw_changes is not None else []
+    allowed = _allowed_attribute_keys(session)
+    normalized: dict[str, int] = {}
+    rejected: list[str] = []
+    for raw_key, raw_value in raw_changes.items():
+        key = _canonical_attr_key(str(raw_key))
+        value = _strict_int(raw_value)
+        if not key or key not in allowed or value is None or (max_abs is not None and abs(value) > max_abs):
+            rejected.append(str(raw_key))
+            continue
+        if value:
+            combined = normalized.get(key, 0) + value
+            if max_abs is not None and abs(combined) > max_abs:
+                rejected.append(str(raw_key))
+                continue
+            normalized[key] = combined
+    return normalized, rejected
+
+
+def _allowed_attribute_keys(session: dict[str, Any]) -> set[str]:
+    character = session.get("character") if isinstance(session.get("character"), dict) else {}
+    attrs = character.get("attributes") if isinstance(character.get("attributes"), dict) else {}
+    keys = {_canonical_attr_key(str(key)) for key in attrs if str(key).strip()}
+    if keys:
+        return keys
+    pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else {}
+    return {
+        _canonical_attr_key(str(item.get("id") or ""))
+        for item in pack.get("attribute_defs", [])
+        if isinstance(item, dict) and str(item.get("id") or "").strip()
+    }
+
+
+def _validated_model_items(session: dict[str, Any], raw_items: Any, *, removing: bool) -> tuple[list[dict[str, Any]], list[str]]:
+    catalog = _model_item_catalog(session, include_owned=True)
+    validated: list[dict[str, Any]] = []
+    rejected: list[str] = []
+    for raw in _as_list(raw_items):
+        item = raw if isinstance(raw, dict) else {"name": raw}
+        requested_id = str(item.get("id") or "").strip()
+        requested_name = _item_name_from_dict(item)
+        source = catalog.get(requested_id) if requested_id else None
+        if source is None and requested_name:
+            source = catalog.get(requested_name)
+        label = requested_id or requested_name or "invalid"
+        quantity = _strict_int(item.get("quantity", 1))
+        if source is None or quantity is None or quantity < 1 or quantity > MODEL_MAX_ITEM_QUANTITY:
+            rejected.append(label)
+            continue
+        if removing:
+            validated.append({"name": str(source.get("name") or source.get("title") or label), "quantity": quantity})
+            continue
+        normalized = _enrich_item(source)
+        normalized["name"] = str(source.get("name") or source.get("title") or label)
+        normalized["quantity"] = quantity
+        validated.append(normalized)
+    return validated, rejected
+
+
+def _model_item_catalog(session: dict[str, Any], *, include_owned: bool) -> dict[str, dict[str, Any]]:
+    catalog: dict[str, dict[str, Any]] = {}
+
+    def register(raw: Any) -> None:
+        item = raw if isinstance(raw, dict) else {"name": str(raw)}
+        name = str(item.get("name") or item.get("title") or "").strip()
+        item_id = str(item.get("id") or "").strip()
+        if not name and not item_id:
+            return
+        canonical = deepcopy(item)
+        canonical["name"] = name or item_id
+        if name:
+            catalog[name] = canonical
+        if item_id:
+            catalog[item_id] = canonical
+
+    pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else {}
+    for item in pack.get("items", []):
+        register(item)
+    for name, details in DEFAULT_ITEM_CATALOG.items():
+        register({"name": name, **details})
+    if include_owned:
+        character = session.get("character") if isinstance(session.get("character"), dict) else {}
+        for item in character.get("inventory", []):
+            register(item)
+    return catalog
+
+
+def _strict_int(value: Any) -> Optional[int]:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    if isinstance(value, float) and (not math.isfinite(value) or not value.is_integer()):
+        return None
+    return int(value)
 
 
 def _iter_actions(actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -1112,15 +1275,17 @@ def apply_state_delta(
     attr_changes = delta.get("attribute_changes")
     if isinstance(attr_changes, dict):
         attrs = character.setdefault("attributes", {})
-        for attr_key, attr_change in attr_changes.items():
-            if isinstance(attr_change, (int, float)):
-                before = int(attrs.get(attr_key, 0))
-                attrs[attr_key] = before + int(attr_change)
-                actual_change = int(attrs[attr_key]) - before
-                if actual_change > 0:
-                    add_system_log(session, f"{attr_key}が{actual_change}上昇しました。")
-                elif actual_change < 0:
-                    add_system_log(session, f"{attr_key}が{abs(actual_change)}減少しました。")
+        validated_attrs, rejected_attrs = _validated_attribute_changes(session, attr_changes)
+        if rejected_attrs:
+            add_system_log(session, "state_delta attribute rejected: " + ", ".join(rejected_attrs))
+        for attr_key, attr_change in validated_attrs.items():
+            before = int(attrs.get(attr_key, 0))
+            attrs[attr_key] = before + attr_change
+            actual_change = int(attrs[attr_key]) - before
+            if actual_change > 0:
+                add_system_log(session, f"{attr_key}が{actual_change}上昇しました。")
+            elif actual_change < 0:
+                add_system_log(session, f"{attr_key}が{abs(actual_change)}減少しました。")
 
     requested_scene = str(delta.get("current_scene") or "").strip()
     requested_location = str(delta.get("current_location") or "").strip()
