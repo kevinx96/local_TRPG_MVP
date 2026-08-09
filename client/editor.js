@@ -111,6 +111,7 @@ function newScenario() {
     attribute_defs: [],
     characters: [],
     enemies: [],
+    combat_rules: defaultCombatRules(),
     combat_choices: [],
     fallback_choices: [],
   });
@@ -205,6 +206,7 @@ function renderEditor() {
   if (state.section === "rules") return renderStringList("rules", "规则");
   if (state.section === "fallback") return renderChoices("fallback_choices", state.scenario.fallback_choices || [], "全局 fallback choices");
   if (state.section === "combat") return renderChoices("combat_choices", state.scenario.combat_choices || [], "全局战斗选项");
+  if (state.section === "combat_rules") return renderCombatRulesEditor();
   if (state.section === "hybrid") return renderHybridEditor();
   if (state.section === "json") return renderJsonEditor();
   if (state.section === "attribute_defs") return renderAttributeDefsEditor();
@@ -218,9 +220,6 @@ function renderMeta() {
   const sceneOptions = state.scenario.scenes
     .map((scene) => `<option value="${escapeHtml(scene.id)}" ${scene.id === meta.initial_scene ? "selected" : ""}>${escapeHtml(scene.title || scene.id)}</option>`)
     .join("");
-  const actionFields = (section === "scenes" || section === "locations")
-    ? actionsJsonMarkup(`${section}.${state.selectedIndex}.actions`, record.actions || [])
-    : "";
   els.editorPane.innerHTML = `<div class="editor-form">
     <div class="form-grid">
       ${field("标题", "meta.title", meta.title || "")}
@@ -254,6 +253,9 @@ function renderRecordEditor(section) {
     return;
   }
   const titleKey = group.titleKey;
+  const actionFields = (section === "scenes" || section === "locations")
+    ? actionsJsonMarkup(`${section}.${state.selectedIndex}.actions`, record.actions || [])
+    : "";
   const common = `<div class="form-grid">
     ${field("ID", `${section}.${state.selectedIndex}.id`, record.id || "")}
     ${field(titleKey === "name" ? "名称" : "标题", `${section}.${state.selectedIndex}.${titleKey}`, record[titleKey] || "")}
@@ -267,13 +269,33 @@ function renderRecordEditor(section) {
       ${field("后续场景 IDs", `${section}.${state.selectedIndex}.next_scene_ids`, toCsv(record.next_scene_ids || []), true)}
     </div>` : "";
   const itemFields = section === "items" ? `<h3 class="section-title">道具效果</h3>
-    <label>效果<textarea data-path="${section}.${state.selectedIndex}.effect">${escapeHtml(record.effect || "")}</textarea></label>` : "";
+    <label>效果<textarea data-path="${section}.${state.selectedIndex}.effect">${escapeHtml(record.effect || "")}</textarea></label>
+    <h3 class="section-title">战斗参数</h3>
+    <div class="form-grid">
+      ${field("战斗类型", `${section}.${state.selectedIndex}.combat.kind`, record.combat?.kind || "")}
+      ${field("治疗公式", `${section}.${state.selectedIndex}.combat.healing`, record.combat?.healing || "")}
+      ${field("伤害公式", `${section}.${state.selectedIndex}.combat.damage`, record.combat?.damage || "")}
+      ${field("命中率", `${section}.${state.selectedIndex}.combat.accuracy`, record.combat?.accuracy ?? 100, false, true)}
+      ${field("元素", `${section}.${state.selectedIndex}.combat.element`, record.combat?.element || "physical")}
+      ${field("装备防御", `${section}.${state.selectedIndex}.combat.defense`, record.combat?.defense ?? 0, false, true)}
+    </div>` : "";
   const locationFields = section === "locations" ? `<h3 class="section-title">关联实体</h3>
     <div class="relation-grid">
       ${relationPicker("NPC", `${section}.${state.selectedIndex}.npc_ids`, record.npc_ids || [], state.scenario.npcs || [])}
       ${relationPicker("道具", `${section}.${state.selectedIndex}.item_ids`, record.item_ids || [], state.scenario.items || [])}
       ${relationPicker("线索", `${section}.${state.selectedIndex}.clue_ids`, record.clue_ids || [], state.scenario.clues || [])}
       ${relationPicker("敌人", `${section}.${state.selectedIndex}.enemy_ids`, record.enemy_ids || [], state.scenario.enemies || [])}
+    </div>
+    <h3 class="section-title">遭遇设置</h3>
+    <div class="form-grid">
+      <label>允许逃跑<select data-path="${section}.${state.selectedIndex}.combat.flee_allowed" data-boolean="true">
+        <option value="true" ${record.combat?.flee_allowed !== false ? "selected" : ""}>是</option>
+        <option value="false" ${record.combat?.flee_allowed === false ? "selected" : ""}>否</option>
+      </select></label>
+      ${field("逃跑 DC", `${section}.${state.selectedIndex}.combat.flee_dc`, record.combat?.flee_dc ?? "", false, true)}
+      ${field("逃跑公式", `${section}.${state.selectedIndex}.combat.flee_formula`, record.combat?.flee_formula || "")}
+      <label class="wide">胜利效果 JSON<textarea data-json-path="${section}.${state.selectedIndex}.combat.victory_effects" spellcheck="false">${escapeHtml(JSON.stringify(record.combat?.victory_effects || {}, null, 2))}</textarea></label>
+      <label class="wide">失败效果 JSON<textarea data-json-path="${section}.${state.selectedIndex}.combat.defeat_effects" spellcheck="false">${escapeHtml(JSON.stringify(record.combat?.defeat_effects || {}, null, 2))}</textarea></label>
     </div>
     <h3 class="section-title">可达地点 IDs</h3>
     ${field("用逗号分隔", `locations.${state.selectedIndex}.connected_location_ids`, toCsv(record.connected_location_ids || []), true)}
@@ -303,6 +325,48 @@ function renderAttributeDefsEditor() {
       ${field("初始数值", `attribute_defs.${state.selectedIndex}.initial_value`, record.initial_value ?? 8, false, true)}
     </div>
     <button class="danger" data-remove-record="attribute_defs" data-index="${state.selectedIndex}" type="button">删除属性定义</button>
+  </div>`;
+}
+
+function defaultCombatRules() {
+  return {
+    basic_attack: { name: "通常攻击", damage: "1d6+str/4", accuracy: 90, element: "physical" },
+    enemy_basic_attack: { name: "攻击", damage: "1d4+str/4", accuracy: 85, element: "physical" },
+    defend_multiplier: 0.5,
+    flee_formula: "1d20+dex/2",
+    flee_dc: 12,
+    sp_regen_per_round: 1,
+    max_rounds: 100,
+  };
+}
+
+function renderCombatRulesEditor() {
+  const rules = state.scenario.combat_rules;
+  els.editorPane.innerHTML = `<div class="editor-form">
+    <h2>通用战斗规则</h2>
+    <p class="summary-line">这些数值作为整个剧本的默认值，角色和敌人可以单独覆盖。</p>
+    <h3 class="section-title">玩家普通攻击</h3>
+    <div class="form-grid">
+      ${field("名称", "combat_rules.basic_attack.name", rules.basic_attack.name || "通常攻击")}
+      ${field("伤害公式", "combat_rules.basic_attack.damage", rules.basic_attack.damage || "1d6+str/4")}
+      ${field("命中率 %", "combat_rules.basic_attack.accuracy", rules.basic_attack.accuracy ?? 90, false, true)}
+      ${field("元素", "combat_rules.basic_attack.element", rules.basic_attack.element || "physical")}
+    </div>
+    <h3 class="section-title">敌人普通攻击</h3>
+    <div class="form-grid">
+      ${field("名称", "combat_rules.enemy_basic_attack.name", rules.enemy_basic_attack.name || "攻击")}
+      ${field("伤害公式", "combat_rules.enemy_basic_attack.damage", rules.enemy_basic_attack.damage || "1d4+str/4")}
+      ${field("命中率 %", "combat_rules.enemy_basic_attack.accuracy", rules.enemy_basic_attack.accuracy ?? 85, false, true)}
+      ${field("元素", "combat_rules.enemy_basic_attack.element", rules.enemy_basic_attack.element || "physical")}
+    </div>
+    <h3 class="section-title">回合与逃跑</h3>
+    <div class="form-grid">
+      ${field("防御伤害倍率", "combat_rules.defend_multiplier", rules.defend_multiplier ?? 0.5, false, true)}
+      ${field("逃跑公式", "combat_rules.flee_formula", rules.flee_formula || "1d20+dex/2")}
+      ${field("逃跑 DC", "combat_rules.flee_dc", rules.flee_dc ?? 12, false, true)}
+      ${field("每回合 SP 恢复", "combat_rules.sp_regen_per_round", rules.sp_regen_per_round ?? 1, false, true)}
+      ${field("最大回合数", "combat_rules.max_rounds", rules.max_rounds ?? 100, false, true)}
+    </div>
   </div>`;
 }
 
@@ -358,6 +422,15 @@ function renderCharactersEditor() {
       ${field("Max SP", `${basePath}.max_sp`, record.max_sp ?? 10, false, true)}
       ${field("GOLD", `${basePath}.gold`, record.gold ?? 0, false, true)}
     </div>
+    <h3 class="section-title">战斗覆盖参数</h3>
+    <div class="form-grid">
+      ${field("普通攻击名称", `${basePath}.combat.basic_attack.name`, record.combat?.basic_attack?.name || "")}
+      ${field("普通攻击伤害", `${basePath}.combat.basic_attack.damage`, record.combat?.basic_attack?.damage || "")}
+      ${field("普通攻击命中率", `${basePath}.combat.basic_attack.accuracy`, record.combat?.basic_attack?.accuracy ?? 90, false, true)}
+      ${field("普通攻击元素", `${basePath}.combat.basic_attack.element`, record.combat?.basic_attack?.element || "physical")}
+      ${field("基础防御", `${basePath}.combat.defense`, record.combat?.defense ?? 0, false, true)}
+      ${field("闪避修正", `${basePath}.combat.evade`, record.combat?.evade ?? 0, false, true)}
+    </div>
     <h3 class="section-title">能力值</h3>
     <div class="form-grid attr-grid">
       ${attrInputs || '<p class="summary-line">请先在「属性定义」中添加属性。</p>'}
@@ -409,6 +482,21 @@ function renderEnemiesEditor() {
       ${field("SP", `${basePath}.sp`, record.sp ?? 0, false, true)}
       ${field("Max SP", `${basePath}.max_sp`, record.max_sp ?? 0, false, true)}
     </div>
+    <h3 class="section-title">战斗参数</h3>
+    <div class="form-grid">
+      ${field("普通攻击名称", `${basePath}.combat.basic_attack.name`, record.combat?.basic_attack?.name || "")}
+      ${field("普通攻击伤害", `${basePath}.combat.basic_attack.damage`, record.combat?.basic_attack?.damage || "")}
+      ${field("普通攻击命中率", `${basePath}.combat.basic_attack.accuracy`, record.combat?.basic_attack?.accuracy ?? 85, false, true)}
+      ${field("普通攻击元素", `${basePath}.combat.basic_attack.element`, record.combat?.basic_attack?.element || "physical")}
+      ${field("基础防御", `${basePath}.combat.defense`, record.combat?.defense ?? 0, false, true)}
+      ${field("闪避修正", `${basePath}.combat.evade`, record.combat?.evade ?? 0, false, true)}
+      ${field("物理倍率", `${basePath}.resistances.physical`, record.resistances?.physical ?? 1, false, true)}
+      ${field("火焰倍率", `${basePath}.resistances.fire`, record.resistances?.fire ?? 1, false, true)}
+      ${field("冰霜倍率", `${basePath}.resistances.ice`, record.resistances?.ice ?? 1, false, true)}
+      ${field("奖励金币", `${basePath}.rewards.gold`, record.rewards?.gold ?? 0, false, true)}
+      ${field("击败后 flags（逗号分隔）", `${basePath}.rewards.flags`, toCsv(record.rewards?.flags || []), true)}
+    </div>
+    <label class="wide">奖励道具 JSON<textarea data-json-path="${basePath}.rewards.items" spellcheck="false">${escapeHtml(JSON.stringify(record.rewards?.items || [], null, 2))}</textarea></label>
     <h3 class="section-title">能力值</h3>
     <div class="form-grid attr-grid">
       ${attrInputs || '<p class="summary-line">请先在「属性定义」中添加属性。</p>'}
@@ -505,6 +593,9 @@ function handleEditorInput(event) {
   }
   if (target.dataset.path) {
     let value = target.dataset.csv === "true" ? fromCsv(target.value) : target.value;
+    if (target.dataset.boolean === "true") {
+      value = target.value === "true";
+    }
     if (target.dataset.number === "true") {
       const parsed = Number(target.value);
       value = Number.isFinite(parsed) ? parsed : target.value;
@@ -673,7 +764,7 @@ function handleEditorClick(event) {
   if (target.dataset.addSkill) {
     const skills = getByPath(state.scenario, target.dataset.addSkill, []);
     setByPath(state.scenario, target.dataset.addSkill, skills);
-    skills.push({ name: "", description: "", effect: "", dice_type: "", cost: 0, cost_type: "" });
+    skills.push({ id: "", name: "", kind: "attack", description: "", effect: "", damage: "", healing: "", dice_type: "", accuracy: 90, element: "physical", cost: 0, cost_type: "", ai_weight: 1 });
     markDirty();
     renderEditor();
   }
@@ -732,6 +823,7 @@ function addCurrentRecord() {
       inventory: [],
       equipment: [],
       skills: [],
+      combat: { basic_attack: { name: "", damage: "", accuracy: 90, element: "physical" }, defense: 0, evade: 0 },
     });
   }
   if (section === "enemies") {
@@ -743,6 +835,9 @@ function addCurrentRecord() {
       sp: 0, max_sp: 0,
       attributes: {},
       skills: [],
+      combat: { basic_attack: { name: "", damage: "", accuracy: 85, element: "physical" }, defense: 0, evade: 0 },
+      resistances: { physical: 1, fire: 1, ice: 1 },
+      rewards: { gold: 0, items: [], flags: [] },
     });
   }
   state.scenario[section].push(record);
@@ -757,6 +852,7 @@ function ensureShape(scenario) {
   scenario.meta.summary ||= "";
   scenario.meta.language ||= "ja";
   scenario.rules = Array.isArray(scenario.rules) ? scenario.rules : [];
+  scenario.combat_rules = mergeDefaults(scenario.combat_rules, defaultCombatRules());
   Object.keys(GROUPS).forEach((key) => {
     scenario[key] = Array.isArray(scenario[key]) ? scenario[key] : [];
   });
@@ -779,6 +875,7 @@ function ensureShape(scenario) {
     char.inventory = Array.isArray(char.inventory) ? char.inventory : [];
     char.equipment = Array.isArray(char.equipment) ? char.equipment : [];
     char.skills = Array.isArray(char.skills) ? char.skills : [];
+    char.combat = mergeDefaults(char.combat, { basic_attack: { name: "", damage: "", accuracy: 90, element: "physical" }, defense: 0, evade: 0 });
   });
   scenario.enemies.forEach((enemy) => {
     enemy.description ||= "";
@@ -791,6 +888,9 @@ function ensureShape(scenario) {
     enemy.max_sp = Number.isFinite(Number(enemy.max_sp)) ? Number(enemy.max_sp) : enemy.sp;
     enemy.attributes = enemy.attributes && typeof enemy.attributes === "object" ? enemy.attributes : {};
     enemy.skills = Array.isArray(enemy.skills) ? enemy.skills : [];
+    enemy.combat = mergeDefaults(enemy.combat, { basic_attack: { name: "", damage: "", accuracy: 85, element: "physical" }, defense: 0, evade: 0 });
+    enemy.resistances = mergeDefaults(enemy.resistances, { physical: 1, fire: 1, ice: 1 });
+    enemy.rewards = mergeDefaults(enemy.rewards, { gold: 0, items: [], flags: [] });
   });
   if (!scenario.scenes.length) {
     scenario.scenes.push({ id: "start", title: "开始", description: "", keywords: [], goals: [] });
@@ -812,9 +912,21 @@ function ensureShape(scenario) {
     location.connected_location_ids = Array.isArray(location.connected_location_ids) ? location.connected_location_ids : [];
     location.choices = normalizeChoices(location.choices);
     location.actions = normalizeActions(location.actions);
+    location.combat = mergeDefaults(location.combat, { flee_allowed: true, victory_effects: {}, defeat_effects: {} });
     if (location.hybrid) ensureHybridShape(location);
   });
   return scenario;
+}
+
+function mergeDefaults(value, defaults) {
+  const source = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  const result = { ...defaults, ...source };
+  for (const [key, defaultValue] of Object.entries(defaults)) {
+    if (defaultValue && typeof defaultValue === "object" && !Array.isArray(defaultValue)) {
+      result[key] = mergeDefaults(source[key], defaultValue);
+    }
+  }
+  return result;
 }
 
 function ensureHybridShape(scene) {
@@ -983,9 +1095,17 @@ function skillsMarkup(basePath, record) {
       <button class="danger" data-remove-skill="${basePath}.skills" data-index="${si}" type="button">删除</button>
     </div>
     <div class="form-grid">
+      ${field("ID", `${basePath}.skills.${si}.id`, skill.id || "", false)}
       ${field("名称", `${basePath}.skills.${si}.name`, skill.name || "", false)}
+      ${field("类型 attack/heal/defend", `${basePath}.skills.${si}.kind`, skill.kind || "attack")}
       ${field("消耗", `${basePath}.skills.${si}.cost`, skill.cost ?? 0, false, true)}
       ${field("消耗类型", `${basePath}.skills.${si}.cost_type`, skill.cost_type || "")}
+      ${field("伤害公式", `${basePath}.skills.${si}.damage`, skill.damage || "")}
+      ${field("治疗公式", `${basePath}.skills.${si}.healing`, skill.healing || "")}
+      ${field("命中率 %", `${basePath}.skills.${si}.accuracy`, skill.accuracy ?? 90, false, true)}
+      ${field("元素", `${basePath}.skills.${si}.element`, skill.element || "physical")}
+      ${field("敌方 AI 权重", `${basePath}.skills.${si}.ai_weight`, skill.ai_weight ?? 1, false, true)}
+      ${field("防御伤害倍率", `${basePath}.skills.${si}.guard_multiplier`, skill.guard_multiplier ?? "", false, true)}
       <label class="wide">描述<textarea data-path="${basePath}.skills.${si}.description">${escapeHtml(skill.description || "")}</textarea></label>
       <label class="wide">效果<textarea data-path="${basePath}.skills.${si}.effect">${escapeHtml(skill.effect || "")}</textarea></label>
       ${field("骰子类型", `${basePath}.skills.${si}.dice_type`, skill.dice_type || "")}
@@ -998,7 +1118,7 @@ function field(label, path, value, csv = false, number = false) {
 }
 
 function sectionLabel(section) {
-  return ({ meta: "基本信息", rules: "规则", hybrid: "Hybrid", fallback: "全局选项", combat: "战斗选项", json: "JSON", attribute_defs: "属性定义", characters: "角色", enemies: "敌人" })[section] || section;
+  return ({ meta: "基本信息", rules: "规则", hybrid: "Hybrid", fallback: "全局选项", combat: "旧战斗选项", combat_rules: "战斗规则", json: "JSON", attribute_defs: "属性定义", characters: "角色", enemies: "敌人" })[section] || section;
 }
 
 function summaryForSection(section) {
@@ -1007,6 +1127,7 @@ function summaryForSection(section) {
   if (section === "hybrid") return `${state.scenario.locations.length} locations with editable prepared turns`;
   if (section === "fallback") return `${state.scenario.fallback_choices.length} 个全局选项`;
   if (section === "combat") return `${state.scenario.combat_choices.length} 个战斗选项`;
+  if (section === "combat_rules") return "通用命中、伤害、防御、逃跑和回合规则";
   if (section === "attribute_defs") return `${state.scenario.attribute_defs.length} 个属性定义`;
   if (section === "characters") return `${state.scenario.characters.length} 个角色`;
   if (section === "enemies") return `${state.scenario.enemies.length} 个敌人`;

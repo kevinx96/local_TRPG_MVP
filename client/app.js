@@ -19,6 +19,10 @@ const state = {
   nextDiceDc: 0,
   nextDiceType: "1d20",
   character: null,
+  combatTargetId: "",
+  combatActionTab: "attack",
+  combatBusy: false,
+  combatActions: [],
 };
 
 /* ── DOM References ── */
@@ -78,6 +82,24 @@ const els = {
   goldText: document.querySelector("#goldText"),
   choicesArea: document.querySelector("#choicesArea"),
   choicesList: document.querySelector("#choicesList"),
+  combatScreen: document.querySelector("#combatScreen"),
+  combatTitle: document.querySelector("#combatTitle"),
+  combatRound: document.querySelector("#combatRound"),
+  combatPlayerName: document.querySelector("#combatPlayerName"),
+  combatPlayerHp: document.querySelector("#combatPlayerHp"),
+  combatPlayerMp: document.querySelector("#combatPlayerMp"),
+  combatPlayerSp: document.querySelector("#combatPlayerSp"),
+  combatPlayerHpBar: document.querySelector("#combatPlayerHpBar"),
+  combatPlayerMpBar: document.querySelector("#combatPlayerMpBar"),
+  combatPlayerSpBar: document.querySelector("#combatPlayerSpBar"),
+  combatEnemies: document.querySelector("#combatEnemies"),
+  combatLog: document.querySelector("#combatLog"),
+  combatActionTabs: document.querySelector("#combatActionTabs"),
+  combatActions: document.querySelector("#combatActions"),
+  combatResult: document.querySelector("#combatResult"),
+  combatResultTitle: document.querySelector("#combatResultTitle"),
+  combatResultText: document.querySelector("#combatResultText"),
+  combatResolveButton: document.querySelector("#combatResolveButton"),
 };
 
 let cachedConfig = null;
@@ -447,6 +469,9 @@ async function newSession() {
   state.lastDiceSignature = "";
   state.nextDiceDc = 0;
   state.nextDiceType = "1d20";
+  state.combatTargetId = "";
+  state.combatActionTab = "attack";
+  state.combatBusy = false;
   stopDiceRollAnimation();
   hideDiceBanner();
   els.gameScreen.style.display = "none";
@@ -542,7 +567,12 @@ function renderSession(session) {
   const character = session.character;
 
   /* Scene */
-  if (els.sceneTitle) els.sceneTitle.textContent = session.current_scene_title || session.current_scene || session.scenario_title || "開始";
+  if (els.sceneTitle) {
+    els.sceneTitle.textContent = session.current_location_title || session.current_scene_title || session.current_location || session.current_scene || session.scenario_title || "開始";
+    els.sceneTitle.title = session.current_scene_title && session.current_location_title !== session.current_scene_title
+      ? session.current_scene_title
+      : "";
+  }
 
   if (els.background) {
     if (character.background_image) {
@@ -574,6 +604,7 @@ function renderSession(session) {
   /* Inventory (item objects) */
   renderInventory(character.inventory || []);
   renderEnemies(session.enemies || []);
+  renderCombat(session);
 
   /* Dice log */
   renderLatestDiceResult(session.dice_log || []);
@@ -596,7 +627,7 @@ function renderSession(session) {
   renderMessages(session.messages || []);
 
   /* Choices */
-  setPendingChoices(session.choices || []);
+  setPendingChoices(session.in_combat ? [] : (session.choices || []));
 }
 
 /* ═══════════════════════════════════════════════════
@@ -1021,6 +1052,139 @@ function handleChoiceListClick(event) {
   if (text) submitChoice(text, card.dataset.actionId || "");
 }
 
+function renderCombat(session) {
+  const combat = session.combat;
+  const active = Boolean(session.in_combat && combat && combat.status);
+  els.gameScreen.classList.toggle("combat-active", active);
+  if (!active) {
+    els.combatScreen.style.display = "none";
+    state.combatTargetId = "";
+    return;
+  }
+
+  els.combatScreen.style.display = "";
+  els.combatScreen.classList.toggle("busy", state.combatBusy);
+  const enemies = Array.isArray(combat.enemies) ? combat.enemies : [];
+  const alive = enemies.filter((enemy) => Number(enemy.hp || 0) > 0);
+  if (!alive.some((enemy) => enemy.id === state.combatTargetId)) {
+    state.combatTargetId = alive[0]?.id || "";
+  }
+  els.combatTitle.textContent = enemies.length
+    ? `VS ${enemies.map((enemy) => enemy.name || enemy.id).join(" / ")}`
+    : "戦闘";
+  els.combatRound.textContent = String(combat.round || 1);
+  els.combatPlayerName.textContent = session.character?.name || "冒険者";
+  setCombatResource("PlayerHp", session.character, "hp");
+  setCombatResource("PlayerMp", session.character, "mp");
+  setCombatResource("PlayerSp", session.character, "sp");
+
+  els.combatEnemies.innerHTML = enemies.map((enemy) => {
+    const hp = Number(enemy.hp || 0);
+    const maxHp = Math.max(1, Number(enemy.max_hp || hp || 1));
+    const percent = Math.max(0, Math.min(100, (hp / maxHp) * 100));
+    const selected = enemy.id === state.combatTargetId;
+    return `<button type="button" class="combat-enemy ${selected ? "selected" : ""} ${hp <= 0 ? "defeated" : ""}"
+      data-combat-target="${escapeAttr(enemy.id || "")}" ${hp <= 0 ? "disabled" : ""}>
+      <span class="combatant-side">ENEMY</span>
+      <h3>${escapeHtml(enemy.name || enemy.id || "敵")}</h3>
+      <div class="combat-resource hp"><span>HP</span><i><b style="width:${percent}%"></b></i><strong>${hp}/${maxHp}</strong></div>
+      ${enemy.description ? `<p>${escapeHtml(enemy.description)}</p>` : ""}
+    </button>`;
+  }).join("");
+
+  const logs = Array.isArray(combat.log) ? combat.log : [];
+  els.combatLog.innerHTML = logs.length
+    ? logs.map((entry) => `<div class="combat-log-entry ${escapeAttr(entry.kind || "")}"><strong>R${entry.round || 1}</strong><span>${escapeHtml(entry.text || "")}</span></div>`).join("")
+    : '<div class="combat-log-entry"><strong>R1</strong><span>行動を選択してください。</span></div>';
+  els.combatLog.scrollTop = els.combatLog.scrollHeight;
+
+  const terminal = combat.status !== "active";
+  els.combatResult.style.display = terminal ? "" : "none";
+  els.combatActionTabs.style.display = terminal ? "none" : "";
+  els.combatActions.style.display = terminal ? "none" : "grid";
+  if (terminal) {
+    const labels = { victory: "勝利", defeat: "敗北", fled: "撤退成功" };
+    els.combatResultTitle.textContent = labels[combat.status] || "戦闘終了";
+    els.combatResultText.textContent = combat.result?.summary || "戦闘結果が確定しました。";
+    els.combatResolveButton.disabled = state.combatBusy || !combat.pending_resolution;
+  } else {
+    state.combatActions = Array.isArray(combat.actions) ? combat.actions : [];
+    renderCombatActions(state.combatActions);
+  }
+}
+
+function setCombatResource(suffix, actor, stat) {
+  const value = Number(actor?.[stat] || 0);
+  const max = Math.max(1, Number(actor?.[`max_${stat}`] || value || 1));
+  els[`combat${suffix}`].textContent = `${value}/${max}`;
+  els[`combat${suffix}Bar`].style.width = `${Math.max(0, Math.min(100, (value / max) * 100))}%`;
+}
+
+function renderCombatActions(actions) {
+  const groups = [
+    { id: "attack", label: "攻撃", types: ["attack"] },
+    { id: "skill", label: "技能", types: ["skill"] },
+    { id: "item", label: "道具", types: ["item"] },
+    { id: "tactics", label: "戦術", types: ["defend", "flee"] },
+  ].filter((group) => actions.some((action) => group.types.includes(action.type)));
+  if (!groups.some((group) => group.id === state.combatActionTab)) {
+    state.combatActionTab = groups[0]?.id || "attack";
+  }
+  els.combatActionTabs.innerHTML = groups.map((group) => `<button type="button" class="combat-tab ${group.id === state.combatActionTab ? "active" : ""}" data-combat-tab="${group.id}">${group.label}</button>`).join("");
+  const current = groups.find((group) => group.id === state.combatActionTab);
+  const visible = current ? actions.filter((action) => current.types.includes(action.type)) : [];
+  els.combatActions.innerHTML = visible.map((action) => {
+    const cost = action.cost ? `${String(action.cost_type || "").toUpperCase()} ${action.cost}` : "";
+    const description = action.enabled === false ? (action.disabled_reason || "使用できません") : (action.description || "");
+    return `<button type="button" class="combat-action" data-combat-action-type="${escapeAttr(action.type || "")}" data-combat-action-id="${escapeAttr(action.id || "")}" ${action.enabled === false ? "disabled" : ""}>
+      <strong>${escapeHtml(action.name || action.id || "行動")}</strong>
+      ${cost ? `<em>${escapeHtml(cost)}</em>` : ""}
+      <span>${escapeHtml(description)}</span>
+    </button>`;
+  }).join("");
+}
+
+async function submitCombatAction(actionType, actionId) {
+  if (!state.sessionId || state.combatBusy) return;
+  state.combatBusy = true;
+  els.combatScreen.classList.add("busy");
+  try {
+    const session = await fetchJson(`/api/sessions/${state.sessionId}/combat/actions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action_type: actionType, action_id: actionId, target_id: state.combatTargetId }),
+    });
+    state.combatBusy = false;
+    renderSession(session);
+  } catch (error) {
+    const errorEntry = document.createElement("div");
+    errorEntry.className = "combat-log-entry error";
+    errorEntry.innerHTML = `<strong>ERROR</strong><span>${escapeHtml(error.message)}</span>`;
+    els.combatLog.append(errorEntry);
+    els.combatLog.scrollTop = els.combatLog.scrollHeight;
+  } finally {
+    state.combatBusy = false;
+    els.combatScreen.classList.remove("busy");
+  }
+}
+
+async function resolveCombatResult() {
+  if (!state.sessionId || state.combatBusy) return;
+  state.combatBusy = true;
+  els.combatScreen.classList.add("busy");
+  els.combatResultText.textContent = "戦闘結果をGMへ渡しています…";
+  try {
+    const session = await fetchJson(`/api/sessions/${state.sessionId}/combat/resolve`, { method: "POST" });
+    state.combatBusy = false;
+    renderSession(session);
+  } catch (error) {
+    els.combatResultText.textContent = `結果処理エラー: ${error.message}`;
+  } finally {
+    state.combatBusy = false;
+    els.combatScreen.classList.remove("busy");
+  }
+}
+
 function updateDialogueAdvanceState() {
   const hasChoices = state.pendingChoices.length > 0 && !state.choicesRevealed;
   els.dialogueBox.classList.toggle("choices-ready", hasChoices);
@@ -1174,6 +1338,29 @@ if (els.inputToggleBtn) els.inputToggleBtn.addEventListener("click", () => {
   els.form.style.display = els.form.style.display === "none" ? "" : "none";
 });
 if (els.choicesList) els.choicesList.addEventListener("click", handleChoiceListClick);
+if (els.combatScreen) {
+  els.combatScreen.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-combat-target]");
+    if (target && !target.disabled) {
+      state.combatTargetId = target.dataset.combatTarget || "";
+      els.combatEnemies.querySelectorAll(".combat-enemy").forEach((enemy) => {
+        enemy.classList.toggle("selected", enemy.dataset.combatTarget === state.combatTargetId);
+      });
+      return;
+    }
+    const tab = event.target.closest("[data-combat-tab]");
+    if (tab) {
+      state.combatActionTab = tab.dataset.combatTab || "attack";
+      renderCombatActions(state.combatActions);
+      return;
+    }
+    const action = event.target.closest("[data-combat-action-type]");
+    if (action && !action.disabled) {
+      submitCombatAction(action.dataset.combatActionType || "", action.dataset.combatActionId || "");
+    }
+  });
+}
+if (els.combatResolveButton) els.combatResolveButton.addEventListener("click", resolveCombatResult);
 if (els.dialogueBox) {
   els.dialogueBox.addEventListener("click", revealPendingChoices);
   els.dialogueBox.addEventListener("keydown", (event) => {

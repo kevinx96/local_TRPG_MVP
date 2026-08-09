@@ -15,12 +15,18 @@ from .scenario_context import (
     fallback_choices_for_session,
     find_scene,
     has_hybrid_prepared_turn,
-    infer_scene_from_text,
     load_scenario_pack,
-    resolve_scene_id,
     scene_title,
     select_hybrid_context,
     select_scenario_context,
+)
+from .combat import ensure_combat_started, public_combat
+from .world_state import (
+    commit_world_position,
+    current_location_id,
+    current_location_title,
+    current_scene_id,
+    ensure_world_state,
 )
 
 
@@ -167,7 +173,7 @@ def create_session(
     if character_id:
         char_template = _find_character_in_pack(scenario_pack, character_id)
         if char_template:
-            character = _character_from_template(char_template)
+            character = _character_from_template(char_template, scenario_pack)
         else:
             character["character_id"] = character_id
 
@@ -186,8 +192,10 @@ def create_session(
         "scenario_title": str(meta.get("title") or path.stem),
         "gm_mode": normalized_gm_mode,
         "scenario_pack": scenario_pack,
-        "current_scene": str(meta.get("initial_scene") or "start"),
-        "current_location": _resolve_initial_location(scenario_pack, str(meta.get("initial_scene") or "start")),
+        "world_state": {
+            "scene_id": str(meta.get("initial_scene") or "start"),
+            "location_id": _resolve_initial_location(scenario_pack, str(meta.get("initial_scene") or "start")),
+        },
         "character": character,
         "messages": [],
         "system_logs": [],
@@ -195,12 +203,15 @@ def create_session(
         "choices": [],
         "flags": {},
         "last_action_result": {},
+        "combat": None,
+        "last_combat_result": {},
         "next_dice_type": "1d20",
         "next_dice_dc": 0,
         "needs_opening": True,
         "created_at": utc_now(),
         "updated_at": utc_now(),
     }
+    ensure_combat_started(session)
     save_session(session)
     return public_session(session)
 
@@ -230,11 +241,14 @@ def load_session(session_id: str) -> dict[str, Any]:
     path = SAVE_DIR / f"{session_id}.json"
     if not path.exists():
         raise FileNotFoundError(f"Session not found: {session_id}")
-    return json.loads(path.read_text(encoding="utf-8"))
+    session = json.loads(path.read_text(encoding="utf-8"))
+    ensure_world_state(session)
+    return session
 
 
 def save_session(session: dict[str, Any]) -> None:
     SAVE_DIR.mkdir(parents=True, exist_ok=True)
+    ensure_world_state(session)
     session["updated_at"] = utc_now()
     (SAVE_DIR / f"{session['id']}.json").write_text(
         json.dumps(session, ensure_ascii=False, indent=2),
@@ -243,13 +257,18 @@ def save_session(session: dict[str, Any]) -> None:
 
 
 def public_session(session: dict[str, Any]) -> dict[str, Any]:
-    enemies = _current_scene_enemies(session)
+    world = ensure_world_state(session)
+    combat = public_combat(session)
     public = deepcopy(session)
     public.pop("scenario_prompt", None)
     public.pop("scenario_pack", None)
+    public["current_scene"] = world["scene_id"]
+    public["current_location"] = world["location_id"]
     public["current_scene_title"] = scene_title(session)
-    public["enemies"] = enemies if isinstance(enemies, list) else []
-    public["in_combat"] = bool(public["enemies"])
+    public["current_location_title"] = current_location_title(session)
+    public["combat"] = combat
+    public["enemies"] = deepcopy(combat.get("enemies") or []) if isinstance(combat, dict) else []
+    public["in_combat"] = bool(isinstance(combat, dict) and combat.get("status"))
 
     from .gm_contract import extract_text_choices, sanitize_visible_text
 
@@ -300,7 +319,7 @@ def _current_scene_enemies(session: dict[str, Any]) -> list[dict[str, Any]]:
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return []
-    scene = find_scene(pack, str(session.get("current_scene") or ""))
+    scene = find_scene(pack, current_scene_id(session))
     if not scene:
         return []
 
@@ -425,7 +444,6 @@ def apply_gm_payload(
         add_system_log(session, "GM応答のstate_deltaが不正だったため無視しました。")
         return
     _infer_state_delta_from_text(gm_text, session, state_delta)
-    _infer_scene_delta_from_text(gm_text, session, state_delta)
     apply_state_delta(session, state_delta)
 
     raw_choices = payload.get("choices")
@@ -468,7 +486,7 @@ def _restore_choice_children_from_scenario(choices: list[dict[str, Any]], sessio
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return
-    scene = find_scene(pack, str(session.get("current_scene") or ""))
+    scene = find_scene(pack, current_scene_id(session))
     if not isinstance(scene, dict):
         return
     fallback: list[Any] = scene.get("fallback_choices", [])
@@ -617,12 +635,7 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
             flags[str(action["once"])] = True
         if action.get("disabled_after"):
             flags[str(action["disabled_after"])] = True
-    apply_state_delta(session, delta)
-    if isinstance(delta.get("current_location"), str) and delta["current_location"].strip():
-        session["current_location"] = delta["current_location"].strip()
-        pack = session.get("scenario_pack")
-        if isinstance(pack, dict):
-            _sync_scene_from_location(session, pack, session["current_location"])
+    apply_state_delta(session, delta, allow_world_transition=True)
     result = {
         "action_id": str(action.get("id") or action.get("action_id") or ""),
         "text": str(action.get("text") or ""),
@@ -1014,7 +1027,12 @@ def _latest_roll_failed(session: dict[str, Any], current_dice_dc: Any = None) ->
     return isinstance(total, (int, float)) and int(total) < int(dc)
 
 
-def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
+def apply_state_delta(
+    session: dict[str, Any],
+    delta: dict[str, Any],
+    *,
+    allow_world_transition: bool = False,
+) -> None:
     character = session["character"]
     for stat in ("hp", "mp", "sp"):
         before = int(character.get(stat, 0))
@@ -1104,31 +1122,34 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
                 elif actual_change < 0:
                     add_system_log(session, f"{attr_key}が{abs(actual_change)}減少しました。")
 
-    if isinstance(delta.get("current_scene"), str) and delta["current_scene"].strip():
-        pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else None
-        current_scene = delta["current_scene"].strip()
-        resolved_scene = resolve_scene_id(pack, current_scene) if pack else current_scene
-        if _scene_transition_allowed(session, resolved_scene):
-            session["current_scene"] = resolved_scene
+    requested_scene = str(delta.get("current_scene") or "").strip()
+    requested_location = str(delta.get("current_location") or "").strip()
+    if requested_scene or requested_location:
+        if not allow_world_transition:
+            add_system_log(session, "model world transition ignored: only the action engine may change position.")
         else:
-            add_system_log(session, f"不正な場面遷移を無視しました: {resolved_scene}")
+            accepted, reason = commit_world_position(
+                session,
+                scene_id=requested_scene or None,
+                location_id=requested_location or None,
+            )
+            if not accepted:
+                add_system_log(session, f"world transition rejected: {reason}")
 
-    if isinstance(delta.get("current_location"), str) and delta["current_location"].strip():
-        session["current_location"] = delta["current_location"].strip()
-        pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else None
-        if pack:
-            _sync_scene_from_location(session, pack, session["current_location"])
 
-
-def _enrich_item(item: dict[str, Any]) -> dict[str, Union[str, int]]:
+def _enrich_item(item: dict[str, Any]) -> dict[str, Any]:
     name = _item_name_from_dict(item) or "不明"
     catalog_entry = DEFAULT_ITEM_CATALOG.get(name, {})
-    return {
+    enriched: dict[str, Any] = {
         "name": name,
         "description": str(item.get("description") or catalog_entry.get("description", "")),
         "effect": str(item.get("effect") or catalog_entry.get("effect", "")),
         "quantity": _safe_quantity(item.get("quantity"), 1),
     }
+    for key in ("id", "icon", "combat"):
+        if key in item:
+            enriched[key] = deepcopy(item[key])
+    return enriched
 
 
 def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], contract_prompt: str) -> list[dict[str, str]]:
@@ -1220,8 +1241,8 @@ def _current_state_summary(session: dict[str, Any], character: dict[str, Any], l
     ]
     return json.dumps(
         {
-            "current_scene": session["current_scene"],
-            "current_location": session.get("current_location", ""),
+            "current_scene": current_scene_id(session),
+            "current_location": current_location_id(session),
             "character": {
                 "name": character.get("name"),
                 "hp": character.get("hp"),
@@ -1365,7 +1386,7 @@ def _find_character_in_pack(pack: dict[str, Any], character_id: str) -> Optional
     return None
 
 
-def _character_from_template(template: dict[str, Any]) -> dict[str, Any]:
+def _character_from_template(template: dict[str, Any], scenario_pack: Optional[dict[str, Any]] = None) -> dict[str, Any]:
     character = deepcopy(DEFAULT_CHARACTER)
     character["character_id"] = str(template.get("id", ""))
     character["name"] = str(template.get("default_name") or template.get("name") or character["name"])
@@ -1380,12 +1401,39 @@ def _character_from_template(template: dict[str, Any]) -> dict[str, Any]:
         character["attributes"] = _normalize_attribute_map(attrs)
     if isinstance(template.get("inventory"), list):
         character["inventory"] = deepcopy(template["inventory"])
+        _merge_inventory_catalog(character["inventory"], scenario_pack)
     if isinstance(template.get("equipment"), list):
         character["equipment"] = _as_text_list(template["equipment"])
     if isinstance(template.get("skills"), list):
         character["skills"] = deepcopy(template["skills"])
+    if isinstance(template.get("combat"), dict):
+        character["combat"] = deepcopy(template["combat"])
     _normalize_character(character)
     return character
+
+
+def _merge_inventory_catalog(inventory: list[Any], scenario_pack: Optional[dict[str, Any]]) -> None:
+    if not isinstance(scenario_pack, dict):
+        return
+    catalog = [item for item in scenario_pack.get("items", []) if isinstance(item, dict)]
+    for index, raw in enumerate(inventory):
+        entry = raw if isinstance(raw, dict) else {"name": str(raw), "quantity": 1}
+        name = str(entry.get("name") or "")
+        item_id = str(entry.get("id") or "")
+        source = next(
+            (
+                item for item in catalog
+                if (item_id and str(item.get("id") or "") == item_id)
+                or (name and str(item.get("name") or item.get("title") or "") == name)
+            ),
+            None,
+        )
+        if source:
+            merged = deepcopy(source)
+            merged.update(entry)
+            inventory[index] = merged
+        elif not isinstance(raw, dict):
+            inventory[index] = entry
 
 
 def _normalize_attribute_map(attrs: dict[str, Any]) -> dict[str, int]:
@@ -1472,87 +1520,6 @@ def _infer_state_delta_from_text(gm_text: str, session: dict[str, Any], delta: d
     match = re.search(r"(\d+)\s*(?:ゴールド|gold|g|金貨|金币|金幣)", gm_text, re.IGNORECASE)
     if match:
         delta["gold_change"] = int(match.group(1))
-
-
-def _infer_scene_delta_from_text(gm_text: str, session: dict[str, Any], delta: dict[str, Any]) -> None:
-    if isinstance(delta.get("current_scene"), str) and delta["current_scene"].strip():
-        return
-    player_text = _latest_player_text(session)
-    explicit_scene = infer_scene_from_text(session, player_text)
-    if explicit_scene:
-        delta["current_scene"] = explicit_scene
-
-
-def auto_transition_scene(session: dict[str, Any], action_text: str) -> None:
-    pack = session.get("scenario_pack")
-    if not isinstance(pack, dict) or not action_text:
-        return
-    current_loc = str(session.get("current_location") or "")
-    location = _find_location_record(pack, current_loc)
-    if not location:
-        return
-    best_score = 0
-    best_location = None
-    for connected_id in _as_text_list(location.get("connected_location_ids")):
-        target = _find_location_record(pack, connected_id)
-        if not target:
-            continue
-        score = _location_match_score(action_text, target)
-        if score > best_score:
-            best_score = score
-            best_location = connected_id
-    if not best_location:
-        return
-    session["current_location"] = best_location
-    _sync_scene_from_location(session, pack, best_location)
-
-
-def _sync_scene_from_location(session: dict[str, Any], pack: dict[str, Any], location_id: str) -> None:
-    for scene in pack.get("scenes", []):
-        if not isinstance(scene, dict):
-            continue
-        location_ids = _as_text_list(scene.get("location_ids"))
-        if location_id in location_ids:
-            session["current_scene"] = str(scene.get("id") or "")
-            return
-
-
-def _location_match_score(text: str, location: dict[str, Any]) -> int:
-    score = 0
-    for needle in [str(location.get("id", "")), str(location.get("title", "")), str(location.get("name", ""))]:
-        if needle and needle in text:
-            score += len(needle)
-    for needle in _as_text_list(location.get("keywords")):
-        if needle and needle in text:
-            score += len(needle) * 2
-    return score
-
-
-def _find_location_record(pack: dict[str, Any], location_id: str) -> Optional[dict[str, Any]]:
-    for loc in pack.get("locations", []):
-        if isinstance(loc, dict) and str(loc.get("id") or "") == location_id:
-            return loc
-    return None
-
-
-def _scene_transition_allowed(session: dict[str, Any], target_scene: str) -> bool:
-    pack = session.get("scenario_pack")
-    if not isinstance(pack, dict):
-        return True
-    target = find_scene(pack, target_scene)
-    if not target:
-        return False
-    current_scene_id = str(session.get("current_scene") or "")
-    if str(target.get("id") or "") == current_scene_id:
-        return True
-    current_scene = find_scene(pack, current_scene_id)
-    if not current_scene:
-        return True
-    next_scene_ids = _as_text_list(current_scene.get("next_scene_ids"))
-    if not next_scene_ids:
-        return True
-    allowed = {resolve_scene_id(pack, scene_id) for scene_id in next_scene_ids}
-    return str(target.get("id") or "") in allowed
 
 
 def _latest_player_text(session: dict[str, Any]) -> str:

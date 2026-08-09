@@ -6,6 +6,8 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any, Optional
 
+from .world_state import current_location_id, current_scene_id
+
 
 DEFAULT_SCENE_ID = "start"
 DEFAULT_FALLBACK_CHOICES = [
@@ -96,6 +98,7 @@ def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) ->
         "rules": [str(rule) for rule in _as_list(raw.get("rules"))],
         "scenes": scenes,
         "fallback_choices": normalize_choices(raw.get("fallback_choices")) or DEFAULT_FALLBACK_CHOICES,
+        "combat_rules": deepcopy(raw.get("combat_rules")) if isinstance(raw.get("combat_rules"), dict) else {},
         "source_path": str(path) if path else "",
     }
     for group in ENTITY_GROUPS:
@@ -127,7 +130,7 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
     if not isinstance(pack, dict):
         return {}
 
-    current_scene = str(session.get("current_scene") or pack.get("meta", {}).get("initial_scene") or DEFAULT_SCENE_ID)
+    current_scene = current_scene_id(session)
     scene = find_scene(pack, current_scene) or (pack.get("scenes") or [{}])[0]
     searchable_text = " ".join(
         part
@@ -178,7 +181,7 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
         "current_scene": _trim_record(_public_record(scene)),
         "matched": matched,
         "available_actions": _trim_choices(current_action_choices(session)),
-        "fallback_choices": _trim_choices(_merged_choices_for_context(pack, current_scene, str(session.get("current_location") or ""))),
+        "fallback_choices": _trim_choices(_merged_choices_for_context(pack, current_scene, current_location_id(session))),
     }
     # Semi mode: inject hybrid hints if available so the LLM has narrative scaffolding
     hybrid = scene.get("hybrid") if isinstance(scene.get("hybrid"), dict) else None
@@ -202,9 +205,9 @@ def select_hybrid_context(
     if not isinstance(pack, dict):
         return {}
 
-    current_scene = str(session.get("current_scene") or pack.get("meta", {}).get("initial_scene") or DEFAULT_SCENE_ID)
+    current_scene = current_scene_id(session)
     scene = find_scene(pack, current_scene) or (pack.get("scenes") or [{}])[0]
-    location_id = str(session.get("current_location") or "")
+    location_id = current_location_id(session)
     location = _find_location_in_pack(pack, location_id) or {}
     prepared_turn = select_hybrid_prepared_turn(session, player_text, opening=opening)
     meta = pack.get("meta", {})
@@ -247,7 +250,7 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return {}
-    location_id = str(session.get("current_location") or "")
+    location_id = current_location_id(session)
     location = _find_location_in_pack(pack, location_id)
     if not location:
         return {}
@@ -294,15 +297,15 @@ def fallback_choices_for_session(session: dict[str, Any]) -> list[dict[str, str]
     action_choices = current_action_choices(session)
     if action_choices:
         return action_choices
-    return fallback_choices_for_scene(pack, str(session.get("current_scene") or ""))
+    return fallback_choices_for_scene(pack, current_scene_id(session))
 
 
 def current_actions_for_session(session: dict[str, Any]) -> list[dict[str, Any]]:
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return []
-    current_scene = str(session.get("current_scene") or "")
-    location_id = str(session.get("current_location") or "")
+    current_scene = current_scene_id(session)
+    location_id = current_location_id(session)
     scene = find_scene(pack, current_scene)
     location = _find_location_in_pack(pack, location_id)
     actions: list[dict[str, Any]] = []
@@ -335,10 +338,6 @@ def _visible_action_choices(choices: list[dict[str, Any]], flags: dict[str, Any]
 
 def fallback_choices_for_scene(pack: dict[str, Any], scene_id: str) -> list[dict[str, str]]:
     scene = find_scene(pack, scene_id)
-    if _scene_has_enemies(pack, scene):
-        combat = normalize_choices(pack.get("combat_choices"))
-        if combat:
-            return combat
     if scene:
         choices = normalize_choices(scene.get("fallback_choices") or scene.get("choice_seeds"))
         if choices:
@@ -380,46 +379,14 @@ def _scene_has_enemies(pack: dict[str, Any], scene: Optional[dict[str, Any]]) ->
     return False
 
 
-def resolve_scene_id(pack: dict[str, Any], value: str) -> str:
-    scene = find_scene(pack, value)
-    if scene:
-        return str(scene.get("id"))
-    for s in pack.get("scenes", []):
-        if not isinstance(s, dict):
-            continue
-        loc_ids = _as_text_list(s.get("location_ids"))
-        if value in loc_ids or value.replace("_loc", "") in loc_ids:
-            return str(s.get("id"))
-    return value
-
-
-def infer_scene_from_text(session: dict[str, Any], text: str) -> Optional[str]:
-    pack = session.get("scenario_pack")
-    if not isinstance(pack, dict) or not text:
-        return None
-    for scene in pack.get("scenes", []):
-        if _record_matches(scene, text):
-            return str(scene.get("id"))
-    for scene in pack.get("scenes", []):
-        for loc_id in _as_text_list(scene.get("location_ids", [])):
-            loc = None
-            for location in pack.get("locations", []):
-                if isinstance(location, dict) and str(location.get("id", "")) == loc_id:
-                    loc = location
-                    break
-            if loc and _record_matches(loc, text):
-                return str(scene.get("id"))
-    return None
-
-
 def scene_title(session: dict[str, Any]) -> str:
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
-        return str(session.get("current_scene") or "")
-    scene = find_scene(pack, str(session.get("current_scene") or ""))
+        return current_scene_id(session)
+    scene = find_scene(pack, current_scene_id(session))
     if scene:
         return str(scene.get("title") or scene.get("id") or "")
-    return str(session.get("current_scene") or "")
+    return current_scene_id(session)
 
 
 def scenario_context_debug(context: dict[str, Any]) -> dict[str, Any]:
@@ -825,13 +792,14 @@ def _safe_number(value: Any, default: int = 0) -> int:
 
 
 def _normalize_character_record(raw: dict[str, Any]) -> dict[str, Any]:
-    record: dict[str, Any] = {
+    record: dict[str, Any] = deepcopy(raw)
+    record.update({
         "id": str(raw.get("id", "")),
         "name": str(raw.get("name", "")),
         "default_name": str(raw.get("default_name") or raw.get("name") or ""),
         "description": str(raw.get("description", "")),
         "image": str(raw.get("image", "")) if raw.get("image") else "",
-    }
+    })
     if raw.get("image_female"):
         record["image_female"] = str(raw["image_female"])
     for stat in ("hp", "max_hp", "mp", "max_mp", "sp", "max_sp", "gold"):
@@ -854,12 +822,13 @@ def _normalize_character_record(raw: dict[str, Any]) -> dict[str, Any]:
 
 
 def _normalize_enemy_record(raw: dict[str, Any]) -> dict[str, Any]:
-    record: dict[str, Any] = {
+    record: dict[str, Any] = deepcopy(raw)
+    record.update({
         "id": str(raw.get("id", "")),
         "name": str(raw.get("name", "")),
         "description": str(raw.get("description", "")),
         "image": str(raw.get("image", "")) if raw.get("image") else "",
-    }
+    })
     for stat in ("hp", "max_hp", "mp", "max_mp", "sp", "max_sp"):
         record[stat] = _safe_number(raw.get(stat), 0)
     attrs = raw.get("attributes")

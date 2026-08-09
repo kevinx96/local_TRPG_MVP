@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Scenario Editor</title>
-    <link rel="stylesheet" href="/static/editor.css?v=20260608f-hybrid-loc" />
+    <link rel="stylesheet" href="/static/editor.css?v=20260810-combat-engine" />
   </head>
   <body>
     <header class="topbar">
@@ -38,6 +38,7 @@
         <button data-section="enemies" type="button">敌人</button>
         <button data-section="attribute_defs" type="button">属性定义</button>
         <button data-section="characters" type="button">角色</button>
+        <button data-section="combat_rules" type="button">战斗规则</button>
         <button data-section="fallback" type="button">全局选项</button>
         <button data-section="combat" type="button">战斗选项</button>
         <button data-section="json" type="button">JSON</button>
@@ -54,7 +55,7 @@
       <section id="editorPane" class="editor-pane" aria-live="polite"></section>
     </main>
 
-    <script src="/static/editor.js?v=20260608f-hybrid-loc"></script>
+    <script src="/static/editor.js?v=20260810-combat-engine"></script>
     <script>
       (function () {
         const btn = document.getElementById('shutdownButton');

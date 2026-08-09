@@ -12,6 +12,16 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
+from .combat import (
+    CombatError,
+    clear_combat_after_resolution,
+    combat_is_active,
+    combat_needs_resolution,
+    combat_result_for_llm,
+    consume_combat_state_delta,
+    ensure_combat_started,
+    perform_combat_action,
+)
 from .gm_contract import STATE_MARKER, build_gm_contract_prompt, build_opening_prompt, split_visible_and_json
 from .llm_client import LLMClientError, chat_completion, debug_log
 from .scenario_context import (
@@ -31,9 +41,9 @@ from .state import (
     add_system_log,
     action_dice_settings,
     action_requirement_status,
+    apply_state_delta,
     apply_action_result,
     apply_gm_payload,
-    auto_transition_scene,
     build_llm_messages,
     choice_requirement_status,
     create_session,
@@ -45,6 +55,7 @@ from .state import (
     save_config,
     save_session,
 )
+from .world_state import current_location_id
 
 
 CLIENT_ROOT = PROJECT_ROOT / "client"
@@ -82,6 +93,12 @@ class ScenarioCreateRequest(BaseModel):
 class ClientDebugRequest(BaseModel):
     event: str
     detail: dict[str, Any] = {}
+
+
+class CombatActionRequest(BaseModel):
+    action_type: str
+    action_id: str = ""
+    target_id: str = ""
 
 
 @app.get("/")
@@ -350,6 +367,45 @@ def api_turn(session_id: str, request: TurnRequest) -> dict[str, Any]:
     return _run_turn(session, request)
 
 
+@app.post("/api/sessions/{session_id}/combat/actions")
+def api_combat_action(session_id: str, request: CombatActionRequest) -> dict[str, Any]:
+    try:
+        session = load_session(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    try:
+        result = perform_combat_action(
+            session,
+            request.action_type,
+            action_id=request.action_id,
+            target_id=request.target_id,
+        )
+        state_delta = consume_combat_state_delta(session)
+        if state_delta:
+            apply_state_delta(session, state_delta, allow_world_transition=True)
+        save_session(session)
+        debug_log(
+            "Combat action "
+            f"session={session_id} type={request.action_type} action_id={request.action_id} "
+            f"target_id={request.target_id} status={result.get('status')} round={result.get('round')}"
+        )
+        return public_session(session)
+    except CombatError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@app.post("/api/sessions/{session_id}/combat/resolve")
+def api_combat_resolve(session_id: str) -> dict[str, Any]:
+    try:
+        session = load_session(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    try:
+        return _run_combat_resolution(session)
+    except CombatError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
 def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
     config = load_config()
     debug_enabled = bool(config.get("debug_llm", True))
@@ -376,10 +432,16 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
     except LLMClientError as exc:
         completion_source = "demo_fallback"
         if debug_enabled:
-            debug_log(f"Opening LLM failure; demo_fallback={config.get('demo_fallback_on_error', True)} error={exc}")
+            debug_log(
+                "Opening LLM failure; "
+                f"demo_fallback={config.get('demo_fallback_on_error', True)} error={_redact_secrets(str(exc))}"
+            )
         if not config.get("demo_fallback_on_error", True):
-            raise HTTPException(status_code=502, detail=f"LLM接続エラー: {exc}") from exc
-        full_response = _demo_opening(session, str(exc))
+            raise HTTPException(
+                status_code=502,
+                detail=f"LLM接続エラー: {_redact_secrets(str(exc))}",
+            ) from exc
+        full_response = _demo_opening(session, _redact_secrets(str(exc)))
     if debug_enabled and full_response:
         completion_path = _save_completion_debug(session, "opening", full_response, completion_source)
         debug_log(f"Opening completion saved path={completion_path}")
@@ -404,11 +466,16 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
         )
     apply_gm_payload(session, visible_text, payload, warning)
     session["needs_opening"] = False
+    ensure_combat_started(session)
     save_session(session)
     return public_session(session)
 
 
 def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
+    if combat_is_active(session):
+        raise HTTPException(status_code=409, detail="戦闘中は戦闘コマンドを使用してください。")
+    if combat_needs_resolution(session):
+        raise HTTPException(status_code=409, detail="戦闘結果を確定してください。")
     action_text = request.text.strip()
     resolved_action = resolve_action(session, action_text, request.action_id)
     if resolved_action:
@@ -437,7 +504,6 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
 
     if not resolved_action:
         session["last_action_result"] = {}
-        auto_transition_scene(session, action_text)
 
     if resolved_action:
         dice_type, dice_dc = action_dice_settings(
@@ -480,10 +546,16 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
     except LLMClientError as exc:
         completion_source = "demo_fallback"
         if debug_enabled:
-            debug_log(f"LLM failure; demo_fallback={config.get('demo_fallback_on_error', True)} error={exc}")
+            debug_log(
+                "LLM failure; "
+                f"demo_fallback={config.get('demo_fallback_on_error', True)} error={_redact_secrets(str(exc))}"
+            )
         if not config.get("demo_fallback_on_error", True):
-            raise HTTPException(status_code=502, detail=f"LLM接続エラー: {exc}") from exc
-        full_response = _demo_response(session, request.text, latest_roll, str(exc))
+            raise HTTPException(
+                status_code=502,
+                detail=f"LLM接続エラー: {_redact_secrets(str(exc))}",
+            ) from exc
+        full_response = _demo_response(session, request.text, latest_roll, _redact_secrets(str(exc)))
     if debug_enabled and full_response:
         completion_path = _save_completion_debug(session, "turn", full_response, completion_source)
         debug_log(f"Turn completion saved path={completion_path}")
@@ -503,12 +575,67 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             f"json_ok={payload is not None} warning={warning!r} elapsed_ms={elapsed_ms:.0f}"
         )
     apply_gm_payload(session, visible_text, payload, warning)
+    ensure_combat_started(session)
     save_session(session)
     if debug_enabled:
         debug_log(
             "Turn saved "
             f"session={session['id']} messages={len(session['messages'])} "
             f"logs={len(session['system_logs'])} dice={len(session['dice_log'])}"
+        )
+    return public_session(session)
+
+
+def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
+    result = combat_result_for_llm(session)
+    clear_combat_after_resolution(session)
+    session["last_action_result"] = {
+        "action_id": f"combat:{result.get('combat_id', '')}",
+        "outcome": result.get("outcome"),
+        "combat_result": result,
+    }
+    latest_roll = {"expression": "combat_result", "rolls": [], "total": 0}
+    messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
+    messages.append({
+        "role": "user",
+        "content": (
+            "以下はゲームエンジンが確定した戦闘結果です。数値、勝敗、報酬を変更せず、"
+            "70〜220文字の日本語で戦闘後の情景を描写してください。次の非戦闘行動候補も提示してください。\n"
+            + json.dumps(result, ensure_ascii=False)
+        ),
+    })
+    config = load_config()
+    debug_enabled = bool(config.get("debug_llm", True))
+    completion_source = "llm"
+    t0 = time.time()
+    try:
+        full_response = chat_completion(config, messages)
+    except LLMClientError as exc:
+        completion_source = "demo_fallback"
+        if not config.get("demo_fallback_on_error", True):
+            raise HTTPException(
+                status_code=502,
+                detail=f"LLM接続エラー: {_redact_secrets(str(exc))}",
+            ) from exc
+        full_response = _demo_combat_resolution(session, result, _redact_secrets(str(exc)))
+    if debug_enabled and full_response:
+        completion_path = _save_completion_debug(session, "combat_result", full_response, completion_source)
+        debug_log(f"Combat result completion saved path={completion_path}")
+    visible_text, payload, warning = split_visible_and_json(full_response)
+    visible_text = _visible_text_from_payload(visible_text, payload)
+    if not visible_text.strip():
+        full_response = _demo_combat_resolution(session, result, "combat result had no player-visible text")
+        visible_text, payload, warning = split_visible_and_json(full_response)
+        visible_text = _visible_text_from_payload(visible_text, payload)
+    apply_gm_payload(session, visible_text, payload, warning)
+    session["last_action_result"] = {}
+    ensure_combat_started(session)
+    save_session(session)
+    if debug_enabled:
+        debug_log(
+            "Combat result narrated "
+            f"session={session['id']} outcome={result.get('outcome')} "
+            f"visible_chars={len(visible_text)} elapsed_ms={(time.time() - t0) * 1000:.0f}"
         )
     return public_session(session)
 
@@ -555,7 +682,7 @@ def _matching_scenario_choice(session: dict[str, Any], action_text: str) -> Opti
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return None
-    location_id = str(session.get("current_location") or "")
+    location_id = current_location_id(session)
     for location in pack.get("locations", []):
         if not isinstance(location, dict) or str(location.get("id") or "") != location_id:
             continue
@@ -579,6 +706,17 @@ def _payload_keys(payload: Optional[dict[str, Any]]) -> list[str]:
 def _raw_preview(text: str, limit: int = 320) -> str:
     compact = re.sub(r"\s+", " ", text).strip()
     return compact[:limit]
+
+
+def _redact_secrets(text: str) -> str:
+    redacted = re.sub(
+        r"([?&](?:key|api_key|token|access_token)=)[^&\s'\"]+",
+        r"\1[REDACTED]",
+        str(text or ""),
+        flags=re.IGNORECASE,
+    )
+    redacted = re.sub(r"\bBearer\s+[^\s,;]+", "Bearer [REDACTED]", redacted, flags=re.IGNORECASE)
+    return re.sub(r"\bAIza[0-9A-Za-z_-]{20,}\b", "[REDACTED]", redacted)
 
 
 def _save_completion_debug(session: dict[str, Any], phase: str, completion: str, source: str) -> str:
@@ -688,6 +826,26 @@ def _demo_response(session: dict[str, Any], player_text: str, roll: dict[str, An
             "background_image": None,
             "character_image": None,
         },
+        "choices": fallback_choices_for_session(session),
+        "debug_error": error,
+    }
+    return gm_text + "\n" + STATE_MARKER + "\n" + json.dumps(payload, ensure_ascii=False)
+
+
+def _demo_combat_resolution(session: dict[str, Any], result: dict[str, Any], error: str) -> str:
+    outcome = str(result.get("outcome") or "")
+    if outcome == "victory":
+        gm_text = "最後の一撃が決まり、敵は地に伏した。荒い息を整えると、戦場に静けさが戻る。傷と消耗は残っているが、道を阻む脅威は退けられた。"
+    elif outcome == "fled":
+        gm_text = "追撃を振り切り、どうにか安全な距離まで退いた。敵の気配はまだ遠くに残っている。体勢を立て直し、別の手段を考える必要がありそうだ。"
+    else:
+        gm_text = "力尽きて膝をつき、戦いは敗北に終わった。今の装備と戦術では押し切れない。回復と準備を整えてから、改めて挑む必要がある。"
+    payload = {
+        "gm_text": gm_text,
+        "system_log": f"戦闘結果: {outcome}",
+        "dice_type": "1d20",
+        "dice_dc": 0,
+        "state_delta": {},
         "choices": fallback_choices_for_session(session),
         "debug_error": error,
     }

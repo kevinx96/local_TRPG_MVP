@@ -103,7 +103,10 @@ class StateTests(unittest.TestCase):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
 
-        self.assertEqual(session["current_scene"], "start")
+        self.assertEqual(state.current_scene_id(session), "start")
+        self.assertEqual(state.current_location_id(session), "forge")
+        self.assertNotIn("current_scene", session)
+        self.assertNotIn("current_location", session)
         self.assertEqual(public["current_scene_title"], "広場")
         self.assertNotIn("scenario_pack", public)
 
@@ -117,6 +120,86 @@ class StateTests(unittest.TestCase):
         session = state.load_session(public["id"])
 
         self.assertEqual(session["scenario_pack"]["meta"]["hybrid_mode"], "semi")
+
+    def test_engine_action_commits_scene_and_location_atomically(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["scenes"][0]["next_scene_ids"] = ["forest"]
+        raw["scenes"][1]["location_ids"] = ["forest_gate"]
+        raw["locations"][0]["scene_id"] = "start"
+        raw["locations"][0]["actions"] = [
+            {
+                "id": "enter_forest",
+                "text": "森へ進む",
+                "effects": [{"current_location": "forest_gate"}],
+            }
+        ]
+        raw["locations"].append(
+            {
+                "id": "forest_gate",
+                "scene_id": "forest",
+                "title": "森の入口",
+            }
+        )
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        action = state.resolve_action(session, action_id="enter_forest")
+        roll = state.roll_dice(session, *state.action_dice_settings(action), client_rolls=[10])
+        state.apply_action_result(session, action, roll)
+        public = state.public_session(session)
+
+        self.assertEqual(session["world_state"], {"scene_id": "forest", "location_id": "forest_gate"})
+        self.assertEqual(public["current_scene"], "forest")
+        self.assertEqual(public["current_location"], "forest_gate")
+        self.assertEqual(public["current_location_title"], "森の入口")
+
+    def test_free_turn_and_model_delta_cannot_change_world_position(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["scenes"][1]["location_ids"] = ["forest_gate"]
+        raw["locations"].append(
+            {"id": "forest_gate", "scene_id": "forest", "title": "森の入口"}
+        )
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+        model_response = json.dumps(
+            {
+                "gm_text": "森へ向かおうとしたが、まだ広場にいる。",
+                "system_log": "",
+                "dice_type": "1d20",
+                "dice_dc": 0,
+                "state_delta": {"current_scene": "forest", "current_location": "forest_gate"},
+                "choices": [{"text": "別の方法を探す", "risk": "判定不要"}],
+            },
+            ensure_ascii=False,
+        )
+
+        with patch.object(app_module, "chat_completion", return_value=model_response):
+            result = app_module._run_turn(
+                session,
+                app_module.TurnRequest(text="森の入口へ向かう"),
+            )
+
+        self.assertEqual(session["world_state"], {"scene_id": "start", "location_id": "forge"})
+        self.assertEqual(result["current_scene"], "start")
+        self.assertEqual(result["current_location"], "forge")
+        self.assertTrue(any("model world transition ignored" in log["text"] for log in session["system_logs"]))
+
+    def test_legacy_position_fields_migrate_to_world_state(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session.pop("world_state")
+        session["current_scene"] = "start"
+        session["current_location"] = "forge"
+
+        world = state.ensure_world_state(session)
+
+        self.assertEqual(world, {"scene_id": "start", "location_id": "forge"})
+        self.assertNotIn("current_scene", session)
+        self.assertNotIn("current_location", session)
 
     def test_load_config_merges_local_config_and_env_base_url(self):
         config_path = self.tmp_path / "config.json"
@@ -341,24 +424,21 @@ class StateTests(unittest.TestCase):
         public = state.create_session(str(path))
 
         self.assertTrue(public["in_combat"])
-        self.assertEqual(public["enemies"][0]["id"], "slime")
+        self.assertEqual(public["enemies"][0]["template_id"], "slime")
+        self.assertEqual(public["combat"]["status"], "active")
         self.assertNotIn("scenario_pack", public)
 
-    def test_combat_fallback_choices_win_when_scene_has_enemies(self):
+    def test_combat_uses_engine_actions_instead_of_llm_choices(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
         raw["locations"][0]["enemy_ids"] = ["slime"]
         raw["enemies"] = [{"id": "slime", "name": "Slime", "hp": 5, "max_hp": 5}]
-        raw["combat_choices"] = [
-            {"text": "Attack the slime", "preview": "Start combat", "risk": "1d20 (DC10)"}
-        ]
+        raw["combat_choices"] = [{"text": "Legacy LLM attack", "preview": "", "risk": ""}]
         path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
         public = state.create_session(str(path))
-        session = state.load_session(public["id"])
-
-        state.apply_gm_payload(session, "A slime blocks the road.", {"state_delta": {}})
-
-        self.assertEqual(session["choices"][0]["text"], "Attack the slime")
+        self.assertEqual(public["choices"], [])
+        self.assertEqual(public["combat"]["actions"][0]["type"], "attack")
+        self.assertNotIn("Legacy LLM attack", [action["name"] for action in public["combat"]["actions"]])
 
     def test_legacy_txt_scenario_still_builds_context(self):
         scenario = self.tmp_path / "legacy.txt"
@@ -368,7 +448,7 @@ class StateTests(unittest.TestCase):
         session = state.load_session(public["id"])
         messages = state.build_llm_messages(session, {"expression": "opening", "rolls": [], "total": 0}, "contract")
 
-        self.assertEqual(session["current_scene"], "start")
+        self.assertEqual(state.current_scene_id(session), "start")
         self.assertEqual(public["current_scene_title"], "開始")
         self.assertIn("シナリオコンテキスト", messages[1]["content"])
         self.assertIn("古い形式のシナリオ本文です。", messages[1]["content"])
@@ -1086,14 +1166,15 @@ class StateTests(unittest.TestCase):
         state.apply_gm_payload(session, "国王から支度金として50goldを受け取った。", {"state_delta": {"gold_change": 0}})
         self.assertEqual(session["character"]["gold"], 50)
 
-    def test_advance_choice_infers_next_scene(self):
+    def test_free_text_does_not_infer_or_commit_a_scene_transition(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
         state.add_player_message(session, "森の入口へ向かう")
         state.apply_gm_payload(session, "冒険者は森へ進んだ。", {"state_delta": {}})
 
-        self.assertEqual(session["current_scene"], "forest")
-        self.assertEqual(session["choices"][0]["text"], "森へ進む")
+        self.assertEqual(state.current_scene_id(session), "start")
+        self.assertEqual(state.current_location_id(session), "forge")
+        self.assertEqual(session["choices"][0]["text"], "鍛冶屋へ向かう")
 
     def test_gm_text_enemy_mention_does_not_infer_remote_scene(self):
         path = self.write_pack()
@@ -1116,7 +1197,10 @@ class StateTests(unittest.TestCase):
             {"state_delta": {}, "choices": [{"text": "準備を続ける", "preview": "", "risk": ""}]},
         )
 
-        self.assertEqual(session["current_scene"], "start")
+        self.assertEqual(state.current_scene_id(session), "start")
+        self.assertEqual(state.current_location_id(session), "forge")
+        self.assertNotIn("current_scene", session)
+        self.assertNotIn("current_location", session)
 
     def test_disallowed_scene_delta_is_ignored_when_next_scenes_are_defined(self):
         path = self.write_pack()
@@ -1134,8 +1218,8 @@ class StateTests(unittest.TestCase):
 
         state.apply_gm_payload(session, "鍛冶師は氷の短剣を渡した。", {"state_delta": {"current_scene": "dragon_valley"}})
 
-        self.assertEqual(session["current_scene"], "start")
-        self.assertTrue(any("不正な場面遷移を無視しました: dragon_valley" in log["text"] for log in session["system_logs"]))
+        self.assertEqual(state.current_scene_id(session), "start")
+        self.assertTrue(any("model world transition ignored" in log["text"] for log in session["system_logs"]))
 
 
     def test_action_purchase_sets_flag_and_disables_repeat(self):
@@ -1192,7 +1276,7 @@ class StateTests(unittest.TestCase):
         result = state.apply_action_result(session, action, roll)
 
         self.assertEqual(result["outcome"], "failure")
-        self.assertEqual(session["current_scene"], "start")
+        self.assertEqual(state.current_scene_id(session), "start")
         self.assertTrue(session["flags"]["robin_refused"])
         self.assertNotIn("recruited_robin", session["flags"])
 
@@ -1249,7 +1333,7 @@ class StateTests(unittest.TestCase):
             {"state_delta": {"current_scene": "dragon_valley", "gold_change": 999}, "choices": [{"text": "bad"}]},
         )
 
-        self.assertEqual(session["current_scene"], "start")
+        self.assertEqual(state.current_scene_id(session), "start")
         self.assertEqual(session["character"]["gold"], 0)
         self.assertNotEqual(session["choices"][0]["text"], "bad")
 
@@ -1371,7 +1455,8 @@ class StateTests(unittest.TestCase):
         path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg_hybrid.json"
         public = state.create_session(str(path), gm_mode="semi", character_id="hero")
         session = state.load_session(public["id"])
-        session["current_location"] = "forge"
+        accepted, reason = state.commit_world_position(session, location_id="forge")
+        self.assertTrue(accepted, reason)
 
         self.assertIsNone(state.resolve_action(session, action_id="buy_equipment"))
         self.assertIsNone(state.resolve_action(session, action_text="装備を買う"))
@@ -1382,7 +1467,8 @@ class StateTests(unittest.TestCase):
         path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg_hybrid.json"
         public = state.create_session(str(path), gm_mode="semi", character_id="hero")
         session = state.load_session(public["id"])
-        session["current_location"] = "forge"
+        accepted, reason = state.commit_world_position(session, location_id="forge")
+        self.assertTrue(accepted, reason)
         session["character"]["gold"] = 50
         session["character"]["attributes"]["end"] = 10
         session["choices"] = current_action_choices(session)
@@ -1454,7 +1540,8 @@ class StateTests(unittest.TestCase):
 
         mage_public = state.create_session(str(path), gm_mode="semi", character_id="mage")
         mage = state.load_session(mage_public["id"])
-        mage["current_location"] = "forge"
+        accepted, reason = state.commit_world_position(mage, location_id="forge")
+        self.assertTrue(accepted, reason)
         mage["choices"] = current_action_choices(mage)
         mage_choices = {
             choice.get("action_id"): choice
@@ -1518,6 +1605,20 @@ class StateTests(unittest.TestCase):
         ]
 
         self.assertFalse(missing)
+
+    def test_debug_errors_redact_api_credentials(self):
+        secret = "AIzaSyExampleSecretValue1234567890"
+        message = (
+            f"https://example.test/generate?key={secret} "
+            f"raw={secret} Authorization: Bearer token-value"
+        )
+
+        redacted = app_module._redact_secrets(message)
+
+        self.assertNotIn(secret, redacted)
+        self.assertNotIn("token-value", redacted)
+        self.assertIn("key=[REDACTED]", redacted)
+        self.assertIn("Bearer [REDACTED]", redacted)
 
     @staticmethod
     def _iter_scenario_actions(actions):

@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/static/styles.css?v=20260608f-hybrid-loc" />
+    <link rel="stylesheet" href="/static/styles.css?v=20260810-combat-engine" />
   </head>
   <body>
 
@@ -103,6 +103,42 @@
         <button id="menuToggleBtn" type="button" class="gal-icon-btn">MENU</button>
       </div>
 
+      <section id="combatScreen" class="combat-screen" style="display:none" aria-live="polite">
+        <header class="combat-header">
+          <div>
+            <span class="combat-kicker">TURN BATTLE</span>
+            <h2 id="combatTitle">戦闘</h2>
+          </div>
+          <div class="combat-round">ROUND <strong id="combatRound">1</strong></div>
+        </header>
+
+        <div class="combat-arena">
+          <article class="combatant-panel player-combatant">
+            <span class="combatant-side">PLAYER</span>
+            <h3 id="combatPlayerName">冒険者</h3>
+            <div class="combat-resource hp"><span>HP</span><i><b id="combatPlayerHpBar"></b></i><strong id="combatPlayerHp">0/0</strong></div>
+            <div class="combat-resource mp"><span>MP</span><i><b id="combatPlayerMpBar"></b></i><strong id="combatPlayerMp">0/0</strong></div>
+            <div class="combat-resource sp"><span>SP</span><i><b id="combatPlayerSpBar"></b></i><strong id="combatPlayerSp">0/0</strong></div>
+          </article>
+
+          <div class="combat-center">
+            <div id="combatLog" class="combat-log"></div>
+          </div>
+
+          <div id="combatEnemies" class="combat-enemies"></div>
+        </div>
+
+        <div class="combat-command-deck">
+          <div id="combatActionTabs" class="combat-action-tabs" role="tablist"></div>
+          <div id="combatActions" class="combat-actions"></div>
+          <div id="combatResult" class="combat-result" style="display:none">
+            <strong id="combatResultTitle">戦闘終了</strong>
+            <span id="combatResultText"></span>
+            <button id="combatResolveButton" type="button">結果をGMへ渡す</button>
+          </div>
+        </div>
+      </section>
+
       <!-- Choices -->
       <div id="choicesArea" class="gal-choices-area" style="display:none">
         <div id="choicesList" class="choices-list"></div>
@@ -178,6 +214,6 @@
       </div>
     </main>
 
-    <script src="/static/app.js?v=20260608f-hybrid-loc"></script>
+    <script src="/static/app.js?v=20260810-combat-engine"></script>
   </body>
 </html>
