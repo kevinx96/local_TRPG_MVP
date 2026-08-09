@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional, Union
 
+from .intent_resolver import resolve_intent
 from .scenario_context import (
     current_actions_for_session,
     fallback_choices_for_session,
@@ -86,6 +87,7 @@ MODEL_RESOURCE_DELTA_KEYS = ("hp_change", "mp_change", "sp_change", "gold_change
 MODEL_MAX_ATTRIBUTE_DELTA = 3
 MODEL_MAX_GOLD_DELTA = 10_000
 MODEL_MAX_ITEM_QUANTITY = 99
+FREEFORM_TURN_LIMIT = 3
 
 _DICE_ATTR_RE = re.compile(r"^(\d+d\d+)(?:\+(\w+))?$", re.IGNORECASE)
 
@@ -268,6 +270,8 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     public = deepcopy(session)
     public.pop("scenario_prompt", None)
     public.pop("scenario_pack", None)
+    public.pop("last_intent_resolution", None)
+    public.pop("deviation_state", None)
     public["current_scene"] = world["scene_id"]
     public["current_location"] = world["location_id"]
     public["current_scene_title"] = scene_title(session)
@@ -449,8 +453,14 @@ def apply_gm_payload(
     if not isinstance(state_delta, dict):
         add_system_log(session, "GM応答のstate_deltaが不正だったため無視しました。")
         return
-    _infer_state_delta_from_text(gm_text, session, state_delta)
-    apply_state_delta(session, sanitize_model_state_delta(session, state_delta))
+    if _model_state_mutations_allowed(session):
+        _infer_state_delta_from_text(gm_text, session, state_delta)
+        apply_state_delta(session, sanitize_model_state_delta(session, state_delta))
+
+    intent = session.get("last_intent_resolution") if isinstance(session.get("last_intent_resolution"), dict) else {}
+    if intent.get("status") == "unmatched":
+        session["choices"] = fallback_choices_for_session(session)
+        return
 
     raw_choices = payload.get("choices")
     if isinstance(raw_choices, list) and raw_choices:
@@ -583,24 +593,167 @@ def choice_requirement_status(choice: dict[str, Any], character: dict[str, Any])
     return (True, "") if passed else (False, _requirement_reason([requirements], "all", character))
 
 
-def resolve_action(session: dict[str, Any], action_text: str = "", action_id: Optional[str] = None) -> Optional[dict[str, Any]]:
-    actions = [
-        action
-        for action in _iter_actions(current_actions_for_session(session))
-        if not action.get("children")
-    ]
+def resolve_player_intent(
+    session: dict[str, Any],
+    action_text: str = "",
+    action_id: Optional[str] = None,
+) -> dict[str, Any]:
+    raw_actions = current_actions_for_session(session)
+    if not raw_actions:
+        return {
+            "status": "legacy",
+            "method": "legacy",
+            "confidence": 0.0,
+            "action_id": "",
+            "candidate_action_ids": [],
+            "scores": [],
+            "action": None,
+        }
+    actions, groups = _intent_action_surfaces(session, raw_actions)
     wanted_id = str(action_id or "").strip()
-    wanted_text = str(action_text or "").strip()
-    for action in actions:
-        if wanted_id and wanted_id in (str(action.get("id") or ""), str(action.get("action_id") or "")):
-            return deepcopy(action)
-    for action in actions:
-        if wanted_text and wanted_text == str(action.get("text") or "").strip():
-            return deepcopy(action)
-    for action in actions:
-        if wanted_text and _action_keyword_matches(action, wanted_text):
-            return deepcopy(action)
-    return None
+    if wanted_id:
+        matched_group = next((group for group in groups if str(group.get("id") or group.get("action_id") or "") == wanted_id), None)
+        if matched_group:
+            return _group_intent_resolution(matched_group, 1.0, "action_group_id")
+    resolution = resolve_intent(actions, action_text, action_id)
+    if resolution.get("status") == "resolved" or wanted_id or not groups:
+        return resolution
+    group_resolution = resolve_intent(groups, action_text)
+    if group_resolution.get("status") == "resolved" and isinstance(group_resolution.get("action"), dict):
+        group_confidence = float(group_resolution.get("confidence") or 0.0)
+        if resolution.get("status") == "unmatched" or group_confidence >= float(resolution.get("confidence") or 0.0):
+            return _group_intent_resolution(
+                group_resolution["action"],
+                group_confidence,
+                "action_group",
+            )
+    if group_resolution.get("status") == "ambiguous":
+        group_ids = set(group_resolution.get("candidate_action_ids", []))
+        candidates = [group for group in groups if str(group.get("id") or "") in group_ids]
+        child_ids = [
+            str(child.get("id") or child.get("action_id") or "")
+            for group in candidates
+            for child in _iter_actions(group.get("children", []))
+            if isinstance(child, dict) and not child.get("children") and str(child.get("id") or child.get("action_id") or "")
+        ]
+        resolution = deepcopy(group_resolution)
+        resolution["candidate_action_ids"] = list(dict.fromkeys(child_ids))
+        resolution["action"] = None
+        return resolution
+    return resolution
+
+
+def _intent_action_surfaces(
+    session: dict[str, Any],
+    raw_actions: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    flags = session.get("flags") if isinstance(session.get("flags"), dict) else {}
+    executable: list[dict[str, Any]] = []
+    groups: list[dict[str, Any]] = []
+
+    def visit(actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        visible: list[dict[str, Any]] = []
+        for action in actions:
+            if not isinstance(action, dict):
+                continue
+            visible_after = str(action.get("visible_after") or "")
+            if visible_after and not flags.get(visible_after):
+                continue
+            children = action.get("children")
+            if isinstance(children, list) and children:
+                visible_children = visit(children)
+                if visible_children:
+                    group = deepcopy(action)
+                    group["children"] = visible_children
+                    groups.append(group)
+                    visible.append(group)
+            else:
+                executable.append(action)
+                visible.append(action)
+        return visible
+
+    visit(raw_actions)
+    return executable, groups
+
+
+def _group_intent_resolution(group: dict[str, Any], confidence: float, method: str) -> dict[str, Any]:
+    child_ids = [
+        str(action.get("id") or action.get("action_id") or "")
+        for action in _iter_actions(group.get("children", []))
+        if isinstance(action, dict) and not action.get("children") and str(action.get("id") or action.get("action_id") or "")
+    ]
+    return {
+        "status": "ambiguous",
+        "method": method,
+        "confidence": round(confidence, 3),
+        "action_id": "",
+        "candidate_action_ids": list(dict.fromkeys(child_ids)),
+        "scores": [{"action_id": str(group.get("id") or ""), "score": round(confidence, 3)}],
+        "action": None,
+    }
+
+
+def resolve_action(session: dict[str, Any], action_text: str = "", action_id: Optional[str] = None) -> Optional[dict[str, Any]]:
+    resolution = resolve_player_intent(session, action_text, action_id)
+    action = resolution.get("action")
+    return deepcopy(action) if resolution.get("status") == "resolved" and isinstance(action, dict) else None
+
+
+def track_intent_resolution(
+    session: dict[str, Any],
+    resolution: dict[str, Any],
+    player_text: str,
+) -> dict[str, Any]:
+    status = str(resolution.get("status") or "unmatched")
+    tracked = {
+        "status": status,
+        "method": str(resolution.get("method") or ""),
+        "confidence": float(resolution.get("confidence") or 0.0),
+        "action_id": str(resolution.get("action_id") or ""),
+        "candidate_action_ids": [str(value) for value in resolution.get("candidate_action_ids", []) if str(value)],
+        "scores": deepcopy(resolution.get("scores", [])),
+        "player_text": str(player_text or "")[:240],
+    }
+    if status in {"resolved", "legacy"}:
+        session.pop("deviation_state", None)
+        tracked["phase"] = "on_track"
+    elif status == "unmatched":
+        previous = session.get("deviation_state") if isinstance(session.get("deviation_state"), dict) else {}
+        previous_turns = int(previous.get("turns", 0) or 0)
+        turns = min(FREEFORM_TURN_LIMIT, previous_turns + 1)
+        phase = "blocked" if previous_turns >= FREEFORM_TURN_LIMIT else ("recovery" if turns >= FREEFORM_TURN_LIMIT else "improvise")
+        deviation = {
+            "turns": turns,
+            "phase": phase,
+            "last_player_text": tracked["player_text"],
+            "candidate_action_ids": tracked["candidate_action_ids"],
+        }
+        session["deviation_state"] = deviation
+        tracked.update(deviation)
+    elif status == "ambiguous":
+        tracked["phase"] = "clarify"
+    else:
+        tracked["phase"] = "rejected"
+    session["last_intent_resolution"] = tracked
+    return tracked
+
+
+def intent_control_prompt(session: dict[str, Any]) -> str:
+    resolution = session.get("last_intent_resolution")
+    if not isinstance(resolution, dict) or resolution.get("status") != "unmatched":
+        return ""
+    phase = str(resolution.get("phase") or "improvise")
+    turns = int(resolution.get("turns", 1) or 1)
+    common = (
+        "【自由入力制御】\n"
+        f"現在の action surface には未解決です（{turns}/{FREEFORM_TURN_LIMIT}ターン）。\n"
+        "この入力を新しい主線や確定事実として採用せず、現在地で起きる短く可逆的な反応だけを描写してください。\n"
+        "場面、場所、フラグ、所持品、数値は変更せず、現在の available_actions へ自然に戻してください。\n"
+        "choices はゲームエンジンが確定するため、新規選択肢を作らないでください。"
+    )
+    if phase == "recovery":
+        return common + "\nこれが即興の最終ターンです。今回で必ず収束させ、available_actions のいずれかを選べる状態に戻してください。"
+    return common
 
 
 def action_requirement_status(action: dict[str, Any], session: dict[str, Any]) -> tuple[bool, str]:
@@ -660,7 +813,17 @@ def validate_model_payload_for_action(session: dict[str, Any], payload: Optional
         return payload
     action_result = session.get("last_action_result") if isinstance(session.get("last_action_result"), dict) else {}
     if not action_result.get("action_id"):
-        return payload
+        intent = session.get("last_intent_resolution") if isinstance(session.get("last_intent_resolution"), dict) else {}
+        if intent.get("status") != "unmatched":
+            return payload
+        sanitized = deepcopy(payload)
+        if isinstance(sanitized.get("state_delta"), dict) and sanitized["state_delta"]:
+            add_system_log(session, "model state_delta ignored: unresolved free input cannot mutate game state.")
+        sanitized["state_delta"] = {}
+        if "choices" in sanitized:
+            add_system_log(session, "model choices ignored: unresolved free input uses the current action surface.")
+        sanitized["choices"] = fallback_choices_for_session(session)
+        return sanitized
     sanitized = deepcopy(payload)
     if isinstance(sanitized.get("state_delta"), dict) and sanitized["state_delta"]:
         add_system_log(session, "model state_delta ignored: action engine already applied the resolved action.")
@@ -669,6 +832,14 @@ def validate_model_payload_for_action(session: dict[str, Any], payload: Optional
         add_system_log(session, "model choices ignored: action engine rebuilt choices from current action surface.")
         sanitized["choices"] = []
     return sanitized
+
+
+def _model_state_mutations_allowed(session: dict[str, Any]) -> bool:
+    action_result = session.get("last_action_result") if isinstance(session.get("last_action_result"), dict) else {}
+    if action_result.get("action_id"):
+        return False
+    intent = session.get("last_intent_resolution") if isinstance(session.get("last_intent_resolution"), dict) else {}
+    return intent.get("status") != "unmatched"
 
 
 def sanitize_model_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> dict[str, Any]:
@@ -837,21 +1008,6 @@ def _iter_actions(actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if isinstance(action.get("children"), list):
             result.extend(_iter_actions(action["children"]))
     return result
-
-
-def _action_keyword_matches(action: dict[str, Any], text: str) -> bool:
-    needles = [str(action.get("id") or ""), str(action.get("text") or ""), str(action.get("preview") or "")]
-    needles.extend(_as_text_list(action.get("intent_keywords")))
-    return any(_text_contains_needle(text, needle) for needle in needles)
-
-
-def _text_contains_needle(text: str, needle: str) -> bool:
-    needle = str(needle or "").strip()
-    if not needle:
-        return False
-    if re.fullmatch(r"[A-Za-z0-9_][A-Za-z0-9_-]*", needle):
-        return re.search(rf"(?<![A-Za-z0-9_-]){re.escape(needle)}(?![A-Za-z0-9_-])", text, re.IGNORECASE) is not None
-    return needle in text
 
 
 def _action_outcome(latest_roll: dict[str, Any]) -> str:
@@ -1348,6 +1504,9 @@ def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], con
     action_result = session.get("last_action_result")
     if isinstance(action_result, dict) and action_result.get("action_id"):
         messages.append({"role": "system", "content": "resolved_action_result:\n" + json.dumps(action_result, ensure_ascii=False)})
+    control_prompt = intent_control_prompt(session)
+    if control_prompt:
+        messages.append({"role": "system", "content": control_prompt})
     memory_summary = _conversation_memory_summary(session, keep_last=history_messages, max_chars=memory_max_chars)
     if memory_summary:
         messages.append({"role": "system", "content": "これまでの会話要約:\n" + memory_summary})
@@ -1366,6 +1525,10 @@ def _should_use_hybrid_messages(session: dict[str, Any], latest_roll: dict[str, 
     if session.get("gm_mode") != "semi":
         return False
     opening = str(latest_roll.get("expression") or "") == "opening"
+    if not opening and current_actions_for_session(session):
+        action_result = session.get("last_action_result") if isinstance(session.get("last_action_result"), dict) else {}
+        if not action_result.get("action_id"):
+            return False
     return has_hybrid_prepared_turn(session, _latest_player_text(session), opening=opening)
 
 

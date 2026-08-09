@@ -3,6 +3,7 @@ import os
 import unittest
 import uuid
 from pathlib import Path
+from typing import Any
 from unittest.mock import patch
 
 from host import app as app_module
@@ -1067,6 +1068,278 @@ class StateTests(unittest.TestCase):
 
         self.assertEqual(dice_type, "1d20")
         self.assertEqual(dice_dc, 0)
+
+    def test_free_text_paraphrase_resolves_current_action(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {
+                "id": "show_shield_to_smith",
+                "text": "鍛冶師に鉄の盾を見せる",
+                "intent_keywords": ["鍛冶師に盾を見せる"],
+                "effects": [{"set_flag": "showed_shield"}],
+            }
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        resolution = state.resolve_player_intent(session, "この鉄の盾を鍛冶師に見てもらいたい")
+
+        self.assertEqual(resolution["status"], "resolved")
+        self.assertEqual(resolution["action"]["id"], "show_shield_to_smith")
+        self.assertEqual(resolution["method"], "semantic")
+
+        abbreviated = state.resolve_player_intent(session, "盾を見てもらいたい")
+        self.assertEqual(abbreviated["status"], "resolved")
+        self.assertEqual(abbreviated["action"]["id"], "show_shield_to_smith")
+
+    def test_entity_term_outranks_generic_dialogue_fragment(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {
+                "id": "ask_king_info",
+                "text": "国王に邪竜の詳しい話を聞く",
+                "intent_keywords": ["国王に邪竜の詳しい話を聞く"],
+            },
+            {
+                "id": "ask_general_advice",
+                "text": "将軍ドラコに助言を求める",
+                "intent_keywords": ["将軍ドラコに助言を求める"],
+            },
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        resolution = state.resolve_player_intent(session, "将軍に話を聞きたい")
+
+        self.assertEqual(resolution["status"], "resolved")
+        self.assertEqual(resolution["action_id"], "ask_general_advice")
+
+    def test_ambiguous_free_text_does_not_choose_between_tied_actions(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {
+                "id": "ask_smith_about_weapon",
+                "text": "鍛冶師に武器を相談する",
+                "intent_keywords": ["鍛冶師", "相談"],
+            },
+            {
+                "id": "ask_smith_about_dragon",
+                "text": "鍛冶師に邪竜を相談する",
+                "intent_keywords": ["鍛冶師", "相談"],
+            },
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        resolution = state.resolve_player_intent(session, "鍛冶師に相談したい")
+
+        self.assertEqual(resolution["status"], "ambiguous")
+        self.assertIsNone(resolution["action"])
+        self.assertEqual(
+            set(resolution["candidate_action_ids"]),
+            {"ask_smith_about_weapon", "ask_smith_about_dragon"},
+        )
+
+    def test_free_text_does_not_resolve_hidden_child_or_ascii_substring(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {
+                "id": "secret_group",
+                "text": "秘密の行動",
+                "visible_after": "secret_open",
+                "children": [
+                    {
+                        "id": "enter_secret_room",
+                        "text": "秘密の部屋に入る",
+                        "intent_keywords": ["秘密の部屋"],
+                    }
+                ],
+            },
+            {
+                "id": "enter_inn",
+                "text": "Enter the inn",
+                "intent_keywords": ["inn"],
+            },
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        hidden = state.resolve_player_intent(session, "秘密の部屋に入る")
+        substring = state.resolve_player_intent(session, "We discuss dinner plans")
+
+        self.assertEqual(hidden["status"], "unmatched")
+        self.assertEqual(substring["status"], "unmatched")
+
+    def test_free_text_matching_action_group_requests_child_selection(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {
+                "id": "buy_equipment",
+                "text": "装備を買う",
+                "intent_keywords": ["装備を買う", "装備を購入する"],
+                "children": [
+                    {"id": "buy_armor", "text": "鎧を買う"},
+                    {"id": "buy_amulet", "text": "護符を買う"},
+                ],
+            }
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        resolution = state.resolve_player_intent(session, "装備を買いたい")
+
+        self.assertEqual(resolution["status"], "ambiguous")
+        self.assertEqual(resolution["method"], "action_group")
+        self.assertEqual(set(resolution["candidate_action_ids"]), {"buy_armor", "buy_amulet"})
+        self.assertIsNone(state.resolve_action(session, action_text="装備を買いたい"))
+
+    def test_unmatched_free_text_cannot_mutate_state_or_replace_action_surface(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {
+                "id": "inspect_shield",
+                "text": "鉄の盾を調べる",
+                "intent_keywords": ["鉄の盾", "盾を調べる"],
+            }
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+        captured: dict[str, Any] = {}
+        model_response = json.dumps(
+            {
+                "gm_text": "空へ手を伸ばしたが、ここから月へは行けない。",
+                "state_delta": {"gold_change": 5, "flags_set": ["flew_to_moon"]},
+                "choices": [{"text": "月の王と話す", "risk": "判定不要"}],
+            },
+            ensure_ascii=False,
+        )
+
+        def fake_completion(_config, messages):
+            captured["messages"] = messages
+            return model_response
+
+        with patch.object(app_module, "load_config", return_value={"debug_llm": False, "demo_fallback_on_error": True}):
+            with patch.object(app_module, "chat_completion", side_effect=fake_completion):
+                result = app_module._run_turn(session, app_module.TurnRequest(text="空を飛んで月へ行く"))
+
+        self.assertEqual(session["character"]["gold"], 0)
+        self.assertNotIn("flew_to_moon", session["flags"])
+        self.assertEqual(session["dice_log"], [])
+        self.assertEqual(result["choices"][0]["action_id"], "inspect_shield")
+        self.assertEqual(session["deviation_state"]["turns"], 1)
+        self.assertIn("自由入力制御", "\n".join(message["content"] for message in captured["messages"]))
+
+    def test_unmatched_free_text_recovers_after_three_llm_turns(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {"id": "inspect_shield", "text": "鉄の盾を調べる", "intent_keywords": ["鉄の盾"]}
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+        prompts: list[str] = []
+        model_response = json.dumps(
+            {"gm_text": "試みは主線の手がかりにはつながらなかった。", "state_delta": {}, "choices": []},
+            ensure_ascii=False,
+        )
+
+        def fake_completion(_config, messages):
+            prompts.append("\n".join(message["content"] for message in messages))
+            return model_response
+
+        with patch.object(app_module, "load_config", return_value={"debug_llm": False, "demo_fallback_on_error": True}):
+            with patch.object(app_module, "chat_completion", side_effect=fake_completion) as completion:
+                for index in range(3):
+                    app_module._run_turn(session, app_module.TurnRequest(text=f"脱線した行動{index}"))
+                fourth = app_module._run_turn(session, app_module.TurnRequest(text="さらに脱線する"))
+
+        self.assertEqual(completion.call_count, 3)
+        self.assertEqual(session["deviation_state"]["turns"], 3)
+        self.assertEqual(session["deviation_state"]["phase"], "blocked")
+        self.assertIn("今回で必ず収束", prompts[-1])
+        self.assertIn("現在できる行動", fourth["messages"][-1]["text"])
+        self.assertEqual(fourth["choices"][0]["action_id"], "inspect_shield")
+        self.assertEqual(session["dice_log"], [])
+
+    def test_resolved_action_clears_deviation_and_applies_engine_effects(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {
+                "id": "inspect_shield",
+                "text": "鉄の盾を調べる",
+                "intent_keywords": ["鉄の盾"],
+                "effects": [{"set_flag": "inspected_shield"}],
+            }
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+        session["deviation_state"] = {"turns": 2, "phase": "improvise"}
+        model_response = json.dumps(
+            {"gm_text": "盾の縁に小さな刻印が見つかった。", "state_delta": {}, "choices": []},
+            ensure_ascii=False,
+        )
+
+        with patch.object(app_module, "load_config", return_value={"debug_llm": False, "demo_fallback_on_error": True}):
+            with patch.object(app_module, "chat_completion", return_value=model_response):
+                app_module._run_turn(session, app_module.TurnRequest(text="盾を調べたい"))
+
+        self.assertNotIn("deviation_state", session)
+        self.assertTrue(session["flags"]["inspected_shield"])
+        self.assertEqual(session["last_action_result"]["action_id"], "inspect_shield")
+        self.assertEqual(session["dice_log"], [])
+
+    def test_resolved_roll_action_uses_client_dice_and_engine_outcome(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {
+                "id": "read_runes",
+                "text": "盾のルーンを読む",
+                "roll": {"dice_type": "1d20+wis", "dc": 12},
+                "success_effects": [{"set_flag": "read_runes"}],
+                "failure_effects": [{"set_flag": "runes_failed"}],
+            }
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"wis": 5}
+        model_response = json.dumps(
+            {"gm_text": "ルーンの意味を読み解いた。", "state_delta": {}, "choices": []},
+            ensure_ascii=False,
+        )
+
+        with patch.object(app_module, "load_config", return_value={"debug_llm": False, "demo_fallback_on_error": True}):
+            with patch.object(app_module, "chat_completion", return_value=model_response):
+                app_module._run_turn(
+                    session,
+                    app_module.TurnRequest(
+                        text="盾のルーンを読む",
+                        action_id="read_runes",
+                        client_dice={"rolls": [10]},
+                    ),
+                )
+
+        self.assertEqual(len(session["dice_log"]), 1)
+        self.assertEqual(session["dice_log"][0]["total"], 15)
+        self.assertTrue(session["dice_log"][0]["success"])
+        self.assertTrue(session["flags"]["read_runes"])
+        self.assertNotIn("runes_failed", session["flags"])
 
     def test_choice_risk_requirement_disables_when_attribute_too_low(self):
         public = state.create_session(str(self.write_pack()))
