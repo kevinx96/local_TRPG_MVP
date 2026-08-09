@@ -12,8 +12,17 @@
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
     "調査や戦闘の後は、次に進める行動選択肢を必ず提示する。",
     "支度金やアイテムを渡した場合は state_delta に反映する。",
-    "戦闘中、SPは毎ターン開始時に最大SPの半分を回復する。戦闘勝利後、HPとMPは全回復する。"
+    "戦闘の命中、ダメージ、敵行動、勝敗、報酬は戦闘エンジンだけが確定する。GMは戦闘結果を変更しない。"
   ],
+  "combat_rules": {
+    "basic_attack": { "name": "通常攻撃", "damage": "1d6+str/4", "accuracy": 90, "element": "physical" },
+    "enemy_basic_attack": { "name": "攻撃", "damage": "1d4+str/4", "accuracy": 85, "element": "physical" },
+    "defend_multiplier": 0.5,
+    "flee_formula": "1d20+dex/2",
+    "flee_dc": 12,
+    "sp_regen_per_round": 1,
+    "max_rounds": 100
+  },
   "scenes": [
     {
       "id": "throne_room",
@@ -123,6 +132,7 @@
   "locations": [
     {
       "id": "castle",
+      "scene_id": "throne_room",
       "title": "アルテリア王城",
       "description": "白い石造りの古城。王国の政治と軍事の中心。目の前には国王エドワードと将軍ドラコがいる。",
       "keywords": [
@@ -698,6 +708,7 @@
     },
     {
       "id": "forge",
+      "scene_id": "throne_room",
       "title": "王城の鍛冶屋",
       "description": "城内の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。",
       "keywords": [
@@ -1424,6 +1435,7 @@
     },
     {
       "id": "inn",
+      "scene_id": "throne_room",
       "title": "王城の宿屋",
       "description": "冒険者や旅人が休息を取るための宿屋。暖かい食事と清潔な寝台がある。",
       "keywords": [
@@ -2273,6 +2285,7 @@
     },
     {
       "id": "magic_shop",
+      "scene_id": "throne_room",
       "title": "王城の魔法店",
       "description": "薄暗い店内に古びた魔導書や魔法の品が並ぶ。店主は無口な老魔術師。",
       "keywords": [
@@ -2422,6 +2435,7 @@
     },
     {
       "id": "item_shop",
+      "scene_id": "throne_room",
       "title": "王城の道具屋",
       "description": "冒険に役立つ品々を扱う道具屋。薬草や旅の消耗品が揃っている。",
       "keywords": [
@@ -2557,6 +2571,7 @@
     },
     {
       "id": "alley",
+      "scene_id": "throne_room",
       "title": "王城の路地裏",
       "description": "人通りの少ない薄暗い路地裏。怪しい商人や密売人が潜んでいる噂がある。",
       "keywords": [
@@ -2694,6 +2709,7 @@
     },
     {
       "id": "dark_forest_loc",
+      "scene_id": "dark_forest",
       "title": "闇の森",
       "description": "湿った薄暗い森。弱い魔物が潜んでいる。",
       "keywords": [
@@ -2705,6 +2721,12 @@
       "enemy_ids": [
         "slime"
       ],
+      "combat": {
+        "flee_allowed": true,
+        "flee_dc": 10,
+        "victory_effects": { "flags_set": ["defeated_slime"] },
+        "defeat_effects": { "hp_change": 1 }
+      },
       "npc_ids": [],
       "item_ids": [],
       "clue_ids": [],
@@ -2926,6 +2948,7 @@
       "actions": [
         {
           "id": "attack_slime",
+          "disabled_after": "combat_defeated:dark_forest_loc:slime",
           "text": "鉄の剣でスライムを攻撃する",
           "preview": "戦闘チュートリアルを進めます",
           "risk": "1d20判定（DC10）",
@@ -2952,6 +2975,7 @@
         },
         {
           "id": "bypass_slime",
+          "disabled_after": "combat_defeated:dark_forest_loc:slime",
           "text": "スライムを迂回して森を抜ける",
           "preview": "戦闘を避けて先へ進みます",
           "risk": "1d20+dex判定（DC25）失敗時スライムが先手攻撃",
@@ -2994,6 +3018,7 @@
     },
     {
       "id": "village",
+      "scene_id": "village",
       "title": "麓の村",
       "description": "山麓に広がる静かな村。長老が古い伝承を語り継いでいる。",
       "keywords": [
@@ -3266,6 +3291,7 @@
     },
     {
       "id": "village_shop",
+      "scene_id": "village",
       "title": "麓の村の道具屋",
       "description": "旅人向けの道具屋。薬草、護符、保存食を扱っている。",
       "keywords": [
@@ -3295,6 +3321,7 @@
     },
     {
       "id": "dragon_valley_loc",
+      "scene_id": "dragon_valley",
       "title": "竜の谷",
       "description": "黒い岩肌と硫黄の匂いが漂う荒涼たる谷。",
       "keywords": [
@@ -3306,6 +3333,11 @@
       "enemy_ids": [
         "ignis"
       ],
+      "combat": {
+        "flee_allowed": false,
+        "victory_effects": { "flags_set": ["defeated_ignis"] },
+        "defeat_effects": { "hp_change": 1 }
+      },
       "npc_ids": [],
       "item_ids": [],
       "clue_ids": [],
@@ -3604,6 +3636,7 @@
     },
     {
       "id": "goblin_fort",
+      "scene_id": "dark_forest",
       "title": "ゴブリンの砦",
       "description": "闇の森の奥深くにあるゴブリンの砦。奪われた王国商人の荷物が積まれている。",
       "keywords": [
@@ -3617,6 +3650,12 @@
       "enemy_ids": [
         "goblin"
       ],
+      "combat": {
+        "flee_allowed": true,
+        "flee_dc": 13,
+        "victory_effects": { "flags_set": ["fought_goblin", "defeated_goblin"] },
+        "defeat_effects": { "hp_change": 1 }
+      },
       "connected_location_ids": [
         "dark_forest_loc",
         "inn"
@@ -3749,6 +3788,7 @@
       "name": "鉄の剣",
       "description": "一見質素な一振りの剣……",
       "effect": "通常攻撃に使用",
+      "combat": { "kind": "weapon", "name": "鉄の剣", "damage": "1d8+str/3", "accuracy": 90, "element": "physical" },
       "keywords": [
         "鉄の剣",
         "剣",
@@ -3760,6 +3800,7 @@
       "name": "薬草",
       "description": "傷を癒す薬草。",
       "effect": "HPを10回復",
+      "combat": { "kind": "heal", "healing": "10", "consumable": true },
       "keywords": [
         "薬草",
         "回復"
@@ -3770,6 +3811,7 @@
       "name": "氷の護符",
       "description": "冷気の力を宿した護符。",
       "effect": "邪竜の弱点を突く",
+      "combat": { "kind": "damage", "damage": "1d8+int/2", "accuracy": 100, "element": "ice", "consumable": false },
       "keywords": [
         "氷の護符",
         "護符",
@@ -3781,6 +3823,7 @@
       "name": "アダマンタイトの鎧",
       "description": "非常に硬い金属で作られた鎧。",
       "effect": "被ダメージを軽減(-3)",
+      "combat": { "kind": "armor", "defense": 3 },
       "keywords": [
         "アダマンタイト",
         "鎧",
@@ -3792,6 +3835,7 @@
       "name": "氷鉄の大剣",
       "description": "氷の護符と上質な剣を融合させた大剣。",
       "effect": "無属性ダメージを氷属性に変換。全攻撃にINT依存の追加ダメージ。",
+      "combat": { "kind": "weapon", "name": "氷鉄の大剣", "damage": "1d10+str/3+int/4", "accuracy": 88, "element": "ice" },
       "keywords": [
         "氷鉄の大剣",
         "大剣",
@@ -3816,6 +3860,7 @@
       "name": "氷の太刀",
       "description": "麓の村に伝わる伝説の強力な氷属性武器。",
       "effect": "無属性ダメージを氷属性に変換。装備不要で毎ターン自動攻撃（1d50判定：20未満で全体攻撃、20以上でHPが最も高い敵単体へ攻撃）。邪竜に対しては毎ターン固定で50の単体ダメージ。",
+      "combat": { "kind": "weapon", "name": "氷の太刀", "damage": "2d10+str/3+int/3", "accuracy": 92, "element": "ice" },
       "keywords": [
         "氷の太刀",
         "武器",
@@ -3866,6 +3911,9 @@
         "wis": 1,
         "end": 4
       },
+      "combat": { "basic_attack": { "name": "体当たり", "damage": "1d4+str/4", "accuracy": 80, "element": "physical" }, "defense": 0, "evade": 5 },
+      "resistances": { "physical": 1, "fire": 1.25, "ice": 1 },
+      "rewards": { "gold": 5, "items": [], "flags": ["defeated_slime"] },
       "skills": [],
       "image": ""
     },
@@ -3873,8 +3921,8 @@
       "id": "ignis",
       "name": "邪竜イグニス",
       "description": "王国を脅かす紅き邪竜。炎の息を吐き、圧倒的な力を持つ。冷気に弱い。通常の物理攻撃や炎属性の攻撃ではダメージを与えられない。",
-      "hp": 300,
-      "max_hp": 300,
+      "hp": 120,
+      "max_hp": 120,
       "mp": 150,
       "max_mp": 150,
       "sp": 10,
@@ -3886,21 +3934,36 @@
         "wis": 6,
         "end": 16
       },
+      "combat": { "basic_attack": { "name": "爪撃", "damage": "1d6+str/4", "accuracy": 86, "element": "physical" }, "defense": 2, "evade": 3 },
+      "resistances": { "physical": 0.65, "fire": 0, "ice": 1.75 },
+      "rewards": { "gold": 100, "items": [], "flags": ["defeated_ignis"] },
       "skills": [
         {
+          "id": "fire_breath",
           "name": "炎の息",
+          "kind": "attack",
           "description": "灼熱の炎を広範囲に吐き出す。",
           "effect": "全体に2d6ダメージ",
-          "dice_type": "2d6+str",
+          "damage": "2d6+int/4",
+          "dice_type": "2d6+int/4",
+          "accuracy": 80,
+          "element": "fire",
           "cost": 5,
-          "cost_type": "mp"
+          "cost_type": "mp",
+          "ai_weight": 2
         },
         {
+          "id": "tail_sweep",
           "name": "尻尾攻撃",
+          "kind": "attack",
           "description": "巨大な尾で薙ぎ払う。",
           "effect": "1d20+str判定、単体ダメージ",
-          "dice_type": "1d20+str",
-          "cost": 0
+          "damage": "1d8+str/4",
+          "dice_type": "1d8+str/4",
+          "accuracy": 90,
+          "element": "physical",
+          "cost": 0,
+          "ai_weight": 3
         }
       ],
       "image": ""
@@ -3922,13 +3985,22 @@
         "wis": 2,
         "end": 6
       },
+      "combat": { "basic_attack": { "name": "粗末な短剣", "damage": "1d4+dex/4", "accuracy": 85, "element": "physical" }, "defense": 0, "evade": 8 },
+      "resistances": { "physical": 1, "fire": 1, "ice": 1.1 },
+      "rewards": { "gold": 12, "items": [], "flags": ["defeated_goblin"] },
       "skills": [
         {
+          "id": "scratch",
           "name": "引っ掻き",
+          "kind": "attack",
           "description": "鋭い爪で引っ掻く。",
           "effect": "1d6+strダメージ",
-          "dice_type": "1d6+str",
-          "cost": 0
+          "damage": "1d6+str/4",
+          "dice_type": "1d6+str/4",
+          "accuracy": 88,
+          "element": "physical",
+          "cost": 0,
+          "ai_weight": 2
         }
       ],
       "image": ""
@@ -4005,6 +4077,7 @@
         "wis": 5,
         "end": 10
       },
+      "combat": { "basic_attack": { "name": "鉄の剣", "damage": "1d8+str/3", "accuracy": 90, "element": "physical" }, "defense": 0, "evade": 0 },
       "inventory": [
         {
           "name": "鉄の剣",
@@ -4031,17 +4104,26 @@
       ],
       "skills": [
         {
+          "id": "power_slash",
           "name": "渾身斬り",
+          "kind": "attack",
           "description": "気合を込めた全力の一撃。",
           "effect": "1d4+str判定ダメージ",
-          "dice_type": "1d4+str",
+          "damage": "1d10+str/2",
+          "dice_type": "1d10+str/2",
+          "accuracy": 85,
+          "element": "physical",
           "cost": 3,
           "cost_type": "sp"
         },
         {
+          "id": "divine_guard",
           "name": "神聖の庇護",
+          "kind": "defend",
           "description": "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。",
           "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+          "guard_multiplier": 0.5,
+          "survive_at_one": true,
           "cost": 0
         }
       ]
@@ -4066,6 +4148,7 @@
         "wis": 12,
         "end": 15
       },
+      "combat": { "basic_attack": { "name": "聖なる杖", "damage": "1d4+str/4", "accuracy": 88, "element": "holy" }, "defense": 0, "evade": 0 },
       "inventory": [
         {
           "name": "聖なる杖",
@@ -4092,17 +4175,24 @@
       ],
       "skills": [
         {
+          "id": "healing_prayer",
           "name": "治癒の祈り",
+          "kind": "heal",
           "description": "聖なる祈りで傷を癒す。",
           "effect": "HPを1d6+知力/4回復",
-          "dice_type": "1d6+int",
+          "healing": "1d6+int/4",
+          "dice_type": "1d6+int/4",
           "cost": 4,
           "cost_type": "mp"
         },
         {
+          "id": "holy_guard",
           "name": "聖なる守護",
+          "kind": "defend",
           "description": "聖光の盾で味方を守る。致死ダメージも耐え抜く。",
           "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+          "guard_multiplier": 0.5,
+          "survive_at_one": true,
           "cost": 6,
           "cost_type": "mp"
         }
@@ -4129,6 +4219,7 @@
         "wis": 10,
         "end": 6
       },
+      "combat": { "basic_attack": { "name": "魔力弾", "damage": "1d4+int/4", "accuracy": 90, "element": "arcane" }, "defense": 0, "evade": 2 },
       "inventory": [
         {
           "name": "魔導書",
@@ -4155,18 +4246,28 @@
       ],
       "skills": [
         {
+          "id": "fireball",
           "name": "火球",
+          "kind": "attack",
           "description": "灼熱の火球を放つ。",
           "effect": "int判定ダメージ、ｈｐ１００％に対して、1d6追加ダメージを与える",
-          "dice_type": "int+1d6",
+          "damage": "1d6+int/2",
+          "dice_type": "1d6+int/2",
+          "accuracy": 90,
+          "element": "fire",
           "cost": 5,
           "cost_type": "mp"
         },
         {
+          "id": "ice_arrow",
           "name": "氷の矢",
+          "kind": "attack",
           "description": "冷気の矢を放つ。",
           "effect": "int/2ダメージ，ｈｐ5０％以下に対して，1d6追加ダメージを与える",
-          "dice_type": "int/2+1d6",
+          "damage": "1d6+int/2",
+          "dice_type": "1d6+int/2",
+          "accuracy": 92,
+          "element": "ice",
           "cost": 3,
           "cost_type": "mp"
         }
@@ -4193,6 +4294,7 @@
         "wis": 6,
         "end": 8
       },
+      "combat": { "basic_attack": { "name": "ダガー", "damage": "1d6+dex/4", "accuracy": 95, "element": "physical" }, "defense": 0, "evade": 8 },
       "inventory": [
         {
           "name": "ダガー",
@@ -4219,18 +4321,26 @@
       ],
       "skills": [
         {
+          "id": "hide_in_shadow",
           "name": "影隠れ",
+          "kind": "defend",
           "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
           "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
+          "guard_multiplier": 0.25,
           "dice_type": "1d20+dex",
           "cost": 2,
           "cost_type": "sp"
         },
         {
+          "id": "vital_strike",
           "name": "急所突き",
+          "kind": "attack",
           "description": "敵の急所を正確に狙う。",
           "effect": "3d6判定ダメージ",
+          "damage": "3d6",
           "dice_type": "3d6",
+          "accuracy": 82,
+          "element": "physical",
           "cost": 4,
           "cost_type": "sp"
         }

@@ -21,6 +21,7 @@
       "type": "array",
       "items": { "type": "string" }
     },
+    "combat_rules": { "$ref": "#/$defs/combat_rules" },
     "scenes": {
       "type": "array",
       "minItems": 1,
@@ -87,7 +88,17 @@
     },
     "locations": {
       "type": "array",
-      "items": { "$ref": "#/$defs/record" }
+      "items": {
+        "allOf": [
+          { "$ref": "#/$defs/record" },
+          {
+            "type": "object",
+            "properties": {
+              "scene_id": { "type": "string", "minLength": 1 }
+            }
+          }
+        ]
+      }
     },
     "npcs": {
       "type": "array",
@@ -122,7 +133,16 @@
             "type": "object",
             "additionalProperties": { "type": "number" }
           },
-          "skills": { "type": "array" }
+          "combat": { "$ref": "#/$defs/combat_actor" },
+          "resistances": {
+            "type": "object",
+            "additionalProperties": { "type": "number", "minimum": 0 }
+          },
+          "rewards": { "$ref": "#/$defs/combat_rewards" },
+          "skills": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/combat_skill" }
+          }
         }
       }
     },
@@ -169,7 +189,11 @@
           },
           "inventory": { "type": "array" },
           "equipment": { "type": "array" },
-          "skills": { "type": "array" }
+          "combat": { "$ref": "#/$defs/combat_actor" },
+          "skills": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/combat_skill" }
+          }
         }
       }
     },
@@ -196,7 +220,69 @@
         "actions": {
           "type": "array",
           "items": { "$ref": "#/$defs/action" }
-        }
+        },
+        "combat": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "combat_rules": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "basic_attack": { "$ref": "#/$defs/combat_attack" },
+        "enemy_basic_attack": { "$ref": "#/$defs/combat_attack" },
+        "defend_multiplier": { "type": "number", "minimum": 0, "maximum": 1 },
+        "flee_formula": { "type": "string" },
+        "flee_dc": { "type": "integer", "minimum": 0 },
+        "sp_regen_per_round": { "type": "integer", "minimum": 0 },
+        "max_rounds": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "combat_actor": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "basic_attack": { "$ref": "#/$defs/combat_attack" },
+        "defense": { "type": "integer", "minimum": 0 },
+        "evade": { "type": "integer" }
+      }
+    },
+    "combat_attack": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": { "type": "string" },
+        "damage": { "type": "string" },
+        "accuracy": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "element": { "type": "string" }
+      }
+    },
+    "combat_skill": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": true,
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "kind": { "enum": ["attack", "heal", "defend", "status"] },
+        "description": { "type": "string" },
+        "damage": { "type": "string" },
+        "healing": { "type": "string" },
+        "accuracy": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "element": { "type": "string" },
+        "cost": { "type": "integer", "minimum": 0 },
+        "cost_type": { "enum": ["", "hp", "mp", "sp"] },
+        "ai_weight": { "type": "integer", "minimum": 1 },
+        "guard_multiplier": { "type": "number", "minimum": 0, "maximum": 1 },
+        "survive_at_one": { "type": "boolean" }
+      }
+    },
+    "combat_rewards": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "gold": { "type": "integer", "minimum": 0 },
+        "items": { "type": "array" },
+        "flags": { "type": "array", "items": { "type": "string" } }
       }
     },
     "choice": {
