@@ -169,13 +169,13 @@ function renderList() {
   if (section === "hybrid") {
     els.addRecordButton.style.display = "none";
     els.listTitle.textContent = "Hybrid prepared turns";
-    const scenes = state.scenario.scenes || [];
-    els.recordList.innerHTML = scenes
-      .map((scene, index) => {
-        const count = scene.hybrid?.prepared_turns?.length || 0;
-        const title = scene.title || scene.id || `Scene ${index + 1}`;
+    const locations = state.scenario.locations || [];
+    els.recordList.innerHTML = locations
+      .map((loc, index) => {
+        const count = loc.hybrid?.prepared_turns?.length || 0;
+        const title = loc.title || loc.id || `Location ${index + 1}`;
         return `<button class="record-row ${index === state.selectedIndex ? "active" : ""}" data-index="${index}" type="button">
-          <strong>${escapeHtml(title)}</strong><span>${escapeHtml(scene.id || "")} · ${count} turns</span>
+          <strong>${escapeHtml(title)}</strong><span>${escapeHtml(loc.id || "")} · ${count} turns</span>
         </button>`;
       })
       .join("");
@@ -218,6 +218,9 @@ function renderMeta() {
   const sceneOptions = state.scenario.scenes
     .map((scene) => `<option value="${escapeHtml(scene.id)}" ${scene.id === meta.initial_scene ? "selected" : ""}>${escapeHtml(scene.title || scene.id)}</option>`)
     .join("");
+  const actionFields = (section === "scenes" || section === "locations")
+    ? actionsJsonMarkup(`${section}.${state.selectedIndex}.actions`, record.actions || [])
+    : "";
   els.editorPane.innerHTML = `<div class="editor-form">
     <div class="form-grid">
       ${field("标题", "meta.title", meta.title || "")}
@@ -257,14 +260,12 @@ function renderRecordEditor(section) {
     <label class="wide">描述<textarea data-path="${section}.${state.selectedIndex}.description">${escapeHtml(record.description || "")}</textarea></label>
     ${field("关键词，用逗号分隔", `${section}.${state.selectedIndex}.keywords`, toCsv(record.keywords || []), true)}
   </div>`;
-  const sceneFields = section === "scenes" ? `<h3 class="section-title">场景节点</h3>
+  const sceneFields = section === "scenes" ? `<h3 class="section-title">场景设定</h3>
     <div class="form-grid">
       ${field("目标，用逗号分隔", `${section}.${state.selectedIndex}.goals`, toCsv(record.goals || []), true)}
-      ${field("可命中地点 IDs", `${section}.${state.selectedIndex}.location_ids`, toCsv(record.location_ids || []), true)}
+      ${field("绑定地点 IDs", `${section}.${state.selectedIndex}.location_ids`, toCsv(record.location_ids || []), true)}
       ${field("后续场景 IDs", `${section}.${state.selectedIndex}.next_scene_ids`, toCsv(record.next_scene_ids || []), true)}
-    </div>
-    <h3 class="section-title">节点 fallback choices</h3>
-    ${choicesMarkup(`${section}.${state.selectedIndex}.fallback_choices`, record.fallback_choices || [])}` : "";
+    </div>` : "";
   const itemFields = section === "items" ? `<h3 class="section-title">道具效果</h3>
     <label>效果<textarea data-path="${section}.${state.selectedIndex}.effect">${escapeHtml(record.effect || "")}</textarea></label>` : "";
   const locationFields = section === "locations" ? `<h3 class="section-title">关联实体</h3>
@@ -273,12 +274,17 @@ function renderRecordEditor(section) {
       ${relationPicker("道具", `${section}.${state.selectedIndex}.item_ids`, record.item_ids || [], state.scenario.items || [])}
       ${relationPicker("线索", `${section}.${state.selectedIndex}.clue_ids`, record.clue_ids || [], state.scenario.clues || [])}
       ${relationPicker("敌人", `${section}.${state.selectedIndex}.enemy_ids`, record.enemy_ids || [], state.scenario.enemies || [])}
-    </div>` : "";
+    </div>
+    <h3 class="section-title">可达地点 IDs</h3>
+    ${field("用逗号分隔", `locations.${state.selectedIndex}.connected_location_ids`, toCsv(record.connected_location_ids || []), true)}
+    <h3 class="section-title">地点选项</h3>
+    ${choicesMarkup(`locations.${state.selectedIndex}.choices`, record.choices || [])}` : "";
   els.editorPane.innerHTML = `<div class="editor-form">
     ${common}
     ${itemFields}
     ${locationFields}
     ${sceneFields}
+    ${actionFields}
     <button class="danger" data-remove-record="${section}" data-index="${state.selectedIndex}" type="button">删除${escapeHtml(group.label)}</button>
   </div>`;
 }
@@ -422,19 +428,19 @@ function renderChoices(path, choices, title) {
 }
 
 function renderHybridEditor() {
-  const scene = state.scenario.scenes[state.selectedIndex];
-  if (!scene) {
-    els.editorPane.innerHTML = `<div class="editor-form"><p class="summary-line">No scene selected.</p></div>`;
+  const location = state.scenario.locations[state.selectedIndex];
+  if (!location) {
+    els.editorPane.innerHTML = `<div class="editor-form"><p class="summary-line">No location selected.</p></div>`;
     return;
   }
-  ensureHybridShape(scene);
-  const basePath = `scenes.${state.selectedIndex}.hybrid`;
-  const turns = scene.hybrid.prepared_turns || [];
+  ensureHybridShape(location);
+  const basePath = `locations.${state.selectedIndex}.hybrid`;
+  const turns = location.hybrid.prepared_turns || [];
   els.editorPane.innerHTML = `<div class="editor-form">
-    <h2>Hybrid prepared turns · ${escapeHtml(scene.title || scene.id || "")}</h2>
+    <h2>Hybrid prepared turns · ${escapeHtml(location.title || location.id || "")}</h2>
     <div class="form-grid">
-      ${field("Mode", `${basePath}.mode`, scene.hybrid.mode || "prepared_gm_turns")}
-      <label class="wide">Summary<textarea data-path="${basePath}.summary">${escapeHtml(scene.hybrid.summary || "")}</textarea></label>
+      ${field("Mode", `${basePath}.mode`, location.hybrid.mode || "prepared_gm_turns")}
+      <label class="wide">Summary<textarea data-path="${basePath}.summary">${escapeHtml(location.hybrid.summary || "")}</textarea></label>
     </div>
     <h3 class="section-title">Prepared GM turns</h3>
     <div class="prepared-turn-list">
@@ -454,6 +460,8 @@ function preparedTurnMarkup(basePath, turn, index) {
     </div>
     <div class="form-grid">
       ${field("ID", `${path}.id`, turn.id || "")}
+      ${field("Action ID", `${path}.action_id`, turn.action_id || "")}
+      ${field("Outcome", `${path}.outcome`, turn.outcome || "neutral")}
       ${field("Purpose", `${path}.purpose`, turn.purpose || "choice_response")}
       ${field("Source choice", `${path}.source_choice`, turn.source_choice || "")}
       ${field("Player intent", `${path}.player_intent`, turn.player_intent || "")}
@@ -468,6 +476,11 @@ function preparedTurnMarkup(basePath, turn, index) {
     <h4 class="mini-title">Choices</h4>
     ${choicesMarkup(`${path}.draft.choices`, draft.choices || [])}
   </section>`;
+}
+
+function actionsJsonMarkup(path, actions) {
+  return `<h3 class="section-title">Actions</h3>
+    <label class="wide">Action Graph JSON<textarea data-json-path="${path}" spellcheck="false">${escapeHtml(JSON.stringify(actions || [], null, 2))}</textarea></label>`;
 }
 
 function renderJsonEditor() {
@@ -525,8 +538,17 @@ function handleEditorInput(event) {
   }
   if (target.dataset.choicePath) {
     const choices = getByPath(state.scenario, target.dataset.choicePath, []);
-    const choice = choices[Number(target.dataset.index)];
-    choice[target.dataset.choiceField] = target.value;
+    if (target.dataset.childIndex !== undefined) {
+      const parentIdx = Number(target.dataset.index);
+      const childIdx = Number(target.dataset.childIndex);
+      const parent = choices[parentIdx];
+      if (parent && Array.isArray(parent.children) && parent.children[childIdx]) {
+        parent.children[childIdx][target.dataset.choiceField] = target.value;
+      }
+    } else {
+      const choice = choices[Number(target.dataset.index)];
+      choice[target.dataset.choiceField] = target.value;
+    }
     markDirty();
   }
   if (target.dataset.relationPath) {
@@ -556,6 +578,39 @@ function handleEditorClick(event) {
     choices.push({ text: "", preview: "", risk: "" });
     markDirty();
     renderEditor();
+  }
+  if (target.dataset.removeChildChoice) {
+    const choices = getByPath(state.scenario, target.dataset.removeChildChoice, []);
+    const parent = choices[Number(target.dataset.parentIndex)];
+    if (parent && Array.isArray(parent.children)) {
+      parent.children.splice(Number(target.dataset.childIndex), 1);
+      if (parent.children.length === 0) delete parent.children;
+    }
+    markDirty();
+    renderEditor();
+  }
+  if (target.dataset.addChildChoice) {
+    const choices = getByPath(state.scenario, target.dataset.addChildChoice, []);
+    const parent = choices[Number(target.dataset.parentIndex)];
+    if (parent) {
+      if (!Array.isArray(parent.children)) parent.children = [];
+      parent.children.push({ text: "", preview: "", risk: "" });
+    }
+    markDirty();
+    renderEditor();
+  }
+  if (target.dataset.toggleChildren) {
+    const choices = getByPath(state.scenario, target.dataset.toggleChildren, []);
+    const parent = choices[Number(target.dataset.index)];
+    if (parent) {
+      if (Array.isArray(parent.children) && parent.children.length > 0) {
+        delete parent.children;
+      } else {
+        parent.children = [{ text: "", preview: "", risk: "" }];
+      }
+      markDirty();
+      renderEditor();
+    }
   }
   if (target.dataset.removeChoice) {
     const choices = getByPath(state.scenario, target.dataset.removeChoice, []);
@@ -655,10 +710,10 @@ function addCurrentRecord() {
   const record = { id: `${section.slice(0, -1)}_${next}`, description: "", keywords: [] };
   record[group.titleKey] = `${group.label} ${next}`;
   if (section === "scenes") {
-    Object.assign(record, { goals: [], location_ids: [], next_scene_ids: [], fallback_choices: [] });
+    Object.assign(record, { goals: [], location_ids: [], next_scene_ids: [] });
   }
   if (section === "locations") {
-    Object.assign(record, { npc_ids: [], item_ids: [], clue_ids: [], enemy_ids: [] });
+    Object.assign(record, { npc_ids: [], item_ids: [], clue_ids: [], enemy_ids: [], connected_location_ids: [], choices: [] });
   }
   if (section === "attribute_defs") {
     record.initial_value = 8;
@@ -738,7 +793,7 @@ function ensureShape(scenario) {
     enemy.skills = Array.isArray(enemy.skills) ? enemy.skills : [];
   });
   if (!scenario.scenes.length) {
-    scenario.scenes.push({ id: "start", title: "开始", description: "", keywords: [], goals: [], fallback_choices: [] });
+    scenario.scenes.push({ id: "start", title: "开始", description: "", keywords: [], goals: [] });
   }
   scenario.meta.initial_scene ||= scenario.scenes[0].id || "start";
   scenario.fallback_choices = normalizeChoices(scenario.fallback_choices);
@@ -747,14 +802,17 @@ function ensureShape(scenario) {
     scene.goals = Array.isArray(scene.goals) ? scene.goals : [];
     scene.location_ids = Array.isArray(scene.location_ids) ? scene.location_ids : [];
     scene.next_scene_ids = Array.isArray(scene.next_scene_ids) ? scene.next_scene_ids : [];
-    scene.fallback_choices = normalizeChoices(scene.fallback_choices);
-    if (scene.hybrid) ensureHybridShape(scene);
+    scene.actions = normalizeActions(scene.actions);
   });
   scenario.locations.forEach((location) => {
     location.npc_ids = Array.isArray(location.npc_ids) ? location.npc_ids : [];
     location.item_ids = Array.isArray(location.item_ids) ? location.item_ids : [];
     location.clue_ids = Array.isArray(location.clue_ids) ? location.clue_ids : [];
     location.enemy_ids = Array.isArray(location.enemy_ids) ? location.enemy_ids : [];
+    location.connected_location_ids = Array.isArray(location.connected_location_ids) ? location.connected_location_ids : [];
+    location.choices = normalizeChoices(location.choices);
+    location.actions = normalizeActions(location.actions);
+    if (location.hybrid) ensureHybridShape(location);
   });
   return scenario;
 }
@@ -766,6 +824,8 @@ function ensureHybridShape(scene) {
   scene.hybrid.prepared_turns = Array.isArray(scene.hybrid.prepared_turns) ? scene.hybrid.prepared_turns : [];
   scene.hybrid.prepared_turns.forEach((turn, index) => {
     turn.id ||= `prepared_turn_${index + 1}`;
+    turn.action_id ||= "";
+    turn.outcome ||= "";
     turn.purpose ||= index === 0 ? "opening" : "choice_response";
     turn.source_choice ||= "";
     turn.player_intent ||= "";
@@ -785,6 +845,8 @@ function ensureHybridShape(scene) {
 function newPreparedTurn(index) {
   return {
     id: `prepared_turn_${index}`,
+    action_id: "",
+    outcome: "",
     purpose: index === 1 ? "opening" : "choice_response",
     source_choice: "",
     player_intent: "",
@@ -806,12 +868,35 @@ function normalizeChoices(value) {
   return value
     .map((choice) => {
       if (typeof choice === "string") return { text: choice, preview: "", risk: "" };
-      return {
+      const normalized = {
+        ...(choice?.id ? { id: choice.id } : {}),
+        ...(choice?.action_id ? { action_id: choice.action_id } : {}),
         text: choice?.text || "",
         preview: choice?.preview || "",
         risk: choice?.risk || "",
       };
+      for (const key of ["intent_keywords", "requirements", "roll", "effects", "success_effects", "failure_effects", "once", "disabled_after", "visible_after", "prepared_turn_id"]) {
+        if (choice && choice[key] !== undefined) normalized[key] = choice[key];
+      }
+      if (Array.isArray(choice?.children) && choice.children.length > 0) {
+        normalized.children = normalizeChoices(choice.children);
+      }
+      return normalized;
     });
+}
+
+function normalizeActions(value) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((action) => action && typeof action === "object")
+    .map((action, index) => ({
+      ...action,
+      id: action.id || action.action_id || `action_${index + 1}`,
+      text: action.text || action.label || "",
+      preview: action.preview || "",
+      risk: action.risk || "",
+      intent_keywords: Array.isArray(action.intent_keywords) ? action.intent_keywords : [],
+    }));
 }
 
 function syncInitialSceneAfterIdEdit() {
@@ -823,12 +908,31 @@ function syncInitialSceneAfterIdEdit() {
 
 function choicesMarkup(path, choices) {
   return `<div class="line-list">
-    ${choices.map((choice, index) => `<div class="choice-row">
-      <input data-choice-path="${path}" data-choice-field="text" data-index="${index}" value="${escapeAttr(choice.text || "")}" placeholder="text" />
-      <input data-choice-path="${path}" data-choice-field="preview" data-index="${index}" value="${escapeAttr(choice.preview || "")}" placeholder="preview" />
-      <input data-choice-path="${path}" data-choice-field="risk" data-index="${index}" value="${escapeAttr(choice.risk || "")}" placeholder="risk" />
-      <button class="danger" data-remove-choice="${path}" data-index="${index}" type="button">删除</button>
-    </div>`).join("")}
+    ${choices.map((choice, index) => {
+      const hasChildren = Array.isArray(choice.children) && choice.children.length > 0;
+      const childMarkup = hasChildren
+        ? `<div class="choice-children">
+            ${choice.children.map((child, ci) => `<div class="choice-row choice-child">
+              <input data-choice-path="${path}" data-choice-field="text" data-index="${index}" data-child-index="${ci}" value="${escapeAttr(child.text || "")}" placeholder="子选项 text" />
+              <input data-choice-path="${path}" data-choice-field="preview" data-index="${index}" data-child-index="${ci}" value="${escapeAttr(child.preview || "")}" placeholder="子选项 preview" />
+              <input data-choice-path="${path}" data-choice-field="risk" data-index="${index}" data-child-index="${ci}" value="${escapeAttr(child.risk || "")}" placeholder="子选项 risk" />
+              <button class="danger" data-remove-child-choice="${path}" data-parent-index="${index}" data-child-index="${ci}" type="button">删除</button>
+            </div>`).join("")}
+            <button data-add-child-choice="${path}" data-parent-index="${index}" type="button">添加子选项</button>
+          </div>`
+        : "";
+      const childToggle = `<button class="toggle-children" data-toggle-children="${path}" data-index="${index}" type="button">${hasChildren ? "收起子选项" : "添加子选项"}</button>`;
+      return `<div class="choice-group">
+        <div class="choice-row">
+          <input data-choice-path="${path}" data-choice-field="text" data-index="${index}" value="${escapeAttr(choice.text || "")}" placeholder="text" />
+          <input data-choice-path="${path}" data-choice-field="preview" data-index="${index}" value="${escapeAttr(choice.preview || "")}" placeholder="preview" />
+          <input data-choice-path="${path}" data-choice-field="risk" data-index="${index}" value="${escapeAttr(choice.risk || "")}" placeholder="risk" />
+          ${childToggle}
+          <button class="danger" data-remove-choice="${path}" data-index="${index}" type="button">删除</button>
+        </div>
+        ${hasChildren ? childMarkup : `<div class="choice-children collapsed" data-children-path="${path}" data-children-index="${index}"></div>`}
+      </div>`;
+    }).join("")}
     <button data-add-choice="${path}" type="button">添加选项</button>
   </div>`;
 }
@@ -900,7 +1004,7 @@ function sectionLabel(section) {
 function summaryForSection(section) {
   if (section === "meta") return "编辑标题、摘要、语言和起始场景。";
   if (section === "rules") return `${state.scenario.rules.length} 条规则`;
-  if (section === "hybrid") return `${state.scenario.scenes.length} scenes with editable prepared turns`;
+  if (section === "hybrid") return `${state.scenario.locations.length} locations with editable prepared turns`;
   if (section === "fallback") return `${state.scenario.fallback_choices.length} 个全局选项`;
   if (section === "combat") return `${state.scenario.combat_choices.length} 个战斗选项`;
   if (section === "attribute_defs") return `${state.scenario.attribute_defs.length} 个属性定义`;

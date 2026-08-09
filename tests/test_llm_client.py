@@ -2,6 +2,9 @@ import unittest
 
 from host.llm_client import (
     _apply_response_format,
+    _content_from_gemini_response,
+    _gemini_payload,
+    _is_gemini_backend,
     _message_role_summary,
     _remote_forbidden_hint,
     _remote_gateway_hint,
@@ -96,6 +99,40 @@ class LLMClientTests(unittest.TestCase):
 
         self.assertIn("HTTP Host Header", hint)
         self.assertIn("localhost:11434", hint)
+
+    def test_gemini_backend_detection(self):
+        self.assertTrue(_is_gemini_backend("gemini", {}))
+        self.assertTrue(_is_gemini_backend("cloud", {"type": "gemini"}))
+        self.assertFalse(_is_gemini_backend("ollama", {}))
+
+    def test_gemini_payload_maps_chat_messages(self):
+        payload = _gemini_payload(
+            [
+                {"role": "system", "content": "contract"},
+                {"role": "user", "content": "hello"},
+                {"role": "assistant", "content": "hi"},
+            ],
+            {"temperature": 0.4, "max_tokens": 123, "response_format": "json_object"},
+        )
+
+        self.assertEqual(payload["systemInstruction"]["parts"][0]["text"], "contract")
+        self.assertEqual(payload["contents"][0]["role"], "user")
+        self.assertEqual(payload["contents"][1]["role"], "model")
+        self.assertEqual(payload["generationConfig"]["responseMimeType"], "application/json")
+        self.assertEqual(payload["generationConfig"]["maxOutputTokens"], 123)
+
+    def test_content_from_gemini_response(self):
+        content = _content_from_gemini_response(
+            '{"candidates":[{"content":{"parts":[{"text":"{\\"gm_text\\":\\"ok\\"}"}]}}]}'
+        )
+
+        self.assertEqual(content, '{"gm_text":"ok"}')
+
+    def test_content_from_gemini_response_ignores_malformed_candidates(self):
+        self.assertEqual(_content_from_gemini_response('{"candidates":[null]}'), "")
+        self.assertEqual(_content_from_gemini_response('{"candidates":["bad"]}'), "")
+        self.assertEqual(_content_from_gemini_response('{"candidates":[{"content":null}]}'), "")
+        self.assertEqual(_content_from_gemini_response('{"candidates":[{"content":{"parts":"bad"}}]}'), "")
 
 
 if __name__ == "__main__":

@@ -29,13 +29,18 @@ from .state import (
     PROJECT_ROOT,
     add_player_message,
     add_system_log,
+    action_dice_settings,
+    action_requirement_status,
+    apply_action_result,
     apply_gm_payload,
+    auto_transition_scene,
     build_llm_messages,
     choice_requirement_status,
     create_session,
     load_config,
     load_session,
     public_session,
+    resolve_action,
     roll_dice,
     save_config,
     save_session,
@@ -60,6 +65,7 @@ class CreateSessionRequest(BaseModel):
 
 class TurnRequest(BaseModel):
     text: str
+    action_id: Optional[str] = None
     speaker: str = "プレイヤー"
     client_dice: Optional[dict[str, Any]] = None
 
@@ -404,6 +410,13 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
 
 def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
     action_text = request.text.strip()
+    resolved_action = resolve_action(session, action_text, request.action_id)
+    if resolved_action:
+        enabled, reason = action_requirement_status(resolved_action, session)
+        if not enabled:
+            add_system_log(session, reason or "この行動は現在選択できません。")
+            save_session(session)
+            return public_session(session)
     choice = _matching_choice(session.get("choices"), action_text)
     if choice:
         enabled, reason = choice_requirement_status(choice, session.get("character", {}))
@@ -411,15 +424,35 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             add_system_log(session, reason or "この行動は条件を満たしていません。")
             save_session(session)
             return public_session(session)
+    else:
+        scenario_choice = _matching_scenario_choice(session, action_text)
+        if scenario_choice:
+            enabled, reason = choice_requirement_status(scenario_choice, session.get("character", {}))
+            if not enabled:
+                add_system_log(session, reason or "この行動は条件を満たしていません。")
+                save_session(session)
+                return public_session(session)
 
     add_player_message(session, action_text, request.speaker)
 
-    dice_type, dice_dc = _dice_settings_for_turn(session, action_text)
+    if not resolved_action:
+        session["last_action_result"] = {}
+        auto_transition_scene(session, action_text)
+
+    if resolved_action:
+        dice_type, dice_dc = action_dice_settings(
+            resolved_action,
+            str(session.get("next_dice_type") or "1d20"),
+            int(session.get("next_dice_dc", 0) or 0),
+        )
+    else:
+        dice_type, dice_dc = _dice_settings_for_turn(session, action_text)
     client_dice = request.client_dice
     if isinstance(client_dice, dict) and isinstance(client_dice.get("rolls"), list) and len(client_dice["rolls"]) > 0:
         latest_roll = roll_dice(session, dice_type, int(dice_dc) if isinstance(dice_dc, (int, float)) else None, client_rolls=client_dice["rolls"])
     else:
         latest_roll = roll_dice(session, dice_type, int(dice_dc) if isinstance(dice_dc, (int, float)) else None)
+    action_result = apply_action_result(session, resolved_action, latest_roll) if resolved_action else {}
 
     config = load_config()
     messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
@@ -431,7 +464,8 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             "Turn start "
             f"session={session['id']} speaker={request.speaker!r} "
             f"text_len={len(request.text.strip())} dice={latest_roll['expression']} "
-            f"total={latest_roll['total']} dc={dice_dc}"
+            f"total={latest_roll['total']} dc={dice_dc} "
+            f"resolved_action_id={action_result.get('action_id', '')} outcome={action_result.get('outcome', '')}"
         )
         debug_log(
             "Turn scenario context "
@@ -481,10 +515,10 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
 
 def _dice_settings_for_turn(session: dict[str, Any], action_text: str) -> tuple[str, int]:
     dice_type = str(session.get("next_dice_type") or "1d20")
-    dice_dc = int(session.get("next_dice_dc", 10) or 0)
+    dice_dc = int(session.get("next_dice_dc", 0) or 0)
     choice = _matching_choice(session.get("choices"), action_text)
     if not choice:
-        return dice_type, max(dice_dc, 10)
+        return dice_type, max(dice_dc, 0)
 
     risk = str(choice.get("risk") or "")
     if "判定不要" in risk:
@@ -511,6 +545,21 @@ def _matching_choice(raw_choices: Any, action_text: str) -> Optional[dict[str, A
             continue
         if str(choice.get("text") or "").strip() == normalized_action:
             return choice
+        child_match = _matching_choice(choice.get("children"), normalized_action)
+        if child_match:
+            return child_match
+    return None
+
+
+def _matching_scenario_choice(session: dict[str, Any], action_text: str) -> Optional[dict[str, Any]]:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return None
+    location_id = str(session.get("current_location") or "")
+    for location in pack.get("locations", []):
+        if not isinstance(location, dict) or str(location.get("id") or "") != location_id:
+            continue
+        return _matching_choice(location.get("choices"), action_text)
     return None
 
 

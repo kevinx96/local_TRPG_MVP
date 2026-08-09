@@ -9,10 +9,74 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
-from .gm_contract import build_gm_contract_prompt
-from .scenario_context import load_scenario_pack, normalize_scenario_pack, scene_title
+from .scenario_context import load_scenario_pack, normalize_scenario_pack
 from .scenario_converter import load_gemini_api_key, parse_json_response
 from .state import DEFAULT_CHARACTER, build_llm_messages
+
+
+def build_hybrid_contract_prompt() -> str:
+    """Gemini专用: 详细完整版contract prompt (不被Ollama精简影响)。基于55dd323风格+新特性。"""
+    return (
+        "あなたはTRPGのゲームマスター（GM）です。自然な日本語で簡潔に進行してください。\n"
+        "出力言語は日本語だけにしてください。英語・中国語・内部プロンプト文を gm_text, system_log, choices に混ぜてはいけません。\n"
+        "シナリオコンテキスト、現在のゲーム状態、直近の会話だけを根拠にしてください。\n"
+        "プレイヤーの行動を勝手に決定せず、結果・状況・NPCの反応を描写して次の行動を待ってください。\n\n"
+        "重要: 出力は必ずJSONオブジェクト1つだけにしてください。JSONの前後に本文、挨拶、Markdown、コードフェンスを書いてはいけません。\n\n"
+        "【GM本文】\n"
+        "・プレイヤーに見せる本文は gm_text にだけ入れてください。\n"
+        "・gm_text は通常70〜300字に収めてください。開始場面でも300字を超えないでください。\n"
+        "・gm_text は必ず日本語で書いてください。固有名詞以外の英語表現は禁止です。\n"
+        "・gm_text は現在状態JSONやシナリオ設定を復唱せず、今回の結果だけを短く描写してください。\n"
+        "・NPCの台詞は必要な時だけ「」で短く入れてください。\n"
+        "・gm_text には番号付き選択肢や『以下の選択肢』を書かないでください。\n"
+        "・gm_text には『JSON:』『現在あなたは』『次のステップは何をしますか』などの内部指示を書かないでください。\n\n"
+        "【状態更新】\n"
+        "・ダイス種別はGMが必要に応じて決めてください（例: 1d20, 2d6, 1d100）。\n"
+        "・属性判定が必要な場合は dice_type に属性idを付加してください（例: 1d20+str で筋力判定）。\n"
+        "・キャラクターの属性値が自動でダイス結果に加算されます。空の場合は通常の 1d20 として扱われます。\n"
+        "・state_delta.attribute_changes で属性値の増減を反映できます（例: {\"str\": -2, \"dex\": +1}）。\n"
+        "・state_delta.current_scene は、場面が変わった時だけ scene id または scene title を入れてください。\n"
+        "・アイテム追加時は name, description, effect, quantity をできるだけ含めてください。\n"
+        "・行動選択肢は choices にだけ3〜5つ入れてください。choices.text と choices.risk は必須、choices.preview は省略可です。\n"
+        "・choices は短くしてください。textは行動名、riskは「判定不要」「1d20+str判定（DC12）」「危険」程度にしてください。\n"
+        "・choices.requirements は任意です。属性条件が必要な行動には requirements を書いてください。\n"
+        "  例: {\"any\": [{\"attribute\": \"str\", \"gte\": 10}]}（筋力10以上で選択可）\n"
+        "  例: {\"all\": [{\"attribute\": \"str\", \"gte\": 8}, {\"attribute\": \"dex\", \"gte\": 6}]}（両方必要）\n"
+        "・choices の一部に children を入れると、プレイヤーがその選択肢をクリックした時に子選択肢が展開されます。\n"
+        "  親はGMに送られません。場所やカテゴリの分岐に使ってください。\n"
+        "  例: {\"text\": \"城内を探索する\", \"risk\": \"判定不要\", \"children\": [{\"text\": \"鍛冶屋へ\", \"risk\": \"判定不要\"}, {\"text\": \"道具屋へ\", \"risk\": \"判定不要\"}]}\n"
+        "  子選択肢にも requirements や children を入れられます。\n\n"
+        "【敵・戦闘】\n"
+        "・シナリオコンテキストの matched.enemies に敵がいる場合、その場面は戦闘または戦闘直前の緊張状態として扱ってください。\n"
+        "・敵のHP/MP/SP、属性、skills、descriptionを参照し、攻撃、防御、回復、撤退、交渉など状況に合う戦闘選択肢を choices に含めてください。\n"
+        "・判定が必要な攻撃や回避では dice_type と dice_dc を設定し、成功・失敗の結果だけを描写してください。\n"
+        "・敵を倒した、弱らせた、逃走した、戦闘が終わったなどの結果は system_log と state_delta.current_scene または choices に反映してください。\n\n"
+        "【出力形式】\n"
+        "まずJSON全体を閉じることを最優先してください。長文で途中切れするより、短いgm_textで完全なJSONを返してください。\n"
+        "次の形のJSONオブジェクトだけを返してください。\n"
+        "{\n"
+        '  "gm_text": "70〜300字のGM本文",\n'
+        '  "system_log": "判定や状態変化の短い説明",\n'
+        '  "dice_type": "1d20",\n'
+        '  "dice_dc": 10,\n'
+        '  "state_delta": {\n'
+        '    "hp_change": 0,\n'
+        '    "mp_change": 0,\n'
+        '    "sp_change": 0,\n'
+        '    "gold_change": 0,\n'
+        '    "attribute_changes": {},\n'
+        '    "inventory_add": [],\n'
+        '    "inventory_remove": [],\n'
+        '    "current_scene": null\n'
+        "  },\n"
+        '  "choices": [\n'
+        '    {"text": "行動内容", "risk": "判定不要"},\n'
+        '    {"text": "行動内容", "risk": "1d20+str判定（DC12）", "requirements": {"all": [{"attribute": "str", "gte": 10}]}},\n'
+        '    {"text": "行動内容", "risk": "危険"},\n'
+        '    {"text": "場所へ移動", "preview": "施設を選ぶ", "risk": "判定不要", "children": [{"text": "鍛冶屋へ", "risk": "判定不要"}, {"text": "道具屋へ", "risk": "判定不要"}]}\n'
+        "  ]\n"
+        "}"
+    )
 
 
 HOST_ROOT = Path(__file__).resolve().parent
@@ -59,26 +123,26 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     processed = 0
     started = not bool(args.start_scene)
-    for scene in source_pack.get("scenes", []):
-        scene_id = str(scene.get("id") or "").strip()
-        if not scene_id:
+    for location in source_pack.get("locations", []):
+        loc_id = str(location.get("id") or "").strip()
+        if not loc_id:
             continue
         if not started:
-            started = scene_id == args.start_scene
+            started = loc_id == args.start_scene
             if not started:
                 continue
         if args.max_scenes and processed >= args.max_scenes:
             break
 
-        target_scene = _scene_by_id(hybrid_pack, scene_id)
-        if target_scene and target_scene.get("hybrid") and not args.force:
-            print(f"skip {scene_id}: hybrid data already exists")
+        target_loc = _location_by_id(hybrid_pack, loc_id)
+        if target_loc and _hybrid_has_content(target_loc.get("hybrid")) and not args.force:
+            print(f"skip {loc_id}: hybrid data already exists")
             continue
 
-        messages = build_scene_messages(source_pack, scene_id)
-        prompt = build_gemini_prompt(messages, source_pack, scene)
-        (prompt_dir / f"{scene_id}.prompt.txt").write_text(prompt, encoding="utf-8")
-        print(f"scene {scene_id}: prompt_chars={len(prompt)}")
+        messages = build_location_messages(source_pack, loc_id)
+        prompt = build_gemini_prompt(messages, source_pack, location)
+        (prompt_dir / f"{loc_id}.prompt.txt").write_text(prompt, encoding="utf-8")
+        print(f"location {loc_id}: prompt_chars={len(prompt)}")
 
         if args.dry_run:
             processed += 1
@@ -87,14 +151,14 @@ def main(argv: Optional[list[str]] = None) -> int:
         raw, payload = call_gemini_payload(
             prompt,
             model_names_from_args(args.model, args.models),
-            raw_path_prefix=prompt_dir / scene_id,
+            raw_path_prefix=prompt_dir / loc_id,
         )
-        (prompt_dir / f"{scene_id}.raw.txt").write_text(raw, encoding="utf-8")
+        (prompt_dir / f"{loc_id}.raw.txt").write_text(raw, encoding="utf-8")
 
-        apply_hybrid_scene(hybrid_pack, scene_id, payload)
+        apply_hybrid_location(hybrid_pack, loc_id, payload)
         _stamp_hybrid_meta(hybrid_pack, source)
         write_pack(output, hybrid_pack)
-        print(f"scene {scene_id}: written {output}")
+        print(f"location {loc_id}: written {output}")
         processed += 1
 
     if args.dry_run:
@@ -105,10 +169,11 @@ def main(argv: Optional[list[str]] = None) -> int:
     return 0
 
 
-def build_scene_messages(pack: dict[str, Any], scene_id: str) -> list[dict[str, str]]:
-    scene = _scene_by_id(pack, scene_id)
-    if not scene:
-        raise ValueError(f"Unknown scene id: {scene_id}")
+def build_location_messages(pack: dict[str, Any], location_id: str) -> list[dict[str, str]]:
+    location = _location_by_id(pack, location_id)
+    if not location:
+        raise ValueError(f"Unknown location id: {location_id}")
+    scene_id = _scene_id_for_location(pack, location_id)
     session = {
         "id": "offline-hybrid-generation",
         "scenario_path": str(DEFAULT_SOURCE),
@@ -116,12 +181,13 @@ def build_scene_messages(pack: dict[str, Any], scene_id: str) -> list[dict[str, 
         "gm_mode": "semi",
         "scenario_pack": pack,
         "current_scene": scene_id,
+        "current_location": location_id,
         "character": deepcopy(DEFAULT_CHARACTER),
         "messages": [
             {
                 "role": "user",
                 "speaker": "Player",
-                "text": "Prepare the fixed Semi/Hybrid script material for this scene.",
+                "text": "Prepare the fixed Semi/Hybrid script material for this location.",
                 "created_at": _now(),
             }
         ],
@@ -134,13 +200,29 @@ def build_scene_messages(pack: dict[str, Any], scene_id: str) -> list[dict[str, 
         "updated_at": _now(),
     }
     latest_roll = {"expression": "offline", "rolls": [], "total": 0}
-    return build_llm_messages(session, latest_roll, build_gm_contract_prompt())
+    return build_llm_messages(session, latest_roll, build_hybrid_contract_prompt())
 
 
-def build_gemini_prompt(messages: list[dict[str, str]], pack: dict[str, Any], scene: dict[str, Any]) -> str:
+def _scene_id_for_location(pack: dict[str, Any], location_id: str) -> str:
+    for scene in pack.get("scenes", []):
+        if not isinstance(scene, dict):
+            continue
+        if location_id in [str(lid) for lid in (scene.get("location_ids") or [])]:
+            return str(scene.get("id") or "")
+    return str(pack.get("meta", {}).get("initial_scene") or "start")
+
+
+def _location_by_id(pack: dict[str, Any], location_id: str) -> Optional[dict[str, Any]]:
+    for loc in pack.get("locations", []):
+        if isinstance(loc, dict) and str(loc.get("id") or "") == location_id:
+            return loc
+    return None
+
+
+def build_gemini_prompt(messages: list[dict[str, str]], pack: dict[str, Any], location: dict[str, Any]) -> str:
     prompt_parts = [
         "The following messages are the same style of context currently sent to the local Ollama GM.",
-        "Use them as source context to prepare reusable GM response payloads for this scene.",
+        "Use them as source context to prepare reusable GM response payloads for this location.",
         "Do not answer as a live session; produce offline pre-cooked turns that qwen can rewrite later.",
         "",
     ]
@@ -155,10 +237,10 @@ def build_gemini_prompt(messages: list[dict[str, str]], pack: dict[str, Any], sc
     prompt_parts.append(
         json.dumps(
             {
-                "task": "Expand one scene into editable Semi/Hybrid script material for a TRPG scenario pack.",
+                "task": "Expand one location into editable Semi/Hybrid script material for a TRPG scenario pack.",
                 "language": pack.get("meta", {}).get("language", "ja"),
-                "scene_id": scene.get("id"),
-                "scene_title": scene.get("title") or scene_title({"scenario_pack": pack, "current_scene": scene.get("id")}),
+                "location_id": location.get("id"),
+                "location_title": str(location.get("title") or location.get("id") or ""),
                 "requirements": [
                     "Return JSON only.",
                     "Do not include markdown fences.",
@@ -189,9 +271,24 @@ def build_gemini_prompt(messages: list[dict[str, str]], pack: dict[str, Any], sc
                                     "system_log": "short state/event log",
                                     "dice_type": "1d20",
                                     "dice_dc": 10,
-                                    "state_delta": {},
+                                    "state_delta": {
+                                        "hp_change": 0,
+                                        "mp_change": 0,
+                                        "sp_change": 0,
+                                        "gold_change": 0,
+                                        "attribute_changes": {},
+                                        "inventory_add": [],
+                                        "inventory_remove": [],
+                                        "current_scene": None
+                                    },
                                     "choices": [
-                                        {"text": "choice label", "preview": "expected direction", "risk": "dice or risk"}
+                                        {
+                                            "text": "choice label",
+                                            "preview": "expected direction",
+                                            "risk": "dice or risk",
+                                            "requirements": {"any": [{"attribute": "str", "gte": 10}]},
+                                            "children": [{"text": "sub-choice", "risk": "risk"}]
+                                        }
                                     ],
                                 },
                                 "rewrite_notes": [
@@ -203,7 +300,13 @@ def build_gemini_prompt(messages: list[dict[str, str]], pack: dict[str, Any], sc
                         "gm_notes": ["private notes for later human editing"],
                     },
                     "fallback_choices": [
-                        {"text": "choice label", "preview": "expected direction", "risk": "dice or risk"}
+                        {
+                            "text": "choice label",
+                            "preview": "expected direction",
+                            "risk": "dice or risk",
+                            "requirements": {"any": [{"attribute": "str", "gte": 10}]},
+                            "children": [{"text": "sub-choice", "risk": "risk"}]
+                        }
                     ],
                 },
             },
@@ -271,6 +374,29 @@ def call_gemini_payload(
                 raise
             print(f"Gemini model fallback: {model_name} failed with {exc.__class__.__name__}: {_one_line(str(exc), 180)}")
     raise RuntimeError(f"All Gemini models failed. Last error: {last_error}") from last_error
+
+
+def _hybrid_has_content(hybrid: Any) -> bool:
+    if not isinstance(hybrid, dict):
+        return False
+    turns = hybrid.get("prepared_turns")
+    if isinstance(turns, list) and turns:
+        return True
+    summary = str(hybrid.get("summary") or "").strip()
+    return bool(summary)
+
+
+def apply_hybrid_location(pack: dict[str, Any], location_id: str, payload: dict[str, Any]) -> None:
+    location = _location_by_id(pack, location_id)
+    if location is None:
+        raise ValueError(f"Output pack no longer has location id: {location_id}")
+    hybrid = payload.get("hybrid")
+    if not isinstance(hybrid, dict):
+        raise ValueError(f"Gemini payload for {location_id} has no hybrid object.")
+    location["hybrid"] = _normalize_hybrid(hybrid)
+    choices = _normalize_choices(payload.get("fallback_choices"))
+    if choices:
+        location["choices"] = choices
 
 
 def apply_hybrid_scene(pack: dict[str, Any], scene_id: str, payload: dict[str, Any]) -> None:
@@ -416,21 +542,26 @@ def _normalize_records(value: Any) -> list[dict[str, Any]]:
     return records
 
 
-def _normalize_choices(value: Any) -> list[dict[str, str]]:
+def _normalize_choices(value: Any) -> list[dict[str, Any]]:
     if not isinstance(value, list):
         return []
-    choices: list[dict[str, str]] = []
+    choices: list[dict[str, Any]] = []
     for item in value:
         if isinstance(item, str) and item.strip():
             choices.append({"text": item.strip(), "preview": "", "risk": ""})
         elif isinstance(item, dict):
             text = str(item.get("text") or "").strip()
             if text:
-                choices.append({
+                normalized: dict[str, Any] = {
                     "text": text,
                     "preview": str(item.get("preview") or ""),
                     "risk": str(item.get("risk") or ""),
-                })
+                }
+                if "requirements" in item:
+                    normalized["requirements"] = deepcopy(item["requirements"])
+                if "children" in item and isinstance(item["children"], list):
+                    normalized["children"] = _normalize_choices(item["children"])
+                choices.append(normalized)
     return choices
 
 

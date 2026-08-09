@@ -8,7 +8,7 @@ from unittest.mock import patch
 from host import app as app_module
 from host import state
 from host.gm_contract import split_visible_and_json
-from host.scenario_context import hybrid_context_debug
+from host.scenario_context import current_action_choices, hybrid_context_debug
 
 
 class StateTests(unittest.TestCase):
@@ -129,14 +129,15 @@ class StateTests(unittest.TestCase):
             encoding="utf-8",
         )
         local_path.write_text(
-            json.dumps({"backends": {"ollama": {"model": "remote-model"}}}),
-            encoding="utf-8",
+            json.dumps({"backends": {"ollama": {"model": "remote-model", "fallback_models": ["m2", "m3"]}}}),
+            encoding="utf-8-sig",
         )
 
         with patch.dict(os.environ, {"TRPG_OLLAMA_BASE_URL": "https://ollama.example.com"}, clear=False):
             config = state.load_config(config_path)
 
         self.assertEqual(config["backends"]["ollama"]["model"], "remote-model")
+        self.assertEqual(config["backends"]["ollama"]["fallback_models"], ["m2", "m3"])
         self.assertEqual(config["backends"]["ollama"]["base_url"], "https://ollama.example.com/v1")
 
     def test_select_scenario_context_matches_keywords(self):
@@ -149,6 +150,25 @@ class StateTests(unittest.TestCase):
         self.assertEqual([item["id"] for item in context["matched"]["npcs"]], ["smith"])
         self.assertEqual([item["id"] for item in context["matched"]["items"]], ["iron_shield"])
         self.assertEqual(context["matched"]["clues"], [])
+
+    def test_select_scenario_context_uses_word_boundaries_for_ascii_keywords(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["npcs"].append({
+            "id": "innkeeper",
+            "name": "Inn Keeper",
+            "description": "Offers a room.",
+            "keywords": ["inn", "\u5bbf"],
+        })
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        english_context = state.select_scenario_context(session, "We discuss dinner in the valley.")
+        japanese_context = state.select_scenario_context(session, "\u5bbf\u5c4b\u3067\u60c5\u5831\u3092\u96c6\u3081\u308b")
+
+        self.assertNotIn("innkeeper", [item["id"] for item in english_context["matched"]["npcs"]])
+        self.assertIn("innkeeper", [item["id"] for item in japanese_context["matched"]["npcs"]])
 
     def test_scene_description_does_not_keyword_match_remote_enemies(self):
         path = self.write_pack()
@@ -481,7 +501,7 @@ class StateTests(unittest.TestCase):
     def test_semi_mode_uses_prepared_turn_context(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
-        raw["scenes"][0]["hybrid"] = {
+        raw["locations"][0]["hybrid"] = {
             "mode": "prepared_gm_turns",
             "prepared_turns": [
                 {
@@ -542,7 +562,7 @@ class StateTests(unittest.TestCase):
     def test_hybrid_turn_matching_ignores_stale_assistant_text(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
-        raw["scenes"][0]["hybrid"] = {
+        raw["locations"][0]["hybrid"] = {
             "mode": "prepared_gm_turns",
             "prepared_turns": [
                 {
@@ -569,10 +589,75 @@ class StateTests(unittest.TestCase):
         self.assertNotIn("SEMI/HYBRID", combined)
         self.assertIn("シナリオコンテキスト", messages[1]["content"])
 
+    def test_hybrid_turn_matching_uses_current_player_text_only(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["hybrid"] = {
+            "mode": "prepared_gm_turns",
+            "prepared_turns": [
+                {
+                    "id": "invite_robin_success",
+                    "purpose": "choice_response",
+                    "source_choice": "\u30d1\u30fc\u30c6\u30a3\u306b\u52e7\u8a98\u3059\u308b",
+                    "trigger_keywords": ["\u30d1\u30fc\u30c6\u30a3", "\u52e7\u8a98"],
+                    "draft": {"gm_text": "invite draft", "choices": []},
+                },
+                {
+                    "id": "robin_rumor",
+                    "purpose": "choice_response",
+                    "source_choice": "\u5642\u8a71\u3092\u805e\u304f",
+                    "trigger_keywords": ["\u5642", "\u8a71"],
+                    "draft": {"gm_text": "rumor draft", "choices": []},
+                },
+            ],
+        }
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path), gm_mode="semi")
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "\u30d1\u30fc\u30c6\u30a3\u306b\u52e7\u8a98\u3059\u308b")
+
+        context = state.select_hybrid_context(session, "\u5642\u8a71\u3092\u805e\u304f", include_debug=True)
+        debug = hybrid_context_debug(context)
+
+        self.assertEqual(debug["prepared_turn"], "robin_rumor")
+
+    def test_hybrid_turn_matching_prefers_failed_roll_draft(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["hybrid"] = {
+            "mode": "prepared_gm_turns",
+            "prepared_turns": [
+                {
+                    "id": "invite_robin_success",
+                    "purpose": "choice_response",
+                    "source_choice": "\u30d1\u30fc\u30c6\u30a3\u306b\u52e7\u8a98\u3059\u308b",
+                    "trigger_keywords": ["\u30d1\u30fc\u30c6\u30a3", "\u52e7\u8a98"],
+                    "draft": {"gm_text": "success draft", "choices": []},
+                },
+                {
+                    "id": "invite_robin_fail",
+                    "purpose": "choice_response",
+                    "source_choice": "\u30d1\u30fc\u30c6\u30a3\u306b\u52e7\u8a98\u3059\u308b",
+                    "trigger_keywords": ["\u30d1\u30fc\u30c6\u30a3", "\u52e7\u8a98"],
+                    "draft": {"gm_text": "fail draft", "choices": []},
+                },
+            ],
+        }
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path), gm_mode="semi")
+        session = state.load_session(public["id"])
+        state.add_player_message(session, "\u30d1\u30fc\u30c6\u30a3\u306b\u52e7\u8a98\u3059\u308b")
+        session["dice_log"].append({"expression": "1d100", "rolls": [12], "total": 12, "dc": 60, "success": False})
+
+        context = state.select_hybrid_context(session, "\u30d1\u30fc\u30c6\u30a3\u306b\u52e7\u8a98\u3059\u308b", include_debug=True)
+        debug = hybrid_context_debug(context)
+
+        self.assertEqual(debug["prepared_turn"], "invite_robin_fail")
+
     def test_full_mode_ignores_prepared_turn_hints(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
-        raw["scenes"][0]["hybrid"] = {
+        raw["locations"][0]["hybrid"] = {
             "mode": "prepared_gm_turns",
             "prepared_turns": [
                 {
@@ -772,6 +857,37 @@ class StateTests(unittest.TestCase):
         self.assertEqual(safe_type, "1d20")
         self.assertEqual(safe_dc, 0)
 
+    def test_child_choice_does_not_fall_back_to_default_dice_dc(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+        session["choices"] = [
+            {
+                "text": "\u57ce\u4e0b\u753a\u3092\u63a2\u7d22\u3059\u308b",
+                "risk": "\u5224\u5b9a\u4e0d\u8981",
+                "children": [
+                    {"text": "\u935b\u51b6\u5c4b\u3078\u5411\u304b\u3046", "risk": "\u5224\u5b9a\u4e0d\u8981"},
+                ],
+            }
+        ]
+
+        dice_type, dice_dc = app_module._dice_settings_for_turn(session, "\u935b\u51b6\u5c4b\u3078\u5411\u304b\u3046")
+
+        self.assertEqual(dice_type, "1d20")
+        self.assertEqual(dice_dc, 0)
+
+    def test_unmatched_action_does_not_create_default_dice_check(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+
+        dice_type, dice_dc = app_module._dice_settings_for_turn(session, "\u81ea\u7531\u5165\u529b")
+
+        self.assertEqual(dice_type, "1d20")
+        self.assertEqual(dice_dc, 0)
+
     def test_choice_risk_requirement_disables_when_attribute_too_low(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
@@ -803,6 +919,144 @@ class StateTests(unittest.TestCase):
 
         self.assertTrue(choice["enabled"])
         self.assertNotIn("disabled_reason", choice)
+
+    def test_choice_risk_character_requirement_preserves_attribute_or(self):
+        public = state.create_session(str(self.write_pack()), character_id="hero")
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"str": 8, "dex": 12}
+        session["choices"] = [
+            {
+                "text": "\u52c7\u8005\u306e\u5263\u3092\u6383\u3046",
+                "risk": "\u52c7\u8005\u306e\u307f\u3001\u7b4b\u529b\u307e\u305f\u306f\u654f\u6377\u304c10\u4ee5\u4e0a\u3067\u5224\u5b9a",
+            },
+        ]
+
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertTrue(choice["enabled"])
+
+        session["character"]["attributes"] = {"str": 8, "dex": 8}
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertFalse(choice["enabled"])
+        self.assertIn("\u7b4b\u529b", choice["disabled_reason"])
+        self.assertIn("\u654f\u6377", choice["disabled_reason"])
+        self.assertIn("\u307e\u305f\u306f", choice["disabled_reason"])
+
+    def test_explicit_nested_choice_requirements_are_recursive(self):
+        public = state.create_session(str(self.write_pack()), character_id="hero")
+        session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"str": 8, "dex": 11}
+        session["choices"] = [
+            {
+                "text": "\u52c7\u8005\u306e\u8a66\u7df4\u3092\u53d7\u3051\u308b",
+                "risk": "\u5224\u5b9a",
+                "requirements": {
+                    "all": [
+                        {"character_id": "hero"},
+                        {
+                            "any": [
+                                {"attribute": "str", "gte": 10},
+                                {"attribute": "dex", "gte": 10},
+                            ]
+                        },
+                    ]
+                },
+            }
+        ]
+
+        choice = state.public_session(session)["choices"][0]
+        self.assertTrue(choice["enabled"])
+
+        session["character"]["attributes"] = {"str": 8, "dex": 8}
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertFalse(choice["enabled"])
+        self.assertIn("\u307e\u305f\u306f", choice["disabled_reason"])
+
+    def test_choice_preview_character_requirement_disables_wrong_character(self):
+        public = state.create_session(str(self.write_pack()), character_id="thief")
+        session = state.load_session(public["id"])
+        session["choices"] = [
+            {
+                "text": "\u935b\u51b6\u5e2b\u306b\u5263\u3092\u898b\u305b\u308b",
+                "preview": "\u52c7\u8005\u306e\u5263\u306b\u3064\u3044\u3066\u76f8\u8ac7\u3059\u308b\uff08\u52c7\u8005\u306e\u307f\uff09",
+                "risk": "\u5224\u5b9a\u4e0d\u8981",
+            }
+        ]
+
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertFalse(choice["enabled"])
+        self.assertIn("\u52c7\u8005\u306e\u307f", choice["disabled_reason"])
+
+    def test_choice_inventory_and_gold_requirements_disable_purchase(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["gold"] = 0
+        session["character"]["inventory"].append({"name": "\u6c37\u306e\u8b77\u7b26", "quantity": 1})
+        session["choices"] = [
+            {
+                "text": "\u6c37\u306e\u8b77\u7b26\u3092\u8cb7\u3046\uff0850G\uff09",
+                "risk": "\u5224\u5b9a\u4e0d\u8981",
+                "requirements": {
+                    "all": [
+                        {"gold_gte": 50},
+                        {"lacks_item": "\u6c37\u306e\u8b77\u7b26"},
+                    ]
+                },
+            }
+        ]
+
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertFalse(choice["enabled"])
+        self.assertIn("50", choice["disabled_reason"])
+        self.assertIn("\u6c37\u306e\u8b77\u7b26", choice["disabled_reason"])
+
+    def test_purchase_text_infers_inventory_and_gold_requirements(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["gold"] = 0
+        session["character"]["inventory"].append({"name": "\u6c37\u306e\u8b77\u7b26", "quantity": 1})
+        session["choices"] = [
+            {
+                "text": "\u6c37\u306e\u8b77\u7b26\u3092\u8cb7\u3046\uff0850G\uff09",
+                "risk": "\u5224\u5b9a\u4e0d\u8981",
+            }
+        ]
+
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertFalse(choice["enabled"])
+        self.assertIn("50", choice["disabled_reason"])
+        self.assertIn("\u6c37\u306e\u8b77\u7b26", choice["disabled_reason"])
+
+    def test_disabled_scenario_choice_is_not_sent_to_llm_when_not_in_current_choices(self):
+        public = state.create_session(str(self.write_pack()))
+        session = state.load_session(public["id"])
+        session["character"]["gold"] = 0
+        session["character"]["inventory"].append({"name": "\u6c37\u306e\u8b77\u7b26", "quantity": 1})
+        session["choices"] = []
+        session["scenario_pack"]["locations"][0]["choices"] = [
+            {
+                "text": "\u6c37\u306e\u8b77\u7b26\u3092\u8cb7\u3046\uff0850G\uff09",
+                "risk": "\u5224\u5b9a\u4e0d\u8981",
+                "requirements": {
+                    "all": [
+                        {"gold_gte": 50},
+                        {"lacks_item": "\u6c37\u306e\u8b77\u7b26"},
+                    ]
+                },
+            }
+        ]
+
+        result = app_module._run_turn(session, app_module.TurnRequest(text="\u6c37\u306e\u8b77\u7b26\u3092\u8cb7\u3046\uff0850G\uff09"))
+
+        self.assertEqual(session["messages"], [])
+        self.assertEqual(session["dice_log"], [])
+        self.assertTrue(any("\u6c37\u306e\u8b77\u7b26" in log.get("text", "") for log in session["system_logs"]))
+        self.assertEqual(result["messages"], [])
 
     def test_disabled_choice_is_not_sent_to_llm(self):
         public = state.create_session(str(self.write_pack()))
@@ -882,6 +1136,396 @@ class StateTests(unittest.TestCase):
 
         self.assertEqual(session["current_scene"], "start")
         self.assertTrue(any("不正な場面遷移を無視しました: dragon_valley" in log["text"] for log in session["system_logs"]))
+
+
+    def test_action_purchase_sets_flag_and_disables_repeat(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {
+                "id": "buy_ice_amulet",
+                "text": "\u6c37\u306e\u8b77\u7b26\u3092\u8cb7\u3046",
+                "requirements": {"gold_gte": 50},
+                "effects": [
+                    {"gold_change": -50},
+                    {"add_item": {"name": "\u6c37\u306e\u8b77\u7b26", "quantity": 1}},
+                    {"set_flag": "bought_ice_amulet"},
+                ],
+                "disabled_after": "bought_ice_amulet",
+            }
+        ]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+        session["character"]["gold"] = 50
+
+        action = state.resolve_action(session, action_id="buy_ice_amulet")
+        roll = state.roll_dice(session, *state.action_dice_settings(action), client_rolls=[10])
+        result = state.apply_action_result(session, action, roll)
+        choice = state.public_session(session)["choices"][0]
+
+        self.assertEqual(result["action_id"], "buy_ice_amulet")
+        self.assertEqual(session["character"]["gold"], 0)
+        self.assertTrue(session["flags"]["bought_ice_amulet"])
+        self.assertTrue(any(item.get("name") == "\u6c37\u306e\u8b77\u7b26" for item in session["character"]["inventory"]))
+        self.assertFalse(choice["enabled"])
+
+    def test_action_failure_branch_does_not_apply_success_effects(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {
+                "id": "invite_robin",
+                "text": "\u30ed\u30d3\u30f3\u3092\u52e7\u8a98\u3059\u308b",
+                "roll": {"dice_type": "1d20", "dc": 15},
+                "success_effects": [{"current_scene": "forest"}, {"set_flag": "recruited_robin"}],
+                "failure_effects": [{"set_flag": "robin_refused"}],
+            }
+        ]
+        raw["scenes"][0]["next_scene_ids"] = ["forest"]
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+
+        action = state.resolve_action(session, action_id="invite_robin")
+        roll = state.roll_dice(session, *state.action_dice_settings(action), client_rolls=[3])
+        result = state.apply_action_result(session, action, roll)
+
+        self.assertEqual(result["outcome"], "failure")
+        self.assertEqual(session["current_scene"], "start")
+        self.assertTrue(session["flags"]["robin_refused"])
+        self.assertNotIn("recruited_robin", session["flags"])
+
+    def test_hybrid_prepared_turn_matches_action_id_and_outcome(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {
+                "id": "invite_robin",
+                "text": "\u30ed\u30d3\u30f3\u3092\u52e7\u8a98\u3059\u308b",
+                "roll": {"dice_type": "1d20", "dc": 15},
+                "failure_effects": [{"set_flag": "robin_refused"}],
+            }
+        ]
+        raw["locations"][0]["hybrid"] = {
+            "mode": "prepared_gm_turns",
+            "prepared_turns": [
+                {"id": "invite_success", "action_id": "invite_robin", "outcome": "success", "draft": {"gm_text": "success draft"}},
+                {"id": "invite_fail", "action_id": "invite_robin", "outcome": "failure", "draft": {"gm_text": "failure draft"}},
+            ],
+        }
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path), gm_mode="semi")
+        session = state.load_session(public["id"])
+        action = state.resolve_action(session, action_id="invite_robin")
+        roll = state.roll_dice(session, *state.action_dice_settings(action), client_rolls=[3])
+        state.apply_action_result(session, action, roll)
+
+        context = state.select_hybrid_context(session, "\u30ed\u30d3\u30f3\u3092\u52e7\u8a98\u3059\u308b", include_debug=True)
+        debug = hybrid_context_debug(context)
+        combined = json.dumps(context, ensure_ascii=False)
+
+        self.assertEqual(debug["prepared_turn"], "invite_fail")
+        self.assertIn("failure draft", combined)
+        self.assertIn("invite_robin", combined)
+
+    def test_action_result_blocks_model_state_delta_and_choices(self):
+        path = self.write_pack()
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw["locations"][0]["actions"] = [
+            {"id": "talk", "text": "\u8a71\u3059", "effects": [{"set_flag": "talked"}]}
+        ]
+        raw["scenes"].append({"id": "dragon_valley", "title": "Dragon Valley", "description": "", "location_ids": []})
+        path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
+        public = state.create_session(str(path))
+        session = state.load_session(public["id"])
+        action = state.resolve_action(session, action_id="talk")
+        roll = state.roll_dice(session, *state.action_dice_settings(action), client_rolls=[10])
+        state.apply_action_result(session, action, roll)
+
+        state.apply_gm_payload(
+            session,
+            "GM text",
+            {"state_delta": {"current_scene": "dragon_valley", "gold_change": 999}, "choices": [{"text": "bad"}]},
+        )
+
+        self.assertEqual(session["current_scene"], "start")
+        self.assertEqual(session["character"]["gold"], 0)
+        self.assertNotEqual(session["choices"][0]["text"], "bad")
+
+    def test_dragon_rpg_city_actions_stay_nested_under_city_group(self):
+        base_path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg.json"
+        public = state.create_session(str(base_path), gm_mode="full")
+        session = state.load_session(public["id"])
+        choices = current_action_choices(session)
+        choice_texts = [choice["text"] for choice in choices]
+
+        self.assertIn("城下町を探索する", choice_texts)
+        self.assertNotIn("鍛冶屋へ向かう", choice_texts)
+        city_choice = next(choice for choice in choices if choice.get("action_id") == "explore_castle_town")
+        self.assertEqual(
+            [child.get("action_id") for child in city_choice.get("children", [])],
+            ["go_forge", "go_inn", "go_magic_shop", "go_item_shop", "go_alley"],
+        )
+
+        action = state.resolve_action(session, action_id="go_forge")
+        self.assertIsNotNone(action)
+        self.assertEqual(action["text"], "鍛冶屋へ向かう")
+
+    def test_dragon_rpg_intro_actions_disable_after_use(self):
+        expected_once_flags = {
+            "ask_king_info": "heard_king_info",
+            "ask_general_advice": "asked_general_advice",
+            "check_supplies": "checked_supplies",
+        }
+
+        for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
+            with self.subTest(filename=filename):
+                path = state.HOST_ROOT / "prompt" / "processed" / filename
+                public = state.create_session(str(path), gm_mode="semi")
+                session = state.load_session(public["id"])
+
+                for action_id, once_flag in expected_once_flags.items():
+                    action = state.resolve_action(session, action_id=action_id)
+                    self.assertIsNotNone(action)
+                    self.assertEqual(action.get("once"), once_flag)
+                    roll = state.roll_dice(
+                        session,
+                        *state.action_dice_settings(action),
+                        client_rolls=[20],
+                    )
+                    state.apply_action_result(session, action, roll)
+
+                choices = {
+                    choice.get("action_id"): choice
+                    for choice in state.public_session(session)["choices"]
+                }
+                for action_id, once_flag in expected_once_flags.items():
+                    self.assertTrue(session["flags"].get(once_flag))
+                    self.assertFalse(choices[action_id]["enabled"])
+                    self.assertIn("完了済み", choices[action_id]["disabled_reason"])
+
+    def test_dragon_rpg_action_groups_and_story_once_flags(self):
+        expected_groups = {
+            "forge": {
+                "buy_equipment": ["buy_adamantite_armor", "buy_ice_amulet"],
+            },
+            "inn": {
+                "ask_ian": ["ask_ian_legend", "ask_ian_advice", "rest_at_inn"],
+                "ask_robin": ["invite_robin", "ask_robin_rumor"],
+            },
+        }
+        expected_once = {
+            "ask_king_info",
+            "ask_general_advice",
+            "check_supplies",
+            "ask_blacksmith_weakness",
+            "show_sword_to_blacksmith",
+            "accept_sword_fusion",
+            "ask_ian_legend",
+            "ask_ian_advice",
+            "invite_robin",
+            "ask_robin_rumor",
+            "talk_suspicious_merchant",
+            "search_alley",
+            "ask_elder_weakness",
+        }
+
+        for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
+            with self.subTest(filename=filename):
+                path = state.HOST_ROOT / "prompt" / "processed" / filename
+                pack = json.loads(path.read_text(encoding="utf-8-sig"))
+                locations = {location["id"]: location for location in pack["locations"]}
+
+                all_actions = {}
+                for location in locations.values():
+                    for action in self._iter_scenario_actions(location.get("actions")):
+                        all_actions[action["id"]] = action
+
+                for location_id, groups in expected_groups.items():
+                    top_actions = {
+                        action["id"]: action
+                        for action in locations[location_id].get("actions", [])
+                    }
+                    for group_id, child_ids in groups.items():
+                        self.assertEqual(
+                            [child.get("id") for child in top_actions[group_id].get("children", [])],
+                            child_ids,
+                        )
+
+                for action_id in expected_once:
+                    self.assertTrue(all_actions[action_id].get("once"), action_id)
+
+                show_sword = all_actions["show_sword_to_blacksmith"]
+                self.assertEqual(show_sword.get("requirements"), {"character_id": "hero"})
+
+                buy_armor = all_actions["buy_adamantite_armor"]
+                self.assertEqual(buy_armor.get("disabled_after"), "bought_adamantite_armor")
+                self.assertIn({"gold_change": -20}, buy_armor.get("effects", []))
+                self.assertIn(
+                    {"add_item": {"name": "アダマンタイトの鎧", "quantity": 1}},
+                    buy_armor.get("effects", []),
+                )
+
+    def test_dragon_rpg_action_groups_are_not_executable(self):
+        path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg_hybrid.json"
+        public = state.create_session(str(path), gm_mode="semi", character_id="hero")
+        session = state.load_session(public["id"])
+        session["current_location"] = "forge"
+
+        self.assertIsNone(state.resolve_action(session, action_id="buy_equipment"))
+        self.assertIsNone(state.resolve_action(session, action_text="装備を買う"))
+        self.assertIsNotNone(state.resolve_action(session, action_id="buy_adamantite_armor"))
+        self.assertIsNotNone(state.resolve_action(session, action_id="buy_ice_amulet"))
+
+    def test_dragon_rpg_forge_purchase_and_hero_choice_runtime(self):
+        path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg_hybrid.json"
+        public = state.create_session(str(path), gm_mode="semi", character_id="hero")
+        session = state.load_session(public["id"])
+        session["current_location"] = "forge"
+        session["character"]["gold"] = 50
+        session["character"]["attributes"]["end"] = 10
+        session["choices"] = current_action_choices(session)
+
+        public_choices = {
+            choice.get("action_id"): choice
+            for choice in state.public_session(session)["choices"]
+        }
+        self.assertTrue(public_choices["show_sword_to_blacksmith"]["enabled"])
+        self.assertEqual(
+            [child.get("action_id") for child in public_choices["buy_equipment"]["children"]],
+            ["buy_adamantite_armor", "buy_ice_amulet"],
+        )
+        self.assertNotIn("accept_sword_fusion", public_choices)
+        before_show_context = state.select_hybrid_context(session, include_debug=True)
+        self.assertNotIn(
+            "accept_sword_fusion",
+            {action.get("action_id") for action in before_show_context["available_actions"]},
+        )
+
+        show_sword = state.resolve_action(session, action_id="show_sword_to_blacksmith")
+        show_roll = state.roll_dice(
+            session,
+            *state.action_dice_settings(show_sword),
+            client_rolls=[10],
+        )
+        state.apply_action_result(session, show_sword, show_roll)
+        hybrid_context = state.select_hybrid_context(
+            session,
+            "鍛冶師に剣を見せる",
+            include_debug=True,
+        )
+        self.assertEqual(hybrid_context["_debug"]["prepared_turn"], "show_sword_to_blacksmith")
+        post_show_choices = {
+            choice.get("action_id"): choice
+            for choice in state.public_session(session)["choices"]
+        }
+        self.assertFalse(post_show_choices["show_sword_to_blacksmith"]["enabled"])
+        self.assertTrue(post_show_choices["accept_sword_fusion"]["enabled"])
+        self.assertIn(
+            "accept_sword_fusion",
+            {action.get("action_id") for action in hybrid_context["available_actions"]},
+        )
+
+        accept_fusion = state.resolve_action(session, action_id="accept_sword_fusion")
+        fusion_roll = state.roll_dice(
+            session,
+            *state.action_dice_settings(accept_fusion),
+            client_rolls=[10],
+        )
+        state.apply_action_result(session, accept_fusion, fusion_roll)
+        fusion_context = state.select_hybrid_context(
+            session,
+            "提案を受け入れる",
+            include_debug=True,
+        )
+        self.assertEqual(fusion_context["_debug"]["prepared_turn"], "accept_sword_fusion")
+        inventory_names = {item.get("name") for item in session["character"]["inventory"]}
+        self.assertNotIn("鉄の剣", inventory_names)
+        self.assertIn("氷鉄の大剣", inventory_names)
+
+        action = state.resolve_action(session, action_id="buy_adamantite_armor")
+        roll = state.roll_dice(session, *state.action_dice_settings(action), client_rolls=[10])
+        state.apply_action_result(session, action, roll)
+        self.assertEqual(session["character"]["gold"], 30)
+        self.assertTrue(
+            any(item.get("name") == "アダマンタイトの鎧" for item in session["character"]["inventory"])
+        )
+
+        mage_public = state.create_session(str(path), gm_mode="semi", character_id="mage")
+        mage = state.load_session(mage_public["id"])
+        mage["current_location"] = "forge"
+        mage["choices"] = current_action_choices(mage)
+        mage_choices = {
+            choice.get("action_id"): choice
+            for choice in state.public_session(mage)["choices"]
+        }
+        self.assertFalse(mage_choices["show_sword_to_blacksmith"]["enabled"])
+
+    def test_dragon_rpg_base_and_hybrid_actions_stay_aligned(self):
+        processed = state.HOST_ROOT / "prompt" / "processed"
+        base = json.loads((processed / "dragon_rpg.json").read_text(encoding="utf-8-sig"))
+        hybrid = json.loads((processed / "dragon_rpg_hybrid.json").read_text(encoding="utf-8-sig"))
+        base_actions = {location["id"]: location.get("actions", []) for location in base["locations"]}
+        hybrid_actions = {location["id"]: location.get("actions", []) for location in hybrid["locations"]}
+
+        self.assertEqual(base_actions, hybrid_actions)
+
+    def test_dragon_rpg_contains_no_ascii_question_mark_placeholders(self):
+        for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
+            with self.subTest(filename=filename):
+                path = state.HOST_ROOT / "prompt" / "processed" / filename
+                pack = json.loads(path.read_text(encoding="utf-8-sig"))
+                broken_paths = []
+
+                def find_broken(value, value_path="$"):
+                    if isinstance(value, dict):
+                        for key, item in value.items():
+                            find_broken(item, f"{value_path}.{key}")
+                    elif isinstance(value, list):
+                        for index, item in enumerate(value):
+                            find_broken(item, f"{value_path}[{index}]")
+                    elif isinstance(value, str) and "??" in value:
+                        broken_paths.append(value_path)
+
+                find_broken(pack)
+                self.assertEqual(broken_paths, [])
+
+    def test_dragon_rpg_hybrid_action_ids_exist_in_base_pack(self):
+        base_path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg.json"
+        hybrid_path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg_hybrid.json"
+        base = json.loads(base_path.read_text(encoding="utf-8-sig"))
+        hybrid = json.loads(hybrid_path.read_text(encoding="utf-8-sig"))
+
+        def iter_actions(actions):
+            for action in actions or []:
+                if not isinstance(action, dict):
+                    continue
+                yield action
+                yield from iter_actions(action.get("children"))
+
+        action_ids = {
+            action.get("id")
+            for location in base.get("locations", [])
+            for action in iter_actions(location.get("actions", []))
+            if isinstance(action, dict) and action.get("id")
+        }
+        missing = [
+            (location.get("id"), turn.get("id"), turn.get("action_id"))
+            for location in hybrid.get("locations", [])
+            for turn in (location.get("hybrid") or {}).get("prepared_turns", [])
+            if isinstance(turn, dict) and turn.get("action_id") and turn.get("action_id") not in action_ids
+        ]
+
+        self.assertFalse(missing)
+
+    @staticmethod
+    def _iter_scenario_actions(actions):
+        for action in actions or []:
+            if not isinstance(action, dict):
+                continue
+            yield action
+            yield from StateTests._iter_scenario_actions(action.get("children"))
 
 
 if __name__ == "__main__":

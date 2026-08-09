@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Optional, Union
 
 from .scenario_context import (
+    current_actions_for_session,
     fallback_choices_for_session,
     find_scene,
     has_hybrid_prepared_turn,
@@ -83,10 +84,10 @@ def utc_now() -> str:
 
 def load_config(path: Optional[Path] = None) -> dict[str, Any]:
     config_path = path or HOST_ROOT / "config.json"
-    config = json.loads(config_path.read_text(encoding="utf-8"))
+    config = json.loads(config_path.read_text(encoding="utf-8-sig"))
     local_path = _local_config_path(config_path)
     if local_path.exists():
-        _deep_update(config, json.loads(local_path.read_text(encoding="utf-8")))
+        _deep_update(config, json.loads(local_path.read_text(encoding="utf-8-sig")))
     _apply_config_env_overrides(config)
     return config
 
@@ -186,19 +187,31 @@ def create_session(
         "gm_mode": normalized_gm_mode,
         "scenario_pack": scenario_pack,
         "current_scene": str(meta.get("initial_scene") or "start"),
+        "current_location": _resolve_initial_location(scenario_pack, str(meta.get("initial_scene") or "start")),
         "character": character,
         "messages": [],
         "system_logs": [],
         "dice_log": [],
         "choices": [],
+        "flags": {},
+        "last_action_result": {},
         "next_dice_type": "1d20",
-        "next_dice_dc": 10,
+        "next_dice_dc": 0,
         "needs_opening": True,
         "created_at": utc_now(),
         "updated_at": utc_now(),
     }
     save_session(session)
     return public_session(session)
+
+
+def _resolve_initial_location(pack: dict[str, Any], scene_id: str) -> str:
+    scene = find_scene(pack, scene_id)
+    if scene:
+        loc_ids = [str(lid) for lid in (scene.get("location_ids") or []) if lid]
+        if loc_ids:
+            return loc_ids[0]
+    return scene_id
 
 
 def _normalize_gm_mode(value: Optional[str]) -> str:
@@ -250,12 +263,37 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
             message["text"] = sanitize_visible_text(original_text)
     if recovered_choices and len(recovered_choices) > len(public.get("choices") or []):
         public["choices"] = recovered_choices
+    public["choices"] = annotate_choices_for_session(public.get("choices"), public)
     public["choices"] = annotate_choices_for_character(public.get("choices"), public.get("character", {}))
     public["system_logs"] = [
         log for log in public.get("system_logs", [])
         if not _is_protocol_warning_log(str(log.get("text", "")))
     ]
     return public
+
+
+def annotate_choices_for_session(raw_choices: Any, session: dict[str, Any]) -> list[dict[str, Any]]:
+    flags = session.get("flags") if isinstance(session.get("flags"), dict) else {}
+    choices: list[dict[str, Any]] = []
+    for item in raw_choices if isinstance(raw_choices, list) else []:
+        choice = {"text": str(item), "preview": "", "risk": ""} if isinstance(item, str) else deepcopy(item)
+        if not isinstance(choice, dict):
+            continue
+        visible_flag = str(choice.get("visible_after") or "")
+        if visible_flag and not flags.get(visible_flag):
+            continue
+        disabled_flag = str(choice.get("disabled_after") or "")
+        once_flag = str(choice.get("once") or "")
+        if disabled_flag and flags.get(disabled_flag):
+            choice["enabled"] = False
+            choice["disabled_reason"] = str(choice.get("disabled_reason") or "完了済みです。")
+        elif once_flag and flags.get(once_flag):
+            choice["enabled"] = False
+            choice["disabled_reason"] = str(choice.get("disabled_reason") or "完了済みです。")
+        if "children" in choice and isinstance(choice["children"], list):
+            choice["children"] = annotate_choices_for_session(choice["children"], session)
+        choices.append(choice)
+    return choices
 
 
 def _current_scene_enemies(session: dict[str, Any]) -> list[dict[str, Any]]:
@@ -363,14 +401,24 @@ def apply_gm_payload(
         add_system_log(session, "choices fallback: model returned no usable JSON.")
         return
 
+    payload = validate_model_payload_for_action(session, payload)
+
     add_system_log(session, str(payload.get("system_log") or "").strip())
 
     dice_type = payload.get("dice_type")
     if isinstance(dice_type, str) and dice_type.strip():
-        session["next_dice_type"] = dice_type.strip()
+        normalized_dice_type = dice_type.strip()
+        if normalized_dice_type.lower() in {"null", "none", "no", "なし"}:
+            session["next_dice_type"] = "1d20"
+        else:
+            session["next_dice_type"] = normalized_dice_type
+    elif dice_type is None:
+        session["next_dice_type"] = "1d20"
     dice_dc = payload.get("dice_dc")
     if isinstance(dice_dc, (int, float)):
         session["next_dice_dc"] = int(dice_dc)
+    else:
+        session["next_dice_dc"] = 0
 
     state_delta = payload.get("state_delta") or {}
     if not isinstance(state_delta, dict):
@@ -384,6 +432,7 @@ def apply_gm_payload(
     if isinstance(raw_choices, list) and raw_choices:
         choices = _normalize_choices(raw_choices)
         if choices:
+            _restore_choice_children_from_scenario(choices, session)
             session["choices"] = choices
             return
         add_system_log(session, "choices fallback: model choices were empty after normalization.")
@@ -400,13 +449,69 @@ def _normalize_choices(raw: list[Any]) -> list[dict[str, Any]]:
         elif isinstance(item, dict):
             text = str(item.get("text") or item.get("option") or item.get("action") or item.get("label") or "").strip()
             if text:
-                choices.append({
+                choice: dict[str, Any] = {
                     "text": text,
                     "preview": str(item.get("preview", "")),
                     "risk": str(item.get("risk", "")),
                     **({"requirements": deepcopy(item["requirements"])} if "requirements" in item else {}),
-                })
+                }
+                children = item.get("children")
+                if isinstance(children, list) and children:
+                    normalized_children = _normalize_choices(children)
+                    if normalized_children:
+                        choice["children"] = normalized_children
+                choices.append(choice)
     return choices[:5]
+
+
+def _restore_choice_children_from_scenario(choices: list[dict[str, Any]], session: dict[str, Any]) -> None:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return
+    scene = find_scene(pack, str(session.get("current_scene") or ""))
+    if not isinstance(scene, dict):
+        return
+    fallback: list[Any] = scene.get("fallback_choices", [])
+    if not isinstance(fallback, list) or not fallback:
+        fallback = pack.get("fallback_choices", [])
+    if not isinstance(fallback, list):
+        return
+    normalized_fallback = _normalize_choices(fallback)
+    parent_map: dict[str, dict[str, Any]] = {}
+    child_to_parent: dict[str, str] = {}
+    for fc in normalized_fallback:
+        if isinstance(fc, dict) and "children" in fc and isinstance(fc["children"], list):
+            parent_map[fc["text"]] = fc
+            for child in fc["children"]:
+                if isinstance(child, dict):
+                    child_to_parent[child.get("text", "")] = fc["text"]
+    if not parent_map:
+        return
+    reconstructed: list[dict[str, Any]] = []
+    used_parents: set[str] = set()
+    for choice in choices:
+        text = choice.get("text", "") if isinstance(choice, dict) else str(choice)
+        if isinstance(choice, dict) and "children" in choice:
+            reconstructed.append(choice)
+            continue
+        matched_parent = False
+        for parent_text, parent_choice in parent_map.items():
+            if parent_text in used_parents:
+                continue
+            if text == parent_text:
+                reconstructed.append(deepcopy(parent_choice))
+                used_parents.add(parent_text)
+                matched_parent = True
+                break
+            if text in child_to_parent and child_to_parent[text] == parent_text:
+                reconstructed.append(deepcopy(parent_choice))
+                used_parents.add(parent_text)
+                matched_parent = True
+                break
+        if not matched_parent and text not in child_to_parent:
+            reconstructed.append(choice)
+    if used_parents:
+        choices[:] = reconstructed
 
 
 def annotate_choices_for_character(raw_choices: Any, character: dict[str, Any]) -> list[dict[str, Any]]:
@@ -421,46 +526,281 @@ def annotate_choices_for_character(raw_choices: Any, character: dict[str, Any]) 
             choice["disabled_reason"] = reason
         else:
             choice.pop("disabled_reason", None)
+        if "children" in choice and isinstance(choice["children"], list):
+            choice["children"] = annotate_choices_for_character(choice["children"], character)
         choices.append(choice)
     return choices
 
 
 def choice_requirement_status(choice: dict[str, Any], character: dict[str, Any]) -> tuple[bool, str]:
+    if choice.get("enabled") is False:
+        return False, str(choice.get("disabled_reason") or "この行動は現在選択できません。")
     requirements = choice.get("requirements")
     if requirements is None:
-        requirements = _requirements_from_risk(str(choice.get("risk") or ""))
+        requirements = _requirements_from_choice_text(choice)
     if not requirements:
         return True, ""
 
     attrs = character.get("attributes", {}) if isinstance(character.get("attributes"), dict) else {}
     if isinstance(requirements, list):
-        passed = all(_requirement_passes(req, attrs) for req in requirements)
-        return (True, "") if passed else (False, _requirement_reason(requirements, "all"))
+        passed = all(_requirement_passes(req, attrs, character) for req in requirements)
+        return (True, "") if passed else (False, _requirement_reason(requirements, "all", character))
     if not isinstance(requirements, dict):
         return True, ""
     if isinstance(requirements.get("any"), list):
         reqs = requirements["any"]
-        passed = any(_requirement_passes(req, attrs) for req in reqs)
-        return (True, "") if passed else (False, _requirement_reason(reqs, "any"))
+        passed = any(_requirement_passes(req, attrs, character) for req in reqs)
+        return (True, "") if passed else (False, _requirement_reason(reqs, "any", character))
     if isinstance(requirements.get("all"), list):
         reqs = requirements["all"]
-        passed = all(_requirement_passes(req, attrs) for req in reqs)
-        return (True, "") if passed else (False, _requirement_reason(reqs, "all"))
-    passed = _requirement_passes(requirements, attrs)
-    return (True, "") if passed else (False, _requirement_reason([requirements], "all"))
+        passed = all(_requirement_passes(req, attrs, character) for req in reqs)
+        return (True, "") if passed else (False, _requirement_reason(reqs, "all", character))
+    passed = _requirement_passes(requirements, attrs, character)
+    return (True, "") if passed else (False, _requirement_reason([requirements], "all", character))
+
+
+def resolve_action(session: dict[str, Any], action_text: str = "", action_id: Optional[str] = None) -> Optional[dict[str, Any]]:
+    actions = [
+        action
+        for action in _iter_actions(current_actions_for_session(session))
+        if not action.get("children")
+    ]
+    wanted_id = str(action_id or "").strip()
+    wanted_text = str(action_text or "").strip()
+    for action in actions:
+        if wanted_id and wanted_id in (str(action.get("id") or ""), str(action.get("action_id") or "")):
+            return deepcopy(action)
+    for action in actions:
+        if wanted_text and wanted_text == str(action.get("text") or "").strip():
+            return deepcopy(action)
+    for action in actions:
+        if wanted_text and _action_keyword_matches(action, wanted_text):
+            return deepcopy(action)
+    return None
+
+
+def action_requirement_status(action: dict[str, Any], session: dict[str, Any]) -> tuple[bool, str]:
+    flags = session.get("flags") if isinstance(session.get("flags"), dict) else {}
+    visible_flag = str(action.get("visible_after") or "")
+    if visible_flag and not flags.get(visible_flag):
+        return False, "この行動はまだ選択できません。"
+    disabled_flag = str(action.get("disabled_after") or "")
+    once_flag = str(action.get("once") or "")
+    if disabled_flag and flags.get(disabled_flag):
+        return False, "完了済みです。"
+    if once_flag and flags.get(once_flag):
+        return False, "完了済みです。"
+    return choice_requirement_status(action, session.get("character", {}))
+
+
+def action_dice_settings(action: Optional[dict[str, Any]], default_type: str = "1d20", default_dc: int = 0) -> tuple[str, int]:
+    if not isinstance(action, dict):
+        return default_type, max(int(default_dc or 0), 0)
+    roll = action.get("roll") if isinstance(action.get("roll"), dict) else {}
+    dice_type = str(roll.get("dice_type") or roll.get("dice") or action.get("dice_type") or default_type or "1d20")
+    dice_dc = roll.get("dc", roll.get("dice_dc", action.get("dice_dc", default_dc)))
+    try:
+        normalized_dc = int(dice_dc or 0)
+    except (TypeError, ValueError):
+        normalized_dc = 0
+    return dice_type, max(normalized_dc, 0)
+
+
+def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_roll: dict[str, Any]) -> dict[str, Any]:
+    outcome = _action_outcome(latest_roll)
+    base_effects = _as_list(action.get("effects"))
+    outcome_effects = _as_list(action.get(f"{outcome}_effects"))
+    delta = _effects_to_state_delta([*base_effects, *outcome_effects])
+    flags = session.setdefault("flags", {})
+    if isinstance(flags, dict):
+        if action.get("once"):
+            flags[str(action["once"])] = True
+        if action.get("disabled_after"):
+            flags[str(action["disabled_after"])] = True
+    apply_state_delta(session, delta)
+    if isinstance(delta.get("current_location"), str) and delta["current_location"].strip():
+        session["current_location"] = delta["current_location"].strip()
+        pack = session.get("scenario_pack")
+        if isinstance(pack, dict):
+            _sync_scene_from_location(session, pack, session["current_location"])
+    result = {
+        "action_id": str(action.get("id") or action.get("action_id") or ""),
+        "text": str(action.get("text") or ""),
+        "outcome": outcome,
+        "roll": latest_roll,
+        "state_delta": delta,
+        "prepared_turn_id": str(action.get("prepared_turn_id") or ""),
+    }
+    session["last_action_result"] = result
+    session["choices"] = fallback_choices_for_session(session)
+    return result
+
+
+def validate_model_payload_for_action(session: dict[str, Any], payload: Optional[dict[str, Any]]) -> Optional[dict[str, Any]]:
+    if not isinstance(payload, dict):
+        return payload
+    action_result = session.get("last_action_result") if isinstance(session.get("last_action_result"), dict) else {}
+    if not action_result.get("action_id"):
+        return payload
+    sanitized = deepcopy(payload)
+    if isinstance(sanitized.get("state_delta"), dict) and sanitized["state_delta"]:
+        add_system_log(session, "model state_delta ignored: action engine already applied the resolved action.")
+    sanitized["state_delta"] = {}
+    if "choices" in sanitized:
+        add_system_log(session, "model choices ignored: action engine rebuilt choices from current action surface.")
+        sanitized["choices"] = []
+    return sanitized
+
+
+def _iter_actions(actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    result: list[dict[str, Any]] = []
+    for action in actions:
+        if not isinstance(action, dict):
+            continue
+        result.append(action)
+        if isinstance(action.get("children"), list):
+            result.extend(_iter_actions(action["children"]))
+    return result
+
+
+def _action_keyword_matches(action: dict[str, Any], text: str) -> bool:
+    needles = [str(action.get("id") or ""), str(action.get("text") or ""), str(action.get("preview") or "")]
+    needles.extend(_as_text_list(action.get("intent_keywords")))
+    return any(_text_contains_needle(text, needle) for needle in needles)
+
+
+def _text_contains_needle(text: str, needle: str) -> bool:
+    needle = str(needle or "").strip()
+    if not needle:
+        return False
+    if re.fullmatch(r"[A-Za-z0-9_][A-Za-z0-9_-]*", needle):
+        return re.search(rf"(?<![A-Za-z0-9_-]){re.escape(needle)}(?![A-Za-z0-9_-])", text, re.IGNORECASE) is not None
+    return needle in text
+
+
+def _action_outcome(latest_roll: dict[str, Any]) -> str:
+    dc = latest_roll.get("dc")
+    if isinstance(dc, (int, float)) and int(dc) > 0:
+        return "success" if bool(latest_roll.get("success")) else "failure"
+    return "neutral"
+
+
+def _effects_to_state_delta(effects: list[Any]) -> dict[str, Any]:
+    delta: dict[str, Any] = {"attribute_changes": {}}
+    inventory_add: list[Any] = []
+    inventory_remove: list[Any] = []
+    flags_set: list[str] = []
+    flags_unset: list[str] = []
+    for effect in effects:
+        if not isinstance(effect, dict):
+            continue
+        if isinstance(effect.get("gold_change"), (int, float)):
+            delta["gold_change"] = int(delta.get("gold_change", 0)) + int(effect["gold_change"])
+        if isinstance(effect.get("gold"), (int, float)):
+            delta["gold"] = int(effect["gold"])
+        for stat in ("hp", "mp", "sp"):
+            if isinstance(effect.get(f"{stat}_change"), (int, float)):
+                delta[f"{stat}_change"] = int(delta.get(f"{stat}_change", 0)) + int(effect[f"{stat}_change"])
+        if effect.get("add_item") is not None:
+            inventory_add.append(effect["add_item"])
+        if effect.get("inventory_add") is not None:
+            inventory_add.extend(_as_list(effect["inventory_add"]))
+        if effect.get("remove_item") is not None:
+            inventory_remove.append(effect["remove_item"])
+        if effect.get("inventory_remove") is not None:
+            inventory_remove.extend(_as_list(effect["inventory_remove"]))
+        if isinstance(effect.get("current_scene"), str):
+            delta["current_scene"] = effect["current_scene"]
+        if isinstance(effect.get("next_scene"), str):
+            delta["current_scene"] = effect["next_scene"]
+        if isinstance(effect.get("current_location"), str):
+            delta["current_location"] = effect["current_location"]
+        if isinstance(effect.get("next_location"), str):
+            delta["current_location"] = effect["next_location"]
+        if isinstance(effect.get("set_flag"), str):
+            flags_set.append(effect["set_flag"])
+        if isinstance(effect.get("unset_flag"), str):
+            flags_unset.append(effect["unset_flag"])
+        if isinstance(effect.get("attribute_changes"), dict):
+            for key, value in effect["attribute_changes"].items():
+                if isinstance(value, (int, float)):
+                    delta["attribute_changes"][key] = int(delta["attribute_changes"].get(key, 0)) + int(value)
+    if inventory_add:
+        delta["inventory_add"] = inventory_add
+    if inventory_remove:
+        delta["inventory_remove"] = inventory_remove
+    if flags_set:
+        delta["flags_set"] = flags_set
+    if flags_unset:
+        delta["flags_unset"] = flags_unset
+    if not delta["attribute_changes"]:
+        delta.pop("attribute_changes", None)
+    return delta
+
+
+def _requirements_from_choice_text(choice: dict[str, Any]) -> dict[str, Any]:
+    source = " ".join(
+        str(choice.get(key) or "")
+        for key in ("text", "preview", "risk")
+    )
+    explicit = _requirements_from_risk(source)
+    purchase_requirements = _purchase_requirements_from_text(source)
+    if explicit and purchase_requirements:
+        if isinstance(explicit.get("all"), list):
+            return {"all": [*explicit["all"], *purchase_requirements]}
+        return {"all": [explicit, *purchase_requirements]}
+    if purchase_requirements:
+        return {"all": purchase_requirements} if len(purchase_requirements) > 1 else purchase_requirements[0]
+    return explicit
+
+
+def _purchase_requirements_from_text(text: str) -> list[dict[str, Any]]:
+    if not any(token in text for token in ("買う", "購入")):
+        return []
+    requirements: list[dict[str, Any]] = []
+    gold_match = re.search(r"(\d+)\s*(?:G|g|ゴールド|gold)", text, re.IGNORECASE)
+    if gold_match:
+        requirements.append({"gold_gte": int(gold_match.group(1))})
+    item_match = re.search(r"(.+?)を(?:買う|購入)", text)
+    if item_match:
+        item_name = item_match.group(1).split("で")[-1].strip(" 　「」『』（）()")
+        if item_name:
+            requirements.append({"lacks_item": item_name})
+    return requirements
 
 
 def _requirements_from_risk(risk: str) -> dict[str, Any]:
+    if not risk:
+        return {}
+    char_req = _character_id_from_risk(risk)
     threshold_match = re.search(r"(\d+)\s*(?:以上|or higher|以上で)", risk, re.IGNORECASE)
     if not threshold_match:
-        return {}
+        return char_req
     threshold = int(threshold_match.group(1))
     attr_keys = _attribute_keys_from_text(risk)
     if not attr_keys:
-        return {}
+        return char_req
+    attr_req: dict[str, Any]
     if "または" in risk or "or" in risk.lower() or "/" in risk:
-        return {"any": [{"attribute": key, "gte": threshold} for key in attr_keys]}
-    return {"all": [{"attribute": key, "gte": threshold} for key in attr_keys]}
+        attr_req = {"any": [{"attribute": key, "gte": threshold} for key in attr_keys]}
+    else:
+        attr_req = {"all": [{"attribute": key, "gte": threshold} for key in attr_keys]}
+    if char_req:
+        return {"all": [char_req, attr_req]}
+    return attr_req
+
+
+def _character_id_from_risk(risk: str) -> dict[str, Any]:
+    char_map = {
+        "勇者": "hero",
+        "僧侶": "cleric",
+        "魔法使い": "mage",
+        "盗賊": "thief",
+    }
+    for name, char_id in char_map.items():
+        if name in risk and ("のみ" in risk or "必要" in risk):
+            return {"character_id": char_id}
+    return {}
 
 
 def _attribute_keys_from_text(text: str) -> list[str]:
@@ -480,9 +820,27 @@ def _attribute_keys_from_text(text: str) -> list[str]:
     return [key for index, key in enumerate(keys) if key not in keys[:index]]
 
 
-def _requirement_passes(requirement: Any, attrs: dict[str, Any]) -> bool:
+def _requirement_passes(requirement: Any, attrs: dict[str, Any], character: dict[str, Any]) -> bool:
     if not isinstance(requirement, dict):
         return True
+    if isinstance(requirement.get("any"), list):
+        return any(_requirement_passes(req, attrs, character) for req in requirement["any"])
+    if isinstance(requirement.get("all"), list):
+        return all(_requirement_passes(req, attrs, character) for req in requirement["all"])
+    if "character_id" in requirement:
+        char_id = str(character.get("id") or character.get("character_id") or "")
+        if str(requirement["character_id"]) != char_id:
+            return False
+        return True
+    min_gold = requirement.get("gold_gte", requirement.get("min_gold"))
+    if isinstance(min_gold, (int, float)):
+        return int(character.get("gold", 0)) >= int(min_gold)
+    has_item = _requirement_item_name(requirement, ("has_item", "inventory_has", "requires_item"))
+    if has_item:
+        return has_item in _inventory_item_names(character)
+    lacks_item = _requirement_item_name(requirement, ("lacks_item", "not_item", "missing_item"))
+    if lacks_item:
+        return lacks_item not in _inventory_item_names(character)
     attr_key = _canonical_attr_key(str(requirement.get("attribute") or requirement.get("attr") or ""))
     if not attr_key:
         return True
@@ -496,23 +854,74 @@ def _requirement_passes(requirement: Any, attrs: dict[str, Any]) -> bool:
     return True
 
 
-def _requirement_reason(requirements: list[Any], mode: str) -> str:
+def _requirement_reason(requirements: list[Any], mode: str, character: dict[str, Any]) -> str:
     labels = [_requirement_label(req) for req in requirements if isinstance(req, dict)]
     labels = [label for label in labels if label]
     if not labels:
-        return "\u6761\u4ef6\u3092\u6e80\u305f\u3057\u3066\u3044\u307e\u305b\u3093"
-    joiner = "\u307e\u305f\u306f" if mode == "any" else "\u3068"
-    return f"{joiner.join(labels)}\u304c\u5fc5\u8981"
+        return "条件を満たしていません"
+    joiner = "または" if mode == "any" else "と"
+    return f"{joiner.join(labels)}が必要"
 
 
 def _requirement_label(requirement: dict[str, Any]) -> str:
+    if isinstance(requirement.get("any"), list):
+        labels = [_requirement_label(req) for req in requirement["any"] if isinstance(req, dict)]
+        labels = [label for label in labels if label]
+        if not labels:
+            return ""
+        joined = "または".join(labels)
+        return f"({joined})" if len(labels) > 1 else joined
+    if isinstance(requirement.get("all"), list):
+        labels = [_requirement_label(req) for req in requirement["all"] if isinstance(req, dict)]
+        labels = [label for label in labels if label]
+        if not labels:
+            return ""
+        return "と".join(labels)
+    if "character_id" in requirement:
+        char_id = str(requirement["character_id"])
+        char_names = {"hero": "勇者のみ", "cleric": "僧侶のみ", "mage": "魔法使いのみ", "thief": "盗賊のみ"}
+        return char_names.get(char_id, f"キャラクター({char_id})のみ")
+    min_gold = requirement.get("gold_gte", requirement.get("min_gold"))
+    if isinstance(min_gold, (int, float)):
+        return f"{int(min_gold)}ゴールド以上"
+    has_item = _requirement_item_name(requirement, ("has_item", "inventory_has", "requires_item"))
+    if has_item:
+        return f"{has_item}所持"
+    lacks_item = _requirement_item_name(requirement, ("lacks_item", "not_item", "missing_item"))
+    if lacks_item:
+        return f"{lacks_item}未所持"
     attr_key = _canonical_attr_key(str(requirement.get("attribute") or requirement.get("attr") or ""))
     if not attr_key:
         return ""
-    label_map = {"str": "\u7b4b\u529b", "dex": "\u654f\u6377", "int": "\u77e5\u529b", "wis": "\u5224\u65ad", "end": "\u8010\u4e45", "cha": "\u9b45\u529b"}
+    label_map = {"str": "筋力", "dex": "敏捷", "int": "知力", "wis": "判断", "end": "耐久", "cha": "魅力"}
     threshold = requirement.get("gte", requirement.get("min", requirement.get("gt", "")))
-    suffix = f"{int(threshold)}\u4ee5\u4e0a" if isinstance(threshold, (int, float)) else ""
+    suffix = f"{int(threshold)}以上" if isinstance(threshold, (int, float)) else ""
     return f"{label_map.get(attr_key, attr_key)}{suffix}"
+
+
+def _requirement_item_name(requirement: dict[str, Any], keys: tuple[str, ...]) -> str:
+    for key in keys:
+        value = requirement.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return ""
+
+
+def _inventory_item_names(character: dict[str, Any]) -> set[str]:
+    names: set[str] = set()
+    inventory = character.get("inventory")
+    if not isinstance(inventory, list):
+        return names
+    for item in inventory:
+        if isinstance(item, dict):
+            if int(item.get("quantity", 1) or 0) <= 0:
+                continue
+            name = str(item.get("name") or "").strip()
+        else:
+            name = str(item or "").strip()
+        if name:
+            names.add(name)
+    return names
 
 
 def _canonical_attr_key(key: str) -> str:
@@ -635,6 +1044,13 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
         if int(character["gold"]) != before:
             add_system_log(session, f"所持金が{int(character['gold'])}ゴールドになりました。")
 
+    flags = session.setdefault("flags", {})
+    if isinstance(flags, dict):
+        for flag in _as_text_list(delta.get("flags_set")):
+            flags[flag] = True
+        for flag in _as_text_list(delta.get("flags_unset")):
+            flags.pop(flag, None)
+
     for item in _as_item_list(delta.get("inventory_add")):
         item_name = str(item["name"]).strip()
         add_qty = _safe_quantity(item.get("quantity"), 1)
@@ -650,21 +1066,26 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
             character["inventory"].append(enriched)
         add_system_log(session, f"{item_name} x{add_qty}を入手しました。")
 
-    for item in _as_text_list(delta.get("inventory_remove")):
+    for item in _as_item_list(delta.get("inventory_remove")):
+        item_name = str(item["name"]).strip()
+        remaining = _safe_quantity(item.get("quantity"), 1)
         removed_qty = 0
         new_inv = []
         for existing in character["inventory"]:
             ename = existing.get("name") if isinstance(existing, dict) else existing
-            if ename == item and isinstance(existing, dict):
-                existing["quantity"] = int(existing.get("quantity", 1)) - 1
-                removed_qty += 1
-                if existing["quantity"] > 0:
+            if ename == item_name and remaining > 0:
+                existing_qty = int(existing.get("quantity", 1)) if isinstance(existing, dict) else 1
+                remove_qty = min(existing_qty, remaining)
+                remaining -= remove_qty
+                removed_qty += remove_qty
+                if isinstance(existing, dict) and existing_qty > remove_qty:
+                    existing["quantity"] = existing_qty - remove_qty
                     new_inv.append(existing)
             else:
                 new_inv.append(existing)
         character["inventory"] = new_inv
         if removed_qty:
-            add_system_log(session, f"{item} x{removed_qty}を失いました。")
+            add_system_log(session, f"{item_name} x{removed_qty}を失いました。")
 
     for image_key in ("background_image", "character_image"):
         if isinstance(delta.get(image_key), str):
@@ -691,6 +1112,12 @@ def apply_state_delta(session: dict[str, Any], delta: dict[str, Any]) -> None:
             session["current_scene"] = resolved_scene
         else:
             add_system_log(session, f"不正な場面遷移を無視しました: {resolved_scene}")
+
+    if isinstance(delta.get("current_location"), str) and delta["current_location"].strip():
+        session["current_location"] = delta["current_location"].strip()
+        pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else None
+        if pack:
+            _sync_scene_from_location(session, pack, session["current_location"])
 
 
 def _enrich_item(item: dict[str, Any]) -> dict[str, Union[str, int]]:
@@ -732,6 +1159,9 @@ def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], con
         {"role": "system", "content": "シナリオコンテキスト:\n" + context_json},
         {"role": "system", "content": "現在のゲーム状態:\n" + state_summary},
     ]
+    action_result = session.get("last_action_result")
+    if isinstance(action_result, dict) and action_result.get("action_id"):
+        messages.append({"role": "system", "content": "resolved_action_result:\n" + json.dumps(action_result, ensure_ascii=False)})
     memory_summary = _conversation_memory_summary(session, keep_last=history_messages, max_chars=memory_max_chars)
     if memory_summary:
         messages.append({"role": "system", "content": "これまでの会話要約:\n" + memory_summary})
@@ -791,6 +1221,7 @@ def _current_state_summary(session: dict[str, Any], character: dict[str, Any], l
     return json.dumps(
         {
             "current_scene": session["current_scene"],
+            "current_location": session.get("current_location", ""),
             "character": {
                 "name": character.get("name"),
                 "hp": character.get("hp"),
@@ -805,6 +1236,7 @@ def _current_state_summary(session: dict[str, Any], character: dict[str, Any], l
                 "inventory": inventory_summary,
             },
             "latest_dice_roll": latest_roll,
+            "flags": session.get("flags", {}),
         },
         ensure_ascii=False,
         default=lambda _: None,
@@ -1022,6 +1454,12 @@ def _as_text_list(value: Any) -> list[str]:
     return []
 
 
+def _as_list(value: Any) -> list[Any]:
+    if value is None:
+        return []
+    return value if isinstance(value, list) else [value]
+
+
 def _infer_state_delta_from_text(gm_text: str, session: dict[str, Any], delta: dict[str, Any]) -> None:
     if isinstance(delta.get("gold"), (int, float)):
         return
@@ -1043,6 +1481,58 @@ def _infer_scene_delta_from_text(gm_text: str, session: dict[str, Any], delta: d
     explicit_scene = infer_scene_from_text(session, player_text)
     if explicit_scene:
         delta["current_scene"] = explicit_scene
+
+
+def auto_transition_scene(session: dict[str, Any], action_text: str) -> None:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict) or not action_text:
+        return
+    current_loc = str(session.get("current_location") or "")
+    location = _find_location_record(pack, current_loc)
+    if not location:
+        return
+    best_score = 0
+    best_location = None
+    for connected_id in _as_text_list(location.get("connected_location_ids")):
+        target = _find_location_record(pack, connected_id)
+        if not target:
+            continue
+        score = _location_match_score(action_text, target)
+        if score > best_score:
+            best_score = score
+            best_location = connected_id
+    if not best_location:
+        return
+    session["current_location"] = best_location
+    _sync_scene_from_location(session, pack, best_location)
+
+
+def _sync_scene_from_location(session: dict[str, Any], pack: dict[str, Any], location_id: str) -> None:
+    for scene in pack.get("scenes", []):
+        if not isinstance(scene, dict):
+            continue
+        location_ids = _as_text_list(scene.get("location_ids"))
+        if location_id in location_ids:
+            session["current_scene"] = str(scene.get("id") or "")
+            return
+
+
+def _location_match_score(text: str, location: dict[str, Any]) -> int:
+    score = 0
+    for needle in [str(location.get("id", "")), str(location.get("title", "")), str(location.get("name", ""))]:
+        if needle and needle in text:
+            score += len(needle)
+    for needle in _as_text_list(location.get("keywords")):
+        if needle and needle in text:
+            score += len(needle) * 2
+    return score
+
+
+def _find_location_record(pack: dict[str, Any], location_id: str) -> Optional[dict[str, Any]]:
+    for loc in pack.get("locations", []):
+        if isinstance(loc, dict) and str(loc.get("id") or "") == location_id:
+            return loc
+    return None
 
 
 def _scene_transition_allowed(session: dict[str, Any], target_scene: str) -> bool:

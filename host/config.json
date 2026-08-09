@@ -6,6 +6,8 @@
       "model": "qwen3-swallow-8b-rl-local",
       "fallback_models": [
         "qwen2.5-7b-instruct-local",
+        "qwen2.5-3b-instruct-q8-0-local",
+        "qwen2.5-3b-instruct-q5-k-m-local",
         "elyza-jp-8b-local"
       ],
       "api_key": "ollama"
@@ -16,9 +18,20 @@
       "fallback_models": [
         "qwen3-swallow-8b-rl-local",
         "qwen2.5-7b-instruct-local",
+        "qwen2.5-3b-instruct-q8-0-local",
+        "qwen2.5-3b-instruct-q5-k-m-local",
         "qwen2.5:7b-instruct"
       ],
       "api_key": "koboldcpp"
+    },
+    "gemini": {
+      "type": "gemini",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "model": "gemini-3.1-flash-lite",
+      "fallback_models": [
+        "gemini-2.0-flash"
+      ],
+      "api_key": ""
     }
   },
   "request_timeout_seconds": 1800,
