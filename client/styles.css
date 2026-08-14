@@ -1029,6 +1029,59 @@ button, select, textarea, input { font: inherit; }
 .combat-active .gal-bottom-area,
 .combat-active .gal-choices-area { display: none !important; }
 
+.combat-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(5, 6, 8, .78);
+  backdrop-filter: blur(5px);
+}
+
+.combat-intro-panel {
+  width: min(760px, calc(100vw - 32px));
+  padding: 28px 30px 24px;
+  border: 1px solid rgba(212, 169, 75, .68);
+  border-radius: 6px;
+  background: rgba(18, 20, 23, .97);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .55);
+}
+
+.combat-intro-label {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.combat-intro-panel p {
+  margin: 0;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.85;
+  white-space: pre-wrap;
+}
+
+.combat-intro-panel button {
+  display: block;
+  min-width: 150px;
+  margin: 22px 0 0 auto;
+  padding: 11px 18px;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  background: var(--gold);
+  color: #111318;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.combat-intro-panel button:hover { filter: brightness(1.08); }
+
 .combat-header {
   width: min(1180px, 100%);
   margin: 0 auto;
@@ -1549,4 +1602,8 @@ button, select, textarea, input { font: inherit; }
   .combat-enemy p { display: none; }
   .combat-enemy .combat-effect-tags { display: none; }
   .combat-terminal .combat-command-deck { min-height: 250px; padding: 26px 20px; }
+  .combat-intro { padding: 14px; }
+  .combat-intro-panel { padding: 22px 20px 18px; }
+  .combat-intro-panel p { font-size: 15px; line-height: 1.75; }
+  .combat-intro-panel button { width: 100%; margin-top: 18px; }
 }

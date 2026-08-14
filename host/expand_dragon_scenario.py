@@ -203,7 +203,17 @@ def action(action_id: str, text: str, preview: str = "", risk: str = "判定不�
     return result
 
 
-def prepared(turn_id: str, action_id: str, text: str, outcome: str = "neutral", notes: list[str] | None = None) -> dict[str, Any]:
+def prepared(
+    turn_id: str,
+    action_id: str,
+    text: str,
+    outcome: str = "neutral",
+    notes: list[str] | None = None,
+    combat_text: str = "",
+) -> dict[str, Any]:
+    draft = {"gm_text": text, "system_log": "", "state_delta": {}, "choices": []}
+    if combat_text:
+        draft["combat_text"] = combat_text
     return {
         "id": turn_id,
         "purpose": "choice_response",
@@ -212,7 +222,7 @@ def prepared(turn_id: str, action_id: str, text: str, outcome: str = "neutral", 
         "trigger_keywords": [],
         "action_id": action_id,
         "outcome": outcome,
-        "draft": {"gm_text": text, "system_log": "", "state_delta": {}, "choices": []},
+        "draft": draft,
         "rewrite_notes": notes or ["確定済みのアクション結果だけを自然な日本語で描写してください。"],
     }
 
@@ -611,12 +621,17 @@ def alley_night(pack: dict[str, Any]) -> dict[str, Any]:
     actions += curse_offer("cleric", "呪われた聖杖", "cleric")
     actions += curse_offer("mage", "呪われた水晶球", "mage")
     actions += curse_offer("thief", "呪われた短剣", "thief")
+    betray = action(
+        "betray_cursed_merchant", "反悔する", "怪しい商人と戦う", "戦闘開始",
+        visible_after="curse_bargain_pending",
+        effects=[{"current_location": "merchant_battle"}, {"start_combat": True}],
+    )
     actions += [
         action("pay_curse_price_hero", "おとなしく代価を払う", "鉄の剣を渡す", visible_for_character="hero", visible_after="curse_bargain_pending", once="paid_curse_price", effects=[{"remove_item": {"name": "鉄の剣", "quantity": 1}}, {"set_flag": "curse_price_paid"}, {"current_location": "alley_after"}]),
         action("pay_curse_price_cleric", "おとなしく代価を払う", "生命力を差し出し、耐久を1にする", visible_for_character="cleric", visible_after="curse_bargain_pending", once="paid_curse_price", effects=[{"attribute_set": {"end": 1}}, {"set_flag": "curse_price_paid"}, {"current_location": "alley_after"}]),
         action("pay_curse_price_mage", "おとなしく代価を払う", "知識を差し出し、全技能を失う", visible_for_character="mage", visible_after="curse_bargain_pending", once="paid_curse_price", effects=[{"clear_skills": True}, {"set_flag": "curse_price_paid"}, {"current_location": "alley_after"}]),
         action("pay_curse_price_thief", "おとなしく代価を払う", "敏捷を差し出し、敏捷を1にする", visible_for_character="thief", visible_after="curse_bargain_pending", once="paid_curse_price", effects=[{"attribute_set": {"dex": 1}}, {"set_flag": "curse_price_paid"}, {"current_location": "alley_after"}]),
-        action("betray_cursed_merchant", "反悔する", "怪しい商人と戦う", "戦闘開始", visible_after="curse_bargain_pending", silent=True, effects=[{"current_location": "merchant_battle"}, {"start_combat": True}]),
+        betray,
         action("leave_night_alley", "取引せず城へ戻る", effects=[{"current_location": "castle"}]),
     ]
     offer_texts = {
@@ -630,6 +645,11 @@ def alley_night(pack: dict[str, Any]) -> dict[str, Any]:
         turns.append(prepared(f"curse_offer_{suffix}", f"hear_curse_offer_{suffix}", offer_texts[char_id]))
         turns.append(prepared(f"curse_received_{suffix}", f"accept_curse_offer_{suffix}", "呪具を受け取ると、商人は黒い袖から手を差し出した。「では、約束の代価を」"))
         turns.append(prepared(f"curse_paid_{suffix}", f"pay_curse_price_{suffix}", "代価が渡されると、怪しい商人は満足そうに身を引き、夜の闇へ溶けていった。"))
+    turns.append(prepared(
+        "curse_bargain_betrayal",
+        betray["id"],
+        "差し出しかけた代価を引き戻し、取引を拒絶する。怪しい商人の笑みが消え、黒衣の内側から死霊の気配が噴き出した。『契約を違えるなら、魂で払ってもらおう』小さな姿は膨れ上がり、亡霊主宰ゼボクが正体を現す。",
+    ))
     return location("alley_night", "王城の路地裏・夜", "街灯の届かない場所に、黒いローブの小柄で毛むくじゃらな商人が立っている。", actions, npc_ids=["suspicious_merchant"], turns=turns)
 
 
@@ -678,16 +698,25 @@ def forest_locations(pack: dict[str, Any]) -> list[dict[str, Any]]:
     lost_combat = {"auto_start": False, "flee_allowed": True, "enemy_ids": ["goblin"], "victory_effects": {"current_location": "elf_spring"}, "defeat_effects": {"hp_change": 1}}
     locations.append(location("lost_goblin_crossroads", "闇の森・迷子のゴブリン", "迷子のゴブリンが、別の一族に盗まれた箱を取り戻してほしいと頼んでいる。", [accept, ignore], npc_ids=["lost_goblin"], enemy_ids=["goblin"], combat=lost_combat, turns=[
         prepared("lost_goblin_accept", accept["id"], "迷子のゴブリンは何度も頭を下げ、木々の奥に隠された砦への道を案内し始めた。"),
-        prepared("lost_goblin_ignore_success", ignore["id"], "背後の気配に振り返ると、ゴブリンの手が財布へ伸びていた。見つかったゴブリンは短剣を抜いた。", "success"),
-        prepared("lost_goblin_ignore_failure", ignore["id"], "泉へ向かって歩き出した後、財布が軽くなっていることに気づいた。迷子を装ったゴブリンに金を盗まれたのだ。", "failure"),
+        prepared("lost_goblin_ignore_success", ignore["id"], "背後の気配に振り返り、財布へ伸びていたゴブリンの手首を掴む。盗みを見破られたゴブリンは箱の話など忘れたように顔を歪め、短剣を抜いて飛びかかってきた。", "success"),
+        prepared(
+            "lost_goblin_ignore_failure",
+            ignore["id"],
+            "泉へ向かって歩き出した後、財布が軽くなっていることに気づいた。迷子を装ったゴブリンに金を盗まれたのだ。",
+            "failure",
+            combat_text="財布を奪ったゴブリンへ追いつくと、空になった袋を投げ捨てて振り返った。『もう奪える金がないなら、顔を見たお前には消えてもらう』隠していた短剣を抜き、口封じのために襲いかかってくる。",
+        ),
     ]))
 
     rest = action("rest_at_elf_spring", "精霊の泉で休む", "HPとMPを回復して休息する", effects=[{"restore_full": True}, {"current_location": "slime_ambush_one"}, {"start_combat": True}])
-    continue_action = action("continue_from_elf_spring", "休まず先へ進む", "二頭の森狼が待ち伏せている", "戦闘開始", silent=True, effects=[{"current_location": "forest_wolves"}, {"start_combat": True}])
-    locations.append(location("elf_spring", "精霊の泉", "淡い光を帯びた泉。休めば力を取り戻せそうだ。", [rest, continue_action], turns=[prepared("elf_spring_rest", rest["id"], "泉の水で傷と魔力を癒し、木陰で眠りにつく。目を覚ますと、周囲を多数のスライムが取り囲んでいた。")]))
+    continue_action = action("continue_from_elf_spring", "休まず先へ進む", "二頭の森狼が待ち伏せている", "戦闘開始", effects=[{"current_location": "forest_wolves"}, {"start_combat": True}])
+    locations.append(location("elf_spring", "精霊の泉", "淡い光を帯びた泉。休めば力を取り戻せそうだ。", [rest, continue_action], turns=[
+        prepared("elf_spring_rest", rest["id"], "泉の水で傷と魔力を癒し、木陰で眠りにつく。目を覚ますと、周囲を多数のスライムが取り囲んでいた。"),
+        prepared("elf_spring_continue", continue_action["id"], "泉を横目に休まず進むと、茂みの左右から低い唸り声が重なった。二頭の森狼が退路と行く手を分けて塞ぎ、牙を剥いて間合いを詰めてくる。"),
+    ]))
     locations.append(location("forest_wolves", "闇の森・狼の縄張り", "泉を通り過ぎた先で二頭の森狼が襲いかかる。", [], enemy_ids=["forest_wolf", "forest_wolf"], combat={"auto_start": False, "flee_allowed": True, "enemy_ids": ["forest_wolf", "forest_wolf"], "victory_effects": {"current_location": "forest_exit"}, "defeat_effects": {"hp_change": 1}}))
-    locations.append(location("slime_ambush_one", "精霊の泉・第一波", "三匹のスライムに包囲されている。", [], enemy_ids=["slime", "slime", "slime"], combat={"auto_start": False, "flee_allowed": False, "enemy_ids": ["slime", "slime", "slime"], "victory_effects": {"current_location": "slime_ambush_two"}, "defeat_effects": {"hp_change": 1}}))
-    locations.append(location("slime_ambush_two", "精霊の泉・第二波", "さらに三匹のスライムが泉から這い出す。", [], enemy_ids=["slime", "slime", "slime"], combat={"auto_start": True, "flee_allowed": False, "enemy_ids": ["slime", "slime", "slime"], "victory_effects": {"current_location": "slime_king_battle"}, "defeat_effects": {"hp_change": 1}}))
+    locations.append(location("slime_ambush_one", "精霊の泉・第一波", "三匹のスライムに包囲されている。", [], enemy_ids=["slime", "slime", "slime"], combat={"auto_start": False, "flee_allowed": False, "enemy_ids": ["slime", "slime", "slime"], "victory_effects": {"current_location": "slime_ambush_two"}, "defeat_effects": {"hp_change": 1}, "result_texts": {"victory": "最後の一匹を弾き飛ばした直後、泉の反対側で水音が三つ重なった。休む間もなく、新たな三匹のスライムが水面から這い上がり、半円を描いて包囲を狭めてくる。"}}))
+    locations.append(location("slime_ambush_two", "精霊の泉・第二波", "さらに三匹のスライムが泉から這い出す。", [], enemy_ids=["slime", "slime", "slime"], combat={"auto_start": True, "flee_allowed": False, "enemy_ids": ["slime", "slime", "slime"], "victory_effects": {"current_location": "slime_king_battle"}, "defeat_effects": {"hp_change": 1}, "result_texts": {"victory": "第二波を退けると泉全体が大きく盛り上がった。水を押し分けて現れたのは、錆びた王冠を載せた巨大なスライムだ。スライム王は仲間の残骸を吸収し、重い身体で地面を揺らす。"}}))
     locations.append(location("slime_king_battle", "精霊の泉・スライム王", "錆びた王冠を載せたスライム王が泉を揺らして現れる。", [], enemy_ids=["slime_king"], combat={"auto_start": True, "boss": True, "flee_allowed": False, "enemy_ids": ["slime_king"], "victory_effects": {"current_location": "forest_exit"}, "defeat_effects": {"hp_change": 1}}))
     locations.append(location("forest_exit", "闇の森・出口", "木々の隙間から麓の村と山道が見えている。", [action(
         "leave_forest_for_village", "森を出て麓の村へ向かう",
@@ -704,25 +733,51 @@ def fort_locations(pack: dict[str, Any]) -> list[dict[str, Any]]:
     locations: list[dict[str, Any]] = []
     first_sneak = action("fort_first_bypass", "見張りを迂回する", "一階最初の戦闘を避ける", "1d20+dex判定（DC13）", roll={"dice_type": "1d20+dex", "dc": 13}, success_effects=[{"current_location": "goblin_fort_first_second"}], failure_effects=[{"start_combat": True}])
     first_combat = {"auto_start": False, "flee_allowed": True, "enemy_ids": ["goblin"], "victory_effects": {"current_location": "goblin_fort_first_second"}, "defeat_effects": {"hp_change": 1}}
-    locations.append(location("goblin_fort", "ゴブリン砦・一階前半", "砦へ入ると、一匹のゴブリンが通路を見張っている。", [combat_start_action("fight_fort_first_guard", "見張りのゴブリンと戦う"), first_sneak], enemy_ids=["goblin"], combat=first_combat, turns=[prepared("fort_first_bypass_success", first_sneak["id"], "物陰と木箱を利用し、見張りに気づかれず一階奥へ進んだ。", "success"), prepared("fort_first_bypass_failure", first_sneak["id"], "足元の空き瓶を蹴り、見張りが短剣を抜いて警報を上げた。", "failure")]))
+    first_fight = combat_start_action("fight_fort_first_guard", "見張りのゴブリンと戦う")
+    locations.append(location("goblin_fort", "ゴブリン砦・一階前半", "砦へ入ると、一匹のゴブリンが通路を見張っている。", [first_fight, first_sneak], enemy_ids=["goblin"], combat=first_combat, turns=[
+        prepared("fort_first_guard_fight", first_fight["id"], "砦の入口を塞ぐ見張りへ武器を向ける。ゴブリンは侵入者に気づいて警笛へ手を伸ばすが、間に合わないと悟ると短剣を抜き、狭い通路で身構えた。"),
+        prepared("fort_first_bypass_success", first_sneak["id"], "物陰と木箱を利用し、見張りに気づかれず一階奥へ進んだ。", "success"),
+        prepared("fort_first_bypass_failure", first_sneak["id"], "足元の空き瓶を蹴り、見張りが短剣を抜いて警報を上げた。", "failure"),
+    ]))
 
     second_sneak = action("fort_second_bypass", "三人組を迂回する", "一階後半の戦闘を避ける", "1d20+dex判定（DC16）", roll={"dice_type": "1d20+dex", "dc": 16}, success_effects=[{"current_location": "goblin_fort_second_choice"}], failure_effects=[{"start_combat": True}])
-    locations.append(location("goblin_fort_first_second", "ゴブリン砦・一階後半", "通路の先を、一匹のゴブリンと二匹の弓ゴブリンが守っている。", [combat_start_action("fight_fort_second_guards", "三人のゴブリンと戦う"), second_sneak], enemy_ids=["goblin", "goblin_archer", "goblin_archer"], combat={"auto_start": False, "flee_allowed": True, "enemy_ids": ["goblin", "goblin_archer", "goblin_archer"], "victory_effects": {"current_location": "goblin_fort_second_choice"}, "defeat_effects": {"hp_change": 1}}))
-    locations.append(location("goblin_fort_second_choice", "ゴブリン砦・二階分岐", "二階の通路は左右に分かれている。右から話し声、左から獣の唸り声が聞こえる。", [action("explore_fort_right", "右の通路を探索する", effects=[{"current_location": "goblin_fort_second_right"}]), action("explore_fort_left", "左の通路を探索する", effects=[{"current_location": "goblin_fort_second_left"}, {"start_combat": True}])]))
+    second_fight = combat_start_action("fight_fort_second_guards", "三人のゴブリンと戦う")
+    locations.append(location("goblin_fort_first_second", "ゴブリン砦・一階後半", "通路の先を、一匹のゴブリンと二匹の弓ゴブリンが守っている。", [second_fight, second_sneak], enemy_ids=["goblin", "goblin_archer", "goblin_archer"], combat={"auto_start": False, "flee_allowed": True, "enemy_ids": ["goblin", "goblin_archer", "goblin_archer"], "victory_effects": {"current_location": "goblin_fort_second_choice"}, "defeat_effects": {"hp_change": 1}}, turns=[
+        prepared("fort_second_guards_fight", second_fight["id"], "一階奥の角を曲がると、中央のゴブリンが槍を構え、両脇の弓兵が木箱の上へ飛び乗った。矢じりがこちらを向き、三方向から逃げ道を封じてくる。"),
+        prepared("fort_second_bypass_success", second_sneak["id"], "巡回の隙を読み、積み上げられた樽の陰を抜けて三人組の背後を通過した。二階へ続く階段まで誰にも気づかれていない。", "success"),
+        prepared("fort_second_bypass_failure", second_sneak["id"], "身を隠した木箱が軋み、二匹の弓ゴブリンが同時に振り向いた。退路へ矢が突き刺さり、中央のゴブリンが武器を抜いて迫る。", "failure"),
+    ]))
+    explore_left = action("explore_fort_left", "左の通路を探索する", effects=[{"current_location": "goblin_fort_second_left"}, {"start_combat": True}])
+    locations.append(location("goblin_fort_second_choice", "ゴブリン砦・二階分岐", "二階の通路は左右に分かれている。右から話し声、左から獣の唸り声が聞こえる。", [action("explore_fort_right", "右の通路を探索する", effects=[{"current_location": "goblin_fort_second_right"}]), explore_left], turns=[
+        prepared("fort_left_hound_ambush", explore_left["id"], "左の扉を押し開けた瞬間、鉄鎖が床を激しく擦った。暗がりに並んだ五対の目が光り、繋がれていた猛犬たちが一斉に鎖を引きちぎって襲いかかる。"),
+    ]))
     avoid_big = action("bypass_hobgoblin", "大ゴブリンを尾行して迂回する", "私室を探る", "1d20+dex判定（DC17）", roll={"dice_type": "1d20+dex", "dc": 17}, success_effects=[{"gold_change": 30}, {"set_flag": "found_hobgoblin_savings"}, {"current_location": "goblin_fort_third_gate"}], failure_effects=[{"start_combat": True}])
-    locations.append(location("goblin_fort_second_right", "ゴブリン砦・二階右", "大ゴブリンが暗号を口ずさみながら私室と廊下を往復している。", [combat_start_action("fight_hobgoblin", "大ゴブリンと戦う"), avoid_big], enemy_ids=["hobgoblin"], combat={"auto_start": False, "flee_allowed": True, "enemy_ids": ["hobgoblin"], "victory_effects": {"flags_set": ["goblin_password_clue"], "current_location": "goblin_fort_third_gate"}, "defeat_effects": {"hp_change": 1}}, turns=[prepared("hobgoblin_bypass_success", avoid_big["id"], "大ゴブリンが離れた隙に私室へ入り、寝台の下から隠し金30Gを見つけた。", "success")]))
+    fight_big = combat_start_action("fight_hobgoblin", "大ゴブリンと戦う")
+    locations.append(location("goblin_fort_second_right", "ゴブリン砦・二階右", "大ゴブリンが暗号を口ずさみながら私室と廊下を往復している。", [fight_big, avoid_big], enemy_ids=["hobgoblin"], combat={"auto_start": False, "flee_allowed": True, "enemy_ids": ["hobgoblin"], "victory_effects": {"flags_set": ["goblin_password_clue"], "current_location": "goblin_fort_third_gate"}, "defeat_effects": {"hp_change": 1}}, turns=[
+        prepared("hobgoblin_direct_fight", fight_big["id"], "大ゴブリンの前へ踏み出すと、相手は口ずさんでいた暗号を止め、壁に立てかけた棍棒を掴んだ。廊下を塞ぐ巨体が床板を鳴らし、正面から突進してくる。"),
+        prepared("hobgoblin_bypass_success", avoid_big["id"], "大ゴブリンが離れた隙に私室へ入り、寝台の下から隠し金30Gを見つけた。", "success"),
+        prepared("hobgoblin_bypass_failure", avoid_big["id"], "尾行中に床板が沈み、大ゴブリンが振り返った。『誰だ！』怒声とともに重い棍棒が壁を削り、逃げ道へ振り下ろされる。", "failure"),
+    ]))
     locations.append(location("goblin_fort_second_left", "ゴブリン砦・二階左", "扉を開けた瞬間、五匹の猛犬が鎖を引きちぎって襲いかかる。", [], enemy_ids=["war_hound"] * 5, combat={"auto_start": False, "flee_allowed": False, "enemy_ids": ["war_hound"] * 5, "victory_effects": {"current_location": "goblin_fort_healing_circle"}, "defeat_effects": {"hp_change": 1}}))
     locations.append(location("goblin_fort_healing_circle", "ゴブリン砦・回復法陣", "猛犬の部屋の奥で、淡い光を放つ回復法陣が稼働している。", [action("use_fort_healing_circle", "回復法陣を使う", "全状態を回復する", effects=[{"restore_full": True}, {"current_location": "goblin_fort_third_gate"}])]))
 
     correct = action("give_correct_password", "暗号を答える", "入手した暗号で鉄門を開ける", visible_after="goblin_password_clue", effects=[{"current_location": "goblin_fort_fourth"}, {"start_combat": True}])
     bluff = action("invent_goblin_password", "暗号を適当に作る", "知力で門番を騙す", "1d20+int判定（DC18）", roll={"dice_type": "1d20+int", "dc": 18}, success_effects=[{"current_location": "goblin_fort_fourth"}, {"start_combat": True}], failure_effects=[{"current_location": "goblin_fort_third_guards"}, {"start_combat": True}])
-    honest = action("admit_no_password", "暗号を知らないと正直に言う", "背後から警備兵が現れる", "戦闘開始", silent=True, effects=[{"current_location": "goblin_fort_third_guards"}, {"start_combat": True}])
-    locations.append(location("goblin_fort_third_gate", "ゴブリン砦・三階鉄門", "四階へ続く鉄門には小窓があり、中から暗号を求める声がする。", [correct, bluff, honest], turns=[prepared("password_bluff_success", bluff["id"], "即興の暗号を堂々と告げると、小窓の向こうで短い相談があり、鉄門が軋みながら開いた。", "success"), prepared("password_bluff_failure", bluff["id"], "沈黙の後、警報の鐘が鳴る。退路には三匹の大ゴブリンが立ち塞がっていた。", "failure")]))
-    locations.append(location("goblin_fort_third_guards", "ゴブリン砦・三階警備戦", "鉄門の前後を三匹の大ゴブリンに挟まれた。", [], enemy_ids=["hobgoblin"] * 3, combat={"auto_start": False, "flee_allowed": False, "enemy_ids": ["hobgoblin"] * 3, "victory_effects": {"current_location": "goblin_fort_fourth"}, "defeat_effects": {"hp_change": 1}}))
+    honest = action("admit_no_password", "暗号を知らないと正直に言う", "背後から警備兵が現れる", "戦闘開始", effects=[{"current_location": "goblin_fort_third_guards"}, {"start_combat": True}])
+    locations.append(location("goblin_fort_third_gate", "ゴブリン砦・三階鉄門", "四階へ続く鉄門には小窓があり、中から暗号を求める声がする。", [correct, bluff, honest], turns=[
+        prepared("password_correct_king_ambush", correct["id"], "覚えた暗号を告げると鉄門が開く。だが財宝庫へ足を踏み入れた途端、玉座代わりの金貨の山からゴブリン王が立ち上がり、左右の弓兵が退路へ照準を合わせた。"),
+        prepared("password_bluff_success", bluff["id"], "即興の暗号を堂々と告げると鉄門が開いた。しかし先に待っていたのは財宝ではなく、金貨の山に座るゴブリン王と二匹の弓兵だった。", "success"),
+        prepared("password_bluff_failure", bluff["id"], "沈黙の後、警報の鐘が鳴る。退路には三匹の大ゴブリンが立ち塞がっていた。", "failure"),
+        prepared("password_honest_guards", honest["id"], "暗号を知らないと答えた瞬間、小窓が勢いよく閉じた。直後に背後の隠し扉が開き、三匹の大ゴブリンが棍棒を構えて退路を塞ぐ。"),
+    ]))
+    locations.append(location("goblin_fort_third_guards", "ゴブリン砦・三階警備戦", "鉄門の前後を三匹の大ゴブリンに挟まれた。", [], enemy_ids=["hobgoblin"] * 3, combat={"auto_start": False, "flee_allowed": False, "enemy_ids": ["hobgoblin"] * 3, "victory_effects": {"current_location": "goblin_fort_fourth"}, "defeat_effects": {"hp_change": 1}, "result_texts": {"victory": "三匹の警備兵を倒すと、戦闘の衝撃で鉄門の錠が外れた。扉の先は財宝庫だ。金貨の山からゴブリン王が立ち上がり、二匹の弓兵が高台へ散って次の戦いを挑んでくる。"}}))
     locations.append(location("goblin_fort_fourth", "ゴブリン砦・四階財宝庫", "財宝の山の前でゴブリン王と二匹の弓兵が待ち構えている。", [], enemy_ids=["goblin_king", "goblin_archer", "goblin_archer"], combat={"auto_start": True, "boss": True, "flee_allowed": False, "enemy_ids": ["goblin_king", "goblin_archer", "goblin_archer"], "victory_effects": {"flags_set": ["cleared_goblin_fort"], "current_location": "goblin_fort_chest_choice"}, "defeat_effects": {"hp_change": 1}}))
     return_box = action("return_lost_goblin_box", "迷子のゴブリンに箱を返す", "約束を守って砦を出る", once="resolved_lost_goblin_box", effects=[{"set_flag": "returned_lost_goblin_box"}, {"current_location": "forest_exit"}])
-    steal_box = action("steal_lost_goblin_box", "ゴブリンの箱を奪う", "箱を巡って戦う", "戦闘開始", once="resolved_lost_goblin_box", silent=True, effects=[{"set_flag": "betrayed_lost_goblin"}, {"current_location": "goblin_fort_chest_fight"}, {"start_combat": True}])
-    locations.append(location("goblin_fort_chest_choice", "ゴブリン砦・奪還した箱", "戦いが終わると迷子のゴブリンが現れ、自分の箱を見つけて抱き寄せようとする。", [return_box, steal_box], npc_ids=["lost_goblin"], turns=[prepared("return_goblin_box", return_box["id"], "約束どおり箱を渡すと、ゴブリンは大切そうに抱え、何度も礼を言って森へ去った。")]))
+    steal_box = action("steal_lost_goblin_box", "ゴブリンの箱を奪う", "箱を巡って戦う", "戦闘開始", once="resolved_lost_goblin_box", effects=[{"set_flag": "betrayed_lost_goblin"}, {"current_location": "goblin_fort_chest_fight"}, {"start_combat": True}])
+    locations.append(location("goblin_fort_chest_choice", "ゴブリン砦・奪還した箱", "戦いが終わると迷子のゴブリンが現れ、自分の箱を見つけて抱き寄せようとする。", [return_box, steal_box], npc_ids=["lost_goblin"], turns=[
+        prepared("return_goblin_box", return_box["id"], "約束どおり箱を渡すと、ゴブリンは大切そうに抱え、何度も礼を言って森へ去った。"),
+        prepared("steal_goblin_box_fight", steal_box["id"], "差し伸べられたゴブリンの手より先に箱を引き寄せる。『それは僕の箱だ！』裏切りを悟ったゴブリンは涙目のまま短剣を抜き、箱を取り戻そうと飛びかかってきた。"),
+    ]))
     locations.append(location("goblin_fort_chest_fight", "ゴブリン砦・箱の争奪", "箱を奪われまいと、迷子のゴブリンが短剣を抜く。", [], enemy_ids=["goblin"], combat={"auto_start": False, "flee_allowed": False, "enemy_ids": ["goblin"], "victory_effects": {"inventory_add": [{"name": "縮小の銃", "quantity": 1}], "flags_set": ["stole_shrinking_gun"], "current_location": "forest_exit"}, "defeat_effects": {"hp_change": 1}}))
     return locations
 
@@ -790,9 +845,9 @@ def village_locations(pack: dict[str, Any]) -> list[dict[str, Any]]:
         "赤い法衣をまとい、全身を炎に包まれた骸骨の魔法使いXanxusが退路を塞いでいる。",
         impossible_actions, npc_ids=["xanxus"],
         turns=[
-            prepared("xanxus_bluff_failed", "bluff_xanxus", "Xanxusは乾いた笑い声を上げた。『その目は何かを知った者の目だ。浅い嘘で私を欺けると思ったか』炎が一斉に膨れ上がる。", "failure"),
-            prepared("xanxus_ambush_failed", "ambush_xanxus", "攻撃を放つより早く、Xanxusの炎が武器ごと身体を弾き返した。『先手を取ったつもりか？』", "failure"),
-            prepared("xanxus_escape_failed", "flee_from_xanxus", "一歩踏み出した瞬間、炎の壁が行く手を封じた。Xanxusは指先を向け、戦いを強いる。", "failure"),
+            prepared("xanxus_bluff_failed", "bluff_xanxus", "Xanxusは乾いた笑い声を上げた。『その目は何かを知った者の目だ。浅い嘘で私を欺けると思ったか』杖の一振りで炎の壁が街道を閉ざし、燃える骸骨は明確な殺意を向けて戦闘態勢に入る。", "failure"),
+            prepared("xanxus_ambush_failed", "ambush_xanxus", "攻撃を放つより早く、Xanxusの炎が武器ごと身体を弾き返した。『先手を取ったつもりか？』着地点を炎の輪が囲み、Xanxusは陨石を呼ぶように片手を天へ掲げる。", "failure"),
+            prepared("xanxus_escape_failed", "flee_from_xanxus", "一歩踏み出した瞬間、炎の壁が行く手を封じた。背後にも火柱が立ち、逃げ場は完全に消える。Xanxusは指先をこちらへ向け、『ならば力ずくで進ませよう』と戦いを強いる。", "failure"),
         ],
     ))
     locations.append(location(
@@ -825,7 +880,7 @@ def village_locations(pack: dict[str, Any]) -> list[dict[str, Any]]:
         [submit, resist_saved, resist_doom], npc_ids=["xanxus"],
         turns=[
             prepared("accept_fire_seed", submit["id"], "火種を飲み込むと胸の奥へ焼ける感覚が沈んだ。炎への耐性を得た一方、氷と水に身体が強く反応する。火種は随時爆発しそうな様子をしている。"),
-            prepared("warlock_rescue", resist_saved["id"], "Xanxusが下殺手を放とうとした瞬間、青い光が炎を切り裂いた。姿を消していたワーロックが立ちはだかる。『Xanxus、それは少しやり過ぎだ』"),
+            prepared("warlock_rescue", resist_saved["id"], "Xanxusがとどめの炎を放とうとした瞬間、青い光が火線を切り裂いた。姿を消していたワーロックがあなたを背後へ庇う。『Xanxus、それは少しやり過ぎだ』青いローブの周囲に八属性の水晶球が展開し、二人の魔法使いの戦闘が始まる。"),
             prepared("xanxus_execution", resist_doom["id"], "Xanxusは一切の躊躇なく炎を解き放った。逃げ場はなく、視界は赤一色に染まった。"),
         ],
     ))
@@ -871,7 +926,8 @@ def village_locations(pack: dict[str, Any]) -> list[dict[str, Any]]:
             "defeat_effects": {"game_over": {"reason": "氷の精霊に凍結させられました。", "ending": "ice_elemental_defeat"}},
             "result_texts": {"victory": "氷の精霊が砕けると、奥から巨大な獣の足音が響いた。", "defeat": "氷の精霊の冷気に全身を閉ざされ、動けなくなった。"},
         }, turns=[
-            prepared("bypass_ice_success", bypass_ice["id"], "冷気の流れを読み、氷の精霊に気づかれず奥の広場へ抜けた。", "success"),
+            prepared("fight_ice_elemental_intro", fight_ice["id"], "武器を構えて凍った路地へ踏み込むと、氷の精霊がこちらの熱を察知した。人の形をした冷気が鋭い氷片を周囲に浮かべ、正面から行く手を塞ぐ。"),
+            prepared("bypass_ice_success", bypass_ice["id"], "冷気の流れを読み、氷の精霊に気づかれず奥の広場へ抜ける。だがそこで巨大な氷霜の狼がファイアスライムを前脚で叩き潰した。砕けた炎を踏み越え、次に冷たい眼があなたを捉える。", "success"),
             prepared("bypass_ice_failure", bypass_ice["id"], "凍った瓦礫を踏み割り、氷の精霊に発見された。", "failure"),
         ],
     ))
@@ -927,6 +983,28 @@ def update_robin(pack: dict[str, Any]) -> None:
             turn.setdefault("draft", {})["gm_text"] = "ロビンは声を落とした。「王城の路地裏には、夜だけ現れる黒い商人がいるそうよ。昼に行っても何も見つからないわ」"
 
 
+def update_castle_departure(pack: dict[str, Any]) -> None:
+    castle = next((entry for entry in pack.get("locations", []) if entry.get("id") == "castle"), None)
+    if not castle:
+        return
+    turns = castle.setdefault("hybrid", {}).setdefault("prepared_turns", [])
+    turns[:] = [turn for turn in turns if turn.get("action_id") != "go_dark_forest"]
+    turns.extend([
+        prepared(
+            "castle_departure_success",
+            "go_dark_forest",
+            "城門を抜けると石畳は次第に細い獣道へ変わり、湿った土と苔の匂いが濃くなっていく。やがて木々が陽光を遮り、闇の森の入口で青いスライムが進路を塞いだ。",
+            "success",
+        ),
+        prepared(
+            "castle_departure_failure",
+            "go_dark_forest",
+            "城門を出たところで装備の留め具が外れ、森へ入る前に引き返すことになった。支度を整え直せば、もう一度出発できる。",
+            "failure",
+        ),
+    ])
+
+
 def update_forge(pack: dict[str, Any]) -> None:
     forge = next((entry for entry in pack.get("locations", []) if entry.get("id") == "forge"), None)
     if not forge:
@@ -972,6 +1050,7 @@ def upgrade(pack: dict[str, Any]) -> dict[str, Any]:
     add_catalog(pack)
     add_village_catalog(pack)
     update_robin(pack)
+    update_castle_departure(pack)
     update_forge(pack)
     replacements = {entry["id"]: entry for entry in [*town_locations(pack), *forest_locations(pack), *fort_locations(pack), *village_locations(pack)]}
     retained = [entry for entry in pack.get("locations", []) if entry.get("id") not in replacements and entry.get("id") != "village_shop"]

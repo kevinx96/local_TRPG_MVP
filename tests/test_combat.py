@@ -88,6 +88,15 @@ class CombatEngineTests(unittest.TestCase):
         self.assertTrue(combat.ensure_combat_started(session))
         self.assertEqual(len(session["combat"]["enemies"]), 3)
 
+    def test_public_combat_exposes_precombat_intro(self):
+        session = self.create()
+        session["combat"] = None
+
+        self.assertTrue(combat.ensure_combat_started(session, intro_text="敵が退路を塞いだ。"))
+
+        public = combat.public_combat(session)
+        self.assertEqual(public["intro_text"], "敵が退路を塞いだ。")
+
     def test_companion_round_start_effects_heal_and_damage(self):
         enemy = {
             "id": "target",

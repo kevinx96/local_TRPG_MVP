@@ -23,6 +23,7 @@ const state = {
   combatActionTab: "attack",
   combatBusy: false,
   combatActions: [],
+  combatIntroSeenId: "",
 };
 
 /* ── DOM References ── */
@@ -88,6 +89,9 @@ const els = {
   choicesArea: document.querySelector("#choicesArea"),
   choicesList: document.querySelector("#choicesList"),
   combatScreen: document.querySelector("#combatScreen"),
+  combatIntro: document.querySelector("#combatIntro"),
+  combatIntroText: document.querySelector("#combatIntroText"),
+  combatIntroContinue: document.querySelector("#combatIntroContinue"),
   combatTitle: document.querySelector("#combatTitle"),
   combatRound: document.querySelector("#combatRound"),
   combatPlayerName: document.querySelector("#combatPlayerName"),
@@ -1161,11 +1165,13 @@ function renderCombat(session) {
   els.gameScreen.classList.toggle("combat-active", active);
   if (!active) {
     els.combatScreen.style.display = "none";
+    if (els.combatIntro) els.combatIntro.style.display = "none";
     state.combatTargetId = "";
     return;
   }
 
   els.combatScreen.style.display = "";
+  renderCombatIntro(combat);
   els.combatScreen.classList.toggle("busy", state.combatBusy);
   const enemies = Array.isArray(combat.enemies) ? combat.enemies : [];
   const alive = enemies.filter((enemy) => Number(enemy.hp || 0) > 0);
@@ -1258,6 +1264,17 @@ function renderCombatActions(actions) {
       <span>${escapeHtml(description)}</span>
     </button>`;
   }).join("");
+}
+
+function renderCombatIntro(combat) {
+  if (!els.combatIntro || !els.combatIntroText || !els.combatIntroContinue) return;
+  const combatId = String(combat?.id || "");
+  const introText = String(combat?.intro_text || "").trim();
+  const visible = Boolean(combatId && introText && combat?.status === "active" && state.combatIntroSeenId !== combatId);
+  els.combatIntro.dataset.combatId = combatId;
+  els.combatIntroText.textContent = introText;
+  els.combatIntro.style.display = visible ? "" : "none";
+  els.combatScreen.classList.toggle("intro-active", visible);
 }
 
 function renderAbilityTags(abilities, compact = false) {
@@ -1499,6 +1516,13 @@ if (els.combatScreen) {
   });
 }
 if (els.combatResolveButton) els.combatResolveButton.addEventListener("click", resolveCombatResult);
+if (els.combatIntroContinue) {
+  els.combatIntroContinue.addEventListener("click", () => {
+    state.combatIntroSeenId = els.combatIntro?.dataset.combatId || "";
+    if (els.combatIntro) els.combatIntro.style.display = "none";
+    if (els.combatScreen) els.combatScreen.classList.remove("intro-active");
+  });
+}
 if (els.dialogueBox) {
   els.dialogueBox.addEventListener("click", revealPendingChoices);
   els.dialogueBox.addEventListener("keydown", (event) => {

@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 from host import app as app_module
 from host import combat, state
+from host.scenario_context import select_hybrid_prepared_turn
 
 
 SCENARIO_ROOT = Path("host/prompt/processed")
@@ -62,6 +63,16 @@ class DragonStoryTests(unittest.TestCase):
         self.assertIn(".combat-terminal .combat-command-deck", css)
         self.assertIn("function renderScenePortraits", source)
         self.assertIn("function renderAbilityTags", source)
+
+    def test_client_has_precombat_intro_surface(self):
+        html = Path("client/index.html").read_text(encoding="utf-8")
+        css = Path("client/styles.css").read_text(encoding="utf-8")
+        source = Path("client/app.js").read_text(encoding="utf-8")
+
+        for element_id in ("combatIntro", "combatIntroText", "combatIntroContinue"):
+            self.assertIn(f'id="{element_id}"', html)
+        self.assertIn(".combat-intro", css)
+        self.assertIn("function renderCombatIntro", source)
 
     def test_portrait_staging_uses_equal_visual_height_and_count_aware_ensemble_sizes(self):
         css = Path("client/styles.css").read_text(encoding="utf-8")
@@ -237,6 +248,120 @@ class DragonStoryTests(unittest.TestCase):
         self.assertEqual(poor["character"]["gold"], 0)
         self.assertTrue(state.ensure_combat_started(poor))
         self.assertEqual(poor["combat"]["enemies"][0]["template_id"], "goblin")
+
+    def test_cross_location_combat_uses_source_prepared_turn(self):
+        session = self.create_runtime_session()
+        session["world_state"] = {"scene_id": "village", "location_id": "xanxus_confrontation"}
+        action = state.resolve_action(session, action_id="bluff_xanxus")
+        roll = state.roll_dice(session, *state.action_dice_settings(action), client_rolls=[10])
+
+        result = state.apply_action_result(session, action, roll)
+        prepared_turn = select_hybrid_prepared_turn(session, action["text"])
+
+        self.assertEqual(result["source_location_id"], "xanxus_confrontation")
+        self.assertEqual(state.current_location_id(session), "xanxus_battle")
+        self.assertEqual(prepared_turn["id"], "xanxus_bluff_failed")
+        self.assertIn("炎", prepared_turn["draft"]["gm_text"])
+
+    def test_castle_departure_has_prepared_transition_for_both_outcomes(self):
+        for rolls, expected_turn_id in (([18], "castle_departure_success"), ([1], "castle_departure_failure")):
+            with self.subTest(expected_turn_id=expected_turn_id):
+                session = self.create_runtime_session()
+                session["world_state"] = {"scene_id": "start", "location_id": "castle"}
+                action = state.resolve_action(session, action_id="go_dark_forest")
+                roll = state.roll_dice(session, *state.action_dice_settings(action), client_rolls=rolls)
+                state.apply_action_result(session, action, roll)
+
+                prepared_turn = select_hybrid_prepared_turn(session, action["text"])
+
+                self.assertEqual(prepared_turn["id"], expected_turn_id)
+                self.assertTrue(prepared_turn["draft"]["gm_text"].strip())
+
+    def test_lost_goblin_and_xanxus_show_intro_before_combat_without_llm(self):
+        cases = (
+            ("dark_forest", "lost_goblin_crossroads", "ignore_lost_goblin", [10], "財布"),
+            ("village", "xanxus_confrontation", "bluff_xanxus", [10], "Xanxus"),
+        )
+        for scene_id, location_id, action_id, rolls, expected_text in cases:
+            with self.subTest(action_id=action_id):
+                session = self.create_runtime_session()
+                session["world_state"] = {"scene_id": scene_id, "location_id": location_id}
+                action = state.resolve_action(session, action_id=action_id)
+                with patch.object(app_module, "chat_completion") as completion:
+                    result = app_module._run_turn(
+                        session,
+                        app_module.TurnRequest(
+                            text=action["text"],
+                            action_id=action_id,
+                            client_dice={"rolls": rolls},
+                        ),
+                    )
+
+                completion.assert_not_called()
+                self.assertTrue(result["in_combat"])
+                self.assertIn(expected_text, result["combat"]["intro_text"])
+                self.assertEqual(result["messages"][-1]["text"], result["combat"]["intro_text"])
+
+    def test_lost_goblin_robbery_uses_combat_specific_text_when_gold_runs_out(self):
+        session = self.create_runtime_session()
+        session["world_state"] = {"scene_id": "dark_forest", "location_id": "lost_goblin_crossroads"}
+        session["character"]["gold"] = 20
+        action = state.resolve_action(session, action_id="ignore_lost_goblin")
+
+        with patch.object(app_module, "chat_completion") as completion:
+            result = app_module._run_turn(
+                session,
+                app_module.TurnRequest(
+                    text=action["text"],
+                    action_id=action["id"],
+                    client_dice={"rolls": [1]},
+                ),
+            )
+
+        completion.assert_not_called()
+        self.assertTrue(result["in_combat"])
+        self.assertIn("口封じ", result["combat"]["intro_text"])
+        self.assertNotIn("泉へ向かって", result["combat"]["intro_text"])
+
+    def test_combat_entries_have_player_visible_introductions(self):
+        required_action_ids = {
+            "betray_cursed_merchant",
+            "attack_slime",
+            "ignore_lost_goblin",
+            "rest_at_elf_spring",
+            "continue_from_elf_spring",
+            "fight_fort_first_guard",
+            "fight_fort_second_guards",
+            "fort_second_bypass",
+            "explore_fort_left",
+            "fight_hobgoblin",
+            "give_correct_password",
+            "admit_no_password",
+            "steal_lost_goblin_box",
+            "approach_burning_village_carefully",
+            "enter_burning_village_directly",
+            "bluff_xanxus",
+            "ambush_xanxus",
+            "flee_from_xanxus",
+            "refuse_xanxus_with_rescue",
+            "fight_ice_elemental",
+            "bypass_ice_elemental",
+        }
+        for filename in SCENARIO_FILES:
+            with self.subTest(filename=filename):
+                pack = self.load_raw(filename)
+                prepared_actions = {
+                    str(turn.get("action_id") or "")
+                    for location in pack.get("locations", [])
+                    for turn in ((location.get("hybrid") or {}).get("prepared_turns") or [])
+                    if str(((turn.get("draft") or {}).get("gm_text") or "")).strip()
+                }
+                self.assertEqual(required_action_ids - prepared_actions, set())
+
+                locations = records(pack, "locations")
+                self.assertIn("victory", locations["slime_ambush_one"]["combat"]["result_texts"])
+                self.assertIn("victory", locations["slime_ambush_two"]["combat"]["result_texts"])
+                self.assertIn("victory", locations["goblin_fort_third_guards"]["combat"]["result_texts"])
 
     def test_burning_village_replaces_old_hybrid_scene(self):
         for filename in SCENARIO_FILES:
