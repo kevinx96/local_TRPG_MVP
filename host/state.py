@@ -945,6 +945,7 @@ def action_dice_settings(action: Optional[dict[str, Any]], default_type: str = "
 
 
 def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_roll: dict[str, Any]) -> dict[str, Any]:
+    source_location_id = current_location_id(session)
     outcome = _action_outcome(latest_roll, action.get("critical_enabled") is not False)
     base_effects = _as_list(action.get("effects"))
     branch_outcome = {
@@ -973,6 +974,7 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
         "roll": latest_roll,
         "state_delta": delta,
         "prepared_turn_id": str(action.get("prepared_turn_id") or ""),
+        "source_location_id": source_location_id,
     }
     record_state_event(
         session,

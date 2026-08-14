@@ -255,10 +255,10 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
         return {}
     hybrid = location.get("hybrid") if isinstance(location.get("hybrid"), dict) else {}
     prepared_turns = hybrid.get("prepared_turns") if isinstance(hybrid.get("prepared_turns"), list) else []
-    if not prepared_turns:
-        return _legacy_dialogue_turn_as_prepared(hybrid, opening)
 
     if opening:
+        if not prepared_turns:
+            return _legacy_dialogue_turn_as_prepared(hybrid, opening)
         for turn in prepared_turns:
             if _turn_purpose(turn) == "opening":
                 return deepcopy(turn)
@@ -267,15 +267,34 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
     action_result = session.get("last_action_result") if isinstance(session.get("last_action_result"), dict) else {}
     action_id = str(action_result.get("action_id") or "")
     outcome = str(action_result.get("outcome") or "")
+    candidate_turns = prepared_turns
     if action_id:
-        exact_matches = [
-            turn for turn in prepared_turns
+        source_location_id = str(action_result.get("source_location_id") or "")
+        source_location = _find_location_in_pack(pack, source_location_id) if source_location_id else None
+        source_hybrid = source_location.get("hybrid") if isinstance(source_location, dict) and isinstance(source_location.get("hybrid"), dict) else {}
+        source_turns = source_hybrid.get("prepared_turns") if isinstance(source_hybrid.get("prepared_turns"), list) else []
+        candidate_turns = [*source_turns, *prepared_turns] if source_location_id != location_id else prepared_turns
+        action_matches = [
+            turn for turn in candidate_turns
             if isinstance(turn, dict)
             and str(turn.get("action_id") or turn.get("prepared_turn_id") or "") == action_id
-            and (not str(turn.get("outcome") or "") or str(turn.get("outcome") or "") == outcome)
         ]
+        exact_matches = [turn for turn in action_matches if str(turn.get("outcome") or "") == outcome]
         if exact_matches:
             return deepcopy(exact_matches[0])
+        normalized_outcome = _normalized_outcome(outcome)
+        family_matches = [
+            turn for turn in action_matches
+            if normalized_outcome and _normalized_outcome(turn.get("outcome")) == normalized_outcome
+        ]
+        if family_matches:
+            return deepcopy(family_matches[0])
+        neutral_matches = [turn for turn in action_matches if not str(turn.get("outcome") or "")]
+        if neutral_matches:
+            return deepcopy(neutral_matches[0])
+
+    if not candidate_turns:
+        return _legacy_dialogue_turn_as_prepared(hybrid, opening)
 
     searchable_text = player_text.strip() or _latest_user_text(session)
     # A resolved action owns the current outcome. Reusing the last dice log here
@@ -283,7 +302,7 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
     latest_outcome = _normalized_outcome(outcome) if action_id else _latest_roll_outcome(session)
     scored = [
         (_prepared_turn_score(turn, searchable_text, latest_outcome), index, turn)
-        for index, turn in enumerate(prepared_turns)
+        for index, turn in enumerate(candidate_turns)
     ]
     scored.sort(key=lambda item: (item[0], -item[1]), reverse=True)
     if scored and scored[0][0] > 0:
@@ -731,9 +750,9 @@ def _prepared_turn_score(turn: Any, text: str, latest_outcome: str = "") -> int:
 
 def _normalized_outcome(value: Any) -> str:
     outcome = str(value or "").strip().lower()
-    if outcome in {"success", "succeed", "passed"}:
+    if outcome in {"success", "succeed", "passed", "critical_success"}:
         return "success"
-    if outcome in {"failure", "fail", "failed"}:
+    if outcome in {"failure", "fail", "failed", "critical_failure"}:
         return "fail"
     return ""
 

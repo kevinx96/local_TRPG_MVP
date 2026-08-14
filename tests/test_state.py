@@ -2104,6 +2104,8 @@ class StateTests(unittest.TestCase):
                 completion.assert_not_called()
                 self.assertTrue(result["in_combat"])
                 self.assertEqual(session["combat"]["status"], "active")
+                self.assertIn("スライム", result["combat"]["intro_text"])
+                self.assertIn("スライム", result["messages"][-1]["text"])
 
     def test_combat_resolution_controls_use_player_facing_copy(self):
         html = (state.HOST_ROOT.parent / "client" / "index.html").read_text(encoding="utf-8")

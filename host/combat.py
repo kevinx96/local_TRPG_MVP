@@ -7,6 +7,7 @@ from copy import deepcopy
 from datetime import datetime, timezone
 from typing import Any, Optional
 
+from .gm_contract import sanitize_visible_text
 from .item_mechanics import (
     equipped_basic_attack_followups,
     effective_ability,
@@ -58,7 +59,7 @@ def combat_needs_resolution(session: dict[str, Any]) -> bool:
     return bool(isinstance(combat, dict) and combat.get("pending_resolution"))
 
 
-def ensure_combat_started(session: dict[str, Any]) -> bool:
+def ensure_combat_started(session: dict[str, Any], intro_text: str = "") -> bool:
     existing = session.get("combat")
     if isinstance(existing, dict) and existing.get("status"):
         return False
@@ -111,6 +112,16 @@ def ensure_combat_started(session: dict[str, Any]) -> bool:
             session["character"] = _runtime_player_character(player_template)
 
     enemies = [_runtime_enemy(enemy, index) for index, enemy in enumerate(enemy_templates)]
+    location = next(
+        (
+            item for item in pack.get("locations", [])
+            if isinstance(item, dict) and str(item.get("id") or "") == location_id
+        ),
+        {},
+    )
+    resolved_intro = sanitize_visible_text(
+        str(intro_text or encounter.get("intro_text") or location.get("description") or "")
+    ).strip()
     session["combat"] = {
         "id": uuid.uuid4().hex,
         "status": "active",
@@ -125,6 +136,7 @@ def ensure_combat_started(session: dict[str, Any]) -> bool:
         "encounter": deepcopy(encounter),
         "pending_resolution": False,
         "result": None,
+        "intro_text": resolved_intro,
         "created_at": utc_now(),
         "event_cursor": len(session.get("event_log") or []),
     }
@@ -278,6 +290,7 @@ def public_combat(session: dict[str, Any]) -> Optional[dict[str, Any]]:
         "log": deepcopy((combat.get("log") or [])[-40:]),
         "pending_resolution": bool(combat.get("pending_resolution")),
         "result": deepcopy(combat.get("result")),
+        "intro_text": str(combat.get("intro_text") or ""),
         "actions": [],
     }
     if combat.get("status") == "active":

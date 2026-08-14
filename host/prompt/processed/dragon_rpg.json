@@ -408,7 +408,47 @@
         }
       ],
       "background_image": "/static/images/bg_dragon_rpg.png",
-      "portrait_image": "/static/images/npc_king.png"
+      "portrait_image": "/static/images/npc_king.png",
+      "hybrid": {
+        "prepared_turns": [
+          {
+            "id": "castle_departure_success",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "go_dark_forest",
+            "trigger_keywords": [],
+            "action_id": "go_dark_forest",
+            "outcome": "success",
+            "draft": {
+              "gm_text": "城門を抜けると石畳は次第に細い獣道へ変わり、湿った土と苔の匂いが濃くなっていく。やがて木々が陽光を遮り、闇の森の入口で青いスライムが進路を塞いだ。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          },
+          {
+            "id": "castle_departure_failure",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "go_dark_forest",
+            "trigger_keywords": [],
+            "action_id": "go_dark_forest",
+            "outcome": "failure",
+            "draft": {
+              "gm_text": "城門を出たところで装備の留め具が外れ、森へ入る前に引き返すことになった。支度を整え直せば、もう一度出発できる。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "forge",
@@ -2231,6 +2271,24 @@
             "rewrite_notes": [
               "確定済みのアクション結果だけを自然な日本語で描写してください。"
             ]
+          },
+          {
+            "id": "curse_bargain_betrayal",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "betray_cursed_merchant",
+            "trigger_keywords": [],
+            "action_id": "betray_cursed_merchant",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "差し出しかけた代価を引き戻し、取引を拒絶する。怪しい商人の笑みが消え、黒衣の内側から死霊の気配が噴き出した。『契約を違えるなら、魂で払ってもらおう』小さな姿は膨れ上がり、亡霊主宰ゼボクが正体を現す。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
           }
         ]
       },
@@ -2534,7 +2592,6 @@
             "反悔する"
           ],
           "visible_after": "curse_bargain_pending",
-          "silent": true,
           "effects": [
             {
               "current_location": "merchant_battle"
@@ -2799,7 +2856,7 @@
             "action_id": "ignore_lost_goblin",
             "outcome": "success",
             "draft": {
-              "gm_text": "背後の気配に振り返ると、ゴブリンの手が財布へ伸びていた。見つかったゴブリンは短剣を抜いた。",
+              "gm_text": "背後の気配に振り返り、財布へ伸びていたゴブリンの手首を掴む。盗みを見破られたゴブリンは箱の話など忘れたように顔を歪め、短剣を抜いて飛びかかってきた。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -2820,7 +2877,8 @@
               "gm_text": "泉へ向かって歩き出した後、財布が軽くなっていることに気づいた。迷子を装ったゴブリンに金を盗まれたのだ。",
               "system_log": "",
               "state_delta": {},
-              "choices": []
+              "choices": [],
+              "combat_text": "財布を奪ったゴブリンへ追いつくと、空になった袋を投げ捨てて振り返った。『もう奪える金がないなら、顔を見たお前には消えてもらう』隠していた短剣を抜き、口封じのために襲いかかってくる。"
             },
             "rewrite_notes": [
               "確定済みのアクション結果だけを自然な日本語で描写してください。"
@@ -2948,6 +3006,24 @@
             "rewrite_notes": [
               "確定済みのアクション結果だけを自然な日本語で描写してください。"
             ]
+          },
+          {
+            "id": "elf_spring_continue",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "continue_from_elf_spring",
+            "trigger_keywords": [],
+            "action_id": "continue_from_elf_spring",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "泉を横目に休まず進むと、茂みの左右から低い唸り声が重なった。二頭の森狼が退路と行く手を分けて塞ぎ、牙を剥いて間合いを詰めてくる。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
           }
         ]
       },
@@ -2985,7 +3061,6 @@
           "intent_keywords": [
             "休まず先へ進む"
           ],
-          "silent": true,
           "effects": [
             {
               "current_location": "forest_wolves"
@@ -3073,6 +3148,9 @@
         },
         "defeat_effects": {
           "hp_change": 1
+        },
+        "result_texts": {
+          "victory": "最後の一匹を弾き飛ばした直後、泉の反対側で水音が三つ重なった。休む間もなく、新たな三匹のスライムが水面から這い上がり、半円を描いて包囲を狭めてくる。"
         }
       },
       "actions": [],
@@ -3114,6 +3192,9 @@
         },
         "defeat_effects": {
           "hp_change": 1
+        },
+        "result_texts": {
+          "victory": "第二波を退けると泉全体が大きく盛り上がった。水を押し分けて現れたのは、錆びた王冠を載せた巨大なスライムだ。スライム王は仲間の残骸を吸収し、重い身体で地面を揺らす。"
         }
       },
       "actions": [],
@@ -3258,6 +3339,24 @@
         "summary": "砦へ入ると、一匹のゴブリンが通路を見張っている。",
         "prepared_turns": [
           {
+            "id": "fort_first_guard_fight",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "fight_fort_first_guard",
+            "trigger_keywords": [],
+            "action_id": "fight_fort_first_guard",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "砦の入口を塞ぐ見張りへ武器を向ける。ゴブリンは侵入者に気づいて警笛へ手を伸ばすが、間に合わないと悟ると短剣を抜き、狭い通路で身構えた。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          },
+          {
             "id": "fort_first_bypass_success",
             "purpose": "choice_response",
             "source_choice": "",
@@ -3371,7 +3470,62 @@
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "通路の先を、一匹のゴブリンと二匹の弓ゴブリンが守っている。",
-        "prepared_turns": []
+        "prepared_turns": [
+          {
+            "id": "fort_second_guards_fight",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "fight_fort_second_guards",
+            "trigger_keywords": [],
+            "action_id": "fight_fort_second_guards",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "一階奥の角を曲がると、中央のゴブリンが槍を構え、両脇の弓兵が木箱の上へ飛び乗った。矢じりがこちらを向き、三方向から逃げ道を封じてくる。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          },
+          {
+            "id": "fort_second_bypass_success",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "fort_second_bypass",
+            "trigger_keywords": [],
+            "action_id": "fort_second_bypass",
+            "outcome": "success",
+            "draft": {
+              "gm_text": "巡回の隙を読み、積み上げられた樽の陰を抜けて三人組の背後を通過した。二階へ続く階段まで誰にも気づかれていない。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          },
+          {
+            "id": "fort_second_bypass_failure",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "fort_second_bypass",
+            "trigger_keywords": [],
+            "action_id": "fort_second_bypass",
+            "outcome": "failure",
+            "draft": {
+              "gm_text": "身を隠した木箱が軋み、二匹の弓ゴブリンが同時に振り向いた。退路へ矢が突き刺さり、中央のゴブリンが武器を抜いて迫る。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          }
+        ]
       },
       "combat": {
         "auto_start": false,
@@ -3447,7 +3601,26 @@
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "二階の通路は左右に分かれている。右から話し声、左から獣の唸り声が聞こえる。",
-        "prepared_turns": []
+        "prepared_turns": [
+          {
+            "id": "fort_left_hound_ambush",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "explore_fort_left",
+            "trigger_keywords": [],
+            "action_id": "explore_fort_left",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "左の扉を押し開けた瞬間、鉄鎖が床を激しく擦った。暗がりに並んだ五対の目が光り、繋がれていた猛犬たちが一斉に鎖を引きちぎって襲いかかる。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          }
+        ]
       },
       "combat": {
         "flee_allowed": true,
@@ -3510,6 +3683,24 @@
         "summary": "大ゴブリンが暗号を口ずさみながら私室と廊下を往復している。",
         "prepared_turns": [
           {
+            "id": "hobgoblin_direct_fight",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "fight_hobgoblin",
+            "trigger_keywords": [],
+            "action_id": "fight_hobgoblin",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "大ゴブリンの前へ踏み出すと、相手は口ずさんでいた暗号を止め、壁に立てかけた棍棒を掴んだ。廊下を塞ぐ巨体が床板を鳴らし、正面から突進してくる。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          },
+          {
             "id": "hobgoblin_bypass_success",
             "purpose": "choice_response",
             "source_choice": "",
@@ -3519,6 +3710,24 @@
             "outcome": "success",
             "draft": {
               "gm_text": "大ゴブリンが離れた隙に私室へ入り、寝台の下から隠し金30Gを見つけた。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          },
+          {
+            "id": "hobgoblin_bypass_failure",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "bypass_hobgoblin",
+            "trigger_keywords": [],
+            "action_id": "bypass_hobgoblin",
+            "outcome": "failure",
+            "draft": {
+              "gm_text": "尾行中に床板が沈み、大ゴブリンが振り返った。『誰だ！』怒声とともに重い棍棒が壁を削り、逃げ道へ振り下ろされる。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -3702,6 +3911,24 @@
         "summary": "四階へ続く鉄門には小窓があり、中から暗号を求める声がする。",
         "prepared_turns": [
           {
+            "id": "password_correct_king_ambush",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "give_correct_password",
+            "trigger_keywords": [],
+            "action_id": "give_correct_password",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "覚えた暗号を告げると鉄門が開く。だが財宝庫へ足を踏み入れた途端、玉座代わりの金貨の山からゴブリン王が立ち上がり、左右の弓兵が退路へ照準を合わせた。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          },
+          {
             "id": "password_bluff_success",
             "purpose": "choice_response",
             "source_choice": "",
@@ -3710,7 +3937,7 @@
             "action_id": "invent_goblin_password",
             "outcome": "success",
             "draft": {
-              "gm_text": "即興の暗号を堂々と告げると、小窓の向こうで短い相談があり、鉄門が軋みながら開いた。",
+              "gm_text": "即興の暗号を堂々と告げると鉄門が開いた。しかし先に待っていたのは財宝ではなく、金貨の山に座るゴブリン王と二匹の弓兵だった。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -3729,6 +3956,24 @@
             "outcome": "failure",
             "draft": {
               "gm_text": "沈黙の後、警報の鐘が鳴る。退路には三匹の大ゴブリンが立ち塞がっていた。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          },
+          {
+            "id": "password_honest_guards",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "admit_no_password",
+            "trigger_keywords": [],
+            "action_id": "admit_no_password",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "暗号を知らないと答えた瞬間、小窓が勢いよく閉じた。直後に背後の隠し扉が開き、三匹の大ゴブリンが棍棒を構えて退路を塞ぐ。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -3800,7 +4045,6 @@
           "intent_keywords": [
             "暗号を知らないと正直に言う"
           ],
-          "silent": true,
           "effects": [
             {
               "current_location": "goblin_fort_third_guards"
@@ -3849,6 +4093,9 @@
         },
         "defeat_effects": {
           "hp_change": 1
+        },
+        "result_texts": {
+          "victory": "三匹の警備兵を倒すと、戦闘の衝撃で鉄門の錠が外れた。扉の先は財宝庫だ。金貨の山からゴブリン王が立ち上がり、二匹の弓兵が高台へ散って次の戦いを挑んでくる。"
         }
       },
       "actions": [],
@@ -3936,6 +4183,24 @@
             "rewrite_notes": [
               "確定済みのアクション結果だけを自然な日本語で描写してください。"
             ]
+          },
+          {
+            "id": "steal_goblin_box_fight",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "steal_lost_goblin_box",
+            "trigger_keywords": [],
+            "action_id": "steal_lost_goblin_box",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "差し伸べられたゴブリンの手より先に箱を引き寄せる。『それは僕の箱だ！』裏切りを悟ったゴブリンは涙目のまま短剣を抜き、箱を取り戻そうと飛びかかってきた。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
           }
         ]
       },
@@ -3973,7 +4238,6 @@
             "ゴブリンの箱を奪う"
           ],
           "once": "resolved_lost_goblin_box",
-          "silent": true,
           "effects": [
             {
               "set_flag": "betrayed_lost_goblin"
@@ -4370,7 +4634,7 @@
             "action_id": "bluff_xanxus",
             "outcome": "failure",
             "draft": {
-              "gm_text": "Xanxusは乾いた笑い声を上げた。『その目は何かを知った者の目だ。浅い嘘で私を欺けると思ったか』炎が一斉に膨れ上がる。",
+              "gm_text": "Xanxusは乾いた笑い声を上げた。『その目は何かを知った者の目だ。浅い嘘で私を欺けると思ったか』杖の一振りで炎の壁が街道を閉ざし、燃える骸骨は明確な殺意を向けて戦闘態勢に入る。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -4388,7 +4652,7 @@
             "action_id": "ambush_xanxus",
             "outcome": "failure",
             "draft": {
-              "gm_text": "攻撃を放つより早く、Xanxusの炎が武器ごと身体を弾き返した。『先手を取ったつもりか？』",
+              "gm_text": "攻撃を放つより早く、Xanxusの炎が武器ごと身体を弾き返した。『先手を取ったつもりか？』着地点を炎の輪が囲み、Xanxusは陨石を呼ぶように片手を天へ掲げる。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -4406,7 +4670,7 @@
             "action_id": "flee_from_xanxus",
             "outcome": "failure",
             "draft": {
-              "gm_text": "一歩踏み出した瞬間、炎の壁が行く手を封じた。Xanxusは指先を向け、戦いを強いる。",
+              "gm_text": "一歩踏み出した瞬間、炎の壁が行く手を封じた。背後にも火柱が立ち、逃げ場は完全に消える。Xanxusは指先をこちらへ向け、『ならば力ずくで進ませよう』と戦いを強いる。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -4604,7 +4868,7 @@
             "action_id": "refuse_xanxus_with_rescue",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "Xanxusが下殺手を放とうとした瞬間、青い光が炎を切り裂いた。姿を消していたワーロックが立ちはだかる。『Xanxus、それは少しやり過ぎだ』",
+              "gm_text": "Xanxusがとどめの炎を放とうとした瞬間、青い光が火線を切り裂いた。姿を消していたワーロックがあなたを背後へ庇う。『Xanxus、それは少しやり過ぎだ』青いローブの周囲に八属性の水晶球が展開し、二人の魔法使いの戦闘が始まる。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -4911,6 +5175,24 @@
         "summary": "氷の精霊が凍りついた路地を巡回している。",
         "prepared_turns": [
           {
+            "id": "fight_ice_elemental_intro",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "fight_ice_elemental",
+            "trigger_keywords": [],
+            "action_id": "fight_ice_elemental",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "武器を構えて凍った路地へ踏み込むと、氷の精霊がこちらの熱を察知した。人の形をした冷気が鋭い氷片を周囲に浮かべ、正面から行く手を塞ぐ。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          },
+          {
             "id": "bypass_ice_success",
             "purpose": "choice_response",
             "source_choice": "",
@@ -4919,7 +5201,7 @@
             "action_id": "bypass_ice_elemental",
             "outcome": "success",
             "draft": {
-              "gm_text": "冷気の流れを読み、氷の精霊に気づかれず奥の広場へ抜けた。",
+              "gm_text": "冷気の流れを読み、氷の精霊に気づかれず奥の広場へ抜ける。だがそこで巨大な氷霜の狼がファイアスライムを前脚で叩き潰した。砕けた炎を踏み越え、次に冷たい眼があなたを捉える。",
               "system_log": "",
               "state_delta": {},
               "choices": []

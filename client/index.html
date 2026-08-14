@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/static/styles.css?v=20260814-portrait-scale" />
+    <link rel="stylesheet" href="/static/styles.css?v=20260814-combat-intro" />
   </head>
   <body>
 
@@ -106,6 +106,14 @@
       </div>
 
       <section id="combatScreen" class="combat-screen" style="display:none" aria-live="polite">
+        <div id="combatIntro" class="combat-intro" style="display:none" role="dialog" aria-modal="true" aria-labelledby="combatIntroLabel">
+          <div class="combat-intro-panel">
+            <span id="combatIntroLabel" class="combat-intro-label">GM</span>
+            <p id="combatIntroText"></p>
+            <button id="combatIntroContinue" type="button">戦闘開始</button>
+          </div>
+        </div>
+
         <header class="combat-header">
           <div>
             <span class="combat-kicker">TURN BATTLE</span>
@@ -226,6 +234,6 @@
       </div>
     </main>
 
-    <script src="/static/app.js?v=20260814-portrait-scale"></script>
+    <script src="/static/app.js?v=20260814-combat-intro"></script>
   </body>
 </html>

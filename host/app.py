@@ -473,7 +473,7 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
         )
     apply_gm_payload(session, visible_text, payload, warning)
     session["needs_opening"] = False
-    ensure_combat_started(session)
+    ensure_combat_started(session, intro_text=visible_text)
     save_session(session)
     return public_session(session)
 
@@ -561,6 +561,18 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
         latest_roll = roll_dice(session, dice_type, int(dice_dc))
     action_result = apply_action_result(session, resolved_action, latest_roll) if resolved_action else {}
 
+    prepared_combat_intro = _prepared_combat_intro(session, action_text)
+    if prepared_combat_intro and ensure_combat_started(session, intro_text=prepared_combat_intro):
+        add_assistant_message(session, prepared_combat_intro)
+        session["last_turn_narrated"] = True
+        save_session(session)
+        debug_log(
+            "Combat started with prepared intro "
+            f"session={session['id']} action_id={action_result.get('action_id', '')} "
+            f"location={current_location_id(session)} chars={len(prepared_combat_intro)}"
+        )
+        return public_session(session)
+
     if _should_skip_turn_narration(session, resolved_action, action_result, action_text):
         ensure_combat_started(session)
         save_session(session)
@@ -632,7 +644,7 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             f"json_ok={payload is not None} warning={warning!r} elapsed_ms={elapsed_ms:.0f}"
         )
     apply_gm_payload(session, visible_text, payload, warning)
-    ensure_combat_started(session)
+    ensure_combat_started(session, intro_text=visible_text)
     save_session(session)
     if debug_enabled:
         debug_log(
@@ -641,6 +653,20 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             f"logs={len(session['system_logs'])} dice={len(session['dice_log'])}"
         )
     return public_session(session)
+
+
+def _prepared_combat_intro(session: dict[str, Any], player_text: str) -> str:
+    if session.get("gm_mode") != "semi":
+        return ""
+    action_result = session.get("last_action_result") if isinstance(session.get("last_action_result"), dict) else {}
+    if not action_result.get("action_id"):
+        return ""
+    prepared = select_hybrid_prepared_turn(session, player_text)
+    draft = prepared.get("draft") if isinstance(prepared.get("draft"), dict) else {}
+    text = str(draft.get("combat_text") or draft.get("gm_text") or "").strip()
+    if text and not re.search(r"戦闘|戦い|襲|飛びかか|攻撃|待ち伏せ|立ちはだか|武器|短剣|牙|殺意", text):
+        text = f"{text}\n\n敵が退路を塞ぎ、戦闘が始まる。"
+    return text
 
 
 def _should_skip_turn_narration(
@@ -715,7 +741,7 @@ def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
         add_assistant_message(session, prepared_text)
         session["last_turn_narrated"] = True
         session["last_action_result"] = {}
-        ensure_combat_started(session)
+        ensure_combat_started(session, intro_text=prepared_text)
         if not combat_is_active(session):
             session["choices"] = fallback_choices_for_session(session)
         save_session(session)
@@ -759,7 +785,7 @@ def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
         visible_text = _visible_text_from_payload(visible_text, payload)
     apply_gm_payload(session, visible_text, payload, warning)
     session["last_action_result"] = {}
-    ensure_combat_started(session)
+    ensure_combat_started(session, intro_text=visible_text)
     save_session(session)
     if debug_enabled:
         debug_log(
