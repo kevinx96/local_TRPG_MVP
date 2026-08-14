@@ -8,7 +8,7 @@ const state = {
   choiceStack: [],
   choicesRevealed: false,
   selectedCharacterId: "hero",
-  selectedCharacterImage: "/static/images/char_male_hero.png",
+  selectedCharacterImage: "/static/images/char_male_hero_v2.png",
   selectedCharacter: null,
   characters: [],
   expandedCharacterId: "",

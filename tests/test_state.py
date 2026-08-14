@@ -892,7 +892,7 @@ class StateTests(unittest.TestCase):
 
         self.assertEqual(character["character_id"], "mage")
         self.assertEqual(character["name"], "リリィ")
-        self.assertEqual(character["character_image"], "/static/images/char_mage.png")
+        self.assertEqual(character["character_image"], "/static/images/char_mage_v2.png")
         self.assertEqual(character["attributes"]["int"], 16)
         self.assertEqual(character["inventory"][0]["name"], "魔導書")
 

@@ -70,6 +70,13 @@ NPC_IMAGES = {
     "fire_bat_dragon": "/static/images/companion_fire_bat_dragon.png",
 }
 
+CHARACTER_IMAGES = {
+    "hero": "/static/images/char_male_hero_v2.png",
+    "cleric": "/static/images/char_cleric_v2.png",
+    "mage": "/static/images/char_mage_v2.png",
+    "thief": "/static/images/char_thief_v2.png",
+}
+
 ENEMY_IMAGES = {
     "slime": "/static/images/enemy_slime.png",
     "ignis": "/static/images/enemy_ignis.png",
@@ -110,13 +117,16 @@ LOCATION_PORTRAITS = {
     "xanxus_battle": "/static/images/npc_xanxus.png",
     "xanxus_ultimatum": "/static/images/npc_xanxus.png",
     "warlock_rescue_battle": "/static/images/npc_warlock.png",
-    "ian_ice_katana_aftermath": "/static/images/npc_ian.png",
+    "ian_ice_katana_aftermath": "/static/images/npc_ian_serious.png",
+}
+
+LOCATION_NPC_PORTRAIT_OVERRIDES = {
+    "ian_ice_katana_aftermath": {"ian": "/static/images/npc_ian_serious.png"},
 }
 
 ACTION_PORTRAITS = {
     "ask_king_info": "/static/images/npc_king.png",
     "ask_general_advice": "/static/images/npc_general.png",
-    "check_supplies": "/static/images/char_male_hero.png",
     "buy_equipment": "/static/images/npc_blacksmith.png",
     "buy_adamantite_armor": "/static/images/npc_blacksmith.png",
     "buy_ice_amulet": "/static/images/npc_blacksmith.png",
@@ -156,9 +166,9 @@ ACTION_PORTRAITS = {
     "accept_xanxus_fire_seed": "/static/images/npc_xanxus.png",
     "refuse_xanxus_with_rescue": "/static/images/npc_xanxus.png",
     "refuse_xanxus_without_rescue": "/static/images/npc_xanxus.png",
-    "accept_ian_request": "/static/images/npc_ian.png",
-    "refuse_ian_after_xanxus": "/static/images/npc_ian.png",
-    "refuse_ian_before_xanxus": "/static/images/npc_ian.png",
+    "accept_ian_request": "/static/images/npc_ian_serious.png",
+    "refuse_ian_after_xanxus": "/static/images/npc_ian_serious.png",
+    "refuse_ian_before_xanxus": "/static/images/npc_ian_serious.png",
 }
 
 for _merchant_action in (
@@ -256,7 +266,11 @@ def apply_visual_assets(pack: dict[str, Any]) -> None:
         if not isinstance(character, dict):
             continue
         character_id = str(character.get("id") or "")
-        if character_id == "warlock":
+        if character_id in CHARACTER_IMAGES:
+            character["image"] = CHARACTER_IMAGES[character_id]
+            if character_id == "hero":
+                character["image_female"] = "/static/images/char_female_hero_v2.png"
+        elif character_id == "warlock":
             character["image"] = "/static/images/npc_warlock.png"
     for place in pack.get("locations", []):
         if not isinstance(place, dict):
@@ -266,6 +280,8 @@ def apply_visual_assets(pack: dict[str, Any]) -> None:
             place["background_image"] = BACKGROUND_IMAGES[location_id]
         if location_id in LOCATION_PORTRAITS:
             place["portrait_image"] = LOCATION_PORTRAITS[location_id]
+        if location_id in LOCATION_NPC_PORTRAIT_OVERRIDES:
+            place["npc_portrait_overrides"] = deepcopy(LOCATION_NPC_PORTRAIT_OVERRIDES[location_id])
         _apply_action_portraits(place.get("actions"))
     for scene in pack.get("scenes", []):
         if isinstance(scene, dict):
@@ -277,7 +293,9 @@ def _apply_action_portraits(actions: Any) -> None:
         if not isinstance(entry, dict):
             continue
         action_id = str(entry.get("id") or entry.get("action_id") or "")
-        if action_id in ACTION_PORTRAITS:
+        if action_id == "check_supplies":
+            entry.pop("portrait_image", None)
+        elif action_id in ACTION_PORTRAITS:
             entry["portrait_image"] = ACTION_PORTRAITS[action_id]
         _apply_action_portraits(entry.get("children"))
 

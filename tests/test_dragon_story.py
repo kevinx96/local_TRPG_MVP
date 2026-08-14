@@ -438,12 +438,61 @@ class DragonStoryTests(unittest.TestCase):
             ["ian", "robin"],
         )
         self.assertFalse(arrival["dialogue_active"])
-        self.assertEqual(arrival["player_portrait_image"], "/static/images/char_mage.png")
+        self.assertEqual(arrival["player_portrait_image"], "/static/images/char_mage_v2.png")
 
         session["last_action_result"] = {"action_id": "ask_robin_rumor", "outcome": "success"}
         dialogue = state.public_session(session)
         self.assertTrue(dialogue["dialogue_active"])
         self.assertEqual(dialogue["dialogue_portrait_image"], "/static/images/npc_robin.png")
+
+    def test_selectable_characters_use_refreshed_rgba_portraits(self):
+        pack = self.load_raw()
+        expected = {
+            "hero": "/static/images/char_male_hero_v2.png",
+            "cleric": "/static/images/char_cleric_v2.png",
+            "mage": "/static/images/char_mage_v2.png",
+            "thief": "/static/images/char_thief_v2.png",
+        }
+        characters = records(pack, "characters")
+        for character_id, image in expected.items():
+            self.assertEqual(characters[character_id]["image"], image)
+            png = Path("client") / image.removeprefix("/static/")
+            self.assertEqual(png.read_bytes()[25], 6, f"{png} must be RGBA")
+        self.assertEqual(characters["hero"]["image_female"], "/static/images/char_female_hero_v2.png")
+        for image in (
+            "/static/images/char_female_hero_v2.png",
+            "/static/images/npc_ian_serious.png",
+        ):
+            png = Path("client") / image.removeprefix("/static/")
+            self.assertEqual(png.read_bytes()[25], 6, f"{png} must be RGBA")
+
+    def test_old_save_portrait_paths_migrate_to_refreshed_art(self):
+        session = self.create_runtime_session("thief")
+        session["character"]["character_image"] = "/static/images/char_thief.png"
+        state.save_session(session)
+
+        loaded = state.load_session(session["id"])
+
+        self.assertEqual(loaded["character"]["character_image"], "/static/images/char_thief_v2.png")
+
+    def test_ian_uses_serious_variant_only_at_ice_katana_aftermath(self):
+        session = self.create_runtime_session()
+        state.commit_world_position(session, location_id="inn")
+        inn = state.public_session(session)
+        self.assertEqual(inn["location_npc_portraits"][0]["image"], "/static/images/npc_ian.png")
+
+        state.ensure_world_state(session).update({
+            "scene_id": "village",
+            "location_id": "ian_ice_katana_aftermath",
+        })
+        aftermath = state.public_session(session)
+        self.assertEqual(
+            aftermath["location_npc_portraits"][0]["image"],
+            "/static/images/npc_ian_serious.png",
+        )
+        session["last_action_result"] = {"action_id": "accept_ian_request", "outcome": "neutral"}
+        dialogue = state.public_session(session)
+        self.assertEqual(dialogue["dialogue_portrait_image"], "/static/images/npc_ian_serious.png")
 
     def test_explicit_retry_can_start_combat_after_a_defeat_lock(self):
         session = self.create_runtime_session()

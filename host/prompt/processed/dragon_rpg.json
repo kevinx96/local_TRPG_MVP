@@ -291,8 +291,7 @@
             {
               "set_flag": "checked_supplies"
             }
-          ],
-          "portrait_image": "/static/images/char_male_hero.png"
+          ]
         },
         {
           "id": "explore_castle_town",
@@ -5166,7 +5165,7 @@
               "current_location": "dragon_valley_loc"
             }
           ],
-          "portrait_image": "/static/images/npc_ian.png"
+          "portrait_image": "/static/images/npc_ian_serious.png"
         },
         {
           "id": "refuse_ian_after_xanxus",
@@ -5182,7 +5181,7 @@
               "current_location": "dragon_valley_loc"
             }
           ],
-          "portrait_image": "/static/images/npc_ian.png"
+          "portrait_image": "/static/images/npc_ian_serious.png"
         },
         {
           "id": "refuse_ian_before_xanxus",
@@ -5198,11 +5197,14 @@
               "current_location": "xanxus_confrontation"
             }
           ],
-          "portrait_image": "/static/images/npc_ian.png"
+          "portrait_image": "/static/images/npc_ian_serious.png"
         }
       ],
       "background_image": "/static/images/bg_frozen_village.png",
-      "portrait_image": "/static/images/npc_ian.png"
+      "portrait_image": "/static/images/npc_ian_serious.png",
+      "npc_portrait_overrides": {
+        "ian": "/static/images/npc_ian_serious.png"
+      }
     }
   ],
   "fallback_choices": [
@@ -6455,8 +6457,8 @@
       "name": "勇者",
       "default_name": "アルス",
       "description": "王国に選ばれし若き冒険者。バランスの取れた能力を持つ。",
-      "image": "/static/images/char_male_hero.png",
-      "image_female": "/static/images/char_female_hero.png",
+      "image": "/static/images/char_male_hero_v2.png",
+      "image_female": "/static/images/char_female_hero_v2.png",
       "hp": 20,
       "max_hp": 20,
       "mp": 8,
@@ -6547,7 +6549,7 @@
       "name": "僧侶",
       "default_name": "マリア",
       "description": "神聖魔法を操る癒し手。HPとMPが高く、知力に優れる。",
-      "image": "/static/images/char_cleric.png",
+      "image": "/static/images/char_cleric_v2.png",
       "hp": 18,
       "max_hp": 18,
       "mp": 14,
@@ -6643,7 +6645,7 @@
       "name": "魔法使い",
       "default_name": "ゴウダン",
       "description": "攻撃魔法を極めた学者。MPが非常に高く、知力に長ける。",
-      "image": "/static/images/char_mage.png",
+      "image": "/static/images/char_mage_v2.png",
       "hp": 12,
       "max_hp": 12,
       "mp": 20,
@@ -6740,7 +6742,7 @@
       "name": "盗賊",
       "default_name": "ファング",
       "description": "影に生きる敏捷の達人。素早さと器用さに優れる。",
-      "image": "/static/images/char_thief.png",
+      "image": "/static/images/char_thief_v2.png",
       "hp": 14,
       "max_hp": 14,
       "mp": 6,
