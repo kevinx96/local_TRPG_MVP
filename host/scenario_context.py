@@ -122,6 +122,7 @@ def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) ->
         pack["characters"] = [_normalize_character_record(c) for c in raw["characters"] if isinstance(c, dict)]
     else:
         pack["characters"] = []
+    pack["companions"] = _normalize_records(raw.get("companions"))
     return pack
 
 
@@ -277,7 +278,9 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
             return deepcopy(exact_matches[0])
 
     searchable_text = player_text.strip() or _latest_user_text(session)
-    latest_outcome = _latest_roll_outcome(session)
+    # A resolved action owns the current outcome. Reusing the last dice log here
+    # can select an unrelated success/failure draft after a no-roll navigation.
+    latest_outcome = _normalized_outcome(outcome) if action_id else _latest_roll_outcome(session)
     scored = [
         (_prepared_turn_score(turn, searchable_text, latest_outcome), index, turn)
         for index, turn in enumerate(prepared_turns)
@@ -318,18 +321,26 @@ def current_actions_for_session(session: dict[str, Any]) -> list[dict[str, Any]]
 def current_action_choices(session: dict[str, Any]) -> list[dict[str, Any]]:
     choices = [_action_as_choice(action) for action in current_actions_for_session(session)]
     flags = session.get("flags") if isinstance(session.get("flags"), dict) else {}
-    return _visible_action_choices(choices, flags)
+    character = session.get("character", {}) if isinstance(session.get("character"), dict) else {}
+    character_id = str(character.get("id") or character.get("character_id") or "")
+    return _visible_action_choices(choices, flags, character_id)
 
 
-def _visible_action_choices(choices: list[dict[str, Any]], flags: dict[str, Any]) -> list[dict[str, Any]]:
+def _visible_action_choices(choices: list[dict[str, Any]], flags: dict[str, Any], character_id: str = "") -> list[dict[str, Any]]:
     visible: list[dict[str, Any]] = []
     for choice in choices:
         visible_flag = str(choice.get("visible_after") or "")
         if visible_flag and not flags.get(visible_flag):
             continue
+        hidden_flag = str(choice.get("hidden_after") or "")
+        if hidden_flag and flags.get(hidden_flag):
+            continue
+        visible_character = str(choice.get("visible_for_character") or "")
+        if visible_character and visible_character != character_id:
+            continue
         item = deepcopy(choice)
         if isinstance(item.get("children"), list):
-            item["children"] = _visible_action_choices(item["children"], flags)
+            item["children"] = _visible_action_choices(item["children"], flags, character_id)
         visible.append(item)
     return visible
 
@@ -454,7 +465,7 @@ def normalize_choices(raw: Any) -> list[dict[str, Any]]:
                 }
                 for key in (
                     "id", "action_id", "intent_keywords", "roll", "effects",
-                    "success_effects", "failure_effects", "once", "disabled_after",
+                    "success_effects", "failure_effects", "once", "disabled_after", "visible_after", "hidden_after",
                     "prepared_turn_id", "outcome",
                 ):
                     if key in item:
@@ -490,7 +501,7 @@ def normalize_actions(raw: Any) -> list[dict[str, Any]]:
         if isinstance(action.get("children"), list):
             action["children"] = normalize_actions(action["children"])
         actions.append(action)
-    return actions[:12]
+    return actions[:32]
 
 
 def _legacy_choice_as_action(choice: dict[str, Any], fallback_id: str) -> dict[str, Any]:
@@ -644,7 +655,7 @@ def _trim_choices(choices: list[dict[str, str]]) -> list[dict[str, Any]]:
         for key in (
             "id", "action_id", "intent_keywords", "roll", "effects",
             "success_effects", "failure_effects", "requirements",
-            "once", "disabled_after", "visible_after", "prepared_turn_id", "outcome",
+            "once", "disabled_after", "visible_after", "hidden_after", "prepared_turn_id", "outcome",
         ):
             if key in choice:
                 item[key] = deepcopy(choice[key])
@@ -705,10 +716,23 @@ def _prepared_turn_score(turn: Any, text: str, latest_outcome: str = "") -> int:
     intent = str(turn.get("player_intent") or "")
     if intent and _text_contains_needle(text, intent):
         score += 1
+    # Outcome only disambiguates semantically matching turns; it must never make
+    # an unrelated prepared turn eligible on its own.
+    if score <= 0:
+        return 0
     turn_outcome = _turn_outcome_hint(turn)
     if latest_outcome and turn_outcome:
         score += 6 if latest_outcome == turn_outcome else -6
     return score
+
+
+def _normalized_outcome(value: Any) -> str:
+    outcome = str(value or "").strip().lower()
+    if outcome in {"success", "succeed", "passed"}:
+        return "success"
+    if outcome in {"failure", "fail", "failed"}:
+        return "fail"
+    return ""
 
 
 def _latest_roll_outcome(session: dict[str, Any]) -> str:

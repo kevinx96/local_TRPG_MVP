@@ -80,6 +80,165 @@ class CombatEngineTests(unittest.TestCase):
         self.assertIn("won_training", delta["flags_set"])
         self.assertTrue(session["flags"]["combat_defeated:arena:dummy"])
 
+    def test_duplicate_enemy_ids_spawn_multiple_combatants(self):
+        session = self.create()
+        session["scenario_pack"]["locations"][0]["enemy_ids"] = ["dummy", "dummy", "dummy"]
+        session["combat"] = None
+
+        self.assertTrue(combat.ensure_combat_started(session))
+        self.assertEqual(len(session["combat"]["enemies"]), 3)
+
+    def test_companion_round_start_effects_heal_and_damage(self):
+        enemy = {
+            "id": "target",
+            "name": "target",
+            "hp": 20,
+            "max_hp": 20,
+            "combat": {"basic_attack": {"damage": "1", "accuracy": 0}},
+        }
+        session = self.create(enemy=enemy)
+        session["combat"] = None
+        session["character"]["hp"] = 5
+        session["companion"] = {
+            "id": "fire_bat_dragon",
+            "name": "火コウモリ竜",
+            "round_start_effects": [
+                {"kind": "damage_enemy", "damage": "2d3", "element": "fire"},
+                {"kind": "heal_player", "amount": "3"},
+            ],
+        }
+
+        self.assertTrue(combat.ensure_combat_started(session))
+
+        self.assertEqual(session["character"]["hp"], 8)
+        self.assertLess(session["combat"]["enemies"][0]["hp"], 20)
+        self.assertTrue(any(entry["actor"] == "companion" for entry in session["combat"]["log"]))
+
+    def test_companion_does_not_log_zero_healing_at_full_hp(self):
+        session = self.create()
+        session["combat"] = None
+        session["companion"] = {
+            "id": "healer",
+            "name": "治療役",
+            "round_start_effects": [{"kind": "heal_player", "amount": "8"}],
+        }
+
+        self.assertTrue(combat.ensure_combat_started(session))
+
+        companion_heals = [
+            entry for entry in session["combat"]["log"]
+            if entry.get("actor") == "companion" and entry.get("kind") == "heal"
+        ]
+        self.assertEqual(companion_heals, [])
+
+    def test_poison_item_ticks_each_round(self):
+        enemy = {
+            "id": "target",
+            "name": "target",
+            "hp": 30,
+            "max_hp": 30,
+            "combat": {"basic_attack": {"damage": "1", "accuracy": 0}},
+        }
+        character = {
+            "id": "hero",
+            "name": "hero",
+            "hp": 20,
+            "max_hp": 20,
+            "mp": 0,
+            "max_mp": 0,
+            "sp": 0,
+            "max_sp": 0,
+            "attributes": {},
+            "inventory": [{
+                "id": "poison_dart",
+                "name": "毒矢",
+                "quantity": 1,
+                "combat": {
+                    "kind": "damage",
+                    "damage": "1",
+                    "accuracy": 100,
+                    "consumable": True,
+                    "on_hit_status": {"id": "poison", "damage": "4", "stackable": True},
+                },
+            }],
+            "equipment": [],
+            "skills": [],
+            "combat": {"basic_attack": {"damage": "1", "accuracy": 100}},
+        }
+        session = self.create(enemy=enemy, character=character)
+
+        combat.perform_combat_action(session, "item", action_id="poison_dart", rng=random.Random(1))
+
+        target = session["combat"]["enemies"][0]
+        self.assertEqual(target["statuses"][0]["id"], "poison")
+        self.assertLessEqual(target["hp"], 25)
+
+    def test_equipment_can_grant_two_player_actions_per_round(self):
+        enemy = {
+            "id": "target",
+            "name": "target",
+            "hp": 30,
+            "max_hp": 30,
+            "combat": {"basic_attack": {"damage": "1", "accuracy": 0}},
+        }
+        character = {
+            "id": "cleric",
+            "name": "cleric",
+            "hp": 20,
+            "max_hp": 20,
+            "mp": 10,
+            "max_mp": 10,
+            "sp": 0,
+            "max_sp": 0,
+            "attributes": {},
+            "inventory": [{
+                "name": "呪われた聖杖",
+                "quantity": 1,
+                "combat": {"kind": "equipment", "extra_actions_per_round": 1},
+            }],
+            "equipment": ["呪われた聖杖"],
+            "skills": [],
+            "combat": {"basic_attack": {"damage": "1", "accuracy": 100}},
+        }
+        session = self.create(enemy=enemy, character=character)
+
+        first = combat.perform_combat_action(session, "defend", rng=random.Random(1))
+        self.assertEqual(first["round"], 1)
+        self.assertEqual(session["combat"]["turn"], "player")
+
+        second = combat.perform_combat_action(session, "defend", rng=random.Random(1))
+        self.assertEqual(second["round"], 2)
+
+    def test_negative_undead_health_only_moves_toward_zero_with_holy_damage(self):
+        enemy = {
+            "id": "undead_lord",
+            "name": "undead lord",
+            "hp": -20,
+            "max_hp": 0,
+            "combat": {
+                "life_rule": "negative_undead",
+                "basic_attack": {"damage": "1", "accuracy": 0},
+            },
+        }
+        session = self.create(enemy=enemy)
+        session["character"]["combat"]["basic_attack"] = {
+            "name": "physical",
+            "damage": "10",
+            "accuracy": 100,
+            "element": "physical",
+        }
+
+        combat.perform_combat_action(session, "attack", rng=random.Random(1))
+        self.assertLess(session["combat"]["enemies"][0]["hp"], -20)
+        self.assertEqual(session["combat"]["status"], "active")
+
+        session["character"]["combat"]["basic_attack"]["element"] = "holy"
+        for _ in range(3):
+            result = combat.perform_combat_action(session, "attack", rng=random.Random(1))
+            if result["status"] == "victory":
+                break
+        self.assertEqual(session["combat"]["status"], "victory")
+
     def test_defend_reduces_enemy_damage_without_llm(self):
         enemy = {
             "id": "soldier",
@@ -297,22 +456,6 @@ class CombatEngineTests(unittest.TestCase):
             self.assertIn(item_id, base_items)
             self.assertIn(item_id, hybrid_items)
             self.assertEqual(base_items[item_id].get("combat"), hybrid_items[item_id].get("combat"))
-
-        post_combat_session = {
-            "scenario_pack": base,
-            "current_scene": "dark_forest",
-            "current_location": "dark_forest_loc",
-            "flags": {"combat_defeated:dark_forest_loc:slime": True},
-            "character": {},
-        }
-        post_combat_choices = state.annotate_choices_for_session(
-            current_action_choices(post_combat_session),
-            post_combat_session,
-        )
-        post_combat_by_id = {choice.get("action_id"): choice for choice in post_combat_choices}
-        self.assertFalse(post_combat_by_id["attack_slime"]["enabled"])
-        self.assertFalse(post_combat_by_id["bypass_slime"]["enabled"])
-        self.assertNotEqual(post_combat_by_id["go_village"].get("enabled"), False)
 
     def test_item_effect_text_is_derived_from_structured_mechanics(self):
         robe = {

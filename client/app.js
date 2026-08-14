@@ -70,6 +70,7 @@ const els = {
   clickIndicator:  document.querySelector("#clickIndicator"),
   characterName:   document.querySelector("#characterName"),
   characterDescription:document.querySelector("#characterDescription"),
+  companionInfo:   document.querySelector("#companionInfo"),
   inventory:       document.querySelector("#inventory"),
   diceLog:         document.querySelector("#diceLog"),
   systemLogs:      document.querySelector("#systemLogs"),
@@ -253,9 +254,11 @@ async function loadScenarios() {
     const data = await fetchJson("/api/scenarios");
     const scenarios = data.scenarios || [];
     els.scenarioSelect.innerHTML = scenarios
-      .map((s) => `<option value="${escapeHtml(s.filename)}">${escapeHtml(s.title || s.filename)}</option>`)
+      .map((s) => `<option value="${escapeHtml(s.filename)}">${escapeHtml(scenarioOptionLabel(s, scenarios))}</option>`)
       .join("");
-    const preferred = scenarios.find((s) => s.filename === "dragon_rpg.json") || scenarios[0];
+    const preferred = scenarios.find((s) => s.filename === "dragon_rpg_hybrid.json")
+      || scenarios.find((s) => s.filename === "dragon_rpg.json")
+      || scenarios[0];
     if (preferred) {
       els.scenarioSelect.value = preferred.filename;
       await onScenarioChange();
@@ -266,12 +269,21 @@ async function loadScenarios() {
   }
 }
 
+function scenarioOptionLabel(scenario, scenarios) {
+  const filename = scenario.filename || "";
+  const title = scenario.title || filename;
+  if (filename.endsWith("_hybrid.json")) return `${title}（Hybrid）`;
+  const hybridFilename = filename.replace(/\.json$/i, "_hybrid.json");
+  if (scenarios.some((item) => item.filename === hybridFilename)) return `${title}（Base）`;
+  return title;
+}
+
 async function onScenarioChange() {
   const filename = els.scenarioSelect.value;
   if (!filename) return;
   try {
     const data = await fetchJson(`/api/scenarios/${encodeURIComponent(filename)}`);
-    const characters = data.scenario?.characters || [];
+    const characters = (data.scenario?.characters || []).filter((char) => char.selectable !== false);
     state.scenarioPath = `host/prompt/processed/${filename}`;
     state.expandedCharacterId = "";
     renderCharacterCards(characters);
@@ -575,16 +587,18 @@ function renderSession(session) {
   }
 
   if (els.background) {
-    if (character.background_image) {
-      els.background.style.backgroundImage = `url(${character.background_image})`;
+    const backgroundImage = session.location_background_image || character.background_image;
+    if (backgroundImage) {
+      els.background.style.backgroundImage = `url(${backgroundImage})`;
     } else {
       els.background.style.backgroundImage = "";
     }
   }
 
   if (els.portrait) {
-    if (character.character_image) {
-      els.portrait.src = character.character_image;
+    const portraitImage = session.active_portrait_image || character.character_image;
+    if (portraitImage) {
+      els.portrait.src = portraitImage;
       els.portrait.style.display = "";
     } else {
       els.portrait.style.display = "none";
@@ -594,6 +608,13 @@ function renderSession(session) {
   /* Character info */
   if (els.characterName) els.characterName.textContent = character.name || "冒険者";
   if (els.characterDescription) els.characterDescription.textContent = character.description || "";
+  if (els.companionInfo) {
+    const companion = session.companion;
+    els.companionInfo.hidden = !companion;
+    els.companionInfo.innerHTML = companion
+      ? `${companion.image ? `<img src="${escapeAttr(companion.image)}" alt="" />` : ""}<span>同行者　${escapeHtml(companion.name || companion.id || "不明")}</span>`
+      : "";
+  }
 
   /* Meters */
   renderMeter("hp", character);
@@ -625,9 +646,17 @@ function renderSession(session) {
 
   /* Messages */
   renderMessages(session.messages || []);
+  els.dialogueBox.classList.toggle("no-narration", session.last_turn_narrated === false);
+  if (session.last_turn_narrated === false) {
+    if (els.speakerName) els.speakerName.textContent = "";
+    if (els.messageText) els.messageText.textContent = "";
+  }
 
   /* Choices */
-  setPendingChoices(session.in_combat ? [] : (session.choices || []));
+  setPendingChoices(
+    session.in_combat ? [] : (session.choices || []),
+    session.last_turn_narrated === false,
+  );
 }
 
 /* ═══════════════════════════════════════════════════
@@ -856,7 +885,9 @@ function showDiceResult(roll) {
   parts.push(`= ${total}`);
   if (hasCheck) {
     parts.push(` / DC${dc}`);
-    parts.push(success ? "成功" : "失敗");
+    if (roll.critical_success) parts.push("大成功");
+    else if (roll.critical_failure) parts.push("大失敗");
+    else parts.push(success ? "成功" : "失敗");
   }
   els.diceBannerText.textContent = parts.join(" ");
 }
@@ -986,11 +1017,16 @@ function hideChoices() {
   els.choicesList.innerHTML = "";
 }
 
-function setPendingChoices(choices) {
+function setPendingChoices(choices, revealImmediately = false) {
   state.pendingChoices = Array.isArray(choices) ? choices : [];
   state.choiceStack = [];
   state.choicesRevealed = false;
   hideChoices();
+  if (revealImmediately && state.pendingChoices.length) {
+    state.choicesRevealed = true;
+    renderChoices(state.pendingChoices);
+    return;
+  }
   updateDialogueAdvanceState();
 }
 
@@ -1083,8 +1119,12 @@ function renderCombat(session) {
     const maxHp = Math.max(1, Number(enemy.max_hp || hp || 1));
     const percent = Math.max(0, Math.min(100, (hp / maxHp) * 100));
     const selected = enemy.id === state.combatTargetId;
+    const enemyImage = enemy.image
+      ? `<img class="combat-enemy-image" src="${escapeAttr(enemy.image)}" alt="" />`
+      : "";
     return `<button type="button" class="combat-enemy ${selected ? "selected" : ""} ${hp <= 0 ? "defeated" : ""}"
       data-combat-target="${escapeAttr(enemy.id || "")}" ${hp <= 0 ? "disabled" : ""}>
+      ${enemyImage}
       <span class="combatant-side">ENEMY</span>
       <h3>${escapeHtml(enemy.name || enemy.id || "敵")}</h3>
       <div class="combat-resource hp"><span>HP</span><i><b style="width:${percent}%"></b></i><strong>${hp}/${maxHp}</strong></div>
@@ -1172,7 +1212,7 @@ async function resolveCombatResult() {
   if (!state.sessionId || state.combatBusy) return;
   state.combatBusy = true;
   els.combatScreen.classList.add("busy");
-  els.combatResultText.textContent = "戦闘結果をGMへ渡しています…";
+  els.combatResultText.textContent = "戦闘終了を処理しています…";
   try {
     const session = await fetchJson(`/api/sessions/${state.sessionId}/combat/resolve`, { method: "POST" });
     state.combatBusy = false;
