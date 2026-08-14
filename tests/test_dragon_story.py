@@ -63,6 +63,16 @@ class DragonStoryTests(unittest.TestCase):
         self.assertIn("function renderScenePortraits", source)
         self.assertIn("function renderAbilityTags", source)
 
+    def test_portrait_staging_uses_equal_visual_height_and_count_aware_ensemble_sizes(self):
+        css = Path("client/styles.css").read_text(encoding="utf-8")
+        source = Path("client/app.js").read_text(encoding="utf-8")
+
+        self.assertIn(".dialogue-mode .gal-sprite", css)
+        self.assertIn("height: 84vh", css)
+        self.assertIn('.location-portrait-group[data-count="1"]', css)
+        self.assertIn('.location-portrait-group[data-count="2"]', css)
+        self.assertIn("els.locationPortraits.dataset.count = String(locationNpcs.length)", source)
+
     def test_town_catalog_and_companions_are_complete(self):
         for filename in SCENARIO_FILES:
             with self.subTest(filename=filename):
