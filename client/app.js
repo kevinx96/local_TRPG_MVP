@@ -1065,6 +1065,7 @@ function renderScenePortraits(session, character) {
   els.locationPortraits.innerHTML = dialogueActive ? "" : locationNpcs.map((npc) => (
     `<figure class="location-portrait"><img src="${escapeAttr(npc.image)}" alt="" /><figcaption>${escapeHtml(npc.name || "")}</figcaption></figure>`
   )).join("");
+  els.locationPortraits.dataset.count = String(locationNpcs.length);
   els.locationPortraits.style.display = !dialogueActive && locationNpcs.length ? "" : "none";
 
   els.playerPortrait.src = playerImage;
