@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/static/styles.css?v=20260810-combat-engine" />
+    <link rel="stylesheet" href="/static/styles.css?v=20260814-hybrid-visuals" />
   </head>
   <body>
 
@@ -134,7 +134,7 @@
           <div id="combatResult" class="combat-result" style="display:none">
             <strong id="combatResultTitle">戦闘終了</strong>
             <span id="combatResultText"></span>
-            <button id="combatResolveButton" type="button">結果をGMへ渡す</button>
+            <button id="combatResolveButton" type="button">戦闘終了</button>
           </div>
         </div>
       </section>
@@ -198,6 +198,7 @@
           <aside class="sidebar">
             <h2 id="characterName" class="char-name-display">アルス</h2>
             <p id="characterDescription">世界を救うため旅立つ若き勇者。</p>
+            <div id="companionInfo" class="companion-info" hidden></div>
             <div class="meters">
               <div class="meter-row"><span class="meter-label">HP</span><div class="meter hp-meter"><i id="hpBar"></i></div><strong id="hpText">20/20</strong></div>
               <div class="meter-row"><span class="meter-label">MP</span><div class="meter mp-meter"><i id="mpBar"></i></div><strong id="mpText">8/8</strong></div>
@@ -214,6 +215,6 @@
       </div>
     </main>
 
-    <script src="/static/app.js?v=20260810-combat-engine"></script>
+    <script src="/static/app.js?v=20260814-hybrid-visuals"></script>
   </body>
 </html>

@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any, Optional, Union
 
 from .intent_resolver import resolve_intent
-from .item_mechanics import structured_item_effect
+from .item_mechanics import item_combat_spec, structured_item_effect
 from .scenario_context import (
     current_actions_for_session,
     fallback_choices_for_session,
@@ -212,7 +212,10 @@ def create_session(
         "dice_log": [],
         "choices": [],
         "flags": {},
+        "companion": None,
+        "game_over": None,
         "last_action_result": {},
+        "last_turn_narrated": False,
         "combat": None,
         "last_combat_result": {},
         "next_dice_type": "1d20",
@@ -257,6 +260,7 @@ def load_session(session_id: str) -> dict[str, Any]:
     character = session.get("character") if isinstance(session.get("character"), dict) else {}
     inventory = character.get("inventory") if isinstance(character.get("inventory"), list) else []
     _merge_inventory_catalog(inventory, session.get("scenario_pack"))
+    _normalize_character(character)
     return session
 
 
@@ -283,9 +287,39 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     public["current_location"] = world["location_id"]
     public["current_scene_title"] = scene_title(session)
     public["current_location_title"] = current_location_title(session)
+    location = _current_location_record(session)
+    if location:
+        public["location_background_image"] = str(location.get("background_image") or "")
+        public["location_portrait_image"] = str(location.get("portrait_image") or "")
+    else:
+        public["location_background_image"] = ""
+        public["location_portrait_image"] = ""
+    last_action_id = str((session.get("last_action_result") or {}).get("action_id") or "")
+    action = next(
+        (
+            entry for entry in _iter_actions(current_actions_for_session(session))
+            if str(entry.get("id") or entry.get("action_id") or "") == last_action_id
+        ),
+        None,
+    )
     public["combat"] = combat
     public["enemies"] = deepcopy(combat.get("enemies") or []) if isinstance(combat, dict) else []
     public["in_combat"] = bool(isinstance(combat, dict) and combat.get("status"))
+    combat_portrait = ""
+    if public["in_combat"]:
+        active_enemy = next(
+            (
+                enemy for enemy in public["enemies"]
+                if isinstance(enemy, dict) and _safe_int(enemy.get("hp"), 0) > 0 and enemy.get("image")
+            ),
+            None,
+        )
+        combat_portrait = str((active_enemy or {}).get("image") or "")
+    public["active_portrait_image"] = str(
+        combat_portrait
+        or (action or {}).get("portrait_image")
+        or public["location_portrait_image"]
+    )
 
     from .gm_contract import extract_text_choices, sanitize_visible_text
 
@@ -309,6 +343,20 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     return public
 
 
+def _current_location_record(session: dict[str, Any]) -> Optional[dict[str, Any]]:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return None
+    location_id = current_location_id(session)
+    return next(
+        (
+            location for location in pack.get("locations", [])
+            if isinstance(location, dict) and str(location.get("id") or "") == location_id
+        ),
+        None,
+    )
+
+
 def annotate_choices_for_session(raw_choices: Any, session: dict[str, Any]) -> list[dict[str, Any]]:
     flags = session.get("flags") if isinstance(session.get("flags"), dict) else {}
     choices: list[dict[str, Any]] = []
@@ -318,6 +366,9 @@ def annotate_choices_for_session(raw_choices: Any, session: dict[str, Any]) -> l
             continue
         visible_flag = str(choice.get("visible_after") or "")
         if visible_flag and not flags.get(visible_flag):
+            continue
+        hidden_flag = str(choice.get("hidden_after") or "")
+        if hidden_flag and flags.get(hidden_flag):
             continue
         disabled_flag = str(choice.get("disabled_after") or "")
         once_flag = str(choice.get("once") or "")
@@ -361,6 +412,7 @@ def add_player_message(session: dict[str, Any], text: str, speaker: str = "プ�
 
 def add_assistant_message(session: dict[str, Any], text: str, speaker: str = "GM") -> None:
     session["messages"].append({"role": "assistant", "speaker": speaker, "text": text, "created_at": utc_now()})
+    session["last_turn_narrated"] = bool(str(text).strip())
 
 
 def add_system_log(session: dict[str, Any], text: str) -> None:
@@ -438,6 +490,8 @@ def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[in
         attr_mod = _attr_value(attrs, attr_key)
     total = base_total + attr_mod
     entry: dict[str, Any] = {"expression": expr, "rolls": rolls, "total": total, "created_at": utc_now()}
+    entry["critical_success"] = bool(rolls and all(value == sides for value in rolls))
+    entry["critical_failure"] = bool(rolls and all(value == 1 for value in rolls))
     if isinstance(dc, int):
         entry["dc"] = dc
         if dc > 0:
@@ -696,11 +750,19 @@ def _intent_action_surfaces(
 
     def visit(actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
         visible: list[dict[str, Any]] = []
+        character = session.get("character", {}) if isinstance(session.get("character"), dict) else {}
+        character_id = str(character.get("id") or character.get("character_id") or "")
         for action in actions:
             if not isinstance(action, dict):
                 continue
             visible_after = str(action.get("visible_after") or "")
             if visible_after and not flags.get(visible_after):
+                continue
+            hidden_after = str(action.get("hidden_after") or "")
+            if hidden_after and flags.get(hidden_after):
+                continue
+            visible_character = str(action.get("visible_for_character") or "")
+            if visible_character and visible_character != character_id:
                 continue
             children = action.get("children")
             if isinstance(children, list) and children:
@@ -827,10 +889,17 @@ def action_dice_settings(action: Optional[dict[str, Any]], default_type: str = "
 
 
 def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_roll: dict[str, Any]) -> dict[str, Any]:
-    outcome = _action_outcome(latest_roll)
+    outcome = _action_outcome(latest_roll, action.get("critical_enabled") is not False)
     base_effects = _as_list(action.get("effects"))
-    outcome_effects = _as_list(action.get(f"{outcome}_effects"))
-    delta = _effects_to_state_delta([*base_effects, *outcome_effects])
+    branch_outcome = {
+        "critical_success": "success",
+        "critical_failure": "failure",
+    }.get(outcome, outcome)
+    replaces_branch = branch_outcome != outcome and action.get(f"{outcome}_replaces_branch") is True
+    outcome_effects = [] if replaces_branch else _as_list(action.get(f"{branch_outcome}_effects"))
+    if branch_outcome != outcome:
+        outcome_effects.extend(_as_list(action.get(f"{outcome}_effects")))
+    delta = _effects_to_state_delta([*base_effects, *outcome_effects], session)
     flags = session.setdefault("flags", {})
     if isinstance(flags, dict):
         if action.get("once"):
@@ -838,12 +907,9 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
             if not flags.get(flag):
                 flags[flag] = True
                 record_state_event(session, "flag_set", "", {"flag": flag, "value": True}, visible=False)
-        if action.get("disabled_after"):
-            flag = str(action["disabled_after"])
-            if not flags.get(flag):
-                flags[flag] = True
-                record_state_event(session, "flag_set", "", {"flag": flag, "value": True}, visible=False)
     apply_state_delta(session, delta, allow_world_transition=True)
+    if delta.get("start_combat") is True:
+        session["combat_start_requested"] = True
     result = {
         "action_id": str(action.get("id") or action.get("action_id") or ""),
         "text": str(action.get("text") or ""),
@@ -1071,14 +1137,19 @@ def _iter_actions(actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return result
 
 
-def _action_outcome(latest_roll: dict[str, Any]) -> str:
+def _action_outcome(latest_roll: dict[str, Any], allow_critical: bool = True) -> str:
     dc = latest_roll.get("dc")
     if isinstance(dc, (int, float)) and int(dc) > 0:
+        if allow_critical and latest_roll.get("critical_success"):
+            return "critical_success"
+        if allow_critical and latest_roll.get("critical_failure"):
+            return "critical_failure"
         return "success" if bool(latest_roll.get("success")) else "failure"
     return "neutral"
 
 
-def _effects_to_state_delta(effects: list[Any]) -> dict[str, Any]:
+def _effects_to_state_delta(effects: list[Any], session: Optional[dict[str, Any]] = None) -> dict[str, Any]:
+    effects = _expand_conditional_effects(effects, session)
     delta: dict[str, Any] = {"attribute_changes": {}}
     inventory_add: list[Any] = []
     inventory_remove: list[Any] = []
@@ -1110,6 +1181,25 @@ def _effects_to_state_delta(effects: list[Any]) -> dict[str, Any]:
             delta["current_location"] = effect["current_location"]
         if isinstance(effect.get("next_location"), str):
             delta["current_location"] = effect["next_location"]
+        for image_key in ("background_image", "character_image"):
+            if isinstance(effect.get(image_key), str):
+                delta[image_key] = effect[image_key]
+        if effect.get("start_combat") is True:
+            delta["start_combat"] = True
+        if isinstance(effect.get("set_companion"), (str, dict)):
+            delta["set_companion"] = deepcopy(effect["set_companion"])
+        if effect.get("clear_companion") is True:
+            delta["clear_companion"] = True
+        if isinstance(effect.get("attribute_set"), dict):
+            delta.setdefault("attribute_set", {}).update(deepcopy(effect["attribute_set"]))
+        if effect.get("clear_skills") is True:
+            delta["clear_skills"] = True
+        if isinstance(effect.get("equip_item"), str):
+            delta["equip_item"] = effect["equip_item"]
+        if isinstance(effect.get("game_over"), (str, dict)):
+            delta["game_over"] = deepcopy(effect["game_over"])
+        if effect.get("restore_full") is True:
+            delta["restore_full"] = True
         if isinstance(effect.get("set_flag"), str):
             flags_set.append(effect["set_flag"])
         if isinstance(effect.get("unset_flag"), str):
@@ -1129,6 +1219,40 @@ def _effects_to_state_delta(effects: list[Any]) -> dict[str, Any]:
     if not delta["attribute_changes"]:
         delta.pop("attribute_changes", None)
     return delta
+
+
+def _expand_conditional_effects(effects: list[Any], session: Optional[dict[str, Any]]) -> list[Any]:
+    expanded: list[Any] = []
+    for effect in effects:
+        if not isinstance(effect, dict) or not isinstance(effect.get("branch"), dict):
+            expanded.append(effect)
+            continue
+        branch = effect["branch"]
+        requirements = branch.get("requirements")
+        passed = _session_requirement_passes(requirements, session)
+        selected = branch.get("then" if passed else "else")
+        expanded.extend(_expand_conditional_effects(_as_list(selected), session))
+    return expanded
+
+
+def _session_requirement_passes(requirement: Any, session: Optional[dict[str, Any]]) -> bool:
+    if not isinstance(requirement, dict):
+        return True
+    if isinstance(requirement.get("any"), list):
+        return any(_session_requirement_passes(item, session) for item in requirement["any"])
+    if isinstance(requirement.get("all"), list):
+        return all(_session_requirement_passes(item, session) for item in requirement["all"])
+    flags = session.get("flags", {}) if isinstance(session, dict) and isinstance(session.get("flags"), dict) else {}
+    if isinstance(requirement.get("flag"), str):
+        return bool(flags.get(requirement["flag"]))
+    if isinstance(requirement.get("not_flag"), str):
+        return not bool(flags.get(requirement["not_flag"]))
+    if isinstance(requirement.get("companion_id"), str):
+        companion = session.get("companion", {}) if isinstance(session, dict) and isinstance(session.get("companion"), dict) else {}
+        return str(companion.get("id") or "") == str(requirement["companion_id"])
+    character = session.get("character", {}) if isinstance(session, dict) and isinstance(session.get("character"), dict) else {}
+    attrs = character.get("attributes", {}) if isinstance(character.get("attributes"), dict) else {}
+    return _requirement_passes(requirement, attrs, character)
 
 
 def _requirements_from_choice_text(choice: dict[str, Any]) -> dict[str, Any]:
@@ -1228,6 +1352,9 @@ def _requirement_passes(requirement: Any, attrs: dict[str, Any], character: dict
     min_gold = requirement.get("gold_gte", requirement.get("min_gold"))
     if isinstance(min_gold, (int, float)):
         return int(character.get("gold", 0)) >= int(min_gold)
+    max_gold = requirement.get("gold_lte", requirement.get("max_gold"))
+    if isinstance(max_gold, (int, float)):
+        return int(character.get("gold", 0)) <= int(max_gold)
     has_item = _requirement_item_name(requirement, ("has_item", "inventory_has", "requires_item"))
     if has_item:
         return has_item in _inventory_item_names(character)
@@ -1277,6 +1404,9 @@ def _requirement_label(requirement: dict[str, Any]) -> str:
     min_gold = requirement.get("gold_gte", requirement.get("min_gold"))
     if isinstance(min_gold, (int, float)):
         return f"{int(min_gold)}ゴールド以上"
+    max_gold = requirement.get("gold_lte", requirement.get("max_gold"))
+    if isinstance(max_gold, (int, float)):
+        return f"{int(max_gold)}ゴールド以下"
     has_item = _requirement_item_name(requirement, ("has_item", "inventory_has", "requires_item"))
     if has_item:
         return f"{has_item}所持"
@@ -1414,6 +1544,10 @@ def apply_state_delta(
     allow_world_transition: bool = False,
 ) -> None:
     character = session["character"]
+    if delta.get("restore_full") is True:
+        for stat in ("hp", "mp", "sp"):
+            character[stat] = int(character.get(f"max_{stat}", character.get(stat, 0)))
+        record_state_event(session, "resources_restored", "HP・MP・SPが全回復しました。", {})
     for stat in ("hp", "mp", "sp"):
         before = int(character.get(stat, 0))
         if isinstance(delta.get(f"{stat}_change"), (int, float)):
@@ -1478,6 +1612,11 @@ def apply_state_delta(
                 flags.pop(flag, None)
                 record_state_event(session, "flag_unset", "", {"flag": flag, "value": False}, visible=False)
 
+    if delta.get("clear_companion") is True:
+        _set_companion(session, None)
+    elif isinstance(delta.get("set_companion"), (str, dict)):
+        _set_companion(session, delta["set_companion"])
+
     for item in _as_item_list(delta.get("inventory_add")):
         item_name = str(item["name"]).strip()
         add_qty = _safe_quantity(item.get("quantity"), 1)
@@ -1506,6 +1645,10 @@ def apply_state_delta(
         for existing in character["inventory"]:
             ename = existing.get("name") if isinstance(existing, dict) else existing
             if ename == item_name and remaining > 0:
+                existing_spec = item_combat_spec(existing) if isinstance(existing, dict) else {}
+                if isinstance(existing, dict) and (existing.get("non_removable") is True or existing_spec.get("non_removable") is True):
+                    new_inv.append(existing)
+                    continue
                 existing_qty = int(existing.get("quantity", 1)) if isinstance(existing, dict) else 1
                 remove_qty = min(existing_qty, remaining)
                 remaining -= remove_qty
@@ -1523,6 +1666,21 @@ def apply_state_delta(
                 f"{item_name} x{removed_qty}を失いました。",
                 {"item": item_name, "quantity": removed_qty},
             )
+
+    _synchronize_equipment(character)
+    equip_item = str(delta.get("equip_item") or "").strip()
+    if equip_item:
+        _equip_inventory_item(character, equip_item)
+
+    if delta.get("clear_skills") is True:
+        removed_skills = len(character.get("skills") or [])
+        character["skills"] = []
+        record_state_event(
+            session,
+            "skills_cleared",
+            "すべての技能を失いました。",
+            {"removed": removed_skills},
+        )
 
     for image_key in ("background_image", "character_image"):
         if isinstance(delta.get(image_key), str):
@@ -1553,6 +1711,32 @@ def apply_state_delta(
                     {"attribute": attr_key, "before": before, "after": int(attrs[attr_key]), "change": actual_change},
                 )
 
+    attr_set = delta.get("attribute_set")
+    if isinstance(attr_set, dict):
+        attrs = character.setdefault("attributes", {})
+        for raw_key, raw_value in attr_set.items():
+            key = _canonical_attr_key(str(raw_key))
+            value = _strict_int(raw_value)
+            if not key or value is None:
+                continue
+            before = int(attrs.get(key, 0))
+            attrs[key] = value
+            record_state_event(
+                session,
+                "attribute_changed",
+                f"{key}が{value}になりました。",
+                {"attribute": key, "before": before, "after": value, "change": value - before},
+            )
+
+    if isinstance(delta.get("game_over"), (str, dict)):
+        raw_game_over = delta["game_over"]
+        game_over = deepcopy(raw_game_over) if isinstance(raw_game_over, dict) else {"reason": str(raw_game_over)}
+        game_over.setdefault("reason", "物語はここで終わりました。")
+        game_over.setdefault("created_at", utc_now())
+        session["game_over"] = game_over
+        session["choices"] = []
+        record_state_event(session, "game_over", str(game_over["reason"]), game_over)
+
     requested_scene = str(delta.get("current_scene") or "").strip()
     requested_location = str(delta.get("current_location") or "").strip()
     if requested_scene or requested_location:
@@ -1576,6 +1760,74 @@ def apply_state_delta(
                         f"現在地が{current_location_title(session)}になりました。",
                         {"before": before_position, "after": after_position},
                     )
+
+
+def _set_companion(session: dict[str, Any], raw_companion: Any) -> None:
+    previous = session.get("companion") if isinstance(session.get("companion"), dict) else None
+    companion: Optional[dict[str, Any]] = None
+    if isinstance(raw_companion, dict):
+        companion = deepcopy(raw_companion)
+    elif isinstance(raw_companion, str) and raw_companion.strip():
+        companion_id = raw_companion.strip()
+        pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else {}
+        companion = next(
+            (
+                deepcopy(candidate)
+                for candidate in pack.get("companions", [])
+                if isinstance(candidate, dict) and str(candidate.get("id") or "") == companion_id
+            ),
+            None,
+        )
+        if companion is None:
+            companion = {"id": companion_id, "name": companion_id}
+
+    previous_id = str(previous.get("id") or "") if previous else ""
+    companion_id = str(companion.get("id") or "") if companion else ""
+    if previous and previous_id != companion_id:
+        previous_name = str(previous.get("name") or previous_id)
+        record_state_event(
+            session,
+            "companion_left",
+            f"{previous_name}がパーティーから離脱しました。",
+            {"companion_id": previous_id, "name": previous_name},
+        )
+    session["companion"] = companion
+    if companion and previous_id != companion_id:
+        companion_name = str(companion.get("name") or companion_id)
+        record_state_event(
+            session,
+            "companion_joined",
+            f"{companion_name}がパーティーに加入しました。",
+            {"companion_id": companion_id, "name": companion_name},
+        )
+
+
+def _equip_inventory_item(character: dict[str, Any], item_name_or_id: str) -> None:
+    inventory = character.get("inventory") if isinstance(character.get("inventory"), list) else []
+    target = next(
+        (
+            item for item in inventory
+            if isinstance(item, dict)
+            and item_name_or_id in {str(item.get("name") or ""), str(item.get("id") or "")}
+        ),
+        None,
+    )
+    if not target:
+        return
+    target_name = str(target.get("name") or target.get("id") or "").strip()
+    equipment = _as_text_list(character.get("equipment"))
+    target_kind = str(item_combat_spec(target).get("kind") or "").lower()
+    if target_kind == "weapon":
+        weapon_names = {
+            str(item.get("name") or item.get("id") or "")
+            for item in inventory
+            if isinstance(item, dict) and str(item_combat_spec(item).get("kind") or "").lower() == "weapon"
+        }
+        equipment = [name for name in equipment if name not in weapon_names]
+    if target_name and target_name not in equipment:
+        equipment.append(target_name)
+    character["equipment"] = equipment
+    _synchronize_equipment(character)
 
 
 def _enrich_item(item: dict[str, Any], scenario_pack: Optional[dict[str, Any]] = None) -> dict[str, Any]:
@@ -1640,6 +1892,15 @@ def build_llm_messages(session: dict[str, Any], latest_roll: dict[str, Any], con
     action_result = session.get("last_action_result")
     if isinstance(action_result, dict) and action_result.get("action_id"):
         messages.append({"role": "system", "content": "resolved_action_result:\n" + json.dumps(action_result, ensure_ascii=False)})
+        messages.append({
+            "role": "system",
+            "content": (
+                "【解決済みアクションの出力制約】\n"
+                "state_delta は空オブジェクト、choices は空配列にしてください。状態と選択肢はエンジンが確定済みです。\n"
+                "available_actions に存在しない取引、報酬、アイテム、追加行動を約束または確定しないでください。\n"
+                "未登録の取引を提案せず、resolved_action_result と available_actions に沿った結果だけを描写してください。"
+            ),
+        })
     control_prompt = intent_control_prompt(session)
     if control_prompt:
         messages.append({"role": "system", "content": control_prompt})
@@ -1881,6 +2142,55 @@ def _normalize_character(character: dict[str, Any]) -> None:
     raw_inv = character.get("inventory", [])
     if isinstance(raw_inv, list):
         character["inventory"] = [_ensure_item_object(i) for i in raw_inv]
+    else:
+        character["inventory"] = []
+    _synchronize_equipment(character)
+
+
+def _synchronize_equipment(character: dict[str, Any]) -> None:
+    inventory = character.get("inventory") if isinstance(character.get("inventory"), list) else []
+    inventory_items = [item for item in inventory if isinstance(item, dict)]
+
+    equipped_items: list[dict[str, Any]] = []
+    normalized_equipment: list[str] = []
+    for equipped_value in _as_text_list(character.get("equipment")):
+        matched = next(
+            (
+                item for item in inventory_items
+                if equipped_value in {str(item.get("name") or ""), str(item.get("id") or "")}
+            ),
+            None,
+        )
+        if not matched:
+            continue
+        canonical_name = str(matched.get("name") or matched.get("id") or "").strip()
+        if canonical_name and canonical_name not in normalized_equipment:
+            normalized_equipment.append(canonical_name)
+            equipped_items.append(matched)
+
+    equipped_weapon = next(
+        (item for item in equipped_items if str(item_combat_spec(item).get("kind") or "").lower() == "weapon"),
+        None,
+    )
+    if not equipped_weapon:
+        equipped_weapon = next(
+            (item for item in inventory_items if str(item_combat_spec(item).get("kind") or "").lower() == "weapon"),
+            None,
+        )
+        if equipped_weapon:
+            weapon_name = str(equipped_weapon.get("name") or equipped_weapon.get("id") or "").strip()
+            if weapon_name and weapon_name not in normalized_equipment:
+                normalized_equipment.append(weapon_name)
+
+    character["equipment"] = normalized_equipment
+    if equipped_weapon:
+        weapon_attack = item_combat_spec(equipped_weapon)
+        weapon_attack.pop("kind", None)
+        combat = character.setdefault("combat", {})
+        if not isinstance(combat, dict):
+            combat = {}
+            character["combat"] = combat
+        combat["basic_attack"] = weapon_attack
 
 
 def _ensure_item_object(item: Any) -> dict[str, Union[str, int]]:

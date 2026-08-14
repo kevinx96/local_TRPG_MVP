@@ -4,9 +4,10 @@ from copy import deepcopy
 from typing import Any
 
 
-USABLE_ITEM_KINDS = {"heal", "restore", "damage"}
+USABLE_ITEM_KINDS = {"heal", "restore", "damage", "flee", "status", "shrink"}
 EQUIPMENT_ITEM_KINDS = {"weapon", "armor", "equipment"}
-SUPPORTED_ITEM_KINDS = USABLE_ITEM_KINDS | EQUIPMENT_ITEM_KINDS
+PASSIVE_ITEM_KINDS = {"passive"}
+SUPPORTED_ITEM_KINDS = USABLE_ITEM_KINDS | EQUIPMENT_ITEM_KINDS | PASSIVE_ITEM_KINDS
 
 
 def item_combat_spec(item: Any) -> dict[str, Any]:
@@ -55,6 +56,12 @@ def structured_item_effect(item: Any) -> str:
             parts.append(f"命中率{_as_int(spec.get('accuracy'), 100)}%")
         if spec.get("element"):
             parts.append(f"{spec['element']}属性")
+    elif kind == "flee":
+        parts.append("戦闘から確実に離脱")
+    elif kind == "status":
+        parts.append(str(spec.get("description") or "状態効果を付与"))
+    elif kind == "shrink":
+        parts.append(f"{_as_int(spec.get('chance'), 2)}%で敵のHPと最大HPを1/10")
 
     modifiers = _modifier_parts(spec)
     parts.extend(modifiers)
@@ -77,15 +84,22 @@ def effective_ability(actor: dict[str, Any], ability: dict[str, Any]) -> dict[st
     kind = _ability_kind(result)
     damage_bonus = 0
     healing_bonus = 0
+    healing_multiplier = 1.0
     for spec in equipped_item_specs(actor):
         if not _modifier_applies(spec, kind):
             continue
         damage_bonus += _as_int(spec.get("skill_damage_bonus"), 0)
         healing_bonus += _as_int(spec.get("skill_healing_bonus"), 0)
+        try:
+            healing_multiplier *= float(spec.get("healing_multiplier", 1) or 1)
+        except (TypeError, ValueError):
+            pass
     if damage_bonus and kind == "attack":
         result["damage"] = _add_formula_bonus(str(result.get("damage") or result.get("dice_type") or "1"), damage_bonus)
     if healing_bonus and kind == "heal":
         result["healing"] = _add_formula_bonus(str(result.get("healing") or result.get("dice_type") or "1"), healing_bonus)
+    if kind == "heal" and healing_multiplier != 1:
+        result["healing_multiplier"] = healing_multiplier
     return result
 
 

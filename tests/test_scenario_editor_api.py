@@ -48,6 +48,10 @@ class ScenarioEditorApiTests(unittest.TestCase):
     def test_list_get_and_save_scenario(self):
         scenario_path = self.tmp_path / "demo.json"
         scenario_path.write_text(json.dumps(self.pack(), ensure_ascii=False), encoding="utf-8")
+        (self.tmp_path / "demo-restore.json").write_text(
+            json.dumps(self.pack("Backup"), ensure_ascii=False),
+            encoding="utf-8",
+        )
         (self.tmp_path / "scenario_pack.schema.json").write_text("{}", encoding="utf-8")
 
         listed = app_module.api_list_scenarios()

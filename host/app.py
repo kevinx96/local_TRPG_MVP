@@ -33,6 +33,7 @@ from .scenario_context import (
     scenario_context_debug,
     scene_title,
     select_hybrid_context,
+    select_hybrid_prepared_turn,
     select_scenario_context,
 )
 from .state import (
@@ -237,7 +238,7 @@ def api_list_scenarios() -> dict[str, Any]:
     scenarios = []
     PROCESSED_SCENARIO_DIR.mkdir(parents=True, exist_ok=True)
     for path in sorted(PROCESSED_SCENARIO_DIR.glob("*.json"), key=lambda item: item.name.lower()):
-        if path.name == SCENARIO_SCHEMA_FILENAME:
+        if path.name == SCENARIO_SCHEMA_FILENAME or re.search(r"(?:^|[-_ ])restore(?:$|[-_ ])", path.stem, re.IGNORECASE):
             continue
         summary = _scenario_summary(path)
         if summary:
@@ -434,18 +435,20 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
     try:
         full_response = chat_completion(config, messages)
     except LLMClientError as exc:
-        completion_source = "demo_fallback"
+        full_response = _prepared_fallback_response(session, opening=True)
+        completion_source = "prepared_fallback" if full_response else "demo_fallback"
         if debug_enabled:
             debug_log(
                 "Opening LLM failure; "
-                f"demo_fallback={config.get('demo_fallback_on_error', True)} error={_redact_secrets(str(exc))}"
+                f"fallback={completion_source} error={_redact_secrets(str(exc))}"
             )
-        if not config.get("demo_fallback_on_error", True):
+        if not full_response and not config.get("demo_fallback_on_error", True):
             raise HTTPException(
                 status_code=502,
                 detail=f"LLM接続エラー: {_redact_secrets(str(exc))}",
             ) from exc
-        full_response = _demo_opening(session, _redact_secrets(str(exc)))
+        if not full_response:
+            full_response = _demo_opening(session, _redact_secrets(str(exc)))
     if debug_enabled and full_response:
         completion_path = _save_completion_debug(session, "opening", full_response, completion_source)
         debug_log(f"Opening completion saved path={completion_path}")
@@ -476,6 +479,8 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
 
 
 def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
+    if session.get("game_over"):
+        raise HTTPException(status_code=409, detail="物語はすでに終了しています。")
     if combat_is_active(session):
         raise HTTPException(status_code=409, detail="戦闘中は戦闘コマンドを使用してください。")
     if combat_needs_resolution(session):
@@ -533,6 +538,7 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
                 return public_session(session)
 
     add_player_message(session, action_text, request.speaker)
+    session["last_turn_narrated"] = False
 
     if resolved_action:
         dice_type, dice_dc = action_dice_settings(
@@ -554,6 +560,16 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
     else:
         latest_roll = roll_dice(session, dice_type, int(dice_dc))
     action_result = apply_action_result(session, resolved_action, latest_roll) if resolved_action else {}
+
+    if _should_skip_turn_narration(session, resolved_action, action_result, action_text):
+        ensure_combat_started(session)
+        save_session(session)
+        debug_log(
+            "Turn narration skipped "
+            f"session={session['id']} action_id={action_result.get('action_id', '')} "
+            f"location={current_location_id(session)}"
+        )
+        return public_session(session)
 
     config = load_config()
     messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
@@ -583,18 +599,20 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
     try:
         full_response = chat_completion(config, messages)
     except LLMClientError as exc:
-        completion_source = "demo_fallback"
+        full_response = _prepared_fallback_response(session, request.text.strip())
+        completion_source = "prepared_fallback" if full_response else "demo_fallback"
         if debug_enabled:
             debug_log(
                 "LLM failure; "
-                f"demo_fallback={config.get('demo_fallback_on_error', True)} error={_redact_secrets(str(exc))}"
+                f"fallback={completion_source} error={_redact_secrets(str(exc))}"
             )
-        if not config.get("demo_fallback_on_error", True):
+        if not full_response and not config.get("demo_fallback_on_error", True):
             raise HTTPException(
                 status_code=502,
                 detail=f"LLM接続エラー: {_redact_secrets(str(exc))}",
             ) from exc
-        full_response = _demo_response(session, request.text, latest_roll, _redact_secrets(str(exc)))
+        if not full_response:
+            full_response = _demo_response(session, request.text, latest_roll, _redact_secrets(str(exc)))
     if debug_enabled and full_response:
         completion_path = _save_completion_debug(session, "turn", full_response, completion_source)
         debug_log(f"Turn completion saved path={completion_path}")
@@ -623,6 +641,38 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             f"logs={len(session['system_logs'])} dice={len(session['dice_log'])}"
         )
     return public_session(session)
+
+
+def _should_skip_turn_narration(
+    session: dict[str, Any],
+    resolved_action: Any,
+    action_result: dict[str, Any],
+    player_text: str,
+) -> bool:
+    if not isinstance(resolved_action, dict) or not action_result:
+        return False
+    if resolved_action.get("silent") is True or str(resolved_action.get("narration") or "").lower() == "none":
+        return True
+    silent_outcomes = {
+        str(outcome)
+        for outcome in resolved_action.get("silent_outcomes", [])
+        if outcome is not None
+    }
+    if str(action_result.get("outcome") or "") in silent_outcomes:
+        return True
+    if session.get("gm_mode") != "semi" or action_result.get("outcome") != "neutral":
+        return False
+    delta = action_result.get("state_delta") if isinstance(action_result.get("state_delta"), dict) else {}
+    meaningful_keys = {
+        key for key, value in delta.items()
+        if value not in (None, "", 0, [], {})
+    }
+    position_keys = {"current_scene", "current_location"}
+    if not meaningful_keys or not meaningful_keys.intersection(position_keys):
+        return False
+    if meaningful_keys.difference(position_keys):
+        return False
+    return not has_hybrid_prepared_turn(session, player_text)
 
 
 def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
@@ -660,6 +710,20 @@ def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
         "outcome": result.get("outcome"),
         "combat_result": result,
     }
+    prepared_text = str(result.get("prepared_text") or "").strip()
+    if prepared_text:
+        add_assistant_message(session, prepared_text)
+        session["last_turn_narrated"] = True
+        session["last_action_result"] = {}
+        ensure_combat_started(session)
+        if not combat_is_active(session):
+            session["choices"] = fallback_choices_for_session(session)
+        save_session(session)
+        debug_log(
+            "Combat result used prepared text "
+            f"session={session['id']} outcome={result.get('outcome')} chars={len(prepared_text)}"
+        )
+        return public_session(session)
     latest_roll = {"expression": "combat_result", "rolls": [], "total": 0}
     messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
     messages.append({
@@ -821,6 +885,30 @@ def _opening_prompt_for_mode(session: dict[str, Any]) -> str:
             "出力はGM JSONオブジェクト1つだけにしてください。"
         )
     return build_opening_prompt(session)
+
+
+def _prepared_fallback_response(
+    session: dict[str, Any],
+    player_text: str = "",
+    *,
+    opening: bool = False,
+) -> str:
+    if session.get("gm_mode") != "semi":
+        return ""
+    prepared = select_hybrid_prepared_turn(session, player_text, opening=opening)
+    draft = prepared.get("draft") if isinstance(prepared.get("draft"), dict) else {}
+    gm_text = str(draft.get("gm_text") or "").strip()
+    if not gm_text:
+        return ""
+    payload = {
+        "gm_text": gm_text,
+        "system_log": str(draft.get("system_log") or "") if opening else "",
+        "dice_type": str(draft.get("dice_type") or "1d20"),
+        "dice_dc": int(draft.get("dice_dc") or 0),
+        "state_delta": deepcopy(draft.get("state_delta") or {}) if opening else {},
+        "choices": fallback_choices_for_session(session),
+    }
+    return gm_text + "\n" + STATE_MARKER + "\n" + json.dumps(payload, ensure_ascii=False)
 
 
 def _context_debug_for_mode(session: dict[str, Any], player_text: str, opening: bool = False) -> dict[str, Any]:
