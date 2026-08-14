@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from typing import Any, Optional
 
 from .item_mechanics import (
+    equipped_basic_attack_followups,
     effective_ability,
     effective_ability_cost,
     item_combat_spec,
@@ -63,17 +64,19 @@ def ensure_combat_started(session: dict[str, Any]) -> bool:
         return False
 
     location_id = current_location_id(session)
+    start_requested = bool(session.get("combat_start_requested"))
     blocked_location = str(session.get("combat_blocked_location") or "")
     if blocked_location and blocked_location != location_id:
         session.pop("combat_blocked_location", None)
-    elif blocked_location and blocked_location == location_id:
+    elif blocked_location and blocked_location == location_id and not start_requested:
         return False
+    elif blocked_location and start_requested:
+        session.pop("combat_blocked_location", None)
 
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return False
     encounter = _encounter_for_session(session, pack)
-    start_requested = bool(session.get("combat_start_requested"))
     if encounter.get("auto_start", True) is False and not start_requested:
         return False
     enemy_ids = encounter.get("enemy_ids") or []
@@ -286,6 +289,8 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
     character = session.get("character") if isinstance(session.get("character"), dict) else {}
     rules = _combat_rules(session)
     basic = _merge_dict(rules.get("basic_attack"), character.get("combat", {}).get("basic_attack") if isinstance(character.get("combat"), dict) else None)
+    basic = _merge_dict(basic, _equipped_weapon_attack(character))
+    basic_followups = equipped_basic_attack_followups(character)
     actions: list[dict[str, Any]] = [
         {
             "type": "attack",
@@ -295,6 +300,8 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
             "cost": 0,
             "cost_type": "",
             "enabled": True,
+            **_combat_action_details(basic),
+            **({"followups": basic_followups} if basic_followups else {}),
         }
     ]
     for index, skill in enumerate(_available_skills(character)):
@@ -305,6 +312,7 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
         cost_type = str(skill.get("cost_type") or "").lower()
         available = _safe_int(character.get(cost_type), 0) if cost_type in {"mp", "sp", "hp"} else cost
         enabled = available >= cost
+        resolved_skill = effective_ability(character, skill)
         actions.append({
             "type": "skill",
             "id": skill_id,
@@ -315,6 +323,7 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
             "kind": _ability_kind(skill),
             "enabled": enabled,
             "disabled_reason": "リソースが不足しています。" if not enabled else "",
+            **_combat_action_details(resolved_skill),
         })
     for index, item in enumerate(character.get("inventory") or []):
         normalized = item if isinstance(item, dict) else {"name": str(item), "quantity": 1}
@@ -330,6 +339,7 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
             "quantity": _safe_int(normalized.get("quantity"), 1),
             "kind": spec.get("kind"),
             "enabled": True,
+            **_combat_action_details(spec),
         })
     actions.extend([
         {
@@ -351,6 +361,14 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
     return actions
 
 
+def _combat_action_details(ability: dict[str, Any]) -> dict[str, Any]:
+    fields = (
+        "damage", "healing", "accuracy", "element", "all_targets", "check",
+        "guard_multiplier", "multi_elements", "hits_per_element",
+    )
+    return {key: deepcopy(ability[key]) for key in fields if ability.get(key) not in (None, "", [], {})}
+
+
 def _player_attack(session: dict[str, Any], target_id: str, rng: Any) -> None:
     combat = session["combat"]
     character = session["character"]
@@ -360,6 +378,10 @@ def _player_attack(session: dict[str, Any], target_id: str, rng: Any) -> None:
     attack = _merge_dict(rules.get("basic_attack"), char_combat.get("basic_attack"))
     attack = _merge_dict(attack, _equipped_weapon_attack(character))
     _resolve_attack(session, character, target, attack, "player", rng)
+    for followup in equipped_basic_attack_followups(character):
+        if _enemy_is_defeated(target):
+            break
+        _resolve_attack(session, character, target, followup, "player", rng)
 
 
 def _player_skill(session: dict[str, Any], skill_id: str, target_id: str, rng: Any) -> None:

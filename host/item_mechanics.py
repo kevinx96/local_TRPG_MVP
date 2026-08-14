@@ -129,8 +129,24 @@ def equipped_item_specs(actor: dict[str, Any]) -> list[dict[str, Any]]:
     return specs
 
 
+def equipped_basic_attack_followups(actor: dict[str, Any]) -> list[dict[str, Any]]:
+    followups: list[dict[str, Any]] = []
+    for spec in equipped_item_specs(actor):
+        raw = spec.get("basic_attack_followup")
+        entries = raw if isinstance(raw, list) else [raw]
+        for entry in entries:
+            if isinstance(entry, dict) and str(entry.get("damage") or "").strip():
+                followups.append(deepcopy(entry))
+    return followups
+
+
 def _modifier_parts(spec: dict[str, Any]) -> list[str]:
     parts: list[str] = []
+    followup = spec.get("basic_attack_followup")
+    if isinstance(followup, dict) and followup.get("damage"):
+        element = str(followup.get("element") or "").strip()
+        suffix = f"({element}属性)" if element else ""
+        parts.append(f"通常攻撃時に{followup['damage']}追撃{suffix}")
     reductions = spec.get("cost_reduction") if isinstance(spec.get("cost_reduction"), dict) else {}
     for resource in ("hp", "mp", "sp"):
         amount = max(0, _as_int(reductions.get(resource), 0))

@@ -67,6 +67,7 @@ NPC_IMAGES = {
     "lost_goblin": "/static/images/npc_lost_goblin.png",
     "xanxus": "/static/images/npc_xanxus.png",
     "warlock": "/static/images/npc_warlock.png",
+    "fire_bat_dragon": "/static/images/companion_fire_bat_dragon.png",
 }
 
 ENEMY_IMAGES = {
@@ -122,6 +123,7 @@ ACTION_PORTRAITS = {
     "ask_blacksmith_weakness": "/static/images/npc_blacksmith.png",
     "show_sword_to_blacksmith": "/static/images/npc_blacksmith.png",
     "accept_sword_fusion": "/static/images/npc_blacksmith.png",
+    "activate_ice_charm": "/static/images/npc_blacksmith.png",
     "ask_ian": "/static/images/npc_ian.png",
     "ask_ian_legend": "/static/images/npc_ian.png",
     "ask_ian_advice": "/static/images/npc_ian.png",
@@ -307,6 +309,12 @@ def add_catalog(pack: dict[str, Any]) -> None:
             "description": "別の一族に箱を盗まれ、闇の森で助けを求めているゴブリン。",
             "keywords": ["迷子", "ゴブリン", "箱"],
         },
+        {
+            "id": "fire_bat_dragon",
+            "name": "火コウモリ竜",
+            "description": "サラが大切にしている、火をまとった小さな翼竜。",
+            "keywords": ["火コウモリ竜", "ペット", "翼竜"],
+        },
     ]:
         upsert(npcs, npc)
 
@@ -361,6 +369,22 @@ def add_catalog(pack: dict[str, Any]) -> None:
         {"id": "cursed_dagger", "name": "呪われた短剣", "description": "攻撃が命中するたび、毎ラウンド3ダメージの毒を重ねる。", "combat": {"kind": "weapon", "name": "呪われた短剣", "damage": "1d6+dex/4", "accuracy": 95, "element": "cursed", "on_hit_status": {"id": "cursed_poison", "name": "累積毒", "damage": "3", "stackable": True}}},
         {"id": "rusted_crown", "name": "錆びた王冠", "description": "スライム王が身につけていた錆びた王冠。今のところ効果はない。"},
         {"id": "shrinking_gun", "name": "縮小の銃", "description": "ごく低確率で敵を縮小し、HPと最大HPを10分の1にする。何度でも使える。", "combat": {"kind": "shrink", "chance": 2, "consumable": False}},
+        {
+            "id": "activated_ice_charm",
+            "name": "氷の護符(活性化済)",
+            "description": "鍛冶師が武器へ嵌め込み、真の力を引き出した氷の護符。",
+            "effect": "通常攻撃のたびに1d8+INT/2の氷属性追撃を行う。",
+            "keywords": ["氷の護符", "活性化", "氷属性"],
+            "combat": {
+                "kind": "equipment",
+                "basic_attack_followup": {
+                    "name": "氷の護符の追撃",
+                    "damage": "1d8+int/2",
+                    "accuracy": 100,
+                    "element": "ice",
+                },
+            },
+        },
     ]
     for item in item_records:
         upsert(items, item)
@@ -542,7 +566,7 @@ def item_shop(pack: dict[str, Any]) -> dict[str, Any]:
         prepared("fire_bat_borrow_success", borrow["id"], "火コウモリ竜はあなたの匂いを嗅ぐと肩へ飛び乗った。サラは嬉しそうに笑い、「ちゃんと連れて帰ってね」と送り出した。", "success"),
         prepared("fire_bat_borrow_failure", borrow["id"], "火コウモリ竜は羽を逆立て、サラの背後へ隠れた。どうやら今は、あなたをあまり気に入っていないようだ。", "failure"),
     ]
-    return location("item_shop", "王城の道具屋", "十歳ほどの金髪の少女サラと、小さな火コウモリ竜がいる。", [purchases, borrow, action("return_castle_from_item_shop", "城に戻る", effects=[{"current_location": "castle"}])], npc_ids=["sarah"], turns=turns)
+    return location("item_shop", "王城の道具屋", "十歳ほどの金髪の少女サラと、小さな火コウモリ竜がいる。", [purchases, borrow, action("return_castle_from_item_shop", "城に戻る", effects=[{"current_location": "castle"}])], npc_ids=["sarah", "fire_bat_dragon"], turns=turns)
 
 
 def alley_day(pack: dict[str, Any]) -> dict[str, Any]:
@@ -885,12 +909,52 @@ def update_robin(pack: dict[str, Any]) -> None:
             turn.setdefault("draft", {})["gm_text"] = "ロビンは声を落とした。「王城の路地裏には、夜だけ現れる黒い商人がいるそうよ。昼に行っても何も見つからないわ」"
 
 
+def update_forge(pack: dict[str, Any]) -> None:
+    forge = next((entry for entry in pack.get("locations", []) if entry.get("id") == "forge"), None)
+    if not forge:
+        return
+    activate = action(
+        "activate_ice_charm",
+        "氷の護符を武器へ嵌め込み活性化する",
+        "通常攻撃に1d8+INT/2の氷属性追撃を加えます",
+        hidden_for_character="hero",
+        once="activated_ice_charm",
+        requirements={
+            "all": [
+                {"has_item": "氷の護符"},
+                {"lacks_item": "氷の護符(活性化済)"},
+            ],
+        },
+        effects=[
+            {"remove_item": {"name": "氷の護符", "quantity": 1}},
+            {"add_item": {"name": "氷の護符(活性化済)", "quantity": 1}},
+            {"equip_item": "氷の護符(活性化済)"},
+            {"set_flag": "activated_ice_charm"},
+        ],
+    )
+    actions = [entry for entry in forge.get("actions", []) if entry.get("id") != activate["id"]]
+    insert_at = next(
+        (index for index, entry in enumerate(actions) if entry.get("id") == "return_castle_from_forge"),
+        len(actions),
+    )
+    actions.insert(insert_at, activate)
+    forge["actions"] = actions
+    turns = forge.setdefault("hybrid", {}).setdefault("prepared_turns", [])
+    turns[:] = [turn for turn in turns if turn.get("action_id") != activate["id"]]
+    turns.append(prepared(
+        "activate_ice_charm_at_forge",
+        activate["id"],
+        "ローベルトは武器の柄へ氷の護符を嵌め込み、槌で魔力の流れを整えた。青白い光が刃を走る。「活性化は済んだ。これからは斬撃のたびに冷気が追い打ちをかける」",
+    ))
+
+
 def upgrade(pack: dict[str, Any]) -> dict[str, Any]:
     meta = pack.setdefault("meta", {})
     meta["title"] = "紅き邪竜イグニス"
     add_catalog(pack)
     add_village_catalog(pack)
     update_robin(pack)
+    update_forge(pack)
     replacements = {entry["id"]: entry for entry in [*town_locations(pack), *forest_locations(pack), *fort_locations(pack), *village_locations(pack)]}
     retained = [entry for entry in pack.get("locations", []) if entry.get("id") not in replacements and entry.get("id") != "village_shop"]
     pack["locations"] = [*retained, *replacements.values()]
