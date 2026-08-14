@@ -75,7 +75,15 @@ DEFAULT_CHARACTER: dict[str, Any] = {
     ],
     "equipment": ["鉄の剣", "革の鎧"],
     "background_image": "/static/images/bg_dragon_rpg.png",
-    "character_image": "/static/images/char_male_hero.png",
+    "character_image": "/static/images/char_male_hero_v2.png",
+}
+
+CHARACTER_PORTRAIT_ALIASES = {
+    "/static/images/char_male_hero.png": "/static/images/char_male_hero_v2.png",
+    "/static/images/char_female_hero.png": "/static/images/char_female_hero_v2.png",
+    "/static/images/char_cleric.png": "/static/images/char_cleric_v2.png",
+    "/static/images/char_mage.png": "/static/images/char_mage_v2.png",
+    "/static/images/char_thief.png": "/static/images/char_thief_v2.png",
 }
 
 
@@ -367,6 +375,9 @@ def _location_npc_portraits(
             if isinstance(record, dict) and str(record.get("id") or ""):
                 catalogs.setdefault(str(record["id"]), record)
     portraits: list[dict[str, str]] = []
+    portrait_overrides = location.get("npc_portrait_overrides")
+    if not isinstance(portrait_overrides, dict):
+        portrait_overrides = {}
     for npc_id in location.get("npc_ids", []):
         record = catalogs.get(str(npc_id))
         if not isinstance(record, dict) or not record.get("image"):
@@ -374,7 +385,7 @@ def _location_npc_portraits(
         portraits.append({
             "id": str(record.get("id") or npc_id),
             "name": str(record.get("name") or npc_id),
-            "image": str(record["image"]),
+            "image": str(portrait_overrides.get(str(npc_id)) or record["image"]),
         })
     if not portraits and location.get("portrait_image"):
         portraits.append({
@@ -2173,6 +2184,9 @@ def _trim_context_to_budget(context_json: str, max_chars: int) -> str:
 
 
 def _normalize_character(character: dict[str, Any]) -> None:
+    portrait = str(character.get("character_image") or "")
+    if portrait in CHARACTER_PORTRAIT_ALIASES:
+        character["character_image"] = CHARACTER_PORTRAIT_ALIASES[portrait]
     for stat in ("hp", "mp", "sp"):
         max_key = f"max_{stat}"
         character[max_key] = int(character.get(max_key, character.get(stat, 0)))
