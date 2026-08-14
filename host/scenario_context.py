@@ -338,6 +338,9 @@ def _visible_action_choices(choices: list[dict[str, Any]], flags: dict[str, Any]
         visible_character = str(choice.get("visible_for_character") or "")
         if visible_character and visible_character != character_id:
             continue
+        hidden_character = str(choice.get("hidden_for_character") or "")
+        if hidden_character and hidden_character == character_id:
+            continue
         item = deepcopy(choice)
         if isinstance(item.get("children"), list):
             item["children"] = _visible_action_choices(item["children"], flags, character_id)

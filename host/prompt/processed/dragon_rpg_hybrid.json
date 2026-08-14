@@ -1282,6 +1282,24 @@
             "rewrite_notes": [],
             "action_id": "accept_sword_fusion",
             "outcome": "neutral"
+          },
+          {
+            "id": "activate_ice_charm_at_forge",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "activate_ice_charm",
+            "trigger_keywords": [],
+            "action_id": "activate_ice_charm",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "ローベルトは武器の柄へ氷の護符を嵌め込み、槌で魔力の流れを整えた。青白い光が刃を走る。「活性化は済んだ。これからは斬撃のたびに冷気が追い打ちをかける」",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
           }
         ]
       },
@@ -1447,6 +1465,48 @@
             },
             {
               "set_flag": "accepted_sword_fusion"
+            }
+          ],
+          "portrait_image": "/static/images/npc_blacksmith.png"
+        },
+        {
+          "id": "activate_ice_charm",
+          "text": "氷の護符を武器へ嵌め込み活性化する",
+          "preview": "通常攻撃に1d8+INT/2の氷属性追撃を加えます",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "氷の護符を武器へ嵌め込み活性化する"
+          ],
+          "hidden_for_character": "hero",
+          "once": "activated_ice_charm",
+          "requirements": {
+            "all": [
+              {
+                "has_item": "氷の護符"
+              },
+              {
+                "lacks_item": "氷の護符(活性化済)"
+              }
+            ]
+          },
+          "effects": [
+            {
+              "remove_item": {
+                "name": "氷の護符",
+                "quantity": 1
+              }
+            },
+            {
+              "add_item": {
+                "name": "氷の護符(活性化済)",
+                "quantity": 1
+              }
+            },
+            {
+              "equip_item": "氷の護符(活性化済)"
+            },
+            {
+              "set_flag": "activated_ice_charm"
             }
           ],
           "portrait_image": "/static/images/npc_blacksmith.png"
@@ -3328,7 +3388,8 @@
         "王城の道具屋"
       ],
       "npc_ids": [
-        "sarah"
+        "sarah",
+        "fire_bat_dragon"
       ],
       "item_ids": [],
       "clue_ids": [],
@@ -7082,6 +7143,17 @@
         "青いローブの魔法使い"
       ],
       "image": "/static/images/npc_warlock.png"
+    },
+    {
+      "id": "fire_bat_dragon",
+      "name": "火コウモリ竜",
+      "description": "サラが大切にしている、火をまとった小さな翼竜。",
+      "keywords": [
+        "火コウモリ竜",
+        "ペット",
+        "翼竜"
+      ],
+      "image": "/static/images/companion_fire_bat_dragon.png"
     }
   ],
   "items": [
@@ -7208,14 +7280,22 @@
     {
       "id": "activated_ice_charm",
       "name": "氷の護符(活性化済)",
-      "description": "鍛冶師によって真の力を引き出された氷の護符。",
-      "effect": "無属性ダメージを氷属性に変換し、邪竜に有効なダメージを与える",
+      "description": "鍛冶師が武器へ嵌め込み、真の力を引き出した氷の護符。",
+      "effect": "通常攻撃のたびに1d8+INT/2の氷属性追撃を行う。",
       "keywords": [
         "氷の護符",
         "活性化",
         "氷属性"
       ],
-      "title": "氷の護符(活性化済)"
+      "combat": {
+        "kind": "equipment",
+        "basic_attack_followup": {
+          "name": "氷の護符の追撃",
+          "damage": "1d8+int/2",
+          "accuracy": 100,
+          "element": "ice"
+        }
+      }
     },
     {
       "id": "ice_katana",

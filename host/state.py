@@ -302,6 +302,14 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
         ),
         None,
     )
+    player_portrait = str((public.get("character") or {}).get("character_image") or "")
+    location_npcs = _location_npc_portraits(session, location)
+    dialogue_portrait = str((action or {}).get("portrait_image") or "")
+    dialogue_active = bool(dialogue_portrait and dialogue_portrait != player_portrait)
+    public["player_portrait_image"] = player_portrait
+    public["location_npc_portraits"] = location_npcs
+    public["dialogue_active"] = dialogue_active
+    public["dialogue_portrait_image"] = dialogue_portrait if dialogue_active else ""
     public["combat"] = combat
     public["enemies"] = deepcopy(combat.get("enemies") or []) if isinstance(combat, dict) else []
     public["in_combat"] = bool(isinstance(combat, dict) and combat.get("status"))
@@ -317,7 +325,8 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
         combat_portrait = str((active_enemy or {}).get("image") or "")
     public["active_portrait_image"] = str(
         combat_portrait
-        or (action or {}).get("portrait_image")
+        or public["dialogue_portrait_image"]
+        or ((location_npcs[0] if location_npcs else {}).get("image") or "")
         or public["location_portrait_image"]
     )
 
@@ -341,6 +350,39 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
         and not _is_protocol_warning_log(str(log.get("text", "")))
     ]
     return public
+
+
+def _location_npc_portraits(
+    session: dict[str, Any],
+    location: Optional[dict[str, Any]],
+) -> list[dict[str, str]]:
+    if not isinstance(location, dict):
+        return []
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return []
+    catalogs: dict[str, dict[str, Any]] = {}
+    for section in ("npcs", "companions"):
+        for record in pack.get(section, []):
+            if isinstance(record, dict) and str(record.get("id") or ""):
+                catalogs.setdefault(str(record["id"]), record)
+    portraits: list[dict[str, str]] = []
+    for npc_id in location.get("npc_ids", []):
+        record = catalogs.get(str(npc_id))
+        if not isinstance(record, dict) or not record.get("image"):
+            continue
+        portraits.append({
+            "id": str(record.get("id") or npc_id),
+            "name": str(record.get("name") or npc_id),
+            "image": str(record["image"]),
+        })
+    if not portraits and location.get("portrait_image"):
+        portraits.append({
+            "id": str(location.get("id") or "location_npc"),
+            "name": "",
+            "image": str(location["portrait_image"]),
+        })
+    return portraits
 
 
 def _current_location_record(session: dict[str, Any]) -> Optional[dict[str, Any]]:
@@ -763,6 +805,9 @@ def _intent_action_surfaces(
                 continue
             visible_character = str(action.get("visible_for_character") or "")
             if visible_character and visible_character != character_id:
+                continue
+            hidden_character = str(action.get("hidden_for_character") or "")
+            if hidden_character and hidden_character == character_id:
                 continue
             children = action.get("children")
             if isinstance(children, list) and children:

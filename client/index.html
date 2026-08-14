@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/static/styles.css?v=20260814-hybrid-visuals" />
+    <link rel="stylesheet" href="/static/styles.css?v=20260814-battle-dialogue-ui" />
   </head>
   <body>
 
@@ -90,7 +90,9 @@
 
       <!-- Sprite Layer -->
       <div id="spriteLayer" class="gal-sprite-layer">
-        <img id="portrait" class="gal-sprite" src="" style="display:none;" />
+        <div id="locationPortraits" class="location-portrait-group"></div>
+        <img id="playerPortrait" class="gal-sprite gal-sprite-player" src="" alt="" style="display:none;" />
+        <img id="npcPortrait" class="gal-sprite gal-sprite-npc" src="" alt="" style="display:none;" />
       </div>
 
       <!-- Top Overlay -->
@@ -114,6 +116,7 @@
 
         <div class="combat-arena">
           <article class="combatant-panel player-combatant">
+            <img id="combatPlayerImage" class="combat-player-image" src="" alt="" />
             <span class="combatant-side">PLAYER</span>
             <h3 id="combatPlayerName">冒険者</h3>
             <div class="combat-resource hp"><span>HP</span><i><b id="combatPlayerHpBar"></b></i><strong id="combatPlayerHp">0/0</strong></div>
@@ -205,6 +208,7 @@
               <div class="meter-row"><span class="meter-label">SP</span><div class="meter sp-meter"><i id="spBar"></i></div><strong id="spText">10/10</strong></div>
             </div>
             <div class="gold-row"><span class="gold-label">GOLD</span><strong id="goldText">0</strong></div>
+            <h3>能力値</h3><div id="characterAttributes" class="attribute-grid"></div>
             <h3>所持品</h3><ul id="inventory" class="inventory"></ul>
             <h3>最近の判定</h3><ul id="diceLog" class="dice-log"></ul>
           </aside>
@@ -213,8 +217,15 @@
           </aside>
         </div>
       </div>
+
+      <div id="endingOverlay" class="ending-overlay" style="display:none" role="dialog" aria-modal="true">
+        <span>GAME OVER</span>
+        <h2 id="endingTitle">敗北</h2>
+        <p id="endingReason"></p>
+        <button id="endingRestartButton" type="button">タイトルへ戻る</button>
+      </div>
     </main>
 
-    <script src="/static/app.js?v=20260814-hybrid-visuals"></script>
+    <script src="/static/app.js?v=20260814-battle-dialogue-ui"></script>
   </body>
 </html>

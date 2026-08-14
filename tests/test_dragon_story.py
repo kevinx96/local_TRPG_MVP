@@ -49,6 +49,20 @@ class DragonStoryTests(unittest.TestCase):
         self.assertIn('s.filename === "dragon_rpg_hybrid.json"', source)
         self.assertIn('return `${title}（Hybrid）`', source)
 
+    def test_client_has_dialogue_pair_attributes_and_defeat_surfaces(self):
+        html = Path("client/index.html").read_text(encoding="utf-8")
+        css = Path("client/styles.css").read_text(encoding="utf-8")
+        source = Path("client/app.js").read_text(encoding="utf-8")
+
+        for element_id in (
+            "locationPortraits", "playerPortrait", "npcPortrait", "characterAttributes",
+            "combatPlayerImage", "endingOverlay",
+        ):
+            self.assertIn(f'id="{element_id}"', html)
+        self.assertIn(".combat-terminal .combat-command-deck", css)
+        self.assertIn("function renderScenePortraits", source)
+        self.assertIn("function renderAbilityTags", source)
+
     def test_town_catalog_and_companions_are_complete(self):
         for filename in SCENARIO_FILES:
             with self.subTest(filename=filename):
@@ -76,8 +90,15 @@ class DragonStoryTests(unittest.TestCase):
                 self.assertEqual(items["healing_scroll"]["combat"]["healing"], "30")
                 self.assertEqual(items["fireball_scroll"]["combat"]["damage"], "1d6+5")
                 self.assertEqual(items["poison_dart"]["combat"]["on_hit_status"]["damage"], "4")
+                self.assertEqual(
+                    items["activated_ice_charm"]["combat"]["basic_attack_followup"]["damage"],
+                    "1d8+int/2",
+                )
                 self.assertEqual(companions["blue_robed_mage"]["round_start_effects"][0]["amount"], "8")
                 self.assertEqual(companions["fire_bat_dragon"]["round_start_effects"][0]["damage"], "2d3")
+                self.assertEqual(locations["item_shop"]["npc_ids"], ["sarah", "fire_bat_dragon"])
+                forge_actions = {entry["id"]: entry for entry in locations["forge"]["actions"]}
+                self.assertEqual(forge_actions["activate_ice_charm"]["hidden_for_character"], "hero")
 
     def test_visual_assets_are_wired_and_present(self):
         client_root = Path("client")
@@ -396,6 +417,74 @@ class DragonStoryTests(unittest.TestCase):
 
         self.assertIn("箱を盗まれ", victory_text)
         self.assertNotIn("箱を抱えて", victory_text)
+
+    def test_location_portraits_switch_from_ensemble_to_dialogue_pair(self):
+        session = self.create_runtime_session("mage")
+        state.commit_world_position(session, location_id="inn")
+
+        arrival = state.public_session(session)
+        self.assertEqual(
+            [npc["id"] for npc in arrival["location_npc_portraits"]],
+            ["ian", "robin"],
+        )
+        self.assertFalse(arrival["dialogue_active"])
+        self.assertEqual(arrival["player_portrait_image"], "/static/images/char_mage.png")
+
+        session["last_action_result"] = {"action_id": "ask_robin_rumor", "outcome": "success"}
+        dialogue = state.public_session(session)
+        self.assertTrue(dialogue["dialogue_active"])
+        self.assertEqual(dialogue["dialogue_portrait_image"], "/static/images/npc_robin.png")
+
+    def test_explicit_retry_can_start_combat_after_a_defeat_lock(self):
+        session = self.create_runtime_session()
+        state.commit_world_position(session, location_id="goblin_fort_first_second")
+        session["combat_blocked_location"] = "goblin_fort_first_second"
+        session["combat_start_requested"] = True
+
+        self.assertTrue(combat.ensure_combat_started(session))
+        self.assertEqual(session["combat"]["status"], "active")
+        self.assertNotIn("combat_blocked_location", session)
+
+    def test_non_hero_can_activate_ice_charm_for_basic_attack_followup(self):
+        session = self.create_runtime_session("mage")
+        if "氷の護符" not in {item.get("name") for item in session["character"]["inventory"]}:
+            state.apply_state_delta(session, {"inventory_add": [{"name": "氷の護符", "quantity": 1}]})
+        state.commit_world_position(session, location_id="forge")
+
+        forge_action = state.resolve_action(session, action_id="activate_ice_charm")
+        self.assertIsNotNone(forge_action)
+        state.apply_action_result(
+            session,
+            forge_action,
+            {"expression": "none", "rolls": [], "total": 0, "dc": 0},
+        )
+        item_names = {item.get("name") for item in session["character"]["inventory"]}
+        self.assertNotIn("氷の護符", item_names)
+        self.assertIn("氷の護符(活性化済)", item_names)
+        self.assertIn("氷の護符(活性化済)", session["character"]["equipment"])
+
+        state.commit_world_position(session, location_id="goblin_fort")
+        session["combat_start_requested"] = True
+        self.assertTrue(combat.ensure_combat_started(session))
+        basic_action = next(entry for entry in combat.combat_actions(session) if entry["id"] == "basic_attack")
+        self.assertEqual(basic_action["followups"][0]["damage"], "1d8+int/2")
+        target = session["combat"]["enemies"][0]
+        combat._player_attack(session, target["id"], random.Random(7))
+        self.assertTrue(
+            any("氷の護符の追撃" in entry.get("text", "") for entry in session["combat"]["log"])
+        )
+
+    def test_combat_actions_expose_structured_effect_details(self):
+        session = self.create_runtime_session("mage")
+        state.commit_world_position(session, location_id="goblin_fort")
+        session["combat_start_requested"] = True
+        self.assertTrue(combat.ensure_combat_started(session))
+
+        actions = {entry["id"]: entry for entry in combat.combat_actions(session)}
+        self.assertIn("damage", actions["basic_attack"])
+        self.assertIn("accuracy", actions["basic_attack"])
+        self.assertEqual(actions["fireball"]["damage"], "1d6+int/2+3")
+        self.assertEqual(actions["fireball"]["element"], "fire")
 
 
 if __name__ == "__main__":
