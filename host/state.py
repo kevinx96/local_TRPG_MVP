@@ -96,9 +96,7 @@ MODEL_RESOURCE_DELTA_KEYS = ("hp_change", "mp_change", "sp_change", "gold_change
 MODEL_MAX_ATTRIBUTE_DELTA = 3
 MODEL_MAX_GOLD_DELTA = 10_000
 MODEL_MAX_ITEM_QUANTITY = 99
-FREEFORM_TURN_LIMIT = 3
-
-_DICE_ATTR_RE = re.compile(r"^(\d+d\d+)(?:\+(\w+))?$", re.IGNORECASE)
+_DICE_ATTR_RE = re.compile(r"^(\d+d\d+)(?:([+-])(\d+|[a-z_]+))?$", re.IGNORECASE)
 
 
 def utc_now() -> str:
@@ -112,6 +110,8 @@ def load_config(path: Optional[Path] = None) -> dict[str, Any]:
     if local_path.exists():
         _deep_update(config, json.loads(local_path.read_text(encoding="utf-8-sig")))
     _apply_config_env_overrides(config)
+    if config.get("active_backend") in config.get("archived_backends", []):
+        config["active_backend"] = "gemini"
     return config
 
 
@@ -133,26 +133,27 @@ def _apply_config_env_overrides(config: dict[str, Any]) -> None:
     if active_backend:
         config["active_backend"] = active_backend.strip()
 
-    backend_name = str(config.get("active_backend") or "ollama")
+    backend_name = str(config.get("active_backend") or "gemini")
     backends = config.setdefault("backends", {})
     backend = backends.setdefault(backend_name, {})
     if not isinstance(backend, dict):
         backend = {}
         backends[backend_name] = backend
 
-    base_url = os.environ.get("TRPG_LLM_BASE_URL") or os.environ.get("TRPG_OLLAMA_BASE_URL")
+    is_ollama = backend_name == "ollama"
+    base_url = os.environ.get("TRPG_LLM_BASE_URL") or (os.environ.get("TRPG_OLLAMA_BASE_URL") if is_ollama else None)
     if base_url:
-        backend["base_url"] = _normalize_openai_base_url(base_url)
+        backend["base_url"] = base_url.strip().rstrip("/") if backend_name == "gemini" or backend.get("type") == "gemini" else _normalize_openai_base_url(base_url)
 
-    model = os.environ.get("TRPG_LLM_MODEL") or os.environ.get("TRPG_OLLAMA_MODEL")
+    model = os.environ.get("TRPG_LLM_MODEL") or (os.environ.get("TRPG_OLLAMA_MODEL") if is_ollama else None)
     if model:
         backend["model"] = model.strip()
 
-    fallbacks = os.environ.get("TRPG_LLM_FALLBACK_MODELS") or os.environ.get("TRPG_OLLAMA_FALLBACK_MODELS")
+    fallbacks = os.environ.get("TRPG_LLM_FALLBACK_MODELS") or (os.environ.get("TRPG_OLLAMA_FALLBACK_MODELS") if is_ollama else None)
     if fallbacks:
         backend["fallback_models"] = [item.strip() for item in fallbacks.split(",") if item.strip()]
 
-    api_key = os.environ.get("TRPG_LLM_API_KEY") or os.environ.get("TRPG_OLLAMA_API_KEY")
+    api_key = os.environ.get("TRPG_LLM_API_KEY") or (os.environ.get("TRPG_OLLAMA_API_KEY") if is_ollama else None)
     if api_key:
         backend["api_key"] = api_key
 
@@ -297,6 +298,7 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     public["current_location_title"] = current_location_title(session)
     location = _current_location_record(session)
     if location:
+        public["free_input_hint"] = str(location.get("free_input_hint") or "行動や台詞を自由に入力してください")
         public["location_background_image"] = str(location.get("background_image") or "")
         public["location_portrait_image"] = str(location.get("portrait_image") or "")
     else:
@@ -527,20 +529,25 @@ def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[in
     dice_part = expr
     attr_key = ""
     dice_match = _DICE_ATTR_RE.match(expr)
-    if dice_match:
-        dice_part = dice_match.group(1)
-        attr_key = _canonical_attr_key(dice_match.group(2) or "")
+    if not dice_match:
+        raise ValueError(f"Unsupported dice expression: {expr}")
+    dice_part = dice_match.group(1)
+    modifier = dice_match.group(3) or ""
+    sign = -1 if dice_match.group(2) == "-" else 1
+    fixed_modifier = sign * int(modifier) if modifier.isdigit() else 0
+    attr_key = _canonical_attr_key(modifier) if modifier and not modifier.isdigit() else ""
+    attrs = _normalize_attribute_map(session.get("character", {}).get("attributes", {}))
+    if attr_key and attr_key not in attrs:
+        raise ValueError(f"Unknown dice attribute: {attr_key}")
     count, sides = _parse_dice_expression(dice_part)
     if client_rolls and isinstance(client_rolls, list) and len(client_rolls) == count and all(_valid_client_roll(r, sides) for r in client_rolls):
         rolls = [int(r) for r in client_rolls]
     else:
         rolls = [random.randint(1, sides) for _ in range(count)]
     base_total = sum(rolls)
-    attr_mod = 0
+    attr_mod = fixed_modifier
     if attr_key:
-        character = session.get("character", {})
-        attrs = character.get("attributes", {}) if isinstance(character.get("attributes"), dict) else {}
-        attr_mod = _attr_value(attrs, attr_key)
+        attr_mod = sign * _attr_value(attrs, attr_key)
     total = base_total + attr_mod
     entry: dict[str, Any] = {"expression": expr, "rolls": rolls, "total": total, "created_at": utc_now()}
     entry["critical_success"] = bool(rolls and all(value == sides for value in rolls))
@@ -549,7 +556,7 @@ def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[in
         entry["dc"] = dc
         if dc > 0:
             entry["success"] = total >= dc
-    if attr_key:
+    if modifier:
         entry["base_total"] = base_total
         entry["attr_mod"] = attr_mod
         entry["attr_key"] = attr_key
@@ -879,18 +886,8 @@ def track_intent_resolution(
         session.pop("deviation_state", None)
         tracked["phase"] = "on_track"
     elif status == "unmatched":
-        previous = session.get("deviation_state") if isinstance(session.get("deviation_state"), dict) else {}
-        previous_turns = int(previous.get("turns", 0) or 0)
-        turns = min(FREEFORM_TURN_LIMIT, previous_turns + 1)
-        phase = "blocked" if previous_turns >= FREEFORM_TURN_LIMIT else ("recovery" if turns >= FREEFORM_TURN_LIMIT else "improvise")
-        deviation = {
-            "turns": turns,
-            "phase": phase,
-            "last_player_text": tracked["player_text"],
-            "candidate_action_ids": tracked["candidate_action_ids"],
-        }
-        session["deviation_state"] = deviation
-        tracked.update(deviation)
+        session.pop("deviation_state", None)
+        tracked["phase"] = "interpret"
     elif status == "ambiguous":
         tracked["phase"] = "clarify"
     else:
@@ -1506,7 +1503,7 @@ def _inventory_item_names(character: dict[str, Any]) -> set[str]:
 
 
 def _canonical_attr_key(key: str) -> str:
-    mapping = {"con": "end", "endurance": "end", "\u8010\u4e45": "end", "\u4f53\u529b": "end", "\u7b4b\u529b": "str"}
+    mapping = {"agi": "dex", "char": "wis", "con": "end", "endurance": "end", "\u8010\u4e45": "end", "\u4f53\u529b": "end", "\u7b4b\u529b": "str"}
     return mapping.get(key.strip().lower(), key.strip().lower())
 
 
@@ -1913,7 +1910,7 @@ def _enrich_item(item: dict[str, Any], scenario_pack: Optional[dict[str, Any]] =
         "effect": structured_item_effect(merged),
         "quantity": _safe_quantity(item.get("quantity"), 1),
     }
-    for key in ("id", "icon", "combat"):
+    for key in ("id", "icon", "combat", "traits"):
         if key in merged:
             enriched[key] = deepcopy(merged[key])
     return enriched
@@ -2164,25 +2161,41 @@ def _trim_context_to_budget(context_json: str, max_chars: int) -> str:
     try:
         ctx = json.loads(context_json)
     except json.JSONDecodeError:
-        return context_json[:max_chars]
-    if isinstance(ctx.get("matched"), dict):
-        groups = list(ctx["matched"].items())
-        groups.sort(key=lambda item: len(item[1]) if isinstance(item[1], list) else 0, reverse=True)
-        removed = []
-        for key, value in groups:
-            if len(ctx["matched"]) <= 1:
-                break
-            del ctx["matched"][key]
-            removed.append(key)
-        serialized = json.dumps(ctx, ensure_ascii=False)
-        if len(serialized) > max_chars:
-            for key in removed:
-                ctx["matched"][key] = []
-    if isinstance(ctx.get("rules"), list):
-        ctx.pop("rules", None)
-    ctx.pop("source_path", None)
-    result = json.dumps(ctx, ensure_ascii=False)
-    return result[:max_chars] if len(result) > max_chars else result
+        return "{}"
+    if not isinstance(ctx, dict):
+        return "{}"
+
+    def encoded() -> str:
+        return json.dumps(ctx, ensure_ascii=False, separators=(",", ":"))
+
+    # Remove duplicate and remote context first. Keep positions and action IDs
+    # intact; splitting serialized JSON can change the meaning of a request.
+    for key in ("source_path", "fallback_choices", "hint_choices", "narrative_hint"):
+        if len(encoded()) <= max_chars:
+            return encoded()
+        ctx.pop(key, None)
+    matched = ctx.get("matched") if isinstance(ctx.get("matched"), dict) else {}
+    while len(encoded()) > max_chars and any(matched.values()):
+        largest = max((key for key in matched if isinstance(matched[key], list) and matched[key]),
+                      key=lambda key: len(json.dumps(matched[key], ensure_ascii=False)), default=None)
+        if largest is None:
+            break
+        matched[largest].pop()
+    for key in ("rules", "meta"):
+        if len(encoded()) <= max_chars:
+            return encoded()
+        ctx.pop(key, None)
+    if len(encoded()) > max_chars:
+        for record_key in ("current_scene", "current_location"):
+            record = ctx.get(record_key)
+            if isinstance(record, dict):
+                ctx[record_key] = {key: record[key] for key in ("id", "title", "name") if key in record}
+    # Extremely large menus are reduced by whole choices, never by bytes.
+    actions = ctx.get("available_actions")
+    while len(encoded()) > max_chars and isinstance(actions, list) and actions:
+        actions.pop()
+        ctx["actions_omitted"] = True
+    return encoded()
 
 
 def _normalize_character(character: dict[str, Any]) -> None:

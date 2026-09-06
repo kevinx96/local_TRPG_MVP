@@ -184,6 +184,9 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
         "available_actions": _trim_choices(current_action_choices(session)),
         "fallback_choices": _trim_choices(_merged_choices_for_context(pack, current_scene, current_location_id(session))),
     }
+    location = _find_location_in_pack(pack, current_location_id(session)) or {}
+    context["current_location"] = {key: deepcopy(location[key]) for key in ("id", "title", "description") if key in location}
+    context["changes_here"] = deepcopy((session.get("scene_changes") or {}).get(current_location_id(session), {}))
     # Semi mode: inject hybrid hints if available so the LLM has narrative scaffolding
     hybrid = scene.get("hybrid") if isinstance(scene.get("hybrid"), dict) else None
     if session.get("gm_mode") == "semi" and hybrid:
@@ -311,6 +314,8 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
 
 
 def fallback_choices_for_session(session: dict[str, Any]) -> list[dict[str, str]]:
+    if session.get("game_over"):
+        return []
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return deepcopy(DEFAULT_FALLBACK_CHOICES)

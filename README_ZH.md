@@ -1,6 +1,6 @@
 # Local LLM TRPG
 
-使用本地LLM作为GM的TRPG客户端最小实现。Host端基于FastAPI管理游戏状态、存档、骰子和OpenAI兼容的LLM调用，Client端在浏览器中运行，采用视觉小说风格（Galgame）UI。
+以 API 担任 GM 的 TRPG 客户端。Host 基于 FastAPI 管理游戏状态、存档、骰子与模型调用，浏览器提供视觉小说风格界面。本地 LLM 暂时雪藏，待有更好的设备后再评估。
 
 > **Python**: 需要3.9或更高版本。已在FastAPI/Pydantic下测试通过。arm64用户建议使用原生arm64 Python/Conda环境。
 
@@ -50,39 +50,25 @@ python -m host.run_server --reload
 
 ## LLM配置
 
-编辑 `host/config.json` 中的 `active_backend` 和 `backends`。
+默认使用 Gemini 3.1 Flash-Lite。将密钥放在环境变量 `GEMINI_API_KEY` 或本机已有的密钥文件中，个人设置写入 `host/local_config.json`，不要提交密钥。Ollama / Koboldcpp 配置保留，但在游戏设置中隐藏。默认每次只尝试一个模型，连接/读取超时为 15 秒。
 
-- Ollama（默认）: `http://localhost:11434/v1`
-- Koboldcpp: `http://localhost:5001/v1`
-
-两者均使用OpenAI兼容的 `/chat/completions` 端点。当前默认模型优先级为 qwen3，随后 fallback 到 qwen2.5 和 ELYZA JP 8B。
+[自由行动、试玩步骤和当前范围](docs/api-free-actions.md)。
 
 ```json
 {
-  "active_backend": "ollama",
+  "active_backend": "gemini",
   "backends": {
-    "ollama": {
-      "base_url": "http://localhost:11434/v1",
-      "model": "qwen3-swallow-8b-rl-local",
-      "fallback_models": [
-        "qwen2.5-7b-instruct-local",
-        "elyza-jp-8b-local"
-      ],
-      "api_key": "ollama"
+    "gemini": {
+      "type": "gemini",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "model": "gemini-3.1-flash-lite",
+      "fallback_models": [],
+      "api_key": ""
     }
   },
-  "temperature": 0.8,
-  "max_tokens": 2048,
-  "request_timeout_seconds": 1800,
-  "response_format": "json_object",
-  "prompting": {
-    "history_messages": 4,
-    "memory_max_chars": 1200,
-    "action_history_max": 40,
-    "action_history_item_chars": 80
-  },
-  "debug_llm": true,
-  "demo_fallback_on_error": true
+  "request_timeout_seconds": 15,
+  "max_model_attempts": 1,
+  "response_format": "json_object"
 }
 ```
 
@@ -96,6 +82,8 @@ python -m host.run_server --reload
 | `action_history_item_chars` | 80 | 每条行动历史的最大字符数 |
 
 ## 远程Ollama
+
+以下为保留的本地推理部署资料。当前默认停用；恢复前需在个人配置中设置 `archived_backends: []` 并选择本地后端。
 
 对于性能较弱的笔记本，可以将游戏主机/客户端保留在本地，仅将LLM调用指向主力PC。不要直接编辑 `host/config.json`，应创建 `host/local_config.json`。该文件已被git忽略，适合保存每台机器自己的URL、token和模型名。
 

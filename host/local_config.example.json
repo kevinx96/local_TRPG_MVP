@@ -1,15 +1,14 @@
 {
+  "active_backend": "gemini",
+  "request_timeout_seconds": 15,
+  "max_model_attempts": 1,
   "backends": {
-    "ollama": {
-      "base_url": "https://ollama.example.com/v1",
-      "model": "qwen3-swallow-8b-rl-local",
-      "fallback_models": [
-        "qwen2.5-7b-instruct-local",
-        "qwen2.5-3b-instruct-q8-0-local",
-        "qwen2.5-3b-instruct-q5-k-m-local",
-        "elyza-jp-8b-local"
-      ],
-      "api_key": "ollama"
+    "gemini": {
+      "type": "gemini",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "model": "gemini-3.1-flash-lite",
+      "fallback_models": [],
+      "api_key": ""
     }
   }
 }

@@ -1,6 +1,6 @@
 # Local LLM TRPG
 
-ローカルLLMをGMとして使う、日本語TRPGクライアントの最小実装です。HostはFastAPIでゲーム状態、セーブ、ダイス、OpenAI互換LLM呼び出しを管理し、Clientはブラウザで動作します（ビジュアルノベル風UI）。
+APIをGMに使う日本語TRPGクライアントです。FastAPIのHostがゲーム状態、セーブ、ダイスを管理し、ブラウザはビジュアルノベル風UIを提供します。ローカルLLMは、より良い機材とモデルを評価できるまで休止します。
 
 > **Python**: 3.9以上必須。FastAPI/Pydanticで動作確認済み。arm64環境では、ネイティブarm64のPython/Conda環境を推奨します。
 
@@ -50,39 +50,25 @@ python -m host.run_server --reload
 
 ## LLM設定
 
-`host/config.json` の `active_backend` と `backends` を編集します。
+デフォルトは Gemini 3.1 Flash-Lite です。APIキーは環境変数 `GEMINI_API_KEY` または既存のローカル鍵ファイルに保存し、個人設定は Git 管理外の `host/local_config.json` に記述します。Ollama / Koboldcpp の設定は保持しますが、ゲーム設定では非表示です。通常はモデル試行1回、接続・読み取りタイムアウト15秒です。
 
-- Ollama（デフォルト）: `http://localhost:11434/v1`
-- Koboldcpp: `http://localhost:5001/v1`
-
-どちらもOpenAI互換の `/chat/completions` エンドポイントを使用します。現在のデフォルト優先順は qwen3、フォールバックとして qwen2.5 と ELYZA JP 8B です。
+自由入力はAPIで一度解釈し、結果はエンジンが確定します。森の入口では餌による誘導、潜行、準備が可能です。更新済みシナリオを遊ぶには新規ゲームを開始してください。[実装と検証の説明（中国語）](docs/api-free-actions.md)。
 
 ```json
 {
-  "active_backend": "ollama",
+  "active_backend": "gemini",
   "backends": {
-    "ollama": {
-      "base_url": "http://localhost:11434/v1",
-      "model": "qwen3-swallow-8b-rl-local",
-      "fallback_models": [
-        "qwen2.5-7b-instruct-local",
-        "elyza-jp-8b-local"
-      ],
-      "api_key": "ollama"
+    "gemini": {
+      "type": "gemini",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "model": "gemini-3.1-flash-lite",
+      "fallback_models": [],
+      "api_key": ""
     }
   },
-  "temperature": 0.8,
-  "max_tokens": 2048,
-  "request_timeout_seconds": 1800,
-  "response_format": "json_object",
-  "prompting": {
-    "history_messages": 4,
-    "memory_max_chars": 1200,
-    "action_history_max": 40,
-    "action_history_item_chars": 80
-  },
-  "debug_llm": true,
-  "demo_fallback_on_error": true
+  "request_timeout_seconds": 15,
+  "max_model_attempts": 1,
+  "response_format": "json_object"
 }
 ```
 
@@ -96,6 +82,8 @@ python -m host.run_server --reload
 | `action_history_item_chars` | 80 | 行動履歴1エントリの最大文字数 |
 
 ## リモートOllama
+
+以下は保存用のローカル推論の資料です。現在は既定で無効です。再開する場合は個人設定で `archived_backends: []` と使用するローカルバックエンドを指定してください。
 
 低スペックのノートPCでは、ゲームのホスト/クライアントは手元で動かし、LLM呼び出しのみメインPCに向けます。マシン固有の設定は `host/config.json` を直接編集せず、`host/local_config.json` を作成してください。これはgit管理外で、端末固有のURL、トークン、モデル名を書く場所です。
 

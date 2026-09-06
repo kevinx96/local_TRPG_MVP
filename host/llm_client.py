@@ -19,7 +19,7 @@ def debug_log(message: str) -> None:
 
 
 def active_backend(config: dict[str, Any]) -> dict[str, Any]:
-    name = config.get("active_backend", "ollama")
+    name = config.get("active_backend", "gemini")
     backends = config.get("backends") or {}
     backend = backends.get(name)
     if not isinstance(backend, dict):
@@ -48,8 +48,8 @@ def stream_chat_completion(
 ) -> Iterable[str]:
     debug_enabled = bool(config.get("debug_llm", True))
     backend = active_backend(config)
-    backend_name = config.get("active_backend", "ollama")
-    candidates = model_candidates(backend)
+    backend_name = config.get("active_backend", "gemini")
+    candidates = model_candidates(backend)[:max(1, int(config.get("max_model_attempts", 1)))]
     if not candidates:
         raise LLMClientError("No LLM model configured.")
 
@@ -73,8 +73,8 @@ def chat_completion(
 ) -> str:
     debug_enabled = bool(config.get("debug_llm", True))
     backend = active_backend(config)
-    backend_name = config.get("active_backend", "ollama")
-    candidates = model_candidates(backend)
+    backend_name = config.get("active_backend", "gemini")
+    candidates = model_candidates(backend)[:max(1, int(config.get("max_model_attempts", 1)))]
     if not candidates:
         raise LLMClientError("No LLM model configured.")
 
@@ -116,7 +116,7 @@ def _chat_completion_once(
     }
     _apply_response_format(payload, config)
     headers = _request_headers(backend)
-    timeout = int(config.get("request_timeout_seconds", 1800))
+    timeout = min(int(config.get("request_timeout_seconds", 15)), int(config.get("gameplay_timeout_seconds", 15)))
     url = f"{base_url}/chat/completions"
 
     if debug_enabled:
@@ -197,7 +197,7 @@ def _stream_chat_completion_once(
     }
     _apply_response_format(payload, config)
     headers = _request_headers(backend)
-    timeout = int(config.get("request_timeout_seconds", 1800))
+    timeout = min(int(config.get("request_timeout_seconds", 15)), int(config.get("gameplay_timeout_seconds", 15)))
     url = f"{base_url}/chat/completions"
 
     if debug_enabled:
@@ -298,10 +298,9 @@ def _gemini_chat_completion_once(
         raise LLMClientError("Gemini API key is empty. Set GEMINI_API_KEY or host/gemini_api_key.txt.")
 
     base_url = str(backend.get("base_url") or "https://generativelanguage.googleapis.com/v1beta").rstrip("/")
-    timeout = int(config.get("request_timeout_seconds", 1800))
+    timeout = min(int(config.get("request_timeout_seconds", 15)), int(config.get("gameplay_timeout_seconds", 15)))
     url = f"{base_url}/models/{quote(model, safe='')}:generateContent"
     payload = _gemini_payload(messages, config)
-    params = {"key": api_key}
 
     if debug_enabled:
         total_chars = sum(len(message.get("content", "")) for message in messages)
@@ -315,7 +314,7 @@ def _gemini_chat_completion_once(
 
     try:
         start_time = time.time()
-        response = requests.post(url, params=params, headers={"Content-Type": "application/json"}, json=payload, timeout=timeout)
+        response = requests.post(url, headers={"Content-Type": "application/json", "x-goog-api-key": api_key}, json=payload, timeout=timeout)
         ttfb_ms = (time.time() - start_time) * 1000
         if debug_enabled:
             debug_log(
@@ -372,6 +371,12 @@ def _gemini_payload(messages: list[dict[str, str]], config: dict[str, Any]) -> d
     }
     if config.get("response_format") == "json_object":
         generation_config["responseMimeType"] = "application/json"
+    response_format = config.get("response_format")
+    if isinstance(response_format, dict) and response_format.get("type") == "json_schema":
+        schema = (response_format.get("json_schema") or {}).get("schema")
+        if isinstance(schema, dict):
+            generation_config["responseMimeType"] = "application/json"
+            generation_config["responseJsonSchema"] = schema
 
     payload: dict[str, Any] = {
         "contents": contents,

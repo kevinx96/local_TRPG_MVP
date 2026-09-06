@@ -1144,6 +1144,7 @@ class StateTests(unittest.TestCase):
     def test_roll_dice_marks_natural_extremes_and_applies_critical_effects(self):
         public = state.create_session(str(self.write_pack()))
         session = state.load_session(public["id"])
+        session["character"]["attributes"] = {"wis": 0}
         action = {
             "id": "rumor",
             "text": "噂を聞く",
@@ -1234,7 +1235,7 @@ class StateTests(unittest.TestCase):
         self.assertEqual(dice_type, "1d20")
         self.assertEqual(dice_dc, 0)
 
-    def test_free_text_paraphrase_resolves_current_action(self):
+    def test_free_text_paraphrase_is_a_candidate_until_interpreted(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
         raw["locations"][0]["actions"] = [
@@ -1251,13 +1252,13 @@ class StateTests(unittest.TestCase):
 
         resolution = state.resolve_player_intent(session, "この鉄の盾を鍛冶師に見てもらいたい")
 
-        self.assertEqual(resolution["status"], "resolved")
-        self.assertEqual(resolution["action"]["id"], "show_shield_to_smith")
-        self.assertEqual(resolution["method"], "semantic")
+        self.assertEqual(resolution["status"], "unmatched")
+        self.assertIsNone(resolution["action"])
+        self.assertIn("show_shield_to_smith", resolution["candidate_action_ids"])
 
         abbreviated = state.resolve_player_intent(session, "盾を見てもらいたい")
-        self.assertEqual(abbreviated["status"], "resolved")
-        self.assertEqual(abbreviated["action"]["id"], "show_shield_to_smith")
+        self.assertEqual(abbreviated["status"], "unmatched")
+        self.assertIn("show_shield_to_smith", abbreviated["candidate_action_ids"])
 
     def test_entity_term_outranks_generic_dialogue_fragment(self):
         path = self.write_pack()
@@ -1280,8 +1281,8 @@ class StateTests(unittest.TestCase):
 
         resolution = state.resolve_player_intent(session, "将軍に話を聞きたい")
 
-        self.assertEqual(resolution["status"], "resolved")
-        self.assertEqual(resolution["action_id"], "ask_general_advice")
+        self.assertEqual(resolution["status"], "unmatched")
+        self.assertEqual(resolution["candidate_action_ids"][0], "ask_general_advice")
 
     def test_ambiguous_free_text_does_not_choose_between_tied_actions(self):
         path = self.write_pack()
@@ -1364,7 +1365,7 @@ class StateTests(unittest.TestCase):
         resolution = state.resolve_player_intent(session, "装備を買いたい")
 
         self.assertEqual(resolution["status"], "ambiguous")
-        self.assertEqual(resolution["method"], "action_group")
+        self.assertEqual(resolution["method"], "")
         self.assertEqual(set(resolution["candidate_action_ids"]), {"buy_armor", "buy_amulet"})
         self.assertIsNone(state.resolve_action(session, action_text="装備を買いたい"))
 
@@ -1403,10 +1404,11 @@ class StateTests(unittest.TestCase):
         self.assertNotIn("flew_to_moon", session["flags"])
         self.assertEqual(session["dice_log"], [])
         self.assertEqual(result["choices"][0]["action_id"], "inspect_shield")
-        self.assertEqual(session["deviation_state"]["turns"], 1)
-        self.assertIn("自由入力制御", "\n".join(message["content"] for message in captured["messages"]))
+        self.assertNotIn("deviation_state", session)
+        self.assertIn("行動案", "\n".join(message["content"] for message in captured["messages"]))
+        self.assertNotIn("月へは行けない", result["messages"][-1]["text"])
 
-    def test_unmatched_free_text_recovers_after_three_llm_turns(self):
+    def test_unmatched_free_text_is_not_blocked_after_three_llm_turns(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
         raw["locations"][0]["actions"] = [
@@ -1431,11 +1433,10 @@ class StateTests(unittest.TestCase):
                     app_module._run_turn(session, app_module.TurnRequest(text=f"脱線した行動{index}"))
                 fourth = app_module._run_turn(session, app_module.TurnRequest(text="さらに脱線する"))
 
-        self.assertEqual(completion.call_count, 3)
-        self.assertEqual(session["deviation_state"]["turns"], 3)
-        self.assertEqual(session["deviation_state"]["phase"], "blocked")
-        self.assertIn("今回で必ず収束", prompts[-1])
-        self.assertIn("現在できる行動", fourth["messages"][-1]["text"])
+        self.assertEqual(completion.call_count, 4)
+        self.assertNotIn("deviation_state", session)
+        self.assertNotIn("今回で必ず収束", prompts[-1])
+        self.assertIn("行動を読み取れませんでした", fourth["messages"][-1]["text"])
         self.assertEqual(fourth["choices"][0]["action_id"], "inspect_shield")
         self.assertEqual(session["dice_log"], [])
 
@@ -1455,7 +1456,8 @@ class StateTests(unittest.TestCase):
         session = state.load_session(public["id"])
         session["deviation_state"] = {"turns": 2, "phase": "improvise"}
         model_response = json.dumps(
-            {"gm_text": "盾の縁に小さな刻印が見つかった。", "state_delta": {}, "choices": []},
+            {"kind": "existing", "action_id": "inspect_shield", "operation": "", "target_id": "",
+             "item_id": "", "advance": False, "approach": "盾を調べる", "reply": ""},
             ensure_ascii=False,
         )
 
@@ -1468,7 +1470,7 @@ class StateTests(unittest.TestCase):
         self.assertEqual(session["last_action_result"]["action_id"], "inspect_shield")
         self.assertEqual(session["dice_log"], [])
 
-    def test_resolved_roll_action_uses_client_dice_and_engine_outcome(self):
+    def test_resolved_roll_action_uses_server_dice_and_engine_outcome(self):
         path = self.write_pack()
         raw = json.loads(path.read_text(encoding="utf-8"))
         raw["locations"][0]["actions"] = [
@@ -1490,13 +1492,13 @@ class StateTests(unittest.TestCase):
         )
 
         with patch.object(app_module, "load_config", return_value={"debug_llm": False, "demo_fallback_on_error": True}):
-            with patch.object(app_module, "chat_completion", return_value=model_response):
+            with patch.object(app_module, "chat_completion", return_value=model_response), patch.object(state.random, "randint", return_value=10):
                 app_module._run_turn(
                     session,
                     app_module.TurnRequest(
                         text="盾のルーンを読む",
                         action_id="read_runes",
-                        client_dice={"rolls": [10]},
+                        client_dice={"rolls": [20]},
                     ),
                 )
 

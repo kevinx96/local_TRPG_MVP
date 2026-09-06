@@ -418,7 +418,7 @@ function updateHeroImage(char) {
 
 async function startGame() {
   const heroName = els.heroNameInput.value.trim() || "アルス";
-  const backend = els.backendSelect ? els.backendSelect.value : "ollama";
+  const backend = els.backendSelect ? els.backendSelect.value : "gemini";
   const model = els.modelSelect ? els.modelSelect.value : "";
   const gmMode = document.querySelector('input[name="gmMode"]:checked')?.value || "semi";
   const scenarioPath = state.scenarioPath;
@@ -530,17 +530,14 @@ async function submitTurn(event) {
   event.preventDefault();
   const text = els.input.value.trim();
   if (!text || !state.sessionId) return;
-  const diceResult = rollLocalDice(text);
   els.input.value = "";
   addMessage("user", "プレイヤー", text);
   hideChoices();
   clearPendingChoices();
   hideDiceBanner();
-  if (diceResult) showDiceResult(diceResult);
   setBusy(true);
   try {
     const body = { text };
-    if (diceResult) body.client_dice = { rolls: diceResult.rolls };
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -561,24 +558,14 @@ async function submitTurn(event) {
 async function submitChoice(choiceText, actionId = "") {
   choiceDebug("submit-choice-start", { choiceText, actionId });
   if (!choiceText || !state.sessionId) return;
-  let diceResult;
-  try {
-    diceResult = rollLocalDice(choiceText);
-  } catch (err) {
-    choiceDebug("submit-choice-dice-error", { choiceText, error: err.message });
-    diceResult = null;
-  }
-  choiceDebug("submit-choice-dice", { choiceText, diceResult });
   addMessage("user", "プレイヤー", choiceText);
   hideChoices();
   clearPendingChoices();
   hideDiceBanner();
-  if (diceResult) showDiceResult(diceResult);
   setBusy(true);
   try {
     const body = { text: choiceText };
     if (actionId) body.action_id = actionId;
-    if (diceResult) body.client_dice = { rolls: diceResult.rolls };
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -603,6 +590,7 @@ async function submitChoice(choiceText, actionId = "") {
 
 function renderSession(session) {
   state.sessionId = session.id;
+  if (els.input) els.input.placeholder = session.free_input_hint || "行動や台詞を自由に入力してください";
   state.nextDiceDc = Number(session.next_dice_dc || 0);
   state.nextDiceType = session.next_dice_type || "1d20";
   state.character = session.character || null;
@@ -817,72 +805,6 @@ function diceSignature(roll) {
   return [roll.expression || "", rolls, roll.total ?? "", roll.dc ?? "", roll.success ?? ""].join("|");
 }
 
-const ATTR_KEY_MAP = {
-  str: "str", strength: "str", 筋力: "str",
-  dex: "dex", dexterity: "dex", 敏捷: "dex", 器用: "dex",
-  con: "con", constitution: "con", 耐久: "con", 体力: "con",
-  int: "int", intelligence: "int", 知力: "int", 知性: "int",
-  wis: "wis", wisdom: "wis", 判断: "wis", 精神: "wis",
-  cha: "cha", charisma: "cha", 魅力: "cha",
-};
-
-function resolveAttrKey(diceExpr) {
-  if (!diceExpr || typeof diceExpr !== "string") return null;
-  const plusIdx = diceExpr.indexOf("+");
-  if (plusIdx < 0) return null;
-  const raw = diceExpr.slice(plusIdx + 1).trim().toLowerCase();
-  return ATTR_KEY_MAP[raw] || raw;
-}
-
-function getAttrValue(attrKey) {
-  if (!attrKey || !state.character) return 0;
-  const attrs = state.character.attributes || state.character.stats || {};
-  const val = attrs[attrKey] ?? attrs[attrKey.toUpperCase()] ?? 0;
-  return typeof val === "number" ? val : parseInt(val, 10) || 0;
-}
-
-function rollLocalDice(actionText) {
-  const allChoices = [...state.pendingChoices, ...state.choiceStack.flat()];
-  const choice = allChoices.find((item) => {
-    const text = typeof item === "string" ? item : (item.text || "");
-    return text === actionText;
-  }) || state.pendingChoices.find((item) => {
-    const text = typeof item === "string" ? item : (item.text || "");
-    return text === actionText;
-  });
-  if (!choice || typeof choice !== "object") {
-    if (Number(state.nextDiceDc || 0) > 0) {
-      const sides = parseInt(String(state.nextDiceType || "1d20").replace(/.*d/i, ""), 10) || 20;
-      const rolls = [1 + Math.floor(Math.random() * sides)];
-      const total = rolls.reduce((a, b) => a + b, 0);
-      return { expression: state.nextDiceType || "1d20", rolls, total, dc: state.nextDiceDc, success: total >= state.nextDiceDc };
-    }
-    return null;
-  }
-  const risk = String(choice.risk || "");
-  if (risk.includes("判定不要")) return null;
-  if (!(/DC\s*\d+|1d\d+|判定/i.test(risk)) && Number(state.nextDiceDc || 0) <= 0) return null;
-  const diceMatch = risk.match(/(\d+)d(\d+(?:\+[A-Za-z_][A-Za-z0-9_]*)?)/i);
-  const count = diceMatch ? parseInt(diceMatch[1], 10) : 1;
-  const dicePart = diceMatch ? diceMatch[2].split("+")[0] : "20";
-  const sides = parseInt(dicePart, 10) || 20;
-  const dcMatch = risk.match(/DC\s*(\d+)/i);
-  const dc = dcMatch ? parseInt(dcMatch[1], 10) : (Number(state.nextDiceDc || 0) || 10);
-  const rolls = Array.from({ length: count }, () => 1 + Math.floor(Math.random() * sides));
-  const baseTotal = rolls.reduce((a, b) => a + b, 0);
-  const attrKey = diceMatch ? resolveAttrKey(diceMatch[2]) : null;
-  const attrMod = attrKey ? getAttrValue(attrKey) : 0;
-  const total = baseTotal + attrMod;
-  const expr = diceMatch ? diceMatch[2] : (state.nextDiceType || "1d20");
-  const result = { expression: expr, rolls, total, dc, success: total >= dc };
-  if (attrKey) {
-    result.base_total = baseTotal;
-    result.attr_mod = attrMod;
-    result.attr_key = attrKey;
-  }
-  return result;
-}
-
 function isCheckRoll(roll) {
   return Number(roll?.dc || 0) > 0;
 }
@@ -894,7 +816,7 @@ function showDiceResult(roll) {
   const total = Number(roll.total ?? 0);
   const dc = Number(roll.dc ?? 0);
   const hasCheck = dc > 0;
-  const success = roll.success === true || (hasCheck && total >= dc);
+  const success = !roll.critical_failure && (roll.success === true || (hasCheck && total >= dc));
   els.diceBanner.style.display = "";
   els.diceBanner.classList.toggle("success", hasCheck && success);
   els.diceBanner.classList.toggle("failure", hasCheck && !success);
@@ -1097,6 +1019,8 @@ function renderEnding(gameOver) {
     return;
   }
   els.endingTitle.textContent = gameOver.title || "敗北";
+  const endingLabel = document.querySelector("#endingLabel");
+  if (endingLabel) endingLabel.textContent = gameOver.ending === "ignis_defeated" ? "ADVENTURE COMPLETE" : "GAME OVER";
   els.endingReason.textContent = gameOver.reason || "物語はここで終わりました。";
   els.endingOverlay.style.display = "";
 }

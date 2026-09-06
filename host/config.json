@@ -1,5 +1,6 @@
 {
-  "active_backend": "ollama",
+  "active_backend": "gemini",
+  "archived_backends": ["ollama", "koboldcpp"],
   "backends": {
     "ollama": {
       "base_url": "http://localhost:11434/v1",
@@ -28,13 +29,12 @@
       "type": "gemini",
       "base_url": "https://generativelanguage.googleapis.com/v1beta",
       "model": "gemini-3.1-flash-lite",
-      "fallback_models": [
-        "gemini-2.0-flash"
-      ],
+      "fallback_models": [],
       "api_key": ""
     }
   },
-  "request_timeout_seconds": 1800,
+  "request_timeout_seconds": 15,
+  "max_model_attempts": 1,
   "temperature": 0.8,
   "max_tokens": 2048,
   "response_format": "json_object",

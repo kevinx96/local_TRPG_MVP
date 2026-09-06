@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-08-14-story-and-visuals"
+    "content_revision": "2026-09-06-api-free-actions"
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -969,13 +969,13 @@
               "id": "invite_robin",
               "text": "パーティに勧誘する",
               "preview": "ロビンを仲間に誘う",
-              "risk": "1d20+cha判定（DC12）",
+              "risk": "1d20+wis判定（DC12）",
               "intent_keywords": [
                 "パーティに勧誘する",
                 "ロビンを仲間に誘う"
               ],
               "roll": {
-                "dice_type": "1d20+cha",
+                "dice_type": "1d20+wis",
                 "dc": 12
               },
               "once": "invited_robin",
@@ -1194,7 +1194,12 @@
         "victory_effects": {
           "flags_set": [
             "defeated_ignis"
-          ]
+          ],
+          "game_over": {
+            "title": "冒険完了",
+            "ending": "ignis_defeated",
+            "reason": "邪竜イグニスは倒れ、谷を覆っていた炎が消えていく。あなたの冒険は、人々が明日を迎える道を開いた。"
+          }
         },
         "defeat_effects": {
           "hp_change": 1
@@ -1237,6 +1242,13 @@
           "success_effects": [
             {
               "set_flag": "defeated_ignis"
+            },
+            {
+              "game_over": {
+                "title": "冒険完了",
+                "ending": "ignis_defeated",
+                "reason": "邪竜イグニスは倒れ、谷を覆っていた炎が消えていく。あなたの冒険は、人々が明日を迎える道を開いた。"
+              }
             }
           ],
           "failure_effects": [
@@ -1249,7 +1261,8 @@
           ],
           "requirements": {
             "has_item": "氷の護符"
-          }
+          },
+          "hidden_after": "defeated_ignis"
         },
         {
           "id": "attack_ignis_with_sword",
@@ -1266,7 +1279,8 @@
             {
               "set_flag": "reckless_dragon_attack"
             }
-          ]
+          ],
+          "hidden_after": "defeated_ignis"
         },
         {
           "id": "defend_ignis_breath",
@@ -1280,7 +1294,8 @@
             {
               "set_flag": "defended_dragon_breath"
             }
-          ]
+          ],
+          "hidden_after": "defeated_ignis"
         }
       ],
       "background_image": "/static/images/bg_dragon_valley.png"
@@ -2732,7 +2747,7 @@
       "id": "dark_forest_loc",
       "scene_id": "dark_forest",
       "title": "闇の森・入口",
-      "description": "薄暗い森の入口で、一匹のスライムが道を塞いでいる。",
+      "description": "薄暗い森の入口。一匹のスライムが道を塞ぎ、地面の木の実に鼻先を寄せている。道の脇には茂みと倒れた枝がある。",
       "keywords": [
         "闇の森・入口"
       ],
@@ -2777,7 +2792,8 @@
         ],
         "victory_effects": {
           "flags_set": [
-            "defeated_slime"
+            "defeated_slime",
+            "forest_entrance_resolved"
           ],
           "current_location": "lost_goblin_crossroads"
         },
@@ -2802,10 +2818,55 @@
             {
               "start_combat": true
             }
+          ],
+          "hidden_after": "forest_entrance_resolved"
+        },
+        {
+          "id": "pass_cleared_forest",
+          "text": "分かっている道を通って十字路へ進む",
+          "preview": "敵を倒す必要はありません",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "分かっている道を通って十字路へ進む"
+          ],
+          "visible_after": "forest_entrance_resolved",
+          "effects": [
+            {
+              "current_location": "lost_goblin_crossroads"
+            }
           ]
         }
       ],
-      "background_image": "/static/images/bg_dark_forest.png"
+      "background_image": "/static/images/bg_dark_forest.png",
+      "free_input_hint": "例：携帯食を投げてスライムを誘い、戦わずに通り抜ける",
+      "objects": [
+        {
+          "id": "fallen_branches",
+          "name": "倒れた枝",
+          "traits": [
+            "movable",
+            "cover_material"
+          ],
+          "description": "道の脇に重なる枝。組み合わせれば足止めや視線を遮る準備に使える。"
+        }
+      ],
+      "obstacles": [
+        {
+          "id": "forest_slime",
+          "name": "スライム",
+          "enemy_id": "slime",
+          "description": "一匹のスライムが道を塞いでいる。食べ物の匂いに敏感で、視野は狭い。",
+          "traits": [
+            "food_motivated"
+          ],
+          "bypassable": true,
+          "sneak_dc": 14,
+          "hint": "携帯食で誘えば確実に道を空ける。潜行はSPを1使い、失敗すると警戒が上がる。枝で準備すると次の潜行の難度が3下がる。",
+          "destination": "lost_goblin_crossroads",
+          "resolved_flag": "forest_entrance_resolved",
+          "arrival_text": "十字路では一匹のゴブリンが、盗まれた箱を取り戻してほしいと助けを求めている。"
+        }
+      ]
     },
     {
       "id": "lost_goblin_crossroads",
@@ -6044,6 +6105,14 @@
           "element": "ice"
         }
       }
+    },
+    {
+      "id": "trail_ration",
+      "name": "携帯食",
+      "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+      "traits": [
+        "food"
+      ]
     }
   ],
   "clues": [
@@ -6713,7 +6782,7 @@
       "initial_value": 8
     },
     {
-      "id": "agi",
+      "id": "dex",
       "name": "敏捷",
       "initial_value": 8
     },
@@ -6723,7 +6792,7 @@
       "initial_value": 8
     },
     {
-      "id": "char",
+      "id": "wis",
       "name": "感知",
       "initial_value": 8
     },
@@ -6794,6 +6863,15 @@
           "description": "傷を癒す薬草。",
           "effect": "HPを10回復",
           "quantity": 1
+        },
+        {
+          "id": "trail_ration",
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "traits": [
+            "food"
+          ],
+          "quantity": 2
         }
       ],
       "equipment": [
@@ -6890,6 +6968,15 @@
           "description": "傷を癒す薬草。",
           "effect": "HPを10回復",
           "quantity": 2
+        },
+        {
+          "id": "trail_ration",
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "traits": [
+            "food"
+          ],
+          "quantity": 2
         }
       ],
       "equipment": [
@@ -6983,6 +7070,15 @@
           "description": "傷を癒す薬草。",
           "effect": "HPを10回復",
           "quantity": 1
+        },
+        {
+          "id": "trail_ration",
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "traits": [
+            "food"
+          ],
+          "quantity": 2
         }
       ],
       "equipment": [
@@ -7078,6 +7174,15 @@
           "description": "鍵開けや罠解除に使う道具一式。",
           "effect": "探索・解除判定+2",
           "quantity": 1
+        },
+        {
+          "id": "trail_ration",
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "traits": [
+            "food"
+          ],
+          "quantity": 2
         }
       ],
       "equipment": [
