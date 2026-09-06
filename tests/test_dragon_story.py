@@ -42,7 +42,7 @@ class DragonStoryTests(unittest.TestCase):
             with self.subTest(filename=filename):
                 meta = self.load_raw(filename)["meta"]
                 self.assertEqual(meta["title"], "紅き邪竜イグニス")
-                self.assertEqual(meta["content_revision"], "2026-08-14-story-and-visuals")
+                self.assertEqual(meta["content_revision"], "2026-09-06-api-free-actions")
 
     def test_client_keeps_hybrid_scenarios_selectable(self):
         source = Path("client/app.js").read_text(encoding="utf-8")
@@ -287,7 +287,7 @@ class DragonStoryTests(unittest.TestCase):
                 session = self.create_runtime_session()
                 session["world_state"] = {"scene_id": scene_id, "location_id": location_id}
                 action = state.resolve_action(session, action_id=action_id)
-                with patch.object(app_module, "chat_completion") as completion:
+                with patch.object(app_module, "chat_completion") as completion, patch.object(state.random, "randint", side_effect=rolls):
                     result = app_module._run_turn(
                         session,
                         app_module.TurnRequest(
@@ -302,7 +302,8 @@ class DragonStoryTests(unittest.TestCase):
                 self.assertIn(expected_text, result["combat"]["intro_text"])
                 self.assertEqual(result["messages"][-1]["text"], result["combat"]["intro_text"])
 
-    def test_lost_goblin_robbery_uses_combat_specific_text_when_gold_runs_out(self):
+    @patch.object(state.random, "randint", return_value=3)
+    def test_lost_goblin_robbery_uses_combat_specific_text_when_gold_runs_out(self, _roll):
         session = self.create_runtime_session()
         session["world_state"] = {"scene_id": "dark_forest", "location_id": "lost_goblin_crossroads"}
         session["character"]["gold"] = 20

@@ -1,6 +1,6 @@
 # Local LLM TRPG
 
-A minimal TRPG client powered by a local LLM as Game Master. The Host runs on FastAPI, managing game state, saves, dice rolls, and OpenAI-compatible LLM calls. The Client runs in the browser with a visual-novel-style (galgame) UI.
+A TRPG client with an API Game Master. The FastAPI Host owns game state, saves and dice; the browser provides a visual-novel-style interface. Local LLM backends are archived until better hardware and models can be evaluated.
 
 > **Python**: 3.9 or newer. Tested with FastAPI/Pydantic. arm64 users should prefer a native arm64 Python/Conda environment.
 
@@ -50,39 +50,25 @@ When a new session is created, the GM generates an opening scene automatically. 
 
 ## LLM Configuration
 
-Edit `active_backend` and `backends` in `host/config.json`.
+Gemini 3.1 Flash-Lite is the default. Set `GEMINI_API_KEY` or use an existing local key file. Keep personal overrides in the ignored `host/local_config.json`; never commit credentials. Ollama and Koboldcpp profiles remain available in code but are hidden from game settings. Gameplay defaults to one model attempt and a 15-second connection/read timeout.
 
-- Ollama (default): `http://localhost:11434/v1`
-- Koboldcpp: `http://localhost:5001/v1`
-
-Both use the OpenAI-compatible `/chat/completions` endpoint. The current default priority model is qwen3, falling back to qwen2.5 and ELYZA JP 8B.
+Free input uses one API interpretation followed by engine-owned outcomes. The forest entrance now supports food distraction, stealth and preparation. Start a new game to use the updated scenario. See [implementation and evaluation notes](docs/api-free-actions.md) (Chinese).
 
 ```json
 {
-  "active_backend": "ollama",
+  "active_backend": "gemini",
   "backends": {
-    "ollama": {
-      "base_url": "http://localhost:11434/v1",
-      "model": "qwen3-swallow-8b-rl-local",
-      "fallback_models": [
-        "qwen2.5-7b-instruct-local",
-        "elyza-jp-8b-local"
-      ],
-      "api_key": "ollama"
+    "gemini": {
+      "type": "gemini",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "model": "gemini-3.1-flash-lite",
+      "fallback_models": [],
+      "api_key": ""
     }
   },
-  "temperature": 0.8,
-  "max_tokens": 2048,
-  "request_timeout_seconds": 1800,
-  "response_format": "json_object",
-  "prompting": {
-    "history_messages": 4,
-    "memory_max_chars": 1200,
-    "action_history_max": 40,
-    "action_history_item_chars": 80
-  },
-  "debug_llm": true,
-  "demo_fallback_on_error": true
+  "request_timeout_seconds": 15,
+  "max_model_attempts": 1,
+  "response_format": "json_object"
 }
 ```
 
@@ -96,6 +82,8 @@ Both use the OpenAI-compatible `/chat/completions` endpoint. The current default
 | `action_history_item_chars` | 80 | Max characters per action history entry |
 
 ## Remote Ollama
+
+Archived deployment notes: local inference is disabled by default. To explicitly restore it, set `archived_backends: []` in personal configuration and select the local backend.
 
 For a slow laptop, keep the game host/client local but point LLM calls to the main PC. Do not edit `host/config.json` for machine-specific settings; create `host/local_config.json` instead. It is ignored by git and is the right place for machine-specific URLs, tokens, and model names.
 

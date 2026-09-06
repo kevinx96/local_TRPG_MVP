@@ -110,7 +110,9 @@ def resolve_intent(
     ]
     if len(contenders) > 1:
         return _unresolved("ambiguous", contenders, scored)
-    return _resolved(scored[0][0], "semantic", top_score, scored)
+    # Lexical overlap only supplies candidates. It cannot distinguish a method,
+    # negation or conditional intent, so only explicit IDs / exact labels execute.
+    return _unresolved("unmatched", [], scored)
 
 
 def _resolved(

@@ -63,13 +63,13 @@
           <div class="config-field">
             <label class="config-label" for="backendSelect">Backend</label>
             <select id="backendSelect" class="config-select">
-              <option value="ollama">Ollama</option>
+              <option value="gemini">Gemini API</option>
             </select>
           </div>
           <div class="config-field">
             <label class="config-label" for="modelSelect">Model</label>
             <select id="modelSelect" class="config-select">
-              <option value="qwen2.5-7b-instruct-local">qwen2.5-7b-instruct-local</option>
+              <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite</option>
             </select>
           </div>
           <div class="config-field">
@@ -227,7 +227,7 @@
       </div>
 
       <div id="endingOverlay" class="ending-overlay" style="display:none" role="dialog" aria-modal="true">
-        <span>GAME OVER</span>
+        <span id="endingLabel">GAME OVER</span>
         <h2 id="endingTitle">敗北</h2>
         <p id="endingReason"></p>
         <button id="endingRestartButton" type="button">タイトルへ戻る</button>

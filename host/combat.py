@@ -60,6 +60,8 @@ def combat_needs_resolution(session: dict[str, Any]) -> bool:
 
 
 def ensure_combat_started(session: dict[str, Any], intro_text: str = "") -> bool:
+    if session.get("game_over"):
+        return False
     existing = session.get("combat")
     if isinstance(existing, dict) and existing.get("status"):
         return False
@@ -112,6 +114,10 @@ def ensure_combat_started(session: dict[str, Any], intro_text: str = "") -> bool
             session["character"] = _runtime_player_character(player_template)
 
     enemies = [_runtime_enemy(enemy, index) for index, enemy in enumerate(enemy_templates)]
+    for change in (session.get("scene_changes") or {}).get(location_id, {}).values():
+        if isinstance(change, dict):
+            change.pop("distracted", None)
+            change.pop("prepared", None)
     location = next(
         (
             item for item in pack.get("locations", [])

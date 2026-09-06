@@ -1044,6 +1044,70 @@ def update_forge(pack: dict[str, Any]) -> None:
     ))
 
 
+def add_free_exploration(pack: dict[str, Any]) -> None:
+    """Add reusable object properties and one obstacle, without phrase menus."""
+    ration = {"id": "trail_ration", "name": "携帯食", "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。", "traits": ["food"]}
+    if not any(item.get("id") == ration["id"] for item in pack.get("items", [])):
+        pack.setdefault("items", []).append(deepcopy(ration))
+    for character in pack.get("characters", []):
+        if character.get("selectable") is False:
+            continue
+        inventory = character.setdefault("inventory", [])
+        if not any(isinstance(item, dict) and item.get("id") == ration["id"] for item in inventory):
+            inventory.append({**deepcopy(ration), "quantity": 2})
+    for definition in pack.get("attribute_defs", []):
+        definition["id"] = {"agi": "dex", "char": "wis"}.get(definition["id"], definition["id"])
+    for location_record in pack.get("locations", []):
+        for entry in _walk_actions(location_record.get("actions", [])):
+            roll = entry.get("roll", {})
+            if entry.get("id") == "invite_robin" and roll.get("dice_type") == "1d20+cha":
+                roll["dice_type"] = "1d20+wis"
+                entry["risk"] = "1d20+wis判定（DC12）"
+        if location_record.get("id") == "dark_forest_loc":
+            location_record["description"] = "薄暗い森の入口。一匹のスライムが道を塞ぎ、地面の木の実に鼻先を寄せている。道の脇には茂みと倒れた枝がある。"
+            location_record["free_input_hint"] = "例：携帯食を投げてスライムを誘い、戦わずに通り抜ける"
+            location_record["objects"] = [{
+                "id": "fallen_branches", "name": "倒れた枝", "traits": ["movable", "cover_material"],
+                "description": "道の脇に重なる枝。組み合わせれば足止めや視線を遮る準備に使える。",
+            }]
+            location_record["obstacles"] = [{
+                "id": "forest_slime", "name": "スライム", "enemy_id": "slime",
+                "description": "一匹のスライムが道を塞いでいる。食べ物の匂いに敏感で、視野は狭い。",
+                "traits": ["food_motivated"], "bypassable": True, "sneak_dc": 14,
+                "hint": "携帯食で誘えば確実に道を空ける。潜行はSPを1使い、失敗すると警戒が上がる。枝で準備すると次の潜行の難度が3下がる。",
+                "destination": "lost_goblin_crossroads", "resolved_flag": "forest_entrance_resolved",
+                "arrival_text": "十字路では一匹のゴブリンが、盗まれた箱を取り戻してほしいと助けを求めている。",
+            }]
+            for entry in location_record.get("actions", []):
+                if entry.get("id") == "attack_slime":
+                    entry["hidden_after"] = "forest_entrance_resolved"
+            if not any(entry.get("id") == "pass_cleared_forest" for entry in location_record.get("actions", [])):
+                location_record.setdefault("actions", []).append(action(
+                    "pass_cleared_forest", "分かっている道を通って十字路へ進む", "敵を倒す必要はありません",
+                    visible_after="forest_entrance_resolved", effects=[{"current_location": "lost_goblin_crossroads"}],
+                ))
+            victory = location_record.setdefault("combat", {}).setdefault("victory_effects", {})
+            flags = victory.setdefault("flags_set", [])
+            if "forest_entrance_resolved" not in flags:
+                flags.append("forest_entrance_resolved")
+        if location_record.get("id") == "dragon_valley_loc":
+            ending = {"title": "冒険完了", "ending": "ignis_defeated", "reason": "邪竜イグニスは倒れ、谷を覆っていた炎が消えていく。あなたの冒険は、人々が明日を迎える道を開いた。"}
+            location_record.setdefault("combat", {}).setdefault("victory_effects", {})["game_over"] = ending
+            for entry in location_record.get("actions", []):
+                entry["hidden_after"] = "defeated_ignis"
+                if entry.get("id") == "attack_ignis_with_ice_amulet":
+                    effects = entry.setdefault("success_effects", [])
+                    if not any("game_over" in effect for effect in effects):
+                        effects.append({"game_over": deepcopy(ending)})
+    pack.setdefault("meta", {})["content_revision"] = "2026-09-06-api-free-actions"
+
+
+def _walk_actions(actions: list[dict[str, Any]]):
+    for entry in actions:
+        yield entry
+        yield from _walk_actions(entry.get("children", []))
+
+
 def upgrade(pack: dict[str, Any]) -> dict[str, Any]:
     meta = pack.setdefault("meta", {})
     meta["title"] = "紅き邪竜イグニス"
@@ -1069,7 +1133,7 @@ def upgrade(pack: dict[str, Any]) -> dict[str, Any]:
         village_scene["actions"] = []
         village_scene.pop("hybrid", None)
     apply_visual_assets(pack)
-    meta["content_revision"] = "2026-08-14-story-and-visuals"
+    add_free_exploration(pack)
     return pack
 
 

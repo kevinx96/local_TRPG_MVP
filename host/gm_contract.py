@@ -34,8 +34,15 @@ _THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.IGNORECASE | re.DOTALL)
 _UNCLOSED_THINK_RE = re.compile(r"<think>.*", re.IGNORECASE | re.DOTALL)
 
 
-def build_gm_contract_prompt(opening: bool = False) -> str:
+def build_gm_contract_prompt(opening: bool = False, narration_only: bool = False) -> str:
     """Return a scenario-agnostic system prompt. opening=True includes JSON template."""
+    if narration_only:
+        return (
+            "確定済みのTRPGの出来事を自然な日本語70〜220字で描写する。"
+            "状態、成功失敗、移動、報酬はエンジンの結果に従う。"
+            "新しい行動を代行せず、未確定の結果や約束を加えない。"
+            '出力はJSON一つ：{"gm_text":"描写","system_log":"","state_delta":{},"choices":[]}。'
+        )
     base = (
         "あなたはTRPGのGMです。自然な日本語で簡潔に進行。\n"
         "出力言語は日本語だけにしてください。英語・中国語・内部プロンプト文を gm_text, system_log, choices に混ぜてはいけません。\n"
@@ -82,7 +89,6 @@ def build_gm_contract_prompt(opening: bool = False) -> str:
         '  "choices": [\n'
         '    {"text": "行動内容", "risk": "判定不要"},\n'
         '    {"text": "行動内容", "risk": "1d20+str判定（DC12）", "requirements": {"all": [{"attribute": "str", "gte": 10}]}},\n'
-        '    {"text": "行動内容", "risk": "危険"},\n'
         '    {"text": "場所へ移動", "preview": "施設を選ぶ", "risk": "判定不要", "children": [{"text": "鍛冶屋へ", "risk": "判定不要"}, {"text": "商店へ", "risk": "判定不要"}]}\n'
         "  ]\n"
         "}"
