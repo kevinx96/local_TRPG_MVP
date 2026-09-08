@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/static/styles.css?v=20260608f-hybrid-loc" />
+    <link rel="stylesheet" href="/static/styles.css?v=20260814-combat-intro" />
   </head>
   <body>
 
@@ -63,13 +63,13 @@
           <div class="config-field">
             <label class="config-label" for="backendSelect">Backend</label>
             <select id="backendSelect" class="config-select">
-              <option value="ollama">Ollama</option>
+              <option value="gemini">Gemini API</option>
             </select>
           </div>
           <div class="config-field">
             <label class="config-label" for="modelSelect">Model</label>
             <select id="modelSelect" class="config-select">
-              <option value="qwen2.5-7b-instruct-local">qwen2.5-7b-instruct-local</option>
+              <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite</option>
             </select>
           </div>
           <div class="config-field">
@@ -90,7 +90,9 @@
 
       <!-- Sprite Layer -->
       <div id="spriteLayer" class="gal-sprite-layer">
-        <img id="portrait" class="gal-sprite" src="" style="display:none;" />
+        <div id="locationPortraits" class="location-portrait-group"></div>
+        <img id="playerPortrait" class="gal-sprite gal-sprite-player" src="" alt="" style="display:none;" />
+        <img id="npcPortrait" class="gal-sprite gal-sprite-npc" src="" alt="" style="display:none;" />
       </div>
 
       <!-- Top Overlay -->
@@ -102,6 +104,51 @@
         </div>
         <button id="menuToggleBtn" type="button" class="gal-icon-btn">MENU</button>
       </div>
+
+      <section id="combatScreen" class="combat-screen" style="display:none" aria-live="polite">
+        <div id="combatIntro" class="combat-intro" style="display:none" role="dialog" aria-modal="true" aria-labelledby="combatIntroLabel">
+          <div class="combat-intro-panel">
+            <span id="combatIntroLabel" class="combat-intro-label">GM</span>
+            <p id="combatIntroText"></p>
+            <button id="combatIntroContinue" type="button">戦闘開始</button>
+          </div>
+        </div>
+
+        <header class="combat-header">
+          <div>
+            <span class="combat-kicker">TURN BATTLE</span>
+            <h2 id="combatTitle">戦闘</h2>
+          </div>
+          <div class="combat-round">ROUND <strong id="combatRound">1</strong></div>
+        </header>
+
+        <div class="combat-arena">
+          <article class="combatant-panel player-combatant">
+            <img id="combatPlayerImage" class="combat-player-image" src="" alt="" />
+            <span class="combatant-side">PLAYER</span>
+            <h3 id="combatPlayerName">冒険者</h3>
+            <div class="combat-resource hp"><span>HP</span><i><b id="combatPlayerHpBar"></b></i><strong id="combatPlayerHp">0/0</strong></div>
+            <div class="combat-resource mp"><span>MP</span><i><b id="combatPlayerMpBar"></b></i><strong id="combatPlayerMp">0/0</strong></div>
+            <div class="combat-resource sp"><span>SP</span><i><b id="combatPlayerSpBar"></b></i><strong id="combatPlayerSp">0/0</strong></div>
+          </article>
+
+          <div class="combat-center">
+            <div id="combatLog" class="combat-log"></div>
+          </div>
+
+          <div id="combatEnemies" class="combat-enemies"></div>
+        </div>
+
+        <div class="combat-command-deck">
+          <div id="combatActionTabs" class="combat-action-tabs" role="tablist"></div>
+          <div id="combatActions" class="combat-actions"></div>
+          <div id="combatResult" class="combat-result" style="display:none">
+            <strong id="combatResultTitle">戦闘終了</strong>
+            <span id="combatResultText"></span>
+            <button id="combatResolveButton" type="button">戦闘終了</button>
+          </div>
+        </div>
+      </section>
 
       <!-- Choices -->
       <div id="choicesArea" class="gal-choices-area" style="display:none">
@@ -162,12 +209,14 @@
           <aside class="sidebar">
             <h2 id="characterName" class="char-name-display">アルス</h2>
             <p id="characterDescription">世界を救うため旅立つ若き勇者。</p>
+            <div id="companionInfo" class="companion-info" hidden></div>
             <div class="meters">
               <div class="meter-row"><span class="meter-label">HP</span><div class="meter hp-meter"><i id="hpBar"></i></div><strong id="hpText">20/20</strong></div>
               <div class="meter-row"><span class="meter-label">MP</span><div class="meter mp-meter"><i id="mpBar"></i></div><strong id="mpText">8/8</strong></div>
               <div class="meter-row"><span class="meter-label">SP</span><div class="meter sp-meter"><i id="spBar"></i></div><strong id="spText">10/10</strong></div>
             </div>
             <div class="gold-row"><span class="gold-label">GOLD</span><strong id="goldText">0</strong></div>
+            <h3>能力値</h3><div id="characterAttributes" class="attribute-grid"></div>
             <h3>所持品</h3><ul id="inventory" class="inventory"></ul>
             <h3>最近の判定</h3><ul id="diceLog" class="dice-log"></ul>
           </aside>
@@ -176,8 +225,15 @@
           </aside>
         </div>
       </div>
+
+      <div id="endingOverlay" class="ending-overlay" style="display:none" role="dialog" aria-modal="true">
+        <span id="endingLabel">GAME OVER</span>
+        <h2 id="endingTitle">敗北</h2>
+        <p id="endingReason"></p>
+        <button id="endingRestartButton" type="button">タイトルへ戻る</button>
+      </div>
     </main>
 
-    <script src="/static/app.js?v=20260608f-hybrid-loc"></script>
+    <script src="/static/app.js?v=20260814-combat-intro"></script>
   </body>
 </html>

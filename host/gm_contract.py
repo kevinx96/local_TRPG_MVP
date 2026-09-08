@@ -34,8 +34,15 @@ _THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.IGNORECASE | re.DOTALL)
 _UNCLOSED_THINK_RE = re.compile(r"<think>.*", re.IGNORECASE | re.DOTALL)
 
 
-def build_gm_contract_prompt(opening: bool = False) -> str:
+def build_gm_contract_prompt(opening: bool = False, narration_only: bool = False) -> str:
     """Return a scenario-agnostic system prompt. opening=True includes JSON template."""
+    if narration_only:
+        return (
+            "確定済みのTRPGの出来事を自然な日本語70〜220字で描写する。"
+            "状態、成功失敗、移動、報酬はエンジンの結果に従う。"
+            "新しい行動を代行せず、未確定の結果や約束を加えない。"
+            '出力はJSON一つ：{"gm_text":"描写","system_log":"","state_delta":{},"choices":[]}。'
+        )
     base = (
         "あなたはTRPGのGMです。自然な日本語で簡潔に進行。\n"
         "出力言語は日本語だけにしてください。英語・中国語・内部プロンプト文を gm_text, system_log, choices に混ぜてはいけません。\n"
@@ -45,9 +52,12 @@ def build_gm_contract_prompt(opening: bool = False) -> str:
         "番号付き選択肢・内部指示禁止。今回の結果だけを描写。\n\n"
         "【状態更新】\n"
         "・dice_type: 1d20, 2d6, 1d20+str等。空=1d20。属性値自動加算。\n"
-        "・state_delta.attribute_changes で属性増減(例:{\"str\":-2})\n"
-        "・current_scene は場面変更時のみ設定\n"
-        "・アイテム追加時は name,description,effect,quantity を含める\n"
+        "・HP/MP/SP/所持金は hp_change/mp_change/sp_change/gold_change だけを使う。hp/mp/sp/gold の絶対値は禁止\n"
+        "・state_delta.attribute_changes は現在の character.attributes に存在する属性だけ。HP/MP/SP/所持金を属性として書かない\n"
+        "・1回の属性増減は -3〜3。旧 con/endurance は end として出力する\n"
+        "・場面と地点はゲームエンジンだけが更新する。state_delta に current_scene/current_location を出力しない\n"
+        "・inventory_add/remove はシナリオに存在する item の id または正式名だけを使う。未知のアイテムを作らない\n"
+        "・flags_set/flags_unset は出力しない。進行フラグはゲームエンジンだけが更新する\n"
         "・choices は3つ。text(行動名)とrisk(判定不要/1d20+str判定DC12/危険)必須\n"
         "・choices.requirements は任意。属性条件やキャラクター制限が必要な行動には requirements を書く。\n"
         "・属性条件例: {\"any\":[{\"attribute\":\"str\",\"gte\":10}]}（いずれか満たせば選択可）\n"
@@ -55,15 +65,16 @@ def build_gm_contract_prompt(opening: bool = False) -> str:
         "・複合条件例: {\"all\":[{\"character_id\":\"hero\"},{\"attribute\":\"str\",\"gte\":10}]}（両方必要）\n"
         "・choices の一部に children を入れると、プレイヤーがその選択肢をクリックした時に子選択肢が展開される。親はGMに送られない。\n"
         "・子供が場所やカテゴリの分岐なら children を使う。例: {\"text\":\"城へ向かう\",\"preview\":\"城内の施設へ\",\"risk\":\"判定不要\",\"children\":[{\"text\":\"鍛冶屋へ\",\"risk\":\"判定不要\"},{\"text\":\"謁見の間へ\",\"risk\":\"1d20判定（DC10）\"}]}\n"
-        "・matched.enemies に敵がいる場合、戦闘として扱い戦闘選択肢を提示\n"
-        "・敵のHP/MP/SP/属性/skillsを参照。成功失敗の結果だけ描写\n"
+        "・戦闘の命中、ダメージ、敵行動、勝敗、報酬を生成しない。これらは戦闘エンジンだけが処理する。\n"
+        "・resolved_action_result に combat_result がある場合、確定済みの数値と勝敗を変更せず戦闘後だけを描写する。\n"
+        "・system_log は常に空文字。ログはゲームエンジンが確定済みイベントから生成する。\n"
         "・耐久属性は end を使う。旧 con は使わない。\n"
 )
     json_template = (
         "\n【出力形式】\nJSON全体を閉じることを最優先。\n"
         "{\n"
         '  "gm_text": "70〜220字のGM本文",\n'
-        '  "system_log": "判定や状態変化の短い説明",\n'
+        '  "system_log": "",\n'
         '  "dice_type": "1d20",\n'
         '  "dice_dc": 10,\n'
         '  "state_delta": {\n'
@@ -73,13 +84,11 @@ def build_gm_contract_prompt(opening: bool = False) -> str:
         '    "gold_change": 0,\n'
         '    "attribute_changes": {},\n'
         '    "inventory_add": [],\n'
-        '    "inventory_remove": [],\n'
-        '    "current_scene": null\n'
+        '    "inventory_remove": []\n'
         "  },\n"
         '  "choices": [\n'
         '    {"text": "行動内容", "risk": "判定不要"},\n'
         '    {"text": "行動内容", "risk": "1d20+str判定（DC12）", "requirements": {"all": [{"attribute": "str", "gte": 10}]}},\n'
-        '    {"text": "行動内容", "risk": "危険"},\n'
         '    {"text": "場所へ移動", "preview": "施設を選ぶ", "risk": "判定不要", "children": [{"text": "鍛冶屋へ", "risk": "判定不要"}, {"text": "商店へ", "risk": "判定不要"}]}\n'
         "  ]\n"
         "}"

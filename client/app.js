@@ -8,7 +8,7 @@ const state = {
   choiceStack: [],
   choicesRevealed: false,
   selectedCharacterId: "hero",
-  selectedCharacterImage: "/static/images/char_male_hero.png",
+  selectedCharacterImage: "/static/images/char_male_hero_v2.png",
   selectedCharacter: null,
   characters: [],
   expandedCharacterId: "",
@@ -19,6 +19,11 @@ const state = {
   nextDiceDc: 0,
   nextDiceType: "1d20",
   character: null,
+  combatTargetId: "",
+  combatActionTab: "attack",
+  combatBusy: false,
+  combatActions: [],
+  combatIntroSeenId: "",
 };
 
 /* ── DOM References ── */
@@ -41,7 +46,10 @@ const els = {
 
   /* Game screen */
   background:      document.querySelector("#background"),
-  portrait:        document.querySelector("#portrait"),
+  spriteLayer:     document.querySelector("#spriteLayer"),
+  locationPortraits:document.querySelector("#locationPortraits"),
+  playerPortrait:  document.querySelector("#playerPortrait"),
+  npcPortrait:     document.querySelector("#npcPortrait"),
   menuToggleBtn:   document.querySelector("#menuToggleBtn"),
   dialogueBox:     document.querySelector("#dialogueBox"),
   speakerName:     document.querySelector("#speakerName"),
@@ -66,6 +74,8 @@ const els = {
   clickIndicator:  document.querySelector("#clickIndicator"),
   characterName:   document.querySelector("#characterName"),
   characterDescription:document.querySelector("#characterDescription"),
+  characterAttributes:document.querySelector("#characterAttributes"),
+  companionInfo:   document.querySelector("#companionInfo"),
   inventory:       document.querySelector("#inventory"),
   diceLog:         document.querySelector("#diceLog"),
   systemLogs:      document.querySelector("#systemLogs"),
@@ -78,6 +88,32 @@ const els = {
   goldText: document.querySelector("#goldText"),
   choicesArea: document.querySelector("#choicesArea"),
   choicesList: document.querySelector("#choicesList"),
+  combatScreen: document.querySelector("#combatScreen"),
+  combatIntro: document.querySelector("#combatIntro"),
+  combatIntroText: document.querySelector("#combatIntroText"),
+  combatIntroContinue: document.querySelector("#combatIntroContinue"),
+  combatTitle: document.querySelector("#combatTitle"),
+  combatRound: document.querySelector("#combatRound"),
+  combatPlayerName: document.querySelector("#combatPlayerName"),
+  combatPlayerImage: document.querySelector("#combatPlayerImage"),
+  combatPlayerHp: document.querySelector("#combatPlayerHp"),
+  combatPlayerMp: document.querySelector("#combatPlayerMp"),
+  combatPlayerSp: document.querySelector("#combatPlayerSp"),
+  combatPlayerHpBar: document.querySelector("#combatPlayerHpBar"),
+  combatPlayerMpBar: document.querySelector("#combatPlayerMpBar"),
+  combatPlayerSpBar: document.querySelector("#combatPlayerSpBar"),
+  combatEnemies: document.querySelector("#combatEnemies"),
+  combatLog: document.querySelector("#combatLog"),
+  combatActionTabs: document.querySelector("#combatActionTabs"),
+  combatActions: document.querySelector("#combatActions"),
+  combatResult: document.querySelector("#combatResult"),
+  combatResultTitle: document.querySelector("#combatResultTitle"),
+  combatResultText: document.querySelector("#combatResultText"),
+  combatResolveButton: document.querySelector("#combatResolveButton"),
+  endingOverlay: document.querySelector("#endingOverlay"),
+  endingTitle: document.querySelector("#endingTitle"),
+  endingReason: document.querySelector("#endingReason"),
+  endingRestartButton: document.querySelector("#endingRestartButton"),
 };
 
 let cachedConfig = null;
@@ -174,6 +210,20 @@ async function init() {
   restoreGmMode();
   await loadConfig();
   await loadScenarios();
+  await resumeSessionFromUrl();
+}
+
+async function resumeSessionFromUrl() {
+  const sessionId = new URLSearchParams(window.location.search).get("session");
+  if (!sessionId || !/^[a-f0-9]{32}$/i.test(sessionId)) return;
+  try {
+    const session = await fetchJson(`/api/sessions/${sessionId}`);
+    els.startScreen.style.display = "none";
+    els.gameScreen.style.display = "";
+    renderSession(session);
+  } catch (error) {
+    if (els.backendStatus) els.backendStatus.textContent = `存档读取失败: ${error.message}`;
+  }
 }
 
 async function loadConfig() {
@@ -231,9 +281,11 @@ async function loadScenarios() {
     const data = await fetchJson("/api/scenarios");
     const scenarios = data.scenarios || [];
     els.scenarioSelect.innerHTML = scenarios
-      .map((s) => `<option value="${escapeHtml(s.filename)}">${escapeHtml(s.title || s.filename)}</option>`)
+      .map((s) => `<option value="${escapeHtml(s.filename)}">${escapeHtml(scenarioOptionLabel(s, scenarios))}</option>`)
       .join("");
-    const preferred = scenarios.find((s) => s.filename === "dragon_rpg.json") || scenarios[0];
+    const preferred = scenarios.find((s) => s.filename === "dragon_rpg_hybrid.json")
+      || scenarios.find((s) => s.filename === "dragon_rpg.json")
+      || scenarios[0];
     if (preferred) {
       els.scenarioSelect.value = preferred.filename;
       await onScenarioChange();
@@ -244,12 +296,21 @@ async function loadScenarios() {
   }
 }
 
+function scenarioOptionLabel(scenario, scenarios) {
+  const filename = scenario.filename || "";
+  const title = scenario.title || filename;
+  if (filename.endsWith("_hybrid.json")) return `${title}（Hybrid）`;
+  const hybridFilename = filename.replace(/\.json$/i, "_hybrid.json");
+  if (scenarios.some((item) => item.filename === hybridFilename)) return `${title}（Base）`;
+  return title;
+}
+
 async function onScenarioChange() {
   const filename = els.scenarioSelect.value;
   if (!filename) return;
   try {
     const data = await fetchJson(`/api/scenarios/${encodeURIComponent(filename)}`);
-    const characters = data.scenario?.characters || [];
+    const characters = (data.scenario?.characters || []).filter((char) => char.selectable !== false);
     state.scenarioPath = `host/prompt/processed/${filename}`;
     state.expandedCharacterId = "";
     renderCharacterCards(characters);
@@ -357,7 +418,7 @@ function updateHeroImage(char) {
 
 async function startGame() {
   const heroName = els.heroNameInput.value.trim() || "アルス";
-  const backend = els.backendSelect ? els.backendSelect.value : "ollama";
+  const backend = els.backendSelect ? els.backendSelect.value : "gemini";
   const model = els.modelSelect ? els.modelSelect.value : "";
   const gmMode = document.querySelector('input[name="gmMode"]:checked')?.value || "semi";
   const scenarioPath = state.scenarioPath;
@@ -390,6 +451,7 @@ async function startGame() {
       }),
     });
     state.sessionId = session.id;
+    window.history.replaceState({}, "", `/?session=${encodeURIComponent(session.id)}`);
     /* Transition to game screen */
     els.startScreen.style.display = "none";
     els.gameScreen.style.display = "";
@@ -447,10 +509,15 @@ async function newSession() {
   state.lastDiceSignature = "";
   state.nextDiceDc = 0;
   state.nextDiceType = "1d20";
+  state.combatTargetId = "";
+  state.combatActionTab = "attack";
+  state.combatBusy = false;
+  window.history.replaceState({}, "", "/");
   stopDiceRollAnimation();
   hideDiceBanner();
   els.gameScreen.style.display = "none";
   els.startScreen.style.display = "";
+  if (els.endingOverlay) els.endingOverlay.style.display = "none";
   els.messages.innerHTML = "";
   hideChoices();
 }
@@ -463,17 +530,14 @@ async function submitTurn(event) {
   event.preventDefault();
   const text = els.input.value.trim();
   if (!text || !state.sessionId) return;
-  const diceResult = rollLocalDice(text);
   els.input.value = "";
   addMessage("user", "プレイヤー", text);
   hideChoices();
   clearPendingChoices();
   hideDiceBanner();
-  if (diceResult) showDiceResult(diceResult);
   setBusy(true);
   try {
     const body = { text };
-    if (diceResult) body.client_dice = { rolls: diceResult.rolls };
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -494,24 +558,14 @@ async function submitTurn(event) {
 async function submitChoice(choiceText, actionId = "") {
   choiceDebug("submit-choice-start", { choiceText, actionId });
   if (!choiceText || !state.sessionId) return;
-  let diceResult;
-  try {
-    diceResult = rollLocalDice(choiceText);
-  } catch (err) {
-    choiceDebug("submit-choice-dice-error", { choiceText, error: err.message });
-    diceResult = null;
-  }
-  choiceDebug("submit-choice-dice", { choiceText, diceResult });
   addMessage("user", "プレイヤー", choiceText);
   hideChoices();
   clearPendingChoices();
   hideDiceBanner();
-  if (diceResult) showDiceResult(diceResult);
   setBusy(true);
   try {
     const body = { text: choiceText };
     if (actionId) body.action_id = actionId;
-    if (diceResult) body.client_dice = { rolls: diceResult.rolls };
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -536,34 +590,42 @@ async function submitChoice(choiceText, actionId = "") {
 
 function renderSession(session) {
   state.sessionId = session.id;
+  if (els.input) els.input.placeholder = session.free_input_hint || "行動や台詞を自由に入力してください";
   state.nextDiceDc = Number(session.next_dice_dc || 0);
   state.nextDiceType = session.next_dice_type || "1d20";
   state.character = session.character || null;
   const character = session.character;
 
   /* Scene */
-  if (els.sceneTitle) els.sceneTitle.textContent = session.current_scene_title || session.current_scene || session.scenario_title || "開始";
+  if (els.sceneTitle) {
+    els.sceneTitle.textContent = session.current_location_title || session.current_scene_title || session.current_location || session.current_scene || session.scenario_title || "開始";
+    els.sceneTitle.title = session.current_scene_title && session.current_location_title !== session.current_scene_title
+      ? session.current_scene_title
+      : "";
+  }
 
   if (els.background) {
-    if (character.background_image) {
-      els.background.style.backgroundImage = `url(${character.background_image})`;
+    const backgroundImage = session.location_background_image || character.background_image;
+    if (backgroundImage) {
+      els.background.style.backgroundImage = `url(${backgroundImage})`;
     } else {
       els.background.style.backgroundImage = "";
     }
   }
 
-  if (els.portrait) {
-    if (character.character_image) {
-      els.portrait.src = character.character_image;
-      els.portrait.style.display = "";
-    } else {
-      els.portrait.style.display = "none";
-    }
-  }
+  renderScenePortraits(session, character);
 
   /* Character info */
   if (els.characterName) els.characterName.textContent = character.name || "冒険者";
   if (els.characterDescription) els.characterDescription.textContent = character.description || "";
+  renderCharacterAttributes(character.attributes || {});
+  if (els.companionInfo) {
+    const companion = session.companion;
+    els.companionInfo.hidden = !companion;
+    els.companionInfo.innerHTML = companion
+      ? `${companion.image ? `<img src="${escapeAttr(companion.image)}" alt="" />` : ""}<span>同行者　${escapeHtml(companion.name || companion.id || "不明")}</span>`
+      : "";
+  }
 
   /* Meters */
   renderMeter("hp", character);
@@ -574,6 +636,8 @@ function renderSession(session) {
   /* Inventory (item objects) */
   renderInventory(character.inventory || []);
   renderEnemies(session.enemies || []);
+  renderCombat(session);
+  renderEnding(session.game_over);
 
   /* Dice log */
   renderLatestDiceResult(session.dice_log || []);
@@ -594,9 +658,17 @@ function renderSession(session) {
 
   /* Messages */
   renderMessages(session.messages || []);
+  els.dialogueBox.classList.toggle("no-narration", session.last_turn_narrated === false);
+  if (session.last_turn_narrated === false) {
+    if (els.speakerName) els.speakerName.textContent = "";
+    if (els.messageText) els.messageText.textContent = "";
+  }
 
   /* Choices */
-  setPendingChoices(session.choices || []);
+  setPendingChoices(
+    session.in_combat ? [] : (session.choices || []),
+    session.last_turn_narrated === false,
+  );
 }
 
 /* ═══════════════════════════════════════════════════
@@ -733,72 +805,6 @@ function diceSignature(roll) {
   return [roll.expression || "", rolls, roll.total ?? "", roll.dc ?? "", roll.success ?? ""].join("|");
 }
 
-const ATTR_KEY_MAP = {
-  str: "str", strength: "str", 筋力: "str",
-  dex: "dex", dexterity: "dex", 敏捷: "dex", 器用: "dex",
-  con: "con", constitution: "con", 耐久: "con", 体力: "con",
-  int: "int", intelligence: "int", 知力: "int", 知性: "int",
-  wis: "wis", wisdom: "wis", 判断: "wis", 精神: "wis",
-  cha: "cha", charisma: "cha", 魅力: "cha",
-};
-
-function resolveAttrKey(diceExpr) {
-  if (!diceExpr || typeof diceExpr !== "string") return null;
-  const plusIdx = diceExpr.indexOf("+");
-  if (plusIdx < 0) return null;
-  const raw = diceExpr.slice(plusIdx + 1).trim().toLowerCase();
-  return ATTR_KEY_MAP[raw] || raw;
-}
-
-function getAttrValue(attrKey) {
-  if (!attrKey || !state.character) return 0;
-  const attrs = state.character.attributes || state.character.stats || {};
-  const val = attrs[attrKey] ?? attrs[attrKey.toUpperCase()] ?? 0;
-  return typeof val === "number" ? val : parseInt(val, 10) || 0;
-}
-
-function rollLocalDice(actionText) {
-  const allChoices = [...state.pendingChoices, ...state.choiceStack.flat()];
-  const choice = allChoices.find((item) => {
-    const text = typeof item === "string" ? item : (item.text || "");
-    return text === actionText;
-  }) || state.pendingChoices.find((item) => {
-    const text = typeof item === "string" ? item : (item.text || "");
-    return text === actionText;
-  });
-  if (!choice || typeof choice !== "object") {
-    if (Number(state.nextDiceDc || 0) > 0) {
-      const sides = parseInt(String(state.nextDiceType || "1d20").replace(/.*d/i, ""), 10) || 20;
-      const rolls = [1 + Math.floor(Math.random() * sides)];
-      const total = rolls.reduce((a, b) => a + b, 0);
-      return { expression: state.nextDiceType || "1d20", rolls, total, dc: state.nextDiceDc, success: total >= state.nextDiceDc };
-    }
-    return null;
-  }
-  const risk = String(choice.risk || "");
-  if (risk.includes("判定不要")) return null;
-  if (!(/DC\s*\d+|1d\d+|判定/i.test(risk)) && Number(state.nextDiceDc || 0) <= 0) return null;
-  const diceMatch = risk.match(/(\d+)d(\d+(?:\+[A-Za-z_][A-Za-z0-9_]*)?)/i);
-  const count = diceMatch ? parseInt(diceMatch[1], 10) : 1;
-  const dicePart = diceMatch ? diceMatch[2].split("+")[0] : "20";
-  const sides = parseInt(dicePart, 10) || 20;
-  const dcMatch = risk.match(/DC\s*(\d+)/i);
-  const dc = dcMatch ? parseInt(dcMatch[1], 10) : (Number(state.nextDiceDc || 0) || 10);
-  const rolls = Array.from({ length: count }, () => 1 + Math.floor(Math.random() * sides));
-  const baseTotal = rolls.reduce((a, b) => a + b, 0);
-  const attrKey = diceMatch ? resolveAttrKey(diceMatch[2]) : null;
-  const attrMod = attrKey ? getAttrValue(attrKey) : 0;
-  const total = baseTotal + attrMod;
-  const expr = diceMatch ? diceMatch[2] : (state.nextDiceType || "1d20");
-  const result = { expression: expr, rolls, total, dc, success: total >= dc };
-  if (attrKey) {
-    result.base_total = baseTotal;
-    result.attr_mod = attrMod;
-    result.attr_key = attrKey;
-  }
-  return result;
-}
-
 function isCheckRoll(roll) {
   return Number(roll?.dc || 0) > 0;
 }
@@ -810,7 +816,7 @@ function showDiceResult(roll) {
   const total = Number(roll.total ?? 0);
   const dc = Number(roll.dc ?? 0);
   const hasCheck = dc > 0;
-  const success = roll.success === true || (hasCheck && total >= dc);
+  const success = !roll.critical_failure && (roll.success === true || (hasCheck && total >= dc));
   els.diceBanner.style.display = "";
   els.diceBanner.classList.toggle("success", hasCheck && success);
   els.diceBanner.classList.toggle("failure", hasCheck && !success);
@@ -825,7 +831,9 @@ function showDiceResult(roll) {
   parts.push(`= ${total}`);
   if (hasCheck) {
     parts.push(` / DC${dc}`);
-    parts.push(success ? "成功" : "失敗");
+    if (roll.critical_success) parts.push("大成功");
+    else if (roll.critical_failure) parts.push("大失敗");
+    else parts.push(success ? "成功" : "失敗");
   }
   els.diceBannerText.textContent = parts.join(" ");
 }
@@ -955,12 +963,66 @@ function hideChoices() {
   els.choicesList.innerHTML = "";
 }
 
-function setPendingChoices(choices) {
+function setPendingChoices(choices, revealImmediately = false) {
   state.pendingChoices = Array.isArray(choices) ? choices : [];
   state.choiceStack = [];
   state.choicesRevealed = false;
   hideChoices();
+  if (revealImmediately && state.pendingChoices.length) {
+    state.choicesRevealed = true;
+    renderChoices(state.pendingChoices);
+    return;
+  }
   updateDialogueAdvanceState();
+}
+
+function renderScenePortraits(session, character) {
+  if (!els.spriteLayer) return;
+  const playerImage = session.player_portrait_image || character.character_image || "";
+  const npcImage = session.dialogue_portrait_image || "";
+  const locationNpcs = Array.isArray(session.location_npc_portraits)
+    ? session.location_npc_portraits.filter((npc) => npc && npc.image)
+    : [];
+  const dialogueActive = Boolean(session.dialogue_active && playerImage && npcImage);
+  els.spriteLayer.classList.toggle("dialogue-mode", dialogueActive);
+  els.spriteLayer.classList.toggle("ensemble-mode", !dialogueActive && locationNpcs.length > 0);
+  els.spriteLayer.classList.toggle("solo-mode", !dialogueActive && locationNpcs.length === 0 && Boolean(playerImage));
+
+  els.locationPortraits.innerHTML = dialogueActive ? "" : locationNpcs.map((npc) => (
+    `<figure class="location-portrait"><img src="${escapeAttr(npc.image)}" alt="" /><figcaption>${escapeHtml(npc.name || "")}</figcaption></figure>`
+  )).join("");
+  els.locationPortraits.dataset.count = String(locationNpcs.length);
+  els.locationPortraits.style.display = !dialogueActive && locationNpcs.length ? "" : "none";
+
+  els.playerPortrait.src = playerImage;
+  els.playerPortrait.style.display = dialogueActive || (!locationNpcs.length && playerImage) ? "" : "none";
+  els.npcPortrait.src = npcImage;
+  els.npcPortrait.style.display = dialogueActive ? "" : "none";
+}
+
+function renderCharacterAttributes(attributes) {
+  if (!els.characterAttributes) return;
+  const labels = {
+    str: "STR", dex: "DEX", int: "INT", wis: "WIS",
+    end: "END", agi: "AGI", cha: "CHA", char: "CHA",
+  };
+  const entries = Object.entries(attributes || {}).filter(([key]) => labels[key]);
+  els.characterAttributes.innerHTML = entries.length
+    ? entries.map(([key, value]) => `<div><span>${labels[key]}</span><strong>${Number(value || 0)}</strong></div>`).join("")
+    : '<p class="empty-attributes">能力値なし</p>';
+}
+
+function renderEnding(gameOver) {
+  if (!els.endingOverlay) return;
+  if (!gameOver) {
+    els.endingOverlay.style.display = "none";
+    return;
+  }
+  els.endingTitle.textContent = gameOver.title || "敗北";
+  const endingLabel = document.querySelector("#endingLabel");
+  if (endingLabel) endingLabel.textContent = gameOver.ending === "ignis_defeated" ? "ADVENTURE COMPLETE" : "GAME OVER";
+  els.endingReason.textContent = gameOver.reason || "物語はここで終わりました。";
+  els.endingOverlay.style.display = "";
 }
 
 function clearPendingChoices() {
@@ -1019,6 +1081,186 @@ function handleChoiceListClick(event) {
 
   const text = card.dataset.choiceText || (typeof choice === "string" ? choice : (choice && typeof choice === "object" ? choice.text : ""));
   if (text) submitChoice(text, card.dataset.actionId || "");
+}
+
+function renderCombat(session) {
+  const combat = session.combat;
+  const active = Boolean(session.in_combat && combat && combat.status);
+  els.gameScreen.classList.toggle("combat-active", active);
+  if (!active) {
+    els.combatScreen.style.display = "none";
+    if (els.combatIntro) els.combatIntro.style.display = "none";
+    state.combatTargetId = "";
+    return;
+  }
+
+  els.combatScreen.style.display = "";
+  renderCombatIntro(combat);
+  els.combatScreen.classList.toggle("busy", state.combatBusy);
+  const enemies = Array.isArray(combat.enemies) ? combat.enemies : [];
+  const alive = enemies.filter((enemy) => Number(enemy.hp || 0) > 0);
+  if (!alive.some((enemy) => enemy.id === state.combatTargetId)) {
+    state.combatTargetId = alive[0]?.id || "";
+  }
+  els.combatTitle.textContent = enemies.length
+    ? `VS ${enemies.map((enemy) => enemy.name || enemy.id).join(" / ")}`
+    : "戦闘";
+  els.combatRound.textContent = String(combat.round || 1);
+  els.combatPlayerName.textContent = session.character?.name || "冒険者";
+  const playerImage = session.player_portrait_image || session.character?.character_image || "";
+  els.combatPlayerImage.src = playerImage;
+  els.combatPlayerImage.style.display = playerImage ? "" : "none";
+  setCombatResource("PlayerHp", session.character, "hp");
+  setCombatResource("PlayerMp", session.character, "mp");
+  setCombatResource("PlayerSp", session.character, "sp");
+
+  els.combatEnemies.classList.toggle("many-enemies", enemies.length >= 3);
+  els.combatEnemies.innerHTML = enemies.map((enemy) => {
+    const hp = Number(enemy.hp || 0);
+    const maxHp = Math.max(1, Number(enemy.max_hp || hp || 1));
+    const percent = Math.max(0, Math.min(100, (hp / maxHp) * 100));
+    const selected = enemy.id === state.combatTargetId;
+    const enemyImage = enemy.image
+      ? `<img class="combat-enemy-image" src="${escapeAttr(enemy.image)}" alt="" />`
+      : "";
+    return `<button type="button" class="combat-enemy ${selected ? "selected" : ""} ${hp <= 0 ? "defeated" : ""}"
+      data-combat-target="${escapeAttr(enemy.id || "")}" ${hp <= 0 ? "disabled" : ""}>
+      ${enemyImage}
+      <span class="combatant-side">ENEMY</span>
+      <h3>${escapeHtml(enemy.name || enemy.id || "敵")}</h3>
+      <div class="combat-resource hp"><span>HP</span><i><b style="width:${percent}%"></b></i><strong>${hp}/${maxHp}</strong></div>
+      ${enemy.description ? `<p>${escapeHtml(enemy.description)}</p>` : ""}
+      ${renderAbilityTags(enemy.skills || [], true)}
+    </button>`;
+  }).join("");
+
+  const logs = Array.isArray(combat.log) ? combat.log : [];
+  els.combatLog.innerHTML = logs.length
+    ? logs.map((entry) => `<div class="combat-log-entry ${escapeAttr(entry.kind || "")}"><strong>R${entry.round || 1}</strong><span>${escapeHtml(entry.text || "")}</span></div>`).join("")
+    : '<div class="combat-log-entry"><strong>R1</strong><span>行動を選択してください。</span></div>';
+  els.combatLog.scrollTop = els.combatLog.scrollHeight;
+
+  const terminal = combat.status !== "active";
+  els.combatScreen.classList.toggle("combat-terminal", terminal);
+  els.combatScreen.classList.toggle("combat-defeat", combat.status === "defeat");
+  els.combatScreen.classList.toggle("combat-victory", combat.status === "victory");
+  els.combatResult.style.display = terminal ? "" : "none";
+  els.combatActionTabs.style.display = terminal ? "none" : "";
+  els.combatActions.style.display = terminal ? "none" : "grid";
+  if (terminal) {
+    const labels = { victory: "勝利", defeat: "敗北", fled: "撤退成功" };
+    els.combatResultTitle.textContent = labels[combat.status] || "戦闘終了";
+    els.combatResultText.textContent = combat.result?.summary || "戦闘結果が確定しました。";
+    els.combatResolveButton.disabled = state.combatBusy || !combat.pending_resolution;
+  } else {
+    state.combatActions = Array.isArray(combat.actions) ? combat.actions : [];
+    renderCombatActions(state.combatActions);
+  }
+}
+
+function setCombatResource(suffix, actor, stat) {
+  const value = Number(actor?.[stat] || 0);
+  const max = Math.max(1, Number(actor?.[`max_${stat}`] || value || 1));
+  els[`combat${suffix}`].textContent = `${value}/${max}`;
+  els[`combat${suffix}Bar`].style.width = `${Math.max(0, Math.min(100, (value / max) * 100))}%`;
+}
+
+function renderCombatActions(actions) {
+  const groups = [
+    { id: "attack", label: "攻撃", types: ["attack"] },
+    { id: "skill", label: "技能", types: ["skill"] },
+    { id: "item", label: "道具", types: ["item"] },
+    { id: "tactics", label: "戦術", types: ["defend", "flee"] },
+  ].filter((group) => actions.some((action) => group.types.includes(action.type)));
+  if (!groups.some((group) => group.id === state.combatActionTab)) {
+    state.combatActionTab = groups[0]?.id || "attack";
+  }
+  els.combatActionTabs.innerHTML = groups.map((group) => `<button type="button" class="combat-tab ${group.id === state.combatActionTab ? "active" : ""}" data-combat-tab="${group.id}">${group.label}</button>`).join("");
+  const current = groups.find((group) => group.id === state.combatActionTab);
+  const visible = current ? actions.filter((action) => current.types.includes(action.type)) : [];
+  els.combatActions.innerHTML = visible.map((action) => {
+    const cost = action.cost ? `${String(action.cost_type || "").toUpperCase()} ${action.cost}` : "";
+    const description = action.enabled === false ? (action.disabled_reason || "使用できません") : (action.description || "");
+    return `<button type="button" class="combat-action" data-combat-action-type="${escapeAttr(action.type || "")}" data-combat-action-id="${escapeAttr(action.id || "")}" ${action.enabled === false ? "disabled" : ""}>
+      <strong>${escapeHtml(action.name || action.id || "行動")}</strong>
+      ${cost ? `<em>${escapeHtml(cost)}</em>` : ""}
+      ${renderAbilityTags([action])}
+      <span>${escapeHtml(description)}</span>
+    </button>`;
+  }).join("");
+}
+
+function renderCombatIntro(combat) {
+  if (!els.combatIntro || !els.combatIntroText || !els.combatIntroContinue) return;
+  const combatId = String(combat?.id || "");
+  const introText = String(combat?.intro_text || "").trim();
+  const visible = Boolean(combatId && introText && combat?.status === "active" && state.combatIntroSeenId !== combatId);
+  els.combatIntro.dataset.combatId = combatId;
+  els.combatIntroText.textContent = introText;
+  els.combatIntro.style.display = visible ? "" : "none";
+  els.combatScreen.classList.toggle("intro-active", visible);
+}
+
+function renderAbilityTags(abilities, compact = false) {
+  const tags = [];
+  for (const ability of abilities || []) {
+    if (!ability || typeof ability !== "object") continue;
+    if (ability.damage) tags.push(`威力 ${ability.damage}`);
+    if (ability.healing) tags.push(`回復 ${ability.healing}`);
+    if (ability.accuracy !== undefined) tags.push(`命中 ${ability.accuracy}%`);
+    if (ability.element) tags.push(String(ability.element).toUpperCase());
+    if (ability.all_targets) tags.push("全体");
+    if (ability.hits_per_element) tags.push(`${ability.hits_per_element}回×${(ability.multi_elements || []).length || 1}属性`);
+    if (ability.check?.dc) tags.push(`判定 DC${ability.check.dc}`);
+    for (const followup of ability.followups || []) {
+      if (followup?.damage) tags.push(`追撃 ${followup.damage}`);
+      if (followup?.element) tags.push(`追撃 ${String(followup.element).toUpperCase()}`);
+    }
+    if (compact && ability.name) tags.unshift(ability.name);
+  }
+  if (!tags.length) return "";
+  return `<div class="combat-effect-tags">${tags.slice(0, compact ? 4 : 6).map((tag) => `<i>${escapeHtml(tag)}</i>`).join("")}</div>`;
+}
+
+async function submitCombatAction(actionType, actionId) {
+  if (!state.sessionId || state.combatBusy) return;
+  state.combatBusy = true;
+  els.combatScreen.classList.add("busy");
+  try {
+    const session = await fetchJson(`/api/sessions/${state.sessionId}/combat/actions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action_type: actionType, action_id: actionId, target_id: state.combatTargetId }),
+    });
+    state.combatBusy = false;
+    renderSession(session);
+  } catch (error) {
+    const errorEntry = document.createElement("div");
+    errorEntry.className = "combat-log-entry error";
+    errorEntry.innerHTML = `<strong>ERROR</strong><span>${escapeHtml(error.message)}</span>`;
+    els.combatLog.append(errorEntry);
+    els.combatLog.scrollTop = els.combatLog.scrollHeight;
+  } finally {
+    state.combatBusy = false;
+    els.combatScreen.classList.remove("busy");
+  }
+}
+
+async function resolveCombatResult() {
+  if (!state.sessionId || state.combatBusy) return;
+  state.combatBusy = true;
+  els.combatScreen.classList.add("busy");
+  els.combatResultText.textContent = "戦闘終了を処理しています…";
+  try {
+    const session = await fetchJson(`/api/sessions/${state.sessionId}/combat/resolve`, { method: "POST" });
+    state.combatBusy = false;
+    renderSession(session);
+  } catch (error) {
+    els.combatResultText.textContent = `結果処理エラー: ${error.message}`;
+  } finally {
+    state.combatBusy = false;
+    els.combatScreen.classList.remove("busy");
+  }
 }
 
 function updateDialogueAdvanceState() {
@@ -1128,6 +1370,7 @@ function escapeAttr(value) {
 els.form.addEventListener("submit", submitTurn);
 els.startButton.addEventListener("click", startGame);
 els.newSessionButton.addEventListener("click", newSession);
+if (els.endingRestartButton) els.endingRestartButton.addEventListener("click", newSession);
 if (els.backendSelect) {
   els.backendSelect.addEventListener("change", () => {
     if (cachedConfig) populateModelSelect(cachedConfig);
@@ -1174,6 +1417,36 @@ if (els.inputToggleBtn) els.inputToggleBtn.addEventListener("click", () => {
   els.form.style.display = els.form.style.display === "none" ? "" : "none";
 });
 if (els.choicesList) els.choicesList.addEventListener("click", handleChoiceListClick);
+if (els.combatScreen) {
+  els.combatScreen.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-combat-target]");
+    if (target && !target.disabled) {
+      state.combatTargetId = target.dataset.combatTarget || "";
+      els.combatEnemies.querySelectorAll(".combat-enemy").forEach((enemy) => {
+        enemy.classList.toggle("selected", enemy.dataset.combatTarget === state.combatTargetId);
+      });
+      return;
+    }
+    const tab = event.target.closest("[data-combat-tab]");
+    if (tab) {
+      state.combatActionTab = tab.dataset.combatTab || "attack";
+      renderCombatActions(state.combatActions);
+      return;
+    }
+    const action = event.target.closest("[data-combat-action-type]");
+    if (action && !action.disabled) {
+      submitCombatAction(action.dataset.combatActionType || "", action.dataset.combatActionId || "");
+    }
+  });
+}
+if (els.combatResolveButton) els.combatResolveButton.addEventListener("click", resolveCombatResult);
+if (els.combatIntroContinue) {
+  els.combatIntroContinue.addEventListener("click", () => {
+    state.combatIntroSeenId = els.combatIntro?.dataset.combatId || "";
+    if (els.combatIntro) els.combatIntro.style.display = "none";
+    if (els.combatScreen) els.combatScreen.classList.remove("intro-active");
+  });
+}
 if (els.dialogueBox) {
   els.dialogueBox.addEventListener("click", revealPendingChoices);
   els.dialogueBox.addEventListener("keydown", (event) => {

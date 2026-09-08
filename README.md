@@ -1,6 +1,6 @@
 # Local LLM TRPG
 
-A minimal TRPG client powered by a local LLM as Game Master. The Host runs on FastAPI, managing game state, saves, dice rolls, and OpenAI-compatible LLM calls. The Client runs in the browser with a visual-novel-style (galgame) UI.
+A TRPG client with an API Game Master. The FastAPI Host owns game state, saves and dice; the browser provides a visual-novel-style interface. Local LLM backends are archived until better hardware and models can be evaluated.
 
 > **Python**: 3.9 or newer. Tested with FastAPI/Pydantic. arm64 users should prefer a native arm64 Python/Conda environment.
 
@@ -50,39 +50,25 @@ When a new session is created, the GM generates an opening scene automatically. 
 
 ## LLM Configuration
 
-Edit `active_backend` and `backends` in `host/config.json`.
+Gemini 3.1 Flash-Lite is the default. Set `GEMINI_API_KEY` or use an existing local key file. Keep personal overrides in the ignored `host/local_config.json`; never commit credentials. Ollama and Koboldcpp profiles remain available in code but are hidden from game settings. Gameplay defaults to one model attempt and a 15-second connection/read timeout.
 
-- Ollama (default): `http://localhost:11434/v1`
-- Koboldcpp: `http://localhost:5001/v1`
-
-Both use the OpenAI-compatible `/chat/completions` endpoint. The current default priority model is qwen3, falling back to qwen2.5 and ELYZA JP 8B.
+Free input uses one API interpretation followed by engine-owned outcomes. The forest entrance now supports food distraction, stealth and preparation. Start a new game to use the updated scenario. See [implementation and evaluation notes](docs/api-free-actions.md) (Chinese).
 
 ```json
 {
-  "active_backend": "ollama",
+  "active_backend": "gemini",
   "backends": {
-    "ollama": {
-      "base_url": "http://localhost:11434/v1",
-      "model": "qwen3-swallow-8b-rl-local",
-      "fallback_models": [
-        "qwen2.5-7b-instruct-local",
-        "elyza-jp-8b-local"
-      ],
-      "api_key": "ollama"
+    "gemini": {
+      "type": "gemini",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "model": "gemini-3.1-flash-lite",
+      "fallback_models": [],
+      "api_key": ""
     }
   },
-  "temperature": 0.8,
-  "max_tokens": 2048,
-  "request_timeout_seconds": 1800,
-  "response_format": "json_object",
-  "prompting": {
-    "history_messages": 4,
-    "memory_max_chars": 1200,
-    "action_history_max": 40,
-    "action_history_item_chars": 80
-  },
-  "debug_llm": true,
-  "demo_fallback_on_error": true
+  "request_timeout_seconds": 15,
+  "max_model_attempts": 1,
+  "response_format": "json_object"
 }
 ```
 
@@ -96,6 +82,8 @@ Both use the OpenAI-compatible `/chat/completions` endpoint. The current default
 | `action_history_item_chars` | 80 | Max characters per action history entry |
 
 ## Remote Ollama
+
+Archived deployment notes: local inference is disabled by default. To explicitly restore it, set `archived_backends: []` in personal configuration and select the local backend.
 
 For a slow laptop, keep the game host/client local but point LLM calls to the main PC. Do not edit `host/config.json` for machine-specific settings; create `host/local_config.json` instead. It is ignored by git and is the right place for machine-specific URLs, tokens, and model names.
 
@@ -166,8 +154,9 @@ Scenarios use the **Scenario Pack** JSON format defined in [`scenario_pack.schem
 ```
 meta              → title, summary, language, initial_scene
 rules[]           → GM behavior rules
+combat_rules      → global attack, defense, resource, flee, and round defaults
 scenes[]          → id, title, description, goals, keywords, location_ids, next_scene_ids, fallback_choices
-locations[]       → id, title, description, keywords, npc_ids, item_ids, clue_ids, enemy_ids
+locations[]       → id, title, description, linked entities, encounter combat settings
 npcs[]            → id, name, description, keywords
 items[]           → id, name, description, effect, keywords
 clues[]           → id, title, description, keywords
@@ -198,9 +187,10 @@ Access the visual editor at `http://127.0.0.1:8000/editor`. All scenario JSON fi
 | NPC | Character definitions |
 | 道具 (Items) | Items with effects |
 | 线索 (Clues) | Story clues |
-| 敌人 (Enemies) | Enemy stats, attributes, skills |
+| 敌人 (Enemies) | Enemy stats, attacks, defenses, resistances, skills, rewards |
 | 属性定义 (Attributes) | Custom attribute definitions (e.g. STR, DEX, INT) |
-| 角色 (Characters) | Playable characters with HP/MP/SP, attributes, inventory, equipment, skills |
+| 角色 (Characters) | Playable characters with HP/MP/SP, attributes, combat overrides, inventory, equipment, skills |
+| 战斗规则 (Combat Rules) | Global attack formulas, accuracy, guard, fleeing, SP regeneration, and round limit |
 | 全局选项 (Fallback) | Global default choices |
 | 战斗选项 (Combat) | Global combat action choices |
 | JSON | Raw JSON edit (advanced) |
@@ -253,7 +243,16 @@ Example: Cleric's "治癒の祈り" (Healing Prayer) — `dice_type: "1d6+int"`,
 
 Enemies are defined in the scenario with full stats, attributes, and skills. They are bound to locations via `enemy_ids`.
 
-When a scene's current location has enemies, the GM automatically switches to **combat choices** (attacking, using skills, defending, using items, fleeing) instead of the usual exploration choices.
+When the engine enters a location with undefeated enemies, it creates a dedicated turn-based combat state. During combat, attacks, skills, items, defense, fleeing, enemy AI, resource costs, damage, rewards, and defeat flags are resolved entirely by `host/combat.py`; `/turn` is blocked and no LLM request is made. After victory, defeat, or escape, the client explicitly submits the fixed combat result once so the GM can narrate the aftermath and resume non-combat play.
+
+Combat balance belongs to scenario data rather than the GM prompt:
+
+- `combat_rules`: scenario-wide defaults for basic attacks, accuracy, defense multiplier, fleeing, SP regeneration, and maximum rounds.
+- `characters[].combat` / `enemies[].combat`: actor-specific attack, defense, and evade overrides.
+- `skills[]`: structured kind, formula, element, accuracy, resource cost, and enemy AI weight.
+- `items[].combat`: weapon, armor, healing, or damage behavior.
+- `locations[].combat`: encounter enemy IDs, flee rules, and victory/defeat effects.
+- `enemies[].rewards`: deterministic gold, item, and flag rewards.
 
 Enemy example (`dragon_rpg.json`):
 - **Slime** (HP 5, STR 4) — tutorial enemy in the dark forest
@@ -303,6 +302,8 @@ Gemini API key is read from env var `GEMINI_API_KEY`, or from `host/gemini_api_k
 | `/api/sessions` | POST | Create new game session |
 | `/api/sessions/{id}` | GET | Get session state |
 | `/api/sessions/{id}/turn` | POST | Submit player action |
+| `/api/sessions/{id}/combat/actions` | POST | Execute one engine-owned combat action without an LLM call |
+| `/api/sessions/{id}/combat/resolve` | POST | Send a completed combat result to the GM once |
 | `/api/scenarios` | GET/POST | List/create scenarios |
 | `/api/scenarios/{filename}` | GET/PUT | Read/update scenario |
 | `/api/config` | GET/PUT | Read/update backend config |
