@@ -770,8 +770,16 @@ def _finish_combat(session: dict[str, Any], status: str, summary: str) -> None:
                 flags[_defeated_flag(template_id, str(combat.get("location_id") or ""))] = True
     elif status == "defeat":
         defeat_delta = deepcopy((combat.get("encounter") or {}).get("defeat_effects") or {})
-        if isinstance(defeat_delta, dict) and defeat_delta:
-            combat["pending_state_delta"] = defeat_delta
+        if not isinstance(defeat_delta, dict):
+            defeat_delta = {}
+        # Continuing after defeat requires an explicit scripted destination.
+        if not any(defeat_delta.get(key) for key in ("game_over", "current_location", "current_scene")):
+            defeat_delta.pop("hp_change", None)
+            defeat_delta.pop("restore_full", None)
+            defeat_delta.update({"hp": 0, "game_over": {
+                "reason": summary, "ending": "combat_defeat",
+            }})
+        combat["pending_state_delta"] = defeat_delta
     combat["result"] = result
     _log(session, "system", status, summary)
 

@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-09-06-api-free-actions"
+    "content_revision": "2026-09-08-death-game-over"
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -78,6 +78,9 @@
         "lost_goblin_crossroads",
         "elf_spring",
         "forest_wolves",
+        "slime_ambush_one",
+        "slime_ambush_two",
+        "slime_king_battle",
         "forest_exit",
         "goblin_fort",
         "goblin_fort_first_second",
@@ -95,7 +98,8 @@
         "mode": "prepared_gm_turns",
         "summary": "",
         "prepared_turns": []
-      }
+      },
+      "next_scene_ids": []
     },
     {
       "id": "village",
@@ -1202,7 +1206,13 @@
           }
         },
         "defeat_effects": {
-          "hp_change": 1
+          "game_over": {
+            "reason": "邪竜イグニスに敗れ、竜の谷で力尽きました。",
+            "ending": "dragon_valley_defeat"
+          }
+        },
+        "result_texts": {
+          "defeat": "邪竜の炎が視界を覆い、冒険は竜の谷で終わりを迎えた。"
         }
       },
       "npc_ids": [],
@@ -2798,10 +2808,15 @@
           "current_location": "lost_goblin_crossroads"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "闇の森・入口で力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "dark_forest_loc_defeat"
+          }
         },
         "result_texts": {
-          "victory": "スライムを倒して森を進むと、十字路で一匹のゴブリンが助けを求めていた。別の一族に箱を盗まれ、取り戻してほしいという。"
+          "victory": "スライムを倒して森を進むと、十字路で一匹のゴブリンが助けを求めていた。別の一族に箱を盗まれ、取り戻してほしいという。",
+          "defeat": "闇の森・入口で力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [
@@ -2957,7 +2972,14 @@
           "current_location": "elf_spring"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "闇の森・迷子のゴブリンで力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "lost_goblin_crossroads_defeat"
+          }
+        },
+        "result_texts": {
+          "defeat": "闇の森・迷子のゴブリンで力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [
@@ -3167,7 +3189,14 @@
           "current_location": "forest_exit"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "闇の森・狼の縄張りで力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "forest_wolves_defeat"
+          }
+        },
+        "result_texts": {
+          "defeat": "闇の森・狼の縄張りで力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [],
@@ -3175,7 +3204,7 @@
     },
     {
       "id": "slime_ambush_one",
-      "scene_id": "throne_room",
+      "scene_id": "dark_forest",
       "title": "精霊の泉・第一波",
       "description": "三匹のスライムに包囲されている。",
       "keywords": [
@@ -3208,10 +3237,15 @@
           "current_location": "slime_ambush_two"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "精霊の泉・第一波で力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "slime_ambush_one_defeat"
+          }
         },
         "result_texts": {
-          "victory": "最後の一匹を弾き飛ばした直後、泉の反対側で水音が三つ重なった。休む間もなく、新たな三匹のスライムが水面から這い上がり、半円を描いて包囲を狭めてくる。"
+          "victory": "最後の一匹を弾き飛ばした直後、泉の反対側で水音が三つ重なった。休む間もなく、新たな三匹のスライムが水面から這い上がり、半円を描いて包囲を狭めてくる。",
+          "defeat": "精霊の泉・第一波で力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [],
@@ -3219,7 +3253,7 @@
     },
     {
       "id": "slime_ambush_two",
-      "scene_id": "throne_room",
+      "scene_id": "dark_forest",
       "title": "精霊の泉・第二波",
       "description": "さらに三匹のスライムが泉から這い出す。",
       "keywords": [
@@ -3252,10 +3286,15 @@
           "current_location": "slime_king_battle"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "精霊の泉・第二波で力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "slime_ambush_two_defeat"
+          }
         },
         "result_texts": {
-          "victory": "第二波を退けると泉全体が大きく盛り上がった。水を押し分けて現れたのは、錆びた王冠を載せた巨大なスライムだ。スライム王は仲間の残骸を吸収し、重い身体で地面を揺らす。"
+          "victory": "第二波を退けると泉全体が大きく盛り上がった。水を押し分けて現れたのは、錆びた王冠を載せた巨大なスライムだ。スライム王は仲間の残骸を吸収し、重い身体で地面を揺らす。",
+          "defeat": "精霊の泉・第二波で力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [],
@@ -3263,7 +3302,7 @@
     },
     {
       "id": "slime_king_battle",
-      "scene_id": "throne_room",
+      "scene_id": "dark_forest",
       "title": "精霊の泉・スライム王",
       "description": "錆びた王冠を載せたスライム王が泉を揺らして現れる。",
       "keywords": [
@@ -3293,7 +3332,14 @@
           "current_location": "forest_exit"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "精霊の泉・スライム王で力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "slime_king_battle_defeat"
+          }
+        },
+        "result_texts": {
+          "defeat": "精霊の泉・スライム王で力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [],
@@ -3465,7 +3511,14 @@
           "current_location": "goblin_fort_first_second"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "ゴブリン砦・一階前半で力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "goblin_fort_defeat"
+          }
+        },
+        "result_texts": {
+          "defeat": "ゴブリン砦・一階前半で力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [
@@ -3600,7 +3653,14 @@
           "current_location": "goblin_fort_second_choice"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "ゴブリン砦・一階後半で力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "goblin_fort_first_second_defeat"
+          }
+        },
+        "result_texts": {
+          "defeat": "ゴブリン砦・一階後半で力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [
@@ -3812,7 +3872,14 @@
           "current_location": "goblin_fort_third_gate"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "ゴブリン砦・二階右で力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "goblin_fort_second_right_defeat"
+          }
+        },
+        "result_texts": {
+          "defeat": "ゴブリン砦・二階右で力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [
@@ -3902,7 +3969,14 @@
           "current_location": "goblin_fort_healing_circle"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "ゴブリン砦・二階左で力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "goblin_fort_second_left_defeat"
+          }
+        },
+        "result_texts": {
+          "defeat": "ゴブリン砦・二階左で力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [],
@@ -4153,10 +4227,15 @@
           "current_location": "goblin_fort_fourth"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "ゴブリン砦・三階警備戦で力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "goblin_fort_third_guards_defeat"
+          }
         },
         "result_texts": {
-          "victory": "三匹の警備兵を倒すと、戦闘の衝撃で鉄門の錠が外れた。扉の先は財宝庫だ。金貨の山からゴブリン王が立ち上がり、二匹の弓兵が高台へ散って次の戦いを挑んでくる。"
+          "victory": "三匹の警備兵を倒すと、戦闘の衝撃で鉄門の錠が外れた。扉の先は財宝庫だ。金貨の山からゴブリン王が立ち上がり、二匹の弓兵が高台へ散って次の戦いを挑んでくる。",
+          "defeat": "ゴブリン砦・三階警備戦で力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [],
@@ -4201,7 +4280,14 @@
           "current_location": "goblin_fort_chest_choice"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "ゴブリン砦・四階財宝庫で力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "goblin_fort_fourth_defeat"
+          }
+        },
+        "result_texts": {
+          "defeat": "ゴブリン砦・四階財宝庫で力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [],
@@ -4356,7 +4442,14 @@
           "current_location": "forest_exit"
         },
         "defeat_effects": {
-          "hp_change": 1
+          "hp": 0,
+          "game_over": {
+            "reason": "ゴブリン砦・箱の争奪で力尽きました。冒険はここで終わりを迎えます。",
+            "ending": "goblin_fort_chest_fight_defeat"
+          }
+        },
+        "result_texts": {
+          "defeat": "ゴブリン砦・箱の争奪で力尽きました。冒険はここで終わりを迎えます。"
         }
       },
       "actions": [],
