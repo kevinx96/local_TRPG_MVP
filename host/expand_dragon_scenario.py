@@ -234,7 +234,7 @@ def hybrid(turns: list[dict[str, Any]], summary: str = "") -> dict[str, Any]:
 def location(location_id: str, title: str, description: str, actions: list[dict[str, Any]], *,
              npc_ids: list[str] | None = None, item_ids: list[str] | None = None, enemy_ids: list[str] | None = None,
              combat: dict[str, Any] | None = None, turns: list[dict[str, Any]] | None = None) -> dict[str, Any]:
-    if location_id.startswith(("dark_", "forest_", "elf_", "lost_", "goblin_")):
+    if location_id.startswith(("dark_", "forest_", "elf_", "lost_", "goblin_", "slime_")):
         scene_id = "dark_forest"
     elif location_id.startswith(("village", "xanxus", "warlock", "ice_", "frost_", "ian_")):
         scene_id = "village"
@@ -1005,6 +1005,34 @@ def update_castle_departure(pack: dict[str, Any]) -> None:
     ])
 
 
+def update_defeat_routes(pack: dict[str, Any]) -> None:
+    for location_entry in pack.get("locations", []):
+        if not isinstance(location_entry, dict) or location_entry.get("scene_id") != "dark_forest":
+            continue
+        encounter = location_entry.get("combat")
+        if not isinstance(encounter, dict) or not encounter.get("enemy_ids"):
+            continue
+        defeat_effects = encounter.get("defeat_effects") if isinstance(encounter.get("defeat_effects"), dict) else {}
+        if defeat_effects.get("game_over"):
+            continue
+        reason = f"{location_entry['title']}で力尽きました。冒険はここで終わりを迎えます。"
+        encounter["defeat_effects"] = {"hp": 0, "game_over": {
+            "reason": reason, "ending": f"{location_entry['id']}_defeat",
+        }}
+        result_texts = encounter.setdefault("result_texts", {})
+        result_texts["defeat"] = reason
+
+    dragon_valley = next((entry for entry in pack.get("locations", []) if entry.get("id") == "dragon_valley_loc"), None)
+    if isinstance(dragon_valley, dict) and isinstance(dragon_valley.get("combat"), dict):
+        dragon_valley["combat"]["defeat_effects"] = {
+            "game_over": {
+                "reason": "邪竜イグニスに敗れ、竜の谷で力尽きました。",
+                "ending": "dragon_valley_defeat",
+            },
+        }
+        dragon_valley["combat"].setdefault("result_texts", {})["defeat"] = "邪竜の炎が視界を覆い、冒険は竜の谷で終わりを迎えた。"
+
+
 def update_forge(pack: dict[str, Any]) -> None:
     forge = next((entry for entry in pack.get("locations", []) if entry.get("id") == "forge"), None)
     if not forge:
@@ -1099,7 +1127,7 @@ def add_free_exploration(pack: dict[str, Any]) -> None:
                     effects = entry.setdefault("success_effects", [])
                     if not any("game_over" in effect for effect in effects):
                         effects.append({"game_over": deepcopy(ending)})
-    pack.setdefault("meta", {})["content_revision"] = "2026-09-06-api-free-actions"
+    pack.setdefault("meta", {})["content_revision"] = "2026-09-08-death-game-over"
 
 
 def _walk_actions(actions: list[dict[str, Any]]):
@@ -1123,7 +1151,8 @@ def upgrade(pack: dict[str, Any]) -> dict[str, Any]:
     if forest_scene:
         forest_scene["description"] = "スライム、迷子のゴブリン、精霊の泉、四階建てのゴブリン砦を巡る分岐章。"
         forest_scene["goals"] = ["闇の森を突破する", "迷子のゴブリンの依頼を解決する", "ゴブリン砦または精霊の泉の危機を乗り越える"]
-        forest_scene["location_ids"] = [entry_id for entry_id in replacements if entry_id.startswith(("dark_", "forest_", "elf_", "lost_", "goblin_"))]
+        forest_scene["location_ids"] = [entry_id for entry_id in replacements if entry_id.startswith(("dark_", "forest_", "elf_", "lost_", "goblin_", "slime_"))]
+        forest_scene["next_scene_ids"] = [scene_id for scene_id in forest_scene.get("next_scene_ids", []) if scene_id != "throne_room"]
     village_scene = next((scene for scene in pack.get("scenes", []) if scene.get("id") == "village"), None)
     if village_scene:
         village_scene["title"] = "第3章：炎上する麓の村"
@@ -1132,6 +1161,7 @@ def upgrade(pack: dict[str, Any]) -> dict[str, Any]:
         village_scene["location_ids"] = [entry_id for entry_id in replacements if entry_id.startswith(("village", "xanxus", "warlock", "ice_", "frost_", "ian_"))]
         village_scene["actions"] = []
         village_scene.pop("hybrid", None)
+    update_defeat_routes(pack)
     apply_visual_assets(pack)
     add_free_exploration(pack)
     return pack

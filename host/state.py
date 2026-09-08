@@ -266,11 +266,82 @@ def load_session(session_id: str) -> dict[str, Any]:
     session = json.loads(path.read_text(encoding="utf-8"))
     ensure_world_state(session)
     session.setdefault("event_log", [])
+    changed = _refresh_session_scenario_pack(session)
+    changed = _recover_legacy_defeat_dead_end(session) or changed
     character = session.get("character") if isinstance(session.get("character"), dict) else {}
     inventory = character.get("inventory") if isinstance(character.get("inventory"), list) else []
     _merge_inventory_catalog(inventory, session.get("scenario_pack"))
     _normalize_character(character)
+    if changed:
+        save_session(session)
     return session
+
+
+def _refresh_session_scenario_pack(session: dict[str, Any]) -> bool:
+    scenario_path = str(session.get("scenario_path") or "").strip()
+    current_pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else {}
+    current_revision = str((current_pack.get("meta") or {}).get("content_revision") or "")
+    if Path(scenario_path).name not in {"dragon_rpg.json", "dragon_rpg_hybrid.json"}:
+        return False
+    try:
+        latest_pack = load_scenario_pack(HOST_ROOT / "prompt" / "processed" / Path(scenario_path).name)
+    except (OSError, ValueError, json.JSONDecodeError):
+        return False
+    latest_revision = str((latest_pack.get("meta") or {}).get("content_revision") or "")
+    if not latest_revision or current_revision >= latest_revision:
+        return False
+    current_title = str((current_pack.get("meta") or {}).get("title") or session.get("scenario_title") or "")
+    latest_title = str((latest_pack.get("meta") or {}).get("title") or "")
+    if current_title and latest_title and current_title != latest_title:
+        return False
+    session["scenario_pack"] = latest_pack
+    session["scenario_title"] = latest_title or session.get("scenario_title")
+    ensure_world_state(session)
+    active_combat = session.get("combat")
+    if isinstance(active_combat, dict):
+        location = next((loc for loc in latest_pack.get("locations", []) if loc.get("id") == active_combat.get("location_id")), {})
+        latest_encounter = location.get("combat") or {}
+        if "defeat_effects" in latest_encounter:
+            active_combat.setdefault("encounter", {})["defeat_effects"] = deepcopy(latest_encounter["defeat_effects"])
+    return True
+
+
+def _recover_legacy_defeat_dead_end(session: dict[str, Any]) -> bool:
+    if session.get("game_over"):
+        return False
+    active_combat = session.get("combat")
+    if isinstance(active_combat, dict) and active_combat.get("status") != "defeat":
+        return False
+    result = (active_combat or {}).get("result") or session.get("last_combat_result") or {}
+    if result.get("outcome") != "defeat":
+        return False
+    defeated_location_id = str(result.get("location_id") or "")
+    if not defeated_location_id or current_location_id(session) != defeated_location_id:
+        return False
+    if not active_combat and str(session.get("combat_blocked_location") or "") != defeated_location_id:
+        return False
+
+    pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else {}
+    location = next(
+        (
+            entry for entry in pack.get("locations", [])
+            if isinstance(entry, dict) and str(entry.get("id") or "") == defeated_location_id
+        ),
+        None,
+    )
+    encounter = location.get("combat") if isinstance(location, dict) and isinstance(location.get("combat"), dict) else {}
+    defeat_effects = encounter.get("defeat_effects") if isinstance(encounter.get("defeat_effects"), dict) else {}
+    ending = defeat_effects.get("game_over")
+    if not ending:
+        return False
+    apply_state_delta(session, {"hp": 0, "game_over": deepcopy(ending)})
+    add_assistant_message(session, session["game_over"]["reason"])
+    session["last_action_result"] = {}
+    session.pop("needs_client_resync", None)
+    session.pop("combat_blocked_location", None)
+    if active_combat:
+        active_combat.pop("pending_state_delta", None)
+    return True
 
 
 def save_session(session: dict[str, Any]) -> None:
@@ -354,6 +425,8 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
         public["choices"] = recovered_choices
     public["choices"] = annotate_choices_for_session(public.get("choices"), public)
     public["choices"] = annotate_choices_for_character(public.get("choices"), public.get("character", {}))
+    if session.get("game_over"):
+        public["choices"] = []
     public["system_logs"] = [
         log for log in public.get("system_logs", [])
         if log.get("source") == "engine"

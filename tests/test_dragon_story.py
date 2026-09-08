@@ -42,7 +42,7 @@ class DragonStoryTests(unittest.TestCase):
             with self.subTest(filename=filename):
                 meta = self.load_raw(filename)["meta"]
                 self.assertEqual(meta["title"], "紅き邪竜イグニス")
-                self.assertEqual(meta["content_revision"], "2026-09-06-api-free-actions")
+                self.assertEqual(meta["content_revision"], "2026-09-08-death-game-over")
 
     def test_client_keeps_hybrid_scenarios_selectable(self):
         source = Path("client/app.js").read_text(encoding="utf-8")
@@ -363,6 +363,18 @@ class DragonStoryTests(unittest.TestCase):
                 self.assertIn("victory", locations["slime_ambush_one"]["combat"]["result_texts"])
                 self.assertIn("victory", locations["slime_ambush_two"]["combat"]["result_texts"])
                 self.assertIn("victory", locations["goblin_fort_third_guards"]["combat"]["result_texts"])
+
+
+    def test_slime_ambush_locations_belong_to_dark_forest(self):
+        for filename in SCENARIO_FILES:
+            with self.subTest(filename=filename):
+                pack = self.load_raw(filename)
+                locations = records(pack, "locations")
+                forest_location_ids = set(records(pack, "scenes")["dark_forest"]["location_ids"])
+                for location_id in ("slime_ambush_one", "slime_ambush_two", "slime_king_battle"):
+                    self.assertEqual(locations[location_id]["scene_id"], "dark_forest")
+                    self.assertIn(location_id, forest_location_ids)
+
 
     def test_burning_village_replaces_old_hybrid_scene(self):
         for filename in SCENARIO_FILES:
