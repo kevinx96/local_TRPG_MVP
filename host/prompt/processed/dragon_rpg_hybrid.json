@@ -8455,7 +8455,8 @@
             }
           ],
           "once": "heard_ignis_testimony",
-          "requirements": {}
+          "requirements": {},
+          "portrait_image": "/static/images/npc_ignis_calm.png"
         },
         {
           "id": "receive_ignis_scale",
@@ -8475,7 +8476,8 @@
             }
           ],
           "once": "received_ignis_scale",
-          "requirements": {}
+          "requirements": {},
+          "portrait_image": "/static/images/npc_ignis_calm.png"
         },
         {
           "id": "ask_ignis_aid",
@@ -8493,7 +8495,8 @@
           "once": "ignis_ally",
           "requirements": {
             "flag": "heard_ignis_testimony"
-          }
+          },
+          "portrait_image": "/static/images/npc_ignis_calm.png"
         },
         {
           "id": "return_to_castle_report",
@@ -8510,7 +8513,9 @@
           ]
         }
       ],
-      "npc_ids": [],
+      "npc_ids": [
+        "ignis_calm"
+      ],
       "enemy_ids": [],
       "connected_location_ids": [
         "castle_report"
@@ -9538,6 +9543,17 @@
       "name": "行商人ガルド",
       "description": "各地を巡る陽気な行商人。森で狼の群れに追われていた。",
       "image": "/static/images/npc_gald.png"
+    },
+    {
+      "id": "ignis_calm",
+      "name": "紅竜イグニス",
+      "description": "白き竜の呪いから解き放たれ、正気を取り戻した紅竜。",
+      "keywords": [
+        "イグニス",
+        "紅竜",
+        "竜"
+      ],
+      "image": "/static/images/npc_ignis_calm.png"
     }
   ],
   "items": [
@@ -10808,9 +10824,8 @@
         }
       ],
       "next_phase": "draco_dragon",
-      "image": "/static/images/npc_general.png",
-      "phase_transition_text": "ドラコの体が裂け、白い光が王の間を満たす。天井を突き破って現れたのは、雪原のような翼を持つ巨竜だった。「我が名はヴァイス。盟約の番人にして、その終わりを告げる者」",
-      "design_todo": "TODO(design): 専用のキャラクター画像を選定する。現在は既存画像を仮置き。"
+      "image": "/static/images/enemy_draco_human.png",
+      "phase_transition_text": "ドラコの体が裂け、白い光が王の間を満たす。天井を突き破って現れたのは、雪原のような翼を持つ巨竜だった。「我が名はヴァイス。盟約の番人にして、その終わりを告げる者」"
     },
     {
       "id": "draco_dragon",
@@ -10867,8 +10882,7 @@
           "ai_weight": 1
         }
       ],
-      "image": "/static/images/enemy_ignis.png",
-      "design_todo": "TODO(design): 専用のキャラクター画像を選定する。現在は既存画像を仮置き。",
+      "image": "/static/images/enemy_draco_dragon.png",
       "phase_allies": [
         {
           "id": "ignis",
@@ -10883,7 +10897,8 @@
               "damage": "9d10+18",
               "element": "fire"
             }
-          ]
+          ],
+          "image": "/static/images/npc_ignis_calm.png"
         }
       ]
     },
