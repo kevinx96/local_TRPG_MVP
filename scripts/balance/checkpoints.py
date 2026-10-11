@@ -155,7 +155,11 @@ def generate(path: Path = DEFAULT_SCENARIO) -> dict[str, Any]:
                 index = steps.index("exit_back")
                 steps[index:index] = ["return_inn_after_forest", "return_castle_from_inn", "go_item_shop", "give_moss_to_sarah",
                     "sell:sarah_shop:trail_ration", "shop:sarah_shop:ice_charm", "return_castle_from_item_shop", "go_inn", "return_forest_exit"]
-            sources = [replay_step(session, step) for step in steps]
+            sources = []
+            for step in steps:
+                if state.current_location_id(session) == "warlock_at_nest":
+                    sources.append(replay_step(session, "continue_after_warlock"))
+                sources.append(replay_step(session, step))
             if state.current_location_id(session) != encounter:
                 raise ValueError(f"Route ended at wrong location: {encounter}")
             actor = session["character"]

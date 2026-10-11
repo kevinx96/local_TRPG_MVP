@@ -7,7 +7,7 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-12-v019-ch34",
+    "content_revision": "2026-10-12-v021-ch34",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true
@@ -9966,7 +9966,7 @@
                     {
                       "branch": {
                         "requirements": {
-                          "flag": "warlock_rescue_triggered"
+                          "flag": "warlock_rescue_available"
                         },
                         "then": [
                           {
@@ -10063,7 +10063,7 @@
               }
             ]
           },
-          "result_text": "聖なる光が胸の火種を焼き払った。Xanxusが怒りに吠える。「小癪な……ならば力ずくで奪うまでだ！」"
+          "result_text": "聖なる光が胸の火種を包み込み、その炎が弱まっていく。Xanxusが怒りに吠える。『小癪な……火種を消される前に、力ずくで奪うまでだ！』"
         },
         {
           "id": "call_warlock",
@@ -10092,7 +10092,7 @@
             }
           ],
           "requirements": {
-            "flag": "warlock_rescue_triggered"
+            "flag": "warlock_rescue_available"
           },
           "result_text": "青い光が走り、ワーロックがあなたの前に立った。彼の杖が火種を凍らせて砕く。「Xanxus、もう白竜の手先は終わりだ」Xanxusは舌打ちし、炎の中へ消えた。ワーロックは振り返る。「あの骸骨は、白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ」"
         }
@@ -12064,8 +12064,8 @@
       "id": "ash_wraith",
       "name": "煤の亡霊",
       "description": "竜の炎に焼かれた者たちの怨念が、煤となって漂う亡霊。",
-      "hp": 24,
-      "max_hp": 24,
+      "hp": 22,
+      "max_hp": 22,
       "element": "dark",
       "attributes": {
         "str": 12,
@@ -12076,7 +12076,7 @@
       "combat": {
         "basic_attack": {
           "name": "煤の亡霊",
-          "damage": "1d26",
+          "damage": "1d24",
           "accuracy": 40,
           "element": "dark"
         },
@@ -12093,7 +12093,7 @@
           "id": "ash_embrace",
           "name": "煤の抱擁",
           "kind": "attack",
-          "damage": "1d26",
+          "damage": "1d24",
           "accuracy": 40,
           "element": "fire",
           "ai_weight": 2,
@@ -12108,7 +12108,7 @@
           "id": "resentment",
           "name": "怨嗟",
           "kind": "attack",
-          "damage": "1d26",
+          "damage": "1d24",
           "accuracy": 40,
           "element": "dark",
           "ai_weight": 1
@@ -13087,7 +13087,7 @@
     {
       "id": "lv5",
       "level": 5,
-      "trigger_flag": "entered_dragon_valley",
+      "trigger_flag": "nest_event_seen",
       "gains": {
         "hero": {
           "max_hp": 5,

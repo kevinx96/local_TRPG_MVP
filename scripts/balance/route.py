@@ -14,6 +14,25 @@ from unittest.mock import patch
 from host import combat, state
 from . import checkpoints, sim
 
+REST_ACTIONS = {"inn": ("rest_at_inn", 10), "village": ("rest_at_refuge", 5),
+                "elf_spring": ("rest_at_elf_spring", 0), "cave_hot_spring": ("rest_hot_spring", 0)}
+
+
+def rest_if_needed(session: dict[str, Any]) -> Optional[dict[str, Any]]:
+    location = state.current_location_id(session)
+    if location not in REST_ACTIONS:
+        return None
+    identifier, cost = REST_ACTIONS[location]
+    actor = session["character"]
+    if actor["hp"] * 10 >= actor["max_hp"] * 7 or actor.get("gold", 0) < cost:
+        return None
+    action = state.resolve_action(session, action_id=identifier)
+    if action is None or not state.action_requirement_status(action, session)[0]:
+        return None
+    before = resources(session)
+    checkpoints.replay_step(session, identifier)
+    return dict(location=location, action=identifier, cost=cost, before=before, after=resources(session))
+
 
 def resources(session: dict[str, Any]) -> dict[str, Any]:
     actor = session["character"]
@@ -52,17 +71,32 @@ def fight(session: dict[str, Any], policy: str, rng: random.Random, *, purify: b
 
 
 def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, character: str,
-          seed: int, policy: str = "heuristic", rest_at_inn: bool = False, purify: bool = False) -> dict[str, Any]:
+          seed: int, policy: str = "heuristic", rest_at_inn: bool = False, purify: bool = False,
+          rest_policy: str = "none") -> dict[str, Any]:
+    if rest_policy not in {"none", "hp70"}:
+        raise ValueError("unknown rest policy")
     session = checkpoints.fresh_session(pack, character)
     rng = random.Random(seed)
     battles = []
     arrival = None
     paid_rests = 0
+    rests = []
     with patch.object(combat, "random", rng):
         for source in [*sources, {"location": encounter, "step": "@final"}]:
             if state.current_location_id(session) != source["location"]:
                 raise ValueError(f"Route diverged before {source['step']}")
             actor = session["character"]
+            if rest_policy == "hp70" and source["step"] not in {a for a, _ in REST_ACTIONS.values()}:
+                while rest := rest_if_needed(session):
+                    rests.append(rest)
+                    paid_rests += int(rest["cost"] > 0)
+                    # The spring's first rest triggers the authored slime ambush chain.
+                    while state.current_location_id(session) != source["location"]:
+                        battle = fight(session, policy, rng, purify=purify)
+                        battles.append(battle)
+                        if not battle["continue"]:
+                            return dict(completed=False, failed_at=battle["encounter"], boss_arrival=arrival,
+                                        battles=battles, paid_rests=paid_rests, rests=rests)
             if (rest_at_inn and source["location"] == "inn" and source["step"] != "rest_at_inn"
                     and actor.get("gold", 0) >= 10
                     and any(actor[r] < actor[f"max_{r}"] for r in ("hp", "mp", "sp"))):
@@ -76,7 +110,7 @@ def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, c
                 battles.append(battle)
                 if not battle["continue"] or (purify and battle["encounter"] == "dragon_valley_loc" and battle["status"] != "purified"):
                     return {"completed": False, "failed_at": battle["encounter"],
-                            "boss_arrival": arrival, "battles": battles, "paid_rests": paid_rests}
+                            "boss_arrival": arrival, "battles": battles, "paid_rests": paid_rests, "rests": rests}
             else:
                 if source["step"].split(":", 1)[0] == "cross_lava_bridge":
                     action = state.resolve_action(session, action_id="cross_lava_bridge")
@@ -90,21 +124,30 @@ def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, c
     ending = (session.get("game_over") or {}).get("ending")
     completed = not purify or ending == "draco_defeated_with_ignis"
     return {"completed": completed, "failed_at": None if completed else encounter,
-            "boss_arrival": arrival, "battles": battles, "paid_rests": paid_rests, "ending": ending}
+            "boss_arrival": arrival, "battles": battles, "paid_rests": paid_rests, "ending": ending, "rests": rests}
 
 
 def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
                    encounter: str = "dragon_valley_loc", n: int = 500,
                    seed: int = 20261011, policy: str = "heuristic", rest_at_inn: bool = False,
-                   purify: bool = False) -> dict[str, Any]:
+                   purify: bool = False, rest_policy: str = "none") -> dict[str, Any]:
     if n < 1:
         raise ValueError("n must be positive")
     sources = cp["encounters"][encounter]["characters"][character]["sources"]
+    if rest_policy == "hp70":
+        sources = list(sources)
+        for index, source in enumerate(sources):
+            if source["location"] == "village_frozen_clue":
+                if source["step"] != "visit_village":
+                    sources[index:index] = [dict(location="village_frozen_clue", step="visit_village"),
+                                            dict(location="village", step="return_frozen_clue")]
+                break
     if purify:
         if encounter != "draco_battle":
             raise ValueError("Purification route ends at draco_battle")
+        original_sources = sources
         sources = []
-        for source in cp["encounters"][encounter]["characters"][character]["sources"]:
+        for source in original_sources:
             if source["location"] == "ignis_last_breath":
                 if source["step"] == "examine_ignis_wound":
                     sources.extend(dict(location="ignis_purified", step=step) for step in
@@ -119,10 +162,15 @@ def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
     used: dict[str, Counter] = {}
     arrivals = []
     completed = 0
+    rest_counts: Counter = Counter()
+    rest_gold = 0
     sample = None
     for index in range(n):
         result = trial(pack, sources, encounter, character,
-                       sim.trial_seed(seed, encounter, character, index), policy, rest_at_inn, purify)
+                       sim.trial_seed(seed, encounter, character, index), policy, rest_at_inn, purify, rest_policy)
+        for rest in result["rests"]:
+            rest_counts[rest["action"]] += 1
+            rest_gold += rest["cost"]
         sample = sample or result
         completed += result["completed"]
         if result.get("ending"):
@@ -138,6 +186,7 @@ def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
     items = sorted({k for a in arrivals for k in a["inventory"]})
     return {"character": character, "route": "purification_true_ending" if purify else encounter, "policy": policy, "n": n, "seed": seed,
             "rest_at_inn": rest_at_inn,
+            "rest_policy": rest_policy, "rest_counts": dict(rest_counts), "rest_gold": rest_gold,
             "completion_rate": completed / n, "failure_counts": dict(failures),
             "ending_counts": dict(endings),
             "boss_arrivals": len(arrivals),
@@ -184,6 +233,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--targets", type=Path, default=sim.TARGETS)
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--rest-at-inn", action="store_true", help="Pay 10G to recover when the route visits the inn")
+    parser.add_argument("--rest-policy", choices=("none", "hp70", "both"), default="both",
+                        help="Rest below 70%% HP at available stops; check hp70 and report no-rest as reference")
     parser.add_argument("--purify", action="store_true", help="Reserve holy water and take purification to the true ending")
     args = parser.parse_args(argv)
     if args.n < 1 or args.shards < 1 or not 0 <= args.shard < args.shards:
@@ -205,13 +256,17 @@ def main(argv: Optional[list[str]] = None) -> int:
             if index % args.shards != args.shard:
                 continue
             policy = targets.get("route_targets", {}).get("routes", {}).get(endpoint, {}).get("policy", "heuristic")
-            rows.append(simulate_route(pack, cp, character, encounter=endpoint, n=args.n, seed=args.seed,
-                                       policy=policy, rest_at_inn=args.rest_at_inn, purify=args.purify))
-            print(f"{endpoint} {character}: {rows[-1]['completion_rate']:.3f}", flush=True)
-            args.output.write_text(json.dumps({"rows": rows, "fingerprints": fingerprints}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            for rest_policy in ("none", "hp70") if args.rest_policy == "both" else (args.rest_policy,):
+                rows.append(simulate_route(pack, cp, character, encounter=endpoint, n=args.n, seed=args.seed,
+                                           policy=policy, rest_at_inn=args.rest_at_inn, purify=args.purify,
+                                           rest_policy=rest_policy))
+                rows[-1]["rest_policy"] = rest_policy
+                print(f"{endpoint} {character} {rest_policy}: {rows[-1]['completion_rate']:.3f}", flush=True)
+                args.output.write_text(json.dumps({"rows": rows, "fingerprints": fingerprints}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     result = {"rows": rows, "fingerprints": fingerprints}
     if args.check:
-        result["violations"] = check_results(rows, targets)
+        checked = [r for r in rows if r["rest_policy"] == "hp70"]
+        result["violations"] = check_results(checked, targets) if checked else []
         print(f"route violations: {len(result['violations'])}")
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return int(bool(result.get("violations")))

@@ -127,7 +127,7 @@ class Chapter34Tests(unittest.TestCase):
             for s in self.sessions("valley_lava_bridge"):
                 if accepted:
                     self.seed(s)
-                s["flags"]["warlock_rescue_triggered"] = rescued
+                s["flags"]["warlock_rescue_available"] = rescued
                 self.gate(s)
                 self.assertEqual(state.current_location_id(s), expected)
                 if accepted:
@@ -143,13 +143,76 @@ class Chapter34Tests(unittest.TestCase):
                 self.gate(s)
                 self.assertEqual(state.current_location_id(s), "valley_nest_gate")
 
+    def test_invited_warlock_and_accepted_seed_are_reachable_together(self):
+        for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
+            pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO.with_name(filename))
+            for invited in (True, False):
+                s = checkpoints.fresh_session(pack, "hero")
+                steps = ["check_supplies"]
+                if invited:
+                    steps += ["go_magic_shop", "invite_blue_mage", "return_castle_from_magic_shop"]
+                steps += checkpoints.proposed_routes()["xanxus_phantom_battle"][:-1]
+                for step in steps:
+                    checkpoints.replay_step(s, step)
+                self.assertEqual(state.current_location_id(s), "xanxus_at_nest")
+                self.assertTrue(s["flags"]["accepted_fire_seed"])
+                self.assertFalse(s["flags"].get("warlock_rescue_triggered", False))
+                action = state.resolve_action(s, action_id="call_warlock")
+                self.assertEqual(state.action_requirement_status(action, s)[0], invited)
+                if invited:
+                    self.assertIn("call_warlock", {a["id"] for a in state.current_actions_for_session(s)})
+                if invited:
+                    self.act(s, "call_warlock")
+                    self.assertFalse(self.has(s, "火種"))
+
+    def test_lv5_at_d3_before_event_and_only_once_from_both_paths(self):
+        for path in ("bridge", "ledge"):
+            for seeded in (True, False):
+                for s in self.sessions("village"):
+                    state.apply_state_delta(s, {"flags_set": ["reached_village"]})
+                    s["character"].update(hp=17, mp=1, sp=2)
+                    if seeded:
+                        self.seed(s)
+                    self.act(s, "go_dragon_valley")
+                    self.assertTrue(s["flags"]["entered_dragon_valley"])
+                    self.assertEqual(s["character"]["level"], 4)
+                    self.assertEqual(s["character"]["hp"], 17)
+                    self.finish(s)
+                    self.assertEqual(s["character"]["level"], 4)
+                    s["character"].update(hp=17, mp=1, sp=2)
+                    if path == "bridge":
+                        self.act(s, "cross_lava_bridge", False)
+                        losses = [e for e in s["event_log"] if e["kind"] == "resource_changed" and e["data"].get("resource") == "hp"]
+                        self.assertTrue(any(e["data"].get("change") == -6 for e in losses))
+                    else:
+                        self.act(s, "take_ledge_path")
+                        self.assertEqual(s["character"]["level"], 4)
+                        self.finish(s)
+                    self.assertEqual(s["character"]["level"], 5)
+                    for r in ("hp", "mp", "sp"):
+                        self.assertEqual(s["character"][r], s["character"][f"max_{r}"])
+                    if seeded:
+                        events = s["event_log"]
+                        level_index = next(i for i, e in enumerate(events) if e["kind"] == "level_up" and e["data"]["level"] == 5)
+                        entry_index = next(i for i, e in enumerate(events) if e["kind"] == "position_changed" and e["data"]["after"]["location_id"] == "xanxus_at_nest")
+                        self.assertLess(level_index, entry_index)
+                        self.act(s, "obey_xanxus_core")
+                    s["character"].update(hp=7, mp=0, sp=0)
+                    state.apply_state_delta(s, {"current_location": "valley_lava_bridge"}, allow_world_transition=True)
+                    self.gate(s)
+                    self.assertEqual(s["character"]["hp"], 7)
+                    self.assertEqual(s["character"]["mp"], 0)
+
     def test_cleanse_costs_phantom_win_loss_and_call_warlock(self):
         for win in (True, False):
             for s in self.sessions("valley_lava_bridge"):
                 self.seed(s)
                 self.add(s, "聖水")
                 self.gate(s)
-                self.act(s, "cleanse_fire_seed")
+                result = self.act(s, "cleanse_fire_seed")
+                self.assertEqual(result["result_text"], "聖なる光が胸の火種を包み込み、その炎が弱まっていく。Xanxusが怒りに吠える。『小癪な……火種を消される前に、力ずくで奪うまでだ！』")
+                self.assertTrue(self.has(s, "火種"))
+                self.assertFalse(s["flags"].get("fire_seed_removed", False))
                 self.assertFalse(self.has(s, "聖水"))
                 self.assertFalse(next(l for l in s["scenario_pack"]["locations"] if l["id"] == "xanxus_phantom_battle")["combat"]["flee_allowed"])
                 self.finish(s, win)
@@ -173,7 +236,7 @@ class Chapter34Tests(unittest.TestCase):
             self.assertEqual(s["character"]["mp"], 0)
         for s in self.sessions("valley_lava_bridge"):
             self.seed(s)
-            s["flags"]["warlock_rescue_triggered"] = True
+            s["flags"]["warlock_rescue_available"] = True
             self.gate(s)
             self.act(s, "call_warlock")
             self.assertFalse(self.has(s, "火種"))
@@ -202,19 +265,20 @@ class Chapter34Tests(unittest.TestCase):
 
     def test_bridge_checks_ledge_and_enemy_first(self):
         for s in self.sessions("valley_entrance"):
-            self.assertEqual(s["character"]["level"], 5)
+            self.assertEqual(s["character"]["level"], 1)
             self.act(s, "sneak_through_ash", False)
             self.assertTrue(s["enemy_first_requested"])
-            self.finish(s)
+            with patch.object(combat, "random", random.Random(1)):
+                self.finish(s)
             self.assertEqual(state.current_location_id(s), "valley_lava_bridge")
             a = state.resolve_action(s, action_id="cross_lava_bridge")
             self.assertEqual(state.action_dice_settings(a, session=s)[1], 12)
             with patch.object(state.random, "randint", return_value=20):
                 checkpoints.replay_step(s, "observe:bridge_ropes")
             self.assertEqual(state.action_dice_settings(a, session=s)[1], 6)
-            before = s["character"]["hp"]
             self.act(s, "cross_lava_bridge", False)
-            self.assertEqual(s["character"]["hp"], before - 6)
+            self.assertEqual(s["character"]["hp"], s["character"]["max_hp"])
+            self.assertEqual(s["character"]["level"], 5)
             self.assertEqual(state.current_location_id(s), "valley_nest_gate")
         for s in self.sessions("valley_lava_bridge"):
             self.act(s, "take_ledge_path")

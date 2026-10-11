@@ -117,7 +117,7 @@ def fixture(view: str = "") -> dict[str, Any]:
         if view in {"chapter4-map", "xanxus-event"}:
             session["visited_locations"] += ["valley_entrance", "valley_lava_bridge"]
         if view == "xanxus-event":
-            session["flags"].update(accepted_fire_seed=True, warlock_rescue_triggered=True, nest_event_seen=True)
+            session["flags"].update(accepted_fire_seed=True, warlock_rescue_available=True, nest_event_seen=True)
             state.apply_state_delta(session, {"inventory_add": [{"name": "火種"}, {"name": "聖水"}]})
         session["choices"] = state.fallback_choices_for_session(session)
         session["messages"] = [{"role": "assistant", "speaker": "GM", "text": record["description"]}]

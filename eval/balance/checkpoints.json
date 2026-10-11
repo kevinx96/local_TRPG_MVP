@@ -1,6 +1,6 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "8eb2779d7d5a7fde1e81dc69f86c6b47c4cb230bc5c33d84f52b42f83c17e1fb",
+  "scenario_sha256": "7670f2880dd87737a15dbb31892d3b7548647aeba90aff5e736891d891ecaa61",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
@@ -29923,11 +29923,10 @@
       "status": "proposed",
       "characters": {
         "hero": {
-          "level": 5,
+          "level": 4,
           "completed_milestones": [
             "lv2",
-            "lv4",
-            "lv5"
+            "lv4"
           ],
           "skills": [
             {
@@ -29953,30 +29952,18 @@
               "guard_multiplier": 0.5,
               "survive_at_one": true,
               "cost": 0
-            },
-            {
-              "id": "hero_lv5_b",
-              "name": "不屈の構え",
-              "kind": "defend",
-              "guard_multiplier": 0.25,
-              "survive_at_one": true,
-              "cost": 2,
-              "cost_type": "sp",
-              "description": "構えを固め、致死ダメージにも耐え抜く。",
-              "unlock_level": 5,
-              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
             }
           ],
           "attributes": {
-            "str": 20,
+            "str": 18,
             "dex": 5,
             "int": 5,
             "wis": 5,
-            "end": 14
+            "end": 13
           },
-          "max_hp": 40,
-          "max_mp": 12,
-          "max_sp": 18,
+          "max_hp": 35,
+          "max_mp": 11,
+          "max_sp": 16,
           "inventory": [
             {
               "name": "革の鎧",
@@ -30365,11 +30352,10 @@
           ]
         },
         "cleric": {
-          "level": 5,
+          "level": 4,
           "completed_milestones": [
             "lv2",
-            "lv4",
-            "lv5"
+            "lv4"
           ],
           "skills": [
             {
@@ -30406,29 +30392,18 @@
               "description": "聖光で敵を攻撃する。",
               "unlock_level": 3,
               "effect": "敵に1d8+wis/2ダメージを与える。"
-            },
-            {
-              "id": "cleric_lv5_b",
-              "name": "大いなる癒し",
-              "kind": "heal",
-              "healing": "2d6+wis/2",
-              "cost": 14,
-              "cost_type": "mp",
-              "description": "聖なる祈りで大きく傷を癒す。",
-              "unlock_level": 5,
-              "effect": "HPを2d6+wis/2回復する。"
             }
           ],
           "attributes": {
             "str": 6,
             "dex": 8,
-            "int": 18,
-            "wis": 20,
+            "int": 17,
+            "wis": 18,
             "end": 15
           },
-          "max_hp": 38,
-          "max_mp": 22,
-          "max_sp": 12,
+          "max_hp": 33,
+          "max_mp": 20,
+          "max_sp": 11,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -30791,11 +30766,10 @@
           ]
         },
         "mage": {
-          "level": 5,
+          "level": 4,
           "completed_milestones": [
             "lv2",
-            "lv4",
-            "lv5"
+            "lv4"
           ],
           "skills": [
             {
@@ -30814,30 +30788,29 @@
               "replaces": "火球"
             },
             {
-              "id": "mage_lv5_a",
-              "name": "氷の矢・改",
+              "id": "ice_arrow",
+              "name": "氷の矢",
               "kind": "attack",
-              "damage": "2d8+int/2",
+              "description": "冷気の矢を放つ。",
+              "effect": "int/2ダメージ，ｈｐ5０％以下に対して，1d6追加ダメージを与える",
+              "damage": "1d6+int/2",
+              "dice_type": "1d6+int/2",
               "accuracy": 92,
               "element": "ice",
-              "cost": 5,
-              "cost_type": "mp",
-              "description": "氷の矢で敵を貫く。",
-              "unlock_level": 5,
-              "effect": "敵に2d8+int/2ダメージを与える。",
-              "replaces": "氷の矢"
+              "cost": 3,
+              "cost_type": "mp"
             }
           ],
           "attributes": {
             "str": 4,
             "dex": 8,
-            "int": 24,
-            "wis": 14,
+            "int": 22,
+            "wis": 13,
             "end": 6
           },
-          "max_hp": 24,
-          "max_mp": 32,
-          "max_sp": 10,
+          "max_hp": 21,
+          "max_mp": 29,
+          "max_sp": 9,
           "inventory": [
             {
               "name": "魔導書",
@@ -31197,11 +31170,10 @@
           ]
         },
         "thief": {
-          "level": 5,
+          "level": 4,
           "completed_milestones": [
             "lv2",
-            "lv4",
-            "lv5"
+            "lv4"
           ],
           "skills": [
             {
@@ -31218,30 +31190,29 @@
               "replaces": "影隠れ"
             },
             {
-              "id": "thief_lv5_a",
-              "name": "急所突き・改",
+              "id": "vital_strike",
+              "name": "急所突き",
               "kind": "attack",
-              "damage": "8d8+dex/2",
-              "accuracy": 92,
-              "element": "physical",
-              "cost": 5,
-              "cost_type": "sp",
               "description": "敵の急所を正確に狙う。",
-              "unlock_level": 5,
-              "effect": "敵に8d8+dex/2ダメージを与える。",
-              "replaces": "急所突き"
+              "effect": "3d6判定ダメージ",
+              "damage": "3d6",
+              "dice_type": "3d6",
+              "accuracy": 82,
+              "element": "physical",
+              "cost": 4,
+              "cost_type": "sp"
             }
           ],
           "attributes": {
-            "str": 12,
-            "dex": 24,
+            "str": 11,
+            "dex": 22,
             "int": 10,
             "wis": 6,
             "end": 8
           },
-          "max_hp": 30,
-          "max_mp": 10,
-          "max_sp": 22,
+          "max_hp": 26,
+          "max_mp": 9,
+          "max_sp": 20,
           "inventory": [
             {
               "name": "ダガー",
@@ -31610,11 +31581,10 @@
       "status": "proposed",
       "characters": {
         "hero": {
-          "level": 5,
+          "level": 4,
           "completed_milestones": [
             "lv2",
-            "lv4",
-            "lv5"
+            "lv4"
           ],
           "skills": [
             {
@@ -31640,30 +31610,18 @@
               "guard_multiplier": 0.5,
               "survive_at_one": true,
               "cost": 0
-            },
-            {
-              "id": "hero_lv5_b",
-              "name": "不屈の構え",
-              "kind": "defend",
-              "guard_multiplier": 0.25,
-              "survive_at_one": true,
-              "cost": 2,
-              "cost_type": "sp",
-              "description": "構えを固め、致死ダメージにも耐え抜く。",
-              "unlock_level": 5,
-              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
             }
           ],
           "attributes": {
-            "str": 20,
+            "str": 18,
             "dex": 5,
             "int": 5,
             "wis": 5,
-            "end": 14
+            "end": 13
           },
-          "max_hp": 40,
-          "max_mp": 12,
-          "max_sp": 18,
+          "max_hp": 35,
+          "max_mp": 11,
+          "max_sp": 16,
           "inventory": [
             {
               "name": "革の鎧",
@@ -32070,11 +32028,10 @@
           ]
         },
         "cleric": {
-          "level": 5,
+          "level": 4,
           "completed_milestones": [
             "lv2",
-            "lv4",
-            "lv5"
+            "lv4"
           ],
           "skills": [
             {
@@ -32111,29 +32068,18 @@
               "description": "聖光で敵を攻撃する。",
               "unlock_level": 3,
               "effect": "敵に1d8+wis/2ダメージを与える。"
-            },
-            {
-              "id": "cleric_lv5_b",
-              "name": "大いなる癒し",
-              "kind": "heal",
-              "healing": "2d6+wis/2",
-              "cost": 14,
-              "cost_type": "mp",
-              "description": "聖なる祈りで大きく傷を癒す。",
-              "unlock_level": 5,
-              "effect": "HPを2d6+wis/2回復する。"
             }
           ],
           "attributes": {
             "str": 6,
             "dex": 8,
-            "int": 18,
-            "wis": 20,
+            "int": 17,
+            "wis": 18,
             "end": 15
           },
-          "max_hp": 38,
-          "max_mp": 22,
-          "max_sp": 12,
+          "max_hp": 33,
+          "max_mp": 20,
+          "max_sp": 11,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -32514,11 +32460,10 @@
           ]
         },
         "mage": {
-          "level": 5,
+          "level": 4,
           "completed_milestones": [
             "lv2",
-            "lv4",
-            "lv5"
+            "lv4"
           ],
           "skills": [
             {
@@ -32537,30 +32482,29 @@
               "replaces": "火球"
             },
             {
-              "id": "mage_lv5_a",
-              "name": "氷の矢・改",
+              "id": "ice_arrow",
+              "name": "氷の矢",
               "kind": "attack",
-              "damage": "2d8+int/2",
+              "description": "冷気の矢を放つ。",
+              "effect": "int/2ダメージ，ｈｐ5０％以下に対して，1d6追加ダメージを与える",
+              "damage": "1d6+int/2",
+              "dice_type": "1d6+int/2",
               "accuracy": 92,
               "element": "ice",
-              "cost": 5,
-              "cost_type": "mp",
-              "description": "氷の矢で敵を貫く。",
-              "unlock_level": 5,
-              "effect": "敵に2d8+int/2ダメージを与える。",
-              "replaces": "氷の矢"
+              "cost": 3,
+              "cost_type": "mp"
             }
           ],
           "attributes": {
             "str": 4,
             "dex": 8,
-            "int": 24,
-            "wis": 14,
+            "int": 22,
+            "wis": 13,
             "end": 6
           },
-          "max_hp": 24,
-          "max_mp": 32,
-          "max_sp": 10,
+          "max_hp": 21,
+          "max_mp": 29,
+          "max_sp": 9,
           "inventory": [
             {
               "name": "魔導書",
@@ -32938,11 +32882,10 @@
           ]
         },
         "thief": {
-          "level": 5,
+          "level": 4,
           "completed_milestones": [
             "lv2",
-            "lv4",
-            "lv5"
+            "lv4"
           ],
           "skills": [
             {
@@ -32959,30 +32902,29 @@
               "replaces": "影隠れ"
             },
             {
-              "id": "thief_lv5_a",
-              "name": "急所突き・改",
+              "id": "vital_strike",
+              "name": "急所突き",
               "kind": "attack",
-              "damage": "8d8+dex/2",
-              "accuracy": 92,
-              "element": "physical",
-              "cost": 5,
-              "cost_type": "sp",
               "description": "敵の急所を正確に狙う。",
-              "unlock_level": 5,
-              "effect": "敵に8d8+dex/2ダメージを与える。",
-              "replaces": "急所突き"
+              "effect": "3d6判定ダメージ",
+              "damage": "3d6",
+              "dice_type": "3d6",
+              "accuracy": 82,
+              "element": "physical",
+              "cost": 4,
+              "cost_type": "sp"
             }
           ],
           "attributes": {
-            "str": 12,
-            "dex": 24,
+            "str": 11,
+            "dex": 22,
             "int": 10,
             "wis": 6,
             "end": 8
           },
-          "max_hp": 30,
-          "max_mp": 10,
-          "max_sp": 22,
+          "max_hp": 26,
+          "max_mp": 9,
+          "max_sp": 20,
           "inventory": [
             {
               "name": "ダガー",
@@ -35902,6 +35844,13 @@
               }
             },
             {
+              "location": "warlock_at_nest",
+              "step": "continue_after_warlock",
+              "delta": {
+                "current_location": "valley_nest_gate"
+              }
+            },
+            {
               "location": "valley_nest_gate",
               "step": "enter_dragon_nest",
               "delta": {
@@ -36353,6 +36302,13 @@
               }
             },
             {
+              "location": "warlock_at_nest",
+              "step": "continue_after_warlock",
+              "delta": {
+                "current_location": "valley_nest_gate"
+              }
+            },
+            {
               "location": "valley_nest_gate",
               "step": "enter_dragon_nest",
               "delta": {
@@ -36779,6 +36735,13 @@
             {
               "location": "valley_lava_bridge",
               "step": "cross_lava_bridge:success",
+              "delta": {
+                "current_location": "valley_nest_gate"
+              }
+            },
+            {
+              "location": "warlock_at_nest",
+              "step": "continue_after_warlock",
               "delta": {
                 "current_location": "valley_nest_gate"
               }
@@ -37211,6 +37174,13 @@
             {
               "location": "valley_lava_bridge",
               "step": "cross_lava_bridge:success",
+              "delta": {
+                "current_location": "valley_nest_gate"
+              }
+            },
+            {
+              "location": "warlock_at_nest",
+              "step": "continue_after_warlock",
               "delta": {
                 "current_location": "valley_nest_gate"
               }
@@ -37707,6 +37677,13 @@
               }
             },
             {
+              "location": "warlock_at_nest",
+              "step": "continue_after_warlock",
+              "delta": {
+                "current_location": "valley_nest_gate"
+              }
+            },
+            {
               "location": "valley_nest_gate",
               "step": "enter_dragon_nest",
               "delta": {
@@ -38230,6 +38207,13 @@
               }
             },
             {
+              "location": "warlock_at_nest",
+              "step": "continue_after_warlock",
+              "delta": {
+                "current_location": "valley_nest_gate"
+              }
+            },
+            {
               "location": "valley_nest_gate",
               "step": "enter_dragon_nest",
               "delta": {
@@ -38728,6 +38712,13 @@
             {
               "location": "valley_lava_bridge",
               "step": "cross_lava_bridge:success",
+              "delta": {
+                "current_location": "valley_nest_gate"
+              }
+            },
+            {
+              "location": "warlock_at_nest",
+              "step": "continue_after_warlock",
               "delta": {
                 "current_location": "valley_nest_gate"
               }
@@ -39232,6 +39223,13 @@
             {
               "location": "valley_lava_bridge",
               "step": "cross_lava_bridge:success",
+              "delta": {
+                "current_location": "valley_nest_gate"
+              }
+            },
+            {
+              "location": "warlock_at_nest",
+              "step": "continue_after_warlock",
               "delta": {
                 "current_location": "valley_nest_gate"
               }

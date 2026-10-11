@@ -21,7 +21,7 @@ class BalancePass2Tests(unittest.TestCase):
                 actor = session["character"]
                 initial = len(actor["skills"])
                 self.assertFalse(any(s.get("unlock_level") for s in actor["skills"]))
-                flags = ["entered_dragon_valley"] if skip else ["defeated_slime_king", "cleared_goblin_fort", "reached_village", "entered_dragon_valley"]
+                flags = ["nest_event_seen"] if skip else ["defeated_slime_king", "cleared_goblin_fort", "reached_village", "entered_dragon_valley", "nest_event_seen"]
                 for flag in flags:
                     state.apply_state_delta(session, {"flags_set": [flag]})
                     expected = sum(1 for s in next(c for c in self.pack["characters"] if c["id"] == cid)["level_skills"]
@@ -104,7 +104,7 @@ class BalancePass2Tests(unittest.TestCase):
                 session = checkpoints.fresh_session(deepcopy(pack), "hero")
                 session["world_state"] = {"scene_id": location["scene_id"], "location_id": location["id"]}
                 dest = effect.get("current_location", effect.get("next_location"))
-                flag, level = ("entered_dragon_valley", 5) if dest == "valley_entrance" else ("reached_village", 4)
+                flag, level = ("entered_dragon_valley", 1) if dest == "valley_entrance" else ("reached_village", 4)
                 if dest != "valley_entrance":
                     self.assertIn(flag, effect["flags_set"])
                 state.apply_state_delta(session, state._effects_to_state_delta([effect], session), allow_world_transition=True)
@@ -143,7 +143,7 @@ class BalancePass2Tests(unittest.TestCase):
             state.apply_action_result(session, action, {})
             self.assertTrue(session["flags"]["entered_dragon_valley"])
             self.assertFalse(session["flags"].get("accepted_ian_request"))
-            self.assertEqual(session["character"]["level"], 5)
+            self.assertEqual(session["character"]["level"], 4)
 
 
 if __name__ == "__main__":

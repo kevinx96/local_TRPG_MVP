@@ -12,6 +12,18 @@ ANGER = "遠くで、Xanxusの怒りに満ちた咆哮が聞こえた"
 WARLOCK = "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。Xanxusは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。"
 REMOVE_SEED = [{"remove_item": {"name": "火種", "quantity": 1, "force": True}},
                {"set_flag": "fire_seed_removed"}, {"set_flag": BETRAYAL}]
+CLEANSE = "聖なる光が胸の火種を包み込み、その炎が弱まっていく。Xanxusが怒りに吠える。『小癪な……火種を消される前に、力ずくで奪うまでだ！』"
+
+
+def fix_ch34(pack: dict[str, Any]) -> None:
+    loc = {l["id"]: l for l in pack["locations"]}
+    cameo = loc["valley_nest_gate"]["entry_effects"][0]["branch"]["then"][1]["branch"]["else"][0]
+    cameo["branch"]["requirements"] = {"flag": "warlock_rescue_available"}
+    actions = {a["id"]: a for a in loc["xanxus_at_nest"]["actions"]}
+    actions["call_warlock"]["requirements"] = {"flag": "warlock_rescue_available"}
+    actions["cleanse_fire_seed"]["result_text"] = CLEANSE
+    next(m for m in pack["milestones"] if m["level"] == 5)["trigger_flag"] = "nest_event_seen"
+    pack["meta"]["content_revision"] = "2026-10-12-v021-ch34"
 
 
 def branch(requirements: dict[str, Any], yes: list, no: list | None = None) -> dict[str, Any]:
@@ -20,6 +32,7 @@ def branch(requirements: dict[str, Any], yes: list, no: list | None = None) -> d
 
 def upgrade(pack: dict[str, Any]) -> None:
     if pack["meta"].get("chapter34_v4"):
+        fix_ch34(pack)
         return
     pack["meta"].update(chapter34_v4=True, content_revision="2026-10-12-v019-ch34")
     loc = {l["id"]: l for l in pack["locations"]}
@@ -102,7 +115,7 @@ def upgrade(pack: dict[str, Any]) -> None:
     gate["actions"] = [move("enter_dragon_nest", "竜の巣へ踏み込む", "dragon_valley_loc", start_combat=True)]
     gate["entry_effects"] = [branch({"not_flag": "nest_event_seen"}, [
         {"set_flag": "nest_event_seen"}, branch({"all": [{"flag": "accepted_fire_seed"}, {"not_flag": "fire_seed_removed"}]},
-            [{"current_location": "xanxus_at_nest"}], [branch({"flag": "warlock_rescue_triggered"}, [{"current_location": "warlock_at_nest"}])])])]
+            [{"current_location": "xanxus_at_nest"}], [branch({"flag": "warlock_rescue_available"}, [{"current_location": "warlock_at_nest"}])])])]
     for record, enemy, destination in ((entrance, "ash_wraith", "valley_lava_bridge"), (ledge, "lava_drake", "valley_nest_gate")):
         record["enemy_ids"] = [enemy, enemy]
         record["combat"] = dict(auto_start=record is ledge, enemy_ids=[enemy, enemy], flee_allowed=False, encounter_class="elite",
@@ -127,9 +140,9 @@ def upgrade(pack: dict[str, Any]) -> None:
         action("cleanse_fire_seed", "聖なる力で火種を浄化する", [branch({"has_item": "聖水"}, [{"remove_item": {"name": "聖水", "quantity": 1}}], [{"mp_change": -6}]),
             {"current_location": "xanxus_phantom_battle"}, {"start_combat": True}],
             requirements={"any": [{"has_item": "聖水"}, {"all": [{"character_id": "cleric"}, {"mp_gte": 6}]}]},
-            result_text="聖なる光が胸の火種を焼き払った。Xanxusが怒りに吠える。「小癪な……ならば力ずくで奪うまでだ！」"),
+            result_text=CLEANSE),
         action("call_warlock", "ワーロックの名を呼ぶ", deepcopy(REMOVE_SEED) + [{"current_location": "valley_nest_gate"}],
-            requirements={"flag": "warlock_rescue_triggered"},
+            requirements={"flag": "warlock_rescue_available"},
             result_text="青い光が走り、ワーロックがあなたの前に立った。彼の杖が火種を凍らせて砕く。「Xanxus、もう白竜の手先は終わりだ」Xanxusは舌打ちし、炎の中へ消えた。ワーロックは振り返る。「あの骸骨は、白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ」")]
     phantom = location("xanxus_phantom_battle", "Xanxusの分身", "Xanxusが自らの炎を分けて作り出した分身。本体ほどの力はない。", "dragon_valley", "bg_dragon_nest")
     phantom["enemy_ids"] = ["xanxus_phantom"]
@@ -207,6 +220,7 @@ def upgrade(pack: dict[str, Any]) -> None:
         upsert(pack["maps"], dict(id=map_id, title=title,
             nodes=[dict(id=i, label=t, kind=k, x=x, y=y, location_ids=ids, description=loc[ids[0]]["description"]) for i, t, k, x, y, ids in rows],
             edges=[{"from": a, "to": b, **({"action_id": c} if c else {})} for a, b, c in links]))
+    fix_ch34(pack)
 
 
 if __name__ == "__main__":

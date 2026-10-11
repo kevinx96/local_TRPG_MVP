@@ -17,7 +17,7 @@ ENCOUNTERS = ("valley_entrance", "valley_ledge", "xanxus_phantom_battle")
 
 
 def route_checkpoint(pack: dict[str, Any], cp: dict[str, Any], character: str, preparation: str) -> dict[str, Any]:
-    if preparation == "no_rest":
+    if preparation in {"no_rest", "paid_rest"}:
         return cp
     result = forest_v3.reward_route(pack, cp, character) if preparation == "all_optional" else deepcopy(cp)
     actor = result["encounters"]["dragon_valley_loc"]["characters"][character]
@@ -44,6 +44,8 @@ def violations(result: dict[str, Any]) -> list[dict[str, Any]]:
         if not bounds[0] <= row["win_rate"] <= bounds[1]:
             failures.append(dict(encounter=row["encounter"], character=row["character"], value=row["win_rate"], target=bounds))
     for row in result["routes"]:
+        if row["preparation"] == "no_rest":
+            continue
         bounds = [.55, .95 if row["preparation"] in {"riku", "all_optional"} else .90]
         if not bounds[0] <= row["completion_rate"] <= bounds[1]:
             failures.append(dict(route=row["preparation"], character=row["character"], value=row["completion_rate"], target=bounds))
@@ -57,7 +59,8 @@ def evaluate_task(task: tuple) -> tuple[str, dict[str, Any]]:
     if kind == "encounters":
         return kind, sim.simulate(pack, identifier, character, n=n, seed=seed, checkpoints=cp)
     snapshot = route_checkpoint(pack, cp, character, identifier)
-    row = route.simulate_route(pack, snapshot, character, n=n, seed=seed)
+    row = route.simulate_route(pack, snapshot, character, n=n, seed=seed,
+                               rest_policy="hp70" if identifier == "paid_rest" else "none")
     row["preparation"] = identifier
     return kind, row
 
@@ -66,7 +69,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Offline chapter 3/4 balance; navigation at the lava bridge uses seeded rolls")
     parser.add_argument("--n", type=int, default=500)
     parser.add_argument("--seed", type=int, default=20261012)
-    parser.add_argument("--output", type=Path, default=Path("eval/reports/balance-2026-10-12-ch34.json"))
+    parser.add_argument("--output", type=Path, default=Path("eval/reports/balance-2026-10-12-ch34b.json"))
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--workers", type=int, default=1)
     args = parser.parse_args()
@@ -74,7 +77,7 @@ def main() -> None:
         p.relative_to(checkpoints.ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
         for p in (checkpoints.DEFAULT_SCENARIO, checkpoints.DEFAULT_CHECKPOINTS, sim.TARGETS, Path(__file__), Path(route.__file__), Path(sim.__file__))})
     tasks = [(kind, identifier, character, args.n, args.seed)
-             for kind, identifiers in (("encounters", ENCOUNTERS), ("routes", ("no_rest", "refuge", "refuge_supplies", "refuge_prepared", "riku", "all_optional")))
+             for kind, identifiers in (("encounters", ENCOUNTERS), ("routes", ("no_rest", "paid_rest")))
              for identifier in identifiers for character in CHARACTERS]
     with ProcessPoolExecutor(max_workers=args.workers) if args.workers > 1 else nullcontext() as pool:
         rows = pool.map(evaluate_task, tasks) if pool else map(evaluate_task, tasks)

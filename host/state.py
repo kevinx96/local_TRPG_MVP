@@ -1983,6 +1983,8 @@ def _apply_state_delta(
         session["choices"] = []
         record_state_event(session, "game_over", str(game_over["reason"]), game_over)
 
+    _apply_milestones(session)
+
     requested_scene = str(delta.get("current_scene") or "").strip()
     requested_location = str(delta.get("current_location") or "").strip()
     if requested_scene or requested_location:
@@ -2019,9 +2021,6 @@ def _apply_state_delta(
                             if location.get("narrate_entry") and battle.get("pending_resolution"):
                                 result = battle.setdefault("result", {})
                                 result["prepared_text"] = "\n".join(filter(None, [result.get("prepared_text"), location["entry_text"]]))
-
-
-    _apply_milestones(session)
 
 
 def _milestone_flags(milestone: dict[str, Any]) -> list[str]:

@@ -113,7 +113,7 @@ class BalancePass3Tests(unittest.TestCase):
         state.apply_state_delta(session, {"flags_set": ["reached_village"]})
         state.apply_state_delta(session, {"clear_skills": True})
         session["event_log"] = []
-        state.apply_state_delta(session, {"flags_set": ["entered_dragon_valley"]})
+        state.apply_state_delta(session, {"flags_set": ["nest_event_seen"]})
         self.assertEqual([s["unlock_level"] for s in session["character"]["skills"]], [5])
         self.assertEqual([s["unlock_level"] for s in self.load_saved(session)["character"]["skills"]], [5])
 
