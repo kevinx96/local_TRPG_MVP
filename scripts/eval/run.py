@@ -54,6 +54,8 @@ def engine_result(session: dict[str, Any], plan: dict[str, Any], text: str) -> d
 def evaluate_case(case: dict[str, Any], session: dict[str, Any], config: dict[str, Any],
                   backend: str, model: str, variant: str, cache_dir: Path, *, live: bool = False,
                   no_cache: bool = False) -> dict[str, Any]:
+    if VARIANTS[variant].gemini_only and backend != "gemini":
+        raise ValueError(f"{variant} is only available for Gemini evaluation")
     messages, request_config = VARIANTS[variant].prepare(session, case["input"], config)
     if "eval_timeout_seconds" in config:
         request_config["request_timeout_seconds"] = config["eval_timeout_seconds"]
@@ -101,9 +103,19 @@ def evaluate_case(case: dict[str, Any], session: dict[str, Any], config: dict[st
             write_cache(cache_dir, key, {k: record[k] for k in ("raw_response", "usage", "latency_ms", "structured_output", "http_errors") if k in record})
     cleaned = gm_contract._strip_thinking_text(record["raw_response"]).strip()
     record["thinking_stripped"] = cleaned != record["raw_response"].strip()
+    if VARIANTS[variant].prompt_suffix:
+        baseline_messages, baseline_config = VARIANTS["default"].prepare(session, case["input"], config)
+        baseline = read_cache(cache_dir, cache_key(backend, model, "default", baseline_messages, baseline_config))
+        current_tokens = record["usage"].get("input_tokens")
+        baseline_tokens = (baseline or {}).get("usage", {}).get("input_tokens")
+        record["prompt_delta"] = {
+            "chars": len(VARIANTS[variant].prompt_suffix),
+            "input_tokens": current_tokens - baseline_tokens
+            if current_tokens is not None and baseline_tokens is not None else None}
     if variant == "lenient":
         cleaned, record["lenient"] = clean_lenient(cleaned)
     try:
+        cleaned = VARIANTS[variant].unwrap(cleaned)
         plan = free_actions.parse_plan(cleaned, session.get("character", {}).get("character_id", ""))
         record["plan"] = plan
         record["costs"] = {"plan": costly_plan(session, plan),
@@ -116,6 +128,29 @@ def evaluate_case(case: dict[str, Any], session: dict[str, Any], config: dict[st
         record["engine"] = {"outcome": "rejected", "attack_or_combat": False,
                             "changes": {k: False for k in protected_state(session)}}
     return record
+
+
+def response_failures(records: list[dict[str, Any]], variant: str) -> dict[str, int]:
+    counts = dict(whitespace=0, empty_object=0, other=0, no_response=0)
+    for record in records:
+        if record["status"] == "ok":
+            continue
+        raw = record.get("raw_response")
+        if raw is None:
+            counts["no_response"] += 1
+            continue
+        cleaned = gm_contract._strip_thinking_text(raw).strip()
+        # Includes the observed failure: an opening brace followed only by whitespace.
+        if cleaned in {"", "{"} or (variant == "union_wrapped" and re.fullmatch(r'\{\s*"plan"\s*:\s*\{', cleaned)):
+            counts["whitespace"] += 1
+            continue
+        try:
+            value = json.loads(cleaned)
+        except ValueError:
+            value = None
+        empty = value == {} or variant == "union_wrapped" and value == {"plan": {}}
+        counts["empty_object" if empty else "other"] += 1
+    return counts
 
 
 def display(value: Any) -> str:
@@ -145,6 +180,12 @@ def report_markdown(report: dict[str, Any]) -> str:
         lines.append(f"| {tag} | {json.dumps(metrics[tag])} |")
     lines.append(f"| 归一化次数 | {metrics['normalizations']} |")
     lines.append(f"| lenient 清理与 existing.operation | {json.dumps(metrics.get('lenient', {}))} |")
+    if report.get("prompt_delta"):
+        delta = report["prompt_delta"]
+        lines += [f"| 相对 default 追加字符 | {delta['chars']} |",
+                  f"| 相对 default input token 增量（匹配缓存均值，{delta['matched']} 对） | {display(delta['input_tokens_mean'])} |"]
+    if report.get("response_failures"):
+        lines.append(f"| 失败形态 | {json.dumps(report['response_failures'])} |")
     if report.get("quota_exhausted"):
         quota = report["quota_exhausted"]
         wait = quota["retry_after_seconds"]
@@ -182,11 +223,19 @@ def main(argv: list[str] = None) -> int:
     args = parser.parse_args(argv)
     if args.limit is not None and args.limit < 1:
         parser.error("--limit must be positive")
+    if VARIANTS[args.variant].gemini_only and args.backend != "gemini":
+        parser.error(f"{args.variant} is only available for Gemini evaluation")
     try:
         config = evaluation_config(state.load_config(), args.backend, args.model,
                                    rpm=args.rpm, timeout=args.timeout, base_url=args.base_url)
     except ValueError as exc:
         parser.error(str(exc))
+    report = run_evaluation(args, config)
+    print(report["run_id"])
+    return 1 if any(error["status"] in {"request_error", "quota_exhausted"} for error in report["errors"]) else 0
+
+
+def run_evaluation(args: argparse.Namespace, config: dict[str, Any]) -> dict[str, Any]:
     case_bytes = args.cases.read_bytes()
     cases = [json.loads(line) for line in case_bytes.decode("utf-8").splitlines() if line.strip()]
     cases = [case for case in cases if args.split == "all" or case["split"] == args.split]
@@ -222,15 +271,20 @@ def main(argv: list[str] = None) -> int:
               "split": args.split, "live": args.live, "labels": "proposed", "cases": str(args.cases),
               "cases_sha256": hashlib.sha256(case_bytes).hexdigest(),
               "quota_exhausted": quota_stop,
+              "response_failures": response_failures(records, args.variant),
               "metrics": summarize(records, prices.get("models", {}).get(args.model)),
               "errors": [{k: r.get(k) for k in ("id", "status", "error_type", "error", "http_errors", "quota")}
                          for r in records if r["status"] in {"request_error", "blocked", "quota_exhausted"}]}
+    if VARIANTS[args.variant].prompt_suffix:
+        deltas = [r["prompt_delta"]["input_tokens"] for r in records
+                  if r.get("prompt_delta", {}).get("input_tokens") is not None]
+        report["prompt_delta"] = {"chars": len(VARIANTS[args.variant].prompt_suffix), "matched": len(deltas),
+                                  "input_tokens_mean": sum(deltas) / len(deltas) if deltas else None}
     report_dir = ROOT / "eval" / "reports"
     report_dir.mkdir(parents=True, exist_ok=True)
     (report_dir / f"{run_id}.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     (report_dir / f"{run_id}.md").write_text(report_markdown(report), encoding="utf-8")
-    print(run_id)
-    return 1 if failed else 0
+    return report
 
 
 if __name__ == "__main__":

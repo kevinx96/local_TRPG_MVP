@@ -19,12 +19,16 @@ class Variant:
     snapshot_schema: bool = False
     dynamic_enum: bool = False
     replay_only: bool = False
+    schema_encoding: Optional[str] = None
+    prompt_suffix: str = ""
+    gemini_only: bool = False
 
     def prepare(self, session: dict[str, Any], text: str, config: dict[str, Any]) -> tuple:
         messages = deepcopy(self.message_builder(deepcopy(session), text))
         configured = deepcopy(self.config_builder(deepcopy(config)))
         if self.system_prompt is not None:
             messages[0]["content"] = self.system_prompt
+        messages[0]["content"] += self.prompt_suffix
         if self.few_shot:
             messages[-1:-1] = deepcopy(list(self.few_shot))
         if self.schema_transform:
@@ -34,7 +38,22 @@ class Variant:
             schema = configured["response_format"]["json_schema"]["schema"]
             context = json.loads(messages[1]["content"])
             configured["response_format"]["json_schema"]["schema"] = union_schema(schema, context, self.dynamic_enum)
+        if self.schema_encoding:
+            schema = configured["response_format"]["json_schema"]["schema"]
+            context = json.loads(messages[1]["content"])
+            configured["response_format"]["json_schema"]["schema"] = encoded_schema(schema, context, self.schema_encoding)
         return messages, configured
+
+    def unwrap(self, raw: str) -> str:
+        if self.schema_encoding != "union_wrapped":
+            return raw
+        try:
+            wrapper = json.loads(raw)
+        except (TypeError, ValueError) as exc:
+            raise free_actions.InvalidPlan("invalid JSON") from exc
+        if not isinstance(wrapper, dict) or set(wrapper) != {"plan"}:
+            raise free_actions.InvalidPlan("unexpected wrapper fields")
+        return json.dumps(wrapper["plan"], ensure_ascii=False)
 
 
 def cleared_values(kind: str) -> dict[str, Any]:
@@ -70,12 +89,17 @@ def clean_lenient(raw: str) -> tuple[str, dict[str, Any]]:
     return json.dumps(plan, ensure_ascii=False), audit
 
 
-def union_schema(schema: dict[str, Any], context: dict[str, Any], dynamic_enum: bool) -> dict[str, Any]:
+def snapshot_choices(context: dict[str, Any]) -> tuple[list[str], list[str]]:
     actions = [a["id"] for a in context["actions"] if a.get("enabled") and a.get("id")]
     # Only prune operations lacking any candidate surface; engine feasibility stays engine-owned.
     operations = [op for op in free_actions.OPERATIONS if op and (
         bool(context["inventory"]) if op == "use_item" else
         bool(context["obstacles"] or context["objects"]) if op == "observe" else bool(context["obstacles"]))]
+    return actions, operations
+
+
+def union_schema(schema: dict[str, Any], context: dict[str, Any], dynamic_enum: bool) -> dict[str, Any]:
+    actions, operations = snapshot_choices(context)
     branches = []
     for kind in free_actions.KINDS:
         if dynamic_enum and (kind == "existing" and not actions or kind == "interact" and not operations):
@@ -95,6 +119,42 @@ def union_schema(schema: dict[str, Any], context: dict[str, Any], dynamic_enum: 
     return {"type": "object", "anyOf": branches}
 
 
+def encoded_schema(schema: dict[str, Any], context: dict[str, Any], encoding: str) -> dict[str, Any]:
+    if encoding == "flat_enum":
+        result = deepcopy(schema)
+        actions, operations = snapshot_choices(context)
+        targets = [entry["id"] for group in ("obstacles", "objects", "npcs") for entry in context[group]]
+        items = [entry["id"] for group in ("objects", "inventory") for entry in context[group]]
+        for field, values in dict(action_id=actions, operation=operations,
+                                  target_id=["self", *targets], item_id=items).items():
+            result["properties"][field]["enum"] = list(dict.fromkeys(["", *values]))
+        return result
+    result = union_schema(schema, context, True)
+    if encoding == "union_wrapped":
+        return {"type": "object", "properties": {"plan": result},
+                "required": ["plan"], "additionalProperties": False}
+    if encoding not in {"union_enum1", "union_ordered"}:
+        raise ValueError(f"unknown schema encoding: {encoding}")
+    for branch in result["anyOf"]:
+        for field in branch["properties"].values():
+            if "const" in field:
+                field["enum"] = [field.pop("const")]
+        if encoding == "union_ordered":
+            branch["propertyOrdering"] = ["kind", *[key for key in branch["properties"] if key != "kind"]]
+    return result
+
+
+SCHEMA_ENCODINGS = ("union_enum1", "union_wrapped", "union_ordered", "flat_enum")
+GUARD_RULES = (
+    "否定・待機・条件だけの入力は代わりの行動を求めていない。費用や危険のある操作を選ばず dialogue にする。\n"
+    "「〜したら」「〜なら」の条件付き行動は今は実行しない。\n"
+    "inventory にない物は使わない。別の物で代用しない。"
+)
+GUARD_RULES_SHORT = "否定・条件・未所持の物を含む入力では、費用のかかる操作を選ばない。"
+
 VARIANTS = {"default": Variant(), "lenient": Variant(replay_only=True),
             "union_schema": Variant(snapshot_schema=True, dynamic_enum=True),
-            "union_schema_noenum": Variant(snapshot_schema=True)}
+            "union_schema_noenum": Variant(snapshot_schema=True),
+            **{name: Variant(schema_encoding=name, gemini_only=True) for name in SCHEMA_ENCODINGS},
+            "guard_rules": Variant(prompt_suffix="\n" + GUARD_RULES),
+            "guard_rules_short": Variant(prompt_suffix="\n" + GUARD_RULES_SHORT)}
