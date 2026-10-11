@@ -79,7 +79,8 @@ def rare_consumable(session: dict[str, Any], action: dict[str, Any]) -> bool:
 
 
 def choose_action(session: dict[str, Any], policy: str, *, purify: bool = True,
-                  reserve_purification: bool = False) -> tuple[dict[str, Any], str]:
+                  reserve_purification: bool = False,
+                  elite_holy_water: bool = True) -> tuple[dict[str, Any], str]:
     if policy not in POLICIES:
         raise ValueError(f"Unknown policy: {policy}")
     actions = [a for a in combat.combat_actions(session) if a.get("enabled")]
@@ -89,7 +90,12 @@ def choose_action(session: dict[str, Any], policy: str, *, purify: bool = True,
     if policy == "attack_only":
         return next(a for a in actions if a["type"] == "attack"), first_target
     if session["combat"]["encounter"].get("encounter_class") in {"trash", "elite"}:
-        actions = [a for a in actions if not rare_consumable(session, a)]
+        allow_holy = (elite_holy_water
+                      and session["combat"]["encounter"].get("encounter_class") == "elite"
+                      and any(combat._resistance_multiplier(e, "holy") > 1 for e in enemies))
+        actions = [a for a in actions if not rare_consumable(session, a)
+                   or (allow_holy and a["type"] == "item" and a["id"] == "holy_water"
+                       and a.get("quantity", 1) > 1)]
     if policy == "heuristic":
         specials = [a for a in actions if a["type"] == "special" and a.get("outcome") == "purified"]
         if purify and specials:

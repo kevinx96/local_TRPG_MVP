@@ -268,6 +268,8 @@ class Chapter34Tests(unittest.TestCase):
             self.assertEqual(s["character"]["level"], 1)
             self.act(s, "sneak_through_ash", False)
             self.assertTrue(s["enemy_first_requested"])
+            # This navigation fixture must survive the real enemy-first round.
+            s["character"].update(hp=200, max_hp=200)
             with patch.object(combat, "random", random.Random(1)):
                 self.finish(s)
             self.assertEqual(state.current_location_id(s), "valley_lava_bridge")

@@ -9,8 +9,8 @@ from .upgrade_forest import ROOT
 def tune(pack: dict[str, Any]) -> None:
     enemies = {e["id"]: e for e in pack["enemies"]}
     for identifier, hp, damage, accuracy, resistances in (
-        ("ash_wraith", 22, "1d24", 40, {"holy": 1.4}),
-        ("lava_drake", 25, "1d20", 75, {"physical": .5}),
+        ("ash_wraith", 4, "1d64", 26, {"holy": 1.4, "physical": .7}),
+        ("lava_drake", 6, "1d56", 25, {"physical": .7}),
         ("xanxus_phantom", 147, "1d24", 80, {"physical": .65, "ice": 1.95, "holy": 1.5}),
     ):
         enemy = enemies[identifier]

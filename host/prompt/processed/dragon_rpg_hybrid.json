@@ -12064,8 +12064,8 @@
       "id": "ash_wraith",
       "name": "煤の亡霊",
       "description": "竜の炎に焼かれた者たちの怨念が、煤となって漂う亡霊。",
-      "hp": 22,
-      "max_hp": 22,
+      "hp": 4,
+      "max_hp": 4,
       "element": "dark",
       "attributes": {
         "str": 12,
@@ -12076,8 +12076,8 @@
       "combat": {
         "basic_attack": {
           "name": "煤の亡霊",
-          "damage": "1d24",
-          "accuracy": 40,
+          "damage": "1d64",
+          "accuracy": 26,
           "element": "dark"
         },
         "defense": 0,
@@ -12085,7 +12085,7 @@
       },
       "resistances": {
         "holy": 1.4,
-        "physical": 0.5,
+        "physical": 0.7,
         "fire": 0.5
       },
       "skills": [
@@ -12093,8 +12093,8 @@
           "id": "ash_embrace",
           "name": "煤の抱擁",
           "kind": "attack",
-          "damage": "1d24",
-          "accuracy": 40,
+          "damage": "1d64",
+          "accuracy": 26,
           "element": "fire",
           "ai_weight": 2,
           "on_hit_status": {
@@ -12108,8 +12108,8 @@
           "id": "resentment",
           "name": "怨嗟",
           "kind": "attack",
-          "damage": "1d24",
-          "accuracy": 40,
+          "damage": "1d64",
+          "accuracy": 26,
           "element": "dark",
           "ai_weight": 1
         }
@@ -12125,8 +12125,8 @@
       "id": "lava_drake",
       "name": "溶岩ドレイク",
       "description": "竜の谷に棲む小型の竜。イグニスの眷属とされる。",
-      "hp": 25,
-      "max_hp": 25,
+      "hp": 6,
+      "max_hp": 6,
       "element": "fire",
       "attributes": {
         "str": 12,
@@ -12137,8 +12137,8 @@
       "combat": {
         "basic_attack": {
           "name": "溶岩ドレイク",
-          "damage": "1d20",
-          "accuracy": 75,
+          "damage": "1d56",
+          "accuracy": 25,
           "element": "fire"
         },
         "defense": 0,
@@ -12147,15 +12147,15 @@
       "resistances": {
         "ice": 1.5,
         "fire": 0.5,
-        "physical": 0.5
+        "physical": 0.7
       },
       "skills": [
         {
           "id": "lava_breath",
           "name": "溶岩の吐息",
           "kind": "attack",
-          "damage": "1d20",
-          "accuracy": 75,
+          "damage": "1d56",
+          "accuracy": 25,
           "element": "fire",
           "ai_weight": 2
         },
@@ -12163,8 +12163,8 @@
           "id": "hook_claw",
           "name": "鉤爪",
           "kind": "attack",
-          "damage": "1d20",
-          "accuracy": 75,
+          "damage": "1d56",
+          "accuracy": 25,
           "element": "physical",
           "ai_weight": 1
         }
