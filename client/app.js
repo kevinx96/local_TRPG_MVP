@@ -609,6 +609,7 @@ function renderSession(session) {
   }
   state.session = session;
   state.sessionId = session.id;
+  renderMaps();
   if (els.input) els.input.placeholder = session.free_input_hint || "行動や台詞を自由に入力してください";
   state.nextDiceDc = Number(session.next_dice_dc || 0);
   state.nextDiceType = session.next_dice_type || "1d20";
@@ -1713,3 +1714,72 @@ document.querySelector("#shopOverlay").addEventListener("keydown", event => {
 
 /* Boot */
 init();
+
+/* Maps use public, visibility-filtered node data only. */
+function mapMarkup(map, mini = false) {
+  const nodes = map.nodes.filter(node => node.visibility !== 'hidden');
+  const symbols = {start:'●', battle:'⚔', event:'✦', rest:'☾', boss:'♛', branch:'✦', exit:'⌂', locked:'🔒', treasure:'◆'};
+  const lines = map.edges.map(edge => {
+    const a = nodes.find(n => n.id === edge.from), b = nodes.find(n => n.id === edge.to);
+    return a && b ? `<line x1="${a.x}%" y1="${a.y}%" x2="${b.x}%" y2="${b.y}%" class="${edge.visited ? 'visited' : ''}" />` : '';
+  }).join('');
+  return `<svg class="map-lines" aria-hidden="true">${lines}</svg>` + nodes.map(node => {
+    const unknown = node.visibility === 'adjacent-unknown';
+    const label = unknown ? '？' : node.label;
+    return `<${mini ? 'span' : 'button type="button"'} class="map-node ${node.visibility} ${node.current ? 'current' : ''} ${node.submap ? 'submap' : ''}"
+      style="left:${node.x}%;top:${node.y}%" data-node-id="${escapeAttr(node.id)}" aria-label="${escapeAttr(label)}">
+      <span class="map-symbol">${unknown ? '？' : node.visibility === 'locked' ? '🔒' : symbols[node.kind] || '●'}</span>
+      ${mini ? '' : `<span class="map-label">${escapeHtml(label)}</span>`}</${mini ? 'span' : 'button'}>`;
+  }).join('');
+}
+
+function renderMaps(selectedId) {
+  const data = state.session?.map;
+  const current = data?.maps.find(m => m.id === data.current_map_id);
+  const mini = document.querySelector('#miniMap');
+  document.querySelector('#mapToggleBtn').disabled = !current;
+  mini.hidden = !current;
+  if (!current) { document.querySelector('#mapOverlay').style.display = 'none'; return; }
+  mini.innerHTML = mapMarkup(current, true);
+  const selected = data.maps.find(m => m.id === selectedId) || current;
+  const parent = data.maps.find(m => m.id === selected.parent);
+  const breadcrumb = document.querySelector('#mapBreadcrumb');
+  breadcrumb.innerHTML = `${parent ? `<button type="button" data-map-id="${escapeAttr(parent.id)}">${escapeHtml(parent.title)}</button> › ` : ''}<strong>${escapeHtml(selected.title)}</strong>`;
+  breadcrumb.querySelector('button')?.addEventListener('click', () => renderMaps(parent.id));
+  const full = document.querySelector('#fullMap');
+  full.innerHTML = mapMarkup(selected);
+  document.querySelector('#mapDetail').textContent = '';
+  for (const button of full.querySelectorAll('[data-node-id]')) {
+    const node = selected.nodes.find(n => n.id === button.dataset.nodeId);
+    const describe = () => { document.querySelector('#mapDetail').textContent = [node.label || '？', node.recommended, node.description].filter(Boolean).join('　'); };
+    button.addEventListener('mouseenter', describe);
+    button.addEventListener('focus', describe);
+    button.addEventListener('click', async () => {
+      describe();
+      if (state.turnBusy || state.serviceBusy || state.session.in_combat || state.session.game_over) return;
+      if (selected.id !== current.id) {
+        if (node.submap && data.maps.some(m => m.id === node.submap)) renderMaps(node.submap);
+        return;
+      }
+      state.turnBusy = true;
+      try { renderSession(await serviceRequest('map/move', {node_id: node.id})); }
+      catch (error) { document.querySelector('#mapDetail').textContent = error.message; }
+      finally { state.turnBusy = false; }
+    });
+  }
+}
+
+function openMap() {
+  renderMaps();
+  document.querySelector('#mapOverlay').style.display = '';
+  document.querySelector('#mapCloseBtn').focus();
+}
+document.querySelector('#mapToggleBtn').addEventListener('click', openMap);
+document.querySelector('#miniMap').addEventListener('click', openMap);
+document.querySelector('#mapCloseBtn').addEventListener('click', () => {
+  document.querySelector('#mapOverlay').style.display = 'none';
+  document.querySelector('#mapToggleBtn').focus();
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') document.querySelector('#mapOverlay').style.display = 'none';
+});

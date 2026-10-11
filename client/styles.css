@@ -1661,3 +1661,22 @@ button, select, textarea, input { font: inherit; }
   .combat-intro-panel p { font-size: 15px; line-height: 1.75; }
   .combat-intro-panel button { width: 100%; margin-top: 18px; }
 }
+
+.map-controls { display: grid; justify-items: end; gap: 10px; }
+.mini-map { position: relative; width: 200px; height: 140px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--panel) 85%, transparent); cursor: pointer; }
+.map-overlay { z-index: 100; }
+.full-map { position: relative; flex: 1; min-height: 300px; margin: 30px 5%; }
+.map-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.map-lines line { stroke: var(--line); stroke-width: 2; }
+.map-lines line.visited { stroke: var(--gold-dim); stroke-width: 3; }
+.map-node { position: absolute; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--gold); background: var(--panel-3); color: var(--gold); display: grid; place-items: center; cursor: pointer; padding: 0; }
+.map-node.submap { border-radius: var(--radius-sm); }
+.map-node.adjacent-unknown { border: 1px dashed var(--muted); color: var(--muted); }
+.map-node.current { box-shadow: 0 0 0 7px var(--gold-glow); animation: mapPulse 2s ease-in-out infinite; }
+.map-label { position: absolute; top: 45px; color: var(--text); width: 150px; text-align: center; font-size: 12px; }
+.mini-map .map-node { width: 19px; height: 19px; font-size: 11px; }
+#mapBreadcrumb button { background: none; color: var(--gold); border: 0; cursor: pointer; }
+#mapDetail { min-height: 80px; padding: 20px; color: var(--text-dim); }
+@keyframes mapPulse { 50% { box-shadow: 0 0 0 12px var(--gold-glow); } }
+@media (prefers-reduced-motion: reduce) { .map-node.current { animation: none; } }
+@media (max-width: 600px) { .map-label { width: 85px; font-size: 10px; } .full-map { margin: 20px 8%; } }

@@ -14,6 +14,7 @@ from typing import Any, Optional, Union
 from .intent_resolver import resolve_intent
 from .item_mechanics import item_combat_spec, structured_item_effect
 from .quests import public_quests, record_quest_changes
+from .maps import public_maps
 from .shops import item_category
 from .scenario_context import (
     current_actions_for_session,
@@ -389,6 +390,7 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     public.pop("event_log", None)
     public.pop("shop_stock", None)
     public["quests"] = public_quests(session)
+    public["map"] = public_maps(session)
     public["character"]["inventory"] = [
         _enrich_item(item if isinstance(item, dict) else {"name": item}, session.get("scenario_pack"))
         for item in session["character"].get("inventory", [])

@@ -26,6 +26,7 @@ from .combat import (
 from .gm_contract import STATE_MARKER, build_gm_contract_prompt, build_opening_prompt, split_visible_and_json
 from .llm_client import LLMClientError, chat_completion, debug_log
 from . import llm_trace
+from .maps import movement_action
 from .shops import ShopError, public_shop, trade, use_item
 from .free_actions import InvalidPlan, adjudicate, build_plan_messages, parse_plan, planner_config
 from .scenario_context import (
@@ -87,6 +88,10 @@ class TurnRequest(BaseModel):
     action_id: Optional[str] = None
     speaker: str = "プレイヤー"
     client_dice: Optional[dict[str, Any]] = None
+
+
+class MapMoveRequest(BaseModel):
+    node_id: str
 
 
 class ScenarioSaveRequest(BaseModel):
@@ -431,6 +436,19 @@ def api_turn(session_id: str, request: TurnRequest) -> dict[str, Any]:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
 
     return _run_turn(session, request)
+
+
+@app.post("/api/sessions/{session_id}/map/move")
+def api_map_move(session_id: str, request: MapMoveRequest) -> dict[str, Any]:
+    try:
+        session = load_session(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    try:
+        action = movement_action(session, request.node_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    return _run_turn(session, TurnRequest(text=action["text"], action_id=action["id"]))
 
 
 @app.post("/api/sessions/{session_id}/combat/actions")

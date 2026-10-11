@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/static/styles.css?v=20261012-shops" />
+    <link rel="stylesheet" href="/static/styles.css?v=20261012-forest-v3" />
   </head>
   <body>
 
@@ -102,7 +102,11 @@
           <h1 id="sceneTitle">開始準備</h1>
           <div id="enemyPanel" class="enemy-panel" style="display:none"></div>
         </div>
-        <button id="menuToggleBtn" type="button" class="gal-icon-btn">MENU</button>
+        <div class="map-controls">
+          <div><button id="mapToggleBtn" type="button" class="gal-icon-btn" disabled>MAP</button>
+          <button id="menuToggleBtn" type="button" class="gal-icon-btn">MENU</button></div>
+          <button id="miniMap" class="mini-map" type="button" aria-label="地図を開く" hidden></button>
+        </div>
       </div>
 
       <section id="combatScreen" class="combat-screen" style="display:none" aria-live="polite">
@@ -199,6 +203,11 @@
         <div id="messages" class="messages" aria-live="polite"></div>
       </div>
 
+      <div id="mapOverlay" class="gal-overlay map-overlay" style="display:none" role="dialog" aria-modal="true" aria-label="地図">
+        <div class="gal-overlay-header"><nav id="mapBreadcrumb" aria-label="地図"></nav>
+          <button id="mapCloseBtn" type="button" class="gal-close-btn" aria-label="閉じる">×</button></div>
+        <div id="fullMap" class="full-map"></div><p id="mapDetail" aria-live="polite"></p>
+      </div>
       <!-- System/Character Menu Overlay -->
       <div id="menuOverlay" class="gal-overlay" style="display:none">
         <div class="gal-overlay-header">
@@ -255,6 +264,6 @@
       </div>
     </main>
 
-    <script src="/static/app.js?v=20261012-shops"></script>
+    <script src="/static/app.js?v=20261012-forest-v3"></script>
   </body>
 </html>

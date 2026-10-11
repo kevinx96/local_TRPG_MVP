@@ -29,6 +29,14 @@ def ensure_world_state(session: dict[str, Any]) -> dict[str, str]:
 
     canonical = {"scene_id": scene_id, "location_id": location_id}
     session[WORLD_STATE_KEY] = canonical
+    if "visited_locations" not in session:
+        history = session.get("location_history", [])
+        session["visited_locations"] = list(dict.fromkeys(
+            str(entry.get("location_id", "") if isinstance(entry, dict) else entry)
+            for entry in history if entry
+        ))
+    if location_id and location_id not in session["visited_locations"]:
+        session["visited_locations"].append(location_id)
     session.pop("current_scene", None)
     session.pop("current_location", None)
     return canonical
@@ -89,6 +97,8 @@ def commit_world_position(
         "scene_id": requested_scene,
         "location_id": requested_location,
     }
+    if requested_location not in session["visited_locations"]:
+        session["visited_locations"].append(requested_location)
     return True, ""
 
 

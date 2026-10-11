@@ -6,6 +6,31 @@
   "required": ["meta", "scenes"],
   "additionalProperties": true,
   "properties": {
+    "maps": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["id", "title", "nodes", "edges"],
+        "properties": {
+          "id": {"type": "string"}, "title": {"type": "string"},
+          "parent": {"type": "string"},
+          "nodes": {"type": "array", "items": {
+            "type": "object", "required": ["id", "label", "kind", "x", "y", "location_ids"],
+            "properties": {
+              "id": {"type": "string"}, "label": {"type": "string"},
+              "kind": {"enum": ["start", "battle", "event", "rest", "boss", "branch", "exit", "locked", "treasure"]},
+              "x": {"type": "number", "minimum": 0, "maximum": 100},
+              "y": {"type": "number", "minimum": 0, "maximum": 100},
+              "location_ids": {"type": "array", "items": {"type": "string"}},
+              "submap": {"type": "string"}, "recommended": {"type": "string"}
+            }
+          }},
+          "edges": {"type": "array", "items": {
+            "type": "object", "required": ["from", "to"],
+            "properties": {"from": {"type": "string"}, "to": {"type": "string"}, "action_id": {"type": "string"}}
+          }}
+        }
+      }
+    },
     "quests": {
       "type": "array",
       "items": {
