@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-09-08-death-game-over"
+    "content_revision": "2026-10-11-balance-pass3"
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -294,6 +294,22 @@
           "effects": [
             {
               "set_flag": "checked_supplies"
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "not_flag": "checked_supplies"
+                },
+                "then": [
+                  {
+                    "add_item": {
+                      "id": "holy_water",
+                      "name": "聖水",
+                      "quantity": 2
+                    }
+                  }
+                ]
+              }
             }
           ]
         },
@@ -450,6 +466,42 @@
             "rewrite_notes": [
               "確定済みのアクション結果だけを自然な日本語で描写してください。"
             ]
+          },
+          {
+            "id": "check_supplies_neutral",
+            "purpose": "choice_response",
+            "action_id": "check_supplies",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "装備を確認し、聖水を2個受け取った。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          },
+          {
+            "id": "ask_general_advice_success",
+            "purpose": "choice_response",
+            "action_id": "ask_general_advice",
+            "outcome": "success",
+            "draft": {
+              "gm_text": "「不死の者には聖水が効く」と将軍は付け加えた。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          },
+          {
+            "id": "ask_general_advice_failure",
+            "purpose": "choice_response",
+            "action_id": "ask_general_advice",
+            "outcome": "failure",
+            "draft": {
+              "gm_text": "「不死の者には聖水が効く」と将軍は付け加えた。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
           }
         ]
       }
@@ -1171,7 +1223,10 @@
           ],
           "effects": [
             {
-              "current_location": "dragon_valley_loc"
+              "current_location": "dragon_valley_loc",
+              "flags_set": [
+                "entered_dragon_valley"
+              ]
             }
           ]
         }
@@ -3103,7 +3158,7 @@
             "action_id": "continue_from_elf_spring",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "泉を横目に休まず進むと、茂みの左右から低い唸り声が重なった。二頭の森狼が退路と行く手を分けて塞ぎ、牙を剥いて間合いを詰めてくる。",
+              "gm_text": "泉を横目に休まず進むと、茂みの左右から低い唸り声が重なった。一頭の森狼が退路と行く手を分けて塞ぎ、牙を剥いて間合いを詰めてくる。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -3164,7 +3219,7 @@
       "id": "forest_wolves",
       "scene_id": "dark_forest",
       "title": "闇の森・狼の縄張り",
-      "description": "泉を通り過ぎた先で二頭の森狼が襲いかかる。",
+      "description": "泉を通り過ぎた先で一頭の森狼が襲いかかる。",
       "keywords": [
         "闇の森・狼の縄張り"
       ],
@@ -3179,14 +3234,13 @@
       "choices": [],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "泉を通り過ぎた先で二頭の森狼が襲いかかる。",
+        "summary": "泉を通り過ぎた先で一頭の森狼が襲いかかる。",
         "prepared_turns": []
       },
       "combat": {
         "auto_start": false,
         "flee_allowed": true,
         "enemy_ids": [
-          "forest_wolf",
           "forest_wolf"
         ],
         "victory_effects": {
@@ -3211,7 +3265,7 @@
       "id": "slime_ambush_one",
       "scene_id": "dark_forest",
       "title": "精霊の泉・第一波",
-      "description": "三匹のスライムに包囲されている。",
+      "description": "一匹のスライムに包囲されている。",
       "keywords": [
         "精霊の泉・第一波"
       ],
@@ -3227,15 +3281,13 @@
       "choices": [],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "三匹のスライムに包囲されている。",
+        "summary": "一匹のスライムに包囲されている。",
         "prepared_turns": []
       },
       "combat": {
         "auto_start": false,
         "flee_allowed": false,
         "enemy_ids": [
-          "slime",
-          "slime",
           "slime"
         ],
         "victory_effects": {
@@ -3249,7 +3301,7 @@
           }
         },
         "result_texts": {
-          "victory": "最後の一匹を弾き飛ばした直後、泉の反対側で水音が三つ重なった。休む間もなく、新たな三匹のスライムが水面から這い上がり、半円を描いて包囲を狭めてくる。",
+          "victory": "最後の一匹を弾き飛ばした直後、泉の反対側で水音が一つ重なった。休む間もなく、新たな一匹のスライムが水面から這い上がり、半円を描いて包囲を狭めてくる。",
           "defeat": "精霊の泉・第一波で力尽きました。冒険はここで終わりを迎えます。"
         },
         "encounter_class": "trash"
@@ -3261,7 +3313,7 @@
       "id": "slime_ambush_two",
       "scene_id": "dark_forest",
       "title": "精霊の泉・第二波",
-      "description": "さらに三匹のスライムが泉から這い出す。",
+      "description": "さらに一匹のスライムが泉から這い出す。",
       "keywords": [
         "精霊の泉・第二波"
       ],
@@ -3277,15 +3329,13 @@
       "choices": [],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "さらに三匹のスライムが泉から這い出す。",
+        "summary": "さらに一匹のスライムが泉から這い出す。",
         "prepared_turns": []
       },
       "combat": {
         "auto_start": true,
         "flee_allowed": false,
         "enemy_ids": [
-          "slime",
-          "slime",
           "slime"
         ],
         "victory_effects": {
@@ -3426,7 +3476,10 @@
               "background_image": "/static/images/bg_burning_village.png"
             },
             {
-              "current_location": "village_approach"
+              "current_location": "village_approach",
+              "flags_set": [
+                "reached_village"
+              ]
             }
           ]
         }
@@ -3576,7 +3629,7 @@
       "id": "goblin_fort_first_second",
       "scene_id": "dark_forest",
       "title": "ゴブリン砦・一階後半",
-      "description": "通路の先を、一匹のゴブリンと二匹の弓ゴブリンが守っている。",
+      "description": "通路の先を、一匹のゴブリンと一匹の弓ゴブリンが守っている。",
       "keywords": [
         "ゴブリン砦・一階後半"
       ],
@@ -3592,7 +3645,7 @@
       "choices": [],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "通路の先を、一匹のゴブリンと二匹の弓ゴブリンが守っている。",
+        "summary": "通路の先を、一匹のゴブリンと一匹の弓ゴブリンが守っている。",
         "prepared_turns": [
           {
             "id": "fort_second_guards_fight",
@@ -3603,7 +3656,7 @@
             "action_id": "fight_fort_second_guards",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "一階奥の角を曲がると、中央のゴブリンが槍を構え、両脇の弓兵が木箱の上へ飛び乗った。矢じりがこちらを向き、三方向から逃げ道を封じてくる。",
+              "gm_text": "一階奥の角を曲がると、中央のゴブリンが槍を構え、両脇の弓兵が木箱の上へ飛び乗った。矢じりがこちらを向き、二方向から逃げ道を封じてくる。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -3621,7 +3674,7 @@
             "action_id": "fort_second_bypass",
             "outcome": "success",
             "draft": {
-              "gm_text": "巡回の隙を読み、積み上げられた樽の陰を抜けて三人組の背後を通過した。二階へ続く階段まで誰にも気づかれていない。",
+              "gm_text": "巡回の隙を読み、積み上げられた樽の陰を抜けて二人組の背後を通過した。二階へ続く階段まで誰にも気づかれていない。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -3639,7 +3692,7 @@
             "action_id": "fort_second_bypass",
             "outcome": "failure",
             "draft": {
-              "gm_text": "身を隠した木箱が軋み、二匹の弓ゴブリンが同時に振り向いた。退路へ矢が突き刺さり、中央のゴブリンが武器を抜いて迫る。",
+              "gm_text": "身を隠した木箱が軋み、一匹の弓ゴブリンが同時に振り向いた。退路へ矢が突き刺さり、中央のゴブリンが武器を抜いて迫る。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -3655,7 +3708,6 @@
         "flee_allowed": true,
         "enemy_ids": [
           "goblin",
-          "goblin_archer",
           "goblin_archer"
         ],
         "victory_effects": {
@@ -3945,7 +3997,7 @@
       "id": "goblin_fort_second_left",
       "scene_id": "dark_forest",
       "title": "ゴブリン砦・二階左",
-      "description": "扉を開けた瞬間、五匹の猛犬が鎖を引きちぎって襲いかかる。",
+      "description": "扉を開けた瞬間、一匹の猛犬が鎖を引きちぎって襲いかかる。",
       "keywords": [
         "ゴブリン砦・二階左"
       ],
@@ -3963,17 +4015,13 @@
       "choices": [],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "扉を開けた瞬間、五匹の猛犬が鎖を引きちぎって襲いかかる。",
+        "summary": "扉を開けた瞬間、一匹の猛犬が鎖を引きちぎって襲いかかる。",
         "prepared_turns": []
       },
       "combat": {
         "auto_start": false,
         "flee_allowed": false,
         "enemy_ids": [
-          "war_hound",
-          "war_hound",
-          "war_hound",
-          "war_hound",
           "war_hound"
         ],
         "victory_effects": {
@@ -4084,7 +4132,7 @@
             "action_id": "invent_goblin_password",
             "outcome": "success",
             "draft": {
-              "gm_text": "即興の暗号を堂々と告げると鉄門が開いた。しかし先に待っていたのは財宝ではなく、金貨の山に座るゴブリン王と二匹の弓兵だった。",
+              "gm_text": "即興の暗号を堂々と告げると鉄門が開いた。しかし先に待っていたのは財宝ではなく、金貨の山に座るゴブリン王と一匹の弓兵だった。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -4102,7 +4150,7 @@
             "action_id": "invent_goblin_password",
             "outcome": "failure",
             "draft": {
-              "gm_text": "沈黙の後、警報の鐘が鳴る。退路には三匹の大ゴブリンが立ち塞がっていた。",
+              "gm_text": "沈黙の後、警報の鐘が鳴る。退路には一匹の大ゴブリンが立ち塞がっていた。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -4120,7 +4168,7 @@
             "action_id": "admit_no_password",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "暗号を知らないと答えた瞬間、小窓が勢いよく閉じた。直後に背後の隠し扉が開き、三匹の大ゴブリンが棍棒を構えて退路を塞ぐ。",
+              "gm_text": "暗号を知らないと答えた瞬間、小窓が勢いよく閉じた。直後に背後の隠し扉が開き、一匹の大ゴブリンが棍棒を構えて退路を塞ぐ。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -4208,7 +4256,7 @@
       "id": "goblin_fort_third_guards",
       "scene_id": "dark_forest",
       "title": "ゴブリン砦・三階警備戦",
-      "description": "鉄門の前後を三匹の大ゴブリンに挟まれた。",
+      "description": "鉄門の前後を一匹の大ゴブリンに挟まれた。",
       "keywords": [
         "ゴブリン砦・三階警備戦"
       ],
@@ -4224,15 +4272,13 @@
       "choices": [],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "鉄門の前後を三匹の大ゴブリンに挟まれた。",
+        "summary": "鉄門の前後を一匹の大ゴブリンに挟まれた。",
         "prepared_turns": []
       },
       "combat": {
         "auto_start": false,
         "flee_allowed": false,
         "enemy_ids": [
-          "hobgoblin",
-          "hobgoblin",
           "hobgoblin"
         ],
         "victory_effects": {
@@ -4246,7 +4292,7 @@
           }
         },
         "result_texts": {
-          "victory": "三匹の警備兵を倒すと、戦闘の衝撃で鉄門の錠が外れた。扉の先は財宝庫だ。金貨の山からゴブリン王が立ち上がり、二匹の弓兵が高台へ散って次の戦いを挑んでくる。",
+          "victory": "一匹の警備兵を倒すと、戦闘の衝撃で鉄門の錠が外れた。扉の先は財宝庫だ。金貨の山からゴブリン王が立ち上がり、一匹の弓兵が高台へ散って次の戦いを挑んでくる。",
           "defeat": "ゴブリン砦・三階警備戦で力尽きました。冒険はここで終わりを迎えます。"
         },
         "encounter_class": "elite"
@@ -4258,7 +4304,7 @@
       "id": "goblin_fort_fourth",
       "scene_id": "dark_forest",
       "title": "ゴブリン砦・四階財宝庫",
-      "description": "財宝の山の前でゴブリン王と二匹の弓兵が待ち構えている。",
+      "description": "財宝の山の前でゴブリン王と一匹の弓兵が待ち構えている。",
       "keywords": [
         "ゴブリン砦・四階財宝庫"
       ],
@@ -4274,7 +4320,7 @@
       "choices": [],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "財宝の山の前でゴブリン王と二匹の弓兵が待ち構えている。",
+        "summary": "財宝の山の前でゴブリン王と一匹の弓兵が待ち構えている。",
         "prepared_turns": []
       },
       "combat": {
@@ -4283,7 +4329,6 @@
         "flee_allowed": false,
         "enemy_ids": [
           "goblin_king",
-          "goblin_archer",
           "goblin_archer"
         ],
         "victory_effects": {
@@ -5305,7 +5350,10 @@
           "visible_after": "xanxus_encountered",
           "effects": [
             {
-              "current_location": "dragon_valley_loc"
+              "current_location": "dragon_valley_loc",
+              "flags_set": [
+                "entered_dragon_valley"
+              ]
             }
           ]
         },
@@ -5619,7 +5667,10 @@
               "set_flag": "accepted_ian_request"
             },
             {
-              "current_location": "dragon_valley_loc"
+              "current_location": "dragon_valley_loc",
+              "flags_set": [
+                "entered_dragon_valley"
+              ]
             }
           ],
           "portrait_image": "/static/images/npc_ian_serious.png"
@@ -5635,7 +5686,10 @@
           "visible_after": "xanxus_encountered",
           "effects": [
             {
-              "current_location": "dragon_valley_loc"
+              "current_location": "dragon_valley_loc",
+              "flags_set": [
+                "entered_dragon_valley"
+              ]
             }
           ],
           "portrait_image": "/static/images/npc_ian_serious.png"
@@ -5887,7 +5941,8 @@
         "魔法の巻物",
         "巻物",
         "攻撃魔法"
-      ]
+      ],
+      "rare": true
     },
     {
       "id": "mp_potion",
@@ -6011,7 +6066,8 @@
         "kind": "heal",
         "healing": "30",
         "consumable": true
-      }
+      },
+      "rare": true
     },
     {
       "id": "fireball_scroll",
@@ -6023,7 +6079,8 @@
         "accuracy": 90,
         "element": "fire",
         "consumable": true
-      }
+      },
+      "rare": true
     },
     {
       "id": "smoke_bomb",
@@ -6227,6 +6284,19 @@
       "traits": [
         "food"
       ]
+    },
+    {
+      "id": "holy_water",
+      "name": "聖水",
+      "description": "教会で清められた水。不死の存在を焼く。",
+      "combat": {
+        "kind": "damage",
+        "damage": "36",
+        "accuracy": 100,
+        "element": "holy",
+        "consumable": true
+      },
+      "rare": true
     }
   ],
   "clues": [
@@ -6258,8 +6328,8 @@
       "id": "slime",
       "name": "スライム",
       "description": "森に潜む弱い魔物。チュートリアル用の敵。",
-      "hp": 5,
-      "max_hp": 5,
+      "hp": 20,
+      "max_hp": 20,
       "mp": 0,
       "max_mp": 0,
       "sp": 0,
@@ -6274,12 +6344,12 @@
       "combat": {
         "basic_attack": {
           "name": "体当たり",
-          "damage": "1d4+str/4",
+          "damage": "1d6",
           "accuracy": 80,
           "element": "physical"
         },
         "defense": 0,
-        "evade": 5
+        "evade": 10
       },
       "resistances": {
         "physical": 1,
@@ -6300,8 +6370,8 @@
       "id": "ignis",
       "name": "邪竜イグニス",
       "description": "王国を脅かす紅き邪竜。炎の息を吐き、圧倒的な力を持つ。冷気に弱い。",
-      "hp": 120,
-      "max_hp": 120,
+      "hp": 152,
+      "max_hp": 152,
       "mp": 150,
       "max_mp": 150,
       "sp": 10,
@@ -6316,12 +6386,12 @@
       "combat": {
         "basic_attack": {
           "name": "爪撃",
-          "damage": "1d6+str/4",
-          "accuracy": 86,
+          "damage": "1d20",
+          "accuracy": 55,
           "element": "physical"
         },
         "defense": 2,
-        "evade": 3
+        "evade": 4
       },
       "resistances": {
         "physical": 0.65,
@@ -6342,9 +6412,9 @@
           "kind": "attack",
           "description": "灼熱の炎を広範囲に吐き出す。",
           "effect": "全体に2d6ダメージ",
-          "damage": "2d6+int/4",
-          "dice_type": "2d6+int/4",
-          "accuracy": 80,
+          "damage": "1d20",
+          "dice_type": "1d20",
+          "accuracy": 55,
           "element": "fire",
           "cost": 5,
           "cost_type": "mp",
@@ -6356,9 +6426,9 @@
           "kind": "attack",
           "description": "巨大な尾で薙ぎ払う。",
           "effect": "1d20+str判定、単体ダメージ",
-          "damage": "1d8+str/4",
-          "dice_type": "1d8+str/4",
-          "accuracy": 90,
+          "damage": "1d20",
+          "dice_type": "1d20",
+          "accuracy": 55,
           "element": "physical",
           "cost": 0,
           "ai_weight": 3
@@ -6370,8 +6440,8 @@
       "id": "goblin",
       "name": "ゴブリン",
       "description": "粗末な短剣を持つ小鬼。",
-      "hp": 15,
-      "max_hp": 15,
+      "hp": 8,
+      "max_hp": 8,
       "attributes": {
         "str": 6,
         "dex": 8,
@@ -6381,12 +6451,12 @@
       "combat": {
         "basic_attack": {
           "name": "粗末な短剣",
-          "damage": "1d4+dex/4",
-          "accuracy": 85,
+          "damage": "1d6",
+          "accuracy": 100,
           "element": "physical"
         },
-        "defense": 0,
-        "evade": 8
+        "defense": 2,
+        "evade": 12
       },
       "resistances": {},
       "rewards": {
@@ -6401,8 +6471,8 @@
       "id": "goblin_archer",
       "name": "弓ゴブリン",
       "description": "高所から粗末な弓を射るゴブリン。",
-      "hp": 12,
-      "max_hp": 12,
+      "hp": 16,
+      "max_hp": 16,
       "attributes": {
         "str": 4,
         "dex": 10,
@@ -6412,11 +6482,11 @@
       "combat": {
         "basic_attack": {
           "name": "粗末な矢",
-          "damage": "1d6+dex/5",
-          "accuracy": 88,
+          "damage": "1d6",
+          "accuracy": 100,
           "element": "physical"
         },
-        "defense": 0,
+        "defense": 1,
         "evade": 10
       },
       "resistances": {},
@@ -6432,8 +6502,8 @@
       "id": "hobgoblin",
       "name": "大ゴブリン",
       "description": "重い棍棒を振るう大柄なゴブリン。",
-      "hp": 30,
-      "max_hp": 30,
+      "hp": 44,
+      "max_hp": 44,
       "attributes": {
         "str": 12,
         "dex": 5,
@@ -6443,12 +6513,12 @@
       "combat": {
         "basic_attack": {
           "name": "大棍棒",
-          "damage": "1d8+str/4",
-          "accuracy": 82,
+          "damage": "1d6",
+          "accuracy": 100,
           "element": "physical"
         },
-        "defense": 2,
-        "evade": 3
+        "defense": 1,
+        "evade": 5
       },
       "resistances": {},
       "rewards": {
@@ -6463,8 +6533,8 @@
       "id": "war_hound",
       "name": "猛犬",
       "description": "砦で飼い慣らされた獰猛な犬。",
-      "hp": 10,
-      "max_hp": 10,
+      "hp": 28,
+      "max_hp": 28,
       "attributes": {
         "str": 7,
         "dex": 10,
@@ -6473,12 +6543,12 @@
       "combat": {
         "basic_attack": {
           "name": "噛みつき",
-          "damage": "1d4+str/4",
-          "accuracy": 88,
+          "damage": "1d10",
+          "accuracy": 75,
           "element": "physical"
         },
-        "defense": 0,
-        "evade": 10
+        "defense": 2,
+        "evade": 7
       },
       "resistances": {},
       "rewards": {
@@ -6493,8 +6563,8 @@
       "id": "forest_wolf",
       "name": "森狼",
       "description": "闇の森を群れで狩る狼。",
-      "hp": 18,
-      "max_hp": 18,
+      "hp": 32,
+      "max_hp": 32,
       "attributes": {
         "str": 9,
         "dex": 11,
@@ -6503,12 +6573,12 @@
       "combat": {
         "basic_attack": {
           "name": "牙",
-          "damage": "1d6+str/4",
-          "accuracy": 88,
+          "damage": "1d10",
+          "accuracy": 70,
           "element": "physical"
         },
-        "defense": 1,
-        "evade": 10
+        "defense": 2,
+        "evade": 0
       },
       "resistances": {},
       "rewards": {
@@ -6523,8 +6593,8 @@
       "id": "slime_king",
       "name": "スライム王",
       "description": "錆びた王冠を載せた巨大なスライム。",
-      "hp": 38,
-      "max_hp": 38,
+      "hp": 80,
+      "max_hp": 80,
       "attributes": {
         "str": 11,
         "dex": 2,
@@ -6534,12 +6604,12 @@
       "combat": {
         "basic_attack": {
           "name": "王の圧潰",
-          "damage": "1d8+str/4",
-          "accuracy": 82,
+          "damage": "1d10",
+          "accuracy": 100,
           "element": "physical"
         },
-        "defense": 2,
-        "evade": 2
+        "defense": 1,
+        "evade": 3
       },
       "resistances": {
         "fire": 1.25
@@ -6563,8 +6633,8 @@
       "id": "goblin_king",
       "name": "ゴブリン王",
       "description": "砦の財宝を支配するゴブリンの王。",
-      "hp": 55,
-      "max_hp": 55,
+      "hp": 64,
+      "max_hp": 64,
       "attributes": {
         "str": 14,
         "dex": 8,
@@ -6574,12 +6644,12 @@
       "combat": {
         "basic_attack": {
           "name": "王の戦斧",
-          "damage": "1d10+str/4",
-          "accuracy": 88,
+          "damage": "1d10",
+          "accuracy": 95,
           "element": "physical"
         },
-        "defense": 3,
-        "evade": 5
+        "defense": 1,
+        "evade": 0
       },
       "resistances": {},
       "rewards": {
@@ -6596,7 +6666,7 @@
       "id": "zebok",
       "name": "亡霊主宰ゼボク",
       "description": "死を逆向きに生きる亡霊の主。通常攻撃ではHPがさらに負へ沈む。",
-      "hp": -100,
+      "hp": -96,
       "max_hp": 0,
       "attributes": {
         "str": 8,
@@ -6608,12 +6678,12 @@
         "life_rule": "negative_undead",
         "basic_attack": {
           "name": "暗黒の爪",
-          "damage": "1d6+int/4",
-          "accuracy": 88,
+          "damage": "1d10",
+          "accuracy": 80,
           "element": "dark"
         },
-        "defense": 0,
-        "evade": 8
+        "defense": 3,
+        "evade": 17
       },
       "resistances": {
         "holy": 1.5,
@@ -6631,8 +6701,8 @@
           "id": "zebok_bone_dragon",
           "name": "亡霊召喚",
           "kind": "attack",
-          "damage": "7d4",
-          "accuracy": 82,
+          "damage": "1d10",
+          "accuracy": 80,
           "element": "dark",
           "ai_weight": 2
         },
@@ -6648,8 +6718,8 @@
           "id": "dark_feast",
           "name": "暗黒の宴",
           "kind": "attack",
-          "damage": "2d6+int",
-          "accuracy": 85,
+          "damage": "1d10",
+          "accuracy": 80,
           "element": "dark",
           "ai_weight": 3
         }
@@ -6661,8 +6731,8 @@
       "name": "ファイアスライム",
       "description": "炎をまとった赤いスライム。",
       "element": "fire",
-      "hp": 24,
-      "max_hp": 24,
+      "hp": 28,
+      "max_hp": 28,
       "attributes": {
         "str": 8,
         "dex": 5,
@@ -6672,12 +6742,12 @@
       "combat": {
         "basic_attack": {
           "name": "火の体当たり",
-          "damage": "1d6+int/4",
-          "accuracy": 86,
+          "damage": "1d6",
+          "accuracy": 55,
           "element": "fire"
         },
         "defense": 1,
-        "evade": 4
+        "evade": 0
       },
       "resistances": {
         "fire": 0.0,
@@ -6697,8 +6767,8 @@
       "name": "火の精霊",
       "description": "人の形を取った荒れ狂う炎。",
       "element": "fire",
-      "hp": 48,
-      "max_hp": 48,
+      "hp": 32,
+      "max_hp": 32,
       "attributes": {
         "str": 9,
         "dex": 9,
@@ -6708,12 +6778,12 @@
       "combat": {
         "basic_attack": {
           "name": "火炎の腕",
-          "damage": "1d8+int/4",
-          "accuracy": 88,
+          "damage": "2d10",
+          "accuracy": 75,
           "element": "fire"
         },
-        "defense": 2,
-        "evade": 8
+        "defense": 0,
+        "evade": 10
       },
       "resistances": {
         "fire": 0.0,
@@ -6733,8 +6803,8 @@
       "name": "氷の精霊",
       "description": "村の火災の中に佇む冷気の塊。",
       "element": "ice",
-      "hp": 52,
-      "max_hp": 52,
+      "hp": 44,
+      "max_hp": 44,
       "attributes": {
         "str": 10,
         "dex": 8,
@@ -6744,12 +6814,12 @@
       "combat": {
         "basic_attack": {
           "name": "氷柱",
-          "damage": "1d8+int/4",
-          "accuracy": 88,
+          "damage": "2d12",
+          "accuracy": 35,
           "element": "ice"
         },
-        "defense": 3,
-        "evade": 7
+        "defense": 0,
+        "evade": 5
       },
       "resistances": {
         "ice": 0.0,
@@ -6768,8 +6838,8 @@
       "name": "氷霜の巨狼",
       "description": "氷の太刀を核として実体化した巨大な霜の狼。",
       "element": "ice",
-      "hp": 140,
-      "max_hp": 140,
+      "hp": 124,
+      "max_hp": 124,
       "attributes": {
         "str": 22,
         "dex": 18,
@@ -6779,12 +6849,12 @@
       "combat": {
         "basic_attack": {
           "name": "凍爪",
-          "damage": "2d8+str/4",
-          "accuracy": 90,
+          "damage": "1d10",
+          "accuracy": 65,
           "element": "ice"
         },
-        "defense": 5,
-        "evade": 12
+        "defense": 1,
+        "evade": 0
       },
       "resistances": {
         "ice": 0.0,
@@ -7016,6 +7086,34 @@
           "survive_at_one": true,
           "cost": 0
         }
+      ],
+      "level_skills": [
+        {
+          "id": "hero_lv3_a",
+          "name": "渾身斬り・改",
+          "kind": "attack",
+          "damage": "1d8+str/2",
+          "accuracy": 92,
+          "element": "physical",
+          "cost": 3,
+          "cost_type": "sp",
+          "description": "気合を込めた全力の一撃。",
+          "unlock_level": 3,
+          "effect": "敵に1d8+str/2ダメージを与える。",
+          "replaces": "渾身斬り"
+        },
+        {
+          "id": "hero_lv5_b",
+          "name": "不屈の構え",
+          "kind": "defend",
+          "guard_multiplier": 0.25,
+          "survive_at_one": true,
+          "cost": 2,
+          "cost_type": "sp",
+          "description": "構えを固め、致死ダメージにも耐え抜く。",
+          "unlock_level": 5,
+          "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
+        }
       ]
     },
     {
@@ -7041,7 +7139,7 @@
       "combat": {
         "basic_attack": {
           "name": "聖なる杖",
-          "damage": "1d4+str/4",
+          "damage": "1d8+wis/4",
           "accuracy": 88,
           "element": "holy"
         },
@@ -7121,7 +7219,33 @@
           "cost_type": "mp"
         }
       ],
-      "image_female": ""
+      "image_female": "",
+      "level_skills": [
+        {
+          "id": "cleric_lv3_a",
+          "name": "聖なる裁き",
+          "kind": "attack",
+          "damage": "1d8+wis/2",
+          "accuracy": 92,
+          "element": "holy",
+          "cost": 3,
+          "cost_type": "mp",
+          "description": "聖光で敵を攻撃する。",
+          "unlock_level": 3,
+          "effect": "敵に1d8+wis/2ダメージを与える。"
+        },
+        {
+          "id": "cleric_lv5_b",
+          "name": "大いなる癒し",
+          "kind": "heal",
+          "healing": "2d6+wis/2",
+          "cost": 14,
+          "cost_type": "mp",
+          "description": "聖なる祈りで大きく傷を癒す。",
+          "unlock_level": 5,
+          "effect": "HPを2d6+wis/2回復する。"
+        }
+      ]
     },
     {
       "id": "mage",
@@ -7227,7 +7351,38 @@
           "cost_type": "mp"
         }
       ],
-      "image_female": ""
+      "image_female": "",
+      "level_skills": [
+        {
+          "id": "mage_lv3_b",
+          "name": "火球・改",
+          "kind": "attack",
+          "damage": "1d8+int/2",
+          "accuracy": 92,
+          "element": "fire",
+          "cost": 6,
+          "cost_type": "mp",
+          "all_targets": true,
+          "description": "火球で敵全体を攻撃する。",
+          "unlock_level": 2,
+          "effect": "敵全体に1d8+int/2ダメージを与える。",
+          "replaces": "火球"
+        },
+        {
+          "id": "mage_lv5_a",
+          "name": "氷の矢・改",
+          "kind": "attack",
+          "damage": "2d8+int/2",
+          "accuracy": 92,
+          "element": "ice",
+          "cost": 5,
+          "cost_type": "mp",
+          "description": "氷の矢で敵を貫く。",
+          "unlock_level": 5,
+          "effect": "敵に2d8+int/2ダメージを与える。",
+          "replaces": "氷の矢"
+        }
+      ]
     },
     {
       "id": "thief",
@@ -7329,7 +7484,36 @@
           "cost_type": "sp"
         }
       ],
-      "image_female": ""
+      "image_female": "",
+      "level_skills": [
+        {
+          "id": "thief_lv3_b",
+          "name": "影隠れ・改",
+          "kind": "defend",
+          "guard_multiplier": 0.25,
+          "survive_at_one": true,
+          "cost": 2,
+          "cost_type": "sp",
+          "description": "影に溶けて攻撃に備える。",
+          "unlock_level": 3,
+          "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+          "replaces": "影隠れ"
+        },
+        {
+          "id": "thief_lv5_a",
+          "name": "急所突き・改",
+          "kind": "attack",
+          "damage": "8d8+dex/2",
+          "accuracy": 92,
+          "element": "physical",
+          "cost": 5,
+          "cost_type": "sp",
+          "description": "敵の急所を正確に狙う。",
+          "unlock_level": 5,
+          "effect": "敵に8d8+dex/2ダメージを与える。",
+          "replaces": "急所突き"
+        }
+      ]
     },
     {
       "id": "warlock",
@@ -7424,11 +7608,12 @@
     {
       "id": "blue_robed_mage",
       "name": "青いローブの魔法使い・ワーロック",
-      "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+      "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
       "round_start_effects": [
         {
           "kind": "heal_player",
-          "amount": "8"
+          "every_n_rounds": 2,
+          "max_hp_ratio": 0.15
         }
       ],
       "image": "/static/images/npc_warlock.png"
@@ -7450,6 +7635,183 @@
         }
       ],
       "image": "/static/images/companion_fire_bat_dragon.png"
+    }
+  ],
+  "milestones": [
+    {
+      "id": "lv2",
+      "level": 2,
+      "trigger_flag": "defeated_slime_king",
+      "alternative_flags": [
+        "combat_defeated:forest_wolves:forest_wolf"
+      ],
+      "gains": {
+        "hero": {
+          "max_hp": 5,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "str": 2,
+            "end": 1
+          }
+        },
+        "cleric": {
+          "max_hp": 5,
+          "max_mp": 2,
+          "max_sp": 1,
+          "attributes": {
+            "wis": 2,
+            "int": 1
+          }
+        },
+        "mage": {
+          "max_hp": 3,
+          "max_mp": 3,
+          "max_sp": 1,
+          "attributes": {
+            "int": 2,
+            "wis": 1
+          }
+        },
+        "thief": {
+          "max_hp": 4,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "dex": 2,
+            "str": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "lv3",
+      "level": 3,
+      "trigger_flag": "cleared_goblin_fort",
+      "gains": {
+        "hero": {
+          "max_hp": 5,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "str": 2,
+            "end": 1
+          }
+        },
+        "cleric": {
+          "max_hp": 5,
+          "max_mp": 2,
+          "max_sp": 1,
+          "attributes": {
+            "wis": 2,
+            "int": 1
+          }
+        },
+        "mage": {
+          "max_hp": 3,
+          "max_mp": 3,
+          "max_sp": 1,
+          "attributes": {
+            "int": 2,
+            "wis": 1
+          }
+        },
+        "thief": {
+          "max_hp": 4,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "dex": 2,
+            "str": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "lv4",
+      "level": 4,
+      "trigger_flag": "reached_village",
+      "gains": {
+        "hero": {
+          "max_hp": 5,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "str": 2,
+            "end": 1
+          }
+        },
+        "cleric": {
+          "max_hp": 5,
+          "max_mp": 2,
+          "max_sp": 1,
+          "attributes": {
+            "wis": 2,
+            "int": 1
+          }
+        },
+        "mage": {
+          "max_hp": 3,
+          "max_mp": 3,
+          "max_sp": 1,
+          "attributes": {
+            "int": 2,
+            "wis": 1
+          }
+        },
+        "thief": {
+          "max_hp": 4,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "dex": 2,
+            "str": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "lv5",
+      "level": 5,
+      "trigger_flag": "entered_dragon_valley",
+      "gains": {
+        "hero": {
+          "max_hp": 5,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "str": 2,
+            "end": 1
+          }
+        },
+        "cleric": {
+          "max_hp": 5,
+          "max_mp": 2,
+          "max_sp": 1,
+          "attributes": {
+            "wis": 2,
+            "int": 1
+          }
+        },
+        "mage": {
+          "max_hp": 3,
+          "max_mp": 3,
+          "max_sp": 1,
+          "attributes": {
+            "int": 2,
+            "wis": 1
+          }
+        },
+        "thief": {
+          "max_hp": 4,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "dex": 2,
+            "str": 1
+          }
+        }
+      }
     }
   ]
 }

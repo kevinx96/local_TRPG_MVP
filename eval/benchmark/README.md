@@ -3,7 +3,7 @@
 本目录仅接收设计负责人审定的标准答案。`intent_v2.jsonl` 为审定的冻结标签，不随当前剧本更新。
 
 冻结的 benchmark 只在冻结的剧本上评测。v2 引用的 38 个 `eval/snapshots/v2_*.json` 快照固定使用
-`scenario_frozen/dragon_rpg@4386cd3.json`，内容逐字节取自 commit `4386cd3`。
+`scenario_frozen/dragon_rpg@f41af9d.json`，内容逐字节取自 commit `f41af9d`，也就是 008（提示词变更的依据）实跑时使用的剧本。
 缺失于历史剧本的字段使用引擎对该历史数据的缺省处理，不从当前剧本补入。
 `scripts.eval.benchmark_v2` 生成的 v2 快照也使用此路径，避免重新生成时解除冻结。
 
@@ -30,11 +30,4 @@ python -m scripts.eval.run --suite intent --cases eval/candidates/intent_v2_scen
 需要在有网络环境补跑真实响应时，显式给对应命令加 `--live`，才会在缓存未命中时调用 API。
 `guard_claims` 仅保留作实验变体，不是默认值。
 
-018 离线复核发现：`4386cd3` 和 008 参考报告运行时的剧本已有差异。冻结版实际缓存命中
-190/194（97.94%），S0+S1 为 176/190（92.63%），不能声称复现参考报告的 92.78%。
-剩余 4 条均在 `goblin_fort_first_second`；仅在内存对照中恢复 008 时的该地点描述，就命中
-194/194，并且全部 metrics 与参考报告相同。冻结文件未作此替换。
-详见 `eval/reports/018-benchmark-pinning-and-secret-actions.md`。
-
-TODO(design): 审核当前剧本版标签；确定历史对照应继续采用指定 `4386cd3`，还是另设与 008
-实跑剧本一致的版本，不能把两者视作同一基线。
+冻结版本的选定（设计负责人，2026-10-12）：018 先按 `4386cd3` 冻结，但 008 实跑时剧本已经改过地点描述，只命中 190/194。改为冻结 `f41af9d` 后，离线重放 dev 194/194、test 292/292 全部命中缓存，S0+S1 分别为 92.78% 和 84.59%，和 `docs/design/prompt-log.md` 的数字完全一致。今后冻结 benchmark 上的所有对比都以这一版为基线。

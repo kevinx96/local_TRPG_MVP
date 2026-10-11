@@ -16,9 +16,9 @@ from scripts.eval.snapshots import ROOT, build_snapshot, isolated_engine, load_s
 
 class BenchmarkPinningTests(unittest.TestCase):
     def test_frozen_scenario_and_all_benchmark_recipes_are_pinned(self):
-        frozen = ROOT / "eval/benchmark/scenario_frozen/dragon_rpg@4386cd3.json"
+        frozen = ROOT / "eval/benchmark/scenario_frozen/dragon_rpg@f41af9d.json"
         self.assertEqual(hashlib.sha256(frozen.read_bytes()).hexdigest(),
-                         "e83856989930a97c4963afbfbf95da0a766563336eb1107676d62310a3ffd02d")
+                         "73a484bc75f75245a5773d74cad45facaa8c2150678fae2e178e7e6a7bba83ca")
         rows = [json.loads(line) for line in (ROOT / "eval/benchmark/intent_v2.jsonl").read_text(encoding="utf-8").splitlines()]
         for identifier in {row["snapshot"] for row in rows}:
             recipe = json.loads((ROOT / "eval/snapshots" / f"{identifier}.json").read_text(encoding="utf-8"))

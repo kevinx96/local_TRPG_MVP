@@ -1,6 +1,6 @@
 {
   "id": "v2_context_cj",
-  "scenario": "eval/benchmark/scenario_frozen/dragon_rpg@4386cd3.json",
+  "scenario": "eval/benchmark/scenario_frozen/dragon_rpg@f41af9d.json",
   "gm_mode": "full",
   "character_id": "hero",
   "location_id": "goblin_fort_second_choice",

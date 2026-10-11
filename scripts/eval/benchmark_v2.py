@@ -52,7 +52,7 @@ CONTEXTS = {
 def recipes() -> dict[str, dict[str, Any]]:
     result = {}
     for alias, (location, actor) in LOCATIONS.items():
-        result[alias] = dict(id=f"v2_{location}_{actor}", scenario="eval/benchmark/scenario_frozen/dragon_rpg@4386cd3.json",
+        result[alias] = dict(id=f"v2_{location}_{actor}", scenario="eval/benchmark/scenario_frozen/dragon_rpg@f41af9d.json",
                              gm_mode="full", character_id=actor, location_id=location,
                              hp_delta=-5, flags={}, inventory_add=[], inventory_remove=[], recent_messages=[])
     for alias, (base, question) in CONTEXTS.items():
