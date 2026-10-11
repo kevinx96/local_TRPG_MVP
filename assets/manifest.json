@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "task": "016",
+  "task": "020",
   "generator": "image_gen",
   "generation_date": "2026-10-12",
   "approved": false,
@@ -574,6 +574,362 @@
       "selection_status": "provisional",
       "selection_reason": "远处树较小、较朦胧，更接近隐约可见；红蓝绿晶体与洞窟纵深均明确。",
       "style_review": "沿用泉参考的水面与瀑布元素；spec 未指定水体，列为待确认。"
+    },
+    {
+      "task": "020",
+      "id": "enemy_ash_wraith",
+      "file": "assets/candidates/020/enemy_ash_wraith/candidate_01.png",
+      "purpose": "煤の亡霊敌人立绘",
+      "prompt": "Create 煤の亡霊: a humanoid resentful spirit made of coal ash and embers. Face is an EMPTY hollow void, lower body dissolves into smoke, scattered DARK RED embers inside its ashen body. Use image 1 for spectral painted detail only, image 2 for elemental brushwork only. No armor, staff, horn crown or cyan magic copied from the reference. Charcoal ash dominates, not bright yellow flames. Square 1254x1254. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 01: Arms reaching outward, upright silhouette, lower body trailing in a loose taper of smoke.",
+      "reference_images": [
+        "client/images/enemy_zebok.png",
+        "client/images/enemy_fire_elemental.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "enemy_ash_wraith",
+      "file": "assets/candidates/020/enemy_ash_wraith/candidate_02.png",
+      "purpose": "煤の亡霊敌人立绘",
+      "prompt": "Create 煤の亡霊: a humanoid resentful spirit made of coal ash and embers. Face is an EMPTY hollow void, lower body dissolves into smoke, scattered DARK RED embers inside its ashen body. Use image 1 for spectral painted detail only, image 2 for elemental brushwork only. No armor, staff, horn crown or cyan magic copied from the reference. Charcoal ash dominates, not bright yellow flames. Square 1254x1254. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: Slight three-quarter turn, one arm reaching forward, ash folds and smoke curling close to the lower silhouette. Keep the full smoke taper inside canvas with generous empty margins; reduce ember brightness to dim dark red pinpoints.",
+      "reference_images": [
+        "client/images/enemy_zebok.png",
+        "client/images/enemy_fire_elemental.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "enemy_ash_wraith",
+      "file": "client/images/enemy_ash_wraith.png",
+      "purpose": "煤の亡霊敌人立绘",
+      "prompt": "Create 煤の亡霊: a humanoid resentful spirit made of coal ash and embers. Face is an EMPTY hollow void, lower body dissolves into smoke, scattered DARK RED embers inside its ashen body. Use image 1 for spectral painted detail only, image 2 for elemental brushwork only. No armor, staff, horn crown or cyan magic copied from the reference. Charcoal ash dominates, not bright yellow flames. Square 1254x1254. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: Slight three-quarter turn, one arm reaching forward, ash folds and smoke curling close to the lower silhouette. Keep the full smoke taper inside canvas with generous empty margins; reduce ember brightness to dim dark red pinpoints.",
+      "reference_images": [
+        "client/images/enemy_zebok.png",
+        "client/images/enemy_fire_elemental.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/enemy_ash_wraith/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "火星较候选 01 收敛，空洞面部和完整烟尾更明确，煤灰占主体。",
+      "style_review": "灰烬卷曲笔触比ゼボク的衣料更密，局部火星仍偏橙红；整体暗色与火元素的厚涂细节相容。"
+    },
+    {
+      "task": "020",
+      "id": "enemy_lava_drake",
+      "file": "assets/candidates/020/enemy_lava_drake/candidate_01.png",
+      "purpose": "溶岩ドレイク敌人立绘",
+      "prompt": "Create 溶岩ドレイク, a horse-sized lesser beast of イグニス. Image 1 defines its family: same red-black overlapping lava scales, swept horns, spiny head profile and red wing membranes with glowing molten veins. Image 2 is only a painted material reference. This is a smaller animalistic quadruped with FOUR separate walking legs PLUS TWO wings attached to the back, six appendages total, long tail, low beastlike body. All four feet clearly separated and visible, no biped stance. Square 1254x1254. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 01: Three-quarter side view, tense prowling stance, wings partly spread and lifted clear of the four legs.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "client/images/enemy_heat_lizard.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "enemy_lava_drake",
+      "file": "assets/candidates/020/enemy_lava_drake/candidate_02.png",
+      "purpose": "溶岩ドレイク敌人立绘",
+      "prompt": "Create 溶岩ドレイク, a horse-sized lesser beast of イグニス. Image 1 defines its family: same red-black overlapping lava scales, swept horns, spiny head profile and red wing membranes with glowing molten veins. Image 2 is only a painted material reference. This is a smaller animalistic quadruped with FOUR separate walking legs PLUS TWO wings attached to the back, six appendages total, long tail, low beastlike body. All four feet clearly separated and visible, no biped stance. Square 1254x1254. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: Side-biased three-quarter view, alert low head, wings raised in a narrower arch, four feet staggered clearly.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "client/images/enemy_heat_lizard.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "enemy_lava_drake",
+      "file": "client/images/enemy_lava_drake.png",
+      "purpose": "溶岩ドレイク敌人立绘",
+      "prompt": "Create 溶岩ドレイク, a horse-sized lesser beast of イグニス. Image 1 defines its family: same red-black overlapping lava scales, swept horns, spiny head profile and red wing membranes with glowing molten veins. Image 2 is only a painted material reference. This is a smaller animalistic quadruped with FOUR separate walking legs PLUS TWO wings attached to the back, six appendages total, long tail, low beastlike body. All four feet clearly separated and visible, no biped stance. Square 1254x1254. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 01: Three-quarter side view, tense prowling stance, wings partly spread and lifted clear of the four legs.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "client/images/enemy_heat_lizard.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/enemy_lava_drake/candidate_01.png",
+      "selection_status": "provisional",
+      "selection_reason": "四只足爪更分开，前倾姿态更像野兽；角、头部和熔岩翼膜可辨识为イグニス同族。",
+      "style_review": "熔岩裂纹比イグニス更密亮，右侧翼尖及尾部距画布边缘较近；相对马的体型需显示比例体现。"
+    },
+    {
+      "task": "020",
+      "id": "enemy_xanxus_phantom",
+      "file": "assets/candidates/020/enemy_xanxus_phantom/candidate_01.png",
+      "purpose": "Xanxusの分身敌人立绘",
+      "prompt": "Use case: identity-preserve. EDIT the supplied npc_xanxus.png into Xanxusの分身, the SAME burning skeletal mage. Preserve exact skull shape and grin, red glowing eyes, crimson high-collar robe, gold trim, red chest and waist gems, spiked shoulders, staff on image-left, casting hand on image-right, full-body pose and proportions. Change his ENTIRE body, robe and staff into translucent flame substance, partially transparent throughout, with wavering contours. Preserve recognizable red robe design and skeletal face instead of a generic fire elemental. Flame highlights can be stronger, but large interior areas of skull, torso, robe and limbs must carry genuine partial alpha. 1024x1536 portrait. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 01: Moderately translucent crimson flame apparition, fine wavering tongues at existing silhouette edges, clear skull and robe ornaments.",
+      "reference_images": [
+        "client/images/npc_xanxus.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "enemy_xanxus_phantom",
+      "file": "assets/candidates/020/enemy_xanxus_phantom/candidate_02.png",
+      "purpose": "Xanxusの分身敌人立绘",
+      "prompt": "Use case: identity-preserve. EDIT the supplied npc_xanxus.png into Xanxusの分身, the SAME burning skeletal mage. Preserve exact skull shape and grin, red glowing eyes, crimson high-collar robe, gold trim, red chest and waist gems, spiked shoulders, staff on image-left, casting hand on image-right, full-body pose and proportions. Change his ENTIRE body, robe and staff into translucent flame substance, partially transparent throughout, with wavering contours. Preserve recognizable red robe design and skeletal face instead of a generic fire elemental. Flame highlights can be stronger, but large interior areas of skull, torso, robe and limbs must carry genuine partial alpha. 1024x1536 portrait. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: More visibly ethereal flickering apparition, wavering translucent crimson robes and staff, identity details still readable. Strictly isolated cutout. No orange atmospheric aura, no glow filling empty space, no background gradient. Background empty alpha=0. Translucency must be in the mage itself, not simulated by painting him over an orange backdrop.",
+      "reference_images": [
+        "client/images/npc_xanxus.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "enemy_xanxus_phantom",
+      "file": "client/images/enemy_xanxus_phantom.png",
+      "purpose": "Xanxusの分身敌人立绘",
+      "prompt": "Use case: identity-preserve. EDIT the supplied npc_xanxus.png into Xanxusの分身, the SAME burning skeletal mage. Preserve exact skull shape and grin, red glowing eyes, crimson high-collar robe, gold trim, red chest and waist gems, spiked shoulders, staff on image-left, casting hand on image-right, full-body pose and proportions. Change his ENTIRE body, robe and staff into translucent flame substance, partially transparent throughout, with wavering contours. Preserve recognizable red robe design and skeletal face instead of a generic fire elemental. Flame highlights can be stronger, but large interior areas of skull, torso, robe and limbs must carry genuine partial alpha. 1024x1536 portrait. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: More visibly ethereal flickering apparition, wavering translucent crimson robes and staff, identity details still readable. Strictly isolated cutout. No orange atmospheric aura, no glow filling empty space, no background gradient. Background empty alpha=0. Translucency must be in the mage itself, not simulated by painting him over an orange backdrop.",
+      "reference_images": [
+        "client/images/npc_xanxus.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/enemy_xanxus_phantom/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "胸腹、衣摆与肢体出现更多透光区域，保持骷髅面部、赤红高领法衣、宝石和法杖的角色辨识度。",
+      "style_review": "火焰亮度与饱和度明显高于原角色；头骨及部分金饰仍较实，半透明程度需设计验收。"
+    },
+    {
+      "task": "020",
+      "id": "npc_riku",
+      "file": "assets/candidates/020/npc_riku/candidate_01.png",
+      "purpose": "長老の孫リク NPC 立绘",
+      "prompt": "Create 長老の孫リク, a seven- or eight-year-old BOY, soot smudges on his face and scorch marks on clothing. Both hands tightly clasp ONE small protective amulet near his chest. Expression shaken and frightened but resilient. Image 1 defines village clothing: muted olive green and ivory layers, simple botanical border, cloth sash and brown boots, adapted to a village child. Image 2 only guides youthful anime semi-realistic painted face and fabric rendering; do not copy her robe, book or braids. Child proportions, full body head to boots. 1024x1536 portrait. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 01: Front three-quarter stance, shoulders drawn in slightly, steady brave gaze despite worried eyebrows, small amulet visible between clasped hands.",
+      "reference_images": [
+        "client/images/npc_elder.png",
+        "client/images/npc_mina.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "npc_riku",
+      "file": "assets/candidates/020/npc_riku/candidate_02.png",
+      "purpose": "長老の孫リク NPC 立绘",
+      "prompt": "Create 長老の孫リク, a seven- or eight-year-old BOY, soot smudges on his face and scorch marks on clothing. Both hands tightly clasp ONE small protective amulet near his chest. Expression shaken and frightened but resilient. Image 1 defines village clothing: muted olive green and ivory layers, simple botanical border, cloth sash and brown boots, adapted to a village child. Image 2 only guides youthful anime semi-realistic painted face and fabric rendering; do not copy her robe, book or braids. Child proportions, full body head to boots. 1024x1536 portrait. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: Nearly frontal stance, feet close together, hands clutching the small amulet, tense mouth and determined eyes. Clothing has limited scorched edges and soot marks, not extensive ragged holes. Keep resilient determination as visible as fear.",
+      "reference_images": [
+        "client/images/npc_elder.png",
+        "client/images/npc_mina.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "npc_riku",
+      "file": "client/images/npc_riku.png",
+      "purpose": "長老の孫リク NPC 立绘",
+      "prompt": "Create 長老の孫リク, a seven- or eight-year-old BOY, soot smudges on his face and scorch marks on clothing. Both hands tightly clasp ONE small protective amulet near his chest. Expression shaken and frightened but resilient. Image 1 defines village clothing: muted olive green and ivory layers, simple botanical border, cloth sash and brown boots, adapted to a village child. Image 2 only guides youthful anime semi-realistic painted face and fabric rendering; do not copy her robe, book or braids. Child proportions, full body head to boots. 1024x1536 portrait. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: Nearly frontal stance, feet close together, hands clutching the small amulet, tense mouth and determined eyes. Clothing has limited scorched edges and soot marks, not extensive ragged holes. Keep resilient determination as visible as fear.",
+      "reference_images": [
+        "client/images/npc_elder.png",
+        "client/images/npc_mina.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/npc_riku/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "双手握住护符、紧张而咬紧牙关的表情更明确；相比候选 01 衣服破洞收敛，绿白衣料对应长老。",
+      "style_review": "边缘暖光较长老明显，衣摆局部仍有余烬亮点；金色短发、护符纹样和腰包由生成器沿参考延伸。"
+    },
+    {
+      "task": "020",
+      "id": "bg_lava_bridge",
+      "file": "assets/candidates/020/bg_lava_bridge/candidate_01.png",
+      "purpose": "熔岩河吊桥背景",
+      "prompt": "Create a scene in the same volcanic valley as image 1. A boiling lava river crossed by ONE solitary dilapidated rope suspension bridge, charred wooden planks and visibly fraying nearly broken ropes, hot wind distorting the air. Dark jagged rocks, lava-red light and smoky crimson sky from reference. Bridge remains a recognizable crossing spanning both banks. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 01: View from rocky approach toward the bridge leading diagonally across the river, foreground shore visible.",
+      "reference_images": [
+        "client/images/bg_dragon_valley.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_lava_bridge",
+      "file": "assets/candidates/020/bg_lava_bridge/candidate_02.png",
+      "purpose": "熔岩河吊桥背景",
+      "prompt": "Create a scene in the same volcanic valley as image 1. A boiling lava river crossed by ONE solitary dilapidated rope suspension bridge, charred wooden planks and visibly fraying nearly broken ropes, hot wind distorting the air. Dark jagged rocks, lava-red light and smoky crimson sky from reference. Bridge remains a recognizable crossing spanning both banks. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: More frontal approach with the bridge receding across the lava river, broken plank gaps and frayed ropes clearly readable.",
+      "reference_images": [
+        "client/images/bg_dragon_valley.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_lava_bridge",
+      "file": "client/images/bg_lava_bridge.png",
+      "purpose": "熔岩河吊桥背景",
+      "prompt": "Create a scene in the same volcanic valley as image 1. A boiling lava river crossed by ONE solitary dilapidated rope suspension bridge, charred wooden planks and visibly fraying nearly broken ropes, hot wind distorting the air. Dark jagged rocks, lava-red light and smoky crimson sky from reference. Bridge remains a recognizable crossing spanning both banks. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 01: View from rocky approach toward the bridge leading diagonally across the river, foreground shore visible.",
+      "reference_images": [
+        "client/images/bg_dragon_valley.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/bg_lava_bridge/candidate_01.png",
+      "selection_status": "provisional",
+      "selection_reason": "两岸桥头及双侧绳索更容易辨认，斜向吊桥形成明确路线，焦黑木板与破绳均可见。",
+      "style_review": "岩石与天空和参考接近，熔岩亮度更高；热风扭曲较含蓄，主要表现为热雾，桥的破损程度待验收。"
+    },
+    {
+      "task": "020",
+      "id": "bg_dragon_nest",
+      "file": "assets/candidates/020/bg_dragon_nest/candidate_01.png",
+      "purpose": "竜の巣入口背景",
+      "prompt": "Create the entrance to 竜の巣 in the volcanic valley of image 1: a gigantic natural cavern entrance, scorching wind, scattered old bones and heat-melted deformed treasure around its rocky threshold; deep inside glows red. Keep dark jagged volcanic stone and lava-red atmosphere matching reference. Treasure should look fused and warped by heat. No dragon visible. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 01: Broad cave mouth seen from outside at ground level, sparse bones and distorted treasure along its edges, ominous red depths.",
+      "reference_images": [
+        "client/images/bg_dragon_valley.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_dragon_nest",
+      "file": "assets/candidates/020/bg_dragon_nest/candidate_02.png",
+      "purpose": "竜の巣入口背景",
+      "prompt": "Create the entrance to 竜の巣 in the volcanic valley of image 1: a gigantic natural cavern entrance, scorching wind, scattered old bones and heat-melted deformed treasure around its rocky threshold; deep inside glows red. Keep dark jagged volcanic stone and lava-red atmosphere matching reference. Treasure should look fused and warped by heat. No dragon visible. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: Slight oblique approach to enormous cavern opening, red inner glow through heat shimmer, bones and warped metal treasures clustered by the threshold.",
+      "reference_images": [
+        "client/images/bg_dragon_valley.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_dragon_nest",
+      "file": "client/images/bg_dragon_nest.png",
+      "purpose": "竜の巣入口背景",
+      "prompt": "Create the entrance to 竜の巣 in the volcanic valley of image 1: a gigantic natural cavern entrance, scorching wind, scattered old bones and heat-melted deformed treasure around its rocky threshold; deep inside glows red. Keep dark jagged volcanic stone and lava-red atmosphere matching reference. Treasure should look fused and warped by heat. No dragon visible. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: Slight oblique approach to enormous cavern opening, red inner glow through heat shimmer, bones and warped metal treasures clustered by the threshold.",
+      "reference_images": [
+        "client/images/bg_dragon_valley.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/bg_dragon_nest/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "巨洞与纵深红光更突出，骨骸和熔化变形的金属财宝集中在入口两侧，前景留白充分。",
+      "style_review": "延续参考火山岩与红天，热光更强；大型兽骨、武器与金属器物具体形态属于生成细节。"
+    },
+    {
+      "task": "020",
+      "id": "bg_burning_house",
+      "file": "assets/candidates/020/bg_burning_house/candidate_01.png",
+      "purpose": "燃烧民家正面背景",
+      "prompt": "Create the FRONT of one burning village house from the same village as image 1. Match its timber-frame upper walls, stone base, steep tiled roof and firelit dark atmosphere. Entrance is visibly BLOCKED by a fallen burning roof beam across the doorway; flames glow through windows. Maintain front facade as the clear subject, ground foreground visible. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 01: Straight frontal view, full doorway and burning obstructing beam clear, smoke rolling from roof.",
+      "reference_images": [
+        "client/images/bg_burning_village.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_burning_house",
+      "file": "assets/candidates/020/bg_burning_house/candidate_02.png",
+      "purpose": "燃烧民家正面背景",
+      "prompt": "Create the FRONT of one burning village house from the same village as image 1. Match its timber-frame upper walls, stone base, steep tiled roof and firelit dark atmosphere. Entrance is visibly BLOCKED by a fallen burning roof beam across the doorway; flames glow through windows. Maintain front facade as the clear subject, ground foreground visible. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: Slightly off-center frontal view, charred beam lying diagonally across the blocked entrance, firelit windows and damaged roof readable.",
+      "reference_images": [
+        "client/images/bg_burning_village.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_burning_house",
+      "file": "client/images/bg_burning_house.png",
+      "purpose": "燃烧民家正面背景",
+      "prompt": "Create the FRONT of one burning village house from the same village as image 1. Match its timber-frame upper walls, stone base, steep tiled roof and firelit dark atmosphere. Entrance is visibly BLOCKED by a fallen burning roof beam across the doorway; flames glow through windows. Maintain front facade as the clear subject, ground foreground visible. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: Slightly off-center frontal view, charred beam lying diagonally across the blocked entrance, firelit windows and damaged roof readable.",
+      "reference_images": [
+        "client/images/bg_burning_village.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/bg_burning_house/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "房梁与碎木明确封堵入口，窗内火光和民家正面清楚，建筑材料与村庄参考一致。",
+      "style_review": "房屋的具体山墙和窗户布局为新构图；火光较参考近景更集中，木梁数量多于单根。"
+    },
+    {
+      "task": "020",
+      "id": "bg_hot_spring",
+      "file": "assets/candidates/020/bg_hot_spring/candidate_01.png",
+      "purpose": "地底小温泉背景",
+      "prompt": "Create a SMALL underground hot spring: natural rocks ring a gently steaming warm pool, luminous moss grows on cavern walls. Mood softer and calmer than the lava cave. Image 1 guides the same natural volcanic cavern rock forms and painted texture; image 2 guides softly luminous underground atmosphere and water rendering only. Replace dramatic lava lighting with subdued moss glow and warm steam. No giant crystals, glowing tree or architecture. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 01: Intimate pool at midground, low rock rim, soft steam drifting upward, small luminous moss patches on enclosing walls.",
+      "reference_images": [
+        "client/images/bg_lava_cave.png",
+        "client/images/bg_crystal_cave.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_hot_spring",
+      "file": "assets/candidates/020/bg_hot_spring/candidate_02.png",
+      "purpose": "地底小温泉背景",
+      "prompt": "Create a SMALL underground hot spring: natural rocks ring a gently steaming warm pool, luminous moss grows on cavern walls. Mood softer and calmer than the lava cave. Image 1 guides the same natural volcanic cavern rock forms and painted texture; image 2 guides softly luminous underground atmosphere and water rendering only. Replace dramatic lava lighting with subdued moss glow and warm steam. No giant crystals, glowing tree or architecture. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: Slightly angled view into a small oval rock-ringed pool, gentle layered steam and restrained glowing wall moss, quiet rocky foreground. The luminous moss must read as soft organic green moss clumps coating rocks, not sharp crystal clusters. Pool compact and secluded, steam clearly rising off water.",
+      "reference_images": [
+        "client/images/bg_lava_cave.png",
+        "client/images/bg_crystal_cave.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_hot_spring",
+      "file": "client/images/bg_hot_spring.png",
+      "purpose": "地底小温泉背景",
+      "prompt": "Create a SMALL underground hot spring: natural rocks ring a gently steaming warm pool, luminous moss grows on cavern walls. Mood softer and calmer than the lava cave. Image 1 guides the same natural volcanic cavern rock forms and painted texture; image 2 guides softly luminous underground atmosphere and water rendering only. Replace dramatic lava lighting with subdued moss glow and warm steam. No giant crystals, glowing tree or architecture. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: Slightly angled view into a small oval rock-ringed pool, gentle layered steam and restrained glowing wall moss, quiet rocky foreground. The luminous moss must read as soft organic green moss clumps coating rocks, not sharp crystal clusters. Pool compact and secluded, steam clearly rising off water.",
+      "reference_images": [
+        "client/images/bg_lava_cave.png",
+        "client/images/bg_crystal_cave.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/bg_hot_spring/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "苔藓呈绿色有机团簇，温泉池更紧凑，蒸汽和柔和光照清楚，岩石笔触延续熔岩洞窟。",
+      "style_review": "相较熔岩参考大幅降低红色饱和度；池缘暖光与小段进水沿用参考水体表现，池缘局部仍较明亮。"
     }
   ],
   "selections": [
@@ -732,13 +1088,121 @@
       "selected_candidate": "assets/candidates/016/bg_crystal_cave/candidate_01.png",
       "selection_reason": "远处树较小、较朦胧，更接近隐约可见；红蓝绿晶体与洞窟纵深均明确。",
       "style_review": "沿用泉参考的水面与瀑布元素；spec 未指定水体，列为待确认。"
+    },
+    {
+      "task": "020",
+      "id": "enemy_ash_wraith",
+      "file": "client/images/enemy_ash_wraith.png",
+      "candidates": [
+        "assets/candidates/020/enemy_ash_wraith/candidate_01.png",
+        "assets/candidates/020/enemy_ash_wraith/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/enemy_ash_wraith/candidate_02.png",
+      "approved": false,
+      "selection_reason": "火星较候选 01 收敛，空洞面部和完整烟尾更明确，煤灰占主体。",
+      "style_review": "灰烬卷曲笔触比ゼボク的衣料更密，局部火星仍偏橙红；整体暗色与火元素的厚涂细节相容。"
+    },
+    {
+      "task": "020",
+      "id": "enemy_lava_drake",
+      "file": "client/images/enemy_lava_drake.png",
+      "candidates": [
+        "assets/candidates/020/enemy_lava_drake/candidate_01.png",
+        "assets/candidates/020/enemy_lava_drake/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/enemy_lava_drake/candidate_01.png",
+      "approved": false,
+      "selection_reason": "四只足爪更分开，前倾姿态更像野兽；角、头部和熔岩翼膜可辨识为イグニス同族。",
+      "style_review": "熔岩裂纹比イグニス更密亮，右侧翼尖及尾部距画布边缘较近；相对马的体型需显示比例体现。"
+    },
+    {
+      "task": "020",
+      "id": "enemy_xanxus_phantom",
+      "file": "client/images/enemy_xanxus_phantom.png",
+      "candidates": [
+        "assets/candidates/020/enemy_xanxus_phantom/candidate_01.png",
+        "assets/candidates/020/enemy_xanxus_phantom/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/enemy_xanxus_phantom/candidate_02.png",
+      "approved": false,
+      "selection_reason": "胸腹、衣摆与肢体出现更多透光区域，保持骷髅面部、赤红高领法衣、宝石和法杖的角色辨识度。",
+      "style_review": "火焰亮度与饱和度明显高于原角色；头骨及部分金饰仍较实，半透明程度需设计验收。"
+    },
+    {
+      "task": "020",
+      "id": "npc_riku",
+      "file": "client/images/npc_riku.png",
+      "candidates": [
+        "assets/candidates/020/npc_riku/candidate_01.png",
+        "assets/candidates/020/npc_riku/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/npc_riku/candidate_02.png",
+      "approved": false,
+      "selection_reason": "双手握住护符、紧张而咬紧牙关的表情更明确；相比候选 01 衣服破洞收敛，绿白衣料对应长老。",
+      "style_review": "边缘暖光较长老明显，衣摆局部仍有余烬亮点；金色短发、护符纹样和腰包由生成器沿参考延伸。"
+    },
+    {
+      "task": "020",
+      "id": "bg_lava_bridge",
+      "file": "client/images/bg_lava_bridge.png",
+      "candidates": [
+        "assets/candidates/020/bg_lava_bridge/candidate_01.png",
+        "assets/candidates/020/bg_lava_bridge/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/bg_lava_bridge/candidate_01.png",
+      "approved": false,
+      "selection_reason": "两岸桥头及双侧绳索更容易辨认，斜向吊桥形成明确路线，焦黑木板与破绳均可见。",
+      "style_review": "岩石与天空和参考接近，熔岩亮度更高；热风扭曲较含蓄，主要表现为热雾，桥的破损程度待验收。"
+    },
+    {
+      "task": "020",
+      "id": "bg_dragon_nest",
+      "file": "client/images/bg_dragon_nest.png",
+      "candidates": [
+        "assets/candidates/020/bg_dragon_nest/candidate_01.png",
+        "assets/candidates/020/bg_dragon_nest/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/bg_dragon_nest/candidate_02.png",
+      "approved": false,
+      "selection_reason": "巨洞与纵深红光更突出，骨骸和熔化变形的金属财宝集中在入口两侧，前景留白充分。",
+      "style_review": "延续参考火山岩与红天，热光更强；大型兽骨、武器与金属器物具体形态属于生成细节。"
+    },
+    {
+      "task": "020",
+      "id": "bg_burning_house",
+      "file": "client/images/bg_burning_house.png",
+      "candidates": [
+        "assets/candidates/020/bg_burning_house/candidate_01.png",
+        "assets/candidates/020/bg_burning_house/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/bg_burning_house/candidate_02.png",
+      "approved": false,
+      "selection_reason": "房梁与碎木明确封堵入口，窗内火光和民家正面清楚，建筑材料与村庄参考一致。",
+      "style_review": "房屋的具体山墙和窗户布局为新构图；火光较参考近景更集中，木梁数量多于单根。"
+    },
+    {
+      "task": "020",
+      "id": "bg_hot_spring",
+      "file": "client/images/bg_hot_spring.png",
+      "candidates": [
+        "assets/candidates/020/bg_hot_spring/candidate_01.png",
+        "assets/candidates/020/bg_hot_spring/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/bg_hot_spring/candidate_02.png",
+      "approved": false,
+      "selection_reason": "苔藓呈绿色有机团簇，温泉池更紧凑，蒸汽和柔和光照清楚，岩石笔触延续熔岩洞窟。",
+      "style_review": "相较熔岩参考大幅降低红色饱和度；池缘暖光与小段进水沿用参考水体表现，池缘局部仍较明亮。"
     }
   ],
   "todo_design": [
     "逐张验收 14 张暂选图，确认后再批准并接线。",
     "确认ミーナ与ガルド未指定的发型、发色、面部与服装装饰细节。",
     "确认水晶蝶碎晶式鳞粉、水晶蜘蛛俯视角、虹晶樹饱和度与残骸破碎程度。",
-    "确认水晶洞窟新增水体、封印魔法阵几何纹样与熔岩热扭曲表现。"
+    "确认水晶洞窟新增水体、封印魔法阵几何纹样与熔岩热扭曲表现。",
+    "020: 逐张验收 8 张工程暂选图，全部 approved=false；确认后由设计负责人批准并接线。",
+    "020: 确认煤の亡霊火星色相、溶岩ドレイク相对马的体型与熔岩亮度、Xanxus 分身头骨和金饰的半透明程度。",
+    "020: 确认リク金色短发、护符纹样、腰包、衣摆余烬与表情是否符合角色定稿。",
+    "020: 确认吊桥破损及热风表现、龙巢兽骨和财宝形态、民家房梁布局、温泉苔藓和池缘暖光。"
   ],
   "inferences": [
     "选图是按 spec 的工程暂选，不代表设计批准。",
@@ -748,39 +1212,134 @@
     "ミーナ追加 npc_sarah 作为年轻面部画风参考；生成器沿用金发、辫子。ガルド生成短发、胡须及货架杂物。细节均待设计确认。",
     "新背景未逐一指定参考的部分使用已有背景的笔触、透视与空前景构图；水晶洞窟候选 01 沿用泉水元素。",
     "独立立绘无法验证相对人体的世界尺寸；炎のウィスプ与蒼晶の蝶显示比例待接线。",
-    "manifest 采用逐文件记录，最终图通过 source_candidate 指向其原候选；候选记录提示词全文，无缩写模板。"
+    "manifest 采用逐文件记录，最终图通过 source_candidate 指向其原候选；候选记录提示词全文，无缩写模板。",
+    "020: 沿用 016 的工程暂选流程；最终图路径表示交付位置，不代表设计批准。",
+    "020: 两候选仅以姿态、视角、构图和发光强弱区分，不定义剧情差异。",
+    "020: 溶岩ドレイク追加已采用的熱岩トカゲ作材质参考；リク追加ミーナ作年轻脸部与布料画风参考。",
+    "020: 从长老参考归纳绿白衣料、植物边饰和棕靴；リク的金色短发、圆形护符花纹与腰包由生成器延伸，未定稿。",
+    "020: 同一火山地区沿用竜の谷的红天、黑岩及远处废墟；龙巢的兽骨、剑和金属器物形态并未由 spec 指定。",
+    "020: 温泉发光苔藓采用绿色，池水采用参考的蓝绿色，池缘暖光与小进水并未由 spec 明确指定。",
+    "020: 沿用背景参考开放前景；绝对体型与年龄只能由画面比例暗示，ドレイク如马的体型需后续接线验证。",
+    "020: manifest 顶层 task/qa 表示最新批次；016 原图和选图记录保留，其原验证记录存入 batches.016。"
   ],
   "deviations": [
     "蜘蛛生成 4 张候选，其余各 2 张；额外两张用于修正八足辨识。",
-    "未改代码或剧本、未新增项目依赖或测试代码；仅素材和 manifest。"
+    "未改代码或剧本、未新增项目依赖或测试代码；仅素材和 manifest。",
+    "020: 无范围偏离。新增 16 张独立候选和 8 张暂选副本，仅更新 manifest；未新增代码、剧本、依赖或测试文件。"
   ],
   "qa": {
-    "dimensions": "全部候选原生达到目标尺寸，无缩放或填充。",
-    "alpha": "11 项立绘为 RGBA，3 项背景为 RGB。暂选立绘在深色、浅色、灰绿色背景合成检查，未见明显白边或灰边。",
-    "portrait_alpha_note": "三个 1024x1536 人物系列的生成 alpha 最大值为 254（非 255），部分外部像素 alpha 为 1；视觉合成未见明显雾光。原始 alpha 未改动。",
-    "style": "逐项参考并排比较笔触、光照和饱和度；差异见 selections[].style_review。",
-    "validation_status": "passed",
+    "dimensions": "本批 24 张交付图片全部原生达到指定尺寸，未缩放或填充。",
+    "alpha": "8 张候选立绘为 RGBA，8 张候选背景为 RGB；全部立绘候选在深色、浅色、灰绿色底合成检查，未见明显白边、灰边或矩形光晕。原始 alpha 保留。",
+    "alpha_note": "生成器部分外部像素 alpha=1，人物 alpha 最大值 254；橙色/暖色原始 RGB 光晕在实际 alpha 合成中不可见。Xanxus 02 的胸腹及衣摆存在明显局部半透明，部分头骨与金饰较实。",
+    "style": "逐图与指定参考及 016 风格基准对照；选择理由及风格偏差见 task=020 的 selections[].style_review。",
+    "validation_status": "blocked_by_existing_test_failure",
     "validation": [
       {
         "command": "python -m unittest discover -s tests -q",
-        "exit_code": 0,
-        "result": "Ran 373 tests in 39.507s; OK (skipped=1)"
+        "exit_code": 1,
+        "result": "Ran 417 tests in 69.987s; FAILED (failures=1, skipped=1). test_current_generator_preserves_labels_and_does_not_mutate_sources: needs_review 与 design_reviewed_mismatches 不一致。"
+      },
+      {
+        "command": "python -m unittest discover -s tests -p test_benchmark_pinning_and_secrets.py -q",
+        "exit_code": 1,
+        "result": "Ran 7 tests in 1.057s; 同一失败复现。该测试只比较 benchmark/快照，不读取图片或 manifest；tests/scripts/eval/host/client/app.js 对 HEAD 无差异。"
       },
       {
         "command": "node --check client/app.js",
         "exit_code": 0,
-        "result": "无输出，语法检查通过"
+        "result": "无输出，语法检查通过。"
       },
       {
         "command": "git diff --check",
         "exit_code": 0,
-        "result": "无空白错误"
+        "result": "无空白错误。"
       },
       {
         "command": "一次性 Pillow/JSON 素材检查（未新增代码文件）",
         "exit_code": 0,
-        "result": "44 图片文件；14 暂选、30 独立候选；尺寸、模式、alpha 范围、参考路径、完整提示词、approved=false、暂选与候选字节一致、UTF-8 无 BOM 全部通过"
+        "result": "24 张图片：16 独立候选、8 暂选副本；尺寸、模式、alpha、参考路径、完整提示词、approved=false、候选与暂选字节一致、UTF-8 无 BOM 均通过；016 原图记录、选图记录和 QA 保留。"
       }
-    ]
-  }
+    ],
+    "commit_gate": "AGENTS.md 要求提交前两项验证必须通过；因既有 benchmark 测试失败，等待用户明确豁免后提交，禁止为通过验证修改本任务范围外文件。"
+  },
+  "batches": {
+    "016": {
+      "generation_date": "2026-10-12",
+      "qa": {
+        "dimensions": "全部候选原生达到目标尺寸，无缩放或填充。",
+        "alpha": "11 项立绘为 RGBA，3 项背景为 RGB。暂选立绘在深色、浅色、灰绿色背景合成检查，未见明显白边或灰边。",
+        "portrait_alpha_note": "三个 1024x1536 人物系列的生成 alpha 最大值为 254（非 255），部分外部像素 alpha 为 1；视觉合成未见明显雾光。原始 alpha 未改动。",
+        "style": "逐项参考并排比较笔触、光照和饱和度；差异见 selections[].style_review。",
+        "validation_status": "passed",
+        "validation": [
+          {
+            "command": "python -m unittest discover -s tests -q",
+            "exit_code": 0,
+            "result": "Ran 373 tests in 39.507s; OK (skipped=1)"
+          },
+          {
+            "command": "node --check client/app.js",
+            "exit_code": 0,
+            "result": "无输出，语法检查通过"
+          },
+          {
+            "command": "git diff --check",
+            "exit_code": 0,
+            "result": "无空白错误"
+          },
+          {
+            "command": "一次性 Pillow/JSON 素材检查（未新增代码文件）",
+            "exit_code": 0,
+            "result": "44 图片文件；14 暂选、30 独立候选；尺寸、模式、alpha 范围、参考路径、完整提示词、approved=false、暂选与候选字节一致、UTF-8 无 BOM 全部通过"
+          }
+        ]
+      }
+    },
+    "020": {
+      "generation_date": "2026-10-12",
+      "qa": {
+        "dimensions": "本批 24 张交付图片全部原生达到指定尺寸，未缩放或填充。",
+        "alpha": "8 张候选立绘为 RGBA，8 张候选背景为 RGB；全部立绘候选在深色、浅色、灰绿色底合成检查，未见明显白边、灰边或矩形光晕。原始 alpha 保留。",
+        "alpha_note": "生成器部分外部像素 alpha=1，人物 alpha 最大值 254；橙色/暖色原始 RGB 光晕在实际 alpha 合成中不可见。Xanxus 02 的胸腹及衣摆存在明显局部半透明，部分头骨与金饰较实。",
+        "style": "逐图与指定参考及 016 风格基准对照；选择理由及风格偏差见 task=020 的 selections[].style_review。",
+        "validation_status": "blocked_by_existing_test_failure",
+        "validation": [
+          {
+            "command": "python -m unittest discover -s tests -q",
+            "exit_code": 1,
+            "result": "Ran 417 tests in 69.987s; FAILED (failures=1, skipped=1). test_current_generator_preserves_labels_and_does_not_mutate_sources: needs_review 与 design_reviewed_mismatches 不一致。"
+          },
+          {
+            "command": "python -m unittest discover -s tests -p test_benchmark_pinning_and_secrets.py -q",
+            "exit_code": 1,
+            "result": "Ran 7 tests in 1.057s; 同一失败复现。该测试只比较 benchmark/快照，不读取图片或 manifest；tests/scripts/eval/host/client/app.js 对 HEAD 无差异。"
+          },
+          {
+            "command": "node --check client/app.js",
+            "exit_code": 0,
+            "result": "无输出，语法检查通过。"
+          },
+          {
+            "command": "git diff --check",
+            "exit_code": 0,
+            "result": "无空白错误。"
+          },
+          {
+            "command": "一次性 Pillow/JSON 素材检查（未新增代码文件）",
+            "exit_code": 0,
+            "result": "24 张图片：16 独立候选、8 暂选副本；尺寸、模式、alpha、参考路径、完整提示词、approved=false、候选与暂选字节一致、UTF-8 无 BOM 均通过；016 原图记录、选图记录和 QA 保留。"
+          }
+        ],
+        "commit_gate": "AGENTS.md 要求提交前两项验证必须通过；因既有 benchmark 测试失败，等待用户明确豁免后提交，禁止为通过验证修改本任务范围外文件。"
+      }
+    }
+  },
+  "tasks": [
+    "016",
+    "020"
+  ],
+  "known_issues": [
+    "020: 全量测试存在与美术无关的既有 benchmark 标签同步失败；未修改生成器或 benchmark。",
+    "020: 原始 alpha 有少量值为 1 的外部像素，实际合成未见背景雾光；Xanxus 的部分头骨和金饰接近不透明，待设计验收。"
+  ]
 }
