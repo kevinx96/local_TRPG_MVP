@@ -1,0 +1,524 @@
+{
+  "run_id": "2026-10-11T110053596540Z-intent-gemini-gemini-3.1-flash-lite-default",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "default",
+  "split": "all",
+  "live": false,
+  "labels": "proposed",
+  "cases": "eval\\benchmark\\intent_v2.jsonl",
+  "cases_sha256": "5fb0a8caa4394ca2f99e4e50e4c384887e4e51068fbf99224fa6a537e1ef4070",
+  "metrics": {
+    "total": 486,
+    "evaluated": 486,
+    "statuses": {
+      "ok": 462,
+      "invalid_plan": 24
+    },
+    "normalizations": 21,
+    "severity": {
+      "S0": 391,
+      "S1": 27,
+      "S2": 56,
+      "S3": 12,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.8600823045267489,
+    "s3_rate": 0.024691358024691357,
+    "engine_caught": 10,
+    "exact": 0.8600823045267489,
+    "kind": 0.8888888888888888,
+    "kind_relaxed": 0.8888888888888888,
+    "field_kind": 0.8888888888888888,
+    "field_action_id": 0.9218106995884774,
+    "field_operation": 0.9238683127572016,
+    "field_target_id": 0.8930041152263375,
+    "field_item_id": 0.9382716049382716,
+    "field_advance": 0.9465020576131687,
+    "confusion_matrix": {
+      "clarify": {
+        "existing": 2,
+        "clarify": 15,
+        "dialogue": 2,
+        "interact": 1
+      },
+      "clarify|dialogue": {
+        "dialogue": 1
+      },
+      "clarify|dialogue|existing": {
+        "existing": 2
+      },
+      "clarify|dialogue|existing|unsupported": {
+        "existing": 1
+      },
+      "clarify|dialogue|unsupported": {
+        "unsupported": 21
+      },
+      "clarify|existing": {
+        "existing": 19,
+        "clarify": 7,
+        "dialogue": 2
+      },
+      "clarify|existing|interact": {
+        "clarify": 5,
+        "existing": 3,
+        "invalid": 1
+      },
+      "clarify|interact": {
+        "interact": 16,
+        "invalid": 6,
+        "existing": 1,
+        "clarify": 1
+      },
+      "clarify|unsupported": {
+        "unsupported": 34,
+        "interact": 6,
+        "existing": 2,
+        "dialogue": 1
+      },
+      "dialogue": {
+        "dialogue": 67,
+        "invalid": 3,
+        "existing": 6,
+        "interact": 4,
+        "clarify": 1
+      },
+      "dialogue|existing|unsupported": {
+        "unsupported": 4,
+        "existing": 4,
+        "dialogue": 4,
+        "invalid": 2
+      },
+      "dialogue|interact": {
+        "interact": 4,
+        "dialogue": 5
+      },
+      "dialogue|interact|unsupported": {
+        "interact": 1,
+        "unsupported": 2
+      },
+      "dialogue|unsupported": {
+        "unsupported": 4
+      },
+      "existing": {
+        "existing": 100,
+        "invalid": 12,
+        "dialogue": 1
+      },
+      "interact": {
+        "interact": 112,
+        "clarify": 1
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.6,
+        "kind": 0.8,
+        "kind_relaxed": 0.8,
+        "s3_count": 0,
+        "engine_caught": 2
+      },
+      "colloquial": {
+        "count": 20,
+        "normalizations": 4,
+        "exact": 0.85,
+        "kind": 0.85,
+        "kind_relaxed": 0.85,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "conditional": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.6,
+        "kind": 0.7,
+        "kind_relaxed": 0.7,
+        "s3_count": 1,
+        "engine_caught": 2
+      },
+      "context_followup": {
+        "count": 20,
+        "normalizations": 2,
+        "exact": 0.95,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "declared_success": {
+        "count": 20,
+        "normalizations": 1,
+        "exact": 0.8,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "deixis_multi": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.75,
+        "kind": 0.75,
+        "kind_relaxed": 0.75,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_unique": {
+        "count": 20,
+        "normalizations": 1,
+        "exact": 0.95,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "dialogue": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "excluded_means": {
+        "count": 20,
+        "normalizations": 3,
+        "exact": 0.9,
+        "kind": 0.9,
+        "kind_relaxed": 0.9,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_exact": {
+        "count": 20,
+        "normalizations": 2,
+        "exact": 0.9,
+        "kind": 0.9,
+        "kind_relaxed": 0.9,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 20,
+        "normalizations": 3,
+        "exact": 0.9,
+        "kind": 0.9,
+        "kind_relaxed": 0.9,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "impossible": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.9,
+        "kind": 0.9,
+        "kind_relaxed": 0.9,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "injection": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_distract": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_observe": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_prepare": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_sneak": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_use_item": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.95,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 46,
+        "normalizations": 4,
+        "exact": 0.8260869565217391,
+        "kind": 0.8478260869565217,
+        "kind_relaxed": 0.8478260869565217,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "missing_item": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.7,
+        "kind": 0.7,
+        "kind_relaxed": 0.7,
+        "s3_count": 6,
+        "engine_caught": 5
+      },
+      "negation": {
+        "count": 20,
+        "normalizations": 1,
+        "exact": 0.8,
+        "kind": 0.85,
+        "kind_relaxed": 0.85,
+        "s3_count": 2,
+        "engine_caught": 0
+      },
+      "parallel": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.8,
+        "kind": 0.85,
+        "kind_relaxed": 0.85,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "sequential": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.65,
+        "kind": 0.7,
+        "kind_relaxed": 0.7,
+        "s3_count": 1,
+        "engine_caught": 1
+      }
+    },
+    "negation": {
+      "count": 20,
+      "preserved": 0.95,
+      "kind": 0.85
+    },
+    "injection": {
+      "count": 20,
+      "no_state_change": 1.0,
+      "kind": 1.0,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 20,
+      "no_state_change": 0.75,
+      "kind": 0.95,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 5
+    },
+    "clarify": {
+      "precision": 0.9333333333333333,
+      "recall": 0.18791946308724833
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.04938271604938271,
+    "latency_ms": {
+      "p50": 1006.4,
+      "p95": 1251.8095
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 695.0576131687243,
+        "reported": 486
+      },
+      "output_tokens": {
+        "mean": 80.47325102880659,
+        "reported": 486
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": null,
+    "top_errors": [
+      {
+        "tag": "chitchat",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-chitchat-005",
+            "input": "鍛冶屋の空気って独特だね。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"blacksmith\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"鍛冶屋の空気について感想を述べる。\",\n  \"reply\": \"ああ、鉄と火の匂いだな。慣れれば悪くないものだ。何か用か？\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "blacksmith",
+              "item_id": "",
+              "advance": false,
+              "approach": "鍛冶屋の空気について感想を述べる。",
+              "reply": "ああ、鉄と火の匂いだな。慣れれば悪くないものだ。何か用か？"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-chitchat-007",
+            "input": "青色って落ち着くから好きなんです。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"blue_robed_mage\",\"item_id\":\"\",\"advance\":false,\"approach\":\"\",\"reply\":\"「そう言っていただけると光栄です。この青は、静寂と深淵を象徴する色ですからね。何かお探しの魔法や、知りたいことはありますか？」\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "blue_robed_mage",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "「そう言っていただけると光栄です。この青は、静寂と深淵を象徴する色ですからね。何かお探しの魔法や、知りたいことはありますか？」"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "conditional",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-conditional-008",
+            "input": "サラが嫌がらなければ竜を借りるか考えるよ。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"sarah\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"サラに火コウモリ竜を貸してもらえるか、彼女の意向を尋ねる。\",\n  \"reply\": \"「えっ、この子を貸してほしいの？……うーん、あなたが悪い人じゃないならいいけど、ちゃんと大切にしてくれる？」\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "sarah",
+              "item_id": "",
+              "advance": false,
+              "approach": "サラに火コウモリ竜を貸してもらえるか、彼女の意向を尋ねる。",
+              "reply": "「えっ、この子を貸してほしいの？……うーん、あなたが悪い人じゃないならいいけど、ちゃんと大切にしてくれる？」"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-conditional-010",
+            "input": "話を聞いて納得できたら取引する。承諾ではないよ。",
+            "raw_response": "{\"kind\": \"existing\", \"action_id\": \"hear_curse_offer_mage\", \"operation\": \"\", \"target_id\": \"\", \"item_id\": \"\", \"advance\": false, \"approach\": \"怪しい商人の持ちかける取引の内容を詳しく聞き、その内容を精査して取引に応じるか判断する。\", \"reply\": \"\"}",
+            "plan": {
+              "kind": "existing",
+              "action_id": "hear_curse_offer_mage",
+              "operation": "",
+              "target_id": "",
+              "item_id": "",
+              "advance": false,
+              "approach": "怪しい商人の持ちかける取引の内容を詳しく聞き、その内容を精査して取引に応じるか判断する。",
+              "reply": ""
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "language_mix",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-language_mix-012",
+            "input": "見張りはbypassで抜けます。",
+            "raw_response": "{\n  \"kind\": \"existing\",\n  \"action_id\": \"fort_first_bypass\",\n  \"operation\": \"sneak\",\n  \"target_id\": \"\",\n  \"item_id\": \"\",\n  \"advance\": true,\n  \"approach\": \"見張りのゴブリンに気づかれないよう、周囲の影や遮蔽物を利用して背後を通り抜ける。\",\n  \"reply\": \"\"\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "fort_first_bypass",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-language_mix-015",
+            "input": "大ゴブリンをfollowして迂回するつもり。",
+            "raw_response": "{\"kind\":\"existing\",\"action_id\":\"bypass_hobgoblin\",\"operation\":\"sneak\",\"target_id\":\"\",\"item_id\":\"\",\"advance\":true,\"approach\":\"大ゴブリンの動きを観察し、隙を見て背後を通り抜ける。\",\"reply\":\"\"}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "bypass_hobgoblin",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}
