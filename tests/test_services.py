@@ -44,7 +44,8 @@ class ServiceTests(unittest.TestCase):
                     current = next(q for q in public_quests(session) if q["id"] == quest["id"])
                     self.assertEqual(current["current_objective"], stage["text"])
                     self.assertEqual(current["completed_stages"], [s["text"] for s in quest["stages"][:index]])
-                    state.apply_state_delta(session, {"flags_set": [stage["done_flag"]]})
+                    done = stage["done_flag"]
+                    state.apply_state_delta(session, {"flags_set": [done[0] if isinstance(done, list) else done]})
                 completed = next(q for q in public_quests(session) if q["id"] == quest["id"])
                 self.assertEqual(completed["status"], "completed")
                 self.assertEqual(completed["current_objective"], "")
@@ -69,7 +70,7 @@ class ServiceTests(unittest.TestCase):
             self.assertEqual(mystery["clue_count"], 1)
         state.apply_state_delta(session, {"flags_set": quest["clue_flags"]})
         self.give(session, "white_dragon_scale", 3)
-        self.assertEqual(public_quests(session)[-1]["clue_count"], 6)
+        self.assertEqual(public_quests(session)[-1]["clue_count"], 7)
         self.assertNotIn("clue_flags", public_quests(session)[-1])
 
     def test_once_flag_and_entry_effect_log_only_once(self):

@@ -131,10 +131,23 @@ def check(pack: dict[str, Any], manifest: dict[str, Any]) -> dict[str, Any]:
                     elif source["type"] == "class_skill":
                         state._unlock_level_skills(session)
                         valid = any(s.get("id") == source["skill"] and s.get("element") == source["element"] for s in session["character"]["skills"])
+                    elif source["type"] == "class_special":
+                        valid = source.get("special_action") == "purify_ignis_prayer" and session["character"]["character_id"] == "cleric"
                     else:
                         valid = any(grants(e["delta"], source["reward"]) for e in matching)
                     if not valid:
                         raise ValueError("source does not grant declared reward")
+                    if key["id"] in {"purification_knowledge", "purification_means"}:
+                        arrival = next(i for i, e in enumerate(events) if e["location"] == "dragon_valley_loc" and e["step"] == "@victory")
+                        if not any(e in events[:arrival] for e in matching):
+                            raise ValueError("purification resource acquired after Ignis")
+                        before, _ = replay(pack, steps[:arrival], source.get("character", "hero"))
+                        combat.ensure_combat_started(before)
+                        enemy = before["combat"]["enemies"][0]
+                        enemy["hp"] = int(enemy["max_hp"] * .4)
+                        specials = [a["id"] for a in combat.combat_actions(before) if a["type"] == "special"]
+                        if not specials or (source.get("special_action") and source["special_action"] not in specials):
+                            raise ValueError("purification unavailable with declared resource")
                     if source.get("crafted_item") and not any(i.get("id") == source["crafted_item"] for i in session["character"]["inventory"]):
                         raise ValueError("crafting destination/item unreachable")
                     found += 1

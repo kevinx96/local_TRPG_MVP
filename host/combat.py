@@ -152,6 +152,7 @@ def ensure_combat_started(session: dict[str, Any], intro_text: str = "") -> bool
     session["choices"] = []
     session.pop("combat_start_requested", None)
     _log(session, "system", "start", f"戦闘開始: {'、'.join(enemy['name'] for enemy in enemies)}")
+    _activate_phase_allies(session)
     _apply_round_start_effects(session, random)
     _check_victory_or_defeat(session)
     return True
@@ -172,7 +173,7 @@ def perform_combat_action(
 
     random_source = rng or random
     normalized_type = str(action_type or "").strip().lower()
-    if normalized_type not in {"attack", "skill", "item", "defend", "flee"}:
+    if normalized_type not in {"attack", "skill", "item", "defend", "flee", "special"}:
         raise CombatError("不明な戦闘行動です。")
 
     before_index = len(combat.get("log") or [])
@@ -184,6 +185,8 @@ def perform_combat_action(
         _player_item(session, action_id, target_id, random_source)
     elif normalized_type == "defend":
         _player_defend(session)
+    elif normalized_type == "special":
+        _player_special_action(session, action_id)
     else:
         _player_flee(session, random_source)
 
@@ -361,6 +364,11 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
             "enabled": True,
             **_combat_action_details(spec),
         })
+    for special in (session.get("combat") or {}).get("encounter", {}).get("special_actions", []):
+        if _special_action_available(session, special):
+            item = _find_entry(character.get("inventory", []), special.get("cost_item", ""), "item")
+            actions.append({**deepcopy(special), "type": "special", "enabled": True,
+                            "cost_item_name": item.get("name", "") if item else ""})
     actions.extend([
         {
             "type": "defend",
@@ -379,6 +387,43 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
         },
     ])
     return actions
+
+
+def _special_action_available(session: dict[str, Any], action: dict[str, Any]) -> bool:
+    from .state import _session_requirement_passes
+
+    if not combat_is_active(session) or not _session_requirement_passes(action.get("requirements"), session):
+        return False
+    enemies = [enemy for enemy in _alive_enemies(session["combat"])
+               if not action.get("enemy_id") or enemy["template_id"] == action["enemy_id"]]
+    if not enemies or any(_hp_ratio(enemy) > action.get("enemy_hp_ratio_lte", 1) for enemy in enemies):
+        return False
+    actor = session["character"]
+    if action.get("cost_item"):
+        item = _find_entry(actor.get("inventory", []), action["cost_item"], "item")
+        return item is not None and _safe_int(item.get("quantity"), 1) >= max(1, _safe_int(action.get("cost"), 1))
+    resource = str(action.get("cost_type") or "")
+    return not resource or _safe_int(actor.get(resource), 0) >= max(0, _safe_int(action.get("cost"), 0))
+
+
+def _player_special_action(session: dict[str, Any], action_id: str) -> None:
+    from .state import _effects_to_state_delta
+
+    action = next((a for a in session["combat"]["encounter"].get("special_actions", [])
+                   if a.get("id") == action_id), None)
+    if action is None or not _special_action_available(session, action):
+        raise CombatError("戦闘行動の条件を満たしていません。")
+    actor = session["character"]
+    if action.get("cost_item"):
+        item = _find_entry(actor["inventory"], action["cost_item"], "item")
+        for _ in range(max(1, _safe_int(action.get("cost"), 1))):
+            _consume_inventory_item(actor, item)
+    elif action.get("cost_type"):
+        resource = action["cost_type"]
+        actor[resource] -= max(0, _safe_int(action.get("cost"), 0))
+    _finish_combat(session, action["outcome"], action["log_text"])
+    session["combat"]["pending_state_delta"] = _effects_to_state_delta(action.get("effects", []), session)
+    session["combat"]["result"]["prepared_text"] = action["log_text"]
 
 
 def _combat_action_details(ability: dict[str, Any]) -> dict[str, Any]:
@@ -769,6 +814,7 @@ def _check_victory_or_defeat(session: dict[str, Any]) -> None:
             {"round": combat["round"], "from": enemy["template_id"], "to": replacement["template_id"]})
         _log(session, "system", "phase_transition", str(enemy.get("phase_transition_text") or ""),
              {"from": enemy["template_id"], "to": replacement["template_id"]})
+        _activate_phase_allies(session)
     if enemies and all(_enemy_is_defeated(enemy) for enemy in enemies):
         _finish_combat(session, "victory", "すべての敵を倒した。")
 
@@ -809,6 +855,8 @@ def _finish_combat(session: dict[str, Any], status: str, summary: str) -> None:
         delta = _victory_delta(session, defeated_phases, combat.get("encounter") or {})
         combat["pending_state_delta"] = delta
         result["rewards"] = deepcopy(delta)
+        if isinstance(delta.get("game_over"), dict):
+            result["prepared_text"] = delta["game_over"]["reason"]
         flags = session.setdefault("flags", {})
         for enemy in defeated_phases:
             template_id = str(enemy.get("template_id") or enemy.get("id") or "")
@@ -831,6 +879,8 @@ def _finish_combat(session: dict[str, Any], status: str, summary: str) -> None:
 
 
 def _victory_delta(session: dict[str, Any], enemies: list[dict[str, Any]], encounter: dict[str, Any]) -> dict[str, Any]:
+    from .state import _effects_to_state_delta
+
     delta: dict[str, Any] = {"gold_change": 0, "inventory_add": [], "flags_set": []}
     for enemy in enemies:
         rewards = enemy.get("rewards") if isinstance(enemy.get("rewards"), dict) else {}
@@ -841,6 +891,8 @@ def _victory_delta(session: dict[str, Any], enemies: list[dict[str, Any]], encou
         if template_id:
             delta["flags_set"].append(_defeated_flag(template_id, current_location_id(session)))
     extra = deepcopy(encounter.get("victory_effects")) if isinstance(encounter.get("victory_effects"), dict) else {}
+    if isinstance(encounter.get("victory_effects"), list):
+        extra = _effects_to_state_delta(encounter["victory_effects"], session)
     by_character = encounter.get("victory_effects_by_character")
     character = session.get("character", {}) if isinstance(session.get("character"), dict) else {}
     character_id = str(character.get("id") or character.get("character_id") or "")
@@ -899,6 +951,36 @@ def _apply_round_start_effects(session: dict[str, Any], rng: Any) -> None:
     companion = session.get("companion") if isinstance(session.get("companion"), dict) else {}
     if (combat.get("encounter") or {}).get("disable_companion"):
         companion = {}
+    _apply_ally_round_start_effects(session, companion, rng)
+    for ally in combat.get("phase_allies", []):
+        _apply_ally_round_start_effects(session, ally, rng, str(ally["id"]))
+    _check_victory_or_defeat(session)
+
+
+def _activate_phase_allies(session: dict[str, Any]) -> None:
+    from .state import _session_requirement_passes
+
+    battle = session["combat"]
+    enemies = _alive_enemies(battle)
+    candidates = [*battle["encounter"].get("phase_allies", []),
+                  *(ally for enemy in enemies for ally in enemy.get("phase_allies", []))]
+    active = []
+    for ally in candidates:
+        if ally.get("enemy_ids") and not any(e["template_id"] in ally["enemy_ids"] for e in enemies):
+            continue
+        if not _session_requirement_passes(ally.get("requirements"), session):
+            continue
+        if any(a["id"] == ally["id"] for a in active):
+            continue
+        active.append(deepcopy(ally))
+        if not any(a["id"] == ally["id"] for a in battle.get("phase_allies", [])):
+            _log(session, ally["id"], "phase_ally", ally.get("entry_text", ""))
+    battle["phase_allies"] = active
+
+
+def _apply_ally_round_start_effects(session: dict[str, Any], companion: dict[str, Any], rng: Any,
+                                  actor_id: str = "companion") -> None:
+    combat = session["combat"]
     for effect in companion.get("round_start_effects") or []:
         if not isinstance(effect, dict):
             continue
@@ -927,8 +1009,7 @@ def _apply_round_start_effects(session: dict[str, Any], rng: Any) -> None:
                     "accuracy": 100,
                     "element": str(effect.get("element") or "physical"),
                 }
-                _resolve_attack(session, companion, target, ability, "companion", rng)
-    _check_victory_or_defeat(session)
+                _resolve_attack(session, companion, target, ability, actor_id, rng)
 
 
 def _tick_enemy_statuses(session: dict[str, Any], rng: Any) -> None:

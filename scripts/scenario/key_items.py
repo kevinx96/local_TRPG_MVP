@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from copy import deepcopy
 from typing import Any
 
 from host import state
@@ -93,6 +94,22 @@ def generate() -> dict[str, Any]:
             add(sources, "ian", "inn", "ask_ian_dragon_tale", "dialogue", {"flag": flag}, tail(town, "go_inn", "ask_ian_dragon_tale"))
         if flag == "noticed_general_frost":
             add(sources, "general_high_roll", "castle", "ask_general_advice:high", "dialogue", {"flag": flag}, tail(town, "ask_general_advice:high"))
+    knowledge = key("purification_knowledge", 2)
+    for entry in list(keys):
+        if entry["id"] in {"frost_trace_seen", "noticed_general_frost", "heard_treaty_lore", "white_dragon_scale"}:
+            for source in entry["sources"]:
+                if source["location"] == "ignis_last_breath":
+                    continue
+                if entry["id"] == "white_dragon_scale" and source["id"] == "frost_core":
+                    continue  # The same investigation is already counted via frost_trace_seen.
+                clone = deepcopy(source)
+                clone["id"] = entry["id"] + "_" + source["id"]
+                knowledge.append(clone)
+    means = key("purification_means", 2)
+    means.extend(deepcopy([source for source in holy if source["type"] != "class_skill"]))
+    add(means, "cleric_prayer", "dragon_valley_loc", "@skill:purify_ignis_prayer", "class_special", {},
+        tail(after, "accept_ian_request", "@skill:purify_ignis_prayer"), character="cleric",
+        special_action="purify_ignis_prayer")
     pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
     for entry in keys:
         for source in entry["sources"]:

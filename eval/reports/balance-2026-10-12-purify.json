@@ -1,0 +1,3103 @@
+{
+  "n": 1000,
+  "route_n": 500,
+  "draco": [
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "standard",
+      "phase_rounds_mean": {
+        "draco_human": 3.303,
+        "draco_dragon": 5.313
+      },
+      "purify": true,
+      "outcomes": {
+        "defeat": 403,
+        "victory": 597
+      },
+      "rounds_mean": 7.616,
+      "success_rounds_mean": 5.006700167504188,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 1000,
+        "draco_dragon": 1000
+      },
+      "win_rate": 0.597,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.5925460636515912,
+      "healing_items_mean": {
+        "治療の巻物": 1.126,
+        "薬草": 0.29
+      },
+      "consumables_mean": {
+        "治療の巻物": 1.126,
+        "紅竜の炎核": 1.0,
+        "聖水": 1.583,
+        "薬草": 0.29
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 4.815,
+      "defeat_rounds": {
+        "4": 41,
+        "5": 36,
+        "6": 31,
+        "7": 23,
+        "8": 21,
+        "9": 25,
+        "10": 18,
+        "11": 11,
+        "12": 20,
+        "13": 18,
+        "14": 17,
+        "15": 27,
+        "16": 26,
+        "17": 22,
+        "18": 22,
+        "19": 12,
+        "20": 12,
+        "21": 7,
+        "22": 8,
+        "23": 1,
+        "24": 2,
+        "25": 2,
+        "27": 1
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 4": 24,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 21,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 17,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 17,
+        "draco_dragon:1:凍てつく吐息 @ round 16": 15,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 15,
+        "draco_dragon:1:凍てつく吐息 @ round 17": 14,
+        "draco_dragon:1:凍てつく吐息 @ round 12": 14,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 14,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 14,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 15": 14,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 13,
+        "draco_dragon:1:凍てつく吐息 @ round 15": 13,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 12,
+        "draco_dragon:1:凍てつく吐息 @ round 18": 11,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 18": 11,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 11,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 16": 11,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 10,
+        "draco_dragon:1:凍てつく吐息 @ round 13": 10,
+        "draco_dragon:1:凍てつく吐息 @ round 14": 10,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 10,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 9,
+        "draco_dragon:1:凍てつく吐息 @ round 20": 9,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 13": 8,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 8,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 17": 8,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 7,
+        "draco_dragon:1:凍てつく吐息 @ round 22": 7,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 14": 7,
+        "draco_dragon:1:凍てつく吐息 @ round 19": 6,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 19": 6,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 12": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 21": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 11": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 20": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 21": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 24": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 25": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 22": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 27": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 23": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "standard",
+      "phase_rounds_mean": {
+        "draco_human": 3.307,
+        "draco_dragon": 4.626
+      },
+      "purify": true,
+      "outcomes": {
+        "defeat": 409,
+        "victory": 591
+      },
+      "rounds_mean": 6.933,
+      "success_rounds_mean": 4.983079526226734,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 1000,
+        "draco_dragon": 1000
+      },
+      "win_rate": 0.591,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.6118532371537982,
+      "healing_items_mean": {
+        "治療の巻物": 1.099,
+        "薬草": 0.163
+      },
+      "consumables_mean": {
+        "治療の巻物": 1.099,
+        "紅竜の炎核": 0.999,
+        "聖水": 1.558,
+        "薬草": 0.163
+      },
+      "mp_spent_mean": 14.169,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "4": 52,
+        "5": 44,
+        "6": 46,
+        "7": 26,
+        "8": 31,
+        "9": 25,
+        "10": 24,
+        "11": 22,
+        "12": 17,
+        "13": 17,
+        "14": 23,
+        "15": 26,
+        "16": 15,
+        "17": 8,
+        "18": 12,
+        "19": 10,
+        "20": 7,
+        "21": 2,
+        "23": 2
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 6": 31,
+        "draco_dragon:1:凍てつく吐息 @ round 4": 26,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 26,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 25,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 22,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 20,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 19,
+        "draco_dragon:1:凍てつく吐息 @ round 15": 18,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 15,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 15,
+        "draco_dragon:1:凍てつく吐息 @ round 14": 14,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 13,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 11": 12,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 11,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 13": 11,
+        "draco_dragon:1:凍てつく吐息 @ round 16": 10,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 10,
+        "draco_dragon:1:凍てつく吐息 @ round 12": 10,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 10,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 9,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 14": 9,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 15": 8,
+        "draco_dragon:1:凍てつく吐息 @ round 18": 7,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 12": 7,
+        "draco_dragon:1:凍てつく吐息 @ round 19": 7,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 13": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 17": 6,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 16": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 18": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 20": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 19": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 23": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 17": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 21": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 21": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "standard",
+      "phase_rounds_mean": {
+        "draco_human": 1,
+        "draco_dragon": 3.533
+      },
+      "purify": true,
+      "outcomes": {
+        "victory": 587,
+        "defeat": 413
+      },
+      "rounds_mean": 3.533,
+      "success_rounds_mean": 2.810902896081772,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 1000,
+        "draco_dragon": 1000
+      },
+      "win_rate": 0.587,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.7092561044860874,
+      "healing_items_mean": {
+        "治療の巻物": 0.957,
+        "薬草": 0.058
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.957,
+        "紅竜の炎核": 0.994,
+        "聖水": 1.275,
+        "薬草": 0.058
+      },
+      "mp_spent_mean": 0.996,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 95,
+        "3": 87,
+        "4": 66,
+        "5": 40,
+        "6": 36,
+        "7": 32,
+        "8": 16,
+        "9": 16,
+        "10": 20,
+        "11": 4,
+        "12": 1
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 2": 61,
+        "draco_dragon:1:凍てつく吐息 @ round 3": 49,
+        "draco_dragon:1:凍てつく吐息 @ round 4": 45,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 3": 38,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 2": 34,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 21,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 20,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 20,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 20,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 19,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 17,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 12,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 11,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 10,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 10,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 9,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 6,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 12": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "standard",
+      "phase_rounds_mean": {
+        "draco_human": 3.148,
+        "draco_dragon": 3.66
+      },
+      "purify": true,
+      "outcomes": {
+        "defeat": 351,
+        "victory": 649
+      },
+      "rounds_mean": 5.808,
+      "success_rounds_mean": 5.419106317411402,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 1000,
+        "draco_dragon": 1000
+      },
+      "win_rate": 0.649,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.6538777606574216,
+      "healing_items_mean": {
+        "治療の巻物": 0.722,
+        "薬草": 0.02
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.722,
+        "紅竜の炎核": 0.989,
+        "聖水": 0.073,
+        "薬草": 0.02
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 13.965,
+      "defeat_rounds": {
+        "4": 84,
+        "5": 74,
+        "6": 59,
+        "7": 42,
+        "8": 27,
+        "9": 20,
+        "10": 13,
+        "11": 9,
+        "12": 8,
+        "13": 4,
+        "14": 7,
+        "15": 2,
+        "16": 1,
+        "20": 1
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 4": 50,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 45,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 34,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 32,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 29,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 27,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 27,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 19,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 15,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 11,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 9,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 8,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 7,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 12": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 14": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 11": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 13": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 12": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 15": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 16": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 13": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 20": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "purification",
+      "phase_rounds_mean": {
+        "draco_human": 3.303,
+        "draco_dragon": 3.657
+      },
+      "purify": true,
+      "outcomes": {
+        "victory": 799,
+        "defeat": 201
+      },
+      "rounds_mean": 5.96,
+      "success_rounds_mean": 6.013767209011264,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 1000,
+        "draco_dragon": 1000
+      },
+      "win_rate": 0.799,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.4648936170212766,
+      "healing_items_mean": {
+        "治療の巻物": 0.525,
+        "薬草": 0.007
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.525,
+        "聖水": 1.786,
+        "薬草": 0.007
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 2.553,
+      "defeat_rounds": {
+        "4": 74,
+        "5": 42,
+        "6": 36,
+        "7": 17,
+        "8": 12,
+        "9": 8,
+        "10": 3,
+        "11": 3,
+        "12": 1,
+        "13": 1,
+        "14": 2,
+        "15": 2
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 4": 48,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 27,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 26,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 26,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 15,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 10,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 10,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 9,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 8,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 14": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 12": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 15": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 13": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "purification",
+      "phase_rounds_mean": {
+        "draco_human": 3.307,
+        "draco_dragon": 3.538
+      },
+      "purify": true,
+      "outcomes": {
+        "defeat": 229,
+        "victory": 771
+      },
+      "rounds_mean": 5.845,
+      "success_rounds_mean": 5.9623865110246435,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 1000,
+        "draco_dragon": 1000
+      },
+      "win_rate": 0.771,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.46764284251484745,
+      "healing_items_mean": {
+        "治療の巻物": 0.647,
+        "薬草": 0.004
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.647,
+        "聖水": 1.751,
+        "薬草": 0.004
+      },
+      "mp_spent_mean": 13.92,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "4": 78,
+        "5": 70,
+        "6": 32,
+        "7": 25,
+        "8": 12,
+        "9": 7,
+        "10": 1,
+        "11": 2,
+        "12": 1,
+        "16": 1
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 4": 47,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 43,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 31,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 27,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 22,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 17,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 10,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 8,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 8,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 6,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 4,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 12": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "purification",
+      "phase_rounds_mean": {
+        "draco_human": 1,
+        "draco_dragon": 3.123
+      },
+      "purify": true,
+      "outcomes": {
+        "victory": 658,
+        "defeat": 342
+      },
+      "rounds_mean": 3.123,
+      "success_rounds_mean": 3.121580547112462,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 1000,
+        "draco_dragon": 1000
+      },
+      "win_rate": 0.658,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.4962639311043566,
+      "healing_items_mean": {
+        "治療の巻物": 0.608,
+        "薬草": 0.008
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.608,
+        "聖水": 1.58,
+        "薬草": 0.008
+      },
+      "mp_spent_mean": 1.124,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 155,
+        "3": 93,
+        "4": 44,
+        "5": 25,
+        "6": 10,
+        "7": 8,
+        "8": 2,
+        "9": 3,
+        "10": 2
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 2": 95,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 2": 60,
+        "draco_dragon:1:凍てつく吐息 @ round 3": 47,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 3": 46,
+        "draco_dragon:1:凍てつく吐息 @ round 4": 29,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 18,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 15,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 8,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 7,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 7,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "purification",
+      "phase_rounds_mean": {
+        "draco_human": 3.148,
+        "draco_dragon": 3.303
+      },
+      "purify": true,
+      "outcomes": {
+        "defeat": 304,
+        "victory": 696
+      },
+      "rounds_mean": 5.451,
+      "success_rounds_mean": 5.511494252873563,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 1000,
+        "draco_dragon": 1000
+      },
+      "win_rate": 0.696,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.5201628352490422,
+      "healing_items_mean": {
+        "治療の巻物": 0.471,
+        "薬草": 0.001
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.471,
+        "聖水": 0.038,
+        "薬草": 0.001
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 15.26,
+      "defeat_rounds": {
+        "4": 120,
+        "5": 72,
+        "6": 53,
+        "7": 35,
+        "8": 14,
+        "9": 6,
+        "10": 1,
+        "11": 1,
+        "12": 1,
+        "13": 1
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 4": 63,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 57,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 45,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 33,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 27,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 22,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 20,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 13,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 8,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 12": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 13": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 1
+      }
+    }
+  ],
+  "ignis": [
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "ignis": 7.113
+      },
+      "purify": true,
+      "outcomes": {
+        "purified": 934,
+        "defeat": 66
+      },
+      "rounds_mean": 7.113,
+      "success_rounds_mean": 7.244111349036403,
+      "threshold_reached": 961,
+      "threshold_rounds_mean": 6.23309053069719,
+      "phase_reached": {
+        "ignis": 1000
+      },
+      "win_rate": 0.934,
+      "rounds_median": 7.0,
+      "hp_left_mean": 0.5531584582441114,
+      "healing_items_mean": {
+        "治療の巻物": 0.53
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.53,
+        "聖水": 1.934
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 9,
+        "4": 9,
+        "5": 17,
+        "6": 21,
+        "7": 7,
+        "8": 3
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 6": 16,
+        "ignis:1:尻尾攻撃 @ round 5": 12,
+        "ignis:1:尻尾攻撃 @ round 3": 7,
+        "ignis:1:炎の息 @ round 5": 5,
+        "ignis:1:尻尾攻撃 @ round 7": 5,
+        "ignis:1:炎の息 @ round 6": 5,
+        "ignis:1:尻尾攻撃 @ round 4": 5,
+        "ignis:1:炎の息 @ round 4": 4,
+        "ignis:1:尻尾攻撃 @ round 8": 2,
+        "ignis:1:炎の息 @ round 7": 2,
+        "ignis:1:炎の息 @ round 3": 2,
+        "ignis:1:炎の息 @ round 8": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "ignis": 9.403
+      },
+      "purify": false,
+      "outcomes": {
+        "defeat": 122,
+        "victory": 878
+      },
+      "rounds_mean": 9.403,
+      "success_rounds_mean": 9.82118451025057,
+      "threshold_reached": 976,
+      "threshold_rounds_mean": 5.072745901639344,
+      "phase_reached": {
+        "ignis": 1000
+      },
+      "win_rate": 0.878,
+      "rounds_median": 9.0,
+      "hp_left_mean": 0.6671127562642369,
+      "healing_items_mean": {
+        "治療の巻物": 1.073,
+        "薬草": 0.001
+      },
+      "consumables_mean": {
+        "治療の巻物": 1.073,
+        "聖水": 2.0,
+        "薬草": 0.001
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 1,
+        "3": 9,
+        "4": 17,
+        "5": 19,
+        "6": 24,
+        "7": 16,
+        "8": 14,
+        "9": 11,
+        "10": 6,
+        "11": 1,
+        "12": 2,
+        "13": 2
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 6": 17,
+        "ignis:1:尻尾攻撃 @ round 4": 12,
+        "ignis:1:炎の息 @ round 5": 10,
+        "ignis:1:尻尾攻撃 @ round 8": 9,
+        "ignis:1:尻尾攻撃 @ round 7": 9,
+        "ignis:1:尻尾攻撃 @ round 5": 9,
+        "ignis:1:炎の息 @ round 7": 7,
+        "ignis:1:炎の息 @ round 6": 7,
+        "ignis:1:尻尾攻撃 @ round 9": 7,
+        "ignis:1:炎の息 @ round 4": 5,
+        "ignis:1:炎の息 @ round 8": 5,
+        "ignis:1:炎の息 @ round 3": 5,
+        "ignis:1:尻尾攻撃 @ round 3": 4,
+        "ignis:1:尻尾攻撃 @ round 10": 4,
+        "ignis:1:炎の息 @ round 9": 4,
+        "ignis:1:炎の息 @ round 10": 2,
+        "ignis:1:炎の息 @ round 13": 2,
+        "ignis:1:尻尾攻撃 @ round 11": 1,
+        "ignis:1:炎の息 @ round 2": 1,
+        "ignis:1:炎の息 @ round 12": 1,
+        "ignis:1:尻尾攻撃 @ round 12": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "ignis": 7.398
+      },
+      "purify": true,
+      "outcomes": {
+        "purified": 854,
+        "defeat": 146
+      },
+      "rounds_mean": 7.398,
+      "success_rounds_mean": 7.8009367681498825,
+      "threshold_reached": 886,
+      "threshold_rounds_mean": 6.797968397291196,
+      "phase_reached": {
+        "ignis": 1000
+      },
+      "win_rate": 0.854,
+      "rounds_median": 7.0,
+      "hp_left_mean": 0.5480709971650437,
+      "healing_items_mean": {
+        "治療の巻物": 0.701
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.701,
+        "聖水": 1.854
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 12,
+        "3": 18,
+        "4": 35,
+        "5": 28,
+        "6": 22,
+        "7": 15,
+        "8": 11,
+        "9": 1,
+        "10": 2,
+        "11": 1,
+        "13": 1
+      },
+      "defeat_causes": {
+        "ignis:1:炎の息 @ round 4": 21,
+        "ignis:1:尻尾攻撃 @ round 6": 18,
+        "ignis:1:炎の息 @ round 5": 16,
+        "ignis:1:尻尾攻撃 @ round 4": 14,
+        "ignis:1:尻尾攻撃 @ round 5": 12,
+        "ignis:1:尻尾攻撃 @ round 3": 9,
+        "ignis:1:炎の息 @ round 3": 9,
+        "ignis:1:尻尾攻撃 @ round 7": 9,
+        "ignis:1:尻尾攻撃 @ round 8": 8,
+        "ignis:1:尻尾攻撃 @ round 2": 7,
+        "ignis:1:炎の息 @ round 7": 6,
+        "ignis:1:炎の息 @ round 2": 5,
+        "ignis:1:炎の息 @ round 6": 4,
+        "ignis:1:炎の息 @ round 8": 3,
+        "ignis:1:尻尾攻撃 @ round 10": 2,
+        "ignis:1:炎の息 @ round 9": 1,
+        "ignis:1:尻尾攻撃 @ round 11": 1,
+        "ignis:1:尻尾攻撃 @ round 13": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "ignis": 9.735
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 756,
+        "defeat": 244
+      },
+      "rounds_mean": 9.735,
+      "success_rounds_mean": 10.743386243386244,
+      "threshold_reached": 933,
+      "threshold_rounds_mean": 5.461950696677385,
+      "phase_reached": {
+        "ignis": 1000
+      },
+      "win_rate": 0.756,
+      "rounds_median": 10.0,
+      "hp_left_mean": 0.670843776106934,
+      "healing_items_mean": {
+        "治療の巻物": 1.25,
+        "薬草": 0.002
+      },
+      "consumables_mean": {
+        "治療の巻物": 1.25,
+        "聖水": 2.0,
+        "薬草": 0.002
+      },
+      "mp_spent_mean": 0.065,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 13,
+        "3": 16,
+        "4": 29,
+        "5": 31,
+        "6": 31,
+        "7": 35,
+        "8": 34,
+        "9": 19,
+        "10": 18,
+        "11": 11,
+        "12": 1,
+        "13": 3,
+        "14": 3
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 7": 25,
+        "ignis:1:尻尾攻撃 @ round 8": 21,
+        "ignis:1:尻尾攻撃 @ round 6": 21,
+        "ignis:1:尻尾攻撃 @ round 5": 16,
+        "ignis:1:尻尾攻撃 @ round 10": 15,
+        "ignis:1:炎の息 @ round 5": 15,
+        "ignis:1:尻尾攻撃 @ round 4": 15,
+        "ignis:1:炎の息 @ round 4": 14,
+        "ignis:1:炎の息 @ round 8": 13,
+        "ignis:1:尻尾攻撃 @ round 2": 12,
+        "ignis:1:尻尾攻撃 @ round 9": 11,
+        "ignis:1:尻尾攻撃 @ round 3": 10,
+        "ignis:1:炎の息 @ round 6": 10,
+        "ignis:1:炎の息 @ round 7": 10,
+        "ignis:1:尻尾攻撃 @ round 11": 9,
+        "ignis:1:炎の息 @ round 9": 8,
+        "ignis:1:炎の息 @ round 3": 6,
+        "ignis:1:炎の息 @ round 10": 3,
+        "ignis:1:尻尾攻撃 @ round 14": 2,
+        "ignis:1:尻尾攻撃 @ round 13": 2,
+        "ignis:1:炎の息 @ round 11": 2,
+        "ignis:1:炎の息 @ round 2": 1,
+        "ignis:1:尻尾攻撃 @ round 12": 1,
+        "ignis:1:炎の息 @ round 13": 1,
+        "ignis:1:炎の息 @ round 14": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "ignis": 4.582
+      },
+      "purify": true,
+      "outcomes": {
+        "purified": 811,
+        "defeat": 189
+      },
+      "rounds_mean": 4.582,
+      "success_rounds_mean": 4.903822441430333,
+      "threshold_reached": 895,
+      "threshold_rounds_mean": 3.9027932960893854,
+      "phase_reached": {
+        "ignis": 1000
+      },
+      "win_rate": 0.811,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.6262844225236334,
+      "healing_items_mean": {
+        "治療の巻物": 0.49
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.49,
+        "聖水": 0.811
+      },
+      "mp_spent_mean": 13.124,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 63,
+        "3": 59,
+        "4": 42,
+        "5": 18,
+        "6": 5,
+        "7": 2
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 3": 47,
+        "ignis:1:尻尾攻撃 @ round 2": 39,
+        "ignis:1:尻尾攻撃 @ round 4": 25,
+        "ignis:1:炎の息 @ round 2": 24,
+        "ignis:1:炎の息 @ round 4": 17,
+        "ignis:1:炎の息 @ round 3": 12,
+        "ignis:1:尻尾攻撃 @ round 5": 11,
+        "ignis:1:炎の息 @ round 5": 7,
+        "ignis:1:尻尾攻撃 @ round 6": 3,
+        "ignis:1:炎の息 @ round 6": 2,
+        "ignis:1:炎の息 @ round 7": 1,
+        "ignis:1:尻尾攻撃 @ round 7": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "ignis": 5.602
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 720,
+        "defeat": 280
+      },
+      "rounds_mean": 5.602,
+      "success_rounds_mean": 6.270833333333333,
+      "threshold_reached": 895,
+      "threshold_rounds_mean": 3.9027932960893854,
+      "phase_reached": {
+        "ignis": 1000
+      },
+      "win_rate": 0.72,
+      "rounds_median": 6.0,
+      "hp_left_mean": 0.7235532407407408,
+      "healing_items_mean": {
+        "治療の巻物": 0.82,
+        "薬草": 0.007
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.82,
+        "聖水": 0.003,
+        "薬草": 0.007
+      },
+      "mp_spent_mean": 19.088,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 63,
+        "3": 59,
+        "4": 75,
+        "5": 45,
+        "6": 21,
+        "7": 9,
+        "8": 4,
+        "9": 2,
+        "10": 2
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 4": 49,
+        "ignis:1:尻尾攻撃 @ round 3": 47,
+        "ignis:1:尻尾攻撃 @ round 2": 39,
+        "ignis:1:尻尾攻撃 @ round 5": 28,
+        "ignis:1:炎の息 @ round 4": 26,
+        "ignis:1:炎の息 @ round 2": 24,
+        "ignis:1:炎の息 @ round 5": 17,
+        "ignis:1:炎の息 @ round 3": 12,
+        "ignis:1:尻尾攻撃 @ round 6": 12,
+        "ignis:1:炎の息 @ round 6": 9,
+        "ignis:1:尻尾攻撃 @ round 7": 5,
+        "ignis:1:炎の息 @ round 7": 4,
+        "ignis:1:尻尾攻撃 @ round 9": 2,
+        "ignis:1:尻尾攻撃 @ round 8": 2,
+        "ignis:1:炎の息 @ round 8": 2,
+        "ignis:1:尻尾攻撃 @ round 10": 1,
+        "ignis:1:炎の息 @ round 10": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "ignis": 5.316
+      },
+      "purify": true,
+      "outcomes": {
+        "purified": 859,
+        "defeat": 141
+      },
+      "rounds_mean": 5.316,
+      "success_rounds_mean": 5.589057043073341,
+      "threshold_reached": 904,
+      "threshold_rounds_mean": 4.581858407079646,
+      "phase_reached": {
+        "ignis": 1000
+      },
+      "win_rate": 0.859,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.6152890958478852,
+      "healing_items_mean": {
+        "治療の巻物": 0.271
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.271,
+        "聖水": 1.859
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 15.87,
+      "defeat_rounds": {
+        "2": 20,
+        "3": 47,
+        "4": 49,
+        "5": 17,
+        "6": 6,
+        "7": 1,
+        "10": 1
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 4": 36,
+        "ignis:1:尻尾攻撃 @ round 3": 24,
+        "ignis:1:炎の息 @ round 3": 23,
+        "ignis:1:尻尾攻撃 @ round 2": 16,
+        "ignis:1:炎の息 @ round 4": 13,
+        "ignis:1:尻尾攻撃 @ round 5": 9,
+        "ignis:1:炎の息 @ round 5": 8,
+        "ignis:1:尻尾攻撃 @ round 6": 4,
+        "ignis:1:炎の息 @ round 2": 4,
+        "ignis:1:炎の息 @ round 6": 2,
+        "ignis:1:炎の息 @ round 7": 1,
+        "ignis:1:炎の息 @ round 10": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 1000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "ignis": 6.781
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 808,
+        "defeat": 192
+      },
+      "rounds_mean": 6.781,
+      "success_rounds_mean": 7.292079207920792,
+      "threshold_reached": 923,
+      "threshold_rounds_mean": 4.322860238353196,
+      "phase_reached": {
+        "ignis": 1000
+      },
+      "win_rate": 0.808,
+      "rounds_median": 7.0,
+      "hp_left_mean": 0.7120462046204621,
+      "healing_items_mean": {
+        "治療の巻物": 0.589
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.589,
+        "聖水": 2.0
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 19.97,
+      "defeat_rounds": {
+        "2": 21,
+        "3": 48,
+        "4": 32,
+        "5": 41,
+        "6": 25,
+        "7": 9,
+        "8": 4,
+        "9": 5,
+        "10": 3,
+        "11": 3,
+        "17": 1
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 3": 30,
+        "ignis:1:尻尾攻撃 @ round 5": 22,
+        "ignis:1:尻尾攻撃 @ round 4": 22,
+        "ignis:1:炎の息 @ round 5": 19,
+        "ignis:1:炎の息 @ round 3": 18,
+        "ignis:1:尻尾攻撃 @ round 6": 15,
+        "ignis:1:尻尾攻撃 @ round 2": 14,
+        "ignis:1:炎の息 @ round 6": 10,
+        "ignis:1:炎の息 @ round 4": 10,
+        "ignis:1:尻尾攻撃 @ round 7": 8,
+        "ignis:1:炎の息 @ round 2": 7,
+        "ignis:1:尻尾攻撃 @ round 9": 5,
+        "ignis:1:尻尾攻撃 @ round 8": 4,
+        "ignis:1:尻尾攻撃 @ round 10": 2,
+        "ignis:1:炎の息 @ round 11": 2,
+        "ignis:1:尻尾攻撃 @ round 11": 1,
+        "ignis:1:炎の息 @ round 10": 1,
+        "ignis:1:炎の息 @ round 7": 1,
+        "ignis:1:尻尾攻撃 @ round 17": 1
+      }
+    }
+  ],
+  "routes": [
+    {
+      "character": "hero",
+      "route": "purification_true_ending",
+      "policy": "heuristic",
+      "n": 500,
+      "seed": 20261012,
+      "rest_at_inn": false,
+      "completion_rate": 0.654,
+      "failure_counts": {
+        "draco_battle": 131,
+        "dragon_valley_loc": 36,
+        "forest_wolves": 5,
+        "ice_elemental_encounter": 1
+      },
+      "ending_counts": {
+        "draco_defeated_with_ignis": 327
+      },
+      "boss_arrivals": 458,
+      "boss_resources_mean": {
+        "hp": 21.01528384279476,
+        "mp": 12,
+        "sp": 18,
+        "level": 5,
+        "inventory": {
+          "携帯食": 2,
+          "氷の結晶": 1,
+          "氷鉄の大剣": 2,
+          "治療の巻物": 2.831877729257642,
+          "白い竜鱗": 2,
+          "薬草": 3,
+          "革の鎧": 1
+        }
+      },
+      "battle_reached": {
+        "dark_forest_loc": 500,
+        "lost_goblin_crossroads": 500,
+        "forest_wolves": 500,
+        "village_fire_slime": 495,
+        "ice_elemental_encounter": 495,
+        "frost_wolf_battle": 494,
+        "dragon_valley_loc": 494,
+        "draco_battle": 458
+      },
+      "consumables_per_reached_battle": {
+        "dark_forest_loc": {},
+        "lost_goblin_crossroads": {},
+        "forest_wolves": {
+          "治療の巻物": 0.04
+        },
+        "village_fire_slime": {},
+        "ice_elemental_encounter": {
+          "治療の巻物": 0.10101010101010101
+        },
+        "frost_wolf_battle": {
+          "聖水": 1.0,
+          "治療の巻物": 0.3016194331983806
+        },
+        "dragon_valley_loc": {
+          "聖水": 0.9271255060728745,
+          "治療の巻物": 0.7064777327935222
+        },
+        "draco_battle": {
+          "治療の巻物": 1.3820960698689957,
+          "薬草": 0.1965065502183406
+        }
+      },
+      "sample_trial": {
+        "completed": true,
+        "failed_at": null,
+        "boss_arrival": {
+          "hp": 25,
+          "mp": 12,
+          "sp": 18,
+          "level": 5,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 3,
+            "携帯食": 2,
+            "氷鉄の大剣": 2,
+            "治療の巻物": 4,
+            "氷の結晶": 1,
+            "白い竜鱗": 2
+          }
+        },
+        "battles": [
+          {
+            "encounter": "dark_forest_loc",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 20,
+              "mp": 8,
+              "sp": 10,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_combat": {
+              "hp": 20,
+              "mp": 8,
+              "sp": 5,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 20,
+              "mp": 8,
+              "sp": 5,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 1
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "lost_goblin_crossroads",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 20,
+              "mp": 8,
+              "sp": 5,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 1
+              }
+            },
+            "after_combat": {
+              "hp": 20,
+              "mp": 8,
+              "sp": 2,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 20,
+              "mp": 8,
+              "sp": 2,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "forest_wolves",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 20,
+              "mp": 8,
+              "sp": 2,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 17,
+              "mp": 8,
+              "sp": 0,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 25,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "village_fire_slime",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 35,
+              "mp": 11,
+              "sp": 16,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 32,
+              "mp": 11,
+              "sp": 16,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 32,
+              "mp": 11,
+              "sp": 16,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "ice_elemental_encounter",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 32,
+              "mp": 11,
+              "sp": 16,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4
+              }
+            },
+            "after_combat": {
+              "hp": 32,
+              "mp": 11,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4
+              }
+            },
+            "after_resolution": {
+              "hp": 32,
+              "mp": 11,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "frost_wolf_battle",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 32,
+              "mp": 11,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "after_combat": {
+              "hp": 30,
+              "mp": 11,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 1,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 30,
+              "mp": 11,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 1,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          },
+          {
+            "encounter": "dragon_valley_loc",
+            "status": "purified",
+            "continue": true,
+            "before": {
+              "hp": 40,
+              "mp": 12,
+              "sp": 18,
+              "level": 5,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 1,
+                "氷鉄の大剣": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 1
+              }
+            },
+            "after_combat": {
+              "hp": 25,
+              "mp": 12,
+              "sp": 18,
+              "level": 5,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "氷鉄の大剣": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 25,
+              "mp": 12,
+              "sp": 18,
+              "level": 5,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "氷鉄の大剣": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          },
+          {
+            "encounter": "draco_battle",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 25,
+              "mp": 12,
+              "sp": 18,
+              "level": 5,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "氷鉄の大剣": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 2
+              }
+            },
+            "after_combat": {
+              "hp": 18,
+              "mp": 12,
+              "sp": 5,
+              "level": 5,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "氷鉄の大剣": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 18,
+              "mp": 12,
+              "sp": 5,
+              "level": 5,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "氷鉄の大剣": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 2
+              }
+            },
+            "consumables": {
+              "治療の巻物": 1
+            }
+          }
+        ],
+        "paid_rests": 0,
+        "ending": "draco_defeated_with_ignis"
+      }
+    },
+    {
+      "character": "cleric",
+      "route": "purification_true_ending",
+      "policy": "heuristic",
+      "n": 500,
+      "seed": 20261012,
+      "rest_at_inn": false,
+      "completion_rate": 0.364,
+      "failure_counts": {
+        "draco_battle": 170,
+        "dragon_valley_loc": 93,
+        "forest_wolves": 47,
+        "ice_elemental_encounter": 8
+      },
+      "ending_counts": {
+        "draco_defeated_with_ignis": 182
+      },
+      "boss_arrivals": 352,
+      "boss_resources_mean": {
+        "hp": 20.519886363636363,
+        "mp": 21.77840909090909,
+        "sp": 12,
+        "level": 5,
+        "inventory": {
+          "ローブ": 1,
+          "携帯食": 2,
+          "氷の結晶": 1,
+          "氷鉄の大剣": 1,
+          "治療の巻物": 2.1363636363636362,
+          "白い竜鱗": 2,
+          "聖なる杖": 1,
+          "薬草": 3.9517045454545454
+        }
+      },
+      "battle_reached": {
+        "dark_forest_loc": 500,
+        "lost_goblin_crossroads": 500,
+        "forest_wolves": 500,
+        "village_fire_slime": 453,
+        "ice_elemental_encounter": 453,
+        "frost_wolf_battle": 445,
+        "dragon_valley_loc": 445,
+        "draco_battle": 352
+      },
+      "consumables_per_reached_battle": {
+        "dark_forest_loc": {
+          "薬草": 0.052
+        },
+        "lost_goblin_crossroads": {
+          "治療の巻物": 0.002
+        },
+        "forest_wolves": {
+          "治療の巻物": 0.224
+        },
+        "village_fire_slime": {},
+        "ice_elemental_encounter": {
+          "治療の巻物": 0.27593818984547464
+        },
+        "frost_wolf_battle": {
+          "聖水": 1.0,
+          "治療の巻物": 0.3415730337078652
+        },
+        "dragon_valley_loc": {
+          "聖水": 0.7910112359550562,
+          "治療の巻物": 0.8966292134831461,
+          "薬草": 0.017977528089887642
+        },
+        "draco_battle": {
+          "治療の巻物": 1.3011363636363635,
+          "薬草": 0.5909090909090909
+        }
+      },
+      "sample_trial": {
+        "completed": false,
+        "failed_at": "draco_battle",
+        "boss_arrival": {
+          "hp": 6,
+          "mp": 22,
+          "sp": 12,
+          "level": 5,
+          "inventory": {
+            "聖なる杖": 1,
+            "ローブ": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "治療の巻物": 3,
+            "氷の結晶": 1,
+            "白い竜鱗": 2,
+            "氷鉄の大剣": 1
+          }
+        },
+        "battles": [
+          {
+            "encounter": "dark_forest_loc",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 18,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 2,
+                "携帯食": 2,
+                "聖水": 2
+              }
+            },
+            "after_combat": {
+              "hp": 16,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 2,
+                "携帯食": 2,
+                "聖水": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 16,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "lost_goblin_crossroads",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 16,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_combat": {
+              "hp": 16,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 16,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "forest_wolves",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 16,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 18,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 23,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "village_fire_slime",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 33,
+              "mp": 20,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 21,
+              "mp": 8,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 21,
+              "mp": 8,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "ice_elemental_encounter",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 21,
+              "mp": 8,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "after_combat": {
+              "hp": 16,
+              "mp": 2,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "after_resolution": {
+              "hp": 16,
+              "mp": 2,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "frost_wolf_battle",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 16,
+              "mp": 2,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "after_combat": {
+              "hp": 33,
+              "mp": 2,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 3,
+                "氷の結晶": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 33,
+              "mp": 2,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1,
+              "治療の巻物": 1
+            }
+          },
+          {
+            "encounter": "dragon_valley_loc",
+            "status": "purified",
+            "continue": true,
+            "before": {
+              "hp": 38,
+              "mp": 22,
+              "sp": 12,
+              "level": 5,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_combat": {
+              "hp": 6,
+              "mp": 22,
+              "sp": 12,
+              "level": 5,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 6,
+              "mp": 22,
+              "sp": 12,
+              "level": 5,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          },
+          {
+            "encounter": "draco_battle",
+            "status": "defeat",
+            "continue": false,
+            "before": {
+              "hp": 6,
+              "mp": 22,
+              "sp": 12,
+              "level": 5,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 2,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_combat": {
+              "hp": 0,
+              "mp": 4,
+              "sp": 12,
+              "level": 5,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "氷の結晶": 1,
+                "白い竜鱗": 2,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 0,
+              "mp": 4,
+              "sp": 12,
+              "level": 5,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "氷の結晶": 1,
+                "白い竜鱗": 2,
+                "氷鉄の大剣": 1
+              }
+            },
+            "consumables": {
+              "治療の巻物": 3,
+              "薬草": 1
+            }
+          }
+        ],
+        "paid_rests": 0
+      }
+    },
+    {
+      "character": "mage",
+      "route": "purification_true_ending",
+      "policy": "heuristic",
+      "n": 500,
+      "seed": 20261012,
+      "rest_at_inn": false,
+      "completion_rate": 0.252,
+      "failure_counts": {
+        "forest_wolves": 59,
+        "dragon_valley_loc": 84,
+        "draco_battle": 188,
+        "frost_wolf_battle": 26,
+        "dark_forest_loc": 5,
+        "ice_elemental_encounter": 11,
+        "lost_goblin_crossroads": 1
+      },
+      "ending_counts": {
+        "draco_defeated_with_ignis": 126
+      },
+      "boss_arrivals": 314,
+      "boss_resources_mean": {
+        "hp": 14.439490445859873,
+        "mp": 18.840764331210192,
+        "sp": 10,
+        "level": 5,
+        "inventory": {
+          "携帯食": 2,
+          "氷の結晶": 1,
+          "氷鉄の大剣": 1,
+          "治療の巻物": 3.1496815286624202,
+          "白い竜鱗": 2,
+          "薬草": 2.8535031847133756,
+          "魔導書": 1,
+          "魔法のローブ": 1
+        }
+      },
+      "battle_reached": {
+        "dark_forest_loc": 500,
+        "lost_goblin_crossroads": 495,
+        "forest_wolves": 494,
+        "village_fire_slime": 435,
+        "ice_elemental_encounter": 435,
+        "frost_wolf_battle": 424,
+        "dragon_valley_loc": 398,
+        "draco_battle": 314
+      },
+      "consumables_per_reached_battle": {
+        "dark_forest_loc": {
+          "薬草": 0.032
+        },
+        "lost_goblin_crossroads": {
+          "薬草": 0.00808080808080808
+        },
+        "forest_wolves": {
+          "薬草": 0.10728744939271255,
+          "治療の巻物": 0.018218623481781375
+        },
+        "village_fire_slime": {},
+        "ice_elemental_encounter": {
+          "治療の巻物": 0.21379310344827587,
+          "薬草": 0.0022988505747126436
+        },
+        "frost_wolf_battle": {
+          "聖水": 1.0,
+          "治療の巻物": 0.17452830188679244
+        },
+        "dragon_valley_loc": {
+          "聖水": 0.7889447236180904,
+          "治療の巻物": 0.4321608040201005,
+          "薬草": 0.002512562814070352
+        },
+        "draco_battle": {
+          "治療の巻物": 0.8949044585987261,
+          "薬草": 0.0732484076433121
+        }
+      },
+      "sample_trial": {
+        "completed": false,
+        "failed_at": "forest_wolves",
+        "boss_arrival": null,
+        "battles": [
+          {
+            "encounter": "dark_forest_loc",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 12,
+              "mp": 20,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 1,
+                "携帯食": 2,
+                "聖水": 2
+              }
+            },
+            "after_combat": {
+              "hp": 5,
+              "mp": 0,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "携帯食": 2,
+                "聖水": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 5,
+              "mp": 0,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 1
+              }
+            },
+            "consumables": {
+              "薬草": 1
+            }
+          },
+          {
+            "encounter": "lost_goblin_crossroads",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 5,
+              "mp": 0,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_combat": {
+              "hp": 5,
+              "mp": 0,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 5,
+              "mp": 0,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "forest_wolves",
+            "status": "defeat",
+            "continue": false,
+            "before": {
+              "hp": 5,
+              "mp": 0,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 0,
+              "mp": 0,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 0,
+              "mp": 0,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          }
+        ],
+        "paid_rests": 0
+      }
+    },
+    {
+      "character": "thief",
+      "route": "purification_true_ending",
+      "policy": "heuristic",
+      "n": 500,
+      "seed": 20261012,
+      "rest_at_inn": false,
+      "completion_rate": 0.354,
+      "failure_counts": {
+        "forest_wolves": 40,
+        "draco_battle": 165,
+        "ice_elemental_encounter": 51,
+        "dragon_valley_loc": 56,
+        "frost_wolf_battle": 8,
+        "dark_forest_loc": 3
+      },
+      "ending_counts": {
+        "draco_defeated_with_ignis": 177
+      },
+      "boss_arrivals": 342,
+      "boss_resources_mean": {
+        "hp": 18.77485380116959,
+        "mp": 10,
+        "sp": 4.947368421052632,
+        "level": 5,
+        "inventory": {
+          "ダガー": 1,
+          "携帯食": 2,
+          "氷の結晶": 1,
+          "氷鉄の大剣": 1,
+          "治療の巻物": 2.625730994152047,
+          "白い竜鱗": 2,
+          "盗賊道具": 1,
+          "薬草": 1.935672514619883,
+          "革の鎧": 1
+        }
+      },
+      "battle_reached": {
+        "dark_forest_loc": 500,
+        "lost_goblin_crossroads": 497,
+        "forest_wolves": 497,
+        "village_fire_slime": 457,
+        "ice_elemental_encounter": 457,
+        "frost_wolf_battle": 406,
+        "dragon_valley_loc": 398,
+        "draco_battle": 342
+      },
+      "consumables_per_reached_battle": {
+        "dark_forest_loc": {},
+        "lost_goblin_crossroads": {
+          "薬草": 0.008048289738430584,
+          "治療の巻物": 0.014084507042253521
+        },
+        "forest_wolves": {
+          "薬草": 0.05432595573440644,
+          "治療の巻物": 0.08853118712273642
+        },
+        "village_fire_slime": {
+          "治療の巻物": 0.002188183807439825
+        },
+        "ice_elemental_encounter": {
+          "治療の巻物": 0.5032822757111597
+        },
+        "frost_wolf_battle": {
+          "聖水": 1.0,
+          "治療の巻物": 0.3275862068965517
+        },
+        "dragon_valley_loc": {
+          "治療の巻物": 0.38190954773869346,
+          "聖水": 0.8592964824120602,
+          "薬草": 0.007537688442211055
+        },
+        "draco_battle": {
+          "治療の巻物": 1.0204678362573099,
+          "薬草": 0.12573099415204678
+        }
+      },
+      "sample_trial": {
+        "completed": true,
+        "failed_at": null,
+        "boss_arrival": {
+          "hp": 6,
+          "mp": 10,
+          "sp": 3,
+          "level": 5,
+          "inventory": {
+            "ダガー": 1,
+            "革の鎧": 1,
+            "盗賊道具": 1,
+            "携帯食": 2,
+            "薬草": 2,
+            "治療の巻物": 2,
+            "氷の結晶": 1,
+            "白い竜鱗": 2,
+            "氷鉄の大剣": 1
+          }
+        },
+        "battles": [
+          {
+            "encounter": "dark_forest_loc",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 14,
+              "mp": 6,
+              "sp": 14,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2
+              }
+            },
+            "after_combat": {
+              "hp": 11,
+              "mp": 6,
+              "sp": 4,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 11,
+              "mp": 6,
+              "sp": 4,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 1
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "lost_goblin_crossroads",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 11,
+              "mp": 6,
+              "sp": 4,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_combat": {
+              "hp": 11,
+              "mp": 6,
+              "sp": 1,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 11,
+              "mp": 6,
+              "sp": 1,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "forest_wolves",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 11,
+              "mp": 6,
+              "sp": 1,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 5,
+              "mp": 6,
+              "sp": 3,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 18,
+              "mp": 7,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "village_fire_slime",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 26,
+              "mp": 9,
+              "sp": 20,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 24,
+              "mp": 9,
+              "sp": 10,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 24,
+              "mp": 9,
+              "sp": 10,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 4
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "ice_elemental_encounter",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 24,
+              "mp": 9,
+              "sp": 10,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 4
+              }
+            },
+            "after_combat": {
+              "hp": 26,
+              "mp": 9,
+              "sp": 3,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 3
+              }
+            },
+            "after_resolution": {
+              "hp": 26,
+              "mp": 9,
+              "sp": 3,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1
+              }
+            },
+            "consumables": {
+              "治療の巻物": 1
+            }
+          },
+          {
+            "encounter": "frost_wolf_battle",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 26,
+              "mp": 9,
+              "sp": 3,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1
+              }
+            },
+            "after_combat": {
+              "hp": 22,
+              "mp": 9,
+              "sp": 3,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 1,
+                "薬草": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 22,
+              "mp": 9,
+              "sp": 3,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 1,
+                "薬草": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          },
+          {
+            "encounter": "dragon_valley_loc",
+            "status": "purified",
+            "continue": true,
+            "before": {
+              "hp": 30,
+              "mp": 10,
+              "sp": 22,
+              "level": 5,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 1,
+                "薬草": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_combat": {
+              "hp": 6,
+              "mp": 10,
+              "sp": 3,
+              "level": 5,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 2,
+                "治療の巻物": 2,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 6,
+              "mp": 10,
+              "sp": 3,
+              "level": 5,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 2,
+                "治療の巻物": 2,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "consumables": {
+              "治療の巻物": 1,
+              "聖水": 1
+            }
+          },
+          {
+            "encounter": "draco_battle",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 6,
+              "mp": 10,
+              "sp": 3,
+              "level": 5,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 2,
+                "治療の巻物": 2,
+                "氷の結晶": 1,
+                "白い竜鱗": 2,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_combat": {
+              "hp": 18,
+              "mp": 10,
+              "sp": 3,
+              "level": 5,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 2,
+                "氷の結晶": 1,
+                "白い竜鱗": 2,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 18,
+              "mp": 10,
+              "sp": 3,
+              "level": 5,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 2,
+                "氷の結晶": 1,
+                "白い竜鱗": 2,
+                "氷鉄の大剣": 1
+              }
+            },
+            "consumables": {
+              "治療の巻物": 2
+            }
+          }
+        ],
+        "paid_rests": 0,
+        "ending": "draco_defeated_with_ignis"
+      }
+    }
+  ],
+  "violations": [],
+  "ally_damage": "1d1024-590",
+  "redundancy": {
+    "counts": {
+      "spring": {
+        "supplies": 1,
+        "ice_options": 7,
+        "holy_options": 4,
+        "knows_fort_password": 4,
+        "white_dragon_scale": 5,
+        "fire_options": 4,
+        "frost_trace_seen": 1,
+        "heard_human_caused_dragon_return": 1,
+        "heard_ignis_last_words": 1,
+        "noticed_general_frost": 2,
+        "heard_treaty_lore": 2,
+        "purification_knowledge": 8,
+        "purification_means": 4
+      },
+      "fort": {
+        "supplies": 1,
+        "ice_options": 7,
+        "holy_options": 4,
+        "knows_fort_password": 4,
+        "white_dragon_scale": 5,
+        "fire_options": 4,
+        "frost_trace_seen": 1,
+        "heard_human_caused_dragon_return": 1,
+        "heard_ignis_last_words": 1,
+        "noticed_general_frost": 2,
+        "heard_treaty_lore": 2,
+        "purification_knowledge": 8,
+        "purification_means": 4
+      }
+    },
+    "errors": []
+  },
+  "fingerprints": {
+    "host/prompt/processed/dragon_rpg.json": "7ac0470a46d44390d9914237983af82fedfebec0f6e05fa95d0ccb0a8838e7c1",
+    "host/prompt/processed/dragon_rpg_hybrid.json": "f3ada8c843021909a7328f37756cd7bc5590a13a1110490893b7a9fd2df0ec8f",
+    "eval/balance/checkpoints.json": "8ec92bdd18e9e7eafbe697ea64dcb61c584019dfd58191813cdc73b38bf79d11",
+    "eval/balance/targets.json": "d9ed49cde90a054adaa8c13294281ac6fbc52e617220ef60510bf9f18c11f5e1",
+    "eval/scenario/key_items.json": "b1ccce05914629fc0547ce90d308560726b56b962cece4cd299ea067195e2ff1",
+    "scripts/balance/sim.py": "6919660df1e641a9510983d47cabbb31e04c7de53f220188aed4767ab9b2c800",
+    "scripts/balance/route.py": "5fcd9c38e4259cac6500ee182956a8a6e3df5db4685e1b21056d3544d1b91fb6",
+    "scripts/balance/purify_report.py": "c08e14ee585b4a61130a313b9ebb6ac540b0277bbedbacf8bde25a6375fcb64a",
+    "host/combat.py": "1387daa980b04f7806ea83b52705fe613c7e52a35aed8d657dd1d990efa949ae"
+  }
+}

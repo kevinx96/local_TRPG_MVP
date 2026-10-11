@@ -60,7 +60,10 @@
                   "type": "string"
                 },
                 "done_flag": {
-                  "type": "string"
+                  "oneOf": [
+                    { "type": "string" },
+                    { "type": "array", "items": { "type": "string" } }
+                  ]
                 }
               }
             }
@@ -262,6 +265,14 @@
                 "type": "object",
                 "additionalProperties": true,
                 "properties": {
+                  "special_actions": {
+                    "type": "array",
+                    "items": { "$ref": "#/$defs/special_action" }
+                  },
+                  "phase_allies": {
+                    "type": "array",
+                    "items": { "$ref": "#/$defs/phase_ally" }
+                  },
                   "encounter_class": {
                     "enum": [
                       "trash",
@@ -362,6 +373,10 @@
             "type": "string",
             "minLength": 1
           },
+          "phase_allies": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/phase_ally" }
+          },
           "phase_transition_text": {
             "type": "string"
           }
@@ -456,6 +471,35 @@
         },
         "combat": { "$ref": "#/$defs/item_combat" },
         "rare": { "type": "boolean" }
+      }
+    },
+    "special_action": {
+      "type": "object",
+      "required": ["id", "name", "outcome", "effects", "log_text"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "requirements": { "type": ["object", "array"] },
+        "enemy_id": { "type": "string" },
+        "enemy_hp_ratio_lte": { "type": "number", "minimum": 0, "maximum": 1 },
+        "cost_item": { "type": "string" },
+        "cost_type": { "enum": ["mp", "sp", "hp"] },
+        "cost": { "type": "integer", "minimum": 0 },
+        "outcome": { "type": "string", "minLength": 1 },
+        "effects": { "type": "array", "items": { "type": "object" } },
+        "log_text": { "type": "string" }
+      }
+    },
+    "phase_ally": {
+      "type": "object",
+      "required": ["id", "name", "round_start_effects"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "requirements": { "type": ["object", "array"] },
+        "enemy_ids": { "type": "array", "items": { "type": "string" } },
+        "entry_text": { "type": "string" },
+        "round_start_effects": { "type": "array", "items": { "type": "object" } }
       }
     },
     "item_combat": {

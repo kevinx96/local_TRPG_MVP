@@ -76,7 +76,8 @@ def rare_consumable(session: dict[str, Any], action: dict[str, Any]) -> bool:
                for enemy in combat._alive_enemies(session["combat"]))
 
 
-def choose_action(session: dict[str, Any], policy: str) -> tuple[dict[str, Any], str]:
+def choose_action(session: dict[str, Any], policy: str, *, purify: bool = True,
+                  reserve_purification: bool = False) -> tuple[dict[str, Any], str]:
     if policy not in POLICIES:
         raise ValueError(f"Unknown policy: {policy}")
     actions = [a for a in combat.combat_actions(session) if a.get("enabled")]
@@ -88,6 +89,20 @@ def choose_action(session: dict[str, Any], policy: str) -> tuple[dict[str, Any],
     if session["combat"]["encounter"].get("encounter_class") in {"trash", "elite"}:
         actions = [a for a in actions if not rare_consumable(session, a)]
     if policy == "heuristic":
+        specials = [a for a in actions if a["type"] == "special" and a.get("outcome") == "purified"]
+        if purify and specials:
+            return specials[0], first_target
+        available = [a for a in session["combat"]["encounter"].get("special_actions", [])
+                     if a.get("outcome") == "purified" and combat._special_action_available(
+                         session, {**a, "enemy_hp_ratio_lte": 1})] if purify else []
+        reserved_items = {a["cost_item"] for a in available if a.get("cost_item")}
+        if reserve_purification:
+            reserved_items.add("holy_water")
+        actions = [a for a in actions if not (a["type"] == "item" and a["id"] in reserved_items
+                                             and a.get("quantity", 1) <= 1)]
+        if available and not reserved_items:
+            reserve_mp = max((a.get("cost", 0) for a in available if a.get("cost_type") == "mp"), default=0)
+            actions = [a for a in actions if a.get("cost_type") != "mp" or actor["mp"] - a.get("cost", 0) >= reserve_mp]
         catalog = {enemy["id"]: enemy for enemy in session["scenario_pack"].get("enemies", [])}
         # Save elemental consumables for the declared next phase's greater weakness.
         actions = [a for a in actions if not (a["type"] == "item" and a.get("kind") == "damage"
@@ -205,13 +220,14 @@ def defeat_cause(session: dict[str, Any]) -> str:
 def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: str = "heuristic", *,
              n: int = 500, seed: int = 20261011, checkpoints: Optional[dict[str, Any]] = None,
              defense_mode: str = "flat", stat_scaling: Optional[dict[str, Any]] = None,
-             companion: bool = True, skill_variant: str = "none", preparation: str = "default") -> dict[str, Any]:
+             companion: bool = True, skill_variant: str = "none", preparation: str = "default",
+             purify: bool = True) -> dict[str, Any]:
     if n < 1:
         raise ValueError("n must be positive")
     template = prepare_session(pack, encounter, character_id, checkpoints, defense_mode=defense_mode,
                                stat_scaling=stat_scaling, companion=companion, skill_variant=skill_variant)
     if preparation != "default":
-        if preparation not in {"standard", "no_fire"}:
+        if preparation not in {"standard", "no_fire", "purification"}:
             raise ValueError("Unknown preparation")
         actor = template["character"]
         def fire_capable(value: Any) -> bool:
@@ -223,6 +239,8 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
         if preparation == "standard":
             core = next(i for i in pack["items"] if i["id"] == "red_dragon_core")
             actor["inventory"].append({**deepcopy(core), "quantity": 1})
+        elif preparation == "purification":
+            template["flags"].update(ignis_purified=True, ignis_ally=True)
         if fire_capable(template.get("companion")):
             template["companion"] = None
         state._synchronize_equipment(actor)
@@ -235,6 +253,8 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
     consumables: Counter = Counter()
     spent = {"mp": 0, "sp": 0}
     wins = 0
+    outcomes: Counter = Counter()
+    threshold_rounds, success_rounds = [], []
     phase_rounds: dict[str, list[int]] = {}
     rng = random.Random()
     with patch.object(combat, "random", rng):
@@ -244,23 +264,33 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
             if not combat.ensure_combat_started(session):
                 raise ValueError(f"Encounter did not start: {encounter}")
             while combat.combat_is_active(session):
-                action, target_id = choose_action(session, policy)
+                action, target_id = choose_action(session, policy, purify=purify)
                 resource = action.get("cost_type")
                 if resource in spent:
                     spent[resource] += int(action.get("cost", 0))
+                if action["type"] == "special" and action.get("cost_item"):
+                    item = combat._find_entry(session["character"]["inventory"], action["cost_item"], "item")
+                    consumables[item["name"]] += int(action.get("cost", 1))
                 if action["type"] == "item":
                     item = combat._find_entry(session["character"]["inventory"], action["id"], "item")
                     if combat.item_combat_spec(item).get("consumable", True):
                         consumables[action["name"]] += 1
                         if action.get("kind") in {"heal", "restore"}:
                             healing_items[action["name"]] += 1
+                action_round = session["combat"]["round"]
                 combat.perform_combat_action(session, action["type"], action["id"], target_id, rng=rng)
+                if encounter == "dragon_valley_loc" and 0 < combat._hp_ratio(session["combat"]["enemies"][0]) <= .4:
+                    session["combat"].setdefault("threshold_round", action_round)
             battle = session["combat"]
             for identifier, duration in phase_durations(battle).items():
                 phase_rounds.setdefault(identifier, []).append(duration)
             rounds.append(battle["round"])
-            if battle["status"] == "victory":
+            outcomes[battle["status"]] += 1
+            if "threshold_round" in battle:
+                threshold_rounds.append(battle["threshold_round"])
+            if battle["status"] in {"victory", "purified"}:
                 wins += 1
+                success_rounds.append(battle["round"])
                 hp_left.append(session["character"]["hp"] / session["character"]["max_hp"])
             else:
                 losses[battle["round"]] += 1
@@ -271,6 +301,10 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
             "skill_variant": skill_variant, "level": template["character"].get("level", 1),
             "enemy_count": len(combat._encounter_for_session(template, shared_pack)["enemy_ids"]),
             "preparation": preparation, "phase_rounds_mean": {k: mean(v) for k, v in phase_rounds.items()},
+            "purify": purify, "outcomes": dict(outcomes), "rounds_mean": mean(rounds),
+            "success_rounds_mean": mean(success_rounds) if success_rounds else None,
+            "threshold_reached": len(threshold_rounds),
+            "threshold_rounds_mean": mean(threshold_rounds) if threshold_rounds else None,
             "phase_reached": {k: len(v) for k, v in phase_rounds.items()},
             "win_rate": wins / n, "rounds_median": median(rounds), "hp_left_mean": mean(hp_left) if hp_left else None,
             "healing_items_mean": {k: v / n for k, v in sorted(healing_items.items())},
@@ -355,7 +389,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--stat-scaling", "--stat_scaling", default="{}", help="JSON object")
     parser.add_argument("--no-companion", action="store_true")
     parser.add_argument("--skills", choices=["none", "A"], default="none")
-    parser.add_argument("--preparation", choices=["default", "standard", "no_fire"], default="default")
+    parser.add_argument("--preparation", choices=["default", "standard", "no_fire", "purification"], default="default")
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--check-resource-metrics", action="store_true",
                         help="Also enforce hp_left and rounds (report-only by default)")

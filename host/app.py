@@ -823,7 +823,7 @@ def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
         _record_obstacle_victory(session)
     player = result.get("player") if isinstance(result.get("player"), dict) else {}
     outcome = str(result.get("outcome") or "")
-    outcome_label = {"victory": "勝利", "defeat": "敗北", "fled": "逃走"}.get(outcome, outcome)
+    outcome_label = {"victory": "勝利", "defeat": "敗北", "fled": "逃走", "purified": "浄化"}.get(outcome, outcome)
     event_text = (
         f"戦闘に{outcome_label}しました。"
         f" HP {player.get('hp', 0)}/{player.get('max_hp', 0)}、"

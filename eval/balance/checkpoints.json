@@ -1,6 +1,6 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "d49409dd9dafd90d090d4f772b77660f1fb42fc254380794a837dc2a6e242a05",
+  "scenario_sha256": "7ac0470a46d44390d9914237983af82fedfebec0f6e05fa95d0ccb0a8838e7c1",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",

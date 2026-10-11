@@ -271,6 +271,9 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
         return deepcopy(prepared_turns[0]) if prepared_turns else {}
 
     action_result = session.get("last_action_result") if isinstance(session.get("last_action_result"), dict) else {}
+    ending = action_result.get("state_delta", {}).get("game_over")
+    if isinstance(ending, dict):
+        return {"draft": {"gm_text": ending["reason"], "system_log": "", "state_delta": {}, "choices": []}}
     action_id = str(action_result.get("action_id") or "")
     outcome = str(action_result.get("outcome") or "")
     candidate_turns = prepared_turns

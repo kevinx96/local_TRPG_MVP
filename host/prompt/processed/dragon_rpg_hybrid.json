@@ -7,7 +7,7 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-12-services-v012"
+    "content_revision": "2026-10-12-services-v013-purification"
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -155,7 +155,8 @@
       ],
       "location_ids": [
         "dragon_valley_loc",
-        "ignis_last_breath"
+        "ignis_last_breath",
+        "ignis_purified"
       ],
       "next_scene_ids": [
         "castle_return"
@@ -2718,7 +2719,84 @@
           "defeat": "邪竜の炎が視界を覆い、冒険は竜の谷で終わりを迎えた。",
           "victory": "倒れたイグニスの胸がかすかに上下している。焼け焦げた鱗の隙間、古い傷口だけが、炎の竜には似つかわしくない白い霜に覆われている。"
         },
-        "encounter_class": "boss"
+        "encounter_class": "boss",
+        "special_actions": [
+          {
+            "enemy_id": "ignis",
+            "enemy_hp_ratio_lte": 0.4,
+            "outcome": "purified",
+            "log_text": "あなたが古傷に聖なる力を注ぐと、白い霜が音を立てて溶け落ちた。イグニスの咆哮が、苦痛から安堵へと変わっていく。",
+            "effects": [
+              {
+                "set_flag": "ignis_purified"
+              },
+              {
+                "current_location": "ignis_purified"
+              }
+            ],
+            "id": "purify_ignis_holy_water",
+            "name": "凍てついた古傷に聖水を注ぐ",
+            "requirements": {
+              "any": [
+                {
+                  "flag": "frost_trace_seen"
+                },
+                {
+                  "flag": "noticed_general_frost"
+                },
+                {
+                  "flag": "heard_treaty_lore"
+                },
+                {
+                  "has_item": "白い竜鱗"
+                }
+              ]
+            },
+            "cost_item": "holy_water",
+            "cost": 1
+          },
+          {
+            "enemy_id": "ignis",
+            "enemy_hp_ratio_lte": 0.4,
+            "outcome": "purified",
+            "log_text": "あなたが古傷に聖なる力を注ぐと、白い霜が音を立てて溶け落ちた。イグニスの咆哮が、苦痛から安堵へと変わっていく。",
+            "effects": [
+              {
+                "set_flag": "ignis_purified"
+              },
+              {
+                "current_location": "ignis_purified"
+              }
+            ],
+            "id": "purify_ignis_prayer",
+            "name": "凍てついた古傷を聖なる光で清める",
+            "requirements": {
+              "all": [
+                {
+                  "any": [
+                    {
+                      "flag": "frost_trace_seen"
+                    },
+                    {
+                      "flag": "noticed_general_frost"
+                    },
+                    {
+                      "flag": "heard_treaty_lore"
+                    },
+                    {
+                      "has_item": "白い竜鱗"
+                    }
+                  ]
+                },
+                {
+                  "character_id": "cleric"
+                }
+              ]
+            },
+            "cost_type": "mp",
+            "cost": 6
+          }
+        ]
       },
       "npc_ids": [],
       "item_ids": [],
@@ -7438,7 +7516,8 @@
                     "heard_human_caused_dragon_return",
                     "heard_ignis_last_words",
                     "noticed_general_frost",
-                    "heard_treaty_lore"
+                    "heard_treaty_lore",
+                    "heard_ignis_testimony"
                   ],
                   "count": 2
                 }
@@ -7456,14 +7535,35 @@
           ],
           "effects": [
             {
-              "game_over": {
-                "title": "冒険完了",
-                "ending": "ignis_defeated",
-                "reason": "邪竜イグニスは討たれ、王国に平和が戻った。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。"
+              "branch": {
+                "requirements": {
+                  "flag": "ignis_purified"
+                },
+                "then": [
+                  {
+                    "game_over": {
+                      "title": "冒険完了",
+                      "ending": "ignis_purified",
+                      "reason": "邪竜の脅威は去り、王国に平和が戻った。竜の谷では、正気を取り戻した紅竜が静かに眠りについている。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。"
+                    }
+                  },
+                  {
+                    "set_flag": "reported_to_king"
+                  }
+                ],
+                "else": [
+                  {
+                    "game_over": {
+                      "title": "冒険完了",
+                      "ending": "ignis_defeated",
+                      "reason": "邪竜イグニスは討たれ、王国に平和が戻った。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。"
+                    }
+                  },
+                  {
+                    "set_flag": "reported_to_king"
+                  }
+                ]
               }
-            },
-            {
-              "set_flag": "reported_to_king"
             }
           ]
         }
@@ -7525,13 +7625,33 @@
         "enemy_ids": [
           "draco_human"
         ],
-        "victory_effects": {
-          "game_over": {
-            "title": "冒険完了",
-            "ending": "draco_defeated",
-            "reason": "白竜ヴァイスは崩れ落ち、王の間に降り積もった霜が静かに溶けていった。国王エドワードは長い沈黙の後、竜の谷へ使者を送ると告げた。盟約を結び直すために。あなたの名は、竜と人をもう一度つないだ者として語り継がれる。"
+        "victory_effects": [
+          {
+            "branch": {
+              "requirements": {
+                "flag": "ignis_ally"
+              },
+              "then": [
+                {
+                  "game_over": {
+                    "title": "冒険完了",
+                    "ending": "draco_defeated_with_ignis",
+                    "reason": "白竜ヴァイスは紅竜の炎に包まれ、崩れ落ちた。王の間に降り積もった霜が溶けると、イグニスは国王の前に静かに頭を垂れた。その日、元素と人と竜は、もう一度盟約を結んだ。あなたの名は、竜と人を本当の意味でつないだ者として語り継がれる。"
+                  }
+                }
+              ],
+              "else": [
+                {
+                  "game_over": {
+                    "title": "冒険完了",
+                    "ending": "draco_defeated",
+                    "reason": "白竜ヴァイスは崩れ落ち、王の間に降り積もった霜が静かに溶けていった。国王エドワードは長い沈黙の後、竜の谷へ使者を送ると告げた。盟約を結び直すために。あなたの名は、竜と人をもう一度つないだ者として語り継がれる。"
+                  }
+                }
+              ]
+            }
           }
-        },
+        ],
         "defeat_effects": {
           "game_over": {
             "ending": "draco_victory",
@@ -7542,6 +7662,130 @@
           "victory": "白竜ヴァイスは崩れ落ち、王の間に降り積もった霜が静かに溶けていった。国王エドワードは長い沈黙の後、竜の谷へ使者を送ると告げた。盟約を結び直すために。あなたの名は、竜と人をもう一度つないだ者として語り継がれる。",
           "defeat": "王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。"
         }
+      }
+    },
+    {
+      "id": "ignis_purified",
+      "scene_id": "dragon_valley",
+      "title": "竜の谷・目覚めた紅竜",
+      "description": "霜が溶け落ちると、イグニスの瞳から狂気の炎が消えた。紅竜は荒い息をつきながら、静かにあなたを見下ろしている。",
+      "actions": [
+        {
+          "id": "hear_ignis_testimony",
+          "text": "イグニスの話を聞く",
+          "preview": "イグニスの話を聞く",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "イグニスの話を聞く"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_ignis_testimony"
+            }
+          ],
+          "once": "heard_ignis_testimony",
+          "requirements": {}
+        },
+        {
+          "id": "receive_ignis_scale",
+          "text": "イグニスが差し出す鱗を受け取る",
+          "preview": "イグニスが差し出す鱗を受け取る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "イグニスが差し出す鱗を受け取る"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "id": "white_dragon_scale",
+                "name": "白い竜鱗",
+                "quantity": 1
+              }
+            }
+          ],
+          "once": "received_ignis_scale",
+          "requirements": {}
+        },
+        {
+          "id": "ask_ignis_aid",
+          "text": "共に戦ってほしいと頼む",
+          "preview": "共に戦ってほしいと頼む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "共に戦ってほしいと頼む"
+          ],
+          "effects": [
+            {
+              "set_flag": "ignis_ally"
+            }
+          ],
+          "once": "ignis_ally",
+          "requirements": {
+            "flag": "heard_ignis_testimony"
+          }
+        },
+        {
+          "id": "return_to_castle_report",
+          "text": "王城へ戻り、国王に報告する",
+          "preview": "王城へ戻り、国王に報告する",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "王城へ戻り、国王に報告する"
+          ],
+          "effects": [
+            {
+              "current_location": "castle_report"
+            }
+          ]
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [
+        "castle_report"
+      ],
+      "background_image": "/static/images/bg_dragon_valley.png",
+      "character_image": "/static/images/enemy_ignis.png",
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "prepared_turns": [
+          {
+            "id": "hear_ignis_testimony_neutral",
+            "purpose": "choice_response",
+            "action_id": "hear_ignis_testimony",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "「人の子よ……礼を言う。十年前、白き竜ヴァイスが我が眠りを破り、この傷に呪いの霜を打ち込んだ。奴は今、人の姿で汝らの王の傍らにいる」",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          },
+          {
+            "id": "receive_ignis_scale_neutral",
+            "purpose": "choice_response",
+            "action_id": "receive_ignis_scale",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "イグニスは自らの古傷から白い鱗を爪で引き抜き、あなたの前に置いた。「これを王に見せよ。あの者も、己の鱗だけは偽れぬ」",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          },
+          {
+            "id": "ask_ignis_aid_neutral",
+            "purpose": "choice_response",
+            "action_id": "ask_ignis_aid",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "「……よかろう。盟約を穢した者には、我が炎で報いる。汝が奴の正体を暴いた時、必ず駆けつけよう」",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          }
+        ]
       }
     }
   ],
@@ -8942,7 +9186,24 @@
         }
       ],
       "image": "/static/images/enemy_ignis.png",
-      "design_todo": "TODO(design): 専用のキャラクター画像を選定する。現在は既存画像を仮置き。"
+      "design_todo": "TODO(design): 専用のキャラクター画像を選定する。現在は既存画像を仮置き。",
+      "phase_allies": [
+        {
+          "id": "ignis",
+          "name": "イグニス",
+          "requirements": {
+            "flag": "ignis_ally"
+          },
+          "entry_text": "その時、王の間の天井が赤く燃え上がった。『待たせたな、人の子よ』――紅竜イグニスが、白竜の前に舞い降りた。",
+          "round_start_effects": [
+            {
+              "kind": "damage_enemy",
+              "damage": "1d1024-590",
+              "element": "fire"
+            }
+          ]
+        }
+      ]
     }
   ],
   "combat_choices": [
@@ -9845,8 +10106,11 @@
           "done_flag": "entered_dragon_valley"
         },
         {
-          "text": "邪竜イグニスを倒す",
-          "done_flag": "defeated_ignis"
+          "text": "邪竜イグニスを止める",
+          "done_flag": [
+            "defeated_ignis",
+            "ignis_purified"
+          ]
         },
         {
           "text": "王城へ戻り、国王に報告する",
@@ -9940,7 +10204,8 @@
         "heard_human_caused_dragon_return",
         "heard_ignis_last_words",
         "noticed_general_frost",
-        "heard_treaty_lore"
+        "heard_treaty_lore",
+        "heard_ignis_testimony"
       ],
       "clue_item": "white_dragon_scale"
     }

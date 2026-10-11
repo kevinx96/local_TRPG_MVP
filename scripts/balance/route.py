@@ -21,7 +21,7 @@ def resources(session: dict[str, Any]) -> dict[str, Any]:
             "inventory": {i["name"]: i.get("quantity", 1) for i in actor["inventory"]}}
 
 
-def fight(session: dict[str, Any], policy: str, rng: random.Random) -> dict[str, Any]:
+def fight(session: dict[str, Any], policy: str, rng: random.Random, *, purify: bool = False) -> dict[str, Any]:
     location = state.current_location_id(session)
     before = resources(session)
     session["combat_start_requested"] = True
@@ -29,7 +29,11 @@ def fight(session: dict[str, Any], policy: str, rng: random.Random) -> dict[str,
         raise ValueError(f"Route encounter did not start: {location}")
     used: Counter = Counter()
     while combat.combat_is_active(session):
-        action, target = sim.choose_action(session, policy)
+        action, target = sim.choose_action(session, policy, purify=purify,
+                                          reserve_purification=purify and not session.get("flags", {}).get("ignis_purified"))
+        if action["type"] == "special" and action.get("cost_item"):
+            item = combat._find_entry(session["character"]["inventory"], action["cost_item"], "item")
+            used[item["name"]] += int(action.get("cost", 1))
         if action["type"] == "item":
             item = combat._find_entry(session["character"]["inventory"], action["id"], "item")
             if combat.item_combat_spec(item).get("consumable", True):
@@ -37,18 +41,18 @@ def fight(session: dict[str, Any], policy: str, rng: random.Random) -> dict[str,
         combat.perform_combat_action(session, action["type"], action["id"], target, rng=rng)
     battle = session["combat"]
     status = battle["status"]
-    continuing = status == "victory" or battle["encounter"].get("encounter_class") == "scripted_loss"
+    continuing = status in {"victory", "purified"} or battle["encounter"].get("encounter_class") == "scripted_loss"
     after_combat = resources(session)
     state.apply_state_delta(session, combat.consume_combat_state_delta(session), allow_world_transition=True)
     combat.clear_combat_after_resolution(session)
     return {"encounter": location, "status": status,
-            "continue": continuing and (status == "victory" or not session.get("game_over")),
+            "continue": continuing and (status in {"victory", "purified"} or not session.get("game_over")),
             "before": before, "after_combat": after_combat, "after_resolution": resources(session),
             "consumables": dict(used)}
 
 
 def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, character: str,
-          seed: int, policy: str = "heuristic", rest_at_inn: bool = False) -> dict[str, Any]:
+          seed: int, policy: str = "heuristic", rest_at_inn: bool = False, purify: bool = False) -> dict[str, Any]:
     session = checkpoints.fresh_session(pack, character)
     rng = random.Random(seed)
     battles = []
@@ -68,23 +72,41 @@ def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, c
                 if source["step"] == "@final" and combat._encounter_for_session(
                         session, pack).get("encounter_class") == "boss":
                     arrival = resources(session)
-                battle = fight(session, policy, rng)
+                battle = fight(session, policy, rng, purify=True) if purify else fight(session, policy, rng)
                 battles.append(battle)
-                if not battle["continue"]:
+                if not battle["continue"] or (purify and battle["encounter"] == "dragon_valley_loc" and battle["status"] != "purified"):
                     return {"completed": False, "failed_at": battle["encounter"],
                             "boss_arrival": arrival, "battles": battles, "paid_rests": paid_rests}
             else:
                 checkpoints.replay_step(session, source["step"])
-    return {"completed": True, "failed_at": None, "boss_arrival": arrival, "battles": battles, "paid_rests": paid_rests}
+    ending = (session.get("game_over") or {}).get("ending")
+    completed = not purify or ending == "draco_defeated_with_ignis"
+    return {"completed": completed, "failed_at": None if completed else encounter,
+            "boss_arrival": arrival, "battles": battles, "paid_rests": paid_rests, "ending": ending}
 
 
 def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
                    encounter: str = "dragon_valley_loc", n: int = 500,
-                   seed: int = 20261011, policy: str = "heuristic", rest_at_inn: bool = False) -> dict[str, Any]:
+                   seed: int = 20261011, policy: str = "heuristic", rest_at_inn: bool = False,
+                   purify: bool = False) -> dict[str, Any]:
     if n < 1:
         raise ValueError("n must be positive")
     sources = cp["encounters"][encounter]["characters"][character]["sources"]
+    if purify:
+        if encounter != "draco_battle":
+            raise ValueError("Purification route ends at draco_battle")
+        sources = []
+        for source in cp["encounters"][encounter]["characters"][character]["sources"]:
+            if source["location"] == "ignis_last_breath":
+                if source["step"] == "examine_ignis_wound":
+                    sources.extend(dict(location="ignis_purified", step=step) for step in
+                                   ("hear_ignis_testimony", "receive_ignis_scale", "ask_ignis_aid"))
+                else:
+                    sources.append({**source, "location": "ignis_purified"})
+            else:
+                sources.append(source)
     failures: Counter = Counter()
+    endings: Counter = Counter()
     reached: Counter = Counter()
     used: dict[str, Counter] = {}
     arrivals = []
@@ -92,9 +114,11 @@ def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
     sample = None
     for index in range(n):
         result = trial(pack, sources, encounter, character,
-                       sim.trial_seed(seed, encounter, character, index), policy, rest_at_inn)
+                       sim.trial_seed(seed, encounter, character, index), policy, rest_at_inn, purify)
         sample = sample or result
         completed += result["completed"]
+        if result.get("ending"):
+            endings[result["ending"]] += 1
         if result["failed_at"]:
             failures[result["failed_at"]] += 1
         if result["boss_arrival"] is not None:
@@ -104,9 +128,10 @@ def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
             reached[key] += 1
             used.setdefault(key, Counter()).update(battle["consumables"])
     items = sorted({k for a in arrivals for k in a["inventory"]})
-    return {"character": character, "route": encounter, "policy": policy, "n": n, "seed": seed,
+    return {"character": character, "route": "purification_true_ending" if purify else encounter, "policy": policy, "n": n, "seed": seed,
             "rest_at_inn": rest_at_inn,
             "completion_rate": completed / n, "failure_counts": dict(failures),
+            "ending_counts": dict(endings),
             "boss_arrivals": len(arrivals),
             "boss_resources_mean": {**{r: mean(a[r] for a in arrivals) for r in ("hp", "mp", "sp", "level")},
                                     "inventory": {k: mean(a["inventory"].get(k, 0) for a in arrivals) for k in items}}
@@ -150,6 +175,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--targets", type=Path, default=sim.TARGETS)
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--rest-at-inn", action="store_true", help="Pay 10G to recover when the route visits the inn")
+    parser.add_argument("--purify", action="store_true", help="Reserve holy water and take purification to the true ending")
     args = parser.parse_args(argv)
     if args.n < 1 or args.shards < 1 or not 0 <= args.shard < args.shards:
         parser.error("invalid n or shard")
@@ -171,7 +197,7 @@ def main(argv: Optional[list[str]] = None) -> int:
                 continue
             policy = targets.get("route_targets", {}).get("routes", {}).get(endpoint, {}).get("policy", "heuristic")
             rows.append(simulate_route(pack, cp, character, encounter=endpoint, n=args.n, seed=args.seed,
-                                       policy=policy, rest_at_inn=args.rest_at_inn))
+                                       policy=policy, rest_at_inn=args.rest_at_inn, purify=args.purify))
             print(f"{endpoint} {character}: {rows[-1]['completion_rate']:.3f}", flush=True)
             args.output.write_text(json.dumps({"rows": rows, "fingerprints": fingerprints}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     result = {"rows": rows, "fingerprints": fingerprints}

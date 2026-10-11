@@ -1247,7 +1247,7 @@ function renderEnding(gameOver) {
   }
   els.endingTitle.textContent = gameOver.title || "敗北";
   const endingLabel = document.querySelector("#endingLabel");
-  if (endingLabel) endingLabel.textContent = gameOver.ending === "ignis_defeated" ? "ADVENTURE COMPLETE" : "GAME OVER";
+  if (endingLabel) endingLabel.textContent = ["ignis_defeated", "ignis_purified", "draco_defeated", "draco_defeated_with_ignis"].includes(gameOver.ending) ? "ADVENTURE COMPLETE" : "GAME OVER";
   els.endingReason.textContent = gameOver.reason || "物語はここで終わりました。";
   els.endingOverlay.style.display = "";
 }
@@ -1375,7 +1375,7 @@ function renderCombat(session) {
   els.combatActionTabs.style.display = terminal ? "none" : "";
   els.combatActions.style.display = terminal ? "none" : "grid";
   if (terminal) {
-    const labels = { victory: "勝利", defeat: "敗北", fled: "撤退成功" };
+    const labels = { victory: "勝利", defeat: "敗北", fled: "撤退成功", purified: "浄化" };
     els.combatResultTitle.textContent = labels[combat.status] || "戦闘終了";
     els.combatResultText.textContent = combat.result?.summary || "戦闘結果が確定しました。";
     els.combatResolveButton.disabled = state.combatBusy || !combat.pending_resolution;
@@ -1397,7 +1397,7 @@ function renderCombatActions(actions) {
     { id: "attack", label: "攻撃", types: ["attack"] },
     { id: "skill", label: "技能", types: ["skill"] },
     { id: "item", label: "道具", types: ["item"] },
-    { id: "tactics", label: "戦術", types: ["defend", "flee"] },
+    { id: "tactics", label: "戦術", types: ["special", "defend", "flee"] },
   ].filter((group) => actions.some((action) => group.types.includes(action.type)));
   if (!groups.some((group) => group.id === state.combatActionTab)) {
     state.combatActionTab = groups[0]?.id || "attack";
@@ -1406,7 +1406,7 @@ function renderCombatActions(actions) {
   const current = groups.find((group) => group.id === state.combatActionTab);
   const visible = current ? actions.filter((action) => current.types.includes(action.type)) : [];
   els.combatActions.innerHTML = visible.map((action) => {
-    const cost = action.cost ? `${String(action.cost_type || "").toUpperCase()} ${action.cost}` : "";
+    const cost = action.cost ? `${String(action.cost_item_name || action.cost_type || "").toUpperCase()} ${action.cost}` : "";
     const description = action.enabled === false ? (action.disabled_reason || "使用できません") : (action.description || "");
     return `<button type="button" class="combat-action" data-combat-action-type="${escapeAttr(action.type || "")}" data-combat-action-id="${escapeAttr(action.id || "")}" ${action.enabled === false ? "disabled" : ""}>
       <strong>${escapeHtml(action.name || action.id || "行動")}</strong>

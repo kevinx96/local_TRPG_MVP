@@ -18,8 +18,12 @@ def public_quests(session: dict[str, Any]) -> list[dict[str, Any]]:
         if any(flags.get(flag) for flag in quest.get("fail_flags", [])):
             status = "failed"
         stages = quest.get("stages", [])
-        done = [stage["text"] for stage in stages if flags.get(stage.get("done_flag"))]
-        current = next((stage["text"] for stage in stages if not flags.get(stage.get("done_flag"))), "")
+        def stage_done(stage: dict[str, Any]) -> bool:
+            value = stage.get("done_flag")
+            return any(flags.get(flag) for flag in (value if isinstance(value, list) else [value]))
+
+        done = [stage["text"] for stage in stages if stage_done(stage)]
+        current = next((stage["text"] for stage in stages if not stage_done(stage)), "")
         entry = {key: quest[key] for key in ("id", "title", "description", "kind")}
         entry.update(status=status, current_objective=current if status == "active" else "",
                      completed_stages=done)
