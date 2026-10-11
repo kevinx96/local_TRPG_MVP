@@ -1,0 +1,75 @@
+{
+  "model": "gemini-3.1-flash-lite",
+  "live": true,
+  "quota_stopped": false,
+  "criterion": "20/20 status=ok; no semantic accuracy threshold",
+  "variants": [
+    {
+      "variant": "union_enum1",
+      "usable": false,
+      "smoke_run_id": "2026-10-11T115955153203Z-intent-gemini-gemini-3.1-flash-lite-union_enum1",
+      "statuses": {
+        "json_error": 12,
+        "invalid_plan": 8
+      },
+      "failures": {
+        "whitespace": 12,
+        "empty_object": 8,
+        "other": 0,
+        "no_response": 0
+      },
+      "full_run_id": null,
+      "full_complete": null
+    },
+    {
+      "variant": "union_wrapped",
+      "usable": false,
+      "smoke_run_id": "2026-10-11T120032472094Z-intent-gemini-gemini-3.1-flash-lite-union_wrapped",
+      "statuses": {
+        "invalid_plan": 20
+      },
+      "failures": {
+        "whitespace": 0,
+        "empty_object": 20,
+        "other": 0,
+        "no_response": 0
+      },
+      "full_run_id": null,
+      "full_complete": null
+    },
+    {
+      "variant": "union_ordered",
+      "usable": false,
+      "smoke_run_id": "2026-10-11T120055291891Z-intent-gemini-gemini-3.1-flash-lite-union_ordered",
+      "statuses": {
+        "invalid_plan": 9,
+        "json_error": 11
+      },
+      "failures": {
+        "whitespace": 11,
+        "empty_object": 9,
+        "other": 0,
+        "no_response": 0
+      },
+      "full_run_id": null,
+      "full_complete": null
+    },
+    {
+      "variant": "flat_enum",
+      "usable": false,
+      "smoke_run_id": "2026-10-11T120131856540Z-intent-gemini-gemini-3.1-flash-lite-flat_enum",
+      "statuses": {
+        "ok": 15,
+        "invalid_plan": 5
+      },
+      "failures": {
+        "whitespace": 0,
+        "empty_object": 0,
+        "other": 5,
+        "no_response": 0
+      },
+      "full_run_id": null,
+      "full_complete": null
+    }
+  ]
+}

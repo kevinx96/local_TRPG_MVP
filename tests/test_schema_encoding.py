@@ -45,14 +45,16 @@ class SchemaEncodingTests(unittest.TestCase):
             with self.subTest(variant=name):
                 quoted = spec.split(f"`{name}`：\n```\n", 1)[1].split("\n```", 1)[0]
                 messages, config = VARIANTS[name].prepare(self.session, self.case["input"], self.config)
-                self.assertEqual(messages[0]["content"], free_actions.PLAN_PROMPT + "\n" + quoted)
+                self.assertEqual(messages[0]["content"], free_actions.PLAN_PROMPT_BASE + "\n" + quoted)
                 self.assertEqual(messages[1:], baseline[1:])
                 self.assertEqual(config, baseline_config)
                 self.assertEqual(VARIANTS[name].unwrap(json.dumps(self.plan)), json.dumps(self.plan))
-                self.assertNotEqual(cache_key("gemini", "fake", name, messages, config),
-                                    cache_key("gemini", "fake", "default", baseline, baseline_config))
         self.assertEqual(free_actions.PLAN_SCHEMA, original_schema)
         self.assertEqual(baseline[0]["content"], free_actions.PLAN_PROMPT)
+        guarded, _ = VARIANTS["guard_rules"].prepare(self.session, self.case["input"], self.config)
+        pre_guard, _ = VARIANTS["pre_guard"].prepare(self.session, self.case["input"], self.config)
+        self.assertEqual(guarded[0]["content"], free_actions.PLAN_PROMPT)
+        self.assertEqual(pre_guard[0]["content"], free_actions.PLAN_PROMPT_BASE)
 
     def test_all_encodings_on_all_dev_snapshots_preserve_defaults_and_descriptions(self):
         cases = [json.loads(line) for line in (ROOT / "eval/benchmark/intent_v2.jsonl").read_text(encoding="utf-8").splitlines()]

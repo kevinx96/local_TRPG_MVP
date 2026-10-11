@@ -34,7 +34,7 @@ PLAN_SCHEMA = {
     "additionalProperties": False,
 }
 
-PLAN_PROMPT = (
+PLAN_PROMPT_BASE = (
     "プレイヤーの自由入力を一つの行動案に解釈する。結果の裁定はゲームエンジンが行う。\n"
     "否定・条件・対象・方法を保つ。『攻撃しない』『餌で誘う』を攻撃に変えない。"
     "複数の独立した行動や曖昧な対象は clarify で一つだけ質問。\n"
@@ -50,6 +50,13 @@ PLAN_PROMPT = (
     "JSON一つだけ。該当しない文字列は空、advance は false。"
     "changes_here と last_result は確定済みで、古い場所の描写より優先する。"
 )
+# Added 2026-10-11 after benchmark v2 (docs/specs/008): halves harmful misfires on the frozen test split.
+PLAN_GUARD_RULES = (
+    "否定・待機・条件だけの入力は代わりの行動を求めていない。費用や危険のある操作を選ばず dialogue にする。\n"
+    "「〜したら」「〜なら」の条件付き行動は今は実行しない。\n"
+    "inventory にない物は使わない。別の物で代用しない。"
+)
+PLAN_PROMPT = PLAN_PROMPT_BASE + "\n" + PLAN_GUARD_RULES
 
 
 class InvalidPlan(ValueError):

@@ -1,0 +1,551 @@
+{
+  "run_id": "2026-10-11T121040703064Z-intent-gemini-gemini-3.1-flash-lite-default",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "default",
+  "split": "test",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\benchmark\\intent_v2.jsonl",
+  "cases_sha256": "f1ea8689cf7f0a28c9123167ecae4c99834eeabeb729eca18a98beb388285875",
+  "quota_exhausted": null,
+  "response_failures": {
+    "whitespace": 0,
+    "empty_object": 0,
+    "other": 21,
+    "no_response": 0
+  },
+  "metrics": {
+    "total": 292,
+    "evaluated": 292,
+    "statuses": {
+      "ok": 271,
+      "invalid_plan": 21
+    },
+    "normalizations": 16,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 228,
+      "S1": 16,
+      "S2": 42,
+      "S3": 6,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.8356164383561644,
+    "s3_rate": 0.02054794520547945,
+    "engine_caught": 5,
+    "exact": 0.8356164383561644,
+    "kind": 0.863013698630137,
+    "kind_relaxed": 0.863013698630137,
+    "field_kind": 0.863013698630137,
+    "field_action_id": 0.8938356164383562,
+    "field_operation": 0.9075342465753424,
+    "field_target_id": 0.8732876712328768,
+    "field_item_id": 0.9212328767123288,
+    "field_advance": 0.9212328767123288,
+    "confusion_matrix": {
+      "clarify": {
+        "existing": 2,
+        "dialogue": 1,
+        "clarify": 8,
+        "interact": 1
+      },
+      "clarify|dialogue": {
+        "dialogue": 1
+      },
+      "clarify|dialogue|existing|unsupported": {
+        "existing": 1
+      },
+      "clarify|dialogue|unsupported": {
+        "unsupported": 13
+      },
+      "clarify|existing": {
+        "existing": 11,
+        "dialogue": 2,
+        "clarify": 5
+      },
+      "clarify|existing|interact": {
+        "existing": 2,
+        "clarify": 2
+      },
+      "clarify|interact": {
+        "interact": 9,
+        "invalid": 5,
+        "existing": 1,
+        "clarify": 1
+      },
+      "clarify|unsupported": {
+        "unsupported": 21,
+        "interact": 2,
+        "dialogue": 1,
+        "existing": 1
+      },
+      "dialogue": {
+        "dialogue": 41,
+        "invalid": 3,
+        "existing": 5,
+        "interact": 3
+      },
+      "dialogue|existing|unsupported": {
+        "unsupported": 3,
+        "existing": 1,
+        "dialogue": 3,
+        "invalid": 1
+      },
+      "dialogue|interact": {
+        "interact": 1,
+        "dialogue": 2
+      },
+      "dialogue|interact|unsupported": {
+        "interact": 1
+      },
+      "dialogue|unsupported": {
+        "unsupported": 4
+      },
+      "existing": {
+        "existing": 55,
+        "invalid": 12
+      },
+      "interact": {
+        "interact": 67
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.5833333333333334,
+        "kind": 0.8333333333333334,
+        "kind_relaxed": 0.8333333333333334,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "colloquial": {
+        "count": 12,
+        "normalizations": 3,
+        "exact": 0.8333333333333334,
+        "kind": 0.8333333333333334,
+        "kind_relaxed": 0.8333333333333334,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "conditional": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.5833333333333334,
+        "kind": 0.5833333333333334,
+        "kind_relaxed": 0.5833333333333334,
+        "s3_count": 1,
+        "engine_caught": 2
+      },
+      "context_followup": {
+        "count": 12,
+        "normalizations": 1,
+        "exact": 0.9166666666666666,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "declared_success": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.9166666666666666,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_multi": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.6666666666666666,
+        "kind": 0.6666666666666666,
+        "kind_relaxed": 0.6666666666666666,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_unique": {
+        "count": 12,
+        "normalizations": 1,
+        "exact": 0.9166666666666666,
+        "kind": 0.9166666666666666,
+        "kind_relaxed": 0.9166666666666666,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "dialogue": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "excluded_means": {
+        "count": 12,
+        "normalizations": 2,
+        "exact": 0.9166666666666666,
+        "kind": 0.9166666666666666,
+        "kind_relaxed": 0.9166666666666666,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_exact": {
+        "count": 12,
+        "normalizations": 2,
+        "exact": 0.8333333333333334,
+        "kind": 0.8333333333333334,
+        "kind_relaxed": 0.8333333333333334,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 12,
+        "normalizations": 3,
+        "exact": 0.8333333333333334,
+        "kind": 0.8333333333333334,
+        "kind_relaxed": 0.8333333333333334,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "impossible": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.8333333333333334,
+        "kind": 0.8333333333333334,
+        "kind_relaxed": 0.8333333333333334,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "injection": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_distract": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_observe": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_prepare": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_sneak": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_use_item": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 28,
+        "normalizations": 3,
+        "exact": 0.7142857142857143,
+        "kind": 0.75,
+        "kind_relaxed": 0.75,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "missing_item": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.8333333333333334,
+        "kind": 0.8333333333333334,
+        "kind_relaxed": 0.8333333333333334,
+        "s3_count": 2,
+        "engine_caught": 1
+      },
+      "negation": {
+        "count": 12,
+        "normalizations": 1,
+        "exact": 0.75,
+        "kind": 0.75,
+        "kind_relaxed": 0.75,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "parallel": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.75,
+        "kind": 0.8333333333333334,
+        "kind_relaxed": 0.8333333333333334,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "sequential": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.5,
+        "kind": 0.5833333333333334,
+        "kind_relaxed": 0.5833333333333334,
+        "s3_count": 1,
+        "engine_caught": 1
+      }
+    },
+    "negation": {
+      "count": 12,
+      "preserved": 0.9166666666666666,
+      "kind": 0.75
+    },
+    "injection": {
+      "count": 12,
+      "no_state_change": 1.0,
+      "kind": 1.0,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 12,
+      "no_state_change": 0.8333333333333334,
+      "kind": 1.0,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 2
+    },
+    "clarify": {
+      "precision": 1.0,
+      "recall": 0.17777777777777778
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.07191780821917808,
+    "latency_ms": {
+      "p50": 1017.3054999999999,
+      "p95": 1288.6234499999998
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 687.7671232876712,
+        "reported": 292
+      },
+      "output_tokens": {
+        "mean": 78.41438356164383,
+        "reported": 292
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.0002895633561643836,
+    "cost_currency": "USD",
+    "cost_reported": 292,
+    "top_errors": [
+      {
+        "tag": "language_mix",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-language_mix-012",
+            "input": "見張りはbypassで抜けます。",
+            "raw_response": "{\n  \"kind\": \"existing\",\n  \"action_id\": \"fort_first_bypass\",\n  \"operation\": \"sneak\",\n  \"target_id\": \"\",\n  \"item_id\": \"\",\n  \"advance\": true,\n  \"approach\": \"見張りのゴブリンに気づかれないよう、周囲の影や遮蔽物を利用して背後を通り抜ける。\",\n  \"reply\": \"\"\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "fort_first_bypass",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-language_mix-015",
+            "input": "大ゴブリンをfollowして迂回するつもり。",
+            "raw_response": "{\"kind\":\"existing\",\"action_id\":\"bypass_hobgoblin\",\"operation\":\"sneak\",\"target_id\":\"\",\"item_id\":\"\",\"advance\":true,\"approach\":\"大ゴブリンの動きを観察し、隙を見て背後を通り抜ける。\",\"reply\":\"\"}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "bypass_hobgoblin",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "sequential",
+        "errors": 6,
+        "examples": [
+          {
+            "id": "v2-sequential-006",
+            "input": "イアンに助言を求め、話が終わったらロビンを誘う。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"ian\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"店主イアンに邪竜討伐の助言を求め、対話を通じて情報を得る。\",\n  \"reply\": \"邪竜か……。奴の鱗は並の剣では傷一つ付かん。氷の属性を纏う武器か、あるいは弱点を突く術が必要になるだろうな。\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "ian",
+              "item_id": "",
+              "advance": false,
+              "approach": "店主イアンに邪竜討伐の助言を求め、対話を通じて情報を得る。",
+              "reply": "邪竜か……。奴の鱗は並の剣では傷一つ付かん。氷の属性を纏う武器か、あるいは弱点を突く術が必要になるだろうな。"
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "existing",
+                "action_id": "ask_ian_advice",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              }
+            ]
+          },
+          {
+            "id": "v2-sequential-012",
+            "input": "出発前の薬草による回復、それから村への移動を頼む。",
+            "raw_response": "{\"kind\":\"interact\",\"action_id\":\"\",\"operation\":\"use_item\",\"target_id\":\"self\",\"item_id\":\"herb\",\"advance\":true,\"approach\":\"薬草を使用してHPを回復し、その後、森を出て麓の村へ向かう。\",\"reply\":\"\"}",
+            "plan": {
+              "kind": "interact",
+              "action_id": "",
+              "operation": "use_item",
+              "target_id": "self",
+              "item_id": "herb",
+              "advance": true,
+              "approach": "薬草を使用してHPを回復し、その後、森を出て麓の村へ向かう。",
+              "reply": ""
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "use_item",
+                "target_id": "self",
+                "item_id": "herb",
+                "advance": false,
+                "tier": "S0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "chitchat",
+        "errors": 5,
+        "examples": [
+          {
+            "id": "v2-chitchat-007",
+            "input": "青色って落ち着くから好きなんです。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"blue_robed_mage\",\"item_id\":\"\",\"advance\":false,\"approach\":\"\",\"reply\":\"「そう言っていただけると光栄です。この青は、静寂と深淵を象徴する色ですからね。何かお探しの魔法や、知りたいことはありますか？」\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "blue_robed_mage",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "「そう言っていただけると光栄です。この青は、静寂と深淵を象徴する色ですからね。何かお探しの魔法や、知りたいことはありますか？」"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-chitchat-008",
+            "input": "品物が多いと目移りしちゃう。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"sarah\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"reply\": \"「ふふ、どれも自慢の品揃えだよ。ゆっくり見ていってね。何か気になるものはある？」\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "sarah",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "「ふふ、どれも自慢の品揃えだよ。ゆっくり見ていってね。何か気になるものはある？」"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

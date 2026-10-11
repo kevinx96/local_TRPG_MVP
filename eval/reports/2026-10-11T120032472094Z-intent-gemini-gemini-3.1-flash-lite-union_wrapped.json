@@ -1,0 +1,292 @@
+{
+  "run_id": "2026-10-11T120032472094Z-intent-gemini-gemini-3.1-flash-lite-union_wrapped",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "union_wrapped",
+  "split": "dev",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\benchmark\\intent_v2.jsonl",
+  "cases_sha256": "f1ea8689cf7f0a28c9123167ecae4c99834eeabeb729eca18a98beb388285875",
+  "quota_exhausted": null,
+  "response_failures": {
+    "whitespace": 0,
+    "empty_object": 20,
+    "other": 0,
+    "no_response": 0
+  },
+  "metrics": {
+    "total": 20,
+    "evaluated": 20,
+    "statuses": {
+      "invalid_plan": 20
+    },
+    "normalizations": 0,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 20,
+      "S3": 0,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.0,
+    "s3_rate": 0.0,
+    "engine_caught": 0,
+    "exact": 0.0,
+    "kind": 0.0,
+    "kind_relaxed": 0.0,
+    "field_kind": 0.0,
+    "field_action_id": 0.0,
+    "field_operation": 0.0,
+    "field_target_id": 0.0,
+    "field_item_id": 0.0,
+    "field_advance": 0.0,
+    "confusion_matrix": {
+      "dialogue": {
+        "invalid": 1
+      },
+      "dialogue|interact": {
+        "invalid": 3
+      },
+      "existing": {
+        "invalid": 16
+      }
+    },
+    "by_tag": {
+      "existing_exact": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "negation": {
+        "count": 4,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      }
+    },
+    "negation": {
+      "count": 4,
+      "preserved": 1.0,
+      "kind": 0.0
+    },
+    "injection": {
+      "count": 0,
+      "no_state_change": null,
+      "kind": null,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 0,
+      "no_state_change": null,
+      "kind": null,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 0
+    },
+    "clarify": {
+      "precision": null,
+      "recall": null
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 1.0,
+    "latency_ms": {
+      "p50": 1076.2135,
+      "p95": 1317.90435
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 722.15,
+        "reported": 20
+      },
+      "output_tokens": {
+        "mean": 12.45,
+        "reported": 20
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.0001992125,
+    "cost_currency": "USD",
+    "cost_reported": 20,
+    "top_errors": [
+      {
+        "tag": "existing_exact",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-existing_exact-001",
+            "input": "国王に邪竜の詳しい話を聞く",
+            "raw_response": "{\n  \"plan\": {\n    }\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "ask_king_info",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-existing_exact-002",
+            "input": "鍛冶師に剣を見せる",
+            "raw_response": "{\n  \"plan\": {\n      }\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "show_sword_to_blacksmith",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "existing_paraphrase",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-existing_paraphrase-001",
+            "input": "陛下、討伐に出る前に邪竜のことを詳しく伺いたいです。",
+            "raw_response": "{\n  \"plan\": {\n    }\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "ask_king_info",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-existing_paraphrase-002",
+            "input": "この鉄の剣、鍛冶師さんに見ていただこう。",
+            "raw_response": "{\n  \"plan\": {\n      }\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "show_sword_to_blacksmith",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "negation",
+        "errors": 4,
+        "examples": [
+          {
+            "id": "v2-negation-001",
+            "input": "スライムを殴るつもりはないよ。",
+            "raw_response": "{\n  \"plan\": {\n      }\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "observe",
+                "target_id": "forest_slime",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "observe",
+                "target_id": "fallen_branches",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-negation-002",
+            "input": "携帯食は投げません。ここで待ちます。",
+            "raw_response": "{\n  \"plan\": {\n    }\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "observe",
+                "target_id": "forest_slime",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "observe",
+                "target_id": "fallen_branches",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

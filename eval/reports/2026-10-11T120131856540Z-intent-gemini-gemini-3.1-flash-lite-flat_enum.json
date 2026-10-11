@@ -1,0 +1,214 @@
+{
+  "run_id": "2026-10-11T120131856540Z-intent-gemini-gemini-3.1-flash-lite-flat_enum",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "flat_enum",
+  "split": "dev",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\benchmark\\intent_v2.jsonl",
+  "cases_sha256": "f1ea8689cf7f0a28c9123167ecae4c99834eeabeb729eca18a98beb388285875",
+  "quota_exhausted": null,
+  "response_failures": {
+    "whitespace": 0,
+    "empty_object": 0,
+    "other": 5,
+    "no_response": 0
+  },
+  "metrics": {
+    "total": 20,
+    "evaluated": 20,
+    "statuses": {
+      "ok": 15,
+      "invalid_plan": 5
+    },
+    "normalizations": 0,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 14,
+      "S1": 1,
+      "S2": 5,
+      "S3": 0,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.75,
+    "s3_rate": 0.0,
+    "engine_caught": 0,
+    "exact": 0.75,
+    "kind": 0.75,
+    "kind_relaxed": 0.75,
+    "field_kind": 0.75,
+    "field_action_id": 0.75,
+    "field_operation": 0.75,
+    "field_target_id": 0.75,
+    "field_item_id": 0.75,
+    "field_advance": 0.75,
+    "confusion_matrix": {
+      "dialogue": {
+        "dialogue": 1
+      },
+      "dialogue|interact": {
+        "dialogue": 2,
+        "interact": 1
+      },
+      "existing": {
+        "existing": 11,
+        "invalid": 5
+      }
+    },
+    "by_tag": {
+      "existing_exact": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.875,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.5,
+        "kind": 0.5,
+        "kind_relaxed": 0.5,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "negation": {
+        "count": 4,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      }
+    },
+    "negation": {
+      "count": 4,
+      "preserved": 1.0,
+      "kind": 1.0
+    },
+    "injection": {
+      "count": 0,
+      "no_state_change": null,
+      "kind": null,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 0,
+      "no_state_change": null,
+      "kind": null,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 0
+    },
+    "clarify": {
+      "precision": null,
+      "recall": null
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.25,
+    "latency_ms": {
+      "p50": 1165.4285,
+      "p95": 1475.4507500000002
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 722.15,
+        "reported": 20
+      },
+      "output_tokens": {
+        "mean": 83.05,
+        "reported": 20
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.0003051125,
+    "cost_currency": "USD",
+    "cost_reported": 20,
+    "top_errors": [
+      {
+        "tag": "existing_paraphrase",
+        "errors": 4,
+        "examples": [
+          {
+            "id": "v2-existing_paraphrase-001",
+            "input": "陛下、討伐に出る前に邪竜のことを詳しく伺いたいです。",
+            "raw_response": "{\n  \"kind\": \"existing\",\n  \"action_id\": \"ask_king_info\",\n  \"operation\": \"\",\n  \"target_id\": \"king\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"国王エドワードに対し、邪竜の討伐に向けた詳細な情報を聞き出す。\",\n  \"reply\": \"\"\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "ask_king_info",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-existing_paraphrase-002",
+            "input": "この鉄の剣、鍛冶師さんに見ていただこう。",
+            "raw_response": "{\n  \"kind\": \"existing\",\n  \"action_id\": \"show_sword_to_blacksmith\",\n  \"operation\": \"\",\n  \"target_id\": \"blacksmith\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"鍛冶師ローベルトに鉄の剣を見せて、状態の確認や強化の相談を持ちかける。\",\n  \"reply\": \"\"\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "show_sword_to_blacksmith",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "existing_exact",
+        "errors": 1,
+        "examples": [
+          {
+            "id": "v2-existing_exact-002",
+            "input": "鍛冶師に剣を見せる",
+            "raw_response": "{\"kind\": \"existing\", \"action_id\": \"show_sword_to_blacksmith\", \"operation\": \"\", \"target_id\": \"blacksmith\", \"item_id\": \"\", \"advance\": false, \"approach\": \"鍛冶師ローベルトに鉄の剣を見せて、状態の確認や強化の相談を持ちかける。\", \"reply\": \"\"}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "show_sword_to_blacksmith",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "negation",
+        "errors": 0,
+        "examples": []
+      }
+    ]
+  },
+  "errors": []
+}

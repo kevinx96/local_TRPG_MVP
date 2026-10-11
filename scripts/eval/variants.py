@@ -145,16 +145,15 @@ def encoded_schema(schema: dict[str, Any], context: dict[str, Any], encoding: st
 
 
 SCHEMA_ENCODINGS = ("union_enum1", "union_wrapped", "union_ordered", "flat_enum")
-GUARD_RULES = (
-    "否定・待機・条件だけの入力は代わりの行動を求めていない。費用や危険のある操作を選ばず dialogue にする。\n"
-    "「〜したら」「〜なら」の条件付き行動は今は実行しない。\n"
-    "inventory にない物は使わない。別の物で代用しない。"
-)
+GUARD_RULES = free_actions.PLAN_GUARD_RULES
 GUARD_RULES_SHORT = "否定・条件・未所持の物を含む入力では、費用のかかる操作を選ばない。"
 
 VARIANTS = {"default": Variant(), "lenient": Variant(replay_only=True),
             "union_schema": Variant(snapshot_schema=True, dynamic_enum=True),
             "union_schema_noenum": Variant(snapshot_schema=True),
             **{name: Variant(schema_encoding=name, gemini_only=True) for name in SCHEMA_ENCODINGS},
-            "guard_rules": Variant(prompt_suffix="\n" + GUARD_RULES),
-            "guard_rules_short": Variant(prompt_suffix="\n" + GUARD_RULES_SHORT)}
+            # The default prompt includes GUARD_RULES since 2026-10-11; these keep spec 008's runs reproducible.
+            "pre_guard": Variant(system_prompt=free_actions.PLAN_PROMPT_BASE),
+            "guard_rules": Variant(system_prompt=free_actions.PLAN_PROMPT_BASE, prompt_suffix="\n" + GUARD_RULES),
+            "guard_rules_short": Variant(system_prompt=free_actions.PLAN_PROMPT_BASE,
+                                         prompt_suffix="\n" + GUARD_RULES_SHORT)}
