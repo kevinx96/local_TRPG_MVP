@@ -108,7 +108,7 @@ class ForestCaveTests(unittest.TestCase):
             s = self.session("magic_shop", char)
             state.apply_state_delta(s, {"inventory_add": [{"name": "虹晶の欠片", "quantity": 1}]})
             self.act(s, "forge_prism_weapon")
-            self.assertEqual(combat._equipped_weapon_attack(s["character"])["element"], "counter")
+            self.assertEqual(combat._equipped_weapon_attack(s["character"])["element"], "weakness")
         self.assertEqual(public_maps(self.session("cave_fork"))["current_map_id"], "sealed_cave")
 
     def test_counter_weapon_uses_actual_weakness_including_rotating_resistances(self):

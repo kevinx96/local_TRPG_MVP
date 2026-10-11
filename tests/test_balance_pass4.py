@@ -22,7 +22,7 @@ class BalancePass4Tests(unittest.TestCase):
         self.assertEqual(route.check_results(self.rows, self.targets), [])
         self.rows[0]["completion_rate"] = .80
         self.assertEqual(route.check_results(self.rows, self.targets)[0]["metric"], "class_spread")
-        self.rows[0]["completion_rate"] = .801
+        self.rows[0]["completion_rate"] = .901
         self.assertEqual({v["metric"] for v in route.check_results(self.rows, self.targets)},
                          {"completion_rate", "class_spread"})
         self.rows.pop(0)

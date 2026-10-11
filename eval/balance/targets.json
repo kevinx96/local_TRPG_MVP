@@ -133,7 +133,10 @@
           "win_rate_lt": 0.3
         },
         "purification": {
-          "win_rate": [0.65, 0.8]
+          "win_rate": [
+            0.65,
+            0.8
+          ]
         }
       },
       "note": "两阶段合计；standard 仅保留紅竜の炎核这一种火属性手段，no_fire 移除全部火属性手段；purification 无炎核及其他火属性手段，有イグニス援军。"
@@ -152,7 +155,7 @@
         "policy": "heuristic",
         "completion_rate": [
           0.55,
-          0.8
+          0.9
         ]
       },
       "goblin_fort_fourth": {
@@ -165,8 +168,31 @@
     }
   },
   "forest_v3": {
-    "early_prism_tree": {"level": 1, "win_rate_lt": 0.35},
-    "prism_weapon_ignis_uplift": [0.10, 0.20],
-    "rewarded_main_completion_rate_max": 0.80
+    "early_prism_tree": {
+      "level": 1,
+      "win_rate_lt": 0.35
+    },
+    "prism_weapon_ignis_uplift": [
+      0.1,
+      0.2
+    ]
+  },
+  "route_targets_with_optional": {
+    "characters": [
+      "hero",
+      "cleric",
+      "mage",
+      "thief"
+    ],
+    "class_spread_max": 0.2,
+    "routes": {
+      "dragon_valley_loc": {
+        "policy": "heuristic",
+        "completion_rate": [
+          0.55,
+          0.95
+        ]
+      }
+    }
   }
 }

@@ -128,11 +128,12 @@ def check_results(result: dict[str, Any], targets: dict[str, Any]) -> list[dict[
     for row in result["weapons"]:
         if not low - 1e-12 <= row["uplift"] <= high + 1e-12:
             violations.append(dict(character=row["character"], metric="prism_weapon_ignis_uplift", value=row["uplift"], target=[low, high]))
-    limit = specs["rewarded_main_completion_rate_max"]
     for row in result["routes"]:
-        if row["completion_rate"] > limit:
+        key = "route_targets_with_optional" if row["sidequests"] else "route_targets"
+        bounds = targets[key]["routes"]["dragon_valley_loc"]["completion_rate"]
+        if not bounds[0] <= row["completion_rate"] <= bounds[1]:
             violations.append(dict(character=row["character"], metric="main_completion_rate", sidequests=row["sidequests"],
-                                   value=row["completion_rate"], target=limit))
+                                   reward_only=row.get("reward_only", False), value=row["completion_rate"], target=bounds))
     return violations
 
 

@@ -34,8 +34,8 @@ def tune(pack: dict[str, Any]) -> None:
                 if phase["element"] == "earth":
                     phase["resistances"]["ice"] = .5
 
-    formulas = {"hero": "3d6+str/3", "cleric": "1d20+wis/3",
-                "mage": "1d20+int/3", "thief": "4d4+dex/4"}
+    formulas = {"hero": "3d6+str/3+14", "cleric": "1d20+wis/3",
+                "mage": "1d20+int/3+20", "thief": "4d4+dex/4+16"}
 
     def update_weapons(value: Any) -> None:
         if isinstance(value, list):
@@ -45,6 +45,7 @@ def tune(pack: dict[str, Any]) -> None:
             identifier = str(value.get("id", ""))
             if identifier.startswith("prism_weapon_") and "combat" in value:
                 value["combat"]["damage"] = formulas[identifier.removeprefix("prism_weapon_")]
+                value["combat"]["element"] = "weakness"
             for child in value.values():
                 update_weapons(child)
 

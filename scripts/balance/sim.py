@@ -52,6 +52,8 @@ def expected_damage(action: dict[str, Any], actor: dict[str, Any], enemy: dict[s
     for element in elements:
         if element == "counter":
             element = combat.counter_attack_element(enemy)
+        elif element == "weakness":
+            element = combat.weakness_attack_element(enemy)
         multiplier = combat._resistance_multiplier(enemy, element)
         amount = combat.damage_after_defense(raw, multiplier, combat._actor_defense(enemy), rules)
         if combat._negative_undead(enemy) and element not in {"holy", "light"}:
@@ -232,7 +234,7 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
         actor = template["character"]
         def fire_capable(value: Any) -> bool:
             if isinstance(value, dict):
-                return value.get("element") in {"fire", "counter"} or "fire" in value.get("multi_elements", []) or any(fire_capable(v) for v in value.values())
+                return value.get("element") in {"fire", "counter", "weakness"} or "fire" in value.get("multi_elements", []) or any(fire_capable(v) for v in value.values())
             return isinstance(value, list) and any(fire_capable(v) for v in value)
         actor["skills"] = [s for s in actor["skills"] if not fire_capable(s)]
         actor["inventory"] = [i for i in actor["inventory"] if not fire_capable(i)]

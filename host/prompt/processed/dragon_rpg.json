@@ -2013,9 +2013,9 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶の剣",
-                              "damage": "3d6+str/3",
+                              "damage": "3d6+str/3+14",
                               "accuracy": 95,
-                              "element": "counter"
+                              "element": "weakness"
                             },
                             "quantity": 1
                           }
@@ -2031,9 +2031,9 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶の剣",
-                              "damage": "3d6+str/3",
+                              "damage": "3d6+str/3+14",
                               "accuracy": 92,
-                              "element": "counter"
+                              "element": "weakness"
                             },
                             "quantity": 1
                           }
@@ -2070,7 +2070,7 @@
                               "name": "虹晶の杖",
                               "damage": "1d20+wis/3",
                               "accuracy": 95,
-                              "element": "counter",
+                              "element": "weakness",
                               "skill_healing_bonus": 2
                             },
                             "quantity": 1
@@ -2089,7 +2089,7 @@
                               "name": "虹晶の杖",
                               "damage": "1d20+wis/3",
                               "accuracy": 92,
-                              "element": "counter",
+                              "element": "weakness",
                               "skill_healing_bonus": 2
                             },
                             "quantity": 1
@@ -2125,9 +2125,9 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶のオーブ",
-                              "damage": "1d20+int/3",
+                              "damage": "1d20+int/3+20",
                               "accuracy": 95,
-                              "element": "counter"
+                              "element": "weakness"
                             },
                             "quantity": 1
                           }
@@ -2143,9 +2143,9 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶のオーブ",
-                              "damage": "1d20+int/3",
+                              "damage": "1d20+int/3+20",
                               "accuracy": 92,
-                              "element": "counter"
+                              "element": "weakness"
                             },
                             "quantity": 1
                           }
@@ -2180,9 +2180,9 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶の短剣",
-                              "damage": "4d4+dex/4",
+                              "damage": "4d4+dex/4+16",
                               "accuracy": 95,
-                              "element": "counter"
+                              "element": "weakness"
                             },
                             "quantity": 1
                           }
@@ -2198,9 +2198,9 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶の短剣",
-                              "damage": "4d4+dex/4",
+                              "damage": "4d4+dex/4+16",
                               "accuracy": 92,
-                              "element": "counter"
+                              "element": "weakness"
                             },
                             "quantity": 1
                           }
@@ -8574,9 +8574,9 @@
       "combat": {
         "kind": "weapon",
         "name": "虹晶の剣",
-        "damage": "3d6+str/3",
+        "damage": "3d6+str/3+14",
         "accuracy": 92,
-        "element": "counter"
+        "element": "weakness"
       }
     },
     {
@@ -8589,7 +8589,7 @@
         "name": "虹晶の杖",
         "damage": "1d20+wis/3",
         "accuracy": 92,
-        "element": "counter",
+        "element": "weakness",
         "skill_healing_bonus": 2
       }
     },
@@ -8601,9 +8601,9 @@
       "combat": {
         "kind": "weapon",
         "name": "虹晶のオーブ",
-        "damage": "1d20+int/3",
+        "damage": "1d20+int/3+20",
         "accuracy": 92,
-        "element": "counter"
+        "element": "weakness"
       }
     },
     {
@@ -8614,9 +8614,9 @@
       "combat": {
         "kind": "weapon",
         "name": "虹晶の短剣",
-        "damage": "4d4+dex/4",
+        "damage": "4d4+dex/4+16",
         "accuracy": 92,
-        "element": "counter"
+        "element": "weakness"
       }
     }
   ],

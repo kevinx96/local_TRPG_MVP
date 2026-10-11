@@ -142,11 +142,12 @@ def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
             "sample_trial": sample}
 
 
-def check_results(rows: list[dict[str, Any]], targets: dict[str, Any]) -> list[dict[str, Any]]:
+def check_results(rows: list[dict[str, Any]], targets: dict[str, Any], *,
+                  target_key: str = "route_targets") -> list[dict[str, Any]]:
     violations = []
-    for endpoint, spec in targets["route_targets"]["routes"].items():
+    for endpoint, spec in targets[target_key]["routes"].items():
         group = [r for r in rows if r["route"] == endpoint and r["policy"] == spec["policy"]]
-        for character in targets["route_targets"]["characters"]:
+        for character in targets[target_key]["characters"]:
             matched = [r for r in group if r["character"] == character]
             if len(matched) != 1:
                 violations.append(dict(route=endpoint, character=character, metric="missing_or_duplicate",
@@ -157,7 +158,7 @@ def check_results(rows: list[dict[str, Any]], targets: dict[str, Any]) -> list[d
                 violations.append(dict(route=endpoint, character=character, metric="completion_rate",
                                        value=value, target=spec["completion_rate"]))
         values = [r["completion_rate"] for r in group]
-        limit = targets["route_targets"]["class_spread_max"]
+        limit = targets[target_key]["class_spread_max"]
         if values and max(values) - min(values) > limit + 1e-12:
             violations.append(dict(route=endpoint, character="all", metric="class_spread",
                                    value=max(values) - min(values), target=[0, limit]))

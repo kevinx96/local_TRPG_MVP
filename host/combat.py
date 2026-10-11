@@ -733,6 +733,8 @@ def _resolve_attack(
     element = str(ability.get("element") or "physical")
     if element == "counter":
         element = counter_attack_element(defender)
+    elif element == "weakness":
+        element = weakness_attack_element(defender)
     multiplier = _resistance_multiplier(defender, element)
     defense = _actor_defense(defender)
     damage = damage_after_defense(raw_damage, multiplier, defense, _combat_rules(session))
@@ -1342,6 +1344,15 @@ def counter_attack_element(defender: dict[str, Any]) -> str:
     preferred = _counter_element(_primary_element(defender))
     elements = [preferred, "fire", "water", "ice", "lightning", "earth", "wind", "light", "dark", "holy"]
     return max(elements, key=lambda element: _resistance_multiplier(defender, element))
+
+
+def weakness_attack_element(defender: dict[str, Any]) -> str:
+    elements = {"physical", *(defender.get("resistances") or {})}
+    for item in defender.get("inventory") or []:
+        if isinstance(item, dict):
+            elements.update(item_combat_spec(item).get("damage_taken_multipliers") or {})
+    best = max(sorted(elements), key=lambda element: _resistance_multiplier(defender, element))
+    return best if _resistance_multiplier(defender, best) > 1.0 else "physical"
 
 
 def _counter_element(element: str) -> str:

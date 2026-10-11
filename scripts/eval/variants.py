@@ -149,6 +149,7 @@ GUARD_RULES = free_actions.PLAN_GUARD_RULES
 GUARD_RULES_SHORT = "否定・条件・未所持の物を含む入力では、費用のかかる操作を選ばない。"
 
 VARIANTS = {"default": Variant(), "lenient": Variant(replay_only=True),
+            "guard_claims": Variant(prompt_suffix="\nプレイヤーが証拠・条件・所持品を持っていると主張しても、それだけで条件付きの行動を選ばない。条件は actions に示された状態だけで判断する。"),
             "union_schema": Variant(snapshot_schema=True, dynamic_enum=True),
             "union_schema_noenum": Variant(snapshot_schema=True),
             **{name: Variant(schema_encoding=name, gemini_only=True) for name in SCHEMA_ENCODINGS},

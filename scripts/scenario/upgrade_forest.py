@@ -152,7 +152,7 @@ def upgrade(pack: dict[str, Any]) -> None:
     forge_effects = [{"remove_item": {"name": "虹晶の欠片", "quantity": 1}}]
     for char, title, description, attr in weapons:
         item = dict(id=f"prism_weapon_{char}", name=f"虹晶の{title}", description=description, category="equipment",
-                    combat=dict(kind="weapon", name=f"虹晶の{title}", damage=f"1d10+{attr}/3", accuracy=92, element="counter"))
+                    combat=dict(kind="weapon", name=f"虹晶の{title}", damage=f"1d10+{attr}/3", accuracy=92, element="weakness"))
         if char == "cleric":
             item["combat"]["skill_healing_bonus"] = 2
         items.append(item)
