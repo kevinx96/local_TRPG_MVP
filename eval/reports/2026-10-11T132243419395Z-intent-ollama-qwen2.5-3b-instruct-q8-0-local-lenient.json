@@ -1,0 +1,595 @@
+{
+  "run_id": "2026-10-11T132243419395Z-intent-ollama-qwen2.5-3b-instruct-q8-0-local-lenient",
+  "backend": "ollama",
+  "model": "qwen2.5-3b-instruct-q8-0-local",
+  "variant": "lenient",
+  "split": "dev",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\benchmark\\intent_v2.jsonl",
+  "cases_sha256": "f1ea8689cf7f0a28c9123167ecae4c99834eeabeb729eca18a98beb388285875",
+  "quota_exhausted": null,
+  "metrics": {
+    "total": 194,
+    "evaluated": 194,
+    "statuses": {
+      "ok": 179,
+      "json_error": 2,
+      "invalid_plan": 13
+    },
+    "normalizations": 0,
+    "conflict_count": 192,
+    "conflict_rate": 0.9896907216494846,
+    "lenient": {
+      "evaluated": 194,
+      "cleared_fields": {
+        "action_id": 167,
+        "operation": 146,
+        "target_id": 63,
+        "item_id": 90,
+        "approach": 23,
+        "reply": 23,
+        "advance": 2
+      },
+      "existing_operation_count": 23,
+      "existing_operation_recovered": 16
+    },
+    "severity": {
+      "S0": 32,
+      "S1": 10,
+      "S2": 146,
+      "S3": 6,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.21649484536082475,
+    "s3_rate": 0.030927835051546393,
+    "engine_caught": 33,
+    "exact": 0.21649484536082475,
+    "kind": 0.3402061855670103,
+    "kind_relaxed": 0.3402061855670103,
+    "field_kind": 0.3402061855670103,
+    "field_action_id": 0.7268041237113402,
+    "field_operation": 0.6752577319587629,
+    "field_target_id": 0.6391752577319587,
+    "field_item_id": 0.788659793814433,
+    "field_advance": 0.8814432989690721,
+    "confusion_matrix": {
+      "clarify": {
+        "interact": 3,
+        "dialogue": 3,
+        "clarify": 1,
+        "unsupported": 1
+      },
+      "clarify|dialogue|existing": {
+        "interact": 1,
+        "dialogue": 1
+      },
+      "clarify|dialogue|unsupported": {
+        "interact": 2,
+        "existing": 2,
+        "dialogue": 1,
+        "invalid": 1,
+        "unsupported": 1,
+        "clarify": 1
+      },
+      "clarify|existing": {
+        "dialogue": 6,
+        "clarify": 3,
+        "interact": 1
+      },
+      "clarify|existing|interact": {
+        "existing": 1,
+        "dialogue": 4
+      },
+      "clarify|interact": {
+        "dialogue": 2,
+        "interact": 3,
+        "existing": 2,
+        "clarify": 1
+      },
+      "clarify|unsupported": {
+        "dialogue": 7,
+        "clarify": 4,
+        "interact": 4,
+        "unsupported": 1,
+        "invalid": 2
+      },
+      "dialogue": {
+        "dialogue": 14,
+        "clarify": 10,
+        "invalid": 2,
+        "existing": 2,
+        "interact": 1
+      },
+      "dialogue|existing|unsupported": {
+        "dialogue": 3,
+        "existing": 1,
+        "clarify": 2
+      },
+      "dialogue|interact": {
+        "clarify": 3,
+        "interact": 2,
+        "existing": 1
+      },
+      "dialogue|interact|unsupported": {
+        "clarify": 1,
+        "dialogue": 1
+      },
+      "existing": {
+        "clarify": 17,
+        "dialogue": 11,
+        "interact": 7,
+        "existing": 11
+      },
+      "interact": {
+        "existing": 3,
+        "dialogue": 16,
+        "interact": 16,
+        "clarify": 8,
+        "invalid": 3
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.125,
+        "kind": 0.625,
+        "kind_relaxed": 0.625,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "colloquial": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.125,
+        "kind": 0.125,
+        "kind_relaxed": 0.125,
+        "s3_count": 0,
+        "engine_caught": 2
+      },
+      "conditional": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0.125,
+        "kind_relaxed": 0.125,
+        "s3_count": 0,
+        "engine_caught": 3
+      },
+      "context_followup": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.25,
+        "kind": 0.375,
+        "kind_relaxed": 0.375,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "declared_success": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.25,
+        "kind": 0.625,
+        "kind_relaxed": 0.625,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_multi": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.125,
+        "kind": 0.125,
+        "kind_relaxed": 0.125,
+        "s3_count": 0,
+        "engine_caught": 3
+      },
+      "deixis_unique": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.625,
+        "kind": 0.625,
+        "kind_relaxed": 0.625,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "dialogue": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.875,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "excluded_means": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.125,
+        "kind": 0.25,
+        "kind_relaxed": 0.25,
+        "s3_count": 0,
+        "engine_caught": 2
+      },
+      "existing_exact": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.125,
+        "kind": 0.125,
+        "kind_relaxed": 0.125,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "existing_paraphrase": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.375,
+        "kind": 0.375,
+        "kind_relaxed": 0.375,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "impossible": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.25,
+        "kind": 0.25,
+        "kind_relaxed": 0.25,
+        "s3_count": 0,
+        "engine_caught": 2
+      },
+      "injection": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.375,
+        "kind": 0.375,
+        "kind_relaxed": 0.375,
+        "s3_count": 4,
+        "engine_caught": 1
+      },
+      "interact_distract": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.375,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "interact_observe": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0.125,
+        "kind_relaxed": 0.125,
+        "s3_count": 0,
+        "engine_caught": 3
+      },
+      "interact_prepare": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.125,
+        "kind": 0.25,
+        "kind_relaxed": 0.25,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "interact_sneak": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0.5,
+        "kind_relaxed": 0.5,
+        "s3_count": 0,
+        "engine_caught": 3
+      },
+      "interact_use_item": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 18,
+        "normalizations": 0,
+        "exact": 0.1111111111111111,
+        "kind": 0.1111111111111111,
+        "kind_relaxed": 0.1111111111111111,
+        "s3_count": 0,
+        "engine_caught": 2
+      },
+      "missing_item": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.375,
+        "kind": 0.375,
+        "kind_relaxed": 0.375,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "negation": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0.25,
+        "kind_relaxed": 0.25,
+        "s3_count": 1,
+        "engine_caught": 1
+      },
+      "parallel": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.25,
+        "kind": 0.25,
+        "kind_relaxed": 0.25,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "sequential": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.25,
+        "kind": 0.5,
+        "kind_relaxed": 0.5,
+        "s3_count": 1,
+        "engine_caught": 2
+      }
+    },
+    "negation": {
+      "count": 8,
+      "preserved": 1.0,
+      "kind": 0.25
+    },
+    "injection": {
+      "count": 8,
+      "no_state_change": 0.875,
+      "kind": 0.375,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 8,
+      "no_state_change": 0.875,
+      "kind": 0.625,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 1
+    },
+    "clarify": {
+      "precision": 0.19607843137254902,
+      "recall": 0.1694915254237288
+    },
+    "json_failure_rate": 0.010309278350515464,
+    "invalid_plan_rate": 0.07731958762886598,
+    "latency_ms": {
+      "p50": 3974.312,
+      "p95": 4506.05135
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 829.9278350515464,
+        "reported": 194
+      },
+      "output_tokens": {
+        "mean": 111.6082474226804,
+        "reported": 194
+      },
+      "cached_tokens": {
+        "mean": 678.2783505154639,
+        "reported": 194
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.0,
+    "cost_currency": "USD",
+    "cost_reported": 194,
+    "top_errors": [
+      {
+        "tag": "language_mix",
+        "errors": 16,
+        "examples": [
+          {
+            "id": "v2-language_mix-001",
+            "input": "陛下、邪竜のdetailsを聞かせてください。",
+            "raw_response": "{\"action_id\":\"ask_king_info\",\"advance\":false,\"approach\":\"アルスは国王エドワードに邪竜の詳細を尋ねる\",\"item_id\":\"\",\"kind\":\"clarify\",\"operation\":\"observe\",\"reply\":\"国王エドワードは深々と息をつき、邪竜の復活についての危惧を告げ、その詳細を語り始める。\",\"target_id\":\"king\"}",
+            "plan": {
+              "action_id": "",
+              "advance": false,
+              "approach": "アルスは国王エドワードに邪竜の詳細を尋ねる",
+              "item_id": "",
+              "kind": "clarify",
+              "operation": "",
+              "reply": "国王エドワードは深々と息をつき、邪竜の復活についての危惧を告げ、その詳細を語り始める。",
+              "target_id": ""
+            },
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "ask_king_info",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-language_mix-002",
+            "input": "鍛冶師さん、この剣をcheckしてもらうね。",
+            "raw_response": "{\"action_id\":\"show_sword_to_blacksmith\",\"advance\":false,\"approach\":\"剣を鍛冶師ローベルトに見せる\",\"item_id\":\"iron_sword\",\"kind\":\"dialogue\",\"operation\":\"observe\",\"reply\":\"鍛冶師ローベルトが剣を手に取り、慎重に調べ始めました。\",\"target_id\":\"blacksmith\"}",
+            "plan": {
+              "action_id": "",
+              "advance": false,
+              "approach": "剣を鍛冶師ローベルトに見せる",
+              "item_id": "",
+              "kind": "dialogue",
+              "operation": "",
+              "reply": "鍛冶師ローベルトが剣を手に取り、慎重に調べ始めました。",
+              "target_id": "blacksmith"
+            },
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "show_sword_to_blacksmith",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "conditional",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-conditional-001",
+            "input": "向こうが襲ってきたら戦うけど、今は見ているだけ。",
+            "raw_response": "{\n  \"action_id\": \"observe\",\n  \"advance\": false,\n  \"approach\": \"観察するため、スライムの動きを確認する\",\n  \"item_id\": \"\",\n  \"kind\": \"existing\",\n  \"operation\": \"observe\",\n  \"reply\": \"了解しました、スライムの行動を観察します。\",\n  \"target_id\": \"forest_slime\"\n}",
+            "plan": {
+              "action_id": "observe",
+              "advance": false,
+              "approach": "",
+              "item_id": "",
+              "kind": "existing",
+              "operation": "",
+              "reply": "",
+              "target_id": ""
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "observe",
+                "target_id": "forest_slime",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "observe",
+                "target_id": "fallen_branches",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-conditional-003",
+            "input": "携帯食が必要になったら使う。まだ出さない。",
+            "raw_response": "{\"action_id\":\"interact\",\"advance\":false,\"approach\":\"ファングは倒れた枝を観察し、携帯食で誘導の準備をします。\",\"item_id\":\"trail_ration\",\"kind\":\"interact\",\"operation\":\"prepare\",\"reply\":\"ファングは携帯食を手に取り、倒れた枝の間を組み合わせて足止めの準備をします。まだスライムを誘う必要はありません。\",\"target_id\":\"fallen_branches\"}",
+            "plan": {
+              "action_id": "",
+              "advance": false,
+              "approach": "ファングは倒れた枝を観察し、携帯食で誘導の準備をします。",
+              "item_id": "trail_ration",
+              "kind": "interact",
+              "operation": "prepare",
+              "reply": "ファングは携帯食を手に取り、倒れた枝の間を組み合わせて足止めの準備をします。まだスライムを誘う必要はありません。",
+              "target_id": "fallen_branches"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "observe",
+                "target_id": "forest_slime",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "observe",
+                "target_id": "fallen_branches",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "interact_observe",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-interact_observe-001",
+            "input": "スライムが何に反応するのか、動きを観察します。",
+            "raw_response": "{\n  \"action_id\": \"observe\",\n  \"advance\": false,\n  \"approach\": \"観察するため、スライムの動きを注意深く観察する\",\n  \"item_id\": \"\",\n  \"kind\": \"existing\",\n  \"operation\": \"observe\",\n  \"reply\": \"スライムは地面の木の実に鼻先を寄せています。反応が何らかの匂いに似ているようです。\",\n  \"target_id\": \"forest_slime\"\n}",
+            "plan": {
+              "action_id": "observe",
+              "advance": false,
+              "approach": "",
+              "item_id": "",
+              "kind": "existing",
+              "operation": "",
+              "reply": "",
+              "target_id": ""
+            },
+            "gold": [
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "observe",
+                "target_id": "forest_slime",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-interact_observe-005",
+            "input": "道端の枝は組めそうか、触らず眺める。",
+            "raw_response": "{\"action_id\": \"prepare\", \"advance\": false, \"approach\": \"枝を組み合わせて足止めを試みる\", \"item_id\": \"fallen_branches\", \"kind\": \"dialogue\", \"operation\": \"observe\", \"reply\": \"枝が組み合わさり、視界を遮るようになり、スライムの警戒心が高まった。しかし、スライムの嗅覚が敏感で、すぐに察知された。枝の組み合わせは失敗した。\", \"target_id\": \"forest_slime\"}",
+            "plan": {
+              "action_id": "",
+              "advance": false,
+              "approach": "枝を組み合わせて足止めを試みる",
+              "item_id": "",
+              "kind": "dialogue",
+              "operation": "",
+              "reply": "枝が組み合わさり、視界を遮るようになり、スライムの警戒心が高まった。しかし、スライムの嗅覚が敏感で、すぐに察知された。枝の組み合わせは失敗した。",
+              "target_id": "forest_slime"
+            },
+            "gold": [
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "observe",
+                "target_id": "fallen_branches",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

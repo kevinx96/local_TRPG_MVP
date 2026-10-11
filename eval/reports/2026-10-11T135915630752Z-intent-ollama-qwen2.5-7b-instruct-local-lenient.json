@@ -1,0 +1,550 @@
+{
+  "run_id": "2026-10-11T135915630752Z-intent-ollama-qwen2.5-7b-instruct-local-lenient",
+  "backend": "ollama",
+  "model": "qwen2.5-7b-instruct-local",
+  "variant": "lenient",
+  "split": "dev",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\benchmark\\intent_v2.jsonl",
+  "cases_sha256": "f1ea8689cf7f0a28c9123167ecae4c99834eeabeb729eca18a98beb388285875",
+  "quota_exhausted": null,
+  "metrics": {
+    "total": 194,
+    "evaluated": 194,
+    "statuses": {
+      "ok": 185,
+      "invalid_plan": 9
+    },
+    "normalizations": 2,
+    "conflict_count": 194,
+    "conflict_rate": 1.0,
+    "lenient": {
+      "evaluated": 194,
+      "cleared_fields": {
+        "operation": 142,
+        "target_id": 47,
+        "approach": 80,
+        "reply": 80,
+        "action_id": 114,
+        "item_id": 34,
+        "advance": 5
+      },
+      "existing_operation_count": 80,
+      "existing_operation_recovered": 76
+    },
+    "severity": {
+      "S0": 67,
+      "S1": 16,
+      "S2": 88,
+      "S3": 23,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.42783505154639173,
+    "s3_rate": 0.11855670103092783,
+    "engine_caught": 36,
+    "exact": 0.42783505154639173,
+    "kind": 0.6237113402061856,
+    "kind_relaxed": 0.6237113402061856,
+    "field_kind": 0.6237113402061856,
+    "field_action_id": 0.7835051546391752,
+    "field_operation": 0.8092783505154639,
+    "field_target_id": 0.7628865979381443,
+    "field_item_id": 0.8144329896907216,
+    "field_advance": 0.9020618556701031,
+    "confusion_matrix": {
+      "clarify": {
+        "existing": 4,
+        "interact": 1,
+        "dialogue": 3
+      },
+      "clarify|dialogue|existing": {
+        "dialogue": 1,
+        "existing": 1
+      },
+      "clarify|dialogue|unsupported": {
+        "interact": 3,
+        "dialogue": 1,
+        "existing": 4
+      },
+      "clarify|existing": {
+        "existing": 10
+      },
+      "clarify|existing|interact": {
+        "interact": 4,
+        "invalid": 1
+      },
+      "clarify|interact": {
+        "interact": 6,
+        "dialogue": 2
+      },
+      "clarify|unsupported": {
+        "unsupported": 5,
+        "dialogue": 4,
+        "clarify": 2,
+        "interact": 2,
+        "existing": 5
+      },
+      "dialogue": {
+        "existing": 10,
+        "dialogue": 17,
+        "clarify": 2
+      },
+      "dialogue|existing|unsupported": {
+        "dialogue": 3,
+        "existing": 3
+      },
+      "dialogue|interact": {
+        "dialogue": 4,
+        "interact": 1,
+        "existing": 1
+      },
+      "dialogue|interact|unsupported": {
+        "existing": 1,
+        "interact": 1
+      },
+      "existing": {
+        "existing": 38,
+        "interact": 3,
+        "dialogue": 4,
+        "invalid": 1
+      },
+      "interact": {
+        "dialogue": 16,
+        "interact": 24,
+        "existing": 3,
+        "invalid": 3
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.125,
+        "kind": 0.75,
+        "kind_relaxed": 0.75,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "colloquial": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.875,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "conditional": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.25,
+        "kind": 0.375,
+        "kind_relaxed": 0.375,
+        "s3_count": 3,
+        "engine_caught": 0
+      },
+      "context_followup": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.625,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "declared_success": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.625,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "deixis_multi": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 3,
+        "engine_caught": 2
+      },
+      "deixis_unique": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.875,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "dialogue": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.875,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "excluded_means": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.375,
+        "kind": 0.5,
+        "kind_relaxed": 0.5,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_exact": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.875,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "existing_paraphrase": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.75,
+        "kind": 0.75,
+        "kind_relaxed": 0.75,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "impossible": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.375,
+        "kind": 0.375,
+        "kind_relaxed": 0.375,
+        "s3_count": 3,
+        "engine_caught": 1
+      },
+      "injection": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.125,
+        "kind": 0.125,
+        "kind_relaxed": 0.125,
+        "s3_count": 7,
+        "engine_caught": 3
+      },
+      "interact_distract": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0.125,
+        "kind_relaxed": 0.125,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_observe": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0.5,
+        "kind_relaxed": 0.5,
+        "s3_count": 0,
+        "engine_caught": 5
+      },
+      "interact_prepare": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.625,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 3
+      },
+      "interact_sneak": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0.75,
+        "kind_relaxed": 0.75,
+        "s3_count": 0,
+        "engine_caught": 7
+      },
+      "interact_use_item": {
+        "count": 8,
+        "normalizations": 1,
+        "exact": 0.125,
+        "kind": 0.125,
+        "kind_relaxed": 0.125,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 18,
+        "normalizations": 0,
+        "exact": 0.5555555555555556,
+        "kind": 0.7777777777777778,
+        "kind_relaxed": 0.7777777777777778,
+        "s3_count": 1,
+        "engine_caught": 4
+      },
+      "missing_item": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.375,
+        "kind": 0.375,
+        "kind_relaxed": 0.375,
+        "s3_count": 1,
+        "engine_caught": 2
+      },
+      "negation": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.25,
+        "kind": 0.5,
+        "kind_relaxed": 0.5,
+        "s3_count": 4,
+        "engine_caught": 1
+      },
+      "parallel": {
+        "count": 8,
+        "normalizations": 1,
+        "exact": 0.5,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 0,
+        "engine_caught": 3
+      },
+      "sequential": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.5,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 1,
+        "engine_caught": 2
+      }
+    },
+    "negation": {
+      "count": 8,
+      "preserved": 0.75,
+      "kind": 0.5
+    },
+    "injection": {
+      "count": 8,
+      "no_state_change": 0.625,
+      "kind": 0.125,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 8,
+      "no_state_change": 0.625,
+      "kind": 0.875,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 4
+    },
+    "clarify": {
+      "precision": 0.5,
+      "recall": 0.03389830508474576
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.04639175257731959,
+    "latency_ms": {
+      "p50": 4591.154,
+      "p95": 5293.92135
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 829.9278350515464,
+        "reported": 194
+      },
+      "output_tokens": {
+        "mean": 112.1082474226804,
+        "reported": 194
+      },
+      "cached_tokens": {
+        "mean": 677.5412371134021,
+        "reported": 194
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.0,
+    "cost_currency": "USD",
+    "cost_reported": 194,
+    "top_errors": [
+      {
+        "tag": "deixis_multi",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-deixis_multi-002",
+            "input": "あの人を呼んで話したいんだけど。",
+            "raw_response": "{\"action_id\":\"invite_robin\",\"advance\":false,\"approach\":\"ロビンを呼んでパーティに勧誘する intention: 魔法使いと女レンジャーで強力なチームを形成する。 method: 直接呼び、説得する。\",\"item_id\":\"\",\"kind\":\"existing\",\"operation\":\"distract\",\"reply\":\"ロビンは少し戸惑いながらも、冒険の道を続けることを約束する。\",\"target_id\":\"robin\"}",
+            "plan": {
+              "action_id": "invite_robin",
+              "advance": false,
+              "approach": "",
+              "item_id": "",
+              "kind": "existing",
+              "operation": "",
+              "reply": "",
+              "target_id": ""
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-deixis_multi-006",
+            "input": "あそこを使って何とかしよう。",
+            "raw_response": "{\n  \"action_id\": \"prepare\",\n  \"advance\": false,\n  \"approach\": \"倒れた枝を使って潜行し、スライムを回避する。\",\n  \"item_id\": \"fallen_branches\",\n  \"kind\": \"interact\",\n  \"operation\": \"prepare\",\n  \"reply\": \"倒れた枝で足止めを準備し、潜行してスライムを避けることにします。準備に枝2本が必要です。準備はSP1を消費します。準備は成功すれば次の潜行の難度を3下げるでしょう。\",\n  \"target_id\": \"forest_slime\"\n}",
+            "plan": {
+              "action_id": "",
+              "advance": false,
+              "approach": "倒れた枝を使って潜行し、スライムを回避する。",
+              "item_id": "fallen_branches",
+              "kind": "interact",
+              "operation": "prepare",
+              "reply": "倒れた枝で足止めを準備し、潜行してスライムを避けることにします。準備に枝2本が必要です。準備はSP1を消費します。準備は成功すれば次の潜行の難度を3下げるでしょう。",
+              "target_id": "forest_slime"
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "interact_distract",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-interact_distract-001",
+            "input": "携帯食を脇へ放ってスライムを誘い、空いた道を通ります。",
+            "raw_response": "{\n  \"action_id\": \"distract\",\n  \"advance\": true,\n  \"approach\": \"携帯食でスライムを誘い、潜行して道を空ける。\",\n  \"item_id\": \"trail_ration\",\n  \"kind\": \"dialogue\",\n  \"operation\": \"distract\",\n  \"reply\": \"スライムを餌で誘導し、潜行して道を空けることに成功しました。前方に進みます。\",\n  \"target_id\": \"forest_slime\"\n}",
+            "plan": {
+              "action_id": "",
+              "advance": false,
+              "approach": "携帯食でスライムを誘い、潜行して道を空ける。",
+              "item_id": "",
+              "kind": "dialogue",
+              "operation": "",
+              "reply": "スライムを餌で誘導し、潜行して道を空けることに成功しました。前方に進みます。",
+              "target_id": "forest_slime"
+            },
+            "gold": [
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "distract",
+                "target_id": "forest_slime",
+                "item_id": "trail_ration",
+                "advance": true
+              }
+            ]
+          },
+          {
+            "id": "v2-interact_distract-002",
+            "input": "干し肉の匂いでスライムをこちらから引き離そう。移動はしない。",
+            "raw_response": "{\n  \"action_id\": \"distract\",\n  \"advance\": false,\n  \"approach\": \"携帯食でスライムを誘導しようとするが、動かない。\",\n  \"item_id\": \"trail_ration\",\n  \"kind\": \"dialogue\",\n  \"operation\": \"distract\",\n  \"reply\": \"スライムは干し肉の匂いに反応して鼻先をこちらに向けたが、動こうとしない。\",\n  \"target_id\": \"forest_slime\"\n}",
+            "plan": {
+              "action_id": "",
+              "advance": false,
+              "approach": "携帯食でスライムを誘導しようとするが、動かない。",
+              "item_id": "",
+              "kind": "dialogue",
+              "operation": "",
+              "reply": "スライムは干し肉の匂いに反応して鼻先をこちらに向けたが、動こうとしない。",
+              "target_id": "forest_slime"
+            },
+            "gold": [
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "distract",
+                "target_id": "forest_slime",
+                "item_id": "trail_ration",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "interact_observe",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-interact_observe-001",
+            "input": "スライムが何に反応するのか、動きを観察します。",
+            "raw_response": "{\n  \"action_id\": \"observe\",\n  \"advance\": false,\n  \"approach\": \"スライムの反応を観察する。\",\n  \"item_id\": \"\",\n  \"kind\": \"dialogue\",\n  \"operation\": \"observe\",\n  \"reply\": \"スライムは木の実の匂いに反応し、それを追いかけるように動いた。しかし視界は狭く、周囲の環境に注意を払っていない。\",\n  \"target_id\": \"forest_slime\"\n}",
+            "plan": {
+              "action_id": "",
+              "advance": false,
+              "approach": "スライムの反応を観察する。",
+              "item_id": "",
+              "kind": "dialogue",
+              "operation": "",
+              "reply": "スライムは木の実の匂いに反応し、それを追いかけるように動いた。しかし視界は狭く、周囲の環境に注意を払っていない。",
+              "target_id": "forest_slime"
+            },
+            "gold": [
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "observe",
+                "target_id": "forest_slime",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-interact_observe-005",
+            "input": "道端の枝は組めそうか、触らず眺める。",
+            "raw_response": "{\n  \"action_id\": \"prepare\",\n  \"advance\": false,\n  \"approach\": \"枝で足止めの準備をする。\",\n  \"item_id\": \"fallen_branches\",\n  \"kind\": \"interact\",\n  \"operation\": \"prepare\",\n  \"reply\": \"枝を組み合わせる準備をする。これで次に潜行する際、難度が3下がる。\",\n  \"target_id\": \"fallen_branches\"\n}",
+            "plan": {
+              "action_id": "",
+              "advance": false,
+              "approach": "枝で足止めの準備をする。",
+              "item_id": "fallen_branches",
+              "kind": "interact",
+              "operation": "prepare",
+              "reply": "枝を組み合わせる準備をする。これで次に潜行する際、難度が3下がる。",
+              "target_id": "fallen_branches"
+            },
+            "gold": [
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "observe",
+                "target_id": "fallen_branches",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}
