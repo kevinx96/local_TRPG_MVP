@@ -15,6 +15,8 @@ from host import app, combat, free_actions, gm_contract, llm_client, state
 from host.llm_trace import prompt_metadata
 from .cache import cache_key, read_cache, write_cache
 from .metrics import summarize
+from .requests import evaluation_config
+from .audit import allowed_state
 from .snapshots import ROOT, isolated_engine, load_snapshot
 from .variants import VARIANTS
 
@@ -39,11 +41,12 @@ def engine_result(session: dict[str, Any], plan: dict[str, Any], text: str) -> d
             result = trial.get("last_action_result") or {"outcome": "rejected"}
         else:
             result = free_actions.adjudicate(trial, plan)
+        authorized = protected_state(allowed_state(session, plan, result))
     after = protected_state(trial)
     action = trial.get("last_action_result") or {}
     return {"outcome": result.get("outcome"), "result": result,
             "changes": {k: before[k] != after[k] for k in before},
-            "before": before, "after": after,
+            "before": before, "after": after, "allowed_after": authorized,
             "attack_or_combat": bool(combat.combat_is_active(trial) or trial.get("combat_start_requested")
                                      or action.get("state_delta", {}).get("start_combat"))}
 
@@ -52,6 +55,9 @@ def evaluate_case(case: dict[str, Any], session: dict[str, Any], config: dict[st
                   backend: str, model: str, variant: str, cache_dir: Path, *, live: bool = False,
                   no_cache: bool = False) -> dict[str, Any]:
     messages, request_config = VARIANTS[variant].prepare(session, case["input"], config)
+    if "eval_timeout_seconds" in config:
+        request_config["request_timeout_seconds"] = config["eval_timeout_seconds"]
+        request_config["gameplay_timeout_seconds"] = config["eval_timeout_seconds"]
     key = cache_key(backend, model, variant, messages, request_config)
     record = {**deepcopy(case), "status": "skipped", "cache_key": key, "cache_hit": False,
               **prompt_metadata(messages), "latency_ms": None, "usage": {}, "raw_response": None,
@@ -68,6 +74,11 @@ def evaluate_case(case: dict[str, Any], session: dict[str, Any], config: dict[st
         usage: dict[str, Any] = {}
         started = time.monotonic()
         try:
+            policy = request_config.get("_request_policy")
+            if backend == "ollama" and policy is not None and not policy.warmed:
+                llm_client.chat_completion(request_config, messages)
+                policy.warmed = True
+                started = time.monotonic()
             raw = llm_client.chat_completion(request_config, messages, usage_out=usage)
         except llm_client.LLMClientError as exc:
             record.update(status="blocked" if isinstance(exc, llm_client.LLMBlockedError) else "request_error",
@@ -81,7 +92,7 @@ def evaluate_case(case: dict[str, Any], session: dict[str, Any], config: dict[st
     cleaned = gm_contract._strip_thinking_text(record["raw_response"]).strip()
     record["thinking_stripped"] = cleaned != record["raw_response"].strip()
     try:
-        plan = free_actions.parse_plan(cleaned)
+        plan = free_actions.parse_plan(cleaned, session.get("character", {}).get("character_id", ""))
         record["plan"] = plan
         record["engine"] = engine_result(session, plan, case["input"])
         record["status"] = "ok"
@@ -114,9 +125,10 @@ def report_markdown(report: dict[str, Any]) -> str:
         lines.append(f"| {key} mean ({value['reported']} reported) | {display(value['mean'])} |")
     for tag in ("negation", "injection", "declared_success"):
         lines.append(f"| {tag} | {json.dumps(metrics[tag])} |")
-    lines += ["", "## 标签分组", "", "| 标签 | 数量 | exact | kind | relaxed |", "|---|---:|---:|---:|---:|"]
+    lines.append(f"| 归一化次数 | {metrics['normalizations']} |")
+    lines += ["", "## 标签分组", "", "| 标签 | 数量 | exact | kind | relaxed | 归一化次数 |", "|---|---:|---:|---:|---:|---:|"]
     for tag, values in metrics["by_tag"].items():
-        lines.append(f"| {tag} | {values['count']} | {display(values['exact'])} | {display(values['kind'])} | {display(values['kind_relaxed'])} |")
+        lines.append(f"| {tag} | {values['count']} | {display(values['exact'])} | {display(values['kind'])} | {display(values['kind_relaxed'])} | {values['normalizations']} |")
     lines += ["", "## 错误最多的三类与样例", ""]
     if not metrics["top_errors"]:
         lines.append("n/a：没有可评测响应，不能给出模型错误排行或典型错例。")
@@ -139,13 +151,17 @@ def main(argv: list[str] = None) -> int:
     parser.add_argument("--limit", type=int)
     parser.add_argument("--live", action="store_true")
     parser.add_argument("--no-cache", action="store_true")
+    parser.add_argument("--rpm", type=float, help="Requests per minute; 0 disables pacing")
+    parser.add_argument("--timeout", type=int)
+    parser.add_argument("--base-url")
     args = parser.parse_args(argv)
     if args.limit is not None and args.limit < 1:
         parser.error("--limit must be positive")
-    config = state.load_config()
-    config.update(active_backend=args.backend, debug_llm=False, trace_llm=False, eval_ollama_schema_fallback=True)
-    config["backends"][args.backend]["model"] = args.model
-    config["backends"][args.backend]["fallback_models"] = []
+    try:
+        config = evaluation_config(state.load_config(), args.backend, args.model,
+                                   rpm=args.rpm, timeout=args.timeout, base_url=args.base_url)
+    except ValueError as exc:
+        parser.error(str(exc))
     case_bytes = args.cases.read_bytes()
     cases = [json.loads(line) for line in case_bytes.decode("utf-8").splitlines() if line.strip()]
     cases = [case for case in cases if args.split == "all" or case["split"] == args.split]

@@ -9,6 +9,8 @@ from typing import Any, Optional
 def cache_key(backend: str, model: str, variant: str, messages: list, config: dict[str, Any]) -> str:
     value = {"backend": backend, "model": model, "variant": variant, "messages": messages,
              "config": {k: config.get(k) for k in ("temperature", "max_tokens", "response_format")}}
+    if "disable_thinking" in config:
+        value["config"]["disable_thinking"] = config["disable_thinking"]
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True,
                                      separators=(",", ":")).encode("utf-8")).hexdigest()
 

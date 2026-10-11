@@ -64,3 +64,6 @@ python -m scripts.evaluate_free_actions --live --case prepare --case explicit_at
 下一阶段扩展到社交、线索与关系记忆，再实现多名角色、房间成员、行动顺序、请求去重和事务保存。当前 JSON 存档仍不适合多人并发写入。
 
 如需恢复本地推理，在个人配置中明确设置 `archived_backends: []`、选择本地后端，并重新评估提示、结构化输出与实际延迟；不应只取消隐藏就承诺同等游戏体验。
+# 契约归一化（002）
+
+`parse_plan` 会把 `existing` 的 `advance: true` 归一化为 `false`（仍拒绝混入 operation、target_id、item_id），并把 `use_item` 的当前角色 ID 归一化为 `self`；仅在发生归一化时返回 `normalized` 字段，列出调整的字段名，评测在归一化后比较。

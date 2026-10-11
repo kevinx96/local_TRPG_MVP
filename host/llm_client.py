@@ -13,6 +13,11 @@ class LLMClientError(RuntimeError):
     pass
 
 
+def _post(config: dict[str, Any], *args: Any, **kwargs: Any) -> requests.Response:
+    policy = config.get("_request_policy")
+    return policy.post(*args, **kwargs) if policy is not None else requests.post(*args, **kwargs)
+
+
 class LLMBlockedError(LLMClientError):
     def __init__(self, reason: str):
         self.reason = reason
@@ -123,6 +128,8 @@ def _chat_completion_once(
         "stream": False,
     }
     _apply_response_format(payload, config)
+    if backend_name == "ollama" and config.get("disable_thinking", backend.get("disable_thinking", False)):
+        payload["reasoning_effort"] = "none"
     headers = _request_headers(backend)
     timeout = min(int(config.get("request_timeout_seconds", 15)), int(config.get("gameplay_timeout_seconds", 15)))
     url = f"{base_url}/chat/completions"
@@ -138,7 +145,7 @@ def _chat_completion_once(
 
     try:
         start_time = time.time()
-        response = requests.post(url, headers=headers, json=payload, timeout=timeout)
+        response = _post(config, url, headers=headers, json=payload, timeout=timeout)
         ttfb_ms = (time.time() - start_time) * 1000
         if debug_enabled:
             debug_log(
@@ -210,6 +217,8 @@ def _stream_chat_completion_once(
         "stream": True,
     }
     _apply_response_format(payload, config)
+    if backend_name == "ollama" and config.get("disable_thinking", backend.get("disable_thinking", False)):
+        payload["reasoning_effort"] = "none"
     headers = _request_headers(backend)
     timeout = min(int(config.get("request_timeout_seconds", 15)), int(config.get("gameplay_timeout_seconds", 15)))
     url = f"{base_url}/chat/completions"
@@ -329,7 +338,7 @@ def _gemini_chat_completion_once(
 
     try:
         start_time = time.time()
-        response = requests.post(url, headers={"Content-Type": "application/json", "x-goog-api-key": api_key}, json=payload, timeout=timeout)
+        response = _post(config, url, headers={"Content-Type": "application/json", "x-goog-api-key": api_key}, json=payload, timeout=timeout)
         ttfb_ms = (time.time() - start_time) * 1000
         if debug_enabled:
             debug_log(
@@ -467,8 +476,10 @@ def _ollama_native_completion(config: dict[str, Any], backend: dict[str, Any], m
     payload = {"model": model, "messages": messages, "stream": False, "format": schema,
                "options": {"temperature": config.get("temperature", 0.8),
                            "num_predict": config.get("max_tokens", 900)}}
+    if config.get("disable_thinking", backend.get("disable_thinking", False)):
+        payload["think"] = False
     try:
-        response = requests.post(f"{base_url}/api/chat", headers=_request_headers(backend), json=payload,
+        response = _post(config, f"{base_url}/api/chat", headers=_request_headers(backend), json=payload,
                                  timeout=min(config.get("request_timeout_seconds", 15), config.get("gameplay_timeout_seconds", 15)))
         response.raise_for_status()
         data = response.json()

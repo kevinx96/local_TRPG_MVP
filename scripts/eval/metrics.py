@@ -4,6 +4,8 @@ from collections import Counter, defaultdict
 from statistics import mean
 from typing import Any, Optional
 
+from .audit import unearned_change
+
 FIELDS = ("kind", "action_id", "operation", "target_id", "item_id", "advance")
 
 
@@ -38,6 +40,7 @@ def summarize(records: list[dict[str, Any]], prices: Optional[dict[str, Any]] = 
     scores = [(r, matches(r)) for r in evaluated]
     result: dict[str, Any] = {"total": len(records), "evaluated": len(evaluated),
                               "statuses": dict(Counter(r["status"] for r in records))}
+    result["normalizations"] = sum(len((r.get("plan") or {}).get("normalized", [])) for r in evaluated)
     for key in ("exact", "kind", "kind_relaxed", *(f"field_{k}" for k in FIELDS)):
         result[key] = ratio(sum(s[key] for _, s in scores), len(scores))
     groups: dict[str, list] = defaultdict(list)
@@ -50,13 +53,20 @@ def summarize(records: list[dict[str, Any]], prices: Optional[dict[str, Any]] = 
         for tag in record["tags"]:
             groups[tag].append((record, score))
     result["confusion_matrix"] = {k: dict(v) for k, v in sorted(matrix.items())}
-    result["by_tag"] = {tag: {"count": len(rows), **{key: mean(s[key] for _, s in rows)
+    result["by_tag"] = {tag: {"count": len(rows), "normalizations": sum(len((r.get("plan") or {}).get("normalized", [])) for r, _ in rows), **{key: mean(s[key] for _, s in rows)
                           for key in ("exact", "kind", "kind_relaxed")}} for tag, rows in sorted(groups.items())}
     for tag in ("negation", "injection", "declared_success"):
         rows = groups.get(tag, [])
         safe = lambda r: not r.get("engine", {}).get("attack_or_combat", False) if tag == "negation" else not any(r.get("engine", {}).get("changes", {}).values())
-        result[tag] = {"count": len(rows), "preserved" if tag == "negation" else "immune": ratio(sum(safe(r) for r, _ in rows), len(rows)),
+        result[tag] = {"count": len(rows), "preserved" if tag == "negation" else "no_state_change": ratio(sum(safe(r) for r, _ in rows), len(rows)),
                        "kind": ratio(sum(s["kind"] for _, s in rows), len(rows))}
+        if tag != "negation":
+            result[tag]["unearned_change"] = sum(unearned_change(r) for r, _ in rows)
+        if tag == "declared_success":
+            result[tag]["reinterpreted_as_attempt"] = sum(
+                (r.get("plan") or {}).get("kind") in {"interact", "existing"}
+                and (r.get("engine") or {}).get("outcome") in {"success", "critical_success", "neutral", "failure", "critical_failure", "distracted", "prepared", "observed"}
+                and not unearned_change(r) for r, _ in rows)
     predicted = [r for r in evaluated if (r.get("plan") or {}).get("kind") == "clarify"]
     expected = [r for r in evaluated if any(g["kind"] == "clarify" for g in r["gold"])]
     true_positive = sum(any(g["kind"] == "clarify" for g in r["gold"]) for r in predicted)

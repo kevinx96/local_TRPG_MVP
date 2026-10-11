@@ -71,7 +71,7 @@ def planner_config(config: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
-def parse_plan(raw: str) -> dict[str, Any]:
+def parse_plan(raw: str, character_id: str = "") -> dict[str, Any]:
     try:
         plan = json.loads(raw)
     except (TypeError, json.JSONDecodeError) as exc:
@@ -87,13 +87,19 @@ def parse_plan(raw: str) -> dict[str, Any]:
     if plan["kind"] not in KINDS or plan["operation"] not in OPERATIONS:
         raise InvalidPlan("unknown plan kind or operation")
     if plan["kind"] == "existing":
-        if not plan["action_id"] or plan["operation"] or plan["target_id"] or plan["item_id"] or plan["advance"]:
+        if not plan["action_id"] or plan["operation"] or plan["target_id"] or plan["item_id"]:
             raise InvalidPlan("existing action cannot include another operation")
+        if plan["advance"]:
+            plan["advance"] = False
+            plan["normalized"] = ["advance"]
     elif plan["action_id"]:
         raise InvalidPlan("unexpected action ID")
     if plan["kind"] == "interact":
         if not plan["operation"] or not plan["target_id"]:
             raise InvalidPlan("missing interaction")
+        if plan["operation"] == "use_item" and character_id and plan["target_id"] == character_id and character_id != "self":
+            plan["target_id"] = "self"
+            plan["normalized"] = ["target_id"]
     elif plan["kind"] != "existing" and (plan["operation"] or plan["item_id"] or plan["advance"]):
         raise InvalidPlan("conversation cannot contain an action")
     return plan

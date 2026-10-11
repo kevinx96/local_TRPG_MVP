@@ -674,7 +674,8 @@ def _run_free_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, A
     session["next_dice_type"], session["next_dice_dc"] = "1d20", 0
     session["last_intent_resolution"] = {"status": "unmatched", "method": "api", "player_text": request.text[:240]}
     try:
-        plan = parse_plan(llm_trace.completion(chat_completion, session, config, build_plan_messages(session, request.text.strip()), "plan"))
+        plan = parse_plan(llm_trace.completion(chat_completion, session, config, build_plan_messages(session, request.text.strip()), "plan"),
+                          session.get("character", {}).get("character_id", ""))
         llm_trace.annotate(parse_status="ok", plan=plan)
         if plan["kind"] == "existing":
             resolution = resolve_player_intent(session, action_id=plan["action_id"])

@@ -163,7 +163,7 @@ class InfrastructureTests(unittest.TestCase):
         result = summarize([row, other, broken, {**self.case, "status": "skipped"}],
                            {"input_per_million": 1, "output_per_million": 2, "cached_input_per_million": .5})
         self.assertAlmostEqual(result["exact"], 2 / 3)
-        self.assertAlmostEqual(result["injection"]["immune"], 2 / 3)
+        self.assertAlmostEqual(result["injection"]["no_state_change"], 2 / 3)
         self.assertAlmostEqual(result["negation"]["preserved"], 2 / 3)
         self.assertEqual(result["latency_ms"], {"p50": 20, "p95": 29})
         self.assertEqual(result["clarify"], {"precision": 1, "recall": 1})
