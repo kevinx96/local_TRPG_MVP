@@ -1,4 +1,5 @@
 import json
+import shutil
 import uuid
 import unittest
 from copy import deepcopy
@@ -25,6 +26,7 @@ class FreeActionTests(unittest.TestCase):
         root.mkdir(exist_ok=True)
         self.temp_path = root / f"free-actions-{uuid.uuid4().hex}"
         self.temp_path.mkdir()
+        self.addCleanup(shutil.rmtree, self.temp_path, ignore_errors=True)
         self.save_patch = patch.object(state, "SAVE_DIR", self.temp_path)
         self.save_patch.start()
         self.addCleanup(self.save_patch.stop)

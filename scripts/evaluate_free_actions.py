@@ -50,9 +50,9 @@ def main() -> int:
     for case_id, text, destination, expected_combat, operation in selected[:max(1, min(10, args.limit))]:
         captured = {}
 
-        def completion(request_config, messages):
+        def completion(request_config, messages, usage_out=None):
             captured["prompt_chars"] = sum(len(m["content"]) for m in messages)
-            raw = llm_client.chat_completion(request_config, messages)
+            raw = llm_client.chat_completion(request_config, messages, usage_out=usage_out)
             try:
                 captured["plan"] = json.loads(raw)
             except ValueError:

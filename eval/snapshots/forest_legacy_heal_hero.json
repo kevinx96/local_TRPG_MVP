@@ -1,0 +1,12 @@
+{
+  "id": "forest_legacy_heal_hero",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "dark_forest_loc",
+  "flags": {},
+  "hp_delta": -5,
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}

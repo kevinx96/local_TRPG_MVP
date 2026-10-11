@@ -1,0 +1,191 @@
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import re
+import time
+from copy import deepcopy
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+from unittest.mock import patch
+
+from host import app, combat, free_actions, gm_contract, llm_client, state
+from host.llm_trace import prompt_metadata
+from .cache import cache_key, read_cache, write_cache
+from .metrics import summarize
+from .snapshots import ROOT, isolated_engine, load_snapshot
+from .variants import VARIANTS
+
+
+def protected_state(session: dict[str, Any]) -> dict[str, Any]:
+    actor = session["character"]
+    return deepcopy({"position": session["world_state"], "flags": session["flags"],
+                     "items": actor["inventory"],
+                     "resources": {k: v for k, v in actor.items() if k not in {"inventory", "name", "description"}}})
+
+
+def engine_result(session: dict[str, Any], plan: dict[str, Any], text: str) -> dict[str, Any]:
+    trial = deepcopy(session)
+    before = protected_state(trial)
+    with isolated_engine("adjudication"), patch.object(app, "load_config", return_value={"debug_llm": False, "trace_llm": False}), \
+         patch.object(app, "chat_completion", side_effect=AssertionError("Evaluation adjudication must not call an LLM")):
+        if plan["kind"] == "existing":
+            resolution = state.resolve_player_intent(trial, action_id=plan["action_id"])
+            if resolution.get("status") != "resolved":
+                raise free_actions.InvalidPlan("unavailable action")
+            app._run_turn(trial, app.TurnRequest(text=text, action_id=plan["action_id"]), allow_narration=False)
+            result = trial.get("last_action_result") or {"outcome": "rejected"}
+        else:
+            result = free_actions.adjudicate(trial, plan)
+    after = protected_state(trial)
+    action = trial.get("last_action_result") or {}
+    return {"outcome": result.get("outcome"), "result": result,
+            "changes": {k: before[k] != after[k] for k in before},
+            "before": before, "after": after,
+            "attack_or_combat": bool(combat.combat_is_active(trial) or trial.get("combat_start_requested")
+                                     or action.get("state_delta", {}).get("start_combat"))}
+
+
+def evaluate_case(case: dict[str, Any], session: dict[str, Any], config: dict[str, Any],
+                  backend: str, model: str, variant: str, cache_dir: Path, *, live: bool = False,
+                  no_cache: bool = False) -> dict[str, Any]:
+    messages, request_config = VARIANTS[variant].prepare(session, case["input"], config)
+    key = cache_key(backend, model, variant, messages, request_config)
+    record = {**deepcopy(case), "status": "skipped", "cache_key": key, "cache_hit": False,
+              **prompt_metadata(messages), "latency_ms": None, "usage": {}, "raw_response": None,
+              "plan": None, "invalid_plan_reason": None, "engine": None,
+              "structured_output": "openai_json_schema" if backend == "ollama" else "gemini_responseJsonSchema"}
+    cached = None if no_cache else read_cache(cache_dir, key)
+    if cached is not None:
+        record.update({k: cached[k] for k in ("raw_response", "usage", "latency_ms", "structured_output") if k in cached})
+        record["cache_hit"] = True
+    elif not live:
+        record["skip_reason"] = "cache_miss" if not no_cache else "cache_disabled"
+        return record
+    else:
+        usage: dict[str, Any] = {}
+        started = time.monotonic()
+        try:
+            raw = llm_client.chat_completion(request_config, messages, usage_out=usage)
+        except llm_client.LLMClientError as exc:
+            record.update(status="blocked" if isinstance(exc, llm_client.LLMBlockedError) else "request_error",
+                          error_type=type(exc).__name__, error=app._redact_secrets(str(exc)), usage=usage,
+                          latency_ms=round((time.monotonic() - started) * 1000, 3))
+            return record
+        record.update(raw_response=raw, usage=usage, latency_ms=round((time.monotonic() - started) * 1000, 3),
+                      structured_output=usage.get("transport", record["structured_output"]))
+        if not no_cache:
+            write_cache(cache_dir, key, {k: record[k] for k in ("raw_response", "usage", "latency_ms", "structured_output")})
+    cleaned = gm_contract._strip_thinking_text(record["raw_response"]).strip()
+    record["thinking_stripped"] = cleaned != record["raw_response"].strip()
+    try:
+        plan = free_actions.parse_plan(cleaned)
+        record["plan"] = plan
+        record["engine"] = engine_result(session, plan, case["input"])
+        record["status"] = "ok"
+    except free_actions.InvalidPlan as exc:
+        record["status"] = "json_error" if str(exc) == "invalid JSON" else "invalid_plan"
+        record["invalid_plan_reason"] = str(exc)
+        record["engine"] = {"outcome": "rejected", "attack_or_combat": False,
+                            "changes": {k: False for k in protected_state(session)}}
+    return record
+
+
+def display(value: Any) -> str:
+    if value is None:
+        return "n/a"
+    return f"{value:.4f}" if isinstance(value, float) else str(value)
+
+
+def report_markdown(report: dict[str, Any]) -> str:
+    metrics = report["metrics"]
+    lines = ["# 拟定标签下的初步数字", "", f"Run: `{report['run_id']}`", "",
+             "候选标签尚未审定。无模型响应时指标为 n/a；skipped、连接错误与拦截不进入意图准确率分母。",
+             "缓存重放的延迟和 token 来自原始调用。所有引擎判定骰固定为 10（不超过骰面上限）。", "",
+             f"总数 {metrics['total']}；可评测响应 {metrics['evaluated']}；状态 `{json.dumps(metrics['statuses'])}`。", "",
+             "| 指标 | 值 |", "|---|---|"]
+    for key in ("exact", "kind", "kind_relaxed", "json_failure_rate", "invalid_plan_rate", "cost_per_turn"):
+        lines.append(f"| {key} | {display(metrics[key])} |")
+    for key, value in metrics["latency_ms"].items():
+        lines.append(f"| latency_ms {key} | {display(value)} |")
+    for key, value in metrics["tokens"].items():
+        lines.append(f"| {key} mean ({value['reported']} reported) | {display(value['mean'])} |")
+    for tag in ("negation", "injection", "declared_success"):
+        lines.append(f"| {tag} | {json.dumps(metrics[tag])} |")
+    lines += ["", "## 标签分组", "", "| 标签 | 数量 | exact | kind | relaxed |", "|---|---:|---:|---:|---:|"]
+    for tag, values in metrics["by_tag"].items():
+        lines.append(f"| {tag} | {values['count']} | {display(values['exact'])} | {display(values['kind'])} | {display(values['kind_relaxed'])} |")
+    lines += ["", "## 错误最多的三类与样例", ""]
+    if not metrics["top_errors"]:
+        lines.append("n/a：没有可评测响应，不能给出模型错误排行或典型错例。")
+    for group in metrics["top_errors"]:
+        lines += [f"### {group['tag']} ({group['errors']})", "", "```json", json.dumps(group["examples"], ensure_ascii=False, indent=2), "```", ""]
+    if report["errors"]:
+        lines += ["", "## 调用失败", "", "```json", json.dumps(report["errors"], ensure_ascii=False, indent=2), "```"]
+    lines += ["", "完整字段准确率、混淆矩阵、clarify、缓存用量和配置指纹见同名 JSON。", ""]
+    return "\n".join(lines)
+
+
+def main(argv: list[str] = None) -> int:
+    parser = argparse.ArgumentParser(description="Offline-first intent evaluation; --live explicitly permits model requests.")
+    parser.add_argument("--suite", choices=["intent"], required=True)
+    parser.add_argument("--cases", type=Path, required=True)
+    parser.add_argument("--backend", choices=["gemini", "ollama"], required=True)
+    parser.add_argument("--model", required=True)
+    parser.add_argument("--variant", choices=list(VARIANTS), default="default")
+    parser.add_argument("--split", choices=["dev", "test", "all"], default="all")
+    parser.add_argument("--limit", type=int)
+    parser.add_argument("--live", action="store_true")
+    parser.add_argument("--no-cache", action="store_true")
+    args = parser.parse_args(argv)
+    if args.limit is not None and args.limit < 1:
+        parser.error("--limit must be positive")
+    config = state.load_config()
+    config.update(active_backend=args.backend, debug_llm=False, trace_llm=False, eval_ollama_schema_fallback=True)
+    config["backends"][args.backend]["model"] = args.model
+    config["backends"][args.backend]["fallback_models"] = []
+    case_bytes = args.cases.read_bytes()
+    cases = [json.loads(line) for line in case_bytes.decode("utf-8").splitlines() if line.strip()]
+    cases = [case for case in cases if args.split == "all" or case["split"] == args.split]
+    if args.limit:
+        cases = cases[:args.limit]
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M%S%fZ")
+    run_id = re.sub(r"[^A-Za-z0-9_.-]", "_", f"{stamp}-{args.suite}-{args.backend}-{args.model}-{args.variant}")
+    directory = ROOT / "eval" / "runs" / run_id
+    directory.mkdir(parents=True)
+    sessions: dict[str, Any] = {}
+    records = []
+    failed = False
+    with (directory / "cases.jsonl").open("w", encoding="utf-8") as output:
+        for case in cases:
+            if case["snapshot"] not in sessions:
+                sessions[case["snapshot"]] = load_snapshot(case["snapshot"])
+            record = evaluate_case(case, sessions[case["snapshot"]], config, args.backend, args.model, args.variant,
+                                   ROOT / "eval" / "cache", live=args.live and not failed, no_cache=args.no_cache)
+            if failed and record["status"] == "skipped":
+                record["skip_reason"] = "backend_unavailable_after_request_error"
+            if record["status"] == "request_error":
+                failed = True
+            records.append(record)
+            output.write(json.dumps(record, ensure_ascii=False) + "\n")
+            output.flush()
+            if len(records) % 25 == 0 or record["status"] == "request_error":
+                print(f"{len(records)}/{len(cases)} {record['status']}", flush=True)
+    prices = json.loads((ROOT / "eval" / "prices.json").read_text(encoding="utf-8"))
+    report = {"run_id": run_id, "backend": args.backend, "model": args.model, "variant": args.variant,
+              "split": args.split, "live": args.live, "labels": "proposed", "cases": str(args.cases),
+              "cases_sha256": hashlib.sha256(case_bytes).hexdigest(),
+              "metrics": summarize(records, prices.get("models", {}).get(args.model)),
+              "errors": [{k: r.get(k) for k in ("id", "status", "error_type", "error")} for r in records if r["status"] in {"request_error", "blocked"}]}
+    report_dir = ROOT / "eval" / "reports"
+    report_dir.mkdir(parents=True, exist_ok=True)
+    (report_dir / f"{run_id}.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    (report_dir / f"{run_id}.md").write_text(report_markdown(report), encoding="utf-8")
+    print(run_id)
+    return 1 if failed else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,4 +1,5 @@
 import json
+import shutil
 import unittest
 import uuid
 from pathlib import Path
@@ -19,6 +20,7 @@ class ScenarioEditorApiTests(unittest.TestCase):
 
     def tearDown(self):
         app_module.PROCESSED_SCENARIO_DIR = self.original_dir
+        shutil.rmtree(self.tmp_path, ignore_errors=True)
 
     def pack(self, title="Test Scenario"):
         return {

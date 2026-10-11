@@ -1,0 +1,8 @@
+{
+  "currency": "USD",
+  "note": "TODO(design): 填写并核对模型每百万 token 的价格，包括缓存输入价格。",
+  "models": {
+    "gemini-3.1-flash-lite": {"input_per_million": null, "output_per_million": null, "cached_input_per_million": null},
+    "qwen3-swallow-8b-rl-local": {"input_per_million": null, "output_per_million": null, "cached_input_per_million": null}
+  }
+}

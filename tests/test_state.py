@@ -1,4 +1,5 @@
 import json
+import shutil
 import os
 import unittest
 import uuid
@@ -23,6 +24,7 @@ class StateTests(unittest.TestCase):
 
     def tearDown(self):
         state.SAVE_DIR = self.original_save_dir
+        shutil.rmtree(self.tmp_path, ignore_errors=True)
 
     def write_pack(self) -> Path:
         path = self.tmp_path / "scenario.json"
@@ -1392,7 +1394,7 @@ class StateTests(unittest.TestCase):
             ensure_ascii=False,
         )
 
-        def fake_completion(_config, messages):
+        def fake_completion(_config, messages, usage_out=None):
             captured["messages"] = messages
             return model_response
 
@@ -1423,7 +1425,7 @@ class StateTests(unittest.TestCase):
             ensure_ascii=False,
         )
 
-        def fake_completion(_config, messages):
+        def fake_completion(_config, messages, usage_out=None):
             prompts.append("\n".join(message["content"] for message in messages))
             return model_response
 

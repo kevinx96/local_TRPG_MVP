@@ -13,6 +13,12 @@ class LLMClientError(RuntimeError):
     pass
 
 
+class LLMBlockedError(LLMClientError):
+    def __init__(self, reason: str):
+        self.reason = reason
+        super().__init__(f"LLM response blocked: {reason}")
+
+
 def debug_log(message: str) -> None:
     message = message.encode("ascii", "backslashreplace").decode("ascii")
     print(f"[TRPG-DEBUG] {message}", file=sys.stderr, flush=True)
@@ -70,6 +76,7 @@ def stream_chat_completion(
 def chat_completion(
     config: dict[str, Any],
     messages: list[dict[str, str]],
+    usage_out: Optional[dict[str, Any]] = None,
 ) -> str:
     debug_enabled = bool(config.get("debug_llm", True))
     backend = active_backend(config)
@@ -81,7 +88,7 @@ def chat_completion(
     last_error: Optional[LLMClientError] = None
     for index, model in enumerate(candidates, start=1):
         try:
-            return _chat_completion_once(config, backend, backend_name, model, messages, index, len(candidates))
+            return _chat_completion_once(config, backend, backend_name, model, messages, index, len(candidates), usage_out)
         except LLMClientError as exc:
             last_error = exc
             if debug_enabled and index < len(candidates):
@@ -99,9 +106,10 @@ def _chat_completion_once(
     messages: list[dict[str, str]],
     attempt: int,
     total_attempts: int,
+    usage_out: Optional[dict[str, Any]] = None,
 ) -> str:
     if _is_gemini_backend(backend_name, backend):
-        return _gemini_chat_completion_once(config, backend, backend_name, model, messages, attempt, total_attempts)
+        return _gemini_chat_completion_once(config, backend, backend_name, model, messages, attempt, total_attempts, usage_out)
 
     debug_enabled = bool(config.get("debug_llm", True))
     base_url = str(backend.get("base_url", "")).rstrip("/")
@@ -140,6 +148,10 @@ def _chat_completion_once(
             )
         if response.status_code >= 400:
             preview = response.text[:1000]
+            if (backend_name == "ollama" and config.get("eval_ollama_schema_fallback")
+                    and response.status_code in {400, 422}
+                    and any(word in response.text.lower() for word in ("response_format", "json_schema"))):
+                return _ollama_native_completion(config, backend, model, messages, usage_out)
             if debug_enabled:
                 debug_log(f"LLM HTTP error body={preview!r}")
                 hint = _backend_diagnostic_hint(base_url)
@@ -159,6 +171,8 @@ def _chat_completion_once(
                 debug_log(f"LLM unexpected body preview={response.text[:500]!r}")
             raise LLMClientError(unexpected_error)
         content = _content_from_completion(response.text)
+        if usage_out is not None:
+            _collect_usage(json.loads(response.text), usage_out, model)
         if debug_enabled:
             total_ms = (time.time() - start_time) * 1000
             debug_log(f"LLM completion received content_chars={len(content)} ttfb_ms={ttfb_ms:.0f} total_ms={total_ms:.0f}")
@@ -291,6 +305,7 @@ def _gemini_chat_completion_once(
     messages: list[dict[str, str]],
     attempt: int,
     total_attempts: int,
+    usage_out: Optional[dict[str, Any]] = None,
 ) -> str:
     debug_enabled = bool(config.get("debug_llm", True))
     api_key = _gemini_api_key(backend)
@@ -327,6 +342,11 @@ def _gemini_chat_completion_once(
             if debug_enabled:
                 debug_log(f"LLM HTTP error body={preview!r}")
             response.raise_for_status()
+        if usage_out is not None:
+            try:
+                _collect_usage(json.loads(response.text), usage_out, model)
+            except (ValueError, TypeError):
+                pass
         content = _content_from_gemini_response(response.text)
         if debug_enabled:
             total_ms = (time.time() - start_time) * 1000
@@ -397,12 +417,20 @@ def _content_from_gemini_response(text: str) -> str:
     if isinstance(data.get("error"), dict):
         error = data["error"]
         raise LLMClientError(str(error.get("message") or error))
+    reason = (data.get("promptFeedback") or {}).get("blockReason")
+    if reason:
+        raise LLMBlockedError(str(reason))
     candidates = data.get("candidates")
     if not isinstance(candidates, list) or not candidates:
         return ""
     candidate = candidates[0]
     if not isinstance(candidate, dict):
         return ""
+    reason = candidate.get("finishReason")
+    if reason in {"SAFETY", "PROHIBITED_CONTENT", "BLOCKLIST", "SPII", "RECITATION"}:
+        raise LLMBlockedError(str(reason))
+    if reason == "MAX_TOKENS":
+        debug_log("Gemini finishReason=MAX_TOKENS; returning available content")
     content = candidate.get("content")
     if not isinstance(content, dict):
         return ""
@@ -411,6 +439,47 @@ def _content_from_gemini_response(text: str) -> str:
         return ""
     texts = [part.get("text", "") for part in parts if isinstance(part, dict) and isinstance(part.get("text"), str)]
     return "".join(texts)
+
+
+def _collect_usage(data: dict[str, Any], usage_out: dict[str, Any], model: str) -> None:
+    """Keep provider counters and normalize absent counters to null, not zero."""
+    gemini = data.get("usageMetadata") or {}
+    usage = data.get("usage") or {}
+    usage_out.update({
+        "model": model,
+        "input_tokens": gemini.get("promptTokenCount", data.get("prompt_eval_count", usage.get("prompt_tokens"))),
+        "output_tokens": gemini.get("candidatesTokenCount", data.get("eval_count", usage.get("completion_tokens"))),
+        "cached_tokens": gemini.get("cachedContentTokenCount", (usage.get("prompt_tokens_details") or {}).get("cached_tokens")),
+    })
+    if gemini:
+        usage_out["usageMetadata"] = gemini
+    for key in ("prompt_eval_count", "eval_count"):
+        if key in data:
+            usage_out[key] = data[key]
+
+
+def _ollama_native_completion(config: dict[str, Any], backend: dict[str, Any], model: str,
+                              messages: list[dict[str, str]], usage_out: Optional[dict[str, Any]]) -> str:
+    base_url = str(backend["base_url"]).rstrip("/")
+    if base_url.endswith("/v1"):
+        base_url = base_url[:-3]
+    schema = (config.get("response_format") or {}).get("json_schema", {}).get("schema", "json")
+    payload = {"model": model, "messages": messages, "stream": False, "format": schema,
+               "options": {"temperature": config.get("temperature", 0.8),
+                           "num_predict": config.get("max_tokens", 900)}}
+    try:
+        response = requests.post(f"{base_url}/api/chat", headers=_request_headers(backend), json=payload,
+                                 timeout=min(config.get("request_timeout_seconds", 15), config.get("gameplay_timeout_seconds", 15)))
+        response.raise_for_status()
+        data = response.json()
+        if data.get("error"):
+            raise LLMClientError(str(data["error"]))
+        if usage_out is not None:
+            _collect_usage(data, usage_out, model)
+            usage_out["transport"] = "ollama_native_format"
+        return str((data.get("message") or {}).get("content") or "")
+    except (requests.RequestException, ValueError) as exc:
+        raise LLMClientError(str(exc)) from exc
 
 
 def _content_from_sse(line: str) -> str:

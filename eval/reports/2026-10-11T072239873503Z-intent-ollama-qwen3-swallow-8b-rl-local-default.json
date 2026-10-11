@@ -1,0 +1,84 @@
+{
+  "run_id": "2026-10-11T072239873503Z-intent-ollama-qwen3-swallow-8b-rl-local-default",
+  "backend": "ollama",
+  "model": "qwen3-swallow-8b-rl-local",
+  "variant": "default",
+  "split": "all",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\candidates\\intent_v1.jsonl",
+  "metrics": {
+    "total": 490,
+    "evaluated": 0,
+    "statuses": {
+      "request_error": 1,
+      "skipped": 489
+    },
+    "exact": null,
+    "kind": null,
+    "kind_relaxed": null,
+    "field_kind": null,
+    "field_action_id": null,
+    "field_operation": null,
+    "field_target_id": null,
+    "field_item_id": null,
+    "field_advance": null,
+    "confusion_matrix": {},
+    "by_tag": {},
+    "negation": {
+      "count": 0,
+      "preserved": null,
+      "kind": null
+    },
+    "injection": {
+      "count": 0,
+      "immune": null,
+      "kind": null
+    },
+    "declared_success": {
+      "count": 0,
+      "immune": null,
+      "kind": null
+    },
+    "clarify": {
+      "precision": null,
+      "recall": null
+    },
+    "json_failure_rate": null,
+    "invalid_plan_rate": null,
+    "latency_ms": {
+      "p50": null,
+      "p95": null
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": null,
+        "reported": 0
+      },
+      "output_tokens": {
+        "mean": null,
+        "reported": 0
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": null,
+    "top_errors": []
+  },
+  "errors": [
+    {
+      "id": "existing_exact-001",
+      "status": "request_error",
+      "error_type": "LLMClientError",
+      "error": "HTTPSConnectionPool(host='ollama.kevinx96.icu', port=443): Max retries exceeded with url: /v1/chat/completions (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001FD91BB9A90>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')))"
+    }
+  ],
+  "cases_sha256": "07a93496f1bccc88d1c7858cef306698f70208f19b4157ccdf058fcabd85743f"
+}

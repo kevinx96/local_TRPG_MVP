@@ -25,6 +25,7 @@ from .combat import (
 )
 from .gm_contract import STATE_MARKER, build_gm_contract_prompt, build_opening_prompt, split_visible_and_json
 from .llm_client import LLMClientError, chat_completion, debug_log
+from . import llm_trace
 from .free_actions import InvalidPlan, adjudicate, build_plan_messages, parse_plan, planner_config
 from .scenario_context import (
     fallback_choices_for_session,
@@ -415,6 +416,7 @@ def api_combat_resolve(session_id: str) -> dict[str, Any]:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
+@llm_trace.game_trace
 def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
     config = load_config()
     debug_enabled = bool(config.get("debug_llm", True))
@@ -437,7 +439,7 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
     completion_source = "llm"
     t0 = time.time()
     try:
-        full_response = chat_completion(config, messages)
+        full_response = llm_trace.completion(chat_completion, session, config, messages, "opening")
     except LLMClientError as exc:
         full_response = _prepared_fallback_response(session, opening=True)
         completion_source = "prepared_fallback" if full_response else "demo_fallback"
@@ -460,6 +462,7 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
     visible_text, payload, warning = split_visible_and_json(full_response)
     visible_text = _visible_text_from_payload(visible_text, payload)
     if not visible_text.strip():
+        llm_trace.annotate(fallback=True)
         if debug_enabled:
             debug_log(
                 "Opening model returned no player-visible text; using local fallback. "
@@ -482,6 +485,7 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
     return public_session(session)
 
 
+@llm_trace.game_trace
 def _run_turn(session: dict[str, Any], request: TurnRequest, *, allow_narration: bool = True) -> dict[str, Any]:
     if session.get("game_over"):
         raise HTTPException(status_code=409, detail="物語はすでに終了しています。")
@@ -615,7 +619,7 @@ def _run_turn(session: dict[str, Any], request: TurnRequest, *, allow_narration:
     t0 = time.time()
     completion_source = "llm"
     try:
-        full_response = chat_completion(config, messages)
+        full_response = llm_trace.completion(chat_completion, session, config, messages, "narration")
     except LLMClientError as exc:
         full_response = _prepared_fallback_response(session, request.text.strip())
         completion_source = "prepared_fallback" if full_response else "demo_fallback"
@@ -661,6 +665,7 @@ def _run_turn(session: dict[str, Any], request: TurnRequest, *, allow_narration:
     return public_session(session)
 
 
+@llm_trace.game_trace
 def _run_free_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
     started = time.monotonic()
     config = planner_config(load_config())
@@ -669,7 +674,8 @@ def _run_free_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, A
     session["next_dice_type"], session["next_dice_dc"] = "1d20", 0
     session["last_intent_resolution"] = {"status": "unmatched", "method": "api", "player_text": request.text[:240]}
     try:
-        plan = parse_plan(chat_completion(config, build_plan_messages(session, request.text.strip())))
+        plan = parse_plan(llm_trace.completion(chat_completion, session, config, build_plan_messages(session, request.text.strip()), "plan"))
+        llm_trace.annotate(parse_status="ok", plan=plan)
         if plan["kind"] == "existing":
             resolution = resolve_player_intent(session, action_id=plan["action_id"])
             if resolution.get("status") != "resolved":
@@ -678,10 +684,12 @@ def _run_free_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, A
         else:
             add_player_message(session, request.text.strip(), request.speaker)
             result = adjudicate(session, plan)
+            llm_trace.annotate(outcome=result.get("outcome"))
             add_assistant_message(session, result["text"])
             session["last_turn_narrated"] = True
             session["choices"] = fallback_choices_for_session(session)
     except (LLMClientError, InvalidPlan) as exc:
+        llm_trace.annotate(parse_status="invalid_plan" if isinstance(exc, InvalidPlan) else "request_error", fallback=True, outcome="rejected")
         # Do not replay the command, retry another model, or expose unvalidated prose.
         add_player_message(session, request.text.strip(), request.speaker)
         add_assistant_message(session, "行動を読み取れませんでした。状況は変わっていません。言い換えるか、現在の選択肢から選んでください。")
@@ -744,6 +752,7 @@ def _should_skip_turn_narration(
     return not has_hybrid_prepared_turn(session, player_text)
 
 
+@llm_trace.game_trace
 def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
     result = combat_result_for_llm(session)
     if result.get("outcome") == "victory":
@@ -816,7 +825,8 @@ def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
     completion_source = "llm"
     t0 = time.time()
     try:
-        full_response = chat_completion(config, messages)
+        full_response = llm_trace.completion(chat_completion, session, config, messages, "narration")
+        llm_trace.annotate(outcome=result.get("outcome"))
     except LLMClientError as exc:
         completion_source = "demo_fallback"
         if not config.get("demo_fallback_on_error", True):
@@ -824,6 +834,7 @@ def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
                 status_code=502,
                 detail=f"LLM接続エラー: {_redact_secrets(str(exc))}",
             ) from exc
+        llm_trace.annotate(outcome=result.get("outcome"), fallback=True)
         full_response = _demo_combat_resolution(session, result, _redact_secrets(str(exc)))
     if debug_enabled and full_response:
         completion_path = _save_completion_debug(session, "combat_result", full_response, completion_source)
@@ -831,6 +842,7 @@ def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
     visible_text, payload, warning = split_visible_and_json(full_response)
     visible_text = _visible_text_from_payload(visible_text, payload)
     if not visible_text.strip():
+        llm_trace.annotate(outcome=result.get("outcome"), fallback=True)
         full_response = _demo_combat_resolution(session, result, "combat result had no player-visible text")
         visible_text, payload, warning = split_visible_and_json(full_response)
         visible_text = _visible_text_from_payload(visible_text, payload)

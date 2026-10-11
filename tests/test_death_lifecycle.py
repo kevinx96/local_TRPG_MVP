@@ -1,5 +1,6 @@
 import json
-import tempfile
+import shutil
+import uuid
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -11,9 +12,10 @@ from host import app, combat, state
 
 class DeathLifecycleTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory()
-        self.addCleanup(self.temp.cleanup)
-        self.saves = patch.object(state, "SAVE_DIR", Path(self.temp.name))
+        self.temp = Path.cwd() / ".tmp-test" / f"death-{uuid.uuid4().hex}"
+        self.temp.mkdir(parents=True)
+        self.addCleanup(shutil.rmtree, self.temp, ignore_errors=True)
+        self.saves = patch.object(state, "SAVE_DIR", self.temp)
         self.saves.start()
         self.addCleanup(self.saves.stop)
 

@@ -1,0 +1,12 @@
+{
+  "id": "goblin_dialogue_hero",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "lost_goblin_crossroads",
+  "flags": {},
+  "hp_delta": 0,
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}

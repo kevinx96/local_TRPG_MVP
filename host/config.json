@@ -45,5 +45,6 @@
     "action_history_item_chars": 80
   },
   "debug_llm": true,
+  "trace_llm": true,
   "demo_fallback_on_error": true
 }

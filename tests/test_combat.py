@@ -1,4 +1,5 @@
 import json
+import shutil
 import random
 import unittest
 import uuid
@@ -22,6 +23,7 @@ class CombatEngineTests(unittest.TestCase):
 
     def tearDown(self):
         state.SAVE_DIR = self.original_save_dir
+        shutil.rmtree(self.root, ignore_errors=True)
 
     def write_pack(self, enemy=None, character=None, combat_rules=None) -> Path:
         enemy = enemy or {
