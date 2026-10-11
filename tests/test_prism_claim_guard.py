@@ -74,7 +74,7 @@ class PrismWeaknessTests(unittest.TestCase):
 
 
 class ClaimGuardTests(unittest.TestCase):
-    def test_exact_suffix_disabled_evidence_action_and_default_isolation(self):
+    def test_exact_suffix_hidden_evidence_action_and_default_isolation(self):
         session = load_snapshot("v2_scenario_report_no_evidence")
         config = evaluation_config({"backends": {"gemini": {"api_key": "fake"}}}, "gemini", "fixture", rpm=0)
         original = deepcopy(session)
@@ -88,6 +88,4 @@ class ClaimGuardTests(unittest.TestCase):
         self.assertEqual(guarded_config, default_config)
         self.assertEqual(VARIANTS["default"].prepare(session, text, config)[0], default)
         self.assertEqual(session, original)
-        action = next(a for a in json.loads(default[1]["content"])["actions"] if a["id"] == "report_with_evidence")
-        self.assertFalse(action["enabled"])
-        self.assertTrue(action["reason"])
+        self.assertNotIn("report_with_evidence", default[1]["content"])

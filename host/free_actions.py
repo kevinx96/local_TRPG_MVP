@@ -146,7 +146,8 @@ def location_changes(session: dict[str, Any]) -> dict[str, Any]:
 
 def build_plan_messages(session: dict[str, Any], player_text: str) -> list[dict[str, str]]:
     location = _location(session)
-    actions, _groups = state._intent_action_surfaces(session, current_actions_for_session(session))
+    actions, _groups = state._intent_action_surfaces(
+        session, current_actions_for_session(session), hide_unavailable_secrets=True)
     action_surface = []
     for action in actions:
         enabled, reason = state.action_requirement_status(action, session)

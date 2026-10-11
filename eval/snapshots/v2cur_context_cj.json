@@ -1,0 +1,17 @@
+{
+  "id": "v2cur_context_cj",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "goblin_fort_second_choice",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": [
+    {
+      "speaker": "GM",
+      "text": "右の通路を探索しますか？"
+    }
+  ]
+}

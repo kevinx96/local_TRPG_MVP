@@ -1,0 +1,17 @@
+{
+  "id": "v2cur_context_cp",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "mage",
+  "location_id": "elf_spring",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": [
+    {
+      "speaker": "GM",
+      "text": "精霊の泉で休みますか？"
+    }
+  ]
+}

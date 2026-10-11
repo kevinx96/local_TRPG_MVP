@@ -1,6 +1,6 @@
 {
   "id": "v2_dark_forest_loc_hero",
-  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "scenario": "eval/benchmark/scenario_frozen/dragon_rpg@4386cd3.json",
   "gm_mode": "full",
   "character_id": "hero",
   "location_id": "dark_forest_loc",

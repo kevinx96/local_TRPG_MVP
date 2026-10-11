@@ -2422,6 +2422,7 @@
             },
             {
               "id": "ask_robin_stolen_scale",
+              "secret": true,
               "text": "将軍の部屋から盗んだ物を見せてもらう",
               "preview": "将軍の部屋から盗んだ物を見せてもらう",
               "risk": "判定不要",
@@ -2878,6 +2879,7 @@
               }
             ],
             "id": "purify_ignis_holy_water",
+            "secret": true,
             "name": "凍てついた古傷に聖水を注ぐ",
             "requirements": {
               "any": [
@@ -2912,6 +2914,7 @@
               }
             ],
             "id": "purify_ignis_prayer",
+            "secret": true,
             "name": "凍てついた古傷を聖なる光で清める",
             "requirements": {
               "all": [
@@ -4653,6 +4656,7 @@
         },
         {
           "id": "buy_white_scale",
+          "secret": true,
           "text": "白い鱗を買う",
           "preview": "白い鱗を買う",
           "risk": "判定不要",
@@ -8254,6 +8258,7 @@
       "actions": [
         {
           "id": "report_with_evidence",
+          "secret": true,
           "text": "将軍ドラコの正体を問いただす",
           "preview": "集めた証拠を国王の前に示す",
           "risk": "判定不要",
@@ -8481,6 +8486,7 @@
         },
         {
           "id": "ask_ignis_aid",
+          "secret": true,
           "text": "共に戦ってほしいと頼む",
           "preview": "共に戦ってほしいと頼む",
           "risk": "判定不要",

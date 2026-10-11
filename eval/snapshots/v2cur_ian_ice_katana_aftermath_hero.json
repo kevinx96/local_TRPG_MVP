@@ -1,0 +1,12 @@
+{
+  "id": "v2cur_ian_ice_katana_aftermath_hero",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "ian_ice_katana_aftermath",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}

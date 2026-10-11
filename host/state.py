@@ -455,7 +455,8 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
             message["text"] = sanitize_visible_text(original_text)
     if recovered_choices and len(recovered_choices) > len(public.get("choices") or []):
         public["choices"] = recovered_choices
-    if any(action.get("open_shop") for action in current_actions_for_session(session)):
+    if any(action.get("open_shop") or action.get("secret")
+           for action in _iter_actions(current_actions_for_session(session))):
         public["choices"] = fallback_choices_for_session(session)
     public["choices"] = annotate_choices_for_session(public.get("choices"), public)
     public["choices"] = annotate_choices_for_character(public.get("choices"), public.get("character", {}))
@@ -528,6 +529,8 @@ def annotate_choices_for_session(raw_choices: Any, session: dict[str, Any]) -> l
         choice = {"text": str(item), "preview": "", "risk": ""} if isinstance(item, str) else deepcopy(item)
         if not isinstance(choice, dict):
             continue
+        if choice.get("secret") and not action_requirement_status(choice, session)[0]:
+            continue
         visible_flag = str(choice.get("visible_after") or "")
         if visible_flag and not flags.get(visible_flag):
             continue
@@ -544,6 +547,8 @@ def annotate_choices_for_session(raw_choices: Any, session: dict[str, Any]) -> l
             choice["disabled_reason"] = str(choice.get("disabled_reason") or "完了済みです。")
         if "children" in choice and isinstance(choice["children"], list):
             choice["children"] = annotate_choices_for_session(choice["children"], session)
+            if not choice["children"]:
+                continue
         if choice.get("requirements") and not _session_requirement_passes(choice["requirements"], session):
             _, requirement_reason = choice_requirement_status(choice, session.get("character", {}))
             choice["enabled"] = False
@@ -916,6 +921,8 @@ def resolve_player_intent(
 def _intent_action_surfaces(
     session: dict[str, Any],
     raw_actions: list[dict[str, Any]],
+    *,
+    hide_unavailable_secrets: bool = False,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     flags = session.get("flags") if isinstance(session.get("flags"), dict) else {}
     executable: list[dict[str, Any]] = []
@@ -939,6 +946,8 @@ def _intent_action_surfaces(
                 continue
             hidden_character = str(action.get("hidden_for_character") or "")
             if hidden_character and hidden_character == character_id:
+                continue
+            if hide_unavailable_secrets and action.get("secret") and not action_requirement_status(action, session)[0]:
                 continue
             children = action.get("children")
             if isinstance(children, list) and children:
@@ -1039,6 +1048,9 @@ def action_requirement_status(action: dict[str, Any], session: dict[str, Any]) -
     if once_flag and flags.get(once_flag):
         return False, "完了済みです。"
     if action.get("requirements") and not _session_requirement_passes(action["requirements"], session):
+        enabled, reason = choice_requirement_status(action, session.get("character", {}))
+        if not enabled:
+            return False, reason
         return False, "この行動はまだ選択できません。"
     return choice_requirement_status(action, session.get("character", {}))
 

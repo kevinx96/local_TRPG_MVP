@@ -226,7 +226,7 @@ class ScenarioV2Tests(unittest.TestCase):
             action = state.resolve_action(session, action_id="report_with_evidence")
             self.assertFalse(state.action_requirement_status(action, session)[0])
             choices = state.annotate_choices_for_session([action], session)
-            self.assertFalse(choices[0]["enabled"])
+            self.assertEqual(choices, [])
             self.assertFalse(state._session_requirement_passes({"flags_count_gte": {"flags": [flag, flag], "count": 2}}, session))
 
     def test_evidence_does_not_block_normal_report(self):

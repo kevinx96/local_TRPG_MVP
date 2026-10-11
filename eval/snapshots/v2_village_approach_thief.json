@@ -1,6 +1,6 @@
 {
   "id": "v2_village_approach_thief",
-  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "scenario": "eval/benchmark/scenario_frozen/dragon_rpg@4386cd3.json",
   "gm_mode": "full",
   "character_id": "thief",
   "location_id": "village_approach",

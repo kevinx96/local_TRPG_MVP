@@ -1,0 +1,155 @@
+{
+  "reference": "2026-10-11T120217862118Z-intent-gemini-gemini-3.1-flash-lite-guard_rules",
+  "offline_only": true,
+  "runs": {
+    "frozen": {
+      "run_id": "2026-10-11T192820099149Z-intent-gemini-gemini-3.1-flash-lite-guard_rules",
+      "total": 194,
+      "cache_hits": 190,
+      "miss_ids": [
+        "v2-existing_exact-013",
+        "v2-existing_paraphrase-013",
+        "v2-deixis_unique-005",
+        "v2-language_mix-013"
+      ],
+      "metrics": {
+        "evaluated": 190,
+        "statuses": {
+          "ok": 188,
+          "skipped": 4,
+          "invalid_plan": 2
+        },
+        "severity": {
+          "S0": 164,
+          "S1": 12,
+          "S2": 13,
+          "S3": 1,
+          "S4": 0
+        },
+        "s0_s1_rate": 0.9263157894736842
+      }
+    },
+    "current": {
+      "run_id": "2026-10-11T193307632107Z-intent-gemini-gemini-3.1-flash-lite-default",
+      "total": 194,
+      "cache_hits": 143,
+      "miss_ids": [
+        "v2cur-existing_exact-002",
+        "v2cur-existing_exact-005",
+        "v2cur-existing_exact-020",
+        "v2cur-existing_paraphrase-002",
+        "v2cur-existing_paraphrase-005",
+        "v2cur-existing_paraphrase-020",
+        "v2cur-negation-005",
+        "v2cur-negation-006",
+        "v2cur-conditional-005",
+        "v2cur-conditional-008",
+        "v2cur-conditional-010",
+        "v2cur-interact_use_item-005",
+        "v2cur-missing_item-011",
+        "v2cur-missing_item-020",
+        "v2cur-dialogue-002",
+        "v2cur-dialogue-005",
+        "v2cur-dialogue-013",
+        "v2cur-dialogue-015",
+        "v2cur-dialogue-016",
+        "v2cur-chitchat-005",
+        "v2cur-chitchat-020",
+        "v2cur-impossible-007",
+        "v2cur-impossible-008",
+        "v2cur-impossible-020",
+        "v2cur-declared_success-008",
+        "v2cur-injection-006",
+        "v2cur-injection-007",
+        "v2cur-colloquial-003",
+        "v2cur-colloquial-004",
+        "v2cur-colloquial-007",
+        "v2cur-context_followup-004",
+        "v2cur-deixis_unique-016",
+        "v2cur-deixis_unique-017",
+        "v2cur-deixis_multi-002",
+        "v2cur-deixis_multi-010",
+        "v2cur-deixis_multi-011",
+        "v2cur-deixis_multi-017",
+        "v2cur-deixis_multi-018",
+        "v2cur-deixis_multi-019",
+        "v2cur-sequential-005",
+        "v2cur-sequential-009",
+        "v2cur-parallel-008",
+        "v2cur-parallel-009",
+        "v2cur-parallel-020",
+        "v2cur-excluded_means-010",
+        "v2cur-excluded_means-011",
+        "v2cur-excluded_means-020",
+        "v2cur-language_mix-002",
+        "v2cur-language_mix-005",
+        "v2cur-language_mix-020",
+        "v2cur-language_mix-028"
+      ],
+      "metrics": {
+        "evaluated": 143,
+        "statuses": {
+          "ok": 142,
+          "skipped": 51,
+          "invalid_plan": 1
+        },
+        "severity": {
+          "S0": 121,
+          "S1": 9,
+          "S2": 12,
+          "S3": 1,
+          "S4": 0
+        },
+        "s0_s1_rate": 0.9090909090909091
+      }
+    },
+    "supplement": {
+      "run_id": "2026-10-11T193307651016Z-intent-gemini-gemini-3.1-flash-lite-default",
+      "total": 50,
+      "cache_hits": 34,
+      "miss_ids": [
+        "v2-scenario-report_choice-007",
+        "v2-scenario-report_choice-008",
+        "v2-scenario-report_choice-009",
+        "v2-scenario-evidence_claim-001",
+        "v2-scenario-evidence_claim-002",
+        "v2-scenario-evidence_claim-003",
+        "v2-scenario-evidence_claim-004",
+        "v2-scenario-evidence_claim-005",
+        "v2-scenario-evidence_claim-006",
+        "v2-scenario-evidence_claim-007",
+        "v2-scenario-evidence_claim-008",
+        "v2-scenario-scale_handling-008",
+        "v2-scenario-lore_question-005",
+        "v2-scenario-lore_question-006",
+        "v2-scenario-lore_question-007",
+        "v2-scenario-lore_question-008"
+      ],
+      "metrics": {
+        "evaluated": 34,
+        "statuses": {
+          "ok": 30,
+          "invalid_plan": 4,
+          "skipped": 16
+        },
+        "severity": {
+          "S0": 23,
+          "S1": 1,
+          "S2": 9,
+          "S3": 1,
+          "S4": 0
+        },
+        "s0_s1_rate": 0.7058823529411765
+      }
+    }
+  },
+  "controlled_diagnostic": {
+    "diagnostic_only": true,
+    "changed_field": "goblin_fort_first_second.description",
+    "description_source": "f41af9d",
+    "cache_hits": 194,
+    "total": 194,
+    "s0_s1_rate": 0.9278350515463918,
+    "metric_differences": {}
+  }
+}

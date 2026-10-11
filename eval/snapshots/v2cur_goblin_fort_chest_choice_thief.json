@@ -1,0 +1,12 @@
+{
+  "id": "v2cur_goblin_fort_chest_choice_thief",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "thief",
+  "location_id": "goblin_fort_chest_choice",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}

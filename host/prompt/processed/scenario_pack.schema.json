@@ -502,6 +502,7 @@
       "type": "object",
       "required": ["id", "name", "outcome", "effects", "log_text"],
       "properties": {
+        "secret": { "type": "boolean" },
         "id": { "type": "string" },
         "name": { "type": "string" },
         "requirements": { "type": ["object", "array"] },
@@ -640,6 +641,7 @@
             "text": { "type": "string" },
             "id": { "type": "string" },
             "action_id": { "type": "string" },
+            "secret": { "type": "boolean" },
             "preview": { "type": "string" },
             "risk": { "type": "string" },
             "intent_keywords": {
@@ -680,6 +682,7 @@
       "additionalProperties": true,
       "properties": {
         "open_shop": { "type": "string" },
+        "secret": { "type": "boolean" },
         "result_text": { "type": "string" },
         "id": { "type": "string" },
         "text": { "type": "string" },

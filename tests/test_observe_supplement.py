@@ -18,10 +18,10 @@ from scripts.scenario.upgrade_v2 import upgrade
 
 class ObserveSupplementTests(unittest.TestCase):
     def test_observe_audit_accepts_rule_effects_but_detects_unearned_changes(self):
-        for snapshot, target in (("v2_castle_hero", "general"),
-                                 ("v2_castle_hero", "general_breath"),
-                                 ("v2_ice_elemental_encounter_mage", "frost_crystal"),
-                                 ("v2_goblin_fort_third_gate_hero", "iron_gate_window")):
+        for snapshot, target in (("v2cur_castle_hero", "general"),
+                                 ("v2cur_castle_hero", "general_breath"),
+                                 ("v2cur_ice_elemental_encounter_mage", "frost_crystal"),
+                                 ("v2cur_goblin_fort_third_gate_hero", "iron_gate_window")):
             for value in (20, 1):
                 with self.subTest(target=target, roll=value):
                     session = load_snapshot(snapshot)
@@ -63,7 +63,7 @@ class ObserveSupplementTests(unittest.TestCase):
                 self.assertEqual(objects["general_breath"]["npc_id"], "general")
 
     def test_gate_observation_does_not_open_or_move_through_gate(self):
-        session = load_snapshot("v2_goblin_fort_third_gate_hero")
+        session = load_snapshot("v2cur_goblin_fort_third_gate_hero")
         plan = {**gold("interact", operation="observe", target_id="iron_gate_window"), "approach": "", "reply": ""}
         before = deepcopy(session["world_state"])
         with isolated_engine("window"), patch.object(state.random, "randint", return_value=20):
@@ -74,7 +74,7 @@ class ObserveSupplementTests(unittest.TestCase):
         self.assertNotIn("開ける", result["text"])
 
     def test_alias_preserves_rejections_and_is_only_used_for_observe(self):
-        original = load_snapshot("v2_castle_hero")
+        original = load_snapshot("v2cur_castle_hero")
         for updates in ({"item_id": "herb"}, {"advance": True}, {"operation": "prepare"},
                         {"operation": "distract"}, {"operation": "sneak"}):
             session = deepcopy(original)
@@ -114,8 +114,10 @@ class ScenarioCandidateTests(unittest.TestCase):
                 self.assertEqual(session["world_state"]["location_id"], recipe["location_id"])
                 if alias in {"E", "N"}:
                     context = json.loads(free_actions.build_plan_messages(session, "")[1]["content"])
-                    action = next(a for a in context["actions"] if a["id"] == "report_with_evidence")
-                    self.assertEqual(action["enabled"], alias == "E")
+                    actions = {a["id"]: a for a in context["actions"]}
+                    self.assertEqual("report_with_evidence" in actions, alias == "E")
+                    if alias == "E":
+                        self.assertTrue(actions["report_with_evidence"]["enabled"])
                     self.assertEqual(bool(free_actions._owned_item(session, "white_dragon_scale")), alias == "E")
                 elif alias == "C":
                     self.assertEqual(session["flags"], {})

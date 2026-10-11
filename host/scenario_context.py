@@ -504,7 +504,7 @@ def normalize_choices(raw: Any) -> list[dict[str, Any]]:
                 for key in (
                     "id", "action_id", "intent_keywords", "roll", "effects",
                     "success_effects", "failure_effects", "once", "disabled_after", "visible_after", "hidden_after",
-                    "prepared_turn_id", "outcome",
+                    "prepared_turn_id", "outcome", "secret",
                 ):
                     if key in item:
                         choice[key] = deepcopy(item[key])
@@ -693,7 +693,7 @@ def _trim_choices(choices: list[dict[str, str]]) -> list[dict[str, Any]]:
         for key in (
             "id", "action_id", "intent_keywords", "roll", "effects",
             "success_effects", "failure_effects", "requirements",
-            "once", "disabled_after", "visible_after", "hidden_after", "prepared_turn_id", "outcome",
+            "once", "disabled_after", "visible_after", "hidden_after", "prepared_turn_id", "outcome", "secret",
         ):
             if key in choice:
                 item[key] = deepcopy(choice[key])
