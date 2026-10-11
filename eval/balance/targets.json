@@ -1,17 +1,82 @@
 {
-  "_note": "数值目标（设计负责人维护）。win_rate 用 heuristic 策略、对应 checkpoint 的装备。区间为闭区间。class_spread 为同一遭遇下各可选职业胜率的最大差值。",
+  "_note": "数值目标（设计负责人维护）。win_rate 用 heuristic 策略、对应 checkpoint 的装备。区间为闭区间。class_spread 为同一遭遇下各可选职业胜率的最大差值。 2026-10-11 pass2 后修订：单场满资源模拟下剩余 HP 不代表连续消耗，放宽 hp_left；商人战单列。",
   "classes": {
-    "trash":         {"policy": "heuristic", "win_rate": [0.95, 1.0], "hp_left": [0.60, 0.85], "rounds": [2, 4]},
-    "elite":         {"policy": "heuristic", "win_rate": [0.75, 0.90], "hp_left": [0.30, 0.50], "rounds": [4, 7]},
-    "boss":          {"policy": "heuristic", "win_rate": [0.60, 0.75], "hp_left": [0.15, 0.40], "rounds": [7, 12],
-                      "attack_only_win_rate_max": 0.20},
-    "scripted_loss": {"policy": "heuristic", "win_rate": [0.0, 0.05]},
-    "guest":         {"policy": "heuristic", "win_rate": [0.85, 1.0], "rounds": [3, 8]}
+    "trash": {
+      "policy": "heuristic",
+      "win_rate": [
+        0.95,
+        1.0
+      ],
+      "hp_left": [
+        0.6,
+        0.95
+      ],
+      "rounds": [
+        1,
+        4
+      ]
+    },
+    "elite": {
+      "policy": "heuristic",
+      "win_rate": [
+        0.75,
+        0.9
+      ],
+      "hp_left": [
+        0.35,
+        0.7
+      ],
+      "rounds": [
+        4,
+        7
+      ]
+    },
+    "boss": {
+      "policy": "heuristic",
+      "win_rate": [
+        0.6,
+        0.75
+      ],
+      "hp_left": [
+        0.15,
+        0.5
+      ],
+      "rounds": [
+        7,
+        12
+      ],
+      "attack_only_win_rate_max": 0.2
+    },
+    "scripted_loss": {
+      "policy": "heuristic",
+      "win_rate": [
+        0.0,
+        0.05
+      ]
+    },
+    "guest": {
+      "policy": "heuristic",
+      "win_rate": [
+        0.85,
+        1.0
+      ],
+      "rounds": [
+        3,
+        8
+      ]
+    }
   },
   "class_spread_max": 0.15,
   "class_spread_max_multi_enemy": 0.25,
-  "companion_uplift": [0.10, 0.20],
-  "incoming_damage_budget": {"trash": 0.15, "elite": 0.25, "boss": 0.35},
+  "companion_uplift": [
+    0.1,
+    0.2
+  ],
+  "incoming_damage_budget": {
+    "trash": 0.15,
+    "elite": 0.25,
+    "boss": 0.35
+  },
   "encounters": {
     "dark_forest_loc": "trash",
     "lost_goblin_crossroads": "trash",
@@ -34,5 +99,17 @@
     "dragon_valley_loc": "boss",
     "xanxus_battle": "scripted_loss",
     "warlock_rescue_battle": "guest"
+  },
+  "encounter_overrides": {
+    "merchant_battle": {
+      "rounds": [
+        2,
+        5
+      ],
+      "hp_left": [
+        0.5,
+        1.0
+      ]
+    }
   }
 }
