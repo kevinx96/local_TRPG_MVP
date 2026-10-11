@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "trpg-host",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "host.run_server", "--no-browser"],
+      "port": 8000
+    }
+  ]
+}
