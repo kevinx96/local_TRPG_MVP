@@ -85,6 +85,15 @@ def summarize(records: list[dict[str, Any]], prices: Optional[dict[str, Any]] = 
     result: dict[str, Any] = {"total": len(records), "evaluated": len(evaluated),
                               "statuses": dict(Counter(r["status"] for r in records))}
     result["normalizations"] = sum(len((r.get("plan") or {}).get("normalized", [])) for r in evaluated)
+    lenient = [r for r in evaluated if "lenient" in r]
+    result["conflict_count"] = sum(r["lenient"]["conflict"] for r in lenient) if lenient else None
+    result["conflict_rate"] = ratio(result["conflict_count"] or 0, len(lenient))
+    result["lenient"] = {
+        "evaluated": len(lenient),
+        "cleared_fields": dict(Counter(k for r in lenient for k in r["lenient"]["cleared_fields"])),
+        "existing_operation_count": sum(r["lenient"]["existing_operation"] for r in lenient),
+        "existing_operation_recovered": sum(r["lenient"]["existing_operation"] and r["status"] == "ok" for r in lenient),
+    }
     record_levels = {id(r): severity(r) for r in evaluated}
     levels = Counter(record_levels[id(r)] for r in evaluated)
     result["severity"] = {level: levels[level] for level in ("S0", "S1", "S2", "S3", "S4")}
@@ -142,10 +151,14 @@ def summarize(records: list[dict[str, Any]], prices: Optional[dict[str, Any]] = 
     rates = prices or {}
     for record in evaluated:
         u = record.get("usage", {})
-        if all(rates.get(k) is not None for k in ("input_per_million", "output_per_million", "cached_input_per_million")) and all(u.get(k) is not None for k in ("input_tokens", "output_tokens")):
+        if all(rates.get(k) is not None for k in ("input_per_million", "output_per_million")) and all(u.get(k) is not None for k in ("input_tokens", "output_tokens")):
             cached = u.get("cached_tokens") or 0
-            costs.append(((u["input_tokens"] - cached) * rates["input_per_million"] + cached * rates["cached_input_per_million"] + u["output_tokens"] * rates["output_per_million"]) / 1_000_000)
+            if cached and rates.get("cached_input_per_million") is None:
+                continue
+            costs.append(((u["input_tokens"] - cached) * rates["input_per_million"] + cached * (rates.get("cached_input_per_million") or 0) + u["output_tokens"] * rates["output_per_million"]) / 1_000_000)
     result["cost_per_turn"] = mean(costs) if costs else None
+    result["cost_currency"] = "USD"
+    result["cost_reported"] = len(costs)
     result["top_errors"] = []
     for tag, rows in sorted(groups.items(), key=lambda pair: (-sum(not s["exact"] for _, s in pair[1]), pair[0]))[:3]:
         errors = [r for r, s in rows if not s["exact"]]

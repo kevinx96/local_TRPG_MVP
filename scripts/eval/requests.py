@@ -9,6 +9,50 @@ from typing import Any, Callable, Optional
 from urllib.parse import urlsplit
 
 import requests
+from host.llm_client import LLMClientError
+
+
+class QuotaExhausted(LLMClientError):
+    def __init__(self, details: dict[str, Any]):
+        self.details = details
+        super().__init__(f"quota_exhausted: {details}")
+
+
+def quota_exhaustion(response: requests.Response) -> Optional[dict[str, Any]]:
+    if response.status_code != 429:
+        return None
+    quota_ids = []
+    delays = []
+
+    def visit(value: Any) -> None:
+        if isinstance(value, dict):
+            for key, child in value.items():
+                if key == "quotaId" and isinstance(child, str):
+                    quota_ids.append(child)
+                elif key == "retryDelay":
+                    try:
+                        seconds = float(str(child).removesuffix("s"))
+                        if math.isfinite(seconds) and seconds >= 0:
+                            delays.append(seconds)
+                    except (TypeError, ValueError):
+                        pass
+                else:
+                    visit(child)
+        elif isinstance(value, list):
+            for child in value:
+                visit(child)
+
+    try:
+        visit(response.json())
+    except (ValueError, TypeError):
+        pass
+    hint = retry_delay(response, 0)
+    if hint:
+        delays.append(hint)
+    wait = max(delays) if delays else None
+    if any("PerDay" in q for q in quota_ids) or wait is not None and wait > 120:
+        return {"quota_ids": quota_ids, "retry_after_seconds": wait}
+    return None
 
 
 def retry_delay(response: requests.Response, fallback: float) -> float:
@@ -42,11 +86,15 @@ class RequestPolicy:
         self.sleep = sleep
         self.last_request: Optional[float] = None
         self.warmed = False
+        self.quota_exhausted: Optional[dict[str, Any]] = None
+        self.http_errors: list[dict[str, Any]] = []
 
     def __deepcopy__(self, memo: dict) -> RequestPolicy:
         return self
 
     def post(self, *args: Any, **kwargs: Any) -> requests.Response:
+        if self.quota_exhausted is not None:
+            raise QuotaExhausted(self.quota_exhausted)
         for retry in range(6):
             if self.last_request is not None:
                 wait = self.last_request + self.interval - self.clock()
@@ -54,6 +102,13 @@ class RequestPolicy:
                     self.sleep(wait)
             self.last_request = self.clock()
             response = requests.post(*args, **kwargs)
+            if response.status_code >= 400:
+                self.http_errors.append({"status_code": response.status_code, "body": response.text})
+            exhausted = quota_exhaustion(response)
+            if exhausted is not None:
+                self.quota_exhausted = exhausted
+                response.close()
+                raise QuotaExhausted(exhausted)
             if response.status_code not in {429, 503} or retry == 5:
                 return response
             delay = retry_delay(response, 2 ** retry)

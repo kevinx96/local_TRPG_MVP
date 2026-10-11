@@ -15,10 +15,10 @@ from host import app, combat, free_actions, gm_contract, llm_client, state
 from host.llm_trace import prompt_metadata
 from .cache import cache_key, read_cache, write_cache
 from .metrics import summarize
-from .requests import evaluation_config
+from .requests import QuotaExhausted, evaluation_config
 from .audit import allowed_state, costly_plan
 from .snapshots import ROOT, isolated_engine, load_snapshot
-from .variants import VARIANTS
+from .variants import VARIANTS, clean_lenient
 
 
 def protected_state(session: dict[str, Any]) -> dict[str, Any]:
@@ -65,32 +65,44 @@ def evaluate_case(case: dict[str, Any], session: dict[str, Any], config: dict[st
               "structured_output": "openai_json_schema" if backend == "ollama" else "gemini_responseJsonSchema"}
     cached = None if no_cache else read_cache(cache_dir, key)
     if cached is not None:
-        record.update({k: cached[k] for k in ("raw_response", "usage", "latency_ms", "structured_output") if k in cached})
+        record.update({k: cached[k] for k in ("raw_response", "usage", "latency_ms", "structured_output", "http_errors") if k in cached})
         record["cache_hit"] = True
-    elif not live:
-        record["skip_reason"] = "cache_miss" if not no_cache else "cache_disabled"
+    elif not live or VARIANTS[variant].replay_only:
+        record["skip_reason"] = ("default_cache_required" if VARIANTS[variant].replay_only else
+                                 "cache_miss" if not no_cache else "cache_disabled")
         return record
     else:
         usage: dict[str, Any] = {}
         started = time.monotonic()
+        policy = request_config.get("_request_policy")
+        error_start = len(policy.http_errors) if policy is not None else 0
         try:
-            policy = request_config.get("_request_policy")
             if backend == "ollama" and policy is not None and not policy.warmed:
                 llm_client.chat_completion(request_config, messages)
                 policy.warmed = True
                 started = time.monotonic()
             raw = llm_client.chat_completion(request_config, messages, usage_out=usage)
         except llm_client.LLMClientError as exc:
-            record.update(status="blocked" if isinstance(exc, llm_client.LLMBlockedError) else "request_error",
+            record.update(status="quota_exhausted" if isinstance(exc, QuotaExhausted) else
+                          "blocked" if isinstance(exc, llm_client.LLMBlockedError) else "request_error",
                           error_type=type(exc).__name__, error=app._redact_secrets(str(exc)), usage=usage,
                           latency_ms=round((time.monotonic() - started) * 1000, 3))
+            if isinstance(exc, QuotaExhausted):
+                record["quota"] = exc.details
             return record
+        finally:
+            if policy is not None:
+                record["http_errors"] = [{"status_code": e["status_code"],
+                                          "body": app._redact_secrets(str(e["body"]))}
+                                         for e in policy.http_errors[error_start:]]
         record.update(raw_response=raw, usage=usage, latency_ms=round((time.monotonic() - started) * 1000, 3),
                       structured_output=usage.get("transport", record["structured_output"]))
         if not no_cache:
-            write_cache(cache_dir, key, {k: record[k] for k in ("raw_response", "usage", "latency_ms", "structured_output")})
+            write_cache(cache_dir, key, {k: record[k] for k in ("raw_response", "usage", "latency_ms", "structured_output", "http_errors") if k in record})
     cleaned = gm_contract._strip_thinking_text(record["raw_response"]).strip()
     record["thinking_stripped"] = cleaned != record["raw_response"].strip()
+    if variant == "lenient":
+        cleaned, record["lenient"] = clean_lenient(cleaned)
     try:
         plan = free_actions.parse_plan(cleaned, session.get("character", {}).get("character_id", ""))
         record["plan"] = plan
@@ -120,8 +132,11 @@ def report_markdown(report: dict[str, Any]) -> str:
              f"总数 {metrics['total']}；可评测响应 {metrics['evaluated']}；状态 `{json.dumps(metrics['statuses'])}`。", "",
              "| 指标 | 值 |", "|---|---|"]
     for key in ("exact", "kind", "kind_relaxed", "s0_s1_rate", "s3_rate", "engine_caught",
-                "severity", "json_failure_rate", "invalid_plan_rate", "cost_per_turn"):
-        lines.append(f"| {key} | {display(metrics.get(key))} |")
+                "severity", "json_failure_rate", "invalid_plan_rate", "conflict_count", "conflict_rate",
+                "cost_per_turn", "cost_currency", "cost_reported"):
+        value = metrics.get(key)
+        rendered = f"{value:.8f}" if key == "cost_per_turn" and value is not None else display(value)
+        lines.append(f"| {key} | {rendered} |")
     for key, value in metrics["latency_ms"].items():
         lines.append(f"| latency_ms {key} | {display(value)} |")
     for key, value in metrics["tokens"].items():
@@ -129,6 +144,13 @@ def report_markdown(report: dict[str, Any]) -> str:
     for tag in ("negation", "injection", "declared_success"):
         lines.append(f"| {tag} | {json.dumps(metrics[tag])} |")
     lines.append(f"| 归一化次数 | {metrics['normalizations']} |")
+    lines.append(f"| lenient 清理与 existing.operation | {json.dumps(metrics.get('lenient', {}))} |")
+    if report.get("quota_exhausted"):
+        quota = report["quota_exhausted"]
+        wait = quota["retry_after_seconds"]
+        lines += ["", f"quota_exhausted：停在第 {quota['case_index']} 条（`{quota['id']}`）；"
+                  f"需要等待 {str(wait) + ' 秒' if wait is not None else '未知（API 未提供 retryDelay）'}。"
+                  "后续只读取已有缓存，不再发起 live 请求。"]
     lines += ["", "## 标签分组", "", "| 标签 | 数量 | exact | kind | relaxed | 归一化次数 | S3 | engine_caught |", "|---|---:|---:|---:|---:|---:|---:|---:|"]
     for tag, values in metrics["by_tag"].items():
         lines.append(f"| {tag} | {values['count']} | {display(values['exact'])} | {display(values['kind'])} | {display(values['kind_relaxed'])} | {values['normalizations']} | {display(values.get('s3_count'))} | {display(values.get('engine_caught'))} |")
@@ -177,6 +199,7 @@ def main(argv: list[str] = None) -> int:
     sessions: dict[str, Any] = {}
     records = []
     failed = False
+    quota_stop = None
     with (directory / "cases.jsonl").open("w", encoding="utf-8") as output:
         for case in cases:
             if case["snapshot"] not in sessions:
@@ -184,20 +207,24 @@ def main(argv: list[str] = None) -> int:
             record = evaluate_case(case, sessions[case["snapshot"]], config, args.backend, args.model, args.variant,
                                    ROOT / "eval" / "cache", live=args.live and not failed, no_cache=args.no_cache)
             if failed and record["status"] == "skipped":
-                record["skip_reason"] = "backend_unavailable_after_request_error"
-            if record["status"] == "request_error":
+                record["skip_reason"] = "quota_exhausted" if quota_stop else "backend_unavailable_after_request_error"
+            if record["status"] in {"request_error", "quota_exhausted"}:
                 failed = True
+            if record["status"] == "quota_exhausted":
+                quota_stop = {"case_index": len(records) + 1, "id": case["id"], **record["quota"]}
             records.append(record)
             output.write(json.dumps(record, ensure_ascii=False) + "\n")
             output.flush()
-            if len(records) % 25 == 0 or record["status"] == "request_error":
+            if len(records) % 25 == 0 or record["status"] in {"request_error", "quota_exhausted"}:
                 print(f"{len(records)}/{len(cases)} {record['status']}", flush=True)
     prices = json.loads((ROOT / "eval" / "prices.json").read_text(encoding="utf-8"))
     report = {"run_id": run_id, "backend": args.backend, "model": args.model, "variant": args.variant,
               "split": args.split, "live": args.live, "labels": "proposed", "cases": str(args.cases),
               "cases_sha256": hashlib.sha256(case_bytes).hexdigest(),
+              "quota_exhausted": quota_stop,
               "metrics": summarize(records, prices.get("models", {}).get(args.model)),
-              "errors": [{k: r.get(k) for k in ("id", "status", "error_type", "error")} for r in records if r["status"] in {"request_error", "blocked"}]}
+              "errors": [{k: r.get(k) for k in ("id", "status", "error_type", "error", "http_errors", "quota")}
+                         for r in records if r["status"] in {"request_error", "blocked", "quota_exhausted"}]}
     report_dir = ROOT / "eval" / "reports"
     report_dir.mkdir(parents=True, exist_ok=True)
     (report_dir / f"{run_id}.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")

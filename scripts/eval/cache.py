@@ -7,6 +7,8 @@ from typing import Any, Optional
 
 
 def cache_key(backend: str, model: str, variant: str, messages: list, config: dict[str, Any]) -> str:
+    if variant == "lenient":
+        variant = "default"
     value = {"backend": backend, "model": model, "variant": variant, "messages": messages,
              "config": {k: config.get(k) for k in ("temperature", "max_tokens", "response_format")}}
     if "disable_thinking" in config:
