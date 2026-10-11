@@ -30,3 +30,6 @@ host/auto_tagger.py
 host/gemini_api_key.*
 *gemini*api*key*
 *gemini*apikey*
+
+# Third-party source material (kept locally, never committed)
+host/prompt/raw/
