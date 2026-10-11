@@ -7,7 +7,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 PACKS = ROOT / "host/prompt/processed"
 CLUES = ["frost_trace_seen", "heard_human_caused_dragon_return", "heard_ignis_last_words",
-         "noticed_general_frost", "heard_treaty_lore"]
+         "noticed_general_frost", "heard_treaty_lore", "heard_xanxus_betrayal"]
 
 
 def actions(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:

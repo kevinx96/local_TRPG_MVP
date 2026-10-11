@@ -29,11 +29,13 @@ def generate() -> dict[str, Any]:
         sources.append(dict(id=identifier, location=location, step=step, type=kind, reward=reward, witnesses=witnesses, **extra))
 
     town = {r: p + ["return_inn_after_forest", "return_castle_from_inn"] for r, p in paths.items()}
-    frozen = {r: p + ["leave_forest_for_village", "approach_burning_village_carefully:success", "@victory"] for r, p in paths.items()}
+    house = {r: p + ["leave_forest_for_village", "approach_burning_village_carefully:success", "@victory"] for r, p in paths.items()}
+    frozen = {r: p + ["leave_burning_house"] for r, p in house.items()}
     ice = {r: p + ["investigate_frozen_village"] for r, p in frozen.items()}
     after = {r: p + ["@victory", "@victory"] for r, p in ice.items()}
     village = {r: p + ["visit_village"] for r, p in after.items()}
-    last = {r: p + ["accept_ian_request", "@victory"] for r, p in after.items()}
+    valley_steps = ["accept_ian_request", "@victory", "cross_lava_bridge:success", "enter_dragon_nest"]
+    last = {r: p + valley_steps + ["@victory"] for r, p in after.items()}
 
     def tail(paths: dict[str, list[str]], *steps: str) -> dict[str, list[str]]:
         return {r: p + list(steps) for r, p in paths.items()}
@@ -48,7 +50,7 @@ def generate() -> dict[str, Any]:
     craft = ["visit_village", "return_castle_from_village", "go_forge", "forge_ice_charm"]
     add(cold, "ice_battle_craft", "ice_elemental_encounter", "@victory", "battle_craft", {"item": "ice_crystal"}, tail(after, *craft), crafted_item="ice_charm")
     add(cold, "ice_observe_craft", "ice_elemental_encounter", "observe:frost_crystal", "observe_craft", {"item": "ice_crystal"}, tail(ice, "observe:frost_crystal", "bypass_ice_elemental:success", "@victory", *craft), crafted_item="ice_charm")
-    add(cold, "mage_ice", "dragon_valley_loc", "@skill:mage_lv5_a", "class_skill", {}, tail(after, "accept_ian_request", "@skill:mage_lv5_a"), character="mage", skill="mage_lv5_a", element="ice")
+    add(cold, "mage_ice", "dragon_valley_loc", "@skill:mage_lv5_a", "class_skill", {}, tail(after, *valley_steps, "@skill:mage_lv5_a"), character="mage", skill="mage_lv5_a", element="ice")
     holy = key("holy_options", 2)
     add(holy, "supplies", "castle", "check_supplies", "story", {"item": "holy_water"}, tail(paths, "leave_forest_for_village"))
     add(holy, "sarah", "item_shop", "shop:sarah_shop:holy_water", "purchase", {"item": "holy_water"}, tail(town, "go_item_shop", "shop:sarah_shop:holy_water"))
@@ -95,8 +97,20 @@ def generate() -> dict[str, Any]:
         add(sources, flag, location, step, "observe" if step.startswith("observe:") else "dialogue", {"flag": flag}, path)
         if flag == "heard_treaty_lore":
             add(sources, "ian", "inn", "ask_ian_dragon_tale", "dialogue", {"flag": flag}, tail(town, "go_inn", "ask_ian_dragon_tale"))
+            add(sources, "riku", "village", "return_riku", "quest", {"flag": flag}, tail(house, "break_burning_beam:success", "visit_village", "return_riku"))
         if flag == "noticed_general_frost":
             add(sources, "general_high_roll", "castle", "ask_general_advice:high", "dialogue", {"flag": flag}, tail(town, "ask_general_advice:high"))
+    betrayal = key("heard_xanxus_betrayal", 0)
+    phantom_paths = tail(frozen, "skip_frozen_clue_before_xanxus", "bluff_xanxus:failure", "@defeat", "accept_xanxus_fire_seed",
+        "investigate_frozen_village", "@victory", "@victory", "accept_ian_request", "@victory", "cross_lava_bridge:success", "cleanse_fire_seed", "@victory")
+    add(betrayal, "phantom", "xanxus_phantom_battle", "@victory", "battle", {"flag": "heard_xanxus_betrayal"}, phantom_paths)
+    rescue_paths = deepcopy(frozen)
+    for steps in rescue_paths.values():
+        index = steps.index("go_dark_forest:success")
+        steps[index:index] = ["go_magic_shop", "invite_blue_mage", "return_castle_from_magic_shop"]
+    rescue_paths = tail(rescue_paths, "skip_frozen_clue_before_xanxus", "bluff_xanxus:failure", "@defeat", "refuse_xanxus_with_rescue", "@victory",
+        "investigate_frozen_village", "@victory", "@victory", *valley_steps[:-1], "@entry")
+    add(betrayal, "warlock", "warlock_at_nest", "@entry", "companion_hint", {"flag": "heard_xanxus_betrayal"}, rescue_paths)
     knowledge = key("purification_knowledge", 2)
     for entry in list(keys):
         if entry["id"] in {"frost_trace_seen", "noticed_general_frost", "heard_treaty_lore", "white_dragon_scale"}:
@@ -111,7 +125,7 @@ def generate() -> dict[str, Any]:
     means = key("purification_means", 2)
     means.extend(deepcopy([source for source in holy if source["type"] != "class_skill"]))
     add(means, "cleric_prayer", "dragon_valley_loc", "@skill:purify_ignis_prayer", "class_special", {},
-        tail(after, "accept_ian_request", "@skill:purify_ignis_prayer"), character="cleric",
+        tail(after, *valley_steps, "@skill:purify_ignis_prayer"), character="cleric",
         special_action="purify_ignis_prayer")
     pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
     for entry in keys:

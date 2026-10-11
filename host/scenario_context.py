@@ -131,6 +131,8 @@ def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) ->
 
 
 def select_scenario_context(session: dict[str, Any], player_text: str = "") -> dict[str, Any]:
+    from .state import _session_requirement_passes
+
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return {}
@@ -172,6 +174,12 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
             max_matched,
             slim_location=(group == "locations"),
         )
+        records = {record["id"]: record for record in pack.get(group, [])}
+        for public_record in matched[group]:
+            for variant in records.get(public_record["id"], {}).get("description_variants", []):
+                if _session_requirement_passes(variant.get("requirements"), session):
+                    public_record["description"] = variant["text"]
+                    break
     matched["enemies"] = _matched_records(
         pack,
         "enemies",

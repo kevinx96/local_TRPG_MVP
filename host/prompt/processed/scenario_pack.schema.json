@@ -536,6 +536,7 @@
         "name": { "type": "string" },
         "damage": { "type": "string" },
         "healing": { "type": "string" },
+        "max_hp_ratio": { "type": "number", "minimum": 0, "maximum": 1 },
         "resource": { "enum": ["hp", "mp", "sp"] },
         "amount": { "type": ["string", "number"] },
         "accuracy": { "type": "integer", "minimum": 0, "maximum": 100 },

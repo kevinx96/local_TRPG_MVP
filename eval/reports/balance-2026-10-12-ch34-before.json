@@ -1,0 +1,1772 @@
+{
+  "rows": [
+    {
+      "character": "hero",
+      "route": "dragon_valley_loc",
+      "policy": "heuristic",
+      "n": 500,
+      "seed": 20261012,
+      "rest_at_inn": false,
+      "completion_rate": 0.834,
+      "failure_counts": {
+        "dragon_valley_loc": 78,
+        "forest_wolves": 3,
+        "ice_elemental_encounter": 2
+      },
+      "ending_counts": {},
+      "boss_arrivals": 495,
+      "boss_resources_mean": {
+        "hp": 40,
+        "mp": 12,
+        "sp": 18,
+        "level": 5,
+        "inventory": {
+          "携帯食": 2,
+          "氷の結晶": 1,
+          "氷鉄の大剣": 2,
+          "治療の巻物": 3.608080808080808,
+          "白い竜鱗": 1,
+          "薬草": 3,
+          "革の鎧": 1
+        }
+      },
+      "battle_reached": {
+        "dark_forest_loc": 500,
+        "lost_goblin_crossroads": 500,
+        "forest_wolves": 500,
+        "village_fire_slime": 497,
+        "ice_elemental_encounter": 497,
+        "frost_wolf_battle": 495,
+        "dragon_valley_loc": 495
+      },
+      "consumables_per_reached_battle": {
+        "dark_forest_loc": {},
+        "lost_goblin_crossroads": {},
+        "forest_wolves": {
+          "治療の巻物": 0.034
+        },
+        "village_fire_slime": {},
+        "ice_elemental_encounter": {
+          "治療の巻物": 0.13883299798792756
+        },
+        "frost_wolf_battle": {
+          "聖水": 2.0,
+          "治療の巻物": 0.21818181818181817
+        },
+        "dragon_valley_loc": {
+          "治療の巻物": 1.3737373737373737,
+          "薬草": 0.046464646464646465
+        }
+      },
+      "sample_trial": {
+        "completed": true,
+        "failed_at": null,
+        "boss_arrival": {
+          "hp": 40,
+          "mp": 12,
+          "sp": 18,
+          "level": 5,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 3,
+            "携帯食": 2,
+            "氷鉄の大剣": 2,
+            "治療の巻物": 4,
+            "氷の結晶": 1,
+            "白い竜鱗": 1
+          }
+        },
+        "battles": [
+          {
+            "encounter": "dark_forest_loc",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 20,
+              "mp": 8,
+              "sp": 10,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_combat": {
+              "hp": 17,
+              "mp": 8,
+              "sp": 2,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 17,
+              "mp": 8,
+              "sp": 2,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 1
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "lost_goblin_crossroads",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 17,
+              "mp": 8,
+              "sp": 2,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 1
+              }
+            },
+            "after_combat": {
+              "hp": 11,
+              "mp": 8,
+              "sp": 1,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 11,
+              "mp": 8,
+              "sp": 1,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "forest_wolves",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 11,
+              "mp": 8,
+              "sp": 1,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 11,
+              "mp": 8,
+              "sp": 0,
+              "level": 1,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 25,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "village_fire_slime",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 35,
+              "mp": 11,
+              "sp": 16,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 30,
+              "mp": 11,
+              "sp": 16,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 30,
+              "mp": 11,
+              "sp": 16,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "ice_elemental_encounter",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 30,
+              "mp": 11,
+              "sp": 16,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4
+              }
+            },
+            "after_combat": {
+              "hp": 28,
+              "mp": 11,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4
+              }
+            },
+            "after_resolution": {
+              "hp": 28,
+              "mp": 11,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "frost_wolf_battle",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 28,
+              "mp": 11,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "after_combat": {
+              "hp": 25,
+              "mp": 11,
+              "sp": 12,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 25,
+              "mp": 11,
+              "sp": 12,
+              "level": 4,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 1
+              }
+            },
+            "consumables": {
+              "聖水": 2
+            }
+          },
+          {
+            "encounter": "dragon_valley_loc",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 40,
+              "mp": 12,
+              "sp": 18,
+              "level": 5,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "氷鉄の大剣": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 1
+              }
+            },
+            "after_combat": {
+              "hp": 36,
+              "mp": 12,
+              "sp": 18,
+              "level": 5,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "氷鉄の大剣": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 36,
+              "mp": 12,
+              "sp": 18,
+              "level": 5,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "氷鉄の大剣": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "紅竜の炎核": 1
+              }
+            },
+            "consumables": {
+              "治療の巻物": 1
+            }
+          }
+        ],
+        "paid_rests": 0,
+        "ending": null
+      }
+    },
+    {
+      "character": "cleric",
+      "route": "dragon_valley_loc",
+      "policy": "heuristic",
+      "n": 500,
+      "seed": 20261012,
+      "rest_at_inn": false,
+      "completion_rate": 0.624,
+      "failure_counts": {
+        "dragon_valley_loc": 137,
+        "forest_wolves": 45,
+        "ice_elemental_encounter": 6
+      },
+      "ending_counts": {},
+      "boss_arrivals": 449,
+      "boss_resources_mean": {
+        "hp": 38,
+        "mp": 22,
+        "sp": 12,
+        "level": 5,
+        "inventory": {
+          "ローブ": 1,
+          "携帯食": 2,
+          "氷の結晶": 1,
+          "氷鉄の大剣": 1,
+          "治療の巻物": 3.318485523385301,
+          "白い竜鱗": 1,
+          "聖なる杖": 1,
+          "薬草": 3.955456570155902
+        }
+      },
+      "battle_reached": {
+        "dark_forest_loc": 500,
+        "lost_goblin_crossroads": 500,
+        "forest_wolves": 500,
+        "village_fire_slime": 455,
+        "ice_elemental_encounter": 455,
+        "frost_wolf_battle": 449,
+        "dragon_valley_loc": 449
+      },
+      "consumables_per_reached_battle": {
+        "dark_forest_loc": {
+          "薬草": 0.044
+        },
+        "lost_goblin_crossroads": {
+          "治療の巻物": 0.006
+        },
+        "forest_wolves": {
+          "治療の巻物": 0.212,
+          "薬草": 0.002
+        },
+        "village_fire_slime": {},
+        "ice_elemental_encounter": {
+          "治療の巻物": 0.25274725274725274
+        },
+        "frost_wolf_battle": {
+          "聖水": 2.0,
+          "治療の巻物": 0.19599109131403117
+        },
+        "dragon_valley_loc": {
+          "治療の巻物": 1.5189309576837418,
+          "薬草": 0.04899777282850779
+        }
+      },
+      "sample_trial": {
+        "completed": false,
+        "failed_at": "dragon_valley_loc",
+        "boss_arrival": {
+          "hp": 38,
+          "mp": 22,
+          "sp": 12,
+          "level": 5,
+          "inventory": {
+            "聖なる杖": 1,
+            "ローブ": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "治療の巻物": 4,
+            "氷の結晶": 1,
+            "白い竜鱗": 1,
+            "氷鉄の大剣": 1
+          }
+        },
+        "battles": [
+          {
+            "encounter": "dark_forest_loc",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 18,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 2,
+                "携帯食": 2,
+                "聖水": 2
+              }
+            },
+            "after_combat": {
+              "hp": 17,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 2,
+                "携帯食": 2,
+                "聖水": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 17,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "lost_goblin_crossroads",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 17,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_combat": {
+              "hp": 17,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 17,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "forest_wolves",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 17,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 7,
+              "mp": 14,
+              "sp": 8,
+              "level": 1,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 23,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "village_fire_slime",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 33,
+              "mp": 20,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 33,
+              "mp": 11,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 33,
+              "mp": 11,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "ice_elemental_encounter",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 33,
+              "mp": 11,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "after_combat": {
+              "hp": 24,
+              "mp": 2,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "after_resolution": {
+              "hp": 24,
+              "mp": 2,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "frost_wolf_battle",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 24,
+              "mp": 2,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "after_combat": {
+              "hp": 14,
+              "mp": 2,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 14,
+              "mp": 2,
+              "sp": 11,
+              "level": 4,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 1
+              }
+            },
+            "consumables": {
+              "聖水": 2
+            }
+          },
+          {
+            "encounter": "dragon_valley_loc",
+            "status": "defeat",
+            "continue": false,
+            "before": {
+              "hp": 38,
+              "mp": 22,
+              "sp": 12,
+              "level": 5,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_combat": {
+              "hp": 0,
+              "mp": 22,
+              "sp": 12,
+              "level": 5,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 0,
+              "mp": 22,
+              "sp": 12,
+              "level": 5,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "consumables": {
+              "治療の巻物": 1
+            }
+          }
+        ],
+        "paid_rests": 0
+      }
+    },
+    {
+      "character": "mage",
+      "route": "dragon_valley_loc",
+      "policy": "heuristic",
+      "n": 500,
+      "seed": 20261012,
+      "rest_at_inn": false,
+      "completion_rate": 0.626,
+      "failure_counts": {
+        "dragon_valley_loc": 117,
+        "frost_wolf_battle": 13,
+        "forest_wolves": 44,
+        "ice_elemental_encounter": 13
+      },
+      "ending_counts": {},
+      "boss_arrivals": 430,
+      "boss_resources_mean": {
+        "hp": 24,
+        "mp": 32,
+        "sp": 10,
+        "level": 5,
+        "inventory": {
+          "携帯食": 2,
+          "氷の結晶": 1,
+          "氷鉄の大剣": 1,
+          "治療の巻物": 3.6627906976744184,
+          "白い竜鱗": 1,
+          "薬草": 2.8813953488372093,
+          "魔導書": 1,
+          "魔法のローブ": 1
+        }
+      },
+      "battle_reached": {
+        "dark_forest_loc": 500,
+        "lost_goblin_crossroads": 500,
+        "forest_wolves": 500,
+        "village_fire_slime": 456,
+        "ice_elemental_encounter": 456,
+        "frost_wolf_battle": 443,
+        "dragon_valley_loc": 430
+      },
+      "consumables_per_reached_battle": {
+        "dark_forest_loc": {
+          "薬草": 0.034
+        },
+        "lost_goblin_crossroads": {
+          "薬草": 0.004
+        },
+        "forest_wolves": {
+          "薬草": 0.084,
+          "治療の巻物": 0.008
+        },
+        "village_fire_slime": {},
+        "ice_elemental_encounter": {
+          "治療の巻物": 0.20175438596491227
+        },
+        "frost_wolf_battle": {
+          "聖水": 1.9706546275395034,
+          "治療の巻物": 0.12415349887133183
+        },
+        "dragon_valley_loc": {
+          "治療の巻物": 0.8116279069767441,
+          "薬草": 0.013953488372093023
+        }
+      },
+      "sample_trial": {
+        "completed": true,
+        "failed_at": null,
+        "boss_arrival": {
+          "hp": 24,
+          "mp": 32,
+          "sp": 10,
+          "level": 5,
+          "inventory": {
+            "魔導書": 1,
+            "魔法のローブ": 1,
+            "薬草": 3,
+            "携帯食": 2,
+            "治療の巻物": 4,
+            "氷の結晶": 1,
+            "白い竜鱗": 1,
+            "氷鉄の大剣": 1
+          }
+        },
+        "battles": [
+          {
+            "encounter": "dark_forest_loc",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 12,
+              "mp": 20,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 1,
+                "携帯食": 2,
+                "聖水": 2
+              }
+            },
+            "after_combat": {
+              "hp": 12,
+              "mp": 16,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 1,
+                "携帯食": 2,
+                "聖水": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 12,
+              "mp": 16,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "lost_goblin_crossroads",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 12,
+              "mp": 16,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_combat": {
+              "hp": 10,
+              "mp": 12,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 10,
+              "mp": 12,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "forest_wolves",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 10,
+              "mp": 12,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 12,
+              "mp": 8,
+              "sp": 6,
+              "level": 1,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 15,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "village_fire_slime",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 21,
+              "mp": 29,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 17,
+              "mp": 25,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 17,
+              "mp": 25,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "ice_elemental_encounter",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 17,
+              "mp": 25,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "after_combat": {
+              "hp": 16,
+              "mp": 10,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "after_resolution": {
+              "hp": 16,
+              "mp": 10,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "frost_wolf_battle",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 16,
+              "mp": 10,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "after_combat": {
+              "hp": 16,
+              "mp": 10,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 16,
+              "mp": 10,
+              "sp": 9,
+              "level": 4,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 1
+              }
+            },
+            "consumables": {
+              "聖水": 2
+            }
+          },
+          {
+            "encounter": "dragon_valley_loc",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 24,
+              "mp": 32,
+              "sp": 10,
+              "level": 5,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_combat": {
+              "hp": 10,
+              "mp": 12,
+              "sp": 10,
+              "level": 5,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 10,
+              "mp": 12,
+              "sp": 10,
+              "level": 5,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 3,
+                "携帯食": 2,
+                "治療の巻物": 4,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1,
+                "紅竜の炎核": 1
+              }
+            },
+            "consumables": {}
+          }
+        ],
+        "paid_rests": 0,
+        "ending": null
+      }
+    },
+    {
+      "character": "thief",
+      "route": "dragon_valley_loc",
+      "policy": "heuristic",
+      "n": 500,
+      "seed": 20261012,
+      "rest_at_inn": false,
+      "completion_rate": 0.444,
+      "failure_counts": {
+        "forest_wolves": 48,
+        "dragon_valley_loc": 184,
+        "ice_elemental_encounter": 42,
+        "frost_wolf_battle": 2,
+        "dark_forest_loc": 2
+      },
+      "ending_counts": {},
+      "boss_arrivals": 406,
+      "boss_resources_mean": {
+        "hp": 30,
+        "mp": 10,
+        "sp": 22,
+        "level": 5,
+        "inventory": {
+          "ダガー": 1,
+          "携帯食": 2,
+          "氷の結晶": 1,
+          "氷鉄の大剣": 1,
+          "治療の巻物": 3.086206896551724,
+          "白い竜鱗": 1,
+          "盗賊道具": 1,
+          "薬草": 1.9088669950738917,
+          "革の鎧": 1
+        }
+      },
+      "battle_reached": {
+        "dark_forest_loc": 500,
+        "lost_goblin_crossroads": 498,
+        "forest_wolves": 498,
+        "village_fire_slime": 450,
+        "ice_elemental_encounter": 450,
+        "frost_wolf_battle": 408,
+        "dragon_valley_loc": 406
+      },
+      "consumables_per_reached_battle": {
+        "dark_forest_loc": {},
+        "lost_goblin_crossroads": {
+          "薬草": 0.008032128514056224,
+          "治療の巻物": 0.010040160642570281
+        },
+        "forest_wolves": {
+          "薬草": 0.06827309236947791,
+          "治療の巻物": 0.0963855421686747
+        },
+        "village_fire_slime": {},
+        "ice_elemental_encounter": {
+          "治療の巻物": 0.5511111111111111
+        },
+        "frost_wolf_battle": {
+          "聖水": 1.9950980392156863,
+          "治療の巻物": 0.22058823529411764,
+          "薬草": 0.004901960784313725
+        },
+        "dragon_valley_loc": {
+          "治療の巻物": 0.9088669950738916,
+          "薬草": 0.034482758620689655
+        }
+      },
+      "sample_trial": {
+        "completed": true,
+        "failed_at": null,
+        "boss_arrival": {
+          "hp": 30,
+          "mp": 10,
+          "sp": 22,
+          "level": 5,
+          "inventory": {
+            "ダガー": 1,
+            "革の鎧": 1,
+            "盗賊道具": 1,
+            "携帯食": 2,
+            "薬草": 1,
+            "治療の巻物": 3,
+            "氷の結晶": 1,
+            "白い竜鱗": 1,
+            "氷鉄の大剣": 1
+          }
+        },
+        "battles": [
+          {
+            "encounter": "dark_forest_loc",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 14,
+              "mp": 6,
+              "sp": 14,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2
+              }
+            },
+            "after_combat": {
+              "hp": 11,
+              "mp": 6,
+              "sp": 7,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 11,
+              "mp": 6,
+              "sp": 7,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 1
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "lost_goblin_crossroads",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 11,
+              "mp": 6,
+              "sp": 7,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_combat": {
+              "hp": 11,
+              "mp": 6,
+              "sp": 3,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 11,
+              "mp": 6,
+              "sp": 3,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "forest_wolves",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 11,
+              "mp": 6,
+              "sp": 3,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 14,
+              "mp": 6,
+              "sp": 2,
+              "level": 1,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 18,
+              "mp": 7,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 1,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {
+              "薬草": 1
+            }
+          },
+          {
+            "encounter": "village_fire_slime",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 26,
+              "mp": 9,
+              "sp": 20,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 19,
+              "mp": 9,
+              "sp": 4,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 19,
+              "mp": 9,
+              "sp": 4,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 1,
+                "治療の巻物": 4
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "ice_elemental_encounter",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 19,
+              "mp": 9,
+              "sp": 4,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 1,
+                "治療の巻物": 4
+              }
+            },
+            "after_combat": {
+              "hp": 14,
+              "mp": 9,
+              "sp": 3,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 1,
+                "治療の巻物": 3
+              }
+            },
+            "after_resolution": {
+              "hp": 14,
+              "mp": 9,
+              "sp": 3,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 1,
+                "治療の巻物": 3,
+                "氷の結晶": 1
+              }
+            },
+            "consumables": {
+              "治療の巻物": 1
+            }
+          },
+          {
+            "encounter": "frost_wolf_battle",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 14,
+              "mp": 9,
+              "sp": 3,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "聖水": 2,
+                "薬草": 1,
+                "治療の巻物": 3,
+                "氷の結晶": 1
+              }
+            },
+            "after_combat": {
+              "hp": 13,
+              "mp": 9,
+              "sp": 2,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 1,
+                "治療の巻物": 3,
+                "氷の結晶": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 13,
+              "mp": 9,
+              "sp": 2,
+              "level": 4,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 1,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 1
+              }
+            },
+            "consumables": {
+              "聖水": 2
+            }
+          },
+          {
+            "encounter": "dragon_valley_loc",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 30,
+              "mp": 10,
+              "sp": 22,
+              "level": 5,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 1,
+                "治療の巻物": 3,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_combat": {
+              "hp": 25,
+              "mp": 10,
+              "sp": 0,
+              "level": 5,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 1,
+                "治療の巻物": 2,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 25,
+              "mp": 10,
+              "sp": 0,
+              "level": 5,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 1,
+                "治療の巻物": 2,
+                "氷の結晶": 1,
+                "白い竜鱗": 1,
+                "氷鉄の大剣": 1,
+                "紅竜の炎核": 1
+              }
+            },
+            "consumables": {
+              "治療の巻物": 1
+            }
+          }
+        ],
+        "paid_rests": 0,
+        "ending": null
+      }
+    }
+  ],
+  "fingerprints": {
+    "host/prompt/processed/dragon_rpg.json": "51bfe83945a49593dae47bd99f3dac1ab1f671f0e41b4d4bd82e02fa5b1f4af0",
+    "eval/balance/checkpoints.json": "6afccc21ce715c141fbef1aa1a54948e69c8f13807c7df68eec2ba614a16b340",
+    "scripts/balance/route.py": "92ac08e3441b5736ff631274f5f321b02950e0d35f3f4b7ee80859fa47ad5813",
+    "D:\\TRPG_Game\\eval\\balance\\targets.json": "41aec4bc2c4d565d1cb822f569e66af399e71f5320cb685d1d4d7dfd9e0e87d2"
+  }
+}

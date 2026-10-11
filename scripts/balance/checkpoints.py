@@ -37,10 +37,13 @@ def proposed_routes() -> dict[str, list[str]]:
     fourth = guards + ["@victory"]
     village = wolves + ["@victory", "leave_forest_for_village"]
     fireslime = village + ["approach_burning_village_carefully:success"]
-    frozen = fireslime + ["@victory"]
+    frozen = fireslime + ["@victory", "leave_burning_house"]
     xanxus = frozen + ["skip_frozen_clue_before_xanxus", "bluff_xanxus:failure"]
     ice = frozen + ["investigate_frozen_village"]
     frost = ice + ["@victory"]
+    valley = frost + ["@victory", "accept_ian_request"]
+    gate = valley + ["@victory", "cross_lava_bridge:success"]
+    ignis = gate + ["enter_dragon_nest"]
     cave = wolves + ["@victory", "exit_back", "wolves_back", "inspect_spring_wall", "decode_seal:success"]
     fork = cave + ["@victory"]
     crystal = fork + ["cave_left", "@victory", "open_lava_chest", "lava_back", "cave_right", "hot_spring_forward"]
@@ -60,8 +63,11 @@ def proposed_routes() -> dict[str, list[str]]:
         "xanxus_battle": xanxus,
         "warlock_rescue_battle": xanxus + ["@defeat", "refuse_xanxus_with_rescue"],
         "ice_elemental_encounter": ice, "frost_wolf_battle": frost,
-        "dragon_valley_loc": frost + ["@victory", "accept_ian_request"],
-        "draco_battle": frost + ["@victory", "accept_ian_request", "@victory", "examine_ignis_wound",
+        "valley_entrance": valley,
+        "valley_ledge": valley + ["@victory", "take_ledge_path"],
+        "xanxus_phantom_battle": frozen + ["skip_frozen_clue_before_xanxus", "bluff_xanxus:failure", "@defeat", "accept_xanxus_fire_seed", "investigate_frozen_village", "@victory", "@victory", "accept_ian_request", "@victory", "cross_lava_bridge:success", "cleanse_fire_seed"],
+        "dragon_valley_loc": ignis,
+        "draco_battle": ignis + ["@victory", "examine_ignis_wound",
                                  "return_to_castle_report", "report_with_evidence"],
         "merchant_battle": ["go_inn", "ask_robin_rumor", "return_castle_from_inn", "go_alley",
                             "wait_for_night_in_alley", "hear_curse_offer_{character}",
@@ -71,7 +77,18 @@ def proposed_routes() -> dict[str, list[str]]:
 
 def replay_step(session: dict[str, Any], step: str) -> dict[str, Any]:
     source = state.current_location_id(session)
-    if step.startswith(("shop:", "sell:")):
+    if step == "@recover_hp":
+        from host.shops import use_item
+
+        actor = session["character"]
+        while actor["hp"] < actor["max_hp"]:
+            item = next((i for i in actor["inventory"] if combat.item_combat_spec(i).get("kind") == "heal"
+                         and combat.item_combat_spec(i).get("consumable", True)), None)
+            if not item:
+                break
+            use_item(session, item.get("id") or item["name"])
+        delta = {}
+    elif step.startswith(("shop:", "sell:")):
         from host.shops import trade
 
         _, shop_id, item_id = step.split(":")

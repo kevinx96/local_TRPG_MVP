@@ -29,6 +29,20 @@ BOOT = r"""
     els.gameScreen.style.display = '';
     renderSession(fixture);
     const mapView = new URLSearchParams(location.search).get('view');
+    if (['chapter3-map', 'chapter4-map', 'burning-house', 'xanxus-event'].includes(mapView)) {
+      check(!document.querySelector('#miniMap').hidden, 'minimap visible');
+      if (mapView.endsWith('-map')) {
+        openMap();
+        check(document.querySelectorAll('#fullMap .adjacent-unknown').length > 0, 'unknown neighbors visible');
+        check(document.querySelector('#fullMap .visited'), 'visited nodes visible');
+      } else {
+        revealPendingChoices();
+        check(document.querySelectorAll('.choice-card').length > 0, 'story choices visible');
+      }
+      check(document.documentElement.scrollWidth <= innerWidth, 'no horizontal overflow');
+      await fetch('/result', {method: 'POST', body: JSON.stringify({ok:true, checks})});
+      return;
+    }
     if (['forest-map', 'fort-map', 'cave-map', 'prism-battle', 'forest-mobile'].includes(mapView)) {
       check(!document.querySelector('#miniMap').hidden, 'minimap visible');
       if (mapView.startsWith('forest')) {
@@ -94,6 +108,20 @@ BOOT = r"""
 def fixture(view: str = "") -> dict[str, Any]:
     pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
     session = checkpoints.fresh_session(pack, "hero")
+    if view in {"chapter3-map", "chapter4-map", "burning-house", "xanxus-event"}:
+        location = {"chapter3-map": "village_frozen_clue", "chapter4-map": "valley_lava_bridge",
+                    "burning-house": "burning_house", "xanxus-event": "xanxus_at_nest"}[view]
+        record = next(l for l in pack["locations"] if l["id"] == location)
+        session["world_state"] = dict(scene_id=record["scene_id"], location_id=location)
+        session["visited_locations"] = ["village_approach", "village_fire_slime", "burning_house"]
+        if view in {"chapter4-map", "xanxus-event"}:
+            session["visited_locations"] += ["valley_entrance", "valley_lava_bridge"]
+        if view == "xanxus-event":
+            session["flags"].update(accepted_fire_seed=True, warlock_rescue_triggered=True, nest_event_seen=True)
+            state.apply_state_delta(session, {"inventory_add": [{"name": "火種"}, {"name": "聖水"}]})
+        session["choices"] = state.fallback_choices_for_session(session)
+        session["messages"] = [{"role": "assistant", "speaker": "GM", "text": record["description"]}]
+        return session
     if view in {"forest-map", "fort-map", "cave-map", "prism-battle", "forest-mobile"}:
         from host import combat
 
@@ -130,6 +158,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Offline services screenshots using installed Chromium; no extra dependencies or LLM")
     parser.add_argument("--browser", type=Path)
     parser.add_argument("--output", type=Path, default=ROOT / ".codex-runs/services-ui")
+    parser.add_argument("--views", nargs="+", help="Capture only these fixture views")
     args = parser.parse_args()
     candidates = [args.browser] if args.browser else [
         Path(r"C:\Program Files\Google\Chrome\Application\chrome.exe"),
@@ -209,7 +238,11 @@ def main() -> int:
     try:
         for view, size in (("shop", "1280,900"), ("shop-mobile", "480,1000"), ("quests", "1280,900"), ("inventory", "1280,1000"),
                            ("forest-map", "1280,900"), ("fort-map", "1280,900"), ("cave-map", "1280,900"),
-                           ("prism-battle", "1280,900"), ("forest-mobile", "480,1000")):
+                           ("prism-battle", "1280,900"), ("forest-mobile", "480,1000"),
+                           ("chapter3-map", "1280,900"), ("chapter4-map", "1280,900"),
+                           ("burning-house", "1280,900"), ("xanxus-event", "1280,900")):
+            if args.views and view not in args.views:
+                continue
             session = fixture(view)
             before = len(results)
             command = [str(browser), "--headless=new", "--disable-gpu", "--no-first-run", "--disable-background-networking",

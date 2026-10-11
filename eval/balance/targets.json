@@ -103,7 +103,10 @@
     "dragon_valley_loc": "boss",
     "xanxus_battle": "scripted_loss",
     "warlock_rescue_battle": "guest",
-    "draco_battle": "boss"
+    "draco_battle": "boss",
+    "valley_entrance": "elite",
+    "valley_ledge": "elite",
+    "xanxus_phantom_battle": "boss"
   },
   "encounter_overrides": {
     "merchant_battle": {

@@ -156,7 +156,10 @@ def use_item(session: dict[str, Any], item_id: str) -> str:
     if missing <= 0:
         raise ShopError("これ以上回復する必要はない。")
     formula = spec.get("healing" if kind == "heal" else "amount") or spec.get("formula") or "10"
-    amount, _ = combat._roll_formula(str(formula), actor, combat.random)
+    if kind == "heal" and "max_hp_ratio" in spec:
+        amount = int(actor["max_hp"] * float(spec["max_hp_ratio"]))
+    else:
+        amount, _ = combat._roll_formula(str(formula), actor, combat.random)
     actual = min(missing, max(0, amount))
     delta = {f"{resource}_change": actual}
     if spec.get("consumable", True):

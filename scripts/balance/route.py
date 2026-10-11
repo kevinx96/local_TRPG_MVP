@@ -68,7 +68,7 @@ def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, c
                     and any(actor[r] < actor[f"max_{r}"] for r in ("hp", "mp", "sp"))):
                 checkpoints.replay_step(session, "rest_at_inn")
                 paid_rests += 1
-            if source["step"].startswith("@"):
+            if source["step"].startswith("@") and source["step"] != "@recover_hp":
                 if source["step"] == "@final" and combat._encounter_for_session(
                         session, pack).get("encounter_class") == "boss":
                     arrival = resources(session)
@@ -78,7 +78,15 @@ def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, c
                     return {"completed": False, "failed_at": battle["encounter"],
                             "boss_arrival": arrival, "battles": battles, "paid_rests": paid_rests}
             else:
-                checkpoints.replay_step(session, source["step"])
+                if source["step"].split(":", 1)[0] == "cross_lava_bridge":
+                    action = state.resolve_action(session, action_id="cross_lava_bridge")
+                    dice, dc = state.action_dice_settings(action, session=session)
+                    roll = state.roll_dice(session, dice, dc, client_rolls=[rng.randint(1, 20)])
+                    state.apply_action_result(session, action, roll)
+                else:
+                    checkpoints.replay_step(session, source["step"])
+                if source["step"] in {"rest_at_refuge", "rest_at_inn"}:
+                    paid_rests += 1
     ending = (session.get("game_over") or {}).get("ending")
     completed = not purify or ending == "draco_defeated_with_ignis"
     return {"completed": completed, "failed_at": None if completed else encounter,

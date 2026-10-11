@@ -59,6 +59,10 @@ class BenchmarkPinningTests(unittest.TestCase):
             self.assertEqual({k: v for k, v in recipe.items() if k not in {"id", "scenario"}},
                              {k: v for k, v in recipes[old["snapshot"]].items() if k not in {"id", "scenario"}})
         for path in outputs:
+            if path.suffix == ".jsonl":
+                # The checked-in candidate can contain later design reviews.
+                self.assertEqual([json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()], copied_rows)
+                continue
             self.assertEqual(path.read_bytes(), (ROOT / path.relative_to(directory)).read_bytes())
         self.assertEqual(source.read_bytes(), (directory / "eval/benchmark/intent_v2.jsonl").read_bytes())
 

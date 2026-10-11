@@ -1108,7 +1108,13 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
         delta = _effects_to_state_delta([*base_effects, *outcome_effects, *bonus_effects], session)
     if action.get("once"):
         delta.setdefault("flags_set", []).append(str(action["once"]))
+    before_events = {event["id"] for event in session.get("event_log", [])}
     apply_state_delta(session, delta, allow_world_transition=True)
+    arrival_texts = [event["text"] for event in session.get("event_log", [])
+                     if event["id"] not in before_events and event["kind"] == "location_hint"
+                     and event.get("data", {}).get("narrate")]
+    if arrival_texts:
+        result_text = "\n".join(filter(None, [result_text, *arrival_texts]))
     if delta.get("start_combat") is True:
         session["combat_start_requested"] = True
     if delta.get("enemy_first") is True:
@@ -1564,6 +1570,9 @@ def _requirement_passes(requirement: Any, attrs: dict[str, Any], character: dict
         return any(_requirement_passes(req, attrs, character) for req in requirement["any"])
     if isinstance(requirement.get("all"), list):
         return all(_requirement_passes(req, attrs, character) for req in requirement["all"])
+    for resource in ("hp", "mp", "sp"):
+        if isinstance(requirement.get(f"{resource}_gte"), (int, float)):
+            return character.get(resource, 0) >= requirement[f"{resource}_gte"]
     if "character_id" in requirement:
         char_id = str(character.get("id") or character.get("character_id") or "")
         if str(requirement["character_id"]) != char_id:
@@ -1604,6 +1613,9 @@ def _requirement_reason(requirements: list[Any], mode: str, character: dict[str,
 
 
 def _requirement_label(requirement: dict[str, Any]) -> str:
+    for resource in ("hp", "mp", "sp"):
+        if isinstance(requirement.get(f"{resource}_gte"), (int, float)):
+            return f"{resource.upper()} {int(requirement[f'{resource}_gte'])}以上"
     if isinstance(requirement.get("any"), list):
         labels = [_requirement_label(req) for req in requirement["any"] if isinstance(req, dict)]
         labels = [label for label in labels if label]
@@ -1878,7 +1890,8 @@ def _apply_state_delta(
             ename = existing.get("name") if isinstance(existing, dict) else existing
             if ename == item_name and remaining > 0:
                 existing_spec = item_combat_spec(existing) if isinstance(existing, dict) else {}
-                if isinstance(existing, dict) and (existing.get("non_removable") is True or existing_spec.get("non_removable") is True):
+                if (isinstance(existing, dict) and item.get("force") is not True
+                        and (existing.get("non_removable") is True or existing_spec.get("non_removable") is True)):
                     new_inv.append(existing)
                     continue
                 existing_qty = int(existing.get("quantity", 1)) if isinstance(existing, dict) else 1
@@ -1997,10 +2010,15 @@ def _apply_state_delta(
                     entry_effects = location.get("entry_effects", [])
                     if entry_effects:
                         entry_delta = _effects_to_state_delta(entry_effects, session)
-                        _apply_state_delta(session, entry_delta)
+                        _apply_state_delta(session, entry_delta, allow_world_transition=True)
                         if entry_delta and location.get("entry_text"):
                             record_state_event(session, "location_hint", str(location["entry_text"]),
-                                               {"location_id": location["id"], "state_delta": deepcopy(entry_delta)})
+                                               {"location_id": location["id"], "state_delta": deepcopy(entry_delta),
+                                                "narrate": bool(location.get("narrate_entry"))})
+                            battle = session.get("combat") or {}
+                            if location.get("narrate_entry") and battle.get("pending_resolution"):
+                                result = battle.setdefault("result", {})
+                                result["prepared_text"] = "\n".join(filter(None, [result.get("prepared_text"), location["entry_text"]]))
 
 
     _apply_milestones(session)

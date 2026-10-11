@@ -116,7 +116,9 @@ def choose_action(session: dict[str, Any], policy: str, *, purify: bool = True,
         if combat._equipped_effect(actor, "healing_harms_humans") and not actor.get("undead_parts"):
             healing = [a for a in healing if a["type"] == "item"]
         if actor["hp"] < actor["max_hp"] * .35 and healing:
-            best = max(healing, key=lambda a: min(actor["max_hp"] - actor["hp"], formula_mean(str(a.get("healing") or "10"), actor)))
+            best = max(healing, key=lambda a: min(actor["max_hp"] - actor["hp"],
+                int(actor["max_hp"] * a["max_hp_ratio"]) if "max_hp_ratio" in a
+                else formula_mean(str(a.get("healing") or "10"), actor)))
             return best, first_target
         encounter = session["combat"]["encounter"]
         if encounter.get("boss") and session["combat"]["round"] <= 2:

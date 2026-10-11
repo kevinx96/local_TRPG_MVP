@@ -431,7 +431,7 @@ def _player_special_action(session: dict[str, Any], action_id: str) -> None:
 
 def _combat_action_details(ability: dict[str, Any]) -> dict[str, Any]:
     fields = (
-        "damage", "healing", "accuracy", "element", "all_targets", "check",
+        "damage", "healing", "max_hp_ratio", "accuracy", "element", "all_targets", "check",
         "guard_multiplier", "multi_elements", "hits_per_element",
     )
     return {key: deepcopy(ability[key]) for key in fields if ability.get(key) not in (None, "", [], {})}
@@ -523,7 +523,11 @@ def _player_item(session: dict[str, Any], item_id: str, target_id: str, rng: Any
         raise CombatError("この道具は戦闘中に使用できません。")
     kind = str(spec.get("kind") or "heal")
     if kind == "heal":
-        amount, detail = _roll_formula(str(spec.get("healing") or spec.get("formula") or "10"), character, rng)
+        if "max_hp_ratio" in spec:
+            amount = int(character["max_hp"] * float(spec["max_hp_ratio"]))
+            detail = {"max_hp_ratio": spec["max_hp_ratio"]}
+        else:
+            amount, detail = _roll_formula(str(spec.get("healing") or spec.get("formula") or "10"), character, rng)
         healed = _heal_actor(character, amount)
         _log(session, "player", "item", f"{item.get('name', '道具')}を使い、HPを{healed}回復した。", {"amount": healed, "formula": detail})
     elif kind == "restore":

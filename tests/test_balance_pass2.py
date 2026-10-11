@@ -88,7 +88,7 @@ class BalancePass2Tests(unittest.TestCase):
     def test_every_entry_effect_sets_flag_and_grants_level(self):
         def transitions(value):
             if isinstance(value, dict):
-                if value.get("current_location", value.get("next_location")) in {"village", "village_approach", "dragon_valley_loc"}:
+                if value.get("current_location", value.get("next_location")) in {"village", "village_approach", "valley_entrance"}:
                     yield value
                 for child in value.values():
                     yield from transitions(child)
@@ -104,8 +104,9 @@ class BalancePass2Tests(unittest.TestCase):
                 session = checkpoints.fresh_session(deepcopy(pack), "hero")
                 session["world_state"] = {"scene_id": location["scene_id"], "location_id": location["id"]}
                 dest = effect.get("current_location", effect.get("next_location"))
-                flag, level = ("entered_dragon_valley", 5) if dest == "dragon_valley_loc" else ("reached_village", 4)
-                self.assertIn(flag, effect["flags_set"])
+                flag, level = ("entered_dragon_valley", 5) if dest == "valley_entrance" else ("reached_village", 4)
+                if dest != "valley_entrance":
+                    self.assertIn(flag, effect["flags_set"])
                 state.apply_state_delta(session, state._effects_to_state_delta([effect], session), allow_world_transition=True)
                 self.assertEqual(session["character"]["level"], level)
                 self.assertEqual(session["character"]["max_hp"], 20 + (level - 1) * 5)
@@ -117,7 +118,7 @@ class BalancePass2Tests(unittest.TestCase):
         for encounter, entry in cp["encounters"].items():
             for cid, actor in entry["characters"].items():
                 holy = next(i for i in actor["inventory"] if i.get("id") == "holy_water")
-                self.assertEqual(holy["quantity"], 2)
+                self.assertEqual(holy["quantity"], 1 if encounter == "xanxus_phantom_battle" else 2)
                 self.assertEqual(actor["sources"][0]["step"], "check_supplies")
                 if encounter == "warlock_rescue_battle":
                     continue

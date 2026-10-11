@@ -158,7 +158,8 @@ class DragonStoryTests(unittest.TestCase):
                 future_assets = {f"/static/images/{name}.png" for name in (
                     "bg_crystal_cave", "bg_lava_cave", "bg_sealed_cave", "enemy_emerald_spider",
                     "enemy_fire_wisp", "enemy_heat_lizard", "enemy_prism_tree", "enemy_ruby_golem",
-                    "enemy_sapphire_moth", "npc_mina", "npc_gald")}
+                    "enemy_sapphire_moth", "npc_mina", "npc_gald", "enemy_ash_wraith", "enemy_lava_drake",
+                    "enemy_xanxus_phantom", "npc_riku", "bg_lava_bridge", "bg_dragon_nest", "bg_burning_house", "bg_hot_spring")}
                 self.assertFalse(set(missing) - future_assets)
 
     def test_public_session_uses_enemy_portrait_during_combat(self):

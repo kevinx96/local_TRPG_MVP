@@ -118,5 +118,7 @@ class DeathLifecycleTests(unittest.TestCase):
                         self.assertEqual(delta.get("current_location"), "xanxus_ultimatum")
                     elif loc["id"].startswith("cave_"):
                         self.assertEqual(delta, {"hp": 1, "current_location": "elf_spring"})
+                    elif loc["id"] == "xanxus_phantom_battle":
+                        self.assertEqual(delta, {"hp": 1, "current_location": "valley_nest_gate", "flags_set": ["promised_core_to_xanxus"]})
                     else:
                         self.assertTrue(delta.get("game_over"))

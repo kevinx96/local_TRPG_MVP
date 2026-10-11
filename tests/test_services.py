@@ -70,7 +70,7 @@ class ServiceTests(unittest.TestCase):
             self.assertEqual(mystery["clue_count"], 1)
         state.apply_state_delta(session, {"flags_set": quest["clue_flags"]})
         self.give(session, "white_dragon_scale", 3)
-        self.assertEqual(public_quests(session)[-1]["clue_count"], 8)
+        self.assertEqual(public_quests(session)[-1]["clue_count"], 9)
         self.assertNotIn("clue_flags", public_quests(session)[-1])
 
     def test_once_flag_and_entry_effect_log_only_once(self):
@@ -247,7 +247,7 @@ class ServiceTests(unittest.TestCase):
             for location in pack["locations"]:
                 ids = {action["id"] for action in state._iter_actions(location.get("actions", []))}
                 self.assertFalse(ids & {"sarah_shop", "blue_mage_shop", "buy_equipment", "buy_ice_amulet"})
-            self.assertEqual(len(pack["quests"]), 9)
+            self.assertEqual(len(pack["quests"]), 11)
             self.assertEqual(len(pack["shops"]), 5)
 
 

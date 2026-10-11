@@ -7,9 +7,10 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-12-v015-sidequests",
+    "content_revision": "2026-10-12-v019-ch34",
     "forest_v3": true,
-    "forest_sidequests": true
+    "forest_sidequests": true,
+    "chapter34_v4": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -140,7 +141,9 @@
         "village_frozen_clue",
         "ice_elemental_encounter",
         "frost_wolf_battle",
-        "ian_ice_katana_aftermath"
+        "ian_ice_katana_aftermath",
+        "burning_house",
+        "village"
       ],
       "next_scene_ids": [
         "dragon_valley",
@@ -165,7 +168,14 @@
       "location_ids": [
         "dragon_valley_loc",
         "ignis_last_breath",
-        "ignis_purified"
+        "ignis_purified",
+        "valley_entrance",
+        "valley_lava_bridge",
+        "valley_ledge",
+        "valley_nest_gate",
+        "xanxus_at_nest",
+        "xanxus_phantom_battle",
+        "warlock_at_nest"
       ],
       "next_scene_ids": [
         "castle_return"
@@ -2508,8 +2518,8 @@
     {
       "id": "village",
       "scene_id": "village",
-      "title": "麓の村",
-      "description": "山麓に広がる静かな村。長老が古い伝承を語り継いでいる。",
+      "title": "麓の村・避難所",
+      "description": "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。長老が人々を励まし、行商人の荷車の周りには小さな人だかりができている。",
       "keywords": [
         "村",
         "麓",
@@ -2517,7 +2527,8 @@
       ],
       "npc_ids": [
         "elder",
-        "gald"
+        "gald",
+        "riku"
       ],
       "clue_ids": [
         "dragon_weakness"
@@ -2526,7 +2537,7 @@
       "enemy_ids": [],
       "connected_location_ids": [
         "village_shop",
-        "dragon_valley_loc"
+        "valley_entrance"
       ],
       "choices": [
         {
@@ -2748,10 +2759,8 @@
           ],
           "effects": [
             {
-              "current_location": "dragon_valley_loc",
-              "flags_set": [
-                "entered_dragon_valley"
-              ]
+              "current_location": "valley_entrance",
+              "flags_set": []
             }
           ]
         },
@@ -2797,6 +2806,50 @@
           "effects": [],
           "open_shop": "gald_shop",
           "visible_after": "saved_gald"
+        },
+        {
+          "id": "rest_at_refuge",
+          "text": "避難所で休ませてもらう（5G）",
+          "preview": "避難所で休ませてもらう（5G）",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "避難所で休ませてもらう（5G）"
+          ],
+          "effects": [
+            {
+              "gold_change": -5
+            },
+            {
+              "restore_full": true
+            }
+          ],
+          "requirements": {
+            "gold_gte": 5
+          },
+          "result_text": "村人が分けてくれた粥をすすり、毛布にくるまって眠った。"
+        },
+        {
+          "id": "return_riku",
+          "text": "リクを長老に会わせる",
+          "preview": "リクを長老に会わせる",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "リクを長老に会わせる"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "name": "竜の秘薬",
+                "quantity": 2
+              }
+            },
+            {
+              "set_flag": "heard_treaty_lore"
+            }
+          ],
+          "visible_after": "riku_rescued",
+          "once": "riku_returned",
+          "result_text": "「リク！……よく無事で」長老は孫を抱きしめ、深く頭を下げた。「礼をさせてくれ。これは村に伝わる竜の秘薬じゃ。それと……この話も伝えておこう。昔、白き竜がこの村に霜を降らせたことがある、と」"
         }
       ],
       "background_image": "/static/images/bg_village.png",
@@ -2832,8 +2885,28 @@
       "npc_requirements": {
         "gald": {
           "flag": "saved_gald"
+        },
+        "riku": {
+          "flag": "riku_rescued"
         }
-      }
+      },
+      "entry_effects": [
+        {
+          "branch": {
+            "requirements": {
+              "flag": "riku_abandoned"
+            },
+            "then": [
+              {
+                "set_flag": "elder_mourning"
+              }
+            ],
+            "else": []
+          }
+        }
+      ],
+      "entry_text": "長老は焼け跡を見つめ、黙り込んでいる",
+      "narrate_entry": true
     },
     {
       "id": "dragon_valley_loc",
@@ -2851,19 +2924,42 @@
       ],
       "combat": {
         "flee_allowed": false,
-        "victory_effects": {
-          "flags_set": [
-            "defeated_ignis"
-          ],
-          "current_location": "ignis_last_breath",
-          "inventory_add": [
-            {
-              "id": "red_dragon_core",
-              "name": "紅竜の炎核",
-              "quantity": 1
+        "victory_effects": [
+          {
+            "set_flag": "defeated_ignis"
+          },
+          {
+            "branch": {
+              "requirements": {
+                "all": [
+                  {
+                    "flag": "promised_core_to_xanxus"
+                  },
+                  {
+                    "not_flag": "fire_seed_removed"
+                  }
+                ]
+              },
+              "then": [
+                {
+                  "set_flag": "xanxus_took_core"
+                }
+              ],
+              "else": [
+                {
+                  "add_item": {
+                    "id": "red_dragon_core",
+                    "name": "紅竜の炎核",
+                    "quantity": 1
+                  }
+                }
+              ]
             }
-          ]
-        },
+          },
+          {
+            "current_location": "ignis_last_breath"
+          }
+        ],
         "defeat_effects": {
           "game_over": {
             "reason": "邪竜イグニスに敗れ、竜の谷で力尽きました。",
@@ -3205,17 +3301,38 @@
           },
           "success_effects": [
             {
-              "flags_set": [
-                "defeated_ignis"
-              ],
-              "current_location": "ignis_last_breath",
-              "inventory_add": [
-                {
-                  "id": "red_dragon_core",
-                  "name": "紅竜の炎核",
-                  "quantity": 1
-                }
-              ]
+              "set_flag": "defeated_ignis"
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "all": [
+                    {
+                      "flag": "promised_core_to_xanxus"
+                    },
+                    {
+                      "not_flag": "fire_seed_removed"
+                    }
+                  ]
+                },
+                "then": [
+                  {
+                    "set_flag": "xanxus_took_core"
+                  }
+                ],
+                "else": [
+                  {
+                    "add_item": {
+                      "id": "red_dragon_core",
+                      "name": "紅竜の炎核",
+                      "quantity": 1
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "current_location": "ignis_last_breath"
             }
           ],
           "failure_effects": [
@@ -7081,7 +7198,7 @@
           "fire_slime"
         ],
         "victory_effects": {
-          "current_location": "village_frozen_clue"
+          "current_location": "burning_house"
         },
         "defeat_effects": {
           "game_over": {
@@ -7126,7 +7243,7 @@
           "fire_elemental"
         ],
         "victory_effects": {
-          "current_location": "village_frozen_clue"
+          "current_location": "burning_house"
         },
         "defeat_effects": {
           "game_over": {
@@ -7696,10 +7813,8 @@
           "visible_after": "xanxus_encountered",
           "effects": [
             {
-              "current_location": "dragon_valley_loc",
-              "flags_set": [
-                "entered_dragon_valley"
-              ]
+              "current_location": "valley_entrance",
+              "flags_set": []
             }
           ]
         },
@@ -8102,10 +8217,8 @@
               "set_flag": "accepted_ian_request"
             },
             {
-              "current_location": "dragon_valley_loc",
-              "flags_set": [
-                "entered_dragon_valley"
-              ]
+              "current_location": "valley_entrance",
+              "flags_set": []
             }
           ],
           "portrait_image": "/static/images/npc_ian_serious.png"
@@ -8121,10 +8234,8 @@
           "visible_after": "xanxus_encountered",
           "effects": [
             {
-              "current_location": "dragon_valley_loc",
-              "flags_set": [
-                "entered_dragon_valley"
-              ]
+              "current_location": "valley_entrance",
+              "flags_set": []
             }
           ],
           "portrait_image": "/static/images/npc_ian_serious.png"
@@ -8259,7 +8370,24 @@
             }
           }
         ]
-      }
+      },
+      "entry_effects": [
+        {
+          "branch": {
+            "requirements": {
+              "flag": "xanxus_took_core"
+            },
+            "then": [
+              {
+                "set_flag": "xanxus_core_scene_seen"
+              }
+            ],
+            "else": []
+          }
+        }
+      ],
+      "entry_text": "「約束の品はもらっていくぞ」Xanxusの声とともに、紅竜の心臓の炎が宙へ吸い上げられていった。",
+      "narrate_entry": true
     },
     {
       "id": "castle_report",
@@ -8304,7 +8432,8 @@
                     "noticed_general_frost",
                     "heard_treaty_lore",
                     "heard_ignis_testimony",
-                    "heard_gald_rumor"
+                    "heard_gald_rumor",
+                    "heard_xanxus_betrayal"
                   ],
                   "count": 2
                 }
@@ -8579,7 +8708,31 @@
             }
           }
         ]
-      }
+      },
+      "entry_effects": [
+        {
+          "branch": {
+            "requirements": {
+              "all": [
+                {
+                  "flag": "promised_core_to_xanxus"
+                },
+                {
+                  "not_flag": "fire_seed_removed"
+                }
+              ]
+            },
+            "then": [
+              {
+                "set_flag": "xanxus_denied_core"
+              }
+            ],
+            "else": []
+          }
+        }
+      ],
+      "entry_text": "遠くで、Xanxusの怒りに満ちた咆哮が聞こえた",
+      "narrate_entry": true
     },
     {
       "id": "cave_seal",
@@ -9191,7 +9344,7 @@
           }
         }
       ],
-      "background_image": "/static/images/bg_crystal_cave.png",
+      "background_image": "/static/images/bg_hot_spring.png",
       "npc_ids": [
         "mina"
       ],
@@ -9392,6 +9545,655 @@
           "victory": "大樹が砕け散ると、その芯から掌ほどの欠片が転がり出た。光にかざすと、色が絶えず移ろっている。"
         }
       }
+    },
+    {
+      "id": "burning_house",
+      "title": "燃える民家の前",
+      "description": "崩れかけた民家の奥から、子どもの泣き声が聞こえる。入口は燃える梁で塞がれている。",
+      "scene_id": "village",
+      "background_image": "/static/images/bg_burning_house.png",
+      "actions": [
+        {
+          "id": "break_burning_beam",
+          "text": "燃える梁を叩き壊す",
+          "preview": "燃える梁を叩き壊す",
+          "risk": "1d20判定（DC13）",
+          "intent_keywords": [
+            "燃える梁を叩き壊す"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+str",
+            "dc": 13
+          },
+          "success_effects": [
+            {
+              "set_flag": "riku_rescued"
+            },
+            {
+              "current_location": "village_frozen_clue"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -5
+            }
+          ],
+          "result_texts": {
+            "success": "梁を蹴り砕いて飛び込むと、煙の中で小さな男の子がうずくまっていた。",
+            "failure": "梁は思ったより重く、熱に腕を焼かれた。"
+          }
+        },
+        {
+          "id": "climb_to_window",
+          "text": "裏手の窓からよじ登る",
+          "preview": "裏手の窓からよじ登る",
+          "risk": "1d20判定（DC13）",
+          "intent_keywords": [
+            "裏手の窓からよじ登る"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 13
+          },
+          "success_effects": [
+            {
+              "set_flag": "riku_rescued"
+            },
+            {
+              "current_location": "village_frozen_clue"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -3
+            }
+          ],
+          "result_texts": {
+            "success": "壁をよじ登って窓から入り込み、男の子を抱えて外へ飛び降りた。",
+            "failure": "足を滑らせ、焼けた壁にしたたかに打ちつけた。"
+          }
+        },
+        {
+          "id": "douse_with_ice",
+          "text": "冷気で炎を鎮める",
+          "preview": "冷気で炎を鎮める",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "冷気で炎を鎮める"
+          ],
+          "effects": [
+            {
+              "set_flag": "riku_rescued"
+            },
+            {
+              "current_location": "village_frozen_clue"
+            }
+          ],
+          "requirements": {
+            "any": [
+              {
+                "has_item": "氷の護符"
+              },
+              {
+                "has_item": "氷の護符(活性化済)"
+              },
+              {
+                "has_item": "氷鉄の大剣"
+              },
+              {
+                "has_item": "氷の太刀"
+              },
+              {
+                "has_item": "氷の結晶"
+              },
+              {
+                "character_id": "mage"
+              }
+            ]
+          },
+          "result_text": "冷気を放つと炎が一瞬で退き、その隙に男の子を連れ出した。"
+        },
+        {
+          "id": "leave_burning_house",
+          "text": "先を急ぐ",
+          "preview": "先を急ぐ",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "先を急ぐ"
+          ],
+          "effects": [
+            {
+              "set_flag": "riku_abandoned"
+            },
+            {
+              "current_location": "village_frozen_clue"
+            }
+          ],
+          "result_text": "泣き声を背に、燃える通りを駆け抜けた。"
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "entry_effects": [
+        {
+          "set_flag": "found_burning_house"
+        }
+      ],
+      "entry_text": "崩れかけた民家の奥から、子どもの泣き声が聞こえる。入口は燃える梁で塞がれている。",
+      "narrate_entry": true,
+      "objects": [
+        {
+          "id": "house_beam",
+          "name": "燃える梁",
+          "description": "燃える梁",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "none",
+              "dc": 0
+            },
+            "success_text": "梁の根元が焼け落ちかけている。力を込めれば折れそうだ。",
+            "failure_text": "",
+            "success_effects": [],
+            "once": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "valley_entrance",
+      "title": "竜の谷・入口",
+      "description": "硫黄の霧が立ち込める谷の入口。霧の中で、煤をまとった人影がゆらゆらと揺れている。",
+      "scene_id": "dragon_valley",
+      "background_image": "/static/images/bg_dragon_valley.png",
+      "actions": [
+        {
+          "id": "fight_ash_wraiths",
+          "text": "戦う",
+          "preview": "戦う",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "戦う"
+          ],
+          "effects": [
+            {
+              "start_combat": true
+            }
+          ]
+        },
+        {
+          "id": "sneak_through_ash",
+          "text": "霧に紛れてやり過ごす",
+          "preview": "霧に紛れてやり過ごす",
+          "risk": "1d20判定（DC14）",
+          "intent_keywords": [
+            "霧に紛れてやり過ごす"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 14
+          },
+          "success_effects": [
+            {
+              "current_location": "valley_lava_bridge"
+            }
+          ],
+          "failure_effects": [
+            {
+              "start_combat": true
+            },
+            {
+              "enemy_first": true
+            }
+          ]
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [
+        "ash_wraith",
+        "ash_wraith"
+      ],
+      "connected_location_ids": [],
+      "entry_effects": [
+        {
+          "set_flag": "entered_dragon_valley"
+        }
+      ],
+      "combat": {
+        "auto_start": false,
+        "enemy_ids": [
+          "ash_wraith",
+          "ash_wraith"
+        ],
+        "flee_allowed": false,
+        "encounter_class": "elite",
+        "victory_effects": {
+          "current_location": "valley_lava_bridge"
+        },
+        "defeat_effects": {
+          "game_over": {
+            "reason": "竜の谷で力尽きた。",
+            "ending": "dragon_valley_defeat"
+          }
+        },
+        "result_texts": {
+          "victory": "煮え立つ溶岩の川に、古い吊り橋が一本だけ架かっている。板は焦げ、縄は今にも切れそうだ。",
+          "defeat": "竜の谷で力尽きた。"
+        }
+      }
+    },
+    {
+      "id": "valley_lava_bridge",
+      "title": "溶岩の吊り橋",
+      "description": "煮え立つ溶岩の川に、古い吊り橋が一本だけ架かっている。板は焦げ、縄は今にも切れそうだ。",
+      "scene_id": "dragon_valley",
+      "background_image": "/static/images/bg_lava_bridge.png",
+      "actions": [
+        {
+          "id": "cross_lava_bridge",
+          "text": "吊り橋を渡る",
+          "preview": "吊り橋を渡る",
+          "risk": "1d20判定（DC12）",
+          "intent_keywords": [
+            "吊り橋を渡る"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 12,
+            "dc_overrides": [
+              {
+                "requirements": {
+                  "flag": "bridge_safe_side_known"
+                },
+                "dc": 6
+              }
+            ]
+          },
+          "success_effects": [
+            {
+              "current_location": "valley_nest_gate"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -6
+            },
+            {
+              "current_location": "valley_nest_gate"
+            }
+          ],
+          "result_texts": {
+            "success": "揺れる板を一枚ずつ踏みしめ、向こう岸へたどり着いた。",
+            "failure": "板が一枚抜け落ち、熱風に焼かれながら必死にしがみついて渡りきった。"
+          }
+        },
+        {
+          "id": "take_ledge_path",
+          "text": "岩棚の迂回路を進む",
+          "preview": "岩棚の迂回路を進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "岩棚の迂回路を進む"
+          ],
+          "effects": [
+            {
+              "current_location": "valley_ledge"
+            }
+          ]
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "objects": [
+        {
+          "id": "bridge_ropes",
+          "name": "焦げた縄",
+          "description": "焦げた縄",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+wis",
+              "dc": 10
+            },
+            "success_text": "右側の縄はまだしっかりしている。右端を伝えば安全に渡れそうだ。",
+            "failure_text": "",
+            "success_effects": [
+              {
+                "set_flag": "bridge_safe_side_known"
+              }
+            ],
+            "once": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "valley_ledge",
+      "title": "岩棚の迂回路",
+      "description": "溶岩の川を見下ろす狭い岩棚。岩陰から、翼の生えた小型の竜が首をもたげた。",
+      "scene_id": "dragon_valley",
+      "background_image": "/static/images/bg_lava_bridge.png",
+      "actions": [],
+      "npc_ids": [],
+      "enemy_ids": [
+        "lava_drake",
+        "lava_drake"
+      ],
+      "connected_location_ids": [],
+      "combat": {
+        "auto_start": true,
+        "enemy_ids": [
+          "lava_drake",
+          "lava_drake"
+        ],
+        "flee_allowed": false,
+        "encounter_class": "elite",
+        "victory_effects": {
+          "current_location": "valley_nest_gate"
+        },
+        "defeat_effects": {
+          "game_over": {
+            "reason": "竜の谷で力尽きた。",
+            "ending": "dragon_valley_defeat"
+          }
+        },
+        "result_texts": {
+          "victory": "巨大な洞穴の入口から、灼熱の風が吹きつけてくる。奥で、何か巨大なものが重く息をしている。",
+          "defeat": "竜の谷で力尽きた。"
+        }
+      }
+    },
+    {
+      "id": "valley_nest_gate",
+      "title": "竜の巣の前",
+      "description": "巨大な洞穴の入口から、灼熱の風が吹きつけてくる。奥で、何か巨大なものが重く息をしている。",
+      "scene_id": "dragon_valley",
+      "background_image": "/static/images/bg_dragon_nest.png",
+      "actions": [
+        {
+          "id": "enter_dragon_nest",
+          "text": "竜の巣へ踏み込む",
+          "preview": "竜の巣へ踏み込む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "竜の巣へ踏み込む"
+          ],
+          "effects": [
+            {
+              "current_location": "dragon_valley_loc"
+            }
+          ],
+          "start_combat": true
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "entry_effects": [
+        {
+          "branch": {
+            "requirements": {
+              "not_flag": "nest_event_seen"
+            },
+            "then": [
+              {
+                "set_flag": "nest_event_seen"
+              },
+              {
+                "branch": {
+                  "requirements": {
+                    "all": [
+                      {
+                        "flag": "accepted_fire_seed"
+                      },
+                      {
+                        "not_flag": "fire_seed_removed"
+                      }
+                    ]
+                  },
+                  "then": [
+                    {
+                      "current_location": "xanxus_at_nest"
+                    }
+                  ],
+                  "else": [
+                    {
+                      "branch": {
+                        "requirements": {
+                          "flag": "warlock_rescue_triggered"
+                        },
+                        "then": [
+                          {
+                            "current_location": "warlock_at_nest"
+                          }
+                        ],
+                        "else": []
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            "else": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "xanxus_at_nest",
+      "title": "竜の巣の前・Xanxus",
+      "description": "炎の中からXanxusが現れた。あなたの胸の火種が、呼応するように熱を帯びる。「よく来た。紅竜を倒したら、その心臓を我に捧げよ。火種を持つ限り、お前は我に逆らえぬ」",
+      "scene_id": "dragon_valley",
+      "background_image": "/static/images/bg_dragon_nest.png",
+      "actions": [
+        {
+          "id": "obey_xanxus_core",
+          "text": "従う",
+          "preview": "従う",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "従う"
+          ],
+          "effects": [
+            {
+              "set_flag": "promised_core_to_xanxus"
+            },
+            {
+              "current_location": "valley_nest_gate"
+            }
+          ],
+          "result_text": "Xanxusは満足げに笑い、炎とともに消えた。"
+        },
+        {
+          "id": "cleanse_fire_seed",
+          "text": "聖なる力で火種を浄化する",
+          "preview": "聖なる力で火種を浄化する",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "聖なる力で火種を浄化する"
+          ],
+          "effects": [
+            {
+              "branch": {
+                "requirements": {
+                  "has_item": "聖水"
+                },
+                "then": [
+                  {
+                    "remove_item": {
+                      "name": "聖水",
+                      "quantity": 1
+                    }
+                  }
+                ],
+                "else": [
+                  {
+                    "mp_change": -6
+                  }
+                ]
+              }
+            },
+            {
+              "current_location": "xanxus_phantom_battle"
+            },
+            {
+              "start_combat": true
+            }
+          ],
+          "requirements": {
+            "any": [
+              {
+                "has_item": "聖水"
+              },
+              {
+                "all": [
+                  {
+                    "character_id": "cleric"
+                  },
+                  {
+                    "mp_gte": 6
+                  }
+                ]
+              }
+            ]
+          },
+          "result_text": "聖なる光が胸の火種を焼き払った。Xanxusが怒りに吠える。「小癪な……ならば力ずくで奪うまでだ！」"
+        },
+        {
+          "id": "call_warlock",
+          "text": "ワーロックの名を呼ぶ",
+          "preview": "ワーロックの名を呼ぶ",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "ワーロックの名を呼ぶ"
+          ],
+          "effects": [
+            {
+              "remove_item": {
+                "name": "火種",
+                "quantity": 1,
+                "force": true
+              }
+            },
+            {
+              "set_flag": "fire_seed_removed"
+            },
+            {
+              "set_flag": "heard_xanxus_betrayal"
+            },
+            {
+              "current_location": "valley_nest_gate"
+            }
+          ],
+          "requirements": {
+            "flag": "warlock_rescue_triggered"
+          },
+          "result_text": "青い光が走り、ワーロックがあなたの前に立った。彼の杖が火種を凍らせて砕く。「Xanxus、もう白竜の手先は終わりだ」Xanxusは舌打ちし、炎の中へ消えた。ワーロックは振り返る。「あの骸骨は、白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ」"
+        }
+      ],
+      "npc_ids": [
+        "xanxus"
+      ],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "portrait_image": "/static/images/npc_xanxus.png",
+      "entry_text": "炎の中からXanxusが現れた。あなたの胸の火種が、呼応するように熱を帯びる。「よく来た。紅竜を倒したら、その心臓を我に捧げよ。火種を持つ限り、お前は我に逆らえぬ」",
+      "narrate_entry": true,
+      "entry_effects": [
+        {
+          "set_flag": "xanxus_nest_seen"
+        }
+      ]
+    },
+    {
+      "id": "xanxus_phantom_battle",
+      "title": "Xanxusの分身",
+      "description": "Xanxusが自らの炎を分けて作り出した分身。本体ほどの力はない。",
+      "scene_id": "dragon_valley",
+      "background_image": "/static/images/bg_dragon_nest.png",
+      "actions": [],
+      "npc_ids": [],
+      "enemy_ids": [
+        "xanxus_phantom"
+      ],
+      "connected_location_ids": [],
+      "combat": {
+        "auto_start": true,
+        "enemy_ids": [
+          "xanxus_phantom"
+        ],
+        "flee_allowed": false,
+        "encounter_class": "boss",
+        "victory_effects": [
+          {
+            "remove_item": {
+              "name": "火種",
+              "quantity": 1,
+              "force": true
+            }
+          },
+          {
+            "set_flag": "fire_seed_removed"
+          },
+          {
+            "set_flag": "heard_xanxus_betrayal"
+          },
+          {
+            "current_location": "valley_nest_gate"
+          }
+        ],
+        "defeat_effects": {
+          "hp": 1,
+          "flags_set": [
+            "promised_core_to_xanxus"
+          ],
+          "current_location": "valley_nest_gate"
+        },
+        "result_texts": {
+          "victory": "分身が崩れ落ちる間際、Xanxusの声が響いた。「白竜め……約束が違うではないか……」",
+          "defeat": "炎に呑まれ、気がつくと巣の前に倒れていた。胸の火種は、まだ脈打っている。"
+        }
+      }
+    },
+    {
+      "id": "warlock_at_nest",
+      "title": "竜の巣の前",
+      "description": "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。Xanxusは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。",
+      "scene_id": "dragon_valley",
+      "background_image": "/static/images/bg_dragon_nest.png",
+      "actions": [
+        {
+          "id": "continue_after_warlock",
+          "text": "先へ進む",
+          "preview": "先へ進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "先へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "valley_nest_gate"
+            }
+          ]
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "entry_effects": [
+        {
+          "set_flag": "heard_xanxus_betrayal"
+        }
+      ],
+      "entry_text": "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。Xanxusは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。",
+      "portrait_image": "/static/images/npc_warlock.png",
+      "narrate_entry": true
     }
   ],
   "npcs": [
@@ -9427,7 +10229,15 @@
         "老人",
         "伝承"
       ],
-      "image": "/static/images/npc_elder.png"
+      "image": "/static/images/npc_elder.png",
+      "description_variants": [
+        {
+          "requirements": {
+            "flag": "riku_abandoned"
+          },
+          "text": "古い伝承を知る老人。邪竜は冷気を嫌うと語る。長老は焼け跡を見つめ、黙り込んでいる"
+        }
+      ]
     },
     {
       "id": "shopkeeper",
@@ -9571,6 +10381,12 @@
         "竜"
       ],
       "image": "/static/images/npc_ignis_calm.png"
+    },
+    {
+      "id": "riku",
+      "name": "長老の孫リク",
+      "description": "村の長老の孫。火事の夜、家に取り残されていた。",
+      "image": "/static/images/npc_riku.png"
     }
   ],
   "items": [
@@ -10121,6 +10937,18 @@
         "damage": "4d4+dex/4+16",
         "accuracy": 92,
         "element": "weakness"
+      }
+    },
+    {
+      "id": "dragon_elixir",
+      "name": "竜の秘薬",
+      "description": "村に代々伝わる秘薬。竜の鱗を煎じたものだという。",
+      "effect": "HP を最大値の 50% 回復",
+      "category": "consumable",
+      "combat": {
+        "kind": "heal",
+        "max_hp_ratio": 0.5,
+        "consumable": true
       }
     }
   ],
@@ -11231,6 +12059,177 @@
           }
         ]
       }
+    },
+    {
+      "id": "ash_wraith",
+      "name": "煤の亡霊",
+      "description": "竜の炎に焼かれた者たちの怨念が、煤となって漂う亡霊。",
+      "hp": 24,
+      "max_hp": 24,
+      "element": "dark",
+      "attributes": {
+        "str": 12,
+        "dex": 10,
+        "int": 14,
+        "end": 10
+      },
+      "combat": {
+        "basic_attack": {
+          "name": "煤の亡霊",
+          "damage": "1d26",
+          "accuracy": 40,
+          "element": "dark"
+        },
+        "defense": 0,
+        "evade": 0
+      },
+      "resistances": {
+        "holy": 1.4,
+        "physical": 0.5,
+        "fire": 0.5
+      },
+      "skills": [
+        {
+          "id": "ash_embrace",
+          "name": "煤の抱擁",
+          "kind": "attack",
+          "damage": "1d26",
+          "accuracy": 40,
+          "element": "fire",
+          "ai_weight": 2,
+          "on_hit_status": {
+            "id": "suffocation",
+            "name": "窒息",
+            "damage": "1",
+            "remaining_rounds": 2
+          }
+        },
+        {
+          "id": "resentment",
+          "name": "怨嗟",
+          "kind": "attack",
+          "damage": "1d26",
+          "accuracy": 40,
+          "element": "dark",
+          "ai_weight": 1
+        }
+      ],
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_ash_wraith.png"
+    },
+    {
+      "id": "lava_drake",
+      "name": "溶岩ドレイク",
+      "description": "竜の谷に棲む小型の竜。イグニスの眷属とされる。",
+      "hp": 25,
+      "max_hp": 25,
+      "element": "fire",
+      "attributes": {
+        "str": 12,
+        "dex": 10,
+        "int": 14,
+        "end": 10
+      },
+      "combat": {
+        "basic_attack": {
+          "name": "溶岩ドレイク",
+          "damage": "1d20",
+          "accuracy": 75,
+          "element": "fire"
+        },
+        "defense": 0,
+        "evade": 8
+      },
+      "resistances": {
+        "ice": 1.5,
+        "fire": 0.5,
+        "physical": 0.5
+      },
+      "skills": [
+        {
+          "id": "lava_breath",
+          "name": "溶岩の吐息",
+          "kind": "attack",
+          "damage": "1d20",
+          "accuracy": 75,
+          "element": "fire",
+          "ai_weight": 2
+        },
+        {
+          "id": "hook_claw",
+          "name": "鉤爪",
+          "kind": "attack",
+          "damage": "1d20",
+          "accuracy": 75,
+          "element": "physical",
+          "ai_weight": 1
+        }
+      ],
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_lava_drake.png"
+    },
+    {
+      "id": "xanxus_phantom",
+      "name": "Xanxusの分身",
+      "description": "Xanxusが自らの炎を分けて作り出した分身。",
+      "hp": 147,
+      "max_hp": 147,
+      "element": "fire",
+      "attributes": {
+        "str": 12,
+        "dex": 10,
+        "int": 14,
+        "end": 10
+      },
+      "combat": {
+        "basic_attack": {
+          "name": "Xanxusの分身",
+          "damage": "1d24",
+          "accuracy": 80,
+          "element": "fire"
+        },
+        "defense": 1,
+        "evade": 3
+      },
+      "resistances": {
+        "ice": 1.95,
+        "holy": 1.5,
+        "fire": 0.5,
+        "physical": 0.65
+      },
+      "skills": [
+        {
+          "id": "flame_vortex",
+          "name": "火炎旋渦",
+          "kind": "field",
+          "round_damage": "3",
+          "element": "fire",
+          "ai_weight": 2
+        },
+        {
+          "id": "summon_meteor",
+          "name": "隕石召喚",
+          "kind": "attack",
+          "damage": "2d24",
+          "accuracy": 85,
+          "element": "fire",
+          "ai_weight": 3
+        }
+      ],
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_xanxus_phantom.png"
     }
   ],
   "combat_choices": [
@@ -12301,6 +13300,48 @@
       "start_item": "robert_hammer"
     },
     {
+      "id": "side_riku",
+      "title": "燃える家の子ども",
+      "description": "燃える民家に子どもが取り残されている。",
+      "kind": "side",
+      "start_flag": "found_burning_house",
+      "complete_flags": [
+        "riku_returned"
+      ],
+      "fail_flags": [
+        "riku_abandoned"
+      ],
+      "stages": [
+        {
+          "text": "子どもを助け出す",
+          "done_flag": "riku_rescued"
+        },
+        {
+          "text": "避難所の長老のもとへ連れて行く",
+          "done_flag": "riku_returned"
+        }
+      ]
+    },
+    {
+      "id": "fire_seed_curse",
+      "title": "火種の呪い",
+      "description": "Xanxusに植え付けられた火種が、胸の中で脈打っている。",
+      "kind": "side",
+      "start_flag": "accepted_fire_seed",
+      "complete_flags": [
+        "fire_seed_removed"
+      ],
+      "fail_flags": [
+        "xanxus_took_core"
+      ],
+      "stages": [
+        {
+          "text": "火種を取り除く方法を探す",
+          "done_flag": "fire_seed_removed"
+        }
+      ]
+    },
+    {
       "id": "mystery_frost",
       "kind": "mystery",
       "title": "凍てつく謎",
@@ -12327,7 +13368,8 @@
         "noticed_general_frost",
         "heard_treaty_lore",
         "heard_ignis_testimony",
-        "heard_gald_rumor"
+        "heard_gald_rumor",
+        "heard_xanxus_betrayal"
       ],
       "clue_item": "white_dragon_scale"
     }
@@ -12932,6 +13974,248 @@
           "from": "F5",
           "to": "F4",
           "action_id": "exit_back"
+        }
+      ]
+    },
+    {
+      "id": "burning_village",
+      "title": "炎上する村",
+      "nodes": [
+        {
+          "id": "V1",
+          "label": "村の入口",
+          "kind": "start",
+          "x": 10,
+          "y": 55,
+          "location_ids": [
+            "village_approach"
+          ],
+          "description": "村は一面の火海となり、家々の間を怪物が徘徊している。生存者の姿は見当たらない。"
+        },
+        {
+          "id": "V2",
+          "label": "燃える大通り",
+          "kind": "battle",
+          "x": 28,
+          "y": 55,
+          "location_ids": [
+            "village_fire_slime",
+            "village_fire_elemental",
+            "burning_house"
+          ],
+          "description": "赤熱したスライムが燃える道を塞いでいる。"
+        },
+        {
+          "id": "V3",
+          "label": "炎の中の結氷",
+          "kind": "event",
+          "x": 46,
+          "y": 55,
+          "location_ids": [
+            "village_frozen_clue"
+          ],
+          "description": "村の炎の一部だけが凍りつき、火と氷の境界が不自然に残されている。"
+        },
+        {
+          "id": "V4",
+          "label": "凍結した路地",
+          "kind": "battle",
+          "x": 62,
+          "y": 25,
+          "location_ids": [
+            "ice_elemental_encounter"
+          ],
+          "description": "氷の精霊が凍りついた路地を巡回している。"
+        },
+        {
+          "id": "V5",
+          "label": "氷霜の巨狼",
+          "kind": "boss",
+          "x": 77,
+          "y": 25,
+          "location_ids": [
+            "frost_wolf_battle"
+          ],
+          "description": "氷霜の巨狼が現れ、傍らのファイアスライムを前脚の一撃で叩き潰した。次にその冷たい眼があなたを捉える。"
+        },
+        {
+          "id": "V6",
+          "label": "砕けた氷の太刀",
+          "kind": "event",
+          "x": 92,
+          "y": 25,
+          "location_ids": [
+            "ian_ice_katana_aftermath"
+          ],
+          "description": "店主イアンが現れ、凍死するほどの力が残る破片に触れないよう制止した。"
+        },
+        {
+          "id": "V7",
+          "label": "燃える街道",
+          "kind": "event",
+          "x": 62,
+          "y": 55,
+          "location_ids": [
+            "xanxus_confrontation",
+            "xanxus_battle",
+            "xanxus_ultimatum",
+            "warlock_rescue_battle"
+          ],
+          "description": "赤い法衣をまとい、全身を炎に包まれた骸骨の魔法使いXanxusが退路を塞いでいる。"
+        },
+        {
+          "id": "V8",
+          "label": "避難所",
+          "kind": "rest",
+          "x": 62,
+          "y": 85,
+          "location_ids": [
+            "village"
+          ],
+          "description": "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。長老が人々を励まし、行商人の荷車の周りには小さな人だかりができている。"
+        }
+      ],
+      "edges": [
+        {
+          "from": "V1",
+          "to": "V2",
+          "action_id": "approach_burning_village_carefully"
+        },
+        {
+          "from": "V2",
+          "to": "V3",
+          "action_id": "leave_burning_house"
+        },
+        {
+          "from": "V3",
+          "to": "V4",
+          "action_id": "investigate_frozen_village"
+        },
+        {
+          "from": "V4",
+          "to": "V5",
+          "action_id": "bypass_ice_elemental"
+        },
+        {
+          "from": "V5",
+          "to": "V6"
+        },
+        {
+          "from": "V3",
+          "to": "V7",
+          "action_id": "skip_frozen_clue_before_xanxus"
+        },
+        {
+          "from": "V3",
+          "to": "V8",
+          "action_id": "visit_village"
+        },
+        {
+          "from": "V8",
+          "to": "V3",
+          "action_id": "return_frozen_clue"
+        },
+        {
+          "from": "V6",
+          "to": "V8",
+          "action_id": "visit_village"
+        },
+        {
+          "from": "V7",
+          "to": "V3",
+          "action_id": "accept_xanxus_fire_seed"
+        }
+      ]
+    },
+    {
+      "id": "dragon_valley",
+      "title": "竜の谷",
+      "nodes": [
+        {
+          "id": "D1",
+          "label": "谷の入口",
+          "kind": "battle",
+          "x": 10,
+          "y": 50,
+          "location_ids": [
+            "valley_entrance"
+          ],
+          "description": "硫黄の霧が立ち込める谷の入口。霧の中で、煤をまとった人影がゆらゆらと揺れている。"
+        },
+        {
+          "id": "D2",
+          "label": "溶岩の吊り橋",
+          "kind": "event",
+          "x": 35,
+          "y": 50,
+          "location_ids": [
+            "valley_lava_bridge"
+          ],
+          "description": "煮え立つ溶岩の川に、古い吊り橋が一本だけ架かっている。板は焦げ、縄は今にも切れそうだ。"
+        },
+        {
+          "id": "D2b",
+          "label": "岩棚の迂回路",
+          "kind": "battle",
+          "x": 50,
+          "y": 80,
+          "location_ids": [
+            "valley_ledge"
+          ],
+          "description": "溶岩の川を見下ろす狭い岩棚。岩陰から、翼の生えた小型の竜が首をもたげた。"
+        },
+        {
+          "id": "D3",
+          "label": "竜の巣の前",
+          "kind": "event",
+          "x": 65,
+          "y": 50,
+          "location_ids": [
+            "valley_nest_gate",
+            "xanxus_at_nest",
+            "xanxus_phantom_battle",
+            "warlock_at_nest"
+          ],
+          "description": "巨大な洞穴の入口から、灼熱の風が吹きつけてくる。奥で、何か巨大なものが重く息をしている。"
+        },
+        {
+          "id": "D4",
+          "label": "竜の巣",
+          "kind": "boss",
+          "x": 90,
+          "y": 50,
+          "location_ids": [
+            "dragon_valley_loc",
+            "ignis_last_breath",
+            "ignis_purified"
+          ],
+          "description": "黒い岩肌と硫黄の匂いが漂う荒涼たる谷。"
+        }
+      ],
+      "edges": [
+        {
+          "from": "D1",
+          "to": "D2",
+          "action_id": "sneak_through_ash"
+        },
+        {
+          "from": "D2",
+          "to": "D3",
+          "action_id": "cross_lava_bridge"
+        },
+        {
+          "from": "D2",
+          "to": "D2b",
+          "action_id": "take_ledge_path"
+        },
+        {
+          "from": "D2b",
+          "to": "D3"
+        },
+        {
+          "from": "D3",
+          "to": "D4",
+          "action_id": "enter_dragon_nest"
         }
       ]
     }

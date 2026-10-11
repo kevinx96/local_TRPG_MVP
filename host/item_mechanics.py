@@ -41,7 +41,9 @@ def structured_item_effect(item: Any) -> str:
             parts.append(f"被ダメージを{defense}軽減")
     elif kind == "heal":
         healing = str(spec.get("healing") or spec.get("amount") or "").strip()
-        if healing:
+        if "max_hp_ratio" in spec:
+            parts.append(f"HPを最大値の{spec['max_hp_ratio'] * 100:g}%回復")
+        elif healing:
             parts.append(f"HPを{healing}回復")
     elif kind == "restore":
         resource = str(spec.get("resource") or "mp").lower()

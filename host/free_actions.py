@@ -379,6 +379,8 @@ def _use_item(session: dict[str, Any], plan: dict[str, Any], changes: dict[str, 
     item = _owned_item(session, plan["item_id"])
     spec = item_combat_spec(item)
     amount = str(spec.get("healing") or spec.get("amount") or "")
+    if "max_hp_ratio" in spec:
+        amount = str(int(actor.get("max_hp", 0) * float(spec["max_hp_ratio"])))
     if spec.get("kind") != "heal" or not amount.isdigit() or int(amount) < 1:
         return _result("その道具は持っていないか、探索中の回復には使えません。")
     missing = int(actor.get("max_hp", 0)) - int(actor.get("hp", 0))
