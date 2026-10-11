@@ -173,6 +173,15 @@ class ServiceTests(unittest.TestCase):
         self.assertEqual(session["shop_stock"]["sarah_shop"]["herb"], 0)
         self.assertIsNone(session["shop_stock"]["sarah_shop"]["holy_water"])
 
+    def test_sell_price_uses_cheapest_shop_so_no_cross_shop_profit(self):
+        session = self.session()
+        prices = [offer["price"] for shop in session["scenario_pack"]["shops"] for offer in shop["items"]
+                  if offer["item_id"] == "fireball_scroll"]
+        self.give(session, "fireball_scroll")
+        gold = session["character"]["gold"]
+        trade(session, "sarah_shop", "fireball_scroll", 1, selling=True)
+        self.assertEqual(session["character"]["gold"] - gold, min(prices) // 2)
+
     def test_key_items_not_sellable_and_purchase_requirements_preserved(self):
         session = self.session()
         for item_id in ("white_dragon_scale", "red_dragon_core", "fire_seed"):

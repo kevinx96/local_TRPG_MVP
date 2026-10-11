@@ -58,11 +58,10 @@ def _owned(session: dict[str, Any], item_id: str) -> dict[str, Any]:
 
 
 def _sell_price(session: dict[str, Any], shop: dict[str, Any], item: dict[str, Any]) -> int:
-    # Prefer this shop's price; otherwise use the first listed catalog price.
-    # TODO(design): 既有店间价差会允许跨店套利；统一售价或限制收购需要设计决定。
-    offers = [*shop["items"], *[offer for s in session["scenario_pack"].get("shops", []) for offer in s["items"]]]
-    offer = next((entry for entry in offers if entry["item_id"] == item.get("id")), None)
-    return int(offer["price"]) // 2 if offer else 5
+    # Half of the cheapest price in any shop, so buying low in one shop and selling in another never profits.
+    prices = [int(offer["price"]) for s in session["scenario_pack"].get("shops", []) for offer in s["items"]
+              if offer["item_id"] == item.get("id")]
+    return min(prices) // 2 if prices else 5
 
 
 def public_shop(session: dict[str, Any], shop_id: str) -> dict[str, Any]:

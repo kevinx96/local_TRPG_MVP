@@ -8079,7 +8079,8 @@
     {
       "id": "rusted_crown",
       "name": "錆びた王冠",
-      "description": "スライム王が身につけていた錆びた王冠。今のところ効果はない。"
+      "description": "スライム王が身につけていた錆びた王冠。今のところ効果はない。",
+      "category": "material"
     },
     {
       "id": "shrinking_gun",
@@ -8115,7 +8116,8 @@
       "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
       "traits": [
         "food"
-      ]
+      ],
+      "category": "consumable"
     },
     {
       "id": "holy_water",
