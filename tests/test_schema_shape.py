@@ -147,7 +147,7 @@ class SchemaShapeTests(unittest.TestCase):
         with patch.object(llm_client, "chat_completion", side_effect=AssertionError("network")):
             self.assertEqual(self.evaluate("lenient", live=True)["skip_reason"], "default_cache_required")
             self.assertEqual(self.evaluate("lenient", live=True, no_cache=True)["status"], "skipped")
-        raw = json.dumps(plan(kind="existing", action_id="attack_slime", operation="sneak"))
+        raw = json.dumps(plan(kind="dialogue", operation="observe"))
         with patch.object(llm_client, "chat_completion", return_value=raw):
             strict = self.evaluate("default", live=True)
         self.assertEqual(strict["status"], "invalid_plan")
@@ -160,8 +160,8 @@ class SchemaShapeTests(unittest.TestCase):
         self.assertEqual(tolerant["latency_ms"], strict["latency_ms"])
         self.assertEqual(list((self.directory / "cache").iterdir()), before)
         summary = summarize([tolerant])
-        self.assertEqual(summary["lenient"]["existing_operation_count"], 1)
-        self.assertEqual(summary["lenient"]["existing_operation_recovered"], 1)
+        # existing+operation is now normalized by the strict parser, so this fixture uses a dialogue with an operation.
+        self.assertEqual(summary["lenient"]["existing_operation_count"], 0)
         self.assertEqual(summary["conflict_rate"], 1)
         self.assertIsNone(summarize([strict])["conflict_rate"])
         self.assertEqual(free_actions.PLAN_SCHEMA, original)

@@ -35,6 +35,13 @@ class SeverityTests(unittest.TestCase):
         row["plan"] = None
         self.assertEqual(severity(row), "S2")
 
+    def test_talk_kinds_ignore_listener_when_gold_target_is_empty(self):
+        row = self.row("dialogue", "dialogue")
+        row["plan"]["target_id"] = "sarah"
+        self.assertEqual(severity(row), "S0")
+        row["gold"][0]["target_id"] = "king"
+        self.assertNotEqual(severity(row), "S0")
+
     def test_explicit_gold_tier_overrides_position(self):
         row = self.row("clarify", "dialogue,clarify")
         row["gold"][1]["tier"] = "S0"

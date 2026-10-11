@@ -94,11 +94,14 @@ def parse_plan(raw: str, character_id: str = "") -> dict[str, Any]:
     if plan["kind"] not in KINDS or plan["operation"] not in OPERATIONS:
         raise InvalidPlan("unknown plan kind or operation")
     if plan["kind"] == "existing":
-        if not plan["action_id"] or plan["operation"] or plan["target_id"] or plan["item_id"]:
+        if not plan["action_id"]:
             raise InvalidPlan("existing action cannot include another operation")
-        if plan["advance"]:
-            plan["advance"] = False
-            plan["normalized"] = ["advance"]
+        # The chosen action defines its own method, target, and movement; extra fields are restatements.
+        normalized = [key for key in ("operation", "target_id", "item_id", "advance") if plan[key]]
+        for key in normalized:
+            plan[key] = False if key == "advance" else ""
+        if normalized:
+            plan["normalized"] = normalized
     elif plan["action_id"]:
         raise InvalidPlan("unexpected action ID")
     if plan["kind"] == "interact":

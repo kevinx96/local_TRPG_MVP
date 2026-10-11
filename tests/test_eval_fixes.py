@@ -27,8 +27,11 @@ class EvalFixTests(unittest.TestCase):
         self.assertFalse(parsed["advance"])
         self.assertEqual(parsed["normalized"], ["advance"])
         for key in ("operation", "target_id", "item_id"):
-            with self.assertRaises(free_actions.InvalidPlan):
-                free_actions.parse_plan(json.dumps({**raw, key: "observe"}))
+            parsed = free_actions.parse_plan(json.dumps({**raw, key: "observe"}))
+            self.assertEqual((parsed["kind"], parsed["action_id"], parsed[key]), ("existing", "go_inn", ""))
+            self.assertIn(key, parsed["normalized"])
+        with self.assertRaises(free_actions.InvalidPlan):
+            free_actions.parse_plan(json.dumps({**raw, "action_id": "", "operation": "observe"}))
 
     def test_actor_alias(self):
         parsed = free_actions.parse_plan(json.dumps(plan()), "hero")

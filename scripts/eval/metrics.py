@@ -10,9 +10,15 @@ from .audit import costly_plan, unearned_change
 FIELDS = ("kind", "action_id", "operation", "target_id", "item_id", "advance")
 
 
+TALK_KINDS = ("dialogue", "clarify", "unsupported")
+
+
 def same_plan(plan: dict[str, Any], gold: dict[str, Any]) -> bool:
+    # PLAN_SCHEMA lets talk replies name the NPC addressed; an empty gold target means "any listener".
+    fields = [k for k in FIELDS
+              if not (k == "target_id" and gold.get("kind") in TALK_KINDS and gold.get("target_id") == "")]
     return bool(plan) and all(type(plan.get(k)) is type(gold.get(k)) and plan.get(k) == gold.get(k)
-                              for k in FIELDS)
+                              for k in fields)
 
 
 @lru_cache(maxsize=128)
