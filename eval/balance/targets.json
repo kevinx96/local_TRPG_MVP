@@ -1,0 +1,35 @@
+{
+  "_note": "数值目标（设计负责人维护）。win_rate 用 heuristic 策略、对应 checkpoint 的装备。区间为闭区间。class_spread 为同一遭遇下各可选职业胜率的最大差值。",
+  "classes": {
+    "trash":         {"policy": "heuristic", "win_rate": [0.95, 1.0], "hp_left": [0.60, 0.85], "rounds": [2, 4]},
+    "elite":         {"policy": "heuristic", "win_rate": [0.75, 0.90], "hp_left": [0.30, 0.50], "rounds": [4, 7]},
+    "boss":          {"policy": "heuristic", "win_rate": [0.60, 0.75], "hp_left": [0.15, 0.40], "rounds": [7, 12],
+                      "attack_only_win_rate_max": 0.20},
+    "scripted_loss": {"policy": "heuristic", "win_rate": [0.0, 0.05]},
+    "guest":         {"policy": "heuristic", "win_rate": [0.85, 1.0], "rounds": [3, 8]}
+  },
+  "class_spread_max": 0.15,
+  "encounters": {
+    "dark_forest_loc": "trash",
+    "lost_goblin_crossroads": "trash",
+    "slime_ambush_one": "trash",
+    "slime_ambush_two": "trash",
+    "goblin_fort": "trash",
+    "goblin_fort_chest_fight": "trash",
+    "village_fire_slime": "trash",
+    "forest_wolves": "elite",
+    "goblin_fort_first_second": "elite",
+    "goblin_fort_second_right": "elite",
+    "goblin_fort_second_left": "elite",
+    "goblin_fort_third_guards": "elite",
+    "village_fire_elemental": "elite",
+    "ice_elemental_encounter": "elite",
+    "slime_king_battle": "boss",
+    "goblin_fort_fourth": "boss",
+    "merchant_battle": "boss",
+    "frost_wolf_battle": "boss",
+    "dragon_valley_loc": "boss",
+    "xanxus_battle": "scripted_loss",
+    "warlock_rescue_battle": "guest"
+  }
+}
