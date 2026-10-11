@@ -269,6 +269,7 @@ def load_session(session_id: str) -> dict[str, Any]:
     changed = _refresh_session_scenario_pack(session)
     changed = _recover_legacy_defeat_dead_end(session) or changed
     character = session.get("character") if isinstance(session.get("character"), dict) else {}
+    _initialize_milestones(session)
     inventory = character.get("inventory") if isinstance(character.get("inventory"), list) else []
     _merge_inventory_catalog(inventory, session.get("scenario_pack"))
     _normalize_character(character)
@@ -296,6 +297,19 @@ def _refresh_session_scenario_pack(session: dict[str, Any]) -> bool:
         return False
     session["scenario_pack"] = latest_pack
     session["scenario_title"] = latest_title or session.get("scenario_title")
+    companion = session.get("companion")
+    if isinstance(companion, dict):
+        latest_companion = next((c for c in latest_pack.get("companions", []) if c.get("id") == companion.get("id")), None)
+        if latest_companion is not None:
+            companion["round_start_effects"] = deepcopy(latest_companion.get("round_start_effects", []))
+    character = session.get("character", {})
+    character_id = character.get("character_id")
+    previous_template = _find_character_in_pack(current_pack, character_id) or {}
+    latest_template = _find_character_in_pack(latest_pack, character_id) or {}
+    previous_attack = previous_template.get("combat", {}).get("basic_attack")
+    latest_attack = latest_template.get("combat", {}).get("basic_attack")
+    if previous_attack and latest_attack and character.get("combat", {}).get("basic_attack") == previous_attack:
+        character["combat"]["basic_attack"] = deepcopy(latest_attack)
     ensure_world_state(session)
     active_combat = session.get("combat")
     if isinstance(active_combat, dict):
@@ -1671,6 +1685,7 @@ def apply_state_delta(
     *,
     allow_world_transition: bool = False,
 ) -> None:
+    _initialize_milestones(session)
     character = session["character"]
     if delta.get("restore_full") is True:
         for stat in ("hp", "mp", "sp"):
@@ -1888,6 +1903,56 @@ def apply_state_delta(
                         f"現在地が{current_location_title(session)}になりました。",
                         {"before": before_position, "after": after_position},
                     )
+
+
+    _apply_milestones(session)
+
+
+def _milestone_flags(milestone: dict[str, Any]) -> list[str]:
+    return [str(milestone["trigger_flag"]), *milestone.get("alternative_flags", [])]
+
+
+def _initialize_milestones(session: dict[str, Any]) -> None:
+    character = session["character"]
+    if "level" not in character:
+        character["level"] = 1
+        # Existing progress in legacy saves is consumed without awarding gains.
+        completed = session.setdefault("completed_milestones", [])
+        for milestone in session.get("scenario_pack", {}).get("milestones", []):
+            if any(session.get("flags", {}).get(f) for f in _milestone_flags(milestone)):
+                if milestone["id"] not in completed:
+                    completed.append(milestone["id"])
+    session.setdefault("completed_milestones", [])
+
+
+def _apply_milestones(session: dict[str, Any]) -> None:
+    character = session["character"]
+    completed = session["completed_milestones"]
+    milestones = sorted(session.get("scenario_pack", {}).get("milestones", []), key=lambda m: m["level"])
+    covered_level = max([character["level"], *[m["level"] for m in milestones if m["id"] in completed]])
+    for milestone in milestones:
+        if milestone["id"] in completed:
+            continue
+        if not any(session.get("flags", {}).get(f) for f in _milestone_flags(milestone)):
+            continue
+        gains = milestone.get("gains", {}).get(character.get("character_id"))
+        if not gains:
+            continue
+        completed.append(milestone["id"])
+        levels_gained = max(0, int(milestone["level"]) - covered_level)
+        if not levels_gained:
+            continue
+        covered_level = int(milestone["level"])
+        for resource in ("hp", "mp", "sp"):
+            key = f"max_{resource}"
+            character[key] += int(gains.get(key, 0)) * levels_gained
+            character[resource] = character[key]
+        for key, value in gains.get("attributes", {}).items():
+            character["attributes"][key] += int(value) * levels_gained
+        character["level"] = max(character["level"], int(milestone["level"]))
+        record_state_event(session, "level_up", f"レベルが{character['level']}に上がりました。",
+                           {"milestone_id": milestone["id"], "level": character["level"],
+                            "levels_gained": levels_gained, "gains_per_level": gains})
 
 
 def _set_companion(session: dict[str, Any], raw_companion: Any) -> None:
@@ -2359,6 +2424,7 @@ def _find_character_in_pack(pack: dict[str, Any], character_id: str) -> Optional
 
 def _character_from_template(template: dict[str, Any], scenario_pack: Optional[dict[str, Any]] = None) -> dict[str, Any]:
     character = deepcopy(DEFAULT_CHARACTER)
+    character["level"] = 1
     character["character_id"] = str(template.get("id", ""))
     character["name"] = str(template.get("default_name") or template.get("name") or character["name"])
     character["description"] = str(template.get("description") or character["description"])

@@ -807,6 +807,9 @@ def _victory_delta(session: dict[str, Any], enemies: list[dict[str, Any]], encou
         delta["gold_change"] += _safe_int(rewards.get("gold"), 0)
         delta["inventory_add"].extend(deepcopy(rewards.get("items") or []))
         delta["flags_set"].extend(str(flag) for flag in (rewards.get("flags") or []) if flag)
+        template_id = str(enemy.get("template_id") or enemy.get("id") or "")
+        if template_id:
+            delta["flags_set"].append(_defeated_flag(template_id, current_location_id(session)))
     extra = deepcopy(encounter.get("victory_effects")) if isinstance(encounter.get("victory_effects"), dict) else {}
     by_character = encounter.get("victory_effects_by_character")
     character = session.get("character", {}) if isinstance(session.get("character"), dict) else {}
@@ -869,9 +872,17 @@ def _apply_round_start_effects(session: dict[str, Any], rng: Any) -> None:
     for effect in companion.get("round_start_effects") or []:
         if not isinstance(effect, dict):
             continue
+        every = max(1, _safe_int(effect.get("every_n_rounds"), 1))
+        if int(combat.get("round", 1)) % every:
+            continue
         kind = str(effect.get("kind") or "")
         if kind == "heal_player":
-            amount, detail = _roll_formula(str(effect.get("amount") or "0"), session["character"], rng)
+            if "max_hp_ratio" in effect:
+                ratio = max(0.0, float(effect["max_hp_ratio"]))
+                amount = int(math.floor(session["character"]["max_hp"] * ratio + 0.5))
+                detail = {"max_hp_ratio": ratio}
+            else:
+                amount, detail = _roll_formula(str(effect.get("amount") or "0"), session["character"], rng)
             healed = _heal_actor(session["character"], amount)
             if healed > 0:
                 _log(session, "companion", "heal", f"{companion.get('name', '同行者')}がHPを{healed}回復した。", {"amount": healed, "formula": detail})

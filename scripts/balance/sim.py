@@ -20,6 +20,7 @@ from .checkpoints import DEFAULT_CHECKPOINTS, DEFAULT_SCENARIO, ROOT, fresh_sess
 POLICIES = ("attack_only", "greedy", "heuristic")
 MODES = ("flat", "floor", "ratio")
 TARGETS = ROOT / "eval/balance/targets.json"
+SKILL_CANDIDATES = ROOT / "eval/balance/skill_candidates.json"
 
 
 def formula_mean(formula: str, actor: dict[str, Any]) -> float:
@@ -114,7 +115,8 @@ def scale_actor(actor: dict[str, Any], scaling: dict[str, Any], pack: dict[str, 
 
 def prepare_session(pack: dict[str, Any], encounter: str, character_id: str,
                     checkpoints: Optional[dict[str, Any]] = None, *, defense_mode: str = "flat",
-                    stat_scaling: Optional[dict[str, Any]] = None, companion: bool = True) -> dict[str, Any]:
+                    stat_scaling: Optional[dict[str, Any]] = None, companion: bool = True,
+                    skill_variant: str = "none") -> dict[str, Any]:
     isolated = deepcopy(pack)
     location = next(l for l in isolated["locations"] if l["id"] == encounter)
     guest = location.get("combat", {}).get("player_character_id")
@@ -124,8 +126,19 @@ def prepare_session(pack: dict[str, Any], encounter: str, character_id: str,
         entry = checkpoints["encounters"][encounter]["characters"][character_id]
         for key in ("inventory", "equipment", "gold"):
             session["character"][key] = deepcopy(entry[key])
+        for key in ("level", "attributes", "max_hp", "max_mp", "max_sp"):
+            if key in entry:
+                session["character"][key] = deepcopy(entry[key])
+        session["completed_milestones"] = deepcopy(entry.get("completed_milestones", []))
         session["companion"] = deepcopy(entry["companion"])
         state._normalize_character(session["character"])
+    if skill_variant not in {"none", "A"}:
+        raise ValueError("Unknown skill variant")
+    if skill_variant == "A" and not guest:
+        for candidate in json.loads(SKILL_CANDIDATES.read_text(encoding="utf-8"))["candidates"]:
+            if (candidate["variant"] == "A" and candidate["character"] == actual_id
+                    and candidate["level"] <= session["character"].get("level", 1)):
+                session["character"]["skills"].append(deepcopy(candidate["skill"]))
     if not companion:
         session["companion"] = None
     scale_actor(session["character"], stat_scaling or {}, isolated)
@@ -167,11 +180,11 @@ def defeat_cause(session: dict[str, Any]) -> str:
 def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: str = "heuristic", *,
              n: int = 500, seed: int = 20261011, checkpoints: Optional[dict[str, Any]] = None,
              defense_mode: str = "flat", stat_scaling: Optional[dict[str, Any]] = None,
-             companion: bool = True) -> dict[str, Any]:
+             companion: bool = True, skill_variant: str = "none") -> dict[str, Any]:
     if n < 1:
         raise ValueError("n must be positive")
     template = prepare_session(pack, encounter, character_id, checkpoints, defense_mode=defense_mode,
-                               stat_scaling=stat_scaling, companion=companion)
+                               stat_scaling=stat_scaling, companion=companion, skill_variant=skill_variant)
     character_id = template["character"]["character_id"]
     shared_pack = template["scenario_pack"]
     rounds, hp_left = [], []
@@ -208,6 +221,8 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
     return {"encounter": encounter, "encounter_class": shared_pack["locations"][0]["combat"]["encounter_class"],
             "character": character_id, "policy": policy, "defense_mode": defense_mode,
             "companion": companion, "n": n, "seed": seed, "stat_scaling": stat_scaling or {},
+            "skill_variant": skill_variant, "level": template["character"].get("level", 1),
+            "enemy_count": len(combat._encounter_for_session(template, shared_pack)["enemy_ids"]),
             "win_rate": wins / n, "rounds_median": median(rounds), "hp_left_mean": mean(hp_left) if hp_left else None,
             "healing_items_mean": {k: v / n for k, v in sorted(healing_items.items())},
             "mp_spent_mean": spent["mp"] / n, "sp_spent_mean": spent["sp"] / n,
@@ -235,10 +250,11 @@ def check_results(rows: list[dict[str, Any]], targets: dict[str, Any]) -> list[d
                                    "target": [0, spec["attack_only_win_rate_max"]]})
     for (mode, encounter), group in groups.items():
         values = [r["win_rate"] for r in group if r["policy"] == "heuristic"]
-        if values and max(values) - min(values) > targets["class_spread_max"] + 1e-12:
+        limit = targets.get("class_spread_max_multi_enemy", targets["class_spread_max"]) if group[0].get("enemy_count", 1) > 1 else targets["class_spread_max"]
+        if values and max(values) - min(values) > limit + 1e-12:
             violations.append({"encounter": encounter, "character": "all", "defense_mode": mode,
                                "metric": "class_spread", "value": max(values) - min(values),
-                               "target": [0, targets["class_spread_max"]]})
+                               "target": [0, limit]})
     return violations
 
 
@@ -267,6 +283,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--defense-mode", "--defense_mode", choices=MODES, default="flat")
     parser.add_argument("--stat-scaling", "--stat_scaling", default="{}", help="JSON object")
     parser.add_argument("--no-companion", action="store_true")
+    parser.add_argument("--skills", choices=["none", "A"], default="none")
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
@@ -279,7 +296,8 @@ def main(argv: Optional[list[str]] = None) -> int:
         policies = list(dict.fromkeys([*policies, "heuristic", "attack_only"]))
     started = time.perf_counter()
     rows = [simulate(pack, encounter, character, policy, n=args.n, seed=args.seed, checkpoints=checkpoints,
-                     defense_mode=args.defense_mode, stat_scaling=json.loads(args.stat_scaling), companion=not args.no_companion)
+                     defense_mode=args.defense_mode, stat_scaling=json.loads(args.stat_scaling), companion=not args.no_companion,
+                     skill_variant=args.skills)
             for encounter in encounters for character in selected_characters(pack, encounter, args.characters) for policy in policies]
     result = {"rows": rows, "elapsed_seconds": time.perf_counter() - started}
     if args.check:

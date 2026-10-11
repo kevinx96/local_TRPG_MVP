@@ -1,6 +1,6 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "dc01caf29130fc95451811b42509a18ba6d8b3e0d03a40efbe082bb9cd729bdf",
+  "scenario_sha256": "b18a0f041e4df0f4b6c758c77b09505e329fb2a10923f58595c17a8fd6b421dd",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
@@ -8,13 +8,26 @@
     "勇者除商人支线外先完成锻冶师换剑；原装备失去后由现有引擎自动装备新武器。其他职业不臆造购物。",
     "模板金币为 0，check_supplies 没有发钱效果；未把支度金叙述当作金币。未假定回城购买或卖战利品。",
     "森林出口主线选双狼支线；砦三层选择无口令警卫战，即使右路已给出口令也按这条可达路线记录。",
-    "TODO(design): 跨战斗消耗、双狼/史莱姆/砦分支、火コウモリ竜及ロビン取舍不能由数据确定。"
+    "TODO(design): 跨战斗消耗、双狼/史莱姆/砦分支、火コウモリ竜及ロビン取舍不能由数据确定。",
+    "TODO(design): 商人战前假定额外取得聖水2个，仅用于模拟；发放地点尚未接入剧本。等级与成长严格按路线触发的里程碑重放。"
   ],
   "encounters": {
     "dark_forest_loc": {
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "革の鎧",
@@ -75,7 +88,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -161,6 +175,18 @@
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -225,7 +251,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -267,6 +294,18 @@
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -328,7 +367,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -370,6 +410,18 @@
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -423,7 +475,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -471,6 +524,18 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "革の鎧",
@@ -531,7 +596,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -621,6 +687,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -630,6 +697,18 @@
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -694,7 +773,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -740,6 +820,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -749,6 +830,18 @@
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -810,7 +903,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -856,6 +950,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -865,6 +960,18 @@
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -918,7 +1025,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -964,6 +1072,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -979,6 +1088,18 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "革の鎧",
@@ -1039,7 +1160,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -1129,6 +1251,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -1150,6 +1273,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -1164,6 +1290,18 @@
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -1228,7 +1366,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -1274,6 +1413,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -1295,6 +1435,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -1309,6 +1452,18 @@
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -1370,7 +1525,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -1416,6 +1572,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -1437,6 +1594,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -1451,6 +1611,18 @@
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -1504,7 +1676,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -1550,6 +1723,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -1571,6 +1745,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -1591,6 +1768,18 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "革の鎧",
@@ -1651,7 +1840,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -1741,6 +1931,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -1762,6 +1953,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -1777,6 +1971,18 @@
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -1841,7 +2047,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -1887,6 +2094,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -1908,6 +2116,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -1923,6 +2134,18 @@
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -1984,7 +2207,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -2030,6 +2254,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -2051,6 +2276,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -2066,6 +2294,18 @@
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -2119,7 +2359,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -2165,6 +2406,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -2186,6 +2428,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -2207,6 +2452,18 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "革の鎧",
@@ -2259,7 +2516,7 @@
             "革の鎧",
             "氷鉄の大剣"
           ],
-          "gold": 25,
+          "gold": 15,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -2267,7 +2524,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -2357,6 +2615,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -2378,6 +2637,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -2394,11 +2656,10 @@
               "location": "slime_ambush_one",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
-                  "defeated_slime",
-                  "defeated_slime"
+                  "combat_defeated:slime_ambush_one:slime"
                 ],
                 "current_location": "slime_ambush_two"
               }
@@ -2406,6 +2667,18 @@
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -2462,7 +2735,7 @@
             "聖なる杖",
             "ローブ"
           ],
-          "gold": 25,
+          "gold": 15,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -2470,7 +2743,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -2516,6 +2790,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -2537,6 +2812,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -2553,11 +2831,10 @@
               "location": "slime_ambush_one",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
-                  "defeated_slime",
-                  "defeated_slime"
+                  "combat_defeated:slime_ambush_one:slime"
                 ],
                 "current_location": "slime_ambush_two"
               }
@@ -2565,6 +2842,18 @@
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -2618,7 +2907,7 @@
             "魔導書",
             "魔法のローブ"
           ],
-          "gold": 25,
+          "gold": 15,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -2626,7 +2915,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -2672,6 +2962,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -2693,6 +2984,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -2709,11 +3003,10 @@
               "location": "slime_ambush_one",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
-                  "defeated_slime",
-                  "defeated_slime"
+                  "combat_defeated:slime_ambush_one:slime"
                 ],
                 "current_location": "slime_ambush_two"
               }
@@ -2721,6 +3014,18 @@
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -2766,7 +3071,7 @@
             "ダガー",
             "革の鎧"
           ],
-          "gold": 25,
+          "gold": 15,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -2774,7 +3079,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -2820,6 +3126,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -2841,6 +3148,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -2857,11 +3167,10 @@
               "location": "slime_ambush_one",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
-                  "defeated_slime",
-                  "defeated_slime"
+                  "combat_defeated:slime_ambush_one:slime"
                 ],
                 "current_location": "slime_ambush_two"
               }
@@ -2875,6 +3184,18 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "革の鎧",
@@ -2927,7 +3248,7 @@
             "革の鎧",
             "氷鉄の大剣"
           ],
-          "gold": 40,
+          "gold": 20,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -2935,7 +3256,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -3025,6 +3347,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -3046,6 +3369,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -3062,11 +3388,10 @@
               "location": "slime_ambush_one",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
-                  "defeated_slime",
-                  "defeated_slime"
+                  "combat_defeated:slime_ambush_one:slime"
                 ],
                 "current_location": "slime_ambush_two"
               }
@@ -3075,11 +3400,10 @@
               "location": "slime_ambush_two",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
-                  "defeated_slime",
-                  "defeated_slime"
+                  "combat_defeated:slime_ambush_two:slime"
                 ],
                 "current_location": "slime_king_battle"
               }
@@ -3087,6 +3411,18 @@
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -3143,7 +3479,7 @@
             "聖なる杖",
             "ローブ"
           ],
-          "gold": 40,
+          "gold": 20,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -3151,7 +3487,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -3197,6 +3534,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -3218,6 +3556,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -3234,11 +3575,10 @@
               "location": "slime_ambush_one",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
-                  "defeated_slime",
-                  "defeated_slime"
+                  "combat_defeated:slime_ambush_one:slime"
                 ],
                 "current_location": "slime_ambush_two"
               }
@@ -3247,11 +3587,10 @@
               "location": "slime_ambush_two",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
-                  "defeated_slime",
-                  "defeated_slime"
+                  "combat_defeated:slime_ambush_two:slime"
                 ],
                 "current_location": "slime_king_battle"
               }
@@ -3259,6 +3598,18 @@
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -3312,7 +3663,7 @@
             "魔導書",
             "魔法のローブ"
           ],
-          "gold": 40,
+          "gold": 20,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -3320,7 +3671,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -3366,6 +3718,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -3387,6 +3740,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -3403,11 +3759,10 @@
               "location": "slime_ambush_one",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
-                  "defeated_slime",
-                  "defeated_slime"
+                  "combat_defeated:slime_ambush_one:slime"
                 ],
                 "current_location": "slime_ambush_two"
               }
@@ -3416,11 +3771,10 @@
               "location": "slime_ambush_two",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
-                  "defeated_slime",
-                  "defeated_slime"
+                  "combat_defeated:slime_ambush_two:slime"
                 ],
                 "current_location": "slime_king_battle"
               }
@@ -3428,6 +3782,18 @@
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -3473,7 +3839,7 @@
             "ダガー",
             "革の鎧"
           ],
-          "gold": 40,
+          "gold": 20,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -3481,7 +3847,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -3527,6 +3894,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -3548,6 +3916,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -3564,11 +3935,10 @@
               "location": "slime_ambush_one",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
-                  "defeated_slime",
-                  "defeated_slime"
+                  "combat_defeated:slime_ambush_one:slime"
                 ],
                 "current_location": "slime_ambush_two"
               }
@@ -3577,11 +3947,10 @@
               "location": "slime_ambush_two",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
-                  "defeated_slime",
-                  "defeated_slime"
+                  "combat_defeated:slime_ambush_two:slime"
                 ],
                 "current_location": "slime_king_battle"
               }
@@ -3595,6 +3964,18 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "革の鎧",
@@ -3655,7 +4036,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -3745,6 +4127,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -3764,6 +4147,18 @@
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -3828,7 +4223,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -3874,6 +4270,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -3893,6 +4290,18 @@
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -3954,7 +4363,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -4000,6 +4410,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -4019,6 +4430,18 @@
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -4072,7 +4495,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -4118,6 +4542,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -4143,6 +4568,18 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "革の鎧",
@@ -4203,7 +4640,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -4293,6 +4731,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -4314,12 +4753,27 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             }
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -4384,7 +4838,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -4430,6 +4885,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -4451,12 +4907,27 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             }
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -4518,7 +4989,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -4564,6 +5036,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -4585,12 +5058,27 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             }
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -4644,7 +5132,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -4690,6 +5179,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -4711,6 +5201,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             }
@@ -4723,6 +5216,18 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "革の鎧",
@@ -4775,7 +5280,7 @@
             "革の鎧",
             "氷鉄の大剣"
           ],
-          "gold": 25,
+          "gold": 20,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -4783,7 +5288,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -4873,6 +5379,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -4894,6 +5401,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -4901,7 +5411,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -4915,6 +5429,18 @@
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -4971,7 +5497,7 @@
             "聖なる杖",
             "ローブ"
           ],
-          "gold": 25,
+          "gold": 20,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -4979,7 +5505,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -5025,6 +5552,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -5046,6 +5574,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -5053,7 +5584,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -5067,6 +5602,18 @@
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -5120,7 +5667,7 @@
             "魔導書",
             "魔法のローブ"
           ],
-          "gold": 25,
+          "gold": 20,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -5128,7 +5675,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -5174,6 +5722,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -5195,6 +5744,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -5202,7 +5754,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -5216,6 +5772,18 @@
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -5261,7 +5829,7 @@
             "ダガー",
             "革の鎧"
           ],
-          "gold": 25,
+          "gold": 20,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -5269,7 +5837,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -5315,6 +5884,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -5336,6 +5906,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -5343,7 +5916,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -5363,6 +5940,18 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "革の鎧",
@@ -5415,7 +6004,7 @@
             "革の鎧",
             "氷鉄の大剣"
           ],
-          "gold": 25,
+          "gold": 20,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -5423,7 +6012,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -5513,6 +6103,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -5534,6 +6125,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -5541,7 +6135,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -5556,6 +6154,18 @@
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -5612,7 +6222,7 @@
             "聖なる杖",
             "ローブ"
           ],
-          "gold": 25,
+          "gold": 20,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -5620,7 +6230,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -5666,6 +6277,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -5687,6 +6299,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -5694,7 +6309,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -5709,6 +6328,18 @@
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -5762,7 +6393,7 @@
             "魔導書",
             "魔法のローブ"
           ],
-          "gold": 25,
+          "gold": 20,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -5770,7 +6401,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -5816,6 +6448,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -5837,6 +6470,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -5844,7 +6480,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -5859,6 +6499,18 @@
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -5904,7 +6556,7 @@
             "ダガー",
             "革の鎧"
           ],
-          "gold": 25,
+          "gold": 20,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -5912,7 +6564,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -5958,6 +6611,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -5979,6 +6633,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -5986,7 +6643,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -6007,6 +6668,18 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "革の鎧",
@@ -6059,7 +6732,7 @@
             "革の鎧",
             "氷鉄の大剣"
           ],
-          "gold": 30,
+          "gold": 25,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -6067,7 +6740,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -6157,6 +6831,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -6178,6 +6853,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -6185,7 +6863,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -6202,6 +6884,7 @@
               "delta": {
                 "gold_change": 5,
                 "flags_set": [
+                  "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
                 ],
                 "current_location": "goblin_fort_third_gate"
@@ -6218,6 +6901,18 @@
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -6274,7 +6969,7 @@
             "聖なる杖",
             "ローブ"
           ],
-          "gold": 30,
+          "gold": 25,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -6282,7 +6977,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -6328,6 +7024,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -6349,6 +7046,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -6356,7 +7056,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -6373,6 +7077,7 @@
               "delta": {
                 "gold_change": 5,
                 "flags_set": [
+                  "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
                 ],
                 "current_location": "goblin_fort_third_gate"
@@ -6389,6 +7094,18 @@
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -6442,7 +7159,7 @@
             "魔導書",
             "魔法のローブ"
           ],
-          "gold": 30,
+          "gold": 25,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -6450,7 +7167,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -6496,6 +7214,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -6517,6 +7236,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -6524,7 +7246,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -6541,6 +7267,7 @@
               "delta": {
                 "gold_change": 5,
                 "flags_set": [
+                  "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
                 ],
                 "current_location": "goblin_fort_third_gate"
@@ -6557,6 +7284,18 @@
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -6602,7 +7341,7 @@
             "ダガー",
             "革の鎧"
           ],
-          "gold": 30,
+          "gold": 25,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -6610,7 +7349,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -6656,6 +7396,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -6677,6 +7418,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -6684,7 +7428,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -6701,6 +7449,7 @@
               "delta": {
                 "gold_change": 5,
                 "flags_set": [
+                  "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
                 ],
                 "current_location": "goblin_fort_third_gate"
@@ -6723,6 +7472,18 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "革の鎧",
@@ -6775,7 +7536,7 @@
             "革の鎧",
             "氷鉄の大剣"
           ],
-          "gold": 45,
+          "gold": 30,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -6783,7 +7544,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -6873,6 +7635,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -6894,6 +7657,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -6901,7 +7667,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -6918,6 +7688,7 @@
               "delta": {
                 "gold_change": 5,
                 "flags_set": [
+                  "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
                 ],
                 "current_location": "goblin_fort_third_gate"
@@ -6935,13 +7706,28 @@
               "location": "goblin_fort_third_guards",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_third_guards:hobgoblin"
+                ],
                 "current_location": "goblin_fort_fourth"
               }
             }
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -6998,7 +7784,7 @@
             "聖なる杖",
             "ローブ"
           ],
-          "gold": 45,
+          "gold": 30,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -7006,7 +7792,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -7052,6 +7839,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -7073,6 +7861,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -7080,7 +7871,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -7097,6 +7892,7 @@
               "delta": {
                 "gold_change": 5,
                 "flags_set": [
+                  "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
                 ],
                 "current_location": "goblin_fort_third_gate"
@@ -7114,13 +7910,28 @@
               "location": "goblin_fort_third_guards",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_third_guards:hobgoblin"
+                ],
                 "current_location": "goblin_fort_fourth"
               }
             }
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -7174,7 +7985,7 @@
             "魔導書",
             "魔法のローブ"
           ],
-          "gold": 45,
+          "gold": 30,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -7182,7 +7993,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -7228,6 +8040,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -7249,6 +8062,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -7256,7 +8072,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -7273,6 +8093,7 @@
               "delta": {
                 "gold_change": 5,
                 "flags_set": [
+                  "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
                 ],
                 "current_location": "goblin_fort_third_gate"
@@ -7290,13 +8111,28 @@
               "location": "goblin_fort_third_guards",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_third_guards:hobgoblin"
+                ],
                 "current_location": "goblin_fort_fourth"
               }
             }
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -7342,7 +8178,7 @@
             "ダガー",
             "革の鎧"
           ],
-          "gold": 45,
+          "gold": 30,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -7350,7 +8186,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -7396,6 +8233,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -7417,6 +8255,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -7424,7 +8265,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -7441,6 +8286,7 @@
               "delta": {
                 "gold_change": 5,
                 "flags_set": [
+                  "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
                 ],
                 "current_location": "goblin_fort_third_gate"
@@ -7458,7 +8304,10 @@
               "location": "goblin_fort_third_guards",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_third_guards:hobgoblin"
+                ],
                 "current_location": "goblin_fort_fourth"
               }
             }
@@ -7471,6 +8320,20 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 3,
+          "completed_milestones": [
+            "lv3"
+          ],
+          "attributes": {
+            "str": 16,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 12
+          },
+          "max_hp": 30,
+          "max_mp": 10,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "革の鎧",
@@ -7523,7 +8386,7 @@
             "革の鎧",
             "氷鉄の大剣"
           ],
-          "gold": 155,
+          "gold": 135,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -7531,7 +8394,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -7621,6 +8485,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -7642,6 +8507,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -7649,7 +8517,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -7666,6 +8538,7 @@
               "delta": {
                 "gold_change": 5,
                 "flags_set": [
+                  "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
                 ],
                 "current_location": "goblin_fort_third_gate"
@@ -7683,7 +8556,10 @@
               "location": "goblin_fort_third_guards",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_third_guards:hobgoblin"
+                ],
                 "current_location": "goblin_fort_fourth"
               }
             },
@@ -7691,9 +8567,11 @@
               "location": "goblin_fort_fourth",
               "step": "@victory",
               "delta": {
-                "gold_change": 110,
+                "gold_change": 105,
                 "flags_set": [
                   "defeated_goblin_king",
+                  "combat_defeated:goblin_fort_fourth:goblin_king",
+                  "combat_defeated:goblin_fort_fourth:goblin_archer",
                   "cleared_goblin_fort"
                 ],
                 "current_location": "goblin_fort_chest_choice"
@@ -7713,6 +8591,20 @@
           ]
         },
         "cleric": {
+          "level": 3,
+          "completed_milestones": [
+            "lv3"
+          ],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 16,
+            "wis": 16,
+            "end": 15
+          },
+          "max_hp": 28,
+          "max_mp": 18,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -7769,7 +8661,7 @@
             "聖なる杖",
             "ローブ"
           ],
-          "gold": 155,
+          "gold": 135,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -7777,7 +8669,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -7823,6 +8716,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -7844,6 +8738,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -7851,7 +8748,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -7868,6 +8769,7 @@
               "delta": {
                 "gold_change": 5,
                 "flags_set": [
+                  "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
                 ],
                 "current_location": "goblin_fort_third_gate"
@@ -7885,7 +8787,10 @@
               "location": "goblin_fort_third_guards",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_third_guards:hobgoblin"
+                ],
                 "current_location": "goblin_fort_fourth"
               }
             },
@@ -7893,9 +8798,11 @@
               "location": "goblin_fort_fourth",
               "step": "@victory",
               "delta": {
-                "gold_change": 110,
+                "gold_change": 105,
                 "flags_set": [
                   "defeated_goblin_king",
+                  "combat_defeated:goblin_fort_fourth:goblin_king",
+                  "combat_defeated:goblin_fort_fourth:goblin_archer",
                   "cleared_goblin_fort"
                 ],
                 "current_location": "goblin_fort_chest_choice"
@@ -7915,6 +8822,20 @@
           ]
         },
         "mage": {
+          "level": 3,
+          "completed_milestones": [
+            "lv3"
+          ],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 20,
+            "wis": 12,
+            "end": 6
+          },
+          "max_hp": 18,
+          "max_mp": 26,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "魔導書",
@@ -7968,7 +8889,7 @@
             "魔導書",
             "魔法のローブ"
           ],
-          "gold": 155,
+          "gold": 135,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -7976,7 +8897,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -8022,6 +8944,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -8043,6 +8966,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -8050,7 +8976,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -8067,6 +8997,7 @@
               "delta": {
                 "gold_change": 5,
                 "flags_set": [
+                  "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
                 ],
                 "current_location": "goblin_fort_third_gate"
@@ -8084,7 +9015,10 @@
               "location": "goblin_fort_third_guards",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_third_guards:hobgoblin"
+                ],
                 "current_location": "goblin_fort_fourth"
               }
             },
@@ -8092,9 +9026,11 @@
               "location": "goblin_fort_fourth",
               "step": "@victory",
               "delta": {
-                "gold_change": 110,
+                "gold_change": 105,
                 "flags_set": [
                   "defeated_goblin_king",
+                  "combat_defeated:goblin_fort_fourth:goblin_king",
+                  "combat_defeated:goblin_fort_fourth:goblin_archer",
                   "cleared_goblin_fort"
                 ],
                 "current_location": "goblin_fort_chest_choice"
@@ -8114,6 +9050,20 @@
           ]
         },
         "thief": {
+          "level": 3,
+          "completed_milestones": [
+            "lv3"
+          ],
+          "attributes": {
+            "str": 10,
+            "dex": 20,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 22,
+          "max_mp": 8,
+          "max_sp": 18,
           "inventory": [
             {
               "name": "ダガー",
@@ -8159,7 +9109,7 @@
             "ダガー",
             "革の鎧"
           ],
-          "gold": 155,
+          "gold": 135,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -8167,7 +9117,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -8213,6 +9164,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -8234,6 +9186,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort:goblin"
+                ],
                 "current_location": "goblin_fort_first_second"
               }
             },
@@ -8241,7 +9196,11 @@
               "location": "goblin_fort_first_second",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 10,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_first_second:goblin",
+                  "combat_defeated:goblin_fort_first_second:goblin_archer"
+                ],
                 "current_location": "goblin_fort_second_choice"
               }
             },
@@ -8258,6 +9217,7 @@
               "delta": {
                 "gold_change": 5,
                 "flags_set": [
+                  "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
                 ],
                 "current_location": "goblin_fort_third_gate"
@@ -8275,7 +9235,10 @@
               "location": "goblin_fort_third_guards",
               "step": "@victory",
               "delta": {
-                "gold_change": 15,
+                "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:goblin_fort_third_guards:hobgoblin"
+                ],
                 "current_location": "goblin_fort_fourth"
               }
             },
@@ -8283,9 +9246,11 @@
               "location": "goblin_fort_fourth",
               "step": "@victory",
               "delta": {
-                "gold_change": 110,
+                "gold_change": 105,
                 "flags_set": [
                   "defeated_goblin_king",
+                  "combat_defeated:goblin_fort_fourth:goblin_king",
+                  "combat_defeated:goblin_fort_fourth:goblin_archer",
                   "cleared_goblin_fort"
                 ],
                 "current_location": "goblin_fort_chest_choice"
@@ -8311,6 +9276,21 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 18,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 13
+          },
+          "max_hp": 35,
+          "max_mp": 11,
+          "max_sp": 16,
           "inventory": [
             {
               "name": "革の鎧",
@@ -8448,6 +9428,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -8469,6 +9450,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -8484,6 +9468,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -8510,6 +9497,21 @@
           ]
         },
         "cleric": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 17,
+            "wis": 18,
+            "end": 15
+          },
+          "max_hp": 33,
+          "max_mp": 20,
+          "max_sp": 11,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -8607,6 +9609,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -8628,6 +9631,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -8643,6 +9649,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -8669,6 +9678,21 @@
           ]
         },
         "mage": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 22,
+            "wis": 13,
+            "end": 6
+          },
+          "max_hp": 21,
+          "max_mp": 29,
+          "max_sp": 9,
           "inventory": [
             {
               "name": "魔導書",
@@ -8763,6 +9787,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -8784,6 +9809,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -8799,6 +9827,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -8825,6 +9856,21 @@
           ]
         },
         "thief": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 11,
+            "dex": 22,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 26,
+          "max_mp": 9,
+          "max_sp": 20,
           "inventory": [
             {
               "name": "ダガー",
@@ -8911,6 +9957,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -8932,6 +9979,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -8947,6 +9997,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -8979,6 +10032,21 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 18,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 13
+          },
+          "max_hp": 35,
+          "max_mp": 11,
+          "max_sp": 16,
           "inventory": [
             {
               "name": "革の鎧",
@@ -9116,6 +10184,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -9137,6 +10206,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -9152,6 +10224,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -9178,6 +10253,21 @@
           ]
         },
         "cleric": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 17,
+            "wis": 18,
+            "end": 15
+          },
+          "max_hp": 33,
+          "max_mp": 20,
+          "max_sp": 11,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -9275,6 +10365,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -9296,6 +10387,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -9311,6 +10405,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -9337,6 +10434,21 @@
           ]
         },
         "mage": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 22,
+            "wis": 13,
+            "end": 6
+          },
+          "max_hp": 21,
+          "max_mp": 29,
+          "max_sp": 9,
           "inventory": [
             {
               "name": "魔導書",
@@ -9431,6 +10543,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -9452,6 +10565,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -9467,6 +10583,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -9493,6 +10612,21 @@
           ]
         },
         "thief": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 11,
+            "dex": 22,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 26,
+          "max_mp": 9,
+          "max_sp": 20,
           "inventory": [
             {
               "name": "ダガー",
@@ -9579,6 +10713,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -9600,6 +10735,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -9615,6 +10753,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -9647,6 +10788,21 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 18,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 13
+          },
+          "max_hp": 35,
+          "max_mp": 11,
+          "max_sp": 16,
           "inventory": [
             {
               "name": "革の鎧",
@@ -9784,6 +10940,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -9805,6 +10962,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -9820,6 +10980,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -9848,6 +11011,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -9872,6 +11038,21 @@
           ]
         },
         "cleric": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 17,
+            "wis": 18,
+            "end": 15
+          },
+          "max_hp": 33,
+          "max_mp": 20,
+          "max_sp": 11,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -9969,6 +11150,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -9990,6 +11172,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -10005,6 +11190,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -10033,6 +11221,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -10057,6 +11248,21 @@
           ]
         },
         "mage": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 22,
+            "wis": 13,
+            "end": 6
+          },
+          "max_hp": 21,
+          "max_mp": 29,
+          "max_sp": 9,
           "inventory": [
             {
               "name": "魔導書",
@@ -10151,6 +11357,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -10172,6 +11379,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -10187,6 +11397,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -10215,6 +11428,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -10239,6 +11455,21 @@
           ]
         },
         "thief": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 11,
+            "dex": 22,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 26,
+          "max_mp": 9,
+          "max_sp": 20,
           "inventory": [
             {
               "name": "ダガー",
@@ -10325,6 +11556,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -10346,6 +11578,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -10361,6 +11596,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -10389,6 +11627,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -10419,6 +11660,21 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 18,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 13
+          },
+          "max_hp": 35,
+          "max_mp": 11,
+          "max_sp": 16,
           "inventory": [
             {
               "name": "革の鎧",
@@ -10556,6 +11812,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -10577,6 +11834,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -10592,6 +11852,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -10620,6 +11883,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -10667,6 +11933,21 @@
           ]
         },
         "cleric": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 17,
+            "wis": 18,
+            "end": 15
+          },
+          "max_hp": 33,
+          "max_mp": 20,
+          "max_sp": 11,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -10764,6 +12045,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -10785,6 +12067,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -10800,6 +12085,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -10828,6 +12116,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -10875,6 +12166,21 @@
           ]
         },
         "mage": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 22,
+            "wis": 13,
+            "end": 6
+          },
+          "max_hp": 21,
+          "max_mp": 29,
+          "max_sp": 9,
           "inventory": [
             {
               "name": "魔導書",
@@ -10969,6 +12275,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -10990,6 +12297,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -11005,6 +12315,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -11033,6 +12346,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -11080,6 +12396,21 @@
           ]
         },
         "thief": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 11,
+            "dex": 22,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 26,
+          "max_mp": 9,
+          "max_sp": 20,
           "inventory": [
             {
               "name": "ダガー",
@@ -11166,6 +12497,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -11187,6 +12519,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -11202,6 +12537,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -11230,6 +12568,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -11285,6 +12626,21 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 18,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 13
+          },
+          "max_hp": 35,
+          "max_mp": 11,
+          "max_sp": 16,
           "inventory": [
             {
               "name": "革の鎧",
@@ -11422,6 +12778,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -11443,6 +12800,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -11458,6 +12818,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -11486,6 +12849,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -11499,6 +12865,21 @@
           ]
         },
         "cleric": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 17,
+            "wis": 18,
+            "end": 15
+          },
+          "max_hp": 33,
+          "max_mp": 20,
+          "max_sp": 11,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -11596,6 +12977,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -11617,6 +12999,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -11632,6 +13017,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -11660,6 +13048,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -11673,6 +13064,21 @@
           ]
         },
         "mage": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 22,
+            "wis": 13,
+            "end": 6
+          },
+          "max_hp": 21,
+          "max_mp": 29,
+          "max_sp": 9,
           "inventory": [
             {
               "name": "魔導書",
@@ -11767,6 +13173,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -11788,6 +13195,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -11803,6 +13213,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -11831,6 +13244,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -11844,6 +13260,21 @@
           ]
         },
         "thief": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 11,
+            "dex": 22,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 26,
+          "max_mp": 9,
+          "max_sp": 20,
           "inventory": [
             {
               "name": "ダガー",
@@ -11930,6 +13361,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -11951,6 +13383,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -11966,6 +13401,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -11994,6 +13432,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -12013,6 +13454,21 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 18,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 13
+          },
+          "max_hp": 35,
+          "max_mp": 11,
+          "max_sp": 16,
           "inventory": [
             {
               "name": "革の鎧",
@@ -12150,6 +13606,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -12171,6 +13628,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -12186,6 +13646,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -12214,6 +13677,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -12229,12 +13695,30 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 15,
+                "flags_set": [
+                  "combat_defeated:ice_elemental_encounter:ice_elemental"
+                ],
                 "current_location": "frost_wolf_battle"
               }
             }
           ]
         },
         "cleric": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 17,
+            "wis": 18,
+            "end": 15
+          },
+          "max_hp": 33,
+          "max_mp": 20,
+          "max_sp": 11,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -12332,6 +13816,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -12353,6 +13838,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -12368,6 +13856,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -12396,6 +13887,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -12411,12 +13905,30 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 15,
+                "flags_set": [
+                  "combat_defeated:ice_elemental_encounter:ice_elemental"
+                ],
                 "current_location": "frost_wolf_battle"
               }
             }
           ]
         },
         "mage": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 22,
+            "wis": 13,
+            "end": 6
+          },
+          "max_hp": 21,
+          "max_mp": 29,
+          "max_sp": 9,
           "inventory": [
             {
               "name": "魔導書",
@@ -12511,6 +14023,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -12532,6 +14045,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -12547,6 +14063,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -12575,6 +14094,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -12590,12 +14112,30 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 15,
+                "flags_set": [
+                  "combat_defeated:ice_elemental_encounter:ice_elemental"
+                ],
                 "current_location": "frost_wolf_battle"
               }
             }
           ]
         },
         "thief": {
+          "level": 4,
+          "completed_milestones": [
+            "lv2",
+            "lv4"
+          ],
+          "attributes": {
+            "str": 11,
+            "dex": 22,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 26,
+          "max_mp": 9,
+          "max_sp": 20,
           "inventory": [
             {
               "name": "ダガー",
@@ -12682,6 +14222,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -12703,6 +14244,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -12718,6 +14262,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -12746,6 +14293,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -12761,6 +14311,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 15,
+                "flags_set": [
+                  "combat_defeated:ice_elemental_encounter:ice_elemental"
+                ],
                 "current_location": "frost_wolf_battle"
               }
             }
@@ -12773,6 +14326,22 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 5,
+          "completed_milestones": [
+            "lv2",
+            "lv4",
+            "lv5"
+          ],
+          "attributes": {
+            "str": 20,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 14
+          },
+          "max_hp": 40,
+          "max_mp": 12,
+          "max_sp": 18,
           "inventory": [
             {
               "name": "革の鎧",
@@ -12910,6 +14479,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -12931,6 +14501,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -12946,6 +14519,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -12974,6 +14550,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -12989,6 +14568,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 15,
+                "flags_set": [
+                  "combat_defeated:ice_elemental_encounter:ice_elemental"
+                ],
                 "current_location": "frost_wolf_battle"
               }
             },
@@ -12999,6 +14581,7 @@
                 "gold_change": 40,
                 "flags_set": [
                   "defeated_frost_dire_wolf",
+                  "combat_defeated:frost_wolf_battle:frost_dire_wolf",
                   "defeated_frost_dire_wolf"
                 ],
                 "current_location": "ian_ice_katana_aftermath"
@@ -13023,6 +14606,22 @@
           ]
         },
         "cleric": {
+          "level": 5,
+          "completed_milestones": [
+            "lv2",
+            "lv4",
+            "lv5"
+          ],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 18,
+            "wis": 20,
+            "end": 15
+          },
+          "max_hp": 38,
+          "max_mp": 22,
+          "max_sp": 12,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -13135,6 +14734,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -13156,6 +14756,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -13171,6 +14774,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -13199,6 +14805,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -13214,6 +14823,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 15,
+                "flags_set": [
+                  "combat_defeated:ice_elemental_encounter:ice_elemental"
+                ],
                 "current_location": "frost_wolf_battle"
               }
             },
@@ -13224,6 +14836,7 @@
                 "gold_change": 40,
                 "flags_set": [
                   "defeated_frost_dire_wolf",
+                  "combat_defeated:frost_wolf_battle:frost_dire_wolf",
                   "defeated_frost_dire_wolf"
                 ],
                 "current_location": "ian_ice_katana_aftermath"
@@ -13248,6 +14861,22 @@
           ]
         },
         "mage": {
+          "level": 5,
+          "completed_milestones": [
+            "lv2",
+            "lv4",
+            "lv5"
+          ],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 24,
+            "wis": 14,
+            "end": 6
+          },
+          "max_hp": 24,
+          "max_mp": 32,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "魔導書",
@@ -13357,6 +14986,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -13378,6 +15008,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -13393,6 +15026,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -13421,6 +15057,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -13436,6 +15075,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 15,
+                "flags_set": [
+                  "combat_defeated:ice_elemental_encounter:ice_elemental"
+                ],
                 "current_location": "frost_wolf_battle"
               }
             },
@@ -13446,6 +15088,7 @@
                 "gold_change": 40,
                 "flags_set": [
                   "defeated_frost_dire_wolf",
+                  "combat_defeated:frost_wolf_battle:frost_dire_wolf",
                   "defeated_frost_dire_wolf"
                 ],
                 "current_location": "ian_ice_katana_aftermath"
@@ -13470,6 +15113,22 @@
           ]
         },
         "thief": {
+          "level": 5,
+          "completed_milestones": [
+            "lv2",
+            "lv4",
+            "lv5"
+          ],
+          "attributes": {
+            "str": 12,
+            "dex": 24,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 30,
+          "max_mp": 10,
+          "max_sp": 22,
           "inventory": [
             {
               "name": "ダガー",
@@ -13570,6 +15229,7 @@
                 "gold_change": 5,
                 "flags_set": [
                   "defeated_slime",
+                  "combat_defeated:dark_forest_loc:slime",
                   "defeated_slime",
                   "forest_entrance_resolved"
                 ],
@@ -13591,6 +15251,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "flags_set": [
+                  "combat_defeated:lost_goblin_crossroads:goblin"
+                ],
                 "current_location": "elf_spring"
               }
             },
@@ -13606,6 +15269,9 @@
               "location": "forest_wolves",
               "step": "@victory",
               "delta": {
+                "flags_set": [
+                  "combat_defeated:forest_wolves:forest_wolf"
+                ],
                 "current_location": "forest_exit"
               }
             },
@@ -13634,6 +15300,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "flags_set": [
+                  "combat_defeated:village_fire_slime:fire_slime"
+                ],
                 "current_location": "village_frozen_clue"
               }
             },
@@ -13649,6 +15318,9 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 15,
+                "flags_set": [
+                  "combat_defeated:ice_elemental_encounter:ice_elemental"
+                ],
                 "current_location": "frost_wolf_battle"
               }
             },
@@ -13659,6 +15331,7 @@
                 "gold_change": 40,
                 "flags_set": [
                   "defeated_frost_dire_wolf",
+                  "combat_defeated:frost_wolf_battle:frost_dire_wolf",
                   "defeated_frost_dire_wolf"
                 ],
                 "current_location": "ian_ice_katana_aftermath"
@@ -13691,6 +15364,18 @@
       "status": "proposed",
       "characters": {
         "hero": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 12,
+            "dex": 5,
+            "int": 5,
+            "wis": 5,
+            "end": 10
+          },
+          "max_hp": 20,
+          "max_mp": 8,
+          "max_sp": 10,
           "inventory": [
             {
               "name": "鉄の剣",
@@ -13753,6 +15438,20 @@
                 "element": "cursed",
                 "self_damage": 1
               }
+            },
+            {
+              "name": "聖水",
+              "description": "聖水",
+              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "quantity": 2,
+              "id": "holy_water",
+              "combat": {
+                "kind": "damage",
+                "damage": "36",
+                "accuracy": 100,
+                "element": "holy",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -13767,7 +15466,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -13873,6 +15573,18 @@
           ]
         },
         "cleric": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 14,
+            "wis": 12,
+            "end": 15
+          },
+          "max_hp": 18,
+          "max_mp": 14,
+          "max_sp": 8,
           "inventory": [
             {
               "name": "聖なる杖",
@@ -13941,6 +15653,20 @@
                 "skill_healing_bonus": 10,
                 "healing_harms_humans": true
               }
+            },
+            {
+              "name": "聖水",
+              "description": "聖水",
+              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "quantity": 2,
+              "id": "holy_water",
+              "combat": {
+                "kind": "damage",
+                "damage": "36",
+                "accuracy": 100,
+                "element": "holy",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -13956,7 +15682,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -14062,6 +15789,18 @@
           ]
         },
         "mage": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 4,
+            "dex": 8,
+            "int": 16,
+            "wis": 10,
+            "end": 6
+          },
+          "max_hp": 12,
+          "max_mp": 20,
+          "max_sp": 6,
           "inventory": [
             {
               "name": "魔導書",
@@ -14146,6 +15885,20 @@
                   }
                 ]
               }
+            },
+            {
+              "name": "聖水",
+              "description": "聖水",
+              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "quantity": 2,
+              "id": "holy_water",
+              "combat": {
+                "kind": "damage",
+                "damage": "36",
+                "accuracy": 100,
+                "element": "holy",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -14161,7 +15914,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",
@@ -14267,6 +16021,18 @@
           ]
         },
         "thief": {
+          "level": 1,
+          "completed_milestones": [],
+          "attributes": {
+            "str": 8,
+            "dex": 16,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "max_hp": 14,
+          "max_mp": 6,
+          "max_sp": 14,
           "inventory": [
             {
               "name": "ダガー",
@@ -14326,6 +16092,20 @@
                   "stackable": true
                 }
               }
+            },
+            {
+              "name": "聖水",
+              "description": "聖水",
+              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "quantity": 2,
+              "id": "holy_water",
+              "combat": {
+                "kind": "damage",
+                "damage": "36",
+                "accuracy": 100,
+                "element": "holy",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -14340,7 +16120,8 @@
             "round_start_effects": [
               {
                 "kind": "heal_player",
-                "amount": "8"
+                "every_n_rounds": 2,
+                "max_hp_ratio": 0.15
               }
             ],
             "image": "/static/images/npc_warlock.png",

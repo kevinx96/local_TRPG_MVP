@@ -123,6 +123,7 @@ def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) ->
     else:
         pack["characters"] = []
     pack["companions"] = _normalize_records(raw.get("companions"))
+    pack["milestones"] = _normalize_records(raw.get("milestones"))
     return pack
 
 

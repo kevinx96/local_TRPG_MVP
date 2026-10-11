@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-09-08-death-game-over"
+    "content_revision": "2026-10-11-balance-pass1"
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -3186,7 +3186,6 @@
         "auto_start": false,
         "flee_allowed": true,
         "enemy_ids": [
-          "forest_wolf",
           "forest_wolf"
         ],
         "victory_effects": {
@@ -3234,8 +3233,6 @@
         "auto_start": false,
         "flee_allowed": false,
         "enemy_ids": [
-          "slime",
-          "slime",
           "slime"
         ],
         "victory_effects": {
@@ -3284,8 +3281,6 @@
         "auto_start": true,
         "flee_allowed": false,
         "enemy_ids": [
-          "slime",
-          "slime",
           "slime"
         ],
         "victory_effects": {
@@ -3655,7 +3650,6 @@
         "flee_allowed": true,
         "enemy_ids": [
           "goblin",
-          "goblin_archer",
           "goblin_archer"
         ],
         "victory_effects": {
@@ -3970,10 +3964,6 @@
         "auto_start": false,
         "flee_allowed": false,
         "enemy_ids": [
-          "war_hound",
-          "war_hound",
-          "war_hound",
-          "war_hound",
           "war_hound"
         ],
         "victory_effects": {
@@ -4231,8 +4221,6 @@
         "auto_start": false,
         "flee_allowed": false,
         "enemy_ids": [
-          "hobgoblin",
-          "hobgoblin",
           "hobgoblin"
         ],
         "victory_effects": {
@@ -4283,7 +4271,6 @@
         "flee_allowed": false,
         "enemy_ids": [
           "goblin_king",
-          "goblin_archer",
           "goblin_archer"
         ],
         "victory_effects": {
@@ -6227,6 +6214,18 @@
       "traits": [
         "food"
       ]
+    },
+    {
+      "id": "holy_water",
+      "name": "聖水",
+      "description": "聖水",
+      "combat": {
+        "kind": "damage",
+        "damage": "36",
+        "accuracy": 100,
+        "element": "holy",
+        "consumable": true
+      }
     }
   ],
   "clues": [
@@ -6258,8 +6257,8 @@
       "id": "slime",
       "name": "スライム",
       "description": "森に潜む弱い魔物。チュートリアル用の敵。",
-      "hp": 5,
-      "max_hp": 5,
+      "hp": 24,
+      "max_hp": 24,
       "mp": 0,
       "max_mp": 0,
       "sp": 0,
@@ -6274,8 +6273,8 @@
       "combat": {
         "basic_attack": {
           "name": "体当たり",
-          "damage": "1d4+str/4",
-          "accuracy": 80,
+          "damage": "1d6",
+          "accuracy": 95,
           "element": "physical"
         },
         "defense": 0,
@@ -6370,8 +6369,8 @@
       "id": "goblin",
       "name": "ゴブリン",
       "description": "粗末な短剣を持つ小鬼。",
-      "hp": 15,
-      "max_hp": 15,
+      "hp": 24,
+      "max_hp": 24,
       "attributes": {
         "str": 6,
         "dex": 8,
@@ -6381,7 +6380,7 @@
       "combat": {
         "basic_attack": {
           "name": "粗末な短剣",
-          "damage": "1d4+dex/4",
+          "damage": "1d6",
           "accuracy": 85,
           "element": "physical"
         },
@@ -6401,8 +6400,8 @@
       "id": "goblin_archer",
       "name": "弓ゴブリン",
       "description": "高所から粗末な弓を射るゴブリン。",
-      "hp": 12,
-      "max_hp": 12,
+      "hp": 8,
+      "max_hp": 8,
       "attributes": {
         "str": 4,
         "dex": 10,
@@ -6412,11 +6411,11 @@
       "combat": {
         "basic_attack": {
           "name": "粗末な矢",
-          "damage": "1d6+dex/5",
-          "accuracy": 88,
+          "damage": "1d6",
+          "accuracy": 50,
           "element": "physical"
         },
-        "defense": 0,
+        "defense": 1,
         "evade": 10
       },
       "resistances": {},
@@ -6432,8 +6431,8 @@
       "id": "hobgoblin",
       "name": "大ゴブリン",
       "description": "重い棍棒を振るう大柄なゴブリン。",
-      "hp": 30,
-      "max_hp": 30,
+      "hp": 32,
+      "max_hp": 32,
       "attributes": {
         "str": 12,
         "dex": 5,
@@ -6443,8 +6442,8 @@
       "combat": {
         "basic_attack": {
           "name": "大棍棒",
-          "damage": "1d8+str/4",
-          "accuracy": 82,
+          "damage": "1d6+1",
+          "accuracy": 80,
           "element": "physical"
         },
         "defense": 2,
@@ -6463,8 +6462,8 @@
       "id": "war_hound",
       "name": "猛犬",
       "description": "砦で飼い慣らされた獰猛な犬。",
-      "hp": 10,
-      "max_hp": 10,
+      "hp": 44,
+      "max_hp": 44,
       "attributes": {
         "str": 7,
         "dex": 10,
@@ -6473,11 +6472,11 @@
       "combat": {
         "basic_attack": {
           "name": "噛みつき",
-          "damage": "1d4+str/4",
-          "accuracy": 88,
+          "damage": "1d4+1",
+          "accuracy": 95,
           "element": "physical"
         },
-        "defense": 0,
+        "defense": 1,
         "evade": 10
       },
       "resistances": {},
@@ -6493,8 +6492,8 @@
       "id": "forest_wolf",
       "name": "森狼",
       "description": "闇の森を群れで狩る狼。",
-      "hp": 18,
-      "max_hp": 18,
+      "hp": 40,
+      "max_hp": 40,
       "attributes": {
         "str": 9,
         "dex": 11,
@@ -6503,8 +6502,8 @@
       "combat": {
         "basic_attack": {
           "name": "牙",
-          "damage": "1d6+str/4",
-          "accuracy": 88,
+          "damage": "1d6+1",
+          "accuracy": 80,
           "element": "physical"
         },
         "defense": 1,
@@ -6534,11 +6533,11 @@
       "combat": {
         "basic_attack": {
           "name": "王の圧潰",
-          "damage": "1d8+str/4",
-          "accuracy": 82,
+          "damage": "1d6+1",
+          "accuracy": 90,
           "element": "physical"
         },
-        "defense": 2,
+        "defense": 3,
         "evade": 2
       },
       "resistances": {
@@ -6563,8 +6562,8 @@
       "id": "goblin_king",
       "name": "ゴブリン王",
       "description": "砦の財宝を支配するゴブリンの王。",
-      "hp": 55,
-      "max_hp": 55,
+      "hp": 48,
+      "max_hp": 48,
       "attributes": {
         "str": 14,
         "dex": 8,
@@ -6574,11 +6573,11 @@
       "combat": {
         "basic_attack": {
           "name": "王の戦斧",
-          "damage": "1d10+str/4",
-          "accuracy": 88,
+          "damage": "1d4",
+          "accuracy": 95,
           "element": "physical"
         },
-        "defense": 3,
+        "defense": 0,
         "evade": 5
       },
       "resistances": {},
@@ -6596,7 +6595,7 @@
       "id": "zebok",
       "name": "亡霊主宰ゼボク",
       "description": "死を逆向きに生きる亡霊の主。通常攻撃ではHPがさらに負へ沈む。",
-      "hp": -100,
+      "hp": -76,
       "max_hp": 0,
       "attributes": {
         "str": 8,
@@ -6608,11 +6607,11 @@
         "life_rule": "negative_undead",
         "basic_attack": {
           "name": "暗黒の爪",
-          "damage": "1d6+int/4",
-          "accuracy": 88,
+          "damage": "1d6+1",
+          "accuracy": 100,
           "element": "dark"
         },
-        "defense": 0,
+        "defense": 1,
         "evade": 8
       },
       "resistances": {
@@ -6631,8 +6630,8 @@
           "id": "zebok_bone_dragon",
           "name": "亡霊召喚",
           "kind": "attack",
-          "damage": "7d4",
-          "accuracy": 82,
+          "damage": "1d6+1",
+          "accuracy": 100,
           "element": "dark",
           "ai_weight": 2
         },
@@ -6648,8 +6647,8 @@
           "id": "dark_feast",
           "name": "暗黒の宴",
           "kind": "attack",
-          "damage": "2d6+int",
-          "accuracy": 85,
+          "damage": "1d6+1",
+          "accuracy": 100,
           "element": "dark",
           "ai_weight": 3
         }
@@ -6661,8 +6660,8 @@
       "name": "ファイアスライム",
       "description": "炎をまとった赤いスライム。",
       "element": "fire",
-      "hp": 24,
-      "max_hp": 24,
+      "hp": 28,
+      "max_hp": 28,
       "attributes": {
         "str": 8,
         "dex": 5,
@@ -6672,11 +6671,11 @@
       "combat": {
         "basic_attack": {
           "name": "火の体当たり",
-          "damage": "1d6+int/4",
-          "accuracy": 86,
+          "damage": "1d6",
+          "accuracy": 100,
           "element": "fire"
         },
-        "defense": 1,
+        "defense": 0,
         "evade": 4
       },
       "resistances": {
@@ -6697,8 +6696,8 @@
       "name": "火の精霊",
       "description": "人の形を取った荒れ狂う炎。",
       "element": "fire",
-      "hp": 48,
-      "max_hp": 48,
+      "hp": 44,
+      "max_hp": 44,
       "attributes": {
         "str": 9,
         "dex": 9,
@@ -6708,11 +6707,11 @@
       "combat": {
         "basic_attack": {
           "name": "火炎の腕",
-          "damage": "1d8+int/4",
-          "accuracy": 88,
+          "damage": "1d6",
+          "accuracy": 100,
           "element": "fire"
         },
-        "defense": 2,
+        "defense": 1,
         "evade": 8
       },
       "resistances": {
@@ -6733,8 +6732,8 @@
       "name": "氷の精霊",
       "description": "村の火災の中に佇む冷気の塊。",
       "element": "ice",
-      "hp": 52,
-      "max_hp": 52,
+      "hp": 48,
+      "max_hp": 48,
       "attributes": {
         "str": 10,
         "dex": 8,
@@ -6744,11 +6743,11 @@
       "combat": {
         "basic_attack": {
           "name": "氷柱",
-          "damage": "1d8+int/4",
-          "accuracy": 88,
+          "damage": "1d6+1",
+          "accuracy": 85,
           "element": "ice"
         },
-        "defense": 3,
+        "defense": 0,
         "evade": 7
       },
       "resistances": {
@@ -6768,8 +6767,8 @@
       "name": "氷霜の巨狼",
       "description": "氷の太刀を核として実体化した巨大な霜の狼。",
       "element": "ice",
-      "hp": 140,
-      "max_hp": 140,
+      "hp": 68,
+      "max_hp": 68,
       "attributes": {
         "str": 22,
         "dex": 18,
@@ -6779,11 +6778,11 @@
       "combat": {
         "basic_attack": {
           "name": "凍爪",
-          "damage": "2d8+str/4",
+          "damage": "1d6+1",
           "accuracy": 90,
           "element": "ice"
         },
-        "defense": 5,
+        "defense": 1,
         "evade": 12
       },
       "resistances": {
@@ -7041,7 +7040,7 @@
       "combat": {
         "basic_attack": {
           "name": "聖なる杖",
-          "damage": "1d4+str/4",
+          "damage": "1d8+wis/4",
           "accuracy": 88,
           "element": "holy"
         },
@@ -7428,7 +7427,8 @@
       "round_start_effects": [
         {
           "kind": "heal_player",
-          "amount": "8"
+          "every_n_rounds": 2,
+          "max_hp_ratio": 0.15
         }
       ],
       "image": "/static/images/npc_warlock.png"
@@ -7450,6 +7450,183 @@
         }
       ],
       "image": "/static/images/companion_fire_bat_dragon.png"
+    }
+  ],
+  "milestones": [
+    {
+      "id": "lv2",
+      "level": 2,
+      "trigger_flag": "defeated_slime_king",
+      "alternative_flags": [
+        "combat_defeated:forest_wolves:forest_wolf"
+      ],
+      "gains": {
+        "hero": {
+          "max_hp": 5,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "str": 2,
+            "end": 1
+          }
+        },
+        "cleric": {
+          "max_hp": 5,
+          "max_mp": 2,
+          "max_sp": 1,
+          "attributes": {
+            "wis": 2,
+            "int": 1
+          }
+        },
+        "mage": {
+          "max_hp": 3,
+          "max_mp": 3,
+          "max_sp": 1,
+          "attributes": {
+            "int": 2,
+            "wis": 1
+          }
+        },
+        "thief": {
+          "max_hp": 4,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "dex": 2,
+            "str": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "lv3",
+      "level": 3,
+      "trigger_flag": "cleared_goblin_fort",
+      "gains": {
+        "hero": {
+          "max_hp": 5,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "str": 2,
+            "end": 1
+          }
+        },
+        "cleric": {
+          "max_hp": 5,
+          "max_mp": 2,
+          "max_sp": 1,
+          "attributes": {
+            "wis": 2,
+            "int": 1
+          }
+        },
+        "mage": {
+          "max_hp": 3,
+          "max_mp": 3,
+          "max_sp": 1,
+          "attributes": {
+            "int": 2,
+            "wis": 1
+          }
+        },
+        "thief": {
+          "max_hp": 4,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "dex": 2,
+            "str": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "lv4",
+      "level": 4,
+      "trigger_flag": "warlock_disappeared_at_village",
+      "gains": {
+        "hero": {
+          "max_hp": 5,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "str": 2,
+            "end": 1
+          }
+        },
+        "cleric": {
+          "max_hp": 5,
+          "max_mp": 2,
+          "max_sp": 1,
+          "attributes": {
+            "wis": 2,
+            "int": 1
+          }
+        },
+        "mage": {
+          "max_hp": 3,
+          "max_mp": 3,
+          "max_sp": 1,
+          "attributes": {
+            "int": 2,
+            "wis": 1
+          }
+        },
+        "thief": {
+          "max_hp": 4,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "dex": 2,
+            "str": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "lv5",
+      "level": 5,
+      "trigger_flag": "accepted_ian_request",
+      "gains": {
+        "hero": {
+          "max_hp": 5,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "str": 2,
+            "end": 1
+          }
+        },
+        "cleric": {
+          "max_hp": 5,
+          "max_mp": 2,
+          "max_sp": 1,
+          "attributes": {
+            "wis": 2,
+            "int": 1
+          }
+        },
+        "mage": {
+          "max_hp": 3,
+          "max_mp": 3,
+          "max_sp": 1,
+          "attributes": {
+            "int": 2,
+            "wis": 1
+          }
+        },
+        "thief": {
+          "max_hp": 4,
+          "max_mp": 1,
+          "max_sp": 2,
+          "attributes": {
+            "dex": 2,
+            "str": 1
+          }
+        }
+      }
     }
   ]
 }

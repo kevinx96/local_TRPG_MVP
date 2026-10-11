@@ -42,7 +42,7 @@ class DragonStoryTests(unittest.TestCase):
             with self.subTest(filename=filename):
                 meta = self.load_raw(filename)["meta"]
                 self.assertEqual(meta["title"], "紅き邪竜イグニス")
-                self.assertEqual(meta["content_revision"], "2026-09-08-death-game-over")
+                self.assertEqual(meta["content_revision"], "2026-10-11-balance-pass1")
 
     def test_client_keeps_hybrid_scenarios_selectable(self):
         source = Path("client/app.js").read_text(encoding="utf-8")
@@ -115,7 +115,8 @@ class DragonStoryTests(unittest.TestCase):
                     items["activated_ice_charm"]["combat"]["basic_attack_followup"]["damage"],
                     "1d8+int/2",
                 )
-                self.assertEqual(companions["blue_robed_mage"]["round_start_effects"][0]["amount"], "8")
+                self.assertEqual(companions["blue_robed_mage"]["round_start_effects"],
+                                 [{"kind": "heal_player", "every_n_rounds": 2, "max_hp_ratio": .15}])
                 self.assertEqual(companions["fire_bat_dragon"]["round_start_effects"][0]["damage"], "2d3")
                 self.assertEqual(locations["item_shop"]["npc_ids"], ["sarah", "fire_bat_dragon"])
                 forge_actions = {entry["id"]: entry for entry in locations["forge"]["actions"]}
@@ -200,7 +201,8 @@ class DragonStoryTests(unittest.TestCase):
             {"expression": "none", "rolls": [], "total": 0, "dc": 0},
         )
         self.assertEqual(session["companion"]["id"], "blue_robed_mage")
-        self.assertEqual(session["companion"]["round_start_effects"][0]["amount"], "8")
+        self.assertEqual(session["companion"]["round_start_effects"],
+                         [{"kind": "heal_player", "every_n_rounds": 2, "max_hp_ratio": .15}])
 
     def test_alley_and_forest_routes_are_structured(self):
         for filename in SCENARIO_FILES:
@@ -214,17 +216,17 @@ class DragonStoryTests(unittest.TestCase):
                     [action["id"] for action in locations["alley"]["actions"]],
                     ["wait_for_night_in_alley", "return_castle_from_alley"],
                 )
-                self.assertEqual(enemies["zebok"]["hp"], -100)
+                self.assertEqual(enemies["zebok"]["hp"], -76)
                 self.assertEqual(enemies["zebok"]["combat"]["life_rule"], "negative_undead")
                 self.assertEqual(items["cursed_holy_staff"]["combat"]["extra_actions_per_round"], 1)
                 self.assertEqual(items["cursed_dagger"]["combat"]["on_hit_status"]["damage"], "3")
 
-                self.assertEqual(locations["slime_ambush_one"]["combat"]["enemy_ids"], ["slime"] * 3)
-                self.assertEqual(locations["slime_ambush_two"]["combat"]["enemy_ids"], ["slime"] * 3)
-                self.assertEqual(locations["goblin_fort_second_left"]["combat"]["enemy_ids"], ["war_hound"] * 5)
+                self.assertEqual(locations["slime_ambush_one"]["combat"]["enemy_ids"], ["slime"])
+                self.assertEqual(locations["slime_ambush_two"]["combat"]["enemy_ids"], ["slime"])
+                self.assertEqual(locations["goblin_fort_second_left"]["combat"]["enemy_ids"], ["war_hound"])
                 self.assertEqual(
                     locations["goblin_fort_fourth"]["combat"]["enemy_ids"],
-                    ["goblin_king", "goblin_archer", "goblin_archer"],
+                    ["goblin_king", "goblin_archer"],
                 )
                 self.assertTrue(locations["goblin_fort_fourth"]["combat"]["auto_start"])
                 self.assertEqual(enemies["goblin_king"]["rewards"]["gold"], 100)
