@@ -124,6 +124,13 @@ def _objects(session: dict[str, Any]) -> list[dict[str, Any]]:
     return [x for x in _location(session).get("objects", []) if isinstance(x, dict) and x.get("id")]
 
 
+def _observe_target(session: dict[str, Any], identifier: str) -> dict[str, Any]:
+    target = next((o for o in [*_obstacles(session), *_objects(session)] if o["id"] == identifier), {})
+    if not target and identifier in _location(session).get("npc_ids", []):
+        target = next((o for o in _objects(session) if o.get("npc_id") == identifier), {})
+    return target
+
+
 def _inventory(session: dict[str, Any]) -> list[dict[str, Any]]:
     return [x for x in session.get("character", {}).get("inventory", []) if isinstance(x, dict) and int(x.get("quantity", 1)) > 0]
 
@@ -251,9 +258,10 @@ def _adjudicate(session: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]
         return _use_item(session, plan, changes)
     target = next((o for o in _obstacles(session) if o["id"] == plan["target_id"]), {})
     if operation == "observe":
-        target = target or next((o for o in _objects(session) if o["id"] == plan["target_id"]), {})
+        target = _observe_target(session, plan["target_id"])
         if not target or plan["item_id"] or plan["advance"]:
             return _result("観察する対象を、今見えているものから指定してください。")
+        plan = {**plan, "target_id": target["id"]}
         changes.setdefault(target["id"], {})["observed"] = True
         text = str(target.get("description") or target.get("name") or "")
         if target.get("hint"):

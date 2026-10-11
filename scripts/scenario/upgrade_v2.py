@@ -129,16 +129,27 @@ def upgrade(pack: dict[str, Any]) -> None:
     for t in locations["castle"]["hybrid"]["prepared_turns"]:
         if t.get("action_id") == "ask_general_advice" and t.get("outcome") == "success" and "不死の者には聖水が効く" not in t["draft"]["gm_text"]:
             t["draft"]["gm_text"] += "「不死の者には聖水が効く」"
-    for lid, oid, name, dc, effects, success in [
-        ("castle", "general_breath", "将軍ドラコ", 16, [{"set_flag": "noticed_general_frost"}], "将軍の足元だけ、絨毯にうっすらと霜が降りている。"),
-        ("ice_elemental_encounter", "frost_crystal", "路地に散らばる氷の結晶", 12, [{"add_item": item("ice_crystal")}], "氷の結晶を手に入れた。"),
-        ("goblin_fort_third_gate", "iron_gate_window", "鉄門の小窓", 13, [{"set_flag": "knows_fort_password"}], "入手した暗号で鉄門を開ける。"),
+    for lid, oid, name, dc, effects, description, success, failure in [
+        ("castle", "general_breath", "将軍ドラコ", 16, [{"set_flag": "noticed_general_frost"}],
+         "国王の傍らに立つ将軍ドラコ。穏やかな表情で広間を見渡している。",
+         "将軍の足元だけ、絨毯にうっすらと霜が降りている。",
+         "将軍は穏やかに微笑んでいる。特に変わった様子は見えない。"),
+        ("ice_elemental_encounter", "frost_crystal", "路地に散らばる氷の結晶", 12, [{"add_item": item("ice_crystal")}],
+         "凍った路地に散らばる、溶けない氷の結晶。",
+         "溶けない氷のかけらを一つ拾い上げた。指先がじんと痺れる。",
+         "拾おうとした結晶は、触れた瞬間に砕けてしまった。"),
+        ("goblin_fort_third_gate", "iron_gate_window", "鉄門の小窓", 13, [{"set_flag": "knows_fort_password"}],
+         "四階へ続く鉄門の小窓。中から見張りの話し声が漏れている。",
+         "小窓の奥で、見張りが合言葉を小声で繰り返している。どうやら、これが鉄門の暗号らしい。",
+         "中の声はくぐもっていて、言葉までは聞き取れなかった。"),
     ]:
         objects = locations[lid].setdefault("objects", [])
         objects[:] = [o for o in objects if o["id"] != oid]
-        objects.append(dict(id=oid, name=name, description=name, observe_reveals=dict(
+        objects.append(dict(id=oid, name=name, description=description, observe_reveals=dict(
             roll=dict(dice_type="1d20+wis", dc=dc), once=f"observed_{oid}", success_effects=effects,
-            failure_effects=[], success_text=success, failure_text="手がかりは見つからなかった。")))
+            failure_effects=[], success_text=success, failure_text=failure)))
+        if oid == "general_breath":
+            objects[-1]["npc_id"] = "general"
     locations["ice_elemental_encounter"]["combat"]["victory_effects"]["inventory_add"] = [item("ice_crystal")]
     password = find("goblin_fort_third_gate", "give_correct_password")
     password.pop("visible_after", None)

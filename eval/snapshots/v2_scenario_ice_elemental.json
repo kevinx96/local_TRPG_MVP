@@ -1,0 +1,12 @@
+{
+  "id": "v2_scenario_ice_elemental",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "mage",
+  "location_id": "ice_elemental_encounter",
+  "hp_delta": 0,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}

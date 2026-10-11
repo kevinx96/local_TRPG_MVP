@@ -152,6 +152,9 @@
                     "id": {
                       "type": "string"
                     },
+                    "npc_id": {
+                      "type": "string"
+                    },
                     "observe_reveals": {
                       "$ref": "#/$defs/observe_reveals"
                     }

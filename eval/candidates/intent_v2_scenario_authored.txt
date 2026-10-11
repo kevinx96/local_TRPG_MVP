@@ -1,0 +1,57 @@
+# 011：逐条手写输入；组装脚本只展开标注字段，不生成或改写输入。
+# 快照代号 | gold（@S0 显式同级） | harmful | family | LABELING 条号与理由 | 日语输入
+@observe_clue
+C|o:general_breath,o:general|-|scenario-general-watch|9 条；观察人物而非索取助言，NPC ID 可由引擎映射到同一对象|将軍ドラコの様子をじっと観察する。
+C|o:general_breath,o:general|-|scenario-general-feet|9 条；关注足边的环境细节，使用观察判定|将軍の足元に何か変わったところがないか見る。
+C|o:general_breath,o:general|-|scenario-general-watch|9 条；安静观察不等于与将军交谈|ドラコには声をかけず、立ち姿をしばらく眺めていたい。
+C|o:general_breath,o:general|-|scenario-general-expression|9 条；查看神情对应 general_breath，不能替换成助言动作|国王の隣にいる将軍、表情におかしな点はないかな。よく見てみる。
+G|o:iron_gate_window|-|scenario-window-listen|9 条；从小窗听声音是对象观察，尚未知道暗号|鉄門の小窓に耳を当てて、中の声を盗み聞きする。
+G|o:iron_gate_window|-|scenario-window-whisper|9 条；辨认小窗内话语，不是打开铁门|向こうの見張り、何をささやいてるんだろう。小窓越しに聞き耳を立てたい。
+G|o:iron_gate_window|-|scenario-window-peek|9 条；查看小窗对应自由观察|四階へ続く門の窓から、中の様子をそっとうかがう。
+G|o:iron_gate_window|-|scenario-window-stay|9、6 条；明确留在门外，仅调查声音来源|扉は開けずに、小窓から漏れてくる話だけ調べます。
+I|o:frost_crystal|-|scenario-crystal-inspect|9 条；调查散落结晶对应对象观察|路地に散らばっている氷の結晶を調べる。
+I|o:frost_crystal|-|scenario-crystal-pickup|9 条；拾取尝试由 observe_reveals 判定并发放结晶|溶けない氷のかけらを一つ拾ってみたい。
+I|o:frost_crystal|-|scenario-crystal-look|9 条；查看结晶特征，不对精灵开战|足元の結晶に目を凝らす。普通の氷と違うところがあるか確かめよう。
+I|o:frost_crystal|-|scenario-crystal-touch|9 条；触碰结晶属于观察方法，仍须引擎判定|この散らばった氷、指で触れて様子を確かめてもいいかな。
+D|e:examine_ignis_wound|-|scenario-wound-inspect|9 条；方法与既有调查伤口一致，首选 existing|イグニスの古傷に残っている霜を詳しく調べたい。
+D|e:examine_ignis_wound|-|scenario-wound-scales|9 条；调查伤处使用现有动作，不另造 observe 对象|焼けた鱗の隙間を見せて。白く凍った傷口に何があるか確かめる。
+D|e:examine_ignis_wound|-|scenario-wound-look|9 条；查看红龙伤口而不是听遗言|倒れている紅竜の胸の傷をのぞき込む。
+D|e:examine_ignis_wound|-|scenario-wound-touch|9 条；检查被霜覆盖的旧伤与既有方法相符|その古い傷、炎の竜なのに冷たそうだな。近寄って傷を調べます。
+@report_choice
+E|e:report_with_evidence|e:report_normally|scenario-report-accuse|9 条；快照持有白い竜鱗，明确选择揭发|陛下の前で証拠を示し、ドラコに本当の姿を問いただします。
+E|e:report_with_evidence|e:report_normally|scenario-report-demand|9 条；有证据时追问将军正体对应既有揭发动作|将軍、もう隠さなくていい。集めた証拠について、この場で説明してもらおう。
+E|e:report_normally|e:report_with_evidence|scenario-report-normal|9、6 条；明确选择普通汇报，不能因有证据而揭发|将軍の件には触れず、イグニスを討ったことだけ国王に報告する。
+E|e:report_normally|e:report_with_evidence|scenario-report-close|9 条；有证据也可选择结束讨伐汇报|討伐の報告を済ませて、この冒険を終えたい。
+E|dialogue,talk:king,talk:general|kind:existing,kind:interact|scenario-report-withhold|3 条；先别说出来是等待，不是正常汇报或揭发|証拠の話は、まだ口に出さないでおこう。
+E|dialogue,talk:general|kind:existing,kind:interact|scenario-report-delay|3 条；保留下一步决定，不触发结局或战斗|ドラコを問い詰めるのは待って。今は何も言わず考えたい。
+N|e:report_normally|e:report_with_evidence|scenario-report-achievement|9 条；无证据也能正常汇报讨伐|陛下、ご命令の邪竜討伐を果たしました。これで報告を終えます。
+N|e:report_normally|e:report_with_evidence|scenario-report-finish|9 条；明确结束普通报告|王様に勝利を報告して、凱旋の務めを済ませよう。
+N|dialogue,talk:king|kind:existing,kind:interact|scenario-report-pause|3 条；中断汇报不等于完成汇报|報告はちょっと待ってください。話す内容を整理させて。
+E|dialogue,talk:king,talk:general|kind:existing,kind:interact|scenario-report-conditional|3 条；条件尚未发生，不立即揭发|国王が証拠を求めたら、将軍の正体を明かそうと思う。
+@evidence_claim
+N|unsupported@S0,dialogue@S0,talk:king@S0|e:report_with_evidence|scenario-claim-proof|5 条及 011 第 3 节；自称有证据不能赋予物品或解锁揭发|証拠なら持っています。将軍こそ白竜です。
+N|unsupported@S0,dialogue@S0,talk:king@S0|e:report_with_evidence|scenario-claim-scale|5 条及 011 第 3 节；背包没有白い竜鱗，不能采纳已获得声明|白い竜鱗はもう手に入れた。これでドラコが白竜だと証明できるはずだ。
+N|unsupported@S0,dialogue@S0,talk:general@S0|e:report_with_evidence|scenario-claim-solved|5 条及 011 第 3 节；已经查明真相是未经引擎确认的宣称|ドラコ、お前の正体は調べがついた。白竜だという証拠もそろっているぞ。
+N|unsupported@S0,dialogue@S0,talk:king@S0|e:report_with_evidence|scenario-claim-king|5 条及 011 第 3 节；对国王的主张仅可拒绝或对话|陛下、私を信じてください。将軍が白竜だと裏づける物は確保済みです。
+N|unsupported@S0,dialogue@S0|e:report_with_evidence|scenario-claim-inventory|5 条及 011 第 3 节；声明袋中有鱗不改变实际背包|袋の中には白い竜鱗があるんだから、将軍の正体はもう隠せないよね。
+N|unsupported@S0,dialogue@S0|e:report_with_evidence|scenario-claim-wound|5 条及 011 第 3 节；快照未取得伤口证据，回溯宣称不成立|イグニスの傷から証拠を回収したよ。あの白い鱗の主はドラコだ。
+N|unsupported@S0,dialogue@S0,talk:king@S0|e:report_with_evidence|scenario-claim-certainty|5 条及 011 第 3 节；断言已收集充分证据不能跳过揭发条件|決定的な証拠は全部集めてあります。王の隣にいるのは白竜です。
+N|unsupported@S0,dialogue@S0,talk:general@S0|e:report_with_evidence|scenario-claim-admission|5 条及 011 第 3 节；虚构将军自认正体不能视为已发生剧情|さっき将軍自身が白竜だと認めた。証拠もあるし、もう疑う余地はない。
+@scale_handling
+E|e:report_with_evidence|e:report_normally,op:use_item|scenario-scale-present|9 条；凱旋の間有鱗并明确作为揭发证据，等同既有动作|白い竜鱗を国王に見せて、将軍の正体を暴く証拠として突きつける。
+E|talk:king,dialogue|e:report_with_evidence,op:use_item|scenario-scale-appraise|8、9 条；仅向国王问鱗的事情，不承诺揭发，也不新增鉴定事实|陛下、この白い竜鱗について何かご存じですか。今はお話を伺うだけです。
+E|talk:general,dialogue|e:report_with_evidence,op:use_item|scenario-scale-ask-general|8、9 条；持鱗向将军提问是对话，不等同公开揭发|ドラコに白い竜鱗のことを聞いてみる。「これ、見覚えはありますか」
+E|unsupported|op:use_item,e:report_with_evidence|scenario-scale-discard|6、9 条；引擎没有丢弃物品操作，不用 use_item 代替|この白い竜鱗はもういらない。床に投げ捨てる。
+E|unsupported|op:use_item,e:report_with_evidence|scenario-scale-transfer|6、9 条；移交所有权没有既有动作，不能自行删除物品|白い竜鱗を将軍に渡して、そのまま持って帰ってもらいたい。
+E|unsupported|op:use_item,e:report_with_evidence|scenario-scale-heal|6、9 条；鱗是证据品，不支持拿它恢复自身生命|白い竜鱗を自分に使って、傷を治してみる。
+E|dialogue|kind:existing,kind:interact|scenario-scale-keep|3 条；保留已有物品、不执行处置|鱗は誰にも渡さない。白い竜鱗を持ったまま、しばらく黙っている。
+N|unsupported,clarify|e:report_with_evidence,op:use_item|scenario-scale-missing|4 条；背包里没有鱗，不能执行展示证据|手持ちの白い竜鱗を出して、国王に証拠として見せたい。
+@lore_question
+V|e:ask_elder_treaty|-|scenario-treaty-history|9 条；明确打听盟约，对应新增既有动作|長老、元素と人と竜の盟約が結ばれた頃のことを教えてください。
+V|e:ask_elder_treaty|-|scenario-treaty-meaning|9 条；问互不伤害的约定，而非笼统索取邪竜弱点|互いを害さないという古い誓い、誰と誰が交わしたのか長老に聞く。
+V|e:ask_elder_treaty|-|scenario-elder-white-dragon|9 条；白竜作为盟约监视者的信息由该既有动作提供|北の雪嶺にいる白き竜は盟約とどう関わっているのか、長老の話を聞きたい。
+V|e:ask_elder_treaty|-|scenario-elder-promise|9 条；要求长老讲古老盟约，与动作方法一致|人と竜の昔の約束について、村で語り継がれている話はありませんか、長老。
+T|e:ask_ian_dragon_tale|-|scenario-ian-grandfather|9 条；祖父所讲竜与人的故事对应新增既有动作|イアン、お祖父さんから聞いた竜と人の昔話を話してくれないか。
+T|e:ask_ian_dragon_tale|-|scenario-ian-red-white|9 条；询问赤白两竜传说，匹配既有昔话|赤き竜と白き竜って、それぞれ何を守っていたの？　イアンに尋ねる。
+T|e:ask_ian_dragon_tale|-|scenario-ian-enemies|9 条；追问竜是否人类敌人，对应该故事而非战术建议|イアン、竜は昔から人の敵だったのかな。古い言い伝えを聞かせてほしい。
+T|e:ask_ian_dragon_tale|-|scenario-ian-treaty|9 条；向イアン打听竜人盟约背景，以当前唯一对应的昔话动作拟定|盟約の昔話を知りたいんだ。鍛冶屋だった頃に聞いた話を頼むよ、イアン。

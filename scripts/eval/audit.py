@@ -58,6 +58,17 @@ def allowed_state(session: dict[str, Any], plan: dict[str, Any], result: dict[st
         return expected
     operation = plan["operation"]
     delta: dict[str, Any] = {}
+    if operation == "observe" and outcome in {"success", "failure"} and not plan["item_id"] and not plan["advance"]:
+        target = free_actions._observe_target(expected, plan["target_id"])
+        reveal = target.get("observe_reveals")
+        if isinstance(reveal, dict) and result.get("roll"):
+            once = str(reveal.get("once") or "")
+            if not once or not expected.get("flags", {}).get(once):
+                roll = result["roll"]
+                branch = "success" if roll.get("success") and not roll.get("critical_failure") else "failure"
+                delta = state._effects_to_state_delta(reveal.get(f"{branch}_effects", []), expected)
+                if once:
+                    delta.setdefault("flags_set", []).append(once)
     if operation == "use_item" and outcome == "success" and plan["target_id"] in {"self", expected["character"]["character_id"]}:
         item = free_actions._owned_item(expected, plan["item_id"])
         spec = free_actions.item_combat_spec(item)

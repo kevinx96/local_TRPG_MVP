@@ -13,6 +13,7 @@ from host.scenario_context import select_hybrid_prepared_turn
 from scripts.balance import checkpoints, route, sim
 from scripts.scenario import key_items, redundancy
 from scripts.scenario.upgrade_v2 import CLUES
+from scripts.eval.snapshots import isolated_engine
 
 
 class ScenarioV2Tests(unittest.TestCase):
@@ -141,6 +142,44 @@ class ScenarioV2Tests(unittest.TestCase):
         target = next(o for o in context["objects"] if o["id"] == "general_breath")
         self.assertNotIn("observe_reveals", target)
         self.assertNotIn("noticed_general_frost", json.dumps(target))
+
+    def test_observe_npc_alias_matches_object_result_and_entire_state(self):
+        for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
+            for value in (20, 1):
+                with self.subTest(pack=filename, roll=value):
+                    original = self.session()
+                    original["scenario_pack"] = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO.with_name(filename))
+                    outcomes = []
+                    for target_id in ("general_breath", "general"):
+                        session = deepcopy(original)
+                        plan = dict(kind="interact", operation="observe", target_id=target_id,
+                                    item_id="", advance=False, approach="将軍を観察する", reply="", action_id="")
+                        before_plan = deepcopy(plan)
+                        with isolated_engine("observe-alias"), patch.object(state.random, "randint", return_value=value) as roll:
+                            first = free_actions.adjudicate(session, plan)
+                            repeat = free_actions.adjudicate(session, plan)
+                        self.assertEqual(plan, before_plan)
+                        outcomes.append((first, repeat, session, roll.call_count))
+                    self.assertEqual(outcomes[0], outcomes[1])
+                    self.assertEqual(outcomes[0][0]["outcome"], "success" if value == 20 else "failure")
+                    self.assertEqual(outcomes[0][1]["text"], "完了済みです。")
+                    self.assertEqual(outcomes[0][3], 1)
+
+    def test_observe_unmapped_or_absent_npc_still_rejects_without_changes(self):
+        for npc_id in ("king", "ian", "unknown"):
+            with self.subTest(npc=npc_id):
+                session = deepcopy(self.session())
+                # Even a declared mapping must not resolve an NPC absent from this location.
+                location = state._current_location_record(session)
+                location.setdefault("objects", []).append(dict(id="absent_npc_object", npc_id="ian"))
+                before = deepcopy(session)
+                plan = dict(kind="interact", operation="observe", target_id=npc_id,
+                            item_id="", advance=False, approach="様子を見る", reply="", action_id="")
+                with patch.object(state, "roll_dice") as roll:
+                    result = free_actions.adjudicate(session, plan)
+                self.assertEqual(result, dict(outcome="rejected", text="観察する対象を、今見えているものから指定してください。"))
+                self.assertEqual(session, before)
+                roll.assert_not_called()
 
     def test_shop_prices_and_forge_resource_payment(self):
         session = self.session("item_shop")

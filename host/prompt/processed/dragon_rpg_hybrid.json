@@ -874,7 +874,7 @@
         {
           "id": "general_breath",
           "name": "将軍ドラコ",
-          "description": "将軍ドラコ",
+          "description": "国王の傍らに立つ将軍ドラコ。穏やかな表情で広間を見渡している。",
           "observe_reveals": {
             "roll": {
               "dice_type": "1d20+wis",
@@ -888,8 +888,9 @@
             ],
             "failure_effects": [],
             "success_text": "将軍の足元だけ、絨毯にうっすらと霜が降りている。",
-            "failure_text": "手がかりは見つからなかった。"
-          }
+            "failure_text": "将軍は穏やかに微笑んでいる。特に変わった様子は見えない。"
+          },
+          "npc_id": "general"
         }
       ]
     },
@@ -6424,7 +6425,7 @@
         {
           "id": "iron_gate_window",
           "name": "鉄門の小窓",
-          "description": "鉄門の小窓",
+          "description": "四階へ続く鉄門の小窓。中から見張りの話し声が漏れている。",
           "observe_reveals": {
             "roll": {
               "dice_type": "1d20+wis",
@@ -6437,8 +6438,8 @@
               }
             ],
             "failure_effects": [],
-            "success_text": "入手した暗号で鉄門を開ける。",
-            "failure_text": "手がかりは見つからなかった。"
+            "success_text": "小窓の奥で、見張りが合言葉を小声で繰り返している。どうやら、これが鉄門の暗号らしい。",
+            "failure_text": "中の声はくぐもっていて、言葉までは聞き取れなかった。"
           }
         }
       ],
@@ -7810,7 +7811,7 @@
         {
           "id": "frost_crystal",
           "name": "路地に散らばる氷の結晶",
-          "description": "路地に散らばる氷の結晶",
+          "description": "凍った路地に散らばる、溶けない氷の結晶。",
           "observe_reveals": {
             "roll": {
               "dice_type": "1d20+wis",
@@ -7827,8 +7828,8 @@
               }
             ],
             "failure_effects": [],
-            "success_text": "氷の結晶を手に入れた。",
-            "failure_text": "手がかりは見つからなかった。"
+            "success_text": "溶けない氷のかけらを一つ拾い上げた。指先がじんと痺れる。",
+            "failure_text": "拾おうとした結晶は、触れた瞬間に砕けてしまった。"
           }
         }
       ]
