@@ -1,15 +1,15 @@
 # イグニス净化数值报告（2026-10-12）
 
-离线确定性引擎；heuristic；seed=20261012；单场每职业每条件 N=1000；连续路线每职业 N=500。
+离线确定性引擎；heuristic；seed=20261012；单场每职业每条件 N=1000；连续路线每职业 N=100。
 单场沿用可达 Lv5 checkpoint，HP/MP/SP 回满。ドラコ两阶段合计；击杀准备仅保留一枚紅竜の炎核，净化准备移除炎核并设置 ignis_ally，两组均移除其他火属性手段，其他资源相同。
 击杀对照不启用特殊行动。净化策略保留最后一份聖水；只有祈祷可用时预留 MP6；HP≤40% 后优先执行净化。不会读取未来随机数。
 
 |职业|击杀路线ドラコ胜率|净化路线ドラコ胜率|
 |---|---:|---:|
-|hero|0.597|0.799|
-|cleric|0.591|0.771|
-|mage|0.587|0.658|
-|thief|0.649|0.696|
+|hero|0.597|0.796|
+|cleric|0.591|0.776|
+|mage|0.587|0.633|
+|thief|0.649|0.715|
 
 目标逐职业核对：击杀 [0.50, 0.70]，净化 [0.65, 0.80]。本报告是调参使用的固定种子验收批次，不是独立留出评估；这些是样本胜率，接近边界的职业仍有抽样不确定性。
 
@@ -24,10 +24,10 @@
 
 |净化→真结局连续路线|完成率|到达ドラコ次数|失败地点及次数|
 |---|---:|---:|---|
-|hero|0.654|458|{"draco_battle": 131, "dragon_valley_loc": 36, "forest_wolves": 5, "ice_elemental_encounter": 1}|
-|cleric|0.364|352|{"draco_battle": 170, "dragon_valley_loc": 93, "forest_wolves": 47, "ice_elemental_encounter": 8}|
-|mage|0.252|314|{"forest_wolves": 59, "dragon_valley_loc": 84, "draco_battle": 188, "frost_wolf_battle": 26, "dark_forest_loc": 5, "ice_elemental_encounter": 11, "lost_goblin_crossroads": 1}|
-|thief|0.354|342|{"forest_wolves": 40, "draco_battle": 165, "ice_elemental_encounter": 51, "dragon_valley_loc": 56, "frost_wolf_battle": 8, "dark_forest_loc": 3}|
+|hero|0.590|88|{"draco_battle": 29, "dragon_valley_loc": 10, "forest_wolves": 2}|
+|cleric|0.280|62|{"dragon_valley_loc": 25, "draco_battle": 34, "forest_wolves": 12, "ice_elemental_encounter": 1}|
+|mage|0.230|55|{"forest_wolves": 13, "dragon_valley_loc": 17, "draco_battle": 32, "frost_wolf_battle": 10, "dark_forest_loc": 2, "ice_elemental_encounter": 3}|
+|thief|0.380|68|{"forest_wolves": 8, "draco_battle": 30, "ice_elemental_encounter": 11, "dragon_valley_loc": 11, "frost_wolf_battle": 2}|
 
 连续路线从初始角色开始，保留跨战斗消耗，仅应用原有升级/剧情回复；途中保留最后一份聖水。イグニス若被打死而未净化，计入此路线未完成。净化后依次听证词、取鳞、请求援军、回城揭发；最终目标为 draco_defeated_with_ignis。连续路线只报告，不设阈值。
 
@@ -40,7 +40,7 @@
 
 ## 实现与推断
 
-- 援军火伤公式：`1d1024-590`，每回合一次，命中100%；沿用引擎公式的非负截断、火抗性、护甲与防御结算。援军只在白竜阶段激活，入场不另赠攻击；第一次伤害在下一个回合开始。
+- 援军火伤公式：`9d10+18`，每回合一次，命中100%；沿用引擎公式的非负截断、火抗性、护甲与防御结算。援军只在白竜阶段激活，入场不另赠攻击；第一次伤害在下一个回合开始。
 - 援军作为战斗内的独立记录，复用同伴回合效果，不占同伴位，不进入可攻击敌人列表，也没有生命结算。
 - 条件行动声明 requirements、enemy_id、enemy_hp_ratio_lte、cost_item 或 cost_type/cost、outcome、effects、log_text；提交时再次校验，失败不扣费。
 - 特殊行动费用即时扣除，剧情效果通过现有 pending_state_delta 在收尾应用；不发击杀奖励、击败flag和炎核。
@@ -60,11 +60,11 @@
 ## 验证和复现
 
 ```powershell
-python -m scripts.balance.purify_report --n 1000 --route-n 500
+python -m scripts.balance.purify_report --n 1000 --route-n 100
 python scripts/scenario/redundancy.py
 python -m unittest discover -s tests -q
 node --check client/app.js
 ```
 
-数值违规数：0；冗余错误数：0。
+数值违规数：2；冗余错误数：0。
 原始JSON记录胜负数、资源消耗、阶段回合、连续路线资源与源文件SHA256。

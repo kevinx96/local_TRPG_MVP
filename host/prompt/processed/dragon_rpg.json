@@ -7711,7 +7711,7 @@
           "round_start_effects": [
             {
               "kind": "damage_enemy",
-              "damage": "1d1024-590",
+              "damage": "9d10+18",
               "element": "fire"
             }
           ]
