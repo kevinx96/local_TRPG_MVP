@@ -7670,7 +7670,7 @@
           }
         }
       ],
-      "background_image": "/static/images/bg_lava_cave.png",
+      "background_image": "/static/images/bg_crystal_cave.png",
       "npc_ids": [
         "mina"
       ],
