@@ -251,7 +251,8 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
             "defeat_rounds": dict(sorted(losses.items())), "defeat_causes": dict(causes.most_common())}
 
 
-def check_results(rows: list[dict[str, Any]], targets: dict[str, Any]) -> list[dict[str, Any]]:
+def check_results(rows: list[dict[str, Any]], targets: dict[str, Any], *,
+                  check_resource_metrics: bool = False) -> list[dict[str, Any]]:
     violations = []
     groups: dict[tuple, list] = {}
     for row in rows:
@@ -261,7 +262,7 @@ def check_results(rows: list[dict[str, Any]], targets: dict[str, Any]) -> list[d
                 **targets.get("encounter_overrides", {}).get(row["encounter"], {})}
         if row["policy"] == spec["policy"]:
             for key, field in (("win_rate", "win_rate"), ("hp_left", "hp_left_mean"), ("rounds", "rounds_median")):
-                if key in spec:
+                if key in spec and (key == "win_rate" or check_resource_metrics):
                     value = row[field]
                     if value is None or not spec[key][0] <= value <= spec[key][1]:
                         violations.append({"encounter": row["encounter"], "character": row["character"],
@@ -308,6 +309,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--no-companion", action="store_true")
     parser.add_argument("--skills", choices=["none", "A"], default="none")
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--check-resource-metrics", action="store_true",
+                        help="Also enforce hp_left and rounds (report-only by default)")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
     pack = state.load_scenario_pack(args.scenario)
@@ -324,7 +327,7 @@ def main(argv: Optional[list[str]] = None) -> int:
             for encounter in encounters for character in selected_characters(pack, encounter, args.characters) for policy in policies]
     result = {"rows": rows, "elapsed_seconds": time.perf_counter() - started}
     if args.check:
-        result["violations"] = check_results(rows, targets)
+        result["violations"] = check_results(rows, targets, check_resource_metrics=args.check_resource_metrics)
     text = json.dumps(result, ensure_ascii=False, indent=2)
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)

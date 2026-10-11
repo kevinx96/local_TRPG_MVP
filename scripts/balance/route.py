@@ -58,7 +58,8 @@ def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, c
             if state.current_location_id(session) != source["location"]:
                 raise ValueError(f"Route diverged before {source['step']}")
             if source["step"].startswith("@"):
-                if state.current_location_id(session) == "dragon_valley_loc":
+                if source["step"] == "@final" and combat._encounter_for_session(
+                        session, pack).get("encounter_class") == "boss":
                     arrival = resources(session)
                 battle = fight(session, policy, rng)
                 battles.append(battle)
@@ -108,7 +109,29 @@ def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
             "sample_trial": sample}
 
 
-def main(argv: Optional[list[str]] = None) -> None:
+def check_results(rows: list[dict[str, Any]], targets: dict[str, Any]) -> list[dict[str, Any]]:
+    violations = []
+    for endpoint, spec in targets["route_targets"]["routes"].items():
+        group = [r for r in rows if r["route"] == endpoint and r["policy"] == spec["policy"]]
+        for character in targets["route_targets"]["characters"]:
+            matched = [r for r in group if r["character"] == character]
+            if len(matched) != 1:
+                violations.append(dict(route=endpoint, character=character, metric="missing_or_duplicate",
+                                       value=len(matched), target=[1, 1]))
+                continue
+            value = matched[0]["completion_rate"]
+            if not spec["completion_rate"][0] <= value <= spec["completion_rate"][1]:
+                violations.append(dict(route=endpoint, character=character, metric="completion_rate",
+                                       value=value, target=spec["completion_rate"]))
+        values = [r["completion_rate"] for r in group]
+        limit = targets["route_targets"]["class_spread_max"]
+        if values and max(values) - min(values) > limit + 1e-12:
+            violations.append(dict(route=endpoint, character="all", metric="class_spread",
+                                   value=max(values) - min(values), target=[0, limit]))
+    return violations
+
+
+def main(argv: Optional[list[str]] = None) -> int:
     parser = argparse.ArgumentParser(description="Offline continuous checkpoint routes; no implicit refill")
     parser.add_argument("--n", type=int, default=500)
     parser.add_argument("--seed", type=int, default=20261011)
@@ -116,21 +139,39 @@ def main(argv: Optional[list[str]] = None) -> None:
     parser.add_argument("--shard", type=int, default=0)
     parser.add_argument("--shards", type=int, default=1)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--targets", type=Path, default=sim.TARGETS)
+    parser.add_argument("--check", action="store_true")
     args = parser.parse_args(argv)
+    if args.n < 1 or args.shards < 1 or not 0 <= args.shard < args.shards:
+        parser.error("invalid n or shard")
+    if args.check and args.shards != 1:
+        parser.error("--check requires an unsharded result")
     pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
     cp = json.loads(checkpoints.DEFAULT_CHECKPOINTS.read_text(encoding="utf-8"))
-    routes = list(cp["encounters"]) if args.routes == ["all"] else args.routes
+    targets = json.loads(args.targets.read_text(encoding="utf-8"))
+    routes = list(targets["route_targets"]["routes"]) if args.check else (
+        list(cp["encounters"]) if args.routes == ["all"] else args.routes)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
     rows = []
     fingerprints = {p.relative_to(checkpoints.ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
                     for p in (checkpoints.DEFAULT_SCENARIO, checkpoints.DEFAULT_CHECKPOINTS, Path(__file__))}
+    fingerprints[str(args.targets)] = hashlib.sha256(args.targets.read_bytes()).hexdigest()
     for endpoint in routes:
         for index, character in enumerate(cp["encounters"][endpoint]["characters"]):
             if index % args.shards != args.shard:
                 continue
-            rows.append(simulate_route(pack, cp, character, encounter=endpoint, n=args.n, seed=args.seed))
+            policy = targets.get("route_targets", {}).get("routes", {}).get(endpoint, {}).get("policy", "heuristic")
+            rows.append(simulate_route(pack, cp, character, encounter=endpoint, n=args.n, seed=args.seed,
+                                       policy=policy))
             print(f"{endpoint} {character}: {rows[-1]['completion_rate']:.3f}", flush=True)
             args.output.write_text(json.dumps({"rows": rows, "fingerprints": fingerprints}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    result = {"rows": rows, "fingerprints": fingerprints}
+    if args.check:
+        result["violations"] = check_results(rows, targets)
+        print(f"route violations: {len(result['violations'])}")
+    args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return int(bool(result.get("violations")))
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

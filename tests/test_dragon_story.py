@@ -668,6 +668,8 @@ class DragonStoryTests(unittest.TestCase):
         basic_action = next(entry for entry in combat.combat_actions(session) if entry["id"] == "basic_attack")
         self.assertEqual(basic_action["followups"][0]["damage"], "1d8+int/2")
         target = session["combat"]["enemies"][0]
+        # Keep the target alive for the followup regardless of scenario balance.
+        target.update(hp=100, max_hp=100)
         combat._player_attack(session, target["id"], random.Random(7))
         self.assertTrue(
             any("氷の護符の追撃" in entry.get("text", "") for entry in session["combat"]["log"])

@@ -2400,6 +2400,9 @@
               "effects": [
                 {
                   "gold_change": -1
+                },
+                {
+                  "restore_full": true
                 }
               ],
               "portrait_image": "/static/images/npc_ian.png"
@@ -8107,7 +8110,16 @@
       },
       "rewards": {
         "gold": 5,
-        "items": [],
+        "items": [
+          {
+            "name": "薬草",
+            "quantity": 2
+          },
+          {
+            "name": "治療の巻物",
+            "quantity": 1
+          }
+        ],
         "flags": [
           "defeated_slime"
         ]
@@ -8119,8 +8131,8 @@
       "id": "ignis",
       "name": "邪竜イグニス",
       "description": "王国を脅かす紅き邪竜。炎の息を吐き、圧倒的な力を持つ。冷気に弱い。通常の物理攻撃や炎属性の攻撃ではダメージを与えられない。",
-      "hp": 152,
-      "max_hp": 152,
+      "hp": 168,
+      "max_hp": 168,
       "mp": 150,
       "max_mp": 150,
       "sp": 10,
@@ -8135,7 +8147,7 @@
       "combat": {
         "basic_attack": {
           "name": "爪撃",
-          "damage": "1d20",
+          "damage": "1d21",
           "accuracy": 55,
           "element": "physical"
         },
@@ -8161,8 +8173,8 @@
           "kind": "attack",
           "description": "灼熱の炎を広範囲に吐き出す。",
           "effect": "全体に2d6ダメージ",
-          "damage": "1d20",
-          "dice_type": "1d20",
+          "damage": "1d21",
+          "dice_type": "1d21",
           "accuracy": 55,
           "element": "fire",
           "cost": 5,
@@ -8175,8 +8187,8 @@
           "kind": "attack",
           "description": "巨大な尾で薙ぎ払う。",
           "effect": "1d20+str判定、単体ダメージ",
-          "damage": "1d20",
-          "dice_type": "1d20",
+          "damage": "1d21",
+          "dice_type": "1d21",
           "accuracy": 55,
           "element": "physical",
           "cost": 0,
@@ -8189,8 +8201,8 @@
       "id": "goblin",
       "name": "ゴブリン",
       "description": "粗末な短剣を持つ小鬼。",
-      "hp": 8,
-      "max_hp": 8,
+      "hp": 4,
+      "max_hp": 4,
       "attributes": {
         "str": 6,
         "dex": 8,
@@ -8201,16 +8213,21 @@
         "basic_attack": {
           "name": "粗末な短剣",
           "damage": "1d6",
-          "accuracy": 100,
+          "accuracy": 75,
           "element": "physical"
         },
-        "defense": 2,
-        "evade": 12
+        "defense": 0,
+        "evade": 0
       },
       "resistances": {},
       "rewards": {
         "gold": 5,
-        "items": [],
+        "items": [
+          {
+            "name": "治療の巻物",
+            "quantity": 1
+          }
+        ],
         "flags": []
       },
       "skills": [],
@@ -8220,8 +8237,8 @@
       "id": "goblin_archer",
       "name": "弓ゴブリン",
       "description": "高所から粗末な弓を射るゴブリン。",
-      "hp": 16,
-      "max_hp": 16,
+      "hp": 8,
+      "max_hp": 8,
       "attributes": {
         "str": 4,
         "dex": 10,
@@ -8232,16 +8249,21 @@
         "basic_attack": {
           "name": "粗末な矢",
           "damage": "1d6",
-          "accuracy": 100,
+          "accuracy": 90,
           "element": "physical"
         },
-        "defense": 1,
-        "evade": 10
+        "defense": 0,
+        "evade": 0
       },
       "resistances": {},
       "rewards": {
         "gold": 5,
-        "items": [],
+        "items": [
+          {
+            "name": "治療の巻物",
+            "quantity": 2
+          }
+        ],
         "flags": []
       },
       "skills": [],
@@ -8251,8 +8273,8 @@
       "id": "hobgoblin",
       "name": "大ゴブリン",
       "description": "重い棍棒を振るう大柄なゴブリン。",
-      "hp": 44,
-      "max_hp": 44,
+      "hp": 12,
+      "max_hp": 12,
       "attributes": {
         "str": 12,
         "dex": 5,
@@ -8263,16 +8285,21 @@
         "basic_attack": {
           "name": "大棍棒",
           "damage": "1d6",
-          "accuracy": 100,
+          "accuracy": 60,
           "element": "physical"
         },
-        "defense": 1,
-        "evade": 5
+        "defense": 0,
+        "evade": 0
       },
       "resistances": {},
       "rewards": {
         "gold": 5,
-        "items": [],
+        "items": [
+          {
+            "name": "薬草",
+            "quantity": 1
+          }
+        ],
         "flags": []
       },
       "skills": [],
@@ -8312,8 +8339,8 @@
       "id": "forest_wolf",
       "name": "森狼",
       "description": "闇の森を群れで狩る狼。",
-      "hp": 32,
-      "max_hp": 32,
+      "hp": 16,
+      "max_hp": 16,
       "attributes": {
         "str": 9,
         "dex": 11,
@@ -8322,11 +8349,11 @@
       "combat": {
         "basic_attack": {
           "name": "牙",
-          "damage": "1d10",
-          "accuracy": 70,
+          "damage": "1d12",
+          "accuracy": 60,
           "element": "physical"
         },
-        "defense": 2,
+        "defense": 0,
         "evade": 0
       },
       "resistances": {},
@@ -8382,8 +8409,8 @@
       "id": "goblin_king",
       "name": "ゴブリン王",
       "description": "砦の財宝を支配するゴブリンの王。",
-      "hp": 64,
-      "max_hp": 64,
+      "hp": 56,
+      "max_hp": 56,
       "attributes": {
         "str": 14,
         "dex": 8,
@@ -8393,11 +8420,11 @@
       "combat": {
         "basic_attack": {
           "name": "王の戦斧",
-          "damage": "1d10",
-          "accuracy": 95,
+          "damage": "1d24",
+          "accuracy": 50,
           "element": "physical"
         },
-        "defense": 1,
+        "defense": 0,
         "evade": 0
       },
       "resistances": {},
@@ -8505,7 +8532,12 @@
       },
       "rewards": {
         "gold": 6,
-        "items": [],
+        "items": [
+          {
+            "name": "治療の巻物",
+            "quantity": 2
+          }
+        ],
         "flags": []
       },
       "skills": [],
@@ -8552,8 +8584,8 @@
       "name": "氷の精霊",
       "description": "村の火災の中に佇む冷気の塊。",
       "element": "ice",
-      "hp": 44,
-      "max_hp": 44,
+      "hp": 28,
+      "max_hp": 28,
       "attributes": {
         "str": 10,
         "dex": 8,
@@ -8563,12 +8595,12 @@
       "combat": {
         "basic_attack": {
           "name": "氷柱",
-          "damage": "2d12",
-          "accuracy": 35,
+          "damage": "1d16",
+          "accuracy": 75,
           "element": "ice"
         },
         "defense": 0,
-        "evade": 5
+        "evade": 0
       },
       "resistances": {
         "ice": 0.0,
@@ -8587,8 +8619,8 @@
       "name": "氷霜の巨狼",
       "description": "氷の太刀を核として実体化した巨大な霜の狼。",
       "element": "ice",
-      "hp": 124,
-      "max_hp": 124,
+      "hp": 48,
+      "max_hp": 48,
       "attributes": {
         "str": 22,
         "dex": 18,
@@ -8598,11 +8630,11 @@
       "combat": {
         "basic_attack": {
           "name": "凍爪",
-          "damage": "1d10",
-          "accuracy": 65,
+          "damage": "1d12",
+          "accuracy": 60,
           "element": "ice"
         },
-        "defense": 1,
+        "defense": 0,
         "evade": 0
       },
       "resistances": {

@@ -63,7 +63,17 @@ python -m scripts.balance.route --n 500 --routes all --output eval/reports/balan
 python -m scripts.balance.pass3_report
 ```
 
-`route`从角色模板重放checkpoint的`sources`，把其中每次战斗及终点战斗交给真实引擎。资源与背包持续传递，只应用实际剧情效果和升级，不复制后续checkpoint的满资源。非战斗判定沿用sources指定的结果；无额外购物或休息。普通战败终止路线，剧情必败按剧本继续。输出终点完成率、各场失败次数、到达最终Boss时的平均资源（仅以到达者为分母）、逐场到达次数和消耗品均值（以到达该场者为分母）。固定seed可复现；全部路线仍为proposed，不设连续流程阈值。
+`route`从角色模板重放checkpoint的`sources`，把其中每次战斗及终点战斗交给真实引擎。资源与背包持续传递，只应用实际剧情效果和升级，不复制后续checkpoint的满资源。非战斗判定沿用sources指定的结果；无额外购物或休息。普通战败终止路线，剧情必败按剧本继续。输出终点完成率、各场失败次数、到达最终Boss时的平均资源（仅以到达者为分母）、逐场到达次数和消耗品均值（以到达该场者为分母）。固定seed可复现；全部路线仍为proposed，009起按下述route_targets验收。
+
+009起，`sim --check`默认只检查单场胜率、职业差距、Boss普攻上限；HP余量和回合数继续输出，加`--check-resource-metrics`才判定这两项。`route --check`读取`targets.json`的`route_targets`，运行其中全部路线，并检查每个职业的通关区间及各路线内职业差距；缺失/重复职业也失败。两类检查分别返回0（达标）或1（越界），不能互相替代。砦通关终点沿用pass3的`goblin_fort_fourth`；009的Boss到达资源也覆盖这个终点。
+
+```powershell
+python -m scripts.balance.route --check --n 500 --output eval/reports/balance-2026-10-11-pass4-routes.json
+python -m scripts.balance.sim --check --n 500 --output eval/reports/balance-2026-10-11-pass4.json
+python -m scripts.balance.pass4 --n 16 --candidates .tmp-test/pass4-candidates.json --output .tmp-test/pass4-search.json
+```
+
+`pass4`候选文件是`[{"name": "...", "parameters": {...}}]`数组，参数含`enemies`（沿用pass1的HP/伤害/命中/防御/回避）、`rewards`（敌人ID→已有回复品名→数量）及`inn_restore`。只在内存试验；`--single-check`重放候选奖励生成单场快照并核验完整单场矩阵，避免使用过期背包。路线评价始终调用`route.simulate_route`。先小N粗筛，再复核候选，锁定后N=500确认。支持`--shard/--shards`独立进程分片；`route --check`禁止在部分分片上验收，必须先合并完整结果再调用`route.check_results`。
 
 `pass3`和`route`都支持`--shard 0 --shards 4`。分片不改变seed；合并后必须对完整矩阵重新调用`check_results`，避免按职业拆分时漏掉职业差距。`pass3 --workers`默认1，以兼容Windows沙箱的进程通信限制。正式结果保留输入指纹，报告生成器以JSON中的`baseline_commit`生成原值→新值差分。
 

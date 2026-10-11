@@ -1,6 +1,6 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "f764f226d6461014cded6e258cfa19f7d962f5ef63619d213315007356a97680",
+  "scenario_sha256": "ad991815d61b0ffd509dd62f2a6ea3602c2a7700a764c332aef4f56eddfe34c4",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
@@ -799,7 +799,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -843,6 +843,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 1,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -963,6 +975,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -1044,7 +1066,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -1073,6 +1095,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 1,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -1150,6 +1184,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -1232,7 +1276,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -1261,6 +1305,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 1,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -1338,6 +1394,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -1441,6 +1507,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 1,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -1516,6 +1606,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -1586,7 +1686,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -1630,6 +1730,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -1750,6 +1862,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -1774,6 +1896,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -1860,7 +1988,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -1889,6 +2017,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -1966,6 +2106,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -1990,6 +2140,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -2077,7 +2233,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -2106,6 +2262,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -2183,6 +2351,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -2207,6 +2385,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -2315,6 +2499,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -2390,6 +2598,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -2414,6 +2632,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -2489,7 +2713,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -2533,6 +2757,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -2653,6 +2889,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -2677,6 +2923,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -2764,7 +3016,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -2793,6 +3045,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -2870,6 +3134,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -2894,6 +3168,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -2982,7 +3262,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -3011,6 +3291,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -3088,6 +3380,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -3112,6 +3414,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -3221,6 +3529,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -3296,6 +3628,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -3320,6 +3662,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -3396,7 +3744,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 5,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -3440,6 +3788,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 3,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -3560,6 +3920,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -3584,6 +3954,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -3604,6 +3980,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:slime_ambush_one:slime"
@@ -3683,7 +4069,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 6,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -3712,6 +4098,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 3,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -3789,6 +4187,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -3813,6 +4221,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -3833,6 +4247,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:slime_ambush_one:slime"
@@ -3913,7 +4337,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 5,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -3942,6 +4366,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 3,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -4019,6 +4455,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -4043,6 +4489,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -4063,6 +4515,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:slime_ambush_one:slime"
@@ -4164,6 +4626,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 4,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 3,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -4239,6 +4725,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -4263,6 +4759,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -4283,6 +4785,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:slime_ambush_one:slime"
@@ -4351,7 +4863,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 7,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -4395,6 +4907,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -4515,6 +5039,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -4539,6 +5073,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -4559,6 +5099,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:slime_ambush_one:slime"
@@ -4571,6 +5121,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:slime_ambush_two:slime"
@@ -4650,7 +5210,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 8,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -4679,6 +5239,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -4756,6 +5328,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -4780,6 +5362,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -4800,6 +5388,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:slime_ambush_one:slime"
@@ -4812,6 +5410,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:slime_ambush_two:slime"
@@ -4892,7 +5500,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 7,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -4921,6 +5529,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -4998,6 +5618,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -5022,6 +5652,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -5042,6 +5678,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:slime_ambush_one:slime"
@@ -5054,6 +5700,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:slime_ambush_two:slime"
@@ -5155,6 +5811,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 6,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -5230,6 +5910,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -5254,6 +5944,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -5274,6 +5970,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:slime_ambush_one:slime"
@@ -5286,6 +5992,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:slime_ambush_two:slime"
@@ -5354,7 +6070,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -5398,6 +6114,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 1,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -5518,6 +6246,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -5609,7 +6347,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -5638,6 +6376,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 1,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -5715,6 +6465,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -5807,7 +6567,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -5836,6 +6596,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 1,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -5913,6 +6685,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -6026,6 +6808,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 1,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -6101,6 +6907,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -6181,7 +6997,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -6225,6 +7041,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -6345,6 +7173,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -6369,6 +7207,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -6447,7 +7291,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -6476,6 +7320,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -6553,6 +7409,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -6577,6 +7443,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -6656,7 +7528,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -6685,6 +7557,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -6762,6 +7646,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -6786,6 +7680,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -6886,6 +7786,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -6961,6 +7885,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -6985,6 +7919,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -7052,7 +7992,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -7096,6 +8036,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -7216,6 +8168,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -7240,6 +8202,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -7251,6 +8219,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -7337,7 +8315,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -7366,6 +8344,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -7443,6 +8433,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -7467,6 +8467,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -7478,6 +8484,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -7565,7 +8581,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -7594,6 +8610,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -7671,6 +8699,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -7695,6 +8733,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -7706,6 +8750,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -7814,6 +8868,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -7889,6 +8967,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -7913,6 +9001,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -7924,6 +9018,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -7999,7 +9103,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -8043,6 +9147,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -8163,6 +9279,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -8187,6 +9313,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -8198,6 +9330,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -8285,7 +9427,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -8314,6 +9456,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -8391,6 +9545,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -8415,6 +9579,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -8426,6 +9596,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -8514,7 +9694,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -8543,6 +9723,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -8620,6 +9812,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -8644,6 +9846,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -8655,6 +9863,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -8764,6 +9982,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -8839,6 +10081,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -8863,6 +10115,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -8874,6 +10132,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -8950,7 +10218,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -8994,6 +10262,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -9114,6 +10394,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -9138,6 +10428,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -9149,6 +10445,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -9168,6 +10474,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
@@ -9255,7 +10567,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 5,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -9284,6 +10596,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -9361,6 +10685,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -9385,6 +10719,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -9396,6 +10736,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -9415,6 +10765,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
@@ -9503,7 +10859,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -9532,6 +10888,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -9609,6 +10977,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -9633,6 +11011,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -9644,6 +11028,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -9663,6 +11057,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
@@ -9772,6 +11172,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 3,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -9847,6 +11271,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -9871,6 +11305,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -9882,6 +11322,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -9901,6 +11351,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
@@ -9977,7 +11433,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 5,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -10021,6 +11477,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -10141,6 +11609,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -10165,6 +11643,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -10176,6 +11660,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -10195,6 +11689,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
@@ -10215,6 +11715,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_third_guards:hobgoblin"
                 ],
@@ -10293,7 +11799,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 6,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -10322,6 +11828,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -10399,6 +11917,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -10423,6 +11951,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -10434,6 +11968,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -10453,6 +11997,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
@@ -10473,6 +12023,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_third_guards:hobgoblin"
                 ],
@@ -10552,7 +12108,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 5,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -10581,6 +12137,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -10658,6 +12226,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -10682,6 +12260,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -10693,6 +12277,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -10712,6 +12306,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
@@ -10732,6 +12332,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_third_guards:hobgoblin"
                 ],
@@ -10832,6 +12438,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 4,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 5,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -10907,6 +12537,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -10931,6 +12571,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -10942,6 +12588,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -10961,6 +12617,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
@@ -10981,6 +12643,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_third_guards:hobgoblin"
                 ],
@@ -11051,7 +12719,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 5,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -11095,6 +12763,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 7,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -11215,6 +12895,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -11239,6 +12929,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -11250,6 +12946,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -11269,6 +12975,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
@@ -11289,6 +13001,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_third_guards:hobgoblin"
                 ],
@@ -11300,6 +13018,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 105,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "defeated_goblin_king",
                   "combat_defeated:goblin_fort_fourth:goblin_king",
@@ -11407,7 +13131,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 6,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -11436,6 +13160,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 7,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -11513,6 +13249,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -11537,6 +13283,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -11548,6 +13300,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -11567,6 +13329,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
@@ -11587,6 +13355,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_third_guards:hobgoblin"
                 ],
@@ -11598,6 +13372,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 105,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "defeated_goblin_king",
                   "combat_defeated:goblin_fort_fourth:goblin_king",
@@ -11695,7 +13475,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 5,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -11724,6 +13504,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 7,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -11801,6 +13593,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -11825,6 +13627,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -11836,6 +13644,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -11855,6 +13673,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
@@ -11875,6 +13699,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_third_guards:hobgoblin"
                 ],
@@ -11886,6 +13716,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 105,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "defeated_goblin_king",
                   "combat_defeated:goblin_fort_fourth:goblin_king",
@@ -12004,6 +13840,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 4,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 7,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -12079,6 +13939,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -12103,6 +13973,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort:goblin"
                 ],
@@ -12114,6 +13990,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 10,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_first_second:goblin",
                   "combat_defeated:goblin_fort_first_second:goblin_archer"
@@ -12133,6 +14019,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_second_right:hobgoblin",
                   "goblin_password_clue"
@@ -12153,6 +14045,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:goblin_fort_third_guards:hobgoblin"
                 ],
@@ -12164,6 +14062,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 105,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "defeated_goblin_king",
                   "combat_defeated:goblin_fort_fourth:goblin_king",
@@ -12249,7 +14153,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -12293,6 +14197,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -12399,6 +14315,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -12423,6 +14349,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -12556,7 +14488,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -12585,6 +14517,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -12648,6 +14592,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -12672,6 +14626,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -12795,7 +14755,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -12824,6 +14784,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -12887,6 +14859,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -12911,6 +14893,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -13055,6 +15043,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -13116,6 +15128,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -13140,6 +15162,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -13250,7 +15278,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -13294,6 +15322,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -13400,6 +15440,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -13424,6 +15474,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -13557,7 +15613,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -13586,6 +15642,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -13649,6 +15717,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -13673,6 +15751,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -13796,7 +15880,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -13825,6 +15909,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -13888,6 +15984,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -13912,6 +16018,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -14056,6 +16168,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -14117,6 +16253,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -14141,6 +16287,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -14251,7 +16403,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -14295,6 +16447,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -14401,6 +16565,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -14425,6 +16599,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -14475,6 +16655,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -14587,7 +16773,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -14616,6 +16802,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -14679,6 +16877,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -14703,6 +16911,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -14753,6 +16967,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -14855,7 +17075,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -14884,6 +17104,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -14947,6 +17179,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -14971,6 +17213,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -15021,6 +17269,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -15144,6 +17398,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -15205,6 +17483,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -15229,6 +17517,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -15279,6 +17573,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -15368,7 +17668,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -15412,6 +17712,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -15518,6 +17830,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -15542,6 +17864,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -15592,6 +17920,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -15727,7 +18061,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -15756,6 +18090,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -15819,6 +18165,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -15843,6 +18199,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -15893,6 +18255,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -16018,7 +18386,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -16047,6 +18415,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -16110,6 +18490,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -16134,6 +18524,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -16184,6 +18580,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -16330,6 +18732,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -16391,6 +18817,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -16415,6 +18851,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -16465,6 +18907,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -16579,7 +19027,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -16623,6 +19071,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -16729,6 +19189,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -16753,6 +19223,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -16803,6 +19279,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -16904,7 +19386,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -16933,6 +19415,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -16996,6 +19490,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -17020,6 +19524,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -17070,6 +19580,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -17161,7 +19677,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -17190,6 +19706,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -17253,6 +19781,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -17277,6 +19815,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -17327,6 +19871,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -17439,6 +19989,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -17500,6 +20074,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -17524,6 +20108,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -17574,6 +20164,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -17652,7 +20248,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -17696,6 +20292,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -17802,6 +20410,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -17826,6 +20444,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -17876,6 +20500,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -17988,7 +20618,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -18017,6 +20647,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -18080,6 +20722,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -18104,6 +20756,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -18154,6 +20812,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -18256,7 +20920,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -18285,6 +20949,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             }
@@ -18348,6 +21024,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -18372,6 +21058,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -18422,6 +21114,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -18545,6 +21243,30 @@
                 "element": "holy",
                 "consumable": true
               }
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
             }
           ],
           "equipment": [
@@ -18606,6 +21328,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -18630,6 +21362,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -18680,6 +21418,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -18782,7 +21526,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -18826,6 +21570,18 @@
                 "damage": "1d10+str/3+int/4",
                 "accuracy": 88,
                 "element": "ice"
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
               }
             }
           ],
@@ -18932,6 +21688,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -18956,6 +21722,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -19006,6 +21778,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -19160,7 +21938,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 4,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -19189,6 +21967,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             },
@@ -19267,6 +22057,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -19291,6 +22091,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -19341,6 +22147,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -19475,7 +22287,7 @@
               "name": "薬草",
               "description": "傷を癒す薬草。",
               "effect": "HPを10回復 / 消耗品",
-              "quantity": 1,
+              "quantity": 3,
               "id": "herb",
               "combat": {
                 "kind": "heal",
@@ -19504,6 +22316,18 @@
                 "damage": "36",
                 "accuracy": 100,
                 "element": "holy",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
                 "consumable": true
               }
             },
@@ -19582,6 +22406,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -19606,6 +22440,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -19656,6 +22496,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],
@@ -19813,6 +22659,30 @@
               }
             },
             {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 2,
+              "id": "herb",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              }
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              }
+            },
+            {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
               "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
@@ -19886,6 +22756,16 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "薬草",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "defeated_slime",
                   "combat_defeated:dark_forest_loc:slime",
@@ -19910,6 +22790,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 5,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:lost_goblin_crossroads:goblin"
                 ],
@@ -19960,6 +22846,12 @@
               "step": "@victory",
               "delta": {
                 "gold_change": 6,
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 2
+                  }
+                ],
                 "flags_set": [
                   "combat_defeated:village_fire_slime:fire_slime"
                 ],

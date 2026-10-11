@@ -109,7 +109,8 @@ class BalanceTests(unittest.TestCase):
         targets = json.loads(sim.TARGETS.read_text(encoding="utf-8"))
         row = dict(encounter="forest_wolves", encounter_class="elite", character="hero", policy="heuristic",
                    defense_mode="flat", win_rate=.8, hp_left_mean=.9, rounds_median=2)
-        violations = sim.check_results([row, {**row, "character": "mage", "win_rate": .5}], targets)
+        violations = sim.check_results([row, {**row, "character": "mage", "win_rate": .5}], targets,
+                                       check_resource_metrics=True)
         self.assertEqual({v["metric"] for v in violations}, {"win_rate", "hp_left", "rounds", "class_spread"})
         boundary = [dict(row, character="hero", win_rate=.90, hp_left_mean=.4, rounds_median=5),
                     dict(row, character="mage", win_rate=.75, hp_left_mean=.4, rounds_median=5)]
