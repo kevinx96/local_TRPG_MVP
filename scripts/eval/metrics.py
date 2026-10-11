@@ -27,7 +27,7 @@ def severity(record: dict[str, Any]) -> str:
     plan = record.get("plan") or {}
     for index, gold in enumerate(record["gold"]):
         if same_plan(plan, gold):
-            return "S0" if index == 0 else "S1"
+            return gold.get("tier") or ("S0" if index == 0 else "S1")
     harmful = record.get("harmful")
     # operation/action_id describe alternatives; kind, when present, constrains them.
     if harmful is not None:

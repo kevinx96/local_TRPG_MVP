@@ -35,6 +35,11 @@ class SeverityTests(unittest.TestCase):
         row["plan"] = None
         self.assertEqual(severity(row), "S2")
 
+    def test_explicit_gold_tier_overrides_position(self):
+        row = self.row("clarify", "dialogue,clarify")
+        row["gold"][1]["tier"] = "S0"
+        self.assertEqual(severity(row), "S0")
+
     def test_harmful_alternatives_and_kind_constraint(self):
         for prediction, harmful in [("pass", {"operation": ["distract"]}),
                                     ("e:attack_slime", {"kind": ["existing"], "action_id": ["attack_slime"]}),
