@@ -1,6 +1,6 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "90af96e0d295925273db8d76e9addcc56929694a41dd0e4e4f25e6d6951c13e6",
+  "scenario_sha256": "f764f226d6461014cded6e258cfa19f7d962f5ef63619d213315007356a97680",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
@@ -123,7 +123,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -340,7 +340,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -514,7 +514,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -678,7 +678,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -854,7 +854,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -1085,7 +1085,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -1273,7 +1273,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -1451,7 +1451,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -1641,7 +1641,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -1901,7 +1901,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -2118,7 +2118,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -2325,7 +2325,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -2544,7 +2544,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -2805,7 +2805,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -3023,7 +3023,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -3231,7 +3231,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -3451,7 +3451,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -3724,7 +3724,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -3954,7 +3954,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -4174,7 +4174,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -4406,7 +4406,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -4691,7 +4691,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -4933,7 +4933,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -5165,7 +5165,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -5409,7 +5409,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -5650,7 +5650,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -5848,7 +5848,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -6036,7 +6036,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -6236,7 +6236,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -6488,7 +6488,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -6697,7 +6697,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -6896,7 +6896,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -7107,7 +7107,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -7378,7 +7378,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -7606,7 +7606,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -7824,7 +7824,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -8054,7 +8054,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -8326,7 +8326,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -8555,7 +8555,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -8774,7 +8774,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -9005,7 +9005,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -9296,7 +9296,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -9544,7 +9544,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -9782,7 +9782,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -10032,7 +10032,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -10334,7 +10334,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -10593,7 +10593,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -10842,7 +10842,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -11002,17 +11002,18 @@
           ],
           "skills": [
             {
-              "id": "power_slash",
-              "name": "渾身斬り",
+              "id": "hero_lv3_a",
+              "name": "渾身斬り・改",
               "kind": "attack",
-              "description": "気合を込めた全力の一撃。",
-              "effect": "1d4+str判定ダメージ",
-              "damage": "1d10+str/2",
-              "dice_type": "1d10+str/2",
-              "accuracy": 85,
+              "damage": "1d8+str/2",
+              "accuracy": 92,
               "element": "physical",
               "cost": 3,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "気合を込めた全力の一撃。",
+              "unlock_level": 3,
+              "effect": "敵に1d8+str/2ダメージを与える。",
+              "replaces": "渾身斬り"
             },
             {
               "id": "divine_guard",
@@ -11023,19 +11024,6 @@
               "guard_multiplier": 0.5,
               "survive_at_one": true,
               "cost": 0
-            },
-            {
-              "id": "hero_lv3_a",
-              "name": "渾身斬り",
-              "kind": "attack",
-              "damage": "1d8+str/2",
-              "accuracy": 92,
-              "element": "physical",
-              "cost": 3,
-              "cost_type": "sp",
-              "description": "気合を込めた全力の一撃。",
-              "unlock_level": 3,
-              "effect": "敵に1d8+str/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -11118,7 +11106,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -11460,7 +11448,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -11639,17 +11627,19 @@
           ],
           "skills": [
             {
-              "id": "fireball",
-              "name": "火球",
+              "id": "mage_lv3_b",
+              "name": "火球・改",
               "kind": "attack",
-              "description": "灼熱の火球を放つ。",
-              "effect": "int判定ダメージ、ｈｐ１００％に対して、1d6追加ダメージを与える",
-              "damage": "1d6+int/2",
-              "dice_type": "1d6+int/2",
-              "accuracy": 90,
+              "damage": "1d8+int/2",
+              "accuracy": 92,
               "element": "fire",
-              "cost": 5,
-              "cost_type": "mp"
+              "cost": 6,
+              "cost_type": "mp",
+              "all_targets": true,
+              "description": "火球で敵全体を攻撃する。",
+              "unlock_level": 2,
+              "effect": "敵全体に1d8+int/2ダメージを与える。",
+              "replaces": "火球"
             },
             {
               "id": "ice_arrow",
@@ -11663,20 +11653,6 @@
               "element": "ice",
               "cost": 3,
               "cost_type": "mp"
-            },
-            {
-              "id": "mage_lv3_b",
-              "name": "火球",
-              "kind": "attack",
-              "damage": "1d8+int/2",
-              "accuracy": 92,
-              "element": "fire",
-              "cost": 6,
-              "cost_type": "mp",
-              "all_targets": true,
-              "description": "火球で敵全体を攻撃する。",
-              "unlock_level": 3,
-              "effect": "敵全体に1d8+int/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -11760,7 +11736,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -11939,15 +11915,17 @@
           ],
           "skills": [
             {
-              "id": "hide_in_shadow",
-              "name": "影隠れ",
+              "id": "thief_lv3_b",
+              "name": "影隠れ・改",
               "kind": "defend",
-              "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
-              "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
               "guard_multiplier": 0.25,
-              "dice_type": "1d20+dex",
+              "survive_at_one": true,
               "cost": 2,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "影に溶けて攻撃に備える。",
+              "unlock_level": 3,
+              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+              "replaces": "影隠れ"
             },
             {
               "id": "vital_strike",
@@ -11961,18 +11939,6 @@
               "element": "physical",
               "cost": 4,
               "cost_type": "sp"
-            },
-            {
-              "id": "thief_lv3_b",
-              "name": "影隠れ",
-              "kind": "defend",
-              "guard_multiplier": 0.25,
-              "survive_at_one": true,
-              "cost": 2,
-              "cost_type": "sp",
-              "description": "影に溶けて攻撃に備える。",
-              "unlock_level": 3,
-              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
             }
           ],
           "attributes": {
@@ -12048,7 +12014,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -12234,17 +12200,18 @@
           ],
           "skills": [
             {
-              "id": "power_slash",
-              "name": "渾身斬り",
+              "id": "hero_lv3_a",
+              "name": "渾身斬り・改",
               "kind": "attack",
-              "description": "気合を込めた全力の一撃。",
-              "effect": "1d4+str判定ダメージ",
-              "damage": "1d10+str/2",
-              "dice_type": "1d10+str/2",
-              "accuracy": 85,
+              "damage": "1d8+str/2",
+              "accuracy": 92,
               "element": "physical",
               "cost": 3,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "気合を込めた全力の一撃。",
+              "unlock_level": 3,
+              "effect": "敵に1d8+str/2ダメージを与える。",
+              "replaces": "渾身斬り"
             },
             {
               "id": "divine_guard",
@@ -12255,19 +12222,6 @@
               "guard_multiplier": 0.5,
               "survive_at_one": true,
               "cost": 0
-            },
-            {
-              "id": "hero_lv3_a",
-              "name": "渾身斬り",
-              "kind": "attack",
-              "damage": "1d8+str/2",
-              "accuracy": 92,
-              "element": "physical",
-              "cost": 3,
-              "cost_type": "sp",
-              "description": "気合を込めた全力の一撃。",
-              "unlock_level": 3,
-              "effect": "敵に1d8+str/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -12773,17 +12727,19 @@
           ],
           "skills": [
             {
-              "id": "fireball",
-              "name": "火球",
+              "id": "mage_lv3_b",
+              "name": "火球・改",
               "kind": "attack",
-              "description": "灼熱の火球を放つ。",
-              "effect": "int判定ダメージ、ｈｐ１００％に対して、1d6追加ダメージを与える",
-              "damage": "1d6+int/2",
-              "dice_type": "1d6+int/2",
-              "accuracy": 90,
+              "damage": "1d8+int/2",
+              "accuracy": 92,
               "element": "fire",
-              "cost": 5,
-              "cost_type": "mp"
+              "cost": 6,
+              "cost_type": "mp",
+              "all_targets": true,
+              "description": "火球で敵全体を攻撃する。",
+              "unlock_level": 2,
+              "effect": "敵全体に1d8+int/2ダメージを与える。",
+              "replaces": "火球"
             },
             {
               "id": "ice_arrow",
@@ -12797,20 +12753,6 @@
               "element": "ice",
               "cost": 3,
               "cost_type": "mp"
-            },
-            {
-              "id": "mage_lv3_b",
-              "name": "火球",
-              "kind": "attack",
-              "damage": "1d8+int/2",
-              "accuracy": 92,
-              "element": "fire",
-              "cost": 6,
-              "cost_type": "mp",
-              "all_targets": true,
-              "description": "火球で敵全体を攻撃する。",
-              "unlock_level": 3,
-              "effect": "敵全体に1d8+int/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -13024,15 +12966,17 @@
           ],
           "skills": [
             {
-              "id": "hide_in_shadow",
-              "name": "影隠れ",
+              "id": "thief_lv3_b",
+              "name": "影隠れ・改",
               "kind": "defend",
-              "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
-              "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
               "guard_multiplier": 0.25,
-              "dice_type": "1d20+dex",
+              "survive_at_one": true,
               "cost": 2,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "影に溶けて攻撃に備える。",
+              "unlock_level": 3,
+              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+              "replaces": "影隠れ"
             },
             {
               "id": "vital_strike",
@@ -13046,18 +12990,6 @@
               "element": "physical",
               "cost": 4,
               "cost_type": "sp"
-            },
-            {
-              "id": "thief_lv3_b",
-              "name": "影隠れ",
-              "kind": "defend",
-              "guard_multiplier": 0.25,
-              "survive_at_one": true,
-              "cost": 2,
-              "cost_type": "sp",
-              "description": "影に溶けて攻撃に備える。",
-              "unlock_level": 3,
-              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
             }
           ],
           "attributes": {
@@ -13269,17 +13201,18 @@
           ],
           "skills": [
             {
-              "id": "power_slash",
-              "name": "渾身斬り",
+              "id": "hero_lv3_a",
+              "name": "渾身斬り・改",
               "kind": "attack",
-              "description": "気合を込めた全力の一撃。",
-              "effect": "1d4+str判定ダメージ",
-              "damage": "1d10+str/2",
-              "dice_type": "1d10+str/2",
-              "accuracy": 85,
+              "damage": "1d8+str/2",
+              "accuracy": 92,
               "element": "physical",
               "cost": 3,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "気合を込めた全力の一撃。",
+              "unlock_level": 3,
+              "effect": "敵に1d8+str/2ダメージを与える。",
+              "replaces": "渾身斬り"
             },
             {
               "id": "divine_guard",
@@ -13290,19 +13223,6 @@
               "guard_multiplier": 0.5,
               "survive_at_one": true,
               "cost": 0
-            },
-            {
-              "id": "hero_lv3_a",
-              "name": "渾身斬り",
-              "kind": "attack",
-              "damage": "1d8+str/2",
-              "accuracy": 92,
-              "element": "physical",
-              "cost": 3,
-              "cost_type": "sp",
-              "description": "気合を込めた全力の一撃。",
-              "unlock_level": 3,
-              "effect": "敵に1d8+str/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -13808,17 +13728,19 @@
           ],
           "skills": [
             {
-              "id": "fireball",
-              "name": "火球",
+              "id": "mage_lv3_b",
+              "name": "火球・改",
               "kind": "attack",
-              "description": "灼熱の火球を放つ。",
-              "effect": "int判定ダメージ、ｈｐ１００％に対して、1d6追加ダメージを与える",
-              "damage": "1d6+int/2",
-              "dice_type": "1d6+int/2",
-              "accuracy": 90,
+              "damage": "1d8+int/2",
+              "accuracy": 92,
               "element": "fire",
-              "cost": 5,
-              "cost_type": "mp"
+              "cost": 6,
+              "cost_type": "mp",
+              "all_targets": true,
+              "description": "火球で敵全体を攻撃する。",
+              "unlock_level": 2,
+              "effect": "敵全体に1d8+int/2ダメージを与える。",
+              "replaces": "火球"
             },
             {
               "id": "ice_arrow",
@@ -13832,20 +13754,6 @@
               "element": "ice",
               "cost": 3,
               "cost_type": "mp"
-            },
-            {
-              "id": "mage_lv3_b",
-              "name": "火球",
-              "kind": "attack",
-              "damage": "1d8+int/2",
-              "accuracy": 92,
-              "element": "fire",
-              "cost": 6,
-              "cost_type": "mp",
-              "all_targets": true,
-              "description": "火球で敵全体を攻撃する。",
-              "unlock_level": 3,
-              "effect": "敵全体に1d8+int/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -14059,15 +13967,17 @@
           ],
           "skills": [
             {
-              "id": "hide_in_shadow",
-              "name": "影隠れ",
+              "id": "thief_lv3_b",
+              "name": "影隠れ・改",
               "kind": "defend",
-              "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
-              "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
               "guard_multiplier": 0.25,
-              "dice_type": "1d20+dex",
+              "survive_at_one": true,
               "cost": 2,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "影に溶けて攻撃に備える。",
+              "unlock_level": 3,
+              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+              "replaces": "影隠れ"
             },
             {
               "id": "vital_strike",
@@ -14081,18 +13991,6 @@
               "element": "physical",
               "cost": 4,
               "cost_type": "sp"
-            },
-            {
-              "id": "thief_lv3_b",
-              "name": "影隠れ",
-              "kind": "defend",
-              "guard_multiplier": 0.25,
-              "survive_at_one": true,
-              "cost": 2,
-              "cost_type": "sp",
-              "description": "影に溶けて攻撃に備える。",
-              "unlock_level": 3,
-              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
             }
           ],
           "attributes": {
@@ -14304,17 +14202,18 @@
           ],
           "skills": [
             {
-              "id": "power_slash",
-              "name": "渾身斬り",
+              "id": "hero_lv3_a",
+              "name": "渾身斬り・改",
               "kind": "attack",
-              "description": "気合を込めた全力の一撃。",
-              "effect": "1d4+str判定ダメージ",
-              "damage": "1d10+str/2",
-              "dice_type": "1d10+str/2",
-              "accuracy": 85,
+              "damage": "1d8+str/2",
+              "accuracy": 92,
               "element": "physical",
               "cost": 3,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "気合を込めた全力の一撃。",
+              "unlock_level": 3,
+              "effect": "敵に1d8+str/2ダメージを与える。",
+              "replaces": "渾身斬り"
             },
             {
               "id": "divine_guard",
@@ -14325,19 +14224,6 @@
               "guard_multiplier": 0.5,
               "survive_at_one": true,
               "cost": 0
-            },
-            {
-              "id": "hero_lv3_a",
-              "name": "渾身斬り",
-              "kind": "attack",
-              "damage": "1d8+str/2",
-              "accuracy": 92,
-              "element": "physical",
-              "cost": 3,
-              "cost_type": "sp",
-              "description": "気合を込めた全力の一撃。",
-              "unlock_level": 3,
-              "effect": "敵に1d8+str/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -14901,17 +14787,19 @@
           ],
           "skills": [
             {
-              "id": "fireball",
-              "name": "火球",
+              "id": "mage_lv3_b",
+              "name": "火球・改",
               "kind": "attack",
-              "description": "灼熱の火球を放つ。",
-              "effect": "int判定ダメージ、ｈｐ１００％に対して、1d6追加ダメージを与える",
-              "damage": "1d6+int/2",
-              "dice_type": "1d6+int/2",
-              "accuracy": 90,
+              "damage": "1d8+int/2",
+              "accuracy": 92,
               "element": "fire",
-              "cost": 5,
-              "cost_type": "mp"
+              "cost": 6,
+              "cost_type": "mp",
+              "all_targets": true,
+              "description": "火球で敵全体を攻撃する。",
+              "unlock_level": 2,
+              "effect": "敵全体に1d8+int/2ダメージを与える。",
+              "replaces": "火球"
             },
             {
               "id": "ice_arrow",
@@ -14925,20 +14813,6 @@
               "element": "ice",
               "cost": 3,
               "cost_type": "mp"
-            },
-            {
-              "id": "mage_lv3_b",
-              "name": "火球",
-              "kind": "attack",
-              "damage": "1d8+int/2",
-              "accuracy": 92,
-              "element": "fire",
-              "cost": 6,
-              "cost_type": "mp",
-              "all_targets": true,
-              "description": "火球で敵全体を攻撃する。",
-              "unlock_level": 3,
-              "effect": "敵全体に1d8+int/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -15181,15 +15055,17 @@
           ],
           "skills": [
             {
-              "id": "hide_in_shadow",
-              "name": "影隠れ",
+              "id": "thief_lv3_b",
+              "name": "影隠れ・改",
               "kind": "defend",
-              "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
-              "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
               "guard_multiplier": 0.25,
-              "dice_type": "1d20+dex",
+              "survive_at_one": true,
               "cost": 2,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "影に溶けて攻撃に備える。",
+              "unlock_level": 3,
+              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+              "replaces": "影隠れ"
             },
             {
               "id": "vital_strike",
@@ -15203,18 +15079,6 @@
               "element": "physical",
               "cost": 4,
               "cost_type": "sp"
-            },
-            {
-              "id": "thief_lv3_b",
-              "name": "影隠れ",
-              "kind": "defend",
-              "guard_multiplier": 0.25,
-              "survive_at_one": true,
-              "cost": 2,
-              "cost_type": "sp",
-              "description": "影に溶けて攻撃に備える。",
-              "unlock_level": 3,
-              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
             }
           ],
           "attributes": {
@@ -15455,17 +15319,18 @@
           ],
           "skills": [
             {
-              "id": "power_slash",
-              "name": "渾身斬り",
+              "id": "hero_lv3_a",
+              "name": "渾身斬り・改",
               "kind": "attack",
-              "description": "気合を込めた全力の一撃。",
-              "effect": "1d4+str判定ダメージ",
-              "damage": "1d10+str/2",
-              "dice_type": "1d10+str/2",
-              "accuracy": 85,
+              "damage": "1d8+str/2",
+              "accuracy": 92,
               "element": "physical",
               "cost": 3,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "気合を込めた全力の一撃。",
+              "unlock_level": 3,
+              "effect": "敵に1d8+str/2ダメージを与える。",
+              "replaces": "渾身斬り"
             },
             {
               "id": "divine_guard",
@@ -15476,19 +15341,6 @@
               "guard_multiplier": 0.5,
               "survive_at_one": true,
               "cost": 0
-            },
-            {
-              "id": "hero_lv3_a",
-              "name": "渾身斬り",
-              "kind": "attack",
-              "damage": "1d8+str/2",
-              "accuracy": 92,
-              "element": "physical",
-              "cost": 3,
-              "cost_type": "sp",
-              "description": "気合を込めた全力の一撃。",
-              "unlock_level": 3,
-              "effect": "敵に1d8+str/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -16098,17 +15950,19 @@
           ],
           "skills": [
             {
-              "id": "fireball",
-              "name": "火球",
+              "id": "mage_lv3_b",
+              "name": "火球・改",
               "kind": "attack",
-              "description": "灼熱の火球を放つ。",
-              "effect": "int判定ダメージ、ｈｐ１００％に対して、1d6追加ダメージを与える",
-              "damage": "1d6+int/2",
-              "dice_type": "1d6+int/2",
-              "accuracy": 90,
+              "damage": "1d8+int/2",
+              "accuracy": 92,
               "element": "fire",
-              "cost": 5,
-              "cost_type": "mp"
+              "cost": 6,
+              "cost_type": "mp",
+              "all_targets": true,
+              "description": "火球で敵全体を攻撃する。",
+              "unlock_level": 2,
+              "effect": "敵全体に1d8+int/2ダメージを与える。",
+              "replaces": "火球"
             },
             {
               "id": "ice_arrow",
@@ -16122,20 +15976,6 @@
               "element": "ice",
               "cost": 3,
               "cost_type": "mp"
-            },
-            {
-              "id": "mage_lv3_b",
-              "name": "火球",
-              "kind": "attack",
-              "damage": "1d8+int/2",
-              "accuracy": 92,
-              "element": "fire",
-              "cost": 6,
-              "cost_type": "mp",
-              "all_targets": true,
-              "description": "火球で敵全体を攻撃する。",
-              "unlock_level": 3,
-              "effect": "敵全体に1d8+int/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -16401,15 +16241,17 @@
           ],
           "skills": [
             {
-              "id": "hide_in_shadow",
-              "name": "影隠れ",
+              "id": "thief_lv3_b",
+              "name": "影隠れ・改",
               "kind": "defend",
-              "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
-              "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
               "guard_multiplier": 0.25,
-              "dice_type": "1d20+dex",
+              "survive_at_one": true,
               "cost": 2,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "影に溶けて攻撃に備える。",
+              "unlock_level": 3,
+              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+              "replaces": "影隠れ"
             },
             {
               "id": "vital_strike",
@@ -16423,18 +16265,6 @@
               "element": "physical",
               "cost": 4,
               "cost_type": "sp"
-            },
-            {
-              "id": "thief_lv3_b",
-              "name": "影隠れ",
-              "kind": "defend",
-              "guard_multiplier": 0.25,
-              "survive_at_one": true,
-              "cost": 2,
-              "cost_type": "sp",
-              "description": "影に溶けて攻撃に備える。",
-              "unlock_level": 3,
-              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
             }
           ],
           "attributes": {
@@ -16700,17 +16530,18 @@
           ],
           "skills": [
             {
-              "id": "power_slash",
-              "name": "渾身斬り",
+              "id": "hero_lv3_a",
+              "name": "渾身斬り・改",
               "kind": "attack",
-              "description": "気合を込めた全力の一撃。",
-              "effect": "1d4+str判定ダメージ",
-              "damage": "1d10+str/2",
-              "dice_type": "1d10+str/2",
-              "accuracy": 85,
+              "damage": "1d8+str/2",
+              "accuracy": 92,
               "element": "physical",
               "cost": 3,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "気合を込めた全力の一撃。",
+              "unlock_level": 3,
+              "effect": "敵に1d8+str/2ダメージを与える。",
+              "replaces": "渾身斬り"
             },
             {
               "id": "divine_guard",
@@ -16721,19 +16552,6 @@
               "guard_multiplier": 0.5,
               "survive_at_one": true,
               "cost": 0
-            },
-            {
-              "id": "hero_lv3_a",
-              "name": "渾身斬り",
-              "kind": "attack",
-              "damage": "1d8+str/2",
-              "accuracy": 92,
-              "element": "physical",
-              "cost": 3,
-              "cost_type": "sp",
-              "description": "気合を込めた全力の一撃。",
-              "unlock_level": 3,
-              "effect": "敵に1d8+str/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -17275,17 +17093,19 @@
           ],
           "skills": [
             {
-              "id": "fireball",
-              "name": "火球",
+              "id": "mage_lv3_b",
+              "name": "火球・改",
               "kind": "attack",
-              "description": "灼熱の火球を放つ。",
-              "effect": "int判定ダメージ、ｈｐ１００％に対して、1d6追加ダメージを与える",
-              "damage": "1d6+int/2",
-              "dice_type": "1d6+int/2",
-              "accuracy": 90,
+              "damage": "1d8+int/2",
+              "accuracy": 92,
               "element": "fire",
-              "cost": 5,
-              "cost_type": "mp"
+              "cost": 6,
+              "cost_type": "mp",
+              "all_targets": true,
+              "description": "火球で敵全体を攻撃する。",
+              "unlock_level": 2,
+              "effect": "敵全体に1d8+int/2ダメージを与える。",
+              "replaces": "火球"
             },
             {
               "id": "ice_arrow",
@@ -17299,20 +17119,6 @@
               "element": "ice",
               "cost": 3,
               "cost_type": "mp"
-            },
-            {
-              "id": "mage_lv3_b",
-              "name": "火球",
-              "kind": "attack",
-              "damage": "1d8+int/2",
-              "accuracy": 92,
-              "element": "fire",
-              "cost": 6,
-              "cost_type": "mp",
-              "all_targets": true,
-              "description": "火球で敵全体を攻撃する。",
-              "unlock_level": 3,
-              "effect": "敵全体に1d8+int/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -17544,15 +17350,17 @@
           ],
           "skills": [
             {
-              "id": "hide_in_shadow",
-              "name": "影隠れ",
+              "id": "thief_lv3_b",
+              "name": "影隠れ・改",
               "kind": "defend",
-              "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
-              "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
               "guard_multiplier": 0.25,
-              "dice_type": "1d20+dex",
+              "survive_at_one": true,
               "cost": 2,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "影に溶けて攻撃に備える。",
+              "unlock_level": 3,
+              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+              "replaces": "影隠れ"
             },
             {
               "id": "vital_strike",
@@ -17566,18 +17374,6 @@
               "element": "physical",
               "cost": 4,
               "cost_type": "sp"
-            },
-            {
-              "id": "thief_lv3_b",
-              "name": "影隠れ",
-              "kind": "defend",
-              "guard_multiplier": 0.25,
-              "survive_at_one": true,
-              "cost": 2,
-              "cost_type": "sp",
-              "description": "影に溶けて攻撃に備える。",
-              "unlock_level": 3,
-              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
             }
           ],
           "attributes": {
@@ -17807,17 +17603,18 @@
           ],
           "skills": [
             {
-              "id": "power_slash",
-              "name": "渾身斬り",
+              "id": "hero_lv3_a",
+              "name": "渾身斬り・改",
               "kind": "attack",
-              "description": "気合を込めた全力の一撃。",
-              "effect": "1d4+str判定ダメージ",
-              "damage": "1d10+str/2",
-              "dice_type": "1d10+str/2",
-              "accuracy": 85,
+              "damage": "1d8+str/2",
+              "accuracy": 92,
               "element": "physical",
               "cost": 3,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "気合を込めた全力の一撃。",
+              "unlock_level": 3,
+              "effect": "敵に1d8+str/2ダメージを与える。",
+              "replaces": "渾身斬り"
             },
             {
               "id": "divine_guard",
@@ -17828,19 +17625,6 @@
               "guard_multiplier": 0.5,
               "survive_at_one": true,
               "cost": 0
-            },
-            {
-              "id": "hero_lv3_a",
-              "name": "渾身斬り",
-              "kind": "attack",
-              "damage": "1d8+str/2",
-              "accuracy": 92,
-              "element": "physical",
-              "cost": 3,
-              "cost_type": "sp",
-              "description": "気合を込めた全力の一撃。",
-              "unlock_level": 3,
-              "effect": "敵に1d8+str/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -18404,17 +18188,19 @@
           ],
           "skills": [
             {
-              "id": "fireball",
-              "name": "火球",
+              "id": "mage_lv3_b",
+              "name": "火球・改",
               "kind": "attack",
-              "description": "灼熱の火球を放つ。",
-              "effect": "int判定ダメージ、ｈｐ１００％に対して、1d6追加ダメージを与える",
-              "damage": "1d6+int/2",
-              "dice_type": "1d6+int/2",
-              "accuracy": 90,
+              "damage": "1d8+int/2",
+              "accuracy": 92,
               "element": "fire",
-              "cost": 5,
-              "cost_type": "mp"
+              "cost": 6,
+              "cost_type": "mp",
+              "all_targets": true,
+              "description": "火球で敵全体を攻撃する。",
+              "unlock_level": 2,
+              "effect": "敵全体に1d8+int/2ダメージを与える。",
+              "replaces": "火球"
             },
             {
               "id": "ice_arrow",
@@ -18428,20 +18214,6 @@
               "element": "ice",
               "cost": 3,
               "cost_type": "mp"
-            },
-            {
-              "id": "mage_lv3_b",
-              "name": "火球",
-              "kind": "attack",
-              "damage": "1d8+int/2",
-              "accuracy": 92,
-              "element": "fire",
-              "cost": 6,
-              "cost_type": "mp",
-              "all_targets": true,
-              "description": "火球で敵全体を攻撃する。",
-              "unlock_level": 3,
-              "effect": "敵全体に1d8+int/2ダメージを与える。"
             }
           ],
           "attributes": {
@@ -18684,15 +18456,17 @@
           ],
           "skills": [
             {
-              "id": "hide_in_shadow",
-              "name": "影隠れ",
+              "id": "thief_lv3_b",
+              "name": "影隠れ・改",
               "kind": "defend",
-              "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
-              "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
               "guard_multiplier": 0.25,
-              "dice_type": "1d20+dex",
+              "survive_at_one": true,
               "cost": 2,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "影に溶けて攻撃に備える。",
+              "unlock_level": 3,
+              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+              "replaces": "影隠れ"
             },
             {
               "id": "vital_strike",
@@ -18706,18 +18480,6 @@
               "element": "physical",
               "cost": 4,
               "cost_type": "sp"
-            },
-            {
-              "id": "thief_lv3_b",
-              "name": "影隠れ",
-              "kind": "defend",
-              "guard_multiplier": 0.25,
-              "survive_at_one": true,
-              "cost": 2,
-              "cost_type": "sp",
-              "description": "影に溶けて攻撃に備える。",
-              "unlock_level": 3,
-              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
             }
           ],
           "attributes": {
@@ -18959,17 +18721,18 @@
           ],
           "skills": [
             {
-              "id": "power_slash",
-              "name": "渾身斬り",
+              "id": "hero_lv3_a",
+              "name": "渾身斬り・改",
               "kind": "attack",
-              "description": "気合を込めた全力の一撃。",
-              "effect": "1d4+str判定ダメージ",
-              "damage": "1d10+str/2",
-              "dice_type": "1d10+str/2",
-              "accuracy": 85,
+              "damage": "1d8+str/2",
+              "accuracy": 92,
               "element": "physical",
               "cost": 3,
-              "cost_type": "sp"
+              "cost_type": "sp",
+              "description": "気合を込めた全力の一撃。",
+              "unlock_level": 3,
+              "effect": "敵に1d8+str/2ダメージを与える。",
+              "replaces": "渾身斬り"
             },
             {
               "id": "divine_guard",
@@ -18980,19 +18743,6 @@
               "guard_multiplier": 0.5,
               "survive_at_one": true,
               "cost": 0
-            },
-            {
-              "id": "hero_lv3_a",
-              "name": "渾身斬り",
-              "kind": "attack",
-              "damage": "1d8+str/2",
-              "accuracy": 92,
-              "element": "physical",
-              "cost": 3,
-              "cost_type": "sp",
-              "description": "気合を込めた全力の一撃。",
-              "unlock_level": 3,
-              "effect": "敵に1d8+str/2ダメージを与える。"
             },
             {
               "id": "hero_lv5_b",
@@ -19656,34 +19406,8 @@
           ],
           "skills": [
             {
-              "id": "fireball",
-              "name": "火球",
-              "kind": "attack",
-              "description": "灼熱の火球を放つ。",
-              "effect": "int判定ダメージ、ｈｐ１００％に対して、1d6追加ダメージを与える",
-              "damage": "1d6+int/2",
-              "dice_type": "1d6+int/2",
-              "accuracy": 90,
-              "element": "fire",
-              "cost": 5,
-              "cost_type": "mp"
-            },
-            {
-              "id": "ice_arrow",
-              "name": "氷の矢",
-              "kind": "attack",
-              "description": "冷気の矢を放つ。",
-              "effect": "int/2ダメージ，ｈｐ5０％以下に対して，1d6追加ダメージを与える",
-              "damage": "1d6+int/2",
-              "dice_type": "1d6+int/2",
-              "accuracy": 92,
-              "element": "ice",
-              "cost": 3,
-              "cost_type": "mp"
-            },
-            {
               "id": "mage_lv3_b",
-              "name": "火球",
+              "name": "火球・改",
               "kind": "attack",
               "damage": "1d8+int/2",
               "accuracy": 92,
@@ -19692,12 +19416,13 @@
               "cost_type": "mp",
               "all_targets": true,
               "description": "火球で敵全体を攻撃する。",
-              "unlock_level": 3,
-              "effect": "敵全体に1d8+int/2ダメージを与える。"
+              "unlock_level": 2,
+              "effect": "敵全体に1d8+int/2ダメージを与える。",
+              "replaces": "火球"
             },
             {
               "id": "mage_lv5_a",
-              "name": "氷の矢",
+              "name": "氷の矢・改",
               "kind": "attack",
               "damage": "2d8+int/2",
               "accuracy": 92,
@@ -19706,7 +19431,8 @@
               "cost_type": "mp",
               "description": "氷の矢で敵を貫く。",
               "unlock_level": 5,
-              "effect": "敵に2d8+int/2ダメージを与える。"
+              "effect": "敵に2d8+int/2ダメージを与える。",
+              "replaces": "氷の矢"
             }
           ],
           "attributes": {
@@ -19995,32 +19721,8 @@
           ],
           "skills": [
             {
-              "id": "hide_in_shadow",
-              "name": "影隠れ",
-              "kind": "defend",
-              "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
-              "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
-              "guard_multiplier": 0.25,
-              "dice_type": "1d20+dex",
-              "cost": 2,
-              "cost_type": "sp"
-            },
-            {
-              "id": "vital_strike",
-              "name": "急所突き",
-              "kind": "attack",
-              "description": "敵の急所を正確に狙う。",
-              "effect": "3d6判定ダメージ",
-              "damage": "3d6",
-              "dice_type": "3d6",
-              "accuracy": 82,
-              "element": "physical",
-              "cost": 4,
-              "cost_type": "sp"
-            },
-            {
               "id": "thief_lv3_b",
-              "name": "影隠れ",
+              "name": "影隠れ・改",
               "kind": "defend",
               "guard_multiplier": 0.25,
               "survive_at_one": true,
@@ -20028,11 +19730,12 @@
               "cost_type": "sp",
               "description": "影に溶けて攻撃に備える。",
               "unlock_level": 3,
-              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
+              "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+              "replaces": "影隠れ"
             },
             {
               "id": "thief_lv5_a",
-              "name": "急所突き",
+              "name": "急所突き・改",
               "kind": "attack",
               "damage": "8d8+dex/2",
               "accuracy": 92,
@@ -20041,7 +19744,8 @@
               "cost_type": "sp",
               "description": "敵の急所を正確に狙う。",
               "unlock_level": 5,
-              "effect": "敵に8d8+dex/2ダメージを与える。"
+              "effect": "敵に8d8+dex/2ダメージを与える。",
+              "replaces": "急所突き"
             }
           ],
           "attributes": {
@@ -20444,7 +20148,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -20700,7 +20404,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -20976,7 +20680,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -21224,7 +20928,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "毎ラウンド開始時にプレイヤーのHPを8回復する。",
+            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",

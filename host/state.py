@@ -273,6 +273,11 @@ def load_session(session_id: str) -> dict[str, Any]:
     inventory = character.get("inventory") if isinstance(character.get("inventory"), list) else []
     _merge_inventory_catalog(inventory, session.get("scenario_pack"))
     _normalize_character(character)
+    before_skills = deepcopy(character.get("skills", []))
+    before_cleared_level = character.get("skills_cleared_through_level")
+    _unlock_level_skills(session, restoring=True)
+    changed = (before_skills != character.get("skills", [])
+               or before_cleared_level != character.get("skills_cleared_through_level") or changed)
     if changed:
         save_session(session)
     return session
@@ -1819,11 +1824,12 @@ def apply_state_delta(
     if delta.get("clear_skills") is True:
         removed_skills = len(character.get("skills") or [])
         character["skills"] = []
+        character["skills_cleared_through_level"] = character.get("level", 1)
         record_state_event(
             session,
             "skills_cleared",
             "すべての技能を失いました。",
-            {"removed": removed_skills},
+            {"removed": removed_skills, "level": character.get("level", 1)},
         )
 
     for image_key in ("background_image", "character_image"):
@@ -1957,12 +1963,37 @@ def _apply_milestones(session: dict[str, Any]) -> None:
                             "levels_gained": levels_gained, "gains_per_level": gains})
 
 
-def _unlock_level_skills(session: dict[str, Any]) -> None:
+def _unlock_level_skills(session: dict[str, Any], *, restoring: bool = False) -> None:
     character = session["character"]
     template = _find_character_in_pack(session["scenario_pack"], character["character_id"]) or {}
     skills = character.setdefault("skills", [])
+    cleared_level = int(character.get("skills_cleared_through_level", 0))
+    if restoring:
+        first_upgrade = next((e.get("data", {}) for e in session.get("event_log", [])
+                              if e.get("kind") == "level_up"), None)
+        event_level = character.get("level", 1)
+        if first_upgrade is not None:
+            first_level = int(first_upgrade.get("level", 1))
+            event_level = max(1, first_level - int(first_upgrade.get("levels_gained", first_level - 1)))
+        for event in session.get("event_log", []):
+            data = event.get("data", {})
+            if event.get("kind") == "level_up":
+                event_level = int(data.get("level", event_level))
+            if event.get("kind") in {"skills_cleared", "clear_skills"} or data.get("clear_skills"):
+                cleared_level = max(cleared_level, int(data.get("level", event_level)))
+        if cleared_level:
+            character["skills_cleared_through_level"] = cleared_level
     for skill in template.get("level_skills", []):
-        if skill["unlock_level"] <= character.get("level", 1) and not any(s.get("id") == skill["id"] for s in skills):
+        if not cleared_level < skill["unlock_level"] <= character.get("level", 1):
+            continue
+        replaces = skill.get("replaces")
+        matches = [i for i, old in enumerate(skills)
+                   if old.get("id") == skill["id"] or (replaces and old.get("name") == replaces)]
+        if matches:
+            skills[matches[0]] = deepcopy(skill)
+            for index in reversed(matches[1:]):
+                skills.pop(index)
+        else:
             skills.append(deepcopy(skill))
 
 

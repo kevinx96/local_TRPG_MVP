@@ -47,6 +47,26 @@ checkpoint 每条均为 `proposed`，每个职业保存装备、物品、金币�
 
 005使用`reached_village`和`entered_dragon_valley`统一入口flag，跳级仍按等级差累计；Lv3/Lv5技能在真实升级时一次追加（跳级也补齐低等级技能），不会改初始技能。旧存档不追溯成长的规则不变。
 
+007起，同名等级技能用`replaces`替换旧技能并加「・改」，火球升级提前Lv2；加载旧存档补发已达等级的技能，剧情清除技能之后不补回已清除等级。旧事件若只有清除记录、没有升级记录，保守按当前等级处理；新清除效果保存等级标记以应对事件截断。
+
+`--check`将`encounter_overrides`合并到类别目标。heuristic和greedy在trash/elite保留圣属性、`rare: true`或对任一敌人单次期望净伤害达到其最大HP绝对值30%的消耗品；Boss可用。`consumables_mean`报告所有消耗品，`healing_items_mean`保留原有治疗子集。伤害阈值复用策略的命中/防御/抗性估计。
+
+```powershell
+# 007：N=16粗筛、N=64复核；搜索不写剧本
+python -m scripts.balance.pass3 --search --iterations 100 --output .tmp-test/pass3-search.json
+# 可补充只含精英的共享模板搜索，基于已选参数
+python -m scripts.balance.pass3 --refine-elites .tmp-test/pass3-search.json --output .tmp-test/pass3-elites.json
+# 锁定后的正式矩阵
+python -m scripts.balance.pass3 --n 500 --output eval/reports/balance-2026-10-11-pass3.json
+# 默认只跑最终Boss路线；all分别跑每条checkpoint路线
+python -m scripts.balance.route --n 500 --routes all --output eval/reports/balance-2026-10-11-pass3-routes.json
+python -m scripts.balance.pass3_report
+```
+
+`route`从角色模板重放checkpoint的`sources`，把其中每次战斗及终点战斗交给真实引擎。资源与背包持续传递，只应用实际剧情效果和升级，不复制后续checkpoint的满资源。非战斗判定沿用sources指定的结果；无额外购物或休息。普通战败终止路线，剧情必败按剧本继续。输出终点完成率、各场失败次数、到达最终Boss时的平均资源（仅以到达者为分母）、逐场到达次数和消耗品均值（以到达该场者为分母）。固定seed可复现；全部路线仍为proposed，不设连续流程阈值。
+
+`pass3`和`route`都支持`--shard 0 --shards 4`。分片不改变seed；合并后必须对完整矩阵重新调用`check_results`，避免按职业拆分时漏掉职业差距。`pass3 --workers`默认1，以兼容Windows沙箱的进程通信限制。正式结果保留输入指纹，报告生成器以JSON中的`baseline_commit`生成原值→新值差分。
+
 ```powershell
 # 005：N=16粗筛、N=64复核，只输出参数；可用--shard 0 --shards 4分片
 python -m scripts.balance.pass2 --search --iterations 100 --output .tmp-test/pass2-search.json

@@ -227,7 +227,10 @@
             "items": {
               "allOf": [{ "$ref": "#/$defs/combat_skill" }],
               "required": ["unlock_level"],
-              "properties": { "unlock_level": { "type": "integer", "minimum": 2 } }
+              "properties": {
+                "unlock_level": { "type": "integer", "minimum": 2 },
+                "replaces": { "type": "string" }
+              }
             }
           },
           "combat": { "$ref": "#/$defs/combat_actor" },
@@ -262,7 +265,8 @@
           "type": "array",
           "items": { "$ref": "#/$defs/action" }
         },
-        "combat": { "$ref": "#/$defs/item_combat" }
+        "combat": { "$ref": "#/$defs/item_combat" },
+        "rare": { "type": "boolean" }
       }
     },
     "item_combat": {

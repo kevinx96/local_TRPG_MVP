@@ -62,6 +62,20 @@ def expected_damage(action: dict[str, Any], actor: dict[str, Any], enemy: dict[s
     return damage
 
 
+def rare_consumable(session: dict[str, Any], action: dict[str, Any]) -> bool:
+    if action["type"] != "item":
+        return False
+    item = combat._find_entry(session["character"]["inventory"], action["id"], "item")
+    spec = combat.item_combat_spec(item)
+    if not spec.get("consumable", True):
+        return False
+    if item.get("rare") or {spec.get("element"), *spec.get("multi_elements", [])} & {"holy", "light"}:
+        return True
+    return any(expected_damage(action, session["character"], enemy, combat._combat_rules(session))
+               >= abs(enemy["max_hp"]) * .30
+               for enemy in combat._alive_enemies(session["combat"]))
+
+
 def choose_action(session: dict[str, Any], policy: str) -> tuple[dict[str, Any], str]:
     if policy not in POLICIES:
         raise ValueError(f"Unknown policy: {policy}")
@@ -71,6 +85,8 @@ def choose_action(session: dict[str, Any], policy: str) -> tuple[dict[str, Any],
     first_target = enemies[0]["id"]
     if policy == "attack_only":
         return next(a for a in actions if a["type"] == "attack"), first_target
+    if session["combat"]["encounter"].get("encounter_class") in {"trash", "elite"}:
+        actions = [a for a in actions if not rare_consumable(session, a)]
     if policy == "heuristic":
         healing = [a for a in actions if a.get("kind") == "heal"]
         if combat._equipped_effect(actor, "healing_harms_humans") and not actor.get("undead_parts"):
@@ -193,6 +209,7 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
     losses: Counter = Counter()
     causes: Counter = Counter()
     healing_items: Counter = Counter()
+    consumables: Counter = Counter()
     spent = {"mp": 0, "sp": 0}
     wins = 0
     rng = random.Random()
@@ -207,10 +224,12 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
                 resource = action.get("cost_type")
                 if resource in spent:
                     spent[resource] += int(action.get("cost", 0))
-                if action["type"] == "item" and action.get("kind") in {"heal", "restore"}:
+                if action["type"] == "item":
                     item = combat._find_entry(session["character"]["inventory"], action["id"], "item")
                     if combat.item_combat_spec(item).get("consumable", True):
-                        healing_items[action["name"]] += 1
+                        consumables[action["name"]] += 1
+                        if action.get("kind") in {"heal", "restore"}:
+                            healing_items[action["name"]] += 1
                 combat.perform_combat_action(session, action["type"], action["id"], target_id, rng=rng)
             battle = session["combat"]
             rounds.append(battle["round"])
@@ -227,6 +246,7 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
             "enemy_count": len(combat._encounter_for_session(template, shared_pack)["enemy_ids"]),
             "win_rate": wins / n, "rounds_median": median(rounds), "hp_left_mean": mean(hp_left) if hp_left else None,
             "healing_items_mean": {k: v / n for k, v in sorted(healing_items.items())},
+            "consumables_mean": {k: v / n for k, v in sorted(consumables.items())},
             "mp_spent_mean": spent["mp"] / n, "sp_spent_mean": spent["sp"] / n,
             "defeat_rounds": dict(sorted(losses.items())), "defeat_causes": dict(causes.most_common())}
 
@@ -237,7 +257,8 @@ def check_results(rows: list[dict[str, Any]], targets: dict[str, Any]) -> list[d
     for row in rows:
         group = groups.setdefault((row["defense_mode"], row["encounter"]), [])
         group.append(row)
-        spec = targets["classes"][row["encounter_class"]]
+        spec = {**targets["classes"][row["encounter_class"]],
+                **targets.get("encounter_overrides", {}).get(row["encounter"], {})}
         if row["policy"] == spec["policy"]:
             for key, field in (("win_rate", "win_rate"), ("hp_left", "hp_left_mean"), ("rounds", "rounds_median")):
                 if key in spec:

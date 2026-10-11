@@ -1,0 +1,136 @@
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import random
+from collections import Counter
+from copy import deepcopy
+from pathlib import Path
+from statistics import mean
+from typing import Any, Optional
+from unittest.mock import patch
+
+from host import combat, state
+from . import checkpoints, sim
+
+
+def resources(session: dict[str, Any]) -> dict[str, Any]:
+    actor = session["character"]
+    return {**{r: actor[r] for r in ("hp", "mp", "sp")}, "level": actor.get("level", 1),
+            "inventory": {i["name"]: i.get("quantity", 1) for i in actor["inventory"]}}
+
+
+def fight(session: dict[str, Any], policy: str, rng: random.Random) -> dict[str, Any]:
+    location = state.current_location_id(session)
+    before = resources(session)
+    session["combat_start_requested"] = True
+    if not combat.ensure_combat_started(session):
+        raise ValueError(f"Route encounter did not start: {location}")
+    used: Counter = Counter()
+    while combat.combat_is_active(session):
+        action, target = sim.choose_action(session, policy)
+        if action["type"] == "item":
+            item = combat._find_entry(session["character"]["inventory"], action["id"], "item")
+            if combat.item_combat_spec(item).get("consumable", True):
+                used[action["name"]] += 1
+        combat.perform_combat_action(session, action["type"], action["id"], target, rng=rng)
+    battle = session["combat"]
+    status = battle["status"]
+    continuing = status == "victory" or battle["encounter"].get("encounter_class") == "scripted_loss"
+    after_combat = resources(session)
+    state.apply_state_delta(session, combat.consume_combat_state_delta(session), allow_world_transition=True)
+    combat.clear_combat_after_resolution(session)
+    return {"encounter": location, "status": status,
+            "continue": continuing and (status == "victory" or not session.get("game_over")),
+            "before": before, "after_combat": after_combat, "after_resolution": resources(session),
+            "consumables": dict(used)}
+
+
+def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, character: str,
+          seed: int, policy: str = "heuristic") -> dict[str, Any]:
+    session = checkpoints.fresh_session(pack, character)
+    rng = random.Random(seed)
+    battles = []
+    arrival = None
+    with patch.object(combat, "random", rng):
+        for source in [*sources, {"location": encounter, "step": "@final"}]:
+            if state.current_location_id(session) != source["location"]:
+                raise ValueError(f"Route diverged before {source['step']}")
+            if source["step"].startswith("@"):
+                if state.current_location_id(session) == "dragon_valley_loc":
+                    arrival = resources(session)
+                battle = fight(session, policy, rng)
+                battles.append(battle)
+                if not battle["continue"]:
+                    return {"completed": False, "failed_at": battle["encounter"],
+                            "boss_arrival": arrival, "battles": battles}
+            else:
+                checkpoints.replay_step(session, source["step"])
+    return {"completed": True, "failed_at": None, "boss_arrival": arrival, "battles": battles}
+
+
+def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
+                   encounter: str = "dragon_valley_loc", n: int = 500,
+                   seed: int = 20261011, policy: str = "heuristic") -> dict[str, Any]:
+    if n < 1:
+        raise ValueError("n must be positive")
+    sources = cp["encounters"][encounter]["characters"][character]["sources"]
+    failures: Counter = Counter()
+    reached: Counter = Counter()
+    used: dict[str, Counter] = {}
+    arrivals = []
+    completed = 0
+    sample = None
+    for index in range(n):
+        result = trial(pack, sources, encounter, character,
+                       sim.trial_seed(seed, encounter, character, index), policy)
+        sample = sample or result
+        completed += result["completed"]
+        if result["failed_at"]:
+            failures[result["failed_at"]] += 1
+        if result["boss_arrival"] is not None:
+            arrivals.append(result["boss_arrival"])
+        for battle in result["battles"]:
+            key = battle["encounter"]
+            reached[key] += 1
+            used.setdefault(key, Counter()).update(battle["consumables"])
+    items = sorted({k for a in arrivals for k in a["inventory"]})
+    return {"character": character, "route": encounter, "policy": policy, "n": n, "seed": seed,
+            "completion_rate": completed / n, "failure_counts": dict(failures),
+            "boss_arrivals": len(arrivals),
+            "boss_resources_mean": {**{r: mean(a[r] for a in arrivals) for r in ("hp", "mp", "sp", "level")},
+                                    "inventory": {k: mean(a["inventory"].get(k, 0) for a in arrivals) for k in items}}
+            if arrivals else None,
+            "battle_reached": dict(reached),
+            "consumables_per_reached_battle": {e: {k: v / reached[e] for k, v in counts.items()}
+                                               for e, counts in used.items()},
+            "sample_trial": sample}
+
+
+def main(argv: Optional[list[str]] = None) -> None:
+    parser = argparse.ArgumentParser(description="Offline continuous checkpoint routes; no implicit refill")
+    parser.add_argument("--n", type=int, default=500)
+    parser.add_argument("--seed", type=int, default=20261011)
+    parser.add_argument("--routes", nargs="+", default=["dragon_valley_loc"])
+    parser.add_argument("--shard", type=int, default=0)
+    parser.add_argument("--shards", type=int, default=1)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args(argv)
+    pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
+    cp = json.loads(checkpoints.DEFAULT_CHECKPOINTS.read_text(encoding="utf-8"))
+    routes = list(cp["encounters"]) if args.routes == ["all"] else args.routes
+    rows = []
+    fingerprints = {p.relative_to(checkpoints.ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+                    for p in (checkpoints.DEFAULT_SCENARIO, checkpoints.DEFAULT_CHECKPOINTS, Path(__file__))}
+    for endpoint in routes:
+        for index, character in enumerate(cp["encounters"][endpoint]["characters"]):
+            if index % args.shards != args.shard:
+                continue
+            rows.append(simulate_route(pack, cp, character, encounter=endpoint, n=args.n, seed=args.seed))
+            print(f"{endpoint} {character}: {rows[-1]['completion_rate']:.3f}", flush=True)
+            args.output.write_text(json.dumps({"rows": rows, "fingerprints": fingerprints}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()

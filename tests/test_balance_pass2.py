@@ -24,7 +24,8 @@ class BalancePass2Tests(unittest.TestCase):
                 flags = ["entered_dragon_valley"] if skip else ["defeated_slime_king", "cleared_goblin_fort", "reached_village", "entered_dragon_valley"]
                 for flag in flags:
                     state.apply_state_delta(session, {"flags_set": [flag]})
-                    expected = 2 if actor["level"] >= 5 else 1 if actor["level"] >= 3 else 0
+                    expected = sum(1 for s in next(c for c in self.pack["characters"] if c["id"] == cid)["level_skills"]
+                                   if s["unlock_level"] <= actor["level"] and not s.get("replaces"))
                     self.assertEqual(len(actor["skills"]), initial + expected)
                 before = deepcopy(actor)
                 state.apply_state_delta(session, {"flags_set": flags})
@@ -35,14 +36,14 @@ class BalancePass2Tests(unittest.TestCase):
                 self.assertEqual(restored["character"]["skills"], actor["skills"])
 
     def test_approved_skill_names_and_roles_match_both_packs(self):
-        expected = {"hero": ["渾身斬り", "不屈の構え"], "cleric": ["聖なる裁き", "大いなる癒し"],
-                    "mage": ["火球", "氷の矢"], "thief": ["影隠れ", "急所突き"]}
+        expected = {"hero": ["渾身斬り・改", "不屈の構え"], "cleric": ["聖なる裁き", "大いなる癒し"],
+                    "mage": ["火球・改", "氷の矢・改"], "thief": ["影隠れ・改", "急所突き・改"]}
         hybrid = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO.with_name("dragon_rpg_hybrid.json"))
         for cid, names in expected.items():
             skills = next(c for c in self.pack["characters"] if c["id"] == cid)["level_skills"]
             self.assertEqual(skills, next(c for c in hybrid["characters"] if c["id"] == cid)["level_skills"])
             self.assertEqual([s["name"] for s in skills], names)
-            self.assertEqual([s["unlock_level"] for s in skills], [3, 5])
+            self.assertEqual([s["unlock_level"] for s in skills], [2 if cid == "mage" else 3, 5])
             if cid == "mage":
                 self.assertTrue(skills[0]["all_targets"])
                 self.assertEqual(skills[0]["element"], "fire")
