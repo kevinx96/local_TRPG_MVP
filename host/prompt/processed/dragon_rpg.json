@@ -1213,7 +1213,8 @@
         },
         "result_texts": {
           "defeat": "邪竜の炎が視界を覆い、冒険は竜の谷で終わりを迎えた。"
-        }
+        },
+        "encounter_class": "boss"
       },
       "npc_ids": [],
       "item_ids": [],
@@ -2705,7 +2706,8 @@
             "reason": "亡霊主宰ゼボクに敗れ、亡霊として永遠に使役されました。",
             "ending": "zebok_servant"
           }
-        }
+        },
+        "encounter_class": "boss"
       },
       "actions": [],
       "background_image": "/static/images/bg_alley_night.png",
@@ -2817,7 +2819,8 @@
         "result_texts": {
           "victory": "スライムを倒して森を進むと、十字路で一匹のゴブリンが助けを求めていた。別の一族に箱を盗まれ、取り戻してほしいという。",
           "defeat": "闇の森・入口で力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "trash"
       },
       "actions": [
         {
@@ -2980,7 +2983,8 @@
         },
         "result_texts": {
           "defeat": "闇の森・迷子のゴブリンで力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "trash"
       },
       "actions": [
         {
@@ -3197,7 +3201,8 @@
         },
         "result_texts": {
           "defeat": "闇の森・狼の縄張りで力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "elite"
       },
       "actions": [],
       "background_image": "/static/images/bg_dark_forest.png"
@@ -3246,7 +3251,8 @@
         "result_texts": {
           "victory": "最後の一匹を弾き飛ばした直後、泉の反対側で水音が三つ重なった。休む間もなく、新たな三匹のスライムが水面から這い上がり、半円を描いて包囲を狭めてくる。",
           "defeat": "精霊の泉・第一波で力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "trash"
       },
       "actions": [],
       "background_image": "/static/images/bg_elf_spring.png"
@@ -3295,7 +3301,8 @@
         "result_texts": {
           "victory": "第二波を退けると泉全体が大きく盛り上がった。水を押し分けて現れたのは、錆びた王冠を載せた巨大なスライムだ。スライム王は仲間の残骸を吸収し、重い身体で地面を揺らす。",
           "defeat": "精霊の泉・第二波で力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "trash"
       },
       "actions": [],
       "background_image": "/static/images/bg_elf_spring.png"
@@ -3340,7 +3347,8 @@
         },
         "result_texts": {
           "defeat": "精霊の泉・スライム王で力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "boss"
       },
       "actions": [],
       "background_image": "/static/images/bg_elf_spring.png"
@@ -3519,7 +3527,8 @@
         },
         "result_texts": {
           "defeat": "ゴブリン砦・一階前半で力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "trash"
       },
       "actions": [
         {
@@ -3661,7 +3670,8 @@
         },
         "result_texts": {
           "defeat": "ゴブリン砦・一階後半で力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "elite"
       },
       "actions": [
         {
@@ -3880,7 +3890,8 @@
         },
         "result_texts": {
           "defeat": "ゴブリン砦・二階右で力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "elite"
       },
       "actions": [
         {
@@ -3977,7 +3988,8 @@
         },
         "result_texts": {
           "defeat": "ゴブリン砦・二階左で力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "elite"
       },
       "actions": [],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -4236,7 +4248,8 @@
         "result_texts": {
           "victory": "三匹の警備兵を倒すと、戦闘の衝撃で鉄門の錠が外れた。扉の先は財宝庫だ。金貨の山からゴブリン王が立ち上がり、二匹の弓兵が高台へ散って次の戦いを挑んでくる。",
           "defeat": "ゴブリン砦・三階警備戦で力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "elite"
       },
       "actions": [],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -4288,7 +4301,8 @@
         },
         "result_texts": {
           "defeat": "ゴブリン砦・四階財宝庫で力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "boss"
       },
       "actions": [],
       "background_image": "/static/images/bg_goblin_treasure.png"
@@ -4450,7 +4464,8 @@
         },
         "result_texts": {
           "defeat": "ゴブリン砦・箱の争奪で力尽きました。冒険はここで終わりを迎えます。"
-        }
+        },
+        "encounter_class": "trash"
       },
       "actions": [],
       "background_image": "/static/images/bg_goblin_treasure.png",
@@ -4710,7 +4725,8 @@
         "result_texts": {
           "victory": "炎の怪物を打ち倒すと、燃え盛る村の一角に不自然な氷が残っていることに気づいた。炎の中でも溶けず、冷気を放ち続けている。",
           "defeat": "炎の怪物に押し切られ、燃え落ちる村の中で力尽きた。"
-        }
+        },
+        "encounter_class": "trash"
       },
       "actions": [],
       "background_image": "/static/images/bg_burning_village.png"
@@ -4754,7 +4770,8 @@
         "result_texts": {
           "victory": "炎の怪物を打ち倒すと、燃え盛る村の一角に不自然な氷が残っていることに気づいた。炎の中でも溶けず、冷気を放ち続けている。",
           "defeat": "炎の怪物に押し切られ、燃え落ちる村の中で力尽きた。"
-        }
+        },
+        "encounter_class": "elite"
       },
       "actions": [],
       "background_image": "/static/images/bg_burning_village.png"
@@ -4969,7 +4986,8 @@
         "result_texts": {
           "victory": "Xanxusを包んでいた炎が次第に消えていく。骸骨は崩れ落ちながら、『まさか、お前は奇術師が化けていたのか……』と呟き、そのまま動かなくなった。",
           "defeat": "Xanxusは倒れたあなたを見下ろした。『大人しく先を探索しろ。そして私の火種を飲め。任務を放棄すれば、その場で爆ぜさせる』"
-        }
+        },
+        "encounter_class": "scripted_loss"
       },
       "actions": [],
       "background_image": "/static/images/bg_burning_village.png",
@@ -5175,7 +5193,8 @@
         "result_texts": {
           "victory": "Xanxusは頭を抱えて炎の彼方へ逃げ去った。ワーロックは、かつて元素・人類・竜が互いを害さない条約を結び、竜と人類は友好関係にあったと説明する。邪竜の暴走には誰かの思惑があり、多くの者が別々の狙いを抱えている。『くれぐれも用心してください。私は背後から見守っています』そう告げると、ワーロックは姿を消した。",
           "defeat": "Xanxusは天を仰いで笑った。『こんなに長くかかったが、ようやく一度お前に勝てた！』ワーロックを退けた炎は、そのまま背後のあなたを貫いた。"
-        }
+        },
+        "encounter_class": "guest"
       },
       "actions": [],
       "background_image": "/static/images/bg_burning_village.png",
@@ -5402,7 +5421,8 @@
         "result_texts": {
           "victory": "氷の精霊が砕けると、奥から巨大な獣の足音が響いた。",
           "defeat": "氷の精霊の冷気に全身を閉ざされ、動けなくなった。"
-        }
+        },
+        "encounter_class": "elite"
       },
       "actions": [
         {
@@ -5489,7 +5509,8 @@
         "result_texts": {
           "victory": "氷霜の巨狼は霧のように消散し、その核だった氷の太刀が地面へ残った。拾おうとした瞬間、空から隕石が落ちて刀を砕く。遠くに全身を炎に包んだ影が一瞬だけ見えた。",
           "defeat": "氷霜の巨狼の牙が守りを砕き、村を覆う冷気の中で力尽きた。"
-        }
+        },
+        "encounter_class": "boss"
       },
       "actions": [],
       "background_image": "/static/images/bg_frozen_village.png"

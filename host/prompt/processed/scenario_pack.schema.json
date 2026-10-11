@@ -94,7 +94,14 @@
           {
             "type": "object",
             "properties": {
-              "scene_id": { "type": "string", "minLength": 1 }
+              "scene_id": { "type": "string", "minLength": 1 },
+              "combat": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "encounter_class": { "enum": ["trash", "elite", "boss", "scripted_loss", "guest"] }
+                }
+              }
             }
           }
         ]
@@ -259,6 +266,9 @@
       "type": "object",
       "additionalProperties": true,
       "properties": {
+        "defense_mode": { "enum": ["flat", "floor", "ratio"] },
+        "floor_ratio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "k": { "type": "number", "exclusiveMinimum": 0 },
         "basic_attack": { "$ref": "#/$defs/combat_attack" },
         "enemy_basic_attack": { "$ref": "#/$defs/combat_attack" },
         "defend_multiplier": { "type": "number", "minimum": 0, "maximum": 1 },

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import random
+import math
 import re
 import uuid
 from copy import deepcopy
@@ -674,7 +675,7 @@ def _resolve_attack(
         element = _counter_element(_primary_element(defender))
     multiplier = _resistance_multiplier(defender, element)
     defense = _actor_defense(defender)
-    damage = 0 if multiplier <= 0 else max(1, int(round(raw_damage * multiplier)) - defense)
+    damage = damage_after_defense(raw_damage, multiplier, defense, _combat_rules(session))
     if defender is session.get("character"):
         status = session["combat"].get("player_status") or {}
         guard = float(status.get("guard_multiplier", 1.0) or 1.0)
@@ -716,6 +717,21 @@ def _resolve_attack(
         _log(session, actor_id, "self_damage", f"反動でHPを{self_damage}失った。", {"damage": self_damage})
     if defender is not session.get("character") and damage > 0:
         _trigger_enemy_auto_abilities(session, defender, rng)
+
+
+def damage_after_defense(raw: float, multiplier: float, defense: int, rules: dict[str, Any]) -> int:
+    if multiplier <= 0:
+        return 0
+    scaled = raw * multiplier
+    mode = rules.get("defense_mode", "flat")
+    if mode == "floor":
+        return max(math.ceil(scaled * float(rules.get("floor_ratio", 0.25))), round(scaled) - defense)
+    if mode == "ratio":
+        k = float(rules.get("k", 10))
+        return max(1, round(scaled * k / (k + defense)))
+    if mode != "flat":
+        raise CombatError(f"Unknown defense_mode: {mode}")
+    return max(1, round(scaled) - defense)
 
 
 def _check_victory_or_defeat(session: dict[str, Any]) -> None:
