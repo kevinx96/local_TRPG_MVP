@@ -9,6 +9,9 @@
     "guest":         {"policy": "heuristic", "win_rate": [0.85, 1.0], "rounds": [3, 8]}
   },
   "class_spread_max": 0.15,
+  "class_spread_max_multi_enemy": 0.25,
+  "companion_uplift": [0.10, 0.20],
+  "incoming_damage_budget": {"trash": 0.15, "elite": 0.25, "boss": 0.35},
   "encounters": {
     "dark_forest_loc": "trash",
     "lost_goblin_crossroads": "trash",
