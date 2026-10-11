@@ -1,0 +1,12 @@
+{
+  "id": "v2_village_frozen_clue_thief",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "thief",
+  "location_id": "village_frozen_clue",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}

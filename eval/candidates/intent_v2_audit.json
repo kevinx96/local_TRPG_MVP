@@ -1,0 +1,587 @@
+{
+  "total": 486,
+  "errors": [],
+  "violations": [],
+  "violation_count": 0,
+  "snapshots": 38,
+  "contextual_snapshots": 9,
+  "primary_tags": {
+    "existing_exact": 20,
+    "existing_paraphrase": 20,
+    "negation": 20,
+    "conditional": 20,
+    "interact_observe": 20,
+    "interact_distract": 20,
+    "interact_sneak": 20,
+    "interact_prepare": 20,
+    "interact_use_item": 20,
+    "missing_item": 20,
+    "dialogue": 20,
+    "chitchat": 20,
+    "impossible": 20,
+    "declared_success": 20,
+    "injection": 20,
+    "colloquial": 20,
+    "context_followup": 20,
+    "deixis_unique": 20,
+    "deixis_multi": 20,
+    "sequential": 20,
+    "parallel": 20,
+    "excluded_means": 20,
+    "language_mix": 46
+  },
+  "actors": {
+    "hero": 167,
+    "mage": 177,
+    "thief": 142
+  },
+  "scenes": {
+    "throne_room": 142,
+    "dark_forest": 266,
+    "village": 62,
+    "dragon_valley": 16
+  },
+  "split": {
+    "dev": 194,
+    "test": 292
+  },
+  "tag_split": {
+    "existing_exact": {
+      "dev": 8,
+      "test": 12
+    },
+    "existing_paraphrase": {
+      "dev": 8,
+      "test": 12
+    },
+    "negation": {
+      "dev": 8,
+      "test": 12
+    },
+    "conditional": {
+      "dev": 8,
+      "test": 12
+    },
+    "interact_observe": {
+      "dev": 8,
+      "test": 12
+    },
+    "interact_distract": {
+      "dev": 8,
+      "test": 12
+    },
+    "interact_sneak": {
+      "test": 12,
+      "dev": 8
+    },
+    "interact_prepare": {
+      "test": 12,
+      "dev": 8
+    },
+    "interact_use_item": {
+      "dev": 8,
+      "test": 12
+    },
+    "missing_item": {
+      "dev": 8,
+      "test": 12
+    },
+    "dialogue": {
+      "test": 12,
+      "dev": 8
+    },
+    "chitchat": {
+      "test": 12,
+      "dev": 8
+    },
+    "impossible": {
+      "test": 12,
+      "dev": 8
+    },
+    "declared_success": {
+      "test": 12,
+      "dev": 8
+    },
+    "injection": {
+      "test": 12,
+      "dev": 8
+    },
+    "colloquial": {
+      "dev": 8,
+      "test": 12
+    },
+    "language_mix": {
+      "dev": 18,
+      "test": 28
+    },
+    "context_followup": {
+      "dev": 8,
+      "test": 12
+    },
+    "deixis_unique": {
+      "dev": 8,
+      "test": 12
+    },
+    "deixis_multi": {
+      "test": 12,
+      "dev": 8
+    },
+    "sequential": {
+      "dev": 8,
+      "test": 12
+    },
+    "parallel": {
+      "test": 12,
+      "dev": 8
+    },
+    "excluded_means": {
+      "test": 12,
+      "dev": 8
+    }
+  },
+  "snapshot_tags": {
+    "v2_alley_after_thief": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "missing_item": 1,
+      "colloquial": 1,
+      "language_mix": 1
+    },
+    "v2_alley_night_mage": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "conditional": 1,
+      "missing_item": 1,
+      "dialogue": 2,
+      "chitchat": 1,
+      "impossible": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "deixis_unique": 1,
+      "sequential": 1,
+      "parallel": 1,
+      "language_mix": 2
+    },
+    "v2_alley_thief": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "conditional": 1,
+      "missing_item": 1,
+      "chitchat": 1,
+      "impossible": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "language_mix": 2
+    },
+    "v2_castle_hero": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "conditional": 1,
+      "interact_use_item": 1,
+      "missing_item": 1,
+      "dialogue": 2,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "deixis_multi": 3,
+      "sequential": 1,
+      "parallel": 1,
+      "excluded_means": 1,
+      "language_mix": 2
+    },
+    "v2_context_cc": {
+      "context_followup": 2
+    },
+    "v2_context_cd": {
+      "context_followup": 2
+    },
+    "v2_context_cf": {
+      "context_followup": 2
+    },
+    "v2_context_ch": {
+      "context_followup": 3,
+      "language_mix": 1
+    },
+    "v2_context_ci": {
+      "interact_use_item": 1,
+      "context_followup": 2,
+      "language_mix": 1
+    },
+    "v2_context_cj": {
+      "context_followup": 2
+    },
+    "v2_context_cp": {
+      "context_followup": 2
+    },
+    "v2_context_cr": {
+      "context_followup": 2
+    },
+    "v2_context_cw": {
+      "interact_use_item": 1,
+      "context_followup": 3
+    },
+    "v2_dark_forest_loc_hero": {
+      "negation": 1,
+      "conditional": 1,
+      "interact_observe": 7,
+      "interact_distract": 7,
+      "interact_sneak": 7,
+      "interact_prepare": 7,
+      "interact_use_item": 1,
+      "missing_item": 1,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "deixis_unique": 1,
+      "deixis_multi": 2,
+      "sequential": 1,
+      "parallel": 1,
+      "excluded_means": 2,
+      "language_mix": 2
+    },
+    "v2_dark_forest_loc_mage": {
+      "negation": 1,
+      "conditional": 1,
+      "interact_observe": 7,
+      "interact_distract": 7,
+      "interact_sneak": 6,
+      "interact_prepare": 7,
+      "interact_use_item": 1,
+      "missing_item": 1,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "deixis_unique": 2,
+      "deixis_multi": 2,
+      "sequential": 1,
+      "parallel": 1,
+      "excluded_means": 2,
+      "language_mix": 2
+    },
+    "v2_dark_forest_loc_thief": {
+      "negation": 1,
+      "conditional": 1,
+      "interact_observe": 6,
+      "interact_distract": 6,
+      "interact_sneak": 7,
+      "interact_prepare": 6,
+      "missing_item": 1,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "deixis_unique": 2,
+      "deixis_multi": 1,
+      "sequential": 1,
+      "parallel": 1,
+      "excluded_means": 2,
+      "language_mix": 2
+    },
+    "v2_dragon_valley_loc_hero": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "conditional": 1,
+      "interact_use_item": 1,
+      "missing_item": 1,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "deixis_unique": 1,
+      "sequential": 1,
+      "parallel": 1,
+      "excluded_means": 1,
+      "language_mix": 2
+    },
+    "v2_elf_spring_mage": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "conditional": 1,
+      "interact_use_item": 1,
+      "missing_item": 1,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "sequential": 1,
+      "parallel": 1,
+      "excluded_means": 1,
+      "language_mix": 2
+    },
+    "v2_forest_exit_hero": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "conditional": 1,
+      "interact_use_item": 1,
+      "chitchat": 1,
+      "colloquial": 1,
+      "sequential": 1,
+      "language_mix": 1
+    },
+    "v2_forge_hero": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "conditional": 1,
+      "interact_use_item": 1,
+      "missing_item": 1,
+      "dialogue": 2,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "deixis_unique": 1,
+      "deixis_multi": 2,
+      "sequential": 1,
+      "parallel": 1,
+      "excluded_means": 1,
+      "language_mix": 2
+    },
+    "v2_goblin_fort_chest_choice_thief": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "conditional": 1,
+      "missing_item": 1,
+      "dialogue": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "deixis_unique": 1,
+      "language_mix": 1
+    },
+    "v2_goblin_fort_first_second_mage": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "interact_use_item": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "colloquial": 1,
+      "deixis_unique": 1,
+      "sequential": 1,
+      "excluded_means": 1,
+      "language_mix": 1
+    },
+    "v2_goblin_fort_healing_circle_mage": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "interact_use_item": 1,
+      "chitchat": 1,
+      "declared_success": 1,
+      "colloquial": 1,
+      "deixis_unique": 1,
+      "parallel": 1,
+      "excluded_means": 1,
+      "language_mix": 1
+    },
+    "v2_goblin_fort_second_choice_hero": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "conditional": 1,
+      "interact_use_item": 1,
+      "chitchat": 1,
+      "impossible": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "deixis_multi": 2,
+      "sequential": 1,
+      "parallel": 1,
+      "excluded_means": 1,
+      "language_mix": 2
+    },
+    "v2_goblin_fort_second_right_thief": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "missing_item": 1,
+      "declared_success": 1,
+      "colloquial": 1,
+      "deixis_unique": 1,
+      "excluded_means": 1,
+      "language_mix": 2
+    },
+    "v2_goblin_fort_thief": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "conditional": 1,
+      "missing_item": 1,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "deixis_unique": 1,
+      "excluded_means": 1,
+      "language_mix": 2
+    },
+    "v2_goblin_fort_third_gate_hero": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "interact_use_item": 1,
+      "impossible": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "sequential": 1,
+      "parallel": 1,
+      "language_mix": 1
+    },
+    "v2_ian_ice_katana_aftermath_hero": {
+      "interact_use_item": 1,
+      "dialogue": 2,
+      "deixis_unique": 1,
+      "parallel": 1,
+      "language_mix": 1
+    },
+    "v2_ice_elemental_encounter_mage": {
+      "negation": 1,
+      "conditional": 1,
+      "interact_use_item": 1,
+      "missing_item": 1,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "deixis_unique": 1,
+      "sequential": 1,
+      "excluded_means": 1,
+      "language_mix": 1
+    },
+    "v2_inn_mage": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "conditional": 1,
+      "interact_use_item": 1,
+      "missing_item": 1,
+      "dialogue": 2,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "deixis_multi": 3,
+      "sequential": 1,
+      "parallel": 1,
+      "excluded_means": 1,
+      "language_mix": 2
+    },
+    "v2_item_shop_thief": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "conditional": 1,
+      "missing_item": 1,
+      "dialogue": 2,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "deixis_multi": 3,
+      "sequential": 1,
+      "parallel": 1,
+      "excluded_means": 1,
+      "language_mix": 2
+    },
+    "v2_lost_goblin_crossroads_thief": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "conditional": 1,
+      "missing_item": 1,
+      "dialogue": 1,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "deixis_unique": 1,
+      "sequential": 1,
+      "parallel": 1,
+      "language_mix": 2
+    },
+    "v2_magic_shop_mage": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "negation": 1,
+      "conditional": 1,
+      "interact_use_item": 1,
+      "missing_item": 1,
+      "dialogue": 2,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "deixis_unique": 1,
+      "deixis_multi": 2,
+      "sequential": 1,
+      "parallel": 1,
+      "excluded_means": 1,
+      "language_mix": 2
+    },
+    "v2_village_approach_thief": {
+      "negation": 1,
+      "conditional": 1,
+      "missing_item": 1,
+      "chitchat": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "colloquial": 1,
+      "language_mix": 1
+    },
+    "v2_village_frozen_clue_thief": {
+      "negation": 1,
+      "missing_item": 1,
+      "chitchat": 1,
+      "declared_success": 1,
+      "colloquial": 1,
+      "parallel": 1,
+      "language_mix": 1
+    },
+    "v2_village_mage": {
+      "existing_exact": 1,
+      "existing_paraphrase": 1,
+      "interact_use_item": 1,
+      "dialogue": 2,
+      "deixis_unique": 1,
+      "sequential": 1,
+      "parallel": 1,
+      "language_mix": 1
+    },
+    "v2_xanxus_confrontation_hero": {
+      "negation": 1,
+      "conditional": 1,
+      "interact_use_item": 1,
+      "dialogue": 1,
+      "impossible": 1,
+      "declared_success": 1,
+      "injection": 1,
+      "deixis_unique": 1,
+      "sequential": 1,
+      "parallel": 1,
+      "excluded_means": 1,
+      "language_mix": 1
+    },
+    "v2_xanxus_ultimatum_mage": {
+      "interact_use_item": 1,
+      "dialogue": 1,
+      "deixis_unique": 1,
+      "sequential": 1,
+      "parallel": 1
+    }
+  }
+}

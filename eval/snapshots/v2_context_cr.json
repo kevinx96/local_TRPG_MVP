@@ -1,0 +1,21 @@
+{
+  "id": "v2_context_cr",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "dark_forest_loc",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": [
+    {
+      "speaker": "勇者",
+      "text": "スライムを観察する。"
+    },
+    {
+      "speaker": "GM",
+      "text": "スライムは食べ物の匂いに敏感で、視野は狭い。携帯食で誘えば確実に道を空ける。"
+    }
+  ]
+}

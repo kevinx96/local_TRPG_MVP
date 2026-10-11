@@ -1,0 +1,12 @@
+{
+  "id": "v2_alley_night_mage",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "mage",
+  "location_id": "alley_night",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}

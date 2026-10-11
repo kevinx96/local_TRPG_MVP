@@ -1,0 +1,17 @@
+{
+  "id": "v2_context_cf",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "forge",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": [
+    {
+      "speaker": "GM",
+      "text": "鍛冶師に剣を見せますか？"
+    }
+  ]
+}

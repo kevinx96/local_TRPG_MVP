@@ -16,7 +16,7 @@ from host.llm_trace import prompt_metadata
 from .cache import cache_key, read_cache, write_cache
 from .metrics import summarize
 from .requests import evaluation_config
-from .audit import allowed_state
+from .audit import allowed_state, costly_plan
 from .snapshots import ROOT, isolated_engine, load_snapshot
 from .variants import VARIANTS
 
@@ -94,6 +94,8 @@ def evaluate_case(case: dict[str, Any], session: dict[str, Any], config: dict[st
     try:
         plan = free_actions.parse_plan(cleaned, session.get("character", {}).get("character_id", ""))
         record["plan"] = plan
+        record["costs"] = {"plan": costly_plan(session, plan),
+                           "gold": [costly_plan(session, g) for g in case["gold"]]}
         record["engine"] = engine_result(session, plan, case["input"])
         record["status"] = "ok"
     except free_actions.InvalidPlan as exc:
@@ -117,8 +119,9 @@ def report_markdown(report: dict[str, Any]) -> str:
              "缓存重放的延迟和 token 来自原始调用。所有引擎判定骰固定为 10（不超过骰面上限）。", "",
              f"总数 {metrics['total']}；可评测响应 {metrics['evaluated']}；状态 `{json.dumps(metrics['statuses'])}`。", "",
              "| 指标 | 值 |", "|---|---|"]
-    for key in ("exact", "kind", "kind_relaxed", "json_failure_rate", "invalid_plan_rate", "cost_per_turn"):
-        lines.append(f"| {key} | {display(metrics[key])} |")
+    for key in ("exact", "kind", "kind_relaxed", "s0_s1_rate", "s3_rate", "engine_caught",
+                "severity", "json_failure_rate", "invalid_plan_rate", "cost_per_turn"):
+        lines.append(f"| {key} | {display(metrics.get(key))} |")
     for key, value in metrics["latency_ms"].items():
         lines.append(f"| latency_ms {key} | {display(value)} |")
     for key, value in metrics["tokens"].items():
@@ -126,9 +129,9 @@ def report_markdown(report: dict[str, Any]) -> str:
     for tag in ("negation", "injection", "declared_success"):
         lines.append(f"| {tag} | {json.dumps(metrics[tag])} |")
     lines.append(f"| 归一化次数 | {metrics['normalizations']} |")
-    lines += ["", "## 标签分组", "", "| 标签 | 数量 | exact | kind | relaxed | 归一化次数 |", "|---|---:|---:|---:|---:|---:|"]
+    lines += ["", "## 标签分组", "", "| 标签 | 数量 | exact | kind | relaxed | 归一化次数 | S3 | engine_caught |", "|---|---:|---:|---:|---:|---:|---:|---:|"]
     for tag, values in metrics["by_tag"].items():
-        lines.append(f"| {tag} | {values['count']} | {display(values['exact'])} | {display(values['kind'])} | {display(values['kind_relaxed'])} | {values['normalizations']} |")
+        lines.append(f"| {tag} | {values['count']} | {display(values['exact'])} | {display(values['kind'])} | {display(values['kind_relaxed'])} | {values['normalizations']} | {display(values.get('s3_count'))} | {display(values.get('engine_caught'))} |")
     lines += ["", "## 错误最多的三类与样例", ""]
     if not metrics["top_errors"]:
         lines.append("n/a：没有可评测响应，不能给出模型错误排行或典型错例。")

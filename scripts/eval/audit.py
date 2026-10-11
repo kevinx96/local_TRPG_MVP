@@ -6,6 +6,44 @@ from typing import Any
 from host import combat, free_actions, state
 
 
+def costly_plan(session: dict[str, Any], plan: dict[str, Any]) -> bool:
+    """Derive risk from action data or a disposable free-action adjudication."""
+    if plan.get("kind") == "existing":
+        action = state.resolve_action(session, action_id=plan.get("action_id", ""))
+        if not action:
+            return False
+        if state.action_dice_settings(action)[1] > 0:
+            return True
+        actor = session["character"]
+        for key, effects in action.items():
+            if key != "effects" and not key.endswith("_effects"):
+                continue
+            delta = state._effects_to_state_delta(state._as_list(effects), session)
+            if (any(delta.get(k, 0) < 0 for k in state.MODEL_RESOURCE_DELTA_KEYS)
+                    or any(delta.get(k, actor.get(k, 0)) < actor.get(k, 0) for k in ("hp", "mp", "sp", "gold"))
+                    or any(delta.get(k) for k in ("inventory_remove", "start_combat", "game_over", "clear_skills"))
+                    or any(delta.get(k) and delta[k] != session["world_state"][world_key]
+                           for k, world_key in (("current_location", "location_id"), ("current_scene", "scene_id")))
+                    or any(value < actor.get("attributes", {}).get(attr, 0)
+                           for attr, value in delta.get("attribute_set", {}).items())
+                    or any(value < 0 for value in delta.get("attribute_changes", {}).values())):
+                return True
+        return False
+    if plan.get("kind") != "interact":
+        return False
+    trial = deepcopy(session)
+    # The engine owns resource costs and check requirements; do not duplicate an operation table.
+    from .snapshots import isolated_engine
+    with isolated_engine("cost-probe"):
+        result = free_actions.adjudicate(trial, {"approach": "", "reply": "", **plan})
+    before, after = session["character"], trial["character"]
+    return bool(result.get("roll") or trial["world_state"] != session["world_state"]
+                or any(after.get(k, 0) < before.get(k, 0) for k in ("hp", "sp", "mp", "gold"))
+                or any(sum(int(i.get("quantity", 1)) for i in after["inventory"]
+                           if free_actions._item_id(i) == free_actions._item_id(item)) < int(item.get("quantity", 1))
+                       for item in before["inventory"]))
+
+
 def allowed_state(session: dict[str, Any], plan: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
     """Rebuild authorized protected changes from rules, never from the observed after-state."""
     expected = deepcopy(session)
