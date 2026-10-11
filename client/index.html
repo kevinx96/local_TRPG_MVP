@@ -217,6 +217,7 @@
             </div>
             <div class="gold-row"><span class="gold-label">GOLD</span><strong id="goldText">0</strong></div>
             <h3>能力値</h3><div id="characterAttributes" class="attribute-grid"></div>
+            <h3>クエスト</h3><div id="quests"></div>
             <h3>所持品</h3><ul id="inventory" class="inventory"></ul>
             <h3>最近の判定</h3><ul id="diceLog" class="dice-log"></ul>
           </aside>
@@ -225,6 +226,26 @@
           </aside>
         </div>
       </div>
+
+      <div id="shopOverlay" class="gal-overlay shop-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="shopTitle">
+        <div class="gal-overlay-header">
+          <div class="shop-keeper">
+            <img id="shopPortrait" alt="" />
+            <div><h2 id="shopTitle"></h2><p id="shopLine" class="item-desc" aria-live="polite"></p></div>
+          </div>
+          <div class="gold-row"><span class="gold-label">GOLD</span><strong id="shopGold">0</strong></div>
+          <button id="shopCloseBtn" type="button" class="gal-close-btn" aria-label="閉じる">✕</button>
+        </div>
+        <div class="shop-tabs" role="tablist">
+          <button id="shopBuyTab" type="button" class="gal-menu-btn" role="tab">購入</button>
+          <button id="shopSellTab" type="button" class="gal-menu-btn" role="tab">売却</button>
+        </div>
+        <div class="shop-columns">
+          <div id="shopItems" class="inventory"></div>
+          <div id="shopDetail"></div>
+        </div>
+      </div>
+      <div id="notifications" class="notifications" role="status" aria-live="polite"></div>
 
       <div id="endingOverlay" class="ending-overlay" style="display:none" role="dialog" aria-modal="true">
         <span id="endingLabel">GAME OVER</span>

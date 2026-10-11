@@ -24,6 +24,15 @@ const state = {
   combatBusy: false,
   combatActions: [],
   combatIntroSeenId: "",
+  session: null,
+  serviceBusy: false,
+  turnBusy: false,
+  shop: null,
+  shopTab: "buy",
+  shopItemId: "",
+  shopQuantity: 1,
+  shopEventId: "",
+  questLogIds: new Set(),
 };
 
 /* ── DOM References ── */
@@ -528,6 +537,7 @@ async function newSession() {
 
 async function submitTurn(event) {
   event.preventDefault();
+  if (state.serviceBusy || state.turnBusy) return;
   const text = els.input.value.trim();
   if (!text || !state.sessionId) return;
   els.input.value = "";
@@ -556,6 +566,7 @@ async function submitTurn(event) {
 }
 
 async function submitChoice(choiceText, actionId = "") {
+  if (state.serviceBusy || state.turnBusy) return;
   choiceDebug("submit-choice-start", { choiceText, actionId });
   if (!choiceText || !state.sessionId) return;
   addMessage("user", "プレイヤー", choiceText);
@@ -589,6 +600,14 @@ async function submitChoice(choiceText, actionId = "") {
    ═══════════════════════════════════════════════════ */
 
 function renderSession(session) {
+  const sameSession = state.session?.id === session.id;
+  if (!sameSession) {
+    closeShop();
+    state.shopEventId = session.last_action_result?.event_id || "";
+    state.questLogIds.clear();
+    document.querySelector("#notifications").replaceChildren();
+  }
+  state.session = session;
   state.sessionId = session.id;
   if (els.input) els.input.placeholder = session.free_input_hint || "行動や台詞を自由に入力してください";
   state.nextDiceDc = Number(session.next_dice_dc || 0);
@@ -635,6 +654,19 @@ function renderSession(session) {
 
   /* Inventory (item objects) */
   renderInventory(character.inventory || []);
+  renderQuests(session.quests || []);
+  for (const entry of session.system_logs || []) {
+    if (!/^クエスト(更新|達成)：/.test(entry.text)) continue;
+    const key = entry.event_id || `${entry.created_at}:${entry.text}`;
+    if (sameSession && !state.questLogIds.has(key)) showNotification(entry.text);
+    state.questLogIds.add(key);
+  }
+  const shopAction = session.last_action_result || {};
+  if (state.shop && (state.shop.location_id !== session.current_location || session.in_combat || session.game_over)) closeShop();
+  if (sameSession && shopAction.open_shop && shopAction.event_id !== state.shopEventId && !session.in_combat && !session.game_over) {
+    state.shopEventId = shopAction.event_id;
+    openShop(shopAction.open_shop);
+  }
   renderEnemies(session.enemies || []);
   renderCombat(session);
   renderEnding(session.game_over);
@@ -688,6 +720,7 @@ function renderMeter(stat, character) {
    ═══════════════════════════════════════════════════ */
 
 function renderInventory(items) {
+  const expanded = new Set([...els.inventory.querySelectorAll(".expanded")].map(row => row.dataset.itemId));
   els.inventory.innerHTML = "";
   if (!items.length) {
     const li = document.createElement("li");
@@ -696,7 +729,18 @@ function renderInventory(items) {
     els.inventory.append(li);
     return;
   }
-  for (const item of items) {
+  // TODO(design): Items without category stay ungrouped until their category is specified.
+  const groups = { consumable: "消耗品", equipment: "装備", material: "素材", key: "重要", "": "" };
+  for (const [category, label] of Object.entries(groups)) {
+    const grouped = items.filter(item => (item.category || "") === category);
+    if (!grouped.length) continue;
+    if (label) {
+      const heading = document.createElement("li");
+      heading.className = "inventory-group";
+      heading.innerHTML = `<h3>${label}</h3>`;
+      els.inventory.append(heading);
+    }
+    for (const item of grouped) {
     const name = typeof item === "string" ? item : (item.name || "不明");
     const desc = typeof item === "object" ? (item.description || "") : "";
     const effect = typeof item === "object" ? (item.effect || "") : "";
@@ -704,13 +748,20 @@ function renderInventory(items) {
 
     const li = document.createElement("li");
     li.className = "inventory-item";
+    li.dataset.itemId = item.id || name;
+    li.classList.toggle("expanded", expanded.has(li.dataset.itemId));
+    const equipped = (state.character?.equipment || []).some(entry =>
+      (typeof entry === "string" ? entry : entry.name || entry.id) === name || entry === item.id);
+    const usable = ["heal", "restore"].includes(item.combat?.kind) && !state.session?.in_combat && !state.session?.game_over;
 
-    const hasDetails = desc || effect;
+    const hasDetails = desc || effect || usable;
 
     li.innerHTML = `
-      <div class="item-header">
+      <div class="item-header" role="button" tabindex="0" aria-expanded="${li.classList.contains("expanded")}">
         <span class="item-name">${escapeHtml(name)}</span>
         <span style="display:flex;align-items:center;gap:6px">
+          ${equipped ? '<span class="item-qty equipped-tag">装備中</span>' : ''}
+          ${item.key_item ? '<span class="item-qty key-tag">重要</span>' : ''}
           <span class="item-qty">×${qty}</span>
           ${hasDetails ? '<span class="item-toggle">▼</span>' : ''}
         </span>
@@ -719,15 +770,191 @@ function renderInventory(items) {
         <div class="item-details">
           ${desc ? `<div class="item-desc">${escapeHtml(desc)}</div>` : ''}
           ${effect ? `<div class="item-effect">${escapeHtml(effect)}</div>` : ''}
+          ${usable ? '<button type="button" class="start-btn item-use">使う</button>' : ''}
         </div>
       ` : ''}
     `;
 
     if (hasDetails) {
-      li.addEventListener("click", () => li.classList.toggle("expanded"));
+      const header = li.querySelector(".item-header");
+      const toggle = () => header.setAttribute("aria-expanded", li.classList.toggle("expanded"));
+      header.addEventListener("click", toggle);
+      header.addEventListener("keydown", event => {
+        if (["Enter", " "].includes(event.key)) { event.preventDefault(); toggle(); }
+      });
     }
+    li.querySelector(".item-use")?.addEventListener("click", () => useInventoryItem(item.id || name));
 
     els.inventory.append(li);
+    }
+  }
+}
+
+function showNotification(text) {
+  const toast = document.createElement("div");
+  toast.className = "notification";
+  toast.textContent = text;
+  document.querySelector("#notifications").append(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+function renderQuests(quests) {
+  const root = document.querySelector("#quests");
+  const expanded = new Set([...root.querySelectorAll("details[open]")].map(row => row.dataset.questId));
+  root.replaceChildren();
+  const labels = { main: "メイン", side: "サブ", mystery: "謎" };
+  for (const quest of [...quests.filter(q => q.status === "active"), ...quests.filter(q => q.status !== "active")]) {
+    const ended = quest.status !== "active";
+    const card = document.createElement(ended ? "details" : "article");
+    card.className = `inventory-item quest-card quest-${quest.kind}`;
+    card.dataset.questId = quest.id;
+    if (ended) card.open = expanded.has(quest.id);
+    const heading = `<span class="item-qty quest-kind">${labels[quest.kind] || ""}</span> <strong>${escapeHtml(quest.title)}</strong>
+      ${ended ? `<span class="quest-${quest.status}">${quest.status === "completed" ? "達成" : "失敗"}</span>` : ""}`;
+    card.innerHTML = `${ended ? `<summary>${heading}</summary>` : `<div>${heading}</div>`}
+      <p class="item-desc">${escapeHtml(quest.description)}</p>
+      ${quest.clue_count !== undefined ? `<p class="item-desc">手がかり：${quest.clue_count}</p>` : ""}
+      ${(quest.completed_stages || []).map(text => `<p class="quest-done">${escapeHtml(text)}</p>`).join("")}
+      ${quest.current_objective ? `<p>▶ ${escapeHtml(quest.current_objective)}</p>` : ""}`;
+    root.append(card);
+  }
+}
+
+async function serviceRequest(path, body) {
+  const response = await fetch(`/api/sessions/${state.sessionId}/${path}`, body === undefined ? {} : {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(typeof data.detail === "string" ? data.detail : "この行動は現在選択できません。");
+  return data;
+}
+
+async function useInventoryItem(itemId) {
+  if (state.serviceBusy || state.turnBusy) return;
+  state.serviceBusy = true;
+  try {
+    const result = await serviceRequest("items/use", { item_id: itemId });
+    renderSession(result.session);
+    showNotification(result.message);
+  } catch (error) {
+    showNotification(error.message);
+  } finally {
+    state.serviceBusy = false;
+  }
+}
+
+function closeShop() {
+  document.querySelector("#shopOverlay").style.display = "none";
+  state.shop = null;
+  state.shopFocus?.focus();
+  state.shopFocus = null;
+}
+
+async function openShop(shopId) {
+  const sessionId = state.sessionId;
+  try {
+    const shop = await serviceRequest(`shops/${encodeURIComponent(shopId)}`);
+    if (sessionId !== state.sessionId || shop.location_id !== state.session.current_location) return;
+    state.shop = shop;
+    state.shopTab = "buy";
+    state.shopItemId = "";
+    state.shopQuantity = 1;
+    state.shopFocus = document.activeElement;
+    document.querySelector("#shopOverlay").style.display = "flex";
+    document.querySelector("#shopLine").textContent = shop.greeting;
+    renderShop();
+    document.querySelector("#shopCloseBtn").focus();
+  } catch (error) { showNotification(error.message); }
+}
+
+function shopLimit(item) {
+  if (!item) return 0;
+  if (state.shopTab === "sell") return Number(item.quantity || 0);
+  if (item.enabled === false) return 0;
+  return Math.min(item.stock === null ? Infinity : item.stock,
+    item.price > 0 ? Math.floor(state.shop.gold / item.price) : Number.MAX_SAFE_INTEGER);
+}
+
+function renderShop() {
+  const shop = state.shop;
+  if (!shop) return;
+  const selling = state.shopTab === "sell";
+  document.querySelector("#shopTitle").textContent = shop.title;
+  document.querySelector("#shopGold").textContent = Number(shop.gold).toLocaleString("ja-JP");
+  const portrait = document.querySelector("#shopPortrait");
+  portrait.hidden = !shop.portrait_image;
+  portrait.src = shop.portrait_image || "";
+  for (const [id, selected] of [["shopBuyTab", !selling], ["shopSellTab", selling]]) {
+    document.querySelector(`#${id}`).setAttribute("aria-selected", selected);
+    document.querySelector(`#${id}`).disabled = state.serviceBusy;
+  }
+  document.querySelector("#shopSellTab").disabled = !shop.buys || state.serviceBusy;
+  const items = selling ? shop.sell_items : shop.items;
+  if (!items.some(item => item.item_id === state.shopItemId)) state.shopItemId = items[0]?.item_id || "";
+  const list = document.querySelector("#shopItems");
+  list.replaceChildren();
+  for (const item of items) {
+    const row = document.createElement("button");
+    row.type = "button";
+    row.className = "inventory-item shop-row";
+    row.classList.toggle("selected", item.item_id === state.shopItemId);
+    row.classList.toggle("sold-out", item.stock === 0);
+    row.setAttribute("aria-pressed", item.item_id === state.shopItemId);
+    row.disabled = state.serviceBusy;
+    row.innerHTML = `<div class="item-name">${escapeHtml(item.name)}</div><div class="item-desc shop-effect">${escapeHtml(item.effect || "")}</div>
+      <div class="shop-row-bottom"><span class="shop-price ${!selling && item.price > shop.gold ? "unaffordable" : ""}">${item.price} G</span>
+      <span class="item-qty">${item.stock === null ? "∞" : `${selling ? "所持：" : "在庫 "}${item.stock}`}</span>
+      ${item.stock === 0 ? '<span class="item-desc">売り切れ</span>' : ""}</div>`;
+    row.addEventListener("click", () => {
+      state.shopItemId = item.item_id;
+      state.shopQuantity = 1;
+      document.querySelector("#shopLine").textContent = shop.greeting;
+      renderShop();
+    });
+    list.append(row);
+  }
+  if (!items.length) list.innerHTML = '<p class="item-desc">所持品なし</p>';
+  const item = items.find(entry => entry.item_id === state.shopItemId);
+  const detail = document.querySelector("#shopDetail");
+  if (!item) { detail.replaceChildren(); return; }
+  const limit = shopLimit(item);
+  state.shopQuantity = Math.max(0, Math.min(state.shopQuantity || 1, limit));
+  const owned = (state.character.inventory || []).find(entry => entry.id === item.item_id || entry.name === item.name)?.quantity || 0;
+  const reason = selling ? "" : item.stock === 0 ? "売り切れ" : item.enabled === false ? item.reason : limit < 1 ? shop.poor_line : "";
+  if (reason === shop.poor_line) document.querySelector("#shopLine").textContent = shop.poor_line;
+  detail.innerHTML = `<h3>${escapeHtml(item.name)}</h3><p class="item-desc">${escapeHtml(item.description || "")}</p>
+    <p class="item-effect">${escapeHtml(item.effect || "")}</p><p>所持：${owned}</p>
+    <div class="shop-purchase"><div class="shop-quantity">
+      <button type="button" class="gal-menu-btn" id="shopMinus" ${state.shopQuantity <= 1 || state.serviceBusy ? "disabled" : ""}>−</button>
+      <output>${state.shopQuantity}</output>
+      <button type="button" class="gal-menu-btn" id="shopPlus" ${state.shopQuantity >= limit || state.serviceBusy ? "disabled" : ""}>+</button>
+      <span class="shop-price">${item.price * state.shopQuantity} G</span></div>
+      <button type="button" class="start-btn" id="shopTrade" ${limit < 1 || state.serviceBusy ? "disabled" : ""}>${selling ? "売却する" : "購入する"}</button>
+      <p class="item-desc">${escapeHtml(reason)}</p></div>`;
+  document.querySelector("#shopMinus").onclick = () => { state.shopQuantity--; renderShop(); };
+  document.querySelector("#shopPlus").onclick = () => { state.shopQuantity++; renderShop(); };
+  document.querySelector("#shopTrade").onclick = performShopTrade;
+}
+
+async function performShopTrade() {
+  if (!state.shop || state.serviceBusy || state.turnBusy) return;
+  const shopId = state.shop.id;
+  state.serviceBusy = true;
+  renderShop();
+  try {
+    const result = await serviceRequest(`shops/${encodeURIComponent(shopId)}/${state.shopTab}`, {
+      item_id: state.shopItemId, quantity: state.shopQuantity,
+    });
+    renderSession(result.session);
+    if (state.shop?.id === shopId) {
+      state.shop = result.shop;
+      document.querySelector("#shopLine").textContent = result.message;
+    }
+  } catch (error) {
+    if (state.shop?.id === shopId) document.querySelector("#shopLine").textContent = error.message;
+  } finally {
+    state.serviceBusy = false;
+    renderShop();
   }
 }
 
@@ -1344,6 +1571,7 @@ async function fetchJson(url, options) {
 }
 
 function setBusy(isBusy) {
+  state.turnBusy = isBusy;
   els.sendButton.disabled = isBusy;
   els.newSessionButton.disabled = isBusy;
   if (isBusy) {
@@ -1463,6 +1691,24 @@ els.heroNameInput.addEventListener("keydown", (e) => {
     e.preventDefault();
     startGame();
   }
+});
+
+document.querySelector("#shopCloseBtn").addEventListener("click", closeShop);
+for (const [id, tab] of [["shopBuyTab", "buy"], ["shopSellTab", "sell"]]) {
+  document.querySelector(`#${id}`).addEventListener("click", () => {
+    state.shopTab = tab;
+    state.shopItemId = "";
+    state.shopQuantity = 1;
+    renderShop();
+  });
+}
+document.querySelector("#shopOverlay").addEventListener("keydown", event => {
+  if (event.key === "Escape") { event.preventDefault(); closeShop(); }
+  if (event.key !== "Tab") return;
+  const buttons = [...event.currentTarget.querySelectorAll("button:not(:disabled)")];
+  const first = buttons[0], last = buttons[buttons.length - 1];
+  if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+  if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
 });
 
 /* Boot */

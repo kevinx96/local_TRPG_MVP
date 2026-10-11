@@ -997,6 +997,51 @@ button, select, textarea, input { font: inherit; }
 .item-effect::before { content: "▸ "; }
 .item-qty { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--gold-dim); color: var(--gold); font-size: 11px; font-weight: 900; }
 
+/* Spec 012 reuses the system menu, inventory rows, badges and primary buttons. */
+.equipped-tag, .quest-completed { color: var(--green); }
+.key-tag, .quest-main .quest-kind { color: var(--gold); }
+.quest-side .quest-kind { color: var(--blue); }
+.quest-mystery .quest-kind { color: var(--purple); }
+.quest-failed, .shop-price.unaffordable { color: var(--red); }
+#quests { display: grid; gap: 6px; }
+.quest-card { cursor: default; font-size: 13px; line-height: 1.6; }
+.quest-card summary { cursor: pointer; }
+.quest-card p { margin-top: 8px; }
+.quest-card .quest-done { color: var(--text-dim); text-decoration: line-through; }
+.item-use { width: auto; padding: 8px 16px; margin-top: 8px; font-size: 13px; }
+.shop-overlay { overflow-y: auto; }
+.shop-overlay .gal-overlay-header { gap: 20px; align-items: flex-start; }
+.shop-keeper { display: flex; gap: 12px; align-items: center; flex: 1; min-width: 0; }
+/* TODO(design): Confirm portrait focal crops for the existing transparent full-body assets. */
+#shopPortrait { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; object-position: top; flex: 0 0 64px; }
+.shop-keeper .item-desc { margin-top: 8px; }
+.shop-overlay .gold-row { gap: 16px; margin: 0; }
+.shop-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+.shop-tabs [aria-selected="true"] { border-bottom-color: var(--gold); }
+.shop-columns { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 24px; min-height: 0; }
+#shopItems { align-content: start; }
+.shop-row { width: 100%; text-align: left; color: var(--text); font: inherit; }
+.shop-row.selected { border-color: var(--gold-glow); }
+.shop-row.sold-out { opacity: .6; }
+.shop-effect { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px; margin: 6px 0; }
+.shop-row-bottom, .shop-quantity { display: flex; gap: 12px; align-items: center; }
+.shop-price { color: var(--gold); }
+#shopDetail { display: flex; flex-direction: column; gap: 12px; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--panel-2); }
+#shopDetail h3 { color: var(--gold); }
+.shop-purchase { margin-top: auto; }
+.shop-quantity { margin-bottom: 12px; }
+.shop-purchase .item-desc { margin-top: 8px; font-size: 12px; }
+.notifications { position: fixed; top: 20px; right: 20px; z-index: 300; display: grid; gap: 8px; max-width: calc(100vw - 40px); pointer-events: none; }
+.notification { padding: 12px 16px; border: 1px solid var(--gold); border-radius: var(--radius-sm); background: var(--panel); color: var(--text); }
+@media (max-width: 767px) {
+  .shop-overlay { padding: 20px; }
+  .shop-overlay .gal-overlay-header { flex-wrap: wrap; gap: 12px; }
+  .shop-keeper { flex-basis: calc(100% - 64px); }
+  .shop-overlay .gal-close-btn { position: absolute; top: 20px; right: 20px; }
+  .shop-keeper { padding-right: 40px; }
+  .shop-columns { grid-template-columns: minmax(0, 1fr); }
+}
+
 .dice-log li, #systemLogs li { border: 1px solid var(--line); background: var(--panel-2); border-radius: var(--radius-sm); padding: 8px 10px; color: var(--text-dim); font-size: 12px; }
 
 .sidebar h2, .system-panel h2 { margin: 14px 0 6px; }
