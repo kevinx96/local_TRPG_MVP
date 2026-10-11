@@ -104,13 +104,14 @@ class SecretActionTests(unittest.TestCase):
     def test_secret_nested_group_and_ordinary_disabled_action(self):
         session = self.session(location="village")
         location = state._current_location_record(session)
-        group = next(a for a in location["actions"] if a["id"] == "ask_elder_weakness")
-        group["children"][0].update(secret=True, requirements={"flag": "heard_treaty_lore"})
+        group = next(a for a in location["actions"] if a["id"] == "talk_elder")
+        next(c for c in group["children"] if c["id"] == "ask_elder_treaty").update(
+            secret=True, requirements={"flag": "heard_treaty_lore"})
         ordinary = next(a for a in location["actions"] if a["id"] == "go_dragon_valley")
         ordinary["requirements"] = {"flag": "heard_treaty_lore"}
         session["choices"] = fallback_choices_for_session(session)
         self.assert_visibility(session, "ask_elder_treaty", False)
-        self.assertNotIn("ask_elder_weakness", json.dumps(state.public_session(session)["choices"]))
+        self.assertNotIn("ask_elder_treaty", json.dumps(state.public_session(session)["choices"]))
         context = json.loads(free_actions.build_plan_messages(session, "")[1]["content"])
         self.assertFalse(next(a for a in context["actions"] if a["id"] == "go_dragon_valley")["enabled"])
         session["flags"]["heard_treaty_lore"] = True
@@ -120,18 +121,20 @@ class SecretActionTests(unittest.TestCase):
         session["flags"]["noticed_general_frost"] = True
         self.assert_visibility(session, "ask_elder_treaty", True)
 
-    def test_elder_leaf_is_already_visible_and_executable(self):
+    def test_elder_questions_are_both_visible_and_executable(self):
         for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
             session = self.session(filename, "village", "mage")
             context = json.loads(free_actions.build_plan_messages(session, "長老に邪竜の弱点を聞く")[1]["content"])
             actions = {a["id"]: a for a in context["actions"]}
             self.assertTrue(actions["ask_elder_treaty"]["enabled"])
-            self.assertNotIn("ask_elder_weakness", actions)
-            resolution = state.resolve_player_intent(session, action_id="ask_elder_treaty")
-            self.assertEqual(resolution["status"], "resolved")
-            with isolated_engine("elder-action"):
-                state.apply_action_result(session, resolution["action"], {})
-            self.assertTrue(session["flags"]["heard_treaty_lore"])
+            self.assertTrue(actions["ask_elder_weakness"]["enabled"])
+            self.assertNotIn("talk_elder", actions)
+            for action_id, flag in (("ask_elder_treaty", "heard_treaty_lore"), ("ask_elder_weakness", "heard_dragon_weakness")):
+                resolution = state.resolve_player_intent(session, action_id=action_id)
+                self.assertEqual(resolution["status"], "resolved")
+                with isolated_engine("elder-action"):
+                    state.apply_action_result(session, resolution["action"], {})
+                self.assertTrue(session["flags"][flag])
 
     def test_purification_secrets_use_combat_availability(self):
         for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):

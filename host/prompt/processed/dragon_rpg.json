@@ -1375,20 +1375,30 @@
       ],
       "actions": [
         {
-          "id": "ask_elder_weakness",
-          "text": "長老に邪竜の弱点を聞く",
-          "preview": "冷気の弱点について情報を得ます",
+          "id": "talk_elder",
+          "text": "長老と話す",
+          "preview": "村の長老から古い話を聞く",
           "risk": "判定不要",
           "intent_keywords": [
-            "長老に邪竜の弱点を聞く"
+            "長老と話す",
+            "長老に話しかける"
           ],
-          "effects": [
-            {
-              "set_flag": "heard_dragon_weakness"
-            }
-          ],
-          "portrait_image": "/static/images/npc_elder.png",
           "children": [
+            {
+              "id": "ask_elder_weakness",
+              "text": "長老に邪竜の弱点を聞く",
+              "preview": "冷気の弱点について情報を得ます",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "長老に邪竜の弱点を聞く"
+              ],
+              "effects": [
+                {
+                  "set_flag": "heard_dragon_weakness"
+                }
+              ],
+              "portrait_image": "/static/images/npc_elder.png"
+            },
             {
               "id": "ask_elder_treaty",
               "text": "古い盟約について聞く",
@@ -1403,7 +1413,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "portrait_image": "/static/images/npc_elder.png"
         },
         {
           "id": "open_village_shop",
