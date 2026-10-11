@@ -9,6 +9,10 @@
 - 429 的错误体里如果 `quotaId` 含 `PerDay`，或者 `retryDelay` 超过 120 秒，**不要等待**，立刻停止 live 请求，记为 `quota_exhausted`。报告里写明停在第几条、需要等多久。已有的结果正常写出。
 - 写测试（伪造错误体）。
 
+## A2. 其他评测修复
+- `eval/prices.json` 已由设计负责人填好，但报告里的 `cost_per_turn` 仍显示 n/a，请修复。按 USD 计算，并写测试。
+- 补充一个数据点：Gemini 在 v2 上有 24 条 InvalidPlan，其中 20 条是 `existing` 带了 `operation`（例如绕行类既有动作带了 `operation: sneak`），action_id 本身是对的。lenient 变体要覆盖这种情况，并单独统计。
+
 ## B. 新增两个变体（只在评测里用，不改游戏默认值）
 1. **`lenient`（解析容错）**：模型请求和 `default` 完全相同，所以**直接复用 default 的缓存**，不额外调用模型。解析时，先按 kind 清掉无关字段，再交给 `parse_plan`：
    - existing：只保留 action_id，其余字段清空，advance 设为 false
