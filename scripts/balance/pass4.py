@@ -26,7 +26,7 @@ def apply(pack: dict[str, Any], parameters: dict[str, Any]) -> dict[str, Any]:
                     items.append(dict(name=name, quantity=quantity))
     if parameters.get("inn_restore"):
         inn = next(l for l in result["locations"] if l["id"] == "inn")
-        action = next(a for parent in inn["actions"] for a in parent.get("children", []) if a["id"] == "rest_at_inn")
+        action = next(a for a in state._iter_actions(inn["actions"]) if a["id"] == "rest_at_inn")
         if {"restore_full": True} not in action["effects"]:
             action["effects"].append({"restore_full": True})
     return result

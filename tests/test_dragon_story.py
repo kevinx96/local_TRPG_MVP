@@ -42,7 +42,7 @@ class DragonStoryTests(unittest.TestCase):
             with self.subTest(filename=filename):
                 meta = self.load_raw(filename)["meta"]
                 self.assertEqual(meta["title"], "紅き邪竜イグニス")
-                self.assertEqual(meta["content_revision"], "2026-10-12-scenario-v2")
+                self.assertEqual(meta["content_revision"], "2026-10-12-services-v012")
 
     def test_client_keeps_hybrid_scenarios_selectable(self):
         source = Path("client/app.js").read_text(encoding="utf-8")
@@ -94,16 +94,17 @@ class DragonStoryTests(unittest.TestCase):
 
                 magic_actions = {action["id"]: action for action in iter_actions(locations["magic_shop"]["actions"])}
                 self.assertEqual(
-                    [child["id"] for child in magic_actions["blue_mage_shop"]["children"]],
-                    ["buy_earth_staff", "buy_healing_scroll", "buy_fireball_scroll"],
+                    [item["item_id"] for item in records(pack, "shops")["magic_shop"]["items"]],
+                    ["earth_staff", "healing_scroll", "fireball_scroll"],
                 )
-                self.assertEqual(magic_actions["buy_earth_staff"]["requirements"]["gold_gte"], 40)
+                self.assertEqual(records(pack, "shops")["magic_shop"]["items"][0]["price"], 40)
                 self.assertEqual(magic_actions["ask_blue_mage_rumor"]["roll"]["dc"], 14)
                 self.assertIn("critical_failure", magic_actions["ask_blue_mage_rumor"]["silent_outcomes"])
 
                 item_actions = {action["id"]: action for action in iter_actions(locations["item_shop"]["actions"])}
                 herb_actions = [action_id for action_id in item_actions if action_id.startswith("buy_sarah_herb_")]
-                self.assertEqual(len(herb_actions), 3)
+                self.assertEqual(len(herb_actions), 0)
+                self.assertEqual(records(pack, "shops")["sarah_shop"]["items"][0]["stock"], 3)
                 self.assertFalse(item_actions["borrow_fire_bat_dragon"]["critical_enabled"])
 
                 self.assertEqual(items["earth_staff"]["combat"]["grants_skills"][0]["damage"], "1d10+int/2")

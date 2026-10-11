@@ -183,13 +183,13 @@ class ScenarioV2Tests(unittest.TestCase):
 
     def test_shop_prices_and_forge_resource_payment(self):
         session = self.session("item_shop")
-        for aid, price in [("buy_sarah_herb_1", 10), ("buy_sarah_holy_water", 15),
-                           ("buy_sarah_ice_charm", 80), ("buy_sarah_fireball_scroll", 40)]:
+        from host.shops import ShopError, trade
+        for item_id, price in [("herb", 10), ("holy_water", 15), ("ice_charm", 80), ("fireball_scroll", 40)]:
             session["character"]["gold"] = price - 1
-            action = state.resolve_action(session, action_id=aid)
-            self.assertFalse(state.action_requirement_status(action, session)[0])
+            with self.assertRaises(ShopError):
+                trade(session, "sarah_shop", item_id, 1)
             session["character"]["gold"] = price
-            self.action(session, aid)
+            trade(session, "sarah_shop", item_id, 1)
             self.assertEqual(session["character"]["gold"], 0)
         session = self.session("forge")
         session["character"]["gold"] = 20

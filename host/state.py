@@ -13,6 +13,8 @@ from typing import Any, Optional, Union
 
 from .intent_resolver import resolve_intent
 from .item_mechanics import item_combat_spec, structured_item_effect
+from .quests import public_quests, record_quest_changes
+from .shops import item_category
 from .scenario_context import (
     current_actions_for_session,
     fallback_choices_for_session,
@@ -234,6 +236,7 @@ def create_session(
         "updated_at": utc_now(),
     }
     ensure_combat_started(session)
+    record_quest_changes(session, [])
     save_session(session)
     return public_session(session)
 
@@ -267,6 +270,8 @@ def load_session(session_id: str) -> dict[str, Any]:
     ensure_world_state(session)
     session.setdefault("event_log", [])
     changed = _refresh_session_scenario_pack(session)
+    if changed:
+        session["choices"] = fallback_choices_for_session(session)
     changed = _recover_legacy_defeat_dead_end(session) or changed
     character = session.get("character") if isinstance(session.get("character"), dict) else {}
     _initialize_milestones(session)
@@ -382,6 +387,12 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     public.pop("last_intent_resolution", None)
     public.pop("deviation_state", None)
     public.pop("event_log", None)
+    public.pop("shop_stock", None)
+    public["quests"] = public_quests(session)
+    public["character"]["inventory"] = [
+        _enrich_item(item if isinstance(item, dict) else {"name": item}, session.get("scenario_pack"))
+        for item in session["character"].get("inventory", [])
+    ]
     public["current_scene"] = world["scene_id"]
     public["current_location"] = world["location_id"]
     public["current_scene_title"] = scene_title(session)
@@ -442,6 +453,8 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
             message["text"] = sanitize_visible_text(original_text)
     if recovered_choices and len(recovered_choices) > len(public.get("choices") or []):
         public["choices"] = recovered_choices
+    if any(action.get("open_shop") for action in current_actions_for_session(session)):
+        public["choices"] = fallback_choices_for_session(session)
     public["choices"] = annotate_choices_for_session(public.get("choices"), public)
     public["choices"] = annotate_choices_for_character(public.get("choices"), public.get("character", {}))
     if session.get("game_over"):
@@ -1060,13 +1073,8 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
             extra_text.append(str(bonus.get("text") or ""))
     if bonus_effects:
         delta = _effects_to_state_delta([*base_effects, *outcome_effects, *bonus_effects], session)
-    flags = session.setdefault("flags", {})
-    if isinstance(flags, dict):
-        if action.get("once"):
-            flag = str(action["once"])
-            if not flags.get(flag):
-                flags[flag] = True
-                record_state_event(session, "flag_set", "", {"flag": flag, "value": True}, visible=False)
+    if action.get("once"):
+        delta.setdefault("flags_set", []).append(str(action["once"]))
     apply_state_delta(session, delta, allow_world_transition=True)
     if delta.get("start_combat") is True:
         session["combat_start_requested"] = True
@@ -1080,7 +1088,9 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
         "source_location_id": source_location_id,
         "extra_text": "".join(extra_text),
     }
-    record_state_event(
+    if action.get("open_shop"):
+        result["open_shop"] = action["open_shop"]
+    event = record_state_event(
         session,
         "action_resolved",
         "",
@@ -1092,6 +1102,7 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
         },
         visible=False,
     )
+    result["event_id"] = event["id"]
     session["last_action_result"] = result
     session["choices"] = fallback_choices_for_session(session)
     return result
@@ -1711,6 +1722,17 @@ def apply_state_delta(
     *,
     allow_world_transition: bool = False,
 ) -> None:
+    before = public_quests(session)
+    _apply_state_delta(session, delta, allow_world_transition=allow_world_transition)
+    record_quest_changes(session, before)
+
+
+def _apply_state_delta(
+    session: dict[str, Any],
+    delta: dict[str, Any],
+    *,
+    allow_world_transition: bool = False,
+) -> None:
     _initialize_milestones(session)
     character = session["character"]
     if delta.get("restore_full") is True:
@@ -1934,7 +1956,7 @@ def apply_state_delta(
                     entry_effects = location.get("entry_effects", [])
                     if entry_effects:
                         entry_delta = _effects_to_state_delta(entry_effects, session)
-                        apply_state_delta(session, entry_delta)
+                        _apply_state_delta(session, entry_delta)
                         if entry_delta and location.get("entry_text"):
                             record_state_event(session, "location_hint", str(location["entry_text"]),
                                                {"location_id": location["id"], "state_delta": deepcopy(entry_delta)})
@@ -2115,12 +2137,15 @@ def _enrich_item(item: dict[str, Any], scenario_pack: Optional[dict[str, Any]] =
     enriched: dict[str, Any] = {
         "name": name,
         "description": str(merged.get("description") or ""),
-        "effect": structured_item_effect(merged),
+        "effect": structured_item_effect(merged) or str(merged.get("effect") or ""),
         "quantity": _safe_quantity(item.get("quantity"), 1),
     }
-    for key in ("id", "icon", "combat", "traits"):
+    for key in ("id", "icon", "combat", "traits", "category", "key_item", "non_removable"):
         if key in merged:
             enriched[key] = deepcopy(merged[key])
+    category = item_category(enriched)
+    if category:
+        enriched["category"] = category
     return enriched
 
 
@@ -2538,7 +2563,7 @@ def _merge_inventory_catalog(inventory: list[Any], scenario_pack: Optional[dict[
         if source:
             merged = deepcopy(source)
             merged.update(entry)
-            merged["effect"] = structured_item_effect(merged)
+            merged["effect"] = structured_item_effect(merged) or str(merged.get("effect") or "")
             inventory[index] = merged
         elif not isinstance(raw, dict):
             inventory[index] = entry

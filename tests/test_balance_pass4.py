@@ -81,7 +81,7 @@ class BalancePass4Tests(unittest.TestCase):
         self.assertEqual(pack, original)
         self.assertEqual(candidate, pass4.apply(candidate, {"inn_restore": True}))
         session = checkpoints.fresh_session(candidate, "hero")
-        session["character"].update(hp=1, mp=0, sp=0, gold=1)
+        session["character"].update(hp=1, mp=0, sp=0, gold=10)
         checkpoints.replay_step(session, "go_inn")
         checkpoints.replay_step(session, "rest_at_inn")
         self.assertEqual(session["character"]["gold"], 0)

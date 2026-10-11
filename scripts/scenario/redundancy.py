@@ -12,6 +12,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from host import combat, free_actions, state
+from host.shops import trade
 from scripts.balance import checkpoints
 
 MANIFEST = ROOT / "eval/scenario/key_items.json"
@@ -24,7 +25,10 @@ def replay(pack: dict[str, Any], steps: list[str], character: str = "hero") -> t
         location = state.current_location_id(session)
         if session.get("game_over"):
             raise ValueError(f"route continues after ending: {location}/{step}")
-        if step == "@entry":
+        if step.startswith("shop:"):
+            _, shop_id, item_id = step.split(":")
+            delta = trade(session, shop_id, item_id, 1)
+        elif step == "@entry":
             hint = next((e for e in reversed(session["event_log"]) if e["kind"] == "location_hint"
                          and e["data"].get("location_id") == location), {})
             delta = hint.get("data", {}).get("state_delta", {})

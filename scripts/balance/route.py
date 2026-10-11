@@ -48,15 +48,22 @@ def fight(session: dict[str, Any], policy: str, rng: random.Random) -> dict[str,
 
 
 def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, character: str,
-          seed: int, policy: str = "heuristic") -> dict[str, Any]:
+          seed: int, policy: str = "heuristic", rest_at_inn: bool = False) -> dict[str, Any]:
     session = checkpoints.fresh_session(pack, character)
     rng = random.Random(seed)
     battles = []
     arrival = None
+    paid_rests = 0
     with patch.object(combat, "random", rng):
         for source in [*sources, {"location": encounter, "step": "@final"}]:
             if state.current_location_id(session) != source["location"]:
                 raise ValueError(f"Route diverged before {source['step']}")
+            actor = session["character"]
+            if (rest_at_inn and source["location"] == "inn" and source["step"] != "rest_at_inn"
+                    and actor.get("gold", 0) >= 10
+                    and any(actor[r] < actor[f"max_{r}"] for r in ("hp", "mp", "sp"))):
+                checkpoints.replay_step(session, "rest_at_inn")
+                paid_rests += 1
             if source["step"].startswith("@"):
                 if source["step"] == "@final" and combat._encounter_for_session(
                         session, pack).get("encounter_class") == "boss":
@@ -65,15 +72,15 @@ def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, c
                 battles.append(battle)
                 if not battle["continue"]:
                     return {"completed": False, "failed_at": battle["encounter"],
-                            "boss_arrival": arrival, "battles": battles}
+                            "boss_arrival": arrival, "battles": battles, "paid_rests": paid_rests}
             else:
                 checkpoints.replay_step(session, source["step"])
-    return {"completed": True, "failed_at": None, "boss_arrival": arrival, "battles": battles}
+    return {"completed": True, "failed_at": None, "boss_arrival": arrival, "battles": battles, "paid_rests": paid_rests}
 
 
 def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
                    encounter: str = "dragon_valley_loc", n: int = 500,
-                   seed: int = 20261011, policy: str = "heuristic") -> dict[str, Any]:
+                   seed: int = 20261011, policy: str = "heuristic", rest_at_inn: bool = False) -> dict[str, Any]:
     if n < 1:
         raise ValueError("n must be positive")
     sources = cp["encounters"][encounter]["characters"][character]["sources"]
@@ -85,7 +92,7 @@ def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
     sample = None
     for index in range(n):
         result = trial(pack, sources, encounter, character,
-                       sim.trial_seed(seed, encounter, character, index), policy)
+                       sim.trial_seed(seed, encounter, character, index), policy, rest_at_inn)
         sample = sample or result
         completed += result["completed"]
         if result["failed_at"]:
@@ -98,6 +105,7 @@ def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
             used.setdefault(key, Counter()).update(battle["consumables"])
     items = sorted({k for a in arrivals for k in a["inventory"]})
     return {"character": character, "route": encounter, "policy": policy, "n": n, "seed": seed,
+            "rest_at_inn": rest_at_inn,
             "completion_rate": completed / n, "failure_counts": dict(failures),
             "boss_arrivals": len(arrivals),
             "boss_resources_mean": {**{r: mean(a[r] for a in arrivals) for r in ("hp", "mp", "sp", "level")},
@@ -141,6 +149,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--targets", type=Path, default=sim.TARGETS)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--rest-at-inn", action="store_true", help="Pay 10G to recover when the route visits the inn")
     args = parser.parse_args(argv)
     if args.n < 1 or args.shards < 1 or not 0 <= args.shard < args.shards:
         parser.error("invalid n or shard")
@@ -162,7 +171,7 @@ def main(argv: Optional[list[str]] = None) -> int:
                 continue
             policy = targets.get("route_targets", {}).get("routes", {}).get(endpoint, {}).get("policy", "heuristic")
             rows.append(simulate_route(pack, cp, character, encounter=endpoint, n=args.n, seed=args.seed,
-                                       policy=policy))
+                                       policy=policy, rest_at_inn=args.rest_at_inn))
             print(f"{endpoint} {character}: {rows[-1]['completion_rate']:.3f}", flush=True)
             args.output.write_text(json.dumps({"rows": rows, "fingerprints": fingerprints}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     result = {"rows": rows, "fingerprints": fingerprints}

@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-12-scenario-v2"
+    "content_revision": "2026-10-12-services-v012"
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -610,38 +610,21 @@
       ],
       "choices": [
         {
-          "text": "装備を買う",
-          "preview": "武具や護符を購入する",
+          "id": "open_forge_shop",
+          "text": "店に入る",
+          "preview": "ローベルト鍛冶店",
           "risk": "判定不要",
-          "children": [
-            {
-              "text": "アダマンタイトの鎧を買う（20G）",
-              "preview": "被ダメージを軽減(-3)",
-              "risk": "判定不要",
-              "requirements": {
-                "all": [
-                  {
-                    "attribute": "end",
-                    "gte": 8
-                  }
-                ]
-              }
-            },
-            {
-              "text": "氷の護符を買う（50G）",
-              "preview": "邪竜の弱点を突く",
-              "risk": "判定不要",
-              "requirements": {
-                "all": [
-                  {
-                    "gold_gte": 50
-                  },
-                  {
-                    "lacks_item": "氷の護符"
-                  }
-                ]
-              }
-            }
+          "open_shop": "forge_shop",
+          "intent_keywords": [
+            "店に入る",
+            "買う",
+            "購入",
+            "売却",
+            "装備を買う",
+            "アダマンタイトの鎧を買う",
+            "アダマンタイトの鎧",
+            "氷の護符を買う",
+            "氷の護符"
           ]
         },
         {
@@ -670,90 +653,22 @@
       ],
       "actions": [
         {
-          "id": "buy_equipment",
-          "text": "装備を買う",
-          "preview": "武具や護符を購入する",
+          "id": "open_forge_shop",
+          "text": "店に入る",
+          "preview": "ローベルト鍛冶店",
           "risk": "判定不要",
+          "open_shop": "forge_shop",
           "intent_keywords": [
-            "装備を買う"
-          ],
-          "children": [
-            {
-              "id": "buy_adamantite_armor",
-              "text": "アダマンタイトの鎧を買う（20G）",
-              "preview": "被ダメージを軽減(-3)",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "アダマンタイトの鎧を買う"
-              ],
-              "requirements": {
-                "all": [
-                  {
-                    "attribute": "end",
-                    "gte": 8
-                  },
-                  {
-                    "gold_gte": 20
-                  },
-                  {
-                    "lacks_item": "アダマンタイトの鎧"
-                  }
-                ]
-              },
-              "effects": [
-                {
-                  "gold_change": -20
-                },
-                {
-                  "add_item": {
-                    "name": "アダマンタイトの鎧",
-                    "quantity": 1
-                  }
-                },
-                {
-                  "set_flag": "bought_adamantite_armor"
-                }
-              ],
-              "disabled_after": "bought_adamantite_armor",
-              "portrait_image": "/static/images/npc_blacksmith.png"
-            },
-            {
-              "id": "buy_ice_amulet",
-              "text": "氷の護符を買う（50G）",
-              "preview": "邪竜の弱点を突く",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "氷の護符を買う"
-              ],
-              "requirements": {
-                "all": [
-                  {
-                    "gold_gte": 50
-                  },
-                  {
-                    "lacks_item": "氷の護符"
-                  }
-                ]
-              },
-              "effects": [
-                {
-                  "gold_change": -50
-                },
-                {
-                  "add_item": {
-                    "name": "氷の護符",
-                    "quantity": 1
-                  }
-                },
-                {
-                  "set_flag": "bought_ice_amulet"
-                }
-              ],
-              "disabled_after": "bought_ice_amulet",
-              "portrait_image": "/static/images/npc_blacksmith.png"
-            }
-          ],
-          "portrait_image": "/static/images/npc_blacksmith.png"
+            "店に入る",
+            "買う",
+            "購入",
+            "売却",
+            "装備を買う",
+            "アダマンタイトの鎧を買う",
+            "アダマンタイトの鎧",
+            "氷の護符を買う",
+            "氷の護符"
+          ]
         },
         {
           "id": "ask_blacksmith_weakness",
@@ -1051,6 +966,29 @@
       ],
       "actions": [
         {
+          "id": "rest_at_inn",
+          "text": "宿で休む（10G）",
+          "preview": "温かい食事と寝台で疲れを癒す",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "宿屋で一晩休む",
+            "宿で休む"
+          ],
+          "requirements": {
+            "gold_gte": 10
+          },
+          "effects": [
+            {
+              "gold_change": -10
+            },
+            {
+              "restore_full": true
+            }
+          ],
+          "portrait_image": "/static/images/npc_ian.png",
+          "result_text": "温かいスープと清潔な寝台で、一晩ぐっすりと眠った。体の疲れがすっかり抜けている。"
+        },
+        {
           "id": "ask_ian",
           "text": "イアンと会話する",
           "preview": "宿屋の店主と話す",
@@ -1096,27 +1034,6 @@
               "effects": [
                 {
                   "set_flag": "heard_ian_advice"
-                }
-              ],
-              "portrait_image": "/static/images/npc_ian.png"
-            },
-            {
-              "id": "rest_at_inn",
-              "text": "宿屋で一晩休む（1G）",
-              "preview": "夜まで休む",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "宿屋で一晩休む"
-              ],
-              "requirements": {
-                "gold_gte": 1
-              },
-              "effects": [
-                {
-                  "gold_change": -1
-                },
-                {
-                  "restore_full": true
                 }
               ],
               "portrait_image": "/static/images/npc_ian.png"
@@ -1336,19 +1253,19 @@
           "risk": "判定不要"
         },
         {
-          "text": "道具屋で氷の護符を買う",
-          "preview": "50ゴールドで冷気の護符を入手します",
+          "id": "open_village_shop",
+          "text": "店に入る",
+          "preview": "麓の村の道具屋",
           "risk": "判定不要",
-          "requirements": {
-            "all": [
-              {
-                "gold_gte": 50
-              },
-              {
-                "lacks_item": "氷の護符"
-              }
-            ]
-          }
+          "open_shop": "village_shop",
+          "intent_keywords": [
+            "店に入る",
+            "買う",
+            "購入",
+            "売却",
+            "道具屋で氷の護符を買う",
+            "氷の護符"
+          ]
         },
         {
           "text": "竜の谷へ向かう",
@@ -1389,39 +1306,19 @@
           ]
         },
         {
-          "id": "buy_ice_amulet",
-          "text": "道具屋で氷の護符を買う",
-          "preview": "50ゴールドで冷気の護符を入手します",
+          "id": "open_village_shop",
+          "text": "店に入る",
+          "preview": "麓の村の道具屋",
           "risk": "判定不要",
+          "open_shop": "village_shop",
           "intent_keywords": [
-            "道具屋で氷の護符を買う"
-          ],
-          "effects": [
-            {
-              "gold_change": -50
-            },
-            {
-              "add_item": {
-                "name": "氷の護符",
-                "quantity": 1
-              }
-            },
-            {
-              "set_flag": "bought_ice_amulet"
-            }
-          ],
-          "requirements": {
-            "all": [
-              {
-                "gold_gte": 50
-              },
-              {
-                "lacks_item": "氷の護符"
-              }
-            ]
-          },
-          "disabled_after": "bought_ice_amulet",
-          "portrait_image": "/static/images/npc_blacksmith.png"
+            "店に入る",
+            "買う",
+            "購入",
+            "売却",
+            "道具屋で氷の護符を買う",
+            "氷の護符"
+          ]
         },
         {
           "id": "go_dragon_valley",
@@ -1652,60 +1549,6 @@
         "summary": "青いローブの銀髪の魔法使いが、杖を背に店番をしている。",
         "prepared_turns": [
           {
-            "id": "blue_mage_buy_earth_staff",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "buy_earth_staff",
-            "trigger_keywords": [],
-            "action_id": "buy_earth_staff",
-            "outcome": "neutral",
-            "draft": {
-              "gm_text": "青いローブの魔法使いは40Gを受け取り、大地の杖を手渡した。杖を装備すると、地面を走る魔力の流れと裂地尖刺の術式が意識に刻まれた。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
-          },
-          {
-            "id": "blue_mage_buy_healing_scroll",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "buy_healing_scroll",
-            "trigger_keywords": [],
-            "action_id": "buy_healing_scroll",
-            "outcome": "neutral",
-            "draft": {
-              "gm_text": "青いローブの魔法使いは10Gを受け取り、HPを30回復する治療の巻物を手渡した。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
-          },
-          {
-            "id": "blue_mage_buy_fireball_scroll",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "buy_fireball_scroll",
-            "trigger_keywords": [],
-            "action_id": "buy_fireball_scroll",
-            "outcome": "neutral",
-            "draft": {
-              "gm_text": "青いローブの魔法使いは10Gを受け取り、知力10相当の火球術を封じた巻物を手渡した。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
-          },
-          {
             "id": "blue_mage_rumor_success",
             "purpose": "choice_response",
             "source_choice": "",
@@ -1804,92 +1647,24 @@
       },
       "actions": [
         {
-          "id": "blue_mage_shop",
-          "text": "品物を買う",
-          "preview": "魔法の品を選びます",
+          "id": "open_magic_shop",
+          "text": "店に入る",
+          "preview": "青のローブ魔法店",
           "risk": "判定不要",
+          "open_shop": "magic_shop",
           "intent_keywords": [
-            "品物を買う"
-          ],
-          "children": [
-            {
-              "id": "buy_earth_staff",
-              "text": "大地の杖を買う（40G）",
-              "preview": "裂地尖刺を習得する杖",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "大地の杖を買う（40G）"
-              ],
-              "requirements": {
-                "gold_gte": 40
-              },
-              "once": "bought_earth_staff",
-              "effects": [
-                {
-                  "gold_change": -40
-                },
-                {
-                  "add_item": {
-                    "name": "大地の杖",
-                    "quantity": 1
-                  }
-                },
-                {
-                  "equip_item": "大地の杖"
-                }
-              ],
-              "portrait_image": "/static/images/npc_warlock.png"
-            },
-            {
-              "id": "buy_healing_scroll",
-              "text": "治療の巻物を買う（10G）",
-              "preview": "HPを30回復する消耗品",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "治療の巻物を買う（10G）"
-              ],
-              "requirements": {
-                "gold_gte": 10
-              },
-              "effects": [
-                {
-                  "gold_change": -10
-                },
-                {
-                  "add_item": {
-                    "name": "治療の巻物",
-                    "quantity": 1
-                  }
-                }
-              ],
-              "portrait_image": "/static/images/npc_warlock.png"
-            },
-            {
-              "id": "buy_fireball_scroll",
-              "text": "火球術の巻物を買う（10G）",
-              "preview": "知力10相当の火球を封じた巻物",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "火球術の巻物を買う（10G）"
-              ],
-              "requirements": {
-                "gold_gte": 10
-              },
-              "effects": [
-                {
-                  "gold_change": -10
-                },
-                {
-                  "add_item": {
-                    "name": "火球術の巻物",
-                    "quantity": 1
-                  }
-                }
-              ],
-              "portrait_image": "/static/images/npc_warlock.png"
-            }
-          ],
-          "portrait_image": "/static/images/npc_warlock.png"
+            "店に入る",
+            "買う",
+            "購入",
+            "売却",
+            "品物を買う",
+            "大地の杖を買う（40G）",
+            "大地の杖",
+            "治療の巻物を買う（10G）",
+            "治療の巻物",
+            "火球術の巻物を買う（10G）",
+            "火球術の巻物"
+          ]
         },
         {
           "id": "ask_blue_mage_rumor",
@@ -1991,96 +1766,6 @@
         "summary": "十歳ほどの金髪の少女サラと、小さな火コウモリ竜がいる。",
         "prepared_turns": [
           {
-            "id": "sarah_buy_herb_1",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "buy_sarah_herb_1",
-            "trigger_keywords": [],
-            "action_id": "buy_sarah_herb_1",
-            "outcome": "neutral",
-            "draft": {
-              "gm_text": "サラは10Gを受け取り、在庫から薬草を一つ取り出して手渡した。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
-          },
-          {
-            "id": "sarah_buy_herb_2",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "buy_sarah_herb_2",
-            "trigger_keywords": [],
-            "action_id": "buy_sarah_herb_2",
-            "outcome": "neutral",
-            "draft": {
-              "gm_text": "サラは10Gを受け取り、在庫から薬草を一つ取り出して手渡した。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
-          },
-          {
-            "id": "sarah_buy_herb_3",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "buy_sarah_herb_3",
-            "trigger_keywords": [],
-            "action_id": "buy_sarah_herb_3",
-            "outcome": "neutral",
-            "draft": {
-              "gm_text": "サラは10Gを受け取り、在庫から薬草を一つ取り出して手渡した。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
-          },
-          {
-            "id": "sarah_buy_smoke_bomb",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "buy_smoke_bomb",
-            "trigger_keywords": [],
-            "action_id": "buy_smoke_bomb",
-            "outcome": "neutral",
-            "draft": {
-              "gm_text": "サラは煙幕弾を包み、戦闘から確実に逃げられるがボスには効かないと念を押して手渡した。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
-          },
-          {
-            "id": "sarah_buy_poison_dart",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "buy_poison_dart",
-            "trigger_keywords": [],
-            "action_id": "buy_poison_dart",
-            "outcome": "neutral",
-            "draft": {
-              "gm_text": "サラは毒矢を慎重に包み、命中後は戦闘が終わるまで毒が相手を蝕むと説明した。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
-          },
-          {
             "id": "fire_bat_borrow_success",
             "purpose": "choice_response",
             "source_choice": "",
@@ -2125,214 +1810,32 @@
       },
       "actions": [
         {
-          "id": "sarah_shop",
-          "text": "品物を買う",
-          "preview": "サラの道具を選びます",
+          "id": "open_sarah_shop",
+          "text": "店に入る",
+          "preview": "サラの道具屋",
           "risk": "判定不要",
+          "open_shop": "sarah_shop",
           "intent_keywords": [
-            "品物を買う"
-          ],
-          "children": [
-            {
-              "id": "buy_sarah_herb_1",
-              "text": "薬草を買う（10G・在庫1/3）",
-              "preview": "HPを10回復する薬草",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "薬草を買う（10G・在庫1/3）"
-              ],
-              "requirements": {
-                "gold_gte": 10
-              },
-              "once": "bought_sarah_herb_1",
-              "effects": [
-                {
-                  "gold_change": -10
-                },
-                {
-                  "add_item": {
-                    "id": "herb",
-                    "name": "薬草",
-                    "quantity": 1
-                  }
-                }
-              ],
-              "portrait_image": "/static/images/npc_sarah.png"
-            },
-            {
-              "id": "buy_sarah_herb_2",
-              "text": "薬草を買う（10G・在庫2/3）",
-              "preview": "HPを10回復する薬草",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "薬草を買う（10G・在庫2/3）"
-              ],
-              "requirements": {
-                "gold_gte": 10
-              },
-              "once": "bought_sarah_herb_2",
-              "effects": [
-                {
-                  "gold_change": -10
-                },
-                {
-                  "add_item": {
-                    "id": "herb",
-                    "name": "薬草",
-                    "quantity": 1
-                  }
-                }
-              ],
-              "portrait_image": "/static/images/npc_sarah.png"
-            },
-            {
-              "id": "buy_sarah_herb_3",
-              "text": "薬草を買う（10G・在庫3/3）",
-              "preview": "HPを10回復する薬草",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "薬草を買う（10G・在庫3/3）"
-              ],
-              "requirements": {
-                "gold_gte": 10
-              },
-              "once": "bought_sarah_herb_3",
-              "effects": [
-                {
-                  "gold_change": -10
-                },
-                {
-                  "add_item": {
-                    "id": "herb",
-                    "name": "薬草",
-                    "quantity": 1
-                  }
-                }
-              ],
-              "portrait_image": "/static/images/npc_sarah.png"
-            },
-            {
-              "id": "buy_smoke_bomb",
-              "text": "煙幕弾を買う（15G）",
-              "preview": "ボス以外から確実に逃走",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "煙幕弾を買う（15G）"
-              ],
-              "requirements": {
-                "gold_gte": 15
-              },
-              "effects": [
-                {
-                  "gold_change": -15
-                },
-                {
-                  "add_item": {
-                    "name": "煙幕弾",
-                    "quantity": 1
-                  }
-                }
-              ],
-              "portrait_image": "/static/images/npc_sarah.png"
-            },
-            {
-              "id": "buy_poison_dart",
-              "text": "毒矢を買う（12G）",
-              "preview": "1ダメージと継続毒",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "毒矢を買う（12G）"
-              ],
-              "requirements": {
-                "gold_gte": 12
-              },
-              "effects": [
-                {
-                  "gold_change": -12
-                },
-                {
-                  "add_item": {
-                    "name": "毒矢",
-                    "quantity": 1
-                  }
-                }
-              ],
-              "portrait_image": "/static/images/npc_sarah.png"
-            },
-            {
-              "id": "buy_sarah_holy_water",
-              "text": "聖水を買う（15G）",
-              "preview": "聖水を買う（15G）",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "聖水を買う（15G）"
-              ],
-              "effects": [
-                {
-                  "gold_change": -15
-                },
-                {
-                  "add_item": {
-                    "id": "holy_water",
-                    "name": "聖水",
-                    "quantity": 1
-                  }
-                }
-              ],
-              "requirements": {
-                "gold_gte": 15
-              }
-            },
-            {
-              "id": "buy_sarah_ice_charm",
-              "text": "氷の護符を買う（80G）",
-              "preview": "氷の護符を買う（80G）",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "氷の護符を買う（80G）"
-              ],
-              "effects": [
-                {
-                  "gold_change": -80
-                },
-                {
-                  "add_item": {
-                    "id": "ice_charm",
-                    "name": "氷の護符",
-                    "quantity": 1
-                  }
-                }
-              ],
-              "requirements": {
-                "gold_gte": 80
-              }
-            },
-            {
-              "id": "buy_sarah_fireball_scroll",
-              "text": "火球術の巻物を買う（40G）",
-              "preview": "火球術の巻物を買う（40G）",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "火球術の巻物を買う（40G）"
-              ],
-              "effects": [
-                {
-                  "gold_change": -40
-                },
-                {
-                  "add_item": {
-                    "id": "fireball_scroll",
-                    "name": "火球術の巻物",
-                    "quantity": 1
-                  }
-                }
-              ],
-              "requirements": {
-                "gold_gte": 40
-              }
-            }
-          ],
-          "portrait_image": "/static/images/npc_sarah.png"
+            "店に入る",
+            "買う",
+            "購入",
+            "売却",
+            "品物を買う",
+            "薬草を買う（10G・在庫1/3）",
+            "薬草",
+            "薬草を買う（10G・在庫2/3）",
+            "薬草を買う（10G・在庫3/3）",
+            "煙幕弾を買う（15G）",
+            "煙幕弾",
+            "毒矢を買う（12G）",
+            "毒矢",
+            "聖水を買う（15G）",
+            "聖水",
+            "氷の護符を買う（80G）",
+            "氷の護符",
+            "火球術の巻物を買う（40G）",
+            "火球術の巻物"
+          ]
         },
         {
           "id": "borrow_fire_bat_dragon",
@@ -6414,6 +5917,9 @@
             },
             {
               "start_combat": true
+            },
+            {
+              "set_flag": "reported_to_king"
             }
           ],
           "requirements": {
@@ -6451,6 +5957,9 @@
                 "ending": "ignis_defeated",
                 "reason": "邪竜イグニスは討たれ、王国に平和が戻った。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。"
               }
+            },
+            {
+              "set_flag": "reported_to_king"
             }
           ]
         }
@@ -6722,7 +6231,8 @@
         "鉄の剣",
         "剣",
         "武器"
-      ]
+      ],
+      "category": "equipment"
     },
     {
       "id": "herb",
@@ -6737,7 +6247,8 @@
       "keywords": [
         "薬草",
         "回復"
-      ]
+      ],
+      "category": "consumable"
     },
     {
       "id": "magic_scroll",
@@ -6756,7 +6267,8 @@
         "巻物",
         "攻撃魔法"
       ],
-      "rare": true
+      "rare": true,
+      "category": "consumable"
     },
     {
       "id": "mp_potion",
@@ -6773,7 +6285,8 @@
         "MP回復薬",
         "魔力",
         "回復薬"
-      ]
+      ],
+      "category": "consumable"
     },
     {
       "id": "ice_charm",
@@ -6791,7 +6304,8 @@
         "氷の護符",
         "護符",
         "冷気"
-      ]
+      ],
+      "category": "equipment"
     },
     {
       "id": "adamantite_armor",
@@ -6806,7 +6320,8 @@
         "アダマンタイト",
         "鎧",
         "防具"
-      ]
+      ],
+      "category": "equipment"
     },
     {
       "id": "ice_iron_greatsword",
@@ -6825,7 +6340,8 @@
         "大剣",
         "氷属性",
         "武器"
-      ]
+      ],
+      "category": "equipment"
     },
     {
       "id": "ice_katana",
@@ -6844,7 +6360,8 @@
         "武器",
         "氷属性",
         "自動攻撃"
-      ]
+      ],
+      "category": "equipment"
     },
     {
       "id": "earth_staff",
@@ -6870,7 +6387,8 @@
             "cost_type": "mp"
           }
         ]
-      }
+      },
+      "category": "equipment"
     },
     {
       "id": "healing_scroll",
@@ -6881,7 +6399,8 @@
         "healing": "30",
         "consumable": true
       },
-      "rare": true
+      "rare": true,
+      "category": "consumable"
     },
     {
       "id": "fireball_scroll",
@@ -6894,7 +6413,8 @@
         "element": "fire",
         "consumable": true
       },
-      "rare": true
+      "rare": true,
+      "category": "consumable"
     },
     {
       "id": "smoke_bomb",
@@ -6903,7 +6423,8 @@
       "combat": {
         "kind": "flee",
         "consumable": true
-      }
+      },
+      "category": "consumable"
     },
     {
       "id": "poison_dart",
@@ -6921,7 +6442,8 @@
           "damage": "4",
           "stackable": false
         }
-      }
+      },
+      "category": "consumable"
     },
     {
       "id": "cursed_holy_sword",
@@ -6935,7 +6457,8 @@
         "accuracy": 90,
         "element": "cursed",
         "self_damage": 1
-      }
+      },
+      "category": "equipment"
     },
     {
       "id": "cursed_holy_staff",
@@ -6951,7 +6474,8 @@
         "healing_multiplier": 2,
         "skill_healing_bonus": 10,
         "healing_harms_humans": true
-      }
+      },
+      "category": "equipment"
     },
     {
       "id": "cursed_crystal_ball",
@@ -6986,7 +6510,8 @@
             }
           }
         ]
-      }
+      },
+      "category": "equipment"
     },
     {
       "id": "dark_crystal_ball",
@@ -7021,7 +6546,8 @@
             }
           }
         ]
-      }
+      },
+      "category": "equipment"
     },
     {
       "id": "cursed_dagger",
@@ -7039,7 +6565,8 @@
           "damage": "3",
           "stackable": true
         }
-      }
+      },
+      "category": "equipment"
     },
     {
       "id": "rusted_crown",
@@ -7054,7 +6581,8 @@
         "kind": "shrink",
         "chance": 2,
         "consumable": false
-      }
+      },
+      "category": "equipment"
     },
     {
       "id": "fire_seed",
@@ -7069,7 +6597,9 @@
           "ice": 2.0,
           "water": 2.0
         }
-      }
+      },
+      "category": "key",
+      "key_item": true
     },
     {
       "id": "activated_ice_charm",
@@ -7089,7 +6619,8 @@
           "accuracy": 100,
           "element": "ice"
         }
-      }
+      },
+      "category": "equipment"
     },
     {
       "id": "trail_ration",
@@ -7110,19 +6641,23 @@
         "element": "holy",
         "consumable": true
       },
-      "rare": true
+      "rare": true,
+      "category": "consumable"
     },
     {
       "id": "white_dragon_scale",
       "name": "白い竜鱗",
       "description": "雪のように白い竜の鱗。触れると指先が凍える。",
-      "effect": "証拠品（戦闘では使えない）"
+      "effect": "証拠品（戦闘では使えない）",
+      "category": "key",
+      "key_item": true
     },
     {
       "id": "ice_crystal",
       "name": "氷の結晶",
       "description": "溶けることのない氷のかけら。",
-      "effect": "鍛冶屋で氷の護符に加工できる"
+      "effect": "鍛冶屋で氷の護符に加工できる",
+      "category": "material"
     },
     {
       "id": "red_dragon_core",
@@ -7136,7 +6671,9 @@
         "element": "fire",
         "consumable": true
       },
-      "rare": true
+      "rare": true,
+      "category": "key",
+      "key_item": true
     }
   ],
   "clues": [
@@ -8794,6 +8331,246 @@
           }
         }
       }
+    }
+  ],
+  "quests": [
+    {
+      "id": "main_ignis",
+      "kind": "main",
+      "title": "紅き邪竜の討伐",
+      "description": "国王エドワードから、王国を脅かす邪竜イグニスの討伐を依頼された。",
+      "start_flag": "",
+      "stages": [
+        {
+          "text": "闇の森を抜け、麓の村へ向かう",
+          "done_flag": "reached_village"
+        },
+        {
+          "text": "竜の谷へ向かう",
+          "done_flag": "entered_dragon_valley"
+        },
+        {
+          "text": "邪竜イグニスを倒す",
+          "done_flag": "defeated_ignis"
+        },
+        {
+          "text": "王城へ戻り、国王に報告する",
+          "done_flag": "reported_to_king"
+        }
+      ],
+      "complete_flags": [
+        "reported_to_king"
+      ],
+      "fail_flags": []
+    },
+    {
+      "id": "side_lost_goblin",
+      "kind": "side",
+      "title": "迷子のゴブリンの箱",
+      "description": "別の一族に盗まれた箱を取り戻してほしいと、迷子のゴブリンに頼まれた。",
+      "start_flag": "lost_goblin_quest",
+      "stages": [
+        {
+          "text": "ゴブリン砦の最上階へたどり着く",
+          "done_flag": "cleared_goblin_fort"
+        },
+        {
+          "text": "箱を持ち主に返す",
+          "done_flag": "returned_lost_goblin_box"
+        }
+      ],
+      "complete_flags": [
+        "returned_lost_goblin_box"
+      ],
+      "fail_flags": [
+        "betrayed_lost_goblin"
+      ]
+    },
+    {
+      "id": "side_robin",
+      "kind": "side",
+      "title": "義賊ロビンの依頼",
+      "description": "ロビンと共に、ゴブリン砦の財宝を取り戻す。",
+      "start_flag": "accepted_robin_goblin_quest",
+      "stages": [
+        {
+          "text": "ゴブリン砦を攻略する",
+          "done_flag": "cleared_goblin_fort"
+        }
+      ],
+      "complete_flags": [
+        "cleared_goblin_fort"
+      ],
+      "fail_flags": []
+    },
+    {
+      "id": "side_ian",
+      "kind": "side",
+      "title": "砕けた氷の太刀",
+      "description": "イアンから、氷の太刀を砕いた元凶を追ってほしいと頼まれた。",
+      "start_flag": "accepted_ian_request",
+      "stages": [
+        {
+          "text": "元凶の手がかりを探す",
+          "done_flag": "draco_revealed"
+        }
+      ],
+      "complete_flags": [
+        "draco_revealed"
+      ],
+      "fail_flags": []
+    },
+    {
+      "id": "mystery_frost",
+      "kind": "mystery",
+      "title": "凍てつく謎",
+      "description": "炎に包まれた村に、不自然な氷が残されていた。誰の仕業だろうか。",
+      "start_flag": [
+        "frost_trace_seen",
+        "heard_ignis_last_words",
+        "noticed_general_frost"
+      ],
+      "stages": [
+        {
+          "text": "白い氷の手がかりを集める",
+          "done_flag": "draco_revealed"
+        }
+      ],
+      "complete_flags": [
+        "draco_revealed"
+      ],
+      "fail_flags": [],
+      "clue_flags": [
+        "frost_trace_seen",
+        "heard_human_caused_dragon_return",
+        "heard_ignis_last_words",
+        "noticed_general_frost",
+        "heard_treaty_lore"
+      ],
+      "clue_item": "white_dragon_scale"
+    }
+  ],
+  "shops": [
+    {
+      "id": "sarah_shop",
+      "location_id": "item_shop",
+      "keeper_npc": "sarah",
+      "title": "サラの道具屋",
+      "greeting": "いらっしゃいませ！今日は何をお探しですか？",
+      "buy_line": "ありがとう！大事に使ってね。",
+      "sell_line": "わあ、いいの？ちゃんと買い取るね。",
+      "poor_line": "うーん、お金が足りないみたい……。",
+      "items": [
+        {
+          "item_id": "herb",
+          "price": 10,
+          "stock": 3
+        },
+        {
+          "item_id": "smoke_bomb",
+          "price": 15,
+          "stock": null
+        },
+        {
+          "item_id": "poison_dart",
+          "price": 12,
+          "stock": null
+        },
+        {
+          "item_id": "holy_water",
+          "price": 15,
+          "stock": null
+        },
+        {
+          "item_id": "ice_charm",
+          "price": 80,
+          "stock": null
+        },
+        {
+          "item_id": "fireball_scroll",
+          "price": 40,
+          "stock": null
+        }
+      ],
+      "buys": true
+    },
+    {
+      "id": "magic_shop",
+      "location_id": "magic_shop",
+      "keeper_npc": "blue_robed_mage",
+      "title": "青のローブ魔法店",
+      "greeting": "……魔道具なら一通り揃っている。",
+      "buy_line": "扱いには気をつけてくれ。",
+      "sell_line": "悪くない品だ。引き取ろう。",
+      "poor_line": "代金が足りないようだ。",
+      "items": [
+        {
+          "item_id": "earth_staff",
+          "price": 40,
+          "stock": 1,
+          "equip_on_buy": true
+        },
+        {
+          "item_id": "healing_scroll",
+          "price": 10,
+          "stock": null
+        },
+        {
+          "item_id": "fireball_scroll",
+          "price": 10,
+          "stock": null
+        }
+      ],
+      "buys": true
+    },
+    {
+      "id": "forge_shop",
+      "location_id": "forge",
+      "keeper_npc": "blacksmith",
+      "title": "ローベルト鍛冶店",
+      "greeting": "……用件は。",
+      "buy_line": "手入れは怠るな。",
+      "sell_line": "……預かろう。",
+      "poor_line": "金が足りん。",
+      "items": [
+        {
+          "item_id": "adamantite_armor",
+          "price": 20,
+          "stock": 1,
+          "requirements": {
+            "all": [
+              {
+                "attribute": "end",
+                "gte": 8
+              }
+            ]
+          }
+        },
+        {
+          "item_id": "ice_charm",
+          "price": 50,
+          "stock": 1
+        }
+      ],
+      "buys": true
+    },
+    {
+      "id": "village_shop",
+      "location_id": "village",
+      "keeper_npc": "shopkeeper",
+      "title": "麓の村の道具屋",
+      "greeting": "こんな時でも店は開けてるよ。気をつけてな。",
+      "buy_line": "無事を祈ってるよ。",
+      "sell_line": "助かるよ、引き取ろう。",
+      "poor_line": "すまんが、それじゃ足りないな。",
+      "items": [
+        {
+          "item_id": "ice_charm",
+          "price": 50,
+          "stock": 1
+        }
+      ],
+      "buys": true
     }
   ]
 }

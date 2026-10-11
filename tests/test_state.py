@@ -2001,11 +2001,8 @@ class StateTests(unittest.TestCase):
 
     def test_dragon_rpg_action_groups_and_story_once_flags(self):
         expected_groups = {
-            "forge": {
-                "buy_equipment": ["buy_adamantite_armor", "buy_ice_amulet"],
-            },
             "inn": {
-                "ask_ian": ["ask_ian_legend", "ask_ian_advice", "rest_at_inn", "ask_ian_dragon_tale"],
+                "ask_ian": ["ask_ian_legend", "ask_ian_advice", "ask_ian_dragon_tale"],
                 "ask_robin": ["invite_robin", "ask_robin_rumor", "ask_robin_stolen_scale"],
             },
         }
@@ -2050,13 +2047,10 @@ class StateTests(unittest.TestCase):
                 show_sword = all_actions["show_sword_to_blacksmith"]
                 self.assertEqual(show_sword.get("requirements"), {"character_id": "hero"})
 
-                buy_armor = all_actions["buy_adamantite_armor"]
-                self.assertEqual(buy_armor.get("disabled_after"), "bought_adamantite_armor")
-                self.assertIn({"gold_change": -20}, buy_armor.get("effects", []))
-                self.assertIn(
-                    {"add_item": {"name": "アダマンタイトの鎧", "quantity": 1}},
-                    buy_armor.get("effects", []),
-                )
+                shop = next(shop for shop in pack["shops"] if shop["id"] == "forge_shop")
+                armor = next(item for item in shop["items"] if item["item_id"] == "adamantite_armor")
+                self.assertEqual((armor["price"], armor["stock"]), (20, 1))
+                self.assertEqual(all_actions["open_forge_shop"]["open_shop"], "forge_shop")
 
     def test_dragon_rpg_robin_quest_has_an_executable_route_to_goblin_fort(self):
         for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
@@ -2200,9 +2194,9 @@ class StateTests(unittest.TestCase):
         self.assertTrue(accepted, reason)
 
         self.assertIsNone(state.resolve_action(session, action_id="buy_equipment"))
-        self.assertIsNone(state.resolve_action(session, action_text="装備を買う"))
-        self.assertIsNotNone(state.resolve_action(session, action_id="buy_adamantite_armor"))
-        self.assertIsNotNone(state.resolve_action(session, action_id="buy_ice_amulet"))
+        self.assertEqual(state.resolve_action(session, action_id="open_forge_shop")["open_shop"], "forge_shop")
+        self.assertIsNone(state.resolve_action(session, action_id="buy_adamantite_armor"))
+        self.assertIsNone(state.resolve_action(session, action_id="buy_ice_amulet"))
 
     def test_dragon_rpg_forge_purchase_and_hero_choice_runtime(self):
         path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg_hybrid.json"
@@ -2219,10 +2213,7 @@ class StateTests(unittest.TestCase):
             for choice in state.public_session(session)["choices"]
         }
         self.assertTrue(public_choices["show_sword_to_blacksmith"]["enabled"])
-        self.assertEqual(
-            [child.get("action_id") for child in public_choices["buy_equipment"]["children"]],
-            ["buy_adamantite_armor", "buy_ice_amulet"],
-        )
+        self.assertEqual(public_choices["open_forge_shop"]["open_shop"], "forge_shop")
         self.assertNotIn("accept_sword_fusion", public_choices)
         before_show_context = state.select_hybrid_context(session, include_debug=True)
         self.assertNotIn(
@@ -2271,9 +2262,8 @@ class StateTests(unittest.TestCase):
         self.assertNotIn("鉄の剣", inventory_names)
         self.assertIn("氷鉄の大剣", inventory_names)
 
-        action = state.resolve_action(session, action_id="buy_adamantite_armor")
-        roll = state.roll_dice(session, *state.action_dice_settings(action), client_rolls=[10])
-        state.apply_action_result(session, action, roll)
+        from host.shops import trade
+        trade(session, "forge_shop", "adamantite_armor", 1)
         self.assertEqual(session["character"]["gold"], 30)
         self.assertTrue(
             any(item.get("name") == "アダマンタイトの鎧" for item in session["character"]["inventory"])

@@ -6,6 +6,138 @@
   "required": ["meta", "scenes"],
   "additionalProperties": true,
   "properties": {
+    "quests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "description",
+          "kind",
+          "stages"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "main",
+              "side",
+              "mystery"
+            ]
+          },
+          "start_flag": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "text",
+                "done_flag"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "done_flag": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "complete_flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fail_flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "shops": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "location_id",
+          "keeper_npc",
+          "title",
+          "items",
+          "buys"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "location_id": {
+            "type": "string"
+          },
+          "keeper_npc": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "buys": {
+            "type": "boolean"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "item_id",
+                "price",
+                "stock"
+              ],
+              "properties": {
+                "item_id": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "stock": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "meta": {
       "type": "object",
       "required": ["title", "initial_scene"],
@@ -181,7 +313,15 @@
     },
     "items": {
       "type": "array",
-      "items": { "$ref": "#/$defs/record" }
+      "items": {
+        "allOf": [
+          { "$ref": "#/$defs/record" },
+          { "properties": {
+            "category": { "enum": ["consumable", "equipment", "material", "key"] },
+            "key_item": { "type": "boolean" }
+          } }
+        ]
+      }
     },
     "clues": {
       "type": "array",
@@ -470,6 +610,8 @@
       "required": ["id", "text"],
       "additionalProperties": true,
       "properties": {
+        "open_shop": { "type": "string" },
+        "result_text": { "type": "string" },
         "id": { "type": "string" },
         "text": { "type": "string" },
         "preview": { "type": "string" },

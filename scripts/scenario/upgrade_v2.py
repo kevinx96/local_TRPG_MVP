@@ -15,6 +15,9 @@ def actions(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def upgrade(pack: dict[str, Any]) -> None:
+    if pack.get("shops") and pack.get("quests"):
+        # Spec 012 supersedes the old purchase actions and report effects.
+        return
     locations = {l["id"]: l for l in pack["locations"]}
     items = {i["id"]: i for i in pack["items"]}
     for identifier, name, description, effect in [

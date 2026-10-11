@@ -11,7 +11,7 @@ from typing import Any, Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, conint
 
 from .combat import (
     CombatError,
@@ -26,6 +26,7 @@ from .combat import (
 from .gm_contract import STATE_MARKER, build_gm_contract_prompt, build_opening_prompt, split_visible_and_json
 from .llm_client import LLMClientError, chat_completion, debug_log
 from . import llm_trace
+from .shops import ShopError, public_shop, trade, use_item
 from .free_actions import InvalidPlan, adjudicate, build_plan_messages, parse_plan, planner_config
 from .scenario_context import (
     fallback_choices_for_session,
@@ -106,6 +107,61 @@ class CombatActionRequest(BaseModel):
     action_type: str
     action_id: str = ""
     target_id: str = ""
+
+
+class ItemUseRequest(BaseModel):
+    item_id: str
+
+
+class ShopTradeRequest(ItemUseRequest):
+    quantity: conint(strict=True, gt=0)
+
+
+@app.post("/api/sessions/{session_id}/items/use")
+def api_use_item(session_id: str, request: ItemUseRequest) -> dict[str, Any]:
+    try:
+        session = load_session(session_id)
+        message = use_item(session, request.item_id)
+        save_session(session)
+        return {"session": public_session(session), "message": message}
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ShopError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.get("/api/sessions/{session_id}/shops/{shop_id}")
+def api_get_shop(session_id: str, shop_id: str) -> dict[str, Any]:
+    try:
+        return public_shop(load_session(session_id), shop_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ShopError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+def _shop_trade(session_id: str, shop_id: str, request: ShopTradeRequest, *, selling: bool) -> dict[str, Any]:
+    try:
+        session = load_session(session_id)
+        trade(session, shop_id, request.item_id, request.quantity, selling=selling)
+        shop = public_shop(session, shop_id)
+        save_session(session)
+        return {"session": public_session(session), "shop": shop,
+                "message": shop["sell_line" if selling else "buy_line"]}
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ShopError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.post("/api/sessions/{session_id}/shops/{shop_id}/buy")
+def api_buy(session_id: str, shop_id: str, request: ShopTradeRequest) -> dict[str, Any]:
+    return _shop_trade(session_id, shop_id, request, selling=False)
+
+
+@app.post("/api/sessions/{session_id}/shops/{shop_id}/sell")
+def api_sell(session_id: str, shop_id: str, request: ShopTradeRequest) -> dict[str, Any]:
+    return _shop_trade(session_id, shop_id, request, selling=True)
 
 
 @app.get("/")
@@ -561,6 +617,13 @@ def _run_turn(session: dict[str, Any], request: TurnRequest, *, allow_narration:
         except ValueError as exc:
             raise HTTPException(status_code=422, detail="この行動の判定設定に不備があるため実行できません。") from exc
     action_result = apply_action_result(session, resolved_action, latest_roll) if resolved_action else {}
+
+    if action_result.get("open_shop") or (resolved_action or {}).get("result_text"):
+        if (resolved_action or {}).get("result_text"):
+            add_assistant_message(session, resolved_action["result_text"])
+            session["last_turn_narrated"] = True
+        save_session(session)
+        return public_session(session)
 
     prepared_combat_intro = _prepared_combat_intro(session, action_text)
     if prepared_combat_intro and ensure_combat_started(session, intro_text=prepared_combat_intro):

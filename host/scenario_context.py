@@ -124,6 +124,8 @@ def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) ->
         pack["characters"] = []
     pack["companions"] = _normalize_records(raw.get("companions"))
     pack["milestones"] = _normalize_records(raw.get("milestones"))
+    pack["quests"] = _normalize_records(raw.get("quests"))
+    pack["shops"] = _normalize_records(raw.get("shops"))
     return pack
 
 

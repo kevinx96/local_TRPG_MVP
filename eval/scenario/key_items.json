@@ -84,7 +84,7 @@
         {
           "id": "village_shop",
           "location": "village",
-          "step": "buy_ice_amulet",
+          "step": "shop:village_shop:ice_charm",
           "type": "purchase",
           "reward": {
             "item": "ice_charm",
@@ -110,7 +110,7 @@
               "@victory",
               "@victory",
               "visit_village",
-              "buy_ice_amulet",
+              "shop:village_shop:ice_charm",
               "go_dragon_valley",
               "@victory",
               "return_to_castle_report"
@@ -138,7 +138,7 @@
               "@victory",
               "@victory",
               "visit_village",
-              "buy_ice_amulet",
+              "shop:village_shop:ice_charm",
               "go_dragon_valley",
               "@victory",
               "return_to_castle_report"
@@ -282,7 +282,7 @@
         {
           "id": "sarah",
           "location": "item_shop",
-          "step": "buy_sarah_ice_charm",
+          "step": "shop:sarah_shop:ice_charm",
           "type": "purchase",
           "reward": {
             "item": "ice_charm"
@@ -309,7 +309,7 @@
               "visit_village",
               "return_castle_from_village",
               "go_item_shop",
-              "buy_sarah_ice_charm",
+              "shop:sarah_shop:ice_charm",
               "return_castle_from_item_shop",
               "return_village",
               "go_dragon_valley",
@@ -341,7 +341,7 @@
               "visit_village",
               "return_castle_from_village",
               "go_item_shop",
-              "buy_sarah_ice_charm",
+              "shop:sarah_shop:ice_charm",
               "return_castle_from_item_shop",
               "return_village",
               "go_dragon_valley",
@@ -626,7 +626,7 @@
         {
           "id": "sarah",
           "location": "item_shop",
-          "step": "buy_sarah_holy_water",
+          "step": "shop:sarah_shop:holy_water",
           "type": "purchase",
           "reward": {
             "item": "holy_water"
@@ -647,7 +647,7 @@
               "return_inn_after_forest",
               "return_castle_from_inn",
               "go_item_shop",
-              "buy_sarah_holy_water",
+              "shop:sarah_shop:holy_water",
               "return_castle_from_item_shop",
               "go_inn",
               "return_forest_exit",
@@ -680,7 +680,7 @@
               "return_inn_after_forest",
               "return_castle_from_inn",
               "go_item_shop",
-              "buy_sarah_holy_water",
+              "shop:sarah_shop:holy_water",
               "return_castle_from_item_shop",
               "go_inn",
               "return_forest_exit",
@@ -1592,7 +1592,7 @@
         {
           "id": "sarah",
           "location": "item_shop",
-          "step": "buy_sarah_fireball_scroll",
+          "step": "shop:sarah_shop:fireball_scroll",
           "type": "purchase",
           "reward": {
             "item": "fireball_scroll"
@@ -1613,7 +1613,7 @@
               "return_inn_after_forest",
               "return_castle_from_inn",
               "go_item_shop",
-              "buy_sarah_fireball_scroll",
+              "shop:sarah_shop:fireball_scroll",
               "return_castle_from_item_shop",
               "go_inn",
               "return_forest_exit",
@@ -1646,7 +1646,7 @@
               "return_inn_after_forest",
               "return_castle_from_inn",
               "go_item_shop",
-              "buy_sarah_fireball_scroll",
+              "shop:sarah_shop:fireball_scroll",
               "return_castle_from_item_shop",
               "go_inn",
               "return_forest_exit",
