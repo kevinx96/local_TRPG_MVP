@@ -1,0 +1,420 @@
+{
+  "run_id": "2026-10-11T081519759570Z-intent-gemini-gemini-3.1-flash-lite-default",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "default",
+  "split": "all",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\candidates\\intent_v1.jsonl",
+  "cases_sha256": "e2e8bb7e0c6cc6dce18fc066d6ad5c57aa13c3e771f7a523198e5b308f88993d",
+  "metrics": {
+    "total": 490,
+    "evaluated": 490,
+    "statuses": {
+      "ok": 482,
+      "invalid_plan": 8
+    },
+    "exact": 0.7877551020408163,
+    "kind": 0.8020408163265306,
+    "kind_relaxed": 0.8571428571428571,
+    "field_kind": 0.8020408163265306,
+    "field_action_id": 0.9714285714285714,
+    "field_operation": 0.8530612244897959,
+    "field_target_id": 0.8367346938775511,
+    "field_item_id": 0.9102040816326531,
+    "field_advance": 0.9653061224489796,
+    "confusion_matrix": {
+      "clarify": {
+        "interact": 35,
+        "clarify": 21,
+        "existing": 6,
+        "invalid": 1,
+        "unsupported": 13,
+        "dialogue": 2
+      },
+      "clarify|dialogue": {
+        "interact": 15,
+        "dialogue": 6,
+        "invalid": 2,
+        "clarify": 1
+      },
+      "dialogue": {
+        "dialogue": 78,
+        "interact": 11,
+        "clarify": 3
+      },
+      "dialogue|unsupported": {
+        "unsupported": 18,
+        "dialogue": 4,
+        "interact": 2
+      },
+      "existing": {
+        "existing": 50,
+        "invalid": 5
+      },
+      "interact": {
+        "interact": 168
+      },
+      "unsupported": {
+        "unsupported": 47,
+        "interact": 1,
+        "clarify": 1
+      }
+    },
+    "by_tag": {
+      "ambiguous_target": {
+        "count": 24,
+        "exact": 0.4166666666666667,
+        "kind": 0.4166666666666667,
+        "kind_relaxed": 0.4166666666666667
+      },
+      "chitchat": {
+        "count": 24,
+        "exact": 0.7916666666666666,
+        "kind": 0.7916666666666666,
+        "kind_relaxed": 0.7916666666666666
+      },
+      "colloquial": {
+        "count": 24,
+        "exact": 0.9166666666666666,
+        "kind": 0.9166666666666666,
+        "kind_relaxed": 0.9166666666666666
+      },
+      "conditional": {
+        "count": 25,
+        "exact": 0.28,
+        "kind": 0.28,
+        "kind_relaxed": 0.88
+      },
+      "declared_success": {
+        "count": 25,
+        "exact": 0.92,
+        "kind": 0.92,
+        "kind_relaxed": 0.92
+      },
+      "dialogue": {
+        "count": 24,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1
+      },
+      "existing_exact": {
+        "count": 24,
+        "exact": 0.9583333333333334,
+        "kind": 0.9583333333333334,
+        "kind_relaxed": 0.9583333333333334
+      },
+      "existing_paraphrase": {
+        "count": 25,
+        "exact": 0.84,
+        "kind": 0.84,
+        "kind_relaxed": 0.84
+      },
+      "impossible": {
+        "count": 24,
+        "exact": 0.9166666666666666,
+        "kind": 0.9166666666666666,
+        "kind_relaxed": 0.9166666666666666
+      },
+      "injection": {
+        "count": 24,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1
+      },
+      "interact_distract": {
+        "count": 26,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1
+      },
+      "interact_observe": {
+        "count": 25,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1
+      },
+      "interact_prepare": {
+        "count": 25,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1
+      },
+      "interact_sneak": {
+        "count": 25,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1
+      },
+      "interact_use_item": {
+        "count": 25,
+        "exact": 0.72,
+        "kind": 1,
+        "kind_relaxed": 1
+      },
+      "language_mix": {
+        "count": 49,
+        "exact": 0.9591836734693877,
+        "kind": 0.9591836734693877,
+        "kind_relaxed": 0.9591836734693877
+      },
+      "legacy": {
+        "count": 10,
+        "exact": 0.8,
+        "kind": 0.9,
+        "kind_relaxed": 0.9
+      },
+      "missing_item": {
+        "count": 24,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0.4583333333333333
+      },
+      "multi_action": {
+        "count": 24,
+        "exact": 0.20833333333333334,
+        "kind": 0.20833333333333334,
+        "kind_relaxed": 0.20833333333333334
+      },
+      "negation": {
+        "count": 25,
+        "exact": 0.84,
+        "kind": 0.84,
+        "kind_relaxed": 0.88
+      }
+    },
+    "negation": {
+      "count": 25,
+      "preserved": 1.0,
+      "kind": 0.84
+    },
+    "injection": {
+      "count": 24,
+      "immune": 1.0,
+      "kind": 1.0
+    },
+    "declared_success": {
+      "count": 25,
+      "immune": 0.92,
+      "kind": 0.92
+    },
+    "clarify": {
+      "precision": 0.8461538461538461,
+      "recall": 0.21568627450980393
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.0163265306122449,
+    "latency_ms": {
+      "p50": 1615.635,
+      "p95": 3419.5859999999993
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 719.4714285714285,
+        "reported": 490
+      },
+      "output_tokens": {
+        "mean": 82.18571428571428,
+        "reported": 490
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": null,
+    "top_errors": [
+      {
+        "tag": "missing_item",
+        "errors": 24,
+        "examples": [
+          {
+            "id": "missing_item-001",
+            "input": "薬草で自分の傷を治したい。",
+            "raw_response": "{\n  \"kind\": \"unsupported\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"reply\": \"申し訳ありませんが、現在所持品の中に「薬草」は見当たりません。持ち物を確認するか、別の方法を検討してください。\"\n}",
+            "plan": {
+              "kind": "unsupported",
+              "action_id": "",
+              "operation": "",
+              "target_id": "",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "申し訳ありませんが、現在所持品の中に「薬草」は見当たりません。持ち物を確認するか、別の方法を検討してください。"
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "missing_item-002",
+            "input": "携帯食でスライムを誘いたい。",
+            "raw_response": "{\n  \"kind\": \"interact\",\n  \"action_id\": \"\",\n  \"operation\": \"distract\",\n  \"target_id\": \"forest_slime\",\n  \"item_id\": \"携帯食\",\n  \"advance\": false,\n  \"approach\": \"携帯食をスライムの注意を引くために投げ、道から誘導する。\",\n  \"reply\": \"\"\n}",
+            "plan": {
+              "kind": "interact",
+              "action_id": "",
+              "operation": "distract",
+              "target_id": "forest_slime",
+              "item_id": "携帯食",
+              "advance": false,
+              "approach": "携帯食をスライムの注意を引くために投げ、道から誘導する。",
+              "reply": ""
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "multi_action",
+        "errors": 19,
+        "examples": [
+          {
+            "id": "multi_action-001",
+            "input": "薬草で回復してからスライムを攻撃する。",
+            "raw_response": "{\"kind\": \"interact\", \"action_id\": \"\", \"operation\": \"use_item\", \"target_id\": \"hero\", \"item_id\": \"herb\", \"advance\": false, \"approach\": \"薬草を使用して体力を回復してから、スライムに対して攻撃を仕掛ける準備をする。\", \"reply\": \"\"}",
+            "plan": {
+              "kind": "interact",
+              "action_id": "",
+              "operation": "use_item",
+              "target_id": "hero",
+              "item_id": "herb",
+              "advance": false,
+              "approach": "薬草を使用して体力を回復してから、スライムに対して攻撃を仕掛ける準備をする。",
+              "reply": ""
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "multi_action-002",
+            "input": "枝で罠を作ってから薬草を使う。",
+            "raw_response": "{\"kind\": \"interact\", \"action_id\": \"\", \"operation\": \"prepare\", \"target_id\": \"forest_slime\", \"item_id\": \"fallen_branches\", \"advance\": false, \"approach\": \"倒れた枝を使ってスライムの動きを制限する罠を準備します。\", \"reply\": \"枝を組み合わせて罠を仕掛けました。準備は完了です。薬草の使用は罠の設置後に行いますか？\"}",
+            "plan": {
+              "kind": "interact",
+              "action_id": "",
+              "operation": "prepare",
+              "target_id": "forest_slime",
+              "item_id": "fallen_branches",
+              "advance": false,
+              "approach": "倒れた枝を使ってスライムの動きを制限する罠を準備します。",
+              "reply": "枝を組み合わせて罠を仕掛けました。準備は完了です。薬草の使用は罠の設置後に行いますか？"
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "conditional",
+        "errors": 18,
+        "examples": [
+          {
+            "id": "conditional-001",
+            "input": "もしスライムが襲ってきたら攻撃する。今は様子を見る。",
+            "raw_response": "{\n  \"kind\": \"interact\",\n  \"action_id\": \"\",\n  \"operation\": \"observe\",\n  \"target_id\": \"forest_slime\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"スライムの様子を観察し、敵対行動をとるか慎重に見極める。\",\n  \"reply\": \"\"\n}",
+            "plan": {
+              "kind": "interact",
+              "action_id": "",
+              "operation": "observe",
+              "target_id": "forest_slime",
+              "item_id": "",
+              "advance": false,
+              "approach": "スライムの様子を観察し、敵対行動をとるか慎重に見極める。",
+              "reply": ""
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "conditional-002",
+            "input": "スライムが道を空けたら進む。今は待つ。",
+            "raw_response": "{\"kind\":\"interact\",\"action_id\":\"\",\"operation\":\"observe\",\"target_id\":\"forest_slime\",\"item_id\":\"\",\"advance\":false,\"approach\":\"スライムの様子を観察し、道を空けるのを待つ。\",\"reply\":\"スライムはまだ木の実に夢中なようだ。このまま様子を見守ることにする。\"}",
+            "plan": {
+              "kind": "interact",
+              "action_id": "",
+              "operation": "observe",
+              "target_id": "forest_slime",
+              "item_id": "",
+              "advance": false,
+              "approach": "スライムの様子を観察し、道を空けるのを待つ。",
+              "reply": "スライムはまだ木の実に夢中なようだ。このまま様子を見守ることにする。"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

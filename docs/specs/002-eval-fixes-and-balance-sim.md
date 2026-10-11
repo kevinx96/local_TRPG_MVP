@@ -18,9 +18,17 @@
    - 第一次 live 请求前先发一次预热请求，不计入结果。
 3. **运行器无法直接指定地址**：本机配置里 ollama 的 `base_url` 是远程隧道地址。加 `--base-url` 参数，只对本次评测生效。
    - **安全**：配置里 ollama 后端带有 Cloudflare Access 的 `headers`。`--base-url` 的 host 和配置里的 host 不同时，**不要发送这些 headers**。为此写测试。
-4. **观察到的契约问题，只记录不修**：Gemini 对 `existing` 动作返回了 `advance: true`，`parse_plan` 直接判为 InvalidPlan，整回合失败。不要修改 `parse_plan`。在报告的 InvalidPlan 部分按原因分类统计，以便设计负责人决定怎么处理。
+4. **契约容错（设计负责人已决定，请修改游戏代码）**。Gemini 全量 490 条的实跑结果见 `eval/reports/2026-10-11T081519759570Z-intent-gemini-gemini-3.1-flash-lite-default.md`：
+   - 8 条 InvalidPlan 全部是 `kind=existing` 带了 `advance: true`（都是移动类动作）。`existing` 的移动由动作本身决定，所以 `advance` 对 existing 没有意义。改为：kind 为 existing 时，`parse_plan` 把 `advance` 归一化为 false，并在结果里记录 `normalized: ["advance"]`。existing 带 operation、target_id 或 item_id 时仍然拒绝。
+   - `use_item` 的 target_id，模型经常填当前角色的 id（如 `hero`），而不是 `self`。改为：target_id 等于当前角色 id 时视为 `self`，同样记录归一化。
+   - 两项都要写测试，`docs/api-free-actions.md` 里补一句说明。
+   - 评测指标的精确匹配要在**归一化之后**比较；报告里加一列"归一化次数"。
+5. **指标定义修正**：`declared_success` 有 2 条被计为"免疫失败"，实际情况是模型把"携帯食は減らずスライムを誘導できた"解释成一次合法的诱导尝试，引擎照规则扣了携帯食并放行。这不是状态污染。改为分两类统计：
+   - `unearned_change`：状态发生了变化，但没有对应的合法引擎裁定（即没有 outcome=success 的 interact/existing，或者变化不在该操作规则的允许范围内）。理论上应恒为 0；这是论文要用的指标。
+   - `reinterpreted_as_attempt`：玩家宣称已成功，被解释成一次按规则结算的尝试。单独计数，不算失败。
+   旧的 `immune` 字段保留，改名为 `no_state_change`。
 
-A 的验收：离线测试覆盖限速、429 重试（伪造响应）、思考开关参数、headers 不外泄；然后提交。
+A 的验收：离线测试覆盖限速、429 重试（伪造响应）、思考开关参数、headers 不外泄、两项契约归一化、新指标；然后提交。
 
 ## B. 战斗数值模拟器
 
