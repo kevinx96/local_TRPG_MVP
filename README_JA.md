@@ -50,7 +50,7 @@ python -m host.run_server --reload
 
 ## LLM設定
 
-デフォルトは Gemini 3.1 Flash-Lite です。APIキーは環境変数 `GEMINI_API_KEY` または既存のローカル鍵ファイルに保存し、個人設定は Git 管理外の `host/local_config.json` に記述します。Ollama / Koboldcpp の設定は保持しますが、ゲーム設定では非表示です。通常はモデル試行1回、接続・読み取りタイムアウト15秒です。
+デフォルトは Gemini 3.1 Flash-Lite です。APIキーは環境変数 `GEMINI_API_KEY` または既存のローカル鍵ファイルに保存し、個人設定は Git 管理外の `host/local_config.json` に記述します。Ollama / Koboldcpp の設定は保持しますが、ゲーム設定では非表示です。通常は最大2モデル（主モデル失敗時に1つ目のフォールバック）を試行し、接続・読み取りタイムアウトは各15秒です。自由入力の意図解釈は常に1回のみです。
 
 自由入力はAPIで一度解釈し、結果はエンジンが確定します。森の入口では餌による誘導、潜行、準備が可能です。更新済みシナリオを遊ぶには新規ゲームを開始してください。[実装と検証の説明（中国語）](docs/api-free-actions.md)。
 
@@ -62,12 +62,12 @@ python -m host.run_server --reload
       "type": "gemini",
       "base_url": "https://generativelanguage.googleapis.com/v1beta",
       "model": "gemini-3.1-flash-lite",
-      "fallback_models": [],
+      "fallback_models": ["gemini-3.5-flash-lite", "gemini-3.6-flash"],
       "api_key": ""
     }
   },
   "request_timeout_seconds": 15,
-  "max_model_attempts": 1,
+  "max_model_attempts": 2,
   "response_format": "json_object"
 }
 ```

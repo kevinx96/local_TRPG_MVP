@@ -29,12 +29,12 @@
       "type": "gemini",
       "base_url": "https://generativelanguage.googleapis.com/v1beta",
       "model": "gemini-3.1-flash-lite",
-      "fallback_models": [],
+      "fallback_models": ["gemini-3.5-flash-lite", "gemini-3.6-flash"],
       "api_key": ""
     }
   },
   "request_timeout_seconds": 15,
-  "max_model_attempts": 1,
+  "max_model_attempts": 2,
   "temperature": 0.8,
   "max_tokens": 2048,
   "response_format": "json_object",

@@ -50,7 +50,7 @@ When a new session is created, the GM generates an opening scene automatically. 
 
 ## LLM Configuration
 
-Gemini 3.1 Flash-Lite is the default. Set `GEMINI_API_KEY` or use an existing local key file. Keep personal overrides in the ignored `host/local_config.json`; never commit credentials. Ollama and Koboldcpp profiles remain available in code but are hidden from game settings. Gameplay defaults to one model attempt and a 15-second connection/read timeout.
+Gemini 3.1 Flash-Lite is the default. Set `GEMINI_API_KEY` or use an existing local key file. Keep personal overrides in the ignored `host/local_config.json`; never commit credentials. Ollama and Koboldcpp profiles remain available in code but are hidden from game settings. Gameplay tries up to two models (primary, then the first fallback) with a 15-second connection/read timeout each; free-action interpretation always uses a single attempt.
 
 Free input uses one API interpretation followed by engine-owned outcomes. The forest entrance now supports food distraction, stealth and preparation. Start a new game to use the updated scenario. See [implementation and evaluation notes](docs/api-free-actions.md) (Chinese).
 
@@ -62,12 +62,12 @@ Free input uses one API interpretation followed by engine-owned outcomes. The fo
       "type": "gemini",
       "base_url": "https://generativelanguage.googleapis.com/v1beta",
       "model": "gemini-3.1-flash-lite",
-      "fallback_models": [],
+      "fallback_models": ["gemini-3.5-flash-lite", "gemini-3.6-flash"],
       "api_key": ""
     }
   },
   "request_timeout_seconds": 15,
-  "max_model_attempts": 1,
+  "max_model_attempts": 2,
   "response_format": "json_object"
 }
 ```

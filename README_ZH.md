@@ -50,7 +50,7 @@ python -m host.run_server --reload
 
 ## LLM配置
 
-默认使用 Gemini 3.1 Flash-Lite。将密钥放在环境变量 `GEMINI_API_KEY` 或本机已有的密钥文件中，个人设置写入 `host/local_config.json`，不要提交密钥。Ollama / Koboldcpp 配置保留，但在游戏设置中隐藏。默认每次只尝试一个模型，连接/读取超时为 15 秒。
+默认使用 Gemini 3.1 Flash-Lite。将密钥放在环境变量 `GEMINI_API_KEY` 或本机已有的密钥文件中，个人设置写入 `host/local_config.json`，不要提交密钥。Ollama / Koboldcpp 配置保留，但在游戏设置中隐藏。默认最多尝试两个模型（主模型失败后用第一个 fallback），每次连接/读取超时为 15 秒；自由行动的意图解释始终只尝试一次。
 
 [自由行动、试玩步骤和当前范围](docs/api-free-actions.md)。
 
@@ -62,12 +62,12 @@ python -m host.run_server --reload
       "type": "gemini",
       "base_url": "https://generativelanguage.googleapis.com/v1beta",
       "model": "gemini-3.1-flash-lite",
-      "fallback_models": [],
+      "fallback_models": ["gemini-3.5-flash-lite", "gemini-3.6-flash"],
       "api_key": ""
     }
   },
   "request_timeout_seconds": 15,
-  "max_model_attempts": 1,
+  "max_model_attempts": 2,
   "response_format": "json_object"
 }
 ```
