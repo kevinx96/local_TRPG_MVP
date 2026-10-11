@@ -51,7 +51,7 @@ def expected_damage(action: dict[str, Any], actor: dict[str, Any], enemy: dict[s
     damage = 0.0
     for element in elements:
         if element == "counter":
-            element = combat._counter_element(combat._primary_element(enemy))
+            element = combat.counter_attack_element(enemy)
         multiplier = combat._resistance_multiplier(enemy, element)
         amount = combat.damage_after_defense(raw, multiplier, combat._actor_defense(enemy), rules)
         if combat._negative_undead(enemy) and element not in {"holy", "light"}:

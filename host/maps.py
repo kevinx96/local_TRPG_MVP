@@ -16,8 +16,9 @@ def public_maps(session: dict[str, Any]) -> dict[str, Any]:
         return {"current_map_id": None, "maps": []}
     result = []
     for source in maps:
+        edges = [e for e in source["edges"] if not e.get("visible_after") or flags.get(e["visible_after"])]
         seen = {n["id"] for n in source["nodes"] if visited.intersection(n["location_ids"])}
-        neighbors = {e[end] for e in source["edges"] for end, other in (("from", "to"), ("to", "from")) if e[other] in seen}
+        neighbors = {e[end] for e in edges for end, other in (("from", "to"), ("to", "from")) if e[other] in seen}
         nodes = []
         for node in source["nodes"]:
             visibility = "visited" if node["id"] in seen else "adjacent-unknown" if node["id"] in neighbors else "hidden"
@@ -29,13 +30,11 @@ def public_maps(session: dict[str, Any]) -> dict[str, Any]:
                 public.update({k: deepcopy(node[k]) for k in ("label", "kind", "description", "recommended", "submap") if k in node})
                 if node.get("locked_until") and flags.get(node["locked_until"]):
                     public["kind"] = "branch"
-                if node.get("locked_until") and flags.get(node["locked_until"]):
-                    public["kind"] = "branch"
             nodes.append(public)
         visible = {n["id"] for n in nodes if n["visibility"] != "hidden"}
         result.append({"id": source["id"], "title": source["title"], "parent": source.get("parent"),
                        "nodes": nodes, "edges": [{"from": e["from"], "to": e["to"], "visited": e["from"] in seen and e["to"] in seen}
-                       for e in source["edges"] if e["from"] in visible and e["to"] in visible]})
+                       for e in edges if e["from"] in visible and e["to"] in visible]})
     return {"current_map_id": current["id"], "maps": result}
 
 
@@ -51,7 +50,8 @@ def movement_action(session: dict[str, Any], node_id: str) -> dict[str, Any]:
         source = next((n for n in map_data["nodes"] if location in n["location_ids"]), None)
         if not source:
             continue
-        edge = next((e for e in map_data["edges"] if e["from"] == source["id"] and e["to"] == node_id), None)
+        edge = next((e for e in map_data["edges"] if e["from"] == source["id"] and e["to"] == node_id
+                     and (not e.get("visible_after") or session.get("flags", {}).get(e["visible_after"]))), None)
         if not edge:
             raise ValueError("隣接する場所を選んでください。")
         if not edge.get("action_id"):

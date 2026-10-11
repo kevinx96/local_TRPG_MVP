@@ -163,5 +163,10 @@
         ]
       }
     }
+  },
+  "forest_v3": {
+    "early_prism_tree": {"level": 1, "win_rate_lt": 0.35},
+    "prism_weapon_ignis_uplift": [0.10, 0.20],
+    "rewarded_main_completion_rate_max": 0.80
   }
 }

@@ -732,7 +732,7 @@ def _resolve_attack(
     raw_damage = max(0, int(round(raw_damage * float(ability.get("damage_multiplier", 1) or 1))))
     element = str(ability.get("element") or "physical")
     if element == "counter":
-        element = _counter_element(_primary_element(defender))
+        element = counter_attack_element(defender)
     multiplier = _resistance_multiplier(defender, element)
     defense = _actor_defense(defender)
     damage = damage_after_defense(raw_damage, multiplier, defense, _combat_rules(session))
@@ -1336,6 +1336,12 @@ def _primary_element(actor: dict[str, Any]) -> str:
     combat = actor.get("combat") if isinstance(actor.get("combat"), dict) else {}
     basic_attack = combat.get("basic_attack") if isinstance(combat.get("basic_attack"), dict) else {}
     return str(basic_attack.get("element") or "physical").lower()
+
+
+def counter_attack_element(defender: dict[str, Any]) -> str:
+    preferred = _counter_element(_primary_element(defender))
+    elements = [preferred, "fire", "water", "ice", "lightning", "earth", "wind", "light", "dark", "holy"]
+    return max(elements, key=lambda element: _resistance_multiplier(defender, element))
 
 
 def _counter_element(element: str) -> str:

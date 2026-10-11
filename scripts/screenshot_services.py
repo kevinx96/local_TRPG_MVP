@@ -28,6 +28,26 @@ BOOT = r"""
     els.startScreen.style.display = 'none';
     els.gameScreen.style.display = '';
     renderSession(fixture);
+    const mapView = new URLSearchParams(location.search).get('view');
+    if (['forest-map', 'fort-map', 'cave-map', 'prism-battle', 'forest-mobile'].includes(mapView)) {
+      check(!document.querySelector('#miniMap').hidden, 'minimap visible');
+      if (mapView.startsWith('forest')) {
+        openMap();
+        check(document.querySelectorAll('#fullMap .adjacent-unknown').length > 0, 'unknown nodes visible');
+        check(!document.querySelector('#fullMap [data-node-id="F5"]'), 'unvisited distant node hidden');
+      } else if (mapView === 'prism-battle') {
+        els.combatIntro.style.display = 'none';
+        check(document.querySelector('#combatEnemies').textContent.includes('虹晶樹'), 'prism boss visible');
+      } else {
+        check(state.session.map.current_map_id === (mapView === 'fort-map' ? 'goblin_fort' : 'sealed_cave'), 'submap selected');
+        openMap();
+        check(document.querySelector('#mapBreadcrumb button'), 'parent breadcrumb');
+        document.querySelector('#mapCloseBtn').click();
+      }
+      check(document.documentElement.scrollWidth <= innerWidth, 'no horizontal overflow');
+      await fetch('/result', {method: 'POST', body: JSON.stringify({ok:true, checks})});
+      return;
+    }
     await openShop('sarah_shop');
     check(state.shop.items.find(i => i.item_id === 'herb').stock === 3, 'initial stock');
     state.shopItemId = 'herb'; state.shopQuantity = 2; renderShop();
@@ -71,9 +91,28 @@ BOOT = r"""
 """
 
 
-def fixture() -> dict[str, Any]:
+def fixture(view: str = "") -> dict[str, Any]:
     pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
     session = checkpoints.fresh_session(pack, "hero")
+    if view in {"forest-map", "fort-map", "cave-map", "prism-battle", "forest-mobile"}:
+        from host import combat
+
+        location = {"forest-map": "elf_spring", "forest-mobile": "elf_spring", "fort-map": "goblin_fort_second_choice",
+                    "cave-map": "cave_fork", "prism-battle": "cave_prism_tree"}[view]
+        session["world_state"] = {"scene_id": "dark_forest", "location_id": location}
+        session["visited_locations"] = ["dark_forest_loc", "lost_goblin_crossroads", "elf_spring"]
+        if view == "fort-map":
+            session["visited_locations"] += ["goblin_fort", "goblin_fort_first_second"]
+        if view in {"cave-map", "prism-battle"}:
+            session["visited_locations"] += ["cave_seal", "cave_heat_corridor", "cave_fork"]
+            session["flags"]["cave_seal_broken"] = True
+        session["choices"] = state.fallback_choices_for_session(session)
+        session["messages"] = [{"role": "assistant", "speaker": "GM", "text": state._current_location_record(session)["description"]}]
+        if view == "prism-battle":
+            combat.ensure_combat_started(session)
+            session["combat"]["round"] = 3
+            combat._apply_round_start_effects(session, combat.random)
+        return session
     state.commit_world_position(session, location_id="item_shop")
     session["character"].update(hp=1, gold=100)
     session["flags"].update(lost_goblin_quest=True, accepted_ian_request=True, frost_trace_seen=True,
@@ -168,8 +207,10 @@ def main() -> int:
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
     try:
-        for view, size in (("shop", "1280,900"), ("shop-mobile", "480,1000"), ("quests", "1280,900"), ("inventory", "1280,1000")):
-            session = fixture()
+        for view, size in (("shop", "1280,900"), ("shop-mobile", "480,1000"), ("quests", "1280,900"), ("inventory", "1280,1000"),
+                           ("forest-map", "1280,900"), ("fort-map", "1280,900"), ("cave-map", "1280,900"),
+                           ("prism-battle", "1280,900"), ("forest-mobile", "480,1000")):
+            session = fixture(view)
             before = len(results)
             command = [str(browser), "--headless=new", "--disable-gpu", "--no-first-run", "--disable-background-networking",
                        "--no-default-browser-check", "--hide-scrollbars", "--force-device-scale-factor=1",

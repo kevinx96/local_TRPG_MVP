@@ -111,6 +111,29 @@ class ForestCaveTests(unittest.TestCase):
             self.assertEqual(combat._equipped_weapon_attack(s["character"])["element"], "counter")
         self.assertEqual(public_maps(self.session("cave_fork"))["current_map_id"], "sealed_cave")
 
+    def test_counter_weapon_uses_actual_weakness_including_rotating_resistances(self):
+        ignis = next(e for e in self.pack["enemies"] if e["id"] == "ignis")
+        self.assertEqual(combat.counter_attack_element(ignis), "ice")
+        s = self.session("cave_prism_tree")
+        combat.ensure_combat_started(s)
+        enemy = s["combat"]["enemies"][0]
+        for turn, expected in ((1, "water"), (3, "fire"), (5, "wind")):
+            s["combat"]["round"] = turn
+            combat._apply_round_start_effects(s, random.Random(1))
+            self.assertEqual(combat.counter_attack_element(enemy), expected)
+
+    def test_forge_rewards_match_tuned_catalogue(self):
+        for char in ("hero", "cleric", "mage", "thief"):
+            for rescued in (False, True):
+                s = self.session("magic_shop", char)
+                s["flags"]["mina_quest_done"] = rescued
+                state.apply_state_delta(s, {"inventory_add": [{"name": "虹晶の欠片", "quantity": 1}]})
+                self.act(s, "forge_prism_weapon")
+                expected = deepcopy(next(i["combat"] for i in self.pack["items"] if i["id"] == f"prism_weapon_{char}"))
+                expected["accuracy"] += 3 if rescued else 0
+                actual = next(i["combat"] for i in s["character"]["inventory"] if i.get("id") == f"prism_weapon_{char}")
+                self.assertEqual(actual, expected)
+
     def test_exact_seal_result_and_auto_battle_use_api_without_model(self):
         s = self.session("cave_seal")
         with patch.object(app, "save_session"), patch.object(app, "roll_dice", return_value={"dc": 15, "success": False}), patch.object(app, "chat_completion", side_effect=AssertionError("network")):

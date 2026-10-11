@@ -71,3 +71,16 @@ class MapTests(unittest.TestCase):
         self.assertEqual(public_maps(self.session)["maps"][1]["parent"], "town")
         state.commit_world_position(self.session, location_id="castle")
         self.assertEqual(public_maps(self.session)["current_map_id"], "town")
+
+    def test_unopened_shortcut_does_not_reveal_exit(self):
+        s = fresh_session(state.load_scenario_pack(DEFAULT_SCENARIO), "hero")
+        state.commit_world_position(s, location_id="lost_goblin_crossroads")
+        forest = next(m for m in public_maps(s)["maps"] if m["id"] == "forest")
+        self.assertEqual(next(n for n in forest["nodes"] if n["id"] == "F5")["visibility"], "hidden")
+        s["flags"]["resolved_lost_goblin_box"] = True
+        forest = next(m for m in public_maps(s)["maps"] if m["id"] == "forest")
+        self.assertEqual(next(n for n in forest["nodes"] if n["id"] == "F5")["visibility"], "adjacent-unknown")
+        with self.assertRaises(ValueError):
+            movement_action(s, "F5")
+        s["flags"]["passed_forest_wolves"] = True
+        self.assertEqual(movement_action(s, "F5")["id"], "fort_shortcut")

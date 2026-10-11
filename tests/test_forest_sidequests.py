@@ -46,9 +46,11 @@ class SidequestTests(unittest.TestCase):
                         self.at("magic_shop")
                         self.act("ask_mina_missing")
                         self.assertTrue(self.s["flags"]["heard_seal_lore"])
+                        self.assertEqual(self.quest("side_mina")["status"], "active")
                     elif start == "tracks":
                         self.at("elf_spring")
                         self.observe("small_footprints")
+                        self.assertEqual(self.quest("side_mina")["status"], "active")
                     self.at("cave_hot_spring")
                     self.act("talk_mina")
                     self.assertEqual(self.quest("side_mina")["status"], "active")

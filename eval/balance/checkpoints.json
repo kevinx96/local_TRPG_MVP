@@ -1,13 +1,14 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "18483811dbd437d0432283ec45c5403b42189356800d0aa154b743ca89061d9c",
+  "scenario_sha256": "9f4e87e6fba48d6a386a151a6232f7dacb9b81b6b4e961831c81ccb72da57db1",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
     "出城前邀请无需付费/判定的 blue_robed_mage；离开森林按剧情 clear_companion。没有叠加互斥同伴。",
-    "勇者除商人支线外先完成锻冶师换剑；原装备失去后由现有引擎自动装备新武器。其他职业不臆造购物。",
-    "模板金币为 0，check_supplies 首次发放 50G；未假定回城购买或卖战利品。",
-    "森林出口主线选双狼支线；砦三层选择无口令警卫战，即使右路已给出口令也按这条可达路线记录。",
+    "勇者除商人支线、洞窟路线外先完成锻冶师换剑；原装备失去后由现有引擎自动装备新武器。",
+    "模板金币为 0，check_supplies 首次发放 50G；仅洞窟路线为僧侶/盗賊重放明确列出的折扣购物与出售。",
+    "森林主线经过 F1–F5；砦与洞窟为可选支路。砦三层选择无口令警卫战。",
+    "洞窟 Lv2：勇者使用初始鉄の剣；僧侶/盗賊交付光苔并出售携帯食后购买氷の護符；魔法使い使用职业技能。C4/C5 先取 C3a 紅玉の護符。",
     "TODO(design): 跨战斗消耗、双狼/史莱姆/砦分支、火コウモリ竜及ロビン取舍不能由数据确定。",
     "所有路线出发前执行 check_supplies 领取聖水2个；各战独立、不扣前战消耗。等级、技能与成长按路线里程碑重放。"
   ],
@@ -56,6 +57,21 @@
           "max_mp": 9,
           "max_sp": 12,
           "inventory": [
+            {
+              "name": "鉄の剣",
+              "description": "一見質素な一振りの剣……",
+              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性",
+              "quantity": 1,
+              "id": "iron_sword",
+              "combat": {
+                "kind": "weapon",
+                "name": "鉄の剣",
+                "damage": "1d8+str/3",
+                "accuracy": 90,
+                "element": "physical"
+              },
+              "category": "equipment"
+            },
             {
               "name": "革の鎧",
               "description": "なめした革で作られた軽量の鎧。",
@@ -107,21 +123,6 @@
               "category": "consumable"
             },
             {
-              "name": "氷鉄の大剣",
-              "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
-              "quantity": 1,
-              "id": "ice_iron_greatsword",
-              "combat": {
-                "kind": "weapon",
-                "name": "氷鉄の大剣",
-                "damage": "1d10+str/3+int/4",
-                "accuracy": 88,
-                "element": "ice"
-              },
-              "category": "equipment"
-            },
-            {
               "name": "治療の巻物",
               "description": "使用すると直ちにHPを30回復する。",
               "effect": "HPを30回復 / 消耗品",
@@ -136,8 +137,8 @@
             }
           ],
           "equipment": [
-            "革の鎧",
-            "氷鉄の大剣"
+            "鉄の剣",
+            "革の鎧"
           ],
           "gold": 60,
           "companion": {
@@ -194,52 +195,6 @@
             {
               "location": "magic_shop",
               "step": "return_castle_from_magic_shop",
-              "delta": {
-                "current_location": "castle"
-              }
-            },
-            {
-              "location": "castle",
-              "step": "go_forge",
-              "delta": {
-                "current_location": "forge"
-              }
-            },
-            {
-              "location": "forge",
-              "step": "show_sword_to_blacksmith",
-              "delta": {
-                "flags_set": [
-                  "showed_hero_sword",
-                  "showed_hero_sword"
-                ]
-              }
-            },
-            {
-              "location": "forge",
-              "step": "accept_sword_fusion",
-              "delta": {
-                "inventory_add": [
-                  {
-                    "name": "氷鉄の大剣",
-                    "quantity": 1
-                  }
-                ],
-                "inventory_remove": [
-                  {
-                    "name": "鉄の剣",
-                    "quantity": 1
-                  }
-                ],
-                "flags_set": [
-                  "accepted_sword_fusion",
-                  "accepted_sword_fusion"
-                ]
-              }
-            },
-            {
-              "location": "forge",
-              "step": "return_castle_from_forge",
               "delta": {
                 "current_location": "castle"
               }
@@ -448,7 +403,7 @@
               "name": "携帯食",
               "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
               "effect": "",
-              "quantity": 2,
+              "quantity": 1,
               "id": "trail_ration",
               "traits": [
                 "food"
@@ -474,7 +429,7 @@
               "name": "治療の巻物",
               "description": "使用すると直ちにHPを30回復する。",
               "effect": "HPを30回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 3,
               "id": "healing_scroll",
               "combat": {
                 "kind": "heal",
@@ -482,13 +437,28 @@
                 "consumable": true
               },
               "category": "consumable"
+            },
+            {
+              "name": "氷の護符",
+              "description": "冷気の力を宿した護符。",
+              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "quantity": 1,
+              "id": "ice_charm",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d8+int/2",
+                "accuracy": 100,
+                "element": "ice",
+                "consumable": false
+              },
+              "category": "equipment"
             }
           ],
           "equipment": [
             "聖なる杖",
             "ローブ"
           ],
-          "gold": 60,
+          "gold": 1,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -614,6 +584,21 @@
             },
             {
               "location": "elf_spring",
+              "step": "observe:glowing_moss_patch",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "gathered_glowing_moss_patch"
+                ]
+              }
+            },
+            {
+              "location": "elf_spring",
               "step": "continue_from_elf_spring",
               "delta": {
                 "current_location": "forest_wolves"
@@ -628,6 +613,101 @@
                   "passed_forest_wolves",
                   "saved_gald"
                 ],
+                "current_location": "forest_exit"
+              }
+            },
+            {
+              "location": "forest_exit",
+              "step": "return_inn_after_forest",
+              "delta": {
+                "current_location": "inn",
+                "flags_set": [
+                  "returned_from_forest"
+                ]
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_castle_from_inn",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_item_shop",
+              "delta": {
+                "current_location": "item_shop"
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "give_moss_to_sarah",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
+                "inventory_remove": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "sarah_moss_done",
+                  "sarah_moss_done"
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "sell:sarah_shop:trail_ration",
+              "delta": {
+                "gold_change": 5,
+                "inventory_remove": [
+                  {
+                    "name": "携帯食",
+                    "quantity": 1
+                  }
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "shop:sarah_shop:ice_charm",
+              "delta": {
+                "gold_change": -64,
+                "inventory_add": [
+                  {
+                    "id": "ice_charm",
+                    "name": "氷の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": []
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "return_castle_from_item_shop",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_inn",
+              "delta": {
+                "current_location": "inn"
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_forest_exit",
+              "delta": {
                 "current_location": "forest_exit"
               }
             },
@@ -1047,7 +1127,7 @@
               "name": "携帯食",
               "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
               "effect": "",
-              "quantity": 2,
+              "quantity": 1,
               "id": "trail_ration",
               "traits": [
                 "food"
@@ -1086,7 +1166,7 @@
               "name": "治療の巻物",
               "description": "使用すると直ちにHPを30回復する。",
               "effect": "HPを30回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 3,
               "id": "healing_scroll",
               "combat": {
                 "kind": "heal",
@@ -1094,13 +1174,28 @@
                 "consumable": true
               },
               "category": "consumable"
+            },
+            {
+              "name": "氷の護符",
+              "description": "冷気の力を宿した護符。",
+              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "quantity": 1,
+              "id": "ice_charm",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d8+int/2",
+                "accuracy": 100,
+                "element": "ice",
+                "consumable": false
+              },
+              "category": "equipment"
             }
           ],
           "equipment": [
             "ダガー",
             "革の鎧"
           ],
-          "gold": 60,
+          "gold": 1,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -1226,6 +1321,21 @@
             },
             {
               "location": "elf_spring",
+              "step": "observe:glowing_moss_patch",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "gathered_glowing_moss_patch"
+                ]
+              }
+            },
+            {
+              "location": "elf_spring",
               "step": "continue_from_elf_spring",
               "delta": {
                 "current_location": "forest_wolves"
@@ -1240,6 +1350,101 @@
                   "passed_forest_wolves",
                   "saved_gald"
                 ],
+                "current_location": "forest_exit"
+              }
+            },
+            {
+              "location": "forest_exit",
+              "step": "return_inn_after_forest",
+              "delta": {
+                "current_location": "inn",
+                "flags_set": [
+                  "returned_from_forest"
+                ]
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_castle_from_inn",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_item_shop",
+              "delta": {
+                "current_location": "item_shop"
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "give_moss_to_sarah",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
+                "inventory_remove": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "sarah_moss_done",
+                  "sarah_moss_done"
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "sell:sarah_shop:trail_ration",
+              "delta": {
+                "gold_change": 5,
+                "inventory_remove": [
+                  {
+                    "name": "携帯食",
+                    "quantity": 1
+                  }
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "shop:sarah_shop:ice_charm",
+              "delta": {
+                "gold_change": -64,
+                "inventory_add": [
+                  {
+                    "id": "ice_charm",
+                    "name": "氷の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": []
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "return_castle_from_item_shop",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_inn",
+              "delta": {
+                "current_location": "inn"
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_forest_exit",
+              "delta": {
                 "current_location": "forest_exit"
               }
             },
@@ -1324,6 +1529,21 @@
           "max_sp": 12,
           "inventory": [
             {
+              "name": "鉄の剣",
+              "description": "一見質素な一振りの剣……",
+              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性",
+              "quantity": 1,
+              "id": "iron_sword",
+              "combat": {
+                "kind": "weapon",
+                "name": "鉄の剣",
+                "damage": "1d8+str/3",
+                "accuracy": 90,
+                "element": "physical"
+              },
+              "category": "equipment"
+            },
+            {
               "name": "革の鎧",
               "description": "なめした革で作られた軽量の鎧。",
               "effect": "被ダメージを1軽減",
@@ -1374,21 +1594,6 @@
               "category": "consumable"
             },
             {
-              "name": "氷鉄の大剣",
-              "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
-              "quantity": 1,
-              "id": "ice_iron_greatsword",
-              "combat": {
-                "kind": "weapon",
-                "name": "氷鉄の大剣",
-                "damage": "1d10+str/3+int/4",
-                "accuracy": 88,
-                "element": "ice"
-              },
-              "category": "equipment"
-            },
-            {
               "name": "治療の巻物",
               "description": "使用すると直ちにHPを30回復する。",
               "effect": "HPを30回復 / 消耗品",
@@ -1411,8 +1616,8 @@
             }
           ],
           "equipment": [
-            "革の鎧",
-            "氷鉄の大剣"
+            "鉄の剣",
+            "革の鎧"
           ],
           "gold": 60,
           "companion": {
@@ -1469,52 +1674,6 @@
             {
               "location": "magic_shop",
               "step": "return_castle_from_magic_shop",
-              "delta": {
-                "current_location": "castle"
-              }
-            },
-            {
-              "location": "castle",
-              "step": "go_forge",
-              "delta": {
-                "current_location": "forge"
-              }
-            },
-            {
-              "location": "forge",
-              "step": "show_sword_to_blacksmith",
-              "delta": {
-                "flags_set": [
-                  "showed_hero_sword",
-                  "showed_hero_sword"
-                ]
-              }
-            },
-            {
-              "location": "forge",
-              "step": "accept_sword_fusion",
-              "delta": {
-                "inventory_add": [
-                  {
-                    "name": "氷鉄の大剣",
-                    "quantity": 1
-                  }
-                ],
-                "inventory_remove": [
-                  {
-                    "name": "鉄の剣",
-                    "quantity": 1
-                  }
-                ],
-                "flags_set": [
-                  "accepted_sword_fusion",
-                  "accepted_sword_fusion"
-                ]
-              }
-            },
-            {
-              "location": "forge",
-              "step": "return_castle_from_forge",
               "delta": {
                 "current_location": "castle"
               }
@@ -1749,7 +1908,7 @@
               "name": "携帯食",
               "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
               "effect": "",
-              "quantity": 2,
+              "quantity": 1,
               "id": "trail_ration",
               "traits": [
                 "food"
@@ -1775,7 +1934,7 @@
               "name": "治療の巻物",
               "description": "使用すると直ちにHPを30回復する。",
               "effect": "HPを30回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 3,
               "id": "healing_scroll",
               "combat": {
                 "kind": "heal",
@@ -1783,6 +1942,21 @@
                 "consumable": true
               },
               "category": "consumable"
+            },
+            {
+              "name": "氷の護符",
+              "description": "冷気の力を宿した護符。",
+              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "quantity": 1,
+              "id": "ice_charm",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d8+int/2",
+                "accuracy": 100,
+                "element": "ice",
+                "consumable": false
+              },
+              "category": "equipment"
             },
             {
               "name": "光苔",
@@ -1797,7 +1971,7 @@
             "聖なる杖",
             "ローブ"
           ],
-          "gold": 60,
+          "gold": 1,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -1923,6 +2097,21 @@
             },
             {
               "location": "elf_spring",
+              "step": "observe:glowing_moss_patch",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "gathered_glowing_moss_patch"
+                ]
+              }
+            },
+            {
+              "location": "elf_spring",
               "step": "continue_from_elf_spring",
               "delta": {
                 "current_location": "forest_wolves"
@@ -1937,6 +2126,101 @@
                   "passed_forest_wolves",
                   "saved_gald"
                 ],
+                "current_location": "forest_exit"
+              }
+            },
+            {
+              "location": "forest_exit",
+              "step": "return_inn_after_forest",
+              "delta": {
+                "current_location": "inn",
+                "flags_set": [
+                  "returned_from_forest"
+                ]
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_castle_from_inn",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_item_shop",
+              "delta": {
+                "current_location": "item_shop"
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "give_moss_to_sarah",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
+                "inventory_remove": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "sarah_moss_done",
+                  "sarah_moss_done"
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "sell:sarah_shop:trail_ration",
+              "delta": {
+                "gold_change": 5,
+                "inventory_remove": [
+                  {
+                    "name": "携帯食",
+                    "quantity": 1
+                  }
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "shop:sarah_shop:ice_charm",
+              "delta": {
+                "gold_change": -64,
+                "inventory_add": [
+                  {
+                    "id": "ice_charm",
+                    "name": "氷の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": []
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "return_castle_from_item_shop",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_inn",
+              "delta": {
+                "current_location": "inn"
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_forest_exit",
+              "delta": {
                 "current_location": "forest_exit"
               }
             },
@@ -2416,7 +2700,7 @@
               "name": "携帯食",
               "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
               "effect": "",
-              "quantity": 2,
+              "quantity": 1,
               "id": "trail_ration",
               "traits": [
                 "food"
@@ -2455,7 +2739,7 @@
               "name": "治療の巻物",
               "description": "使用すると直ちにHPを30回復する。",
               "effect": "HPを30回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 3,
               "id": "healing_scroll",
               "combat": {
                 "kind": "heal",
@@ -2463,6 +2747,21 @@
                 "consumable": true
               },
               "category": "consumable"
+            },
+            {
+              "name": "氷の護符",
+              "description": "冷気の力を宿した護符。",
+              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "quantity": 1,
+              "id": "ice_charm",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d8+int/2",
+                "accuracy": 100,
+                "element": "ice",
+                "consumable": false
+              },
+              "category": "equipment"
             },
             {
               "name": "光苔",
@@ -2477,7 +2776,7 @@
             "ダガー",
             "革の鎧"
           ],
-          "gold": 60,
+          "gold": 1,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -2603,6 +2902,21 @@
             },
             {
               "location": "elf_spring",
+              "step": "observe:glowing_moss_patch",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "gathered_glowing_moss_patch"
+                ]
+              }
+            },
+            {
+              "location": "elf_spring",
               "step": "continue_from_elf_spring",
               "delta": {
                 "current_location": "forest_wolves"
@@ -2617,6 +2931,101 @@
                   "passed_forest_wolves",
                   "saved_gald"
                 ],
+                "current_location": "forest_exit"
+              }
+            },
+            {
+              "location": "forest_exit",
+              "step": "return_inn_after_forest",
+              "delta": {
+                "current_location": "inn",
+                "flags_set": [
+                  "returned_from_forest"
+                ]
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_castle_from_inn",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_item_shop",
+              "delta": {
+                "current_location": "item_shop"
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "give_moss_to_sarah",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
+                "inventory_remove": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "sarah_moss_done",
+                  "sarah_moss_done"
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "sell:sarah_shop:trail_ration",
+              "delta": {
+                "gold_change": 5,
+                "inventory_remove": [
+                  {
+                    "name": "携帯食",
+                    "quantity": 1
+                  }
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "shop:sarah_shop:ice_charm",
+              "delta": {
+                "gold_change": -64,
+                "inventory_add": [
+                  {
+                    "id": "ice_charm",
+                    "name": "氷の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": []
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "return_castle_from_item_shop",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_inn",
+              "delta": {
+                "current_location": "inn"
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_forest_exit",
+              "delta": {
                 "current_location": "forest_exit"
               }
             },
@@ -2727,6 +3136,21 @@
           "max_sp": 12,
           "inventory": [
             {
+              "name": "鉄の剣",
+              "description": "一見質素な一振りの剣……",
+              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性",
+              "quantity": 1,
+              "id": "iron_sword",
+              "combat": {
+                "kind": "weapon",
+                "name": "鉄の剣",
+                "damage": "1d8+str/3",
+                "accuracy": 90,
+                "element": "physical"
+              },
+              "category": "equipment"
+            },
+            {
               "name": "革の鎧",
               "description": "なめした革で作られた軽量の鎧。",
               "effect": "被ダメージを1軽減",
@@ -2777,21 +3201,6 @@
               "category": "consumable"
             },
             {
-              "name": "氷鉄の大剣",
-              "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
-              "quantity": 1,
-              "id": "ice_iron_greatsword",
-              "combat": {
-                "kind": "weapon",
-                "name": "氷鉄の大剣",
-                "damage": "1d10+str/3+int/4",
-                "accuracy": 88,
-                "element": "ice"
-              },
-              "category": "equipment"
-            },
-            {
               "name": "治療の巻物",
               "description": "使用すると直ちにHPを30回復する。",
               "effect": "HPを30回復 / 消耗品",
@@ -2811,11 +3220,42 @@
               "quantity": 1,
               "id": "glowing_moss",
               "category": "material"
+            },
+            {
+              "name": "火球術の巻物",
+              "description": "知力10として火球を一度だけ放つ。",
+              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "quantity": 2,
+              "id": "fireball_scroll",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d6+5",
+                "accuracy": 90,
+                "element": "fire",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "紅玉の護符",
+              "description": "熱を帯びた赤い宝石の護符。",
+              "effect": "",
+              "quantity": 1,
+              "id": "ruby_charm",
+              "combat": {
+                "kind": "equipment",
+                "requires_equipped": true,
+                "damage_taken_multipliers": {
+                  "fire": 0.7
+                }
+              },
+              "category": "equipment"
             }
           ],
           "equipment": [
+            "鉄の剣",
             "革の鎧",
-            "氷鉄の大剣"
+            "紅玉の護符"
           ],
           "gold": 60,
           "companion": {
@@ -2872,52 +3312,6 @@
             {
               "location": "magic_shop",
               "step": "return_castle_from_magic_shop",
-              "delta": {
-                "current_location": "castle"
-              }
-            },
-            {
-              "location": "castle",
-              "step": "go_forge",
-              "delta": {
-                "current_location": "forge"
-              }
-            },
-            {
-              "location": "forge",
-              "step": "show_sword_to_blacksmith",
-              "delta": {
-                "flags_set": [
-                  "showed_hero_sword",
-                  "showed_hero_sword"
-                ]
-              }
-            },
-            {
-              "location": "forge",
-              "step": "accept_sword_fusion",
-              "delta": {
-                "inventory_add": [
-                  {
-                    "name": "氷鉄の大剣",
-                    "quantity": 1
-                  }
-                ],
-                "inventory_remove": [
-                  {
-                    "name": "鉄の剣",
-                    "quantity": 1
-                  }
-                ],
-                "flags_set": [
-                  "accepted_sword_fusion",
-                  "accepted_sword_fusion"
-                ]
-              }
-            },
-            {
-              "location": "forge",
-              "step": "return_castle_from_forge",
               "delta": {
                 "current_location": "castle"
               }
@@ -3058,6 +3452,52 @@
             },
             {
               "location": "cave_fork",
+              "step": "cave_left",
+              "delta": {
+                "current_location": "cave_lava_room"
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "@victory",
+              "delta": {
+                "flags_set": [
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "cleared_cave_lava_room"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "open_lava_chest",
+              "delta": {
+                "equip_item": "紅玉の護符",
+                "inventory_add": [
+                  {
+                    "name": "火球術の巻物",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "紅玉の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "opened_lava_chest"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "lava_back",
+              "delta": {
+                "current_location": "cave_fork"
+              }
+            },
+            {
+              "location": "cave_fork",
               "step": "cave_right",
               "delta": {
                 "current_location": "cave_hot_spring"
@@ -3159,7 +3599,7 @@
               "name": "携帯食",
               "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
               "effect": "",
-              "quantity": 2,
+              "quantity": 1,
               "id": "trail_ration",
               "traits": [
                 "food"
@@ -3185,7 +3625,7 @@
               "name": "治療の巻物",
               "description": "使用すると直ちにHPを30回復する。",
               "effect": "HPを30回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 3,
               "id": "healing_scroll",
               "combat": {
                 "kind": "heal",
@@ -3195,19 +3635,65 @@
               "category": "consumable"
             },
             {
+              "name": "氷の護符",
+              "description": "冷気の力を宿した護符。",
+              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "quantity": 1,
+              "id": "ice_charm",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d8+int/2",
+                "accuracy": 100,
+                "element": "ice",
+                "consumable": false
+              },
+              "category": "equipment"
+            },
+            {
               "name": "光苔",
               "description": "暗い場所で淡く光る苔。薬の材料になる。",
               "effect": "",
               "quantity": 1,
               "id": "glowing_moss",
               "category": "material"
+            },
+            {
+              "name": "火球術の巻物",
+              "description": "知力10として火球を一度だけ放つ。",
+              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "quantity": 2,
+              "id": "fireball_scroll",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d6+5",
+                "accuracy": 90,
+                "element": "fire",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "紅玉の護符",
+              "description": "熱を帯びた赤い宝石の護符。",
+              "effect": "",
+              "quantity": 1,
+              "id": "ruby_charm",
+              "combat": {
+                "kind": "equipment",
+                "requires_equipped": true,
+                "damage_taken_multipliers": {
+                  "fire": 0.7
+                }
+              },
+              "category": "equipment"
             }
           ],
           "equipment": [
             "聖なる杖",
-            "ローブ"
+            "ローブ",
+            "紅玉の護符"
           ],
-          "gold": 60,
+          "gold": 1,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -3333,6 +3819,21 @@
             },
             {
               "location": "elf_spring",
+              "step": "observe:glowing_moss_patch",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "gathered_glowing_moss_patch"
+                ]
+              }
+            },
+            {
+              "location": "elf_spring",
               "step": "continue_from_elf_spring",
               "delta": {
                 "current_location": "forest_wolves"
@@ -3347,6 +3848,101 @@
                   "passed_forest_wolves",
                   "saved_gald"
                 ],
+                "current_location": "forest_exit"
+              }
+            },
+            {
+              "location": "forest_exit",
+              "step": "return_inn_after_forest",
+              "delta": {
+                "current_location": "inn",
+                "flags_set": [
+                  "returned_from_forest"
+                ]
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_castle_from_inn",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_item_shop",
+              "delta": {
+                "current_location": "item_shop"
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "give_moss_to_sarah",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
+                "inventory_remove": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "sarah_moss_done",
+                  "sarah_moss_done"
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "sell:sarah_shop:trail_ration",
+              "delta": {
+                "gold_change": 5,
+                "inventory_remove": [
+                  {
+                    "name": "携帯食",
+                    "quantity": 1
+                  }
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "shop:sarah_shop:ice_charm",
+              "delta": {
+                "gold_change": -64,
+                "inventory_add": [
+                  {
+                    "id": "ice_charm",
+                    "name": "氷の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": []
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "return_castle_from_item_shop",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_inn",
+              "delta": {
+                "current_location": "inn"
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_forest_exit",
+              "delta": {
                 "current_location": "forest_exit"
               }
             },
@@ -3397,6 +3993,52 @@
                   "combat_defeated:cave_heat_corridor:heat_lizard",
                   "cleared_cave_heat_corridor"
                 ],
+                "current_location": "cave_fork"
+              }
+            },
+            {
+              "location": "cave_fork",
+              "step": "cave_left",
+              "delta": {
+                "current_location": "cave_lava_room"
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "@victory",
+              "delta": {
+                "flags_set": [
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "cleared_cave_lava_room"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "open_lava_chest",
+              "delta": {
+                "equip_item": "紅玉の護符",
+                "inventory_add": [
+                  {
+                    "name": "火球術の巻物",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "紅玉の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "opened_lava_chest"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "lava_back",
+              "delta": {
                 "current_location": "cave_fork"
               }
             },
@@ -3548,11 +4190,42 @@
               "quantity": 1,
               "id": "glowing_moss",
               "category": "material"
+            },
+            {
+              "name": "火球術の巻物",
+              "description": "知力10として火球を一度だけ放つ。",
+              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "quantity": 2,
+              "id": "fireball_scroll",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d6+5",
+                "accuracy": 90,
+                "element": "fire",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "紅玉の護符",
+              "description": "熱を帯びた赤い宝石の護符。",
+              "effect": "",
+              "quantity": 1,
+              "id": "ruby_charm",
+              "combat": {
+                "kind": "equipment",
+                "requires_equipped": true,
+                "damage_taken_multipliers": {
+                  "fire": 0.7
+                }
+              },
+              "category": "equipment"
             }
           ],
           "equipment": [
             "魔導書",
-            "魔法のローブ"
+            "魔法のローブ",
+            "紅玉の護符"
           ],
           "gold": 60,
           "companion": {
@@ -3749,6 +4422,52 @@
             },
             {
               "location": "cave_fork",
+              "step": "cave_left",
+              "delta": {
+                "current_location": "cave_lava_room"
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "@victory",
+              "delta": {
+                "flags_set": [
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "cleared_cave_lava_room"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "open_lava_chest",
+              "delta": {
+                "equip_item": "紅玉の護符",
+                "inventory_add": [
+                  {
+                    "name": "火球術の巻物",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "紅玉の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "opened_lava_chest"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "lava_back",
+              "delta": {
+                "current_location": "cave_fork"
+              }
+            },
+            {
+              "location": "cave_fork",
               "step": "cave_right",
               "delta": {
                 "current_location": "cave_hot_spring"
@@ -3840,7 +4559,7 @@
               "name": "携帯食",
               "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
               "effect": "",
-              "quantity": 2,
+              "quantity": 1,
               "id": "trail_ration",
               "traits": [
                 "food"
@@ -3879,7 +4598,7 @@
               "name": "治療の巻物",
               "description": "使用すると直ちにHPを30回復する。",
               "effect": "HPを30回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 3,
               "id": "healing_scroll",
               "combat": {
                 "kind": "heal",
@@ -3889,19 +4608,65 @@
               "category": "consumable"
             },
             {
+              "name": "氷の護符",
+              "description": "冷気の力を宿した護符。",
+              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "quantity": 1,
+              "id": "ice_charm",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d8+int/2",
+                "accuracy": 100,
+                "element": "ice",
+                "consumable": false
+              },
+              "category": "equipment"
+            },
+            {
               "name": "光苔",
               "description": "暗い場所で淡く光る苔。薬の材料になる。",
               "effect": "",
               "quantity": 1,
               "id": "glowing_moss",
               "category": "material"
+            },
+            {
+              "name": "火球術の巻物",
+              "description": "知力10として火球を一度だけ放つ。",
+              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "quantity": 2,
+              "id": "fireball_scroll",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d6+5",
+                "accuracy": 90,
+                "element": "fire",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "紅玉の護符",
+              "description": "熱を帯びた赤い宝石の護符。",
+              "effect": "",
+              "quantity": 1,
+              "id": "ruby_charm",
+              "combat": {
+                "kind": "equipment",
+                "requires_equipped": true,
+                "damage_taken_multipliers": {
+                  "fire": 0.7
+                }
+              },
+              "category": "equipment"
             }
           ],
           "equipment": [
             "ダガー",
-            "革の鎧"
+            "革の鎧",
+            "紅玉の護符"
           ],
-          "gold": 60,
+          "gold": 1,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -4027,6 +4792,21 @@
             },
             {
               "location": "elf_spring",
+              "step": "observe:glowing_moss_patch",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "gathered_glowing_moss_patch"
+                ]
+              }
+            },
+            {
+              "location": "elf_spring",
               "step": "continue_from_elf_spring",
               "delta": {
                 "current_location": "forest_wolves"
@@ -4041,6 +4821,101 @@
                   "passed_forest_wolves",
                   "saved_gald"
                 ],
+                "current_location": "forest_exit"
+              }
+            },
+            {
+              "location": "forest_exit",
+              "step": "return_inn_after_forest",
+              "delta": {
+                "current_location": "inn",
+                "flags_set": [
+                  "returned_from_forest"
+                ]
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_castle_from_inn",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_item_shop",
+              "delta": {
+                "current_location": "item_shop"
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "give_moss_to_sarah",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
+                "inventory_remove": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "sarah_moss_done",
+                  "sarah_moss_done"
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "sell:sarah_shop:trail_ration",
+              "delta": {
+                "gold_change": 5,
+                "inventory_remove": [
+                  {
+                    "name": "携帯食",
+                    "quantity": 1
+                  }
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "shop:sarah_shop:ice_charm",
+              "delta": {
+                "gold_change": -64,
+                "inventory_add": [
+                  {
+                    "id": "ice_charm",
+                    "name": "氷の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": []
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "return_castle_from_item_shop",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_inn",
+              "delta": {
+                "current_location": "inn"
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_forest_exit",
+              "delta": {
                 "current_location": "forest_exit"
               }
             },
@@ -4091,6 +4966,52 @@
                   "combat_defeated:cave_heat_corridor:heat_lizard",
                   "cleared_cave_heat_corridor"
                 ],
+                "current_location": "cave_fork"
+              }
+            },
+            {
+              "location": "cave_fork",
+              "step": "cave_left",
+              "delta": {
+                "current_location": "cave_lava_room"
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "@victory",
+              "delta": {
+                "flags_set": [
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "cleared_cave_lava_room"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "open_lava_chest",
+              "delta": {
+                "equip_item": "紅玉の護符",
+                "inventory_add": [
+                  {
+                    "name": "火球術の巻物",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "紅玉の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "opened_lava_chest"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "lava_back",
+              "delta": {
                 "current_location": "cave_fork"
               }
             },
@@ -4158,6 +5079,21 @@
           "max_sp": 12,
           "inventory": [
             {
+              "name": "鉄の剣",
+              "description": "一見質素な一振りの剣……",
+              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性",
+              "quantity": 1,
+              "id": "iron_sword",
+              "combat": {
+                "kind": "weapon",
+                "name": "鉄の剣",
+                "damage": "1d8+str/3",
+                "accuracy": 90,
+                "element": "physical"
+              },
+              "category": "equipment"
+            },
+            {
               "name": "革の鎧",
               "description": "なめした革で作られた軽量の鎧。",
               "effect": "被ダメージを1軽減",
@@ -4208,21 +5144,6 @@
               "category": "consumable"
             },
             {
-              "name": "氷鉄の大剣",
-              "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
-              "quantity": 1,
-              "id": "ice_iron_greatsword",
-              "combat": {
-                "kind": "weapon",
-                "name": "氷鉄の大剣",
-                "damage": "1d10+str/3+int/4",
-                "accuracy": 88,
-                "element": "ice"
-              },
-              "category": "equipment"
-            },
-            {
               "name": "治療の巻物",
               "description": "使用すると直ちにHPを30回復する。",
               "effect": "HPを30回復 / 消耗品",
@@ -4242,11 +5163,42 @@
               "quantity": 1,
               "id": "glowing_moss",
               "category": "material"
+            },
+            {
+              "name": "火球術の巻物",
+              "description": "知力10として火球を一度だけ放つ。",
+              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "quantity": 2,
+              "id": "fireball_scroll",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d6+5",
+                "accuracy": 90,
+                "element": "fire",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "紅玉の護符",
+              "description": "熱を帯びた赤い宝石の護符。",
+              "effect": "",
+              "quantity": 1,
+              "id": "ruby_charm",
+              "combat": {
+                "kind": "equipment",
+                "requires_equipped": true,
+                "damage_taken_multipliers": {
+                  "fire": 0.7
+                }
+              },
+              "category": "equipment"
             }
           ],
           "equipment": [
+            "鉄の剣",
             "革の鎧",
-            "氷鉄の大剣"
+            "紅玉の護符"
           ],
           "gold": 60,
           "companion": {
@@ -4303,52 +5255,6 @@
             {
               "location": "magic_shop",
               "step": "return_castle_from_magic_shop",
-              "delta": {
-                "current_location": "castle"
-              }
-            },
-            {
-              "location": "castle",
-              "step": "go_forge",
-              "delta": {
-                "current_location": "forge"
-              }
-            },
-            {
-              "location": "forge",
-              "step": "show_sword_to_blacksmith",
-              "delta": {
-                "flags_set": [
-                  "showed_hero_sword",
-                  "showed_hero_sword"
-                ]
-              }
-            },
-            {
-              "location": "forge",
-              "step": "accept_sword_fusion",
-              "delta": {
-                "inventory_add": [
-                  {
-                    "name": "氷鉄の大剣",
-                    "quantity": 1
-                  }
-                ],
-                "inventory_remove": [
-                  {
-                    "name": "鉄の剣",
-                    "quantity": 1
-                  }
-                ],
-                "flags_set": [
-                  "accepted_sword_fusion",
-                  "accepted_sword_fusion"
-                ]
-              }
-            },
-            {
-              "location": "forge",
-              "step": "return_castle_from_forge",
               "delta": {
                 "current_location": "castle"
               }
@@ -4489,6 +5395,52 @@
             },
             {
               "location": "cave_fork",
+              "step": "cave_left",
+              "delta": {
+                "current_location": "cave_lava_room"
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "@victory",
+              "delta": {
+                "flags_set": [
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "cleared_cave_lava_room"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "open_lava_chest",
+              "delta": {
+                "equip_item": "紅玉の護符",
+                "inventory_add": [
+                  {
+                    "name": "火球術の巻物",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "紅玉の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "opened_lava_chest"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "lava_back",
+              "delta": {
+                "current_location": "cave_fork"
+              }
+            },
+            {
+              "location": "cave_fork",
               "step": "cave_right",
               "delta": {
                 "current_location": "cave_hot_spring"
@@ -4604,7 +5556,7 @@
               "name": "携帯食",
               "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
               "effect": "",
-              "quantity": 2,
+              "quantity": 1,
               "id": "trail_ration",
               "traits": [
                 "food"
@@ -4630,7 +5582,7 @@
               "name": "治療の巻物",
               "description": "使用すると直ちにHPを30回復する。",
               "effect": "HPを30回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 3,
               "id": "healing_scroll",
               "combat": {
                 "kind": "heal",
@@ -4640,19 +5592,65 @@
               "category": "consumable"
             },
             {
+              "name": "氷の護符",
+              "description": "冷気の力を宿した護符。",
+              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "quantity": 1,
+              "id": "ice_charm",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d8+int/2",
+                "accuracy": 100,
+                "element": "ice",
+                "consumable": false
+              },
+              "category": "equipment"
+            },
+            {
               "name": "光苔",
               "description": "暗い場所で淡く光る苔。薬の材料になる。",
               "effect": "",
               "quantity": 1,
               "id": "glowing_moss",
               "category": "material"
+            },
+            {
+              "name": "火球術の巻物",
+              "description": "知力10として火球を一度だけ放つ。",
+              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "quantity": 2,
+              "id": "fireball_scroll",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d6+5",
+                "accuracy": 90,
+                "element": "fire",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "紅玉の護符",
+              "description": "熱を帯びた赤い宝石の護符。",
+              "effect": "",
+              "quantity": 1,
+              "id": "ruby_charm",
+              "combat": {
+                "kind": "equipment",
+                "requires_equipped": true,
+                "damage_taken_multipliers": {
+                  "fire": 0.7
+                }
+              },
+              "category": "equipment"
             }
           ],
           "equipment": [
             "聖なる杖",
-            "ローブ"
+            "ローブ",
+            "紅玉の護符"
           ],
-          "gold": 60,
+          "gold": 1,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -4778,6 +5776,21 @@
             },
             {
               "location": "elf_spring",
+              "step": "observe:glowing_moss_patch",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "gathered_glowing_moss_patch"
+                ]
+              }
+            },
+            {
+              "location": "elf_spring",
               "step": "continue_from_elf_spring",
               "delta": {
                 "current_location": "forest_wolves"
@@ -4792,6 +5805,101 @@
                   "passed_forest_wolves",
                   "saved_gald"
                 ],
+                "current_location": "forest_exit"
+              }
+            },
+            {
+              "location": "forest_exit",
+              "step": "return_inn_after_forest",
+              "delta": {
+                "current_location": "inn",
+                "flags_set": [
+                  "returned_from_forest"
+                ]
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_castle_from_inn",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_item_shop",
+              "delta": {
+                "current_location": "item_shop"
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "give_moss_to_sarah",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
+                "inventory_remove": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "sarah_moss_done",
+                  "sarah_moss_done"
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "sell:sarah_shop:trail_ration",
+              "delta": {
+                "gold_change": 5,
+                "inventory_remove": [
+                  {
+                    "name": "携帯食",
+                    "quantity": 1
+                  }
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "shop:sarah_shop:ice_charm",
+              "delta": {
+                "gold_change": -64,
+                "inventory_add": [
+                  {
+                    "id": "ice_charm",
+                    "name": "氷の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": []
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "return_castle_from_item_shop",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_inn",
+              "delta": {
+                "current_location": "inn"
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_forest_exit",
+              "delta": {
                 "current_location": "forest_exit"
               }
             },
@@ -4842,6 +5950,52 @@
                   "combat_defeated:cave_heat_corridor:heat_lizard",
                   "cleared_cave_heat_corridor"
                 ],
+                "current_location": "cave_fork"
+              }
+            },
+            {
+              "location": "cave_fork",
+              "step": "cave_left",
+              "delta": {
+                "current_location": "cave_lava_room"
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "@victory",
+              "delta": {
+                "flags_set": [
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "cleared_cave_lava_room"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "open_lava_chest",
+              "delta": {
+                "equip_item": "紅玉の護符",
+                "inventory_add": [
+                  {
+                    "name": "火球術の巻物",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "紅玉の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "opened_lava_chest"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "lava_back",
+              "delta": {
                 "current_location": "cave_fork"
               }
             },
@@ -5007,11 +6161,42 @@
               "quantity": 1,
               "id": "glowing_moss",
               "category": "material"
+            },
+            {
+              "name": "火球術の巻物",
+              "description": "知力10として火球を一度だけ放つ。",
+              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "quantity": 2,
+              "id": "fireball_scroll",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d6+5",
+                "accuracy": 90,
+                "element": "fire",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "紅玉の護符",
+              "description": "熱を帯びた赤い宝石の護符。",
+              "effect": "",
+              "quantity": 1,
+              "id": "ruby_charm",
+              "combat": {
+                "kind": "equipment",
+                "requires_equipped": true,
+                "damage_taken_multipliers": {
+                  "fire": 0.7
+                }
+              },
+              "category": "equipment"
             }
           ],
           "equipment": [
             "魔導書",
-            "魔法のローブ"
+            "魔法のローブ",
+            "紅玉の護符"
           ],
           "gold": 60,
           "companion": {
@@ -5208,6 +6393,52 @@
             },
             {
               "location": "cave_fork",
+              "step": "cave_left",
+              "delta": {
+                "current_location": "cave_lava_room"
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "@victory",
+              "delta": {
+                "flags_set": [
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "cleared_cave_lava_room"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "open_lava_chest",
+              "delta": {
+                "equip_item": "紅玉の護符",
+                "inventory_add": [
+                  {
+                    "name": "火球術の巻物",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "紅玉の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "opened_lava_chest"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "lava_back",
+              "delta": {
+                "current_location": "cave_fork"
+              }
+            },
+            {
+              "location": "cave_fork",
               "step": "cave_right",
               "delta": {
                 "current_location": "cave_hot_spring"
@@ -5313,7 +6544,7 @@
               "name": "携帯食",
               "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
               "effect": "",
-              "quantity": 2,
+              "quantity": 1,
               "id": "trail_ration",
               "traits": [
                 "food"
@@ -5352,7 +6583,7 @@
               "name": "治療の巻物",
               "description": "使用すると直ちにHPを30回復する。",
               "effect": "HPを30回復 / 消耗品",
-              "quantity": 2,
+              "quantity": 3,
               "id": "healing_scroll",
               "combat": {
                 "kind": "heal",
@@ -5362,19 +6593,65 @@
               "category": "consumable"
             },
             {
+              "name": "氷の護符",
+              "description": "冷気の力を宿した護符。",
+              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "quantity": 1,
+              "id": "ice_charm",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d8+int/2",
+                "accuracy": 100,
+                "element": "ice",
+                "consumable": false
+              },
+              "category": "equipment"
+            },
+            {
               "name": "光苔",
               "description": "暗い場所で淡く光る苔。薬の材料になる。",
               "effect": "",
               "quantity": 1,
               "id": "glowing_moss",
               "category": "material"
+            },
+            {
+              "name": "火球術の巻物",
+              "description": "知力10として火球を一度だけ放つ。",
+              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "quantity": 2,
+              "id": "fireball_scroll",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d6+5",
+                "accuracy": 90,
+                "element": "fire",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "紅玉の護符",
+              "description": "熱を帯びた赤い宝石の護符。",
+              "effect": "",
+              "quantity": 1,
+              "id": "ruby_charm",
+              "combat": {
+                "kind": "equipment",
+                "requires_equipped": true,
+                "damage_taken_multipliers": {
+                  "fire": 0.7
+                }
+              },
+              "category": "equipment"
             }
           ],
           "equipment": [
             "ダガー",
-            "革の鎧"
+            "革の鎧",
+            "紅玉の護符"
           ],
-          "gold": 60,
+          "gold": 1,
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
@@ -5500,6 +6777,21 @@
             },
             {
               "location": "elf_spring",
+              "step": "observe:glowing_moss_patch",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "gathered_glowing_moss_patch"
+                ]
+              }
+            },
+            {
+              "location": "elf_spring",
               "step": "continue_from_elf_spring",
               "delta": {
                 "current_location": "forest_wolves"
@@ -5514,6 +6806,101 @@
                   "passed_forest_wolves",
                   "saved_gald"
                 ],
+                "current_location": "forest_exit"
+              }
+            },
+            {
+              "location": "forest_exit",
+              "step": "return_inn_after_forest",
+              "delta": {
+                "current_location": "inn",
+                "flags_set": [
+                  "returned_from_forest"
+                ]
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_castle_from_inn",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_item_shop",
+              "delta": {
+                "current_location": "item_shop"
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "give_moss_to_sarah",
+              "delta": {
+                "inventory_add": [
+                  {
+                    "name": "治療の巻物",
+                    "quantity": 1
+                  }
+                ],
+                "inventory_remove": [
+                  {
+                    "name": "光苔",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "sarah_moss_done",
+                  "sarah_moss_done"
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "sell:sarah_shop:trail_ration",
+              "delta": {
+                "gold_change": 5,
+                "inventory_remove": [
+                  {
+                    "name": "携帯食",
+                    "quantity": 1
+                  }
+                ]
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "shop:sarah_shop:ice_charm",
+              "delta": {
+                "gold_change": -64,
+                "inventory_add": [
+                  {
+                    "id": "ice_charm",
+                    "name": "氷の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": []
+              }
+            },
+            {
+              "location": "item_shop",
+              "step": "return_castle_from_item_shop",
+              "delta": {
+                "current_location": "castle"
+              }
+            },
+            {
+              "location": "castle",
+              "step": "go_inn",
+              "delta": {
+                "current_location": "inn"
+              }
+            },
+            {
+              "location": "inn",
+              "step": "return_forest_exit",
+              "delta": {
                 "current_location": "forest_exit"
               }
             },
@@ -5564,6 +6951,52 @@
                   "combat_defeated:cave_heat_corridor:heat_lizard",
                   "cleared_cave_heat_corridor"
                 ],
+                "current_location": "cave_fork"
+              }
+            },
+            {
+              "location": "cave_fork",
+              "step": "cave_left",
+              "delta": {
+                "current_location": "cave_lava_room"
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "@victory",
+              "delta": {
+                "flags_set": [
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "combat_defeated:cave_lava_room:fire_wisp",
+                  "cleared_cave_lava_room"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "open_lava_chest",
+              "delta": {
+                "equip_item": "紅玉の護符",
+                "inventory_add": [
+                  {
+                    "name": "火球術の巻物",
+                    "quantity": 2
+                  },
+                  {
+                    "name": "紅玉の護符",
+                    "quantity": 1
+                  }
+                ],
+                "flags_set": [
+                  "opened_lava_chest"
+                ]
+              }
+            },
+            {
+              "location": "cave_lava_room",
+              "step": "lava_back",
+              "delta": {
                 "current_location": "cave_fork"
               }
             },

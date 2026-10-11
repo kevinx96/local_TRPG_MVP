@@ -3517,7 +3517,7 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶の剣",
-                              "damage": "1d10+str/3",
+                              "damage": "3d6+str/3",
                               "accuracy": 95,
                               "element": "counter"
                             },
@@ -3535,7 +3535,7 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶の剣",
-                              "damage": "1d10+str/3",
+                              "damage": "3d6+str/3",
                               "accuracy": 92,
                               "element": "counter"
                             },
@@ -3572,7 +3572,7 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶の杖",
-                              "damage": "1d10+wis/3",
+                              "damage": "1d20+wis/3",
                               "accuracy": 95,
                               "element": "counter",
                               "skill_healing_bonus": 2
@@ -3591,7 +3591,7 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶の杖",
-                              "damage": "1d10+wis/3",
+                              "damage": "1d20+wis/3",
                               "accuracy": 92,
                               "element": "counter",
                               "skill_healing_bonus": 2
@@ -3629,7 +3629,7 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶のオーブ",
-                              "damage": "1d10+int/3",
+                              "damage": "1d20+int/3",
                               "accuracy": 95,
                               "element": "counter"
                             },
@@ -3647,7 +3647,7 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶のオーブ",
-                              "damage": "1d10+int/3",
+                              "damage": "1d20+int/3",
                               "accuracy": 92,
                               "element": "counter"
                             },
@@ -3684,7 +3684,7 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶の短剣",
-                              "damage": "1d10+dex/3",
+                              "damage": "4d4+dex/4",
                               "accuracy": 95,
                               "element": "counter"
                             },
@@ -3702,7 +3702,7 @@
                             "combat": {
                               "kind": "weapon",
                               "name": "虹晶の短剣",
-                              "damage": "1d10+dex/3",
+                              "damage": "4d4+dex/4",
                               "accuracy": 92,
                               "element": "counter"
                             },
@@ -10045,7 +10045,7 @@
       "combat": {
         "kind": "weapon",
         "name": "虹晶の剣",
-        "damage": "1d10+str/3",
+        "damage": "3d6+str/3",
         "accuracy": 92,
         "element": "counter"
       }
@@ -10058,7 +10058,7 @@
       "combat": {
         "kind": "weapon",
         "name": "虹晶の杖",
-        "damage": "1d10+wis/3",
+        "damage": "1d20+wis/3",
         "accuracy": 92,
         "element": "counter",
         "skill_healing_bonus": 2
@@ -10072,7 +10072,7 @@
       "combat": {
         "kind": "weapon",
         "name": "虹晶のオーブ",
-        "damage": "1d10+int/3",
+        "damage": "1d20+int/3",
         "accuracy": 92,
         "element": "counter"
       }
@@ -10085,7 +10085,7 @@
       "combat": {
         "kind": "weapon",
         "name": "虹晶の短剣",
-        "damage": "1d10+dex/3",
+        "damage": "4d4+dex/4",
         "accuracy": 92,
         "element": "counter"
       }
@@ -10892,8 +10892,8 @@
       "name": "熱岩トカゲ",
       "description": "溶岩を背負った大トカゲ。噛みつかれると火傷を負う。",
       "element": "fire",
-      "hp": 22,
-      "max_hp": 22,
+      "hp": 18,
+      "max_hp": 18,
       "image": "/static/images/enemy_heat_lizard.png",
       "attributes": {
         "str": 8,
@@ -10904,8 +10904,8 @@
       "combat": {
         "basic_attack": {
           "name": "灼熱の噛みつき",
-          "damage": "1d4+1",
-          "accuracy": 85,
+          "damage": "2d5+1",
+          "accuracy": 86,
           "element": "fire",
           "on_hit_status": {
             "id": "burn",
@@ -10918,7 +10918,8 @@
         "evade": 5
       },
       "resistances": {
-        "ice": 1.5
+        "ice": 1.5,
+        "fire": 0.25
       },
       "rewards": {
         "gold": 0,
@@ -10944,16 +10945,17 @@
       "combat": {
         "basic_attack": {
           "name": "火の粉",
-          "damage": "1d3",
-          "accuracy": 85,
+          "damage": "1d7",
+          "accuracy": 100,
           "element": "fire"
         },
         "defense": 0,
-        "evade": 20
+        "evade": 30
       },
       "resistances": {
         "ice": 1.5,
-        "water": 1.5
+        "water": 1.5,
+        "fire": 0.8
       },
       "rewards": {
         "gold": 0,
@@ -10967,8 +10969,8 @@
       "name": "紅晶ゴーレム",
       "description": "赤い水晶が寄り集まってできた巨人。動きは鈍いが一撃が重い。",
       "element": "fire",
-      "hp": 26,
-      "max_hp": 26,
+      "hp": 33,
+      "max_hp": 33,
       "image": "/static/images/enemy_ruby_golem.png",
       "attributes": {
         "str": 8,
@@ -10979,8 +10981,8 @@
       "combat": {
         "basic_attack": {
           "name": "紅晶の拳",
-          "damage": "1d6+1",
-          "accuracy": 85,
+          "damage": "1d12",
+          "accuracy": 75,
           "element": "physical"
         },
         "defense": 2,
@@ -10989,7 +10991,8 @@
       "resistances": {
         "physical": 0.6,
         "water": 1.5,
-        "ice": 1.5
+        "ice": 1.5,
+        "fire": 0.35
       },
       "rewards": {
         "gold": 0,
@@ -11001,16 +11004,16 @@
           "id": "ruby_fist",
           "kind": "damage",
           "name": "紅晶の拳",
-          "damage": "1d6+1",
-          "accuracy": 85,
+          "damage": "1d12",
+          "accuracy": 75,
           "element": "physical"
         },
         {
           "id": "ruby_ray",
           "name": "熱線",
           "kind": "damage",
-          "damage": "1d4",
-          "accuracy": 90,
+          "damage": "1d12",
+          "accuracy": 75,
           "element": "fire"
         }
       ]
@@ -11100,8 +11103,8 @@
       "name": "虹晶樹",
       "description": "七色の水晶でできた大樹。洞窟の魔力を吸い上げ、魔物を生み出してきた。",
       "element": "fire",
-      "hp": 85,
-      "max_hp": 85,
+      "hp": 130,
+      "max_hp": 130,
       "image": "/static/images/enemy_prism_tree.png",
       "attributes": {
         "str": 8,
@@ -11112,8 +11115,8 @@
       "combat": {
         "basic_attack": {
           "name": "虹の枝打ち",
-          "damage": "1d8+2",
-          "accuracy": 85,
+          "damage": "1d14",
+          "accuracy": 78,
           "element": "physical"
         },
         "defense": 2,
@@ -11122,7 +11125,9 @@
       "resistances": {
         "fire": 0.25,
         "ice": 1.5,
-        "water": 1.5
+        "water": 1.5,
+        "physical": 0.6,
+        "holy": 0.75
       },
       "rewards": {
         "gold": 0,
@@ -11141,16 +11146,16 @@
           "id": "prism_branch",
           "kind": "damage",
           "name": "虹の枝打ち",
-          "damage": "1d8+2",
-          "accuracy": 85,
+          "damage": "1d14",
+          "accuracy": 78,
           "element": "physical"
         },
         {
           "id": "crystal_rain",
           "name": "結晶の雨",
           "kind": "damage",
-          "damage": "1d6+2",
-          "accuracy": 95,
+          "damage": "1d14",
+          "accuracy": 78,
           "element": "current",
           "target": "all"
         }
@@ -11165,7 +11170,9 @@
             "resistances": {
               "fire": 0.25,
               "water": 1.5,
-              "ice": 1.5
+              "ice": 1.5,
+              "physical": 0.6,
+              "holy": 0.75
             }
           },
           {
@@ -11173,7 +11180,9 @@
             "element": "ice",
             "resistances": {
               "ice": 0.25,
-              "fire": 1.5
+              "fire": 1.5,
+              "physical": 0.6,
+              "holy": 0.75
             }
           },
           {
@@ -11182,7 +11191,10 @@
             "resistances": {
               "earth": 0.25,
               "fire": 1.5,
-              "wind": 1.5
+              "wind": 1.5,
+              "physical": 0.6,
+              "holy": 0.75,
+              "ice": 0.5
             }
           }
         ]
@@ -12866,7 +12878,8 @@
         {
           "from": "F2",
           "to": "F5",
-          "action_id": "fort_shortcut"
+          "action_id": "fort_shortcut",
+          "visible_after": "resolved_lost_goblin_box"
         },
         {
           "from": "F3",

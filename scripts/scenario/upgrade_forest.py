@@ -86,6 +86,7 @@ def map_data(pack: dict[str, Any]) -> list[dict[str, Any]]:
                        edge("C4", "C5", "pass_crystal_corridor"), edge("C5", "C4", "prism_back"),
                        edge("C4", "C2", "crystal_back"), edge("C2", "C1", "fork_back"), edge("C1", "C0", "heat_back")])
     cave["nodes"][0]["locked_until"] = "cave_seal_broken"
+    next(e for e in forest["edges"] if e.get("action_id") == "fort_shortcut")["visible_after"] = "resolved_lost_goblin_box"
     return [fort, cave, forest]  # Most specific location ownership first.
 
 

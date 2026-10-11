@@ -43,7 +43,7 @@ def proposed_routes() -> dict[str, list[str]]:
     frost = ice + ["@victory"]
     cave = wolves + ["@victory", "exit_back", "wolves_back", "inspect_spring_wall", "decode_seal:success"]
     fork = cave + ["@victory"]
-    crystal = fork + ["cave_right", "hot_spring_forward"]
+    crystal = fork + ["cave_left", "@victory", "open_lava_chest", "lava_back", "cave_right", "hot_spring_forward"]
     return {
         "cave_heat_corridor": cave, "cave_lava_room": fork + ["cave_left"],
         "cave_crystal_corridor": crystal, "cave_prism_tree": crystal + ["@victory"],
@@ -71,7 +71,20 @@ def proposed_routes() -> dict[str, list[str]]:
 
 def replay_step(session: dict[str, Any], step: str) -> dict[str, Any]:
     source = state.current_location_id(session)
-    if step.startswith("@"):
+    if step.startswith(("shop:", "sell:")):
+        from host.shops import trade
+
+        _, shop_id, item_id = step.split(":")
+        delta = trade(session, shop_id, item_id, 1, selling=step.startswith("sell:"))
+    elif step.startswith("observe:"):
+        from host.free_actions import adjudicate
+
+        result = adjudicate(session, dict(kind="interact", operation="observe", target_id=step.split(":", 1)[1],
+                                         item_id="", action_id="", advance=False, approach="観察する", reply=""))
+        if result["outcome"] != "success":
+            raise ValueError(f"Unavailable checkpoint observation: {source}/{step}")
+        delta = result["state_delta"]
+    elif step.startswith("@"):
         encounter = combat._encounter_for_session(session, session["scenario_pack"])
         if not encounter["enemy_ids"]:
             raise ValueError(f"No encounter at {source}")
@@ -105,9 +118,10 @@ def generate(path: Path = DEFAULT_SCENARIO) -> dict[str, Any]:
             "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
             "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
             "出城前邀请无需付费/判定的 blue_robed_mage；离开森林按剧情 clear_companion。没有叠加互斥同伴。",
-            "勇者除商人支线外先完成锻冶师换剑；原装备失去后由现有引擎自动装备新武器。其他职业不臆造购物。",
-            "模板金币为 0，check_supplies 首次发放 50G；未假定回城购买或卖战利品。",
-            "森林出口主线选双狼支线；砦三层选择无口令警卫战，即使右路已给出口令也按这条可达路线记录。",
+            "勇者除商人支线、洞窟路线外先完成锻冶师换剑；原装备失去后由现有引擎自动装备新武器。",
+            "模板金币为 0，check_supplies 首次发放 50G；仅洞窟路线为僧侶/盗賊重放明确列出的折扣购物与出售。",
+            "森林主线经过 F1–F5；砦与洞窟为可选支路。砦三层选择无口令警卫战。",
+            "洞窟 Lv2：勇者使用初始鉄の剣；僧侶/盗賊交付光苔并出售携帯食后购买氷の護符；魔法使い使用职业技能。C4/C5 先取 C3a 紅玉の護符。",
             "TODO(design): 跨战斗消耗、双狼/史莱姆/砦分支、火コウモリ竜及ロビン取舍不能由数据确定。",
             "所有路线出发前执行 check_supplies 领取聖水2个；各战独立、不扣前战消耗。等级、技能与成长按路线里程碑重放。",
         ], "encounters": {}}
@@ -116,9 +130,14 @@ def generate(path: Path = DEFAULT_SCENARIO) -> dict[str, Any]:
         for character_id in characters:
             session = fresh_session(pack, character_id)
             steps = ["check_supplies", "go_magic_shop", "invite_blue_mage", "return_castle_from_magic_shop"]
-            if character_id == "hero" and encounter != "merchant_battle":
+            if character_id == "hero" and encounter != "merchant_battle" and not encounter.startswith("cave_"):
                 steps += ["go_forge", "show_sword_to_blacksmith", "accept_sword_fusion", "return_castle_from_forge"]
             steps += [step.format(character=character_id) for step in route]
+            if encounter.startswith("cave_") and character_id in {"cleric", "thief"}:
+                steps.insert(steps.index("continue_from_elf_spring"), "observe:glowing_moss_patch")
+                index = steps.index("exit_back")
+                steps[index:index] = ["return_inn_after_forest", "return_castle_from_inn", "go_item_shop", "give_moss_to_sarah",
+                    "sell:sarah_shop:trail_ration", "shop:sarah_shop:ice_charm", "return_castle_from_item_shop", "go_inn", "return_forest_exit"]
             sources = [replay_step(session, step) for step in steps]
             if state.current_location_id(session) != encounter:
                 raise ValueError(f"Route ended at wrong location: {encounter}")
