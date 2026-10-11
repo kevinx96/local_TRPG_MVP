@@ -69,21 +69,21 @@ class BalancePass2Tests(unittest.TestCase):
                 self.assertEqual(holy["quantity"], 2)
                 self.assertEqual(holy["combat"]["element"], "holy")
                 self.assertEqual(holy["combat"]["damage"], "36")
-                self.assertEqual(session["character"]["gold"], gold)
+                self.assertEqual(session["character"]["gold"], gold + 50)
                 self.assertFalse(state.action_requirement_status(action, session)[0])
                 state.apply_action_result(session, action, {})
                 self.assertEqual(next(i for i in session["character"]["inventory"] if i.get("id") == "holy_water")["quantity"], 2)
                 state.apply_state_delta(session, {"inventory_remove": [{"name": "聖水", "quantity": 2}]})
                 state.apply_action_result(session, action, {})
-                self.assertFalse(any(i.get("id") == "holy_water" for i in session["character"]["inventory"]))
+                self.assertEqual(sum(i.get("quantity", 1) for i in session["character"]["inventory"] if i.get("id") == "holy_water"), 0)
 
-    def test_advice_does_not_grant_supplies(self):
+    def test_advice_grants_one_holy_water_only_on_success(self):
         for success in (True, False):
             session = checkpoints.fresh_session(deepcopy(self.pack), "hero")
             action = state.resolve_action(session, action_id="ask_general_advice")
             state.apply_action_result(session, action, {"dc": 15, "success": success})
             self.assertIn("不死の者には聖水が効く", select_hybrid_prepared_turn(session)["draft"]["gm_text"])
-            self.assertFalse(any(i.get("id") == "holy_water" for i in session["character"]["inventory"]))
+            self.assertEqual(sum(i.get("quantity", 1) for i in session["character"]["inventory"] if i.get("id") == "holy_water"), int(success))
 
     def test_every_entry_effect_sets_flag_and_grants_level(self):
         def transitions(value):
@@ -99,7 +99,7 @@ class BalancePass2Tests(unittest.TestCase):
         for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
             pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO.with_name(filename))
             entries = [(location, effect) for location in pack["locations"] for effect in transitions(location)]
-            self.assertEqual(len(entries), 5)
+            self.assertEqual(len(entries), 8)
             for location, effect in entries:
                 session = checkpoints.fresh_session(deepcopy(pack), "hero")
                 session["world_state"] = {"scene_id": location["scene_id"], "location_id": location["id"]}

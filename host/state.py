@@ -527,6 +527,10 @@ def annotate_choices_for_session(raw_choices: Any, session: dict[str, Any]) -> l
             choice["disabled_reason"] = str(choice.get("disabled_reason") or "完了済みです。")
         if "children" in choice and isinstance(choice["children"], list):
             choice["children"] = annotate_choices_for_session(choice["children"], session)
+        if choice.get("requirements") and not _session_requirement_passes(choice["requirements"], session):
+            _, requirement_reason = choice_requirement_status(choice, session.get("character", {}))
+            choice["enabled"] = False
+            choice["disabled_reason"] = choice.get("disabled_reason") or requirement_reason or "この行動はまだ選択できません。"
         choices.append(choice)
     return choices
 
@@ -1017,6 +1021,8 @@ def action_requirement_status(action: dict[str, Any], session: dict[str, Any]) -
         return False, "完了済みです。"
     if once_flag and flags.get(once_flag):
         return False, "完了済みです。"
+    if action.get("requirements") and not _session_requirement_passes(action["requirements"], session):
+        return False, "この行動はまだ選択できません。"
     return choice_requirement_status(action, session.get("character", {}))
 
 
@@ -1046,6 +1052,14 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
     if branch_outcome != outcome:
         outcome_effects.extend(_as_list(action.get(f"{outcome}_effects")))
     delta = _effects_to_state_delta([*base_effects, *outcome_effects], session)
+    extra_text = []
+    bonus_effects = []
+    for bonus in action.get("roll_bonuses", []):
+        if _safe_int(latest_roll.get("total"), 0) >= bonus["total_gte"]:
+            bonus_effects.extend(bonus.get("effects", []))
+            extra_text.append(str(bonus.get("text") or ""))
+    if bonus_effects:
+        delta = _effects_to_state_delta([*base_effects, *outcome_effects, *bonus_effects], session)
     flags = session.setdefault("flags", {})
     if isinstance(flags, dict):
         if action.get("once"):
@@ -1064,6 +1078,7 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
         "state_delta": delta,
         "prepared_turn_id": str(action.get("prepared_turn_id") or ""),
         "source_location_id": source_location_id,
+        "extra_text": "".join(extra_text),
     }
     record_state_event(
         session,
@@ -1384,6 +1399,8 @@ def _expand_conditional_effects(effects: list[Any], session: Optional[dict[str, 
 
 
 def _session_requirement_passes(requirement: Any, session: Optional[dict[str, Any]]) -> bool:
+    if isinstance(requirement, list):
+        return all(_session_requirement_passes(item, session) for item in requirement)
     if not isinstance(requirement, dict):
         return True
     if isinstance(requirement.get("any"), list):
@@ -1391,6 +1408,9 @@ def _session_requirement_passes(requirement: Any, session: Optional[dict[str, An
     if isinstance(requirement.get("all"), list):
         return all(_session_requirement_passes(item, session) for item in requirement["all"])
     flags = session.get("flags", {}) if isinstance(session, dict) and isinstance(session.get("flags"), dict) else {}
+    if isinstance(requirement.get("flags_count_gte"), dict):
+        spec = requirement["flags_count_gte"]
+        return sum(bool(flags.get(flag)) for flag in set(spec["flags"])) >= spec["count"]
     if isinstance(requirement.get("flag"), str):
         return bool(flags.get(requirement["flag"]))
     if isinstance(requirement.get("not_flag"), str):
@@ -1910,6 +1930,14 @@ def apply_state_delta(
                         f"現在地が{current_location_title(session)}になりました。",
                         {"before": before_position, "after": after_position},
                     )
+                    location = _current_location_record(session) or {}
+                    entry_effects = location.get("entry_effects", [])
+                    if entry_effects:
+                        entry_delta = _effects_to_state_delta(entry_effects, session)
+                        apply_state_delta(session, entry_delta)
+                        if entry_delta and location.get("entry_text"):
+                            record_state_event(session, "location_hint", str(location["entry_text"]),
+                                               {"location_id": location["id"], "state_delta": deepcopy(entry_delta)})
 
 
     _apply_milestones(session)

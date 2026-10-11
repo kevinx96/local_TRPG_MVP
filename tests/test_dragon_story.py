@@ -42,7 +42,7 @@ class DragonStoryTests(unittest.TestCase):
             with self.subTest(filename=filename):
                 meta = self.load_raw(filename)["meta"]
                 self.assertEqual(meta["title"], "紅き邪竜イグニス")
-                self.assertEqual(meta["content_revision"], "2026-10-11-balance-pass3")
+                self.assertEqual(meta["content_revision"], "2026-10-12-scenario-v2")
 
     def test_client_keeps_hybrid_scenarios_selectable(self):
         source = Path("client/app.js").read_text(encoding="utf-8")

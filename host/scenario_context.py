@@ -285,14 +285,18 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
         ]
         exact_matches = [turn for turn in action_matches if str(turn.get("outcome") or "") == outcome]
         if exact_matches:
-            return deepcopy(exact_matches[0])
+            turn = deepcopy(exact_matches[0])
+            turn.setdefault("draft", {})["gm_text"] = str(turn.get("draft", {}).get("gm_text") or "") + str(action_result.get("extra_text") or "")
+            return turn
         normalized_outcome = _normalized_outcome(outcome)
         family_matches = [
             turn for turn in action_matches
             if normalized_outcome and _normalized_outcome(turn.get("outcome")) == normalized_outcome
         ]
         if family_matches:
-            return deepcopy(family_matches[0])
+            turn = deepcopy(family_matches[0])
+            turn.setdefault("draft", {})["gm_text"] = str(turn.get("draft", {}).get("gm_text") or "") + str(action_result.get("extra_text") or "")
+            return turn
         neutral_matches = [turn for turn in action_matches if not str(turn.get("outcome") or "")]
         if neutral_matches:
             return deepcopy(neutral_matches[0])

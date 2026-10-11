@@ -551,7 +551,8 @@ def _enemy_phase(session: dict[str, Any], rng: Any) -> None:
         _execute_enemy_ability(session, enemy, ability, rng)
         if session.get("game_over"):
             break
-    combat["player_status"] = {}
+    disabled_round = combat.get("player_status", {}).get("guard_disabled_round", 0)
+    combat["player_status"] = {"guard_disabled_round": disabled_round} if disabled_round > combat["round"] else {}
 
 
 def _execute_enemy_ability(session: dict[str, Any], enemy: dict[str, Any], ability: dict[str, Any], rng: Any) -> None:
@@ -576,6 +577,14 @@ def _execute_enemy_ability(session: dict[str, Any], enemy: dict[str, Any], abili
         _log(session, actor_id, "field", f"{enemy.get('name')}は{field['name']}を展開した。", field)
     elif kind == "status" and ability.get("status_effect") == "undead_conversion":
         _apply_undead_conversion(session, actor_id)
+    elif kind == "defend":
+        _apply_status(enemy, {"id": str(ability["id"]), "name": str(ability["name"]),
+                              "guard_multiplier": ability.get("guard_multiplier", 0.5),
+                              "remaining_rounds": int(ability.get("duration", 2)) + 1})
+        _log(session, actor_id, "defend", f"{enemy.get('name')}は{ability['name']}で守りを固めた。")
+    elif kind == "status" and ability.get("status_effect") == "break_guard":
+        session["combat"].setdefault("player_status", {})["guard_disabled_round"] = session["combat"]["round"] + 1
+        _log(session, actor_id, "status", f"{enemy.get('name')}は{ability['name']}を使用した。")
     else:
         _resolve_attack(session, enemy, session["character"], ability, actor_id, rng)
 
@@ -679,7 +688,12 @@ def _resolve_attack(
     if defender is session.get("character"):
         status = session["combat"].get("player_status") or {}
         guard = float(status.get("guard_multiplier", 1.0) or 1.0)
+        if status.get("guard_disabled_round", 0) >= session["combat"]["round"]:
+            guard = 1.0
         damage = max(0, int(round(damage * guard)))
+    else:
+        for status in defender.get("statuses", []):
+            damage = max(0, int(round(damage * float(status.get("guard_multiplier", 1.0)))))
     before_hp = _safe_int(defender.get("hp"), 0)
     if _negative_undead(defender):
         if element.lower() in {"holy", "light"} or ability.get("heals_negative_undead"):
@@ -740,6 +754,21 @@ def _check_victory_or_defeat(session: dict[str, Any]) -> None:
         _finish_combat(session, "defeat", "プレイヤーは戦闘不能になった。")
         return
     enemies = combat.get("enemies") or []
+    catalog = {enemy["id"]: enemy for enemy in session.get("scenario_pack", {}).get("enemies", [])}
+    for index, enemy in enumerate(enemies):
+        if not _enemy_is_defeated(enemy) or not enemy.get("next_phase"):
+            continue
+        template = catalog.get(enemy["next_phase"])
+        if template is None:
+            raise CombatError(f"Unknown next_phase: {enemy['next_phase']}")
+        replacement = _runtime_enemy(template, index)
+        replacement["hp"] = replacement["max_hp"]
+        combat.setdefault("completed_phases", []).append(deepcopy(enemy))
+        enemies[index] = replacement
+        combat.setdefault("phase_transitions", []).append(
+            {"round": combat["round"], "from": enemy["template_id"], "to": replacement["template_id"]})
+        _log(session, "system", "phase_transition", str(enemy.get("phase_transition_text") or ""),
+             {"from": enemy["template_id"], "to": replacement["template_id"]})
     if enemies and all(_enemy_is_defeated(enemy) for enemy in enemies):
         _finish_combat(session, "victory", "すべての敵を倒した。")
 
@@ -776,11 +805,12 @@ def _finish_combat(session: dict[str, Any], status: str, summary: str) -> None:
     if isinstance(result_texts, dict) and isinstance(result_texts.get(status), str):
         result["prepared_text"] = result_texts[status]
     if status == "victory":
-        delta = _victory_delta(session, enemies, combat.get("encounter") or {})
+        defeated_phases = [*combat.get("completed_phases", []), *enemies]
+        delta = _victory_delta(session, defeated_phases, combat.get("encounter") or {})
         combat["pending_state_delta"] = delta
         result["rewards"] = deepcopy(delta)
         flags = session.setdefault("flags", {})
-        for enemy in enemies:
+        for enemy in defeated_phases:
             template_id = str(enemy.get("template_id") or enemy.get("id") or "")
             if template_id:
                 flags[_defeated_flag(template_id, str(combat.get("location_id") or ""))] = True

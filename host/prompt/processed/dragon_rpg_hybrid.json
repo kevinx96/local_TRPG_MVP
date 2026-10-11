@@ -7,7 +7,7 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-11-balance-pass3"
+    "content_revision": "2026-10-12-scenario-v2"
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -57,7 +57,8 @@
       ],
       "next_scene_ids": [
         "castle_town",
-        "dark_forest"
+        "dark_forest",
+        "village"
       ],
       "actions": []
     },
@@ -98,7 +99,8 @@
         "goblin_fort_chest_fight"
       ],
       "next_scene_ids": [
-        "village"
+        "village",
+        "throne_room"
       ],
       "actions": []
     },
@@ -132,7 +134,8 @@
         "ian_ice_katana_aftermath"
       ],
       "next_scene_ids": [
-        "dragon_valley"
+        "dragon_valley",
+        "throne_room"
       ],
       "actions": []
     },
@@ -151,10 +154,21 @@
         "最終決戦"
       ],
       "location_ids": [
-        "dragon_valley_loc"
+        "dragon_valley_loc",
+        "ignis_last_breath"
       ],
-      "next_scene_ids": [],
+      "next_scene_ids": [
+        "castle_return"
+      ],
       "actions": []
+    },
+    {
+      "id": "castle_return",
+      "title": "王城への帰還",
+      "location_ids": [
+        "castle_report",
+        "draco_battle"
+      ]
     }
   ],
   "fallback_choices": [
@@ -664,6 +678,13 @@
           "success_effects": [
             {
               "set_flag": "got_general_advice"
+            },
+            {
+              "add_item": {
+                "id": "holy_water",
+                "name": "聖水",
+                "quantity": 1
+              }
             }
           ],
           "failure_effects": [
@@ -671,7 +692,18 @@
               "set_flag": "general_advice_failed"
             }
           ],
-          "portrait_image": "/static/images/npc_general.png"
+          "portrait_image": "/static/images/npc_general.png",
+          "roll_bonuses": [
+            {
+              "total_gte": 18,
+              "effects": [
+                {
+                  "set_flag": "noticed_general_frost"
+                }
+              ],
+              "text": "話し終えた将軍の吐息が、なぜか白く凍っていた。"
+            }
+          ]
         },
         {
           "id": "check_supplies",
@@ -684,14 +716,14 @@
           "once": "checked_supplies",
           "effects": [
             {
-              "set_flag": "checked_supplies"
-            },
-            {
               "branch": {
                 "requirements": {
                   "not_flag": "checked_supplies"
                 },
                 "then": [
+                  {
+                    "gold_change": 50
+                  },
                   {
                     "add_item": {
                       "id": "holy_water",
@@ -816,10 +848,50 @@
               "set_flag": "forest_departure_failed"
             }
           ]
+        },
+        {
+          "id": "return_village",
+          "text": "麓の村へ向かう",
+          "preview": "麓の村へ向かう",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "麓の村へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "village",
+              "flags_set": [
+                "reached_village"
+              ]
+            }
+          ],
+          "visible_after": "returned_from_village"
         }
       ],
       "background_image": "/static/images/bg_dragon_rpg.png",
-      "portrait_image": "/static/images/npc_king.png"
+      "portrait_image": "/static/images/npc_king.png",
+      "objects": [
+        {
+          "id": "general_breath",
+          "name": "将軍ドラコ",
+          "description": "将軍ドラコ",
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+wis",
+              "dc": 16
+            },
+            "once": "observed_general_breath",
+            "success_effects": [
+              {
+                "set_flag": "noticed_general_frost"
+              }
+            ],
+            "failure_effects": [],
+            "success_text": "将軍の足元だけ、絨毯にうっすらと霜が降りている。",
+            "failure_text": "手がかりは見つからなかった。"
+          }
+        }
+      ]
     },
     {
       "id": "forge",
@@ -1613,6 +1685,44 @@
               "set_flag": "forest_departure_failed"
             }
           ]
+        },
+        {
+          "id": "forge_ice_charm",
+          "text": "氷の結晶を護符に加工する",
+          "preview": "氷の結晶を護符に加工する",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "氷の結晶を護符に加工する"
+          ],
+          "effects": [
+            {
+              "gold_change": -20
+            },
+            {
+              "remove_item": {
+                "id": "ice_crystal",
+                "name": "氷の結晶",
+                "quantity": 1
+              }
+            },
+            {
+              "add_item": {
+                "id": "ice_charm",
+                "name": "氷の護符",
+                "quantity": 1
+              }
+            }
+          ],
+          "requirements": {
+            "all": [
+              {
+                "has_item": "氷の結晶"
+              },
+              {
+                "gold_gte": 20
+              }
+            ]
+          }
         }
       ],
       "background_image": "/static/images/bg_forge.png",
@@ -2332,6 +2442,30 @@
             "rewrite_notes": [],
             "action_id": "ask_robin_rumor",
             "outcome": "neutral"
+          },
+          {
+            "id": "ask_ian_dragon_tale_neutral",
+            "purpose": "choice_response",
+            "action_id": "ask_ian_dragon_tale",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "「村の鍛冶屋だった頃、祖父がよく言っていた。赤き竜は火を、白き竜は氷を守る。どちらも本来は人の敵じゃない、とな」",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          },
+          {
+            "id": "ask_robin_stolen_scale_neutral",
+            "purpose": "choice_response",
+            "action_id": "ask_robin_stolen_scale",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "「将軍様の部屋で見つけたんだけどさ、売ろうとしたら手が凍りそうになって。あんたが持ってなよ」",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
           }
         ]
       },
@@ -2406,6 +2540,20 @@
                 }
               ],
               "portrait_image": "/static/images/npc_ian.png"
+            },
+            {
+              "id": "ask_ian_dragon_tale",
+              "text": "竜と人の昔話を聞く",
+              "preview": "竜と人の昔話を聞く",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "竜と人の昔話を聞く"
+              ],
+              "effects": [
+                {
+                  "set_flag": "heard_treaty_lore"
+                }
+              ]
             }
           ],
           "portrait_image": "/static/images/npc_ian.png"
@@ -2466,6 +2614,35 @@
                 }
               ],
               "portrait_image": "/static/images/npc_robin.png"
+            },
+            {
+              "id": "ask_robin_stolen_scale",
+              "text": "将軍の部屋から盗んだ物を見せてもらう",
+              "preview": "将軍の部屋から盗んだ物を見せてもらう",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "将軍の部屋から盗んだ物を見せてもらう"
+              ],
+              "effects": [
+                {
+                  "add_item": {
+                    "id": "white_dragon_scale",
+                    "name": "白い竜鱗",
+                    "quantity": 1
+                  }
+                }
+              ],
+              "once": "received_robin_scale",
+              "requirements": {
+                "all": [
+                  {
+                    "flag": "recruited_robin"
+                  },
+                  {
+                    "flag": "cleared_goblin_fort"
+                  }
+                ]
+              }
             }
           ],
           "portrait_image": "/static/images/npc_robin.png"
@@ -2502,6 +2679,21 @@
               "current_location": "castle"
             }
           ]
+        },
+        {
+          "id": "return_forest_exit",
+          "text": "森を出て麓の村へ向かう",
+          "preview": "森を出て麓の村へ向かう",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "森を出て麓の村へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "forest_exit"
+            }
+          ],
+          "visible_after": "returned_from_forest"
         }
       ],
       "background_image": "/static/images/bg_inn.png",
@@ -2710,6 +2902,18 @@
             ],
             "action_id": "buy_ice_amulet",
             "outcome": "neutral"
+          },
+          {
+            "id": "ask_elder_treaty_neutral",
+            "purpose": "choice_response",
+            "action_id": "ask_elder_treaty",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "「昔、元素と人と竜は互いを害さぬと誓い合った。北の雪嶺には、盟約を見張る白き竜がいると聞く」",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
           }
         ],
         "gm_notes": [
@@ -2725,13 +2929,28 @@
           "intent_keywords": [
             "長老に邪竜の弱点を聞く"
           ],
-          "once": "heard_dragon_weakness",
           "effects": [
             {
               "set_flag": "heard_dragon_weakness"
             }
           ],
-          "portrait_image": "/static/images/npc_elder.png"
+          "portrait_image": "/static/images/npc_elder.png",
+          "children": [
+            {
+              "id": "ask_elder_treaty",
+              "text": "古い盟約について聞く",
+              "preview": "古い盟約について聞く",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "古い盟約について聞く"
+              ],
+              "effects": [
+                {
+                  "set_flag": "heard_treaty_lore"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "buy_ice_amulet",
@@ -2784,6 +3003,37 @@
               ]
             }
           ]
+        },
+        {
+          "id": "return_castle_from_village",
+          "text": "城に戻る",
+          "preview": "城に戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城に戻る"
+          ],
+          "effects": [
+            {
+              "set_flag": "returned_from_village"
+            },
+            {
+              "current_location": "castle"
+            }
+          ]
+        },
+        {
+          "id": "return_frozen_clue",
+          "text": "結氷した場所を探索する",
+          "preview": "結氷した場所を探索する",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "結氷した場所を探索する"
+          ],
+          "effects": [
+            {
+              "current_location": "village_frozen_clue"
+            }
+          ]
         }
       ],
       "background_image": "/static/images/bg_village.png",
@@ -2809,11 +3059,14 @@
           "flags_set": [
             "defeated_ignis"
           ],
-          "game_over": {
-            "title": "冒険完了",
-            "ending": "ignis_defeated",
-            "reason": "邪竜イグニスは倒れ、谷を覆っていた炎が消えていく。あなたの冒険は、人々が明日を迎える道を開いた。"
-          }
+          "current_location": "ignis_last_breath",
+          "inventory_add": [
+            {
+              "id": "red_dragon_core",
+              "name": "紅竜の炎核",
+              "quantity": 1
+            }
+          ]
         },
         "defeat_effects": {
           "game_over": {
@@ -2822,7 +3075,8 @@
           }
         },
         "result_texts": {
-          "defeat": "邪竜の炎が視界を覆い、冒険は竜の谷で終わりを迎えた。"
+          "defeat": "邪竜の炎が視界を覆い、冒険は竜の谷で終わりを迎えた。",
+          "victory": "倒れたイグニスの胸がかすかに上下している。焼け焦げた鱗の隙間、古い傷口だけが、炎の竜には似つかわしくない白い霜に覆われている。"
         },
         "encounter_class": "boss"
       },
@@ -3076,14 +3330,17 @@
           },
           "success_effects": [
             {
-              "set_flag": "defeated_ignis"
-            },
-            {
-              "game_over": {
-                "title": "冒険完了",
-                "ending": "ignis_defeated",
-                "reason": "邪竜イグニスは倒れ、谷を覆っていた炎が消えていく。あなたの冒険は、人々が明日を迎える道を開いた。"
-              }
+              "flags_set": [
+                "defeated_ignis"
+              ],
+              "current_location": "ignis_last_breath",
+              "inventory_add": [
+                {
+                  "id": "red_dragon_core",
+                  "name": "紅竜の炎核",
+                  "quantity": 1
+                }
+              ]
             }
           ],
           "failure_effects": [
@@ -3503,7 +3760,7 @@
             "action_id": "buy_sarah_herb_1",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "サラは5Gを受け取り、在庫から薬草を一つ取り出して手渡した。",
+              "gm_text": "サラは10Gを受け取り、在庫から薬草を一つ取り出して手渡した。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -3521,7 +3778,7 @@
             "action_id": "buy_sarah_herb_2",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "サラは5Gを受け取り、在庫から薬草を一つ取り出して手渡した。",
+              "gm_text": "サラは10Gを受け取り、在庫から薬草を一つ取り出して手渡した。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -3539,7 +3796,7 @@
             "action_id": "buy_sarah_herb_3",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "サラは5Gを受け取り、在庫から薬草を一つ取り出して手渡した。",
+              "gm_text": "サラは10Gを受け取り、在庫から薬草を一つ取り出して手渡した。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -3639,22 +3896,23 @@
           "children": [
             {
               "id": "buy_sarah_herb_1",
-              "text": "薬草を買う（5G・在庫1/3）",
+              "text": "薬草を買う（10G・在庫1/3）",
               "preview": "HPを10回復する薬草",
               "risk": "判定不要",
               "intent_keywords": [
-                "薬草を買う（5G・在庫1/3）"
+                "薬草を買う（10G・在庫1/3）"
               ],
               "requirements": {
-                "gold_gte": 5
+                "gold_gte": 10
               },
               "once": "bought_sarah_herb_1",
               "effects": [
                 {
-                  "gold_change": -5
+                  "gold_change": -10
                 },
                 {
                   "add_item": {
+                    "id": "herb",
                     "name": "薬草",
                     "quantity": 1
                   }
@@ -3664,22 +3922,23 @@
             },
             {
               "id": "buy_sarah_herb_2",
-              "text": "薬草を買う（5G・在庫2/3）",
+              "text": "薬草を買う（10G・在庫2/3）",
               "preview": "HPを10回復する薬草",
               "risk": "判定不要",
               "intent_keywords": [
-                "薬草を買う（5G・在庫2/3）"
+                "薬草を買う（10G・在庫2/3）"
               ],
               "requirements": {
-                "gold_gte": 5
+                "gold_gte": 10
               },
               "once": "bought_sarah_herb_2",
               "effects": [
                 {
-                  "gold_change": -5
+                  "gold_change": -10
                 },
                 {
                   "add_item": {
+                    "id": "herb",
                     "name": "薬草",
                     "quantity": 1
                   }
@@ -3689,22 +3948,23 @@
             },
             {
               "id": "buy_sarah_herb_3",
-              "text": "薬草を買う（5G・在庫3/3）",
+              "text": "薬草を買う（10G・在庫3/3）",
               "preview": "HPを10回復する薬草",
               "risk": "判定不要",
               "intent_keywords": [
-                "薬草を買う（5G・在庫3/3）"
+                "薬草を買う（10G・在庫3/3）"
               ],
               "requirements": {
-                "gold_gte": 5
+                "gold_gte": 10
               },
               "once": "bought_sarah_herb_3",
               "effects": [
                 {
-                  "gold_change": -5
+                  "gold_change": -10
                 },
                 {
                   "add_item": {
+                    "id": "herb",
                     "name": "薬草",
                     "quantity": 1
                   }
@@ -3759,6 +4019,78 @@
                 }
               ],
               "portrait_image": "/static/images/npc_sarah.png"
+            },
+            {
+              "id": "buy_sarah_holy_water",
+              "text": "聖水を買う（15G）",
+              "preview": "聖水を買う（15G）",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "聖水を買う（15G）"
+              ],
+              "effects": [
+                {
+                  "gold_change": -15
+                },
+                {
+                  "add_item": {
+                    "id": "holy_water",
+                    "name": "聖水",
+                    "quantity": 1
+                  }
+                }
+              ],
+              "requirements": {
+                "gold_gte": 15
+              }
+            },
+            {
+              "id": "buy_sarah_ice_charm",
+              "text": "氷の護符を買う（80G）",
+              "preview": "氷の護符を買う（80G）",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "氷の護符を買う（80G）"
+              ],
+              "effects": [
+                {
+                  "gold_change": -80
+                },
+                {
+                  "add_item": {
+                    "id": "ice_charm",
+                    "name": "氷の護符",
+                    "quantity": 1
+                  }
+                }
+              ],
+              "requirements": {
+                "gold_gte": 80
+              }
+            },
+            {
+              "id": "buy_sarah_fireball_scroll",
+              "text": "火球術の巻物を買う（40G）",
+              "preview": "火球術の巻物を買う（40G）",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "火球術の巻物を買う（40G）"
+              ],
+              "effects": [
+                {
+                  "gold_change": -40
+                },
+                {
+                  "add_item": {
+                    "id": "fireball_scroll",
+                    "name": "火球術の巻物",
+                    "quantity": 1
+                  }
+                }
+              ],
+              "requirements": {
+                "gold_gte": 40
+              }
             }
           ],
           "portrait_image": "/static/images/npc_sarah.png"
@@ -4139,6 +4471,18 @@
             "rewrite_notes": [
               "確定済みのアクション結果だけを自然な日本語で描写してください。"
             ]
+          },
+          {
+            "id": "buy_white_scale_neutral",
+            "purpose": "choice_response",
+            "action_id": "buy_white_scale",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "「ヒヒ……それは北の雪嶺から落ちてきたものさ。持ち主は案外、近くにいるかもしれないねえ」",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
           }
         ]
       },
@@ -4466,6 +4810,37 @@
             }
           ],
           "portrait_image": "/static/images/npc_suspicious_merchant.png"
+        },
+        {
+          "id": "buy_white_scale",
+          "text": "白い鱗を買う",
+          "preview": "白い鱗を買う",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "白い鱗を買う"
+          ],
+          "effects": [
+            {
+              "gold_change": -60
+            },
+            {
+              "add_item": {
+                "id": "white_dragon_scale",
+                "name": "白い竜鱗",
+                "quantity": 1
+              }
+            }
+          ],
+          "requirements": {
+            "all": [
+              {
+                "gold_gte": 60
+              },
+              {
+                "lacks_item": "白い竜鱗"
+              }
+            ]
+          }
         }
       ],
       "background_image": "/static/images/bg_alley_night.png",
@@ -4826,6 +5201,9 @@
             },
             {
               "current_location": "goblin_fort"
+            },
+            {
+              "set_flag": "knows_fort_password"
             }
           ],
           "portrait_image": "/static/images/npc_lost_goblin.png"
@@ -5249,6 +5627,23 @@
               "flags_set": [
                 "reached_village"
               ]
+            }
+          ]
+        },
+        {
+          "id": "return_inn_after_forest",
+          "text": "宿屋へ向かう",
+          "preview": "宿屋へ向かう",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "宿屋へ向かう"
+          ],
+          "effects": [
+            {
+              "set_flag": "returned_from_forest"
+            },
+            {
+              "current_location": "inn"
             }
           ]
         }
@@ -5751,6 +6146,9 @@
             },
             {
               "current_location": "goblin_fort_third_gate"
+            },
+            {
+              "set_flag": "knows_fort_password"
             }
           ],
           "failure_effects": [
@@ -5962,7 +6360,6 @@
           "intent_keywords": [
             "暗号を答える"
           ],
-          "visible_after": "goblin_password_clue",
           "effects": [
             {
               "current_location": "goblin_fort_fourth"
@@ -5970,7 +6367,10 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "requirements": {
+            "flag": "knows_fort_password"
+          }
         },
         {
           "id": "invent_goblin_password",
@@ -6019,7 +6419,51 @@
           ]
         }
       ],
-      "background_image": "/static/images/bg_goblin_fort.png"
+      "background_image": "/static/images/bg_goblin_fort.png",
+      "objects": [
+        {
+          "id": "iron_gate_window",
+          "name": "鉄門の小窓",
+          "description": "鉄門の小窓",
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+wis",
+              "dc": 13
+            },
+            "once": "observed_iron_gate_window",
+            "success_effects": [
+              {
+                "set_flag": "knows_fort_password"
+              }
+            ],
+            "failure_effects": [],
+            "success_text": "入手した暗号で鉄門を開ける。",
+            "failure_text": "手がかりは見つからなかった。"
+          }
+        }
+      ],
+      "entry_effects": [
+        {
+          "branch": {
+            "requirements": {
+              "all": [
+                {
+                  "companion_id": "robin"
+                },
+                {
+                  "not_flag": "knows_fort_password"
+                }
+              ]
+            },
+            "then": [
+              {
+                "set_flag": "knows_fort_password"
+              }
+            ]
+          }
+        }
+      ],
+      "entry_text": "ロビンが暗号を教えてくれた。"
     },
     {
       "id": "goblin_fort_third_guards",
@@ -7085,6 +7529,30 @@
             "rewrite_notes": [
               "確定済みのアクション結果だけを自然な日本語で描写してください。"
             ]
+          },
+          {
+            "id": "inspect_frost_core_success",
+            "purpose": "choice_response",
+            "action_id": "inspect_frost_core",
+            "outcome": "success",
+            "draft": {
+              "gm_text": "凍った炎の中心に、白い鱗が一枚埋まっていた。冷気はそこから広がっている。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          },
+          {
+            "id": "inspect_frost_core_failure",
+            "purpose": "choice_response",
+            "action_id": "inspect_frost_core",
+            "outcome": "failure",
+            "draft": {
+              "gm_text": "冷気の源は分からない。ただ、この氷は自然のものではないと確信した。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
           }
         ]
       },
@@ -7138,6 +7606,55 @@
           "effects": [
             {
               "current_location": "xanxus_confrontation"
+            }
+          ]
+        },
+        {
+          "id": "inspect_frost_core",
+          "text": "結氷の中心を調べる",
+          "preview": "結氷の中心を調べる",
+          "risk": "1d20+wis判定（DC12）",
+          "intent_keywords": [
+            "結氷の中心を調べる"
+          ],
+          "effects": [],
+          "once": "inspected_frost_core",
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 12
+          },
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "white_dragon_scale",
+                "name": "白い竜鱗",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "frost_trace_seen"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "frost_trace_seen"
+            }
+          ]
+        },
+        {
+          "id": "visit_village",
+          "text": "長老に邪竜の弱点を聞く",
+          "preview": "長老に邪竜の弱点を聞く",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "長老に邪竜の弱点を聞く"
+          ],
+          "effects": [
+            {
+              "current_location": "village",
+              "flags_set": [
+                "reached_village"
+              ]
             }
           ]
         }
@@ -7227,7 +7744,14 @@
           "ice_elemental"
         ],
         "victory_effects": {
-          "current_location": "frost_wolf_battle"
+          "current_location": "frost_wolf_battle",
+          "inventory_add": [
+            {
+              "id": "ice_crystal",
+              "name": "氷の結晶",
+              "quantity": 1
+            }
+          ]
         },
         "defeat_effects": {
           "game_over": {
@@ -7281,7 +7805,33 @@
           ]
         }
       ],
-      "background_image": "/static/images/bg_frozen_village.png"
+      "background_image": "/static/images/bg_frozen_village.png",
+      "objects": [
+        {
+          "id": "frost_crystal",
+          "name": "路地に散らばる氷の結晶",
+          "description": "路地に散らばる氷の結晶",
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+wis",
+              "dc": 12
+            },
+            "once": "observed_frost_crystal",
+            "success_effects": [
+              {
+                "add_item": {
+                  "id": "ice_crystal",
+                  "name": "氷の結晶",
+                  "quantity": 1
+                }
+              }
+            ],
+            "failure_effects": [],
+            "success_text": "氷の結晶を手に入れた。",
+            "failure_text": "手がかりは見つからなかった。"
+          }
+        }
+      ]
     },
     {
       "id": "frost_wolf_battle",
@@ -7315,7 +7865,14 @@
           "flags_set": [
             "defeated_frost_dire_wolf"
           ],
-          "current_location": "ian_ice_katana_aftermath"
+          "current_location": "ian_ice_katana_aftermath",
+          "inventory_add": [
+            {
+              "id": "white_dragon_scale",
+              "name": "白い竜鱗",
+              "quantity": 1
+            }
+          ]
         },
         "defeat_effects": {
           "game_over": {
@@ -7324,7 +7881,7 @@
           }
         },
         "result_texts": {
-          "victory": "氷霜の巨狼は霧のように消散し、その核だった氷の太刀が地面へ残った。拾おうとした瞬間、空から隕石が落ちて刀を砕く。遠くに全身を炎に包んだ影が一瞬だけ見えた。",
+          "victory": "氷霜の巨狼は霧のように消散し、その核だった氷の太刀が地面へ残った。拾おうとした瞬間、空から隕石が落ちて刀を砕く。遠くに全身を炎に包んだ影が一瞬だけ見えた。巨狼の核が砕け、中から白い鱗が一枚転がり出た。",
           "defeat": "氷霜の巨狼の牙が守りを砕き、村を覆う冷気の中で力尽きた。"
         },
         "encounter_class": "boss"
@@ -7478,12 +8035,261 @@
             }
           ],
           "portrait_image": "/static/images/npc_ian_serious.png"
+        },
+        {
+          "id": "visit_village",
+          "text": "長老に邪竜の弱点を聞く",
+          "preview": "長老に邪竜の弱点を聞く",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "長老に邪竜の弱点を聞く"
+          ],
+          "effects": [
+            {
+              "current_location": "village",
+              "flags_set": [
+                "reached_village"
+              ]
+            }
+          ]
         }
       ],
       "background_image": "/static/images/bg_frozen_village.png",
       "portrait_image": "/static/images/npc_ian_serious.png",
       "npc_portrait_overrides": {
         "ian": "/static/images/npc_ian_serious.png"
+      }
+    },
+    {
+      "id": "ignis_last_breath",
+      "scene_id": "dragon_valley",
+      "title": "竜の谷・紅竜の最期",
+      "description": "倒れたイグニスの胸がかすかに上下している。焼け焦げた鱗の隙間、古い傷口だけが、炎の竜には似つかわしくない白い霜に覆われている。",
+      "actions": [
+        {
+          "id": "examine_ignis_wound",
+          "text": "イグニスの傷を調べる",
+          "preview": "霜に覆われた古傷を確かめる",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "イグニスの傷を調べる"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "id": "white_dragon_scale",
+                "name": "白い竜鱗",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "examined_ignis_wound"
+            }
+          ],
+          "once": "examined_ignis_wound"
+        },
+        {
+          "id": "hear_ignis_last_words",
+          "text": "イグニスの最期の言葉を聞く",
+          "preview": "消えゆく竜の声に耳を傾ける",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "イグニスの最期の言葉を聞く"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_ignis_last_words"
+            }
+          ],
+          "once": "heard_ignis_last_words"
+        },
+        {
+          "id": "return_to_castle_report",
+          "text": "王城へ戻り、国王に報告する",
+          "preview": "凱旋し、討伐を報告する",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "王城へ戻り、国王に報告する"
+          ],
+          "effects": [
+            {
+              "current_location": "castle_report"
+            }
+          ]
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "background_image": "/static/images/bg_dragon_valley.png",
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "prepared_turns": [
+          {
+            "id": "examine_ignis_wound_neutral",
+            "purpose": "choice_response",
+            "action_id": "examine_ignis_wound",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "傷口の奥で、雪のように白い鱗が一枚、肉に食い込んだまま凍りついていた。紅竜のものではない。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          },
+          {
+            "id": "hear_ignis_last_words_neutral",
+            "purpose": "choice_response",
+            "action_id": "hear_ignis_last_words",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "「……白き者に、気をつけよ。盟約を……破ったのは、我ではない……」紅竜の瞳から光が消えた。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "castle_report",
+      "scene_id": "castle_return",
+      "title": "王城・凱旋の間",
+      "description": "凱旋を祝う鐘が鳴り、王の間には人々が集まっている。国王エドワードが立ち上がって迎え、その傍らで将軍ドラコが静かに拍手を送っている。",
+      "actions": [
+        {
+          "id": "report_with_evidence",
+          "text": "将軍ドラコの正体を問いただす",
+          "preview": "集めた証拠を国王の前に示す",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "将軍ドラコの正体を問いただす"
+          ],
+          "effects": [
+            {
+              "set_flag": "draco_revealed"
+            },
+            {
+              "current_location": "draco_battle"
+            },
+            {
+              "start_combat": true
+            }
+          ],
+          "requirements": {
+            "any": [
+              {
+                "has_item": "白い竜鱗"
+              },
+              {
+                "flags_count_gte": {
+                  "flags": [
+                    "frost_trace_seen",
+                    "heard_human_caused_dragon_return",
+                    "heard_ignis_last_words",
+                    "noticed_general_frost",
+                    "heard_treaty_lore"
+                  ],
+                  "count": 2
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "report_normally",
+          "text": "討伐を報告する",
+          "preview": "イグニス討伐の報告を終える",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "討伐を報告する"
+          ],
+          "effects": [
+            {
+              "game_over": {
+                "title": "冒険完了",
+                "ending": "ignis_defeated",
+                "reason": "邪竜イグニスは討たれ、王国に平和が戻った。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。"
+              }
+            }
+          ]
+        }
+      ],
+      "npc_ids": [
+        "king",
+        "general"
+      ],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "background_image": "/static/images/bg_dragon_rpg.png",
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "prepared_turns": [
+          {
+            "id": "report_with_evidence_neutral",
+            "purpose": "choice_response",
+            "action_id": "report_with_evidence",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          },
+          {
+            "id": "report_normally_neutral",
+            "purpose": "choice_response",
+            "action_id": "report_normally",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "邪竜イグニスは討たれ、王国に平和が戻った。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "draco_battle",
+      "scene_id": "castle_return",
+      "title": "王の間・剣聖ドラコ",
+      "description": "将軍ドラコが剣を抜く。その刃は氷のように青白く、王の間に霜が広がっていく。",
+      "actions": [],
+      "npc_ids": [],
+      "enemy_ids": [
+        "draco_human"
+      ],
+      "connected_location_ids": [],
+      "background_image": "/static/images/bg_dragon_rpg.png",
+      "combat": {
+        "auto_start": true,
+        "boss": true,
+        "encounter_class": "boss",
+        "flee_allowed": false,
+        "enemy_ids": [
+          "draco_human"
+        ],
+        "victory_effects": {
+          "game_over": {
+            "title": "冒険完了",
+            "ending": "draco_defeated",
+            "reason": "白竜ヴァイスは崩れ落ち、王の間に降り積もった霜が静かに溶けていった。国王エドワードは長い沈黙の後、竜の谷へ使者を送ると告げた。盟約を結び直すために。あなたの名は、竜と人をもう一度つないだ者として語り継がれる。"
+          }
+        },
+        "defeat_effects": {
+          "game_over": {
+            "ending": "draco_victory",
+            "reason": "王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。"
+          }
+        },
+        "result_texts": {
+          "victory": "白竜ヴァイスは崩れ落ち、王の間に降り積もった霜が静かに溶けていった。国王エドワードは長い沈黙の後、竜の谷へ使者を送ると告げた。盟約を結び直すために。あなたの名は、竜と人をもう一度つないだ者として語り継がれる。",
+          "defeat": "王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。"
+        }
       }
     }
   ],
@@ -8046,6 +8852,32 @@
         "damage": "36",
         "accuracy": 100,
         "element": "holy",
+        "consumable": true
+      },
+      "rare": true
+    },
+    {
+      "id": "white_dragon_scale",
+      "name": "白い竜鱗",
+      "description": "雪のように白い竜の鱗。触れると指先が凍える。",
+      "effect": "証拠品（戦闘では使えない）"
+    },
+    {
+      "id": "ice_crystal",
+      "name": "氷の結晶",
+      "description": "溶けることのない氷のかけら。",
+      "effect": "鍛冶屋で氷の護符に加工できる"
+    },
+    {
+      "id": "red_dragon_core",
+      "name": "紅竜の炎核",
+      "description": "イグニスの命の炎が宿った結晶。",
+      "effect": "火属性の大ダメージ（消耗品）。",
+      "combat": {
+        "kind": "damage",
+        "damage": "1d100+100",
+        "accuracy": 100,
+        "element": "fire",
         "consumable": true
       },
       "rare": true
@@ -8716,6 +9548,119 @@
         }
       ],
       "image": "/static/images/npc_xanxus.png"
+    },
+    {
+      "id": "draco_human",
+      "name": "剣聖ドラコ",
+      "description": "剣聖と称えられた将軍。人の姿のまま、凍てつく剣技を振るう。",
+      "hp": 25,
+      "max_hp": 25,
+      "attributes": {
+        "str": 16,
+        "dex": 12,
+        "int": 14,
+        "end": 12
+      },
+      "element": "ice",
+      "combat": {
+        "defense": 2,
+        "basic_attack": {
+          "name": "剣聖の一閃",
+          "damage": "1d8+5",
+          "accuracy": 90,
+          "element": "physical"
+        }
+      },
+      "skills": [
+        {
+          "id": "sword_flash",
+          "name": "剣聖の一閃",
+          "kind": "attack",
+          "damage": "1d8+5",
+          "accuracy": 90,
+          "element": "physical",
+          "ai_weight": 3
+        },
+        {
+          "id": "ice_blade",
+          "name": "氷刃",
+          "kind": "attack",
+          "damage": "1d8+4",
+          "accuracy": 90,
+          "element": "ice",
+          "ai_weight": 2
+        },
+        {
+          "id": "guard_stance",
+          "name": "護衛の構え",
+          "kind": "defend",
+          "guard_multiplier": 0.6,
+          "duration": 2,
+          "ai_weight": 1
+        }
+      ],
+      "next_phase": "draco_dragon",
+      "image": "/static/images/npc_general.png",
+      "phase_transition_text": "ドラコの体が裂け、白い光が王の間を満たす。天井を突き破って現れたのは、雪原のような翼を持つ巨竜だった。「我が名はヴァイス。盟約の番人にして、その終わりを告げる者」",
+      "design_todo": "TODO(design): 専用のキャラクター画像を選定する。現在は既存画像を仮置き。"
+    },
+    {
+      "id": "draco_dragon",
+      "name": "白竜ヴァイス",
+      "description": "将軍ドラコの真の姿。吐息は万物を凍らせる。",
+      "hp": 220,
+      "max_hp": 220,
+      "attributes": {
+        "str": 20,
+        "dex": 10,
+        "int": 20,
+        "end": 16
+      },
+      "element": "ice",
+      "resistances": {
+        "fire": 1.5,
+        "ice": 0.25,
+        "physical": 0.25,
+        "holy": 0.25
+      },
+      "combat": {
+        "defense": 2,
+        "basic_attack": {
+          "name": "白翼の薙ぎ払い",
+          "damage": "1d12+10",
+          "accuracy": 90,
+          "element": "physical"
+        }
+      },
+      "skills": [
+        {
+          "id": "frozen_breath",
+          "name": "凍てつく吐息",
+          "kind": "attack",
+          "damage": "1d12+10",
+          "accuracy": 90,
+          "element": "ice",
+          "ai_weight": 3
+        },
+        {
+          "id": "white_wings",
+          "name": "白翼の薙ぎ払い",
+          "kind": "attack",
+          "damage": "1d12+10",
+          "accuracy": 90,
+          "element": "physical",
+          "ai_weight": 2
+        },
+        {
+          "id": "snow_roar",
+          "name": "雪嵐の咆哮",
+          "kind": "status",
+          "status_effect": "break_guard",
+          "ai_weight": 1
+        }
+      ],
+      "image": "/static/images/enemy_ignis.png",
+      "design_todo": "TODO(design): 専用のキャラクター画像を選定する。現在は既存画像を仮置き。"
     }
   ],
   "combat_choices": [

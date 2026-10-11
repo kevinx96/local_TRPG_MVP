@@ -88,6 +88,13 @@ def choose_action(session: dict[str, Any], policy: str) -> tuple[dict[str, Any],
     if session["combat"]["encounter"].get("encounter_class") in {"trash", "elite"}:
         actions = [a for a in actions if not rare_consumable(session, a)]
     if policy == "heuristic":
+        catalog = {enemy["id"]: enemy for enemy in session["scenario_pack"].get("enemies", [])}
+        # Save elemental consumables for the declared next phase's greater weakness.
+        actions = [a for a in actions if not (a["type"] == "item" and a.get("kind") == "damage"
+                   and combat.item_combat_spec(combat._find_entry(actor["inventory"], a["id"], "item")).get("consumable", True)
+                   and any(e.get("next_phase") in catalog and
+                           combat._resistance_multiplier(catalog[e["next_phase"]], a.get("element", "physical")) >
+                           combat._resistance_multiplier(e, a.get("element", "physical")) for e in enemies))]
         healing = [a for a in actions if a.get("kind") == "heal"]
         if combat._equipped_effect(actor, "healing_harms_humans") and not actor.get("undead_parts"):
             healing = [a for a in healing if a["type"] == "item"]
@@ -198,11 +205,27 @@ def defeat_cause(session: dict[str, Any]) -> str:
 def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: str = "heuristic", *,
              n: int = 500, seed: int = 20261011, checkpoints: Optional[dict[str, Any]] = None,
              defense_mode: str = "flat", stat_scaling: Optional[dict[str, Any]] = None,
-             companion: bool = True, skill_variant: str = "none") -> dict[str, Any]:
+             companion: bool = True, skill_variant: str = "none", preparation: str = "default") -> dict[str, Any]:
     if n < 1:
         raise ValueError("n must be positive")
     template = prepare_session(pack, encounter, character_id, checkpoints, defense_mode=defense_mode,
                                stat_scaling=stat_scaling, companion=companion, skill_variant=skill_variant)
+    if preparation != "default":
+        if preparation not in {"standard", "no_fire"}:
+            raise ValueError("Unknown preparation")
+        actor = template["character"]
+        def fire_capable(value: Any) -> bool:
+            if isinstance(value, dict):
+                return value.get("element") in {"fire", "counter"} or "fire" in value.get("multi_elements", []) or any(fire_capable(v) for v in value.values())
+            return isinstance(value, list) and any(fire_capable(v) for v in value)
+        actor["skills"] = [s for s in actor["skills"] if not fire_capable(s)]
+        actor["inventory"] = [i for i in actor["inventory"] if not fire_capable(i)]
+        if preparation == "standard":
+            core = next(i for i in pack["items"] if i["id"] == "red_dragon_core")
+            actor["inventory"].append({**deepcopy(core), "quantity": 1})
+        if fire_capable(template.get("companion")):
+            template["companion"] = None
+        state._synchronize_equipment(actor)
     character_id = template["character"]["character_id"]
     shared_pack = template["scenario_pack"]
     rounds, hp_left = [], []
@@ -212,6 +235,7 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
     consumables: Counter = Counter()
     spent = {"mp": 0, "sp": 0}
     wins = 0
+    phase_rounds: dict[str, list[int]] = {}
     rng = random.Random()
     with patch.object(combat, "random", rng):
         for index in range(n):
@@ -232,6 +256,8 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
                             healing_items[action["name"]] += 1
                 combat.perform_combat_action(session, action["type"], action["id"], target_id, rng=rng)
             battle = session["combat"]
+            for identifier, duration in phase_durations(battle).items():
+                phase_rounds.setdefault(identifier, []).append(duration)
             rounds.append(battle["round"])
             if battle["status"] == "victory":
                 wins += 1
@@ -244,11 +270,25 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
             "companion": companion, "n": n, "seed": seed, "stat_scaling": stat_scaling or {},
             "skill_variant": skill_variant, "level": template["character"].get("level", 1),
             "enemy_count": len(combat._encounter_for_session(template, shared_pack)["enemy_ids"]),
+            "preparation": preparation, "phase_rounds_mean": {k: mean(v) for k, v in phase_rounds.items()},
+            "phase_reached": {k: len(v) for k, v in phase_rounds.items()},
             "win_rate": wins / n, "rounds_median": median(rounds), "hp_left_mean": mean(hp_left) if hp_left else None,
             "healing_items_mean": {k: v / n for k, v in sorted(healing_items.items())},
             "consumables_mean": {k: v / n for k, v in sorted(consumables.items())},
             "mp_spent_mean": spent["mp"] / n, "sp_spent_mean": spent["sp"] / n,
             "defeat_rounds": dict(sorted(losses.items())), "defeat_causes": dict(causes.most_common())}
+
+
+def phase_durations(battle: dict[str, Any]) -> dict[str, int]:
+    transitions = battle.get("phase_transitions", [])
+    start = 1
+    result = {}
+    for event in transitions:
+        result[event["from"]] = event["round"] - start + 1
+        start = event["round"]
+    if battle["enemies"]:
+        result[battle["enemies"][0]["template_id"]] = battle["round"] - start + 1
+    return result
 
 
 def check_results(rows: list[dict[str, Any]], targets: dict[str, Any], *,
@@ -260,6 +300,13 @@ def check_results(rows: list[dict[str, Any]], targets: dict[str, Any], *,
         group.append(row)
         spec = {**targets["classes"][row["encounter_class"]],
                 **targets.get("encounter_overrides", {}).get(row["encounter"], {})}
+        preparation = spec.get("preparations", {}).get(row.get("preparation"), {})
+        spec.update(preparation)
+        if "win_rate_lt" in spec and row["win_rate"] >= spec["win_rate_lt"]:
+            violations.append(dict(encounter=row["encounter"], character=row["character"], metric="win_rate_lt",
+                                   value=row["win_rate"], target=spec["win_rate_lt"]))
+        if "win_rate_lt" in spec:
+            spec.pop("win_rate", None)
         if row["policy"] == spec["policy"]:
             for key, field in (("win_rate", "win_rate"), ("hp_left", "hp_left_mean"), ("rounds", "rounds_median")):
                 if key in spec and (key == "win_rate" or check_resource_metrics):
@@ -308,6 +355,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--stat-scaling", "--stat_scaling", default="{}", help="JSON object")
     parser.add_argument("--no-companion", action="store_true")
     parser.add_argument("--skills", choices=["none", "A"], default="none")
+    parser.add_argument("--preparation", choices=["default", "standard", "no_fire"], default="default")
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--check-resource-metrics", action="store_true",
                         help="Also enforce hp_left and rounds (report-only by default)")
@@ -323,7 +371,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     started = time.perf_counter()
     rows = [simulate(pack, encounter, character, policy, n=args.n, seed=args.seed, checkpoints=checkpoints,
                      defense_mode=args.defense_mode, stat_scaling=json.loads(args.stat_scaling), companion=not args.no_companion,
-                     skill_variant=args.skills)
+                     skill_variant=args.skills, preparation=args.preparation)
             for encounter in encounters for character in selected_characters(pack, encounter, args.characters) for policy in policies]
     result = {"rows": rows, "elapsed_seconds": time.perf_counter() - started}
     if args.check:

@@ -116,17 +116,56 @@
       "type": "array",
       "items": {
         "allOf": [
-          { "$ref": "#/$defs/record" },
+          {
+            "$ref": "#/$defs/record"
+          },
           {
             "type": "object",
             "properties": {
-              "scene_id": { "type": "string", "minLength": 1 },
+              "scene_id": {
+                "type": "string",
+                "minLength": 1
+              },
               "combat": {
                 "type": "object",
                 "additionalProperties": true,
                 "properties": {
-                  "encounter_class": { "enum": ["trash", "elite", "boss", "scripted_loss", "guest"] }
+                  "encounter_class": {
+                    "enum": [
+                      "trash",
+                      "elite",
+                      "boss",
+                      "scripted_loss",
+                      "guest"
+                    ]
+                  }
                 }
+              },
+              "objects": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "observe_reveals": {
+                      "$ref": "#/$defs/observe_reveals"
+                    }
+                  }
+                }
+              },
+              "entry_effects": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/action_effect"
+                }
+              },
+              "entry_text": {
+                "type": "string"
               }
             }
           }
@@ -175,6 +214,13 @@
           "skills": {
             "type": "array",
             "items": { "$ref": "#/$defs/combat_skill" }
+          },
+          "next_phase": {
+            "type": "string",
+            "minLength": 1
+          },
+          "phase_transition_text": {
+            "type": "string"
           }
         }
       }
@@ -352,7 +398,14 @@
         "cost_type": { "enum": ["", "hp", "mp", "sp"] },
         "ai_weight": { "type": "integer", "minimum": 1 },
         "guard_multiplier": { "type": "number", "minimum": 0, "maximum": 1 },
-        "survive_at_one": { "type": "boolean" }
+        "survive_at_one": { "type": "boolean" },
+        "duration": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status_effect": {
+          "type": "string"
+        }
       }
     },
     "combat_rewards": {
@@ -443,6 +496,31 @@
         "children": {
           "type": "array",
           "items": { "$ref": "#/$defs/action" }
+        },
+        "roll_bonuses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "total_gte",
+              "effects",
+              "text"
+            ],
+            "properties": {
+              "total_gte": {
+                "type": "integer"
+              },
+              "effects": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/action_effect"
+                }
+              },
+              "text": {
+                "type": "string"
+              }
+            }
+          }
         }
       }
     },
@@ -472,23 +550,81 @@
       }
     },
     "choice_requirements": {
-      "oneOf": [
-        { "$ref": "#/$defs/attribute_requirement" },
+      "anyOf": [
         {
           "type": "array",
-          "items": { "$ref": "#/$defs/choice_requirements" }
+          "items": {
+            "$ref": "#/$defs/choice_requirements"
+          }
         },
         {
           "type": "object",
           "additionalProperties": true,
           "properties": {
+            "attribute": {
+              "type": "string"
+            },
+            "gte": {
+              "type": "number"
+            },
+            "min": {
+              "type": "number"
+            },
+            "gt": {
+              "type": "number"
+            },
+            "flag": {
+              "type": "string"
+            },
+            "not_flag": {
+              "type": "string"
+            },
+            "companion_id": {
+              "type": "string"
+            },
+            "has_item": {
+              "type": "string"
+            },
+            "lacks_item": {
+              "type": "string"
+            },
+            "character_id": {
+              "type": "string"
+            },
+            "gold_gte": {
+              "type": "number"
+            },
             "any": {
               "type": "array",
-              "items": { "$ref": "#/$defs/choice_requirements" }
+              "items": {
+                "$ref": "#/$defs/choice_requirements"
+              }
             },
             "all": {
               "type": "array",
-              "items": { "$ref": "#/$defs/choice_requirements" }
+              "items": {
+                "$ref": "#/$defs/choice_requirements"
+              }
+            },
+            "flags_count_gte": {
+              "type": "object",
+              "required": [
+                "flags",
+                "count"
+              ],
+              "properties": {
+                "flags": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "count": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
             }
           }
         }
@@ -569,6 +705,43 @@
         "rewrite_notes": {
           "type": "array",
           "items": { "type": "string" }
+        }
+      }
+    },
+    "observe_reveals": {
+      "type": "object",
+      "required": [
+        "roll",
+        "once",
+        "success_effects",
+        "failure_effects",
+        "success_text",
+        "failure_text"
+      ],
+      "properties": {
+        "roll": {
+          "$ref": "#/$defs/action_roll"
+        },
+        "once": {
+          "type": "string"
+        },
+        "success_effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action_effect"
+          }
+        },
+        "failure_effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action_effect"
+          }
+        },
+        "success_text": {
+          "type": "string"
+        },
+        "failure_text": {
+          "type": "string"
         }
       }
     }

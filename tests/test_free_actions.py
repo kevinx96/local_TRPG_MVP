@@ -209,7 +209,7 @@ class FreeActionTests(unittest.TestCase):
     def test_ending_blocks_stale_actions(self):
         session = self.session()
         session["world_state"] = {"scene_id": "dragon_valley", "location_id": "dragon_valley_loc"}
-        ending = state._current_location_record(session)["combat"]["victory_effects"]
+        ending = {"game_over": {"ending": "ignis_defeated", "reason": "冒険完了"}}
         state.apply_state_delta(session, ending, allow_world_transition=True)
         self.assertEqual(session["game_over"]["ending"], "ignis_defeated")
         self.assertEqual(fallback_choices_for_session(session), [])
@@ -251,9 +251,10 @@ class FreeActionTests(unittest.TestCase):
                 self.assertEqual(session["scene_changes"][location_id]["forest_slime"]["resolution"], "defeated")
                 self.assertTrue(session["scene_changes"][location_id]["forest_slime"]["enemy_defeated"])
             else:
-                self.assertEqual(result["game_over"]["ending"], "ignis_defeated")
-                self.assertEqual(result["choices"], [])
-                self.assertIn("邪竜イグニスは倒れ", result["messages"][-1]["text"])
+                self.assertIsNone(result["game_over"])
+                self.assertEqual(result["current_location"], "ignis_last_breath")
+                self.assertTrue(result["choices"])
+                self.assertIn("倒れたイグニスの胸", result["messages"][-1]["text"])
 
     def test_ollama_environment_cannot_override_api_destination(self):
         config = {"active_backend": "gemini", "backends": {"gemini": {"type": "gemini", "model": "configured-api", "base_url": "https://generativelanguage.googleapis.com/v1beta"}}}

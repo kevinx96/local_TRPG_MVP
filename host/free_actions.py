@@ -174,7 +174,7 @@ def build_plan_messages(session: dict[str, Any], player_text: str) -> list[dict[
                      "description": str(location.get("description") or "")[:400]},
         "actions": action_surface,
         "obstacles": obstacles,
-        "objects": _objects(session),
+        "objects": [{k: deepcopy(v) for k, v in obj.items() if k != "observe_reveals"} for obj in _objects(session)],
         "npcs": npcs,
         "inventory": inventory,
         "changes_here": location_changes(session),
@@ -258,6 +258,21 @@ def _adjudicate(session: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]
         text = str(target.get("description") or target.get("name") or "")
         if target.get("hint"):
             text += " " + str(target["hint"])
+        reveal = target.get("observe_reveals")
+        if isinstance(reveal, dict):
+            once = str(reveal.get("once") or "")
+            if once and session.get("flags", {}).get(once):
+                return _commit(session, plan, _result("完了済みです。", "observed"), changes)
+            dice, dc = state.action_dice_settings(reveal)
+            roll = state.roll_dice(session, dice, dc)
+            success = bool(roll["success"] and not roll.get("critical_failure"))
+            branch = "success" if success else "failure"
+            delta = state._effects_to_state_delta(reveal.get(f"{branch}_effects", []), session)
+            if once:
+                delta.setdefault("flags_set", []).append(once)
+            state.apply_state_delta(session, delta)
+            text = str(reveal.get(f"{branch}_text") or text)
+            return _commit(session, plan, _result(text, branch, roll=roll, state_delta=delta), changes)
         return _commit(session, plan, _result(text, "observed"), changes)
     if not target:
         return _result("その方法を試す対象が、今いる場所では見つかりません。")

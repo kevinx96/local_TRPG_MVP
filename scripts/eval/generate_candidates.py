@@ -56,27 +56,6 @@ def generate() -> list[dict[str, Any]]:
                      "accept_kinds": accept or sorted({g["kind"] for g in [answer, *(alternatives or [])]}),
                      "label_status": "proposed"})
 
-    snapshots = {r["id"]: build_snapshot(r) for r in recipes()}
-    actions = []
-    for identifier, session in snapshots.items():
-        if identifier in {"forest_low_hp_hero", "forest_missing_supplies_hero", "forest_legacy_heal_hero"}:
-            continue
-        context = json.loads(free_actions.build_plan_messages(session, "")[1]["content"])
-        for action in context["actions"]:
-            if action["enabled"]:
-                actions.append((identifier, action))
-    # Spread exact examples across locations instead of taking a single large shop.
-    buckets: dict[str, list] = defaultdict(list)
-    for identifier, action in actions:
-        buckets[identifier].append(action)
-    spread = []
-    for index in range(max(map(len, buckets.values()))):
-        for identifier, bucket in buckets.items():
-            if index < len(bucket):
-                spread.append((identifier, bucket[index]))
-    assert len(spread) >= 24
-    for identifier, action in spread[:24]:
-        add("existing_exact", action["text"], gold("existing", action_id=action["id"]), identifier)
     paraphrases = {
         "attack_slime": "剣を抜き、道を塞ぐスライムに斬りかかる。",
         "rest_at_elf_spring": "この泉で少し休息したい。",
@@ -103,6 +82,27 @@ def generate() -> list[dict[str, Any]]:
         "go_forge": "城下町の鍛冶屋へ行こう。",
         "go_dark_forest": "王城を離れて闇の森を目指す。",
     }
+    snapshots = {r["id"]: build_snapshot(r) for r in recipes()}
+    actions = []
+    for identifier, session in snapshots.items():
+        if identifier in {"forest_low_hp_hero", "forest_missing_supplies_hero", "forest_legacy_heal_hero"}:
+            continue
+        context = json.loads(free_actions.build_plan_messages(session, "")[1]["content"])
+        for action in context["actions"]:
+            if action["enabled"] and action["id"] in paraphrases:
+                actions.append((identifier, action))
+    # Spread exact examples across locations instead of taking a single large shop.
+    buckets: dict[str, list] = defaultdict(list)
+    for identifier, action in actions:
+        buckets[identifier].append(action)
+    spread = []
+    for index in range(max(map(len, buckets.values()))):
+        for identifier, bucket in buckets.items():
+            if index < len(bucket):
+                spread.append((identifier, bucket[index]))
+    assert len(spread) >= 24
+    for identifier, action in spread[:24]:
+        add("existing_exact", action["text"], gold("existing", action_id=action["id"]), identifier)
     for index, (identifier, action) in enumerate(spread[:24]):
         add("existing_paraphrase", paraphrases[action["id"]], gold("existing", action_id=action["id"]), identifier,
             note="既存の行動と対象・方法を保った言い換え。")

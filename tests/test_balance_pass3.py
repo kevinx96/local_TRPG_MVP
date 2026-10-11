@@ -185,7 +185,8 @@ class BalancePass3Tests(unittest.TestCase):
         with patch.object(combat, "random", random.Random(17)):
             result = route.fight(session, "heuristic", random.Random(17))
         self.assertEqual(result["status"], "victory")
-        self.assertTrue(session["game_over"])
+        self.assertIsNone(session["game_over"])
+        self.assertEqual(state.current_location_id(session), "ignis_last_breath")
         self.assertTrue(result["continue"])
 
 

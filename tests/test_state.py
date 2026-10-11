@@ -2005,8 +2005,8 @@ class StateTests(unittest.TestCase):
                 "buy_equipment": ["buy_adamantite_armor", "buy_ice_amulet"],
             },
             "inn": {
-                "ask_ian": ["ask_ian_legend", "ask_ian_advice", "rest_at_inn"],
-                "ask_robin": ["invite_robin", "ask_robin_rumor"],
+                "ask_ian": ["ask_ian_legend", "ask_ian_advice", "rest_at_inn", "ask_ian_dragon_tale"],
+                "ask_robin": ["invite_robin", "ask_robin_rumor", "ask_robin_stolen_scale"],
             },
         }
         expected_once = {
@@ -2020,7 +2020,6 @@ class StateTests(unittest.TestCase):
             "ask_ian_advice",
             "invite_robin",
             "ask_robin_rumor",
-            "ask_elder_weakness",
         }
 
         for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):

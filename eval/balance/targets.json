@@ -98,7 +98,8 @@
     "frost_wolf_battle": "boss",
     "dragon_valley_loc": "boss",
     "xanxus_battle": "scripted_loss",
-    "warlock_rescue_battle": "guest"
+    "warlock_rescue_battle": "guest",
+    "draco_battle": "boss"
   },
   "encounter_overrides": {
     "merchant_battle": {
@@ -110,6 +111,25 @@
         0.5,
         1.0
       ]
+    },
+    "draco_battle": {
+      "policy": "heuristic",
+      "win_rate": [
+        0.5,
+        0.7
+      ],
+      "preparations": {
+        "standard": {
+          "win_rate": [
+            0.5,
+            0.7
+          ]
+        },
+        "no_fire": {
+          "win_rate_lt": 0.3
+        }
+      },
+      "note": "两阶段合计；standard 仅保留紅竜の炎核这一种火属性手段，no_fire 移除全部火属性手段。"
     }
   },
   "route_targets": {
