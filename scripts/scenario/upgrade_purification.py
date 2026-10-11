@@ -17,7 +17,7 @@ BEST_ENDING = "白竜ヴァイスは紅竜の炎に包まれ、崩れ落ちた�
 
 
 def upgrade(pack: dict[str, Any]) -> None:
-    if pack["meta"].get("content_revision") == "2026-10-12-services-v013-purification":
+    if pack["meta"].get("content_revision") == "2026-10-12-services-v013-purification" or pack["meta"].get("forest_v3"):
         return
     locations = {l["id"]: l for l in pack["locations"]}
     encounter = locations["dragon_valley_loc"]["combat"]

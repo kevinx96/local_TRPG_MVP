@@ -31,6 +31,9 @@ def ensure_world_state(session: dict[str, Any]) -> dict[str, str]:
     session[WORLD_STATE_KEY] = canonical
     if "visited_locations" not in session:
         history = session.get("location_history", [])
+        history = [*history, *(position for event in session.get("event_log", [])
+                              if event.get("kind") == "position_changed"
+                              for position in (event.get("data", {}).get("before", {}), event.get("data", {}).get("after", {})))]
         session["visited_locations"] = list(dict.fromkeys(
             str(entry.get("location_id", "") if isinstance(entry, dict) else entry)
             for entry in history if entry

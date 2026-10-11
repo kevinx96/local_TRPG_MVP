@@ -139,7 +139,7 @@ class BalancePassTests(unittest.TestCase):
         cp = checkpoints.generate()
         targets = json.loads(sim.TARGETS.read_text(encoding="utf-8"))
         rows = budget.incoming_damage_budget(self.pack, cp, targets)
-        self.assertEqual(len(rows), 85)
+        self.assertEqual(len(rows), 101)
 
     def test_multi_enemy_spread_uses_existing_target(self):
         targets = json.loads(sim.TARGETS.read_text(encoding="utf-8"))

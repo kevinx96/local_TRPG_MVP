@@ -628,6 +628,15 @@ function renderSession(session) {
     const backgroundImage = session.location_background_image || character.background_image;
     if (backgroundImage) {
       els.background.style.backgroundImage = `url(${backgroundImage})`;
+      els.background.dataset.placeholder = '';
+      const probe = new Image();
+      probe.onerror = () => {
+        if (state.session?.location_background_image === backgroundImage) {
+          els.background.style.backgroundImage = '';
+          els.background.dataset.placeholder = session.current_location_title || '';
+        }
+      };
+      probe.src = backgroundImage;
     } else {
       els.background.style.backgroundImage = "";
     }
@@ -1783,3 +1792,12 @@ document.querySelector('#mapCloseBtn').addEventListener('click', () => {
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape') document.querySelector('#mapOverlay').style.display = 'none';
 });
+document.addEventListener('error', event => {
+  const img = event.target;
+  if (img.tagName !== 'IMG') return;
+  img.classList.add('asset-placeholder');
+  img.alt = img.alt || img.closest('figure')?.textContent || img.closest('.combat-enemy')?.querySelector('h3')?.textContent || '✦';
+}, true);
+document.addEventListener('load', event => {
+  if (event.target.tagName === 'IMG') event.target.classList.remove('asset-placeholder');
+}, true);

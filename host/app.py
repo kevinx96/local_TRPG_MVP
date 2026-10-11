@@ -620,6 +620,7 @@ def _run_turn(session: dict[str, Any], request: TurnRequest, *, allow_narration:
             resolved_action,
             "1d20",
             0,
+            session=session,
         )
     elif intent_status == "legacy":
         dice_type, dice_dc = _dice_settings_for_turn(session, action_text)
@@ -636,10 +637,11 @@ def _run_turn(session: dict[str, Any], request: TurnRequest, *, allow_narration:
             raise HTTPException(status_code=422, detail="この行動の判定設定に不備があるため実行できません。") from exc
     action_result = apply_action_result(session, resolved_action, latest_roll) if resolved_action else {}
 
-    if action_result.get("open_shop") or (resolved_action or {}).get("result_text"):
-        if (resolved_action or {}).get("result_text"):
-            add_assistant_message(session, resolved_action["result_text"])
+    if action_result.get("open_shop") or action_result.get("result_text"):
+        if action_result.get("result_text"):
+            add_assistant_message(session, action_result["result_text"])
             session["last_turn_narrated"] = True
+        ensure_combat_started(session)
         save_session(session)
         return public_session(session)
 

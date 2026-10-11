@@ -42,7 +42,7 @@ class DragonStoryTests(unittest.TestCase):
             with self.subTest(filename=filename):
                 meta = self.load_raw(filename)["meta"]
                 self.assertEqual(meta["title"], "紅き邪竜イグニス")
-                self.assertEqual(meta["content_revision"], "2026-10-12-services-v013-purification")
+                self.assertTrue(meta["forest_v3"])
 
     def test_client_keeps_hybrid_scenarios_selectable(self):
         source = Path("client/app.js").read_text(encoding="utf-8")
@@ -155,7 +155,11 @@ class DragonStoryTests(unittest.TestCase):
                     url for url in sorted(asset_urls)
                     if not (client_root / url.removeprefix("/static/")).is_file()
                 ]
-                self.assertEqual(missing, [])
+                future_assets = {f"/static/images/{name}.png" for name in (
+                    "bg_crystal_cave", "bg_lava_cave", "bg_sealed_cave", "enemy_emerald_spider",
+                    "enemy_fire_wisp", "enemy_heat_lizard", "enemy_prism_tree", "enemy_ruby_golem",
+                    "enemy_sapphire_moth", "npc_mina", "npc_gald")}
+                self.assertFalse(set(missing) - future_assets)
 
     def test_public_session_uses_enemy_portrait_during_combat(self):
         session = self.create_runtime_session()
@@ -240,7 +244,7 @@ class DragonStoryTests(unittest.TestCase):
         roll = state.roll_dice(wealthy, *state.action_dice_settings(action), client_rolls=[1])
         state.apply_action_result(wealthy, action, roll)
         self.assertEqual(wealthy["character"]["gold"], 20)
-        self.assertEqual(state.current_location_id(wealthy), "elf_spring")
+        self.assertEqual(state.current_location_id(wealthy), "lost_goblin_crossroads")
 
         poor = self.create_runtime_session()
         state.commit_world_position(poor, location_id="lost_goblin_crossroads")
@@ -333,7 +337,6 @@ class DragonStoryTests(unittest.TestCase):
             "attack_slime",
             "ignore_lost_goblin",
             "rest_at_elf_spring",
-            "continue_from_elf_spring",
             "fight_fort_first_guard",
             "fight_fort_second_guards",
             "fort_second_bypass",

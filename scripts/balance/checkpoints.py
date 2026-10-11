@@ -27,10 +27,10 @@ def fresh_session(pack: dict[str, Any], character_id: str) -> dict[str, Any]:
 def proposed_routes() -> dict[str, list[str]]:
     forest = ["go_dark_forest:success"]
     lost = forest + ["@victory"]
-    spring = lost + ["ignore_lost_goblin:success", "@victory"]
+    spring = lost + ["ignore_lost_goblin:success", "@victory", "crossroads_forward"]
     wolves = spring + ["continue_from_elf_spring"]
     slime1 = spring + ["rest_at_elf_spring"]
-    fort = lost + ["help_lost_goblin"]
+    fort = lost + ["help_lost_goblin", "enter_goblin_fort"]
     fort2 = fort + ["@victory"]
     right = fort2 + ["@victory", "explore_fort_right"]
     guards = right + ["@victory", "admit_no_password"]
@@ -41,7 +41,12 @@ def proposed_routes() -> dict[str, list[str]]:
     xanxus = frozen + ["skip_frozen_clue_before_xanxus", "bluff_xanxus:failure"]
     ice = frozen + ["investigate_frozen_village"]
     frost = ice + ["@victory"]
+    cave = wolves + ["@victory", "exit_back", "wolves_back", "inspect_spring_wall", "decode_seal:success"]
+    fork = cave + ["@victory"]
+    crystal = fork + ["cave_right", "hot_spring_forward"]
     return {
+        "cave_heat_corridor": cave, "cave_lava_room": fork + ["cave_left"],
+        "cave_crystal_corridor": crystal, "cave_prism_tree": crystal + ["@victory"],
         "dark_forest_loc": forest, "lost_goblin_crossroads": lost,
         "forest_wolves": wolves, "slime_ambush_one": slime1,
         "slime_ambush_two": slime1 + ["@victory"], "slime_king_battle": slime1 + ["@victory", "@victory"],

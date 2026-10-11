@@ -4,7 +4,8 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-12-services-v013-purification"
+    "content_revision": "2026-10-12-v015-forest",
+    "forest_v3": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -92,7 +93,14 @@
         "goblin_fort_third_guards",
         "goblin_fort_fourth",
         "goblin_fort_chest_choice",
-        "goblin_fort_chest_fight"
+        "goblin_fort_chest_fight",
+        "cave_seal",
+        "cave_heat_corridor",
+        "cave_fork",
+        "cave_lava_room",
+        "cave_hot_spring",
+        "cave_crystal_corridor",
+        "cave_prism_tree"
       ],
       "hybrid": {
         "mode": "prepared_gm_turns",
@@ -1817,6 +1825,155 @@
               "current_location": "castle"
             }
           ]
+        },
+        {
+          "id": "ask_seal_lore",
+          "text": "泉の封印について尋ねる",
+          "preview": "泉の封印について尋ねる",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "泉の封印について尋ねる"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_seal_lore"
+            }
+          ],
+          "result_text": "「精霊の泉の裏に古い封印がある。泉と同じ律動を読めば、解くのは難しくない」"
+        },
+        {
+          "id": "forge_prism_weapon",
+          "text": "虹晶の欠片を武器に仕立ててもらう",
+          "preview": "虹晶の欠片を武器に仕立ててもらう",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "虹晶の欠片を武器に仕立ててもらう"
+          ],
+          "effects": [
+            {
+              "remove_item": {
+                "name": "虹晶の欠片",
+                "quantity": 1
+              }
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "character_id": "hero"
+                },
+                "then": [
+                  {
+                    "add_item": {
+                      "id": "prism_weapon_hero",
+                      "name": "虹晶の剣",
+                      "description": "刃の色が敵に応じて移ろう剣。相手の弱点を自ら探り当てる。",
+                      "category": "equipment",
+                      "combat": {
+                        "kind": "weapon",
+                        "name": "虹晶の剣",
+                        "damage": "1d10+str/3",
+                        "accuracy": 92,
+                        "element": "counter"
+                      },
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "equip_item": "虹晶の剣"
+                  }
+                ]
+              }
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "character_id": "cleric"
+                },
+                "then": [
+                  {
+                    "add_item": {
+                      "id": "prism_weapon_cleric",
+                      "name": "虹晶の杖",
+                      "description": "祈りの光を七色に分ける杖。癒やしの力も高める。",
+                      "category": "equipment",
+                      "combat": {
+                        "kind": "weapon",
+                        "name": "虹晶の杖",
+                        "damage": "1d10+wis/3",
+                        "accuracy": 92,
+                        "element": "counter",
+                        "skill_healing_bonus": 2
+                      },
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "equip_item": "虹晶の杖"
+                  }
+                ]
+              }
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "character_id": "mage"
+                },
+                "then": [
+                  {
+                    "add_item": {
+                      "id": "prism_weapon_mage",
+                      "name": "虹晶のオーブ",
+                      "description": "魔力を敵の弱点の属性へ変える宝珠。",
+                      "category": "equipment",
+                      "combat": {
+                        "kind": "weapon",
+                        "name": "虹晶のオーブ",
+                        "damage": "1d10+int/3",
+                        "accuracy": 92,
+                        "element": "counter"
+                      },
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "equip_item": "虹晶のオーブ"
+                  }
+                ]
+              }
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "character_id": "thief"
+                },
+                "then": [
+                  {
+                    "add_item": {
+                      "id": "prism_weapon_thief",
+                      "name": "虹晶の短剣",
+                      "description": "刺すたびに色を変える短剣。急所を逃さない。",
+                      "category": "equipment",
+                      "combat": {
+                        "kind": "weapon",
+                        "name": "虹晶の短剣",
+                        "damage": "1d10+dex/3",
+                        "accuracy": 92,
+                        "element": "counter"
+                      },
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "equip_item": "虹晶の短剣"
+                  }
+                ]
+              }
+            }
+          ],
+          "requirements": {
+            "has_item": "虹晶の欠片"
+          },
+          "result_text": "「……面白い欠片だ。少し待っていろ」"
         }
       ],
       "background_image": "/static/images/bg_magic_shop.png",
@@ -2908,7 +3065,7 @@
     {
       "id": "lost_goblin_crossroads",
       "scene_id": "dark_forest",
-      "title": "闇の森・迷子のゴブリン",
+      "title": "迷い子の十字路",
       "description": "迷子のゴブリンが、別の一族に盗まれた箱を取り戻してほしいと頼んでいる。",
       "keywords": [
         "闇の森・迷子のゴブリン"
@@ -2927,24 +3084,6 @@
         "mode": "prepared_gm_turns",
         "summary": "迷子のゴブリンが、別の一族に盗まれた箱を取り戻してほしいと頼んでいる。",
         "prepared_turns": [
-          {
-            "id": "lost_goblin_accept",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "help_lost_goblin",
-            "trigger_keywords": [],
-            "action_id": "help_lost_goblin",
-            "outcome": "neutral",
-            "draft": {
-              "gm_text": "迷子のゴブリンは何度も頭を下げ、木々の奥に隠された砦への道を案内し始めた。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
-          },
           {
             "id": "lost_goblin_ignore_success",
             "purpose": "choice_response",
@@ -2990,9 +3129,7 @@
         "enemy_ids": [
           "goblin"
         ],
-        "victory_effects": {
-          "current_location": "elf_spring"
-        },
+        "victory_effects": {},
         "defeat_effects": {
           "hp": 0,
           "game_over": {
@@ -3009,7 +3146,7 @@
         {
           "id": "help_lost_goblin",
           "text": "箱を取り戻す手伝いを引き受ける",
-          "preview": "ゴブリン砦へ向かう",
+          "preview": "箱を取り戻す手伝いを引き受ける",
           "risk": "判定不要",
           "intent_keywords": [
             "箱を取り戻す手伝いを引き受ける"
@@ -3018,9 +3155,6 @@
           "effects": [
             {
               "set_flag": "lost_goblin_quest"
-            },
-            {
-              "current_location": "goblin_fort"
             },
             {
               "set_flag": "knows_fort_password"
@@ -3066,15 +3200,78 @@
                     "start_combat": true
                   }
                 ],
-                "else": [
-                  {
-                    "current_location": "elf_spring"
-                  }
-                ]
+                "else": []
               }
             }
           ],
           "portrait_image": "/static/images/npc_lost_goblin.png"
+        },
+        {
+          "id": "crossroads_forward",
+          "text": "先へ進む",
+          "preview": "先へ進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "先へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "elf_spring"
+            }
+          ]
+        },
+        {
+          "id": "enter_goblin_fort",
+          "text": "ゴブリン砦へ向かう",
+          "preview": "ゴブリン砦へ向かう",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "ゴブリン砦へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "goblin_fort"
+            }
+          ],
+          "visible_after": "lost_goblin_quest"
+        },
+        {
+          "id": "crossroads_back",
+          "text": "森の入口へ戻る",
+          "preview": "森の入口へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "森の入口へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ]
+        },
+        {
+          "id": "fort_shortcut",
+          "text": "砦の裏口から森の出口へ抜ける",
+          "preview": "砦の裏口から森の出口へ抜ける",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "砦の裏口から森の出口へ抜ける"
+          ],
+          "effects": [
+            {
+              "current_location": "forest_exit"
+            }
+          ],
+          "requirements": {
+            "all": [
+              {
+                "flag": "resolved_lost_goblin_box"
+              },
+              {
+                "flag": "passed_forest_wolves"
+              }
+            ]
+          }
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
@@ -3115,24 +3312,6 @@
             "rewrite_notes": [
               "確定済みのアクション結果だけを自然な日本語で描写してください。"
             ]
-          },
-          {
-            "id": "elf_spring_continue",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "continue_from_elf_spring",
-            "trigger_keywords": [],
-            "action_id": "continue_from_elf_spring",
-            "outcome": "neutral",
-            "draft": {
-              "gm_text": "泉を横目に休まず進むと、茂みの左右から低い唸り声が重なった。一頭の森狼が退路と行く手を分けて塞ぎ、牙を剥いて間合いを詰めてくる。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
           }
         ]
       },
@@ -3155,27 +3334,63 @@
               "restore_full": true
             },
             {
-              "current_location": "slime_ambush_one"
-            },
-            {
-              "start_combat": true
+              "branch": {
+                "requirements": {
+                  "flag": "defeated_slime_king"
+                },
+                "then": [],
+                "else": [
+                  {
+                    "current_location": "slime_ambush_one"
+                  },
+                  {
+                    "start_combat": true
+                  }
+                ]
+              }
             }
           ]
         },
         {
           "id": "continue_from_elf_spring",
           "text": "休まず先へ進む",
-          "preview": "二頭の森狼が待ち伏せている",
-          "risk": "戦闘開始",
+          "preview": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。",
+          "risk": "判定不要",
           "intent_keywords": [
             "休まず先へ進む"
           ],
           "effects": [
             {
               "current_location": "forest_wolves"
-            },
+            }
+          ],
+          "result_text": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。"
+        },
+        {
+          "id": "inspect_spring_wall",
+          "text": "泉の奥の岩壁を調べる",
+          "preview": "泉の奥の岩壁を調べる",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "泉の奥の岩壁を調べる"
+          ],
+          "effects": [
             {
-              "start_combat": true
+              "current_location": "cave_seal"
+            }
+          ]
+        },
+        {
+          "id": "spring_back",
+          "text": "十字路へ戻る",
+          "preview": "十字路へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "十字路へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "lost_goblin_crossroads"
             }
           ]
         }
@@ -3186,11 +3401,13 @@
       "id": "forest_wolves",
       "scene_id": "dark_forest",
       "title": "闇の森・狼の縄張り",
-      "description": "泉を通り過ぎた先で一頭の森狼が襲いかかる。",
+      "description": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。",
       "keywords": [
         "闇の森・狼の縄張り"
       ],
-      "npc_ids": [],
+      "npc_ids": [
+        "gald"
+      ],
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [
@@ -3201,7 +3418,7 @@
       "choices": [],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "泉を通り過ぎた先で一頭の森狼が襲いかかる。",
+        "summary": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。",
         "prepared_turns": []
       },
       "combat": {
@@ -3211,7 +3428,11 @@
           "forest_wolf"
         ],
         "victory_effects": {
-          "current_location": "forest_exit"
+          "current_location": "forest_exit",
+          "flags_set": [
+            "passed_forest_wolves",
+            "saved_gald"
+          ]
         },
         "defeat_effects": {
           "hp": 0,
@@ -3221,12 +3442,114 @@
           }
         },
         "result_texts": {
-          "defeat": "闇の森・狼の縄張りで力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "闇の森・狼の縄張りで力尽きました。冒険はここで終わりを迎えます。",
+          "victory": "「助かった！命の恩人だ。俺はガルド、村でも商売してる。見かけたら寄ってくれ」"
         },
         "encounter_class": "elite"
       },
-      "actions": [],
-      "background_image": "/static/images/bg_dark_forest.png"
+      "actions": [
+        {
+          "id": "fight_forest_wolves",
+          "text": "森狼と戦う",
+          "preview": "森狼と戦う",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "森狼と戦う"
+          ],
+          "effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "hidden_after": "passed_forest_wolves"
+        },
+        {
+          "id": "distract_forest_wolves",
+          "text": "携帯食で森狼を誘導する",
+          "preview": "携帯食で森狼を誘導する",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "携帯食で森狼を誘導する"
+          ],
+          "effects": [],
+          "free_action": {
+            "operation": "distract",
+            "target_id": "forest_wolves",
+            "item_id": "trail_ration",
+            "advance": true
+          },
+          "hidden_after": "passed_forest_wolves"
+        },
+        {
+          "id": "sneak_forest_wolves",
+          "text": "森狼の脇を潜行して通る",
+          "preview": "森狼の脇を潜行して通る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "森狼の脇を潜行して通る"
+          ],
+          "effects": [],
+          "free_action": {
+            "operation": "sneak",
+            "target_id": "forest_wolves",
+            "item_id": "",
+            "advance": true
+          },
+          "hidden_after": "passed_forest_wolves"
+        },
+        {
+          "id": "pass_cleared_wolves",
+          "text": "先へ進む",
+          "preview": "先へ進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "先へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "forest_exit"
+            }
+          ],
+          "visible_after": "passed_forest_wolves"
+        },
+        {
+          "id": "wolves_back",
+          "text": "泉へ戻る",
+          "preview": "泉へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "泉へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "elf_spring"
+            }
+          ]
+        }
+      ],
+      "background_image": "/static/images/bg_dark_forest.png",
+      "obstacles": [
+        {
+          "id": "forest_wolves",
+          "name": "森狼",
+          "enemy_id": "forest_wolf",
+          "description": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。",
+          "traits": [
+            "food_motivated"
+          ],
+          "bypassable": true,
+          "sneak_dc": 14,
+          "hint": "携帯食で誘えば確実に道を空ける。潜行はSPを1使い、失敗すると警戒が上がる。枝で準備すると次の潜行の難度が3下がる。",
+          "destination": "forest_exit",
+          "resolved_flag": "passed_forest_wolves",
+          "arrival_text": "「助かった！命の恩人だ。俺はガルド、村でも商売してる。見かけたら寄ってくれ」",
+          "pass_effects": [
+            {
+              "set_flag": "saved_gald"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "slime_ambush_one",
@@ -3353,7 +3676,7 @@
           "slime_king"
         ],
         "victory_effects": {
-          "current_location": "forest_exit"
+          "current_location": "elf_spring"
         },
         "defeat_effects": {
           "hp": 0,
@@ -3464,6 +3787,20 @@
             },
             {
               "current_location": "inn"
+            }
+          ]
+        },
+        {
+          "id": "exit_back",
+          "text": "狼の縄張りへ戻る",
+          "preview": "狼の縄張りへ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "狼の縄張りへ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "forest_wolves"
             }
           ]
         }
@@ -4463,7 +4800,7 @@
               "set_flag": "returned_lost_goblin_box"
             },
             {
-              "current_location": "forest_exit"
+              "current_location": "lost_goblin_crossroads"
             }
           ],
           "portrait_image": "/static/images/npc_lost_goblin.png"
@@ -4531,7 +4868,7 @@
           "flags_set": [
             "stole_shrinking_gun"
           ],
-          "current_location": "forest_exit"
+          "current_location": "lost_goblin_crossroads"
         },
         "defeat_effects": {
           "hp": 0,
@@ -6283,6 +6620,725 @@
           }
         ]
       }
+    },
+    {
+      "id": "cave_seal",
+      "scene_id": "dark_forest",
+      "title": "泉の奥・封印の岩壁",
+      "description": "泉の裏手の岩壁に、七色に揺らめく魔法陣が刻まれている。陣の奥から、かすかに熱い風が吹き出している。",
+      "actions": [
+        {
+          "id": "decode_seal",
+          "text": "魔法陣を解読する",
+          "preview": "魔法陣を解読する",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "魔法陣を解読する"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 15,
+            "dc_overrides": [
+              {
+                "requirements": {
+                  "any": [
+                    {
+                      "flag": "seal_pattern_known"
+                    },
+                    {
+                      "flag": "heard_seal_lore"
+                    }
+                  ]
+                },
+                "dc": 8
+              }
+            ]
+          },
+          "critical_enabled": false,
+          "hidden_after": "cave_seal_broken",
+          "success_effects": [
+            {
+              "set_flag": "cave_seal_broken"
+            },
+            {
+              "current_location": "cave_heat_corridor"
+            }
+          ],
+          "failure_effects": [
+            {
+              "sp_change": -2
+            }
+          ],
+          "result_texts": {
+            "success": "魔法陣の線を一本ずつなぞると、七色の光がほどけるように消えた。",
+            "failure": "光が弾け、指先に痺れが走った。もう一度試すこともできる。"
+          }
+        },
+        {
+          "id": "pray_at_seal",
+          "text": "泉の精霊に祈る",
+          "preview": "泉の精霊に祈る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "泉の精霊に祈る"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 14
+          },
+          "critical_enabled": false,
+          "hidden_after": "cave_seal_broken",
+          "success_effects": [
+            {
+              "set_flag": "cave_seal_broken"
+            },
+            {
+              "current_location": "cave_heat_corridor"
+            }
+          ],
+          "failure_effects": [
+            {
+              "sp_change": -2
+            }
+          ],
+          "result_texts": {
+            "success": "泉の水面が光り、その輝きが岩壁の魔法陣を静かに溶かしていった。",
+            "failure": "泉は静まり返ったままだ。"
+          }
+        },
+        {
+          "id": "force_seal",
+          "text": "力ずくで岩壁を砕く",
+          "preview": "力ずくで岩壁を砕く",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "力ずくで岩壁を砕く"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+str",
+            "dc": 17
+          },
+          "critical_enabled": false,
+          "hidden_after": "cave_seal_broken",
+          "success_effects": [
+            {
+              "set_flag": "cave_seal_broken"
+            },
+            {
+              "current_location": "cave_heat_corridor"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -4
+            }
+          ],
+          "result_texts": {
+            "success": "渾身の一撃で魔法陣ごと岩壁がひび割れ、通路が口を開けた。",
+            "failure": "魔法陣に弾き返され、体が岩に叩きつけられた。"
+          }
+        },
+        {
+          "id": "pour_holy_water_on_seal",
+          "text": "聖水を魔法陣に注ぐ",
+          "preview": "聖水を魔法陣に注ぐ",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "聖水を魔法陣に注ぐ"
+          ],
+          "effects": [
+            {
+              "remove_item": {
+                "name": "聖水",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "cave_seal_broken"
+            },
+            {
+              "current_location": "cave_heat_corridor"
+            }
+          ],
+          "requirements": {
+            "has_item": "聖水"
+          },
+          "hidden_after": "cave_seal_broken",
+          "result_text": "聖水が触れた瞬間、魔法陣は白い煙を上げて砕け散った。"
+        },
+        {
+          "id": "enter_open_cave",
+          "text": "洞窟へ進む",
+          "preview": "洞窟へ進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "洞窟へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_heat_corridor"
+            }
+          ],
+          "visible_after": "cave_seal_broken"
+        },
+        {
+          "id": "leave_seal",
+          "text": "泉へ戻る",
+          "preview": "泉へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "泉へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "elf_spring"
+            }
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "id": "seal_glyphs",
+          "name": "魔法陣の文様",
+          "description": "魔法陣の文様",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+int",
+              "dc": 12
+            },
+            "success_text": "文様の一部が、精霊の泉の水面と同じ律動で明滅している。泉の力で解ける封印らしい。",
+            "failure_text": "複雑な文様の意味は読み取れなかった。",
+            "success_effects": [
+              {
+                "set_flag": "seal_pattern_known"
+              }
+            ],
+            "once": ""
+          }
+        }
+      ],
+      "background_image": "/static/images/bg_sealed_cave.png",
+      "npc_ids": [],
+      "enemy_ids": []
+    },
+    {
+      "id": "cave_heat_corridor",
+      "scene_id": "dark_forest",
+      "title": "熱気の回廊",
+      "description": "岩肌が赤く光り、足元から熱気が立ち上る。岩陰で、溶岩をまとったトカゲが舌を鳴らしている。",
+      "actions": [
+        {
+          "id": "fight_heat",
+          "text": "戦う",
+          "preview": "戦う",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "戦う"
+          ],
+          "effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "hidden_after": "cleared_cave_heat_corridor"
+        },
+        {
+          "id": "sneak_heat",
+          "text": "岩陰を伝って抜ける",
+          "preview": "岩陰を伝って抜ける",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "岩陰を伝って抜ける"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 13
+          },
+          "critical_enabled": false,
+          "hidden_after": "cleared_cave_heat_corridor",
+          "success_effects": [
+            {
+              "current_location": "cave_fork"
+            },
+            {
+              "set_flag": "cleared_cave_heat_corridor"
+            }
+          ],
+          "failure_effects": [
+            {
+              "start_combat": true
+            }
+          ]
+        },
+        {
+          "id": "pass_heat_corridor",
+          "text": "奥へ進む",
+          "preview": "奥へ進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "奥へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_fork"
+            }
+          ],
+          "visible_after": "cleared_cave_heat_corridor"
+        },
+        {
+          "id": "heat_back",
+          "text": "封印の岩壁へ戻る",
+          "preview": "封印の岩壁へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "封印の岩壁へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_seal"
+            }
+          ]
+        }
+      ],
+      "objects": [],
+      "background_image": "/static/images/bg_lava_cave.png",
+      "npc_ids": [],
+      "enemy_ids": [
+        "heat_lizard",
+        "heat_lizard"
+      ],
+      "combat": {
+        "enemy_ids": [
+          "heat_lizard",
+          "heat_lizard"
+        ],
+        "auto_start": false,
+        "encounter_class": "elite",
+        "boss": false,
+        "flee_allowed": false,
+        "victory_effects": {
+          "flags_set": [
+            "cleared_cave_heat_corridor"
+          ],
+          "current_location": "cave_fork",
+          "inventory_add": [
+            {
+              "id": "glowing_moss",
+              "name": "光苔",
+              "quantity": 1
+            }
+          ]
+        },
+        "defeat_effects": {
+          "hp": 1,
+          "current_location": "elf_spring"
+        },
+        "result_texts": {
+          "defeat": "気がつくと泉のほとりに倒れていた。"
+        }
+      }
+    },
+    {
+      "id": "cave_fork",
+      "scene_id": "dark_forest",
+      "title": "分かれ道",
+      "description": "通路が二つに分かれている。左からは溶岩の唸り、右からは水の滴る音と、かすかな人の声が聞こえる。",
+      "actions": [
+        {
+          "id": "cave_left",
+          "text": "左の通路へ進む",
+          "preview": "左の通路へ進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "左の通路へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_lava_room"
+            }
+          ]
+        },
+        {
+          "id": "cave_right",
+          "text": "右の通路へ進む",
+          "preview": "右の通路へ進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "右の通路へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_hot_spring"
+            }
+          ]
+        },
+        {
+          "id": "fork_back",
+          "text": "熱気の回廊へ戻る",
+          "preview": "熱気の回廊へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "熱気の回廊へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_heat_corridor"
+            }
+          ]
+        }
+      ],
+      "objects": [],
+      "background_image": "/static/images/bg_lava_cave.png",
+      "npc_ids": [],
+      "enemy_ids": []
+    },
+    {
+      "id": "cave_lava_room",
+      "scene_id": "dark_forest",
+      "title": "溶岩の小部屋",
+      "description": "溶岩溜まりの縁に、古い宝箱が置かれている。宝箱の前で、小さな炎の精がいくつも踊っている。",
+      "actions": [
+        {
+          "id": "open_lava_chest",
+          "text": "宝箱を開ける",
+          "preview": "宝箱を開ける",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "宝箱を開ける"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "name": "火球術の巻物",
+                "quantity": 2
+              }
+            },
+            {
+              "add_item": {
+                "name": "紅玉の護符",
+                "quantity": 1
+              }
+            },
+            {
+              "equip_item": "紅玉の護符"
+            }
+          ],
+          "visible_after": "cleared_cave_lava_room",
+          "once": "opened_lava_chest",
+          "result_text": "箱の中には、熱を帯びた巻物と赤い宝石の護符が収められていた。"
+        },
+        {
+          "id": "lava_back",
+          "text": "分かれ道へ戻る",
+          "preview": "分かれ道へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "分かれ道へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_fork"
+            }
+          ]
+        },
+        {
+          "id": "lava_forward",
+          "text": "奥へ進む",
+          "preview": "奥へ進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "奥へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_crystal_corridor"
+            }
+          ]
+        }
+      ],
+      "objects": [],
+      "background_image": "/static/images/bg_lava_cave.png",
+      "npc_ids": [],
+      "enemy_ids": [
+        "fire_wisp",
+        "fire_wisp",
+        "fire_wisp"
+      ],
+      "combat": {
+        "enemy_ids": [
+          "fire_wisp",
+          "fire_wisp",
+          "fire_wisp"
+        ],
+        "auto_start": true,
+        "encounter_class": "elite",
+        "boss": false,
+        "flee_allowed": false,
+        "victory_effects": {
+          "flags_set": [
+            "cleared_cave_lava_room"
+          ]
+        },
+        "defeat_effects": {
+          "hp": 1,
+          "current_location": "elf_spring"
+        },
+        "result_texts": {
+          "defeat": "気がつくと泉のほとりに倒れていた。"
+        }
+      }
+    },
+    {
+      "id": "cave_hot_spring",
+      "scene_id": "dark_forest",
+      "title": "地底の温泉",
+      "description": "湯気の立ち込める小さな温泉がある。岩の隙間に、ローブ姿の少女が膝を抱えて座り込んでいる。",
+      "actions": [
+        {
+          "id": "rest_hot_spring",
+          "text": "温泉で休む",
+          "preview": "温泉で休む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "温泉で休む"
+          ],
+          "effects": [
+            {
+              "restore_ratio": 0.5
+            }
+          ],
+          "once": "rested_hot_spring",
+          "result_text": "熱い湯に浸かると、疲れがじんわりと溶けていく。"
+        },
+        {
+          "id": "hot_spring_back",
+          "text": "分かれ道へ戻る",
+          "preview": "分かれ道へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "分かれ道へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_fork"
+            }
+          ]
+        },
+        {
+          "id": "hot_spring_forward",
+          "text": "奥へ進む",
+          "preview": "奥へ進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "奥へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_crystal_corridor"
+            }
+          ]
+        }
+      ],
+      "objects": [],
+      "background_image": "/static/images/bg_lava_cave.png",
+      "npc_ids": [],
+      "enemy_ids": []
+    },
+    {
+      "id": "cave_crystal_corridor",
+      "scene_id": "dark_forest",
+      "title": "水晶の回廊",
+      "description": "壁一面に、赤・青・緑の水晶が生えている。足音が響くたび、水晶が震え、形を変えて動き出した。",
+      "actions": [
+        {
+          "id": "fight_crystal",
+          "text": "戦う",
+          "preview": "戦う",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "戦う"
+          ],
+          "effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "hidden_after": "cleared_cave_crystal_corridor"
+        },
+        {
+          "id": "sneak_crystal",
+          "text": "水晶の共鳴が収まるまで息を潜める",
+          "preview": "水晶の共鳴が収まるまで息を潜める",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "水晶の共鳴が収まるまで息を潜める"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 15
+          },
+          "critical_enabled": false,
+          "hidden_after": "cleared_cave_crystal_corridor",
+          "success_effects": [
+            {
+              "current_location": "cave_prism_tree"
+            },
+            {
+              "set_flag": "cleared_cave_crystal_corridor"
+            }
+          ],
+          "failure_effects": [
+            {
+              "start_combat": true
+            },
+            {
+              "enemy_first": true
+            }
+          ]
+        },
+        {
+          "id": "pass_crystal_corridor",
+          "text": "奥へ進む",
+          "preview": "奥へ進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "奥へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_prism_tree"
+            }
+          ],
+          "visible_after": "cleared_cave_crystal_corridor"
+        },
+        {
+          "id": "crystal_back",
+          "text": "分かれ道へ戻る",
+          "preview": "分かれ道へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "分かれ道へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_fork"
+            }
+          ]
+        }
+      ],
+      "objects": [],
+      "background_image": "/static/images/bg_crystal_cave.png",
+      "npc_ids": [],
+      "enemy_ids": [
+        "ruby_golem",
+        "sapphire_moth",
+        "sapphire_moth",
+        "emerald_spider"
+      ],
+      "combat": {
+        "enemy_ids": [
+          "ruby_golem",
+          "sapphire_moth",
+          "sapphire_moth",
+          "emerald_spider"
+        ],
+        "auto_start": false,
+        "encounter_class": "elite",
+        "boss": false,
+        "flee_allowed": false,
+        "victory_effects": {
+          "flags_set": [
+            "cleared_cave_crystal_corridor"
+          ],
+          "current_location": "cave_prism_tree"
+        },
+        "defeat_effects": {
+          "hp": 1,
+          "current_location": "elf_spring"
+        },
+        "result_texts": {
+          "defeat": "気がつくと泉のほとりに倒れていた。"
+        }
+      }
+    },
+    {
+      "id": "cave_prism_tree",
+      "scene_id": "dark_forest",
+      "title": "虹晶樹の間",
+      "description": "洞窟の最奥に、七色の水晶でできた大樹がそびえている。枝の一本一本が脈打ち、根元には砕けた魔物たちの水晶が積み重なっている。",
+      "actions": [
+        {
+          "id": "leave_prism_tree",
+          "text": "泉へ戻る",
+          "preview": "泉へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "泉へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "elf_spring"
+            }
+          ],
+          "visible_after": "cleared_cave_prism_tree"
+        },
+        {
+          "id": "prism_back",
+          "text": "水晶の回廊へ戻る",
+          "preview": "水晶の回廊へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "水晶の回廊へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_crystal_corridor"
+            }
+          ],
+          "visible_after": "cleared_cave_prism_tree"
+        }
+      ],
+      "objects": [],
+      "background_image": "/static/images/bg_crystal_cave.png",
+      "npc_ids": [],
+      "enemy_ids": [
+        "prism_tree"
+      ],
+      "combat": {
+        "enemy_ids": [
+          "prism_tree"
+        ],
+        "auto_start": true,
+        "encounter_class": "boss",
+        "boss": true,
+        "flee_allowed": false,
+        "victory_effects": {
+          "flags_set": [
+            "cleared_cave_prism_tree"
+          ],
+          "inventory_add": [
+            {
+              "id": "prism_shard",
+              "name": "虹晶の欠片",
+              "quantity": 1
+            }
+          ]
+        },
+        "defeat_effects": {
+          "hp": 1,
+          "current_location": "elf_spring"
+        },
+        "result_texts": {
+          "defeat": "水晶の枝に打ち据えられ、気がつくと泉のほとりに倒れていた。",
+          "victory": "大樹が砕け散ると、その芯から掌ほどの欠片が転がり出た。光にかざすと、色が絶えず移ろっている。"
+        }
+      }
     }
   ],
   "fallback_choices": [
@@ -6920,6 +7976,93 @@
       "rare": true,
       "category": "key",
       "key_item": true
+    },
+    {
+      "id": "prism_shard",
+      "name": "虹晶の欠片",
+      "description": "色が絶えず移ろう水晶の欠片。強い魔力を秘めている。",
+      "effect": "魔法店で武器に加工できる",
+      "category": "key",
+      "key_item": true
+    },
+    {
+      "id": "ruby_charm",
+      "name": "紅玉の護符",
+      "description": "熱を帯びた赤い宝石の護符。",
+      "category": "equipment",
+      "combat": {
+        "kind": "equipment",
+        "requires_equipped": true,
+        "damage_taken_multipliers": {
+          "fire": 0.7
+        }
+      }
+    },
+    {
+      "id": "glowing_moss",
+      "name": "光苔",
+      "description": "暗い場所で淡く光る苔。薬の材料になる。",
+      "category": "material"
+    },
+    {
+      "id": "robert_hammer",
+      "name": "刻印のハンマー",
+      "description": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
+      "category": "key",
+      "key_item": true
+    },
+    {
+      "id": "prism_weapon_hero",
+      "name": "虹晶の剣",
+      "description": "刃の色が敵に応じて移ろう剣。相手の弱点を自ら探り当てる。",
+      "category": "equipment",
+      "combat": {
+        "kind": "weapon",
+        "name": "虹晶の剣",
+        "damage": "1d10+str/3",
+        "accuracy": 92,
+        "element": "counter"
+      }
+    },
+    {
+      "id": "prism_weapon_cleric",
+      "name": "虹晶の杖",
+      "description": "祈りの光を七色に分ける杖。癒やしの力も高める。",
+      "category": "equipment",
+      "combat": {
+        "kind": "weapon",
+        "name": "虹晶の杖",
+        "damage": "1d10+wis/3",
+        "accuracy": 92,
+        "element": "counter",
+        "skill_healing_bonus": 2
+      }
+    },
+    {
+      "id": "prism_weapon_mage",
+      "name": "虹晶のオーブ",
+      "description": "魔力を敵の弱点の属性へ変える宝珠。",
+      "category": "equipment",
+      "combat": {
+        "kind": "weapon",
+        "name": "虹晶のオーブ",
+        "damage": "1d10+int/3",
+        "accuracy": 92,
+        "element": "counter"
+      }
+    },
+    {
+      "id": "prism_weapon_thief",
+      "name": "虹晶の短剣",
+      "description": "刺すたびに色を変える短剣。急所を逃さない。",
+      "category": "equipment",
+      "combat": {
+        "kind": "weapon",
+        "name": "虹晶の短剣",
+        "damage": "1d10+dex/3",
+        "accuracy": 92,
+        "element": "counter"
+      }
     }
   ],
   "clues": [
@@ -7717,6 +8860,307 @@
           ]
         }
       ]
+    },
+    {
+      "id": "heat_lizard",
+      "name": "熱岩トカゲ",
+      "description": "溶岩を背負った大トカゲ。噛みつかれると火傷を負う。",
+      "element": "fire",
+      "hp": 22,
+      "max_hp": 22,
+      "image": "/static/images/enemy_heat_lizard.png",
+      "attributes": {
+        "str": 8,
+        "int": 8,
+        "dex": 6,
+        "end": 8
+      },
+      "combat": {
+        "basic_attack": {
+          "name": "灼熱の噛みつき",
+          "damage": "1d4+1",
+          "accuracy": 85,
+          "element": "fire",
+          "on_hit_status": {
+            "id": "burn",
+            "name": "火傷",
+            "damage": "1",
+            "remaining_rounds": 2
+          }
+        },
+        "defense": 1,
+        "evade": 5
+      },
+      "resistances": {
+        "ice": 1.5
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "skills": []
+    },
+    {
+      "id": "fire_wisp",
+      "name": "炎のウィスプ",
+      "description": "洞窟の熱から生まれた小さな炎の精。群れて漂う。",
+      "element": "fire",
+      "hp": 12,
+      "max_hp": 12,
+      "image": "/static/images/enemy_fire_wisp.png",
+      "attributes": {
+        "str": 8,
+        "int": 8,
+        "dex": 6,
+        "end": 8
+      },
+      "combat": {
+        "basic_attack": {
+          "name": "火の粉",
+          "damage": "1d3",
+          "accuracy": 85,
+          "element": "fire"
+        },
+        "defense": 0,
+        "evade": 20
+      },
+      "resistances": {
+        "ice": 1.5,
+        "water": 1.5
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "skills": []
+    },
+    {
+      "id": "ruby_golem",
+      "name": "紅晶ゴーレム",
+      "description": "赤い水晶が寄り集まってできた巨人。動きは鈍いが一撃が重い。",
+      "element": "fire",
+      "hp": 26,
+      "max_hp": 26,
+      "image": "/static/images/enemy_ruby_golem.png",
+      "attributes": {
+        "str": 8,
+        "int": 8,
+        "dex": 6,
+        "end": 8
+      },
+      "combat": {
+        "basic_attack": {
+          "name": "紅晶の拳",
+          "damage": "1d6+1",
+          "accuracy": 85,
+          "element": "physical"
+        },
+        "defense": 2,
+        "evade": 0
+      },
+      "resistances": {
+        "physical": 0.6,
+        "water": 1.5,
+        "ice": 1.5
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "skills": [
+        {
+          "id": "ruby_fist",
+          "kind": "damage",
+          "name": "紅晶の拳",
+          "damage": "1d6+1",
+          "accuracy": 85,
+          "element": "physical"
+        },
+        {
+          "id": "ruby_ray",
+          "name": "熱線",
+          "kind": "damage",
+          "damage": "1d4",
+          "accuracy": 90,
+          "element": "fire"
+        }
+      ]
+    },
+    {
+      "id": "sapphire_moth",
+      "name": "蒼晶の蝶",
+      "description": "青い水晶の翅を持つ蝶。鱗粉が冷気を帯びている。",
+      "element": "ice",
+      "hp": 9,
+      "max_hp": 9,
+      "image": "/static/images/enemy_sapphire_moth.png",
+      "attributes": {
+        "str": 8,
+        "int": 8,
+        "dex": 6,
+        "end": 8
+      },
+      "combat": {
+        "basic_attack": {
+          "name": "凍える鱗粉",
+          "damage": "1d3",
+          "accuracy": 85,
+          "element": "ice",
+          "on_hit_status": {
+            "id": "chill",
+            "name": "凍え",
+            "accuracy_penalty": 15,
+            "remaining_rounds": 2
+          }
+        },
+        "defense": 0,
+        "evade": 30
+      },
+      "resistances": {
+        "fire": 1.5
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "skills": []
+    },
+    {
+      "id": "emerald_spider",
+      "name": "翠晶の蜘蛛",
+      "description": "緑の水晶の脚を持つ蜘蛛。毒を含んだ糸を吐く。",
+      "element": "earth",
+      "hp": 12,
+      "max_hp": 12,
+      "image": "/static/images/enemy_emerald_spider.png",
+      "attributes": {
+        "str": 8,
+        "int": 8,
+        "dex": 6,
+        "end": 8
+      },
+      "combat": {
+        "basic_attack": {
+          "name": "毒糸",
+          "damage": "1d3",
+          "accuracy": 85,
+          "element": "earth",
+          "on_hit_status": {
+            "id": "poison",
+            "name": "毒",
+            "damage": "1",
+            "remaining_rounds": 2
+          }
+        },
+        "defense": 0,
+        "evade": 10
+      },
+      "resistances": {
+        "fire": 1.5
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "skills": []
+    },
+    {
+      "id": "prism_tree",
+      "name": "虹晶樹",
+      "description": "七色の水晶でできた大樹。洞窟の魔力を吸い上げ、魔物を生み出してきた。",
+      "element": "fire",
+      "hp": 85,
+      "max_hp": 85,
+      "image": "/static/images/enemy_prism_tree.png",
+      "attributes": {
+        "str": 8,
+        "int": 8,
+        "dex": 6,
+        "end": 8
+      },
+      "combat": {
+        "basic_attack": {
+          "name": "虹の枝打ち",
+          "damage": "1d8+2",
+          "accuracy": 85,
+          "element": "physical"
+        },
+        "defense": 2,
+        "evade": 0
+      },
+      "resistances": {
+        "fire": 0.25,
+        "ice": 1.5,
+        "water": 1.5
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "skills": [
+        {
+          "id": "root_absorb",
+          "name": "根の吸収",
+          "kind": "heal",
+          "healing": "1d6",
+          "every_n_rounds": 3
+        },
+        {
+          "id": "prism_branch",
+          "kind": "damage",
+          "name": "虹の枝打ち",
+          "damage": "1d8+2",
+          "accuracy": 85,
+          "element": "physical"
+        },
+        {
+          "id": "crystal_rain",
+          "name": "結晶の雨",
+          "kind": "damage",
+          "damage": "1d6+2",
+          "accuracy": 95,
+          "element": "current",
+          "target": "all"
+        }
+      ],
+      "resistance_cycle": {
+        "every": 2,
+        "log": "虹晶樹の輝きが<色>に変わった。",
+        "phases": [
+          {
+            "name": "紅",
+            "element": "fire",
+            "resistances": {
+              "fire": 0.25,
+              "water": 1.5,
+              "ice": 1.5
+            }
+          },
+          {
+            "name": "蒼",
+            "element": "ice",
+            "resistances": {
+              "ice": 0.25,
+              "fire": 1.5
+            }
+          },
+          {
+            "name": "翠",
+            "element": "earth",
+            "resistances": {
+              "earth": 0.25,
+              "fire": 1.5,
+              "wind": 1.5
+            }
+          }
+        ]
+      }
     }
   ],
   "combat_choices": [
@@ -8423,10 +9867,8 @@
     {
       "id": "lv2",
       "level": 2,
-      "trigger_flag": "defeated_slime_king",
-      "alternative_flags": [
-        "combat_defeated:forest_wolves:forest_wolf"
-      ],
+      "trigger_flag": "passed_forest_wolves",
+      "alternative_flags": [],
       "gains": {
         "hero": {
           "max_hp": 5,
@@ -8838,6 +10280,444 @@
         }
       ],
       "buys": true
+    }
+  ],
+  "maps": [
+    {
+      "id": "goblin_fort",
+      "title": "ゴブリン砦",
+      "parent": "forest",
+      "nodes": [
+        {
+          "id": "G1",
+          "label": "ゴブリン砦",
+          "kind": "battle",
+          "x": 12,
+          "y": 75,
+          "location_ids": [
+            "goblin_fort"
+          ],
+          "description": "砦へ入ると、一匹のゴブリンが通路を見張っている。"
+        },
+        {
+          "id": "G2",
+          "label": "二階",
+          "kind": "battle",
+          "x": 30,
+          "y": 75,
+          "location_ids": [
+            "goblin_fort_first_second",
+            "goblin_fort_second_choice"
+          ],
+          "description": "通路の先を、一匹のゴブリンと一匹の弓ゴブリンが守っている。"
+        },
+        {
+          "id": "G3r",
+          "label": "右の通路",
+          "kind": "battle",
+          "x": 48,
+          "y": 35,
+          "location_ids": [
+            "goblin_fort_second_right"
+          ],
+          "description": "大ゴブリンが暗号を口ずさみながら私室と廊下を往復している。"
+        },
+        {
+          "id": "G3l",
+          "label": "回復法陣",
+          "kind": "rest",
+          "x": 48,
+          "y": 75,
+          "location_ids": [
+            "goblin_fort_second_left",
+            "goblin_fort_healing_circle"
+          ],
+          "description": "扉を開けた瞬間、一匹の猛犬が鎖を引きちぎって襲いかかる。"
+        },
+        {
+          "id": "G4",
+          "label": "三階",
+          "kind": "battle",
+          "x": 68,
+          "y": 55,
+          "location_ids": [
+            "goblin_fort_third_gate",
+            "goblin_fort_third_guards"
+          ],
+          "description": "四階へ続く鉄門には小窓があり、中から暗号を求める声がする。"
+        },
+        {
+          "id": "G5",
+          "label": "財宝庫",
+          "kind": "treasure",
+          "x": 87,
+          "y": 55,
+          "location_ids": [
+            "goblin_fort_fourth",
+            "goblin_fort_chest_choice",
+            "goblin_fort_chest_fight"
+          ],
+          "description": "財宝の山の前でゴブリン王と一匹の弓兵が待ち構えている。"
+        }
+      ],
+      "edges": [
+        {
+          "from": "G1",
+          "to": "G2",
+          "action_id": "fort_first_bypass"
+        },
+        {
+          "from": "G2",
+          "to": "G3r",
+          "action_id": "explore_fort_right"
+        },
+        {
+          "from": "G2",
+          "to": "G3l",
+          "action_id": "explore_fort_left"
+        },
+        {
+          "from": "G3r",
+          "to": "G4",
+          "action_id": "bypass_hobgoblin"
+        },
+        {
+          "from": "G3l",
+          "to": "G4",
+          "action_id": "use_fort_healing_circle"
+        },
+        {
+          "from": "G4",
+          "to": "G5",
+          "action_id": "give_correct_password"
+        }
+      ]
+    },
+    {
+      "id": "sealed_cave",
+      "title": "封印の洞窟",
+      "parent": "forest",
+      "nodes": [
+        {
+          "id": "C0",
+          "label": "封印の岩壁",
+          "kind": "locked",
+          "x": 10,
+          "y": 65,
+          "location_ids": [
+            "cave_seal"
+          ],
+          "description": "泉の裏手の岩壁に、七色に揺らめく魔法陣が刻まれている。陣の奥から、かすかに熱い風が吹き出している。",
+          "recommended": "推奨 Lv2",
+          "locked_until": "cave_seal_broken"
+        },
+        {
+          "id": "C1",
+          "label": "熱気の回廊",
+          "kind": "battle",
+          "x": 25,
+          "y": 65,
+          "location_ids": [
+            "cave_heat_corridor"
+          ],
+          "description": "岩肌が赤く光り、足元から熱気が立ち上る。岩陰で、溶岩をまとったトカゲが舌を鳴らしている。",
+          "recommended": "推奨 Lv2"
+        },
+        {
+          "id": "C2",
+          "label": "分かれ道",
+          "kind": "branch",
+          "x": 40,
+          "y": 65,
+          "location_ids": [
+            "cave_fork"
+          ],
+          "description": "通路が二つに分かれている。左からは溶岩の唸り、右からは水の滴る音と、かすかな人の声が聞こえる。",
+          "recommended": "推奨 Lv2"
+        },
+        {
+          "id": "C3a",
+          "label": "溶岩の小部屋",
+          "kind": "treasure",
+          "x": 56,
+          "y": 25,
+          "location_ids": [
+            "cave_lava_room"
+          ],
+          "description": "溶岩溜まりの縁に、古い宝箱が置かれている。宝箱の前で、小さな炎の精がいくつも踊っている。",
+          "recommended": "推奨 Lv2"
+        },
+        {
+          "id": "C3b",
+          "label": "地底の温泉",
+          "kind": "rest",
+          "x": 56,
+          "y": 75,
+          "location_ids": [
+            "cave_hot_spring"
+          ],
+          "description": "湯気の立ち込める小さな温泉がある。岩の隙間に、ローブ姿の少女が膝を抱えて座り込んでいる。",
+          "recommended": "推奨 Lv2"
+        },
+        {
+          "id": "C4",
+          "label": "水晶の回廊",
+          "kind": "battle",
+          "x": 74,
+          "y": 50,
+          "location_ids": [
+            "cave_crystal_corridor"
+          ],
+          "description": "壁一面に、赤・青・緑の水晶が生えている。足音が響くたび、水晶が震え、形を変えて動き出した。",
+          "recommended": "推奨 Lv2"
+        },
+        {
+          "id": "C5",
+          "label": "虹晶樹の間",
+          "kind": "boss",
+          "x": 90,
+          "y": 50,
+          "location_ids": [
+            "cave_prism_tree"
+          ],
+          "description": "洞窟の最奥に、七色の水晶でできた大樹がそびえている。枝の一本一本が脈打ち、根元には砕けた魔物たちの水晶が積み重なっている。",
+          "recommended": "推奨 Lv2"
+        }
+      ],
+      "edges": [
+        {
+          "from": "C0",
+          "to": "C1",
+          "action_id": "enter_open_cave"
+        },
+        {
+          "from": "C1",
+          "to": "C2",
+          "action_id": "pass_heat_corridor"
+        },
+        {
+          "from": "C2",
+          "to": "C3a",
+          "action_id": "cave_left"
+        },
+        {
+          "from": "C2",
+          "to": "C3b",
+          "action_id": "cave_right"
+        },
+        {
+          "from": "C3a",
+          "to": "C2",
+          "action_id": "lava_back"
+        },
+        {
+          "from": "C3b",
+          "to": "C2",
+          "action_id": "hot_spring_back"
+        },
+        {
+          "from": "C3a",
+          "to": "C4",
+          "action_id": "lava_forward"
+        },
+        {
+          "from": "C3b",
+          "to": "C4",
+          "action_id": "hot_spring_forward"
+        },
+        {
+          "from": "C4",
+          "to": "C5",
+          "action_id": "pass_crystal_corridor"
+        },
+        {
+          "from": "C5",
+          "to": "C4",
+          "action_id": "prism_back"
+        },
+        {
+          "from": "C4",
+          "to": "C2",
+          "action_id": "crystal_back"
+        },
+        {
+          "from": "C2",
+          "to": "C1",
+          "action_id": "fork_back"
+        },
+        {
+          "from": "C1",
+          "to": "C0",
+          "action_id": "heat_back"
+        }
+      ]
+    },
+    {
+      "id": "forest",
+      "title": "闇の森",
+      "nodes": [
+        {
+          "id": "F1",
+          "label": "森の入口",
+          "kind": "start",
+          "x": 10,
+          "y": 65,
+          "location_ids": [
+            "dark_forest_loc"
+          ],
+          "description": "薄暗い森の入口。一匹のスライムが道を塞ぎ、地面の木の実に鼻先を寄せている。道の脇には茂みと倒れた枝がある。"
+        },
+        {
+          "id": "F2",
+          "label": "迷い子の十字路",
+          "kind": "event",
+          "x": 30,
+          "y": 65,
+          "location_ids": [
+            "lost_goblin_crossroads"
+          ],
+          "description": "迷子のゴブリンが、別の一族に盗まれた箱を取り戻してほしいと頼んでいる。"
+        },
+        {
+          "id": "F3",
+          "label": "精霊の泉",
+          "kind": "rest",
+          "x": 50,
+          "y": 65,
+          "location_ids": [
+            "elf_spring",
+            "slime_ambush_one",
+            "slime_ambush_two",
+            "slime_king_battle"
+          ],
+          "description": "淡い光を帯びた泉。休めば力を取り戻せそうだ。"
+        },
+        {
+          "id": "F4",
+          "label": "狼の縄張り",
+          "kind": "battle",
+          "x": 70,
+          "y": 65,
+          "location_ids": [
+            "forest_wolves"
+          ],
+          "description": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。"
+        },
+        {
+          "id": "F5",
+          "label": "森の出口",
+          "kind": "exit",
+          "x": 90,
+          "y": 65,
+          "location_ids": [
+            "forest_exit"
+          ],
+          "description": "木々の隙間から麓の村と山道が見えている。"
+        },
+        {
+          "id": "fort",
+          "label": "ゴブリン砦",
+          "kind": "branch",
+          "x": 30,
+          "y": 25,
+          "location_ids": [
+            "goblin_fort",
+            "goblin_fort_first_second",
+            "goblin_fort_second_choice",
+            "goblin_fort_second_right",
+            "goblin_fort_second_left",
+            "goblin_fort_healing_circle",
+            "goblin_fort_third_gate",
+            "goblin_fort_third_guards",
+            "goblin_fort_fourth",
+            "goblin_fort_chest_choice",
+            "goblin_fort_chest_fight"
+          ],
+          "description": "砦へ入ると、一匹のゴブリンが通路を見張っている。",
+          "submap": "goblin_fort"
+        },
+        {
+          "id": "cave",
+          "label": "封印の洞窟",
+          "kind": "locked",
+          "x": 60,
+          "y": 25,
+          "location_ids": [
+            "cave_seal",
+            "cave_heat_corridor",
+            "cave_fork",
+            "cave_lava_room",
+            "cave_hot_spring",
+            "cave_crystal_corridor",
+            "cave_prism_tree"
+          ],
+          "description": "泉の裏手の岩壁に、七色に揺らめく魔法陣が刻まれている。陣の奥から、かすかに熱い風が吹き出している。",
+          "submap": "sealed_cave",
+          "locked_until": "cave_seal_broken",
+          "recommended": "推奨 Lv2"
+        }
+      ],
+      "edges": [
+        {
+          "from": "F1",
+          "to": "F2",
+          "action_id": "pass_cleared_forest"
+        },
+        {
+          "from": "F2",
+          "to": "F3",
+          "action_id": "crossroads_forward"
+        },
+        {
+          "from": "F3",
+          "to": "F4",
+          "action_id": "continue_from_elf_spring"
+        },
+        {
+          "from": "F4",
+          "to": "F5",
+          "action_id": "pass_cleared_wolves"
+        },
+        {
+          "from": "F2",
+          "to": "fort",
+          "action_id": "enter_goblin_fort"
+        },
+        {
+          "from": "F3",
+          "to": "cave",
+          "action_id": "inspect_spring_wall"
+        },
+        {
+          "from": "fort",
+          "to": "F2"
+        },
+        {
+          "from": "F2",
+          "to": "F5",
+          "action_id": "fort_shortcut"
+        },
+        {
+          "from": "F3",
+          "to": "F2",
+          "action_id": "spring_back"
+        },
+        {
+          "from": "F2",
+          "to": "F1",
+          "action_id": "crossroads_back"
+        },
+        {
+          "from": "F4",
+          "to": "F3",
+          "action_id": "wolves_back"
+        },
+        {
+          "from": "F5",
+          "to": "F4",
+          "action_id": "exit_back"
+        }
+      ]
     }
   ]
 }

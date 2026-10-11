@@ -84,6 +84,9 @@ def finish_witness(pack: dict[str, Any], steps: list[str], character: str) -> li
         "ian_ice_katana_aftermath": "accept_ian_request", "ignis_last_breath": "return_to_castle_report",
         "goblin_fort_second_choice": "explore_fort_right", "goblin_fort_third_gate": "give_correct_password",
         "goblin_fort_chest_choice": "return_lost_goblin_box",
+        "lost_goblin_crossroads": "crossroads_forward", "elf_spring": "continue_from_elf_spring",
+        "cave_seal": "leave_seal", "cave_fork": "cave_right", "cave_hot_spring": "hot_spring_forward",
+        "cave_prism_tree": "leave_prism_tree",
     }
     for _ in range(40):
         location = state.current_location_id(session)
@@ -91,6 +94,8 @@ def finish_witness(pack: dict[str, Any], steps: list[str], character: str) -> li
             return steps + suffix
         if location == "castle":
             step = "return_village" if session["flags"].get("returned_from_village") else "go_inn"
+        elif location == "forest_wolves" and session["flags"].get("passed_forest_wolves"):
+            step = "pass_cleared_wolves"
         elif location in navigation:
             step = navigation[location]
         else:

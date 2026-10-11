@@ -11,9 +11,12 @@ from .redundancy import MANIFEST, finish_witness
 
 def generate() -> dict[str, Any]:
     start = ["check_supplies", "go_inn", "invite_robin:success", "ask_robin_rumor", "return_castle_from_inn", "go_dark_forest:success", "@victory"]
-    fortress = ["help_lost_goblin", "@victory", "@victory", "explore_fort_right", "bypass_hobgoblin:success", "give_correct_password", "@victory", "return_lost_goblin_box"]
-    paths = {"spring": start + ["ignore_lost_goblin:success", "@victory", "continue_from_elf_spring", "@victory"],
-             "fort": start + fortress}
+    fortress = ["help_lost_goblin", "enter_goblin_fort", "@victory", "@victory", "explore_fort_right", "bypass_hobgoblin:success", "give_correct_password", "@victory", "return_lost_goblin_box"]
+    main = ["crossroads_forward", "continue_from_elf_spring", "@victory"]
+    cave_trip = ["exit_back", "wolves_back", "inspect_spring_wall", "decode_seal:success", "@victory", "cave_right", "hot_spring_forward", "@victory", "@victory", "leave_prism_tree", "continue_from_elf_spring", "pass_cleared_wolves"]
+    paths = {"spring": start + ["ignore_lost_goblin:success", "@victory"] + main,
+             "fort": start + fortress + main,
+             "cave": start + ["ignore_lost_goblin:success", "@victory"] + main + cave_trip}
     keys = []
 
     def key(identifier: str, minimum: int) -> list[dict[str, Any]]:
@@ -52,28 +55,28 @@ def generate() -> dict[str, Any]:
     add(holy, "general", "castle", "ask_general_advice:success", "dialogue", {"item": "holy_water"}, tail(town, "ask_general_advice:success"))
     add(holy, "cleric", "ian_ice_katana_aftermath", "accept_ian_request", "class_skill", {}, tail(after, "accept_ian_request"), character="cleric", skill="cleric_lv3_a", element="holy")
     password = key("knows_fort_password", 2)
-    fort_paths = {"fort": start, "spring": town["spring"] + ["go_dark_forest:success", "pass_cleared_forest"]}
+    fort_paths = {r: (start if r == "fort" else town[r] + ["go_dark_forest:success", "pass_cleared_forest"]) for r in paths}
     # Every witness goes through its main branch; spring can revisit the crossroads.
     for identifier, location, step, kind, extension in [
         ("lost_goblin", "lost_goblin_crossroads", "help_lost_goblin", "quest", ["help_lost_goblin"]),
-        ("hobgoblin", "goblin_fort_second_right", "bypass_hobgoblin:success", "sneak", fortress[:5]),
-        ("window", "goblin_fort_third_gate", "observe:iron_gate_window", "observe", fortress[:5] + ["observe:iron_gate_window"]),
-        ("robin", "goblin_fort_third_gate", "@entry", "companion_hint", fortress[:5] + ["@entry"]),
+        ("hobgoblin", "goblin_fort_second_right", "bypass_hobgoblin:success", "sneak", fortress[:6]),
+        ("window", "goblin_fort_third_gate", "observe:iron_gate_window", "observe", fortress[:6] + ["observe:iron_gate_window"]),
+        ("robin", "goblin_fort_third_gate", "@entry", "companion_hint", fortress[:6] + ["@entry"]),
     ]:
         witnesses = tail(fort_paths, *extension)
         if identifier == "lost_goblin":
-            witnesses["fort"] += ["@victory"]
+            witnesses["fort"] += ["enter_goblin_fort", "@victory"]
         if identifier == "robin":
             approach = ["accept_robin_goblin_quest", "@victory", "@victory", "explore_fort_right", "@victory", "@entry"]
-            witnesses = {"fort": start[:4] + approach,
-                         "spring": town["spring"] + ["go_inn", *approach]}
+            witnesses = {r: (start[:4] + approach if r == "fort" else town[r] + ["go_inn", *approach]) for r in paths}
         add(password, identifier, location, step, kind, {"flag": "knows_fort_password"}, witnesses)
     scale = key("white_dragon_scale", 3)
     add(scale, "frost_core", "village_frozen_clue", "inspect_frost_core:success", "exploration", {"item": "white_dragon_scale"}, tail(frozen, "inspect_frost_core:success"))
     add(scale, "wolf", "frost_wolf_battle", "@victory", "battle", {"item": "white_dragon_scale"}, after)
     add(scale, "wound", "ignis_last_breath", "examine_ignis_wound", "exploration", {"item": "white_dragon_scale"}, tail(last, "examine_ignis_wound"))
     robin = tail(paths, "return_inn_after_forest", "ask_robin_stolen_scale")
-    robin["spring"] = paths["spring"] + ["return_inn_after_forest", "accept_robin_goblin_quest", *fortress[1:], "return_inn_after_forest", "ask_robin_stolen_scale"]
+    for r in ("spring", "cave"):
+        robin[r] = paths[r] + ["return_inn_after_forest", "accept_robin_goblin_quest", *fortress[2:], "fort_shortcut", "return_inn_after_forest", "ask_robin_stolen_scale"]
     add(scale, "robin", "inn", "ask_robin_stolen_scale", "quest", {"item": "white_dragon_scale"}, robin)
     add(scale, "merchant", "alley_night", "buy_white_scale", "purchase", {"item": "white_dragon_scale"}, tail(town, "go_alley", "wait_for_night_in_alley", "buy_white_scale"))
     fire = key("fire_options", 2)
@@ -115,7 +118,7 @@ def generate() -> dict[str, Any]:
         for source in entry["sources"]:
             for branch, steps in source["witnesses"].items():
                 source["witnesses"][branch] = finish_witness(pack, steps, source.get("character", "hero"))
-    return dict(routes={"spring": {"landmark": "elf_spring"}, "fort": {"landmark": "goblin_fort"}},
+    return dict(routes={"spring": {"landmark": "elf_spring"}, "fort": {"landmark": "goblin_fort"}, "cave": {"landmark": "cave_seal"}},
                 notes=["路线允许返回城镇及砦支线；每个来源单独重放合法动作及成功战斗，不把所有来源同时领取。",
                        "职业来源只计相应职业；不叠加职业。资金是一次性修复，线索是可替代证据，逐一核验但不要求每个可选 flag 有两个来源。"], keys=keys)
 

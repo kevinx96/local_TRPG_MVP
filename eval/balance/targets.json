@@ -78,6 +78,10 @@
     "boss": 0.35
   },
   "encounters": {
+    "cave_heat_corridor": "elite",
+    "cave_lava_room": "elite",
+    "cave_crystal_corridor": "elite",
+    "cave_prism_tree": "boss",
     "dark_forest_loc": "trash",
     "lost_goblin_crossroads": "trash",
     "slime_ambush_one": "trash",

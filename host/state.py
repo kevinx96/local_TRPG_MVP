@@ -1041,12 +1041,17 @@ def action_requirement_status(action: dict[str, Any], session: dict[str, Any]) -
     return choice_requirement_status(action, session.get("character", {}))
 
 
-def action_dice_settings(action: Optional[dict[str, Any]], default_type: str = "1d20", default_dc: int = 0) -> tuple[str, int]:
+def action_dice_settings(action: Optional[dict[str, Any]], default_type: str = "1d20", default_dc: int = 0,
+                         session: Optional[dict[str, Any]] = None) -> tuple[str, int]:
     if not isinstance(action, dict):
         return default_type, max(int(default_dc or 0), 0)
     roll = action.get("roll") if isinstance(action.get("roll"), dict) else {}
     dice_type = str(roll.get("dice_type") or roll.get("dice") or action.get("dice_type") or default_type or "1d20")
     dice_dc = roll.get("dc", roll.get("dice_dc", action.get("dice_dc", default_dc)))
+    for variant in roll.get("dc_overrides", []):
+        if session is not None and _session_requirement_passes(variant.get("requirements"), session):
+            dice_dc = variant["dc"]
+            break
     try:
         normalized_dc = int(dice_dc or 0)
     except (TypeError, ValueError):
@@ -1056,6 +1061,13 @@ def action_dice_settings(action: Optional[dict[str, Any]], default_type: str = "
 
 def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_roll: dict[str, Any]) -> dict[str, Any]:
     source_location_id = current_location_id(session)
+    if action.get("free_action"):
+        from .free_actions import adjudicate
+
+        result = adjudicate(session, dict(kind="interact", action_id="", approach=action["text"], reply="", **action["free_action"]))
+        session["choices"] = fallback_choices_for_session(session)
+        return {"action_id": action["id"], "text": action["text"], "outcome": result["outcome"],
+                "result_text": result["text"], "state_delta": result.get("state_delta", {}), "source_location_id": source_location_id}
     outcome = _action_outcome(latest_roll, action.get("critical_enabled") is not False)
     base_effects = _as_list(action.get("effects"))
     branch_outcome = {
@@ -1063,6 +1075,11 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
         "critical_failure": "failure",
     }.get(outcome, outcome)
     replaces_branch = branch_outcome != outcome and action.get(f"{outcome}_replaces_branch") is True
+    result_text = action.get("result_texts", {}).get(branch_outcome, action.get("result_text", ""))
+    for variant in action.get("result_variants", []):
+        if _session_requirement_passes(variant.get("requirements"), session):
+            result_text = variant["text"]
+            break
     outcome_effects = [] if replaces_branch else _as_list(action.get(f"{branch_outcome}_effects"))
     if branch_outcome != outcome:
         outcome_effects.extend(_as_list(action.get(f"{outcome}_effects")))
@@ -1080,6 +1097,8 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
     apply_state_delta(session, delta, allow_world_transition=True)
     if delta.get("start_combat") is True:
         session["combat_start_requested"] = True
+    if delta.get("enemy_first") is True:
+        session["enemy_first_requested"] = True
     result = {
         "action_id": str(action.get("id") or action.get("action_id") or ""),
         "text": str(action.get("text") or ""),
@@ -1089,6 +1108,7 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
         "prepared_turn_id": str(action.get("prepared_turn_id") or ""),
         "source_location_id": source_location_id,
         "extra_text": "".join(extra_text),
+        "result_text": result_text,
     }
     if action.get("open_shop"):
         result["open_shop"] = action["open_shop"]
@@ -1375,6 +1395,11 @@ def _effects_to_state_delta(effects: list[Any], session: Optional[dict[str, Any]
             delta["game_over"] = deepcopy(effect["game_over"])
         if effect.get("restore_full") is True:
             delta["restore_full"] = True
+        if isinstance(effect.get("restore_ratio"), (int, float)) and session:
+            for resource in ("hp", "mp", "sp"):
+                delta[f"{resource}_change"] = int(session["character"][f"max_{resource}"] * effect["restore_ratio"])
+        if effect.get("enemy_first") is True:
+            delta["enemy_first"] = True
         if isinstance(effect.get("set_flag"), str):
             flags_set.append(effect["set_flag"])
         flags_set.extend(_as_text_list(effect.get("flags_set")))

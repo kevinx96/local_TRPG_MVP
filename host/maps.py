@@ -27,6 +27,10 @@ def public_maps(session: dict[str, Any]) -> dict[str, Any]:
                       "current": location in node["location_ids"]}
             if visibility in {"visited", "locked"}:
                 public.update({k: deepcopy(node[k]) for k in ("label", "kind", "description", "recommended", "submap") if k in node})
+                if node.get("locked_until") and flags.get(node["locked_until"]):
+                    public["kind"] = "branch"
+                if node.get("locked_until") and flags.get(node["locked_until"]):
+                    public["kind"] = "branch"
             nodes.append(public)
         visible = {n["id"] for n in nodes if n["visibility"] != "hidden"}
         result.append({"id": source["id"], "title": source["title"], "parent": source.get("parent"),

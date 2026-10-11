@@ -30,6 +30,7 @@ class MapTests(unittest.TestCase):
         self.assertEqual(public_maps(self.session)["maps"][0]["nodes"][2]["visibility"], "locked")
         self.session["flags"]["unlocked"] = True
         self.assertEqual(public_maps(self.session)["maps"][0]["nodes"][2]["visibility"], "visited")
+        self.assertEqual(public_maps(self.session)["maps"][0]["nodes"][2]["kind"], "branch")
 
     def test_move_uses_turn_pipeline(self):
         with patch.object(app, "load_session", return_value=self.session), patch.object(app, "_run_turn", return_value={}) as turn:

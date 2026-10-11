@@ -154,6 +154,8 @@ def ensure_combat_started(session: dict[str, Any], intro_text: str = "") -> bool
     _log(session, "system", "start", f"戦闘開始: {'、'.join(enemy['name'] for enemy in enemies)}")
     _activate_phase_allies(session)
     _apply_round_start_effects(session, random)
+    if session.pop("enemy_first_requested", False) and combat_is_active(session):
+        _enemy_phase(session, random)
     _check_victory_or_defeat(session)
     return True
 
@@ -279,6 +281,7 @@ def clear_combat_after_resolution(session: dict[str, Any]) -> dict[str, Any]:
         session["combat_blocked_location"] = location_id
     if isinstance(session.get("character"), dict):
         session["character"].pop("combat_immunities", None)
+        session["character"].pop("statuses", None)
     original_character = combat.get("original_character")
     if isinstance(original_character, dict):
         session["character"] = deepcopy(original_character)
@@ -602,6 +605,8 @@ def _enemy_phase(session: dict[str, Any], rng: Any) -> None:
 
 def _execute_enemy_ability(session: dict[str, Any], enemy: dict[str, Any], ability: dict[str, Any], rng: Any) -> None:
     actor_id = str(enemy.get("id") or "enemy")
+    if ability.get("element") == "current":
+        ability = {**ability, "element": _primary_element(enemy)}
     kind = _ability_kind(ability)
     if kind == "heal":
         amount, detail = _roll_formula(str(ability.get("healing") or ability.get("dice_type") or "1d4"), enemy, rng)
@@ -713,6 +718,7 @@ def _resolve_attack(
 ) -> None:
     name = display_name or str(ability.get("name") or "攻撃")
     accuracy = _safe_int(ability.get("accuracy"), 90 if actor_id == "player" else 85)
+    accuracy -= sum(_safe_int(s.get("accuracy_penalty"), 0) for s in attacker.get("statuses", []))
     evade = _safe_int((defender.get("combat") or {}).get("evade") if isinstance(defender.get("combat"), dict) else defender.get("evade"), 0)
     chance = max(5, min(100, accuracy - evade))
     hit_roll = rng.randint(1, 100)
@@ -944,6 +950,17 @@ def _apply_round_start_effects(session: dict[str, Any], rng: Any) -> None:
     combat = session.get("combat")
     if not isinstance(combat, dict) or combat.get("status") != "active":
         return
+    for enemy in _alive_enemies(combat):
+        cycle = enemy.get("resistance_cycle", {})
+        phases = cycle.get("phases", [])
+        if phases:
+            index = ((combat["round"] - 1) // max(1, int(cycle.get("every", 2)))) % len(phases)
+            phase = phases[index]
+            if enemy.get("resistance_phase") != index:
+                previous = enemy.get("resistance_phase")
+                enemy.update(resistance_phase=index, resistances=deepcopy(phase["resistances"]), element=phase["element"])
+                if previous is not None:
+                    _log(session, enemy["id"], "resistance_cycle", cycle["log"].replace("<色>", phase["name"]))
     _apply_enemy_fields(session, rng)
     _tick_enemy_statuses(session, rng)
     if combat.get("status") != "active":
@@ -1001,7 +1018,7 @@ def _apply_ally_round_start_effects(session: dict[str, Any], companion: dict[str
         elif kind == "damage_enemy":
             targets = list(_alive_enemies(combat))
             if not effect.get("all_targets") and targets:
-                targets = targets[:1]
+                targets = [rng.choice(targets)] if effect.get("random_target") else targets[:1]
             for target in targets:
                 ability = {
                     "name": str(effect.get("name") or companion.get("name") or "同行者の攻撃"),
@@ -1013,7 +1030,7 @@ def _apply_ally_round_start_effects(session: dict[str, Any], companion: dict[str
 
 
 def _tick_enemy_statuses(session: dict[str, Any], rng: Any) -> None:
-    for enemy in _alive_enemies(session["combat"]):
+    for enemy in [*_alive_enemies(session["combat"]), session["character"]]:
         active_statuses: list[dict[str, Any]] = []
         for status in enemy.get("statuses") or []:
             if not isinstance(status, dict):
@@ -1124,6 +1141,10 @@ def _choose_enemy_ability(enemy: dict[str, Any], session: dict[str, Any], rng: A
     for skill in enemy.get("skills") or []:
         if not isinstance(skill, dict) or not _can_pay_cost(enemy, skill):
             continue
+        if skill.get("every_n_rounds"):
+            if session["combat"]["round"] % int(skill["every_n_rounds"]):
+                continue
+            return deepcopy(skill)
         character = session.get("character", {}) if isinstance(session.get("character"), dict) else {}
         character_id = str(character.get("id") or character.get("character_id") or "")
         if skill.get("skip_if_mage_undead") and character_id == "mage" and character.get("undead_parts"):
@@ -1347,6 +1368,8 @@ def _resistance_multiplier(actor: dict[str, Any], element: str) -> float:
         if not isinstance(item, dict):
             continue
         spec = item_combat_spec(item)
+        if spec.get("requires_equipped") and item.get("name") not in actor.get("equipment", []):
+            continue
         passive = spec.get("damage_taken_multipliers")
         if not isinstance(passive, dict):
             continue
