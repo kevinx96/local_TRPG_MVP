@@ -121,7 +121,8 @@ def _obstacles(session: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def _objects(session: dict[str, Any]) -> list[dict[str, Any]]:
-    return [x for x in _location(session).get("objects", []) if isinstance(x, dict) and x.get("id")]
+    return [x for x in _location(session).get("objects", []) if isinstance(x, dict) and x.get("id")
+            and state._session_requirement_passes(x.get("requirements"), session)]
 
 
 def _observe_target(session: dict[str, Any], identifier: str) -> dict[str, Any]:
@@ -160,6 +161,7 @@ def build_plan_messages(session: dict[str, Any], player_text: str) -> list[dict[
         {key: npc[key] for key in ("id", "name", "description") if key in npc}
         for npc in session.get("scenario_pack", {}).get("npcs", [])
         if npc.get("id") in location.get("npc_ids", [])
+        and state._session_requirement_passes(location.get("npc_requirements", {}).get(npc.get("id")), session)
     ]
     obstacles = []
     for obstacle in _obstacles(session):
@@ -246,7 +248,8 @@ def adjudicate(session: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]:
 def _adjudicate(session: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]:
     kind = plan["kind"]
     if kind in {"dialogue", "clarify", "unsupported"}:
-        if plan["target_id"] and plan["target_id"] not in _location(session).get("npc_ids", []):
+        if plan["target_id"] and (plan["target_id"] not in _location(session).get("npc_ids", [])
+                or not state._session_requirement_passes(_location(session).get("npc_requirements", {}).get(plan["target_id"]), session)):
             return _result("その相手はここにはいません。誰に話しかけますか？")
         text = sanitize_visible_text(plan["reply"]) or "どの相手に、何をしたいですか？"
         return _result(text, kind)
@@ -272,7 +275,7 @@ def _adjudicate(session: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]
             if once and session.get("flags", {}).get(once):
                 return _commit(session, plan, _result("完了済みです。", "observed"), changes)
             dice, dc = state.action_dice_settings(reveal)
-            roll = state.roll_dice(session, dice, dc)
+            roll = state.roll_dice(session, dice, dc) if dc > 0 else {"expression": "none", "rolls": [], "dc": 0, "success": True}
             success = bool(roll["success"] and not roll.get("critical_failure"))
             branch = "success" if success else "failure"
             delta = state._effects_to_state_delta(reveal.get(f"{branch}_effects", []), session)

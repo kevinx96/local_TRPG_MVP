@@ -70,7 +70,7 @@ class ServiceTests(unittest.TestCase):
             self.assertEqual(mystery["clue_count"], 1)
         state.apply_state_delta(session, {"flags_set": quest["clue_flags"]})
         self.give(session, "white_dragon_scale", 3)
-        self.assertEqual(public_quests(session)[-1]["clue_count"], 7)
+        self.assertEqual(public_quests(session)[-1]["clue_count"], 8)
         self.assertNotIn("clue_flags", public_quests(session)[-1])
 
     def test_once_flag_and_entry_effect_log_only_once(self):
@@ -164,13 +164,13 @@ class ServiceTests(unittest.TestCase):
                 trade(session, "sarah_shop", item, qty)
             self.assertEqual(session, before)
         trade(session, "sarah_shop", "herb", 2, selling=True)
-        self.assertEqual(session["character"]["gold"], 180)
+        self.assertEqual(session["character"]["gold"], 178)
         trade(session, "sarah_shop", "holy_water", 1)
         trade(session, "sarah_shop", "holy_water", 1, selling=True)
-        self.assertEqual(session["character"]["gold"], 172)
+        self.assertEqual(session["character"]["gold"], 169)
         self.give(session, "rusted_crown")
         trade(session, "sarah_shop", "rusted_crown", 1, selling=True)
-        self.assertEqual(session["character"]["gold"], 177)
+        self.assertEqual(session["character"]["gold"], 174)
         self.assertEqual(session["shop_stock"]["sarah_shop"]["herb"], 0)
         self.assertIsNone(session["shop_stock"]["sarah_shop"]["holy_water"])
 
@@ -247,8 +247,8 @@ class ServiceTests(unittest.TestCase):
             for location in pack["locations"]:
                 ids = {action["id"] for action in state._iter_actions(location.get("actions", []))}
                 self.assertFalse(ids & {"sarah_shop", "blue_mage_shop", "buy_equipment", "buy_ice_amulet"})
-            self.assertEqual(len(pack["quests"]), 5)
-            self.assertEqual(len(pack["shops"]), 4)
+            self.assertEqual(len(pack["quests"]), 9)
+            self.assertEqual(len(pack["shops"]), 5)
 
 
 if __name__ == "__main__":

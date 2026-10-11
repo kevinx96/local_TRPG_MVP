@@ -1,6 +1,6 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "68a8dffe0cd9c232e1c47cdb41912c6f1ea43b0f20f7ca5e9419968a1c39ac25",
+  "scenario_sha256": "18483811dbd437d0432283ec45c5403b42189356800d0aa154b743ca89061d9c",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
@@ -19073,6 +19073,15 @@
                 "consumable": true
               },
               "category": "consumable"
+            },
+            {
+              "name": "刻印のハンマー",
+              "description": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
+              "effect": "",
+              "quantity": 1,
+              "id": "robert_hammer",
+              "category": "key",
+              "key_item": true
             }
           ],
           "equipment": [
@@ -19331,6 +19340,11 @@
                   {
                     "name": "治療の巻物",
                     "quantity": 2
+                  },
+                  {
+                    "id": "robert_hammer",
+                    "name": "刻印のハンマー",
+                    "quantity": 1
                   }
                 ],
                 "flags_set": [
@@ -19490,6 +19504,15 @@
                 "consumable": true
               },
               "category": "consumable"
+            },
+            {
+              "name": "刻印のハンマー",
+              "description": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
+              "effect": "",
+              "quantity": 1,
+              "id": "robert_hammer",
+              "category": "key",
+              "key_item": true
             }
           ],
           "equipment": [
@@ -19702,6 +19725,11 @@
                   {
                     "name": "治療の巻物",
                     "quantity": 2
+                  },
+                  {
+                    "id": "robert_hammer",
+                    "name": "刻印のハンマー",
+                    "quantity": 1
                   }
                 ],
                 "flags_set": [
@@ -19851,6 +19879,15 @@
                 "consumable": true
               },
               "category": "consumable"
+            },
+            {
+              "name": "刻印のハンマー",
+              "description": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
+              "effect": "",
+              "quantity": 1,
+              "id": "robert_hammer",
+              "category": "key",
+              "key_item": true
             }
           ],
           "equipment": [
@@ -20063,6 +20100,11 @@
                   {
                     "name": "治療の巻物",
                     "quantity": 2
+                  },
+                  {
+                    "id": "robert_hammer",
+                    "name": "刻印のハンマー",
+                    "quantity": 1
                   }
                 ],
                 "flags_set": [
@@ -20214,6 +20256,15 @@
                 "consumable": true
               },
               "category": "consumable"
+            },
+            {
+              "name": "刻印のハンマー",
+              "description": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
+              "effect": "",
+              "quantity": 1,
+              "id": "robert_hammer",
+              "category": "key",
+              "key_item": true
             }
           ],
           "equipment": [
@@ -20426,6 +20477,11 @@
                   {
                     "name": "治療の巻物",
                     "quantity": 2
+                  },
+                  {
+                    "id": "robert_hammer",
+                    "name": "刻印のハンマー",
+                    "quantity": 1
                   }
                 ],
                 "flags_set": [

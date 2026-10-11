@@ -9,7 +9,10 @@ def public_quests(session: dict[str, Any]) -> list[dict[str, Any]]:
     for quest in session.get("scenario_pack", {}).get("quests", []):
         start = quest.get("start_flag", "")
         starts = start if isinstance(start, list) else [start]
-        if start and not any(flags.get(flag) for flag in starts):
+        has_start_item = any(i.get("id") == quest.get("start_item") and i.get("quantity", 1) > 0
+                             for i in session.get("character", {}).get("inventory", []) if isinstance(i, dict)) if quest.get("start_item") else False
+        completed = bool(quest.get("complete_flags")) and all(flags.get(f) for f in quest["complete_flags"])
+        if start and not any(flags.get(flag) for flag in starts) and not has_start_item and not completed:
             continue
         complete = quest.get("complete_flags", [])
         status = "active"

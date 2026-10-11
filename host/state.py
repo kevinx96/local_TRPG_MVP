@@ -488,6 +488,8 @@ def _location_npc_portraits(
     if not isinstance(portrait_overrides, dict):
         portrait_overrides = {}
     for npc_id in location.get("npc_ids", []):
+        if not _session_requirement_passes(location.get("npc_requirements", {}).get(npc_id), session):
+            continue
         record = catalogs.get(str(npc_id))
         if not isinstance(record, dict) or not record.get("image"):
             continue

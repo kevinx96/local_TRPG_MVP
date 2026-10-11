@@ -7,8 +7,9 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-12-v015-forest",
-    "forest_v3": true
+    "content_revision": "2026-10-12-v015-sidequests",
+    "forest_v3": true,
+    "forest_sidequests": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -832,6 +833,23 @@
                   "current_location": "alley"
                 }
               ]
+            },
+            {
+              "id": "ask_gald_rumor",
+              "text": "行商人ガルドに声をかける",
+              "preview": "行商人ガルドに声をかける",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "行商人ガルドに声をかける"
+              ],
+              "effects": [
+                {
+                  "set_flag": "heard_gald_rumor"
+                }
+              ],
+              "visible_after": "saved_gald",
+              "result_text": "「将軍様の屋敷に、夜な夜な白い霧が出るって噂だぜ」",
+              "portrait_image": "/static/images/npc_gald.png"
             }
           ]
         },
@@ -1523,6 +1541,77 @@
               }
             ]
           }
+        },
+        {
+          "id": "ask_robert_hammer",
+          "text": "浮かない顔をしているが？",
+          "preview": "浮かない顔をしているが？",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "浮かない顔をしているが？"
+          ],
+          "effects": [
+            {
+              "set_flag": "robert_hammer_heard"
+            }
+          ],
+          "once": "asked_robert_hammer",
+          "result_text": "「……親父の形見のハンマーを、ゴブリンどもに盗まれた」"
+        },
+        {
+          "id": "return_robert_hammer",
+          "text": "刻印のハンマーを返す",
+          "preview": "刻印のハンマーを返す",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "刻印のハンマーを返す"
+          ],
+          "effects": [
+            {
+              "remove_item": {
+                "name": "刻印のハンマー",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "robert_hammer_returned"
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "any": [
+                    {
+                      "flag": "bought_adamantite_armor"
+                    },
+                    {
+                      "has_item": "アダマンタイトの鎧"
+                    }
+                  ]
+                },
+                "then": [
+                  {
+                    "gold_change": 100
+                  }
+                ],
+                "else": [
+                  {
+                    "add_item": {
+                      "name": "アダマンタイトの鎧",
+                      "quantity": 1
+                    }
+                  },
+                  {
+                    "equip_item": "アダマンタイトの鎧"
+                  }
+                ]
+              }
+            }
+          ],
+          "requirements": {
+            "has_item": "刻印のハンマー"
+          },
+          "once": "robert_hammer_returned",
+          "result_text": "「……それは。どこでこれを」ローベルトは長い間ハンマーを握りしめていた。「礼だ。好きな防具を一つ、仕立て直してやる」"
         }
       ],
       "background_image": "/static/images/bg_forge.png",
@@ -2426,7 +2515,8 @@
         "長老"
       ],
       "npc_ids": [
-        "elder"
+        "elder",
+        "gald"
       ],
       "clue_ids": [
         "dragon_weakness"
@@ -2683,10 +2773,55 @@
               "current_location": "village_frozen_clue"
             }
           ]
+        },
+        {
+          "id": "open_gald_shop",
+          "text": "行商人ガルドの店に入る",
+          "preview": "行商人ガルドの店に入る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "行商人ガルドの店に入る"
+          ],
+          "effects": [],
+          "open_shop": "gald_shop",
+          "visible_after": "saved_gald"
         }
       ],
       "background_image": "/static/images/bg_village.png",
-      "portrait_image": "/static/images/npc_elder.png"
+      "portrait_image": "/static/images/npc_elder.png",
+      "objects": [
+        {
+          "id": "gald_cart",
+          "name": "行商人の荷車",
+          "description": "行商人の荷車",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "none",
+              "dc": 0
+            },
+            "success_text": "倒れた荷車が放置されている。散らばった荷物の中に、使えそうな薬草が残っていた。",
+            "failure_text": "",
+            "success_effects": [
+              {
+                "add_item": {
+                  "name": "薬草",
+                  "quantity": 1
+                }
+              }
+            ],
+            "once": "searched_gald_cart"
+          },
+          "requirements": {
+            "flag": "abandoned_gald"
+          }
+        }
+      ],
+      "npc_requirements": {
+        "gald": {
+          "flag": "saved_gald"
+        }
+      }
     },
     {
       "id": "dragon_valley_loc",
@@ -3127,7 +3262,8 @@
         "王城の魔法店"
       ],
       "npc_ids": [
-        "blue_robed_mage"
+        "blue_robed_mage",
+        "mina"
       ],
       "item_ids": [],
       "clue_ids": [],
@@ -3367,19 +3503,46 @@
                 },
                 "then": [
                   {
-                    "add_item": {
-                      "id": "prism_weapon_hero",
-                      "name": "虹晶の剣",
-                      "description": "刃の色が敵に応じて移ろう剣。相手の弱点を自ら探り当てる。",
-                      "category": "equipment",
-                      "combat": {
-                        "kind": "weapon",
-                        "name": "虹晶の剣",
-                        "damage": "1d10+str/3",
-                        "accuracy": 92,
-                        "element": "counter"
+                    "branch": {
+                      "requirements": {
+                        "flag": "mina_quest_done"
                       },
-                      "quantity": 1
+                      "then": [
+                        {
+                          "add_item": {
+                            "id": "prism_weapon_hero",
+                            "name": "虹晶の剣",
+                            "description": "刃の色が敵に応じて移ろう剣。相手の弱点を自ら探り当てる。",
+                            "category": "equipment",
+                            "combat": {
+                              "kind": "weapon",
+                              "name": "虹晶の剣",
+                              "damage": "1d10+str/3",
+                              "accuracy": 95,
+                              "element": "counter"
+                            },
+                            "quantity": 1
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "add_item": {
+                            "id": "prism_weapon_hero",
+                            "name": "虹晶の剣",
+                            "description": "刃の色が敵に応じて移ろう剣。相手の弱点を自ら探り当てる。",
+                            "category": "equipment",
+                            "combat": {
+                              "kind": "weapon",
+                              "name": "虹晶の剣",
+                              "damage": "1d10+str/3",
+                              "accuracy": 92,
+                              "element": "counter"
+                            },
+                            "quantity": 1
+                          }
+                        }
+                      ]
                     }
                   },
                   {
@@ -3395,20 +3558,48 @@
                 },
                 "then": [
                   {
-                    "add_item": {
-                      "id": "prism_weapon_cleric",
-                      "name": "虹晶の杖",
-                      "description": "祈りの光を七色に分ける杖。癒やしの力も高める。",
-                      "category": "equipment",
-                      "combat": {
-                        "kind": "weapon",
-                        "name": "虹晶の杖",
-                        "damage": "1d10+wis/3",
-                        "accuracy": 92,
-                        "element": "counter",
-                        "skill_healing_bonus": 2
+                    "branch": {
+                      "requirements": {
+                        "flag": "mina_quest_done"
                       },
-                      "quantity": 1
+                      "then": [
+                        {
+                          "add_item": {
+                            "id": "prism_weapon_cleric",
+                            "name": "虹晶の杖",
+                            "description": "祈りの光を七色に分ける杖。癒やしの力も高める。",
+                            "category": "equipment",
+                            "combat": {
+                              "kind": "weapon",
+                              "name": "虹晶の杖",
+                              "damage": "1d10+wis/3",
+                              "accuracy": 95,
+                              "element": "counter",
+                              "skill_healing_bonus": 2
+                            },
+                            "quantity": 1
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "add_item": {
+                            "id": "prism_weapon_cleric",
+                            "name": "虹晶の杖",
+                            "description": "祈りの光を七色に分ける杖。癒やしの力も高める。",
+                            "category": "equipment",
+                            "combat": {
+                              "kind": "weapon",
+                              "name": "虹晶の杖",
+                              "damage": "1d10+wis/3",
+                              "accuracy": 92,
+                              "element": "counter",
+                              "skill_healing_bonus": 2
+                            },
+                            "quantity": 1
+                          }
+                        }
+                      ]
                     }
                   },
                   {
@@ -3424,19 +3615,46 @@
                 },
                 "then": [
                   {
-                    "add_item": {
-                      "id": "prism_weapon_mage",
-                      "name": "虹晶のオーブ",
-                      "description": "魔力を敵の弱点の属性へ変える宝珠。",
-                      "category": "equipment",
-                      "combat": {
-                        "kind": "weapon",
-                        "name": "虹晶のオーブ",
-                        "damage": "1d10+int/3",
-                        "accuracy": 92,
-                        "element": "counter"
+                    "branch": {
+                      "requirements": {
+                        "flag": "mina_quest_done"
                       },
-                      "quantity": 1
+                      "then": [
+                        {
+                          "add_item": {
+                            "id": "prism_weapon_mage",
+                            "name": "虹晶のオーブ",
+                            "description": "魔力を敵の弱点の属性へ変える宝珠。",
+                            "category": "equipment",
+                            "combat": {
+                              "kind": "weapon",
+                              "name": "虹晶のオーブ",
+                              "damage": "1d10+int/3",
+                              "accuracy": 95,
+                              "element": "counter"
+                            },
+                            "quantity": 1
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "add_item": {
+                            "id": "prism_weapon_mage",
+                            "name": "虹晶のオーブ",
+                            "description": "魔力を敵の弱点の属性へ変える宝珠。",
+                            "category": "equipment",
+                            "combat": {
+                              "kind": "weapon",
+                              "name": "虹晶のオーブ",
+                              "damage": "1d10+int/3",
+                              "accuracy": 92,
+                              "element": "counter"
+                            },
+                            "quantity": 1
+                          }
+                        }
+                      ]
                     }
                   },
                   {
@@ -3452,19 +3670,46 @@
                 },
                 "then": [
                   {
-                    "add_item": {
-                      "id": "prism_weapon_thief",
-                      "name": "虹晶の短剣",
-                      "description": "刺すたびに色を変える短剣。急所を逃さない。",
-                      "category": "equipment",
-                      "combat": {
-                        "kind": "weapon",
-                        "name": "虹晶の短剣",
-                        "damage": "1d10+dex/3",
-                        "accuracy": 92,
-                        "element": "counter"
+                    "branch": {
+                      "requirements": {
+                        "flag": "mina_quest_done"
                       },
-                      "quantity": 1
+                      "then": [
+                        {
+                          "add_item": {
+                            "id": "prism_weapon_thief",
+                            "name": "虹晶の短剣",
+                            "description": "刺すたびに色を変える短剣。急所を逃さない。",
+                            "category": "equipment",
+                            "combat": {
+                              "kind": "weapon",
+                              "name": "虹晶の短剣",
+                              "damage": "1d10+dex/3",
+                              "accuracy": 95,
+                              "element": "counter"
+                            },
+                            "quantity": 1
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "add_item": {
+                            "id": "prism_weapon_thief",
+                            "name": "虹晶の短剣",
+                            "description": "刺すたびに色を変える短剣。急所を逃さない。",
+                            "category": "equipment",
+                            "combat": {
+                              "kind": "weapon",
+                              "name": "虹晶の短剣",
+                              "damage": "1d10+dex/3",
+                              "accuracy": 92,
+                              "element": "counter"
+                            },
+                            "quantity": 1
+                          }
+                        }
+                      ]
                     }
                   },
                   {
@@ -3477,11 +3722,78 @@
           "requirements": {
             "has_item": "虹晶の欠片"
           },
-          "result_text": "「……面白い欠片だ。少し待っていろ」"
+          "result_text": "「……面白い欠片だ。少し待っていろ」",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "mina_quest_done"
+              },
+              "text": "「師匠の代わりに私がやります！助けてもらったお礼です」"
+            }
+          ]
+        },
+        {
+          "id": "ask_mina_missing",
+          "text": "最近変わったことは？",
+          "preview": "最近変わったことは？",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "最近変わったことは？"
+          ],
+          "effects": [
+            {
+              "set_flag": "mina_missing_heard"
+            },
+            {
+              "set_flag": "heard_seal_lore"
+            }
+          ],
+          "once": "asked_mina_missing",
+          "result_text": "「弟子のミーナが戻らない。泉の封印の話をした翌日からだ……」"
+        },
+        {
+          "id": "report_mina_safe",
+          "text": "ミーナを無事に連れ帰ったと伝える",
+          "preview": "ミーナを無事に連れ帰ったと伝える",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "ミーナを無事に連れ帰ったと伝える"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "name": "MP回復薬",
+                "quantity": 2
+              }
+            },
+            {
+              "set_flag": "mina_quest_done"
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "companion_id": "mina"
+                },
+                "then": [
+                  {
+                    "clear_companion": true
+                  }
+                ]
+              }
+            }
+          ],
+          "visible_after": "mina_rescued",
+          "once": "mina_quest_done",
+          "result_text": "「……世話をかけたな。礼を言う」"
         }
       ],
       "background_image": "/static/images/bg_magic_shop.png",
-      "portrait_image": "/static/images/npc_warlock.png"
+      "portrait_image": "/static/images/npc_warlock.png",
+      "npc_requirements": {
+        "mina": {
+          "flag": "mina_quest_done"
+        }
+      }
     },
     {
       "id": "item_shop",
@@ -3618,6 +3930,53 @@
               "current_location": "castle"
             }
           ]
+        },
+        {
+          "id": "ask_sarah_request",
+          "text": "何か困っていることはある？",
+          "preview": "何か困っていることはある？",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "何か困っていることはある？"
+          ],
+          "effects": [
+            {
+              "set_flag": "sarah_moss_request"
+            }
+          ],
+          "once": "asked_sarah_request",
+          "result_text": "「お母さんの薬を作りたいんだけど、光苔が足りないの。森の暗いところに生えてるんだって」"
+        },
+        {
+          "id": "give_moss_to_sarah",
+          "text": "光苔を渡す",
+          "preview": "光苔を渡す",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "光苔を渡す"
+          ],
+          "effects": [
+            {
+              "remove_item": {
+                "name": "光苔",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "sarah_moss_done"
+            },
+            {
+              "add_item": {
+                "name": "治療の巻物",
+                "quantity": 1
+              }
+            }
+          ],
+          "requirements": {
+            "has_item": "光苔"
+          },
+          "once": "sarah_moss_done",
+          "result_text": "「わあ、ありがとう！これでお母さんの薬が作れる！お礼に、これからはずっと安くしてあげるね」"
         }
       ],
       "background_image": "/static/images/bg_item_shop.png",
@@ -4899,7 +5258,52 @@
           ]
         }
       ],
-      "background_image": "/static/images/bg_elf_spring.png"
+      "background_image": "/static/images/bg_elf_spring.png",
+      "objects": [
+        {
+          "id": "small_footprints",
+          "name": "泉のほとりの小さな足跡",
+          "description": "泉のほとりの小さな足跡",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+wis",
+              "dc": 10
+            },
+            "success_text": "小さな足跡が、泉の裏の岩壁へと続いている。",
+            "failure_text": "",
+            "success_effects": [
+              {
+                "set_flag": "mina_tracks_found"
+              }
+            ],
+            "once": ""
+          }
+        },
+        {
+          "id": "glowing_moss_patch",
+          "name": "岩陰で光る苔",
+          "description": "岩陰で光る苔",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "none",
+              "dc": 0
+            },
+            "success_text": "岩陰に、淡く光る苔が生えていた。少し摘み取っておこう。",
+            "failure_text": "",
+            "success_effects": [
+              {
+                "add_item": {
+                  "name": "光苔",
+                  "quantity": 1
+                }
+              }
+            ],
+            "once": "gathered_glowing_moss_patch"
+          }
+        }
+      ]
     },
     {
       "id": "forest_wolves",
@@ -5029,6 +5433,28 @@
               "current_location": "elf_spring"
             }
           ]
+        },
+        {
+          "id": "abandon_gald",
+          "text": "見捨てて先を急ぐ",
+          "preview": "見捨てて先を急ぐ",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "見捨てて先を急ぐ"
+          ],
+          "effects": [
+            {
+              "set_flag": "abandoned_gald"
+            },
+            {
+              "set_flag": "passed_forest_wolves"
+            },
+            {
+              "current_location": "forest_exit"
+            }
+          ],
+          "hidden_after": "passed_forest_wolves",
+          "result_text": "背後で荷車の倒れる音がした。振り返らずに森を抜けた。"
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
@@ -6209,7 +6635,14 @@
           "flags_set": [
             "cleared_goblin_fort"
           ],
-          "current_location": "goblin_fort_chest_choice"
+          "current_location": "goblin_fort_chest_choice",
+          "inventory_add": [
+            {
+              "id": "robert_hammer",
+              "name": "刻印のハンマー",
+              "quantity": 1
+            }
+          ]
         },
         "defeat_effects": {
           "hp": 0,
@@ -7854,7 +8287,8 @@
                     "heard_ignis_last_words",
                     "noticed_general_frost",
                     "heard_treaty_lore",
-                    "heard_ignis_testimony"
+                    "heard_ignis_testimony",
+                    "heard_gald_rumor"
                   ],
                   "count": 2
                 }
@@ -8646,12 +9080,105 @@
               "current_location": "cave_crystal_corridor"
             }
           ]
+        },
+        {
+          "id": "talk_mina",
+          "text": "少女に話しかける",
+          "preview": "少女に話しかける",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "少女に話しかける"
+          ],
+          "effects": [
+            {
+              "set_flag": "met_mina"
+            }
+          ],
+          "hidden_after": "mina_rescued",
+          "result_text": "「た、助けて……！封印を抜けたら戻れなくなっちゃって。奥の大きな水晶の木が怖くて動けないの」",
+          "portrait_image": "/static/images/npc_mina.png"
+        },
+        {
+          "id": "escort_mina",
+          "text": "ミーナを連れて行く",
+          "preview": "ミーナを連れて行く",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "ミーナを連れて行く"
+          ],
+          "effects": [
+            {
+              "set_companion": "mina"
+            },
+            {
+              "set_flag": "mina_rescued"
+            }
+          ],
+          "visible_after": "met_mina",
+          "once": "mina_rescued",
+          "requirements": {
+            "any": [
+              {
+                "not_flag": "mina_waiting"
+              },
+              {
+                "flag": "cleared_cave_prism_tree"
+              }
+            ]
+          }
+        },
+        {
+          "id": "leave_mina_wait",
+          "text": "ここで待つよう伝える",
+          "preview": "ここで待つよう伝える",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "ここで待つよう伝える"
+          ],
+          "effects": [
+            {
+              "set_flag": "mina_waiting"
+            }
+          ],
+          "visible_after": "met_mina",
+          "hidden_after": "mina_rescued"
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "id": "moss_on_wall",
+          "name": "温泉の壁の苔",
+          "description": "温泉の壁の苔",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "none",
+              "dc": 0
+            },
+            "success_text": "岩陰に、淡く光る苔が生えていた。少し摘み取っておこう。",
+            "failure_text": "",
+            "success_effects": [
+              {
+                "add_item": {
+                  "name": "光苔",
+                  "quantity": 1
+                }
+              }
+            ],
+            "once": "gathered_moss_on_wall"
+          }
+        }
+      ],
       "background_image": "/static/images/bg_lava_cave.png",
-      "npc_ids": [],
-      "enemy_ids": []
+      "npc_ids": [
+        "mina"
+      ],
+      "enemy_ids": [],
+      "npc_requirements": {
+        "mina": {
+          "not_flag": "mina_rescued"
+        }
+      }
     },
     {
       "id": "cave_crystal_corridor",
@@ -8999,6 +9526,18 @@
         "翼竜"
       ],
       "image": "/static/images/companion_fire_bat_dragon.png"
+    },
+    {
+      "id": "mina",
+      "name": "見習い魔法使いミーナ",
+      "description": "魔法店の弟子。好奇心が強く、師匠の言いつけを破って封印の洞窟に入り込んだ。",
+      "image": "/static/images/npc_mina.png"
+    },
+    {
+      "id": "gald",
+      "name": "行商人ガルド",
+      "description": "各地を巡る陽気な行商人。森で狼の群れに追われていた。",
+      "image": "/static/images/npc_gald.png"
     }
   ],
   "items": [
@@ -11354,6 +11893,21 @@
         }
       ],
       "image": "/static/images/companion_fire_bat_dragon.png"
+    },
+    {
+      "id": "mina",
+      "name": "見習い魔法使いミーナ",
+      "image": "/static/images/npc_mina.png",
+      "description": "魔法店の弟子。好奇心が強く、師匠の言いつけを破って封印の洞窟に入り込んだ。",
+      "round_start_effects": [
+        {
+          "kind": "damage_enemy",
+          "every_n_rounds": 2,
+          "damage": "1d6",
+          "element": "ice",
+          "random_target": true
+        }
+      ]
     }
   ],
   "milestones": [
@@ -11622,6 +12176,87 @@
       "fail_flags": []
     },
     {
+      "id": "side_mina",
+      "title": "見習い魔法使いミーナ",
+      "description": "魔法店の弟子ミーナが、封印の洞窟から戻らないらしい。",
+      "kind": "side",
+      "start_flag": [
+        "mina_missing_heard",
+        "met_mina",
+        "mina_tracks_found"
+      ],
+      "complete_flags": [
+        "mina_quest_done"
+      ],
+      "fail_flags": [],
+      "stages": [
+        {
+          "text": "封印の洞窟でミーナを探す",
+          "done_flag": "met_mina"
+        },
+        {
+          "text": "ミーナを連れ帰る",
+          "done_flag": "mina_rescued"
+        },
+        {
+          "text": "魔法店に報告する",
+          "done_flag": "mina_quest_done"
+        }
+      ]
+    },
+    {
+      "id": "side_sarah",
+      "title": "サラの薬づくり",
+      "description": "サラは、母親の薬に使う光苔を探している。",
+      "kind": "side",
+      "start_flag": "sarah_moss_request",
+      "complete_flags": [
+        "sarah_moss_done"
+      ],
+      "fail_flags": [],
+      "stages": [
+        {
+          "text": "光苔を渡す",
+          "done_flag": "sarah_moss_done"
+        }
+      ]
+    },
+    {
+      "id": "side_gald",
+      "title": "行商人ガルド",
+      "description": "狼に追われていた行商人を助けた。",
+      "kind": "side",
+      "start_flag": "saved_gald",
+      "complete_flags": [
+        "visited_gald_shop"
+      ],
+      "fail_flags": [],
+      "stages": [
+        {
+          "text": "村でガルドの店を訪ねる",
+          "done_flag": "visited_gald_shop"
+        }
+      ]
+    },
+    {
+      "id": "side_robert",
+      "title": "鍛冶師の形見",
+      "description": "鍛冶師ローベルトは、ゴブリンに盗まれた父の形見のハンマーを探している。",
+      "kind": "side",
+      "start_flag": "robert_hammer_heard",
+      "complete_flags": [
+        "robert_hammer_returned"
+      ],
+      "fail_flags": [],
+      "stages": [
+        {
+          "text": "刻印のハンマーを返す",
+          "done_flag": "robert_hammer_returned"
+        }
+      ],
+      "start_item": "robert_hammer"
+    },
+    {
       "id": "mystery_frost",
       "kind": "mystery",
       "title": "凍てつく謎",
@@ -11647,7 +12282,8 @@
         "heard_ignis_last_words",
         "noticed_general_frost",
         "heard_treaty_lore",
-        "heard_ignis_testimony"
+        "heard_ignis_testimony",
+        "heard_gald_rumor"
       ],
       "clue_item": "white_dragon_scale"
     }
@@ -11694,7 +12330,11 @@
           "stock": null
         }
       ],
-      "buys": true
+      "buys": true,
+      "discount": {
+        "flag": "sarah_moss_done",
+        "multiplier": 0.8
+      }
     },
     {
       "id": "magic_shop",
@@ -11746,7 +12386,8 @@
                 "gte": 8
               }
             ]
-          }
+          },
+          "on_purchase_flag": "bought_adamantite_armor"
         },
         {
           "item_id": "ice_charm",
@@ -11773,6 +12414,43 @@
         }
       ],
       "buys": true
+    },
+    {
+      "id": "gald_shop",
+      "location_id": "village",
+      "keeper_npc": "gald",
+      "title": "行商人ガルド",
+      "requirements": {
+        "flag": "saved_gald"
+      },
+      "greeting": "よう、命の恩人！安くしとくぜ",
+      "buy_line": "毎度あり！",
+      "sell_line": "いい品だな、引き取ろう",
+      "poor_line": "おっと、それじゃ足りねえな",
+      "buys": true,
+      "on_purchase_flag": "visited_gald_shop",
+      "items": [
+        {
+          "item_id": "herb",
+          "price": 8,
+          "stock": null
+        },
+        {
+          "item_id": "holy_water",
+          "price": 12,
+          "stock": null
+        },
+        {
+          "item_id": "ice_charm",
+          "price": 40,
+          "stock": 1
+        },
+        {
+          "item_id": "smoke_bomb",
+          "price": 12,
+          "stock": null
+        }
+      ]
     }
   ],
   "maps": [

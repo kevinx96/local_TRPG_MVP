@@ -33,9 +33,11 @@ def item_category(item: dict[str, Any]) -> str:
 
 
 def _shop(session: dict[str, Any], shop_id: str) -> dict[str, Any]:
+    from .state import _session_requirement_passes
+
     require_exploration(session)
     shop = next((s for s in session.get("scenario_pack", {}).get("shops", []) if s["id"] == shop_id), None)
-    if not shop or shop["location_id"] != current_location_id(session):
+    if not shop or shop["location_id"] != current_location_id(session) or not _session_requirement_passes(shop.get("requirements"), session):
         raise ShopError("この行動は現在選択できません。")
     return shop
 
@@ -57,9 +59,15 @@ def _owned(session: dict[str, Any], item_id: str) -> dict[str, Any]:
     raise ShopError("道具が見つかりません。")
 
 
+def _price(session: dict[str, Any], shop: dict[str, Any], offer: dict[str, Any]) -> int:
+    discount = shop.get("discount", {})
+    multiplier = float(discount.get("multiplier", 1)) if session.get("flags", {}).get(discount.get("flag")) else 1
+    return max(1, int(int(offer["price"]) * multiplier))
+
+
 def _sell_price(session: dict[str, Any], shop: dict[str, Any], item: dict[str, Any]) -> int:
     # Half of the cheapest price in any shop, so buying low in one shop and selling in another never profits.
-    prices = [int(offer["price"]) for s in session["scenario_pack"].get("shops", []) for offer in s["items"]
+    prices = [_price(session, s, offer) for s in session["scenario_pack"].get("shops", []) for offer in s["items"]
               if offer["item_id"] == item.get("id")]
     return min(prices) // 2 if prices else 5
 
@@ -79,7 +87,7 @@ def public_shop(session: dict[str, Any], shop_id: str) -> dict[str, Any]:
     for offer in shop["items"]:
         item = _enrich_item(catalog[offer["item_id"]], session["scenario_pack"])
         enabled, reason = action_requirement_status({"requirements": offer.get("requirements", {})}, session)
-        public["items"].append({**item, "item_id": offer["item_id"], "price": offer["price"],
+        public["items"].append({**item, "item_id": offer["item_id"], "price": _price(session, shop, offer),
                                 "stock": stock[offer["item_id"]], "enabled": enabled, "reason": reason})
     public["sell_items"] = []
     if shop.get("buys"):
@@ -112,14 +120,16 @@ def trade(session: dict[str, Any], shop_id: str, item_id: str, quantity: int, *,
             raise ShopError("道具が見つかりません。")
         if stock[item_id] is not None and quantity > stock[item_id]:
             raise ShopError("売り切れ")
-        if session["character"].get("gold", 0) < offer["price"] * quantity:
+        price = _price(session, shop, offer)
+        if session["character"].get("gold", 0) < price * quantity:
             raise ShopError(shop["poor_line"])
         enabled, reason = action_requirement_status({"requirements": offer.get("requirements", {})}, session)
         if not enabled:
             raise ShopError(reason)
         item = next(item for item in session["scenario_pack"]["items"] if item["id"] == item_id)
-        delta = {"gold_change": -offer["price"] * quantity,
+        delta = {"gold_change": -price * quantity,
                  "inventory_add": [{"id": item_id, "name": item["name"], "quantity": quantity}]}
+        delta["flags_set"] = [source["on_purchase_flag"] for source in (shop, offer) if source.get("on_purchase_flag")]
         if offer.get("equip_on_buy"):
             delta["equip_item"] = item["name"]
         if stock[item_id] is not None:

@@ -36,7 +36,7 @@ BOOT = r"""
     state.shopTab = 'sell'; state.shopQuantity = 1; renderShop();
     check(!state.shop.sell_items.some(i => i.key_item), 'key items excluded');
     await performShopTrade();
-    check(state.shop.gold === 85, 'sell refresh');
+    check(state.shop.gold === 84, 'sell refresh');
     state.shopTab = 'buy'; state.shopQuantity = 1; renderShop();
     await performShopTrade();
     check(document.querySelector('.shop-row.sold-out') && document.querySelector('#shopTrade').disabled, 'sold out');
