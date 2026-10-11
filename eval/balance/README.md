@@ -43,7 +43,17 @@ python -m scripts.balance.report --n 500 --seed 20261011 --workers 8
 
 checkpoint 每条均为 `proposed`，每个职业保存装备、物品、金币、同伴以及逐步 action/combat delta 来源。路线选择及未知消耗见 JSON 的 `notes`。每场独立回满 HP/MP/SP，未估算先前战斗的道具消耗；因此结果是所列装备条件下的单战强度，不是完整通关概率。
 
-004还保存里程碑等级、已处理节点、成长后的上限和属性；商人checkpoint额外假定持有2个聖水，尚无游戏内发放动作。多敌职业差距使用targets已有的0.25，单敌仍为0.15。`budget.incoming_damage_budget`按开局全敌存活计算期望伤害/最大HP，含骰子分布、命中、抗性、防御和AI权重，状态/领域限制另列。候选A数据在`skill_candidates.json`，不写入角色模板。
+004还保存里程碑等级、已处理节点、成长后的上限和属性。005起，全部checkpoint先重放王城`check_supplies`，一次领取2个聖水；移除商人战额外注入，仍不扣历史消耗。保存真实解锁技能，模拟按等级从当前剧本的`level_skills`重建，以便搜索技能参数。默认`--skills none`表示不注入历史候选，即使用正式技能；`--skills A`用历史候选A替代正式新增技能，保留Lv1技能。多敌职业差距使用targets已有的0.25，单敌仍为0.15。`budget.incoming_damage_budget`按开局全敌存活计算期望伤害/最大HP，含骰子分布、命中、抗性、防御和AI权重，状态/领域限制另列。`skill_candidates.json`保留004历史候选，不作为当前正式技能定义。
+
+005使用`reached_village`和`entered_dragon_valley`统一入口flag，跳级仍按等级差累计；Lv3/Lv5技能在真实升级时一次追加（跳级也补齐低等级技能），不会改初始技能。旧存档不追溯成长的规则不变。
+
+```powershell
+# 005：N=16粗筛、N=64复核，只输出参数；可用--shard 0 --shards 4分片
+python -m scripts.balance.pass2 --search --iterations 100 --output .tmp-test/pass2-search.json
+# 锁定参数后N=500：正式技能、有/无同伴及去掉新增技能的消融
+python -m scripts.balance.pass2 --n 500 --output eval/reports/balance-2026-10-11-pass2.json
+python -m scripts.balance.pass2_report
+```
 
 缩放搜索按 hp_mult 升序、再按统一属性增加升序，找到第一个胜率落在目标区间的点即停止，无命中时穷尽全部 63 点。CSV 保留所有已测点和消耗/战败原因；只匹配胜率，不暗示其他 targets 约束也通过。报告进程缓存位于 `.tmp-test/balance-runs/<输入和代码指纹>/`；恢复运行时元数据中的 `elapsed_seconds` 是本次续跑墙钟时间，`cached_jobs` 标识复用了多少任务，worker 累计时间覆盖全部完成任务。
 

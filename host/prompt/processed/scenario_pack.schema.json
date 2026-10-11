@@ -222,6 +222,14 @@
           },
           "inventory": { "type": "array" },
           "equipment": { "type": "array" },
+          "level_skills": {
+            "type": "array",
+            "items": {
+              "allOf": [{ "$ref": "#/$defs/combat_skill" }],
+              "required": ["unlock_level"],
+              "properties": { "unlock_level": { "type": "integer", "minimum": 2 } }
+            }
+          },
           "combat": { "$ref": "#/$defs/combat_actor" },
           "skills": {
             "type": "array",

@@ -102,13 +102,13 @@ def generate(path: Path = DEFAULT_SCENARIO) -> dict[str, Any]:
             "模板金币为 0，check_supplies 没有发钱效果；未把支度金叙述当作金币。未假定回城购买或卖战利品。",
             "森林出口主线选双狼支线；砦三层选择无口令警卫战，即使右路已给出口令也按这条可达路线记录。",
             "TODO(design): 跨战斗消耗、双狼/史莱姆/砦分支、火コウモリ竜及ロビン取舍不能由数据确定。",
-            "TODO(design): 商人战前假定额外取得聖水2个，仅用于模拟；发放地点尚未接入剧本。等级与成长严格按路线触发的里程碑重放。",
+            "所有路线出发前执行 check_supplies 领取聖水2个；各战独立、不扣前战消耗。等级、技能与成长按路线里程碑重放。",
         ], "encounters": {}}
     for encounter, route in proposed_routes().items():
         entry: dict[str, Any] = {"status": "proposed", "characters": {}, "notes": []}
         for character_id in characters:
             session = fresh_session(pack, character_id)
-            steps = ["go_magic_shop", "invite_blue_mage", "return_castle_from_magic_shop"]
+            steps = ["check_supplies", "go_magic_shop", "invite_blue_mage", "return_castle_from_magic_shop"]
             if character_id == "hero" and encounter != "merchant_battle":
                 steps += ["go_forge", "show_sword_to_blacksmith", "accept_sword_fusion", "return_castle_from_forge"]
             steps += [step.format(character=character_id) for step in route]
@@ -116,10 +116,9 @@ def generate(path: Path = DEFAULT_SCENARIO) -> dict[str, Any]:
             if state.current_location_id(session) != encounter:
                 raise ValueError(f"Route ended at wrong location: {encounter}")
             actor = session["character"]
-            if encounter == "merchant_battle" and any(i.get("id") == "holy_water" for i in pack.get("items", [])):
-                state.apply_state_delta(session, {"inventory_add": [{"name": "聖水", "quantity": 2}]})
             entry["characters"][character_id] = {
                 "level": actor["level"], "completed_milestones": deepcopy(session["completed_milestones"]),
+                "skills": deepcopy(actor["skills"]),
                 "attributes": deepcopy(actor["attributes"]),
                 **{f"max_{r}": actor[f"max_{r}"] for r in ("hp", "mp", "sp")},
                 "inventory": deepcopy(actor["inventory"]), "equipment": deepcopy(actor["equipment"]),

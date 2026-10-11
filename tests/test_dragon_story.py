@@ -42,7 +42,7 @@ class DragonStoryTests(unittest.TestCase):
             with self.subTest(filename=filename):
                 meta = self.load_raw(filename)["meta"]
                 self.assertEqual(meta["title"], "紅き邪竜イグニス")
-                self.assertEqual(meta["content_revision"], "2026-10-11-balance-pass1")
+                self.assertEqual(meta["content_revision"], "2026-10-11-balance-pass2")
 
     def test_client_keeps_hybrid_scenarios_selectable(self):
         source = Path("client/app.js").read_text(encoding="utf-8")
@@ -216,7 +216,7 @@ class DragonStoryTests(unittest.TestCase):
                     [action["id"] for action in locations["alley"]["actions"]],
                     ["wait_for_night_in_alley", "return_castle_from_alley"],
                 )
-                self.assertEqual(enemies["zebok"]["hp"], -76)
+                self.assertEqual(enemies["zebok"]["hp"], -96)
                 self.assertEqual(enemies["zebok"]["combat"]["life_rule"], "negative_undead")
                 self.assertEqual(items["cursed_holy_staff"]["combat"]["extra_actions_per_round"], 1)
                 self.assertEqual(items["cursed_dagger"]["combat"]["on_hit_status"]["damage"], "3")

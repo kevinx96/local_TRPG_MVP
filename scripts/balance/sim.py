@@ -134,6 +134,8 @@ def prepare_session(pack: dict[str, Any], encounter: str, character_id: str,
         state._normalize_character(session["character"])
     if skill_variant not in {"none", "A"}:
         raise ValueError("Unknown skill variant")
+    if skill_variant == "none" and not guest:
+        state._unlock_level_skills(session)
     if skill_variant == "A" and not guest:
         for candidate in json.loads(SKILL_CANDIDATES.read_text(encoding="utf-8"))["candidates"]:
             if (candidate["variant"] == "A" and candidate["character"] == actual_id

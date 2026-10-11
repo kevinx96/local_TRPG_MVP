@@ -1344,6 +1344,7 @@ def _effects_to_state_delta(effects: list[Any], session: Optional[dict[str, Any]
             delta["restore_full"] = True
         if isinstance(effect.get("set_flag"), str):
             flags_set.append(effect["set_flag"])
+        flags_set.extend(_as_text_list(effect.get("flags_set")))
         if isinstance(effect.get("unset_flag"), str):
             flags_unset.append(effect["unset_flag"])
         if isinstance(effect.get("attribute_changes"), dict):
@@ -1950,9 +1951,19 @@ def _apply_milestones(session: dict[str, Any]) -> None:
         for key, value in gains.get("attributes", {}).items():
             character["attributes"][key] += int(value) * levels_gained
         character["level"] = max(character["level"], int(milestone["level"]))
+        _unlock_level_skills(session)
         record_state_event(session, "level_up", f"レベルが{character['level']}に上がりました。",
                            {"milestone_id": milestone["id"], "level": character["level"],
                             "levels_gained": levels_gained, "gains_per_level": gains})
+
+
+def _unlock_level_skills(session: dict[str, Any]) -> None:
+    character = session["character"]
+    template = _find_character_in_pack(session["scenario_pack"], character["character_id"]) or {}
+    skills = character.setdefault("skills", [])
+    for skill in template.get("level_skills", []):
+        if skill["unlock_level"] <= character.get("level", 1) and not any(s.get("id") == skill["id"] for s in skills):
+            skills.append(deepcopy(skill))
 
 
 def _set_companion(session: dict[str, Any], raw_companion: Any) -> None:

@@ -7,7 +7,7 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-11-balance-pass1"
+    "content_revision": "2026-10-11-balance-pass2"
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -430,7 +430,7 @@
               "助言"
             ],
             "draft": {
-              "gm_text": "将軍ドラコはあなたの体格を一瞥し、満足げに頷いた。「見事だ。お前なら邪竜の猛攻にも耐えうるかもしれん。正面からの攻撃は無謀だが、奴のブレスの後に生じる隙を狙え。健闘を祈る」と実戦的な助言を与えてくれた。",
+              "gm_text": "将軍ドラコはあなたの体格を一瞥し、満足げに頷いた。「見事だ。お前なら邪竜の猛攻にも耐えうるかもしれん。正面からの攻撃は無謀だが、奴のブレスの後に生じる隙を狙え。健闘を祈る」と実戦的な助言を与えてくれた。「不死の者には聖水が効く」と将軍は付け加えた。",
               "system_log": "将軍ドラコから戦術的なアドバイスを得た。",
               "dice_type": "1d20",
               "dice_dc": 15,
@@ -511,7 +511,7 @@
               "助言"
             ],
             "draft": {
-              "gm_text": "将軍ドラコはあなたを一瞥し、鼻で笑った。「その程度の体では邪竜の息吹一つに耐えられまい。まずは己を鍛え直すことだ。私から教えることは何もない」",
+              "gm_text": "将軍ドラコはあなたを一瞥し、鼻で笑った。「その程度の体では邪竜の息吹一つに耐えられまい。まずは己を鍛え直すことだ。私から教えることは何もない」「不死の者には聖水が効く」と将軍は付け加えた。",
               "system_log": "将軍ドラコに助言を求めたが、拒絶された。",
               "dice_type": "1d20",
               "dice_dc": 15,
@@ -616,6 +616,18 @@
             "rewrite_notes": [
               "確定済みのアクション結果だけを自然な日本語で描写してください。"
             ]
+          },
+          {
+            "id": "check_supplies_neutral",
+            "purpose": "choice_response",
+            "action_id": "check_supplies",
+            "outcome": "neutral",
+            "draft": {
+              "gm_text": "装備を確認し、聖水を2個受け取った。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
           }
         ]
       },
@@ -673,6 +685,22 @@
           "effects": [
             {
               "set_flag": "checked_supplies"
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "not_flag": "checked_supplies"
+                },
+                "then": [
+                  {
+                    "add_item": {
+                      "id": "holy_water",
+                      "name": "聖水",
+                      "quantity": 2
+                    }
+                  }
+                ]
+              }
             }
           ]
         },
@@ -2747,7 +2775,10 @@
           ],
           "effects": [
             {
-              "current_location": "dragon_valley_loc"
+              "current_location": "dragon_valley_loc",
+              "flags_set": [
+                "entered_dragon_valley"
+              ]
             }
           ]
         }
@@ -5211,7 +5242,10 @@
               "background_image": "/static/images/bg_burning_village.png"
             },
             {
-              "current_location": "village_approach"
+              "current_location": "village_approach",
+              "flags_set": [
+                "reached_village"
+              ]
             }
           ]
         }
@@ -7082,7 +7116,10 @@
           "visible_after": "xanxus_encountered",
           "effects": [
             {
-              "current_location": "dragon_valley_loc"
+              "current_location": "dragon_valley_loc",
+              "flags_set": [
+                "entered_dragon_valley"
+              ]
             }
           ]
         },
@@ -7396,7 +7433,10 @@
               "set_flag": "accepted_ian_request"
             },
             {
-              "current_location": "dragon_valley_loc"
+              "current_location": "dragon_valley_loc",
+              "flags_set": [
+                "entered_dragon_valley"
+              ]
             }
           ],
           "portrait_image": "/static/images/npc_ian_serious.png"
@@ -7412,7 +7452,10 @@
           "visible_after": "xanxus_encountered",
           "effects": [
             {
-              "current_location": "dragon_valley_loc"
+              "current_location": "dragon_valley_loc",
+              "flags_set": [
+                "entered_dragon_valley"
+              ]
             }
           ],
           "portrait_image": "/static/images/npc_ian_serious.png"
@@ -7991,7 +8034,7 @@
     {
       "id": "holy_water",
       "name": "聖水",
-      "description": "聖水",
+      "description": "教会で清められた水。不死の存在を焼く。",
       "combat": {
         "kind": "damage",
         "damage": "36",
@@ -8030,8 +8073,8 @@
       "id": "slime",
       "name": "スライム",
       "description": "森に潜む弱い魔物。チュートリアル用の敵。",
-      "hp": 24,
-      "max_hp": 24,
+      "hp": 80,
+      "max_hp": 80,
       "mp": 0,
       "max_mp": 0,
       "sp": 0,
@@ -8046,11 +8089,11 @@
       "combat": {
         "basic_attack": {
           "name": "体当たり",
-          "damage": "1d6",
-          "accuracy": 95,
+          "damage": "1d6+1",
+          "accuracy": 60,
           "element": "physical"
         },
-        "defense": 0,
+        "defense": 1,
         "evade": 5
       },
       "resistances": {
@@ -8072,8 +8115,8 @@
       "id": "ignis",
       "name": "邪竜イグニス",
       "description": "王国を脅かす紅き邪竜。炎の息を吐き、圧倒的な力を持つ。冷気に弱い。通常の物理攻撃や炎属性の攻撃ではダメージを与えられない。",
-      "hp": 120,
-      "max_hp": 120,
+      "hp": 148,
+      "max_hp": 148,
       "mp": 150,
       "max_mp": 150,
       "sp": 10,
@@ -8088,12 +8131,12 @@
       "combat": {
         "basic_attack": {
           "name": "爪撃",
-          "damage": "1d6+str/4",
-          "accuracy": 86,
+          "damage": "1d20",
+          "accuracy": 55,
           "element": "physical"
         },
-        "defense": 2,
-        "evade": 3
+        "defense": 1,
+        "evade": 8
       },
       "resistances": {
         "physical": 0.65,
@@ -8114,9 +8157,9 @@
           "kind": "attack",
           "description": "灼熱の炎を広範囲に吐き出す。",
           "effect": "全体に2d6ダメージ",
-          "damage": "2d6+int/4",
-          "dice_type": "2d6+int/4",
-          "accuracy": 80,
+          "damage": "1d20",
+          "dice_type": "1d20",
+          "accuracy": 55,
           "element": "fire",
           "cost": 5,
           "cost_type": "mp",
@@ -8128,9 +8171,9 @@
           "kind": "attack",
           "description": "巨大な尾で薙ぎ払う。",
           "effect": "1d20+str判定、単体ダメージ",
-          "damage": "1d8+str/4",
-          "dice_type": "1d8+str/4",
-          "accuracy": 90,
+          "damage": "1d20",
+          "dice_type": "1d20",
+          "accuracy": 55,
           "element": "physical",
           "cost": 0,
           "ai_weight": 3
@@ -8142,8 +8185,8 @@
       "id": "goblin",
       "name": "ゴブリン",
       "description": "粗末な短剣を持つ小鬼。",
-      "hp": 24,
-      "max_hp": 24,
+      "hp": 84,
+      "max_hp": 84,
       "attributes": {
         "str": 6,
         "dex": 8,
@@ -8154,11 +8197,11 @@
         "basic_attack": {
           "name": "粗末な短剣",
           "damage": "1d6",
-          "accuracy": 85,
+          "accuracy": 80,
           "element": "physical"
         },
         "defense": 0,
-        "evade": 8
+        "evade": 1
       },
       "resistances": {},
       "rewards": {
@@ -8173,8 +8216,8 @@
       "id": "goblin_archer",
       "name": "弓ゴブリン",
       "description": "高所から粗末な弓を射るゴブリン。",
-      "hp": 8,
-      "max_hp": 8,
+      "hp": 56,
+      "max_hp": 56,
       "attributes": {
         "str": 4,
         "dex": 10,
@@ -8184,12 +8227,12 @@
       "combat": {
         "basic_attack": {
           "name": "粗末な矢",
-          "damage": "1d6",
-          "accuracy": 50,
+          "damage": "1d4",
+          "accuracy": 95,
           "element": "physical"
         },
         "defense": 1,
-        "evade": 10
+        "evade": 5
       },
       "resistances": {},
       "rewards": {
@@ -8204,8 +8247,8 @@
       "id": "hobgoblin",
       "name": "大ゴブリン",
       "description": "重い棍棒を振るう大柄なゴブリン。",
-      "hp": 32,
-      "max_hp": 32,
+      "hp": 96,
+      "max_hp": 96,
       "attributes": {
         "str": 12,
         "dex": 5,
@@ -8219,8 +8262,8 @@
           "accuracy": 80,
           "element": "physical"
         },
-        "defense": 2,
-        "evade": 3
+        "defense": 0,
+        "evade": 6
       },
       "resistances": {},
       "rewards": {
@@ -8235,8 +8278,8 @@
       "id": "war_hound",
       "name": "猛犬",
       "description": "砦で飼い慣らされた獰猛な犬。",
-      "hp": 44,
-      "max_hp": 44,
+      "hp": 76,
+      "max_hp": 76,
       "attributes": {
         "str": 7,
         "dex": 10,
@@ -8245,12 +8288,12 @@
       "combat": {
         "basic_attack": {
           "name": "噛みつき",
-          "damage": "1d4+1",
-          "accuracy": 95,
+          "damage": "1d10",
+          "accuracy": 75,
           "element": "physical"
         },
-        "defense": 1,
-        "evade": 10
+        "defense": 2,
+        "evade": 17
       },
       "resistances": {},
       "rewards": {
@@ -8265,8 +8308,8 @@
       "id": "forest_wolf",
       "name": "森狼",
       "description": "闇の森を群れで狩る狼。",
-      "hp": 40,
-      "max_hp": 40,
+      "hp": 88,
+      "max_hp": 88,
       "attributes": {
         "str": 9,
         "dex": 11,
@@ -8275,12 +8318,12 @@
       "combat": {
         "basic_attack": {
           "name": "牙",
-          "damage": "1d6+1",
-          "accuracy": 80,
+          "damage": "1d8",
+          "accuracy": 85,
           "element": "physical"
         },
-        "defense": 1,
-        "evade": 10
+        "defense": 2,
+        "evade": 0
       },
       "resistances": {},
       "rewards": {
@@ -8295,8 +8338,8 @@
       "id": "slime_king",
       "name": "スライム王",
       "description": "錆びた王冠を載せた巨大なスライム。",
-      "hp": 38,
-      "max_hp": 38,
+      "hp": 96,
+      "max_hp": 96,
       "attributes": {
         "str": 11,
         "dex": 2,
@@ -8307,11 +8350,11 @@
         "basic_attack": {
           "name": "王の圧潰",
           "damage": "1d6+1",
-          "accuracy": 90,
+          "accuracy": 100,
           "element": "physical"
         },
-        "defense": 3,
-        "evade": 2
+        "defense": 2,
+        "evade": 4
       },
       "resistances": {
         "fire": 1.25
@@ -8335,8 +8378,8 @@
       "id": "goblin_king",
       "name": "ゴブリン王",
       "description": "砦の財宝を支配するゴブリンの王。",
-      "hp": 48,
-      "max_hp": 48,
+      "hp": 64,
+      "max_hp": 64,
       "attributes": {
         "str": 14,
         "dex": 8,
@@ -8346,12 +8389,12 @@
       "combat": {
         "basic_attack": {
           "name": "王の戦斧",
-          "damage": "1d4",
-          "accuracy": 95,
+          "damage": "1d8+2",
+          "accuracy": 90,
           "element": "physical"
         },
-        "defense": 0,
-        "evade": 5
+        "defense": 2,
+        "evade": 1
       },
       "resistances": {},
       "rewards": {
@@ -8368,7 +8411,7 @@
       "id": "zebok",
       "name": "亡霊主宰ゼボク",
       "description": "死を逆向きに生きる亡霊の主。通常攻撃ではHPがさらに負へ沈む。",
-      "hp": -76,
+      "hp": -96,
       "max_hp": 0,
       "attributes": {
         "str": 8,
@@ -8380,12 +8423,12 @@
         "life_rule": "negative_undead",
         "basic_attack": {
           "name": "暗黒の爪",
-          "damage": "1d6+1",
-          "accuracy": 100,
+          "damage": "1d10",
+          "accuracy": 80,
           "element": "dark"
         },
-        "defense": 1,
-        "evade": 8
+        "defense": 3,
+        "evade": 17
       },
       "resistances": {
         "holy": 1.5,
@@ -8403,8 +8446,8 @@
           "id": "zebok_bone_dragon",
           "name": "亡霊召喚",
           "kind": "attack",
-          "damage": "1d6+1",
-          "accuracy": 100,
+          "damage": "1d10",
+          "accuracy": 80,
           "element": "dark",
           "ai_weight": 2
         },
@@ -8420,8 +8463,8 @@
           "id": "dark_feast",
           "name": "暗黒の宴",
           "kind": "attack",
-          "damage": "1d6+1",
-          "accuracy": 100,
+          "damage": "1d10",
+          "accuracy": 80,
           "element": "dark",
           "ai_weight": 3
         }
@@ -8433,8 +8476,8 @@
       "name": "ファイアスライム",
       "description": "炎をまとった赤いスライム。",
       "element": "fire",
-      "hp": 28,
-      "max_hp": 28,
+      "hp": 84,
+      "max_hp": 84,
       "attributes": {
         "str": 8,
         "dex": 5,
@@ -8444,12 +8487,12 @@
       "combat": {
         "basic_attack": {
           "name": "火の体当たり",
-          "damage": "1d6",
-          "accuracy": 100,
+          "damage": "1d10",
+          "accuracy": 70,
           "element": "fire"
         },
         "defense": 0,
-        "evade": 4
+        "evade": 0
       },
       "resistances": {
         "fire": 0.0,
@@ -8469,8 +8512,8 @@
       "name": "火の精霊",
       "description": "人の形を取った荒れ狂う炎。",
       "element": "fire",
-      "hp": 44,
-      "max_hp": 44,
+      "hp": 80,
+      "max_hp": 80,
       "attributes": {
         "str": 9,
         "dex": 9,
@@ -8480,12 +8523,12 @@
       "combat": {
         "basic_attack": {
           "name": "火炎の腕",
-          "damage": "1d6",
-          "accuracy": 100,
+          "damage": "1d8+2",
+          "accuracy": 80,
           "element": "fire"
         },
-        "defense": 1,
-        "evade": 8
+        "defense": 4,
+        "evade": 11
       },
       "resistances": {
         "fire": 0.0,
@@ -8505,8 +8548,8 @@
       "name": "氷の精霊",
       "description": "村の火災の中に佇む冷気の塊。",
       "element": "ice",
-      "hp": 48,
-      "max_hp": 48,
+      "hp": 84,
+      "max_hp": 84,
       "attributes": {
         "str": 10,
         "dex": 8,
@@ -8516,12 +8559,12 @@
       "combat": {
         "basic_attack": {
           "name": "氷柱",
-          "damage": "1d6+1",
-          "accuracy": 85,
+          "damage": "1d8+2",
+          "accuracy": 100,
           "element": "ice"
         },
-        "defense": 0,
-        "evade": 7
+        "defense": 1,
+        "evade": 5
       },
       "resistances": {
         "ice": 0.0,
@@ -8540,8 +8583,8 @@
       "name": "氷霜の巨狼",
       "description": "氷の太刀を核として実体化した巨大な霜の狼。",
       "element": "ice",
-      "hp": 68,
-      "max_hp": 68,
+      "hp": 120,
+      "max_hp": 120,
       "attributes": {
         "str": 22,
         "dex": 18,
@@ -8551,12 +8594,12 @@
       "combat": {
         "basic_attack": {
           "name": "凍爪",
-          "damage": "1d6+1",
-          "accuracy": 90,
+          "damage": "1d10",
+          "accuracy": 60,
           "element": "ice"
         },
-        "defense": 1,
-        "evade": 12
+        "defense": 2,
+        "evade": 2
       },
       "resistances": {
         "ice": 0.0,
@@ -8790,6 +8833,33 @@
           "survive_at_one": true,
           "cost": 0
         }
+      ],
+      "level_skills": [
+        {
+          "id": "hero_lv3_a",
+          "name": "渾身斬り",
+          "kind": "attack",
+          "damage": "1d8+str/2",
+          "accuracy": 92,
+          "element": "physical",
+          "cost": 3,
+          "cost_type": "sp",
+          "description": "気合を込めた全力の一撃。",
+          "unlock_level": 3,
+          "effect": "敵に1d8+str/2ダメージを与える。"
+        },
+        {
+          "id": "hero_lv5_b",
+          "name": "不屈の構え",
+          "kind": "defend",
+          "guard_multiplier": 0.25,
+          "survive_at_one": true,
+          "cost": 2,
+          "cost_type": "sp",
+          "description": "構えを固め、致死ダメージにも耐え抜く。",
+          "unlock_level": 5,
+          "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
+        }
       ]
     },
     {
@@ -8896,7 +8966,33 @@
           "cost_type": "mp"
         }
       ],
-      "image_female": ""
+      "image_female": "",
+      "level_skills": [
+        {
+          "id": "cleric_lv3_a",
+          "name": "聖なる裁き",
+          "kind": "attack",
+          "damage": "1d8+wis/2",
+          "accuracy": 92,
+          "element": "holy",
+          "cost": 3,
+          "cost_type": "mp",
+          "description": "聖光で敵を攻撃する。",
+          "unlock_level": 3,
+          "effect": "敵に1d8+wis/2ダメージを与える。"
+        },
+        {
+          "id": "cleric_lv5_b",
+          "name": "大いなる癒し",
+          "kind": "heal",
+          "healing": "2d6+wis/2",
+          "cost": 14,
+          "cost_type": "mp",
+          "description": "聖なる祈りで大きく傷を癒す。",
+          "unlock_level": 5,
+          "effect": "HPを2d6+wis/2回復する。"
+        }
+      ]
     },
     {
       "id": "mage",
@@ -9003,7 +9099,36 @@
           "cost_type": "mp"
         }
       ],
-      "image_female": ""
+      "image_female": "",
+      "level_skills": [
+        {
+          "id": "mage_lv3_b",
+          "name": "火球",
+          "kind": "attack",
+          "damage": "1d8+int/2",
+          "accuracy": 92,
+          "element": "fire",
+          "cost": 6,
+          "cost_type": "mp",
+          "all_targets": true,
+          "description": "火球で敵全体を攻撃する。",
+          "unlock_level": 3,
+          "effect": "敵全体に1d8+int/2ダメージを与える。"
+        },
+        {
+          "id": "mage_lv5_a",
+          "name": "氷の矢",
+          "kind": "attack",
+          "damage": "2d8+int/2",
+          "accuracy": 92,
+          "element": "ice",
+          "cost": 5,
+          "cost_type": "mp",
+          "description": "氷の矢で敵を貫く。",
+          "unlock_level": 5,
+          "effect": "敵に2d8+int/2ダメージを与える。"
+        }
+      ]
     },
     {
       "id": "thief",
@@ -9107,7 +9232,34 @@
           "cost_type": "sp"
         }
       ],
-      "image_female": ""
+      "image_female": "",
+      "level_skills": [
+        {
+          "id": "thief_lv3_b",
+          "name": "影隠れ",
+          "kind": "defend",
+          "guard_multiplier": 0.25,
+          "survive_at_one": true,
+          "cost": 2,
+          "cost_type": "sp",
+          "description": "影に溶けて攻撃に備える。",
+          "unlock_level": 3,
+          "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
+        },
+        {
+          "id": "thief_lv5_a",
+          "name": "急所突き",
+          "kind": "attack",
+          "damage": "8d8+dex/2",
+          "accuracy": 92,
+          "element": "physical",
+          "cost": 5,
+          "cost_type": "sp",
+          "description": "敵の急所を正確に狙う。",
+          "unlock_level": 5,
+          "effect": "敵に8d8+dex/2ダメージを与える。"
+        }
+      ]
     },
     {
       "id": "warlock",
@@ -9324,7 +9476,7 @@
     {
       "id": "lv4",
       "level": 4,
-      "trigger_flag": "warlock_disappeared_at_village",
+      "trigger_flag": "reached_village",
       "gains": {
         "hero": {
           "max_hp": 5,
@@ -9367,7 +9519,7 @@
     {
       "id": "lv5",
       "level": 5,
-      "trigger_flag": "accepted_ian_request",
+      "trigger_flag": "entered_dragon_valley",
       "gains": {
         "hero": {
           "max_hp": 5,
