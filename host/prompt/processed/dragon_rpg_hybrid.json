@@ -4899,7 +4899,7 @@
           "id": "betray_cursed_merchant",
           "text": "反悔する",
           "preview": "怪しい商人と戦う",
-          "risk": "戦闘開始",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "反悔する"
           ],
@@ -5145,7 +5145,7 @@
           "id": "attack_slime",
           "text": "スライムと戦う",
           "preview": "戦闘を開始します",
-          "risk": "戦闘開始",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "スライムと戦う"
           ],
@@ -5466,8 +5466,8 @@
         {
           "id": "rest_at_elf_spring",
           "text": "精霊の泉で休む",
-          "preview": "HPとMPを回復して休息する",
-          "risk": "判定不要",
+          "preview": "泉で休めば力を取り戻せる。ただ、水面の下で何かがうごめいている気がする",
+          "risk": "休息中に襲われる恐れあり",
           "intent_keywords": [
             "精霊の泉で休む"
           ],
@@ -5639,7 +5639,7 @@
           "id": "fight_forest_wolves",
           "text": "森狼と戦う",
           "preview": "森狼と戦う",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "森狼と戦う"
           ],
@@ -5654,7 +5654,7 @@
           "id": "distract_forest_wolves",
           "text": "携帯食で森狼を誘導する",
           "preview": "携帯食で森狼を誘導する",
-          "risk": "判定不要",
+          "risk": "携帯食を1つ消費",
           "intent_keywords": [
             "携帯食で森狼を誘導する"
           ],
@@ -5671,7 +5671,7 @@
           "id": "sneak_forest_wolves",
           "text": "森狼の脇を潜行して通る",
           "preview": "森狼の脇を潜行して通る",
-          "risk": "判定不要",
+          "risk": "1d20+dex判定（DC14）・SP1消費",
           "intent_keywords": [
             "森狼の脇を潜行して通る"
           ],
@@ -6118,7 +6118,7 @@
           "id": "fight_fort_first_guard",
           "text": "見張りのゴブリンと戦う",
           "preview": "戦闘を開始します",
-          "risk": "戦闘開始",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "見張りのゴブリンと戦う"
           ],
@@ -6260,7 +6260,7 @@
           "id": "fight_fort_second_guards",
           "text": "三人のゴブリンと戦う",
           "preview": "戦闘を開始します",
-          "risk": "戦闘開始",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "三人のゴブリンと戦う"
           ],
@@ -6359,7 +6359,7 @@
           "id": "explore_fort_left",
           "text": "左の通路を探索する",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "左の通路を探索する"
           ],
@@ -6480,7 +6480,7 @@
           "id": "fight_hobgoblin",
           "text": "大ゴブリンと戦う",
           "preview": "戦闘を開始します",
-          "risk": "戦闘開始",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "大ゴブリンと戦う"
           ],
@@ -6722,7 +6722,7 @@
           "id": "give_correct_password",
           "text": "暗号を答える",
           "preview": "入手した暗号で鉄門を開ける",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "暗号を答える"
           ],
@@ -6771,7 +6771,7 @@
           "id": "admit_no_password",
           "text": "暗号を知らないと正直に言う",
           "preview": "背後から警備兵が現れる",
-          "risk": "戦闘開始",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "暗号を知らないと正直に言う"
           ],
@@ -7025,7 +7025,7 @@
           "id": "steal_lost_goblin_box",
           "text": "ゴブリンの箱を奪う",
           "preview": "箱を巡って戦う",
-          "risk": "戦闘開始",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "ゴブリンの箱を奪う"
           ],
@@ -7286,7 +7286,7 @@
           "id": "enter_burning_village_directly",
           "text": "炎の中へ踏み込む",
           "preview": "怪物を退けて村へ入ります",
-          "risk": "戦闘開始",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "炎の中へ踏み込む"
           ],
@@ -7734,7 +7734,7 @@
           "id": "refuse_xanxus_with_rescue",
           "text": "死んでも従わない",
           "preview": "Xanxusの要求を拒絶します",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "死んでも従わない"
           ],
@@ -8141,7 +8141,7 @@
           "id": "fight_ice_elemental",
           "text": "氷の精霊と戦う",
           "preview": "戦闘を開始します",
-          "risk": "戦闘開始",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "氷の精霊と戦う"
           ],
@@ -8549,7 +8549,7 @@
           "secret": true,
           "text": "将軍ドラコの正体を問いただす",
           "preview": "集めた証拠を国王の前に示す",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "将軍ドラコの正体を問いただす"
           ],
@@ -9023,7 +9023,7 @@
           "id": "decode_seal",
           "text": "魔法陣を解読する",
           "preview": "魔法陣を解読する",
-          "risk": "判定不要",
+          "risk": "1d20+int判定（DC15）",
           "intent_keywords": [
             "魔法陣を解読する"
           ],
@@ -9071,7 +9071,7 @@
           "id": "pray_at_seal",
           "text": "泉の精霊に祈る",
           "preview": "泉の精霊に祈る",
-          "risk": "判定不要",
+          "risk": "1d20+wis判定（DC14）",
           "intent_keywords": [
             "泉の精霊に祈る"
           ],
@@ -9104,7 +9104,7 @@
           "id": "force_seal",
           "text": "力ずくで岩壁を砕く",
           "preview": "力ずくで岩壁を砕く",
-          "risk": "判定不要",
+          "risk": "1d20+str判定（DC17）",
           "intent_keywords": [
             "力ずくで岩壁を砕く"
           ],
@@ -9227,7 +9227,7 @@
           "id": "fight_heat",
           "text": "戦う",
           "preview": "戦う",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "戦う"
           ],
@@ -9242,7 +9242,7 @@
           "id": "sneak_heat",
           "text": "岩陰を伝って抜ける",
           "preview": "岩陰を伝って抜ける",
-          "risk": "判定不要",
+          "risk": "1d20+dex判定（DC13）",
           "intent_keywords": [
             "岩陰を伝って抜ける"
           ],
@@ -9644,7 +9644,7 @@
           "id": "fight_crystal",
           "text": "戦う",
           "preview": "戦う",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "戦う"
           ],
@@ -9659,7 +9659,7 @@
           "id": "sneak_crystal",
           "text": "水晶の共鳴が収まるまで息を潜める",
           "preview": "水晶の共鳴が収まるまで息を潜める",
-          "risk": "判定不要",
+          "risk": "1d20+wis判定（DC15）",
           "intent_keywords": [
             "水晶の共鳴が収まるまで息を潜める"
           ],
@@ -9836,7 +9836,7 @@
           "id": "break_burning_beam",
           "text": "燃える梁を叩き壊す",
           "preview": "燃える梁を叩き壊す",
-          "risk": "1d20判定（DC13）",
+          "risk": "1d20+str判定（DC13）",
           "intent_keywords": [
             "燃える梁を叩き壊す"
           ],
@@ -9867,7 +9867,7 @@
           "id": "climb_to_window",
           "text": "裏手の窓からよじ登る",
           "preview": "裏手の窓からよじ登る",
-          "risk": "1d20判定（DC13）",
+          "risk": "1d20+dex判定（DC13）",
           "intent_keywords": [
             "裏手の窓からよじ登る"
           ],
@@ -9993,7 +9993,7 @@
           "id": "fight_ash_wraiths",
           "text": "戦う",
           "preview": "戦う",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "戦う"
           ],
@@ -10007,7 +10007,7 @@
           "id": "sneak_through_ash",
           "text": "霧に紛れてやり過ごす",
           "preview": "霧に紛れてやり過ごす",
-          "risk": "1d20判定（DC14）",
+          "risk": "1d20+dex判定（DC14）",
           "intent_keywords": [
             "霧に紛れてやり過ごす"
           ],
@@ -10076,7 +10076,7 @@
           "id": "cross_lava_bridge",
           "text": "吊り橋を渡る",
           "preview": "吊り橋を渡る",
-          "risk": "1d20判定（DC12）",
+          "risk": "1d20+dex判定（DC12）",
           "intent_keywords": [
             "吊り橋を渡る"
           ],
@@ -10293,7 +10293,7 @@
           "id": "cleanse_fire_seed",
           "text": "聖なる力で火種を浄化する",
           "preview": "聖なる力で火種を浄化する",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "聖なる力で火種を浄化する"
           ],
@@ -10742,7 +10742,7 @@
           "id": "sneak_into_mansion",
           "text": "裏口から忍び込む",
           "preview": "裏口から忍び込む",
-          "risk": "1d20判定（DC13）",
+          "risk": "1d20+dex判定（DC13）",
           "intent_keywords": [
             "裏口から忍び込む"
           ],
@@ -10852,7 +10852,7 @@
           "id": "fight_ice_sentinels",
           "text": "戦う",
           "preview": "戦う",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "戦う"
           ],
@@ -10866,7 +10866,7 @@
           "id": "evade_ice_sentinels",
           "text": "番兵の巡回の隙を突く",
           "preview": "番兵の巡回の隙を突く",
-          "risk": "1d20判定（DC15）",
+          "risk": "1d20+wis判定（DC15）",
           "intent_keywords": [
             "番兵の巡回の隙を突く"
           ],

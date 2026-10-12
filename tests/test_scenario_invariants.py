@@ -27,5 +27,20 @@ class ScenarioInvariantTests(unittest.TestCase):
                             self.assertEqual([key for key in EFFECT_KEYS if action.get(key)], [])
 
 
+    def test_risk_labels_match_mechanics(self):
+        from scripts.scenario.risk_labels import _walk as walk_actions, expected_risk
+        for filename in PACKS:
+            pack = json.loads((ROOT / "host/prompt/processed" / filename).read_text(encoding="utf-8"))
+            items = {item["id"]: item["name"] for item in pack.get("items", []) if item.get("id")}
+            for location in pack["locations"]:
+                for action in walk_actions(location.get("actions") or []):
+                    if action.get("children"):
+                        continue
+                    label = expected_risk(action, location, items)
+                    if label:
+                        with self.subTest(pack=filename, location=location["id"], action=action["id"]):
+                            self.assertEqual(action.get("risk"), label)
+
+
 if __name__ == "__main__":
     unittest.main()

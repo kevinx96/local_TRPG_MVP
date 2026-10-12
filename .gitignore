@@ -36,3 +36,6 @@ host/gemini_api_key.*
 
 # Third-party source material (kept locally, never committed)
 host/prompt/raw/
+
+# Agent worktrees
+.claude/worktrees/
