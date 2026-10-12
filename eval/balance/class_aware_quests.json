@@ -1,0 +1,568 @@
+{
+  "n": 500,
+  "seed": 20261013,
+  "loss_limit": 0.02,
+  "order": [
+    "gald",
+    "riku",
+    "cave_chest",
+    "cave_full",
+    "fort"
+  ],
+  "selected": {
+    "hero": [
+      "gald",
+      "riku"
+    ],
+    "cleric": [
+      "gald"
+    ],
+    "mage": [
+      "gald",
+      "riku"
+    ],
+    "thief": [
+      "gald",
+      "riku"
+    ]
+  },
+  "log": [
+    {
+      "step": "base",
+      "character": "hero",
+      "quests": [],
+      "completion_rate": 0.574,
+      "failure_counts": {
+        "valley_entrance": 104,
+        "dragon_valley_loc": 103,
+        "slime_king_battle": 3,
+        "village_fire_elemental": 3
+      }
+    },
+    {
+      "step": "base",
+      "character": "cleric",
+      "quests": [],
+      "completion_rate": 0.552,
+      "failure_counts": {
+        "dragon_valley_loc": 112,
+        "valley_entrance": 47,
+        "slime_king_battle": 61,
+        "frost_wolf_battle": 1,
+        "village_fire_elemental": 3
+      }
+    },
+    {
+      "step": "base",
+      "character": "mage",
+      "quests": [],
+      "completion_rate": 0.596,
+      "failure_counts": {
+        "slime_king_battle": 47,
+        "dragon_valley_loc": 125,
+        "slime_ambush_two": 1,
+        "valley_entrance": 15,
+        "village_fire_elemental": 11,
+        "slime_ambush_one": 1,
+        "frost_wolf_battle": 1,
+        "dark_forest_loc": 1
+      }
+    },
+    {
+      "step": "base",
+      "character": "thief",
+      "quests": [],
+      "completion_rate": 0.51,
+      "failure_counts": {
+        "ice_elemental_encounter": 8,
+        "dragon_valley_loc": 164,
+        "village_fire_elemental": 24,
+        "slime_king_battle": 38,
+        "valley_entrance": 7,
+        "frost_wolf_battle": 2,
+        "dark_forest_loc": 2
+      }
+    },
+    {
+      "step": "gald",
+      "character": "hero",
+      "quests": [
+        "gald"
+      ],
+      "reference_quests": [],
+      "reference_rate": 0.574,
+      "loss": -0.026000000000000023,
+      "adopted": true,
+      "completion_rate": 0.6,
+      "failure_counts": {
+        "valley_entrance": 107,
+        "dragon_valley_loc": 87,
+        "slime_king_battle": 3,
+        "village_fire_elemental": 3
+      }
+    },
+    {
+      "step": "gald",
+      "character": "cleric",
+      "quests": [
+        "gald"
+      ],
+      "reference_quests": [],
+      "reference_rate": 0.552,
+      "loss": 0.0,
+      "adopted": true,
+      "completion_rate": 0.552,
+      "failure_counts": {
+        "dragon_valley_loc": 114,
+        "valley_entrance": 45,
+        "slime_king_battle": 61,
+        "frost_wolf_battle": 1,
+        "village_fire_elemental": 3
+      }
+    },
+    {
+      "step": "gald",
+      "character": "mage",
+      "quests": [
+        "gald"
+      ],
+      "reference_quests": [],
+      "reference_rate": 0.596,
+      "loss": 0.006000000000000005,
+      "adopted": true,
+      "completion_rate": 0.59,
+      "failure_counts": {
+        "slime_king_battle": 47,
+        "dragon_valley_loc": 122,
+        "slime_ambush_two": 1,
+        "village_fire_elemental": 11,
+        "valley_entrance": 21,
+        "slime_ambush_one": 1,
+        "frost_wolf_battle": 1,
+        "dark_forest_loc": 1
+      }
+    },
+    {
+      "step": "gald",
+      "character": "thief",
+      "quests": [
+        "gald"
+      ],
+      "reference_quests": [],
+      "reference_rate": 0.51,
+      "loss": 0.0,
+      "adopted": true,
+      "completion_rate": 0.51,
+      "failure_counts": {
+        "ice_elemental_encounter": 8,
+        "dragon_valley_loc": 164,
+        "village_fire_elemental": 24,
+        "slime_king_battle": 38,
+        "valley_entrance": 7,
+        "frost_wolf_battle": 2,
+        "dark_forest_loc": 2
+      }
+    },
+    {
+      "step": "riku",
+      "character": "hero",
+      "quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_quests": [
+        "gald"
+      ],
+      "reference_rate": 0.6,
+      "loss": -0.020000000000000018,
+      "adopted": true,
+      "completion_rate": 0.62,
+      "failure_counts": {
+        "valley_entrance": 103,
+        "dragon_valley_loc": 81,
+        "slime_king_battle": 3,
+        "village_fire_elemental": 3
+      }
+    },
+    {
+      "step": "riku",
+      "character": "cleric",
+      "quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_quests": [
+        "gald"
+      ],
+      "reference_rate": 0.552,
+      "loss": 0.02200000000000002,
+      "adopted": false,
+      "completion_rate": 0.53,
+      "failure_counts": {
+        "dragon_valley_loc": 109,
+        "valley_entrance": 62,
+        "slime_king_battle": 61,
+        "village_fire_elemental": 3
+      }
+    },
+    {
+      "step": "riku",
+      "character": "mage",
+      "quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_quests": [
+        "gald"
+      ],
+      "reference_rate": 0.59,
+      "loss": -0.006000000000000005,
+      "adopted": true,
+      "completion_rate": 0.596,
+      "failure_counts": {
+        "slime_king_battle": 47,
+        "dragon_valley_loc": 119,
+        "slime_ambush_two": 1,
+        "valley_entrance": 21,
+        "village_fire_elemental": 11,
+        "slime_ambush_one": 1,
+        "frost_wolf_battle": 1,
+        "dark_forest_loc": 1
+      }
+    },
+    {
+      "step": "riku",
+      "character": "thief",
+      "quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_quests": [
+        "gald"
+      ],
+      "reference_rate": 0.51,
+      "loss": -0.03400000000000003,
+      "adopted": true,
+      "completion_rate": 0.544,
+      "failure_counts": {
+        "dragon_valley_loc": 153,
+        "village_fire_elemental": 24,
+        "slime_king_battle": 38,
+        "frost_wolf_battle": 3,
+        "valley_entrance": 3,
+        "ice_elemental_encounter": 5,
+        "dark_forest_loc": 2
+      }
+    },
+    {
+      "step": "cave_chest",
+      "character": "hero",
+      "quests": [
+        "gald",
+        "riku",
+        "cave_chest"
+      ],
+      "reference_quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_rate": 0.62,
+      "loss": 0.04200000000000004,
+      "adopted": false,
+      "completion_rate": 0.578,
+      "failure_counts": {
+        "cave_lava_room": 65,
+        "valley_entrance": 77,
+        "dragon_valley_loc": 55,
+        "slime_king_battle": 3,
+        "cave_heat_corridor": 10,
+        "ice_elemental_encounter": 1
+      }
+    },
+    {
+      "step": "cave_chest",
+      "character": "cleric",
+      "quests": [
+        "gald",
+        "cave_chest"
+      ],
+      "reference_quests": [
+        "gald"
+      ],
+      "reference_rate": 0.552,
+      "loss": 0.396,
+      "adopted": false,
+      "completion_rate": 0.156,
+      "failure_counts": {
+        "cave_lava_room": 268,
+        "valley_entrance": 16,
+        "cave_heat_corridor": 56,
+        "slime_king_battle": 67,
+        "dragon_valley_loc": 15
+      }
+    },
+    {
+      "step": "cave_chest",
+      "character": "mage",
+      "quests": [
+        "gald",
+        "riku",
+        "cave_chest"
+      ],
+      "reference_quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_rate": 0.596,
+      "loss": 0.10999999999999999,
+      "adopted": false,
+      "completion_rate": 0.486,
+      "failure_counts": {
+        "cave_heat_corridor": 13,
+        "slime_king_battle": 78,
+        "cave_lava_room": 77,
+        "dragon_valley_loc": 66,
+        "slime_ambush_two": 1,
+        "village_fire_elemental": 4,
+        "slime_ambush_one": 1,
+        "valley_entrance": 11,
+        "frost_wolf_battle": 4,
+        "dark_forest_loc": 1,
+        "ice_elemental_encounter": 1
+      }
+    },
+    {
+      "step": "cave_chest",
+      "character": "thief",
+      "quests": [
+        "gald",
+        "riku",
+        "cave_chest"
+      ],
+      "reference_quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_rate": 0.544,
+      "loss": 0.30400000000000005,
+      "adopted": false,
+      "completion_rate": 0.24,
+      "failure_counts": {
+        "cave_lava_room": 265,
+        "slime_king_battle": 44,
+        "dragon_valley_loc": 59,
+        "ice_elemental_encounter": 1,
+        "valley_entrance": 5,
+        "village_fire_elemental": 2,
+        "frost_wolf_battle": 2,
+        "dark_forest_loc": 2
+      }
+    },
+    {
+      "step": "cave_full",
+      "character": "hero",
+      "quests": [
+        "gald",
+        "riku",
+        "cave_full"
+      ],
+      "reference_quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_rate": 0.62,
+      "loss": 0.15199999999999997,
+      "adopted": false,
+      "completion_rate": 0.468,
+      "failure_counts": {
+        "cave_lava_room": 65,
+        "cave_prism_tree": 59,
+        "valley_entrance": 45,
+        "cave_crystal_corridor": 78,
+        "slime_king_battle": 7,
+        "cave_heat_corridor": 10,
+        "dragon_valley_loc": 2
+      }
+    },
+    {
+      "step": "cave_full",
+      "character": "cleric",
+      "quests": [
+        "gald",
+        "cave_full"
+      ],
+      "reference_quests": [
+        "gald"
+      ],
+      "reference_rate": 0.552,
+      "loss": 0.546,
+      "adopted": false,
+      "completion_rate": 0.006,
+      "failure_counts": {
+        "cave_lava_room": 268,
+        "cave_prism_tree": 72,
+        "cave_heat_corridor": 56,
+        "slime_king_battle": 62,
+        "cave_crystal_corridor": 38,
+        "valley_entrance": 1
+      }
+    },
+    {
+      "step": "cave_full",
+      "character": "mage",
+      "quests": [
+        "gald",
+        "riku",
+        "cave_full"
+      ],
+      "reference_quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_rate": 0.596,
+      "loss": 0.46199999999999997,
+      "adopted": false,
+      "completion_rate": 0.134,
+      "failure_counts": {
+        "cave_heat_corridor": 13,
+        "slime_king_battle": 99,
+        "cave_lava_room": 77,
+        "cave_prism_tree": 184,
+        "cave_crystal_corridor": 48,
+        "slime_ambush_two": 1,
+        "valley_entrance": 5,
+        "slime_ambush_one": 1,
+        "dragon_valley_loc": 4,
+        "dark_forest_loc": 1
+      }
+    },
+    {
+      "step": "cave_full",
+      "character": "thief",
+      "quests": [
+        "gald",
+        "riku",
+        "cave_full"
+      ],
+      "reference_quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_rate": 0.544,
+      "loss": 0.536,
+      "adopted": false,
+      "completion_rate": 0.008,
+      "failure_counts": {
+        "cave_lava_room": 265,
+        "cave_crystal_corridor": 124,
+        "cave_prism_tree": 66,
+        "slime_king_battle": 39,
+        "dark_forest_loc": 2
+      }
+    },
+    {
+      "step": "fort",
+      "character": "hero",
+      "quests": [
+        "gald",
+        "riku",
+        "fort"
+      ],
+      "reference_quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_rate": 0.62,
+      "loss": 0.026000000000000023,
+      "adopted": false,
+      "completion_rate": 0.594,
+      "failure_counts": {
+        "goblin_fort_fourth": 121,
+        "goblin_fort_second_left": 8,
+        "valley_entrance": 61,
+        "dragon_valley_loc": 12,
+        "village_fire_elemental": 1
+      }
+    },
+    {
+      "step": "fort",
+      "character": "cleric",
+      "quests": [
+        "gald",
+        "fort"
+      ],
+      "reference_quests": [
+        "gald"
+      ],
+      "reference_rate": 0.552,
+      "loss": 0.10800000000000004,
+      "adopted": false,
+      "completion_rate": 0.444,
+      "failure_counts": {
+        "goblin_fort_fourth": 211,
+        "dragon_valley_loc": 35,
+        "valley_entrance": 29,
+        "goblin_fort_first_second": 3
+      }
+    },
+    {
+      "step": "fort",
+      "character": "mage",
+      "quests": [
+        "gald",
+        "riku",
+        "fort"
+      ],
+      "reference_quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_rate": 0.596,
+      "loss": 0.19799999999999995,
+      "adopted": false,
+      "completion_rate": 0.398,
+      "failure_counts": {
+        "goblin_fort_fourth": 221,
+        "dragon_valley_loc": 45,
+        "goblin_fort_first_second": 15,
+        "village_fire_elemental": 4,
+        "valley_entrance": 13,
+        "goblin_fort_second_right": 2,
+        "dark_forest_loc": 1
+      }
+    },
+    {
+      "step": "fort",
+      "character": "thief",
+      "quests": [
+        "gald",
+        "riku",
+        "fort"
+      ],
+      "reference_quests": [
+        "gald",
+        "riku"
+      ],
+      "reference_rate": 0.544,
+      "loss": 0.02200000000000002,
+      "adopted": false,
+      "completion_rate": 0.522,
+      "failure_counts": {
+        "goblin_fort_fourth": 150,
+        "dragon_valley_loc": 69,
+        "goblin_fort_first_second": 2,
+        "valley_entrance": 10,
+        "village_fire_elemental": 5,
+        "ice_elemental_encounter": 1,
+        "dark_forest_loc": 2
+      }
+    }
+  ],
+  "fingerprints": {
+    "host/prompt/processed/dragon_rpg.json": "5ece0abea2d7fae0b81a0e1e55bc2b141eea357af9711adfe485d55caca2f67f",
+    "eval/balance/checkpoints.json": "eca21b1389a30e27dfb8e669029d68bd27c4931786bcbd32795e193368afff15",
+    "scripts/balance/class_aware.py": "58355400a4ecf3df9f21fc0fbafc8a15491111048bb2954664f030f501ab4f81",
+    "scripts/balance/sim.py": "646d495700787e3cef98c4073143b3fc98d684a4d9b7ff9c74d7505da992b48a",
+    "scripts/balance/route.py": "dcd617aa075a724113b09ab6aeecd39e43c88acd01b6a0faf4e9b6402c0230c1"
+  }
+}

@@ -130,9 +130,22 @@ def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, c
 def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
                    encounter: str = "dragon_valley_loc", n: int = 500,
                    seed: int = 20261011, policy: str = "heuristic", rest_at_inn: bool = False,
-                   purify: bool = False, rest_policy: str = "none") -> dict[str, Any]:
+                   purify: bool = False, rest_policy: str = "none",
+                   quests: Optional[tuple[str, ...]] = None, decisions: str = "class_aware",
+                   dice: str = "real") -> dict[str, Any]:
     if n < 1:
         raise ValueError("n must be positive")
+    aware = None
+    if rest_policy == "class_aware":
+        # 027: hp70 rests plus option choice by expected outcome; quests from the pilot file by default.
+        from . import class_aware
+
+        if encounter != "dragon_valley_loc" or purify or rest_at_inn:
+            raise ValueError("class_aware covers the plain mainline only")
+        if quests is None:
+            quests = tuple(class_aware.load_quests().get(character, ()))
+        aware = dict(quests=tuple(quests), decisions=decisions, dice=dice, policy=policy,
+                     evaluator=class_aware.Evaluator(quests, policy=policy) if decisions == "class_aware" else None)
     sources = cp["encounters"][encounter]["characters"][character]["sources"]
     if rest_policy == "hp70":
         sources = list(sources)
@@ -165,9 +178,14 @@ def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
     rest_counts: Counter = Counter()
     rest_gold = 0
     sample = None
+    results = []
     for index in range(n):
-        result = trial(pack, sources, encounter, character,
-                       sim.trial_seed(seed, encounter, character, index), policy, rest_at_inn, purify, rest_policy)
+        trial_seed = sim.trial_seed(seed, encounter, character, index)
+        if aware is not None:
+            result = class_aware.trial(pack, cp, character, trial_seed, **aware)
+            results.append(result)
+        else:
+            result = trial(pack, sources, encounter, character, trial_seed, policy, rest_at_inn, purify, rest_policy)
         for rest in result["rests"]:
             rest_counts[rest["action"]] += 1
             rest_gold += rest["cost"]
@@ -196,6 +214,8 @@ def simulate_route(pack: dict[str, Any], cp: dict[str, Any], character: str, *,
             "battle_reached": dict(reached),
             "consumables_per_reached_battle": {e: {k: v / reached[e] for k, v in counts.items()}
                                                for e, counts in used.items()},
+            **({"quests": list(aware["quests"]), "decisions": aware["decisions"], "dice": aware["dice"],
+                "choice_stats": class_aware.choice_stats(results)} if aware is not None else {}),
             "sample_trial": sample}
 
 
@@ -233,8 +253,9 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--targets", type=Path, default=sim.TARGETS)
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--rest-at-inn", action="store_true", help="Pay 10G to recover when the route visits the inn")
-    parser.add_argument("--rest-policy", choices=("none", "hp70", "both"), default="both",
-                        help="Rest below 70%% HP at available stops; check hp70 and report no-rest as reference")
+    parser.add_argument("--rest-policy", choices=("none", "hp70", "class_aware", "both", "all"), default="both",
+                        help="Rest below 70%% HP at available stops; check hp70 and report no-rest as reference. "
+                             "class_aware adds option choice by expected outcome on top of hp70; all = none/hp70/class_aware")
     parser.add_argument("--purify", action="store_true", help="Reserve holy water and take purification to the true ending")
     args = parser.parse_args(argv)
     if args.n < 1 or args.shards < 1 or not 0 <= args.shard < args.shards:
@@ -249,14 +270,20 @@ def main(argv: Optional[list[str]] = None) -> int:
     args.output.parent.mkdir(parents=True, exist_ok=True)
     rows = []
     fingerprints = {p.relative_to(checkpoints.ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
-                    for p in (checkpoints.DEFAULT_SCENARIO, checkpoints.DEFAULT_CHECKPOINTS, Path(__file__))}
+                    for p in (checkpoints.DEFAULT_SCENARIO, checkpoints.DEFAULT_CHECKPOINTS, Path(__file__),
+                              Path(__file__).with_name("class_aware.py"), checkpoints.ROOT / "eval/balance/class_aware_quests.json")
+                    if p.exists()}
     fingerprints[str(args.targets)] = hashlib.sha256(args.targets.read_bytes()).hexdigest()
     for endpoint in routes:
         for index, character in enumerate(cp["encounters"][endpoint]["characters"]):
             if index % args.shards != args.shard:
                 continue
             policy = targets.get("route_targets", {}).get("routes", {}).get(endpoint, {}).get("policy", "heuristic")
-            for rest_policy in ("none", "hp70") if args.rest_policy == "both" else (args.rest_policy,):
+            policies = {"both": ("none", "hp70"), "all": ("none", "hp70", "class_aware")}.get(
+                args.rest_policy, (args.rest_policy,))
+            if endpoint != "dragon_valley_loc" or args.purify or args.rest_at_inn:
+                policies = tuple(p for p in policies if p != "class_aware")
+            for rest_policy in policies:
                 rows.append(simulate_route(pack, cp, character, encounter=endpoint, n=args.n, seed=args.seed,
                                            policy=policy, rest_at_inn=args.rest_at_inn, purify=args.purify,
                                            rest_policy=rest_policy))
