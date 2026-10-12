@@ -40,8 +40,8 @@ def check_results(rows: list[dict[str, Any]], selected: list[str] | None = None)
         if not 3 - 1e-9 <= contribution <= 8 + 1e-9:
             errors.append(f'{case}: mean contribution {contribution:.3f}pp outside [3,8]')
     for row in rows:
-        if row['case'] == 'all_kill' and row['win_rate'] > .92:
-            errors.append(f"{row['character']}/all_kill: win rate above 0.92")
+        if row['case'] == 'all_kill' and row['win_rate'] > .95:  # design 2026-10-12: a near-perfect run may reach 95%
+            errors.append(f"{row['character']}/all_kill: win rate above 0.95")
     return errors
 
 
@@ -126,7 +126,7 @@ def markdown(result: dict[str, Any]) -> str:
         if case in ch5.SUPPORTS:
             contributions = [r['contribution_pp'] for r in values]
             lines.append('|' + LABELS[case] + '贡献pp|' + '|'.join(f'{v:+.2f}' for v in [*contributions, mean(contributions)]) + '|')
-    lines += ['', '025只对国王和ロビン的四职业平均贡献检查[3,8]pp；击杀全满按逐职业检查≤92%。净化全满约100%按设计接受，其他支援逐职业只报告。',
+    lines += ['', '025只对国王和ロビン的四职业平均贡献检查[3,8]pp；击杀全满按逐职业检查≤95%（026 后设计放宽）。净化全满约100%按设计接受，其他支援逐职业只报告。',
               '使用相同种子配对；支援可能改变行动选择及随机数消费，因此单职业负点估计不直接说明减伤反向生效。JSON保留胜负数、资源消耗、阶段回合、输入哈希和完整支援配置。', '',
               f"验收违规数：{len(result['violations'])}。", *[f'- {v}' for v in result['violations']], '']
     if result.get('selected'):

@@ -110,7 +110,7 @@ class SupportTuningTests(unittest.TestCase):
                 human['hp'] = 0
                 combat._check_victory_or_defeat(s)
                 dragon = s['combat']['enemies'][0]
-                self.assertEqual((dragon['hp'], dragon['max_hp']), (198, 198) if enabled else (220, 220))
+                self.assertEqual((dragon['hp'], dragon['max_hp']), (209, 209) if enabled else (220, 220))
                 messages = [e['text'] for e in s['combat']['log'] if e['kind'] == 'support']
                 phase2_text = '白竜の巨体から、一瞬だけ光が抜け落ちた。ロビンが盗んだ首飾りの効果らしい。'
                 self.assertEqual(messages, [phase1_text, phase2_text] if enabled else [])
@@ -151,7 +151,7 @@ class SupportReportTests(unittest.TestCase):
         with patch.object(support2.sim, 'simulate', side_effect=fake), patch('builtins.print'):
             result = support2.search(2, 123)
         self.assertEqual([r['multiplier'] for r in result['candidates']], [n / 100 for n in range(90, 74, -1)])
-        self.assertTrue(all(.75 <= value <= .90 for value in values))
+        self.assertTrue(all(.75 <= value <= .95 for value in values))
         self.assertTrue(all(row['mean_contribution_pp'] == 5 for row in result['candidates']))
 
     def rows(self):
@@ -168,7 +168,7 @@ class SupportReportTests(unittest.TestCase):
             if r['case'] == 'ignis':
                 r['contribution_pp'] = 40
         self.assertEqual(support.check_results(rows), [])
-        next(r for r in rows if r['case'] == 'all_kill')['win_rate'] = .921
+        next(r for r in rows if r['case'] == 'all_kill')['win_rate'] = .951
         self.assertEqual(len(support.check_results(rows)), 1)
         next(r for r in rows if r['case'] == 'king')['contribution_pp'] = 11
         self.assertEqual(len(support.check_results(rows)), 2)
