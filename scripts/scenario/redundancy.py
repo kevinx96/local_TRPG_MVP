@@ -90,6 +90,8 @@ def finish_witness(pack: dict[str, Any], steps: list[str], character: str) -> li
         "lost_goblin_crossroads": "crossroads_forward", "elf_spring": "continue_from_elf_spring",
         "cave_seal": "leave_seal", "cave_fork": "cave_right", "cave_hot_spring": "hot_spring_forward",
         "cave_prism_tree": "leave_prism_tree",
+        "royal_gate": "enter_festival_town", "festival_town": "go_report_hall",
+        "mansion_study": "leave_mansion_study", "ignis_purified": "return_to_castle_report",
     }
     for _ in range(40):
         location = state.current_location_id(session)

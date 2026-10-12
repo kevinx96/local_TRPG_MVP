@@ -1,0 +1,36 @@
+[
+  {
+    "ok": true,
+    "checks": [
+      "visited chapter-five nodes visible",
+      "no horizontal overflow"
+    ],
+    "view": "chapter5-map"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "visited chapter-five nodes visible",
+      "mansion submap selected",
+      "no horizontal overflow"
+    ],
+    "view": "mansion-map"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "enemy visible",
+      "no horizontal overflow"
+    ],
+    "view": "assassin-battle"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "enemy visible",
+      "all five support messages visible",
+      "no horizontal overflow"
+    ],
+    "view": "draco-support"
+  }
+]

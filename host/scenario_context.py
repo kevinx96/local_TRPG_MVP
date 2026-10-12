@@ -127,6 +127,8 @@ def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) ->
     pack["quests"] = _normalize_records(raw.get("quests"))
     pack["shops"] = _normalize_records(raw.get("shops"))
     pack["maps"] = _normalize_records(raw.get("maps"))
+    pack['chapter_locks'] = deepcopy(raw.get('chapter_locks', []))
+    pack['item_flags'] = deepcopy(raw.get('item_flags', {}))
     return pack
 
 

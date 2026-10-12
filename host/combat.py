@@ -153,9 +153,20 @@ def ensure_combat_started(session: dict[str, Any], intro_text: str = "") -> bool
     session.pop("combat_start_requested", None)
     _log(session, "system", "start", f"戦闘開始: {'、'.join(enemy['name'] for enemy in enemies)}")
     _activate_phase_allies(session)
+    _activate_encounter_modifiers(session)
+    from .state import _session_requirement_passes
+    for event in encounter.get('start_events', []):
+        if _session_requirement_passes(event.get('requirements'), session):
+            _log(session, 'system', 'warning', event['text'])
     _apply_round_start_effects(session, random)
-    if session.pop("enemy_first_requested", False) and combat_is_active(session):
+    enemy_first = session.pop('enemy_first_requested', False)
+    if encounter.get('enemy_first_requirements'):
+        enemy_first = enemy_first or _session_requirement_passes(encounter['enemy_first_requirements'], session)
+    if encounter.get('player_first_requirements') and _session_requirement_passes(encounter['player_first_requirements'], session):
+        enemy_first = False
+    if enemy_first and combat_is_active(session):
         _enemy_phase(session, random)
+        session['combat']['turn'] = 'player'
     _check_victory_or_defeat(session)
     return True
 
@@ -317,6 +328,7 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
     basic = _merge_dict(rules.get("basic_attack"), character.get("combat", {}).get("basic_attack") if isinstance(character.get("combat"), dict) else None)
     basic = _merge_dict(basic, _equipped_weapon_attack(character))
     basic_followups = equipped_basic_attack_followups(character)
+    basic_followups += [deepcopy(m['basic_followup']) for m in (session.get('combat') or {}).get('active_modifiers', []) if m.get('basic_followup')]
     actions: list[dict[str, Any]] = [
         {
             "type": "attack",
@@ -446,7 +458,8 @@ def _player_attack(session: dict[str, Any], target_id: str, rng: Any) -> None:
     attack = _merge_dict(rules.get("basic_attack"), char_combat.get("basic_attack"))
     attack = _merge_dict(attack, _equipped_weapon_attack(character))
     _resolve_attack(session, character, target, attack, "player", rng)
-    for followup in equipped_basic_attack_followups(character):
+    followups = equipped_basic_attack_followups(character) + [m['basic_followup'] for m in _encounter_modifiers(session, target) if m.get('basic_followup')]
+    for followup in followups:
         if _enemy_is_defeated(target):
             break
         _resolve_attack(session, character, target, followup, "player", rng)
@@ -640,7 +653,10 @@ def _execute_enemy_ability(session: dict[str, Any], enemy: dict[str, Any], abili
         session["combat"].setdefault("player_status", {})["guard_disabled_round"] = session["combat"]["round"] + 1
         _log(session, actor_id, "status", f"{enemy.get('name')}は{ability['name']}を使用した。")
     else:
-        _resolve_attack(session, enemy, session["character"], ability, actor_id, rng)
+        for _ in range(max(1, int(ability.get('hits', 1)))):
+            if session['character']['hp'] <= 0:
+                break
+            _resolve_attack(session, enemy, session["character"], ability, actor_id, rng)
 
 
 def _apply_enemy_fields(session: dict[str, Any], rng: Any) -> None:
@@ -679,6 +695,8 @@ def _apply_direct_formula_damage(
     raw_damage, detail = _roll_formula(formula, attacker, rng)
     multiplier = _resistance_multiplier(defender, element)
     damage = max(0, int(round(max(0, raw_damage) * multiplier)))
+    if defender is session.get('character'):
+        damage = _modified_received_damage(session, damage, element, attacker, name)
     defender["hp"] = max(0, _safe_int(defender.get("hp"), 0) - damage)
     _log(session, str(attacker.get("id") or "enemy"), "field_damage", f"{name}が{damage}ダメージを与えた。", {"damage": damage, "formula": detail, "element": element})
 
@@ -722,6 +740,9 @@ def _resolve_attack(
 ) -> None:
     name = display_name or str(ability.get("name") or "攻撃")
     accuracy = _safe_int(ability.get("accuracy"), 90 if actor_id == "player" else 85)
+    if defender is session.get('character'):
+        accuracy += sum(int(m.get('accuracy', 0)) for m in _encounter_modifiers(session, attacker)
+                        if m.get('enemy_skill') in (ability.get('id'), ability.get('name')))
     accuracy -= sum(_safe_int(s.get("accuracy_penalty"), 0) for s in attacker.get("statuses", []))
     evade = _safe_int((defender.get("combat") or {}).get("evade") if isinstance(defender.get("combat"), dict) else defender.get("evade"), 0)
     chance = max(5, min(100, accuracy - evade))
@@ -741,8 +762,11 @@ def _resolve_attack(
         element = weakness_attack_element(defender)
     multiplier = _resistance_multiplier(defender, element)
     defense = _actor_defense(defender)
+    if defender is not session.get('character'):
+        defense = max(0, defense + sum(int(m.get('enemy_defense', 0)) for m in _encounter_modifiers(session, defender)))
     damage = damage_after_defense(raw_damage, multiplier, defense, _combat_rules(session))
     if defender is session.get("character"):
+        damage = _modified_received_damage(session, damage, element, attacker, ability.get('name', ''), ability.get('id', ''))
         status = session["combat"].get("player_status") or {}
         guard = float(status.get("guard_multiplier", 1.0) or 1.0)
         if status.get("guard_disabled_round", 0) >= session["combat"]["round"]:
@@ -827,6 +851,7 @@ def _check_victory_or_defeat(session: dict[str, Any]) -> None:
         _log(session, "system", "phase_transition", str(enemy.get("phase_transition_text") or ""),
              {"from": enemy["template_id"], "to": replacement["template_id"]})
         _activate_phase_allies(session)
+        _activate_encounter_modifiers(session)
     if enemies and all(_enemy_is_defeated(enemy) for enemy in enemies):
         _finish_combat(session, "victory", "すべての敵を倒した。")
 
@@ -999,6 +1024,40 @@ def _activate_phase_allies(session: dict[str, Any]) -> None:
         if not any(a["id"] == ally["id"] for a in battle.get("phase_allies", [])):
             _log(session, ally["id"], "phase_ally", ally.get("entry_text", ""))
     battle["phase_allies"] = active
+
+
+def _encounter_modifiers(session: dict[str, Any], enemy: dict[str, Any]) -> list[dict[str, Any]]:
+    return [m for m in session.get('combat', {}).get('active_modifiers', [])
+            if not m.get('enemy_ids') or enemy.get('template_id') in m['enemy_ids']]
+
+
+def _activate_encounter_modifiers(session: dict[str, Any]) -> None:
+    from .state import _session_requirement_passes
+
+    battle = session['combat']
+    active = []
+    for modifier in battle['encounter'].get('encounter_modifiers', []):
+        if modifier.get('enemy_ids') and not any(e['template_id'] in modifier['enemy_ids'] for e in _alive_enemies(battle)):
+            continue
+        if not _session_requirement_passes(modifier.get('requirements'), session):
+            continue
+        active.append(deepcopy(modifier))
+        seen = battle.setdefault('announced_modifiers', [])
+        if modifier['id'] not in seen:
+            _log(session, modifier['id'], 'support', modifier['text'])
+            seen.append(modifier['id'])
+    battle['active_modifiers'] = active
+
+
+def _modified_received_damage(session: dict[str, Any], damage: int, element: str,
+                              enemy: dict[str, Any], name: str, skill_id: str = '') -> int:
+    multiplier = 1.0
+    for modifier in _encounter_modifiers(session, enemy):
+        if modifier.get('received_element') == element:
+            multiplier *= float(modifier.get('received_multiplier', 1))
+        if modifier.get('enemy_skill') in (name, skill_id):
+            multiplier *= float(modifier.get('damage_multiplier', 1))
+    return max(0, int(round(damage * multiplier)))
 
 
 def _apply_ally_round_start_effects(session: dict[str, Any], companion: dict[str, Any], rng: Any,

@@ -23,7 +23,7 @@ def fix_ch34(pack: dict[str, Any]) -> None:
     actions["call_warlock"]["requirements"] = {"flag": "warlock_rescue_available"}
     actions["cleanse_fire_seed"]["result_text"] = CLEANSE
     next(m for m in pack["milestones"] if m["level"] == 5)["trigger_flag"] = "nest_event_seen"
-    pack["meta"]["content_revision"] = "2026-10-12-v021-ch34"
+    pack["meta"]["content_revision"] = max(pack['meta'].get('content_revision', ''), '2026-10-12-v021-ch34')
 
 
 def branch(requirements: dict[str, Any], yes: list, no: list | None = None) -> dict[str, Any]:

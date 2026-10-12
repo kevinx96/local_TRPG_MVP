@@ -61,16 +61,17 @@ class ServiceTests(unittest.TestCase):
                 self.assertNotIn("quests", session)
 
     def test_mystery_any_start_and_clue_count_no_total(self):
-        quest = self.pack["quests"][-1]
+        quest = next(q for q in self.pack['quests'] if q['id'] == 'mystery_frost')
         for flag in quest["start_flag"]:
             session = self.session()
             session["flags"][flag] = True
             mystery = public_quests(session)[-1]
             self.assertEqual(mystery["id"], "mystery_frost")
             self.assertEqual(mystery["clue_count"], 1)
+        self.give(session, 'assassin_crest')
         state.apply_state_delta(session, {"flags_set": quest["clue_flags"]})
         self.give(session, "white_dragon_scale", 3)
-        self.assertEqual(public_quests(session)[-1]["clue_count"], 9)
+        self.assertEqual(public_quests(session)[-1]["clue_count"], 10)
         self.assertNotIn("clue_flags", public_quests(session)[-1])
 
     def test_once_flag_and_entry_effect_log_only_once(self):
@@ -247,8 +248,8 @@ class ServiceTests(unittest.TestCase):
             for location in pack["locations"]:
                 ids = {action["id"] for action in state._iter_actions(location.get("actions", []))}
                 self.assertFalse(ids & {"sarah_shop", "blue_mage_shop", "buy_equipment", "buy_ice_amulet"})
-            self.assertEqual(len(pack["quests"]), 11)
-            self.assertEqual(len(pack["shops"]), 5)
+            self.assertEqual(len(pack["quests"]), 12)
+            self.assertEqual(len(pack["shops"]), 6)
 
 
 if __name__ == "__main__":

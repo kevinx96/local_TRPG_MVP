@@ -9,8 +9,9 @@ def public_quests(session: dict[str, Any]) -> list[dict[str, Any]]:
     for quest in session.get("scenario_pack", {}).get("quests", []):
         start = quest.get("start_flag", "")
         starts = start if isinstance(start, list) else [start]
-        has_start_item = any(i.get("id") == quest.get("start_item") and i.get("quantity", 1) > 0
-                             for i in session.get("character", {}).get("inventory", []) if isinstance(i, dict)) if quest.get("start_item") else False
+        start_items = quest.get('start_items', [quest.get('start_item')])
+        has_start_item = any(i.get('id') and i.get('id') in start_items and i.get('quantity', 1) > 0
+                             for i in session.get('character', {}).get('inventory', []) if isinstance(i, dict))
         completed = bool(quest.get("complete_flags")) and all(flags.get(f) for f in quest["complete_flags"])
         if start and not any(flags.get(flag) for flag in starts) and not has_start_item and not completed:
             continue
@@ -33,7 +34,7 @@ def public_quests(session: dict[str, Any]) -> list[dict[str, Any]]:
         if "clue_flags" in quest:
             entry["clue_count"] = sum(bool(flags.get(flag)) for flag in quest["clue_flags"])
             entry["clue_count"] += int(any(
-                item.get("id") == quest.get("clue_item") and item.get("quantity", 1) > 0
+                item.get("id") in quest.get('clue_items', [quest.get('clue_item')]) and item.get("quantity", 1) > 0
                 for item in session.get("character", {}).get("inventory", []) if isinstance(item, dict)))
         result.append(entry)
     return result

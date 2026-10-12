@@ -93,7 +93,10 @@ def commit_world_position(
     else:
         return True, ""
 
-    if requested_scene != current["scene_id"] and not _scene_transition_allowed(pack, current["scene_id"], requested_scene):
+    chapter = next((rule for rule in pack.get('chapter_locks', []) if session.get('flags', {}).get(rule['flag'])), None)
+    if chapter and requested_location not in chapter['location_ids']:
+        return False, 'chapter transition is not allowed'
+    if not chapter and requested_scene != current["scene_id"] and not _scene_transition_allowed(pack, current["scene_id"], requested_scene):
         return False, f"scene transition is not allowed: {current['scene_id']} -> {requested_scene}"
 
     session[WORLD_STATE_KEY] = {

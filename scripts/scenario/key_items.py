@@ -128,6 +128,18 @@ def generate() -> dict[str, Any]:
         tail(after, *valley_steps, "@skill:purify_ignis_prayer"), character="cleric",
         special_action="purify_ignis_prayer")
     pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
+    capital = tail(last, 'examine_ignis_wound', 'return_to_castle_report', 'enter_festival_town')
+    mansion = tail(capital, 'go_general_mansion', 'robin_picks_lock', 'evade_ice_sentinels:success')
+    journal = key('draco_journal', 1)
+    add(journal, 'study', 'mansion_study', 'take_draco_journal', 'exploration', {'item': 'draco_journal'}, tail(mansion, 'take_draco_journal'))
+    strong = key('strong_evidence', 4)
+    strong.extend(deepcopy(scale + journal))
+    crest = key('has_assassin_crest', 1)
+    add(crest, 'assassins', 'inn_night_ambush', '@victory', 'battle', {'item': 'assassin_crest'},
+        tail(capital, 'go_inn', 'rest_at_inn', '@victory', 'return_castle_from_inn'))
+    frost = next(entry['sources'] for entry in keys if entry['id'] == 'noticed_general_frost')
+    add(frost, 'fountain', 'mansion_garden', 'observe:frozen_fountain', 'observe', {'flag': 'noticed_general_frost'},
+        tail(capital, 'go_general_mansion', 'observe:frozen_fountain', 'leave_mansion'))
     for entry in keys:
         for source in entry["sources"]:
             for branch, steps in source["witnesses"].items():

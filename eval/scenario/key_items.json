@@ -53,7 +53,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -87,7 +89,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -126,7 +130,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         }
@@ -173,7 +179,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -209,7 +217,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -250,7 +260,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -296,7 +308,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -338,7 +352,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -385,7 +401,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -423,7 +441,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -457,7 +477,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -496,7 +518,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -540,7 +564,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -580,7 +606,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -625,7 +653,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -669,7 +699,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -709,7 +741,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -754,7 +788,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           },
           "crafted_item": "ice_charm"
@@ -800,7 +836,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -841,7 +879,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -887,7 +927,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           },
           "crafted_item": "ice_charm"
@@ -925,7 +967,9 @@
               "enter_dragon_nest",
               "@skill:mage_lv5_a",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -960,7 +1004,9 @@
               "enter_dragon_nest",
               "@skill:mage_lv5_a",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -1000,7 +1046,9 @@
               "enter_dragon_nest",
               "@skill:mage_lv5_a",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           },
           "character": "mage",
@@ -1047,7 +1095,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -1081,7 +1131,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -1120,7 +1172,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -1165,7 +1219,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -1206,7 +1262,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -1252,7 +1310,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -1295,7 +1355,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -1334,7 +1396,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -1378,7 +1442,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -1414,7 +1480,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -1448,7 +1516,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -1487,7 +1557,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           },
           "character": "cleric",
@@ -1542,7 +1614,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -1576,7 +1650,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -1623,7 +1699,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -1677,7 +1755,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -1711,7 +1791,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -1766,7 +1848,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -1821,7 +1905,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -1856,7 +1942,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -1912,7 +2000,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -1965,7 +2055,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -1996,7 +2088,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -2050,7 +2144,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         }
@@ -2095,7 +2191,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -2130,7 +2228,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -2170,7 +2270,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -2208,7 +2310,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -2242,7 +2346,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -2281,7 +2387,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -2320,7 +2428,9 @@
               "enter_dragon_nest",
               "@victory",
               "examine_ignis_wound",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -2355,7 +2465,9 @@
               "enter_dragon_nest",
               "@victory",
               "examine_ignis_wound",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -2395,7 +2507,9 @@
               "enter_dragon_nest",
               "@victory",
               "examine_ignis_wound",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -2446,7 +2560,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -2483,7 +2599,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -2535,7 +2653,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -2581,7 +2701,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -2623,7 +2745,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -2670,7 +2794,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         }
@@ -2714,7 +2840,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -2748,7 +2876,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -2787,7 +2917,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -2832,7 +2964,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -2873,7 +3007,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -2919,7 +3055,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -2964,7 +3102,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -3005,7 +3145,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -3051,7 +3193,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -3087,7 +3231,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -3121,7 +3267,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -3160,7 +3308,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           },
           "character": "mage",
@@ -3208,7 +3358,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -3243,7 +3395,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -3283,7 +3437,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         }
@@ -3334,7 +3490,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -3375,7 +3533,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -3421,7 +3581,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         }
@@ -3466,7 +3628,9 @@
               "enter_dragon_nest",
               "@victory",
               "hear_ignis_last_words",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -3501,7 +3665,9 @@
               "enter_dragon_nest",
               "@victory",
               "hear_ignis_last_words",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -3541,7 +3707,9 @@
               "enter_dragon_nest",
               "@victory",
               "hear_ignis_last_words",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         }
@@ -3590,7 +3758,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -3629,7 +3799,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -3673,7 +3845,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -3716,7 +3890,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -3755,7 +3931,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -3799,7 +3977,138 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ]
+          }
+        },
+        {
+          "id": "fountain",
+          "location": "mansion_garden",
+          "step": "observe:frozen_fountain",
+          "type": "observe",
+          "reward": {
+            "flag": "noticed_general_frost"
+          },
+          "witnesses": {
+            "spring": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_general_mansion",
+              "observe:frozen_fountain",
+              "leave_mansion",
+              "go_report_hall"
+            ],
+            "fort": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "help_lost_goblin",
+              "enter_goblin_fort",
+              "@victory",
+              "@victory",
+              "explore_fort_right",
+              "bypass_hobgoblin:success",
+              "give_correct_password",
+              "@victory",
+              "return_lost_goblin_box",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_general_mansion",
+              "observe:frozen_fountain",
+              "leave_mansion",
+              "go_report_hall"
+            ],
+            "cave": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "exit_back",
+              "wolves_back",
+              "inspect_spring_wall",
+              "decode_seal:success",
+              "@victory",
+              "cave_right",
+              "hot_spring_forward",
+              "@victory",
+              "@victory",
+              "leave_prism_tree",
+              "continue_from_elf_spring",
+              "pass_cleared_wolves",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_general_mansion",
+              "observe:frozen_fountain",
+              "leave_mansion",
+              "go_report_hall"
             ]
           }
         }
@@ -3845,7 +4154,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -3881,7 +4192,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -3922,7 +4235,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -3965,7 +4280,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -4004,7 +4321,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -4048,7 +4367,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -4085,7 +4406,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -4118,7 +4441,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -4156,7 +4481,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         }
@@ -4206,7 +4533,9 @@
               "@victory",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -4246,7 +4575,9 @@
               "@victory",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -4291,7 +4622,9 @@
               "@victory",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -4339,7 +4672,9 @@
               "continue_after_warlock",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -4383,7 +4718,9 @@
               "continue_after_warlock",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -4432,7 +4769,9 @@
               "continue_after_warlock",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         }
@@ -4476,7 +4815,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -4510,7 +4851,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -4549,7 +4892,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -4600,7 +4945,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -4637,7 +4984,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -4689,7 +5038,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -4735,7 +5086,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -4777,7 +5130,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -4824,7 +5179,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -4863,7 +5220,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -4898,7 +5257,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -4938,7 +5299,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -4981,7 +5344,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -5020,7 +5385,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -5064,7 +5431,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -5107,7 +5476,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -5146,7 +5517,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -5190,7 +5563,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -5230,7 +5605,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -5266,7 +5643,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -5307,7 +5686,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -5350,7 +5731,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -5389,7 +5772,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -5433,7 +5818,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -5470,7 +5857,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -5503,7 +5892,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -5541,7 +5932,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         }
@@ -5585,7 +5978,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -5619,7 +6014,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -5658,7 +6055,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -5703,7 +6102,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -5744,7 +6145,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -5790,7 +6193,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -5833,7 +6238,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -5872,7 +6279,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -5916,7 +6325,9 @@
               "cross_lava_bridge:success",
               "enter_dragon_nest",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           }
         },
@@ -5953,7 +6364,9 @@
               "enter_dragon_nest",
               "@skill:purify_ignis_prayer",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "fort": [
               "check_supplies",
@@ -5988,7 +6401,9 @@
               "enter_dragon_nest",
               "@skill:purify_ignis_prayer",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ],
             "cave": [
               "check_supplies",
@@ -6028,11 +6443,1077 @@
               "enter_dragon_nest",
               "@skill:purify_ignis_prayer",
               "@victory",
-              "return_to_castle_report"
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
             ]
           },
           "character": "cleric",
           "special_action": "purify_ignis_prayer"
+        }
+      ]
+    },
+    {
+      "id": "draco_journal",
+      "minimum": 1,
+      "sources": [
+        {
+          "id": "study",
+          "location": "mansion_study",
+          "step": "take_draco_journal",
+          "type": "exploration",
+          "reward": {
+            "item": "draco_journal"
+          },
+          "witnesses": {
+            "spring": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_general_mansion",
+              "robin_picks_lock",
+              "evade_ice_sentinels:success",
+              "take_draco_journal",
+              "leave_mansion_study",
+              "go_report_hall"
+            ],
+            "fort": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "help_lost_goblin",
+              "enter_goblin_fort",
+              "@victory",
+              "@victory",
+              "explore_fort_right",
+              "bypass_hobgoblin:success",
+              "give_correct_password",
+              "@victory",
+              "return_lost_goblin_box",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_general_mansion",
+              "robin_picks_lock",
+              "evade_ice_sentinels:success",
+              "take_draco_journal",
+              "leave_mansion_study",
+              "go_report_hall"
+            ],
+            "cave": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "exit_back",
+              "wolves_back",
+              "inspect_spring_wall",
+              "decode_seal:success",
+              "@victory",
+              "cave_right",
+              "hot_spring_forward",
+              "@victory",
+              "@victory",
+              "leave_prism_tree",
+              "continue_from_elf_spring",
+              "pass_cleared_wolves",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_general_mansion",
+              "robin_picks_lock",
+              "evade_ice_sentinels:success",
+              "take_draco_journal",
+              "leave_mansion_study",
+              "go_report_hall"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "strong_evidence",
+      "minimum": 4,
+      "sources": [
+        {
+          "id": "frost_core",
+          "location": "village_frozen_clue",
+          "step": "inspect_frost_core:success",
+          "type": "exploration",
+          "reward": {
+            "item": "white_dragon_scale"
+          },
+          "witnesses": {
+            "spring": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "inspect_frost_core:success",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ],
+            "fort": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "help_lost_goblin",
+              "enter_goblin_fort",
+              "@victory",
+              "@victory",
+              "explore_fort_right",
+              "bypass_hobgoblin:success",
+              "give_correct_password",
+              "@victory",
+              "return_lost_goblin_box",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "inspect_frost_core:success",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ],
+            "cave": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "exit_back",
+              "wolves_back",
+              "inspect_spring_wall",
+              "decode_seal:success",
+              "@victory",
+              "cave_right",
+              "hot_spring_forward",
+              "@victory",
+              "@victory",
+              "leave_prism_tree",
+              "continue_from_elf_spring",
+              "pass_cleared_wolves",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "inspect_frost_core:success",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ]
+          }
+        },
+        {
+          "id": "wolf",
+          "location": "frost_wolf_battle",
+          "step": "@victory",
+          "type": "battle",
+          "reward": {
+            "item": "white_dragon_scale"
+          },
+          "witnesses": {
+            "spring": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ],
+            "fort": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "help_lost_goblin",
+              "enter_goblin_fort",
+              "@victory",
+              "@victory",
+              "explore_fort_right",
+              "bypass_hobgoblin:success",
+              "give_correct_password",
+              "@victory",
+              "return_lost_goblin_box",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ],
+            "cave": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "exit_back",
+              "wolves_back",
+              "inspect_spring_wall",
+              "decode_seal:success",
+              "@victory",
+              "cave_right",
+              "hot_spring_forward",
+              "@victory",
+              "@victory",
+              "leave_prism_tree",
+              "continue_from_elf_spring",
+              "pass_cleared_wolves",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ]
+          }
+        },
+        {
+          "id": "wound",
+          "location": "ignis_last_breath",
+          "step": "examine_ignis_wound",
+          "type": "exploration",
+          "reward": {
+            "item": "white_dragon_scale"
+          },
+          "witnesses": {
+            "spring": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ],
+            "fort": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "help_lost_goblin",
+              "enter_goblin_fort",
+              "@victory",
+              "@victory",
+              "explore_fort_right",
+              "bypass_hobgoblin:success",
+              "give_correct_password",
+              "@victory",
+              "return_lost_goblin_box",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ],
+            "cave": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "exit_back",
+              "wolves_back",
+              "inspect_spring_wall",
+              "decode_seal:success",
+              "@victory",
+              "cave_right",
+              "hot_spring_forward",
+              "@victory",
+              "@victory",
+              "leave_prism_tree",
+              "continue_from_elf_spring",
+              "pass_cleared_wolves",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ]
+          }
+        },
+        {
+          "id": "robin",
+          "location": "inn",
+          "step": "ask_robin_stolen_scale",
+          "type": "quest",
+          "reward": {
+            "item": "white_dragon_scale"
+          },
+          "witnesses": {
+            "spring": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "return_inn_after_forest",
+              "accept_robin_goblin_quest",
+              "@victory",
+              "@victory",
+              "explore_fort_right",
+              "bypass_hobgoblin:success",
+              "give_correct_password",
+              "@victory",
+              "return_lost_goblin_box",
+              "fort_shortcut",
+              "return_inn_after_forest",
+              "ask_robin_stolen_scale",
+              "return_forest_exit",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ],
+            "fort": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "help_lost_goblin",
+              "enter_goblin_fort",
+              "@victory",
+              "@victory",
+              "explore_fort_right",
+              "bypass_hobgoblin:success",
+              "give_correct_password",
+              "@victory",
+              "return_lost_goblin_box",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "return_inn_after_forest",
+              "ask_robin_stolen_scale",
+              "return_forest_exit",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ],
+            "cave": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "exit_back",
+              "wolves_back",
+              "inspect_spring_wall",
+              "decode_seal:success",
+              "@victory",
+              "cave_right",
+              "hot_spring_forward",
+              "@victory",
+              "@victory",
+              "leave_prism_tree",
+              "continue_from_elf_spring",
+              "pass_cleared_wolves",
+              "return_inn_after_forest",
+              "accept_robin_goblin_quest",
+              "@victory",
+              "@victory",
+              "explore_fort_right",
+              "bypass_hobgoblin:success",
+              "give_correct_password",
+              "@victory",
+              "return_lost_goblin_box",
+              "fort_shortcut",
+              "return_inn_after_forest",
+              "ask_robin_stolen_scale",
+              "return_forest_exit",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ]
+          }
+        },
+        {
+          "id": "merchant",
+          "location": "alley_night",
+          "step": "buy_white_scale",
+          "type": "purchase",
+          "reward": {
+            "item": "white_dragon_scale"
+          },
+          "witnesses": {
+            "spring": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "return_inn_after_forest",
+              "return_castle_from_inn",
+              "go_alley",
+              "wait_for_night_in_alley",
+              "buy_white_scale",
+              "leave_night_alley",
+              "go_inn",
+              "return_forest_exit",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ],
+            "fort": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "help_lost_goblin",
+              "enter_goblin_fort",
+              "@victory",
+              "@victory",
+              "explore_fort_right",
+              "bypass_hobgoblin:success",
+              "give_correct_password",
+              "@victory",
+              "return_lost_goblin_box",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "return_inn_after_forest",
+              "return_castle_from_inn",
+              "go_alley",
+              "wait_for_night_in_alley",
+              "buy_white_scale",
+              "leave_night_alley",
+              "go_inn",
+              "return_forest_exit",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ],
+            "cave": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "exit_back",
+              "wolves_back",
+              "inspect_spring_wall",
+              "decode_seal:success",
+              "@victory",
+              "cave_right",
+              "hot_spring_forward",
+              "@victory",
+              "@victory",
+              "leave_prism_tree",
+              "continue_from_elf_spring",
+              "pass_cleared_wolves",
+              "return_inn_after_forest",
+              "return_castle_from_inn",
+              "go_alley",
+              "wait_for_night_in_alley",
+              "buy_white_scale",
+              "leave_night_alley",
+              "go_inn",
+              "return_forest_exit",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_report_hall"
+            ]
+          }
+        },
+        {
+          "id": "study",
+          "location": "mansion_study",
+          "step": "take_draco_journal",
+          "type": "exploration",
+          "reward": {
+            "item": "draco_journal"
+          },
+          "witnesses": {
+            "spring": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_general_mansion",
+              "robin_picks_lock",
+              "evade_ice_sentinels:success",
+              "take_draco_journal",
+              "leave_mansion_study",
+              "go_report_hall"
+            ],
+            "fort": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "help_lost_goblin",
+              "enter_goblin_fort",
+              "@victory",
+              "@victory",
+              "explore_fort_right",
+              "bypass_hobgoblin:success",
+              "give_correct_password",
+              "@victory",
+              "return_lost_goblin_box",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_general_mansion",
+              "robin_picks_lock",
+              "evade_ice_sentinels:success",
+              "take_draco_journal",
+              "leave_mansion_study",
+              "go_report_hall"
+            ],
+            "cave": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "exit_back",
+              "wolves_back",
+              "inspect_spring_wall",
+              "decode_seal:success",
+              "@victory",
+              "cave_right",
+              "hot_spring_forward",
+              "@victory",
+              "@victory",
+              "leave_prism_tree",
+              "continue_from_elf_spring",
+              "pass_cleared_wolves",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_general_mansion",
+              "robin_picks_lock",
+              "evade_ice_sentinels:success",
+              "take_draco_journal",
+              "leave_mansion_study",
+              "go_report_hall"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "has_assassin_crest",
+      "minimum": 1,
+      "sources": [
+        {
+          "id": "assassins",
+          "location": "inn_night_ambush",
+          "step": "@victory",
+          "type": "battle",
+          "reward": {
+            "item": "assassin_crest"
+          },
+          "witnesses": {
+            "spring": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_inn",
+              "rest_at_inn",
+              "@victory",
+              "return_castle_from_inn",
+              "go_report_hall"
+            ],
+            "fort": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "help_lost_goblin",
+              "enter_goblin_fort",
+              "@victory",
+              "@victory",
+              "explore_fort_right",
+              "bypass_hobgoblin:success",
+              "give_correct_password",
+              "@victory",
+              "return_lost_goblin_box",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_inn",
+              "rest_at_inn",
+              "@victory",
+              "return_castle_from_inn",
+              "go_report_hall"
+            ],
+            "cave": [
+              "check_supplies",
+              "go_inn",
+              "invite_robin:success",
+              "ask_robin_rumor",
+              "return_castle_from_inn",
+              "go_dark_forest:success",
+              "@victory",
+              "ignore_lost_goblin:success",
+              "@victory",
+              "crossroads_forward",
+              "continue_from_elf_spring",
+              "@victory",
+              "exit_back",
+              "wolves_back",
+              "inspect_spring_wall",
+              "decode_seal:success",
+              "@victory",
+              "cave_right",
+              "hot_spring_forward",
+              "@victory",
+              "@victory",
+              "leave_prism_tree",
+              "continue_from_elf_spring",
+              "pass_cleared_wolves",
+              "leave_forest_for_village",
+              "approach_burning_village_carefully:success",
+              "@victory",
+              "leave_burning_house",
+              "investigate_frozen_village",
+              "@victory",
+              "@victory",
+              "accept_ian_request",
+              "@victory",
+              "cross_lava_bridge:success",
+              "enter_dragon_nest",
+              "@victory",
+              "examine_ignis_wound",
+              "return_to_castle_report",
+              "enter_festival_town",
+              "go_inn",
+              "rest_at_inn",
+              "@victory",
+              "return_castle_from_inn",
+              "go_report_hall"
+            ]
+          }
         }
       ]
     }

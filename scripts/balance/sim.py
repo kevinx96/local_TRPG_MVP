@@ -231,7 +231,7 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
              n: int = 500, seed: int = 20261011, checkpoints: Optional[dict[str, Any]] = None,
              defense_mode: str = "flat", stat_scaling: Optional[dict[str, Any]] = None,
              companion: bool = True, skill_variant: str = "none", preparation: str = "default",
-             purify: bool = True) -> dict[str, Any]:
+             purify: bool = True, initial_delta: Optional[dict[str, Any]] = None) -> dict[str, Any]:
     if n < 1:
         raise ValueError("n must be positive")
     template = prepare_session(pack, encounter, character_id, checkpoints, defense_mode=defense_mode,
@@ -254,6 +254,8 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
         if fire_capable(template.get("companion")):
             template["companion"] = None
         state._synchronize_equipment(actor)
+    if initial_delta:
+        state.apply_state_delta(template, initial_delta)
     character_id = template["character"]["character_id"]
     shared_pack = template["scenario_pack"]
     rounds, hp_left = [], []

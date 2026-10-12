@@ -7,11 +7,15 @@ from .world_state import current_location_id
 
 
 def public_maps(session: dict[str, Any]) -> dict[str, Any]:
+    from .state import _session_requirement_passes
+
     location = current_location_id(session)
-    maps = session.get("scenario_pack", {}).get("maps", [])
+    maps = [m for m in session.get('scenario_pack', {}).get('maps', [])
+            if _session_requirement_passes(m.get('requirements'), session)]
     visited = set(session.get("visited_locations", []))
     flags = session.get("flags", {})
-    current = next((m for m in maps if any(location in n["location_ids"] for n in m["nodes"])), None)
+    current = next((m for m in sorted(maps, key=lambda m: not bool(m.get('parent')))
+                    if any(location in n['location_ids'] for n in m['nodes'])), None)
     if not current:
         return {"current_map_id": None, "maps": []}
     result = []
@@ -46,7 +50,10 @@ def movement_action(session: dict[str, Any], node_id: str) -> dict[str, Any]:
     if session.get("combat"):
         raise ValueError("戦闘中は移動できません。")
     location = current_location_id(session)
+    current_map = public_maps(session)['current_map_id']
     for map_data in session.get("scenario_pack", {}).get("maps", []):
+        if map_data['id'] != current_map:
+            continue
         source = next((n for n in map_data["nodes"] if location in n["location_ids"]), None)
         if not source:
             continue

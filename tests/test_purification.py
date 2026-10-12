@@ -145,6 +145,8 @@ class PurificationTests(unittest.TestCase):
             if ally:
                 self.action(session, "ask_ignis_aid")
             self.action(session, "return_to_castle_report")
+            self.action(session, "enter_festival_town")
+            self.action(session, "go_report_hall")
             # The guaranteed scale alone must suffice for exposure.
             session["flags"] = {k: v for k, v in session["flags"].items() if k in {"ignis_purified", "ignis_ally"}}
             self.action(session, "report_with_evidence")
@@ -156,6 +158,8 @@ class PurificationTests(unittest.TestCase):
             self.assertEqual(session["game_over"]["ending"], "draco_defeated_with_ignis" if ally else "draco_defeated")
         session = self.purify()
         self.action(session, "return_to_castle_report")
+        self.action(session, "enter_festival_town")
+        self.action(session, "go_report_hall")
         self.action(session, "report_normally")
         self.assertEqual(session["game_over"]["ending"], "ignis_purified")
         self.assertEqual(select_hybrid_prepared_turn(session)["draft"]["gm_text"], upgrade_purification.NORMAL_ENDING)
@@ -192,6 +196,8 @@ class PurificationTests(unittest.TestCase):
             for enabled in (False, True):
                 pack = deepcopy(self.pack)
                 dragon = next(e for e in pack["enemies"] if e["id"] == "draco_dragon")
+                encounter = next(l for l in pack['locations'] if l['id'] == 'draco_battle')['combat']
+                dragon['phase_allies'] = encounter.pop('phase_allies')
                 dragon["phase_allies"][0]["round_start_effects"][0]["damage"] = "10"
                 if declaration == "encounter":
                     ally = dragon.pop("phase_allies")[0]

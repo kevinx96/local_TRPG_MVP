@@ -68,7 +68,7 @@ def proposed_routes() -> dict[str, list[str]]:
         "xanxus_phantom_battle": frozen + ["skip_frozen_clue_before_xanxus", "bluff_xanxus:failure", "@defeat", "accept_xanxus_fire_seed", "investigate_frozen_village", "@victory", "@victory", "accept_ian_request", "@victory", "cross_lava_bridge:success", "cleanse_fire_seed"],
         "dragon_valley_loc": ignis,
         "draco_battle": ignis + ["@victory", "examine_ignis_wound",
-                                 "return_to_castle_report", "report_with_evidence"],
+                                 "return_to_castle_report", "enter_festival_town", "go_report_hall", "report_with_evidence"],
         "merchant_battle": ["go_inn", "ask_robin_rumor", "return_castle_from_inn", "go_alley",
                             "wait_for_night_in_alley", "hear_curse_offer_{character}",
                             "accept_curse_offer_{character}", "betray_cursed_merchant"],

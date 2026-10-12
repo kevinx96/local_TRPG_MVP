@@ -29,6 +29,26 @@ BOOT = r"""
     els.gameScreen.style.display = '';
     renderSession(fixture);
     const mapView = new URLSearchParams(location.search).get('view');
+    if (['chapter5-map', 'mansion-map', 'assassin-battle', 'draco-support'].includes(mapView)) {
+      if (mapView.endsWith('-map')) {
+        openMap();
+        check(document.querySelector('#fullMap .visited'), 'visited chapter-five nodes visible');
+        if (mapView === 'mansion-map') check(state.session.map.current_map_id === 'general_mansion', 'mansion submap selected');
+      } else {
+        els.combatIntro.style.display = 'none';
+        check(document.querySelector('#combatEnemies').textContent.includes(mapView === 'assassin-battle' ? '氷の刺客' : '白竜ヴァイス'), 'enemy visible');
+        if (mapView === 'draco-support') {
+          check(document.querySelectorAll('#combatLog .support').length === 5, 'all five support messages visible');
+          els.combatLog.style.maxHeight = '460px';
+          els.combatLog.style.height = '460px';
+          document.querySelector('.combat-arena').style.gridTemplateRows = 'minmax(0, 1fr) 460px';
+          els.combatLog.scrollTop = 0;
+        }
+      }
+      check(document.documentElement.scrollWidth <= innerWidth, 'no horizontal overflow');
+      await fetch('/result', {method: 'POST', body: JSON.stringify({ok:true, checks})});
+      return;
+    }
     if (['chapter3-map', 'chapter4-map', 'burning-house', 'xanxus-event'].includes(mapView)) {
       check(!document.querySelector('#miniMap').hidden, 'minimap visible');
       if (mapView.endsWith('-map')) {
@@ -108,6 +128,26 @@ BOOT = r"""
 def fixture(view: str = "") -> dict[str, Any]:
     pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
     session = checkpoints.fresh_session(pack, "hero")
+    if view in {'chapter5-map', 'mansion-map', 'assassin-battle', 'draco-support'}:
+        from host import combat
+        location = {'chapter5-map': 'festival_town', 'mansion-map': 'mansion_corridor',
+                    'assassin-battle': 'inn_night_ambush', 'draco-support': 'draco_battle'}[view]
+        session['world_state'] = dict(scene_id='castle_return', location_id=location)
+        session['flags'].update(returned_to_capital=True, recruited_robin=True, cleared_goblin_fort=True,
+                                king_trust=True, mina_quest_done=True, robert_hammer_returned=True)
+        state.apply_state_delta(session, {'inventory_add': [{'name': '霜封じの護符'}, {'name': '白竜の日誌'}]})
+        session['visited_locations'] = ['royal_gate', 'festival_town', 'mansion_garden', 'king_private_room', 'inn', 'item_shop', 'magic_shop', 'forge']
+        if view == 'mansion-map':
+            session['visited_locations'] += ['mansion_corridor', 'mansion_study']
+        record = state._current_location_record(session)
+        session['messages'] = [dict(role='assistant', speaker='GM', text=record['description'])]
+        session['choices'] = state.fallback_choices_for_session(session)
+        if view in {'assassin-battle', 'draco-support'}:
+            combat.ensure_combat_started(session)
+            if view == 'draco-support':
+                session['combat']['enemies'][0]['hp'] = 0
+                combat._check_victory_or_defeat(session)
+        return session
     if view in {"chapter3-map", "chapter4-map", "burning-house", "xanxus-event"}:
         location = {"chapter3-map": "village_frozen_clue", "chapter4-map": "valley_lava_bridge",
                     "burning-house": "burning_house", "xanxus-event": "xanxus_at_nest"}[view]
@@ -240,7 +280,9 @@ def main() -> int:
                            ("forest-map", "1280,900"), ("fort-map", "1280,900"), ("cave-map", "1280,900"),
                            ("prism-battle", "1280,900"), ("forest-mobile", "480,1000"),
                            ("chapter3-map", "1280,900"), ("chapter4-map", "1280,900"),
-                           ("burning-house", "1280,900"), ("xanxus-event", "1280,900")):
+                           ("burning-house", "1280,900"), ("xanxus-event", "1280,900"),
+                           ('chapter5-map', '1280,1000'), ('mansion-map', '1280,1000'),
+                           ('assassin-battle', '1280,1000'), ('draco-support', '1280,1200')):
             if args.views and view not in args.views:
                 continue
             session = fixture(view)

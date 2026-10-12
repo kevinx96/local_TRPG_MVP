@@ -4,10 +4,11 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-12-v021-ch34",
+    "content_revision": "2026-10-12-v023-ch5",
     "forest_v3": true,
     "forest_sidequests": true,
-    "chapter34_v4": true
+    "chapter34_v4": true,
+    "chapter5_v5": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -184,7 +185,14 @@
       "title": "王城への帰還",
       "location_ids": [
         "castle_report",
-        "draco_battle"
+        "draco_battle",
+        "royal_gate",
+        "festival_town",
+        "mansion_garden",
+        "mansion_corridor",
+        "mansion_study",
+        "king_private_room",
+        "inn_night_ambush"
       ]
     }
   ],
@@ -838,7 +846,21 @@
           ],
           "effects": [
             {
-              "current_location": "castle"
+              "branch": {
+                "requirements": {
+                  "flag": "returned_to_capital"
+                },
+                "then": [
+                  {
+                    "current_location": "festival_town"
+                  }
+                ],
+                "else": [
+                  {
+                    "current_location": "castle"
+                  }
+                ]
+              }
             }
           ]
         },
@@ -1090,11 +1112,76 @@
               "gold_change": -10
             },
             {
-              "restore_full": true
+              "branch": {
+                "requirements": {
+                  "all": [
+                    {
+                      "flag": "returned_to_capital"
+                    },
+                    {
+                      "any": [
+                        {
+                          "has_item": "白い竜鱗"
+                        },
+                        {
+                          "has_item": "白竜の日誌"
+                        }
+                      ]
+                    },
+                    {
+                      "not_flag": "draco_revealed"
+                    },
+                    {
+                      "not_flag": "assassins_attacked"
+                    }
+                  ]
+                },
+                "then": [
+                  {
+                    "set_flag": "assassins_attacked"
+                  },
+                  {
+                    "current_location": "inn_night_ambush"
+                  }
+                ],
+                "else": [
+                  {
+                    "restore_full": true
+                  }
+                ]
+              }
             }
           ],
           "portrait_image": "/static/images/npc_ian.png",
-          "result_text": "温かいスープと清潔な寝台で、一晩ぐっすりと眠った。体の疲れがすっかり抜けている。"
+          "result_text": "温かいスープと清潔な寝台で、一晩ぐっすりと眠った。体の疲れがすっかり抜けている。",
+          "result_variants": [
+            {
+              "requirements": {
+                "all": [
+                  {
+                    "flag": "returned_to_capital"
+                  },
+                  {
+                    "any": [
+                      {
+                        "has_item": "白い竜鱗"
+                      },
+                      {
+                        "has_item": "白竜の日誌"
+                      }
+                    ]
+                  },
+                  {
+                    "not_flag": "draco_revealed"
+                  },
+                  {
+                    "not_flag": "assassins_attacked"
+                  }
+                ]
+              },
+              "text": ""
+            }
+          ]
         },
         {
           "id": "ask_ian",
@@ -1270,7 +1357,16 @@
               "current_location": "goblin_fort"
             }
           ],
-          "portrait_image": "/static/images/npc_robin.png"
+          "portrait_image": "/static/images/npc_robin.png",
+          "requirements": {
+            "all": [
+              {},
+              {
+                "not_flag": "returned_to_capital"
+              }
+            ]
+          },
+          "secret": true
         },
         {
           "id": "return_castle_from_inn",
@@ -1282,7 +1378,21 @@
           ],
           "effects": [
             {
-              "current_location": "castle"
+              "branch": {
+                "requirements": {
+                  "flag": "returned_to_capital"
+                },
+                "then": [
+                  {
+                    "current_location": "festival_town"
+                  }
+                ],
+                "else": [
+                  {
+                    "current_location": "castle"
+                  }
+                ]
+              }
             }
           ]
         },
@@ -1299,7 +1409,16 @@
               "current_location": "forest_exit"
             }
           ],
-          "visible_after": "returned_from_forest"
+          "visible_after": "returned_from_forest",
+          "requirements": {
+            "all": [
+              {},
+              {
+                "not_flag": "returned_to_capital"
+              }
+            ]
+          },
+          "secret": true
         }
       ],
       "hybrid": {
@@ -2089,7 +2208,21 @@
           ],
           "effects": [
             {
-              "current_location": "castle"
+              "branch": {
+                "requirements": {
+                  "flag": "returned_to_capital"
+                },
+                "then": [
+                  {
+                    "current_location": "festival_town"
+                  }
+                ],
+                "else": [
+                  {
+                    "current_location": "castle"
+                  }
+                ]
+              }
             }
           ]
         },
@@ -2554,7 +2687,21 @@
           ],
           "effects": [
             {
-              "current_location": "castle"
+              "branch": {
+                "requirements": {
+                  "flag": "returned_to_capital"
+                },
+                "then": [
+                  {
+                    "current_location": "festival_town"
+                  }
+                ],
+                "else": [
+                  {
+                    "current_location": "castle"
+                  }
+                ]
+              }
             }
           ]
         },
@@ -6829,14 +6976,16 @@
           ],
           "effects": [
             {
-              "current_location": "castle_report"
+              "current_location": "royal_gate"
             }
           ]
         }
       ],
       "npc_ids": [],
       "enemy_ids": [],
-      "connected_location_ids": [],
+      "connected_location_ids": [
+        "royal_gate"
+      ],
       "background_image": "/static/images/bg_dragon_valley.png",
       "hybrid": {
         "mode": "prepared_gm_turns",
@@ -6929,13 +7078,25 @@
                     "heard_treaty_lore",
                     "heard_ignis_testimony",
                     "heard_gald_rumor",
-                    "heard_xanxus_betrayal"
+                    "heard_xanxus_betrayal",
+                    "has_assassin_crest"
                   ],
                   "count": 2
                 }
+              },
+              {
+                "has_item": "白竜の日誌"
               }
             ]
-          }
+          },
+          "result_variants": [
+            {
+              "requirements": {
+                "has_item": "白竜の日誌"
+              },
+              "text": "あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」あなたが日誌を掲げると、ドラコの表情から初めて笑みが消えた。"
+            }
+          ]
         },
         {
           "id": "report_normally",
@@ -7073,7 +7234,100 @@
         "result_texts": {
           "victory": "白竜ヴァイスは崩れ落ち、王の間に降り積もった霜が静かに溶けていった。国王エドワードは長い沈黙の後、竜の谷へ使者を送ると告げた。盟約を結び直すために。あなたの名は、竜と人をもう一度つないだ者として語り継がれる。",
           "defeat": "王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。"
-        }
+        },
+        "encounter_modifiers": [
+          {
+            "id": "king",
+            "enemy_ids": [
+              "draco_human"
+            ],
+            "requirements": {
+              "flag": "king_trust"
+            },
+            "enemy_defense": -2,
+            "text": "「近衛兵、将軍を囲め！」国王の号令が王の間に響いた。"
+          },
+          {
+            "id": "robin",
+            "enemy_ids": [
+              "draco_human"
+            ],
+            "requirements": {
+              "all": [
+                {
+                  "flag": "recruited_robin"
+                },
+                {
+                  "flag": "cleared_goblin_fort"
+                }
+              ]
+            },
+            "enemy_skill": "剣聖の一閃",
+            "accuracy": -15,
+            "text": "「昨夜のうちに、あんたの剣の留め金を緩めといたよ」柱の陰からロビンの声がした。"
+          },
+          {
+            "id": "mina",
+            "enemy_ids": [
+              "draco_dragon"
+            ],
+            "requirements": {
+              "flag": "mina_quest_done"
+            },
+            "received_element": "ice",
+            "received_multiplier": 0.8,
+            "text": "「今です、師匠！」ミーナと青いローブの魔法使いが、あなたの周りに炎の結界を張った。"
+          },
+          {
+            "id": "robert",
+            "enemy_ids": [
+              "draco_dragon"
+            ],
+            "requirements": {
+              "flag": "robert_hammer_returned"
+            },
+            "basic_followup": {
+              "name": "霜断ちの刻印",
+              "damage": "1d6",
+              "accuracy": 100,
+              "element": "fire"
+            },
+            "text": "剣の刻印が赤く輝いた。ローベルトが打ち込んだ霜断ちの刻印だ。"
+          },
+          {
+            "id": "charm",
+            "enemy_ids": [
+              "draco_dragon"
+            ],
+            "requirements": {
+              "has_item": "霜封じの護符"
+            },
+            "enemy_skill": "凍てつく吐息",
+            "damage_multiplier": 0.7,
+            "text": "胸の護符が白く光り、吹きつける冷気を和らげた。"
+          }
+        ],
+        "phase_allies": [
+          {
+            "id": "ignis",
+            "name": "イグニス",
+            "requirements": {
+              "flag": "ignis_ally"
+            },
+            "entry_text": "その時、王の間の天井が赤く燃え上がった。『待たせたな、人の子よ』――紅竜イグニスが、白竜の前に舞い降りた。",
+            "round_start_effects": [
+              {
+                "kind": "damage_enemy",
+                "damage": "9d10+18",
+                "element": "fire"
+              }
+            ],
+            "image": "/static/images/npc_ignis_calm.png",
+            "enemy_ids": [
+              "draco_dragon"
+            ]
+          }
+        ]
       }
     },
     {
@@ -7150,7 +7404,7 @@
           ],
           "effects": [
             {
-              "current_location": "castle_report"
+              "current_location": "royal_gate"
             }
           ]
         }
@@ -7160,7 +7414,7 @@
       ],
       "enemy_ids": [],
       "connected_location_ids": [
-        "castle_report"
+        "royal_gate"
       ],
       "background_image": "/static/images/bg_dragon_valley.png",
       "character_image": "/static/images/enemy_ignis.png",
@@ -8690,6 +8944,685 @@
       "entry_text": "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。Xanxusは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。",
       "portrait_image": "/static/images/npc_warlock.png",
       "narrate_entry": true
+    },
+    {
+      "id": "royal_gate",
+      "title": "凱旋の城門",
+      "description": "城門をくぐると、花びらと歓声があなたを迎えた。邪竜の脅威が去ったことは、すでに城下町じゅうに知れ渡っている。人混みの向こうで、将軍ドラコが穏やかに手を振っていた。",
+      "scene_id": "castle_return",
+      "actions": [
+        {
+          "id": "enter_festival_town",
+          "text": "城下町へ進む",
+          "preview": "城下町へ進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城下町へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "festival_town"
+            }
+          ]
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "background_image": "/static/images/bg_royal_gate.png",
+      "entry_effects": [
+        {
+          "set_flag": "returned_to_capital"
+        }
+      ],
+      "entry_text": "城門をくぐると、花びらと歓声があなたを迎えた。邪竜の脅威が去ったことは、すでに城下町じゅうに知れ渡っている。人混みの向こうで、将軍ドラコが穏やかに手を振っていた。",
+      "narrate_entry": true
+    },
+    {
+      "id": "festival_town",
+      "title": "凱旋の城下町",
+      "description": "城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。",
+      "scene_id": "castle_return",
+      "actions": [
+        {
+          "id": "go_inn",
+          "text": "宿屋へ向かう",
+          "preview": "宿屋へ向かう",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "宿屋へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "inn"
+            }
+          ]
+        },
+        {
+          "id": "go_item_shop",
+          "text": "道具屋へ向かう",
+          "preview": "道具屋へ向かう",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "道具屋へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "item_shop"
+            }
+          ]
+        },
+        {
+          "id": "go_magic_shop",
+          "text": "魔法店へ向かう",
+          "preview": "魔法店へ向かう",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "魔法店へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "magic_shop"
+            }
+          ]
+        },
+        {
+          "id": "go_forge",
+          "text": "鍛冶屋へ向かう",
+          "preview": "鍛冶屋へ向かう",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鍛冶屋へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "forge"
+            }
+          ]
+        },
+        {
+          "id": "go_general_mansion",
+          "text": "将軍の屋敷へ向かう",
+          "preview": "将軍の屋敷へ向かう",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "将軍の屋敷へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "mansion_garden"
+            }
+          ],
+          "requirements": {
+            "any": [
+              {
+                "flag": "heard_gald_rumor"
+              },
+              {
+                "flag": "noticed_general_frost"
+              },
+              {
+                "flag": "heard_xanxus_betrayal"
+              },
+              {
+                "has_item": "白い竜鱗"
+              }
+            ]
+          },
+          "secret": true,
+          "unlock_flag": "mansion_unlocked"
+        },
+        {
+          "id": "request_king_audience",
+          "text": "国王に内密の謁見を願い出る",
+          "preview": "国王に内密の謁見を願い出る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "国王に内密の謁見を願い出る"
+          ],
+          "effects": [
+            {
+              "current_location": "king_private_room"
+            }
+          ],
+          "requirements": {
+            "any": [
+              {
+                "flag": "frost_trace_seen"
+              },
+              {
+                "flag": "heard_human_caused_dragon_return"
+              },
+              {
+                "flag": "heard_ignis_last_words"
+              },
+              {
+                "flag": "noticed_general_frost"
+              },
+              {
+                "flag": "heard_treaty_lore"
+              },
+              {
+                "flag": "heard_ignis_testimony"
+              },
+              {
+                "flag": "heard_gald_rumor"
+              },
+              {
+                "flag": "heard_xanxus_betrayal"
+              },
+              {
+                "flag": "has_assassin_crest"
+              },
+              {
+                "has_item": "白い竜鱗"
+              },
+              {
+                "has_item": "白竜の日誌"
+              }
+            ]
+          },
+          "secret": true
+        },
+        {
+          "id": "go_report_hall",
+          "text": "凱旋の間へ向かう",
+          "preview": "凱旋の間へ向かう",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "凱旋の間へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "castle_report"
+            }
+          ]
+        },
+        {
+          "id": "open_gald_capital_shop",
+          "text": "行商人ガルド",
+          "preview": "行商人ガルド",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "行商人ガルド"
+          ],
+          "effects": [],
+          "requirements": {
+            "flag": "saved_gald"
+          },
+          "secret": true,
+          "open_shop": "gald_capital_shop"
+        }
+      ],
+      "npc_ids": [
+        "gald"
+      ],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "background_image": "/static/images/bg_festival_town.png",
+      "entry_events": [
+        {
+          "requirements": {
+            "flag": "mina_quest_done"
+          },
+          "once": "ch5_thanks_mina_quest_done",
+          "text": "ミーナが駆け寄ってきた。「無事でよかった！ 師匠と一緒に、とっておきの術を用意してあるんです」"
+        },
+        {
+          "requirements": {
+            "flag": "riku_returned"
+          },
+          "once": "ch5_thanks_riku_returned",
+          "text": "人混みの中から、リクが手を振っている。避難していた村の人たちも、王都まで凱旋を見に来たらしい。"
+        },
+        {
+          "requirements": {
+            "flag": "saved_gald"
+          },
+          "once": "ch5_thanks_saved_gald",
+          "text": "「よう、英雄！」ガルドが荷車の上から叫んだ。「とっておきの品を仕入れてきたぜ。道具屋の隣で店を広げてる」"
+        },
+        {
+          "requirements": {
+            "flag": "robert_hammer_returned"
+          },
+          "once": "ch5_thanks_robert_hammer_returned",
+          "text": "鍛冶屋の前で、ローベルトが無言で手招きしている。"
+        }
+      ],
+      "npc_requirements": {
+        "gald": {
+          "flag": "saved_gald"
+        }
+      },
+      "entry_text": "城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。",
+      "narrate_entry": true,
+      "entry_effects": [
+        {
+          "set_flag": "entered_festival_town"
+        }
+      ]
+    },
+    {
+      "id": "mansion_garden",
+      "title": "将軍の屋敷・夜の庭",
+      "description": "夜更けの将軍の屋敷は、祝祭の喧騒が嘘のように静まり返っている。庭の噴水だけが、なぜか凍りついていた。",
+      "scene_id": "castle_return",
+      "actions": [
+        {
+          "id": "sneak_into_mansion",
+          "text": "裏口から忍び込む",
+          "preview": "裏口から忍び込む",
+          "risk": "1d20判定（DC13）",
+          "intent_keywords": [
+            "裏口から忍び込む"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 13
+          },
+          "success_effects": [
+            {
+              "unset_flag": "mansion_alert"
+            },
+            {
+              "current_location": "mansion_corridor"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "mansion_alert"
+            },
+            {
+              "current_location": "mansion_corridor"
+            }
+          ],
+          "result_texts": {
+            "success": "物音ひとつ立てず、裏口の錠を外した。",
+            "failure": "扉が軋み、屋敷の奥で何かが動く気配がした。"
+          }
+        },
+        {
+          "id": "robin_picks_lock",
+          "text": "ロビンに錠を開けてもらう",
+          "preview": "ロビンに錠を開けてもらう",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "ロビンに錠を開けてもらう"
+          ],
+          "effects": [
+            {
+              "unset_flag": "mansion_alert"
+            },
+            {
+              "current_location": "mansion_corridor"
+            }
+          ],
+          "requirements": {
+            "flag": "recruited_robin"
+          },
+          "result_text": "ロビンが細い針金を差し込むと、錠はあっさりと外れた。「将軍様の屋敷ってのは、案外ちょろいもんだね」"
+        },
+        {
+          "id": "leave_mansion",
+          "text": "城下町へ戻る",
+          "preview": "城下町へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城下町へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "festival_town"
+            }
+          ]
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "background_image": "/static/images/bg_mansion_garden.png",
+      "objects": [
+        {
+          "id": "frozen_fountain",
+          "name": "凍った噴水",
+          "description": "凍った噴水",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "none",
+              "dc": 0
+            },
+            "success_text": "真夏の夜だというのに、噴水の水は芯まで凍りついている。",
+            "failure_text": "",
+            "success_effects": [
+              {
+                "set_flag": "noticed_general_frost"
+              }
+            ],
+            "once": "observed_frozen_fountain"
+          }
+        }
+      ],
+      "entry_text": "夜更けの将軍の屋敷は、祝祭の喧騒が嘘のように静まり返っている。庭の噴水だけが、なぜか凍りついていた。",
+      "narrate_entry": true,
+      "entry_effects": [
+        {
+          "set_flag": "entered_mansion_garden"
+        }
+      ]
+    },
+    {
+      "id": "mansion_corridor",
+      "title": "将軍の屋敷・凍てつく回廊",
+      "description": "廊下の壁も床も、薄い氷に覆われている。突き当たりの扉の前に、氷でできた鎧の番兵が二体、無言で立っていた。",
+      "scene_id": "castle_return",
+      "actions": [
+        {
+          "id": "fight_ice_sentinels",
+          "text": "戦う",
+          "preview": "戦う",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "戦う"
+          ],
+          "effects": [
+            {
+              "start_combat": true
+            }
+          ]
+        },
+        {
+          "id": "evade_ice_sentinels",
+          "text": "番兵の巡回の隙を突く",
+          "preview": "番兵の巡回の隙を突く",
+          "risk": "1d20判定（DC15）",
+          "intent_keywords": [
+            "番兵の巡回の隙を突く"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 15
+          },
+          "success_effects": [
+            {
+              "current_location": "mansion_study"
+            }
+          ],
+          "failure_effects": [
+            {
+              "start_combat": true
+            },
+            {
+              "enemy_first": true
+            }
+          ]
+        },
+        {
+          "id": "pass_cleared_sentinels",
+          "text": "先へ進む",
+          "preview": "先へ進む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "先へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "mansion_study"
+            }
+          ],
+          "visible_after": "combat_defeated:mansion_corridor:ice_sentinel"
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [
+        "ice_sentinel",
+        "ice_sentinel"
+      ],
+      "connected_location_ids": [],
+      "background_image": "/static/images/bg_mansion_corridor.png",
+      "combat": {
+        "auto_start": false,
+        "enemy_ids": [
+          "ice_sentinel",
+          "ice_sentinel"
+        ],
+        "flee_allowed": false,
+        "encounter_class": "elite",
+        "enemy_first_requirements": {
+          "flag": "mansion_alert"
+        },
+        "victory_effects": {
+          "current_location": "mansion_study"
+        },
+        "defeat_effects": {
+          "hp": 1,
+          "current_location": "festival_town"
+        },
+        "result_texts": {
+          "defeat": "氷の拳に打ち据えられ、気がつくと城下町の路地裏に倒れていた。"
+        }
+      },
+      "entry_text": "廊下の壁も床も、薄い氷に覆われている。突き当たりの扉の前に、氷でできた鎧の番兵が二体、無言で立っていた。",
+      "narrate_entry": true,
+      "entry_effects": [
+        {
+          "set_flag": "entered_mansion_corridor"
+        }
+      ]
+    },
+    {
+      "id": "mansion_study",
+      "title": "将軍の屋敷・書斎",
+      "description": "書斎には古い書物が積み上げられ、机の上に一冊の日誌が開かれたまま置かれていた。部屋の奥には、白い鱗で飾られた小箱がある。",
+      "scene_id": "castle_return",
+      "actions": [
+        {
+          "id": "take_draco_journal",
+          "text": "日誌を手に取る",
+          "preview": "日誌を手に取る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "日誌を手に取る"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "id": "draco_journal",
+                "name": "白竜の日誌"
+              }
+            }
+          ],
+          "once": "draco_journal",
+          "result_text": "日誌には、十年前に紅竜の傷へ霜を打ち込んだこと、Xanxusと交わした密約、そして王国を手に入れる計画が、几帳面な文字で記されていた。"
+        },
+        {
+          "id": "open_scale_box",
+          "text": "小箱を開ける",
+          "preview": "小箱を開ける",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "小箱を開ける"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "id": "frost_seal_charm",
+                "name": "霜封じの護符"
+              }
+            }
+          ],
+          "once": "opened_scale_box",
+          "result_text": "小箱の中には、白い鱗を編み込んだ護符が収められていた。添えられた札には「我が冷気を鎮めるもの」とある。"
+        },
+        {
+          "id": "leave_mansion_study",
+          "text": "屋敷を出る",
+          "preview": "屋敷を出る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "屋敷を出る"
+          ],
+          "effects": [
+            {
+              "current_location": "festival_town"
+            }
+          ]
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "background_image": "/static/images/bg_mansion_study.png",
+      "entry_text": "書斎には古い書物が積み上げられ、机の上に一冊の日誌が開かれたまま置かれていた。部屋の奥には、白い鱗で飾られた小箱がある。",
+      "narrate_entry": true,
+      "entry_effects": [
+        {
+          "set_flag": "entered_mansion_study"
+        }
+      ]
+    },
+    {
+      "id": "king_private_room",
+      "title": "王の私室",
+      "description": "豪奢な寝室の窓辺で、国王エドワードが一人、月を見上げていた。あなたに気づくと、王は静かに人払いをした。",
+      "scene_id": "castle_return",
+      "actions": [
+        {
+          "id": "confide_in_king",
+          "text": "将軍への疑いを打ち明ける",
+          "preview": "将軍への疑いを打ち明ける",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "将軍への疑いを打ち明ける"
+          ],
+          "effects": [],
+          "once": "king_trust",
+          "result_text": "王は長い沈黙の後、重い口を開いた。「……十年前、竜の谷へ兵を送れと進言したのは、ドラコだった。わしはそれを信じ、紅竜を怒らせてしまった。もしそなたの言う通りなら……その時は、わしが近衛兵に命じよう。そなたを守れ、と」"
+        },
+        {
+          "id": "ask_king_rest",
+          "text": "城に泊めていただけないか頼む",
+          "preview": "城に泊めていただけないか頼む",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城に泊めていただけないか頼む"
+          ],
+          "effects": [
+            {
+              "restore_full": true
+            }
+          ],
+          "requirements": {
+            "flag": "king_trust"
+          },
+          "result_text": "王の計らいで、城の客室に通された。衛兵が扉の前に立ち、あなたは久しぶりに安心して眠った。"
+        },
+        {
+          "id": "leave_king_room",
+          "text": "城下町へ戻る",
+          "preview": "城下町へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城下町へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "festival_town"
+            }
+          ]
+        }
+      ],
+      "npc_ids": [
+        "king"
+      ],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "background_image": "/static/images/bg_king_room.png",
+      "entry_text": "豪奢な寝室の窓辺で、国王エドワードが一人、月を見上げていた。あなたに気づくと、王は静かに人払いをした。",
+      "narrate_entry": true,
+      "entry_effects": [
+        {
+          "set_flag": "entered_king_private_room"
+        }
+      ]
+    },
+    {
+      "id": "inn_night_ambush",
+      "title": "宿屋・深夜の襲撃",
+      "description": "真夜中、部屋の窓が音もなく凍りつき、砕け散った。白い装束の刺客が二人、氷の刃を手に滑り込んでくる。",
+      "scene_id": "castle_return",
+      "actions": [],
+      "npc_ids": [],
+      "enemy_ids": [
+        "ice_assassin",
+        "ice_assassin"
+      ],
+      "connected_location_ids": [],
+      "background_image": "/static/images/bg_inn_night.png",
+      "combat": {
+        "auto_start": true,
+        "enemy_ids": [
+          "ice_assassin",
+          "ice_assassin"
+        ],
+        "encounter_class": "elite",
+        "flee_allowed": false,
+        "enemy_first_requirements": {
+          "not_flag": "recruited_robin"
+        },
+        "player_first_requirements": {
+          "flag": "recruited_robin"
+        },
+        "start_events": [
+          {
+            "requirements": {
+              "flag": "recruited_robin"
+            },
+            "text": "「起きな！ 窓の外に誰かいる！」ロビンの声で飛び起きると、すでに刺客が窓に手をかけていた。"
+          }
+        ],
+        "victory_effects": {
+          "inventory_add": [
+            {
+              "id": "assassin_crest",
+              "name": "刺客の徽章",
+              "quantity": 1
+            }
+          ],
+          "flags_set": [
+            "assassins_defeated"
+          ],
+          "restore_full": true,
+          "current_location": "inn"
+        },
+        "defeat_effects": {
+          "hp": 1,
+          "inventory_remove": [
+            {
+              "name": "白い竜鱗",
+              "quantity": 99
+            }
+          ],
+          "flags_set": [
+            "scale_stolen"
+          ],
+          "current_location": "inn"
+        },
+        "result_texts": {
+          "victory": "倒れた刺客の懐から、白い竜を象った徽章がこぼれ落ちた。将軍家の紋章だ。",
+          "defeat": "気がつくと朝だった。部屋は荒らされ、白い鱗だけが消えていた。"
+        }
+      },
+      "entry_text": "真夜中、部屋の窓が音もなく凍りつき、砕け散った。白い装束の刺客が二人、氷の刃を手に滑り込んでくる。",
+      "narrate_entry": true,
+      "entry_effects": [
+        {
+          "set_flag": "entered_inn_night_ambush"
+        }
+      ]
     }
   ],
   "fallback_choices": [
@@ -9461,6 +10394,45 @@
       "combat": {
         "kind": "heal",
         "max_hp_ratio": 0.5,
+        "consumable": true
+      }
+    },
+    {
+      "id": "draco_journal",
+      "name": "白竜の日誌",
+      "description": "将軍ドラコの日誌。紅竜への呪いとXanxusとの密約が記されている。",
+      "effect": "証拠品",
+      "category": "key",
+      "key_item": true
+    },
+    {
+      "id": "frost_seal_charm",
+      "name": "霜封じの護符",
+      "description": "白い鱗を編み込んだ護符。白竜の冷気を鎮めるという。",
+      "effect": "凍てつく吐息のダメージを軽減",
+      "category": "key",
+      "key_item": true
+    },
+    {
+      "id": "assassin_crest",
+      "name": "刺客の徽章",
+      "description": "白い竜を象った徽章。将軍家の紋章だ。",
+      "effect": "証拠品",
+      "category": "key",
+      "key_item": true
+    },
+    {
+      "id": "fire_dragon_oil",
+      "name": "火竜の油",
+      "description": "竜の谷の火山で採れる油。白い竜に効くという。",
+      "effect": "火属性の大ダメージ（消耗品）",
+      "category": "consumable",
+      "key_item": false,
+      "combat": {
+        "kind": "damage",
+        "damage": "2d6",
+        "accuracy": 95,
+        "element": "fire",
         "consumable": true
       }
     }
@@ -10240,25 +11212,7 @@
           "ai_weight": 1
         }
       ],
-      "image": "/static/images/enemy_draco_dragon.png",
-      "phase_allies": [
-        {
-          "id": "ignis",
-          "name": "イグニス",
-          "requirements": {
-            "flag": "ignis_ally"
-          },
-          "entry_text": "その時、王の間の天井が赤く燃え上がった。『待たせたな、人の子よ』――紅竜イグニスが、白竜の前に舞い降りた。",
-          "round_start_effects": [
-            {
-              "kind": "damage_enemy",
-              "damage": "9d10+18",
-              "element": "fire"
-            }
-          ],
-          "image": "/static/images/npc_ignis_calm.png"
-        }
-      ]
+      "image": "/static/images/enemy_draco_dragon.png"
     },
     {
       "id": "heat_lizard",
@@ -10743,6 +11697,125 @@
         "flags": []
       },
       "image": "/static/images/enemy_xanxus_phantom.png"
+    },
+    {
+      "id": "ice_sentinel",
+      "name": "氷の番兵",
+      "description": "将軍の冷気から作られた、氷の鎧の番兵。",
+      "hp": 32,
+      "max_hp": 32,
+      "element": "ice",
+      "attributes": {
+        "str": 12,
+        "dex": 6,
+        "int": 10,
+        "end": 12
+      },
+      "combat": {
+        "defense": 1,
+        "evade": 0,
+        "basic_attack": {
+          "name": "氷槌",
+          "damage": "1d40",
+          "accuracy": 20,
+          "element": "physical",
+          "damage_multiplier": 1
+        }
+      },
+      "resistances": {
+        "physical": 0.6,
+        "fire": 1.45
+      },
+      "skills": [
+        {
+          "id": "ice_hammer",
+          "name": "氷槌",
+          "kind": "attack",
+          "damage": "1d40",
+          "accuracy": 20,
+          "element": "physical",
+          "ai_weight": 3,
+          "damage_multiplier": 1
+        },
+        {
+          "id": "frozen_stance",
+          "name": "凍結の構え",
+          "kind": "defend",
+          "guard_multiplier": 0.6,
+          "duration": 2,
+          "ai_weight": 1
+        }
+      ],
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_ice_sentinel.png"
+    },
+    {
+      "id": "ice_assassin",
+      "name": "氷の刺客",
+      "description": "将軍に仕える白装束の刺客。氷の刃を操る。",
+      "hp": 30,
+      "max_hp": 30,
+      "element": "ice",
+      "attributes": {
+        "str": 12,
+        "dex": 16,
+        "int": 10,
+        "end": 12
+      },
+      "combat": {
+        "defense": 1,
+        "evade": 15,
+        "basic_attack": {
+          "name": "氷刃の連撃",
+          "damage": "1d12",
+          "accuracy": 39,
+          "element": "ice",
+          "damage_multiplier": 1
+        }
+      },
+      "resistances": {
+        "fire": 1.5,
+        "physical": 0.55
+      },
+      "skills": [
+        {
+          "id": "ice_blade_combo",
+          "name": "氷刃の連撃",
+          "kind": "attack",
+          "damage": "1d12",
+          "accuracy": 39,
+          "element": "ice",
+          "hits": 2,
+          "ai_weight": 3,
+          "damage_multiplier": 1
+        },
+        {
+          "id": "frozen_poison",
+          "name": "凍てつく毒",
+          "kind": "attack",
+          "damage": "1d12",
+          "accuracy": 39,
+          "element": "ice",
+          "ai_weight": 1,
+          "on_hit_status": {
+            "id": "frozen_poison",
+            "name": "凍てつく毒",
+            "damage": "2",
+            "remaining_rounds": 2
+          },
+          "damage_multiplier": 1
+        }
+      ],
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_ice_assassin.png"
     }
   ],
   "combat_choices": [
@@ -11855,8 +12928,14 @@
       "description": "炎に包まれた村に、不自然な氷が残されていた。誰の仕業だろうか。",
       "start_flag": [
         "frost_trace_seen",
+        "heard_human_caused_dragon_return",
         "heard_ignis_last_words",
-        "noticed_general_frost"
+        "noticed_general_frost",
+        "heard_treaty_lore",
+        "heard_ignis_testimony",
+        "heard_gald_rumor",
+        "heard_xanxus_betrayal",
+        "has_assassin_crest"
       ],
       "stages": [
         {
@@ -11876,9 +12955,34 @@
         "heard_treaty_lore",
         "heard_ignis_testimony",
         "heard_gald_rumor",
-        "heard_xanxus_betrayal"
+        "heard_xanxus_betrayal",
+        "has_assassin_crest"
       ],
-      "clue_item": "white_dragon_scale"
+      "clue_items": [
+        "white_dragon_scale",
+        "draco_journal"
+      ],
+      "start_items": [
+        "white_dragon_scale",
+        "draco_journal"
+      ]
+    },
+    {
+      "id": "side_general_mansion",
+      "title": "将軍の屋敷",
+      "description": "屋敷を調べる",
+      "kind": "side",
+      "start_flag": "mansion_unlocked",
+      "complete_flags": [
+        "draco_journal"
+      ],
+      "stages": [
+        {
+          "text": "屋敷を調べる",
+          "done_flag": "draco_journal"
+        }
+      ],
+      "fail_flags": []
     }
   ],
   "shops": [
@@ -12042,6 +13146,28 @@
           "item_id": "smoke_bomb",
           "price": 12,
           "stock": null
+        }
+      ]
+    },
+    {
+      "id": "gald_capital_shop",
+      "location_id": "festival_town",
+      "keeper_npc": "gald",
+      "title": "行商人ガルド",
+      "requirements": {
+        "flag": "saved_gald"
+      },
+      "greeting": "とっておきだ。白い竜には火が一番効くって話だぜ",
+      "buy_line": "毎度あり！",
+      "sell_line": "いい品だな、引き取ろう",
+      "poor_line": "おっと、それじゃ足りねえな",
+      "buys": true,
+      "on_purchase_flag": "visited_gald_shop",
+      "items": [
+        {
+          "item_id": "fire_dragon_oil",
+          "price": 40,
+          "stock": 2
         }
       ]
     }
@@ -12724,6 +13850,268 @@
           "to": "D4",
           "action_id": "enter_dragon_nest"
         }
+      ]
+    },
+    {
+      "id": "royal_return",
+      "title": "王城への帰還",
+      "nodes": [
+        {
+          "id": "R1",
+          "label": "凱旋の城門",
+          "kind": "start",
+          "x": 10,
+          "y": 50,
+          "location_ids": [
+            "royal_gate"
+          ],
+          "description": "城門をくぐると、花びらと歓声があなたを迎えた。邪竜の脅威が去ったことは、すでに城下町じゅうに知れ渡っている。人混みの向こうで、将軍ドラコが穏やかに手を振っていた。"
+        },
+        {
+          "id": "R2",
+          "label": "凱旋の城下町",
+          "kind": "event",
+          "x": 35,
+          "y": 50,
+          "location_ids": [
+            "festival_town"
+          ],
+          "description": "城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。"
+        },
+        {
+          "id": "R3",
+          "label": "将軍の屋敷",
+          "kind": "branch",
+          "x": 60,
+          "y": 20,
+          "location_ids": [
+            "mansion_garden"
+          ],
+          "description": "夜更けの将軍の屋敷は、祝祭の喧騒が嘘のように静まり返っている。庭の噴水だけが、なぜか凍りついていた。",
+          "submap": "general_mansion"
+        },
+        {
+          "id": "R4",
+          "label": "王の私室",
+          "kind": "rest",
+          "x": 60,
+          "y": 50,
+          "location_ids": [
+            "king_private_room"
+          ],
+          "description": "豪奢な寝室の窓辺で、国王エドワードが一人、月を見上げていた。あなたに気づくと、王は静かに人払いをした。"
+        },
+        {
+          "id": "R5",
+          "label": "凱旋の間",
+          "kind": "boss",
+          "x": 85,
+          "y": 50,
+          "location_ids": [
+            "castle_report",
+            "draco_battle"
+          ],
+          "description": "凱旋を祝う鐘が鳴り、王の間には人々が集まっている。国王エドワードが立ち上がって迎え、その傍らで将軍ドラコが静かに拍手を送っている。"
+        },
+        {
+          "id": "inn",
+          "label": "宿屋",
+          "kind": "rest",
+          "x": 20,
+          "y": 85,
+          "location_ids": [
+            "inn",
+            "inn_night_ambush"
+          ],
+          "description": "冒険者や旅人が休息を取るための宿屋。暖かい食事と清潔な寝台がある。"
+        },
+        {
+          "id": "item_shop",
+          "label": "道具屋",
+          "kind": "event",
+          "x": 40,
+          "y": 85,
+          "location_ids": [
+            "item_shop"
+          ],
+          "description": "十歳ほどの金髪の少女サラと、小さな火コウモリ竜がいる。"
+        },
+        {
+          "id": "magic_shop",
+          "label": "魔法店",
+          "kind": "event",
+          "x": 60,
+          "y": 85,
+          "location_ids": [
+            "magic_shop"
+          ],
+          "description": "青いローブの銀髪の魔法使いが、杖を背に店番をしている。"
+        },
+        {
+          "id": "forge",
+          "label": "鍛冶屋",
+          "kind": "event",
+          "x": 80,
+          "y": 85,
+          "location_ids": [
+            "forge"
+          ],
+          "description": "城内の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。"
+        }
+      ],
+      "edges": [
+        {
+          "from": "R1",
+          "to": "R2",
+          "action_id": "enter_festival_town"
+        },
+        {
+          "from": "R2",
+          "to": "R3",
+          "action_id": "go_general_mansion"
+        },
+        {
+          "from": "R2",
+          "to": "R4",
+          "action_id": "request_king_audience"
+        },
+        {
+          "from": "R2",
+          "to": "R5",
+          "action_id": "go_report_hall"
+        },
+        {
+          "from": "R3",
+          "to": "R2",
+          "action_id": "leave_mansion"
+        },
+        {
+          "from": "R4",
+          "to": "R2",
+          "action_id": "leave_king_room"
+        },
+        {
+          "from": "R2",
+          "to": "inn",
+          "action_id": "go_inn"
+        },
+        {
+          "from": "inn",
+          "to": "R2",
+          "action_id": "return_castle_from_inn"
+        },
+        {
+          "from": "R2",
+          "to": "item_shop",
+          "action_id": "go_item_shop"
+        },
+        {
+          "from": "item_shop",
+          "to": "R2",
+          "action_id": "return_castle_from_item_shop"
+        },
+        {
+          "from": "R2",
+          "to": "magic_shop",
+          "action_id": "go_magic_shop"
+        },
+        {
+          "from": "magic_shop",
+          "to": "R2",
+          "action_id": "return_castle_from_magic_shop"
+        },
+        {
+          "from": "R2",
+          "to": "forge",
+          "action_id": "go_forge"
+        },
+        {
+          "from": "forge",
+          "to": "R2",
+          "action_id": "return_castle_from_forge"
+        }
+      ],
+      "requirements": {
+        "flag": "returned_to_capital"
+      }
+    },
+    {
+      "id": "general_mansion",
+      "title": "将軍の屋敷",
+      "nodes": [
+        {
+          "id": "R3a",
+          "label": "夜の庭",
+          "kind": "start",
+          "x": 15,
+          "y": 50,
+          "location_ids": [
+            "mansion_garden"
+          ],
+          "description": "夜更けの将軍の屋敷は、祝祭の喧騒が嘘のように静まり返っている。庭の噴水だけが、なぜか凍りついていた。"
+        },
+        {
+          "id": "R3b",
+          "label": "凍てつく回廊",
+          "kind": "battle",
+          "x": 50,
+          "y": 50,
+          "location_ids": [
+            "mansion_corridor"
+          ],
+          "description": "廊下の壁も床も、薄い氷に覆われている。突き当たりの扉の前に、氷でできた鎧の番兵が二体、無言で立っていた。"
+        },
+        {
+          "id": "R3c",
+          "label": "将軍の書斎",
+          "kind": "event",
+          "x": 85,
+          "y": 50,
+          "location_ids": [
+            "mansion_study"
+          ],
+          "description": "書斎には古い書物が積み上げられ、机の上に一冊の日誌が開かれたまま置かれていた。部屋の奥には、白い鱗で飾られた小箱がある。"
+        }
+      ],
+      "edges": [
+        {
+          "from": "R3a",
+          "to": "R3b",
+          "action_id": "sneak_into_mansion"
+        },
+        {
+          "from": "R3b",
+          "to": "R3c",
+          "action_id": "evade_ice_sentinels"
+        }
+      ],
+      "parent": "royal_return"
+    }
+  ],
+  "item_flags": {
+    "assassin_crest": "has_assassin_crest",
+    "draco_journal": {
+      "flag": "draco_journal",
+      "persistent": true
+    }
+  },
+  "chapter_locks": [
+    {
+      "flag": "returned_to_capital",
+      "location_ids": [
+        "castle_report",
+        "draco_battle",
+        "royal_gate",
+        "festival_town",
+        "mansion_garden",
+        "mansion_corridor",
+        "mansion_study",
+        "king_private_room",
+        "inn_night_ambush",
+        "inn",
+        "item_shop",
+        "magic_shop",
+        "forge"
       ]
     }
   ]

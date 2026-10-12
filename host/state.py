@@ -271,6 +271,12 @@ def load_session(session_id: str) -> dict[str, Any]:
     ensure_world_state(session)
     session.setdefault("event_log", [])
     changed = _refresh_session_scenario_pack(session)
+    if session.get('scenario_pack', {}).get('meta', {}).get('chapter5_v5') and current_scene_id(session) == 'castle_return':
+        if not session.setdefault('flags', {}).get('returned_to_capital'):
+            session['flags']['returned_to_capital'] = True
+            changed = True
+    _sync_scenario_item_flags(session)
+    _unlock_visible_actions(session)
     if changed:
         session["choices"] = fallback_choices_for_session(session)
     changed = _recover_legacy_defeat_dead_end(session) or changed
@@ -1777,7 +1783,29 @@ def apply_state_delta(
 ) -> None:
     before = public_quests(session)
     _apply_state_delta(session, delta, allow_world_transition=allow_world_transition)
+    _sync_scenario_item_flags(session)
+    _unlock_visible_actions(session)
     record_quest_changes(session, before)
+
+
+def _sync_scenario_item_flags(session: dict[str, Any]) -> None:
+    inventory = session.get('character', {}).get('inventory', [])
+    for item_id, spec in session.get('scenario_pack', {}).get('item_flags', {}).items():
+        flag = spec['flag'] if isinstance(spec, dict) else spec
+        owned = any(
+            isinstance(item, dict) and item.get('id') == item_id and item.get('quantity', 1) > 0
+            for item in inventory)
+        if owned:
+            session.setdefault('flags', {})[flag] = True
+        elif not isinstance(spec, dict) or not spec.get('persistent'):
+            session.setdefault('flags', {}).pop(flag, None)
+
+
+def _unlock_visible_actions(session: dict[str, Any]) -> None:
+    for action in _iter_actions(current_actions_for_session(session)):
+        flag = action.get('unlock_flag')
+        if flag and action_requirement_status(action, session)[0]:
+            session.setdefault('flags', {})[flag] = True
 
 
 def _apply_state_delta(
@@ -2009,6 +2037,10 @@ def _apply_state_delta(
                         {"before": before_position, "after": after_position},
                     )
                     location = _current_location_record(session) or {}
+                    for event in location.get('entry_events', []):
+                        if not session.get('flags', {}).get(event['once']) and _session_requirement_passes(event.get('requirements'), session):
+                            session.setdefault('flags', {})[event['once']] = True
+                            record_state_event(session, 'location_hint', event['text'], {'location_id': location['id']})
                     entry_effects = location.get("entry_effects", [])
                     if entry_effects:
                         entry_delta = _effects_to_state_delta(entry_effects, session)

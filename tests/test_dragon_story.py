@@ -160,6 +160,9 @@ class DragonStoryTests(unittest.TestCase):
                     "enemy_fire_wisp", "enemy_heat_lizard", "enemy_prism_tree", "enemy_ruby_golem",
                     "enemy_sapphire_moth", "npc_mina", "npc_gald", "enemy_ash_wraith", "enemy_lava_drake",
                     "enemy_xanxus_phantom", "npc_riku", "bg_lava_bridge", "bg_dragon_nest", "bg_burning_house", "bg_hot_spring")}
+                future_assets.update(f'/static/images/{name}.png' for name in (
+                    'enemy_ice_sentinel', 'enemy_ice_assassin', 'bg_festival_town', 'bg_royal_gate',
+                    'bg_mansion_garden', 'bg_mansion_corridor', 'bg_mansion_study', 'bg_king_room', 'bg_inn_night'))
                 self.assertFalse(set(missing) - future_assets)
 
     def test_public_session_uses_enemy_portrait_during_combat(self):
