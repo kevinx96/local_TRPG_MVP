@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "task": "020",
+  "task": "024",
   "generator": "image_gen",
   "generation_date": "2026-10-12",
   "approved": false,
@@ -930,6 +930,671 @@
       "selection_status": "provisional",
       "selection_reason": "苔藓呈绿色有机团簇，温泉池更紧凑，蒸汽和柔和光照清楚，岩石笔触延续熔岩洞窟。",
       "style_review": "相较熔岩参考大幅降低红色饱和度；池缘暖光与小段进水沿用参考水体表现，池缘局部仍较明亮。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_sentinel",
+      "file": "assets/candidates/024/enemy_ice_sentinel/candidate_01.png",
+      "purpose": "氷の番兵",
+      "prompt": "Use case: stylized-concept. Create 氷の番兵, a heavy full-body guard whose entire plate armor and war hammer are made of ice. Empty helmet contains only icy blue cold light, no human face. Massive weighty stance. Image 1 and image 2 are style and ice-family references only: match the white dragon and frost wolf snow-white palette, crystalline ice-blue facets, detailed painted fantasy brushwork and strong directional rim highlights. Not a dragon or wolf, no fur. Square 1254x1254 sprite, full body and entire hammer inside frame with safe margins. Actual transparent background, alpha zero outside silhouette, clean edges without white/gray matte or diffuse background glow, no ground plane. No text, letters, logos, watermark. Candidate 01: braced broad stance, heavy ice hammer held down diagonally beside the body.",
+      "reference_images": [
+        "client/images/enemy_draco_dragon.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_sentinel",
+      "file": "assets/candidates/024/enemy_ice_sentinel/candidate_02.png",
+      "purpose": "氷の番兵",
+      "prompt": "Use case: stylized-concept. Create 氷の番兵, a heavy full-body guard whose entire plate armor and war hammer are made of ice. Empty helmet contains only icy blue cold light, no human face. Massive weighty stance. Image 1 and image 2 are style and ice-family references only: match the white dragon and frost wolf snow-white palette, crystalline ice-blue facets, detailed painted fantasy brushwork and strong directional rim highlights. Not a dragon or wolf, no fur. Square 1254x1254 sprite, full body and entire hammer inside frame with safe margins. Actual transparent background, alpha zero outside silhouette, clean edges without white/gray matte or diffuse background glow, no ground plane. No text, letters, logos, watermark. Candidate 02: slow heavy forward step, both hands gripping the long ice hammer across the torso; distinct readable helmet and massive shoulder armor.",
+      "reference_images": [
+        "client/images/enemy_draco_dragon.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_sentinel",
+      "file": "assets/candidates/024/enemy_ice_sentinel/candidate_03.png",
+      "purpose": "氷の番兵",
+      "prompt": "Use case: stylized-concept. Create 氷の番兵, a heavy full-body guard whose entire plate armor and war hammer are made of ice. Empty helmet contains only icy blue cold light, no human face. Massive weighty stance. Image 1 and image 2 are style and ice-family references only: match the white dragon and frost wolf snow-white palette, crystalline ice-blue facets, detailed painted fantasy brushwork and strong directional rim highlights. Not a dragon or wolf, no fur. Square 1254x1254 sprite, full body and entire hammer inside frame with safe margins. Actual transparent background, alpha zero outside silhouette, clean edges without white/gray matte or diffuse background glow, no ground plane. No text, letters, logos, watermark. Candidate 03: heavy braced stance holding an ice war hammer diagonally downward. Critical framing: make the entire sentinel occupy only the central 85 percent of the square canvas, with clearly visible empty transparent margins on ALL four sides. Every helmet spike, both boots, hammer shaft and hammer head must be fully inside canvas, never touching an edge. Slightly reduce cyan saturation relative to the references.",
+      "reference_images": [
+        "client/images/enemy_draco_dragon.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_assassin",
+      "file": "assets/candidates/024/enemy_ice_assassin/candidate_01.png",
+      "purpose": "氷の刺客",
+      "prompt": "Use case: stylized-concept. Create 氷の刺客, a masked assassin in white clothing, agile low crouching combat pose, exactly one ice blade held in each hand, a clearly visible white dragon emblem on the chest. Reference image is for detailed anime semi-realistic painted style, directional upper-left highlights, clothing texture and pale cyan-white ice blade material only; do not copy the general's identity, red cape or heavy armor. Full body head to both boots and both complete blades inside frame, 1024x1536 portrait with generous safe margins. White clothing with icy blue shadows. Genuine transparent alpha background, clean antialiased edges, no white/gray fringe, no background gradient, no glow behind body, no ground plane, no text, letters, logo or watermark. Candidate 01: compact crouch, torso turned three-quarters toward viewer so the chest emblem is readable, blades separated at either side.",
+      "reference_images": [
+        "client/images/enemy_draco_human.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1024,
+        1536
+      ],
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_assassin",
+      "file": "assets/candidates/024/enemy_ice_assassin/candidate_02.png",
+      "purpose": "氷の刺客",
+      "prompt": "Use case: stylized-concept. Create 氷の刺客, a masked assassin in white clothing, agile low crouching combat pose, exactly one ice blade held in each hand, a clearly visible white dragon emblem on the chest. Reference image is for detailed anime semi-realistic painted style, directional upper-left highlights, clothing texture and pale cyan-white ice blade material only; do not copy the general's identity, red cape or heavy armor. Full body head to both boots and both complete blades inside frame, 1024x1536 portrait with generous safe margins. White clothing with icy blue shadows. Genuine transparent alpha background, clean antialiased edges, no white/gray fringe, no background gradient, no glow behind body, no ground plane, no text, letters, logo or watermark. Candidate 02: low forward-ready crouch with one knee deeply bent and the other leg extended, two ice knives held at distinct angles, chest white-dragon embroidery visible.",
+      "reference_images": [
+        "client/images/enemy_draco_human.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1024,
+        1536
+      ],
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_royal_gate",
+      "file": "assets/candidates/024/bg_royal_gate/candidate_01.png",
+      "purpose": "凱旋の城門",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create the royal city gate welcoming a triumphant return, drifting flower petals, crowds along the sides waving their hands in welcome, bright sunshine. Use the reference throne room's pale stone, gilded Gothic detailing, blue-and-gold and red banners to establish the same kingdom's exterior. Open central approach for game sprites; no named hero or prominent foreground protagonist. Candidate 01: Frontal approach with the grand arch in the middle distance and sun from upper left.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_royal_gate",
+      "file": "assets/candidates/024/bg_royal_gate/candidate_02.png",
+      "purpose": "凱旋の城門",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create the royal city gate welcoming a triumphant return, drifting flower petals, crowds along the sides waving their hands in welcome, bright sunshine. Use the reference throne room's pale stone, gilded Gothic detailing, blue-and-gold and red banners to establish the same kingdom's exterior. Open central approach for game sprites; no named hero or prominent foreground protagonist. Candidate 02: Slightly oblique approach, welcoming townsfolk flank the path, bright gate towers frame blue sky.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_festival_town",
+      "file": "assets/candidates/024/bg_festival_town/candidate_01.png",
+      "purpose": "凱旋の城下町",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a festive castle town street, colorful pennants, flower garlands, market stalls and crowds. Image 1 establishes the kingdom's architecture and banner colors, image 2 the wooden market furniture and painted everyday materials. Open central cobbled lane and lively side stalls; no named foreground protagonist. Do not reproduce the shop reference's UI parchment panel. Candidate 01: Street receding gently toward the castle, overhead pennants and flower garlands.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_item_shop.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_festival_town",
+      "file": "assets/candidates/024/bg_festival_town/candidate_02.png",
+      "purpose": "凱旋の城下町",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a festive castle town street, colorful pennants, flower garlands, market stalls and crowds. Image 1 establishes the kingdom's architecture and banner colors, image 2 the wooden market furniture and painted everyday materials. Open central cobbled lane and lively side stalls; no named foreground protagonist. Do not reproduce the shop reference's UI parchment panel. Candidate 02: Slight turn in the street, garlands above, stalls on both sides with ordinary welcoming townspeople.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_item_shop.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_garden",
+      "file": "assets/candidates/024/bg_mansion_garden/candidate_01.png",
+      "purpose": "将軍の屋敷・夜の庭",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a noble mansion garden under moonlight. The central fountain is completely frozen solid, including its jets and basins; thin frost covers the ground. Quiet empty garden, mansion behind it. Image 1 guides ornate pale-stone architecture; image 2 guides finely painted cool nocturnal vegetation and depth. No people, no liquid running water. Candidate 01: View along the garden path toward the central frozen fountain and mansion.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_elf_spring.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_garden",
+      "file": "assets/candidates/024/bg_mansion_garden/candidate_02.png",
+      "purpose": "将軍の屋敷・夜の庭",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a noble mansion garden under moonlight. The central fountain is completely frozen solid, including its jets and basins; thin frost covers the ground. Quiet empty garden, mansion behind it. Image 1 guides ornate pale-stone architecture; image 2 guides finely painted cool nocturnal vegetation and depth. No people, no liquid running water. Candidate 02: Slightly oblique view of the frozen central fountain, frosted paths frame the silent mansion. The ice should look like frozen fountain water: solid frozen jets and sheets, hanging icicles and sealed basins, not ornamental crystal clusters. Keep frost thin and mansion scale restrained.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_elf_spring.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_corridor",
+      "file": "assets/candidates/024/bg_mansion_corridor/candidate_01.png",
+      "purpose": "将軍の屋敷・凍てつく回廊",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a luxurious noble mansion corridor whose walls and floor are coated with THIN ice, with ONE closed door at the far end. Use the reference's carved pale-stone arches, gilded architectural details and blue accents but at domestic mansion scale, no throne. Cold subdued light reflecting along thin icy surfaces, preserve visible wall carvings and floor tiles beneath ice, no giant ice cave. Empty of people. Candidate 01: Straight centered perspective toward the single end door.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_corridor",
+      "file": "assets/candidates/024/bg_mansion_corridor/candidate_02.png",
+      "purpose": "将軍の屋敷・凍てつく回廊",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a luxurious noble mansion corridor whose walls and floor are coated with THIN ice, with ONE closed door at the far end. Use the reference's carved pale-stone arches, gilded architectural details and blue accents but at domestic mansion scale, no throne. Cold subdued light reflecting along thin icy surfaces, preserve visible wall carvings and floor tiles beneath ice, no giant ice cave. Empty of people. Candidate 02: Slightly offset perspective, fine ice across floor and wall panels, end door clearly readable.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_study",
+      "file": "assets/candidates/024/bg_mansion_study/candidate_01.png",
+      "purpose": "将軍の屋敷・書斎",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a noble mansion study filled with ancient books. On the desk lies ONE open journal with unlettered pages; in a corner is a SMALL box decorated with white scales, clearly identifiable. Moonlight enters through the window. Image 1 controls refined architectural details; image 2 painted timber, bookshelves, and warm material texture under cool light. No people, no legible marks or writing in journal or book spines. Candidate 01: Desk in the middle ground with open journal, small white-scale decorated box in a visible room corner.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_inn.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_study",
+      "file": "assets/candidates/024/bg_mansion_study/candidate_02.png",
+      "purpose": "将軍の屋敷・書斎",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a noble mansion study filled with ancient books. On the desk lies ONE open journal with unlettered pages; in a corner is a SMALL box decorated with white scales, clearly identifiable. Moonlight enters through the window. Image 1 controls refined architectural details; image 2 painted timber, bookshelves, and warm material texture under cool light. No people, no legible marks or writing in journal or book spines. Candidate 02: Angled view across the desk toward tall bookshelves and moonlit window, small white-scaled box at the corner beside the shelves. Moonlight should dominate; keep only a few dim warm candle accents, much less warm lighting than the inn reference. Ancient books should also form small readable piles. The small box's overlapping white scales should be recognizable.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_inn.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_king_room",
+      "file": "assets/candidates/024/bg_king_room/candidate_01.png",
+      "purpose": "王の私室",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create the king's luxurious but silent private bedchamber in moonlight, composed near the window. Use the reference's pale carved stone, gilded details, blue-and-gold textiles and delicate fantasy painting style. An ornate bed, quiet floor space near the window, moonlight falling through the window; no king or other people, no throne-room duplication. Candidate 01: View by a tall arched window, moonlight crosses the empty foreground with bed set farther inside the chamber.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_king_room",
+      "file": "assets/candidates/024/bg_king_room/candidate_02.png",
+      "purpose": "王の私室",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create the king's luxurious but silent private bedchamber in moonlight, composed near the window. Use the reference's pale carved stone, gilded details, blue-and-gold textiles and delicate fantasy painting style. An ornate bed, quiet floor space near the window, moonlight falling through the window; no king or other people, no throne-room duplication. Candidate 02: A slightly diagonal near-window view, soft cool moonlight on rich bed drapery and gilded pale-stone details. Emphasize the moonlit quiet: restrained dim candle accents only, no bright daytime lighting.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_inn_night",
+      "file": "assets/candidates/024/bg_inn_night/candidate_01.png",
+      "purpose": "宿屋・深夜",
+      "prompt": "Use case: lighting-weather. EDIT TARGET: the supplied bg_inn.png. Create 宿屋・深夜, the SAME inn interior at deep night after the window has frozen and shattered, cold air flowing inside. Preserve the reference camera, exact room layout, left stone fireplace and table, central reception counter and arched door, upstairs wooden balcony, staircase on the right, right noticeboard and wall furniture. Preserve the detailed painted fantasy brushwork and original 1672x941 landscape dimensions. The right upper arched window is iced over and visibly broken: jagged frost-covered remaining glass around a clear opening, fallen icy glass nearby, cold blue moonlight and a low stream of freezing mist entering there. Dim the warm lamps and fireplace to subdued embers; night outside. No people, no new bedroom or bed. Fully opaque full-bleed background, no text, letters, logos, watermark or UI; notice papers remain unlettered shapes. Candidate 01: restrained inward curling cold mist from the shattered upper-right window, fine frost spreading down the stair railing and nearby floor.",
+      "reference_images": [
+        "client/images/bg_inn.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1672,
+        941
+      ],
+      "dimensions": [
+        1672,
+        941
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_inn_night",
+      "file": "assets/candidates/024/bg_inn_night/candidate_02.png",
+      "purpose": "宿屋・深夜",
+      "prompt": "Use case: lighting-weather. EDIT TARGET: the supplied bg_inn.png. Create 宿屋・深夜, the SAME inn interior at deep night after the window has frozen and shattered, cold air flowing inside. Preserve the reference camera, exact room layout, left stone fireplace and table, central reception counter and arched door, upstairs wooden balcony, staircase on the right, right noticeboard and wall furniture. Preserve the detailed painted fantasy brushwork and original 1672x941 landscape dimensions. The right upper arched window is iced over and visibly broken: jagged frost-covered remaining glass around a clear opening, fallen icy glass nearby, cold blue moonlight and a low stream of freezing mist entering there. Dim the warm lamps and fireplace to subdued embers; night outside. No people, no new bedroom or bed. Fully opaque full-bleed background, no text, letters, logos, watermark or UI; notice papers remain unlettered shapes. Candidate 02: clearly readable jagged hole in the iced upper-right window, cool air flows down the stairs and across the open foreground; keep original architecture and furniture unchanged.",
+      "reference_images": [
+        "client/images/bg_inn.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1672,
+        941
+      ],
+      "dimensions": [
+        1672,
+        941
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_sentinel",
+      "file": "client/images/enemy_ice_sentinel.png",
+      "purpose": "氷の番兵",
+      "prompt": "Use case: stylized-concept. Create 氷の番兵, a heavy full-body guard whose entire plate armor and war hammer are made of ice. Empty helmet contains only icy blue cold light, no human face. Massive weighty stance. Image 1 and image 2 are style and ice-family references only: match the white dragon and frost wolf snow-white palette, crystalline ice-blue facets, detailed painted fantasy brushwork and strong directional rim highlights. Not a dragon or wolf, no fur. Square 1254x1254 sprite, full body and entire hammer inside frame with safe margins. Actual transparent background, alpha zero outside silhouette, clean edges without white/gray matte or diffuse background glow, no ground plane. No text, letters, logos, watermark. Candidate 03: heavy braced stance holding an ice war hammer diagonally downward. Critical framing: make the entire sentinel occupy only the central 85 percent of the square canvas, with clearly visible empty transparent margins on ALL four sides. Every helmet spike, both boots, hammer shaft and hammer head must be fully inside canvas, never touching an edge. Slightly reduce cyan saturation relative to the references.",
+      "reference_images": [
+        "client/images/enemy_draco_dragon.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。",
+      "source_candidate": "assets/candidates/024/enemy_ice_sentinel/candidate_03.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 03 的头盔、双足和冰锤均有边距，厚重站姿及空头盔冷光明确；01/02 边距过紧。",
+      "style_review": "晶面与白竜、霜狼同族，但甲片更密、更尖锐；冰蓝高光较强。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_assassin",
+      "file": "client/images/enemy_ice_assassin.png",
+      "purpose": "氷の刺客",
+      "prompt": "Use case: stylized-concept. Create 氷の刺客, a masked assassin in white clothing, agile low crouching combat pose, exactly one ice blade held in each hand, a clearly visible white dragon emblem on the chest. Reference image is for detailed anime semi-realistic painted style, directional upper-left highlights, clothing texture and pale cyan-white ice blade material only; do not copy the general's identity, red cape or heavy armor. Full body head to both boots and both complete blades inside frame, 1024x1536 portrait with generous safe margins. White clothing with icy blue shadows. Genuine transparent alpha background, clean antialiased edges, no white/gray fringe, no background gradient, no glow behind body, no ground plane, no text, letters, logo or watermark. Candidate 02: low forward-ready crouch with one knee deeply bent and the other leg extended, two ice knives held at distinct angles, chest white-dragon embroidery visible.",
+      "reference_images": [
+        "client/images/enemy_draco_human.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1024,
+        1536
+      ],
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。",
+      "source_candidate": "assets/candidates/024/enemy_ice_assassin/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 02 双冰刃与双足完整，低伏姿态及胸前白竜纹章清楚，边距优于 01。",
+      "style_review": "银发、护具与繁复刺绣由生成器延伸；白竜胸章偏盘曲龙形，未沿用有翼白竜的完整轮廓；侧边刀尖仍较近画布边缘。"
+    },
+    {
+      "task": "024",
+      "id": "bg_royal_gate",
+      "file": "client/images/bg_royal_gate.png",
+      "purpose": "凱旋の城門",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create the royal city gate welcoming a triumphant return, drifting flower petals, crowds along the sides waving their hands in welcome, bright sunshine. Use the reference throne room's pale stone, gilded Gothic detailing, blue-and-gold and red banners to establish the same kingdom's exterior. Open central approach for game sprites; no named hero or prominent foreground protagonist. Candidate 02: Slightly oblique approach, welcoming townsfolk flank the path, bright gate towers frame blue sky.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。",
+      "source_candidate": "assets/candidates/024/bg_royal_gate/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 02 两侧挥手人群更清楚，城门、花瓣和日照完整，中央通道可用。",
+      "style_review": "金饰和塔楼比王座厅参考更繁复，明度较高；狮、鸟与四分盾徽为参考纹样的延伸。"
+    },
+    {
+      "task": "024",
+      "id": "bg_festival_town",
+      "file": "client/images/bg_festival_town.png",
+      "purpose": "凱旋の城下町",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a festive castle town street, colorful pennants, flower garlands, market stalls and crowds. Image 1 establishes the kingdom's architecture and banner colors, image 2 the wooden market furniture and painted everyday materials. Open central cobbled lane and lively side stalls; no named foreground protagonist. Do not reproduce the shop reference's UI parchment panel. Candidate 02: Slight turn in the street, garlands above, stalls on both sides with ordinary welcoming townspeople.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_item_shop.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。",
+      "source_candidate": "assets/candidates/024/bg_festival_town/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 02 人群和摊位活动更清楚，彩旗、花环及街道纵深均明确。",
+      "style_review": "摊位延续道具店木材与杂货质感；节庆蓝金红配色更明亮，王城天际线与居民服饰细节未定稿。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_garden",
+      "file": "client/images/bg_mansion_garden.png",
+      "purpose": "将軍の屋敷・夜の庭",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a noble mansion garden under moonlight. The central fountain is completely frozen solid, including its jets and basins; thin frost covers the ground. Quiet empty garden, mansion behind it. Image 1 guides ornate pale-stone architecture; image 2 guides finely painted cool nocturnal vegetation and depth. No people, no liquid running water. Candidate 02: Slightly oblique view of the frozen central fountain, frosted paths frame the silent mansion. The ice should look like frozen fountain water: solid frozen jets and sheets, hanging icicles and sealed basins, not ornamental crystal clusters. Keep frost thin and mansion scale restrained.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_elf_spring.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。",
+      "source_candidate": "assets/candidates/024/bg_mansion_garden/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 02 冻结喷流和封冻池面更明确，霜地与月夜庭院清楚；01 的晶簇更突出。",
+      "style_review": "宅邸仍偏宫殿规模，窗灯偏暖且较多；喷泉中央仍有晶柱状冰，霜的局部厚度较明显。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_corridor",
+      "file": "client/images/bg_mansion_corridor.png",
+      "purpose": "将軍の屋敷・凍てつく回廊",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a luxurious noble mansion corridor whose walls and floor are coated with THIN ice, with ONE closed door at the far end. Use the reference's carved pale-stone arches, gilded architectural details and blue accents but at domestic mansion scale, no throne. Cold subdued light reflecting along thin icy surfaces, preserve visible wall carvings and floor tiles beneath ice, no giant ice cave. Empty of people. Candidate 01: Straight centered perspective toward the single end door.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。",
+      "source_candidate": "assets/candidates/024/bg_mansion_corridor/candidate_01.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 01 中央尽头门与墙地薄冰最直观，原有雕饰和地砖在冰下可见。",
+      "style_review": "回廊拱顶及金饰接近王宫规模；烛光较亮，门为一处双开门，墙边有小冰挂。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_study",
+      "file": "client/images/bg_mansion_study.png",
+      "purpose": "将軍の屋敷・書斎",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a noble mansion study filled with ancient books. On the desk lies ONE open journal with unlettered pages; in a corner is a SMALL box decorated with white scales, clearly identifiable. Moonlight enters through the window. Image 1 controls refined architectural details; image 2 painted timber, bookshelves, and warm material texture under cool light. No people, no legible marks or writing in journal or book spines. Candidate 02: Angled view across the desk toward tall bookshelves and moonlit window, small white-scaled box at the corner beside the shelves. Moonlight should dominate; keep only a few dim warm candle accents, much less warm lighting than the inn reference. Ancient books should also form small readable piles. The small box's overlapping white scales should be recognizable.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_inn.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。",
+      "source_candidate": "assets/candidates/024/bg_mansion_study/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 02 日志在近景可辨，角落小箱的重叠白鳞清楚，月光比 01 更突出。",
+      "style_review": "木料笔触延续宿屋，蓝金装饰延续王城；新增地球仪、浑天仪与胸像等陈设，局部烛光仍偏暖；日志无文字。"
+    },
+    {
+      "task": "024",
+      "id": "bg_king_room",
+      "file": "client/images/bg_king_room.png",
+      "purpose": "王の私室",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create the king's luxurious but silent private bedchamber in moonlight, composed near the window. Use the reference's pale carved stone, gilded details, blue-and-gold textiles and delicate fantasy painting style. An ornate bed, quiet floor space near the window, moonlight falling through the window; no king or other people, no throne-room duplication. Candidate 01: View by a tall arched window, moonlight crosses the empty foreground with bed set farther inside the chamber.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。",
+      "source_candidate": "assets/candidates/024/bg_king_room/candidate_01.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 01 寝床、月光窗及窗边空地清晰，留给立绘的前景空间较 02 充足。",
+      "style_review": "蓝金装饰与参考同系但繁复度较高；保留暖色烛光，与冷月光形成较强对比。"
+    },
+    {
+      "task": "024",
+      "id": "bg_inn_night",
+      "file": "client/images/bg_inn_night.png",
+      "purpose": "宿屋・深夜",
+      "prompt": "Use case: lighting-weather. EDIT TARGET: the supplied bg_inn.png. Create 宿屋・深夜, the SAME inn interior at deep night after the window has frozen and shattered, cold air flowing inside. Preserve the reference camera, exact room layout, left stone fireplace and table, central reception counter and arched door, upstairs wooden balcony, staircase on the right, right noticeboard and wall furniture. Preserve the detailed painted fantasy brushwork and original 1672x941 landscape dimensions. The right upper arched window is iced over and visibly broken: jagged frost-covered remaining glass around a clear opening, fallen icy glass nearby, cold blue moonlight and a low stream of freezing mist entering there. Dim the warm lamps and fireplace to subdued embers; night outside. No people, no new bedroom or bed. Fully opaque full-bleed background, no text, letters, logos, watermark or UI; notice papers remain unlettered shapes. Candidate 02: clearly readable jagged hole in the iced upper-right window, cool air flows down the stairs and across the open foreground; keep original architecture and furniture unchanged.",
+      "reference_images": [
+        "client/images/bg_inn.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1672,
+        941
+      ],
+      "dimensions": [
+        1672,
+        941
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。",
+      "source_candidate": "assets/candidates/024/bg_inn_night/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 02 破窗缺口、楼梯下碎片及涌入前景的冷气更明确，原参考的大厅家具布局基本保持。",
+      "style_review": "保持木石笔触，亮度明显降低；窗形和局部小物有轻微生成差异。参考实际为大厅而非 spec 所称客房；公告纸为不可辨小纹理。"
     }
   ],
   "selections": [
@@ -1192,6 +1857,124 @@
       "approved": false,
       "selection_reason": "苔藓呈绿色有机团簇，温泉池更紧凑，蒸汽和柔和光照清楚，岩石笔触延续熔岩洞窟。",
       "style_review": "相较熔岩参考大幅降低红色饱和度；池缘暖光与小段进水沿用参考水体表现，池缘局部仍较明亮。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_sentinel",
+      "file": "client/images/enemy_ice_sentinel.png",
+      "candidates": [
+        "assets/candidates/024/enemy_ice_sentinel/candidate_01.png",
+        "assets/candidates/024/enemy_ice_sentinel/candidate_02.png",
+        "assets/candidates/024/enemy_ice_sentinel/candidate_03.png"
+      ],
+      "selected_candidate": "assets/candidates/024/enemy_ice_sentinel/candidate_03.png",
+      "approved": false,
+      "selection_reason": "候选 03 的头盔、双足和冰锤均有边距，厚重站姿及空头盔冷光明确；01/02 边距过紧。",
+      "style_review": "晶面与白竜、霜狼同族，但甲片更密、更尖锐；冰蓝高光较强。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_assassin",
+      "file": "client/images/enemy_ice_assassin.png",
+      "candidates": [
+        "assets/candidates/024/enemy_ice_assassin/candidate_01.png",
+        "assets/candidates/024/enemy_ice_assassin/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/enemy_ice_assassin/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选 02 双冰刃与双足完整，低伏姿态及胸前白竜纹章清楚，边距优于 01。",
+      "style_review": "银发、护具与繁复刺绣由生成器延伸；白竜胸章偏盘曲龙形，未沿用有翼白竜的完整轮廓；侧边刀尖仍较近画布边缘。"
+    },
+    {
+      "task": "024",
+      "id": "bg_royal_gate",
+      "file": "client/images/bg_royal_gate.png",
+      "candidates": [
+        "assets/candidates/024/bg_royal_gate/candidate_01.png",
+        "assets/candidates/024/bg_royal_gate/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_royal_gate/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选 02 两侧挥手人群更清楚，城门、花瓣和日照完整，中央通道可用。",
+      "style_review": "金饰和塔楼比王座厅参考更繁复，明度较高；狮、鸟与四分盾徽为参考纹样的延伸。"
+    },
+    {
+      "task": "024",
+      "id": "bg_festival_town",
+      "file": "client/images/bg_festival_town.png",
+      "candidates": [
+        "assets/candidates/024/bg_festival_town/candidate_01.png",
+        "assets/candidates/024/bg_festival_town/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_festival_town/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选 02 人群和摊位活动更清楚，彩旗、花环及街道纵深均明确。",
+      "style_review": "摊位延续道具店木材与杂货质感；节庆蓝金红配色更明亮，王城天际线与居民服饰细节未定稿。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_garden",
+      "file": "client/images/bg_mansion_garden.png",
+      "candidates": [
+        "assets/candidates/024/bg_mansion_garden/candidate_01.png",
+        "assets/candidates/024/bg_mansion_garden/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_mansion_garden/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选 02 冻结喷流和封冻池面更明确，霜地与月夜庭院清楚；01 的晶簇更突出。",
+      "style_review": "宅邸仍偏宫殿规模，窗灯偏暖且较多；喷泉中央仍有晶柱状冰，霜的局部厚度较明显。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_corridor",
+      "file": "client/images/bg_mansion_corridor.png",
+      "candidates": [
+        "assets/candidates/024/bg_mansion_corridor/candidate_01.png",
+        "assets/candidates/024/bg_mansion_corridor/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_mansion_corridor/candidate_01.png",
+      "approved": false,
+      "selection_reason": "候选 01 中央尽头门与墙地薄冰最直观，原有雕饰和地砖在冰下可见。",
+      "style_review": "回廊拱顶及金饰接近王宫规模；烛光较亮，门为一处双开门，墙边有小冰挂。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_study",
+      "file": "client/images/bg_mansion_study.png",
+      "candidates": [
+        "assets/candidates/024/bg_mansion_study/candidate_01.png",
+        "assets/candidates/024/bg_mansion_study/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_mansion_study/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选 02 日志在近景可辨，角落小箱的重叠白鳞清楚，月光比 01 更突出。",
+      "style_review": "木料笔触延续宿屋，蓝金装饰延续王城；新增地球仪、浑天仪与胸像等陈设，局部烛光仍偏暖；日志无文字。"
+    },
+    {
+      "task": "024",
+      "id": "bg_king_room",
+      "file": "client/images/bg_king_room.png",
+      "candidates": [
+        "assets/candidates/024/bg_king_room/candidate_01.png",
+        "assets/candidates/024/bg_king_room/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_king_room/candidate_01.png",
+      "approved": false,
+      "selection_reason": "候选 01 寝床、月光窗及窗边空地清晰，留给立绘的前景空间较 02 充足。",
+      "style_review": "蓝金装饰与参考同系但繁复度较高；保留暖色烛光，与冷月光形成较强对比。"
+    },
+    {
+      "task": "024",
+      "id": "bg_inn_night",
+      "file": "client/images/bg_inn_night.png",
+      "candidates": [
+        "assets/candidates/024/bg_inn_night/candidate_01.png",
+        "assets/candidates/024/bg_inn_night/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_inn_night/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选 02 破窗缺口、楼梯下碎片及涌入前景的冷气更明确，原参考的大厅家具布局基本保持。",
+      "style_review": "保持木石笔触，亮度明显降低；窗形和局部小物有轻微生成差异。参考实际为大厅而非 spec 所称客房；公告纸为不可辨小纹理。"
     }
   ],
   "todo_design": [
@@ -1202,7 +1985,11 @@
     "020: 逐张验收 8 张工程暂选图，全部 approved=false；确认后由设计负责人批准并接线。",
     "020: 确认煤の亡霊火星色相、溶岩ドレイク相对马的体型与熔岩亮度、Xanxus 分身头骨和金饰的半透明程度。",
     "020: 确认リク金色短发、护符纹样、腰包、衣摆余烬与表情是否符合角色定稿。",
-    "020: 确认吊桥破损及热风表现、龙巢兽骨和财宝形态、民家房梁布局、温泉苔藓和池缘暖光。"
+    "020: 确认吊桥破损及热风表现、龙巢兽骨和财宝形态、民家房梁布局、温泉苔藓和池缘暖光。",
+    "024: 逐张验收 9 张工程暂选图与 19 张候选，全部 approved=false；最终选图及接线由设计负责人处理。",
+    "024: 确认宿屋参考图与 spec 的客房描述冲突：本批优先保留 bg_inn.png 实际大厅布局，未另造客房。已向用户询问，制作时未收到回复。",
+    "024: 确认刺客银发、护具、盘曲式白竜纹章及服装刺绣；确认番兵甲片尖锐度和冰蓝亮度。",
+    "024: 确认宅邸宫殿式规模、夜景暖灯、喷泉晶柱状冻结、书斋附加陈设与王室纹章的适用性。"
   ],
   "inferences": [
     "选图是按 spec 的工程暂选，不代表设计批准。",
@@ -1220,47 +2007,49 @@
     "020: 同一火山地区沿用竜の谷的红天、黑岩及远处废墟；龙巢的兽骨、剑和金属器物形态并未由 spec 指定。",
     "020: 温泉发光苔藓采用绿色，池水采用参考的蓝绿色，池缘暖光与小进水并未由 spec 明确指定。",
     "020: 沿用背景参考开放前景；绝对体型与年龄只能由画面比例暗示，ドレイク如马的体型需后续接线验证。",
-    "020: manifest 顶层 task/qa 表示最新批次；016 原图和选图记录保留，其原验证记录存入 batches.016。"
+    "020: manifest 顶层 task/qa 表示最新批次；016 原图和选图记录保留，其原验证记录存入 batches.016。",
+    "024: 沿用 016/020 工程暂选流程，交付路径不表示设计批准；全部保留 approved=false。",
+    "024: 未指定参考的宅邸建筑沿用 bg_dragon_rpg 的浅石、金饰、拱顶与蓝金织物；庭院另以 bg_elf_spring 参照植被和冷色笔触，书斋另以 bg_inn 参照书架和木材。",
+    "024: 两候选以姿态、视角或光照强弱区别，未定义剧情差异；冰番兵多一版用于边距修正。",
+    "024: 王的私室中的“窗边”按窗边构图和空地理解；人物未在 spec 指定，未添加国王。",
+    "024: 宿屋按明确的参考编辑要求保留大厅，破窗选用参考已有右上拱窗；深夜灯火衰减为弱光与余烬。",
+    "024: 刺客银发、护具、纹章具体形态；番兵尖晶甲片；城门塔楼、盾徽、居民衣饰；宅邸规模、喷泉形制、窗灯；书斋仪器、胸像、植物；寝床和家具具体形式均为生成器对参考的延伸，须设计确认。",
+    "024: 日志和书脊不写文字，公告纸保留不可辨纹理，以落实不画文字要求；未新增叙事。",
+    "024: 方形背景虽明确请求 1024×1024，工具实际给出 1254×1254，按 016 允许的等比缩放缩小至参考尺寸；未裁切或重绘。",
+    "024: manifest 顶层 task/qa 表示最新批次，016/020 原记录保留，旧 QA 留存 batches。"
   ],
   "deviations": [
     "蜘蛛生成 4 张候选，其余各 2 张；额外两张用于修正八足辨识。",
     "未改代码或剧本、未新增项目依赖或测试代码；仅素材和 manifest。",
-    "020: 无范围偏离。新增 16 张独立候选和 8 张暂选副本，仅更新 manifest；未新增代码、剧本、依赖或测试文件。"
+    "020: 无范围偏离。新增 16 张独立候选和 8 张暂选副本，仅更新 manifest；未新增代码、剧本、依赖或测试文件。",
+    "024: 冰番兵生成 3 张，其余每项 2 张，超过最低两候选要求以修正贴边。",
+    "024: bg_inn_night 保留实际参考的大厅，而非文字描述的客房；参考与文字不一致，优先执行参考编辑要求，留 TODO(design)。",
+    "024: 按用户本轮明确要求及 024 说明免跑全量测试，执行素材与提交范围检查后直接提交。"
   ],
   "qa": {
-    "dimensions": "本批 24 张交付图片全部原生达到指定尺寸，未缩放或填充。",
-    "alpha": "8 张候选立绘为 RGBA，8 张候选背景为 RGB；全部立绘候选在深色、浅色、灰绿色底合成检查，未见明显白边、灰边或矩形光晕。原始 alpha 保留。",
-    "alpha_note": "生成器部分外部像素 alpha=1，人物 alpha 最大值 254；橙色/暖色原始 RGB 光晕在实际 alpha 合成中不可见。Xanxus 02 的胸腹及衣摆存在明显局部半透明，部分头骨与金饰较实。",
-    "style": "逐图与指定参考及 016 风格基准对照；选择理由及风格偏差见 task=020 的 selections[].style_review。",
-    "validation_status": "blocked_by_existing_test_failure",
+    "dimensions": "28 张交付 PNG：19 独立候选、9 暂选副本。番兵 1254×1254，刺客 1024×1536，6 项方形背景 1024×1024，宿屋 1672×941。12 张方形背景候选按 016 允许等比缩小；其余原生尺寸。",
+    "alpha": "5 张立绘候选为 RGBA，14 张背景候选为 RGB。立绘在深色、浅色、灰绿色底合成检查，未见明显白边、灰边或矩形背景光晕；原始 alpha 保留。",
+    "style": "逐项检查全部候选与已读参考的笔触、材质、光照和饱和度；暂选理由与风格偏差见 task=024 的 selections。生成过程直接查看原图，另以合成图检查 alpha。",
+    "validation_status": "passed_asset_checks",
+    "test_policy": "用户明确要求仅图片与 manifest，免跑全量测试，生成完直接提交；未修改代码或剧本。",
     "validation": [
       {
-        "command": "python -m unittest discover -s tests -q",
-        "exit_code": 1,
-        "result": "Ran 417 tests in 69.987s; FAILED (failures=1, skipped=1). test_current_generator_preserves_labels_and_does_not_mutate_sources: needs_review 与 design_reviewed_mismatches 不一致。"
-      },
-      {
-        "command": "python -m unittest discover -s tests -p test_benchmark_pinning_and_secrets.py -q",
-        "exit_code": 1,
-        "result": "Ran 7 tests in 1.057s; 同一失败复现。该测试只比较 benchmark/快照，不读取图片或 manifest；tests/scripts/eval/host/client/app.js 对 HEAD 无差异。"
-      },
-      {
-        "command": "node --check client/app.js",
+        "command": "??? Python/Pillow/JSON ?????python -?????????",
         "exit_code": 0,
-        "result": "无输出，语法检查通过。"
+        "result": "28 PNG = 19 ???? + 9 ?????9 ??????????alpha????????????approved=false????????UTF-8 ? BOM ???????????? manifest ? 28 ?? PNG??? art/024?"
       },
       {
         "command": "git diff --check",
         "exit_code": 0,
-        "result": "无空白错误。"
+        "result": "??????????"
       },
       {
-        "command": "一次性 Pillow/JSON 素材检查（未新增代码文件）",
-        "exit_code": 0,
-        "result": "24 张图片：16 独立候选、8 暂选副本；尺寸、模式、alpha、参考路径、完整提示词、approved=false、候选与暂选字节一致、UTF-8 无 BOM 均通过；016 原图记录、选图记录和 QA 保留。"
+        "command": "python -m unittest discover -s tests -q / node --check client/app.js",
+        "status": "not_run",
+        "result": "???????? 024 spec ?????????????????????????"
       }
     ],
-    "commit_gate": "AGENTS.md 要求提交前两项验证必须通过；因既有 benchmark 测试失败，等待用户明确豁免后提交，禁止为通过验证修改本任务范围外文件。"
+    "commit_gate": "??????????????? manifest???????? art/024????????"
   },
   "batches": {
     "016": {
@@ -1332,14 +2121,46 @@
         ],
         "commit_gate": "AGENTS.md 要求提交前两项验证必须通过；因既有 benchmark 测试失败，等待用户明确豁免后提交，禁止为通过验证修改本任务范围外文件。"
       }
+    },
+    "024": {
+      "generation_date": "2026-10-12",
+      "qa": {
+        "dimensions": "28 张交付 PNG：19 独立候选、9 暂选副本。番兵 1254×1254，刺客 1024×1536，6 项方形背景 1024×1024，宿屋 1672×941。12 张方形背景候选按 016 允许等比缩小；其余原生尺寸。",
+        "alpha": "5 张立绘候选为 RGBA，14 张背景候选为 RGB。立绘在深色、浅色、灰绿色底合成检查，未见明显白边、灰边或矩形背景光晕；原始 alpha 保留。",
+        "style": "逐项检查全部候选与已读参考的笔触、材质、光照和饱和度；暂选理由与风格偏差见 task=024 的 selections。生成过程直接查看原图，另以合成图检查 alpha。",
+        "validation_status": "passed_asset_checks",
+        "test_policy": "用户明确要求仅图片与 manifest，免跑全量测试，生成完直接提交；未修改代码或剧本。",
+        "validation": [
+          {
+            "command": "??? Python/Pillow/JSON ?????python -?????????",
+            "exit_code": 0,
+            "result": "28 PNG = 19 ???? + 9 ?????9 ??????????alpha????????????approved=false????????UTF-8 ? BOM ???????????? manifest ? 28 ?? PNG??? art/024?"
+          },
+          {
+            "command": "git diff --check",
+            "exit_code": 0,
+            "result": "??????????"
+          },
+          {
+            "command": "python -m unittest discover -s tests -q / node --check client/app.js",
+            "status": "not_run",
+            "result": "???????? 024 spec ?????????????????????????"
+          }
+        ],
+        "commit_gate": "??????????????? manifest???????? art/024????????"
+      }
     }
   },
   "tasks": [
     "016",
-    "020"
+    "020",
+    "024"
   ],
   "known_issues": [
     "020: 全量测试存在与美术无关的既有 benchmark 标签同步失败；未修改生成器或 benchmark。",
-    "020: 原始 alpha 有少量值为 1 的外部像素，实际合成未见背景雾光；Xanxus 的部分头骨和金饰接近不透明，待设计验收。"
+    "020: 原始 alpha 有少量值为 1 的外部像素，实际合成未见背景雾光；Xanxus 的部分头骨和金饰接近不透明，待设计验收。",
+    "024: 原始立绘外部有少量 alpha=1 像素，刺客 alpha 最大值为 254；深浅及灰绿底合成未见明显矩形雾光或白灰边，保留原始 alpha。",
+    "024: 番兵候选 01/02 边距过紧，暂选 03；刺客候选 02 侧边刀尖仍较近边缘。",
+    "024: 宿屋大厅/客房描述冲突、白竜纹章形状和宅邸规模待设计确认；全部为未批准候选。"
   ]
 }
