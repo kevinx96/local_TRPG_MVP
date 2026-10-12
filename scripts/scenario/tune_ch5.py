@@ -24,6 +24,16 @@ def tune(pack: dict[str, Any]) -> None:
             if 'damage' in ability:
                 ability.update(damage=damage, accuracy=accuracy)
     next(i for i in pack['items'] if i['id'] == 'fire_dragon_oil')['combat']['damage'] = '2d6'
+    tune_support(pack)
+
+
+def tune_support(pack: dict[str, Any]) -> None:
+    modifiers = next(loc for loc in pack['locations'] if loc['id'] == 'draco_battle')['combat']['encounter_modifiers']
+    next(m for m in modifiers if m['id'] == 'king').update(
+        enemy_defense=-4, disabled_enemy_skills=['guard_stance'],
+        round_start_attack=dict(name='近衛兵', damage='13', accuracy=100, element='physical'))
+    next(m for m in modifiers if m['id'] == 'robin').update(accuracy=-30, damage_multiplier=.8)
+    pack['meta']['content_revision'] = max(pack['meta'].get('content_revision', ''), '2026-10-12-v025-support')
 
 
 if __name__ == '__main__':

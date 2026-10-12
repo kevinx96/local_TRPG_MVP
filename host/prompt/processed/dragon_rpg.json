@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-12-v023-ch5",
+    "content_revision": "2026-10-12-v025-support",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -7244,8 +7244,17 @@
             "requirements": {
               "flag": "king_trust"
             },
-            "enemy_defense": -2,
-            "text": "「近衛兵、将軍を囲め！」国王の号令が王の間に響いた。"
+            "enemy_defense": -4,
+            "text": "「近衛兵、将軍を囲め！」国王の号令が王の間に響いた。",
+            "disabled_enemy_skills": [
+              "guard_stance"
+            ],
+            "round_start_attack": {
+              "name": "近衛兵",
+              "damage": "13",
+              "accuracy": 100,
+              "element": "physical"
+            }
           },
           {
             "id": "robin",
@@ -7263,8 +7272,9 @@
               ]
             },
             "enemy_skill": "剣聖の一閃",
-            "accuracy": -15,
-            "text": "「昨夜のうちに、あんたの剣の留め金を緩めといたよ」柱の陰からロビンの声がした。"
+            "accuracy": -30,
+            "text": "「昨夜のうちに、あんたの剣の留め金を緩めといたよ」柱の陰からロビンの声がした。",
+            "damage_multiplier": 0.8
           },
           {
             "id": "mina",

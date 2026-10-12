@@ -1002,6 +1002,13 @@ def _apply_round_start_effects(session: dict[str, Any], rng: Any) -> None:
     _apply_ally_round_start_effects(session, companion, rng)
     for ally in combat.get("phase_allies", []):
         _apply_ally_round_start_effects(session, ally, rng, str(ally["id"]))
+    for enemy in _alive_enemies(combat):
+        for modifier in _encounter_modifiers(session, enemy):
+            attack = modifier.get('round_start_attack')
+            if isinstance(attack, dict):
+                _resolve_attack(session, modifier, enemy, attack, str(modifier['id']), rng)
+                if _enemy_is_defeated(enemy):
+                    break
     _check_victory_or_defeat(session)
 
 
@@ -1203,8 +1210,12 @@ def _runtime_player_character(template: dict[str, Any]) -> dict[str, Any]:
 def _choose_enemy_ability(enemy: dict[str, Any], session: dict[str, Any], rng: Any) -> dict[str, Any]:
     affordable: list[dict[str, Any]] = []
     weights: list[int] = []
+    disabled = {skill for modifier in _encounter_modifiers(session, enemy)
+                for skill in modifier.get('disabled_enemy_skills', [])}
     for skill in enemy.get("skills") or []:
         if not isinstance(skill, dict) or not _can_pay_cost(enemy, skill):
+            continue
+        if skill.get('id') in disabled or skill.get('name') in disabled:
             continue
         if skill.get("every_n_rounds"):
             if session["combat"]["round"] % int(skill["every_n_rounds"]):

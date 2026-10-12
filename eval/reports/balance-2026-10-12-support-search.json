@@ -1,0 +1,264 @@
+{
+  "n": 500,
+  "seed": 20261012,
+  "characters": [
+    "hero",
+    "cleric",
+    "mage",
+    "thief"
+  ],
+  "baseline": [
+    0.588,
+    0.578,
+    0.57,
+    0.638
+  ],
+  "candidates": [
+    {
+      "support": "king",
+      "variant": "specified",
+      "value": null,
+      "rates": [
+        0.59,
+        0.596,
+        0.57,
+        0.652
+      ],
+      "contribution_pp": 0.85
+    },
+    {
+      "support": "robin",
+      "variant": "specified",
+      "value": null,
+      "rates": [
+        0.57,
+        0.564,
+        0.57,
+        0.644
+      ],
+      "contribution_pp": -0.65
+    },
+    {
+      "support": "king",
+      "variant": "round_start_damage",
+      "value": "2",
+      "rates": [
+        0.658,
+        0.624,
+        0.532,
+        0.664
+      ],
+      "contribution_pp": 2.6
+    },
+    {
+      "support": "king",
+      "variant": "round_start_damage",
+      "value": "4",
+      "rates": [
+        0.658,
+        0.624,
+        0.532,
+        0.664
+      ],
+      "contribution_pp": 2.6
+    },
+    {
+      "support": "king",
+      "variant": "round_start_damage",
+      "value": "6",
+      "rates": [
+        0.658,
+        0.624,
+        0.532,
+        0.664
+      ],
+      "contribution_pp": 2.6
+    },
+    {
+      "support": "king",
+      "variant": "round_start_damage",
+      "value": "8",
+      "rates": [
+        0.658,
+        0.624,
+        0.532,
+        0.676
+      ],
+      "contribution_pp": 2.9
+    },
+    {
+      "support": "king",
+      "variant": "round_start_damage",
+      "value": "10",
+      "rates": [
+        0.694,
+        0.634,
+        0.532,
+        0.714
+      ],
+      "contribution_pp": 5.0
+    },
+    {
+      "support": "king",
+      "variant": "round_start_damage",
+      "value": "12",
+      "rates": [
+        0.694,
+        0.634,
+        0.532,
+        0.714
+      ],
+      "contribution_pp": 5.0
+    },
+    {
+      "support": "king",
+      "variant": "round_start_damage",
+      "value": "13",
+      "rates": [
+        0.652,
+        0.632,
+        0.532,
+        0.734
+      ],
+      "contribution_pp": 4.4
+    },
+    {
+      "support": "king",
+      "variant": "round_start_damage",
+      "value": "16",
+      "rates": [
+        0.652,
+        0.632,
+        0.532,
+        0.734
+      ],
+      "contribution_pp": 4.4
+    },
+    {
+      "support": "king",
+      "variant": "round_start_damage",
+      "value": "20",
+      "rates": [
+        0.652,
+        0.632,
+        0.532,
+        0.734
+      ],
+      "contribution_pp": 4.4
+    },
+    {
+      "support": "king",
+      "variant": "round_start_damage",
+      "value": "1d6",
+      "rates": [
+        0.614,
+        0.614,
+        0.584,
+        0.656
+      ],
+      "contribution_pp": 2.35
+    },
+    {
+      "support": "king",
+      "variant": "round_start_damage",
+      "value": "2d6",
+      "rates": [
+        0.662,
+        0.584,
+        0.558,
+        0.642
+      ],
+      "contribution_pp": 1.8
+    },
+    {
+      "support": "robin",
+      "variant": "sword_only",
+      "value": [
+        -60,
+        0.5
+      ],
+      "rates": [
+        0.572,
+        0.588,
+        0.57,
+        0.652
+      ],
+      "contribution_pp": 0.2
+    },
+    {
+      "support": "robin",
+      "variant": "sword_only",
+      "value": [
+        -85,
+        0.2
+      ],
+      "rates": [
+        0.576,
+        0.57,
+        0.57,
+        0.65
+      ],
+      "contribution_pp": -0.2
+    },
+    {
+      "support": "robin",
+      "variant": "sword_only",
+      "value": [
+        -90,
+        0
+      ],
+      "rates": [
+        0.574,
+        0.57,
+        0.57,
+        0.65
+      ],
+      "contribution_pp": -0.25
+    },
+    {
+      "support": "robin",
+      "variant": "all_phase1_attacks",
+      "value": [
+        -30,
+        0.8
+      ],
+      "rates": [
+        0.588,
+        0.576,
+        0.57,
+        0.664
+      ],
+      "contribution_pp": 0.6
+    },
+    {
+      "support": "robin",
+      "variant": "all_phase1_attacks",
+      "value": [
+        -60,
+        0.5
+      ],
+      "rates": [
+        0.578,
+        0.586,
+        0.57,
+        0.662
+      ],
+      "contribution_pp": 0.55
+    },
+    {
+      "support": "robin",
+      "variant": "all_phase1_attacks",
+      "value": [
+        -90,
+        0
+      ],
+      "rates": [
+        0.592,
+        0.584,
+        0.57,
+        0.654
+      ],
+      "contribution_pp": 0.65
+    }
+  ]
+}
