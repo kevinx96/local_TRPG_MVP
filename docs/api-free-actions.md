@@ -66,7 +66,7 @@ python -m scripts.evaluate_free_actions --live --case prepare --case explicit_at
 如需恢复本地推理，在个人配置中明确设置 `archived_backends: []`、选择本地后端，并重新评估提示、结构化输出与实际延迟；不应只取消隐藏就承诺同等游戏体验。
 # 契约归一化（002）
 
-`parse_plan` 会把 `existing` 的 `advance: true` 归一化为 `false`（仍拒绝混入 operation、target_id、item_id），并把 `use_item` 的当前角色 ID 归一化为 `self`；仅在发生归一化时返回 `normalized` 字段，列出调整的字段名，评测在归一化后比较。
+`parse_plan` 会把 `existing` 计划里多余的 `operation`、`target_id`、`item_id` 清空、`advance` 归一化为 `false`（2026-10-12 起；没有 action_id 的 existing 仍然拒绝），并把 `use_item` 的当前角色 ID 归一化为 `self`；仅在发生归一化时返回 `normalized` 字段，列出调整的字段名，评测在归一化后比较。
 # 里程碑存档兼容
 
 没有 `character.level` 的旧存档按 Lv1 读取；已有触发 flag 的里程碑仅记为已处理，不追溯补发成长或回复，之后新获得的里程碑仍由引擎结算。模型不能写入等级、资源上限或里程碑记录。
