@@ -1596,6 +1596,10 @@ button, select, textarea, input { font: inherit; }
 .ending-overlay > span { color: var(--red); font-size: 13px; font-weight: 900; }
 .ending-overlay h2 { margin: 0; color: var(--red); font-size: clamp(36px, 8vw, 76px); }
 .ending-overlay p { max-width: 620px; margin: 0; color: var(--text-dim); line-height: 1.8; }
+.ending-overlay.complete > span, .ending-overlay.complete h2 { color: var(--gold); }
+.ending-epilogue { list-style: none; margin: 0; padding: 16px 0 0; max-width: 620px; max-height: 40vh; overflow-y: auto; display: grid; gap: 10px; border-top: 1px solid var(--line); text-align: left; }
+.ending-epilogue:empty { display: none; }
+.ending-epilogue li { color: var(--text-dim); font-size: 14px; line-height: 1.7; opacity: 0; animation: fadeIn .6s ease-out forwards; }
 .ending-overlay button {
   padding: 11px 20px;
   border: 1px solid var(--gold);

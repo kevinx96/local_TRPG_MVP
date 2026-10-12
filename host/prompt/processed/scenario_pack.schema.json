@@ -3,31 +3,110 @@
   "$id": "https://local.trpg/scenario_pack.schema.json",
   "title": "TRPG Scenario Pack",
   "type": "object",
-  "required": ["meta", "scenes"],
+  "required": [
+    "meta",
+    "scenes"
+  ],
   "additionalProperties": true,
   "properties": {
     "maps": {
       "type": "array",
       "items": {
-        "type": "object", "required": ["id", "title", "nodes", "edges"],
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "nodes",
+          "edges"
+        ],
         "properties": {
-          "id": {"type": "string"}, "title": {"type": "string"},
-          "parent": {"type": "string"},
-          "nodes": {"type": "array", "items": {
-            "type": "object", "required": ["id", "label", "kind", "x", "y", "location_ids"],
-            "properties": {
-              "id": {"type": "string"}, "label": {"type": "string"},
-              "kind": {"enum": ["start", "battle", "event", "rest", "boss", "branch", "exit", "locked", "treasure"]},
-              "x": {"type": "number", "minimum": 0, "maximum": 100},
-              "y": {"type": "number", "minimum": 0, "maximum": 100},
-              "location_ids": {"type": "array", "items": {"type": "string"}},
-              "submap": {"type": "string"}, "recommended": {"type": "string"}
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "parent": {
+            "type": "string"
+          },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "label",
+                "kind",
+                "x",
+                "y",
+                "location_ids"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "kind": {
+                  "enum": [
+                    "start",
+                    "battle",
+                    "event",
+                    "rest",
+                    "boss",
+                    "branch",
+                    "exit",
+                    "locked",
+                    "treasure"
+                  ]
+                },
+                "x": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "y": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "location_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "submap": {
+                  "type": "string"
+                },
+                "recommended": {
+                  "type": "string"
+                }
+              }
             }
-          }},
-          "edges": {"type": "array", "items": {
-            "type": "object", "required": ["from", "to"],
-            "properties": {"from": {"type": "string"}, "to": {"type": "string"}, "action_id": {"type": "string"}}
-          }}
+          },
+          "edges": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "from",
+                "to"
+              ],
+              "properties": {
+                "from": {
+                  "type": "string"
+                },
+                "to": {
+                  "type": "string"
+                },
+                "action_id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -86,8 +165,15 @@
                 },
                 "done_flag": {
                   "oneOf": [
-                    { "type": "string" },
-                    { "type": "array", "items": { "type": "string" } }
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
                   ]
                 }
               }
@@ -168,40 +254,93 @@
     },
     "meta": {
       "type": "object",
-      "required": ["title", "initial_scene"],
+      "required": [
+        "title",
+        "initial_scene"
+      ],
       "additionalProperties": true,
       "properties": {
-        "title": { "type": "string" },
-        "summary": { "type": "string" },
-        "language": { "type": "string" },
-        "initial_scene": { "type": "string" }
+        "title": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "initial_scene": {
+          "type": "string"
+        }
       }
     },
     "rules": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": {
+        "type": "string"
+      }
     },
-    "combat_rules": { "$ref": "#/$defs/combat_rules" },
+    "combat_rules": {
+      "$ref": "#/$defs/combat_rules"
+    },
     "milestones": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "level", "trigger_flag", "gains"],
+        "required": [
+          "id",
+          "level",
+          "trigger_flag",
+          "gains"
+        ],
         "properties": {
-          "id": { "type": "string", "minLength": 1 },
-          "level": { "type": "integer", "minimum": 2 },
-          "trigger_flag": { "type": "string", "minLength": 1 },
-          "alternative_flags": { "type": "array", "items": { "type": "string" } },
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 2
+          },
+          "trigger_flag": {
+            "type": "string",
+            "minLength": 1
+          },
+          "alternative_flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "gains": {
             "type": "object",
             "additionalProperties": {
               "type": "object",
-              "required": ["max_hp", "max_mp", "max_sp", "attributes"],
+              "required": [
+                "max_hp",
+                "max_mp",
+                "max_sp",
+                "attributes"
+              ],
               "properties": {
-                "max_hp": { "type": "integer", "minimum": 0 },
-                "max_mp": { "type": "integer", "minimum": 0 },
-                "max_sp": { "type": "integer", "minimum": 0 },
-                "attributes": { "type": "object", "additionalProperties": { "type": "integer" } }
+                "max_hp": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "max_mp": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "max_sp": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "attributes": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer"
+                  }
+                }
               }
             }
           }
@@ -213,57 +352,87 @@
       "minItems": 1,
       "items": {
         "allOf": [
-          { "$ref": "#/$defs/record" },
+          {
+            "$ref": "#/$defs/record"
+          },
           {
             "type": "object",
-            "required": ["id"],
+            "required": [
+              "id"
+            ],
             "properties": {
               "goals": {
                 "type": "array",
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
               "location_ids": {
                 "type": "array",
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
               "next_scene_ids": {
                 "type": "array",
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
               "fallback_choices": {
                 "type": "array",
-                "items": { "$ref": "#/$defs/choice" }
+                "items": {
+                  "$ref": "#/$defs/choice"
+                }
               },
               "actions": {
                 "type": "array",
-                "items": { "$ref": "#/$defs/action" }
+                "items": {
+                  "$ref": "#/$defs/action"
+                }
               },
               "hybrid": {
                 "type": "object",
                 "additionalProperties": true,
                 "properties": {
-                  "mode": { "type": "string" },
-                  "summary": { "type": "string" },
-                  "opening": { "type": "string" },
+                  "mode": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "opening": {
+                    "type": "string"
+                  },
                   "prepared_turns": {
                     "type": "array",
-                    "items": { "$ref": "#/$defs/prepared_turn" }
+                    "items": {
+                      "$ref": "#/$defs/prepared_turn"
+                    }
                   },
                   "dialogue_turns": {
                     "type": "array",
-                    "items": { "$ref": "#/$defs/dialogue_turn" }
+                    "items": {
+                      "$ref": "#/$defs/dialogue_turn"
+                    }
                   },
                   "beats": {
                     "type": "array",
-                    "items": { "$ref": "#/$defs/record" }
+                    "items": {
+                      "$ref": "#/$defs/record"
+                    }
                   },
                   "branches": {
                     "type": "array",
-                    "items": { "$ref": "#/$defs/record" }
+                    "items": {
+                      "$ref": "#/$defs/record"
+                    }
                   },
                   "gm_notes": {
                     "type": "array",
-                    "items": { "type": "string" }
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -292,11 +461,15 @@
                 "properties": {
                   "special_actions": {
                     "type": "array",
-                    "items": { "$ref": "#/$defs/special_action" }
+                    "items": {
+                      "$ref": "#/$defs/special_action"
+                    }
                   },
                   "phase_allies": {
                     "type": "array",
-                    "items": { "$ref": "#/$defs/phase_ally" }
+                    "items": {
+                      "$ref": "#/$defs/phase_ally"
+                    }
                   },
                   "encounter_class": {
                     "enum": [
@@ -345,54 +518,105 @@
     },
     "npcs": {
       "type": "array",
-      "items": { "$ref": "#/$defs/record" }
+      "items": {
+        "$ref": "#/$defs/record"
+      }
     },
     "items": {
       "type": "array",
       "items": {
         "allOf": [
-          { "$ref": "#/$defs/record" },
-          { "properties": {
-            "category": { "enum": ["consumable", "equipment", "material", "key"] },
-            "key_item": { "type": "boolean" }
-          } }
+          {
+            "$ref": "#/$defs/record"
+          },
+          {
+            "properties": {
+              "category": {
+                "enum": [
+                  "consumable",
+                  "equipment",
+                  "material",
+                  "key"
+                ]
+              },
+              "key_item": {
+                "type": "boolean"
+              }
+            }
+          }
         ]
       }
     },
     "clues": {
       "type": "array",
-      "items": { "$ref": "#/$defs/record" }
+      "items": {
+        "$ref": "#/$defs/record"
+      }
     },
     "enemies": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name"],
+        "required": [
+          "id",
+          "name"
+        ],
         "additionalProperties": true,
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "description": { "type": "string" },
-          "image": { "type": "string" },
-          "hp": { "type": "integer" },
-          "max_hp": { "type": "integer" },
-          "mp": { "type": "integer" },
-          "max_mp": { "type": "integer" },
-          "sp": { "type": "integer" },
-          "max_sp": { "type": "integer" },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "hp": {
+            "type": "integer"
+          },
+          "max_hp": {
+            "type": "integer"
+          },
+          "mp": {
+            "type": "integer"
+          },
+          "max_mp": {
+            "type": "integer"
+          },
+          "sp": {
+            "type": "integer"
+          },
+          "max_sp": {
+            "type": "integer"
+          },
           "attributes": {
             "type": "object",
-            "additionalProperties": { "type": "number" }
+            "additionalProperties": {
+              "type": "number"
+            }
           },
-          "combat": { "$ref": "#/$defs/combat_actor" },
+          "combat": {
+            "$ref": "#/$defs/combat_actor"
+          },
           "resistances": {
             "type": "object",
-            "additionalProperties": { "type": "number", "minimum": 0 }
+            "additionalProperties": {
+              "type": "number",
+              "minimum": 0
+            }
           },
-          "rewards": { "$ref": "#/$defs/combat_rewards" },
+          "rewards": {
+            "$ref": "#/$defs/combat_rewards"
+          },
           "skills": {
             "type": "array",
-            "items": { "$ref": "#/$defs/combat_skill" }
+            "items": {
+              "$ref": "#/$defs/combat_skill"
+            }
           },
           "next_phase": {
             "type": "string",
@@ -400,7 +624,9 @@
           },
           "phase_allies": {
             "type": "array",
-            "items": { "$ref": "#/$defs/phase_ally" }
+            "items": {
+              "$ref": "#/$defs/phase_ally"
+            }
           },
           "phase_transition_text": {
             "type": "string"
@@ -410,18 +636,30 @@
     },
     "combat_choices": {
       "type": "array",
-      "items": { "$ref": "#/$defs/choice" }
+      "items": {
+        "$ref": "#/$defs/choice"
+      }
     },
     "attribute_defs": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name"],
+        "required": [
+          "id",
+          "name"
+        ],
         "additionalProperties": true,
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "initial_value": { "type": "number", "default": 8 }
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "initial_value": {
+            "type": "number",
+            "default": 8
+          }
         }
       }
     },
@@ -429,134 +667,363 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name"],
+        "required": [
+          "id",
+          "name"
+        ],
         "additionalProperties": true,
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "default_name": { "type": "string" },
-          "description": { "type": "string" },
-          "image": { "type": "string" },
-          "image_female": { "type": "string" },
-          "hp": { "type": "integer" },
-          "max_hp": { "type": "integer" },
-          "mp": { "type": "integer" },
-          "max_mp": { "type": "integer" },
-          "sp": { "type": "integer" },
-          "max_sp": { "type": "integer" },
-          "gold": { "type": "integer" },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "default_name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "image_female": {
+            "type": "string"
+          },
+          "hp": {
+            "type": "integer"
+          },
+          "max_hp": {
+            "type": "integer"
+          },
+          "mp": {
+            "type": "integer"
+          },
+          "max_mp": {
+            "type": "integer"
+          },
+          "sp": {
+            "type": "integer"
+          },
+          "max_sp": {
+            "type": "integer"
+          },
+          "gold": {
+            "type": "integer"
+          },
           "attributes": {
             "type": "object",
-            "additionalProperties": { "type": "number" }
+            "additionalProperties": {
+              "type": "number"
+            }
           },
-          "inventory": { "type": "array" },
-          "equipment": { "type": "array" },
+          "inventory": {
+            "type": "array"
+          },
+          "equipment": {
+            "type": "array"
+          },
           "level_skills": {
             "type": "array",
             "items": {
-              "allOf": [{ "$ref": "#/$defs/combat_skill" }],
-              "required": ["unlock_level"],
+              "allOf": [
+                {
+                  "$ref": "#/$defs/combat_skill"
+                }
+              ],
+              "required": [
+                "unlock_level"
+              ],
               "properties": {
-                "unlock_level": { "type": "integer", "minimum": 2 },
-                "replaces": { "type": "string" }
+                "unlock_level": {
+                  "type": "integer",
+                  "minimum": 2
+                },
+                "replaces": {
+                  "type": "string"
+                }
               }
             }
           },
-          "combat": { "$ref": "#/$defs/combat_actor" },
+          "combat": {
+            "$ref": "#/$defs/combat_actor"
+          },
           "skills": {
             "type": "array",
-            "items": { "$ref": "#/$defs/combat_skill" }
+            "items": {
+              "$ref": "#/$defs/combat_skill"
+            }
           }
         }
       }
     },
     "fallback_choices": {
       "type": "array",
-      "items": { "$ref": "#/$defs/choice" }
+      "items": {
+        "$ref": "#/$defs/choice"
+      }
+    },
+    "epilogues": {
+      "type": "array",
+      "description": "Aftermath lines shown after an ending, selected by ending id and requirements.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "text"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "endings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "requirements": {},
+          "text": {
+            "type": "string"
+          }
+        }
+      }
     }
   },
   "$defs": {
     "record": {
       "type": "object",
-      "required": ["id"],
+      "required": [
+        "id"
+      ],
       "additionalProperties": true,
       "properties": {
-        "id": { "type": "string" },
-        "title": { "type": "string" },
-        "name": { "type": "string" },
-        "summary": { "type": "string" },
-        "description": { "type": "string" },
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
         "keywords": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
         "actions": {
           "type": "array",
-          "items": { "$ref": "#/$defs/action" }
+          "items": {
+            "$ref": "#/$defs/action"
+          }
         },
-        "combat": { "$ref": "#/$defs/item_combat" },
-        "rare": { "type": "boolean" }
+        "combat": {
+          "$ref": "#/$defs/item_combat"
+        },
+        "rare": {
+          "type": "boolean"
+        }
       }
     },
     "special_action": {
       "type": "object",
-      "required": ["id", "name", "outcome", "effects", "log_text"],
+      "required": [
+        "id",
+        "name",
+        "outcome",
+        "effects",
+        "log_text"
+      ],
       "properties": {
-        "secret": { "type": "boolean" },
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "requirements": { "type": ["object", "array"] },
-        "enemy_id": { "type": "string" },
-        "enemy_hp_ratio_lte": { "type": "number", "minimum": 0, "maximum": 1 },
-        "cost_item": { "type": "string" },
-        "cost_type": { "enum": ["mp", "sp", "hp"] },
-        "cost": { "type": "integer", "minimum": 0 },
-        "outcome": { "type": "string", "minLength": 1 },
-        "effects": { "type": "array", "items": { "type": "object" } },
-        "log_text": { "type": "string" }
+        "secret": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "requirements": {
+          "type": [
+            "object",
+            "array"
+          ]
+        },
+        "enemy_id": {
+          "type": "string"
+        },
+        "enemy_hp_ratio_lte": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "cost_item": {
+          "type": "string"
+        },
+        "cost_type": {
+          "enum": [
+            "mp",
+            "sp",
+            "hp"
+          ]
+        },
+        "cost": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "outcome": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "log_text": {
+          "type": "string"
+        }
       }
     },
     "phase_ally": {
       "type": "object",
-      "required": ["id", "name", "round_start_effects"],
+      "required": [
+        "id",
+        "name",
+        "round_start_effects"
+      ],
       "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "requirements": { "type": ["object", "array"] },
-        "enemy_ids": { "type": "array", "items": { "type": "string" } },
-        "entry_text": { "type": "string" },
-        "round_start_effects": { "type": "array", "items": { "type": "object" } }
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "requirements": {
+          "type": [
+            "object",
+            "array"
+          ]
+        },
+        "enemy_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "entry_text": {
+          "type": "string"
+        },
+        "round_start_effects": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
       }
     },
     "item_combat": {
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "kind": { "enum": ["", "weapon", "armor", "equipment", "heal", "restore", "damage"] },
-        "name": { "type": "string" },
-        "damage": { "type": "string" },
-        "healing": { "type": "string" },
-        "max_hp_ratio": { "type": "number", "minimum": 0, "maximum": 1 },
-        "resource": { "enum": ["hp", "mp", "sp"] },
-        "amount": { "type": ["string", "number"] },
-        "accuracy": { "type": "integer", "minimum": 0, "maximum": 100 },
-        "element": { "type": "string" },
-        "defense": { "type": "integer", "minimum": 0 },
-        "consumable": { "type": "boolean" },
+        "kind": {
+          "enum": [
+            "",
+            "weapon",
+            "armor",
+            "equipment",
+            "heal",
+            "restore",
+            "damage"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "damage": {
+          "type": "string"
+        },
+        "healing": {
+          "type": "string"
+        },
+        "max_hp_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "resource": {
+          "enum": [
+            "hp",
+            "mp",
+            "sp"
+          ]
+        },
+        "amount": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "accuracy": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "element": {
+          "type": "string"
+        },
+        "defense": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "consumable": {
+          "type": "boolean"
+        },
         "cost_reduction": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "hp": { "type": "integer", "minimum": 0 },
-            "mp": { "type": "integer", "minimum": 0 },
-            "sp": { "type": "integer", "minimum": 0 }
+            "hp": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mp": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "sp": {
+              "type": "integer",
+              "minimum": 0
+            }
           }
         },
-        "skill_damage_bonus": { "type": "integer" },
-        "skill_healing_bonus": { "type": "integer" },
+        "skill_damage_bonus": {
+          "type": "integer"
+        },
+        "skill_healing_bonus": {
+          "type": "integer"
+        },
         "applies_to": {
           "type": "array",
-          "items": { "enum": ["attack", "heal", "defend", "status"] }
+          "items": {
+            "enum": [
+              "attack",
+              "heal",
+              "defend",
+              "status"
+            ]
+          }
         }
       }
     },
@@ -564,55 +1031,148 @@
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "defense_mode": { "enum": ["flat", "floor", "ratio"] },
-        "floor_ratio": { "type": "number", "minimum": 0, "maximum": 1 },
-        "k": { "type": "number", "exclusiveMinimum": 0 },
-        "basic_attack": { "$ref": "#/$defs/combat_attack" },
-        "enemy_basic_attack": { "$ref": "#/$defs/combat_attack" },
-        "defend_multiplier": { "type": "number", "minimum": 0, "maximum": 1 },
-        "flee_formula": { "type": "string" },
-        "flee_dc": { "type": "integer", "minimum": 0 },
-        "sp_regen_per_round": { "type": "integer", "minimum": 0 },
-        "max_rounds": { "type": "integer", "minimum": 1 }
+        "defense_mode": {
+          "enum": [
+            "flat",
+            "floor",
+            "ratio"
+          ]
+        },
+        "floor_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "k": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "basic_attack": {
+          "$ref": "#/$defs/combat_attack"
+        },
+        "enemy_basic_attack": {
+          "$ref": "#/$defs/combat_attack"
+        },
+        "defend_multiplier": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "flee_formula": {
+          "type": "string"
+        },
+        "flee_dc": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sp_regen_per_round": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_rounds": {
+          "type": "integer",
+          "minimum": 1
+        }
       }
     },
     "combat_actor": {
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "basic_attack": { "$ref": "#/$defs/combat_attack" },
-        "defense": { "type": "integer", "minimum": 0 },
-        "evade": { "type": "integer" }
+        "basic_attack": {
+          "$ref": "#/$defs/combat_attack"
+        },
+        "defense": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "evade": {
+          "type": "integer"
+        }
       }
     },
     "combat_attack": {
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "name": { "type": "string" },
-        "damage": { "type": "string" },
-        "accuracy": { "type": "integer", "minimum": 0, "maximum": 100 },
-        "element": { "type": "string" }
+        "name": {
+          "type": "string"
+        },
+        "damage": {
+          "type": "string"
+        },
+        "accuracy": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "element": {
+          "type": "string"
+        }
       }
     },
     "combat_skill": {
       "type": "object",
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "additionalProperties": true,
       "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "kind": { "enum": ["attack", "heal", "defend", "status"] },
-        "description": { "type": "string" },
-        "damage": { "type": "string" },
-        "healing": { "type": "string" },
-        "accuracy": { "type": "integer", "minimum": 0, "maximum": 100 },
-        "element": { "type": "string" },
-        "cost": { "type": "integer", "minimum": 0 },
-        "cost_type": { "enum": ["", "hp", "mp", "sp"] },
-        "ai_weight": { "type": "integer", "minimum": 1 },
-        "guard_multiplier": { "type": "number", "minimum": 0, "maximum": 1 },
-        "survive_at_one": { "type": "boolean" },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "attack",
+            "heal",
+            "defend",
+            "status"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "damage": {
+          "type": "string"
+        },
+        "healing": {
+          "type": "string"
+        },
+        "accuracy": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "element": {
+          "type": "string"
+        },
+        "cost": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cost_type": {
+          "enum": [
+            "",
+            "hp",
+            "mp",
+            "sp"
+          ]
+        },
+        "ai_weight": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "guard_multiplier": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "survive_at_one": {
+          "type": "boolean"
+        },
         "duration": {
           "type": "integer",
           "minimum": 1
@@ -626,52 +1186,104 @@
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "gold": { "type": "integer", "minimum": 0 },
-        "items": { "type": "array" },
-        "flags": { "type": "array", "items": { "type": "string" } }
+        "gold": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array"
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "choice": {
       "oneOf": [
-        { "type": "string" },
+        {
+          "type": "string"
+        },
         {
           "type": "object",
-          "required": ["text"],
+          "required": [
+            "text"
+          ],
           "additionalProperties": true,
           "properties": {
-            "text": { "type": "string" },
-            "id": { "type": "string" },
-            "action_id": { "type": "string" },
-            "secret": { "type": "boolean" },
-            "preview": { "type": "string" },
-            "risk": { "type": "string" },
+            "text": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "action_id": {
+              "type": "string"
+            },
+            "secret": {
+              "type": "boolean"
+            },
+            "preview": {
+              "type": "string"
+            },
+            "risk": {
+              "type": "string"
+            },
             "intent_keywords": {
               "type": "array",
-              "items": { "type": "string" }
+              "items": {
+                "type": "string"
+              }
             },
-            "roll": { "$ref": "#/$defs/action_roll" },
+            "roll": {
+              "$ref": "#/$defs/action_roll"
+            },
             "effects": {
               "type": "array",
-              "items": { "$ref": "#/$defs/action_effect" }
+              "items": {
+                "$ref": "#/$defs/action_effect"
+              }
             },
             "success_effects": {
               "type": "array",
-              "items": { "$ref": "#/$defs/action_effect" }
+              "items": {
+                "$ref": "#/$defs/action_effect"
+              }
             },
             "failure_effects": {
               "type": "array",
-              "items": { "$ref": "#/$defs/action_effect" }
+              "items": {
+                "$ref": "#/$defs/action_effect"
+              }
             },
-            "once": { "type": "string" },
-            "disabled_after": { "type": "string" },
-            "visible_after": { "type": "string" },
-            "prepared_turn_id": { "type": "string" },
-            "requirements": { "$ref": "#/$defs/choice_requirements" },
-            "enabled": { "type": "boolean" },
-            "disabled_reason": { "type": "string" },
+            "once": {
+              "type": "string"
+            },
+            "disabled_after": {
+              "type": "string"
+            },
+            "visible_after": {
+              "type": "string"
+            },
+            "prepared_turn_id": {
+              "type": "string"
+            },
+            "requirements": {
+              "$ref": "#/$defs/choice_requirements"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "disabled_reason": {
+              "type": "string"
+            },
             "children": {
               "type": "array",
-              "items": { "$ref": "#/$defs/choice" }
+              "items": {
+                "$ref": "#/$defs/choice"
+              }
             }
           }
         }
@@ -679,41 +1291,80 @@
     },
     "action": {
       "type": "object",
-      "required": ["id", "text"],
+      "required": [
+        "id",
+        "text"
+      ],
       "additionalProperties": true,
       "properties": {
-        "open_shop": { "type": "string" },
-        "secret": { "type": "boolean" },
-        "result_text": { "type": "string" },
-        "id": { "type": "string" },
-        "text": { "type": "string" },
-        "preview": { "type": "string" },
-        "risk": { "type": "string" },
+        "open_shop": {
+          "type": "string"
+        },
+        "secret": {
+          "type": "boolean"
+        },
+        "result_text": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "preview": {
+          "type": "string"
+        },
+        "risk": {
+          "type": "string"
+        },
         "intent_keywords": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
-        "requirements": { "$ref": "#/$defs/choice_requirements" },
-        "roll": { "$ref": "#/$defs/action_roll" },
+        "requirements": {
+          "$ref": "#/$defs/choice_requirements"
+        },
+        "roll": {
+          "$ref": "#/$defs/action_roll"
+        },
         "effects": {
           "type": "array",
-          "items": { "$ref": "#/$defs/action_effect" }
+          "items": {
+            "$ref": "#/$defs/action_effect"
+          }
         },
         "success_effects": {
           "type": "array",
-          "items": { "$ref": "#/$defs/action_effect" }
+          "items": {
+            "$ref": "#/$defs/action_effect"
+          }
         },
         "failure_effects": {
           "type": "array",
-          "items": { "$ref": "#/$defs/action_effect" }
+          "items": {
+            "$ref": "#/$defs/action_effect"
+          }
         },
-        "once": { "type": "string" },
-        "disabled_after": { "type": "string" },
-        "visible_after": { "type": "string" },
-        "prepared_turn_id": { "type": "string" },
+        "once": {
+          "type": "string"
+        },
+        "disabled_after": {
+          "type": "string"
+        },
+        "visible_after": {
+          "type": "string"
+        },
+        "prepared_turn_id": {
+          "type": "string"
+        },
         "children": {
           "type": "array",
-          "items": { "$ref": "#/$defs/action" }
+          "items": {
+            "$ref": "#/$defs/action"
+          }
         },
         "roll_bonuses": {
           "type": "array",
@@ -746,25 +1397,47 @@
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "dice_type": { "type": "string" },
-        "dc": { "type": "integer" }
+        "dice_type": {
+          "type": "string"
+        },
+        "dc": {
+          "type": "integer"
+        }
       }
     },
     "action_effect": {
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "gold_change": { "type": "integer" },
+        "gold_change": {
+          "type": "integer"
+        },
         "add_item": {},
         "remove_item": {},
-        "inventory_add": { "type": "array" },
-        "inventory_remove": { "type": "array" },
-        "set_flag": { "type": "string" },
-        "unset_flag": { "type": "string" },
-        "current_scene": { "type": "string" },
-        "current_location": { "type": "string" },
-        "next_scene": { "type": "string" },
-        "next_location": { "type": "string" }
+        "inventory_add": {
+          "type": "array"
+        },
+        "inventory_remove": {
+          "type": "array"
+        },
+        "set_flag": {
+          "type": "string"
+        },
+        "unset_flag": {
+          "type": "string"
+        },
+        "current_scene": {
+          "type": "string"
+        },
+        "current_location": {
+          "type": "string"
+        },
+        "next_scene": {
+          "type": "string"
+        },
+        "next_location": {
+          "type": "string"
+        }
       }
     },
     "choice_requirements": {
@@ -852,27 +1525,47 @@
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "attribute": { "type": "string" },
-        "gte": { "type": "number" },
-        "min": { "type": "number" },
-        "gt": { "type": "number" }
+        "attribute": {
+          "type": "string"
+        },
+        "gte": {
+          "type": "number"
+        },
+        "min": {
+          "type": "number"
+        },
+        "gt": {
+          "type": "number"
+        }
       }
     },
     "dialogue_turn": {
       "type": "object",
-      "required": ["id"],
+      "required": [
+        "id"
+      ],
       "additionalProperties": true,
       "properties": {
-        "id": { "type": "string" },
+        "id": {
+          "type": "string"
+        },
         "trigger_keywords": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
-        "gm_text": { "type": "string" },
-        "state_delta": { "type": "object" },
+        "gm_text": {
+          "type": "string"
+        },
+        "state_delta": {
+          "type": "object"
+        },
         "choices": {
           "type": "array",
-          "items": { "$ref": "#/$defs/choice" }
+          "items": {
+            "$ref": "#/$defs/choice"
+          }
         },
         "followups": {
           "type": "array",
@@ -880,10 +1573,18 @@
             "type": "object",
             "additionalProperties": true,
             "properties": {
-              "choice_text": { "type": "string" },
-              "gm_text": { "type": "string" },
-              "state_delta": { "type": "object" },
-              "next_scene": { "type": "string" }
+              "choice_text": {
+                "type": "string"
+              },
+              "gm_text": {
+                "type": "string"
+              },
+              "state_delta": {
+                "type": "object"
+              },
+              "next_scene": {
+                "type": "string"
+              }
             }
           }
         }
@@ -891,38 +1592,71 @@
     },
     "prepared_turn": {
       "type": "object",
-      "required": ["id", "draft"],
+      "required": [
+        "id",
+        "draft"
+      ],
       "additionalProperties": true,
       "properties": {
-        "id": { "type": "string" },
-        "action_id": { "type": "string" },
-        "outcome": { "type": "string" },
-        "purpose": { "type": "string" },
-        "source_choice": { "type": "string" },
-        "player_intent": { "type": "string" },
+        "id": {
+          "type": "string"
+        },
+        "action_id": {
+          "type": "string"
+        },
+        "outcome": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "source_choice": {
+          "type": "string"
+        },
+        "player_intent": {
+          "type": "string"
+        },
         "trigger_keywords": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
         "draft": {
           "type": "object",
-          "required": ["gm_text"],
+          "required": [
+            "gm_text"
+          ],
           "additionalProperties": true,
           "properties": {
-            "gm_text": { "type": "string" },
-            "system_log": { "type": "string" },
-            "dice_type": { "type": "string" },
-            "dice_dc": { "type": "integer" },
-            "state_delta": { "type": "object" },
+            "gm_text": {
+              "type": "string"
+            },
+            "system_log": {
+              "type": "string"
+            },
+            "dice_type": {
+              "type": "string"
+            },
+            "dice_dc": {
+              "type": "integer"
+            },
+            "state_delta": {
+              "type": "object"
+            },
             "choices": {
               "type": "array",
-              "items": { "$ref": "#/$defs/choice" }
+              "items": {
+                "$ref": "#/$defs/choice"
+              }
             }
           }
         },
         "rewrite_notes": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         }
       }
     },

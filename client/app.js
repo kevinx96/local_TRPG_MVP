@@ -1256,9 +1256,20 @@ function renderEnding(gameOver) {
     return;
   }
   els.endingTitle.textContent = gameOver.title || "敗北";
+  const complete = ["ignis_defeated", "ignis_purified", "draco_defeated", "draco_defeated_with_ignis"].includes(gameOver.ending);
+  els.endingOverlay.classList.toggle("complete", complete);
   const endingLabel = document.querySelector("#endingLabel");
-  if (endingLabel) endingLabel.textContent = ["ignis_defeated", "ignis_purified", "draco_defeated", "draco_defeated_with_ignis"].includes(gameOver.ending) ? "ADVENTURE COMPLETE" : "GAME OVER";
+  if (endingLabel) endingLabel.textContent = complete ? "ADVENTURE COMPLETE" : "GAME OVER";
   els.endingReason.textContent = gameOver.reason || "物語はここで終わりました。";
+  const epilogue = document.querySelector("#endingEpilogue");
+  if (epilogue) {
+    epilogue.replaceChildren(...(gameOver.epilogue || []).map((line, index) => {
+      const item = document.createElement("li");
+      item.textContent = line;
+      item.style.animationDelay = `${0.6 + index * 0.5}s`;
+      return item;
+    }));
+  }
   els.endingOverlay.style.display = "";
 }
 

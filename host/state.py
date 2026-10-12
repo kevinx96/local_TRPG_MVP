@@ -1462,6 +1462,22 @@ def _expand_conditional_effects(effects: list[Any], session: Optional[dict[str, 
     return expanded
 
 
+def _epilogue_lines(session: dict[str, Any], game_over: dict[str, Any]) -> list[str]:
+    """Aftermath lines for the ending, chosen by the flags the player earned along the way."""
+    pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else {}
+    ending = str(game_over.get("ending") or "")
+    lines: list[str] = []
+    for entry in pack.get("epilogues") or []:
+        if not isinstance(entry, dict) or not entry.get("text"):
+            continue
+        endings = entry.get("endings") or []
+        if endings and ending not in endings:
+            continue
+        if _session_requirement_passes(entry.get("requirements"), session):
+            lines.append(str(entry["text"]))
+    return lines
+
+
 def _session_requirement_passes(requirement: Any, session: Optional[dict[str, Any]]) -> bool:
     if isinstance(requirement, list):
         return all(_session_requirement_passes(item, session) for item in requirement)
@@ -2007,6 +2023,7 @@ def _apply_state_delta(
         game_over = deepcopy(raw_game_over) if isinstance(raw_game_over, dict) else {"reason": str(raw_game_over)}
         game_over.setdefault("reason", "物語はここで終わりました。")
         game_over.setdefault("created_at", utc_now())
+        game_over.setdefault("epilogue", _epilogue_lines(session, game_over))
         session["game_over"] = game_over
         session["choices"] = []
         record_state_event(session, "game_over", str(game_over["reason"]), game_over)
