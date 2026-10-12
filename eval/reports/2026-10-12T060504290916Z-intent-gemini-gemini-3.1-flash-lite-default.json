@@ -1,0 +1,588 @@
+{
+  "run_id": "2026-10-12T060504290916Z-intent-gemini-gemini-3.1-flash-lite-default",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "default",
+  "split": "all",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\candidates\\intent_v2_current.jsonl",
+  "cases_sha256": "8d071f8d1b5a82df94d15d79221abfef8f239c0a386a565ace0572e56f400e92",
+  "quota_exhausted": null,
+  "response_failures": {
+    "whitespace": 0,
+    "empty_object": 0,
+    "other": 0,
+    "no_response": 0
+  },
+  "metrics": {
+    "total": 486,
+    "evaluated": 486,
+    "statuses": {
+      "ok": 486
+    },
+    "normalizations": 54,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 426,
+      "S1": 36,
+      "S2": 18,
+      "S3": 6,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.9506172839506173,
+    "s3_rate": 0.012345679012345678,
+    "engine_caught": 3,
+    "exact": 0.9135802469135802,
+    "kind": 0.9567901234567902,
+    "kind_relaxed": 0.9567901234567902,
+    "field_kind": 0.9567901234567902,
+    "field_action_id": 0.9814814814814815,
+    "field_operation": 0.9917695473251029,
+    "field_target_id": 0.9465020576131687,
+    "field_item_id": 0.9979423868312757,
+    "field_advance": 0.9979423868312757,
+    "confusion_matrix": {
+      "clarify": {
+        "clarify": 11,
+        "dialogue": 3,
+        "interact": 1,
+        "existing": 1
+      },
+      "clarify|dialogue": {
+        "existing": 1
+      },
+      "clarify|dialogue|existing": {
+        "existing": 2
+      },
+      "clarify|dialogue|existing|unsupported": {
+        "existing": 1
+      },
+      "clarify|dialogue|unsupported": {
+        "dialogue": 5,
+        "unsupported": 36
+      },
+      "clarify|existing": {
+        "existing": 21,
+        "clarify": 7,
+        "dialogue": 3,
+        "unsupported": 1
+      },
+      "clarify|existing|interact": {
+        "clarify": 5,
+        "existing": 4
+      },
+      "clarify|interact": {
+        "interact": 17,
+        "existing": 4,
+        "dialogue": 1,
+        "clarify": 2
+      },
+      "clarify|unsupported": {
+        "unsupported": 21,
+        "dialogue": 2
+      },
+      "dialogue": {
+        "dialogue": 77,
+        "existing": 1,
+        "interact": 2
+      },
+      "dialogue|existing": {
+        "existing": 1
+      },
+      "dialogue|existing|unsupported": {
+        "dialogue": 9,
+        "existing": 4,
+        "unsupported": 1
+      },
+      "dialogue|interact": {
+        "dialogue": 7,
+        "interact": 2
+      },
+      "dialogue|interact|unsupported": {
+        "interact": 1,
+        "dialogue": 2
+      },
+      "dialogue|unsupported": {
+        "dialogue": 3,
+        "unsupported": 1
+      },
+      "existing": {
+        "existing": 113
+      },
+      "interact": {
+        "interact": 112,
+        "clarify": 1
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.7,
+        "kind": 0.9,
+        "kind_relaxed": 0.9,
+        "s3_count": 0,
+        "engine_caught": 2
+      },
+      "colloquial": {
+        "count": 20,
+        "normalizations": 5,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "conditional": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.85,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "context_followup": {
+        "count": 20,
+        "normalizations": 1,
+        "exact": 0.9,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "declared_success": {
+        "count": 20,
+        "normalizations": 2,
+        "exact": 0.7,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "deixis_multi": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.65,
+        "kind": 0.65,
+        "kind_relaxed": 0.65,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_unique": {
+        "count": 20,
+        "normalizations": 2,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "dialogue": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.95,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "excluded_means": {
+        "count": 20,
+        "normalizations": 4,
+        "exact": 0.95,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_exact": {
+        "count": 20,
+        "normalizations": 5,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 20,
+        "normalizations": 6,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "impossible": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.95,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "injection": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.95,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_distract": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_observe": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_prepare": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_sneak": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_use_item": {
+        "count": 20,
+        "normalizations": 4,
+        "exact": 0.95,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 46,
+        "normalizations": 11,
+        "exact": 0.9130434782608695,
+        "kind": 0.9782608695652174,
+        "kind_relaxed": 0.9782608695652174,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "missing_item": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "negation": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "parallel": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.9,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "sequential": {
+        "count": 20,
+        "normalizations": 14,
+        "exact": 0.65,
+        "kind": 0.7,
+        "kind_relaxed": 0.7,
+        "s3_count": 5,
+        "engine_caught": 1
+      }
+    },
+    "negation": {
+      "count": 20,
+      "preserved": 1.0,
+      "kind": 1.0
+    },
+    "injection": {
+      "count": 20,
+      "no_state_change": 0.95,
+      "kind": 1.0,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 20,
+      "no_state_change": 0.75,
+      "kind": 1.0,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 5
+    },
+    "clarify": {
+      "precision": 0.9615384615384616,
+      "recall": 0.16778523489932887
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.0,
+    "latency_ms": {
+      "p50": 993.933,
+      "p95": 1352.70225
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 771.783950617284,
+        "reported": 486
+      },
+      "output_tokens": {
+        "mean": 83.96502057613169,
+        "reported": 486
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.00031889351851851854,
+    "cost_currency": "USD",
+    "cost_reported": 486,
+    "top_errors": [
+      {
+        "tag": "deixis_multi",
+        "errors": 7,
+        "examples": [
+          {
+            "id": "v2cur-deixis_multi-003",
+            "input": "そっちの相手と話をさせて。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"sarah\",\"item_id\":\"\",\"advance\":false,\"approach\":\"\",\"reply\":\"サラ「いらっしゃい！何か用かな？それとも、何か珍しいものでも持ってる？」\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "sarah",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "サラ「いらっしゃい！何か用かな？それとも、何か珍しいものでも持ってる？」"
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2cur-deixis_multi-005",
+            "input": "それを調べてみて。",
+            "raw_response": "{\n  \"kind\": \"interact\",\n  \"action_id\": \"\",\n  \"operation\": \"observe\",\n  \"target_id\": \"forest_slime\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"スライムの様子を詳しく観察し、その行動パターンや弱点がないか注意深く調べます。\",\n  \"reply\": \"\"\n}",
+            "plan": {
+              "kind": "interact",
+              "action_id": "",
+              "operation": "observe",
+              "target_id": "forest_slime",
+              "item_id": "",
+              "advance": false,
+              "approach": "スライムの様子を詳しく観察し、その行動パターンや弱点がないか注意深く調べます。",
+              "reply": ""
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "sequential",
+        "errors": 7,
+        "examples": [
+          {
+            "id": "v2cur-sequential-010",
+            "input": "ゴブリンに挨拶してから箱探しを引き受けるね。",
+            "raw_response": "{\n  \"kind\": \"existing\",\n  \"action_id\": \"help_lost_goblin\",\n  \"operation\": \"\",\n  \"target_id\": \"\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"迷子のゴブリンに声をかけて挨拶をし、箱を取り戻す依頼を引き受ける。\",\n  \"reply\": \"「本当！？ありがとう！箱は北の洞窟に持ち去られたんだ。どうか取り返してきてくれ！」\"\n}",
+            "plan": {
+              "kind": "existing",
+              "action_id": "help_lost_goblin",
+              "operation": "",
+              "target_id": "",
+              "item_id": "",
+              "advance": false,
+              "approach": "迷子のゴブリンに声をかけて挨拶をし、箱を取り戻す依頼を引き受ける。",
+              "reply": "「本当！？ありがとう！箱は北の洞窟に持ち去られたんだ。どうか取り返してきてくれ！」"
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "lost_goblin",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              }
+            ]
+          },
+          {
+            "id": "v2cur-sequential-011",
+            "input": "薬草で手当てをした後に、泉で休憩します。",
+            "raw_response": "{\"kind\": \"existing\", \"action_id\": \"rest_at_elf_spring\", \"operation\": \"use_item\", \"target_id\": \"self\", \"item_id\": \"herb\", \"advance\": false, \"approach\": \"薬草で傷を癒やしてから、精霊の泉の力で体力を回復させる。\", \"reply\": \"\"}",
+            "plan": {
+              "kind": "existing",
+              "action_id": "rest_at_elf_spring",
+              "operation": "",
+              "target_id": "",
+              "item_id": "",
+              "advance": false,
+              "approach": "薬草で傷を癒やしてから、精霊の泉の力で体力を回復させる。",
+              "reply": "",
+              "normalized": [
+                "operation",
+                "target_id",
+                "item_id"
+              ]
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "interact",
+                "action_id": "",
+                "operation": "use_item",
+                "target_id": "self",
+                "item_id": "herb",
+                "advance": false,
+                "tier": "S0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "chitchat",
+        "errors": 6,
+        "examples": [
+          {
+            "id": "v2cur-chitchat-005",
+            "input": "鍛冶屋の空気って独特だね。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"blacksmith\",\"item_id\":\"\",\"advance\":false,\"approach\":\"\",\"reply\":\"ああ、鉄と火の匂いだな。慣れればどうということはないが、よそ者には少しきついかもしれない。何か用か？\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "blacksmith",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "ああ、鉄と火の匂いだな。慣れればどうということはないが、よそ者には少しきついかもしれない。何か用か？"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2cur-chitchat-007",
+            "input": "青色って落ち着くから好きなんです。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"blue_robed_mage\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"reply\": \"ふむ、青がお好きですか。確かにこのローブの色は、精神を落ち着かせる効果があると言われています。何か落ち着いて話したいことでもありますかな？\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "blue_robed_mage",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "ふむ、青がお好きですか。確かにこのローブの色は、精神を落ち着かせる効果があると言われています。何か落ち着いて話したいことでもありますかな？"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

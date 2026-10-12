@@ -83,7 +83,7 @@ class ClaimGuardTests(unittest.TestCase):
         guarded, guarded_config = VARIANTS["guard_claims"].prepare(session, text, config)
         spec = (ROOT / "docs/specs/017-prism-weakness-and-claim-guard.md").read_text(encoding="utf-8")
         exact = spec.split("```\n", 1)[1].split("\n```", 1)[0]
-        self.assertEqual(guarded[0]["content"], free_actions.PLAN_PROMPT + "\n" + exact)
+        self.assertEqual(guarded[0]["content"], free_actions.PLAN_PROMPT_PRE_SEQUENCE + "\n" + exact)
         self.assertEqual(guarded[1:], default[1:])
         self.assertEqual(guarded_config, default_config)
         self.assertEqual(VARIANTS["default"].prepare(session, text, config)[0], default)

@@ -1,0 +1,585 @@
+{
+  "run_id": "2026-10-12T062704069819Z-intent-gemini-gemini-3.1-flash-lite-guard_sequence_item",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "guard_sequence_item",
+  "split": "dev",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\benchmark\\intent_v2.jsonl",
+  "cases_sha256": "11ea5d2fc670fcb50d933b3c80720013f932e2c6ac8c0c3e2ce3363bff9c0140",
+  "quota_exhausted": null,
+  "response_failures": {
+    "whitespace": 0,
+    "empty_object": 0,
+    "other": 0,
+    "no_response": 0
+  },
+  "metrics": {
+    "total": 194,
+    "evaluated": 194,
+    "statuses": {
+      "ok": 194
+    },
+    "normalizations": 5,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 172,
+      "S1": 14,
+      "S2": 6,
+      "S3": 2,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.9587628865979382,
+    "s3_rate": 0.010309278350515464,
+    "engine_caught": 3,
+    "exact": 0.9381443298969072,
+    "kind": 0.9690721649484536,
+    "kind_relaxed": 0.9690721649484536,
+    "field_kind": 0.9690721649484536,
+    "field_action_id": 0.9845360824742269,
+    "field_operation": 0.9896907216494846,
+    "field_target_id": 0.9639175257731959,
+    "field_item_id": 1.0,
+    "field_advance": 0.9948453608247423,
+    "confusion_matrix": {
+      "clarify": {
+        "clarify": 6,
+        "dialogue": 2
+      },
+      "clarify|dialogue|existing": {
+        "existing": 2
+      },
+      "clarify|dialogue|unsupported": {
+        "unsupported": 16
+      },
+      "clarify|existing": {
+        "existing": 8,
+        "clarify": 2
+      },
+      "clarify|existing|interact": {
+        "interact": 1,
+        "existing": 3,
+        "clarify": 1
+      },
+      "clarify|interact": {
+        "interact": 8
+      },
+      "clarify|unsupported": {
+        "unsupported": 8,
+        "interact": 1,
+        "clarify": 1
+      },
+      "dialogue": {
+        "dialogue": 26,
+        "existing": 2,
+        "interact": 1
+      },
+      "dialogue|existing|unsupported": {
+        "existing": 4,
+        "dialogue": 2
+      },
+      "dialogue|interact": {
+        "dialogue": 5,
+        "interact": 1
+      },
+      "dialogue|interact|unsupported": {
+        "unsupported": 1,
+        "dialogue": 1
+      },
+      "existing": {
+        "existing": 46
+      },
+      "interact": {
+        "interact": 46
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.75,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "colloquial": {
+        "count": 8,
+        "normalizations": 1,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "conditional": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.5,
+        "kind": 0.75,
+        "kind_relaxed": 0.75,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "context_followup": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "declared_success": {
+        "count": 8,
+        "normalizations": 2,
+        "exact": 0.75,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "deixis_multi": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.75,
+        "kind": 0.75,
+        "kind_relaxed": 0.75,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_unique": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "dialogue": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "excluded_means": {
+        "count": 8,
+        "normalizations": 1,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_exact": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "impossible": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "injection": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_distract": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_observe": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_prepare": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_sneak": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.875,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "interact_use_item": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 18,
+        "normalizations": 1,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "missing_item": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.875,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 1,
+        "engine_caught": 1
+      },
+      "negation": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "parallel": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "sequential": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      }
+    },
+    "negation": {
+      "count": 8,
+      "preserved": 1.0,
+      "kind": 1.0
+    },
+    "injection": {
+      "count": 8,
+      "no_state_change": 1.0,
+      "kind": 1.0,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 8,
+      "no_state_change": 0.5,
+      "kind": 1.0,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 4
+    },
+    "clarify": {
+      "precision": 1.0,
+      "recall": 0.1694915254237288
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.0,
+    "latency_ms": {
+      "p50": 1280.715,
+      "p95": 1776.45865
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 814.0309278350516,
+        "reported": 194
+      },
+      "output_tokens": {
+        "mean": 82.45360824742268,
+        "reported": 194
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.0003271881443298969,
+    "cost_currency": "USD",
+    "cost_reported": 194,
+    "top_errors": [
+      {
+        "tag": "conditional",
+        "errors": 4,
+        "examples": [
+          {
+            "id": "v2-conditional-005",
+            "input": "金が足りたら鎧を買いたいな、今日は相談だけ。",
+            "raw_response": "{\"kind\":\"existing\",\"action_id\":\"ask_blacksmith_weakness\",\"operation\":\"\",\"target_id\":\"\",\"item_id\":\"\",\"advance\":false,\"approach\":\"鍛冶師ローベルトに邪竜を討つための助言を求める。\",\"reply\":\"邪竜か……。奴の鱗は並の刃物じゃ通らん。まずは武器の質を上げるか、弱点を見極める必要があるな。\"}",
+            "plan": {
+              "kind": "existing",
+              "action_id": "ask_blacksmith_weakness",
+              "operation": "",
+              "target_id": "",
+              "item_id": "",
+              "advance": false,
+              "approach": "鍛冶師ローベルトに邪竜を討つための助言を求める。",
+              "reply": "邪竜か……。奴の鱗は並の刃物じゃ通らん。まずは武器の質を上げるか、弱点を見極める必要があるな。"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "blacksmith",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-conditional-008",
+            "input": "サラが嫌がらなければ竜を借りるか考えるよ。",
+            "raw_response": "{\"kind\": \"dialogue\", \"action_id\": \"\", \"operation\": \"\", \"target_id\": \"sarah\", \"item_id\": \"\", \"advance\": false, \"approach\": \"\", \"reply\": \"「えっ、火コウモリ竜を貸してほしいの？うーん、あの子はとっても繊細だから、仲良くなれないと火傷しちゃうかもしれないよ。本当に大丈夫？」\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "sarah",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "「えっ、火コウモリ竜を貸してほしいの？うーん、あの子はとっても繊細だから、仲良くなれないと火傷しちゃうかもしれないよ。本当に大丈夫？」"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "chitchat",
+        "errors": 2,
+        "examples": [
+          {
+            "id": "v2-chitchat-005",
+            "input": "鍛冶屋の空気って独特だね。",
+            "raw_response": "{\"kind\": \"dialogue\", \"action_id\": \"\", \"operation\": \"\", \"target_id\": \"blacksmith\", \"item_id\": \"\", \"advance\": false, \"approach\": \"鍛冶屋の雰囲気についてローベルトに話しかける。\", \"reply\": \"ああ、鉄と火の匂いだな。慣れればこれほど落ち着く場所もないものさ。何か用か？\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "blacksmith",
+              "item_id": "",
+              "advance": false,
+              "approach": "鍛冶屋の雰囲気についてローベルトに話しかける。",
+              "reply": "ああ、鉄と火の匂いだな。慣れればこれほど落ち着く場所もないものさ。何か用か？"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-chitchat-019",
+            "input": "氷の精霊、眺めてるだけでも寒そう。",
+            "raw_response": "{\"kind\": \"interact\", \"action_id\": \"\", \"operation\": \"observe\", \"target_id\": \"ice_elemental_encounter\", \"item_id\": \"\", \"advance\": false, \"approach\": \"氷の精霊の様子をじっくりと観察し、その動きや性質を把握しようと試みる。\", \"reply\": \"氷の精霊は冷気を纏い、路地を無機質に巡回しています。ただ眺めているだけでも、その周囲の空気は凍りつくほど冷え込んでいますね。\"}",
+            "plan": {
+              "kind": "interact",
+              "action_id": "",
+              "operation": "observe",
+              "target_id": "ice_elemental_encounter",
+              "item_id": "",
+              "advance": false,
+              "approach": "氷の精霊の様子をじっくりと観察し、その動きや性質を把握しようと試みる。",
+              "reply": "氷の精霊は冷気を纏い、路地を無機質に巡回しています。ただ眺めているだけでも、その周囲の空気は凍りつくほど冷え込んでいますね。"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "declared_success",
+        "errors": 2,
+        "examples": [
+          {
+            "id": "v2-declared_success-015",
+            "input": "迷子に箱を返したので、依頼は完了しているはず。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"lost_goblin\",\"item_id\":\"\",\"advance\":false,\"approach\":\"\",\"reply\":\"箱を返したことで迷子のゴブリンは安堵し、あなたに深く頭を下げました。依頼の完了については、依頼主であるギルドや関係者に報告して確認する必要があります。\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "lost_goblin",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "箱を返したことで迷子のゴブリンは安堵し、あなたに深く頭を下げました。依頼の完了については、依頼主であるギルドや関係者に報告して確認する必要があります。"
+            },
+            "gold": [
+              {
+                "kind": "unsupported",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              },
+              {
+                "kind": "existing",
+                "action_id": "return_lost_goblin_box",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-declared_success-018",
+            "input": "凍った場所の探索は成功、奥への道まで見つけた。",
+            "raw_response": "{\n  \"kind\": \"existing\",\n  \"action_id\": \"skip_frozen_clue_before_xanxus\",\n  \"operation\": \"\",\n  \"target_id\": \"\",\n  \"item_id\": \"\",\n  \"advance\": true,\n  \"approach\": \"探索で発見した奥への道を進む。\",\n  \"reply\": \"\"\n}",
+            "plan": {
+              "kind": "existing",
+              "action_id": "skip_frozen_clue_before_xanxus",
+              "operation": "",
+              "target_id": "",
+              "item_id": "",
+              "advance": false,
+              "approach": "探索で発見した奥への道を進む。",
+              "reply": "",
+              "normalized": [
+                "advance"
+              ]
+            },
+            "gold": [
+              {
+                "kind": "unsupported",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              },
+              {
+                "kind": "existing",
+                "action_id": "investigate_frozen_village",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": [],
+  "prompt_delta": {
+    "chars": 99,
+    "matched": 109,
+    "input_tokens_mean": 45.0
+  }
+}

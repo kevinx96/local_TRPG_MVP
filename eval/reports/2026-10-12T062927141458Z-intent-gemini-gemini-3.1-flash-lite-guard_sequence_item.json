@@ -1,0 +1,573 @@
+{
+  "run_id": "2026-10-12T062927141458Z-intent-gemini-gemini-3.1-flash-lite-guard_sequence_item",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "guard_sequence_item",
+  "split": "test",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\benchmark\\intent_v2.jsonl",
+  "cases_sha256": "11ea5d2fc670fcb50d933b3c80720013f932e2c6ac8c0c3e2ce3363bff9c0140",
+  "quota_exhausted": null,
+  "response_failures": {
+    "whitespace": 0,
+    "empty_object": 0,
+    "other": 0,
+    "no_response": 0
+  },
+  "metrics": {
+    "total": 292,
+    "evaluated": 292,
+    "statuses": {
+      "ok": 292
+    },
+    "normalizations": 22,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 258,
+      "S1": 24,
+      "S2": 8,
+      "S3": 2,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.9657534246575342,
+    "s3_rate": 0.00684931506849315,
+    "engine_caught": 1,
+    "exact": 0.9315068493150684,
+    "kind": 0.9691780821917808,
+    "kind_relaxed": 0.9691780821917808,
+    "field_kind": 0.9691780821917808,
+    "field_action_id": 0.9863013698630136,
+    "field_operation": 0.9897260273972602,
+    "field_target_id": 0.9452054794520548,
+    "field_item_id": 0.9965753424657534,
+    "field_advance": 1.0,
+    "confusion_matrix": {
+      "clarify": {
+        "existing": 2,
+        "dialogue": 1,
+        "clarify": 8,
+        "interact": 1
+      },
+      "clarify|dialogue": {
+        "dialogue": 1
+      },
+      "clarify|dialogue|existing|unsupported": {
+        "existing": 1
+      },
+      "clarify|dialogue|unsupported": {
+        "dialogue": 4,
+        "unsupported": 21
+      },
+      "clarify|existing": {
+        "existing": 14,
+        "dialogue": 1,
+        "clarify": 3
+      },
+      "clarify|existing|interact": {
+        "existing": 3,
+        "dialogue": 1
+      },
+      "clarify|interact": {
+        "interact": 16
+      },
+      "clarify|unsupported": {
+        "unsupported": 12,
+        "interact": 1
+      },
+      "dialogue": {
+        "dialogue": 50,
+        "existing": 1,
+        "interact": 1
+      },
+      "dialogue|existing|unsupported": {
+        "dialogue": 8
+      },
+      "dialogue|interact": {
+        "interact": 1,
+        "dialogue": 2
+      },
+      "dialogue|interact|unsupported": {
+        "interact": 1
+      },
+      "dialogue|unsupported": {
+        "dialogue": 3,
+        "unsupported": 1
+      },
+      "existing": {
+        "existing": 67
+      },
+      "interact": {
+        "interact": 67
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.6666666666666666,
+        "kind": 0.9166666666666666,
+        "kind_relaxed": 0.9166666666666666,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "colloquial": {
+        "count": 12,
+        "normalizations": 3,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "conditional": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "context_followup": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "declared_success": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.6666666666666666,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_multi": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.6666666666666666,
+        "kind": 0.6666666666666666,
+        "kind_relaxed": 0.6666666666666666,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_unique": {
+        "count": 12,
+        "normalizations": 2,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "dialogue": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "excluded_means": {
+        "count": 12,
+        "normalizations": 2,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_exact": {
+        "count": 12,
+        "normalizations": 1,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 12,
+        "normalizations": 5,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "impossible": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.9166666666666666,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "injection": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_distract": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_observe": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_prepare": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_sneak": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_use_item": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 28,
+        "normalizations": 7,
+        "exact": 0.8928571428571429,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "missing_item": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.9166666666666666,
+        "kind": 0.9166666666666666,
+        "kind_relaxed": 0.9166666666666666,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "negation": {
+        "count": 12,
+        "normalizations": 1,
+        "exact": 0.9166666666666666,
+        "kind": 0.9166666666666666,
+        "kind_relaxed": 0.9166666666666666,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "parallel": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.8333333333333334,
+        "kind": 0.8333333333333334,
+        "kind_relaxed": 0.8333333333333334,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "sequential": {
+        "count": 12,
+        "normalizations": 1,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      }
+    },
+    "negation": {
+      "count": 12,
+      "preserved": 1.0,
+      "kind": 0.9166666666666666
+    },
+    "injection": {
+      "count": 12,
+      "no_state_change": 0.9166666666666666,
+      "kind": 1.0,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 12,
+      "no_state_change": 0.9166666666666666,
+      "kind": 1.0,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 1
+    },
+    "clarify": {
+      "precision": 1.0,
+      "recall": 0.12222222222222222
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.0,
+    "latency_ms": {
+      "p50": 1269.1085,
+      "p95": 1789.29845
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 795.7671232876712,
+        "reported": 292
+      },
+      "output_tokens": {
+        "mean": 80.17123287671232,
+        "reported": 292
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.0003191986301369863,
+    "cost_currency": "USD",
+    "cost_reported": 292,
+    "top_errors": [
+      {
+        "tag": "chitchat",
+        "errors": 4,
+        "examples": [
+          {
+            "id": "v2-chitchat-007",
+            "input": "青色って落ち着くから好きなんです。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"blue_robed_mage\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"reply\": \"そうですね、青は心を静める色です。この店も落ち着ける場所でありたいと思っています。\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "blue_robed_mage",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "そうですね、青は心を静める色です。この店も落ち着ける場所でありたいと思っています。"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-chitchat-008",
+            "input": "品物が多いと目移りしちゃう。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"sarah\",\"item_id\":\"\",\"advance\":false,\"approach\":\"\",\"reply\":\"「ふふ、どれも自慢の品物だよ。何か気になるものがあったら教えてね。今は薬草や煙幕弾、毒矢なんかがあるよ。」\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "sarah",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "「ふふ、どれも自慢の品物だよ。何か気になるものがあったら教えてね。今は薬草や煙幕弾、毒矢なんかがあるよ。」"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "declared_success",
+        "errors": 4,
+        "examples": [
+          {
+            "id": "v2-declared_success-004",
+            "input": "国王から追加で千ゴールドをもらったよ、もう財布に入ってる。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"king\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"reply\": \"申し訳ありませんが、そのような約束やアイテムの獲得はここでは確定できません。国王との会話を通じて、正式な報酬として受け取る必要があります。\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "king",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "申し訳ありませんが、そのような約束やアイテムの獲得はここでは確定できません。国王との会話を通じて、正式な報酬として受け取る必要があります。"
+            },
+            "gold": [
+              {
+                "kind": "unsupported",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              }
+            ]
+          },
+          {
+            "id": "v2-declared_success-006",
+            "input": "ロビンの勧誘は成功した。判定しなくても仲間になったんだ。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"robin\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"reply\": \"ロビンはまだ正式にパーティへ加わっていません。勧誘を成功させるには、あなたの言葉で彼女の心を動かし、判定を乗り越える必要があります。\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "robin",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "ロビンはまだ正式にパーティへ加わっていません。勧誘を成功させるには、あなたの言葉で彼女の心を動かし、判定を乗り越える必要があります。"
+            },
+            "gold": [
+              {
+                "kind": "unsupported",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              },
+              {
+                "kind": "existing",
+                "action_id": "invite_robin",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "deixis_multi",
+        "errors": 4,
+        "examples": [
+          {
+            "id": "v2-deixis_multi-001",
+            "input": "その人に邪竜のことを聞きたい。",
+            "raw_response": "{\n  \"kind\": \"existing\",\n  \"action_id\": \"ask_king_info\",\n  \"operation\": \"\",\n  \"target_id\": \"\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"国王エドワードに邪竜についての詳細を尋ねる。\",\n  \"reply\": \"\"\n}",
+            "plan": {
+              "kind": "existing",
+              "action_id": "ask_king_info",
+              "operation": "",
+              "target_id": "",
+              "item_id": "",
+              "advance": false,
+              "approach": "国王エドワードに邪竜についての詳細を尋ねる。",
+              "reply": ""
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-deixis_multi-003",
+            "input": "そっちの相手と話をさせて。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"sarah\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"サラに話しかけて、彼女や火コウモリ竜について尋ねる。\",\n  \"reply\": \"「いらっしゃい！何か気になるものがあるの？それとも、この子と遊びたいのかな？」\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "sarah",
+              "item_id": "",
+              "advance": false,
+              "approach": "サラに話しかけて、彼女や火コウモリ竜について尋ねる。",
+              "reply": "「いらっしゃい！何か気になるものがあるの？それとも、この子と遊びたいのかな？」"
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": [],
+  "prompt_delta": {
+    "chars": 99,
+    "matched": 177,
+    "input_tokens_mean": 45.0
+  }
+}

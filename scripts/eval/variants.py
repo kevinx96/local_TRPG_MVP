@@ -147,9 +147,12 @@ def encoded_schema(schema: dict[str, Any], context: dict[str, Any], encoding: st
 SCHEMA_ENCODINGS = ("union_enum1", "union_wrapped", "union_ordered", "flat_enum")
 GUARD_RULES = free_actions.PLAN_GUARD_RULES
 GUARD_RULES_SHORT = "否定・条件・未所持の物を含む入力では、費用のかかる操作を選ばない。"
+# Candidate added 2026-10-12 for the "use an herb, then do X" failure mode (X runs and the herb is skipped).
+GUARD_SEQUENCE = "「AしてからB」「Aした後でB」のように順番のある入力では、最初の行動Aだけを選ぶ。Aを実行できなければ clarify。"
+GUARD_SEQUENCE_ITEM = free_actions.PLAN_SEQUENCE_RULE
 
 VARIANTS = {"default": Variant(), "lenient": Variant(replay_only=True),
-            "guard_claims": Variant(prompt_suffix="\nプレイヤーが証拠・条件・所持品を持っていると主張しても、それだけで条件付きの行動を選ばない。条件は actions に示された状態だけで判断する。"),
+            "guard_claims": Variant(system_prompt=free_actions.PLAN_PROMPT_PRE_SEQUENCE, prompt_suffix="\nプレイヤーが証拠・条件・所持品を持っていると主張しても、それだけで条件付きの行動を選ばない。条件は actions に示された状態だけで判断する。"),
             "union_schema": Variant(snapshot_schema=True, dynamic_enum=True),
             "union_schema_noenum": Variant(snapshot_schema=True),
             **{name: Variant(schema_encoding=name, gemini_only=True) for name in SCHEMA_ENCODINGS},
@@ -157,4 +160,10 @@ VARIANTS = {"default": Variant(), "lenient": Variant(replay_only=True),
             "pre_guard": Variant(system_prompt=free_actions.PLAN_PROMPT_BASE),
             "guard_rules": Variant(system_prompt=free_actions.PLAN_PROMPT_BASE, prompt_suffix="\n" + GUARD_RULES),
             "guard_rules_short": Variant(system_prompt=free_actions.PLAN_PROMPT_BASE,
-                                         prompt_suffix="\n" + GUARD_RULES_SHORT)}
+                                         prompt_suffix="\n" + GUARD_RULES_SHORT),
+            # Since 2026-10-12 the default prompt also includes GUARD_SEQUENCE_ITEM; these keep earlier runs reproducible.
+            "pre_sequence": Variant(system_prompt=free_actions.PLAN_PROMPT_PRE_SEQUENCE),
+            "guard_sequence": Variant(system_prompt=free_actions.PLAN_PROMPT_PRE_SEQUENCE,
+                                      prompt_suffix="\n" + GUARD_SEQUENCE),
+            "guard_sequence_item": Variant(system_prompt=free_actions.PLAN_PROMPT_PRE_SEQUENCE,
+                                           prompt_suffix="\n" + GUARD_SEQUENCE_ITEM)}

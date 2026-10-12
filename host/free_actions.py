@@ -56,7 +56,10 @@ PLAN_GUARD_RULES = (
     "「〜したら」「〜なら」の条件付き行動は今は実行しない。\n"
     "inventory にない物は使わない。別の物で代用しない。"
 )
-PLAN_PROMPT = PLAN_PROMPT_BASE + "\n" + PLAN_GUARD_RULES
+PLAN_PROMPT_PRE_SEQUENCE = PLAN_PROMPT_BASE + "\n" + PLAN_GUARD_RULES
+# Added 2026-10-12 (docs/design/prompt-log.md): stops "use an herb, then do X" from running X and skipping the herb.
+PLAN_SEQUENCE_RULE = "「AしてからB」「Aした後でB」のように順番のある入力では、最初の行動Aだけを選ぶ（Aが薬草などの所持品の使用なら interact の use_item）。Aを実行できなければ clarify。"
+PLAN_PROMPT = PLAN_PROMPT_PRE_SEQUENCE + "\n" + PLAN_SEQUENCE_RULE
 
 
 class InvalidPlan(ValueError):

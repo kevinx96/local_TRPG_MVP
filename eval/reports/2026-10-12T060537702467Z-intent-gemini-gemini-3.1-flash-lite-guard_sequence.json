@@ -1,0 +1,587 @@
+{
+  "run_id": "2026-10-12T060537702467Z-intent-gemini-gemini-3.1-flash-lite-guard_sequence",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "guard_sequence",
+  "split": "all",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\candidates\\intent_v2_current.jsonl",
+  "cases_sha256": "8d071f8d1b5a82df94d15d79221abfef8f239c0a386a565ace0572e56f400e92",
+  "quota_exhausted": null,
+  "response_failures": {
+    "whitespace": 0,
+    "empty_object": 0,
+    "other": 3,
+    "no_response": 0
+  },
+  "metrics": {
+    "total": 486,
+    "evaluated": 486,
+    "statuses": {
+      "ok": 483,
+      "invalid_plan": 3
+    },
+    "normalizations": 39,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 422,
+      "S1": 38,
+      "S2": 24,
+      "S3": 2,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.9465020576131687,
+    "s3_rate": 0.00411522633744856,
+    "engine_caught": 5,
+    "exact": 0.9197530864197531,
+    "kind": 0.9547325102880658,
+    "kind_relaxed": 0.9547325102880658,
+    "field_kind": 0.9547325102880658,
+    "field_action_id": 0.9794238683127572,
+    "field_operation": 0.9876543209876543,
+    "field_target_id": 0.9465020576131687,
+    "field_item_id": 0.9938271604938271,
+    "field_advance": 0.9917695473251029,
+    "confusion_matrix": {
+      "clarify": {
+        "dialogue": 4,
+        "clarify": 10,
+        "interact": 1,
+        "existing": 1
+      },
+      "clarify|dialogue": {
+        "dialogue": 1
+      },
+      "clarify|dialogue|existing": {
+        "existing": 2
+      },
+      "clarify|dialogue|existing|unsupported": {
+        "existing": 1
+      },
+      "clarify|dialogue|unsupported": {
+        "dialogue": 5,
+        "unsupported": 36
+      },
+      "clarify|existing": {
+        "existing": 22,
+        "clarify": 6,
+        "dialogue": 3,
+        "unsupported": 1
+      },
+      "clarify|existing|interact": {
+        "clarify": 2,
+        "existing": 7
+      },
+      "clarify|interact": {
+        "interact": 18,
+        "existing": 2,
+        "invalid": 2,
+        "clarify": 2
+      },
+      "clarify|unsupported": {
+        "unsupported": 20,
+        "dialogue": 3
+      },
+      "dialogue": {
+        "dialogue": 76,
+        "existing": 2,
+        "interact": 2
+      },
+      "dialogue|existing": {
+        "existing": 1
+      },
+      "dialogue|existing|unsupported": {
+        "dialogue": 12,
+        "existing": 2
+      },
+      "dialogue|interact": {
+        "dialogue": 7,
+        "interact": 2
+      },
+      "dialogue|interact|unsupported": {
+        "dialogue": 2,
+        "unsupported": 1
+      },
+      "dialogue|unsupported": {
+        "dialogue": 3,
+        "unsupported": 1
+      },
+      "existing": {
+        "existing": 113
+      },
+      "interact": {
+        "interact": 112,
+        "existing": 1
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.7,
+        "kind": 0.9,
+        "kind_relaxed": 0.9,
+        "s3_count": 0,
+        "engine_caught": 2
+      },
+      "colloquial": {
+        "count": 20,
+        "normalizations": 7,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "conditional": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.85,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "context_followup": {
+        "count": 20,
+        "normalizations": 1,
+        "exact": 0.95,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "declared_success": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.8,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_multi": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.55,
+        "kind": 0.55,
+        "kind_relaxed": 0.55,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_unique": {
+        "count": 20,
+        "normalizations": 2,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "dialogue": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "excluded_means": {
+        "count": 20,
+        "normalizations": 4,
+        "exact": 0.95,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_exact": {
+        "count": 20,
+        "normalizations": 3,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 20,
+        "normalizations": 7,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "impossible": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.95,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "injection": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.95,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_distract": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_observe": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_prepare": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_sneak": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.9,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 2
+      },
+      "interact_use_item": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.95,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 46,
+        "normalizations": 8,
+        "exact": 0.9565217391304348,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "missing_item": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.9,
+        "kind": 0.9,
+        "kind_relaxed": 0.9,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "negation": {
+        "count": 20,
+        "normalizations": 1,
+        "exact": 0.95,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "parallel": {
+        "count": 20,
+        "normalizations": 0,
+        "exact": 0.95,
+        "kind": 0.95,
+        "kind_relaxed": 0.95,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "sequential": {
+        "count": 20,
+        "normalizations": 6,
+        "exact": 0.8,
+        "kind": 0.8,
+        "kind_relaxed": 0.8,
+        "s3_count": 1,
+        "engine_caught": 1
+      }
+    },
+    "negation": {
+      "count": 20,
+      "preserved": 1.0,
+      "kind": 0.95
+    },
+    "injection": {
+      "count": 20,
+      "no_state_change": 0.95,
+      "kind": 1.0,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 20,
+      "no_state_change": 0.9,
+      "kind": 1.0,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 2
+    },
+    "clarify": {
+      "precision": 1.0,
+      "recall": 0.1342281879194631
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.006172839506172839,
+    "latency_ms": {
+      "p50": 1309.5729999999999,
+      "p95": 1763.6165
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 800.783950617284,
+        "reported": 486
+      },
+      "output_tokens": {
+        "mean": 78.9074074074074,
+        "reported": 486
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.0003185570987654321,
+    "cost_currency": "USD",
+    "cost_reported": 486,
+    "top_errors": [
+      {
+        "tag": "deixis_multi",
+        "errors": 9,
+        "examples": [
+          {
+            "id": "v2cur-deixis_multi-001",
+            "input": "その人に邪竜のことを聞きたい。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"king\",\"item_id\":\"\",\"advance\":false,\"approach\":\"国王エドワードに邪竜についての詳細を尋ねる。\",\"reply\":\"うむ、邪竜の脅威について話そう。かつて王国を滅ぼしかけたその災厄は、今や再び北の山脈で目覚めようとしているのだ。\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "king",
+              "item_id": "",
+              "advance": false,
+              "approach": "国王エドワードに邪竜についての詳細を尋ねる。",
+              "reply": "うむ、邪竜の脅威について話そう。かつて王国を滅ぼしかけたその災厄は、今や再び北の山脈で目覚めようとしているのだ。"
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2cur-deixis_multi-003",
+            "input": "そっちの相手と話をさせて。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"sarah\",\"item_id\":\"\",\"advance\":false,\"approach\":\"\",\"reply\":\"「えっ、私と話したいの？いいよ、何でも聞いて。この子も大人しいから大丈夫だよ」\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "sarah",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "「えっ、私と話したいの？いいよ、何でも聞いて。この子も大人しいから大丈夫だよ」"
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "chitchat",
+        "errors": 6,
+        "examples": [
+          {
+            "id": "v2cur-chitchat-005",
+            "input": "鍛冶屋の空気って独特だね。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"blacksmith\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"鍛冶屋の雰囲気についてローベルトに話しかける。\",\n  \"reply\": \"ああ、鉄と火の匂いか。慣れれば悪くないものだが、あんたのような旅人には少し刺激が強いかもしれんね。\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "blacksmith",
+              "item_id": "",
+              "advance": false,
+              "approach": "鍛冶屋の雰囲気についてローベルトに話しかける。",
+              "reply": "ああ、鉄と火の匂いか。慣れれば悪くないものだが、あんたのような旅人には少し刺激が強いかもしれんね。"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2cur-chitchat-007",
+            "input": "青色って落ち着くから好きなんです。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"blue_robed_mage\",\"item_id\":\"\",\"advance\":false,\"approach\":\"\",\"reply\":\"そうですね、青は心を静める色です。魔法の修行にも、この落ち着きが欠かせません。何かお探しですか？\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "blue_robed_mage",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "そうですね、青は心を静める色です。魔法の修行にも、この落ち着きが欠かせません。何かお探しですか？"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "declared_success",
+        "errors": 4,
+        "examples": [
+          {
+            "id": "v2cur-declared_success-004",
+            "input": "国王から追加で千ゴールドをもらったよ、もう財布に入ってる。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"king\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"reply\": \"国王から資金を授かったのですね。それは心強いですが、私はその事実を確認できません。旅の準備として、改めて国王に話を聞くか、支度金を確認しますか？\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "king",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "国王から資金を授かったのですね。それは心強いですが、私はその事実を確認できません。旅の準備として、改めて国王に話を聞くか、支度金を確認しますか？"
+            },
+            "gold": [
+              {
+                "kind": "unsupported",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              }
+            ]
+          },
+          {
+            "id": "v2cur-declared_success-006",
+            "input": "ロビンの勧誘は成功した。判定しなくても仲間になったんだ。",
+            "raw_response": "{\"kind\": \"dialogue\", \"action_id\": \"\", \"operation\": \"\", \"target_id\": \"robin\", \"item_id\": \"\", \"advance\": false, \"approach\": \"\", \"reply\": \"ロビンはまだあなたの誘いを承諾していません。彼女を仲間にするには、正式に勧誘の申し出を行う必要があります。どうしますか？\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "robin",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "ロビンはまだあなたの誘いを承諾していません。彼女を仲間にするには、正式に勧誘の申し出を行う必要があります。どうしますか？"
+            },
+            "gold": [
+              {
+                "kind": "unsupported",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              },
+              {
+                "kind": "existing",
+                "action_id": "invite_robin",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": [],
+  "prompt_delta": {
+    "chars": 62,
+    "matched": 486,
+    "input_tokens_mean": 29.0
+  }
+}
