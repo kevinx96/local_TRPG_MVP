@@ -12,7 +12,10 @@ from typing import Any, Callable
 
 from .gm_contract import split_visible_and_json
 
-TRACE_DIR = Path(__file__).resolve().parent / "debug" / "traces"
+import sys
+
+_USER_ROOT = Path(sys.executable).resolve().parent if getattr(sys, "frozen", False) else Path(__file__).resolve().parent
+TRACE_DIR = _USER_ROOT / "debug" / "traces"
 _records: ContextVar = ContextVar("llm_trace_records", default=None)
 
 

@@ -48,7 +48,20 @@ python -m host.run_server --reload
 
 创建新会话时，GM会自动生成开场场景。玩家根据GM的叙述输入第一个行动。GM响应会在生成完成后全文显示。
 
-## LLM配置
+## 打包成 exe
+
+在本地构建（需要 PyInstaller）。API key 不会被打进 exe：构建后会解开 exe 里的全部压缩模块，搜索已配置的 key，发现就删除产物并报错。
+
+```powershell
+python -m scripts.build_exe
+```
+
+产物是 `dist/LocalTRPG/LocalTRPG.exe` 和可以分发的 `dist/LocalTRPG.zip`。使用时把 `local_config.example.json` 复制成 exe 旁边的 `local_config.json` 并填入 key；存档和日志也写在 exe 旁边。
+
+- `--with-local-config`：把 `host/local_config.json` 复制到 exe 旁边，供自己使用（zip 在复制之前生成，不含 key）。
+- `--onefile`：打成单个 exe（约 200MB，每次启动需要解压，启动较慢）。
+
+
 
 默认使用 Gemini 3.1 Flash-Lite。将密钥放在环境变量 `GEMINI_API_KEY` 或本机已有的密钥文件中，个人设置写入 `host/local_config.json`，不要提交密钥。Ollama / Koboldcpp 配置保留，但在游戏设置中隐藏。默认最多尝试两个模型（主模型失败后用第一个 fallback），每次连接/读取超时为 15 秒；自由行动的意图解释始终只尝试一次。
 

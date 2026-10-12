@@ -319,7 +319,7 @@ def _gemini_chat_completion_once(
     debug_enabled = bool(config.get("debug_llm", True))
     api_key = _gemini_api_key(backend)
     if not api_key:
-        raise LLMClientError("Gemini API key is empty. Set GEMINI_API_KEY or host/gemini_api_key.txt.")
+        raise LLMClientError("Gemini API key is empty. Set GEMINI_API_KEY, or put api_key in local_config.json (next to LocalTRPG.exe in the packaged build; host/local_config.json in development).")
 
     base_url = str(backend.get("base_url") or "https://generativelanguage.googleapis.com/v1beta").rstrip("/")
     timeout = min(int(config.get("request_timeout_seconds", 15)), int(config.get("gameplay_timeout_seconds", 15)))

@@ -43,6 +43,7 @@ from .scenario_context import (
 from .state import (
     HOST_ROOT,
     PROJECT_ROOT,
+    USER_ROOT,
     add_assistant_message,
     add_player_message,
     add_system_log,
@@ -69,7 +70,7 @@ from .world_state import current_location_id, current_location_title
 
 CLIENT_ROOT = PROJECT_ROOT / "client"
 PROCESSED_SCENARIO_DIR = HOST_ROOT / "prompt" / "processed"
-DEBUG_COMPLETION_DIR = HOST_ROOT / "debug" / "completions"
+DEBUG_COMPLETION_DIR = USER_ROOT / "debug" / "completions"
 SCENARIO_SCHEMA_FILENAME = "scenario_pack.schema.json"
 
 app = FastAPI(title="Local TRPG Host", version="0.2.0")

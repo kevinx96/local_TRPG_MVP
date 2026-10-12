@@ -39,3 +39,7 @@ host/prompt/raw/
 
 # Agent worktrees
 .claude/worktrees/
+
+# PyInstaller output
+build/
+dist/

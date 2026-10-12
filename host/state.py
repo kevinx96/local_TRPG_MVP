@@ -5,6 +5,7 @@ import math
 import os
 import random
 import re
+import sys
 import uuid
 from copy import deepcopy
 from datetime import datetime, timezone
@@ -38,7 +39,10 @@ from .world_state import (
 
 HOST_ROOT = Path(__file__).resolve().parent
 PROJECT_ROOT = HOST_ROOT.parent
-SAVE_DIR = HOST_ROOT / "saves"
+# A frozen build bundles read-only resources; saves, logs and personal config live next to the executable.
+FROZEN = bool(getattr(sys, "frozen", False))
+USER_ROOT = Path(sys.executable).resolve().parent if FROZEN else HOST_ROOT
+SAVE_DIR = USER_ROOT / "saves"
 DEFAULT_SCENARIO = HOST_ROOT / "prompt" / "processed" / "dragon_rpg.json"
 
 
@@ -128,6 +132,8 @@ def _local_config_path(config_path: Path) -> Path:
     env_path = os.environ.get("TRPG_LOCAL_CONFIG")
     if env_path:
         return resolve_local_path(env_path, default=config_path)
+    if FROZEN:
+        return USER_ROOT / "local_config.json"
     return config_path.with_name("local_config.json")
 
 
