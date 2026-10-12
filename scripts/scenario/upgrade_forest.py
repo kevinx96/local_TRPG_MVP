@@ -47,8 +47,8 @@ def map_data(pack: dict[str, Any]) -> list[dict[str, Any]]:
     forest = dict(id="forest", title="闇の森", nodes=[
         node("F1", "森の入口", "start", 10, 65, ["dark_forest_loc"]),
         node("F2", "迷い子の十字路", "event", 30, 65, ["lost_goblin_crossroads"]),
-        node("F3", "精霊の泉", "rest", 50, 65, ["elf_spring", "slime_ambush_one", "slime_ambush_two", "slime_king_battle"]),
-        node("F4", "狼の縄張り", "battle", 70, 65, ["forest_wolves"]),
+        node("F3", "精霊の泉", "rest", 50, 85, ["elf_spring", "slime_ambush_one", "slime_ambush_two", "slime_king_battle"]),
+        node("F4", "狼の縄張り", "battle", 70, 85, ["forest_wolves"]),
         node("F5", "森の出口", "exit", 90, 65, ["forest_exit"]),
         node("fort", "ゴブリン砦", "branch", 30, 25, [l for l in locations if l.startswith("goblin_fort")], submap="goblin_fort"),
         node("cave", "封印の洞窟", "locked", 60, 25, [l for l in locations if l.startswith("cave_")],

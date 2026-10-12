@@ -1,0 +1,5863 @@
+{
+  "n": 500,
+  "seed": 20261012,
+  "characters": [
+    "hero",
+    "cleric",
+    "mage",
+    "thief"
+  ],
+  "baseline": [
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "standard",
+      "phase_rounds_mean": {
+        "draco_human": 3.282,
+        "draco_dragon": 5.224
+      },
+      "purify": false,
+      "outcomes": {
+        "defeat": 206,
+        "victory": 294
+      },
+      "rounds_mean": 7.506,
+      "success_rounds_mean": 4.976190476190476,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 500,
+        "draco_dragon": 500
+      },
+      "win_rate": 0.588,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.5719387755102041,
+      "healing_items_mean": {
+        "治療の巻物": 1.084,
+        "薬草": 0.288
+      },
+      "consumables_mean": {
+        "治療の巻物": 1.084,
+        "紅竜の炎核": 1.0,
+        "聖水": 1.566,
+        "薬草": 0.288
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 4.68,
+      "defeat_rounds": {
+        "4": 27,
+        "5": 20,
+        "6": 16,
+        "7": 14,
+        "8": 10,
+        "9": 9,
+        "10": 9,
+        "11": 5,
+        "12": 8,
+        "13": 10,
+        "14": 6,
+        "15": 11,
+        "16": 15,
+        "17": 14,
+        "18": 13,
+        "19": 4,
+        "20": 6,
+        "21": 4,
+        "22": 4,
+        "27": 1
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 4": 15,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 12,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 11,
+        "draco_dragon:1:凍てつく吐息 @ round 17": 9,
+        "draco_dragon:1:凍てつく吐息 @ round 16": 9,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 9,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 9,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 18": 9,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 8,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 15": 8,
+        "draco_dragon:1:凍てつく吐息 @ round 12": 7,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 7,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 6,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 16": 6,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 13": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 17": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 13": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 20": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 18": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 4,
+        "draco_dragon:1:凍てつく吐息 @ round 14": 4,
+        "draco_dragon:1:凍てつく吐息 @ round 21": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 22": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 19": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 15": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 11": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 22": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 21": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 27": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 19": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 20": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 12": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "standard",
+      "phase_rounds_mean": {
+        "draco_human": 3.304,
+        "draco_dragon": 4.61
+      },
+      "purify": false,
+      "outcomes": {
+        "defeat": 211,
+        "victory": 289
+      },
+      "rounds_mean": 6.914,
+      "success_rounds_mean": 4.927335640138408,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 500,
+        "draco_dragon": 500
+      },
+      "win_rate": 0.578,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.6019850664724093,
+      "healing_items_mean": {
+        "治療の巻物": 1.11,
+        "薬草": 0.16
+      },
+      "consumables_mean": {
+        "治療の巻物": 1.11,
+        "紅竜の炎核": 0.998,
+        "聖水": 1.552,
+        "薬草": 0.16
+      },
+      "mp_spent_mean": 14.184,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "4": 25,
+        "5": 27,
+        "6": 20,
+        "7": 12,
+        "8": 16,
+        "9": 16,
+        "10": 16,
+        "11": 11,
+        "12": 9,
+        "13": 7,
+        "14": 11,
+        "15": 16,
+        "16": 9,
+        "17": 2,
+        "18": 5,
+        "19": 4,
+        "20": 3,
+        "21": 1,
+        "23": 1
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 6": 15,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 14,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 14,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 13,
+        "draco_dragon:1:凍てつく吐息 @ round 4": 11,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 11,
+        "draco_dragon:1:凍てつく吐息 @ round 15": 11,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 9,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 9,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 8,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 7,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 7,
+        "draco_dragon:1:凍てつく吐息 @ round 14": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 12": 6,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 11": 6,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 13": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 16": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 15": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 14": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 16": 4,
+        "draco_dragon:1:凍てつく吐息 @ round 18": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 12": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 19": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 20": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 18": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 17": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 19": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 13": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 21": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 23": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "standard",
+      "phase_rounds_mean": {
+        "draco_human": 1,
+        "draco_dragon": 3.468
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 285,
+        "defeat": 215
+      },
+      "rounds_mean": 3.468,
+      "success_rounds_mean": 2.8105263157894735,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 500,
+        "draco_dragon": 500
+      },
+      "win_rate": 0.57,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.7235380116959065,
+      "healing_items_mean": {
+        "治療の巻物": 0.926,
+        "薬草": 0.056
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.926,
+        "紅竜の炎核": 0.996,
+        "聖水": 1.268,
+        "薬草": 0.056
+      },
+      "mp_spent_mean": 0.888,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 54,
+        "3": 50,
+        "4": 37,
+        "5": 12,
+        "6": 18,
+        "7": 18,
+        "8": 11,
+        "9": 7,
+        "10": 6,
+        "11": 2
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 2": 31,
+        "draco_dragon:1:凍てつく吐息 @ round 3": 28,
+        "draco_dragon:1:凍てつく吐息 @ round 4": 25,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 2": 23,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 3": 22,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 13,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 12,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 11,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 7,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 6,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 6,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "standard",
+      "phase_rounds_mean": {
+        "draco_human": 3.138,
+        "draco_dragon": 3.688
+      },
+      "purify": false,
+      "outcomes": {
+        "defeat": 181,
+        "victory": 319
+      },
+      "rounds_mean": 5.826,
+      "success_rounds_mean": 5.467084639498433,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 500,
+        "draco_dragon": 500
+      },
+      "win_rate": 0.638,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.6499477533960293,
+      "healing_items_mean": {
+        "治療の巻物": 0.736,
+        "薬草": 0.022
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.736,
+        "紅竜の炎核": 0.988,
+        "聖水": 0.076,
+        "薬草": 0.022
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 13.97,
+      "defeat_rounds": {
+        "4": 51,
+        "5": 28,
+        "6": 32,
+        "7": 26,
+        "8": 13,
+        "9": 10,
+        "10": 6,
+        "11": 2,
+        "12": 4,
+        "13": 2,
+        "14": 5,
+        "15": 1,
+        "16": 1
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 4": 33,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 18,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 18,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 18,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 14,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 14,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 12,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 10,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 10,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 4,
+        "draco_dragon:1:凍てつく吐息 @ round 14": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 12": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 12": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 15": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 13": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 16": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 13": 1
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "multiplier": 0.9,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 4.248
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 133,
+            "victory": 367
+          },
+          "rounds_mean": 6.53,
+          "success_rounds_mean": 4.8501362397820165,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.734,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.5743869209809265,
+          "healing_items_mean": {
+            "治療の巻物": 0.802,
+            "薬草": 0.184
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.802,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.472,
+            "薬草": 0.184
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 3.21,
+          "defeat_rounds": {
+            "4": 20,
+            "5": 10,
+            "6": 8,
+            "7": 11,
+            "8": 7,
+            "9": 7,
+            "10": 5,
+            "11": 3,
+            "12": 3,
+            "13": 6,
+            "14": 4,
+            "15": 8,
+            "16": 12,
+            "17": 8,
+            "18": 8,
+            "19": 3,
+            "20": 4,
+            "21": 3,
+            "22": 3
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 11,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 7,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 13": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 21": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 22": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 22": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 21": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 3.862
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 134,
+            "victory": 366
+          },
+          "rounds_mean": 6.166,
+          "success_rounds_mean": 4.969945355191257,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.732,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6044003451251079,
+          "healing_items_mean": {
+            "治療の巻物": 0.868,
+            "薬草": 0.092
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.868,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.494,
+            "薬草": 0.092
+          },
+          "mp_spent_mean": 13.428,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 21,
+            "5": 14,
+            "6": 13,
+            "7": 9,
+            "8": 10,
+            "9": 11,
+            "10": 7,
+            "11": 8,
+            "12": 5,
+            "13": 3,
+            "14": 7,
+            "15": 9,
+            "16": 6,
+            "17": 1,
+            "18": 5,
+            "19": 3,
+            "20": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 11,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 10,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 10,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 12": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 20": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 3.254
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 351,
+            "defeat": 149
+          },
+          "rounds_mean": 3.254,
+          "success_rounds_mean": 2.7948717948717947,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.702,
+          "rounds_median": 3.0,
+          "hp_left_mean": 0.7098765432098766,
+          "healing_items_mean": {
+            "治療の巻物": 0.87,
+            "薬草": 0.042
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.87,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.196,
+            "薬草": 0.042
+          },
+          "mp_spent_mean": 0.6,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 37,
+            "3": 34,
+            "4": 27,
+            "5": 7,
+            "6": 13,
+            "7": 14,
+            "8": 8,
+            "9": 4,
+            "10": 4,
+            "11": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 22,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 19,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 18,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 15,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 15,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 10,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 3.122
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 384,
+            "defeat": 116
+          },
+          "rounds_mean": 5.26,
+          "success_rounds_mean": 5.096354166666667,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.768,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.66796875,
+          "healing_items_mean": {
+            "治療の巻物": 0.586,
+            "薬草": 0.004
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.586,
+            "紅竜の炎核": 0.988,
+            "聖水": 0.022,
+            "薬草": 0.004
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 12.3,
+          "defeat_rounds": {
+            "4": 40,
+            "5": 22,
+            "6": 21,
+            "7": 14,
+            "8": 8,
+            "9": 5,
+            "10": 2,
+            "11": 2,
+            "14": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 26,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 14,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 13,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 11,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 10,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 7,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        14.600000000000001,
+        15.400000000000002,
+        13.200000000000001,
+        13.0
+      ],
+      "mean_contribution_pp": 14.05
+    },
+    {
+      "multiplier": 0.89,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 4.148
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 125,
+            "victory": 375
+          },
+          "rounds_mean": 6.43,
+          "success_rounds_mean": 4.8613333333333335,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.75,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.576,
+          "healing_items_mean": {
+            "治療の巻物": 0.768,
+            "薬草": 0.184
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.768,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.462,
+            "薬草": 0.184
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 3.042,
+          "defeat_rounds": {
+            "4": 20,
+            "5": 10,
+            "6": 8,
+            "7": 11,
+            "8": 5,
+            "9": 6,
+            "10": 5,
+            "11": 2,
+            "12": 3,
+            "13": 4,
+            "14": 3,
+            "15": 8,
+            "16": 12,
+            "17": 7,
+            "18": 8,
+            "19": 3,
+            "20": 4,
+            "21": 3,
+            "22": 3
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 11,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 7,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 21": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 13": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 22": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 22": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 21": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 3.8
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 132,
+            "victory": 368
+          },
+          "rounds_mean": 6.104,
+          "success_rounds_mean": 4.907608695652174,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.736,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.602974828375286,
+          "healing_items_mean": {
+            "治療の巻物": 0.842,
+            "薬草": 0.092
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.842,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.494,
+            "薬草": 0.092
+          },
+          "mp_spent_mean": 13.338,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 20,
+            "5": 14,
+            "6": 13,
+            "7": 9,
+            "8": 10,
+            "9": 11,
+            "10": 7,
+            "11": 8,
+            "12": 5,
+            "13": 3,
+            "14": 6,
+            "15": 9,
+            "16": 6,
+            "17": 1,
+            "18": 5,
+            "19": 3,
+            "20": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 11,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 10,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 12": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 20": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 3.238
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 356,
+            "defeat": 144
+          },
+          "rounds_mean": 3.238,
+          "success_rounds_mean": 2.8286516853932584,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.712,
+          "rounds_median": 3.0,
+          "hp_left_mean": 0.712312734082397,
+          "healing_items_mean": {
+            "治療の巻物": 0.862,
+            "薬草": 0.042
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.862,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.19,
+            "薬草": 0.042
+          },
+          "mp_spent_mean": 0.592,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 37,
+            "3": 33,
+            "4": 27,
+            "5": 7,
+            "6": 13,
+            "7": 11,
+            "8": 8,
+            "9": 4,
+            "10": 3,
+            "11": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 22,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 19,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 18,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 15,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 14,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 3.066
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 395,
+            "defeat": 105
+          },
+          "rounds_mean": 5.204,
+          "success_rounds_mean": 5.0810126582278485,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.79,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6648101265822784,
+          "healing_items_mean": {
+            "治療の巻物": 0.57,
+            "薬草": 0.004
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.57,
+            "紅竜の炎核": 0.988,
+            "聖水": 0.018,
+            "薬草": 0.004
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 12.12,
+          "defeat_rounds": {
+            "4": 40,
+            "5": 20,
+            "6": 19,
+            "7": 12,
+            "8": 4,
+            "9": 5,
+            "10": 1,
+            "11": 2,
+            "14": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 26,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 14,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 12,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 10,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 9,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        16.200000000000003,
+        15.800000000000002,
+        14.200000000000001,
+        15.200000000000003
+      ],
+      "mean_contribution_pp": 15.35
+    },
+    {
+      "multiplier": 0.88,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 4.06
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 119,
+            "victory": 381
+          },
+          "rounds_mean": 6.342,
+          "success_rounds_mean": 4.84251968503937,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.762,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.5757217847769028,
+          "healing_items_mean": {
+            "治療の巻物": 0.742,
+            "薬草": 0.174
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.742,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.46,
+            "薬草": 0.174
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 2.892,
+          "defeat_rounds": {
+            "4": 19,
+            "5": 9,
+            "6": 8,
+            "7": 11,
+            "8": 5,
+            "9": 6,
+            "10": 4,
+            "11": 2,
+            "12": 3,
+            "13": 3,
+            "14": 3,
+            "15": 8,
+            "16": 11,
+            "17": 7,
+            "18": 7,
+            "19": 3,
+            "20": 4,
+            "21": 3,
+            "22": 3
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 10,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 7,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 21": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 13": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 22": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 22": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 21": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 3.744
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 130,
+            "victory": 370
+          },
+          "rounds_mean": 6.048,
+          "success_rounds_mean": 4.859459459459459,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.74,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.606827880512091,
+          "healing_items_mean": {
+            "治療の巻物": 0.832,
+            "薬草": 0.086
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.832,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.482,
+            "薬草": 0.086
+          },
+          "mp_spent_mean": 13.272,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 20,
+            "5": 14,
+            "6": 12,
+            "7": 9,
+            "8": 10,
+            "9": 11,
+            "10": 7,
+            "11": 8,
+            "12": 5,
+            "13": 3,
+            "14": 5,
+            "15": 9,
+            "16": 6,
+            "17": 1,
+            "18": 5,
+            "19": 3,
+            "20": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 11,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 12": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 20": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 3.218
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 361,
+            "defeat": 139
+          },
+          "rounds_mean": 3.218,
+          "success_rounds_mean": 2.8282548476454292,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.722,
+          "rounds_median": 3.0,
+          "hp_left_mean": 0.7109879963065558,
+          "healing_items_mean": {
+            "治療の巻物": 0.854,
+            "薬草": 0.042
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.854,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.184,
+            "薬草": 0.042
+          },
+          "mp_spent_mean": 0.568,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 34,
+            "3": 33,
+            "4": 27,
+            "5": 7,
+            "6": 13,
+            "7": 11,
+            "8": 7,
+            "9": 4,
+            "10": 2,
+            "11": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 20,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 19,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 18,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 14,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 14,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 3.032
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 401,
+            "defeat": 99
+          },
+          "rounds_mean": 5.17,
+          "success_rounds_mean": 5.062344139650873,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.802,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6650041562759768,
+          "healing_items_mean": {
+            "治療の巻物": 0.56,
+            "薬草": 0.004
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.56,
+            "紅竜の炎核": 0.988,
+            "聖水": 0.016,
+            "薬草": 0.004
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 12.01,
+          "defeat_rounds": {
+            "4": 39,
+            "5": 19,
+            "6": 18,
+            "7": 11,
+            "8": 4,
+            "9": 3,
+            "10": 1,
+            "11": 2,
+            "14": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 25,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 14,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 12,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 9,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 9,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        17.400000000000006,
+        16.200000000000003,
+        15.200000000000003,
+        16.400000000000002
+      ],
+      "mean_contribution_pp": 16.3
+    },
+    {
+      "multiplier": 0.87,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 3.898
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 105,
+            "victory": 395
+          },
+          "rounds_mean": 6.18,
+          "success_rounds_mean": 4.951898734177215,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.79,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.5779746835443038,
+          "healing_items_mean": {
+            "治療の巻物": 0.698,
+            "薬草": 0.15
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.698,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.456,
+            "薬草": 0.15
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 2.622,
+          "defeat_rounds": {
+            "4": 18,
+            "5": 9,
+            "6": 8,
+            "7": 11,
+            "8": 3,
+            "9": 5,
+            "10": 3,
+            "11": 2,
+            "12": 2,
+            "13": 3,
+            "14": 2,
+            "15": 8,
+            "16": 10,
+            "17": 6,
+            "18": 4,
+            "19": 3,
+            "20": 2,
+            "21": 3,
+            "22": 3
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 10,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 21": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 13": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 22": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 22": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 21": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 3.68
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 121,
+            "victory": 379
+          },
+          "rounds_mean": 5.984,
+          "success_rounds_mean": 4.926121372031663,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.758,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6081794195250659,
+          "healing_items_mean": {
+            "治療の巻物": 0.818,
+            "薬草": 0.082
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.818,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.464,
+            "薬草": 0.082
+          },
+          "mp_spent_mean": 13.212,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 20,
+            "5": 13,
+            "6": 12,
+            "7": 8,
+            "8": 9,
+            "9": 10,
+            "10": 6,
+            "11": 8,
+            "12": 4,
+            "13": 3,
+            "14": 5,
+            "15": 8,
+            "16": 6,
+            "18": 4,
+            "19": 3,
+            "20": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 11,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 7,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 12": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 20": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 3.186
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 370,
+            "defeat": 130
+          },
+          "rounds_mean": 3.186,
+          "success_rounds_mean": 2.8189189189189188,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.74,
+          "rounds_median": 3.0,
+          "hp_left_mean": 0.7147522522522523,
+          "healing_items_mean": {
+            "治療の巻物": 0.846,
+            "薬草": 0.04
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.846,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.174,
+            "薬草": 0.04
+          },
+          "mp_spent_mean": 0.52,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 32,
+            "3": 30,
+            "4": 26,
+            "5": 6,
+            "6": 12,
+            "7": 11,
+            "8": 7,
+            "9": 4,
+            "10": 1,
+            "11": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 20,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 18,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 16,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 14,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 12,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.95
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 410,
+            "defeat": 90
+          },
+          "rounds_mean": 5.088,
+          "success_rounds_mean": 4.975609756097561,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.82,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6678861788617886,
+          "healing_items_mean": {
+            "治療の巻物": 0.538,
+            "薬草": 0.004
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.538,
+            "紅竜の炎核": 0.988,
+            "聖水": 0.012,
+            "薬草": 0.004
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 11.73,
+          "defeat_rounds": {
+            "4": 35,
+            "5": 17,
+            "6": 17,
+            "7": 11,
+            "8": 4,
+            "9": 2,
+            "11": 2,
+            "14": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 22,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 13,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 11,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        20.200000000000006,
+        18.000000000000004,
+        17.000000000000004,
+        18.199999999999996
+      ],
+      "mean_contribution_pp": 18.35
+    },
+    {
+      "multiplier": 0.86,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 3.792
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 101,
+            "victory": 399
+          },
+          "rounds_mean": 6.074,
+          "success_rounds_mean": 4.8997493734335835,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.798,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.57531328320802,
+          "healing_items_mean": {
+            "治療の巻物": 0.666,
+            "薬草": 0.144
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.666,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.45,
+            "薬草": 0.144
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 2.436,
+          "defeat_rounds": {
+            "4": 18,
+            "5": 9,
+            "6": 7,
+            "7": 11,
+            "8": 3,
+            "9": 5,
+            "10": 3,
+            "11": 2,
+            "13": 3,
+            "14": 2,
+            "15": 8,
+            "16": 10,
+            "17": 6,
+            "18": 4,
+            "19": 3,
+            "20": 2,
+            "21": 3,
+            "22": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 10,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 21": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 13": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 22": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 21": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 3.636
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 116,
+            "victory": 384
+          },
+          "rounds_mean": 5.94,
+          "success_rounds_mean": 4.96875,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.768,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6099232456140351,
+          "healing_items_mean": {
+            "治療の巻物": 0.808,
+            "薬草": 0.08
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.808,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.458,
+            "薬草": 0.08
+          },
+          "mp_spent_mean": 13.176,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 20,
+            "5": 12,
+            "6": 12,
+            "7": 8,
+            "8": 9,
+            "9": 10,
+            "10": 6,
+            "11": 8,
+            "12": 3,
+            "13": 3,
+            "14": 3,
+            "15": 8,
+            "16": 6,
+            "18": 3,
+            "19": 3,
+            "20": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 11,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 9,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 20": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 12": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 3.174
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 376,
+            "defeat": 124
+          },
+          "rounds_mean": 3.174,
+          "success_rounds_mean": 2.8377659574468086,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.752,
+          "rounds_median": 3.0,
+          "hp_left_mean": 0.7135416666666666,
+          "healing_items_mean": {
+            "治療の巻物": 0.842,
+            "薬草": 0.04
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.842,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.17,
+            "薬草": 0.04
+          },
+          "mp_spent_mean": 0.504,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 31,
+            "3": 29,
+            "4": 26,
+            "5": 5,
+            "6": 10,
+            "7": 11,
+            "8": 6,
+            "9": 4,
+            "10": 1,
+            "11": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 20,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 18,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 15,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 14,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 11,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.9
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 416,
+            "defeat": 84
+          },
+          "rounds_mean": 5.038,
+          "success_rounds_mean": 4.96875,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.832,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6699519230769231,
+          "healing_items_mean": {
+            "治療の巻物": 0.526,
+            "薬草": 0.004
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.526,
+            "紅竜の炎核": 0.988,
+            "聖水": 0.008,
+            "薬草": 0.004
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 11.56,
+          "defeat_rounds": {
+            "4": 34,
+            "5": 16,
+            "6": 16,
+            "7": 11,
+            "8": 4,
+            "9": 1,
+            "11": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 21,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 13,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 10,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        21.000000000000007,
+        19.000000000000007,
+        18.200000000000006,
+        19.399999999999995
+      ],
+      "mean_contribution_pp": 19.4
+    },
+    {
+      "multiplier": 0.85,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 3.668
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 93,
+            "victory": 407
+          },
+          "rounds_mean": 5.95,
+          "success_rounds_mean": 4.820638820638821,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.814,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.5697788697788698,
+          "healing_items_mean": {
+            "治療の巻物": 0.628,
+            "薬草": 0.14
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.628,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.44,
+            "薬草": 0.14
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 2.22,
+          "defeat_rounds": {
+            "4": 17,
+            "5": 9,
+            "6": 5,
+            "7": 9,
+            "8": 2,
+            "9": 5,
+            "10": 3,
+            "11": 2,
+            "13": 3,
+            "14": 2,
+            "15": 7,
+            "16": 9,
+            "17": 6,
+            "18": 4,
+            "19": 3,
+            "20": 2,
+            "21": 3,
+            "22": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 10,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 21": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 13": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 22": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 21": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 3.564
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 110,
+            "victory": 390
+          },
+          "rounds_mean": 5.868,
+          "success_rounds_mean": 4.958974358974359,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.78,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6136302294197031,
+          "healing_items_mean": {
+            "治療の巻物": 0.786,
+            "薬草": 0.078
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.786,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.45,
+            "薬草": 0.078
+          },
+          "mp_spent_mean": 13.104,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 19,
+            "5": 12,
+            "6": 12,
+            "7": 8,
+            "8": 9,
+            "9": 9,
+            "10": 4,
+            "11": 8,
+            "12": 3,
+            "13": 3,
+            "14": 2,
+            "15": 7,
+            "16": 6,
+            "18": 3,
+            "19": 3,
+            "20": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 11,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 20": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 12": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 3.13
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 386,
+            "defeat": 114
+          },
+          "rounds_mean": 3.13,
+          "success_rounds_mean": 2.816062176165803,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.772,
+          "rounds_median": 3.0,
+          "hp_left_mean": 0.7137305699481865,
+          "healing_items_mean": {
+            "治療の巻物": 0.826,
+            "薬草": 0.036
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.826,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.164,
+            "薬草": 0.036
+          },
+          "mp_spent_mean": 0.432,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 28,
+            "3": 27,
+            "4": 24,
+            "5": 5,
+            "6": 9,
+            "7": 10,
+            "8": 6,
+            "9": 3,
+            "10": 1,
+            "11": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 18,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 16,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 14,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 13,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 10,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.85
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 421,
+            "defeat": 79
+          },
+          "rounds_mean": 4.988,
+          "success_rounds_mean": 4.935866983372922,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.842,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.6718923198733175,
+          "healing_items_mean": {
+            "治療の巻物": 0.512,
+            "薬草": 0.004
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.512,
+            "紅竜の炎核": 0.988,
+            "聖水": 0.006,
+            "薬草": 0.004
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 11.39,
+          "defeat_rounds": {
+            "4": 33,
+            "5": 16,
+            "6": 16,
+            "7": 8,
+            "8": 4,
+            "9": 1,
+            "11": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 21,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 12,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 10,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        22.599999999999998,
+        20.200000000000006,
+        20.200000000000006,
+        20.399999999999995
+      ],
+      "mean_contribution_pp": 20.85
+    },
+    {
+      "multiplier": 0.84,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 3.58
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 414,
+            "defeat": 86
+          },
+          "rounds_mean": 5.862,
+          "success_rounds_mean": 4.85024154589372,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.828,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.569987922705314,
+          "healing_items_mean": {
+            "治療の巻物": 0.604,
+            "薬草": 0.128
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.604,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.438,
+            "薬草": 0.128
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 2.07,
+          "defeat_rounds": {
+            "4": 16,
+            "5": 8,
+            "6": 5,
+            "7": 9,
+            "8": 2,
+            "9": 4,
+            "10": 3,
+            "11": 2,
+            "13": 3,
+            "14": 2,
+            "15": 6,
+            "16": 9,
+            "17": 5,
+            "18": 4,
+            "19": 2,
+            "20": 2,
+            "21": 2,
+            "22": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 9,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 13": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 22": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 21": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 21": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 3.508
+          },
+          "purify": false,
+          "outcomes": {
+            "defeat": 99,
+            "victory": 401
+          },
+          "rounds_mean": 5.812,
+          "success_rounds_mean": 5.084788029925187,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.802,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6139257120357002,
+          "healing_items_mean": {
+            "治療の巻物": 0.774,
+            "薬草": 0.074
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.774,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.444,
+            "薬草": 0.074
+          },
+          "mp_spent_mean": 13.068,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 18,
+            "5": 12,
+            "6": 10,
+            "7": 8,
+            "8": 9,
+            "9": 7,
+            "10": 4,
+            "11": 7,
+            "12": 3,
+            "13": 3,
+            "14": 2,
+            "15": 5,
+            "16": 6,
+            "18": 3,
+            "19": 1,
+            "20": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 10,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 7,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 12": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 20": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 3.102
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 391,
+            "defeat": 109
+          },
+          "rounds_mean": 3.102,
+          "success_rounds_mean": 2.843989769820972,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.782,
+          "rounds_median": 3.0,
+          "hp_left_mean": 0.7146206308610401,
+          "healing_items_mean": {
+            "治療の巻物": 0.816,
+            "薬草": 0.032
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.816,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.162,
+            "薬草": 0.032
+          },
+          "mp_spent_mean": 0.384,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 28,
+            "3": 26,
+            "4": 24,
+            "5": 5,
+            "6": 9,
+            "7": 9,
+            "8": 6,
+            "9": 1,
+            "10": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 18,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 16,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 13,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 13,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 10,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.812
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 426,
+            "defeat": 74
+          },
+          "rounds_mean": 4.95,
+          "success_rounds_mean": 4.896713615023474,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.852,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.6709702660406885,
+          "healing_items_mean": {
+            "治療の巻物": 0.502,
+            "薬草": 0.004
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.502,
+            "紅竜の炎核": 0.988,
+            "聖水": 0.006,
+            "薬草": 0.004
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 11.25,
+          "defeat_rounds": {
+            "4": 31,
+            "5": 15,
+            "6": 15,
+            "7": 8,
+            "8": 3,
+            "9": 1,
+            "11": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 20,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 11,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 9,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 7,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        24.0,
+        22.40000000000001,
+        21.200000000000006,
+        21.4
+      ],
+      "mean_contribution_pp": 22.25
+    },
+    {
+      "multiplier": 0.83,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 3.476
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 419,
+            "defeat": 81
+          },
+          "rounds_mean": 5.758,
+          "success_rounds_mean": 4.79236276849642,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.838,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.5699880668257756,
+          "healing_items_mean": {
+            "治療の巻物": 0.564,
+            "薬草": 0.124
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.564,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.426,
+            "薬草": 0.124
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 1.926,
+          "defeat_rounds": {
+            "4": 15,
+            "5": 8,
+            "6": 4,
+            "7": 8,
+            "8": 2,
+            "9": 4,
+            "10": 3,
+            "11": 2,
+            "13": 3,
+            "14": 2,
+            "15": 6,
+            "16": 8,
+            "17": 5,
+            "18": 4,
+            "19": 1,
+            "20": 2,
+            "21": 2,
+            "22": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 9,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 13": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 22": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 21": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 21": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 3.428
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 408,
+            "defeat": 92
+          },
+          "rounds_mean": 5.732,
+          "success_rounds_mean": 5.051470588235294,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.816,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6150025799793601,
+          "healing_items_mean": {
+            "治療の巻物": 0.75,
+            "薬草": 0.072
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.75,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.44,
+            "薬草": 0.072
+          },
+          "mp_spent_mean": 12.996,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 17,
+            "5": 12,
+            "6": 9,
+            "7": 7,
+            "8": 7,
+            "9": 7,
+            "10": 4,
+            "11": 7,
+            "12": 3,
+            "13": 2,
+            "14": 2,
+            "15": 5,
+            "16": 5,
+            "18": 3,
+            "19": 1,
+            "20": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 10,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 12": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 20": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 3.096
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 400,
+            "defeat": 100
+          },
+          "rounds_mean": 3.096,
+          "success_rounds_mean": 2.8675,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.8,
+          "rounds_median": 3.0,
+          "hp_left_mean": 0.7103125,
+          "healing_items_mean": {
+            "治療の巻物": 0.816,
+            "薬草": 0.03
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.816,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.162,
+            "薬草": 0.03
+          },
+          "mp_spent_mean": 0.368,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 26,
+            "3": 24,
+            "4": 22,
+            "5": 4,
+            "6": 9,
+            "7": 8,
+            "8": 5,
+            "9": 1,
+            "10": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 17,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 14,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 12,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 12,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 9,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.776
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 431,
+            "defeat": 69
+          },
+          "rounds_mean": 4.914,
+          "success_rounds_mean": 4.860788863109049,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.862,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.6692188708430008,
+          "healing_items_mean": {
+            "治療の巻物": 0.494,
+            "薬草": 0.004
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.494,
+            "紅竜の炎核": 0.988,
+            "聖水": 0.004,
+            "薬草": 0.004
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 11.12,
+          "defeat_rounds": {
+            "4": 29,
+            "5": 14,
+            "6": 15,
+            "7": 6,
+            "8": 3,
+            "9": 1,
+            "11": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 18,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 11,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 7,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        25.0,
+        23.799999999999997,
+        23.00000000000001,
+        22.4
+      ],
+      "mean_contribution_pp": 23.55
+    },
+    {
+      "multiplier": 0.82,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 3.342
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 432,
+            "defeat": 68
+          },
+          "rounds_mean": 5.624,
+          "success_rounds_mean": 4.858796296296297,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.864,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.5697337962962963,
+          "healing_items_mean": {
+            "治療の巻物": 0.526,
+            "薬草": 0.106
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.526,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.402,
+            "薬草": 0.106
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 1.77,
+          "defeat_rounds": {
+            "4": 13,
+            "5": 7,
+            "6": 3,
+            "7": 8,
+            "8": 2,
+            "9": 4,
+            "10": 3,
+            "11": 1,
+            "14": 2,
+            "15": 5,
+            "16": 6,
+            "17": 5,
+            "18": 4,
+            "19": 1,
+            "20": 2,
+            "22": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 7,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 22": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 19": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 3.27
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 423,
+            "defeat": 77
+          },
+          "rounds_mean": 5.574,
+          "success_rounds_mean": 5.073286052009457,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.846,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6111111111111112,
+          "healing_items_mean": {
+            "治療の巻物": 0.698,
+            "薬草": 0.06
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.698,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.428,
+            "薬草": 0.06
+          },
+          "mp_spent_mean": 12.894,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 15,
+            "5": 11,
+            "6": 9,
+            "7": 4,
+            "8": 7,
+            "9": 6,
+            "10": 4,
+            "11": 6,
+            "12": 2,
+            "13": 2,
+            "14": 2,
+            "15": 3,
+            "16": 3,
+            "18": 1,
+            "19": 1,
+            "20": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 20": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 3.034
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 409,
+            "defeat": 91
+          },
+          "rounds_mean": 3.034,
+          "success_rounds_mean": 2.8166259168704157,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.818,
+          "rounds_median": 3.0,
+          "hp_left_mean": 0.715158924205379,
+          "healing_items_mean": {
+            "治療の巻物": 0.794,
+            "薬草": 0.026
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.794,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.14,
+            "薬草": 0.026
+          },
+          "mp_spent_mean": 0.312,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 24,
+            "3": 22,
+            "4": 20,
+            "5": 3,
+            "6": 8,
+            "7": 7,
+            "8": 5,
+            "9": 1,
+            "10": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 16,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 12,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 11,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 11,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.714
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 438,
+            "defeat": 62
+          },
+          "rounds_mean": 4.852,
+          "success_rounds_mean": 4.808219178082192,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.876,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.6646118721461187,
+          "healing_items_mean": {
+            "治療の巻物": 0.474,
+            "薬草": 0.004
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.474,
+            "紅竜の炎核": 0.988,
+            "聖水": 0.002,
+            "薬草": 0.004
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 10.92,
+          "defeat_rounds": {
+            "4": 27,
+            "5": 13,
+            "6": 13,
+            "7": 6,
+            "8": 2,
+            "11": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 17,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 10,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        27.6,
+        26.8,
+        24.8,
+        23.799999999999997
+      ],
+      "mean_contribution_pp": 25.75
+    },
+    {
+      "multiplier": 0.81,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 3.254
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 442,
+            "defeat": 58
+          },
+          "rounds_mean": 5.536,
+          "success_rounds_mean": 4.873303167420814,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.884,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.5692307692307692,
+          "healing_items_mean": {
+            "治療の巻物": 0.504,
+            "薬草": 0.096
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.504,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.394,
+            "薬草": 0.096
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 1.626,
+          "defeat_rounds": {
+            "4": 12,
+            "5": 7,
+            "6": 3,
+            "7": 5,
+            "8": 2,
+            "9": 1,
+            "10": 3,
+            "14": 2,
+            "15": 5,
+            "16": 6,
+            "17": 4,
+            "18": 4,
+            "20": 2,
+            "22": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 22": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 3.168
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 428,
+            "defeat": 72
+          },
+          "rounds_mean": 5.472,
+          "success_rounds_mean": 4.964953271028038,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.856,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6144244958189867,
+          "healing_items_mean": {
+            "治療の巻物": 0.662,
+            "薬草": 0.054
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.662,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.418,
+            "薬草": 0.054
+          },
+          "mp_spent_mean": 12.828,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 14,
+            "5": 8,
+            "6": 9,
+            "7": 4,
+            "8": 7,
+            "9": 6,
+            "10": 4,
+            "11": 5,
+            "12": 2,
+            "13": 2,
+            "14": 2,
+            "15": 3,
+            "16": 3,
+            "18": 1,
+            "19": 1,
+            "20": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 7,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 20": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 3.02
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 414,
+            "defeat": 86
+          },
+          "rounds_mean": 3.02,
+          "success_rounds_mean": 2.8115942028985508,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.828,
+          "rounds_median": 3.0,
+          "hp_left_mean": 0.7137681159420289,
+          "healing_items_mean": {
+            "治療の巻物": 0.792,
+            "薬草": 0.026
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.792,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.134,
+            "薬草": 0.026
+          },
+          "mp_spent_mean": 0.288,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 23,
+            "3": 20,
+            "4": 19,
+            "5": 3,
+            "6": 8,
+            "7": 6,
+            "8": 5,
+            "9": 1,
+            "10": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 15,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 12,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 10,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 10,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.682
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 444,
+            "defeat": 56
+          },
+          "rounds_mean": 4.82,
+          "success_rounds_mean": 4.786036036036036,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.888,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.6677177177177177,
+          "healing_items_mean": {
+            "治療の巻物": 0.468,
+            "薬草": 0.004
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.468,
+            "紅竜の炎核": 0.988,
+            "聖水": 0.002,
+            "薬草": 0.004
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 10.79,
+          "defeat_rounds": {
+            "4": 27,
+            "5": 11,
+            "6": 10,
+            "7": 5,
+            "8": 2,
+            "11": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 17,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 10,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        29.600000000000005,
+        27.800000000000004,
+        25.8,
+        25.0
+      ],
+      "mean_contribution_pp": 27.05
+    },
+    {
+      "multiplier": 0.8,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 3.134
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 448,
+            "defeat": 52
+          },
+          "rounds_mean": 5.416,
+          "success_rounds_mean": 4.866071428571429,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.896,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.5734375,
+          "healing_items_mean": {
+            "治療の巻物": 0.48,
+            "薬草": 0.076
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.48,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.388,
+            "薬草": 0.076
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 1.416,
+          "defeat_rounds": {
+            "4": 11,
+            "5": 7,
+            "6": 3,
+            "7": 5,
+            "8": 2,
+            "9": 1,
+            "10": 3,
+            "14": 2,
+            "15": 4,
+            "16": 4,
+            "17": 3,
+            "18": 3,
+            "20": 2,
+            "22": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 22": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 3.104
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 437,
+            "defeat": 63
+          },
+          "rounds_mean": 5.408,
+          "success_rounds_mean": 4.961098398169336,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.874,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6201975189690473,
+          "healing_items_mean": {
+            "治療の巻物": 0.65,
+            "薬草": 0.05
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.65,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.414,
+            "薬草": 0.05
+          },
+          "mp_spent_mean": 12.732,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 13,
+            "5": 5,
+            "6": 9,
+            "7": 4,
+            "8": 6,
+            "9": 6,
+            "10": 3,
+            "11": 4,
+            "12": 1,
+            "13": 2,
+            "14": 2,
+            "15": 2,
+            "16": 3,
+            "18": 1,
+            "19": 1,
+            "20": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 20": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 2.994
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 422,
+            "defeat": 78
+          },
+          "rounds_mean": 2.994,
+          "success_rounds_mean": 2.8033175355450237,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.844,
+          "rounds_median": 2.0,
+          "hp_left_mean": 0.7115916271721959,
+          "healing_items_mean": {
+            "治療の巻物": 0.784,
+            "薬草": 0.026
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.784,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.124,
+            "薬草": 0.026
+          },
+          "mp_spent_mean": 0.256,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 22,
+            "3": 19,
+            "4": 14,
+            "5": 3,
+            "6": 8,
+            "7": 5,
+            "8": 5,
+            "9": 1,
+            "10": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 14,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 10,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 9,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.656
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 449,
+            "defeat": 51
+          },
+          "rounds_mean": 4.794,
+          "success_rounds_mean": 4.7728285077951,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.898,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.6674832962138084,
+          "healing_items_mean": {
+            "治療の巻物": 0.464,
+            "薬草": 0.004
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.464,
+            "紅竜の炎核": 0.988,
+            "聖水": 0.002,
+            "薬草": 0.004
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 10.68,
+          "defeat_rounds": {
+            "4": 27,
+            "5": 8,
+            "6": 10,
+            "7": 5,
+            "11": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 17,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 10,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        30.800000000000004,
+        29.600000000000005,
+        27.400000000000002,
+        26.0
+      ],
+      "mean_contribution_pp": 28.45
+    },
+    {
+      "multiplier": 0.79,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 3.036
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 454,
+            "defeat": 46
+          },
+          "rounds_mean": 5.318,
+          "success_rounds_mean": 4.850220264317181,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.908,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.5744493392070484,
+          "healing_items_mean": {
+            "治療の巻物": 0.448,
+            "薬草": 0.07
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.448,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.376,
+            "薬草": 0.07
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 1.272,
+          "defeat_rounds": {
+            "4": 9,
+            "5": 6,
+            "6": 3,
+            "7": 5,
+            "8": 2,
+            "9": 1,
+            "10": 3,
+            "14": 1,
+            "15": 4,
+            "16": 4,
+            "17": 3,
+            "18": 3,
+            "20": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 3.01
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 443,
+            "defeat": 57
+          },
+          "rounds_mean": 5.314,
+          "success_rounds_mean": 4.891647855530474,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.886,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6180349293097303,
+          "healing_items_mean": {
+            "治療の巻物": 0.616,
+            "薬草": 0.044
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.616,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.398,
+            "薬草": 0.044
+          },
+          "mp_spent_mean": 12.624,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 10,
+            "5": 5,
+            "6": 9,
+            "7": 3,
+            "8": 6,
+            "9": 6,
+            "10": 3,
+            "11": 3,
+            "12": 1,
+            "13": 2,
+            "14": 2,
+            "15": 2,
+            "16": 2,
+            "18": 1,
+            "19": 1,
+            "20": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 6": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 6,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 20": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 2.966
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 434,
+            "defeat": 66
+          },
+          "rounds_mean": 2.966,
+          "success_rounds_mean": 2.834101382488479,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.868,
+          "rounds_median": 2.0,
+          "hp_left_mean": 0.7056451612903226,
+          "healing_items_mean": {
+            "治療の巻物": 0.776,
+            "薬草": 0.024
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.776,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.112,
+            "薬草": 0.024
+          },
+          "mp_spent_mean": 0.232,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 19,
+            "3": 16,
+            "4": 14,
+            "5": 3,
+            "6": 7,
+            "7": 4,
+            "8": 2,
+            "10": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 12,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 7,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.612
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 455,
+            "defeat": 45
+          },
+          "rounds_mean": 4.75,
+          "success_rounds_mean": 4.742857142857143,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.91,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.6698901098901099,
+          "healing_items_mean": {
+            "治療の巻物": 0.45
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.45,
+            "紅竜の炎核": 0.988
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 10.56,
+          "defeat_rounds": {
+            "4": 26,
+            "5": 6,
+            "6": 8,
+            "7": 5
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 17,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        32.00000000000001,
+        30.800000000000004,
+        29.800000000000004,
+        27.200000000000003
+      ],
+      "mean_contribution_pp": 29.95
+    },
+    {
+      "multiplier": 0.78,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 2.924
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 464,
+            "defeat": 36
+          },
+          "rounds_mean": 5.206,
+          "success_rounds_mean": 4.801724137931035,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.928,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.5692887931034483,
+          "healing_items_mean": {
+            "治療の巻物": 0.414,
+            "薬草": 0.054
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.414,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.372,
+            "薬草": 0.054
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 1.098,
+          "defeat_rounds": {
+            "4": 6,
+            "5": 4,
+            "6": 2,
+            "7": 4,
+            "8": 2,
+            "9": 1,
+            "10": 3,
+            "14": 1,
+            "15": 3,
+            "16": 2,
+            "17": 3,
+            "18": 3,
+            "20": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 17": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 2.928
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 452,
+            "defeat": 48
+          },
+          "rounds_mean": 5.232,
+          "success_rounds_mean": 4.873893805309734,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.904,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6152189101071263,
+          "healing_items_mean": {
+            "治療の巻物": 0.598,
+            "薬草": 0.034
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.598,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.384,
+            "薬草": 0.034
+          },
+          "mp_spent_mean": 12.546,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 9,
+            "5": 2,
+            "6": 8,
+            "7": 3,
+            "8": 4,
+            "9": 6,
+            "10": 3,
+            "11": 3,
+            "12": 1,
+            "13": 2,
+            "14": 2,
+            "15": 2,
+            "16": 1,
+            "18": 1,
+            "19": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 6": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 2.948
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 444,
+            "defeat": 56
+          },
+          "rounds_mean": 2.948,
+          "success_rounds_mean": 2.8468468468468466,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.888,
+          "rounds_median": 2.0,
+          "hp_left_mean": 0.7048611111111112,
+          "healing_items_mean": {
+            "治療の巻物": 0.77,
+            "薬草": 0.024
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.77,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.108,
+            "薬草": 0.024
+          },
+          "mp_spent_mean": 0.2,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 17,
+            "3": 13,
+            "4": 13,
+            "5": 3,
+            "6": 4,
+            "7": 4,
+            "8": 1,
+            "10": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 11,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 7,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.57
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 455,
+            "defeat": 45
+          },
+          "rounds_mean": 4.708,
+          "success_rounds_mean": 4.696703296703297,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.91,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.6762637362637363,
+          "healing_items_mean": {
+            "治療の巻物": 0.436
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.436,
+            "紅竜の炎核": 0.988
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 10.42,
+          "defeat_rounds": {
+            "4": 26,
+            "5": 6,
+            "6": 8,
+            "7": 5
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 17,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        34.00000000000001,
+        32.60000000000001,
+        31.800000000000004,
+        27.200000000000003
+      ],
+      "mean_contribution_pp": 31.4
+    },
+    {
+      "multiplier": 0.77,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 2.786
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 471,
+            "defeat": 29
+          },
+          "rounds_mean": 5.068,
+          "success_rounds_mean": 4.768577494692145,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.942,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.576380042462845,
+          "healing_items_mean": {
+            "治療の巻物": 0.372,
+            "薬草": 0.044
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.372,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.358,
+            "薬草": 0.044
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 0.882,
+          "defeat_rounds": {
+            "4": 6,
+            "5": 4,
+            "6": 1,
+            "7": 3,
+            "8": 2,
+            "9": 1,
+            "10": 2,
+            "14": 1,
+            "15": 1,
+            "16": 2,
+            "17": 1,
+            "18": 3,
+            "20": 2
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 17": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 2.834
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 460,
+            "defeat": 40
+          },
+          "rounds_mean": 5.138,
+          "success_rounds_mean": 4.852173913043479,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.92,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6136155606407323,
+          "healing_items_mean": {
+            "治療の巻物": 0.566,
+            "薬草": 0.032
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.566,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.376,
+            "薬草": 0.032
+          },
+          "mp_spent_mean": 12.426,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 7,
+            "5": 2,
+            "6": 8,
+            "7": 3,
+            "8": 4,
+            "9": 4,
+            "10": 1,
+            "11": 3,
+            "12": 1,
+            "13": 2,
+            "14": 1,
+            "15": 2,
+            "18": 1,
+            "19": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 6": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 19": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 2.904
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 453,
+            "defeat": 47
+          },
+          "rounds_mean": 2.904,
+          "success_rounds_mean": 2.80794701986755,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.906,
+          "rounds_median": 2.0,
+          "hp_left_mean": 0.7084253127299485,
+          "healing_items_mean": {
+            "治療の巻物": 0.754,
+            "薬草": 0.024
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.754,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.092,
+            "薬草": 0.024
+          },
+          "mp_spent_mean": 0.152,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 14,
+            "3": 9,
+            "4": 12,
+            "5": 3,
+            "6": 4,
+            "7": 4,
+            "10": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 8,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 5,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.52
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 461,
+            "defeat": 39
+          },
+          "rounds_mean": 4.658,
+          "success_rounds_mean": 4.648590021691974,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.922,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.6765726681127983,
+          "healing_items_mean": {
+            "治療の巻物": 0.418
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.418,
+            "紅竜の炎核": 0.988
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 10.26,
+          "defeat_rounds": {
+            "4": 24,
+            "5": 4,
+            "6": 7,
+            "7": 4
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 15,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 9,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        35.4,
+        34.20000000000001,
+        33.60000000000001,
+        28.400000000000002
+      ],
+      "mean_contribution_pp": 32.9
+    },
+    {
+      "multiplier": 0.76,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 2.68
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 479,
+            "defeat": 21
+          },
+          "rounds_mean": 4.962,
+          "success_rounds_mean": 4.8058455114822545,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.958,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.5735908141962421,
+          "healing_items_mean": {
+            "治療の巻物": 0.342,
+            "薬草": 0.032
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.342,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.352,
+            "薬草": 0.032
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 0.708,
+          "defeat_rounds": {
+            "4": 5,
+            "5": 4,
+            "6": 1,
+            "7": 2,
+            "8": 2,
+            "9": 1,
+            "10": 1,
+            "14": 1,
+            "16": 2,
+            "18": 1,
+            "20": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 18": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 2.774
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 471,
+            "defeat": 29
+          },
+          "rounds_mean": 5.078,
+          "success_rounds_mean": 4.876857749469214,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.942,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6110179908369651,
+          "healing_items_mean": {
+            "治療の巻物": 0.548,
+            "薬草": 0.026
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.548,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.372,
+            "薬草": 0.026
+          },
+          "mp_spent_mean": 12.354,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 5,
+            "5": 2,
+            "6": 6,
+            "7": 2,
+            "8": 3,
+            "9": 3,
+            "11": 1,
+            "12": 1,
+            "13": 2,
+            "14": 1,
+            "15": 2,
+            "18": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 6": 5,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 9": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 12": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 2.87
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 459,
+            "defeat": 41
+          },
+          "rounds_mean": 2.87,
+          "success_rounds_mean": 2.7777777777777777,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.918,
+          "rounds_median": 2.0,
+          "hp_left_mean": 0.7103304284676834,
+          "healing_items_mean": {
+            "治療の巻物": 0.738,
+            "薬草": 0.024
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.738,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.082,
+            "薬草": 0.024
+          },
+          "mp_spent_mean": 0.12,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 12,
+            "3": 8,
+            "4": 10,
+            "5": 2,
+            "6": 4,
+            "7": 4,
+            "10": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.504
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 466,
+            "defeat": 34
+          },
+          "rounds_mean": 4.642,
+          "success_rounds_mean": 4.635193133047211,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.932,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.6761087267525036,
+          "healing_items_mean": {
+            "治療の巻物": 0.414
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.414,
+            "紅竜の炎核": 0.988
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 10.2,
+          "defeat_rounds": {
+            "4": 21,
+            "5": 4,
+            "6": 6,
+            "7": 3
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 13,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        37.0,
+        36.4,
+        34.80000000000001,
+        29.400000000000006
+      ],
+      "mean_contribution_pp": 34.4
+    },
+    {
+      "multiplier": 0.75,
+      "supports": [
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "hero",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.282,
+            "draco_dragon": 2.59
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 486,
+            "defeat": 14
+          },
+          "rounds_mean": 4.872,
+          "success_rounds_mean": 4.765432098765432,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.972,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.573045267489712,
+          "healing_items_mean": {
+            "治療の巻物": 0.316,
+            "薬草": 0.026
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.316,
+            "紅竜の炎核": 1.0,
+            "聖水": 1.34,
+            "薬草": 0.026
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 0.57,
+          "defeat_rounds": {
+            "4": 4,
+            "5": 3,
+            "6": 1,
+            "7": 1,
+            "10": 1,
+            "14": 1,
+            "16": 2,
+            "20": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 3,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 14": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 20": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "cleric",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.304,
+            "draco_dragon": 2.718
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 477,
+            "defeat": 23
+          },
+          "rounds_mean": 5.022,
+          "success_rounds_mean": 4.863731656184487,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.954,
+          "rounds_median": 5.0,
+          "hp_left_mean": 0.6114421273309059,
+          "healing_items_mean": {
+            "治療の巻物": 0.53,
+            "薬草": 0.026
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.53,
+            "紅竜の炎核": 0.998,
+            "聖水": 1.36,
+            "薬草": 0.026
+          },
+          "mp_spent_mean": 12.288,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "4": 5,
+            "5": 2,
+            "6": 5,
+            "7": 1,
+            "8": 2,
+            "9": 1,
+            "11": 1,
+            "13": 2,
+            "14": 1,
+            "15": 2,
+            "18": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 6": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 13": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 9": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 8": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 18": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 8": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 11": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 15": 1,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "mage",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 1,
+            "draco_dragon": 2.852
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 461,
+            "defeat": 39
+          },
+          "rounds_mean": 2.852,
+          "success_rounds_mean": 2.770065075921909,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.922,
+          "rounds_median": 2.0,
+          "hp_left_mean": 0.7130332610267535,
+          "healing_items_mean": {
+            "治療の巻物": 0.736,
+            "薬草": 0.024
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.736,
+            "紅竜の炎核": 0.996,
+            "聖水": 1.066,
+            "薬草": 0.024
+          },
+          "mp_spent_mean": 0.12,
+          "sp_spent_mean": 0.0,
+          "defeat_rounds": {
+            "2": 12,
+            "3": 8,
+            "4": 9,
+            "5": 2,
+            "6": 4,
+            "7": 3,
+            "10": 1
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 2": 8,
+            "draco_dragon:1:凍てつく吐息 @ round 4": 6,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 2": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 3": 4,
+            "draco_dragon:1:凍てつく吐息 @ round 3": 4,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 3,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 10": 1,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 1
+          }
+        },
+        {
+          "encounter": "draco_battle",
+          "encounter_class": "boss",
+          "character": "thief",
+          "policy": "heuristic",
+          "defense_mode": "flat",
+          "companion": true,
+          "n": 500,
+          "seed": 20261012,
+          "stat_scaling": {},
+          "skill_variant": "none",
+          "level": 5,
+          "enemy_count": 1,
+          "preparation": "standard",
+          "phase_rounds_mean": {
+            "draco_human": 3.138,
+            "draco_dragon": 2.47
+          },
+          "purify": false,
+          "outcomes": {
+            "victory": 470,
+            "defeat": 30
+          },
+          "rounds_mean": 4.608,
+          "success_rounds_mean": 4.602127659574468,
+          "threshold_reached": 0,
+          "threshold_rounds_mean": null,
+          "phase_reached": {
+            "draco_human": 500,
+            "draco_dragon": 500
+          },
+          "win_rate": 0.94,
+          "rounds_median": 4.0,
+          "hp_left_mean": 0.6720567375886525,
+          "healing_items_mean": {
+            "治療の巻物": 0.402
+          },
+          "consumables_mean": {
+            "治療の巻物": 0.402,
+            "紅竜の炎核": 0.988
+          },
+          "mp_spent_mean": 0.0,
+          "sp_spent_mean": 10.09,
+          "defeat_rounds": {
+            "4": 19,
+            "5": 4,
+            "6": 4,
+            "7": 3
+          },
+          "defeat_causes": {
+            "draco_dragon:1:凍てつく吐息 @ round 4": 12,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 4": 7,
+            "draco_dragon:1:凍てつく吐息 @ round 6": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 5": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 6": 2,
+            "draco_dragon:1:白翼の薙ぎ払い @ round 7": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 5": 2,
+            "draco_dragon:1:凍てつく吐息 @ round 7": 1
+          }
+        }
+      ],
+      "contribution_pp": [
+        38.4,
+        37.6,
+        35.20000000000001,
+        30.199999999999992
+      ],
+      "mean_contribution_pp": 35.35
+    }
+  ],
+  "fingerprints": {
+    "host/prompt/processed/dragon_rpg.json": "0158bb891eacb6c509a172c6d4fa601b4b0f147fd3a1c9b058a6159f2782b48a",
+    "scripts/balance/support2.py": "a36218e99b8c67f09ec0e93c276606ba215423fe716eef27f7d2fde3077d3d63",
+    "scripts/balance/sim.py": "6a7f06e722c0b16b194b95586d9aeeda88724f263162ffdd02f0a592a8e4512d",
+    "scripts/balance/checkpoints.py": "b73ceb12430ab93c7e22650cb28cc06e333e8be893e539dd5080ce1c15ea1b66",
+    "host/combat.py": "f8813a64b6cab58e955ca8179d5ef06de6afae4f8cd172f3923f218f53687f4a"
+  }
+}

@@ -1049,6 +1049,17 @@ def _activate_encounter_modifiers(session: dict[str, Any]) -> None:
         if not _session_requirement_passes(modifier.get('requirements'), session):
             continue
         active.append(deepcopy(modifier))
+        if 'enemy_hp_multiplier' in modifier:
+            for enemy in _alive_enemies(battle):
+                if modifier.get('enemy_ids') and enemy['template_id'] not in modifier['enemy_ids']:
+                    continue
+                applied = enemy.setdefault('applied_hp_modifiers', [])
+                if modifier['id'] in applied:
+                    continue
+                multiplier = float(modifier['enemy_hp_multiplier'])
+                enemy['max_hp'] = max(1, int(round(enemy['max_hp'] * multiplier)))
+                enemy['hp'] = min(enemy['max_hp'], max(1, int(round(enemy['hp'] * multiplier))))
+                applied.append(modifier['id'])
         seen = battle.setdefault('announced_modifiers', [])
         if modifier['id'] not in seen:
             _log(session, modifier['id'], 'support', modifier['text'])

@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-12-v025-support",
+    "content_revision": "2026-10-12-v026-support2",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -7271,10 +7271,25 @@
                 }
               ]
             },
-            "enemy_skill": "剣聖の一閃",
-            "accuracy": -30,
-            "text": "「昨夜のうちに、あんたの剣の留め金を緩めといたよ」柱の陰からロビンの声がした。",
-            "damage_multiplier": 0.8
+            "text": "「昨夜のうちに、あんたの部屋から妙な首飾りをくすねといたよ。白い竜の力の源なんだろ？」柱の陰からロビンの声がした。"
+          },
+          {
+            "id": "robin_dragon",
+            "enemy_ids": [
+              "draco_dragon"
+            ],
+            "requirements": {
+              "all": [
+                {
+                  "flag": "recruited_robin"
+                },
+                {
+                  "flag": "cleared_goblin_fort"
+                }
+              ]
+            },
+            "enemy_hp_multiplier": 0.9,
+            "text": "白竜の巨体から、一瞬だけ光が抜け落ちた。ロビンが盗んだ首飾りの効果らしい。"
           },
           {
             "id": "mina",
@@ -13483,7 +13498,7 @@
           "label": "精霊の泉",
           "kind": "rest",
           "x": 50,
-          "y": 65,
+          "y": 85,
           "location_ids": [
             "elf_spring",
             "slime_ambush_one",
@@ -13497,7 +13512,7 @@
           "label": "狼の縄張り",
           "kind": "battle",
           "x": 70,
-          "y": 65,
+          "y": 85,
           "location_ids": [
             "forest_wolves"
           ],
@@ -13916,7 +13931,7 @@
           "label": "凱旋の間",
           "kind": "boss",
           "x": 85,
-          "y": 50,
+          "y": 20,
           "location_ids": [
             "castle_report",
             "draco_battle"

@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+import json
 import random
 import unittest
 from copy import deepcopy
 from unittest.mock import Mock, patch
 
 from host import combat, state
-from scripts.balance import checkpoints, support
+from scripts.balance import checkpoints, support, support2
 from scripts.scenario.tune_ch5 import tune_support
 
 
@@ -72,7 +73,7 @@ class SupportTuningTests(unittest.TestCase):
             self.assertEqual(combat._choose_enemy_ability(enemy, s, rng)['id'], 'guard_stance')
             self.assertEqual(combat._modified_received_damage(s, 100, 'physical', enemy, '剣聖の一閃'), 100)
 
-    def test_robin_accuracy_damage_and_same_named_basic_attack(self):
+    def test_robin_no_longer_changes_phase1_attacks(self):
         for enabled in (False, True):
             for s in self.sessions(enabled):
                 enemy = s['combat']['enemies'][0]
@@ -84,13 +85,42 @@ class SupportTuningTests(unittest.TestCase):
                 for ability in (enemy['skills'][0], enemy['combat']['basic_attack']):
                     attack = {**ability, 'damage': '10'}
                     combat._resolve_attack(s, enemy, s['character'], attack, enemy['id'], Mock(randint=Mock(return_value=65)))
-                    self.assertEqual(s['combat']['log'][-1]['kind'], 'miss' if enabled else 'damage')
+                    self.assertEqual(s['combat']['log'][-1]['kind'], 'damage')
                     combat._resolve_attack(s, enemy, s['character'], attack, enemy['id'], Mock(randint=Mock(return_value=1)))
                     data = s['combat']['log'][-1]['data']
-                    self.assertEqual(data['hit_chance'], 60 if enabled else 90)
-                    self.assertEqual(data['damage'], 8 if enabled else 10)
+                    self.assertEqual(data['hit_chance'], 90)
+                    self.assertEqual(data['damage'], 10)
                 self.assertEqual(enemy, original)
                 self.assertEqual(combat._modified_received_damage(s, 100, 'ice', enemy, '氷刃'), 100)
+
+    def test_robin_phase2_hp_text_conditions_and_reactivation(self):
+        for recruited, cleared in ((False, False), (True, False), (False, True), (True, True)):
+            for s in self.sessions(False):
+                s['combat'] = None
+                s['combat_start_requested'] = True
+                s['flags'].update(recruited_robin=recruited, cleared_goblin_fort=cleared)
+                original = deepcopy(s['scenario_pack'])
+                combat.ensure_combat_started(s)
+                enabled = recruited and cleared
+                human = s['combat']['enemies'][0]
+                self.assertEqual((human['hp'], human['max_hp']), (25, 25))
+                messages = [e['text'] for e in s['combat']['log'] if e['kind'] == 'support']
+                phase1_text = '「昨夜のうちに、あんたの部屋から妙な首飾りをくすねといたよ。白い竜の力の源なんだろ？」柱の陰からロビンの声がした。'
+                self.assertEqual(messages, [phase1_text] if enabled else [])
+                human['hp'] = 0
+                combat._check_victory_or_defeat(s)
+                dragon = s['combat']['enemies'][0]
+                self.assertEqual((dragon['hp'], dragon['max_hp']), (198, 198) if enabled else (220, 220))
+                messages = [e['text'] for e in s['combat']['log'] if e['kind'] == 'support']
+                phase2_text = '白竜の巨体から、一瞬だけ光が抜け落ちた。ロビンが盗んだ首飾りの効果らしい。'
+                self.assertEqual(messages, [phase1_text, phase2_text] if enabled else [])
+                dragon['hp'] -= 10
+                saved = deepcopy(s['combat'])
+                s = json.loads(json.dumps(s, ensure_ascii=False))
+                combat._activate_encounter_modifiers(s)
+                combat._check_victory_or_defeat(s)
+                self.assertEqual(s['combat'], saved)
+                self.assertEqual(s['scenario_pack'], original)
 
     def test_tuning_is_idempotent_and_preserves_other_support_and_text(self):
         packs = []
@@ -105,6 +135,25 @@ class SupportTuningTests(unittest.TestCase):
 
 
 class SupportReportTests(unittest.TestCase):
+    def test_phase2_search_only_changes_hp_within_authorized_range(self):
+        values = []
+
+        def fake(pack, encounter, character, **kwargs):
+            modifiers = next(loc for loc in pack['locations'] if loc['id'] == encounter)['combat']['encounter_modifiers']
+            robin = next(m for m in modifiers if m['id'] == 'robin')
+            self.assertFalse({'enemy_skill', 'accuracy', 'damage_multiplier'}.intersection(robin))
+            multiplier = next(m['enemy_hp_multiplier'] for m in modifiers if m['id'] == 'robin_dragon')
+            values.append(multiplier)
+            self.assertEqual(kwargs['seed'], 123)
+            self.assertFalse(kwargs['purify'])
+            return dict(character=character, win_rate=.65 if kwargs.get('initial_delta') else .6)
+
+        with patch.object(support2.sim, 'simulate', side_effect=fake), patch('builtins.print'):
+            result = support2.search(2, 123)
+        self.assertEqual([r['multiplier'] for r in result['candidates']], [n / 100 for n in range(90, 74, -1)])
+        self.assertTrue(all(.75 <= value <= .90 for value in values))
+        self.assertTrue(all(row['mean_contribution_pp'] == 5 for row in result['candidates']))
+
     def rows(self):
         return [dict(case=case, character=c, win_rate=.6, contribution_pp=5)
                 for case in support.cases() for c in support.CHARACTERS]

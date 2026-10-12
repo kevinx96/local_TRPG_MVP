@@ -38,7 +38,7 @@ BOOT = r"""
         els.combatIntro.style.display = 'none';
         check(document.querySelector('#combatEnemies').textContent.includes(mapView === 'assassin-battle' ? '氷の刺客' : '白竜ヴァイス'), 'enemy visible');
         if (mapView === 'draco-support') {
-          check(document.querySelectorAll('#combatLog .support').length === 5, 'all five support messages visible');
+          check(document.querySelectorAll('#combatLog .support').length === 6, 'all six support messages visible');
           els.combatLog.style.maxHeight = '460px';
           els.combatLog.style.height = '460px';
           document.querySelector('.combat-arena').style.gridTemplateRows = 'minmax(0, 1fr) 460px';

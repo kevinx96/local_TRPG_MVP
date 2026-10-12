@@ -135,7 +135,7 @@ def upgrade(pack: dict[str, Any]) -> None:
             resistances=resistances, skills=skills, rewards=dict(gold=0, items=[], flags=[]), image=f'/static/images/enemy_{identifier}.png'))
     loc['draco_battle']['combat']['encounter_modifiers'] = [
         dict(id='king', enemy_ids=['draco_human'], requirements={'flag': 'king_trust'}, enemy_defense=-2, text='「近衛兵、将軍を囲め！」国王の号令が王の間に響いた。'),
-        dict(id='robin', enemy_ids=['draco_human'], requirements={'all': [{'flag': 'recruited_robin'}, {'flag': 'cleared_goblin_fort'}]}, enemy_skill='剣聖の一閃', accuracy=-15, text='「昨夜のうちに、あんたの剣の留め金を緩めといたよ」柱の陰からロビンの声がした。'),
+        dict(id='robin', enemy_ids=['draco_human'], requirements={'all': [{'flag': 'recruited_robin'}, {'flag': 'cleared_goblin_fort'}]}, text='「昨夜のうちに、あんたの部屋から妙な首飾りをくすねといたよ。白い竜の力の源なんだろ？」柱の陰からロビンの声がした。'),
         dict(id='mina', enemy_ids=['draco_dragon'], requirements={'flag': 'mina_quest_done'}, received_element='ice', received_multiplier=.8, text='「今です、師匠！」ミーナと青いローブの魔法使いが、あなたの周りに炎の結界を張った。'),
         dict(id='robert', enemy_ids=['draco_dragon'], requirements={'flag': 'robert_hammer_returned'}, basic_followup=dict(name='霜断ちの刻印', damage='1d6', accuracy=100, element='fire'), text='剣の刻印が赤く輝いた。ローベルトが打ち込んだ霜断ちの刻印だ。'),
         dict(id='charm', enemy_ids=['draco_dragon'], requirements={'has_item': '霜封じの護符'}, enemy_skill='凍てつく吐息', damage_multiplier=.7, text='胸の護符が白く光り、吹きつける冷気を和らげた。')]
@@ -155,7 +155,7 @@ def upgrade(pack: dict[str, Any]) -> None:
     upsert(pack['maps'], map_record('royal_return', '王城への帰還', [
         ('R1', '凱旋の城門', 'start', 10, 50, ['royal_gate'], {}), ('R2', '凱旋の城下町', 'event', 35, 50, ['festival_town'], {}),
         ('R3', '将軍の屋敷', 'branch', 60, 20, ['mansion_garden'], {'submap': 'general_mansion'}),
-        ('R4', '王の私室', 'rest', 60, 50, ['king_private_room'], {}), ('R5', '凱旋の間', 'boss', 85, 50, ['castle_report', 'draco_battle'], {}),
+        ('R4', '王の私室', 'rest', 60, 50, ['king_private_room'], {}), ('R5', '凱旋の間', 'boss', 85, 20, ['castle_report', 'draco_battle'], {}),
         ('inn', '宿屋', 'rest', 20, 85, ['inn', 'inn_night_ambush'], {}), ('item_shop', '道具屋', 'event', 40, 85, ['item_shop'], {}),
         ('magic_shop', '魔法店', 'event', 60, 85, ['magic_shop'], {}), ('forge', '鍛冶屋', 'event', 80, 85, ['forge'], {})],
         [('R1', 'R2', 'enter_festival_town'), ('R2', 'R3', 'go_general_mansion'), ('R2', 'R4', 'request_king_audience'), ('R2', 'R5', 'go_report_hall'), ('R3', 'R2', 'leave_mansion'), ('R4', 'R2', 'leave_king_room')] +

@@ -294,7 +294,7 @@ class Chapter5Tests(unittest.TestCase):
             self.assertEqual(s['combat']['log'][-1]['data']['damage'], 10)
             combat._resolve_attack(s, enemy, s['character'], enemy['skills'][0], enemy['id'], rng)
             data = s['combat']['log'][-1]['data']
-            self.assertEqual(data.get('hit_chance', data.get('chance')), 60)
+            self.assertEqual(data.get('hit_chance', data.get('chance')), 90)
             enemy['hp'] = 0
             combat._check_victory_or_defeat(s)
             dragon = s['combat']['enemies'][0]
