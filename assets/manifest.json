@@ -1669,7 +1669,7 @@
         "client/images/bg_sealed_cave.png"
       ],
       "generation_date": "2026-10-13",
-      "approved": false,
+      "approved": true,
       "size": [
         1672,
         941
@@ -1686,7 +1686,7 @@
         "client/images/bg_sealed_cave.png"
       ],
       "generation_date": "2026-10-13",
-      "approved": false,
+      "approved": true,
       "size": [
         1672,
         941
@@ -1720,7 +1720,7 @@
         "client/images/bg_sealed_cave.png"
       ],
       "generation_date": "2026-10-13",
-      "approved": false,
+      "approved": true,
       "size": [
         1672,
         941
@@ -1754,7 +1754,7 @@
         "client/images/bg_sealed_cave.png"
       ],
       "generation_date": "2026-10-13",
-      "approved": false,
+      "approved": true,
       "size": [
         1672,
         941
@@ -1788,7 +1788,7 @@
         "client/images/enemy_goblin_king.png"
       ],
       "generation_date": "2026-10-13",
-      "approved": false,
+      "approved": true,
       "size": [
         1254,
         1254
@@ -1830,7 +1830,7 @@
         "client/images/enemy_goblin_king.png"
       ],
       "generation_date": "2026-10-13",
-      "approved": false,
+      "approved": true,
       "size": [
         1254,
         1254
@@ -1893,7 +1893,7 @@
         "client/images/enemy_goblin_king.png"
       ],
       "generation_date": "2026-10-13",
-      "approved": false,
+      "approved": true,
       "size": [
         1254,
         1254
@@ -1914,7 +1914,7 @@
         "client/images/enemy_goblin_king.png"
       ],
       "generation_date": "2026-10-13",
-      "approved": false,
+      "approved": true,
       "size": [
         1254,
         1254
@@ -1977,7 +1977,7 @@
         "client/images/enemy_goblin_king.png"
       ],
       "generation_date": "2026-10-13",
-      "approved": false,
+      "approved": true,
       "size": [
         1254,
         1254
@@ -2017,7 +2017,7 @@
         "client/images/enemy_zebok.png"
       ],
       "generation_date": "2026-10-13",
-      "approved": false,
+      "approved": true,
       "size": [
         1254,
         1254
@@ -2430,9 +2430,9 @@
         "assets/candidates/031/bg_old_battlefield/candidate_01.png",
         "assets/candidates/031/bg_old_battlefield/candidate_02.png"
       ],
-      "selected_candidate": "assets/candidates/031/bg_old_battlefield/candidate_01.png",
-      "approved": false,
-      "selection_reason": "工程暂选01用于接线和截图；两张候选均保留，最终选择归设计负责人。",
+      "selected_candidate": "assets/candidates/031/bg_old_battlefield/candidate_02.png",
+      "approved": true,
+      "selection_reason": "设计负责人定稿：前景的断旗、头盔和剑更清楚",
       "style_review": "01保留白雾、锈剑与折旗；02远景城堡更突出。暂选01以贴近古戦場与木质残塔，待设计选定。"
     },
     {
@@ -2444,8 +2444,8 @@
         "assets/candidates/031/bg_ruined_watchtower/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/031/bg_ruined_watchtower/candidate_01.png",
-      "approved": false,
-      "selection_reason": "工程暂选01用于接线和截图；两张候选均保留，最终选择归设计负责人。",
+      "approved": true,
+      "selection_reason": "设计负责人定稿：室内与楼梯最清楚",
       "style_review": "01石塔内景与熄灭火堆清楚，笔触和冷色光接近既有洞窟；两张的木箱、旗帜与楼梯细节未经定稿。"
     },
     {
@@ -2457,8 +2457,8 @@
         "assets/candidates/031/bg_ghoul_marsh/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/031/bg_ghoul_marsh/candidate_01.png",
-      "approved": false,
-      "selection_reason": "工程暂选01用于接线和截图；两张候选均保留，最终选择归设计负责人。",
+      "approved": true,
+      "selection_reason": "设计负责人定稿：02 背景的遗迹像鸟居，和西式奇幻不符",
       "style_review": "01黑水与伸出的手臂易辨认，02雾气更重。保留冷灰绿色调；枯树和水面构图待设计审定。"
     },
     {
@@ -2470,8 +2470,8 @@
         "assets/candidates/031/bg_grave_chapel/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/031/bg_grave_chapel/candidate_01.png",
-      "approved": false,
-      "selection_reason": "工程暂选01用于接线和截图；两张候选均保留，最终选择归设计负责人。",
+      "approved": true,
+      "selection_reason": "设计负责人定稿：祭坛最清楚",
       "style_review": "01无屋顶礼拝堂和祭坛清楚；规模、窗花、十字装饰及烛台属生成细节，需设计确认。"
     },
     {
@@ -2483,8 +2483,8 @@
         "assets/candidates/031/enemy_skeleton_soldier/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/031/enemy_skeleton_soldier/candidate_01.png",
-      "approved": false,
-      "selection_reason": "工程暂选01用于接线和截图；两张候选均保留，最终选择归设计负责人。",
+      "approved": true,
+      "selection_reason": "设计负责人定稿：红披风多一点色彩",
       "style_review": "01全身与锈蚀盔甲清楚，02姿态更紧；附加圆盾未经定稿。透明边缘保留原生alpha。"
     },
     {
@@ -2496,8 +2496,8 @@
         "assets/candidates/031/enemy_ghoul/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/031/enemy_ghoul/candidate_01.png",
-      "approved": false,
-      "selection_reason": "工程暂选01用于接线和截图；两张候选均保留，最终选择归设计负责人。",
+      "approved": true,
+      "selection_reason": "设计负责人定稿：爬行姿态，轮廓最清楚",
       "style_review": "01全身腐朽死者与泥水清楚；02下身较靠边，暂选01。材质延续参考的绘画感。"
     },
     {
@@ -2508,9 +2508,9 @@
         "assets/candidates/031/enemy_wraith/candidate_01.png",
         "assets/candidates/031/enemy_wraith/candidate_02.png"
       ],
-      "selected_candidate": "assets/candidates/031/enemy_wraith/candidate_01.png",
-      "approved": false,
-      "selection_reason": "工程暂选01用于接线和截图；两张候选均保留，最终选择归设计负责人。",
+      "selected_candidate": "assets/candidates/031/enemy_wraith/candidate_02.png",
+      "approved": true,
+      "selection_reason": "设计负责人定稿：更亮，暗背景上更醒目",
       "style_review": "01青白幽灵完整；两张均呈长发女性轮廓，性别和衣裙未经定稿，需设计审定。"
     },
     {
@@ -2522,8 +2522,8 @@
         "assets/candidates/031/enemy_grave_knight/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/031/enemy_grave_knight/candidate_01.png",
-      "approved": false,
-      "selection_reason": "工程暂选01用于接线和截图；两张候选均保留，最终选择归设计负责人。",
+      "approved": true,
+      "selection_reason": "设计负责人定稿：剑尖朝下立着，对应「大剣を床に突き立て」",
       "style_review": "01全身与大剑易辨认，02盔甲更繁复；甲片装饰与蓝雾均属待审细节。"
     },
     {
@@ -2534,9 +2534,9 @@
         "assets/candidates/031/npc_old_soldier_ghost/candidate_01.png",
         "assets/candidates/031/npc_old_soldier_ghost/candidate_02.png"
       ],
-      "selected_candidate": "assets/candidates/031/npc_old_soldier_ghost/candidate_01.png",
-      "approved": false,
-      "selection_reason": "工程暂选01用于接线和截图；两张候选均保留，最终选择归设计负责人。",
+      "selected_candidate": "assets/candidates/031/npc_old_soldier_ghost/candidate_02.png",
+      "approved": true,
+      "selection_reason": "设计负责人定稿：倚剑的姿态更有亡灵的哀伤",
       "style_review": "01半透明年轻兵士轮廓清楚；银发、全身盔甲和站姿属于生成细节，待设计审定。"
     },
     {
@@ -2547,9 +2547,9 @@
         "assets/candidates/031/npc_zebok_merchant/candidate_01.png",
         "assets/candidates/031/npc_zebok_merchant/candidate_02.png"
       ],
-      "selected_candidate": "assets/candidates/031/npc_zebok_merchant/candidate_01.png",
-      "approved": false,
-      "selection_reason": "工程暂选01用于接线和截图；两张候选均保留，最终选择归设计负责人。",
+      "selected_candidate": "assets/candidates/031/npc_zebok_merchant/candidate_02.png",
+      "approved": true,
+      "selection_reason": "设计负责人定稿：狡黠的笑和钱袋符合ゼボク",
       "style_review": "01黑紫袍、矮小多毛与青蓝眼睛可辨认；两张均有背包和兽样面部，商人形态与战斗形态的一致性待设计选定。"
     }
   ],

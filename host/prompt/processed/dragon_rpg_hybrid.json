@@ -12935,7 +12935,7 @@
           ],
           "hidden_after": "passed_bone_field",
           "risk_source": "action",
-          "result_text": "霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。"
+          "result_text": "剣を抜いて踏み出すと、骸骨兵たちは錆びた剣を構え、かちかちと顎を鳴らした。"
         },
         {
           "id": "sneak_bone_field",
@@ -13205,7 +13205,7 @@
           ],
           "hidden_after": "passed_ghoul_marsh",
           "risk_source": "action",
-          "result_text": "黒い水が淀む沼地。泥の中から、腐った腕が何本も突き出している。"
+          "result_text": "沼へ足を踏み入れると、泥の中から屍鬼が這い出し、濁った目でこちらを見据えた。"
         },
         {
           "id": "sneak_ghoul_marsh",
@@ -13234,8 +13234,8 @@
           "steal_encounter": "ghoul_marsh",
           "risk_source": "action",
           "result_texts": {
-            "success": "沼の縁を伝って抜ける。",
-            "failure": "黒い水が淀む沼地。泥の中から、腐った腕が何本も突き出している。"
+            "success": "腐った腕の間を縫うように、沼の縁の倒木を渡りきった。屍鬼たちは泥の中で呻くばかりで、こちらに気づかない。",
+            "failure": "倒木が音を立てて折れ、膝まで黒い泥に沈んだ。泥の中から伸びた腕が、足首をつかむ。"
           }
         },
         {
@@ -13256,11 +13256,12 @@
         },
         {
           "id": "marsh_to_chapel",
-          "text": "墓守の礼拝堂",
+          "text": "墓守の礼拝堂へ向かう",
           "preview": "",
           "risk": "危険（戦闘）",
           "intent_keywords": [
-            "墓守の礼拝堂"
+            "墓守の礼拝堂へ向かう",
+            "礼拝堂へ向かう"
           ],
           "effects": [
             {
@@ -13471,7 +13472,7 @@
           "secret": true,
           "hidden_after": "passed_grave_chapel",
           "risk_source": "action",
-          "result_text": "古戦場の外れに、屋根の落ちた小さな礼拝堂がある。祭壇の前で、大剣を携えた骸骨の騎士が膝をついている。"
+          "result_text": "「その剣、試させてもらう」と告げると、骸骨の騎士は静かに立ち上がり、大剣を両手で構え直した。"
         },
         {
           "id": "fight_grave_knight",
@@ -13505,7 +13506,7 @@
           "secret": true,
           "hidden_after": "passed_grave_chapel",
           "risk_source": "action",
-          "result_text": "古戦場の外れに、屋根の落ちた小さな礼拝堂がある。祭壇の前で、大剣を携えた骸骨の騎士が膝をついている。"
+          "result_text": "骸骨の騎士がゆっくりと立ち上がり、大剣を両手で構えた。兜の奥で、青白い光が揺れている。"
         },
         {
           "id": "chapel_to_village",

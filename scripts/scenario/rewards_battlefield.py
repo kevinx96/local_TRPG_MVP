@@ -285,16 +285,16 @@ def finish_battlefield(pack: dict[str, Any]) -> None:
         for entry in loc["actions"]:
             if entry.get("preview") == entry["text"]:
                 entry["preview"] = ""
-            if entry["id"] in {"fight_skeleton_soldiers", "fight_ghoul", "challenge_grave_knight", "fight_grave_knight"}:
-                entry["result_text"] = loc["description"]
         if identifier in {"bone_field", "ghoul_marsh", "grave_chapel"}:
             defeat = f"{loc['title']}で力尽きた。冒険はここで終わりを迎える。"
             loc["combat"]["defeat_effects"] = {"game_over": {
                 "ending": "combat_defeat", "reason": defeat}}
             loc["combat"]["result_texts"]["defeat"] = defeat
-    sneak = next(a for a in locations["ghoul_marsh"]["actions"] if a["id"] == "sneak_ghoul_marsh")
-    # TODO(design): 沼地潜行未给定稿，暂复用选项与场景正文，不创作新叙述。
-    sneak["result_texts"] = {"success": sneak["text"] + "。", "failure": locations["ghoul_marsh"]["description"]}
+    # Fight openers and the marsh sneak are the design lead's final texts.
+    from scripts.scenario.design_031 import TEXTS
+    for (location_id, action_id), fields in TEXTS.items():
+        entry = next(a for a in locations[location_id]["actions"] if a["id"] == action_id)
+        entry.update(json.loads(json.dumps(fields, ensure_ascii=False)))
 
 
 def upgrade(pack: dict[str, Any]) -> None:
