@@ -7,7 +7,7 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-13-v029-playtest-fixes",
+    "content_revision": "2026-10-13-v029-design",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -502,7 +502,8 @@
               "set_flag": "heard_king_info"
             }
           ],
-          "portrait_image": "/static/images/npc_king.png"
+          "portrait_image": "/static/images/npc_king.png",
+          "result_text": "「イグニスは炎を操る恐ろしい竜だ」と国王は杖を強く握りしめる。「だが、竜の谷の古文書によれば、奴は冷気を帯びた攻撃を極端に嫌うそうだ。氷の魔力を持つ武器か、その性質を突く工夫が必要になるだろう」。その言葉には、かつて多くの騎士たちが挑み、そして散った無念が滲んでいる。"
         },
         {
           "id": "ask_general_advice",
@@ -1564,7 +1565,8 @@
               "set_flag": "heard_blacksmith_advice"
             }
           ],
-          "portrait_image": "/static/images/npc_blacksmith.png"
+          "portrait_image": "/static/images/npc_blacksmith.png",
+          "result_text": "鍛冶師ローベルトは手を止め、低い声で語り始めた。「通常の物理攻撃や炎は、あの邪竜イグニスには一切通用せん。だが、『氷の護符』の力を武器に纏わせれば、自身の攻撃を氷属性に変換できる。それなら奴にも傷を負わせられるはずだ」"
         },
         {
           "id": "show_sword_to_blacksmith",
@@ -1583,7 +1585,8 @@
           "requirements": {
             "character_id": "hero"
           },
-          "portrait_image": "/static/images/npc_blacksmith.png"
+          "portrait_image": "/static/images/npc_blacksmith.png",
+          "result_text": "ローベルトは君の鉄の剣をじっと見つめ、少し言葉を濁した。「お前の剣……氷の護符を埋め込むことはできるが、今の剣はボロボロすぎて耐えられん。俺が打った上質な剣に護符を融合させてやろう。護符の代金は要らん、その鉄の剣を置いていくならな」"
         },
         {
           "id": "accept_sword_fusion",
@@ -1627,7 +1630,8 @@
               "set_flag": "accepted_sword_fusion"
             }
           ],
-          "portrait_image": "/static/images/npc_blacksmith.png"
+          "portrait_image": "/static/images/npc_blacksmith.png",
+          "result_text": "「よし、少し待っていろ」ローベルトは鉄の剣を受け取ると、奥から見事な大剣を取り出し、氷の護符を柄に埋め込んだ。目も眩むような青い輝きが剣を包み込む。「完成だ。名付けて『氷鉄の大剣』。邪竜の鱗も容易く貫き、お前の魔力に応じた追撃も発生する至高の品だ」"
         },
         {
           "id": "activate_ice_charm",
@@ -2988,7 +2992,8 @@
                   "set_flag": "heard_robin_night_rumor"
                 }
               ],
-              "portrait_image": "/static/images/npc_robin.png"
+              "portrait_image": "/static/images/npc_robin.png",
+              "result_text": "ロビンは声を落とした。「王城の路地裏には、夜だけ現れる黒い商人がいるそうよ。昼に行っても何も見つからないわ」"
             },
             {
               "id": "ask_robin_stolen_scale",
@@ -3677,7 +3682,7 @@
               "対峙"
             ],
             "draft": {
-              "gm_text": "「グルルル…」硫黄の煙が立ち込める谷の奥から、紅き邪竜イグニスが巨大な翼を広げて姿を現します。その眼光は激しい怒りに燃え、口元からは凄まじい熱気が漏れ出ています。王国を脅かす邪悪なる存在を前に、いよいよ決戦の時です！",
+              "gm_text": "「グルルル…」硫黄の煙が立ち込める谷の奥から、紅き邪竜イグニスが巨大な翼を広げて姿を現した。その眼光は激しい怒りに燃え、口元からは凄まじい熱気が漏れ出ている。王国を脅かす邪悪なる存在を前に、いよいよ決戦の時だ。",
               "system_log": "邪竜イグニスとの戦闘開始。SP回復が発生。",
               "dice_type": "1d20",
               "dice_dc": 12,
@@ -5674,7 +5679,7 @@
         },
         "result_texts": {
           "victory": "スライムを倒して森を進むと、十字路で一匹のゴブリンが助けを求めていた。別の一族に箱を盗まれ、取り戻してほしいという。",
-          "defeat": "闇の森・入口で力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "闇の森・入口で力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "trash"
       },
@@ -5883,7 +5888,7 @@
           }
         },
         "result_texts": {
-          "defeat": "闇の森・迷子のゴブリンで力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "闇の森・迷子のゴブリンで力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "trash"
       },
@@ -6339,7 +6344,7 @@
           }
         },
         "result_texts": {
-          "defeat": "闇の森・狼の縄張りで力尽きました。冒険はここで終わりを迎えます。",
+          "defeat": "闇の森・狼の縄張りで力尽きた。冒険はここで終わりを迎える。",
           "victory": "「助かった！命の恩人だ。俺はガルド、村でも商売してる。見かけたら寄ってくれ」"
         },
         "encounter_class": "elite"
@@ -6512,7 +6517,7 @@
         },
         "result_texts": {
           "victory": "最後の一匹を弾き飛ばした直後、泉の反対側で水音が一つ重なった。休む間もなく、新たな一匹のスライムが水面から這い上がり、半円を描いて包囲を狭めてくる。",
-          "defeat": "精霊の泉・第一波で力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "精霊の泉・第一波で力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "trash"
       },
@@ -6560,7 +6565,7 @@
         },
         "result_texts": {
           "victory": "第二波を退けると泉全体が大きく盛り上がった。水を押し分けて現れたのは、錆びた王冠を載せた巨大なスライムだ。スライム王は仲間の残骸を吸収し、重い身体で地面を揺らす。",
-          "defeat": "精霊の泉・第二波で力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "精霊の泉・第二波で力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "trash"
       },
@@ -6606,7 +6611,7 @@
           }
         },
         "result_texts": {
-          "defeat": "精霊の泉・スライム王で力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "精霊の泉・スライム王で力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "boss"
       },
@@ -6847,7 +6852,7 @@
           }
         },
         "result_texts": {
-          "defeat": "ゴブリン砦・一階前半で力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "ゴブリン砦・一階前半で力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "trash"
       },
@@ -6889,6 +6894,23 @@
               "start_combat": true
             }
           ]
+        },
+        {
+          "id": "leave_goblin_fort",
+          "text": "砦を出て十字路へ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "砦を出る",
+            "引き返す",
+            "十字路へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "lost_goblin_crossroads"
+            }
+          ],
+          "result_text": "見張りに気づかれる前に踵を返し、森の十字路まで引き返した。"
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -7000,7 +7022,7 @@
           }
         },
         "result_texts": {
-          "defeat": "ゴブリン砦・一階後半で力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "ゴブリン砦・一階後半で力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "elite"
       },
@@ -7220,7 +7242,7 @@
           }
         },
         "result_texts": {
-          "defeat": "ゴブリン砦・二階右で力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "ゴブリン砦・二階右で力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "elite"
       },
@@ -7317,7 +7339,7 @@
           }
         },
         "result_texts": {
-          "defeat": "ゴブリン砦・二階左で力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "ゴブリン砦・二階左で力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "elite"
       },
@@ -7628,7 +7650,7 @@
         },
         "result_texts": {
           "victory": "一匹の警備兵を倒すと、戦闘の衝撃で鉄門の錠が外れた。扉の先は財宝庫だ。金貨の山からゴブリン王が立ち上がり、一匹の弓兵が高台へ散って次の戦いを挑んでくる。",
-          "defeat": "ゴブリン砦・三階警備戦で力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "ゴブリン砦・三階警備戦で力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "elite"
       },
@@ -7687,7 +7709,7 @@
           }
         },
         "result_texts": {
-          "defeat": "ゴブリン砦・四階財宝庫で力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "ゴブリン砦・四階財宝庫で力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "boss"
       },
@@ -7920,7 +7942,7 @@
           }
         },
         "result_texts": {
-          "defeat": "ゴブリン砦・箱の争奪で力尽きました。冒険はここで終わりを迎えます。"
+          "defeat": "ゴブリン砦・箱の争奪で力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "trash"
       },

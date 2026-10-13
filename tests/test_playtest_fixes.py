@@ -105,10 +105,6 @@ class PlaytestFixTests(unittest.TestCase):
                 self.assertEqual(case["companion"], None if disappears else companion)
 
     def test_no_stationary_narration_gaps_beyond_documented_exceptions(self):
-        # TODO(design): These five full-mode actions still rely on model narration.
-        full_only = {("castle", "ask_king_info", "neutral"), ("forge", "ask_blacksmith_weakness", "neutral"),
-                     ("forge", "show_sword_to_blacksmith", "neutral"), ("forge", "accept_sword_fusion", "neutral"),
-                     ("inn", "ask_robin_rumor", "neutral")}
         shops = {("forge", "open_forge_shop"), ("village", "open_village_shop"), ("village", "open_gald_shop"),
                  ("magic_shop", "open_magic_shop"), ("item_shop", "open_sarah_shop"), ("festival_town", "open_gald_capital_shop")}
         impossible = {("xanxus_confrontation", action, "success")
@@ -117,7 +113,7 @@ class PlaytestFixTests(unittest.TestCase):
             gaps = narration_gaps(session["scenario_pack"])
             self.assertEqual({(g["location"], g["action"]) for g in gaps if g["reason"] == "open_shop"}, shops)
             missing = {(g["location"], g["action"], g["outcome"]) for g in gaps if g["reason"] == "missing"}
-            self.assertEqual(missing, impossible | (full_only if filename == "dragon_rpg.json" else set()))
+            self.assertEqual(missing, impossible)
 
     def test_town_return_routes_and_map_visibility(self):
         for session in self.sessions("castle_town"):
