@@ -7,7 +7,7 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-13-v028-castle-town",
+    "content_revision": "2026-10-13-v029-playtest-fixes",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -239,8 +239,7 @@
       "clue_ids": [],
       "enemy_ids": [],
       "connected_location_ids": [
-        "castle_town",
-        "village"
+        "castle_town"
       ],
       "choices": [
         {
@@ -262,12 +261,6 @@
           "text": "城下町へ出る",
           "preview": "王城の門前に広がる城下町へ",
           "risk": "判定不要"
-        },
-        {
-          "text": "麓の村へ向かう",
-          "preview": "麓の村へ向かう",
-          "risk": "判定不要",
-          "visible_after": "returned_from_village"
         }
       ],
       "hybrid": {
@@ -316,12 +309,6 @@
                   "text": "城下町へ出る",
                   "preview": "王城の門前に広がる城下町へ",
                   "risk": "判定不要"
-                },
-                {
-                  "text": "麓の村へ向かう",
-                  "preview": "麓の村へ向かう",
-                  "risk": "判定不要",
-                  "visible_after": "returned_from_village"
                 }
               ]
             },
@@ -368,12 +355,6 @@
                   "text": "城下町へ出る",
                   "preview": "王城の門前に広がる城下町へ",
                   "risk": "判定不要"
-                },
-                {
-                  "text": "麓の村へ向かう",
-                  "preview": "麓の村へ向かう",
-                  "risk": "判定不要",
-                  "visible_after": "returned_from_village"
                 }
               ]
             },
@@ -429,12 +410,6 @@
                   "text": "城下町へ出る",
                   "preview": "王城の門前に広がる城下町へ",
                   "risk": "判定不要"
-                },
-                {
-                  "text": "麓の村へ向かう",
-                  "preview": "麓の村へ向かう",
-                  "risk": "判定不要",
-                  "visible_after": "returned_from_village"
                 }
               ]
             },
@@ -489,12 +464,6 @@
                   "text": "城下町へ出る",
                   "preview": "王城の門前に広がる城下町へ",
                   "risk": "判定不要"
-                },
-                {
-                  "text": "麓の村へ向かう",
-                  "preview": "麓の村へ向かう",
-                  "risk": "判定不要",
-                  "visible_after": "returned_from_village"
                 }
               ]
             },
@@ -620,24 +589,6 @@
               "current_location": "castle_town"
             }
           ]
-        },
-        {
-          "id": "return_village",
-          "text": "麓の村へ向かう",
-          "preview": "麓の村へ向かう",
-          "risk": "判定不要",
-          "intent_keywords": [
-            "麓の村へ向かう"
-          ],
-          "effects": [
-            {
-              "current_location": "village",
-              "flags_set": [
-                "reached_village"
-              ]
-            }
-          ],
-          "visible_after": "returned_from_village"
         }
       ],
       "background_image": "/static/images/bg_dragon_rpg.png",
@@ -769,7 +720,7 @@
         {
           "id": "ask_gald_rumor",
           "text": "行商人ガルドに声をかける",
-          "preview": "行商人ガルドに声をかける",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "行商人ガルドに声をかける"
@@ -786,7 +737,7 @@
         {
           "id": "return_castle_from_town",
           "text": "王城へ戻る",
-          "preview": "王城へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "王城へ戻る"
@@ -801,24 +752,58 @@
           "id": "go_dark_forest",
           "text": "城門を出て闇の森へ向かう",
           "preview": "第2章へ進みます",
-          "risk": "1d20判定（DC10）",
+          "risk": "判定不要",
           "intent_keywords": [
             "城門を出て闇の森へ向かう"
           ],
-          "roll": {
-            "dice_type": "1d20",
-            "dc": 10
-          },
-          "success_effects": [
+          "effects": [
             {
               "current_location": "dark_forest_loc"
             }
-          ],
-          "failure_effects": [
-            {
-              "set_flag": "forest_departure_failed"
-            }
           ]
+        },
+        {
+          "id": "return_village",
+          "text": "麓の村へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "麓の村へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "village",
+              "flags_set": [
+                "reached_village"
+              ]
+            }
+          ],
+          "visible_after": "returned_from_village",
+          "result_text": "城門を出て街道を下り、闇の森を抜けると、焼け跡の残る麓の村が見えてきた。"
+        },
+        {
+          "id": "return_forest_exit",
+          "text": "闇の森の出口へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "闇の森の出口へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "forest_exit"
+            }
+          ],
+          "visible_after": "returned_from_forest",
+          "requirements": {
+            "all": [
+              {},
+              {
+                "not_flag": "returned_to_capital"
+              }
+            ]
+          },
+          "secret": true
         }
       ],
       "hybrid": {
@@ -831,27 +816,9 @@
             "player_intent": "go_dark_forest",
             "trigger_keywords": [],
             "action_id": "go_dark_forest",
-            "outcome": "success",
+            "outcome": "neutral",
             "draft": {
               "gm_text": "城門を抜けると石畳は次第に細い獣道へ変わり、湿った土と苔の匂いが濃くなっていく。やがて木々が陽光を遮り、闇の森の入口で青いスライムが進路を塞いだ。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
-          },
-          {
-            "id": "castle_departure_failure",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "go_dark_forest",
-            "trigger_keywords": [],
-            "action_id": "go_dark_forest",
-            "outcome": "failure",
-            "draft": {
-              "gm_text": "城門を出たところで装備の留め具が外れ、森へ入る前に引き返すことになった。支度を整え直せば、もう一度出発できる。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -870,7 +837,9 @@
         "item_shop",
         "alley",
         "castle",
-        "dark_forest_loc"
+        "dark_forest_loc",
+        "village",
+        "forest_exit"
       ],
       "choices": [
         {
@@ -900,27 +869,48 @@
         },
         {
           "text": "行商人ガルドに声をかける",
-          "preview": "行商人ガルドに声をかける",
+          "preview": "",
           "risk": "判定不要",
           "visible_after": "saved_gald"
         },
         {
           "text": "王城へ戻る",
-          "preview": "王城へ戻る",
+          "preview": "",
           "risk": "判定不要"
         },
         {
           "text": "城門を出て闇の森へ向かう",
           "preview": "第2章へ進みます",
-          "risk": "1d20判定（DC10）"
+          "risk": "判定不要"
+        },
+        {
+          "text": "麓の村へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "returned_from_village"
+        },
+        {
+          "text": "闇の森の出口へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "returned_from_forest",
+          "requirements": {
+            "all": [
+              {},
+              {
+                "not_flag": "returned_to_capital"
+              }
+            ]
+          },
+          "secret": true
         }
       ]
     },
     {
       "id": "forge",
       "scene_id": "throne_room",
-      "title": "王城の鍛冶屋",
-      "description": "城内の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。",
+      "title": "城下町の鍛冶屋",
+      "description": "城下町の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。",
       "keywords": [
         "鍛冶屋",
         "鍛造屋",
@@ -1006,7 +996,7 @@
         },
         {
           "text": "氷の結晶を護符に加工する",
-          "preview": "氷の結晶を護符に加工する",
+          "preview": "",
           "risk": "判定不要",
           "requirements": {
             "all": [
@@ -1021,12 +1011,12 @@
         },
         {
           "text": "浮かない顔をしているが？",
-          "preview": "浮かない顔をしているが？",
+          "preview": "",
           "risk": "判定不要"
         },
         {
           "text": "刻印のハンマーを返す",
-          "preview": "刻印のハンマーを返す",
+          "preview": "",
           "risk": "判定不要",
           "requirements": {
             "has_item": "刻印のハンマー"
@@ -1049,7 +1039,7 @@
               "到着"
             ],
             "draft": {
-              "gm_text": "城内の小さな鍛冶屋に足を踏み入れると、熱気と鉄を打つ音があなたを出迎えた。無骨だが腕の立つ鍛冶師ローベルトが、汗を拭いながらこちらを見ている。「武器の点検か？それとも新しい武具が要るのか？」",
+              "gm_text": "城下町の小さな鍛冶屋に足を踏み入れると、熱気と鉄を打つ音があなたを出迎えた。無骨だが腕の立つ鍛冶師ローベルトが、汗を拭いながらこちらを見ている。「武器の点検か？それとも新しい武具が要るのか？」",
               "system_log": "鍛冶屋に入った。",
               "dice_type": "null",
               "dice_dc": 0,
@@ -1123,7 +1113,7 @@
                 },
                 {
                   "text": "氷の結晶を護符に加工する",
-                  "preview": "氷の結晶を護符に加工する",
+                  "preview": "",
                   "risk": "判定不要",
                   "requirements": {
                     "all": [
@@ -1138,12 +1128,12 @@
                 },
                 {
                   "text": "浮かない顔をしているが？",
-                  "preview": "浮かない顔をしているが？",
+                  "preview": "",
                   "risk": "判定不要"
                 },
                 {
                   "text": "刻印のハンマーを返す",
-                  "preview": "刻印のハンマーを返す",
+                  "preview": "",
                   "risk": "判定不要",
                   "requirements": {
                     "has_item": "刻印のハンマー"
@@ -1243,7 +1233,7 @@
                 },
                 {
                   "text": "氷の結晶を護符に加工する",
-                  "preview": "氷の結晶を護符に加工する",
+                  "preview": "",
                   "risk": "判定不要",
                   "requirements": {
                     "all": [
@@ -1258,12 +1248,12 @@
                 },
                 {
                   "text": "浮かない顔をしているが？",
-                  "preview": "浮かない顔をしているが？",
+                  "preview": "",
                   "risk": "判定不要"
                 },
                 {
                   "text": "刻印のハンマーを返す",
-                  "preview": "刻印のハンマーを返す",
+                  "preview": "",
                   "risk": "判定不要",
                   "requirements": {
                     "has_item": "刻印のハンマー"
@@ -1360,7 +1350,7 @@
                 },
                 {
                   "text": "氷の結晶を護符に加工する",
-                  "preview": "氷の結晶を護符に加工する",
+                  "preview": "",
                   "risk": "判定不要",
                   "requirements": {
                     "all": [
@@ -1375,12 +1365,12 @@
                 },
                 {
                   "text": "浮かない顔をしているが？",
-                  "preview": "浮かない顔をしているが？",
+                  "preview": "",
                   "risk": "判定不要"
                 },
                 {
                   "text": "刻印のハンマーを返す",
-                  "preview": "刻印のハンマーを返す",
+                  "preview": "",
                   "risk": "判定不要",
                   "requirements": {
                     "has_item": "刻印のハンマー"
@@ -1489,7 +1479,7 @@
                 },
                 {
                   "text": "氷の結晶を護符に加工する",
-                  "preview": "氷の結晶を護符に加工する",
+                  "preview": "",
                   "risk": "判定不要",
                   "requirements": {
                     "all": [
@@ -1504,12 +1494,12 @@
                 },
                 {
                   "text": "浮かない顔をしているが？",
-                  "preview": "浮かない顔をしているが？",
+                  "preview": "",
                   "risk": "判定不要"
                 },
                 {
                   "text": "刻印のハンマーを返す",
-                  "preview": "刻印のハンマーを返す",
+                  "preview": "",
                   "risk": "判定不要",
                   "requirements": {
                     "has_item": "刻印のハンマー"
@@ -1712,7 +1702,7 @@
         {
           "id": "forge_ice_charm",
           "text": "氷の結晶を護符に加工する",
-          "preview": "氷の結晶を護符に加工する",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "氷の結晶を護符に加工する"
@@ -1745,12 +1735,13 @@
                 "gold_gte": 20
               }
             ]
-          }
+          },
+          "result_text": "ローベルトは氷の結晶を炉の脇で慎重に削り、銀の枠にはめ込んだ。「ほらよ。冷気が逃げねえように仕上げておいた」手渡された護符は、ひやりと冷たい。"
         },
         {
           "id": "ask_robert_hammer",
           "text": "浮かない顔をしているが？",
-          "preview": "浮かない顔をしているが？",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "浮かない顔をしているが？"
@@ -1766,7 +1757,7 @@
         {
           "id": "return_robert_hammer",
           "text": "刻印のハンマーを返す",
-          "preview": "刻印のハンマーを返す",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "刻印のハンマーを返す"
@@ -1825,7 +1816,7 @@
     {
       "id": "inn",
       "scene_id": "throne_room",
-      "title": "王城の宿屋",
+      "title": "城下町の宿屋",
       "description": "冒険者や旅人が休息を取るための宿屋。暖かい食事と清潔な寝台がある。",
       "keywords": [
         "宿屋",
@@ -1862,59 +1853,19 @@
           "risk": "判定不要",
           "children": [
             {
-              "id": "ask_ian_legend",
               "text": "強力な氷属性武器の伝説について聞く",
               "preview": "伝説の武器の情報を得る",
-              "risk": "1d30判定（DC4）",
-              "intent_keywords": [
-                "強力な氷属性武器の伝説について聞く"
-              ],
-              "roll": {
-                "dice_type": "1d30",
-                "dc": 4
-              },
-              "once": "asked_ian_legend",
-              "success_effects": [
-                {
-                  "set_flag": "heard_ice_weapon_legend"
-                }
-              ],
-              "failure_effects": [
-                {
-                  "set_flag": "ian_legend_refused"
-                }
-              ],
-              "portrait_image": "/static/images/npc_ian.png"
+              "risk": "1d20判定（DC3）"
             },
             {
-              "id": "ask_ian_advice",
               "text": "邪竜を倒すアドバイスを求める",
               "preview": "イアンの意見を聞く",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "邪竜を倒すアドバイスを求める"
-              ],
-              "once": "asked_ian_advice",
-              "effects": [
-                {
-                  "set_flag": "heard_ian_advice"
-                }
-              ],
-              "portrait_image": "/static/images/npc_ian.png"
+              "risk": "判定不要"
             },
             {
-              "id": "ask_ian_dragon_tale",
               "text": "竜と人の昔話を聞く",
-              "preview": "竜と人の昔話を聞く",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "竜と人の昔話を聞く"
-              ],
-              "effects": [
-                {
-                  "set_flag": "heard_treaty_lore"
-                }
-              ]
+              "preview": "",
+              "risk": "判定不要"
             }
           ]
         },
@@ -1924,72 +1875,20 @@
           "risk": "判定不要",
           "children": [
             {
-              "id": "invite_robin",
               "text": "パーティに勧誘する",
               "preview": "ロビンを仲間に誘う",
-              "risk": "1d20+wis判定（DC12）",
-              "intent_keywords": [
-                "パーティに勧誘する",
-                "ロビンを仲間に誘う"
-              ],
-              "roll": {
-                "dice_type": "1d20+wis",
-                "dc": 12
-              },
-              "once": "invited_robin",
-              "success_effects": [
-                {
-                  "set_flag": "recruited_robin"
-                },
-                {
-                  "set_companion": "robin"
-                }
-              ],
-              "failure_effects": [
-                {
-                  "set_flag": "robin_refused"
-                }
-              ],
-              "portrait_image": "/static/images/npc_robin.png"
+              "risk": "1d20+wis判定（DC12）"
             },
             {
-              "id": "ask_robin_rumor",
               "text": "噂話を聞く",
               "preview": "ロビンから情報を得る",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "噂話を聞く"
-              ],
-              "once": "heard_robin_rumor",
-              "effects": [
-                {
-                  "set_flag": "heard_robin_rumor"
-                },
-                {
-                  "set_flag": "heard_robin_night_rumor"
-                }
-              ],
-              "portrait_image": "/static/images/npc_robin.png"
+              "risk": "判定不要"
             },
             {
-              "id": "ask_robin_stolen_scale",
               "secret": true,
               "text": "将軍の部屋から盗んだ物を見せてもらう",
-              "preview": "将軍の部屋から盗んだ物を見せてもらう",
+              "preview": "",
               "risk": "判定不要",
-              "intent_keywords": [
-                "将軍の部屋から盗んだ物を見せてもらう"
-              ],
-              "effects": [
-                {
-                  "add_item": {
-                    "id": "white_dragon_scale",
-                    "name": "白い竜鱗",
-                    "quantity": 1
-                  }
-                }
-              ],
-              "once": "received_robin_scale",
               "requirements": {
                 "all": [
                   {
@@ -2016,27 +1915,13 @@
               }
             ]
           },
-          "secret": true
+          "secret": true,
+          "hidden_after": "defeated_goblin_king"
         },
         {
           "text": "城下町に戻る",
           "preview": "大通りへ戻る",
           "risk": "判定不要"
-        },
-        {
-          "text": "森を出て麓の村へ向かう",
-          "preview": "森を出て麓の村へ向かう",
-          "risk": "判定不要",
-          "visible_after": "returned_from_forest",
-          "requirements": {
-            "all": [
-              {},
-              {
-                "not_flag": "returned_to_capital"
-              }
-            ]
-          },
-          "secret": true
         }
       ],
       "hybrid": {
@@ -2071,6 +1956,14 @@
               },
               "choices": [
                 {
+                  "text": "宿で休む（10G）",
+                  "preview": "温かい食事と寝台で疲れを癒す",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "gold_gte": 10
+                  }
+                },
+                {
                   "text": "イアンと会話する",
                   "preview": "宿屋の店主と話す",
                   "risk": "判定不要",
@@ -2078,7 +1971,7 @@
                     {
                       "text": "強力な氷属性武器の伝説について聞く",
                       "preview": "伝説の武器の情報を得る",
-                      "risk": "1d30判定（DC4）"
+                      "risk": "1d20判定（DC3）"
                     },
                     {
                       "text": "邪竜を倒すアドバイスを求める",
@@ -2086,8 +1979,8 @@
                       "risk": "判定不要"
                     },
                     {
-                      "text": "宿屋で一晩休む（1G）",
-                      "preview": "夜まで休む",
+                      "text": "竜と人の昔話を聞く",
+                      "preview": "",
                       "risk": "判定不要"
                     }
                   ]
@@ -2100,14 +1993,46 @@
                     {
                       "text": "パーティに勧誘する",
                       "preview": "ロビンを仲間に誘う",
-                      "risk": "1d100+agi判定（DC60）"
+                      "risk": "1d20+wis判定（DC12）"
                     },
                     {
                       "text": "噂話を聞く",
                       "preview": "ロビンから情報を得る",
                       "risk": "判定不要"
+                    },
+                    {
+                      "secret": true,
+                      "text": "将軍の部屋から盗んだ物を見せてもらう",
+                      "preview": "",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "flag": "recruited_robin"
+                          },
+                          {
+                            "flag": "cleared_goblin_fort"
+                          }
+                        ]
+                      }
                     }
                   ]
+                },
+                {
+                  "text": "ロビンの依頼を引き受ける",
+                  "preview": "ロビンとゴブリンの砦へ向かう",
+                  "risk": "判定不要",
+                  "visible_after": "recruited_robin",
+                  "requirements": {
+                    "all": [
+                      {},
+                      {
+                        "not_flag": "returned_to_capital"
+                      }
+                    ]
+                  },
+                  "secret": true,
+                  "hidden_after": "defeated_goblin_king"
                 },
                 {
                   "text": "城下町に戻る",
@@ -2133,10 +2058,10 @@
               "イアン"
             ],
             "draft": {
-              "gm_text": "イアンは遠い目をし、過去に麓の村で語られていた伝説の「氷の太刀」について思い出しました。「詳しいことは村の長老に聞くといい」と助言してくれました。",
+              "gm_text": "イアンは遠い目をして、かつて麓の村で語られていた伝説の「氷の太刀」の話をしてくれた。「詳しいことは村の長老に聞くといい」",
               "system_log": "イアンから伝説の武器「氷の太刀」の情報を得た。",
-              "dice_type": "1d30",
-              "dice_dc": 4,
+              "dice_type": "1d20",
+              "dice_dc": 3,
               "state_delta": {
                 "hp_change": 0,
                 "mp_change": 0,
@@ -2149,9 +2074,12 @@
               },
               "choices": [
                 {
-                  "text": "すぐに麓の村へ向かう",
-                  "preview": "極めて危険",
-                  "risk": "判定不要"
+                  "text": "宿で休む（10G）",
+                  "preview": "温かい食事と寝台で疲れを癒す",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "gold_gte": 10
+                  }
                 },
                 {
                   "text": "イアンと会話する",
@@ -2161,7 +2089,7 @@
                     {
                       "text": "強力な氷属性武器の伝説について聞く",
                       "preview": "伝説の武器の情報を得る",
-                      "risk": "1d30判定（DC4）"
+                      "risk": "1d20判定（DC3）"
                     },
                     {
                       "text": "邪竜を倒すアドバイスを求める",
@@ -2169,8 +2097,8 @@
                       "risk": "判定不要"
                     },
                     {
-                      "text": "宿屋で一晩休む（1G）",
-                      "preview": "夜まで休む",
+                      "text": "竜と人の昔話を聞く",
+                      "preview": "",
                       "risk": "判定不要"
                     }
                   ]
@@ -2183,14 +2111,46 @@
                     {
                       "text": "パーティに勧誘する",
                       "preview": "ロビンを仲間に誘う",
-                      "risk": "1d100+agi判定（DC60）"
+                      "risk": "1d20+wis判定（DC12）"
                     },
                     {
                       "text": "噂話を聞く",
                       "preview": "ロビンから情報を得る",
                       "risk": "判定不要"
+                    },
+                    {
+                      "secret": true,
+                      "text": "将軍の部屋から盗んだ物を見せてもらう",
+                      "preview": "",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "flag": "recruited_robin"
+                          },
+                          {
+                            "flag": "cleared_goblin_fort"
+                          }
+                        ]
+                      }
                     }
                   ]
+                },
+                {
+                  "text": "ロビンの依頼を引き受ける",
+                  "preview": "ロビンとゴブリンの砦へ向かう",
+                  "risk": "判定不要",
+                  "visible_after": "recruited_robin",
+                  "requirements": {
+                    "all": [
+                      {},
+                      {
+                        "not_flag": "returned_to_capital"
+                      }
+                    ]
+                  },
+                  "secret": true,
+                  "hidden_after": "defeated_goblin_king"
                 },
                 {
                   "text": "城下町に戻る",
@@ -2200,7 +2160,7 @@
               ]
             },
             "rewrite_notes": [
-              "1d30判定成功時に使用。"
+              "1d20判定成功時に使用。"
             ],
             "action_id": "ask_ian_legend",
             "outcome": "success"
@@ -2216,10 +2176,10 @@
               "イアン"
             ],
             "draft": {
-              "gm_text": "イアンは過去の辛い記憶を思い出し、苦痛の表情を浮かべて口を閉ざしてしまいました。これ以上聞き出すことはできそうにありません。",
+              "gm_text": "イアンは辛い記憶に触れたのか、顔をしかめて口を閉ざした。これ以上は聞き出せそうにない。",
               "system_log": "イアンは過去のトラウマにより回答を拒否した。",
-              "dice_type": "1d30",
-              "dice_dc": 4,
+              "dice_type": "1d20",
+              "dice_dc": 3,
               "state_delta": {
                 "hp_change": 0,
                 "mp_change": 0,
@@ -2232,6 +2192,14 @@
               },
               "choices": [
                 {
+                  "text": "宿で休む（10G）",
+                  "preview": "温かい食事と寝台で疲れを癒す",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "gold_gte": 10
+                  }
+                },
+                {
                   "text": "イアンと会話する",
                   "preview": "宿屋の店主と話す",
                   "risk": "判定不要",
@@ -2239,7 +2207,7 @@
                     {
                       "text": "強力な氷属性武器の伝説について聞く",
                       "preview": "伝説の武器の情報を得る",
-                      "risk": "1d30判定（DC4）"
+                      "risk": "1d20判定（DC3）"
                     },
                     {
                       "text": "邪竜を倒すアドバイスを求める",
@@ -2247,8 +2215,8 @@
                       "risk": "判定不要"
                     },
                     {
-                      "text": "宿屋で一晩休む（1G）",
-                      "preview": "夜まで休む",
+                      "text": "竜と人の昔話を聞く",
+                      "preview": "",
                       "risk": "判定不要"
                     }
                   ]
@@ -2261,14 +2229,46 @@
                     {
                       "text": "パーティに勧誘する",
                       "preview": "ロビンを仲間に誘う",
-                      "risk": "1d100+agi判定（DC60）"
+                      "risk": "1d20+wis判定（DC12）"
                     },
                     {
                       "text": "噂話を聞く",
                       "preview": "ロビンから情報を得る",
                       "risk": "判定不要"
+                    },
+                    {
+                      "secret": true,
+                      "text": "将軍の部屋から盗んだ物を見せてもらう",
+                      "preview": "",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "flag": "recruited_robin"
+                          },
+                          {
+                            "flag": "cleared_goblin_fort"
+                          }
+                        ]
+                      }
                     }
                   ]
+                },
+                {
+                  "text": "ロビンの依頼を引き受ける",
+                  "preview": "ロビンとゴブリンの砦へ向かう",
+                  "risk": "判定不要",
+                  "visible_after": "recruited_robin",
+                  "requirements": {
+                    "all": [
+                      {},
+                      {
+                        "not_flag": "returned_to_capital"
+                      }
+                    ]
+                  },
+                  "secret": true,
+                  "hidden_after": "defeated_goblin_king"
                 },
                 {
                   "text": "城下町に戻る",
@@ -2278,7 +2278,7 @@
               ]
             },
             "rewrite_notes": [
-              "1d30判定失敗時に使用。"
+              "1d20判定失敗時に使用。"
             ],
             "action_id": "ask_ian_legend",
             "outcome": "failure"
@@ -2294,7 +2294,7 @@
               "倒す"
             ],
             "draft": {
-              "gm_text": "イアンはため息をつき、「邪竜は過去に何度も倒されているが、また復活する。国王にとって討伐は定期的な仕事のようなものだ。国王の言う通りにするのが間違いないさ」と語りました。",
+              "gm_text": "イアンはため息をついた。「邪竜は過去に何度も倒されているが、そのたびに蘇る。国王にとっちゃ、討伐は定期的な仕事みたいなもんさ。言われた通りにしておくのが一番だ」",
               "system_log": "邪竜討伐に関するイアンのメタ的なアドバイスを聞いた。",
               "dice_type": "1d20",
               "dice_dc": 0,
@@ -2310,6 +2310,14 @@
               },
               "choices": [
                 {
+                  "text": "宿で休む（10G）",
+                  "preview": "温かい食事と寝台で疲れを癒す",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "gold_gte": 10
+                  }
+                },
+                {
                   "text": "イアンと会話する",
                   "preview": "宿屋の店主と話す",
                   "risk": "判定不要",
@@ -2317,7 +2325,7 @@
                     {
                       "text": "強力な氷属性武器の伝説について聞く",
                       "preview": "伝説の武器の情報を得る",
-                      "risk": "1d30判定（DC4）"
+                      "risk": "1d20判定（DC3）"
                     },
                     {
                       "text": "邪竜を倒すアドバイスを求める",
@@ -2325,8 +2333,8 @@
                       "risk": "判定不要"
                     },
                     {
-                      "text": "宿屋で一晩休む（1G）",
-                      "preview": "夜まで休む",
+                      "text": "竜と人の昔話を聞く",
+                      "preview": "",
                       "risk": "判定不要"
                     }
                   ]
@@ -2339,14 +2347,46 @@
                     {
                       "text": "パーティに勧誘する",
                       "preview": "ロビンを仲間に誘う",
-                      "risk": "1d100+agi判定（DC60）"
+                      "risk": "1d20+wis判定（DC12）"
                     },
                     {
                       "text": "噂話を聞く",
                       "preview": "ロビンから情報を得る",
                       "risk": "判定不要"
+                    },
+                    {
+                      "secret": true,
+                      "text": "将軍の部屋から盗んだ物を見せてもらう",
+                      "preview": "",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "flag": "recruited_robin"
+                          },
+                          {
+                            "flag": "cleared_goblin_fort"
+                          }
+                        ]
+                      }
                     }
                   ]
+                },
+                {
+                  "text": "ロビンの依頼を引き受ける",
+                  "preview": "ロビンとゴブリンの砦へ向かう",
+                  "risk": "判定不要",
+                  "visible_after": "recruited_robin",
+                  "requirements": {
+                    "all": [
+                      {},
+                      {
+                        "not_flag": "returned_to_capital"
+                      }
+                    ]
+                  },
+                  "secret": true,
+                  "hidden_after": "defeated_goblin_king"
                 },
                 {
                   "text": "城下町に戻る",
@@ -2370,7 +2410,7 @@
               "ロビン"
             ],
             "draft": {
-              "gm_text": "ロビンは笑って頷きました。「同行してもいいわよ。でもその前に、私の手伝いをしてくれない？王国商人の荷物が闇の森のゴブリンに奪われたの。今すぐ一緒に取り返しに行きましょう」",
+              "gm_text": "ロビンは笑って頷いた。「同行してもいいわよ。でもその前に、私の手伝いをしてくれない？王国商人の荷物が、闇の森のゴブリンに奪われたの」",
               "system_log": "ロビンが同行に同意した。ただしゴブリン討伐の手伝いが条件となる。",
               "dice_type": "1d100+agi",
               "dice_dc": 60,
@@ -2386,9 +2426,12 @@
               },
               "choices": [
                 {
-                  "text": "引き受ける",
-                  "preview": "ロビンが同行し、ゴブリンの砦へ",
-                  "risk": "判定不要"
+                  "text": "宿で休む（10G）",
+                  "preview": "温かい食事と寝台で疲れを癒す",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "gold_gte": 10
+                  }
                 },
                 {
                   "text": "イアンと会話する",
@@ -2398,7 +2441,7 @@
                     {
                       "text": "強力な氷属性武器の伝説について聞く",
                       "preview": "伝説の武器の情報を得る",
-                      "risk": "1d30判定（DC4）"
+                      "risk": "1d20判定（DC3）"
                     },
                     {
                       "text": "邪竜を倒すアドバイスを求める",
@@ -2406,8 +2449,8 @@
                       "risk": "判定不要"
                     },
                     {
-                      "text": "宿屋で一晩休む（1G）",
-                      "preview": "夜まで休む",
+                      "text": "竜と人の昔話を聞く",
+                      "preview": "",
                       "risk": "判定不要"
                     }
                   ]
@@ -2420,14 +2463,46 @@
                     {
                       "text": "パーティに勧誘する",
                       "preview": "ロビンを仲間に誘う",
-                      "risk": "1d100+agi判定（DC60）"
+                      "risk": "1d20+wis判定（DC12）"
                     },
                     {
                       "text": "噂話を聞く",
                       "preview": "ロビンから情報を得る",
                       "risk": "判定不要"
+                    },
+                    {
+                      "secret": true,
+                      "text": "将軍の部屋から盗んだ物を見せてもらう",
+                      "preview": "",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "flag": "recruited_robin"
+                          },
+                          {
+                            "flag": "cleared_goblin_fort"
+                          }
+                        ]
+                      }
                     }
                   ]
+                },
+                {
+                  "text": "ロビンの依頼を引き受ける",
+                  "preview": "ロビンとゴブリンの砦へ向かう",
+                  "risk": "判定不要",
+                  "visible_after": "recruited_robin",
+                  "requirements": {
+                    "all": [
+                      {},
+                      {
+                        "not_flag": "returned_to_capital"
+                      }
+                    ]
+                  },
+                  "secret": true,
+                  "hidden_after": "defeated_goblin_king"
                 },
                 {
                   "text": "城下町に戻る",
@@ -2453,7 +2528,7 @@
               "ロビン"
             ],
             "draft": {
-              "gm_text": "ロビンは肩をすくめました。「悪いけど、今は忙しいの。また今度ね」",
+              "gm_text": "ロビンは肩をすくめた。「悪いけど、今は忙しいの。また今度ね」",
               "system_log": "ロビンの勧誘に失敗した。",
               "dice_type": "1d100+agi",
               "dice_dc": 60,
@@ -2469,6 +2544,14 @@
               },
               "choices": [
                 {
+                  "text": "宿で休む（10G）",
+                  "preview": "温かい食事と寝台で疲れを癒す",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "gold_gte": 10
+                  }
+                },
+                {
                   "text": "イアンと会話する",
                   "preview": "宿屋の店主と話す",
                   "risk": "判定不要",
@@ -2476,7 +2559,7 @@
                     {
                       "text": "強力な氷属性武器の伝説について聞く",
                       "preview": "伝説の武器の情報を得る",
-                      "risk": "1d30判定（DC4）"
+                      "risk": "1d20判定（DC3）"
                     },
                     {
                       "text": "邪竜を倒すアドバイスを求める",
@@ -2484,8 +2567,8 @@
                       "risk": "判定不要"
                     },
                     {
-                      "text": "宿屋で一晩休む（1G）",
-                      "preview": "夜まで休む",
+                      "text": "竜と人の昔話を聞く",
+                      "preview": "",
                       "risk": "判定不要"
                     }
                   ]
@@ -2498,14 +2581,46 @@
                     {
                       "text": "パーティに勧誘する",
                       "preview": "ロビンを仲間に誘う",
-                      "risk": "1d100+agi判定（DC60）"
+                      "risk": "1d20+wis判定（DC12）"
                     },
                     {
                       "text": "噂話を聞く",
                       "preview": "ロビンから情報を得る",
                       "risk": "判定不要"
+                    },
+                    {
+                      "secret": true,
+                      "text": "将軍の部屋から盗んだ物を見せてもらう",
+                      "preview": "",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "flag": "recruited_robin"
+                          },
+                          {
+                            "flag": "cleared_goblin_fort"
+                          }
+                        ]
+                      }
                     }
                   ]
+                },
+                {
+                  "text": "ロビンの依頼を引き受ける",
+                  "preview": "ロビンとゴブリンの砦へ向かう",
+                  "risk": "判定不要",
+                  "visible_after": "recruited_robin",
+                  "requirements": {
+                    "all": [
+                      {},
+                      {
+                        "not_flag": "returned_to_capital"
+                      }
+                    ]
+                  },
+                  "secret": true,
+                  "hidden_after": "defeated_goblin_king"
                 },
                 {
                   "text": "城下町に戻る",
@@ -2547,6 +2662,14 @@
               },
               "choices": [
                 {
+                  "text": "宿で休む（10G）",
+                  "preview": "温かい食事と寝台で疲れを癒す",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "gold_gte": 10
+                  }
+                },
+                {
                   "text": "イアンと会話する",
                   "preview": "宿屋の店主と話す",
                   "risk": "判定不要",
@@ -2554,7 +2677,7 @@
                     {
                       "text": "強力な氷属性武器の伝説について聞く",
                       "preview": "伝説の武器の情報を得る",
-                      "risk": "1d30判定（DC4）"
+                      "risk": "1d20判定（DC3）"
                     },
                     {
                       "text": "邪竜を倒すアドバイスを求める",
@@ -2562,8 +2685,8 @@
                       "risk": "判定不要"
                     },
                     {
-                      "text": "宿屋で一晩休む（1G）",
-                      "preview": "夜まで休む",
+                      "text": "竜と人の昔話を聞く",
+                      "preview": "",
                       "risk": "判定不要"
                     }
                   ]
@@ -2576,14 +2699,46 @@
                     {
                       "text": "パーティに勧誘する",
                       "preview": "ロビンを仲間に誘う",
-                      "risk": "1d100+agi判定（DC60）"
+                      "risk": "1d20+wis判定（DC12）"
                     },
                     {
                       "text": "噂話を聞く",
                       "preview": "ロビンから情報を得る",
                       "risk": "判定不要"
+                    },
+                    {
+                      "secret": true,
+                      "text": "将軍の部屋から盗んだ物を見せてもらう",
+                      "preview": "",
+                      "risk": "判定不要",
+                      "requirements": {
+                        "all": [
+                          {
+                            "flag": "recruited_robin"
+                          },
+                          {
+                            "flag": "cleared_goblin_fort"
+                          }
+                        ]
+                      }
                     }
                   ]
+                },
+                {
+                  "text": "ロビンの依頼を引き受ける",
+                  "preview": "ロビンとゴブリンの砦へ向かう",
+                  "risk": "判定不要",
+                  "visible_after": "recruited_robin",
+                  "requirements": {
+                    "all": [
+                      {},
+                      {
+                        "not_flag": "returned_to_capital"
+                      }
+                    ]
+                  },
+                  "secret": true,
+                  "hidden_after": "defeated_goblin_king"
                 },
                 {
                   "text": "城下町に戻る",
@@ -2724,13 +2879,13 @@
               "id": "ask_ian_legend",
               "text": "強力な氷属性武器の伝説について聞く",
               "preview": "伝説の武器の情報を得る",
-              "risk": "1d30判定（DC4）",
+              "risk": "1d20判定（DC3）",
               "intent_keywords": [
                 "強力な氷属性武器の伝説について聞く"
               ],
               "roll": {
-                "dice_type": "1d30",
-                "dc": 4
+                "dice_type": "1d20",
+                "dc": 3
               },
               "once": "asked_ian_legend",
               "success_effects": [
@@ -2764,7 +2919,7 @@
             {
               "id": "ask_ian_dragon_tale",
               "text": "竜と人の昔話を聞く",
-              "preview": "竜と人の昔話を聞く",
+              "preview": "",
               "risk": "判定不要",
               "intent_keywords": [
                 "竜と人の昔話を聞く"
@@ -2839,7 +2994,7 @@
               "id": "ask_robin_stolen_scale",
               "secret": true,
               "text": "将軍の部屋から盗んだ物を見せてもらう",
-              "preview": "将軍の部屋から盗んだ物を見せてもらう",
+              "preview": "",
               "risk": "判定不要",
               "intent_keywords": [
                 "将軍の部屋から盗んだ物を見せてもらう"
@@ -2894,7 +3049,9 @@
               }
             ]
           },
-          "secret": true
+          "secret": true,
+          "result_text": "「決まりね」ロビンは弓を背負い直して立ち上がった。「近道を知ってるの。ついてきて」彼女の案内で森の獣道を抜けると、木々の間にゴブリンの砦が黒くそびえていた。",
+          "hidden_after": "defeated_goblin_king"
         },
         {
           "id": "return_castle_from_inn",
@@ -2923,30 +3080,6 @@
               }
             }
           ]
-        },
-        {
-          "id": "return_forest_exit",
-          "text": "森を出て麓の村へ向かう",
-          "preview": "森を出て麓の村へ向かう",
-          "risk": "判定不要",
-          "intent_keywords": [
-            "森を出て麓の村へ向かう"
-          ],
-          "effects": [
-            {
-              "current_location": "forest_exit"
-            }
-          ],
-          "visible_after": "returned_from_forest",
-          "requirements": {
-            "all": [
-              {},
-              {
-                "not_flag": "returned_to_capital"
-              }
-            ]
-          },
-          "secret": true
         }
       ],
       "background_image": "/static/images/bg_inn.png",
@@ -2978,29 +3111,61 @@
       ],
       "choices": [
         {
-          "text": "長老に邪竜の弱点を聞く",
-          "preview": "冷気の弱点について情報を得ます",
-          "risk": "判定不要"
+          "text": "長老と話す",
+          "preview": "村の長老から古い話を聞く",
+          "risk": "判定不要",
+          "children": [
+            {
+              "text": "長老に邪竜の弱点を聞く",
+              "preview": "冷気の弱点について情報を得ます",
+              "risk": "判定不要"
+            },
+            {
+              "text": "古い盟約について聞く",
+              "preview": "",
+              "risk": "判定不要"
+            }
+          ]
         },
         {
-          "id": "open_village_shop",
           "text": "店に入る",
           "preview": "麓の村の道具屋",
-          "risk": "判定不要",
-          "open_shop": "village_shop",
-          "intent_keywords": [
-            "店に入る",
-            "買う",
-            "購入",
-            "売却",
-            "道具屋で氷の護符を買う",
-            "氷の護符"
-          ]
+          "risk": "判定不要"
         },
         {
           "text": "竜の谷へ向かう",
           "preview": "第4章へ進みます",
           "risk": "危険"
+        },
+        {
+          "text": "城下町に戻る",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "結氷した場所を探索する",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "行商人ガルドの店に入る",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "saved_gald"
+        },
+        {
+          "text": "避難所で休ませてもらう（5G）",
+          "preview": "",
+          "risk": "判定不要",
+          "requirements": {
+            "gold_gte": 5
+          }
+        },
+        {
+          "text": "リクを長老に会わせる",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "riku_rescued"
         }
       ],
       "hybrid": {
@@ -3018,7 +3183,7 @@
               "探索"
             ],
             "draft": {
-              "gm_text": "邪竜イグニスが潜む谷の麓にある小さな村に到着しました。冷たい風が吹き抜ける中、村人たちは怯えた様子で生活しています。邪竜に立ち向かう術を得るため、まずは情報を集めるか、旅の支度を整える必要があります。",
+              "gm_text": "邪竜イグニスが潜む谷の麓、小さな村にたどり着いた。冷たい風が吹き抜ける中、村人たちは怯えた様子で暮らしている。邪竜に立ち向かう術を得るには、まず情報を集め、旅の支度を整える必要がありそうだ。",
               "system_log": "シーン「麓の村」が開始されました。",
               "dice_type": "1d20",
               "dice_dc": 10,
@@ -3078,7 +3243,7 @@
               "話を聞く"
             ],
             "draft": {
-              "gm_text": "白髭を蓄えた長老は、あなたの決意を聞くと静かに頷きました。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」",
+              "gm_text": "白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」",
               "system_log": "手がかり「邪竜の弱点」を獲得しました。",
               "dice_type": "1d20",
               "dice_dc": 10,
@@ -3157,7 +3322,7 @@
             {
               "id": "ask_elder_treaty",
               "text": "古い盟約について聞く",
-              "preview": "古い盟約について聞く",
+              "preview": "",
               "risk": "判定不要",
               "intent_keywords": [
                 "古い盟約について聞く"
@@ -3199,29 +3364,31 @@
               "current_location": "valley_entrance",
               "flags_set": []
             }
-          ]
+          ],
+          "result_text": "長老たちに見送られて村を出る。山道を登るにつれて空気は熱を帯び、やがて硫黄の霧が谷の入口を覆っていた。"
         },
         {
           "id": "return_castle_from_village",
-          "text": "城に戻る",
-          "preview": "城に戻る",
+          "text": "城下町に戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
-            "城に戻る"
+            "城下町に戻る"
           ],
           "effects": [
             {
               "set_flag": "returned_from_village"
             },
             {
-              "current_location": "castle"
+              "current_location": "castle_town"
             }
-          ]
+          ],
+          "result_text": "村を発ち、来た道を引き返す。森を抜けて城門をくぐると、見慣れた城下町の大通りが広がっていた。"
         },
         {
           "id": "return_frozen_clue",
           "text": "結氷した場所を探索する",
-          "preview": "結氷した場所を探索する",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "結氷した場所を探索する"
@@ -3235,7 +3402,7 @@
         {
           "id": "open_gald_shop",
           "text": "行商人ガルドの店に入る",
-          "preview": "行商人ガルドの店に入る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "行商人ガルドの店に入る"
@@ -3247,7 +3414,7 @@
         {
           "id": "rest_at_refuge",
           "text": "避難所で休ませてもらう（5G）",
-          "preview": "避難所で休ませてもらう（5G）",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "避難所で休ませてもらう（5G）"
@@ -3268,7 +3435,7 @@
         {
           "id": "return_riku",
           "text": "リクを長老に会わせる",
-          "preview": "リクを長老に会わせる",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "リクを長老に会わせる"
@@ -3492,23 +3659,7 @@
       "item_ids": [],
       "clue_ids": [],
       "connected_location_ids": [],
-      "choices": [
-        {
-          "text": "氷の護符を掲げて攻撃する",
-          "preview": "邪竜の弱点を狙います",
-          "risk": "1d20判定（DC12）"
-        },
-        {
-          "text": "鉄の剣で正面から斬り込む",
-          "preview": "危険ですが直接ダメージを狙います",
-          "risk": "危険"
-        },
-        {
-          "text": "防御して炎の息に備える",
-          "preview": "次の被害を抑えます",
-          "risk": "判定不要"
-        }
-      ],
+      "choices": [],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "邪竜イグニスとの決戦における導入、および主要な3つの行動選択への返答。",
@@ -3564,158 +3715,6 @@
             ],
             "action_id": "",
             "outcome": ""
-          },
-          {
-            "id": "dragon_valley_ice_amulet",
-            "purpose": "choice_response",
-            "source_choice": "氷の護符を掲げて攻撃する",
-            "player_intent": "use ice magic/amulet",
-            "trigger_keywords": [
-              "氷の護符",
-              "氷",
-              "護符",
-              "冷気",
-              "弱点"
-            ],
-            "draft": {
-              "gm_text": "あなたが懐から氷の護符を掲げると、極寒の猛吹雪が吹き荒れ、イグニスの燃え盛る体を直撃します！「グオオオッ！？」邪竜は苦悶の声を上げ、その巨大な巨体を震わせました。冷気攻撃は見事に効果を発揮しているようです！",
-              "system_log": "氷の護符による弱点属性攻撃が命中、邪竜に大ダメージ。毎ターンのSP自動回復適用。",
-              "dice_type": "1d20+int",
-              "dice_dc": 12,
-              "state_delta": {
-                "hp_change": 0,
-                "mp_change": -2,
-                "sp_change": 5,
-                "gold_change": 0,
-                "attribute_changes": {},
-                "inventory_add": [],
-                "inventory_remove": [],
-                "current_scene": null
-              },
-              "choices": [
-                {
-                  "text": "冷気に怯んだ隙に、剣で追撃する",
-                  "preview": "物理追撃を行う",
-                  "risk": "1d20+str判定（DC12）"
-                },
-                {
-                  "text": "さらなる冷気魔力を溜めて攻撃する",
-                  "preview": "魔法攻撃を継続する",
-                  "risk": "1d20+int判定（DC14）"
-                },
-                {
-                  "text": "薬草を使って消耗を回復する",
-                  "preview": "HPを回復する",
-                  "risk": "判定不要"
-                }
-              ]
-            },
-            "rewrite_notes": [
-              "イグニスが冷気を苦手としている事実（ダメージ表現）は変えないでください。"
-            ],
-            "action_id": "attack_ignis_with_ice_amulet",
-            "outcome": "success"
-          },
-          {
-            "id": "dragon_valley_sword_attack",
-            "purpose": "choice_response",
-            "source_choice": "鉄の剣で正面から斬り込む",
-            "player_intent": "melee physical attack",
-            "trigger_keywords": [
-              "鉄の剣",
-              "斬り込む",
-              "正面",
-              "攻撃",
-              "斬る"
-            ],
-            "draft": {
-              "gm_text": "あなたは鉄の剣を強く握り締め、正面から邪竜の足元へと斬り込みます！しかし、イグニスは嘲笑うかのように巨大な尻尾を叩きつけてきました。硬い鱗に剣が弾かれ、凄まじい衝撃が体中に走り、吹き飛ばされます！",
-              "system_log": "正面からの物理攻撃は鱗に遮られ、反撃によりダメージを受ける。SP回復適用。",
-              "dice_type": "1d20+str",
-              "dice_dc": 14,
-              "state_delta": {
-                "hp_change": -5,
-                "mp_change": 0,
-                "sp_change": 5,
-                "gold_change": 0,
-                "attribute_changes": {},
-                "inventory_add": [],
-                "inventory_remove": [],
-                "current_scene": null
-              },
-              "choices": [
-                {
-                  "text": "すぐさま立ち上がり、薬草を口に含む",
-                  "preview": "HPを安全に回復する",
-                  "risk": "判定不要"
-                },
-                {
-                  "text": "氷の護符を取り出し、属性攻撃に切り替える",
-                  "preview": "弱点冷気攻撃に切り替え",
-                  "risk": "1d20判定（DC12）"
-                },
-                {
-                  "text": "邪竜の死角である背後へ回り込む",
-                  "preview": "回避を優先しながら移動する",
-                  "risk": "1d20+dex判定（DC13）"
-                }
-              ]
-            },
-            "rewrite_notes": [
-              "正面攻撃は有効ではないことをプレイヤーに伝えるためのターンです。"
-            ],
-            "action_id": "attack_ignis_with_sword",
-            "outcome": "neutral"
-          },
-          {
-            "id": "dragon_valley_defend",
-            "purpose": "choice_response",
-            "source_choice": "防御して炎の息に備える",
-            "player_intent": "defend against fire breath",
-            "trigger_keywords": [
-              "防御",
-              "守る",
-              "身を守る",
-              "備える"
-            ],
-            "draft": {
-              "gm_text": "あなたは素早く防御の姿勢を取り、盾を構えてイグニスの攻撃に備えます。次の瞬間、灼熱の炎の息があなたを包み込みましたが、防御のおかげで致命傷は避けられました。荒い息を吐く邪竜の前で、反撃の機会をうかがいます。",
-              "system_log": "防御行動により炎の息のダメージを半減。SP回復適用。",
-              "dice_type": "1d20",
-              "dice_dc": 12,
-              "state_delta": {
-                "hp_change": -3,
-                "mp_change": 0,
-                "sp_change": 5,
-                "gold_change": 0,
-                "attribute_changes": {},
-                "inventory_add": [],
-                "inventory_remove": [],
-                "current_scene": null
-              },
-              "choices": [
-                {
-                  "text": "防御の隙をついて、氷の護符で反撃する",
-                  "preview": "邪竜の弱点を突く",
-                  "risk": "1d20判定（DC12）"
-                },
-                {
-                  "text": "さらに防御を固め、仲間の支援を待つ",
-                  "preview": "継続防御で持久戦に持ち込む",
-                  "risk": "判定不要"
-                },
-                {
-                  "text": "退避用の煙玉を使い、態勢を立て直す",
-                  "preview": "道具を駆使して仕切り直す",
-                  "risk": "1d20+dex判定（DC10）"
-                }
-              ]
-            },
-            "rewrite_notes": [
-              "防御の効果（ダメージ半減）をプレイヤーにわかるように描写してください。"
-            ],
-            "action_id": "defend_ignis_breath",
-            "outcome": "neutral"
           }
         ],
         "gm_notes": [
@@ -3723,108 +3722,13 @@
           "防御も有効な選択肢であることを示す。"
         ]
       },
-      "actions": [
-        {
-          "id": "attack_ignis_with_ice_amulet",
-          "text": "氷の護符を掲げて攻撃する",
-          "preview": "邪竜の弱点を狙います",
-          "risk": "1d20判定（DC12）",
-          "intent_keywords": [
-            "氷の護符を掲げて攻撃する"
-          ],
-          "roll": {
-            "dice_type": "1d20",
-            "dc": 12
-          },
-          "success_effects": [
-            {
-              "set_flag": "defeated_ignis"
-            },
-            {
-              "branch": {
-                "requirements": {
-                  "all": [
-                    {
-                      "flag": "promised_core_to_xanxus"
-                    },
-                    {
-                      "not_flag": "fire_seed_removed"
-                    }
-                  ]
-                },
-                "then": [
-                  {
-                    "set_flag": "xanxus_took_core"
-                  }
-                ],
-                "else": [
-                  {
-                    "add_item": {
-                      "id": "red_dragon_core",
-                      "name": "紅竜の炎核",
-                      "quantity": 1
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "current_location": "ignis_last_breath"
-            }
-          ],
-          "failure_effects": [
-            {
-              "hp_change": -5
-            },
-            {
-              "set_flag": "ice_amulet_attack_failed"
-            }
-          ],
-          "requirements": {
-            "has_item": "氷の護符"
-          },
-          "hidden_after": "defeated_ignis"
-        },
-        {
-          "id": "attack_ignis_with_sword",
-          "text": "鉄の剣で正面から斬り込む",
-          "preview": "危険ですが直接ダメージを狙います",
-          "risk": "危険",
-          "intent_keywords": [
-            "鉄の剣で正面から斬り込む"
-          ],
-          "effects": [
-            {
-              "hp_change": -6
-            },
-            {
-              "set_flag": "reckless_dragon_attack"
-            }
-          ],
-          "hidden_after": "defeated_ignis"
-        },
-        {
-          "id": "defend_ignis_breath",
-          "text": "防御して炎の息に備える",
-          "preview": "次の被害を抑えます",
-          "risk": "判定不要",
-          "intent_keywords": [
-            "防御して炎の息に備える"
-          ],
-          "effects": [
-            {
-              "set_flag": "defended_dragon_breath"
-            }
-          ],
-          "hidden_after": "defeated_ignis"
-        }
-      ],
+      "actions": [],
       "background_image": "/static/images/bg_dragon_valley.png"
     },
     {
       "id": "magic_shop",
       "scene_id": "throne_room",
-      "title": "王城の魔法店",
+      "title": "城下町の魔法店",
       "description": "青いローブの銀髪の魔法使いが、杖を背に店番をしている。",
       "keywords": [
         "王城の魔法店"
@@ -3862,7 +3766,7 @@
         },
         {
           "text": "泉の封印について尋ねる",
-          "preview": "泉の封印について尋ねる",
+          "preview": "",
           "risk": "判定不要",
           "secret": true,
           "requirements": {
@@ -3878,7 +3782,7 @@
         },
         {
           "text": "虹晶の欠片を武器に仕立ててもらう",
-          "preview": "虹晶の欠片を武器に仕立ててもらう",
+          "preview": "",
           "risk": "判定不要",
           "requirements": {
             "has_item": "虹晶の欠片"
@@ -3886,12 +3790,12 @@
         },
         {
           "text": "最近変わったことは？",
-          "preview": "最近変わったことは？",
+          "preview": "",
           "risk": "判定不要"
         },
         {
           "text": "ミーナを無事に連れ帰ったと伝える",
-          "preview": "ミーナを無事に連れ帰ったと伝える",
+          "preview": "",
           "risk": "判定不要",
           "visible_after": "mina_rescued"
         }
@@ -3900,6 +3804,22 @@
         "mode": "prepared_gm_turns",
         "summary": "青いローブの銀髪の魔法使いが、杖を背に店番をしている。",
         "prepared_turns": [
+          {
+            "id": "magic_shop_opening",
+            "purpose": "opening",
+            "action_id": "go_magic_shop",
+            "outcome": "neutral",
+            "trigger_keywords": [
+              "魔法店",
+              "到着"
+            ],
+            "draft": {
+              "gm_text": "薬草と古い紙の匂いが漂う店内で、青いローブの銀髪の魔法使いが顔を上げた。棚の小瓶が、窓からの光を受けて淡く瞬いている。「何かお探しかな」",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          },
           {
             "id": "blue_mage_rumor_success",
             "purpose": "choice_response",
@@ -4109,7 +4029,7 @@
         {
           "id": "ask_seal_lore",
           "text": "泉の封印について尋ねる",
-          "preview": "泉の封印について尋ねる",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "泉の封印について尋ねる"
@@ -4135,7 +4055,7 @@
         {
           "id": "forge_prism_weapon",
           "text": "虹晶の欠片を武器に仕立ててもらう",
-          "preview": "虹晶の欠片を武器に仕立ててもらう",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "虹晶の欠片を武器に仕立ててもらう"
@@ -4386,7 +4306,7 @@
         {
           "id": "ask_mina_missing",
           "text": "最近変わったことは？",
-          "preview": "最近変わったことは？",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "最近変わったことは？"
@@ -4405,7 +4325,7 @@
         {
           "id": "report_mina_safe",
           "text": "ミーナを無事に連れ帰ったと伝える",
-          "preview": "ミーナを無事に連れ帰ったと伝える",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "ミーナを無事に連れ帰ったと伝える"
@@ -4449,7 +4369,7 @@
     {
       "id": "item_shop",
       "scene_id": "throne_room",
-      "title": "王城の道具屋",
+      "title": "城下町の道具屋",
       "description": "十歳ほどの金髪の少女サラと、小さな火コウモリ竜がいる。",
       "keywords": [
         "王城の道具屋"
@@ -4482,12 +4402,12 @@
         },
         {
           "text": "何か困っていることはある？",
-          "preview": "何か困っていることはある？",
+          "preview": "",
           "risk": "判定不要"
         },
         {
           "text": "光苔を渡す",
-          "preview": "光苔を渡す",
+          "preview": "",
           "risk": "判定不要",
           "requirements": {
             "has_item": "光苔"
@@ -4498,6 +4418,22 @@
         "mode": "prepared_gm_turns",
         "summary": "十歳ほどの金髪の少女サラと、小さな火コウモリ竜がいる。",
         "prepared_turns": [
+          {
+            "id": "item_shop_opening",
+            "purpose": "opening",
+            "action_id": "go_item_shop",
+            "outcome": "neutral",
+            "trigger_keywords": [
+              "道具屋",
+              "到着"
+            ],
+            "draft": {
+              "gm_text": "扉の鈴が鳴ると、棚の陰から金髪の少女サラが顔を出した。肩の上では小さな火コウモリ竜が、ぱちぱちと火の粉を散らしている。「いらっしゃいませ！今日は何をお探しですか？」",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          },
           {
             "id": "fire_bat_borrow_success",
             "purpose": "choice_response",
@@ -4630,7 +4566,7 @@
         {
           "id": "ask_sarah_request",
           "text": "何か困っていることはある？",
-          "preview": "何か困っていることはある？",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "何か困っていることはある？"
@@ -4646,7 +4582,7 @@
         {
           "id": "give_moss_to_sarah",
           "text": "光苔を渡す",
-          "preview": "光苔を渡す",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "光苔を渡す"
@@ -4681,7 +4617,7 @@
     {
       "id": "alley",
       "scene_id": "throne_room",
-      "title": "王城の路地裏・昼",
+      "title": "城下町の路地裏・昼",
       "description": "昼の路地には人影がなく、奥へ進む理由も見当たらない。",
       "keywords": [
         "王城の路地裏・昼"
@@ -4710,6 +4646,22 @@
         "mode": "prepared_gm_turns",
         "summary": "昼の路地には人影がなく、奥へ進む理由も見当たらない。",
         "prepared_turns": [
+          {
+            "id": "alley_opening",
+            "purpose": "opening",
+            "action_id": "go_alley",
+            "outcome": "neutral",
+            "trigger_keywords": [
+              "路地裏・昼",
+              "到着"
+            ],
+            "draft": {
+              "gm_text": "昼の路地裏はひっそりとして、干された洗濯物が風に揺れているだけだ。奥へ進む理由も見当たらない。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            }
+          },
           {
             "id": "alley_wait_night",
             "purpose": "choice_response",
@@ -4785,7 +4737,7 @@
     {
       "id": "alley_night",
       "scene_id": "throne_room",
-      "title": "王城の路地裏・夜",
+      "title": "城下町の路地裏・夜",
       "description": "街灯の届かない場所に、黒いローブの小柄で毛むくじゃらな商人が立っている。",
       "keywords": [
         "王城の路地裏・夜"
@@ -4888,7 +4840,7 @@
         {
           "secret": true,
           "text": "白い鱗を買う",
-          "preview": "白い鱗を買う",
+          "preview": "",
           "risk": "判定不要",
           "requirements": {
             "all": [
@@ -5497,7 +5449,7 @@
           "id": "buy_white_scale",
           "secret": true,
           "text": "白い鱗を買う",
-          "preview": "白い鱗を買う",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "白い鱗を買う"
@@ -5807,7 +5759,72 @@
         "goblin"
       ],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "箱を取り戻す手伝いを引き受ける",
+          "preview": "",
+          "risk": "判定不要",
+          "secret": true,
+          "requirements": {
+            "all": [
+              {
+                "not_flag": "combat_defeated:lost_goblin_crossroads:goblin"
+              },
+              {
+                "not_flag": "resolved_lost_goblin_box"
+              }
+            ]
+          }
+        },
+        {
+          "text": "迷子のゴブリンを無視する",
+          "preview": "背を向けた隙に何か起きるかもしれない",
+          "risk": "未知の感知判定",
+          "secret": true,
+          "requirements": {
+            "all": [
+              {
+                "not_flag": "combat_defeated:lost_goblin_crossroads:goblin"
+              },
+              {
+                "not_flag": "resolved_lost_goblin_box"
+              }
+            ]
+          }
+        },
+        {
+          "text": "先へ進む",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "ゴブリン砦へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "lost_goblin_quest",
+          "hidden_after": "defeated_goblin_king"
+        },
+        {
+          "text": "森の入口へ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "砦の裏口から森の出口へ抜ける",
+          "preview": "",
+          "risk": "判定不要",
+          "requirements": {
+            "all": [
+              {
+                "flag": "resolved_lost_goblin_box"
+              },
+              {
+                "flag": "passed_forest_wolves"
+              }
+            ]
+          }
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "迷子のゴブリンが、別の一族に盗まれた箱を取り戻してほしいと頼んでいる。",
@@ -5874,7 +5891,7 @@
         {
           "id": "help_lost_goblin",
           "text": "箱を取り戻す手伝いを引き受ける",
-          "preview": "箱を取り戻す手伝いを引き受ける",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "箱を取り戻す手伝いを引き受ける"
@@ -5888,7 +5905,19 @@
               "set_flag": "knows_fort_password"
             }
           ],
-          "portrait_image": "/static/images/npc_lost_goblin.png"
+          "portrait_image": "/static/images/npc_lost_goblin.png",
+          "result_text": "「分かった、取り返してやる」と告げると、ゴブリンの顔がぱっと明るくなった。「砦の鉄門で合言葉を聞かれたら、こう答えるんだ」背伸びして耳打ちすると、木々の向こうにそびえる砦を指さした。",
+          "secret": true,
+          "requirements": {
+            "all": [
+              {
+                "not_flag": "combat_defeated:lost_goblin_crossroads:goblin"
+              },
+              {
+                "not_flag": "resolved_lost_goblin_box"
+              }
+            ]
+          }
         },
         {
           "id": "ignore_lost_goblin",
@@ -5932,12 +5961,23 @@
               }
             }
           ],
-          "portrait_image": "/static/images/npc_lost_goblin.png"
+          "portrait_image": "/static/images/npc_lost_goblin.png",
+          "secret": true,
+          "requirements": {
+            "all": [
+              {
+                "not_flag": "combat_defeated:lost_goblin_crossroads:goblin"
+              },
+              {
+                "not_flag": "resolved_lost_goblin_box"
+              }
+            ]
+          }
         },
         {
           "id": "crossroads_forward",
           "text": "先へ進む",
-          "preview": "先へ進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "先へ進む"
@@ -5951,7 +5991,7 @@
         {
           "id": "enter_goblin_fort",
           "text": "ゴブリン砦へ向かう",
-          "preview": "ゴブリン砦へ向かう",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "ゴブリン砦へ向かう"
@@ -5961,12 +6001,13 @@
               "current_location": "goblin_fort"
             }
           ],
-          "visible_after": "lost_goblin_quest"
+          "visible_after": "lost_goblin_quest",
+          "hidden_after": "defeated_goblin_king"
         },
         {
           "id": "crossroads_back",
           "text": "森の入口へ戻る",
-          "preview": "森の入口へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "森の入口へ戻る"
@@ -5980,7 +6021,7 @@
         {
           "id": "fort_shortcut",
           "text": "砦の裏口から森の出口へ抜ける",
-          "preview": "砦の裏口から森の出口へ抜ける",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "砦の裏口から森の出口へ抜ける"
@@ -6003,7 +6044,33 @@
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
-      "portrait_image": "/static/images/npc_lost_goblin.png"
+      "npc_requirements": {
+        "lost_goblin": {
+          "all": [
+            {
+              "not_flag": "combat_defeated:lost_goblin_crossroads:goblin"
+            },
+            {
+              "not_flag": "resolved_lost_goblin_box"
+            }
+          ]
+        }
+      },
+      "description_variants": [
+        {
+          "requirements": {
+            "any": [
+              {
+                "flag": "combat_defeated:lost_goblin_crossroads:goblin"
+              },
+              {
+                "flag": "resolved_lost_goblin_box"
+              }
+            ]
+          },
+          "text": ""
+        }
+      ]
     },
     {
       "id": "elf_spring",
@@ -6018,7 +6085,28 @@
       "clue_ids": [],
       "enemy_ids": [],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "精霊の泉で休む",
+          "preview": "泉で休めば力を取り戻せる。ただ、水面の下で何かがうごめいている気がする",
+          "risk": "休息中に襲われる恐れあり"
+        },
+        {
+          "text": "休まず先へ進む",
+          "preview": "森の奥へ進む",
+          "risk": "判定不要"
+        },
+        {
+          "text": "泉の奥の岩壁を調べる",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "十字路へ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "淡い光を帯びた泉。休めば力を取り戻せそうだ。",
@@ -6082,7 +6170,7 @@
         {
           "id": "continue_from_elf_spring",
           "text": "休まず先へ進む",
-          "preview": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。",
+          "preview": "森の奥へ進む",
           "risk": "判定不要",
           "intent_keywords": [
             "休まず先へ進む"
@@ -6097,7 +6185,7 @@
         {
           "id": "inspect_spring_wall",
           "text": "泉の奥の岩壁を調べる",
-          "preview": "泉の奥の岩壁を調べる",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "泉の奥の岩壁を調べる"
@@ -6111,7 +6199,7 @@
         {
           "id": "spring_back",
           "text": "十字路へ戻る",
-          "preview": "十字路へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "十字路へ戻る"
@@ -6188,7 +6276,43 @@
         "forest_wolf"
       ],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "森狼と戦う",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "hidden_after": "passed_forest_wolves"
+        },
+        {
+          "text": "携帯食で森狼を誘導する",
+          "preview": "",
+          "risk": "携帯食を1つ消費",
+          "hidden_after": "passed_forest_wolves"
+        },
+        {
+          "text": "森狼の脇を潜行して通る",
+          "preview": "",
+          "risk": "1d20+dex判定（DC14）・SP1消費",
+          "hidden_after": "passed_forest_wolves"
+        },
+        {
+          "text": "先へ進む",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "passed_forest_wolves"
+        },
+        {
+          "text": "泉へ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "見捨てて先を急ぐ",
+          "preview": "",
+          "risk": "判定不要",
+          "hidden_after": "passed_forest_wolves"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。",
@@ -6224,7 +6348,7 @@
         {
           "id": "fight_forest_wolves",
           "text": "森狼と戦う",
-          "preview": "森狼と戦う",
+          "preview": "",
           "risk": "危険（戦闘）",
           "intent_keywords": [
             "森狼と戦う"
@@ -6234,12 +6358,13 @@
               "start_combat": true
             }
           ],
-          "hidden_after": "passed_forest_wolves"
+          "hidden_after": "passed_forest_wolves",
+          "result_text": "荷車の前へ飛び出すと、森狼たちは低く唸り、狙いをこちらへ変えた。"
         },
         {
           "id": "distract_forest_wolves",
           "text": "携帯食で森狼を誘導する",
-          "preview": "携帯食で森狼を誘導する",
+          "preview": "",
           "risk": "携帯食を1つ消費",
           "intent_keywords": [
             "携帯食で森狼を誘導する"
@@ -6256,7 +6381,7 @@
         {
           "id": "sneak_forest_wolves",
           "text": "森狼の脇を潜行して通る",
-          "preview": "森狼の脇を潜行して通る",
+          "preview": "",
           "risk": "1d20+dex判定（DC14）・SP1消費",
           "intent_keywords": [
             "森狼の脇を潜行して通る"
@@ -6273,7 +6398,7 @@
         {
           "id": "pass_cleared_wolves",
           "text": "先へ進む",
-          "preview": "先へ進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "先へ進む"
@@ -6288,7 +6413,7 @@
         {
           "id": "wolves_back",
           "text": "泉へ戻る",
-          "preview": "泉へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "泉へ戻る"
@@ -6302,7 +6427,7 @@
         {
           "id": "abandon_gald",
           "text": "見捨てて先を急ぐ",
-          "preview": "見捨てて先を急ぐ",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "見捨てて先を急ぐ"
@@ -6501,7 +6626,23 @@
       "clue_ids": [],
       "enemy_ids": [],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "森を出て麓の村へ向かう",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "城下町へ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "狼の縄張りへ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "木々の隙間から麓の村と山道が見えている。",
@@ -6515,7 +6656,7 @@
             "action_id": "leave_forest_for_village",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "森を抜けて村へ近づくにつれ、空が赤く染まり、焦げた匂いが濃くなる。村はすでに一面の火海となっていた。同行していた者がいれば、背後から青いローブの気配だけが忽然と消えている。",
+              "gm_text": "森を抜けて村へ近づくにつれ、空が赤く染まり、焦げた匂いが濃くなる。村はすでに一面の火海となっていた。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -6566,29 +6707,35 @@
                 "reached_village"
               ]
             }
+          ],
+          "result_text": "森を抜けて村へ近づくにつれ、空が赤く染まり、焦げた匂いが濃くなる。村はすでに一面の火海となっていた。",
+          "result_variants": [
+            {
+              "requirements": {
+                "companion_id": "blue_robed_mage"
+              },
+              "text": "森を抜けて村へ近づくにつれ、空が赤く染まり、焦げた匂いが濃くなる。村はすでに一面の火海となっていた。森を抜けたところで振り返ると、青いローブの魔法使いの姿が消えていた。"
+            }
           ]
         },
         {
           "id": "return_inn_after_forest",
-          "text": "宿屋へ向かう",
-          "preview": "宿屋へ向かう",
+          "text": "城下町へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
-            "宿屋へ向かう"
+            "城下町へ戻る"
           ],
           "effects": [
             {
-              "set_flag": "returned_from_forest"
-            },
-            {
-              "current_location": "inn"
+              "current_location": "castle_town"
             }
           ]
         },
         {
           "id": "exit_back",
           "text": "狼の縄張りへ戻る",
-          "preview": "狼の縄張りへ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "狼の縄張りへ戻る"
@@ -6600,7 +6747,12 @@
           ]
         }
       ],
-      "background_image": "/static/images/bg_dark_forest.png"
+      "background_image": "/static/images/bg_dark_forest.png",
+      "entry_effects": [
+        {
+          "set_flag": "returned_from_forest"
+        }
+      ]
     },
     {
       "id": "goblin_fort",
@@ -6758,7 +6910,18 @@
         "goblin_archer"
       ],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "ゴブリンたちと戦う",
+          "preview": "戦闘を開始します",
+          "risk": "危険（戦闘）"
+        },
+        {
+          "text": "見張りの二匹を迂回する",
+          "preview": "一階後半の戦闘を避ける",
+          "risk": "1d20+dex判定（DC16）"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "通路の先を、一匹のゴブリンと一匹の弓ゴブリンが守っている。",
@@ -6772,7 +6935,7 @@
             "action_id": "fight_fort_second_guards",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "一階奥の角を曲がると、中央のゴブリンが槍を構え、両脇の弓兵が木箱の上へ飛び乗った。矢じりがこちらを向き、二方向から逃げ道を封じてくる。",
+              "gm_text": "一階奥の角を曲がると、ゴブリンが槍を構え、弓ゴブリンが木箱の上へ飛び乗った。矢じりがこちらを向き、逃げ道を封じてくる。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -6790,7 +6953,7 @@
             "action_id": "fort_second_bypass",
             "outcome": "success",
             "draft": {
-              "gm_text": "巡回の隙を読み、積み上げられた樽の陰を抜けて二人組の背後を通過した。二階へ続く階段まで誰にも気づかれていない。",
+              "gm_text": "巡回の隙を読み、積み上げられた樽の陰を抜けて二匹の背後を通過した。二階へ続く階段まで誰にも気づかれていない。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -6808,7 +6971,7 @@
             "action_id": "fort_second_bypass",
             "outcome": "failure",
             "draft": {
-              "gm_text": "身を隠した木箱が軋み、一匹の弓ゴブリンが同時に振り向いた。退路へ矢が突き刺さり、中央のゴブリンが武器を抜いて迫る。",
+              "gm_text": "身を隠した木箱が軋み、弓ゴブリンが振り向いた。退路へ矢が突き刺さり、ゴブリンが武器を抜いて迫る。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -6844,11 +7007,11 @@
       "actions": [
         {
           "id": "fight_fort_second_guards",
-          "text": "三人のゴブリンと戦う",
+          "text": "ゴブリンたちと戦う",
           "preview": "戦闘を開始します",
           "risk": "危険（戦闘）",
           "intent_keywords": [
-            "三人のゴブリンと戦う"
+            "ゴブリンたちと戦う"
           ],
           "silent": true,
           "effects": [
@@ -6859,11 +7022,11 @@
         },
         {
           "id": "fort_second_bypass",
-          "text": "三人組を迂回する",
+          "text": "見張りの二匹を迂回する",
           "preview": "一階後半の戦闘を避ける",
           "risk": "1d20+dex判定（DC16）",
           "intent_keywords": [
-            "三人組を迂回する"
+            "見張りの二匹を迂回する"
           ],
           "roll": {
             "dice_type": "1d20+dex",
@@ -6910,7 +7073,7 @@
             "action_id": "explore_fort_left",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "左の扉を押し開けた瞬間、鉄鎖が床を激しく擦った。暗がりに並んだ五対の目が光り、繋がれていた猛犬たちが一斉に鎖を引きちぎって襲いかかる。",
+              "gm_text": "左の扉を押し開けた瞬間、鉄鎖が床を激しく擦った。暗がりで一対の目が光り、繋がれていた猛犬が鎖を引きちぎって襲いかかる。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -7174,7 +7337,13 @@
       "clue_ids": [],
       "enemy_ids": [],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "回復法陣を使う",
+          "preview": "全状態を回復する",
+          "risk": "判定不要"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "猛犬の部屋の奥で、淡い光を放つ回復法陣が稼働している。",
@@ -7201,7 +7370,8 @@
             {
               "current_location": "goblin_fort_third_gate"
             }
-          ]
+          ],
+          "result_text": "法陣の中央に立つと、淡い光が足元から立ちのぼり、傷口がみるみる塞がっていった。息が整ったところで、奥の階段を上る。"
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -7233,7 +7403,7 @@
             "action_id": "give_correct_password",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "覚えた暗号を告げると鉄門が開く。だが財宝庫へ足を踏み入れた途端、玉座代わりの金貨の山からゴブリン王が立ち上がり、左右の弓兵が退路へ照準を合わせた。",
+              "gm_text": "覚えた暗号を告げると鉄門が開く。だが財宝庫へ足を踏み入れた途端、玉座代わりの金貨の山からゴブリン王が立ち上がり、傍らの弓兵が退路へ照準を合わせた。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -7539,7 +7709,26 @@
       "clue_ids": [],
       "enemy_ids": [],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "迷子のゴブリンに箱を返す",
+          "preview": "約束を守って砦を出る",
+          "risk": "判定不要",
+          "hidden_after": "combat_defeated:lost_goblin_crossroads:goblin"
+        },
+        {
+          "text": "ゴブリンの箱を奪う",
+          "preview": "箱を巡って戦う",
+          "risk": "危険（戦闘）",
+          "hidden_after": "combat_defeated:lost_goblin_crossroads:goblin"
+        },
+        {
+          "text": "箱を持ち帰る",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "combat_defeated:lost_goblin_crossroads:goblin"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "戦いが終わると迷子のゴブリンが現れ、自分の箱を見つけて抱き寄せようとする。",
@@ -7605,7 +7794,8 @@
               "current_location": "lost_goblin_crossroads"
             }
           ],
-          "portrait_image": "/static/images/npc_lost_goblin.png"
+          "portrait_image": "/static/images/npc_lost_goblin.png",
+          "hidden_after": "combat_defeated:lost_goblin_crossroads:goblin"
         },
         {
           "id": "steal_lost_goblin_box",
@@ -7627,11 +7817,61 @@
               "start_combat": true
             }
           ],
-          "portrait_image": "/static/images/npc_lost_goblin.png"
+          "portrait_image": "/static/images/npc_lost_goblin.png",
+          "hidden_after": "combat_defeated:lost_goblin_crossroads:goblin"
+        },
+        {
+          "id": "take_abandoned_goblin_box",
+          "text": "箱を持ち帰る",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "combat_defeated:lost_goblin_crossroads:goblin",
+          "once": "resolved_lost_goblin_box",
+          "result_text": "主を失った箱は、金貨の山の陰に転がっていた。蓋の留め金を外し、中身ごと持ち帰ることにした。",
+          "effects": [
+            {
+              "add_item": {
+                "name": "縮小の銃",
+                "quantity": 1
+              }
+            },
+            {
+              "set_flag": "stole_shrinking_gun"
+            },
+            {
+              "current_location": "lost_goblin_crossroads"
+            }
+          ]
         }
       ],
       "background_image": "/static/images/bg_goblin_treasure.png",
-      "portrait_image": "/static/images/npc_lost_goblin.png"
+      "npc_requirements": {
+        "lost_goblin": {
+          "all": [
+            {
+              "not_flag": "combat_defeated:lost_goblin_crossroads:goblin"
+            },
+            {
+              "not_flag": "resolved_lost_goblin_box"
+            }
+          ]
+        }
+      },
+      "description_variants": [
+        {
+          "requirements": {
+            "any": [
+              {
+                "flag": "combat_defeated:lost_goblin_crossroads:goblin"
+              },
+              {
+                "flag": "resolved_lost_goblin_box"
+              }
+            ]
+          },
+          "text": "主を失った箱は、金貨の山の陰に転がっていた。"
+        }
+      ]
     },
     {
       "id": "goblin_fort_chest_fight",
@@ -8079,7 +8319,7 @@
           "id": "bluff_xanxus",
           "text": "ごまかして切り抜ける",
           "preview": "何も察知していないふりをします",
-          "risk": "不可能な判定（DC999）",
+          "risk": "危険",
           "intent_keywords": [
             "ごまかして切り抜ける"
           ],
@@ -8105,7 +8345,7 @@
           "id": "ambush_xanxus",
           "text": "先手を打って攻撃する",
           "preview": "Xanxusが動く前に仕掛けます",
-          "risk": "不可能な判定（DC999）",
+          "risk": "危険",
           "intent_keywords": [
             "先手を打って攻撃する"
           ],
@@ -8131,7 +8371,7 @@
           "id": "flee_from_xanxus",
           "text": "もう一度逃走を試みる",
           "preview": "全力でその場を離れます",
-          "risk": "不可能な判定（DC999）",
+          "risk": "危険",
           "intent_keywords": [
             "もう一度逃走を試みる"
           ],
@@ -8569,7 +8809,7 @@
         {
           "id": "inspect_frost_core",
           "text": "結氷の中心を調べる",
-          "preview": "結氷の中心を調べる",
+          "preview": "",
           "risk": "1d20+wis判定（DC12）",
           "intent_keywords": [
             "結氷の中心を調べる"
@@ -8601,7 +8841,7 @@
         {
           "id": "visit_village",
           "text": "長老に邪竜の弱点を聞く",
-          "preview": "長老に邪竜の弱点を聞く",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "長老に邪竜の弱点を聞く"
@@ -8992,7 +9232,7 @@
         {
           "id": "visit_village",
           "text": "長老に邪竜の弱点を聞く",
-          "preview": "長老に邪竜の弱点を聞く",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "長老に邪竜の弱点を聞く"
@@ -9454,7 +9694,7 @@
         {
           "id": "hear_ignis_testimony",
           "text": "イグニスの話を聞く",
-          "preview": "イグニスの話を聞く",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "イグニスの話を聞く"
@@ -9471,7 +9711,7 @@
         {
           "id": "receive_ignis_scale",
           "text": "イグニスが差し出す鱗を受け取る",
-          "preview": "イグニスが差し出す鱗を受け取る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "イグニスが差し出す鱗を受け取る"
@@ -9493,7 +9733,7 @@
           "id": "ask_ignis_aid",
           "secret": true,
           "text": "共に戦ってほしいと頼む",
-          "preview": "共に戦ってほしいと頼む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "共に戦ってほしいと頼む"
@@ -9512,7 +9752,7 @@
         {
           "id": "return_to_castle_report",
           "text": "王城へ戻り、国王に報告する",
-          "preview": "王城へ戻り、国王に報告する",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "王城へ戻り、国王に報告する"
@@ -9608,7 +9848,7 @@
         {
           "id": "decode_seal",
           "text": "魔法陣を解読する",
-          "preview": "魔法陣を解読する",
+          "preview": "",
           "risk": "1d20+int判定（DC15）",
           "intent_keywords": [
             "魔法陣を解読する"
@@ -9656,7 +9896,7 @@
         {
           "id": "pray_at_seal",
           "text": "泉の精霊に祈る",
-          "preview": "泉の精霊に祈る",
+          "preview": "",
           "risk": "1d20+wis判定（DC14）",
           "intent_keywords": [
             "泉の精霊に祈る"
@@ -9689,7 +9929,7 @@
         {
           "id": "force_seal",
           "text": "力ずくで岩壁を砕く",
-          "preview": "力ずくで岩壁を砕く",
+          "preview": "",
           "risk": "1d20+str判定（DC17）",
           "intent_keywords": [
             "力ずくで岩壁を砕く"
@@ -9722,7 +9962,7 @@
         {
           "id": "pour_holy_water_on_seal",
           "text": "聖水を魔法陣に注ぐ",
-          "preview": "聖水を魔法陣に注ぐ",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "聖水を魔法陣に注ぐ"
@@ -9750,7 +9990,7 @@
         {
           "id": "enter_open_cave",
           "text": "洞窟へ進む",
-          "preview": "洞窟へ進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "洞窟へ進む"
@@ -9765,7 +10005,7 @@
         {
           "id": "leave_seal",
           "text": "泉へ戻る",
-          "preview": "泉へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "泉へ戻る"
@@ -9816,23 +10056,24 @@
       "actions": [
         {
           "id": "fight_heat",
-          "text": "戦う",
-          "preview": "戦う",
+          "text": "熱岩トカゲと戦う",
+          "preview": "",
           "risk": "危険（戦闘）",
           "intent_keywords": [
-            "戦う"
+            "熱岩トカゲと戦う"
           ],
           "effects": [
             {
               "start_combat": true
             }
           ],
-          "hidden_after": "cleared_cave_heat_corridor"
+          "hidden_after": "cleared_cave_heat_corridor",
+          "result_text": "熱気の中へ踏み出すと、岩陰から二匹の熱岩トカゲが、溶岩の滴る口を開けて這い出してきた。"
         },
         {
           "id": "sneak_heat",
           "text": "岩陰を伝って抜ける",
-          "preview": "岩陰を伝って抜ける",
+          "preview": "",
           "risk": "1d20+dex判定（DC13）",
           "intent_keywords": [
             "岩陰を伝って抜ける"
@@ -9856,12 +10097,16 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "result_texts": {
+            "success": "赤く光る岩肌の影だけを選んで進み、トカゲたちの舌の音を背に回廊を抜けた。",
+            "failure": "足元の小石が転がり、熱岩トカゲが一斉にこちらを向いた。"
+          }
         },
         {
           "id": "pass_heat_corridor",
           "text": "奥へ進む",
-          "preview": "奥へ進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "奥へ進む"
@@ -9876,7 +10121,7 @@
         {
           "id": "heat_back",
           "text": "封印の岩壁へ戻る",
-          "preview": "封印の岩壁へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "封印の岩壁へ戻る"
@@ -9924,7 +10169,32 @@
         "result_texts": {
           "defeat": "気がつくと泉のほとりに倒れていた。"
         }
-      }
+      },
+      "choices": [
+        {
+          "text": "熱岩トカゲと戦う",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "hidden_after": "cleared_cave_heat_corridor"
+        },
+        {
+          "text": "岩陰を伝って抜ける",
+          "preview": "",
+          "risk": "1d20+dex判定（DC13）",
+          "hidden_after": "cleared_cave_heat_corridor"
+        },
+        {
+          "text": "奥へ進む",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "cleared_cave_heat_corridor"
+        },
+        {
+          "text": "封印の岩壁へ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ]
     },
     {
       "id": "cave_fork",
@@ -9935,7 +10205,7 @@
         {
           "id": "cave_left",
           "text": "左の通路へ進む",
-          "preview": "左の通路へ進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "左の通路へ進む"
@@ -9949,7 +10219,7 @@
         {
           "id": "cave_right",
           "text": "右の通路へ進む",
-          "preview": "右の通路へ進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "右の通路へ進む"
@@ -9963,7 +10233,7 @@
         {
           "id": "fork_back",
           "text": "熱気の回廊へ戻る",
-          "preview": "熱気の回廊へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "熱気の回廊へ戻る"
@@ -9989,7 +10259,7 @@
         {
           "id": "open_lava_chest",
           "text": "宝箱を開ける",
-          "preview": "宝箱を開ける",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "宝箱を開ける"
@@ -10018,7 +10288,7 @@
         {
           "id": "lava_back",
           "text": "分かれ道へ戻る",
-          "preview": "分かれ道へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "分かれ道へ戻る"
@@ -10032,7 +10302,7 @@
         {
           "id": "lava_forward",
           "text": "奥へ進む",
-          "preview": "奥へ進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "奥へ進む"
@@ -10085,7 +10355,7 @@
         {
           "id": "rest_hot_spring",
           "text": "温泉で休む",
-          "preview": "温泉で休む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "温泉で休む"
@@ -10101,7 +10371,7 @@
         {
           "id": "hot_spring_back",
           "text": "分かれ道へ戻る",
-          "preview": "分かれ道へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "分かれ道へ戻る"
@@ -10115,7 +10385,7 @@
         {
           "id": "hot_spring_forward",
           "text": "奥へ進む",
-          "preview": "奥へ進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "奥へ進む"
@@ -10129,7 +10399,7 @@
         {
           "id": "talk_mina",
           "text": "少女に話しかける",
-          "preview": "少女に話しかける",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "少女に話しかける"
@@ -10146,7 +10416,7 @@
         {
           "id": "escort_mina",
           "text": "ミーナを連れて行く",
-          "preview": "ミーナを連れて行く",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "ミーナを連れて行く"
@@ -10170,12 +10440,13 @@
                 "flag": "cleared_cave_prism_tree"
               }
             ]
-          }
+          },
+          "result_text": "「一緒に帰ろう」と手を差し出すと、ミーナは涙を拭って頷き、ローブの裾を握りしめて立ち上がった。"
         },
         {
           "id": "leave_mina_wait",
           "text": "ここで待つよう伝える",
-          "preview": "ここで待つよう伝える",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "ここで待つよう伝える"
@@ -10186,7 +10457,8 @@
             }
           ],
           "visible_after": "met_mina",
-          "hidden_after": "mina_rescued"
+          "hidden_after": "mina_rescued",
+          "result_text": "「すぐ戻る。ここで待っていてくれ」と告げると、ミーナは小さく頷き、湯気の向こうで膝を抱え直した。"
         }
       ],
       "objects": [
@@ -10223,7 +10495,53 @@
         "mina": {
           "not_flag": "mina_rescued"
         }
-      }
+      },
+      "choices": [
+        {
+          "text": "温泉で休む",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "分かれ道へ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "奥へ進む",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "少女に話しかける",
+          "preview": "",
+          "risk": "判定不要",
+          "hidden_after": "mina_rescued"
+        },
+        {
+          "text": "ミーナを連れて行く",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "met_mina",
+          "requirements": {
+            "any": [
+              {
+                "not_flag": "mina_waiting"
+              },
+              {
+                "flag": "cleared_cave_prism_tree"
+              }
+            ]
+          }
+        },
+        {
+          "text": "ここで待つよう伝える",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "met_mina",
+          "hidden_after": "mina_rescued"
+        }
+      ]
     },
     {
       "id": "cave_crystal_corridor",
@@ -10233,23 +10551,24 @@
       "actions": [
         {
           "id": "fight_crystal",
-          "text": "戦う",
-          "preview": "戦う",
+          "text": "水晶の魔物と戦う",
+          "preview": "",
           "risk": "危険（戦闘）",
           "intent_keywords": [
-            "戦う"
+            "水晶の魔物と戦う"
           ],
           "effects": [
             {
               "start_combat": true
             }
           ],
-          "hidden_after": "cleared_cave_crystal_corridor"
+          "hidden_after": "cleared_cave_crystal_corridor",
+          "result_text": "剣を構えた瞬間、水晶が甲高く鳴り、紅晶のゴーレムと蒼晶の蝶、翠晶の蜘蛛が壁から剥がれるように姿を現した。"
         },
         {
           "id": "sneak_crystal",
           "text": "水晶の共鳴が収まるまで息を潜める",
-          "preview": "水晶の共鳴が収まるまで息を潜める",
+          "preview": "",
           "risk": "1d20+wis判定（DC15）",
           "intent_keywords": [
             "水晶の共鳴が収まるまで息を潜める"
@@ -10276,12 +10595,16 @@
             {
               "enemy_first": true
             }
-          ]
+          ],
+          "result_texts": {
+            "success": "壁際で息を殺していると、水晶の震えは少しずつ静まり、形を取りかけた魔物たちも元の結晶へ戻っていった。その隙に回廊を抜ける。",
+            "failure": "漏れた吐息に水晶が共鳴し、甲高い音とともに魔物たちが一斉に襲いかかってきた。"
+          }
         },
         {
           "id": "pass_crystal_corridor",
           "text": "奥へ進む",
-          "preview": "奥へ進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "奥へ進む"
@@ -10296,7 +10619,7 @@
         {
           "id": "crystal_back",
           "text": "分かれ道へ戻る",
-          "preview": "分かれ道へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "分かれ道へ戻る"
@@ -10341,7 +10664,32 @@
         "result_texts": {
           "defeat": "気がつくと泉のほとりに倒れていた。"
         }
-      }
+      },
+      "choices": [
+        {
+          "text": "水晶の魔物と戦う",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "hidden_after": "cleared_cave_crystal_corridor"
+        },
+        {
+          "text": "水晶の共鳴が収まるまで息を潜める",
+          "preview": "",
+          "risk": "1d20+wis判定（DC15）",
+          "hidden_after": "cleared_cave_crystal_corridor"
+        },
+        {
+          "text": "奥へ進む",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "cleared_cave_crystal_corridor"
+        },
+        {
+          "text": "分かれ道へ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ]
     },
     {
       "id": "cave_prism_tree",
@@ -10352,7 +10700,7 @@
         {
           "id": "leave_prism_tree",
           "text": "泉へ戻る",
-          "preview": "泉へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "泉へ戻る"
@@ -10367,7 +10715,7 @@
         {
           "id": "prism_back",
           "text": "水晶の回廊へ戻る",
-          "preview": "水晶の回廊へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "水晶の回廊へ戻る"
@@ -10426,7 +10774,7 @@
         {
           "id": "break_burning_beam",
           "text": "燃える梁を叩き壊す",
-          "preview": "燃える梁を叩き壊す",
+          "preview": "",
           "risk": "1d20+str判定（DC13）",
           "intent_keywords": [
             "燃える梁を叩き壊す"
@@ -10457,7 +10805,7 @@
         {
           "id": "climb_to_window",
           "text": "裏手の窓からよじ登る",
-          "preview": "裏手の窓からよじ登る",
+          "preview": "",
           "risk": "1d20+dex判定（DC13）",
           "intent_keywords": [
             "裏手の窓からよじ登る"
@@ -10488,7 +10836,7 @@
         {
           "id": "douse_with_ice",
           "text": "冷気で炎を鎮める",
-          "preview": "冷気で炎を鎮める",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "冷気で炎を鎮める"
@@ -10528,7 +10876,7 @@
         {
           "id": "leave_burning_house",
           "text": "先を急ぐ",
-          "preview": "先を急ぐ",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "先を急ぐ"
@@ -10582,22 +10930,23 @@
       "actions": [
         {
           "id": "fight_ash_wraiths",
-          "text": "戦う",
-          "preview": "戦う",
+          "text": "煤の亡霊と戦う",
+          "preview": "",
           "risk": "危険（戦闘）",
           "intent_keywords": [
-            "戦う"
+            "煤の亡霊と戦う"
           ],
           "effects": [
             {
               "start_combat": true
             }
-          ]
+          ],
+          "result_text": "霧を割って進むと、煤をまとった二つの人影がこちらへ向き直り、焦げた腕を伸ばしてきた。"
         },
         {
           "id": "sneak_through_ash",
           "text": "霧に紛れてやり過ごす",
-          "preview": "霧に紛れてやり過ごす",
+          "preview": "",
           "risk": "1d20+dex判定（DC14）",
           "intent_keywords": [
             "霧に紛れてやり過ごす"
@@ -10619,7 +10968,11 @@
             {
               "enemy_first": true
             }
-          ]
+          ],
+          "result_texts": {
+            "success": "硫黄の霧が濃くなる瞬間を待ち、亡霊たちの間を音もなく抜けた。",
+            "failure": "霧が晴れた一瞬、煤の亡霊と目が合った。先に動いたのは向こうだった。"
+          }
         }
       ],
       "npc_ids": [],
@@ -10654,7 +11007,19 @@
           "victory": "煮え立つ溶岩の川に、古い吊り橋が一本だけ架かっている。板は焦げ、縄は今にも切れそうだ。",
           "defeat": "竜の谷で力尽きた。"
         }
-      }
+      },
+      "choices": [
+        {
+          "text": "煤の亡霊と戦う",
+          "preview": "",
+          "risk": "危険（戦闘）"
+        },
+        {
+          "text": "霧に紛れてやり過ごす",
+          "preview": "",
+          "risk": "1d20+dex判定（DC14）"
+        }
+      ]
     },
     {
       "id": "valley_lava_bridge",
@@ -10666,7 +11031,7 @@
         {
           "id": "cross_lava_bridge",
           "text": "吊り橋を渡る",
-          "preview": "吊り橋を渡る",
+          "preview": "",
           "risk": "1d20+dex判定（DC12）",
           "intent_keywords": [
             "吊り橋を渡る"
@@ -10705,7 +11070,7 @@
         {
           "id": "take_ledge_path",
           "text": "岩棚の迂回路を進む",
-          "preview": "岩棚の迂回路を進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "岩棚の迂回路を進む"
@@ -10714,7 +11079,8 @@
             {
               "current_location": "valley_ledge"
             }
-          ]
+          ],
+          "result_text": "吊り橋を避け、崖に張り出した岩棚へ足をかけた。足元から熱風が吹き上げてくる。"
         }
       ],
       "npc_ids": [],
@@ -10740,6 +11106,18 @@
             ],
             "once": ""
           }
+        }
+      ],
+      "choices": [
+        {
+          "text": "吊り橋を渡る",
+          "preview": "",
+          "risk": "1d20+dex判定（DC12）"
+        },
+        {
+          "text": "岩棚の迂回路を進む",
+          "preview": "",
+          "risk": "判定不要"
         }
       ]
     },
@@ -10789,7 +11167,7 @@
         {
           "id": "enter_dragon_nest",
           "text": "竜の巣へ踏み込む",
-          "preview": "竜の巣へ踏み込む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "竜の巣へ踏み込む"
@@ -10799,7 +11177,8 @@
               "current_location": "dragon_valley_loc"
             }
           ],
-          "start_combat": true
+          "start_combat": true,
+          "result_text": "灼熱の風に逆らって洞穴へ踏み込む。闇の奥で、巨大な何かがゆっくりと目を開けた。"
         }
       ],
       "npc_ids": [],
@@ -10853,6 +11232,13 @@
             "else": []
           }
         }
+      ],
+      "choices": [
+        {
+          "text": "竜の巣へ踏み込む",
+          "preview": "",
+          "risk": "判定不要"
+        }
       ]
     },
     {
@@ -10865,7 +11251,7 @@
         {
           "id": "obey_xanxus_core",
           "text": "従う",
-          "preview": "従う",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "従う"
@@ -10883,7 +11269,7 @@
         {
           "id": "cleanse_fire_seed",
           "text": "聖なる力で火種を浄化する",
-          "preview": "聖なる力で火種を浄化する",
+          "preview": "",
           "risk": "危険（戦闘）",
           "intent_keywords": [
             "聖なる力で火種を浄化する"
@@ -10938,7 +11324,7 @@
         {
           "id": "call_warlock",
           "text": "ワーロックの名を呼ぶ",
-          "preview": "ワーロックの名を呼ぶ",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "ワーロックの名を呼ぶ"
@@ -11041,7 +11427,7 @@
         {
           "id": "continue_after_warlock",
           "text": "先へ進む",
-          "preview": "先へ進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "先へ進む"
@@ -11074,7 +11460,7 @@
         {
           "id": "enter_festival_town",
           "text": "城下町へ進む",
-          "preview": "城下町へ進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "城下町へ進む"
@@ -11107,7 +11493,7 @@
         {
           "id": "go_inn",
           "text": "宿屋へ向かう",
-          "preview": "宿屋へ向かう",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "宿屋へ向かう"
@@ -11121,7 +11507,7 @@
         {
           "id": "go_item_shop",
           "text": "道具屋へ向かう",
-          "preview": "道具屋へ向かう",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "道具屋へ向かう"
@@ -11135,7 +11521,7 @@
         {
           "id": "go_magic_shop",
           "text": "魔法店へ向かう",
-          "preview": "魔法店へ向かう",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "魔法店へ向かう"
@@ -11149,7 +11535,7 @@
         {
           "id": "go_forge",
           "text": "鍛冶屋へ向かう",
-          "preview": "鍛冶屋へ向かう",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "鍛冶屋へ向かう"
@@ -11163,7 +11549,7 @@
         {
           "id": "go_general_mansion",
           "text": "将軍の屋敷へ向かう",
-          "preview": "将軍の屋敷へ向かう",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "将軍の屋敷へ向かう"
@@ -11195,7 +11581,7 @@
         {
           "id": "request_king_audience",
           "text": "国王に内密の謁見を願い出る",
-          "preview": "国王に内密の謁見を願い出る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "国王に内密の謁見を願い出る"
@@ -11247,7 +11633,7 @@
         {
           "id": "go_report_hall",
           "text": "凱旋の間へ向かう",
-          "preview": "凱旋の間へ向かう",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "凱旋の間へ向かう"
@@ -11261,7 +11647,7 @@
         {
           "id": "open_gald_capital_shop",
           "text": "行商人ガルド",
-          "preview": "行商人ガルド",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "行商人ガルド"
@@ -11332,7 +11718,7 @@
         {
           "id": "sneak_into_mansion",
           "text": "裏口から忍び込む",
-          "preview": "裏口から忍び込む",
+          "preview": "",
           "risk": "1d20+dex判定（DC13）",
           "intent_keywords": [
             "裏口から忍び込む"
@@ -11366,7 +11752,7 @@
         {
           "id": "robin_picks_lock",
           "text": "ロビンに錠を開けてもらう",
-          "preview": "ロビンに錠を開けてもらう",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "ロビンに錠を開けてもらう"
@@ -11387,7 +11773,7 @@
         {
           "id": "leave_mansion",
           "text": "城下町へ戻る",
-          "preview": "城下町へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "城下町へ戻る"
@@ -11441,22 +11827,23 @@
       "actions": [
         {
           "id": "fight_ice_sentinels",
-          "text": "戦う",
-          "preview": "戦う",
+          "text": "氷の番兵と戦う",
+          "preview": "",
           "risk": "危険（戦闘）",
           "intent_keywords": [
-            "戦う"
+            "氷の番兵と戦う"
           ],
           "effects": [
             {
               "start_combat": true
             }
-          ]
+          ],
+          "result_text": "一歩近づくと、氷の番兵が軋む音を立てて槍を構え、扉の前を塞いだ。"
         },
         {
           "id": "evade_ice_sentinels",
           "text": "番兵の巡回の隙を突く",
-          "preview": "番兵の巡回の隙を突く",
+          "preview": "",
           "risk": "1d20+wis判定（DC15）",
           "intent_keywords": [
             "番兵の巡回の隙を突く"
@@ -11478,12 +11865,16 @@
             {
               "enemy_first": true
             }
-          ]
+          ],
+          "result_texts": {
+            "success": "二体の番兵が向きを変える一瞬を見計らい、凍った床を滑るように扉の内側へ抜けた。",
+            "failure": "凍った床がきしみ、番兵の兜がこちらを向いた。冷たい槍が先に突き出される。"
+          }
         },
         {
           "id": "pass_cleared_sentinels",
           "text": "先へ進む",
-          "preview": "先へ進む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "先へ進む"
@@ -11531,6 +11922,24 @@
         {
           "set_flag": "entered_mansion_corridor"
         }
+      ],
+      "choices": [
+        {
+          "text": "氷の番兵と戦う",
+          "preview": "",
+          "risk": "危険（戦闘）"
+        },
+        {
+          "text": "番兵の巡回の隙を突く",
+          "preview": "",
+          "risk": "1d20+wis判定（DC15）"
+        },
+        {
+          "text": "先へ進む",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "combat_defeated:mansion_corridor:ice_sentinel"
+        }
       ]
     },
     {
@@ -11542,7 +11951,7 @@
         {
           "id": "take_draco_journal",
           "text": "日誌を手に取る",
-          "preview": "日誌を手に取る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "日誌を手に取る"
@@ -11561,7 +11970,7 @@
         {
           "id": "open_scale_box",
           "text": "小箱を開ける",
-          "preview": "小箱を開ける",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "小箱を開ける"
@@ -11580,7 +11989,7 @@
         {
           "id": "leave_mansion_study",
           "text": "屋敷を出る",
-          "preview": "屋敷を出る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "屋敷を出る"
@@ -11613,7 +12022,7 @@
         {
           "id": "confide_in_king",
           "text": "将軍への疑いを打ち明ける",
-          "preview": "将軍への疑いを打ち明ける",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "将軍への疑いを打ち明ける"
@@ -11625,7 +12034,7 @@
         {
           "id": "ask_king_rest",
           "text": "城に泊めていただけないか頼む",
-          "preview": "城に泊めていただけないか頼む",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "城に泊めていただけないか頼む"
@@ -11643,7 +12052,7 @@
         {
           "id": "leave_king_room",
           "text": "城下町へ戻る",
-          "preview": "城下町へ戻る",
+          "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
             "城下町へ戻る"
@@ -15317,7 +15726,7 @@
           "location_ids": [
             "forge"
           ],
-          "description": "城内の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。"
+          "description": "城下町の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。"
         },
         {
           "id": "inn",
@@ -15375,6 +15784,26 @@
           "y": 88,
           "location_ids": [],
           "description": "城下町の南にある大門。その先の街道は、闇の森へと続いている。"
+        },
+        {
+          "id": "forest_exit",
+          "label": "森の出口",
+          "kind": "exit",
+          "x": 90,
+          "y": 94,
+          "location_ids": [],
+          "description": "木々の隙間から麓の村と山道が見えている。",
+          "known_after": "returned_from_forest"
+        },
+        {
+          "id": "village",
+          "label": "麓の村",
+          "kind": "exit",
+          "x": 10,
+          "y": 94,
+          "location_ids": [],
+          "description": "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。長老が人々を励まし、行商人の荷車の周りには小さな人だかりができている。",
+          "known_after": "returned_from_village"
         }
       ],
       "edges": [
@@ -15451,6 +15880,18 @@
           "from": "gate",
           "to": "C2",
           "action_id": "go_castle_town"
+        },
+        {
+          "from": "C2",
+          "to": "forest_exit",
+          "action_id": "return_forest_exit",
+          "visible_after": "returned_from_forest"
+        },
+        {
+          "from": "C2",
+          "to": "village",
+          "action_id": "return_village",
+          "visible_after": "returned_from_village"
         }
       ],
       "requirements": {
@@ -16240,7 +16681,7 @@
           "location_ids": [
             "forge"
           ],
-          "description": "城内の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。"
+          "description": "城下町の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。"
         }
       ],
       "edges": [

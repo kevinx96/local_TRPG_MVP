@@ -28,6 +28,7 @@ from .scenario_context import (
     select_scenario_context,
 )
 from .combat import ensure_combat_started, public_combat
+from .area_retry import areas_here, capture_entries, retry_snapshot
 from .world_state import (
     commit_world_position,
     current_location_id,
@@ -235,6 +236,8 @@ def create_session(
         "last_action_result": {},
         "last_turn_narrated": False,
         "combat": None,
+        "area_snapshots": {},
+        "retry_count": 0,
         "last_combat_result": {},
         "next_dice_type": "1d20",
         "next_dice_dc": 0,
@@ -242,6 +245,7 @@ def create_session(
         "created_at": utc_now(),
         "updated_at": utc_now(),
     }
+    capture_entries(session, None, set())
     ensure_combat_started(session)
     record_quest_changes(session, [])
     save_session(session)
@@ -276,6 +280,8 @@ def load_session(session_id: str) -> dict[str, Any]:
     session = json.loads(path.read_text(encoding="utf-8"))
     ensure_world_state(session)
     session.setdefault("event_log", [])
+    session.setdefault("area_snapshots", {})
+    session.setdefault("retry_count", 0)
     changed = _refresh_session_scenario_pack(session)
     if session.get('scenario_pack', {}).get('meta', {}).get('chapter5_v5') and current_scene_id(session) == 'castle_return':
         if not session.setdefault('flags', {}).get('returned_to_capital'):
@@ -320,6 +326,8 @@ def _refresh_session_scenario_pack(session: dict[str, Any]) -> bool:
         return False
     session["scenario_pack"] = latest_pack
     session["scenario_title"] = latest_title or session.get("scenario_title")
+    if "forest_exit" in session.get("visited_locations", []):
+        session.setdefault("flags", {})["returned_from_forest"] = True
     companion = session.get("companion")
     if isinstance(companion, dict):
         latest_companion = next((c for c in latest_pack.get("companions", []) if c.get("id") == companion.get("id")), None)
@@ -402,6 +410,11 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     public.pop("event_log", None)
     public.pop("known_item_names", None)
     public.pop("shop_stock", None)
+    public.pop("area_snapshots", None)
+    public["can_retry_area"] = retry_snapshot(session) is not None
+    public["last_action_result"] = {key: deepcopy(value)
+                                    for key, value in (session.get("last_action_result") or {}).items()
+                                    if key in {"action_id", "event_id", "open_shop"}}
     public["quests"] = public_quests(session)
     public["map"] = public_maps(session)
     public["character"]["inventory"] = [
@@ -481,7 +494,16 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
         if log.get("source") == "engine"
         and not _is_protocol_warning_log(str(log.get("text", "")))
     ]
-    return public
+    return _without_resolution_fields(public)
+
+
+def _without_resolution_fields(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {key: _without_resolution_fields(child) for key, child in value.items()
+                if key not in {"effects", "success_effects", "failure_effects", "roll_bonuses", "result_text", "result_texts"}}
+    if isinstance(value, list):
+        return [_without_resolution_fields(child) for child in value]
+    return value
 
 
 def _location_npc_portraits(
@@ -585,9 +607,10 @@ def _failed_choice_requirements(requirement: Any, session: dict[str, Any]) -> li
 
 
 def known_item_names(session: dict[str, Any]) -> set[str]:
+    legacy_events = session.get("event_log", []) if "known_item_names" not in session else []
     return (set(session.get("known_item_names", []))
             | _inventory_item_names(session.get("character", {}))
-            | {str(event.get("data", {}).get("item")) for event in session.get("event_log", [])
+            | {str(event.get("data", {}).get("item")) for event in legacy_events
                if event.get("kind") == "item_added" and event.get("data", {}).get("item")})
 
 
@@ -692,7 +715,7 @@ def record_state_event(
     events = session.setdefault("event_log", [])
     events.append(event)
     if kind == "item_added":
-        session["known_item_names"] = sorted(known_item_names(session))
+        session["known_item_names"] = sorted(known_item_names(session) | {str(event["data"]["item"])})
     if len(events) > 240:
         session["event_log"] = events[-240:]
     if visible and text:
@@ -1886,11 +1909,15 @@ def apply_state_delta(
     *,
     allow_world_transition: bool = False,
 ) -> None:
+    previous_location = current_location_id(session)
+    previous_areas = {area["id"] for area in areas_here(session)} if "area_snapshots" in session else set()
     before = public_quests(session)
     _apply_state_delta(session, delta, allow_world_transition=allow_world_transition)
     _sync_scenario_item_flags(session)
     _unlock_visible_actions(session)
     record_quest_changes(session, before)
+    if current_location_id(session) != previous_location:
+        capture_entries(session, previous_location, previous_areas)
 
 
 def _sync_scenario_item_flags(session: dict[str, Any]) -> None:

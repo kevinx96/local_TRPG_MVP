@@ -178,6 +178,10 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
             slim_location=(group == "locations"),
         )
         records = {record["id"]: record for record in pack.get(group, [])}
+        if group == "npcs":
+            requirements = (_find_location_in_pack(pack, current_location_id(session)) or {}).get("npc_requirements", {})
+            matched[group] = [record for record in matched[group]
+                              if _session_requirement_passes(requirements.get(record["id"]), session)]
         for public_record in matched[group]:
             for variant in records.get(public_record["id"], {}).get("description_variants", []):
                 if _session_requirement_passes(variant.get("requirements"), session):
@@ -201,6 +205,10 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
     }
     location = _find_location_in_pack(pack, current_location_id(session)) or {}
     context["current_location"] = {key: deepcopy(location[key]) for key in ("id", "title", "description") if key in location}
+    for variant in location.get("description_variants", []):
+        if _session_requirement_passes(variant.get("requirements"), session):
+            context["current_location"]["description"] = variant["text"]
+            break
     context["changes_here"] = deepcopy((session.get("scene_changes") or {}).get(current_location_id(session), {}))
     # Semi mode: inject hybrid hints if available so the LLM has narrative scaffolding
     hybrid = scene.get("hybrid") if isinstance(scene.get("hybrid"), dict) else None

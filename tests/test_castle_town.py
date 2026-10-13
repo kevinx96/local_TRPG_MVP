@@ -34,7 +34,7 @@ class CastleTownTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 checkpoints.replay_step(session, "check_supplies")
 
-    def test_town_connections_and_gate_roll(self):
+    def test_town_connections_and_gate_departure_without_roll(self):
         for session in self.sessions():
             self.assertIsNone(state.resolve_action(session, action_id="go_dark_forest"))
             checkpoints.replay_step(session, "go_castle_town")
@@ -50,11 +50,10 @@ class CastleTownTests(unittest.TestCase):
                 self.assertEqual((action["text"], action["preview"]), ("城下町に戻る", "大通りへ戻る"))
                 state.apply_action_result(session, action, {})
                 self.assertEqual(state.current_location_id(session), "castle_town")
-            checkpoints.replay_step(session, "go_dark_forest:failure")
-            self.assertEqual(state.current_location_id(session), "castle_town")
             action = movement_action(session, "gate")
-            self.assertEqual(action["roll"]["dc"], 10)
-            state.apply_action_result(session, action, {"dc": 10, "success": True})
+            self.assertNotIn("roll", action)
+            self.assertEqual(action["risk"], "判定不要")
+            state.apply_action_result(session, action, {})
             self.assertEqual(state.current_location_id(session), "dark_forest_loc")
 
     def test_facilities_and_alley_variants_keep_chapter_five_returns(self):

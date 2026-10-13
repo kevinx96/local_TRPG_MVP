@@ -14,9 +14,9 @@ def generate() -> dict[str, Any]:
     fortress = ["help_lost_goblin", "enter_goblin_fort", "@victory", "@victory", "explore_fort_right", "bypass_hobgoblin:success", "give_correct_password", "@victory", "return_lost_goblin_box"]
     main = ["crossroads_forward", "continue_from_elf_spring", "@victory"]
     cave_trip = ["exit_back", "wolves_back", "inspect_spring_wall", "decode_seal:success", "@victory", "cave_right", "hot_spring_forward", "@victory", "@victory", "leave_prism_tree", "continue_from_elf_spring", "pass_cleared_wolves"]
-    paths = {"spring": start + ["ignore_lost_goblin:success", "@victory"] + main,
+    paths = {"spring": start + main,
              "fort": start + fortress + main,
-             "cave": start + ["ignore_lost_goblin:success", "@victory"] + main + cave_trip}
+             "cave": start + main + cave_trip}
     keys = []
 
     def key(identifier: str, minimum: int) -> list[dict[str, Any]]:
@@ -28,7 +28,7 @@ def generate() -> dict[str, Any]:
             reward: dict[str, str], witnesses: dict[str, list[str]], **extra: Any) -> None:
         sources.append(dict(id=identifier, location=location, step=step, type=kind, reward=reward, witnesses=witnesses, **extra))
 
-    town = {r: p + ["return_inn_after_forest", "return_castle_from_inn"] for r, p in paths.items()}
+    town = {r: p + ["return_inn_after_forest"] for r, p in paths.items()}
     house = {r: p + ["leave_forest_for_village", "approach_burning_village_carefully:success", "@victory"] for r, p in paths.items()}
     frozen = {r: p + ["leave_burning_house"] for r, p in house.items()}
     ice = {r: p + ["investigate_frozen_village"] for r, p in frozen.items()}
@@ -46,8 +46,8 @@ def generate() -> dict[str, Any]:
     add(cold, "village_shop", "village", "shop:village_shop:ice_charm", "purchase", {"item": "ice_charm", "name": "氷の護符"}, tail(village, "shop:village_shop:ice_charm"))
     add(cold, "fusion", "forge", "accept_sword_fusion", "quest", {"name": "氷鉄の大剣"}, tail(town, "go_forge", "show_sword_to_blacksmith", "accept_sword_fusion"))
     add(cold, "ian", "ian_ice_katana_aftermath", "accept_ian_request", "quest", {"name": "氷鉄の大剣"}, tail(after, "accept_ian_request"))
-    add(cold, "sarah", "item_shop", "shop:sarah_shop:ice_charm", "purchase", {"item": "ice_charm"}, tail(village, "return_castle_from_village", "go_castle_town", "go_item_shop", "shop:sarah_shop:ice_charm"))
-    craft = ["visit_village", "return_castle_from_village", "go_castle_town", "go_forge", "forge_ice_charm"]
+    add(cold, "sarah", "item_shop", "shop:sarah_shop:ice_charm", "purchase", {"item": "ice_charm"}, tail(village, "return_castle_from_village", "go_item_shop", "shop:sarah_shop:ice_charm"))
+    craft = ["visit_village", "return_castle_from_village", "go_forge", "forge_ice_charm"]
     add(cold, "ice_battle_craft", "ice_elemental_encounter", "@victory", "battle_craft", {"item": "ice_crystal"}, tail(after, *craft), crafted_item="ice_charm")
     add(cold, "ice_observe_craft", "ice_elemental_encounter", "observe:frost_crystal", "observe_craft", {"item": "ice_crystal"}, tail(ice, "observe:frost_crystal", "bypass_ice_elemental:success", "@victory", *craft), crafted_item="ice_charm")
     add(cold, "mage_ice", "dragon_valley_loc", "@skill:mage_lv5_a", "class_skill", {}, tail(after, *valley_steps, "@skill:mage_lv5_a"), character="mage", skill="mage_lv5_a", element="ice")
@@ -76,9 +76,9 @@ def generate() -> dict[str, Any]:
     add(scale, "frost_core", "village_frozen_clue", "inspect_frost_core:success", "exploration", {"item": "white_dragon_scale"}, tail(frozen, "inspect_frost_core:success"))
     add(scale, "wolf", "frost_wolf_battle", "@victory", "battle", {"item": "white_dragon_scale"}, after)
     add(scale, "wound", "ignis_last_breath", "examine_ignis_wound", "exploration", {"item": "white_dragon_scale"}, tail(last, "examine_ignis_wound"))
-    robin = tail(paths, "return_inn_after_forest", "ask_robin_stolen_scale")
+    robin = tail(paths, "return_inn_after_forest", "go_inn", "ask_robin_stolen_scale")
     for r in ("spring", "cave"):
-        robin[r] = paths[r] + ["return_inn_after_forest", "accept_robin_goblin_quest", *fortress[2:], "fort_shortcut", "return_inn_after_forest", "ask_robin_stolen_scale"]
+        robin[r] = paths[r] + ["return_inn_after_forest", "go_inn", "accept_robin_goblin_quest", *fortress[2:], "fort_shortcut", "return_inn_after_forest", "go_inn", "ask_robin_stolen_scale"]
     add(scale, "robin", "inn", "ask_robin_stolen_scale", "quest", {"item": "white_dragon_scale"}, robin)
     add(scale, "merchant", "alley_night", "buy_white_scale", "purchase", {"item": "white_dragon_scale"}, tail(town, "go_alley", "wait_for_night_in_alley", "buy_white_scale"))
     fire = key("fire_options", 2)

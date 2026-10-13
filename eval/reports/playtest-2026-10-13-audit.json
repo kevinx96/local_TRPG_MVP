@@ -1,0 +1,402 @@
+{
+  "dragon_rpg.json": {
+    "narration_gaps": [
+      {
+        "location": "castle",
+        "action": "ask_king_info",
+        "outcome": "neutral",
+        "reason": "missing"
+      },
+      {
+        "location": "forge",
+        "action": "open_forge_shop",
+        "outcome": "neutral",
+        "reason": "open_shop"
+      },
+      {
+        "location": "forge",
+        "action": "ask_blacksmith_weakness",
+        "outcome": "neutral",
+        "reason": "missing"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith",
+        "outcome": "neutral",
+        "reason": "missing"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion",
+        "outcome": "neutral",
+        "reason": "missing"
+      },
+      {
+        "location": "inn",
+        "action": "ask_robin_rumor",
+        "outcome": "neutral",
+        "reason": "missing"
+      },
+      {
+        "location": "village",
+        "action": "open_village_shop",
+        "outcome": "neutral",
+        "reason": "open_shop"
+      },
+      {
+        "location": "village",
+        "action": "open_gald_shop",
+        "outcome": "neutral",
+        "reason": "open_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "open_magic_shop",
+        "outcome": "neutral",
+        "reason": "open_shop"
+      },
+      {
+        "location": "item_shop",
+        "action": "open_sarah_shop",
+        "outcome": "neutral",
+        "reason": "open_shop"
+      },
+      {
+        "location": "xanxus_confrontation",
+        "action": "bluff_xanxus",
+        "outcome": "success",
+        "reason": "missing"
+      },
+      {
+        "location": "xanxus_confrontation",
+        "action": "ambush_xanxus",
+        "outcome": "success",
+        "reason": "missing"
+      },
+      {
+        "location": "xanxus_confrontation",
+        "action": "flee_from_xanxus",
+        "outcome": "success",
+        "reason": "missing"
+      },
+      {
+        "location": "festival_town",
+        "action": "open_gald_capital_shop",
+        "outcome": "neutral",
+        "reason": "open_shop"
+      }
+    ],
+    "style": [
+      {
+        "path": "pack.locations.dark_forest_loc.combat.result_texts.defeat",
+        "text": "闇の森・入口で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.lost_goblin_crossroads.combat.result_texts.defeat",
+        "text": "闇の森・迷子のゴブリンで力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.forest_wolves.combat.result_texts.defeat",
+        "text": "闇の森・狼の縄張りで力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.slime_ambush_one.combat.result_texts.defeat",
+        "text": "精霊の泉・第一波で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.slime_ambush_two.combat.result_texts.defeat",
+        "text": "精霊の泉・第二波で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.slime_king_battle.combat.result_texts.defeat",
+        "text": "精霊の泉・スライム王で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort.combat.result_texts.defeat",
+        "text": "ゴブリン砦・一階前半で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort_first_second.combat.result_texts.defeat",
+        "text": "ゴブリン砦・一階後半で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort_second_right.combat.result_texts.defeat",
+        "text": "ゴブリン砦・二階右で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort_second_left.combat.result_texts.defeat",
+        "text": "ゴブリン砦・二階左で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort_third_guards.combat.result_texts.defeat",
+        "text": "ゴブリン砦・三階警備戦で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort_fourth.combat.result_texts.defeat",
+        "text": "ゴブリン砦・四階財宝庫で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort_chest_fight.combat.result_texts.defeat",
+        "text": "ゴブリン砦・箱の争奪で力尽きました。冒険はここで終わりを迎えます。"
+      }
+    ],
+    "quantities": [
+      {
+        "path": "pack.locations.slime_ambush_one.combat.result_texts.victory",
+        "text": "最後の一匹を弾き飛ばした直後、泉の反対側で水音が一つ重なった。休む間もなく、新たな一匹のスライムが水面から這い上がり、半円を描いて包囲を狭めてくる。",
+        "stated_count": 2,
+        "encounters": {
+          "slime_ambush_one": [
+            "slime"
+          ]
+        }
+      },
+      {
+        "path": "pack.locations.goblin_fort_third_gate.hybrid.prepared_turns.password_bluff_success.draft.gm_text",
+        "text": "即興の暗号を堂々と告げると鉄門が開いた。しかし先に待っていたのは財宝ではなく、金貨の山に座るゴブリン王と一匹の弓兵だった。",
+        "stated_count": 1,
+        "encounters": {
+          "goblin_fort_third_guards": [
+            "hobgoblin"
+          ],
+          "goblin_fort_fourth": [
+            "goblin_king",
+            "goblin_archer"
+          ]
+        }
+      },
+      {
+        "path": "pack.locations.goblin_fort_third_gate.hybrid.prepared_turns.password_bluff_failure.draft.gm_text",
+        "text": "沈黙の後、警報の鐘が鳴る。退路には一匹の大ゴブリンが立ち塞がっていた。",
+        "stated_count": 1,
+        "encounters": {
+          "goblin_fort_third_guards": [
+            "hobgoblin"
+          ],
+          "goblin_fort_fourth": [
+            "goblin_king",
+            "goblin_archer"
+          ]
+        }
+      },
+      {
+        "path": "pack.locations.goblin_fort_third_guards.combat.result_texts.victory",
+        "text": "一匹の警備兵を倒すと、戦闘の衝撃で鉄門の錠が外れた。扉の先は財宝庫だ。金貨の山からゴブリン王が立ち上がり、一匹の弓兵が高台へ散って次の戦いを挑んでくる。",
+        "stated_count": 2,
+        "encounters": {
+          "goblin_fort_third_guards": [
+            "hobgoblin"
+          ]
+        }
+      },
+      {
+        "path": "pack.locations.goblin_fort_fourth.description",
+        "text": "財宝の山の前でゴブリン王と一匹の弓兵が待ち構えている。",
+        "stated_count": 1,
+        "encounters": {
+          "goblin_fort_fourth": [
+            "goblin_king",
+            "goblin_archer"
+          ]
+        }
+      },
+      {
+        "path": "pack.locations.xanxus_ultimatum.hybrid.prepared_turns.warlock_rescue.draft.gm_text",
+        "text": "Xanxusがとどめの炎を放とうとした瞬間、青い光が火線を切り裂いた。姿を消していたワーロックがあなたを背後へ庇う。『Xanxus、それは少しやり過ぎだ』青いローブの周囲に八属性の水晶球が展開し、二人の魔法使いの戦闘が始まる。",
+        "stated_count": 2,
+        "encounters": {
+          "warlock_rescue_battle": [
+            "xanxus"
+          ]
+        }
+      }
+    ]
+  },
+  "dragon_rpg_hybrid.json": {
+    "narration_gaps": [
+      {
+        "location": "forge",
+        "action": "open_forge_shop",
+        "outcome": "neutral",
+        "reason": "open_shop"
+      },
+      {
+        "location": "village",
+        "action": "open_village_shop",
+        "outcome": "neutral",
+        "reason": "open_shop"
+      },
+      {
+        "location": "village",
+        "action": "open_gald_shop",
+        "outcome": "neutral",
+        "reason": "open_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "open_magic_shop",
+        "outcome": "neutral",
+        "reason": "open_shop"
+      },
+      {
+        "location": "item_shop",
+        "action": "open_sarah_shop",
+        "outcome": "neutral",
+        "reason": "open_shop"
+      },
+      {
+        "location": "xanxus_confrontation",
+        "action": "bluff_xanxus",
+        "outcome": "success",
+        "reason": "missing"
+      },
+      {
+        "location": "xanxus_confrontation",
+        "action": "ambush_xanxus",
+        "outcome": "success",
+        "reason": "missing"
+      },
+      {
+        "location": "xanxus_confrontation",
+        "action": "flee_from_xanxus",
+        "outcome": "success",
+        "reason": "missing"
+      },
+      {
+        "location": "festival_town",
+        "action": "open_gald_capital_shop",
+        "outcome": "neutral",
+        "reason": "open_shop"
+      }
+    ],
+    "style": [
+      {
+        "path": "pack.locations.dragon_valley_loc.hybrid.prepared_turns.dragon_valley_opening.draft.gm_text",
+        "text": "「グルルル…」硫黄の煙が立ち込める谷の奥から、紅き邪竜イグニスが巨大な翼を広げて姿を現します。その眼光は激しい怒りに燃え、口元からは凄まじい熱気が漏れ出ています。王国を脅かす邪悪なる存在を前に、いよいよ決戦の時です！"
+      },
+      {
+        "path": "pack.locations.dark_forest_loc.combat.result_texts.defeat",
+        "text": "闇の森・入口で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.lost_goblin_crossroads.combat.result_texts.defeat",
+        "text": "闇の森・迷子のゴブリンで力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.forest_wolves.combat.result_texts.defeat",
+        "text": "闇の森・狼の縄張りで力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.slime_ambush_one.combat.result_texts.defeat",
+        "text": "精霊の泉・第一波で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.slime_ambush_two.combat.result_texts.defeat",
+        "text": "精霊の泉・第二波で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.slime_king_battle.combat.result_texts.defeat",
+        "text": "精霊の泉・スライム王で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort.combat.result_texts.defeat",
+        "text": "ゴブリン砦・一階前半で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort_first_second.combat.result_texts.defeat",
+        "text": "ゴブリン砦・一階後半で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort_second_right.combat.result_texts.defeat",
+        "text": "ゴブリン砦・二階右で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort_second_left.combat.result_texts.defeat",
+        "text": "ゴブリン砦・二階左で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort_third_guards.combat.result_texts.defeat",
+        "text": "ゴブリン砦・三階警備戦で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort_fourth.combat.result_texts.defeat",
+        "text": "ゴブリン砦・四階財宝庫で力尽きました。冒険はここで終わりを迎えます。"
+      },
+      {
+        "path": "pack.locations.goblin_fort_chest_fight.combat.result_texts.defeat",
+        "text": "ゴブリン砦・箱の争奪で力尽きました。冒険はここで終わりを迎えます。"
+      }
+    ],
+    "quantities": [
+      {
+        "path": "pack.locations.slime_ambush_one.combat.result_texts.victory",
+        "text": "最後の一匹を弾き飛ばした直後、泉の反対側で水音が一つ重なった。休む間もなく、新たな一匹のスライムが水面から這い上がり、半円を描いて包囲を狭めてくる。",
+        "stated_count": 2,
+        "encounters": {
+          "slime_ambush_one": [
+            "slime"
+          ]
+        }
+      },
+      {
+        "path": "pack.locations.goblin_fort_third_gate.hybrid.prepared_turns.password_bluff_success.draft.gm_text",
+        "text": "即興の暗号を堂々と告げると鉄門が開いた。しかし先に待っていたのは財宝ではなく、金貨の山に座るゴブリン王と一匹の弓兵だった。",
+        "stated_count": 1,
+        "encounters": {
+          "goblin_fort_third_guards": [
+            "hobgoblin"
+          ],
+          "goblin_fort_fourth": [
+            "goblin_king",
+            "goblin_archer"
+          ]
+        }
+      },
+      {
+        "path": "pack.locations.goblin_fort_third_gate.hybrid.prepared_turns.password_bluff_failure.draft.gm_text",
+        "text": "沈黙の後、警報の鐘が鳴る。退路には一匹の大ゴブリンが立ち塞がっていた。",
+        "stated_count": 1,
+        "encounters": {
+          "goblin_fort_third_guards": [
+            "hobgoblin"
+          ],
+          "goblin_fort_fourth": [
+            "goblin_king",
+            "goblin_archer"
+          ]
+        }
+      },
+      {
+        "path": "pack.locations.goblin_fort_third_guards.combat.result_texts.victory",
+        "text": "一匹の警備兵を倒すと、戦闘の衝撃で鉄門の錠が外れた。扉の先は財宝庫だ。金貨の山からゴブリン王が立ち上がり、一匹の弓兵が高台へ散って次の戦いを挑んでくる。",
+        "stated_count": 2,
+        "encounters": {
+          "goblin_fort_third_guards": [
+            "hobgoblin"
+          ]
+        }
+      },
+      {
+        "path": "pack.locations.goblin_fort_fourth.description",
+        "text": "財宝の山の前でゴブリン王と一匹の弓兵が待ち構えている。",
+        "stated_count": 1,
+        "encounters": {
+          "goblin_fort_fourth": [
+            "goblin_king",
+            "goblin_archer"
+          ]
+        }
+      },
+      {
+        "path": "pack.locations.xanxus_ultimatum.hybrid.prepared_turns.warlock_rescue.draft.gm_text",
+        "text": "Xanxusがとどめの炎を放とうとした瞬間、青い光が火線を切り裂いた。姿を消していたワーロックがあなたを背後へ庇う。『Xanxus、それは少しやり過ぎだ』青いローブの周囲に八属性の水晶球が展開し、二人の魔法使いの戦闘が始まる。",
+        "stated_count": 2,
+        "encounters": {
+          "warlock_rescue_battle": [
+            "xanxus"
+          ]
+        }
+      }
+    ]
+  }
+}

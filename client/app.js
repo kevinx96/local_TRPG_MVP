@@ -125,6 +125,7 @@ const els = {
   endingTitle: document.querySelector("#endingTitle"),
   endingReason: document.querySelector("#endingReason"),
   endingRestartButton: document.querySelector("#endingRestartButton"),
+  endingRetryButton: document.querySelector("#endingRetryButton"),
 };
 
 let cachedConfig = null;
@@ -1232,6 +1233,7 @@ function renderCharacterAttributes(attributes) {
 
 function renderEnding(gameOver) {
   if (!els.endingOverlay) return;
+  if (els.endingRetryButton) els.endingRetryButton.hidden = !gameOver || !state.session?.can_retry_area;
   if (!gameOver) {
     els.endingOverlay.style.display = "none";
     return;
@@ -1252,6 +1254,22 @@ function renderEnding(gameOver) {
     }));
   }
   els.endingOverlay.style.display = "";
+}
+
+async function retryArea() {
+  if (!state.session?.can_retry_area || state.turnBusy || state.combatBusy || state.serviceBusy) return;
+  state.turnBusy = true;
+  els.endingRetryButton.disabled = true;
+  try {
+    const session = await serviceRequest("retry", {});
+    clearPendingChoices();
+    renderSession(session);
+  } catch (error) {
+    els.endingReason.textContent = error.message;
+  } finally {
+    state.turnBusy = false;
+    els.endingRetryButton.disabled = false;
+  }
 }
 
 function clearPendingChoices() {
@@ -1601,6 +1619,7 @@ els.form.addEventListener("submit", submitTurn);
 els.startButton.addEventListener("click", startGame);
 els.newSessionButton.addEventListener("click", newSession);
 if (els.endingRestartButton) els.endingRestartButton.addEventListener("click", newSession);
+if (els.endingRetryButton) els.endingRetryButton.addEventListener("click", retryArea);
 if (els.backendSelect) {
   els.backendSelect.addEventListener("change", () => {
     if (cachedConfig) populateModelSelect(cachedConfig);

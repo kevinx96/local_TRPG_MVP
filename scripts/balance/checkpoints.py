@@ -25,7 +25,7 @@ def fresh_session(pack: dict[str, Any], character_id: str) -> dict[str, Any]:
 
 
 def proposed_routes() -> dict[str, list[str]]:
-    forest = ["go_dark_forest:success"]
+    forest = ["go_dark_forest"]
     lost = forest + ["@victory"]
     spring = lost + ["ignore_lost_goblin:success", "@victory", "crossroads_forward"]
     wolves = spring + ["continue_from_elf_spring"]
@@ -155,8 +155,8 @@ def generate(path: Path = DEFAULT_SCENARIO) -> dict[str, Any]:
             if encounter.startswith("cave_") and character_id in {"cleric", "thief"}:
                 steps.insert(steps.index("continue_from_elf_spring"), "observe:glowing_moss_patch")
                 index = steps.index("exit_back")
-                steps[index:index] = ["return_inn_after_forest", "return_castle_from_inn", "go_item_shop", "give_moss_to_sarah",
-                    "sell:sarah_shop:trail_ration", "shop:sarah_shop:ice_charm", "return_castle_from_item_shop", "go_inn", "return_forest_exit"]
+                steps[index:index] = ["return_inn_after_forest", "go_item_shop", "give_moss_to_sarah",
+                    "sell:sarah_shop:trail_ration", "shop:sarah_shop:ice_charm", "return_castle_from_item_shop", "return_forest_exit"]
             sources = []
             for step in steps:
                 if state.current_location_id(session) == "warlock_at_nest":

@@ -1,6 +1,6 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "517c50c09208279b64cf143e708b824a03b0a30b2ce5c74a3c13a22b1615522c",
+  "scenario_sha256": "3089f4e6fb2d5aa687eb024a84f72333723f277f6b608d2ba82d9ca8b2ef9ea1",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
@@ -220,7 +220,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -557,7 +557,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -658,16 +658,6 @@
               "location": "forest_exit",
               "step": "return_inn_after_forest",
               "delta": {
-                "current_location": "inn",
-                "flags_set": [
-                  "returned_from_forest"
-                ]
-              }
-            },
-            {
-              "location": "inn",
-              "step": "return_castle_from_inn",
-              "delta": {
                 "current_location": "castle_town"
               }
             },
@@ -737,13 +727,6 @@
             },
             {
               "location": "castle_town",
-              "step": "go_inn",
-              "delta": {
-                "current_location": "inn"
-              }
-            },
-            {
-              "location": "inn",
               "step": "return_forest_exit",
               "delta": {
                 "current_location": "forest_exit"
@@ -992,7 +975,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -1332,7 +1315,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -1433,16 +1416,6 @@
               "location": "forest_exit",
               "step": "return_inn_after_forest",
               "delta": {
-                "current_location": "inn",
-                "flags_set": [
-                  "returned_from_forest"
-                ]
-              }
-            },
-            {
-              "location": "inn",
-              "step": "return_castle_from_inn",
-              "delta": {
                 "current_location": "castle_town"
               }
             },
@@ -1512,13 +1485,6 @@
             },
             {
               "location": "castle_town",
-              "step": "go_inn",
-              "delta": {
-                "current_location": "inn"
-              }
-            },
-            {
-              "location": "inn",
               "step": "return_forest_exit",
               "delta": {
                 "current_location": "forest_exit"
@@ -1775,7 +1741,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -2146,7 +2112,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -2247,16 +2213,6 @@
               "location": "forest_exit",
               "step": "return_inn_after_forest",
               "delta": {
-                "current_location": "inn",
-                "flags_set": [
-                  "returned_from_forest"
-                ]
-              }
-            },
-            {
-              "location": "inn",
-              "step": "return_castle_from_inn",
-              "delta": {
                 "current_location": "castle_town"
               }
             },
@@ -2326,13 +2282,6 @@
             },
             {
               "location": "castle_town",
-              "step": "go_inn",
-              "delta": {
-                "current_location": "inn"
-              }
-            },
-            {
-              "location": "inn",
               "step": "return_forest_exit",
               "delta": {
                 "current_location": "forest_exit"
@@ -2615,7 +2564,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -2989,7 +2938,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -3090,16 +3039,6 @@
               "location": "forest_exit",
               "step": "return_inn_after_forest",
               "delta": {
-                "current_location": "inn",
-                "flags_set": [
-                  "returned_from_forest"
-                ]
-              }
-            },
-            {
-              "location": "inn",
-              "step": "return_castle_from_inn",
-              "delta": {
                 "current_location": "castle_town"
               }
             },
@@ -3169,13 +3108,6 @@
             },
             {
               "location": "castle_town",
-              "step": "go_inn",
-              "delta": {
-                "current_location": "inn"
-              }
-            },
-            {
-              "location": "inn",
               "step": "return_forest_exit",
               "delta": {
                 "current_location": "forest_exit"
@@ -3489,7 +3421,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -3944,7 +3876,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -4045,16 +3977,6 @@
               "location": "forest_exit",
               "step": "return_inn_after_forest",
               "delta": {
-                "current_location": "inn",
-                "flags_set": [
-                  "returned_from_forest"
-                ]
-              }
-            },
-            {
-              "location": "inn",
-              "step": "return_castle_from_inn",
-              "delta": {
                 "current_location": "castle_town"
               }
             },
@@ -4124,13 +4046,6 @@
             },
             {
               "location": "castle_town",
-              "step": "go_inn",
-              "delta": {
-                "current_location": "inn"
-              }
-            },
-            {
-              "location": "inn",
               "step": "return_forest_exit",
               "delta": {
                 "current_location": "forest_exit"
@@ -4497,7 +4412,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -4955,7 +4870,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -5056,16 +4971,6 @@
               "location": "forest_exit",
               "step": "return_inn_after_forest",
               "delta": {
-                "current_location": "inn",
-                "flags_set": [
-                  "returned_from_forest"
-                ]
-              }
-            },
-            {
-              "location": "inn",
-              "step": "return_castle_from_inn",
-              "delta": {
                 "current_location": "castle_town"
               }
             },
@@ -5135,13 +5040,6 @@
             },
             {
               "location": "castle_town",
-              "step": "go_inn",
-              "delta": {
-                "current_location": "inn"
-              }
-            },
-            {
-              "location": "inn",
               "step": "return_forest_exit",
               "delta": {
                 "current_location": "forest_exit"
@@ -5508,7 +5406,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -5977,7 +5875,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -6078,16 +5976,6 @@
               "location": "forest_exit",
               "step": "return_inn_after_forest",
               "delta": {
-                "current_location": "inn",
-                "flags_set": [
-                  "returned_from_forest"
-                ]
-              }
-            },
-            {
-              "location": "inn",
-              "step": "return_castle_from_inn",
-              "delta": {
                 "current_location": "castle_town"
               }
             },
@@ -6157,13 +6045,6 @@
             },
             {
               "location": "castle_town",
-              "step": "go_inn",
-              "delta": {
-                "current_location": "inn"
-              }
-            },
-            {
-              "location": "inn",
               "step": "return_forest_exit",
               "delta": {
                 "current_location": "forest_exit"
@@ -6544,7 +6425,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -7016,7 +6897,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -7117,16 +6998,6 @@
               "location": "forest_exit",
               "step": "return_inn_after_forest",
               "delta": {
-                "current_location": "inn",
-                "flags_set": [
-                  "returned_from_forest"
-                ]
-              }
-            },
-            {
-              "location": "inn",
-              "step": "return_castle_from_inn",
-              "delta": {
                 "current_location": "castle_town"
               }
             },
@@ -7196,13 +7067,6 @@
             },
             {
               "location": "castle_town",
-              "step": "go_inn",
-              "delta": {
-                "current_location": "inn"
-              }
-            },
-            {
-              "location": "inn",
               "step": "return_forest_exit",
               "delta": {
                 "current_location": "forest_exit"
@@ -7575,7 +7439,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -7774,7 +7638,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -7974,7 +7838,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -8176,7 +8040,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -8437,7 +8301,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -8673,7 +8537,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -8910,7 +8774,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -9149,7 +9013,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -9434,7 +9298,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -9711,7 +9575,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -9989,7 +9853,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -10269,7 +10133,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -10595,7 +10459,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -10874,7 +10738,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -11154,7 +11018,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -11436,7 +11300,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -11764,7 +11628,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -12065,7 +11929,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -12367,7 +12231,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -12671,7 +12535,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -13021,7 +12885,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -13344,7 +13208,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -13668,7 +13532,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -13994,7 +13858,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -14366,7 +14230,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -14620,7 +14484,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -14875,7 +14739,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -15132,7 +14996,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -15435,7 +15299,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -15706,7 +15570,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -15978,7 +15842,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -16252,7 +16116,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -16572,7 +16436,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -16872,7 +16736,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -17173,7 +17037,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -17476,7 +17340,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -17825,7 +17689,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -18126,7 +17990,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -18428,7 +18292,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -18732,7 +18596,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -19082,7 +18946,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -19408,7 +19272,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -19735,7 +19599,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -20064,7 +19928,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -20439,7 +20303,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -20782,7 +20646,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -21126,7 +20990,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -21472,7 +21336,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -21876,7 +21740,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -22280,7 +22144,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -22674,7 +22538,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -23070,7 +22934,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -23489,7 +23353,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -23801,7 +23665,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -24103,7 +23967,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -24407,7 +24271,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -24756,7 +24620,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -25068,7 +24932,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -25370,7 +25234,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -25674,7 +25538,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -26023,7 +25887,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -26380,7 +26244,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -26727,7 +26591,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -27076,7 +26940,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -27470,7 +27334,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -27850,7 +27714,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -28220,7 +28084,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -28592,7 +28456,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -29011,7 +28875,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -29357,7 +29221,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -29693,7 +29557,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -30031,7 +29895,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -30422,7 +30286,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -30794,7 +30658,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -31156,7 +31020,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -31520,7 +31384,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -31938,7 +31802,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -32371,7 +32235,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -32794,7 +32658,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -33218,7 +33082,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -33672,7 +33536,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -34123,7 +33987,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -34564,7 +34428,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -35006,7 +34870,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -35510,7 +35374,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -36052,7 +35916,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -36574,7 +36438,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -37097,7 +36961,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -37642,7 +37506,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -38119,7 +37983,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -38576,7 +38440,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -39034,7 +38898,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -39551,7 +39415,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -40114,7 +39978,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -40657,7 +40521,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }
@@ -41201,7 +41065,7 @@
             },
             {
               "location": "castle_town",
-              "step": "go_dark_forest:success",
+              "step": "go_dark_forest",
               "delta": {
                 "current_location": "dark_forest_loc"
               }

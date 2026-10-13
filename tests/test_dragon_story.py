@@ -274,19 +274,16 @@ class DragonStoryTests(unittest.TestCase):
         self.assertEqual(prepared_turn["id"], "xanxus_bluff_failed")
         self.assertIn("炎", prepared_turn["draft"]["gm_text"])
 
-    def test_castle_departure_has_prepared_transition_for_both_outcomes(self):
-        for rolls, expected_turn_id in (([18], "castle_departure_success"), ([1], "castle_departure_failure")):
-            with self.subTest(expected_turn_id=expected_turn_id):
-                session = self.create_runtime_session()
-                session["world_state"] = {"scene_id": "throne_room", "location_id": "castle_town"}
-                action = state.resolve_action(session, action_id="go_dark_forest")
-                roll = state.roll_dice(session, *state.action_dice_settings(action), client_rolls=rolls)
-                state.apply_action_result(session, action, roll)
-
-                prepared_turn = select_hybrid_prepared_turn(session, action["text"])
-
-                self.assertEqual(prepared_turn["id"], expected_turn_id)
-                self.assertTrue(prepared_turn["draft"]["gm_text"].strip())
+    def test_castle_departure_has_prepared_transition_without_roll(self):
+        session = self.create_runtime_session()
+        session["world_state"] = {"scene_id": "throne_room", "location_id": "castle_town"}
+        action = state.resolve_action(session, action_id="go_dark_forest")
+        self.assertNotIn("roll", action)
+        state.apply_action_result(session, action, {})
+        prepared_turn = select_hybrid_prepared_turn(session, action["text"])
+        self.assertEqual(prepared_turn["id"], "castle_departure_success")
+        self.assertEqual(state.current_location_id(session), "dark_forest_loc")
+        self.assertTrue(prepared_turn["draft"]["gm_text"].strip())
 
     def test_lost_goblin_and_xanxus_show_intro_before_combat_without_llm(self):
         cases = (

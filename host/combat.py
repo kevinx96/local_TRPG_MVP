@@ -911,6 +911,8 @@ def _finish_combat(session: dict[str, Any], status: str, summary: str) -> None:
                 "reason": summary, "ending": "combat_defeat",
             }})
         combat["pending_state_delta"] = defeat_delta
+        if isinstance(defeat_delta.get("game_over"), dict) and (combat.get("encounter") or {}).get("encounter_class") != "scripted_loss":
+            defeat_delta["game_over"]["combat_defeat"] = True
     combat["result"] = result
     _log(session, "system", status, summary)
 

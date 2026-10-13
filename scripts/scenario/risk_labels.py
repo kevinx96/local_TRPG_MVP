@@ -24,14 +24,14 @@ def _starts_combat(action: dict[str, Any]) -> bool:
 def expected_risk(action: dict[str, Any], location: dict[str, Any], items: dict[str, str]) -> Optional[str]:
     """Return the label the mechanics imply, or None when the current label should be kept."""
     risk = str(action.get("risk") or "")
+    roll = action.get("roll")
+    if isinstance(roll, dict) and int(roll.get("dc") or 0) >= 100:
+        return "危険"
     if risk.startswith("未知"):
         return None  # deliberately hidden checks
     if "以上で" in risk:
         return None  # labels that also state an eligibility requirement are written by hand
-    roll = action.get("roll")
     if isinstance(roll, dict) and roll.get("dc") is not None:
-        if int(roll["dc"]) >= 999:
-            return None  # scripted impossible checks keep their own wording
         return f"{roll.get('dice_type') or '1d20'}判定（DC{roll['dc']}）"
     free = action.get("free_action")
     if isinstance(free, dict):
