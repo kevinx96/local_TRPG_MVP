@@ -4,11 +4,12 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-13-v029-design",
+    "content_revision": "2026-10-13-v031",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
-    "chapter5_v5": true
+    "chapter5_v5": true,
+    "rewards_battlefield_v031": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -194,6 +195,27 @@
         "mansion_study",
         "king_private_room",
         "inn_night_ambush"
+      ]
+    },
+    {
+      "id": "old_battlefield",
+      "title": "霧の古戦場",
+      "location_ids": [
+        "old_battlefield",
+        "bone_field",
+        "ruined_watchtower",
+        "ghoul_marsh",
+        "grave_chapel"
+      ],
+      "enemy_ids": [],
+      "description": "霧の古戦場",
+      "npc_ids": [
+        "old_soldier_ghost",
+        "suspicious_merchant"
+      ],
+      "next_scene_ids": [
+        "dark_forest",
+        "village"
       ]
     }
   ],
@@ -538,7 +560,7 @@
             }
           ],
           "visible_after": "saved_gald",
-          "result_text": "「将軍様の屋敷に、夜な夜な白い霧が出るって噂だぜ」",
+          "result_text": "「将軍様の屋敷に、夜な夜な白い霧が出るって噂だぜ」「古戦場の街道は村の裏手への近道だが、亡者が出る。教会の聖水を忘れるなよ」",
           "portrait_image": "/static/images/npc_gald.png",
           "risk_source": "action"
         },
@@ -3597,7 +3619,7 @@
               "set_flag": "curse_offer_heard"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "action"
         },
         {
@@ -3628,7 +3650,7 @@
               "set_flag": "curse_bargain_pending"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "action"
         },
         {
@@ -3646,7 +3668,7 @@
               "set_flag": "curse_offer_heard"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "action"
         },
         {
@@ -3675,7 +3697,7 @@
               "set_flag": "curse_bargain_pending"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "action"
         },
         {
@@ -3693,7 +3715,7 @@
               "set_flag": "curse_offer_heard"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "action"
         },
         {
@@ -3722,7 +3744,7 @@
               "set_flag": "curse_bargain_pending"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "action"
         },
         {
@@ -3740,7 +3762,7 @@
               "set_flag": "curse_offer_heard"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "action"
         },
         {
@@ -3769,7 +3791,7 @@
               "set_flag": "curse_bargain_pending"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "action"
         },
         {
@@ -3797,7 +3819,7 @@
               "current_location": "alley_after"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "destination"
         },
         {
@@ -3824,7 +3846,7 @@
               "current_location": "alley_after"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "destination"
         },
         {
@@ -3849,7 +3871,7 @@
               "current_location": "alley_after"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "destination"
         },
         {
@@ -3876,7 +3898,7 @@
               "current_location": "alley_after"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "destination"
         },
         {
@@ -3894,9 +3916,12 @@
             },
             {
               "start_combat": true
+            },
+            {
+              "set_flag": "fought_cursed_merchant"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "action"
         },
         {
@@ -3926,7 +3951,7 @@
               }
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "destination"
         },
         {
@@ -4026,7 +4051,19 @@
             "ending": "zebok_servant"
           }
         },
-        "encounter_class": "boss"
+        "encounter_class": "boss",
+        "one_time_reward": {
+          "flag": "reward_claimed:merchant_battle",
+          "items": [
+            {
+              "id": "elixir_wis",
+              "name": "祈りの霊薬",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに祈りの霊薬をくすねた。"
+        },
+        "victory_gold_bonus": 85
       },
       "actions": [],
       "background_image": "/static/images/bg_alley_night.png",
@@ -4373,7 +4410,8 @@
         "result_texts": {
           "defeat": "闇の森・迷子のゴブリンで力尽きた。冒険はここで終わりを迎える。"
         },
-        "encounter_class": "trash"
+        "encounter_class": "trash",
+        "victory_gold_bonus": 0
       },
       "actions": [
         {
@@ -4839,7 +4877,26 @@
           "defeat": "闇の森・狼の縄張りで力尽きた。冒険はここで終わりを迎える。",
           "victory": "「助かった！命の恩人だ。俺はガルド、村でも商売してる。見かけたら寄ってくれ」"
         },
-        "encounter_class": "elite"
+        "encounter_class": "elite",
+        "one_time_reward": {
+          "flag": "reward_claimed:forest_wolves",
+          "items": [
+            {
+              "id": "fruit_life",
+              "name": "生命の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに生命の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:forest"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:forest",
+            "reward_claimed:forest_wolves"
+          ]
+        },
+        "victory_gold_bonus": 15
       },
       "actions": [
         {
@@ -4970,7 +5027,8 @@
             {
               "set_flag": "saved_gald"
             }
-          ]
+          ],
+          "steal_encounter": "forest_wolves"
         }
       ]
     },
@@ -5015,7 +5073,8 @@
           "victory": "最後の一匹を弾き飛ばした直後、泉の反対側で水音が一つ重なった。休む間もなく、新たな一匹のスライムが水面から這い上がり、半円を描いて包囲を狭めてくる。",
           "defeat": "精霊の泉・第一波で力尽きた。冒険はここで終わりを迎える。"
         },
-        "encounter_class": "trash"
+        "encounter_class": "trash",
+        "victory_gold_bonus": 0
       },
       "actions": [],
       "background_image": "/static/images/bg_elf_spring.png"
@@ -5061,7 +5120,8 @@
           "victory": "第二波を退けると泉全体が大きく盛り上がった。水を押し分けて現れたのは、錆びた王冠を載せた巨大なスライムだ。スライム王は仲間の残骸を吸収し、重い身体で地面を揺らす。",
           "defeat": "精霊の泉・第二波で力尽きた。冒険はここで終わりを迎える。"
         },
-        "encounter_class": "trash"
+        "encounter_class": "trash",
+        "victory_gold_bonus": 0
       },
       "actions": [],
       "background_image": "/static/images/bg_elf_spring.png"
@@ -5107,7 +5167,19 @@
         "result_texts": {
           "defeat": "精霊の泉・スライム王で力尽きた。冒険はここで終わりを迎える。"
         },
-        "encounter_class": "boss"
+        "encounter_class": "boss",
+        "one_time_reward": {
+          "flag": "reward_claimed:slime_king_battle",
+          "items": [
+            {
+              "id": "elixir_end",
+              "name": "鉄壁の霊薬",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに鉄壁の霊薬をくすねた。"
+        },
+        "victory_gold_bonus": 75
       },
       "actions": [],
       "background_image": "/static/images/bg_elf_spring.png"
@@ -5247,6 +5319,22 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "enter_old_battlefield",
+          "text": "霧の古戦場を抜けて村の裏手へ向かう",
+          "preview": "街道を外れ、古戦場を通る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "霧の古戦場を抜けて村の裏手へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "old_battlefield"
+            }
+          ],
+          "result_text": "森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。",
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
@@ -5351,7 +5439,8 @@
         "result_texts": {
           "defeat": "ゴブリン砦・一階前半で力尽きた。冒険はここで終わりを迎える。"
         },
-        "encounter_class": "trash"
+        "encounter_class": "trash",
+        "victory_gold_bonus": 0
       },
       "actions": [
         {
@@ -5523,7 +5612,29 @@
         "result_texts": {
           "defeat": "ゴブリン砦・一階後半で力尽きた。冒険はここで終わりを迎える。"
         },
-        "encounter_class": "elite"
+        "encounter_class": "elite",
+        "one_time_reward": {
+          "flag": "reward_claimed:goblin_fort_first_second",
+          "items": [
+            {
+              "id": "fruit_life",
+              "name": "生命の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに生命の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:goblin_fort"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:goblin_fort",
+            "reward_claimed:goblin_fort_first_second",
+            "reward_claimed:goblin_fort_second_right",
+            "reward_claimed:goblin_fort_second_left",
+            "reward_claimed:goblin_fort_third_guards"
+          ]
+        },
+        "victory_gold_bonus": 0
       },
       "actions": [
         {
@@ -5564,7 +5675,8 @@
               "start_combat": true
             }
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "steal_encounter": "goblin_fort_first_second"
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -5747,7 +5859,29 @@
         "result_texts": {
           "defeat": "ゴブリン砦・二階右で力尽きた。冒険はここで終わりを迎える。"
         },
-        "encounter_class": "elite"
+        "encounter_class": "elite",
+        "one_time_reward": {
+          "flag": "reward_claimed:goblin_fort_second_right",
+          "items": [
+            {
+              "id": "fruit_life",
+              "name": "生命の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに生命の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:goblin_fort"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:goblin_fort",
+            "reward_claimed:goblin_fort_first_second",
+            "reward_claimed:goblin_fort_second_right",
+            "reward_claimed:goblin_fort_second_left",
+            "reward_claimed:goblin_fort_third_guards"
+          ]
+        },
+        "victory_gold_bonus": 0
       },
       "actions": [
         {
@@ -5797,7 +5931,8 @@
               "start_combat": true
             }
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "steal_encounter": "goblin_fort_second_right"
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -5842,7 +5977,29 @@
         "result_texts": {
           "defeat": "ゴブリン砦・二階左で力尽きた。冒険はここで終わりを迎える。"
         },
-        "encounter_class": "elite"
+        "encounter_class": "elite",
+        "one_time_reward": {
+          "flag": "reward_claimed:goblin_fort_second_left",
+          "items": [
+            {
+              "id": "fruit_life",
+              "name": "生命の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに生命の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:goblin_fort"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:goblin_fort",
+            "reward_claimed:goblin_fort_first_second",
+            "reward_claimed:goblin_fort_second_right",
+            "reward_claimed:goblin_fort_second_left",
+            "reward_claimed:goblin_fort_third_guards"
+          ]
+        },
+        "victory_gold_bonus": 20
       },
       "actions": [],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -6155,7 +6312,29 @@
           "victory": "一匹の警備兵を倒すと、戦闘の衝撃で鉄門の錠が外れた。扉の先は財宝庫だ。金貨の山からゴブリン王が立ち上がり、一匹の弓兵が高台へ散って次の戦いを挑んでくる。",
           "defeat": "ゴブリン砦・三階警備戦で力尽きた。冒険はここで終わりを迎える。"
         },
-        "encounter_class": "elite"
+        "encounter_class": "elite",
+        "one_time_reward": {
+          "flag": "reward_claimed:goblin_fort_third_guards",
+          "items": [
+            {
+              "id": "fruit_life",
+              "name": "生命の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに生命の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:goblin_fort"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:goblin_fort",
+            "reward_claimed:goblin_fort_first_second",
+            "reward_claimed:goblin_fort_second_right",
+            "reward_claimed:goblin_fort_second_left",
+            "reward_claimed:goblin_fort_third_guards"
+          ]
+        },
+        "victory_gold_bonus": 0
       },
       "actions": [],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -6213,7 +6392,33 @@
         "result_texts": {
           "defeat": "ゴブリン砦・四階財宝庫で力尽きた。冒険はここで終わりを迎える。"
         },
-        "encounter_class": "boss"
+        "encounter_class": "boss",
+        "one_time_reward": {
+          "flag": "reward_claimed:goblin_fort_fourth",
+          "items": [
+            {
+              "id": "elixir_str",
+              "name": "剛力の霊薬",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに剛力の霊薬をくすねた。"
+        },
+        "encounter_modifiers": [
+          {
+            "id": "robin_trap",
+            "requirements": {
+              "companion_id": "robin"
+            },
+            "enemy_ids": [
+              "goblin_king"
+            ],
+            "enemy_skip_rounds": 2,
+            "text": "「足元、気をつけな」ロビンが金貨の山の陰に仕掛けておいた投げ縄が跳ね上がり、ゴブリン王の足をすくった。王は金貨の山に頭から突っ込み、目を回している。",
+            "recovery_text": "ゴブリン王が頭を振りながら起き上がった。"
+          }
+        ],
+        "victory_gold_bonus": 0
       },
       "actions": [],
       "background_image": "/static/images/bg_goblin_treasure.png"
@@ -6449,7 +6654,8 @@
         "result_texts": {
           "defeat": "ゴブリン砦・箱の争奪で力尽きた。冒険はここで終わりを迎える。"
         },
-        "encounter_class": "trash"
+        "encounter_class": "trash",
+        "victory_gold_bonus": 0
       },
       "actions": [],
       "background_image": "/static/images/bg_goblin_treasure.png",
@@ -6713,7 +6919,8 @@
           "victory": "炎の怪物を打ち倒すと、燃え盛る村の一角に不自然な氷が残っていることに気づいた。炎の中でも溶けず、冷気を放ち続けている。",
           "defeat": "炎の怪物に押し切られ、燃え落ちる村の中で力尽きた。"
         },
-        "encounter_class": "trash"
+        "encounter_class": "trash",
+        "victory_gold_bonus": 0
       },
       "actions": [],
       "background_image": "/static/images/bg_burning_village.png"
@@ -6758,7 +6965,27 @@
           "victory": "炎の怪物を打ち倒すと、燃え盛る村の一角に不自然な氷が残っていることに気づいた。炎の中でも溶けず、冷気を放ち続けている。",
           "defeat": "炎の怪物に押し切られ、燃え落ちる村の中で力尽きた。"
         },
-        "encounter_class": "elite"
+        "encounter_class": "elite",
+        "one_time_reward": {
+          "flag": "reward_claimed:village_fire_elemental",
+          "items": [
+            {
+              "id": "fruit_mana",
+              "name": "魔力の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに魔力の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:burning_village"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:burning_village",
+            "reward_claimed:village_fire_elemental",
+            "reward_claimed:ice_elemental_encounter"
+          ]
+        },
+        "victory_gold_bonus": 10
       },
       "actions": [],
       "background_image": "/static/images/bg_burning_village.png"
@@ -7501,7 +7728,27 @@
           "victory": "氷の精霊が砕けると、奥から巨大な獣の足音が響いた。",
           "defeat": "氷の精霊の冷気に全身を閉ざされ、動けなくなった。"
         },
-        "encounter_class": "elite"
+        "encounter_class": "elite",
+        "one_time_reward": {
+          "flag": "reward_claimed:ice_elemental_encounter",
+          "items": [
+            {
+              "id": "fruit_mana",
+              "name": "魔力の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに魔力の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:burning_village"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:burning_village",
+            "reward_claimed:village_fire_elemental",
+            "reward_claimed:ice_elemental_encounter"
+          ]
+        },
+        "victory_gold_bonus": 0
       },
       "actions": [
         {
@@ -7542,7 +7789,8 @@
               "start_combat": true
             }
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "steal_encounter": "ice_elemental_encounter"
         }
       ],
       "background_image": "/static/images/bg_frozen_village.png",
@@ -7624,7 +7872,19 @@
           "victory": "氷霜の巨狼は霧のように消散し、その核だった氷の太刀が地面へ残った。拾おうとした瞬間、空から隕石が落ちて刀を砕く。遠くに全身を炎に包んだ影が一瞬だけ見えた。巨狼の核が砕け、中から白い鱗が一枚転がり出た。",
           "defeat": "氷霜の巨狼の牙が守りを砕き、村を覆う冷気の中で力尽きた。"
         },
-        "encounter_class": "boss"
+        "encounter_class": "boss",
+        "one_time_reward": {
+          "flag": "reward_claimed:frost_wolf_battle",
+          "items": [
+            {
+              "id": "elixir_dex",
+              "name": "迅速の霊薬",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに迅速の霊薬をくすねた。"
+        },
+        "victory_gold_bonus": 10
       },
       "actions": [],
       "background_image": "/static/images/bg_frozen_village.png"
@@ -7959,7 +8219,8 @@
                     "heard_ignis_testimony",
                     "heard_gald_rumor",
                     "heard_xanxus_betrayal",
-                    "has_assassin_crest"
+                    "has_assassin_crest",
+                    "heard_old_soldier_ghost"
                   ],
                   "count": 2
                 }
@@ -8665,7 +8926,8 @@
             "success": "赤く光る岩肌の影だけを選んで進み、トカゲたちの舌の音を背に回廊を抜けた。",
             "failure": "足元の小石が転がり、熱岩トカゲが一斉にこちらを向いた。"
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "steal_encounter": "cave_heat_corridor"
         },
         {
           "id": "pass_heat_corridor",
@@ -8734,7 +8996,28 @@
         },
         "result_texts": {
           "defeat": "気がつくと泉のほとりに倒れていた。"
-        }
+        },
+        "one_time_reward": {
+          "flag": "reward_claimed:cave_heat_corridor",
+          "items": [
+            {
+              "id": "fruit_life",
+              "name": "生命の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに生命の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:sealed_cave"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:sealed_cave",
+            "reward_claimed:cave_heat_corridor",
+            "reward_claimed:cave_lava_room",
+            "reward_claimed:cave_crystal_corridor"
+          ]
+        },
+        "victory_gold_bonus": 20
       },
       "choices": [
         {
@@ -8915,7 +9198,28 @@
         },
         "result_texts": {
           "defeat": "気がつくと泉のほとりに倒れていた。"
-        }
+        },
+        "one_time_reward": {
+          "flag": "reward_claimed:cave_lava_room",
+          "items": [
+            {
+              "id": "fruit_mana",
+              "name": "魔力の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに魔力の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:sealed_cave"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:sealed_cave",
+            "reward_claimed:cave_heat_corridor",
+            "reward_claimed:cave_lava_room",
+            "reward_claimed:cave_crystal_corridor"
+          ]
+        },
+        "victory_gold_bonus": 20
       }
     },
     {
@@ -9179,7 +9483,8 @@
             "success": "壁際で息を殺していると、水晶の震えは少しずつ静まり、形を取りかけた魔物たちも元の結晶へ戻っていった。その隙に回廊を抜ける。",
             "failure": "漏れた吐息に水晶が共鳴し、甲高い音とともに魔物たちが一斉に襲いかかってきた。"
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "steal_encounter": "cave_crystal_corridor"
         },
         {
           "id": "pass_crystal_corridor",
@@ -9245,7 +9550,28 @@
         },
         "result_texts": {
           "defeat": "気がつくと泉のほとりに倒れていた。"
-        }
+        },
+        "one_time_reward": {
+          "flag": "reward_claimed:cave_crystal_corridor",
+          "items": [
+            {
+              "id": "fruit_mana",
+              "name": "魔力の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに魔力の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:sealed_cave"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:sealed_cave",
+            "reward_claimed:cave_heat_corridor",
+            "reward_claimed:cave_lava_room",
+            "reward_claimed:cave_crystal_corridor"
+          ]
+        },
+        "victory_gold_bonus": 25
       },
       "choices": [
         {
@@ -9345,7 +9671,56 @@
         "result_texts": {
           "defeat": "水晶の枝に打ち据えられ、気がつくと泉のほとりに倒れていた。",
           "victory": "大樹が砕け散ると、その芯から掌ほどの欠片が転がり出た。光にかざすと、色が絶えず移ろっている。"
-        }
+        },
+        "one_time_reward": {
+          "flag": "reward_claimed:cave_prism_tree",
+          "items": [
+            {
+              "id": "elixir_int",
+              "name": "叡智の霊薬",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに叡智の霊薬をくすねた。"
+        },
+        "victory_bonus_effects": [
+          {
+            "branch": {
+              "requirements": {
+                "all": [
+                  {
+                    "companion_id": "fire_bat_dragon"
+                  },
+                  {
+                    "not_flag": "fire_bat_empowered"
+                  }
+                ]
+              },
+              "then": [
+                {
+                  "set_flag": "fire_bat_empowered"
+                }
+              ],
+              "else": []
+            }
+          }
+        ],
+        "victory_events": [
+          {
+            "requirements": {
+              "all": [
+                {
+                  "companion_id": "fire_bat_dragon"
+                },
+                {
+                  "not_flag": "fire_bat_empowered"
+                }
+              ]
+            },
+            "text": "砕け散った虹晶の欠片を、火コウモリ竜が嬉しそうについばんだ。小さな炎が、虹色にきらめいている。"
+          }
+        ],
+        "victory_gold_bonus": 190
       }
     },
     {
@@ -9562,7 +9937,8 @@
             "success": "硫黄の霧が濃くなる瞬間を待ち、亡霊たちの間を音もなく抜けた。",
             "failure": "霧が晴れた一瞬、煤の亡霊と目が合った。先に動いたのは向こうだった。"
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "steal_encounter": "valley_entrance"
         }
       ],
       "npc_ids": [],
@@ -9596,7 +9972,27 @@
         "result_texts": {
           "victory": "煮え立つ溶岩の川に、古い吊り橋が一本だけ架かっている。板は焦げ、縄は今にも切れそうだ。",
           "defeat": "竜の谷で力尽きた。"
-        }
+        },
+        "one_time_reward": {
+          "flag": "reward_claimed:valley_entrance",
+          "items": [
+            {
+              "id": "fruit_mana",
+              "name": "魔力の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに魔力の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:dragon_valley"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:dragon_valley",
+            "reward_claimed:valley_entrance",
+            "reward_claimed:valley_ledge"
+          ]
+        },
+        "victory_gold_bonus": 35
       },
       "choices": [
         {
@@ -9746,7 +10142,27 @@
         "result_texts": {
           "victory": "巨大な洞穴の入口から、灼熱の風が吹きつけてくる。奥で、何か巨大なものが重く息をしている。",
           "defeat": "竜の谷で力尽きた。"
-        }
+        },
+        "one_time_reward": {
+          "flag": "reward_claimed:valley_ledge",
+          "items": [
+            {
+              "id": "fruit_life",
+              "name": "生命の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに生命の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:dragon_valley"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:dragon_valley",
+            "reward_claimed:valley_entrance",
+            "reward_claimed:valley_ledge"
+          ]
+        },
+        "victory_gold_bonus": 10
       }
     },
     {
@@ -10010,7 +10426,19 @@
         "result_texts": {
           "victory": "分身が崩れ落ちる間際、Xanxusの声が響いた。「白竜め……約束が違うではないか……」",
           "defeat": "炎に呑まれ、気がつくと巣の前に倒れていた。胸の火種は、まだ脈打っている。"
-        }
+        },
+        "one_time_reward": {
+          "flag": "reward_claimed:xanxus_phantom_battle",
+          "items": [
+            {
+              "id": "fruit_mana",
+              "name": "魔力の果実",
+              "quantity": 2
+            }
+          ],
+          "steal_text": "すれ違いざまに魔力の果実をくすねた。"
+        },
+        "victory_gold_bonus": 75
       }
     },
     {
@@ -10480,7 +10908,8 @@
             "success": "二体の番兵が向きを変える一瞬を見計らい、凍った床を滑るように扉の内側へ抜けた。",
             "failure": "凍った床がきしみ、番兵の兜がこちらを向いた。冷たい槍が先に突き出される。"
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "steal_encounter": "mansion_corridor"
         },
         {
           "id": "pass_cleared_sentinels",
@@ -10526,7 +10955,26 @@
         },
         "result_texts": {
           "defeat": "氷の拳に打ち据えられ、気がつくと城下町の路地裏に倒れていた。"
-        }
+        },
+        "one_time_reward": {
+          "flag": "reward_claimed:mansion_corridor",
+          "items": [
+            {
+              "id": "fruit_mana",
+              "name": "魔力の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに魔力の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:general_mansion"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:general_mansion",
+            "reward_claimed:mansion_corridor"
+          ]
+        },
+        "victory_gold_bonus": 25
       },
       "entry_text": "廊下の壁も床も、薄い氷に覆われている。突き当たりの扉の前に、氷でできた鎧の番兵が二体、無言で立っていた。",
       "narrate_entry": true,
@@ -10761,7 +11209,26 @@
         "result_texts": {
           "victory": "倒れた刺客の懐から、白い竜を象った徽章がこぼれ落ちた。将軍家の紋章だ。",
           "defeat": "気がつくと朝だった。部屋は荒らされ、白い鱗だけが消えていた。"
-        }
+        },
+        "one_time_reward": {
+          "flag": "reward_claimed:inn_night_ambush",
+          "items": [
+            {
+              "id": "fruit_life",
+              "name": "生命の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに生命の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:inn_night_ambush"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:inn_night_ambush",
+            "reward_claimed:inn_night_ambush"
+          ]
+        },
+        "victory_gold_bonus": 40
       },
       "entry_text": "真夜中、部屋の窓が音もなく凍りつき、砕け散った。白い装束の刺客が二人、氷の刃を手に滑り込んでくる。",
       "narrate_entry": true,
@@ -10770,6 +11237,856 @@
           "set_flag": "entered_inn_night_ambush"
         }
       ]
+    },
+    {
+      "id": "old_battlefield",
+      "scene_id": "old_battlefield",
+      "title": "霧の古戦場",
+      "description": "森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。",
+      "background_image": "/static/images/bg_old_battlefield.png",
+      "actions": [
+        {
+          "id": "battlefield_to_bones",
+          "text": "骨の野へ進む",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "骨の野へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "bone_field"
+            }
+          ],
+          "result_text": "霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "battlefield_to_forest",
+          "text": "森の出口へ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "森の出口へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "forest_exit"
+            }
+          ],
+          "result_text": "木々の隙間から麓の村と山道が見えている。",
+          "risk_source": "destination"
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "choices": [],
+      "entry_events": [
+        {
+          "once": "battlefield_warlock_warned",
+          "requirements": {
+            "companion_id": "blue_robed_mage"
+          },
+          "narrate": true,
+          "text": "ワーロックが足を止めた。「瘴気が濃い……ここでは元素の流れが乱れる。癒やしの術は当てにしないでくれ」"
+        },
+        {
+          "once": "battlefield_curse_noticed",
+          "requirements": {
+            "any": [
+              {
+                "has_item": "呪われた聖剣"
+              },
+              {
+                "has_item": "呪われた聖杖"
+              },
+              {
+                "has_item": "呪われた水晶球"
+              },
+              {
+                "has_item": "呪われた短剣"
+              }
+            ]
+          },
+          "narrate": true,
+          "text": "腰の呪いの品が、かすかに脈打った。霧の向こうで、何かがこちらを見ている。"
+        }
+      ],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      }
+    },
+    {
+      "id": "bone_field",
+      "scene_id": "old_battlefield",
+      "title": "骨の野",
+      "description": "霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。",
+      "background_image": "/static/images/bg_old_battlefield.png",
+      "actions": [
+        {
+          "id": "fight_skeleton_soldiers",
+          "text": "骸骨兵と戦う",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "骸骨兵と戦う"
+          ],
+          "effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "hidden_after": "passed_bone_field",
+          "risk_source": "action",
+          "result_text": "霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。"
+        },
+        {
+          "id": "sneak_bone_field",
+          "text": "霧に紛れて抜ける",
+          "preview": "",
+          "risk": "1d20+dex判定（DC14）",
+          "intent_keywords": [
+            "霧に紛れて抜ける"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 14
+          },
+          "hidden_after": "passed_bone_field",
+          "success_effects": [
+            {
+              "set_flag": "passed_bone_field"
+            }
+          ],
+          "failure_effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "result_texts": {
+            "success": "骸骨兵が霧の向こうを見つめている隙に、野を抜けた。",
+            "failure": "足元の骨が乾いた音を立て、骸骨兵が一斉にこちらを向いた。"
+          },
+          "risk_source": "action"
+        },
+        {
+          "id": "show_curse_to_skeletons",
+          "text": "呪いの品を掲げて通る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "呪いの品を掲げて通る"
+          ],
+          "effects": [
+            {
+              "set_flag": "passed_bone_field"
+            }
+          ],
+          "requirements": {
+            "any": [
+              {
+                "has_item": "呪われた聖剣"
+              },
+              {
+                "has_item": "呪われた聖杖"
+              },
+              {
+                "has_item": "呪われた水晶球"
+              },
+              {
+                "has_item": "呪われた短剣"
+              }
+            ]
+          },
+          "secret": true,
+          "hidden_after": "passed_bone_field",
+          "result_text": "骸骨兵は呪いの品の気配に気づくと、錆びた剣を下ろして道を開けた。",
+          "risk_source": "action"
+        },
+        {
+          "id": "bones_to_tower",
+          "text": "崩れた見張り塔へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "崩れた見張り塔へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "ruined_watchtower"
+            }
+          ],
+          "result_text": "半ば崩れた石の塔。中では、半透明の兵士が一人、消えた焚き火の前にうずくまっている。",
+          "visible_after": "passed_bone_field",
+          "risk_source": "destination"
+        },
+        {
+          "id": "bones_to_marsh",
+          "text": "屍鬼の沼へ進む",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "屍鬼の沼へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "ghoul_marsh"
+            }
+          ],
+          "result_text": "黒い水が淀む沼地。泥の中から、腐った腕が何本も突き出している。",
+          "visible_after": "passed_bone_field",
+          "risk_source": "destination"
+        },
+        {
+          "id": "bones_to_battlefield",
+          "text": "霧の古戦場へ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "霧の古戦場へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "old_battlefield"
+            }
+          ],
+          "result_text": "森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。",
+          "visible_after": "passed_bone_field",
+          "risk_source": "destination"
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [
+        "skeleton_soldier",
+        "skeleton_soldier"
+      ],
+      "connected_location_ids": [],
+      "choices": [],
+      "combat": {
+        "enemy_ids": [
+          "skeleton_soldier",
+          "skeleton_soldier"
+        ],
+        "auto_start": false,
+        "encounter_class": "trash",
+        "boss": false,
+        "flee_allowed": false,
+        "disable_companion_healing": [
+          "blue_robed_mage"
+        ],
+        "victory_effects": {
+          "flags_set": [
+            "passed_bone_field"
+          ]
+        },
+        "result_texts": {
+          "victory": "骸骨兵は崩れ落ち、ただの骨の山に戻った。",
+          "defeat": "骨の野で力尽きた。冒険はここで終わりを迎える。"
+        },
+        "defeat_effects": {
+          "game_over": {
+            "ending": "combat_defeat",
+            "reason": "骨の野で力尽きた。冒険はここで終わりを迎える。"
+          }
+        },
+        "victory_gold_bonus": 15
+      }
+    },
+    {
+      "id": "ruined_watchtower",
+      "scene_id": "old_battlefield",
+      "title": "崩れた見張り塔",
+      "description": "半ば崩れた石の塔。中では、半透明の兵士が一人、消えた焚き火の前にうずくまっている。",
+      "background_image": "/static/images/bg_ruined_watchtower.png",
+      "actions": [
+        {
+          "id": "talk_old_soldier",
+          "text": "亡霊の兵士に話しかける",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "亡霊の兵士に話しかける"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_old_soldier_ghost"
+            }
+          ],
+          "portrait_image": "/static/images/npc_old_soldier_ghost.png",
+          "result_text": "亡霊は顔を上げた。「……十年前、将軍ドラコの進言で、我らは竜の谷へ送られた。谷に着いた夜、白い霜が陣を覆い、気づけば皆ここで骨になっていた。紅竜の炎ではない。あれは、ひどく冷たかった」",
+          "risk_source": "action"
+        },
+        {
+          "id": "search_watchtower",
+          "text": "塔の上を調べる",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "塔の上を調べる"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "id": "gravekeeper_cloak",
+                "name": "墓守の外套",
+                "quantity": 1
+              }
+            },
+            {
+              "equip_item": "墓守の外套"
+            }
+          ],
+          "once": "found_gravekeeper_cloak",
+          "result_text": "崩れた階段の上に、古い衛兵の外套が残っていた。裏地には、死者を鎮める祈りの文句が縫い込まれている。",
+          "risk_source": "action"
+        },
+        {
+          "id": "rest_watchtower",
+          "text": "焚き火に火を入れて休む",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "焚き火に火を入れて休む"
+          ],
+          "effects": [
+            {
+              "restore_full": true
+            }
+          ],
+          "once": "rested_watchtower",
+          "result_text": "消えた焚き火に火を入れ、少しだけ休んだ。亡霊は黙って、その火を見つめていた。",
+          "risk_source": "action"
+        },
+        {
+          "id": "tower_to_bones",
+          "text": "骨の野へ戻る",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "骨の野へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "bone_field"
+            }
+          ],
+          "result_text": "霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。",
+          "risk_source": "destination"
+        }
+      ],
+      "npc_ids": [
+        "old_soldier_ghost"
+      ],
+      "enemy_ids": [],
+      "connected_location_ids": [],
+      "choices": [],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      }
+    },
+    {
+      "id": "ghoul_marsh",
+      "scene_id": "old_battlefield",
+      "title": "屍鬼の沼",
+      "description": "黒い水が淀む沼地。泥の中から、腐った腕が何本も突き出している。",
+      "background_image": "/static/images/bg_ghoul_marsh.png",
+      "actions": [
+        {
+          "id": "fight_ghoul",
+          "text": "屍鬼と戦う",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "屍鬼と戦う"
+          ],
+          "effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "hidden_after": "passed_ghoul_marsh",
+          "risk_source": "action",
+          "result_text": "黒い水が淀む沼地。泥の中から、腐った腕が何本も突き出している。"
+        },
+        {
+          "id": "sneak_ghoul_marsh",
+          "text": "沼の縁を伝って抜ける",
+          "preview": "",
+          "risk": "1d20+dex判定（DC15）",
+          "intent_keywords": [
+            "沼の縁を伝って抜ける"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 15
+          },
+          "hidden_after": "passed_ghoul_marsh",
+          "success_effects": [
+            {
+              "set_flag": "passed_ghoul_marsh"
+            }
+          ],
+          "failure_effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "steal_encounter": "ghoul_marsh",
+          "risk_source": "action",
+          "result_texts": {
+            "success": "沼の縁を伝って抜ける。",
+            "failure": "黒い水が淀む沼地。泥の中から、腐った腕が何本も突き出している。"
+          }
+        },
+        {
+          "id": "marsh_to_bones",
+          "text": "骨の野へ戻る",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "骨の野へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "bone_field"
+            }
+          ],
+          "result_text": "霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "marsh_to_chapel",
+          "text": "墓守の礼拝堂",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "墓守の礼拝堂"
+          ],
+          "effects": [
+            {
+              "current_location": "grave_chapel"
+            }
+          ],
+          "result_text": "古戦場の外れに、屋根の落ちた小さな礼拝堂がある。祭壇の前で、大剣を携えた骸骨の騎士が膝をついている。",
+          "visible_after": "passed_ghoul_marsh",
+          "portrait_image": "/static/images/npc_zebok_merchant.png",
+          "risk_source": "destination"
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [
+        "ghoul",
+        "wraith"
+      ],
+      "connected_location_ids": [],
+      "choices": [],
+      "combat": {
+        "enemy_ids": [
+          "ghoul",
+          "wraith"
+        ],
+        "auto_start": false,
+        "encounter_class": "elite",
+        "boss": false,
+        "flee_allowed": false,
+        "disable_companion_healing": [
+          "blue_robed_mage"
+        ],
+        "victory_effects": {
+          "flags_set": [
+            "passed_ghoul_marsh"
+          ]
+        },
+        "result_texts": {
+          "victory": "最後の屍鬼が泥の中へ沈んだ。黒い水面に、青く光る果実が一つ浮かんでいる。",
+          "defeat": "屍鬼の沼で力尽きた。冒険はここで終わりを迎える。"
+        },
+        "enemy_variants": [
+          {
+            "requirements": {
+              "any": [
+                {
+                  "has_item": "呪われた聖剣"
+                },
+                {
+                  "has_item": "呪われた聖杖"
+                },
+                {
+                  "has_item": "呪われた水晶球"
+                },
+                {
+                  "has_item": "呪われた短剣"
+                }
+              ]
+            },
+            "enemy_ids": [
+              "ghoul"
+            ]
+          }
+        ],
+        "encounter_modifiers": [
+          {
+            "id": "curse_slows_ghoul",
+            "requirements": {
+              "any": [
+                {
+                  "has_item": "呪われた聖剣"
+                },
+                {
+                  "has_item": "呪われた聖杖"
+                },
+                {
+                  "has_item": "呪われた水晶球"
+                },
+                {
+                  "has_item": "呪われた短剣"
+                }
+              ]
+            },
+            "enemy_ids": [
+              "ghoul"
+            ],
+            "enemy_hp_multiplier": 0.6,
+            "text": "屍鬼は呪いの品の気配に怯え、動きが鈍っている。"
+          }
+        ],
+        "start_events": [
+          {
+            "requirements": {
+              "all": [
+                {
+                  "not_item": "呪われた聖剣"
+                },
+                {
+                  "not_item": "呪われた聖杖"
+                },
+                {
+                  "not_item": "呪われた水晶球"
+                },
+                {
+                  "not_item": "呪われた短剣"
+                }
+              ]
+            },
+            "text": "沼の上に青白い怨霊が浮かび上がり、屍鬼に加勢した。"
+          }
+        ],
+        "one_time_reward": {
+          "flag": "reward_claimed:ghoul_marsh",
+          "items": [
+            {
+              "id": "fruit_mana",
+              "name": "魔力の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに魔力の果実をくすねた。",
+          "shared_flags": [
+            "elite_fruit_claimed:old_battlefield"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:old_battlefield",
+            "reward_claimed:ghoul_marsh"
+          ]
+        },
+        "defeat_effects": {
+          "game_over": {
+            "ending": "combat_defeat",
+            "reason": "屍鬼の沼で力尽きた。冒険はここで終わりを迎える。"
+          }
+        },
+        "victory_gold_bonus": 30
+      }
+    },
+    {
+      "id": "grave_chapel",
+      "scene_id": "old_battlefield",
+      "title": "墓守の礼拝堂",
+      "description": "古戦場の外れに、屋根の落ちた小さな礼拝堂がある。祭壇の前で、大剣を携えた骸骨の騎士が膝をついている。",
+      "background_image": "/static/images/bg_grave_chapel.png",
+      "actions": [
+        {
+          "id": "curse_pass_grave_knight",
+          "text": "騎士に道を譲ってもらう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "騎士に道を譲ってもらう"
+          ],
+          "effects": [
+            {
+              "set_flag": "passed_grave_chapel"
+            }
+          ],
+          "requirements": {
+            "any": [
+              {
+                "has_item": "呪われた聖剣"
+              },
+              {
+                "has_item": "呪われた聖杖"
+              },
+              {
+                "has_item": "呪われた水晶球"
+              },
+              {
+                "has_item": "呪われた短剣"
+              }
+            ]
+          },
+          "secret": true,
+          "hidden_after": "passed_grave_chapel",
+          "result_text": "骸骨の騎士は大剣を床に突き立て、深く頭を垂れた。祭壇の脇の裏門が、軋みながら開く。",
+          "risk_source": "action"
+        },
+        {
+          "id": "challenge_grave_knight",
+          "text": "あえて騎士に挑む",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "あえて騎士に挑む"
+          ],
+          "effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "requirements": {
+            "any": [
+              {
+                "has_item": "呪われた聖剣"
+              },
+              {
+                "has_item": "呪われた聖杖"
+              },
+              {
+                "has_item": "呪われた水晶球"
+              },
+              {
+                "has_item": "呪われた短剣"
+              }
+            ]
+          },
+          "secret": true,
+          "hidden_after": "passed_grave_chapel",
+          "risk_source": "action",
+          "result_text": "古戦場の外れに、屋根の落ちた小さな礼拝堂がある。祭壇の前で、大剣を携えた骸骨の騎士が膝をついている。"
+        },
+        {
+          "id": "fight_grave_knight",
+          "text": "骸骨の騎士と戦う",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "骸骨の騎士と戦う"
+          ],
+          "effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "requirements": {
+            "all": [
+              {
+                "not_item": "呪われた聖剣"
+              },
+              {
+                "not_item": "呪われた聖杖"
+              },
+              {
+                "not_item": "呪われた水晶球"
+              },
+              {
+                "not_item": "呪われた短剣"
+              }
+            ]
+          },
+          "secret": true,
+          "hidden_after": "passed_grave_chapel",
+          "risk_source": "action",
+          "result_text": "古戦場の外れに、屋根の落ちた小さな礼拝堂がある。祭壇の前で、大剣を携えた骸骨の騎士が膝をついている。"
+        },
+        {
+          "id": "chapel_to_village",
+          "text": "礼拝堂の裏門から村へ抜ける",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "礼拝堂の裏門から村へ抜ける"
+          ],
+          "effects": [
+            {
+              "set_flag": "reached_village"
+            },
+            {
+              "current_location": "village_frozen_clue"
+            }
+          ],
+          "visible_after": "passed_grave_chapel",
+          "result_text": "礼拝堂の裏門を抜けると、坂の下に炎上する麓の村が見えた。村の外れの一角だけが、なぜか白く凍りついている。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "chapel_to_marsh",
+          "text": "屍鬼の沼へ進む",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "屍鬼の沼へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "ghoul_marsh"
+            }
+          ],
+          "result_text": "黒い水が淀む沼地。泥の中から、腐った腕が何本も突き出している。",
+          "risk_source": "destination"
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [
+        "grave_knight"
+      ],
+      "connected_location_ids": [],
+      "choices": [],
+      "entry_events": [
+        {
+          "once": "battlefield_zebok_seen",
+          "requirements": {
+            "all": [
+              {
+                "any": [
+                  {
+                    "has_item": "呪われた聖剣"
+                  },
+                  {
+                    "has_item": "呪われた聖杖"
+                  },
+                  {
+                    "has_item": "呪われた水晶球"
+                  },
+                  {
+                    "has_item": "呪われた短剣"
+                  }
+                ]
+              },
+              {
+                "flag": "curse_bargain_pending"
+              },
+              {
+                "not_flag": "curse_price_paid"
+              }
+            ]
+          },
+          "narrate": true,
+          "text": "祭壇の陰から、聞き覚えのある笑い声がした。黒いローブの小柄な商人――ゼボクが、毛むくじゃらの指で骸骨の騎士の兜を撫でている。「おや、我が品を大事にしているようだな。骨どもも、主の匂いには逆らえん。……代価のことは、忘れておらぬぞ」商人の姿は、霧に溶けるように消えた。",
+          "portrait_image": "/static/images/npc_zebok_merchant.png"
+        },
+        {
+          "once": "battlefield_zebok_seen",
+          "requirements": {
+            "all": [
+              {
+                "any": [
+                  {
+                    "has_item": "呪われた聖剣"
+                  },
+                  {
+                    "has_item": "呪われた聖杖"
+                  },
+                  {
+                    "has_item": "呪われた水晶球"
+                  },
+                  {
+                    "has_item": "呪われた短剣"
+                  }
+                ]
+              },
+              {
+                "flag": "curse_price_paid"
+              }
+            ]
+          },
+          "narrate": true,
+          "text": "「代価は確かに受け取った。客人には道を開けてやれ」ゼボクが手を振ると、骸骨の騎士は静かに頭を垂れた。商人の姿は、霧に溶けるように消えた。",
+          "portrait_image": "/static/images/npc_zebok_merchant.png"
+        },
+        {
+          "once": "battlefield_zebok_seen",
+          "requirements": {
+            "any": [
+              {
+                "flag": "fought_cursed_merchant"
+              },
+              {
+                "flag": "zebok_escaped"
+              }
+            ]
+          },
+          "narrate": true,
+          "text": "「懲りぬ奴よ。あの夜の借りは、この騎士に返してもらおう」ゼボクの指が鳴ると、骸骨の騎士の眼窩に赤い火が灯った。商人の姿は、霧に溶けるように消えた。",
+          "effects": [
+            {
+              "set_flag": "battlefield_zebok_hostile"
+            }
+          ],
+          "portrait_image": "/static/images/npc_zebok_merchant.png"
+        },
+        {
+          "once": "battlefield_zebok_seen",
+          "narrate": true,
+          "text": "祭壇の陰に、毛むくじゃらの小柄な影が見えた。「人の子か。ここは死者の道……生者が通る道ではないぞ」影は喉の奥で笑い、霧の中へ消えた。",
+          "portrait_image": "/static/images/npc_zebok_merchant.png"
+        }
+      ],
+      "combat": {
+        "enemy_ids": [
+          "grave_knight"
+        ],
+        "auto_start": false,
+        "encounter_class": "boss",
+        "boss": true,
+        "flee_allowed": false,
+        "disable_companion_healing": [
+          "blue_robed_mage"
+        ],
+        "victory_effects": {
+          "flags_set": [
+            "passed_grave_chapel"
+          ]
+        },
+        "result_texts": {
+          "victory": "骸骨の騎士は、大剣を祭壇に立てかけるように崩れ落ちた。兜の奥から、赤い果実が二つ転がり出た。",
+          "defeat": "墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。"
+        },
+        "enemy_first_requirements": {
+          "flag": "battlefield_zebok_hostile"
+        },
+        "one_time_reward": {
+          "flag": "reward_claimed:grave_chapel",
+          "items": [
+            {
+              "id": "fruit_life",
+              "name": "生命の果実",
+              "quantity": 2
+            }
+          ],
+          "steal_text": "すれ違いざまに生命の果実をくすねた。"
+        },
+        "defeat_effects": {
+          "game_over": {
+            "ending": "combat_defeat",
+            "reason": "墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。"
+          }
+        },
+        "victory_gold_bonus": 60
+      }
     }
   ],
   "fallback_choices": [
@@ -10907,7 +12224,8 @@
         "黒いローブ",
         "夜の路地"
       ],
-      "image": "/static/images/npc_suspicious_merchant.png"
+      "image": "/static/images/npc_zebok_merchant.png",
+      "portrait_image": "/static/images/npc_zebok_merchant.png"
     },
     {
       "id": "lost_goblin",
@@ -10980,6 +12298,12 @@
       "name": "長老の孫リク",
       "description": "村の長老の孫。火事の夜、家に取り残されていた。",
       "image": "/static/images/npc_riku.png"
+    },
+    {
+      "id": "old_soldier_ghost",
+      "name": "亡霊の兵士",
+      "description": "半透明の若い兵士",
+      "image": "/static/images/npc_old_soldier_ghost.png"
     }
   ],
   "items": [
@@ -11581,6 +12905,124 @@
         "accuracy": 95,
         "element": "fire",
         "consumable": true
+      }
+    },
+    {
+      "id": "gravekeeper_cloak",
+      "name": "墓守の外套",
+      "category": "equipment",
+      "description": "崩れた階段の上に、古い衛兵の外套が残っていた。裏地には、死者を鎮める祈りの文句が縫い込まれている。",
+      "combat": {
+        "kind": "armor",
+        "defense": 2,
+        "conditional_defense": {
+          "enemy_ids": [
+            "skeleton_soldier",
+            "ghoul",
+            "wraith",
+            "grave_knight"
+          ],
+          "location_ids": [
+            "old_battlefield",
+            "bone_field",
+            "ruined_watchtower",
+            "ghoul_marsh",
+            "grave_chapel"
+          ],
+          "amount": 1,
+          "description": "霧の古戦場：被ダメージをさらに1軽減"
+        }
+      }
+    },
+    {
+      "id": "elixir_str",
+      "name": "剛力の霊薬",
+      "description": "飲めば腕に力がみなぎる、古い霊薬。",
+      "category": "consumable",
+      "combat": {
+        "kind": "permanent",
+        "consumable": true,
+        "amount": 2,
+        "attribute": "str",
+        "label": "筋力"
+      }
+    },
+    {
+      "id": "elixir_dex",
+      "name": "迅速の霊薬",
+      "description": "身のこなしが風のように軽くなる。",
+      "category": "consumable",
+      "combat": {
+        "kind": "permanent",
+        "consumable": true,
+        "amount": 2,
+        "attribute": "dex",
+        "label": "敏捷"
+      }
+    },
+    {
+      "id": "elixir_int",
+      "name": "叡智の霊薬",
+      "description": "頭の芯まで澄みわたる、青い霊薬。",
+      "category": "consumable",
+      "combat": {
+        "kind": "permanent",
+        "consumable": true,
+        "amount": 2,
+        "attribute": "int",
+        "label": "知力"
+      }
+    },
+    {
+      "id": "elixir_wis",
+      "name": "祈りの霊薬",
+      "description": "心が静まり、見えないものの気配に敏くなる。",
+      "category": "consumable",
+      "combat": {
+        "kind": "permanent",
+        "consumable": true,
+        "amount": 2,
+        "attribute": "wis",
+        "label": "感知"
+      }
+    },
+    {
+      "id": "elixir_end",
+      "name": "鉄壁の霊薬",
+      "description": "体が岩のように頑丈になる。",
+      "category": "consumable",
+      "combat": {
+        "kind": "permanent",
+        "consumable": true,
+        "amount": 2,
+        "attribute": "end",
+        "label": "耐久"
+      }
+    },
+    {
+      "id": "fruit_life",
+      "name": "生命の果実",
+      "description": "赤く熟した不思議な果実。",
+      "category": "consumable",
+      "combat": {
+        "kind": "permanent",
+        "consumable": true,
+        "amount": 3,
+        "resource": "hp",
+        "label": "最大HP"
+      }
+    },
+    {
+      "id": "fruit_mana",
+      "name": "魔力の果実",
+      "description": "青く光る不思議な果実。",
+      "category": "consumable",
+      "combat": {
+        "kind": "permanent",
+        "consumable": true,
+        "amount": 3,
+        "resource": "mp",
+        "label": "最大MP"
       }
     }
   ],
@@ -12963,6 +14405,130 @@
         "flags": []
       },
       "image": "/static/images/enemy_ice_assassin.png"
+    },
+    {
+      "id": "skeleton_soldier",
+      "name": "骸骨兵",
+      "description": "錆びた鎧をまとった、十年前の兵士の骸。",
+      "hp": 12,
+      "max_hp": 12,
+      "attributes": {},
+      "element": "dark",
+      "resistances": {
+        "holy": 1.5,
+        "physical": 1,
+        "ice": 1
+      },
+      "skills": [],
+      "combat": {
+        "defense": 0,
+        "evade": 0,
+        "basic_attack": {
+          "name": "攻撃",
+          "damage": "1d6+2",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_skeleton_soldier.png"
+    },
+    {
+      "id": "ghoul",
+      "name": "屍鬼",
+      "description": "沼の泥から這い出す、腐った死者。",
+      "hp": 26,
+      "max_hp": 26,
+      "attributes": {},
+      "element": "dark",
+      "resistances": {
+        "holy": 1.5,
+        "physical": 1,
+        "ice": 1
+      },
+      "skills": [],
+      "combat": {
+        "defense": 0,
+        "evade": 0,
+        "basic_attack": {
+          "name": "攻撃",
+          "damage": "1d10+3",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_ghoul.png"
+    },
+    {
+      "id": "wraith",
+      "name": "怨霊",
+      "description": "霧の中に浮かぶ、青白い死者の怨念。",
+      "hp": 12,
+      "max_hp": 12,
+      "attributes": {},
+      "element": "dark",
+      "resistances": {
+        "holy": 1.5,
+        "physical": 1,
+        "ice": 1
+      },
+      "skills": [],
+      "combat": {
+        "defense": 0,
+        "evade": 0,
+        "basic_attack": {
+          "name": "攻撃",
+          "damage": "1d6+2",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_wraith.png"
+    },
+    {
+      "id": "grave_knight",
+      "name": "墓守の骸骨騎士",
+      "description": "礼拝堂を守り続ける、大剣の骸骨騎士。",
+      "hp": 60,
+      "max_hp": 60,
+      "attributes": {},
+      "element": "dark",
+      "resistances": {
+        "holy": 1.5,
+        "physical": 1,
+        "ice": 1
+      },
+      "skills": [],
+      "combat": {
+        "defense": 0,
+        "evade": 0,
+        "basic_attack": {
+          "name": "攻撃",
+          "damage": "2d8+5",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_grave_knight.png"
     }
   ],
   "combat_choices": [
@@ -13649,7 +15215,7 @@
     {
       "id": "fire_bat_dragon",
       "name": "火コウモリ竜",
-      "description": "毎ラウンド開始時に敵へ2d3の火属性ダメージを与え、プレイヤーのHPを3回復する。",
+      "description": "毎ラウンド開始時に敵へ2d3の火属性ダメージを与え、プレイヤーのHPを3回復する（虹晶を食べた後は6回復）。",
       "round_start_effects": [
         {
           "kind": "damage_enemy",
@@ -13659,7 +15225,17 @@
         },
         {
           "kind": "heal_player",
-          "amount": "3"
+          "amount": "3",
+          "requirements": {
+            "not_flag": "fire_bat_empowered"
+          }
+        },
+        {
+          "kind": "heal_player",
+          "amount": "6",
+          "requirements": {
+            "flag": "fire_bat_empowered"
+          }
         }
       ],
       "image": "/static/images/companion_fire_bat_dragon.png"
@@ -15440,6 +17016,123 @@
         }
       ],
       "parent": "royal_return"
+    },
+    {
+      "id": "old_battlefield",
+      "title": "霧の古戦場",
+      "nodes": [
+        {
+          "id": "B1",
+          "label": "霧の古戦場",
+          "kind": "start",
+          "x": 10,
+          "y": 50,
+          "location_ids": [
+            "old_battlefield"
+          ],
+          "description": "森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。"
+        },
+        {
+          "id": "B2",
+          "label": "骨の野",
+          "kind": "battle",
+          "x": 30,
+          "y": 50,
+          "location_ids": [
+            "bone_field"
+          ],
+          "description": "霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。"
+        },
+        {
+          "id": "B3",
+          "label": "崩れた見張り塔",
+          "kind": "rest",
+          "x": 45,
+          "y": 18,
+          "location_ids": [
+            "ruined_watchtower"
+          ],
+          "description": "半ば崩れた石の塔。中では、半透明の兵士が一人、消えた焚き火の前にうずくまっている。"
+        },
+        {
+          "id": "B4",
+          "label": "屍鬼の沼",
+          "kind": "battle",
+          "x": 60,
+          "y": 72,
+          "location_ids": [
+            "ghoul_marsh"
+          ],
+          "description": "黒い水が淀む沼地。泥の中から、腐った腕が何本も突き出している。"
+        },
+        {
+          "id": "B5",
+          "label": "墓守の礼拝堂",
+          "kind": "boss",
+          "x": 78,
+          "y": 40,
+          "location_ids": [
+            "grave_chapel"
+          ],
+          "description": "古戦場の外れに、屋根の落ちた小さな礼拝堂がある。祭壇の前で、大剣を携えた骸骨の騎士が膝をついている。"
+        },
+        {
+          "id": "B6",
+          "label": "村の裏門",
+          "kind": "exit",
+          "x": 92,
+          "y": 50,
+          "location_ids": [],
+          "description": "村の裏門"
+        }
+      ],
+      "edges": [
+        {
+          "from": "B1",
+          "to": "B2",
+          "action_id": "battlefield_to_bones"
+        },
+        {
+          "from": "B2",
+          "to": "B1",
+          "action_id": "bones_to_battlefield"
+        },
+        {
+          "from": "B2",
+          "to": "B3",
+          "action_id": "bones_to_tower"
+        },
+        {
+          "from": "B3",
+          "to": "B2",
+          "action_id": "tower_to_bones"
+        },
+        {
+          "from": "B2",
+          "to": "B4",
+          "action_id": "bones_to_marsh"
+        },
+        {
+          "from": "B4",
+          "to": "B2",
+          "action_id": "marsh_to_bones"
+        },
+        {
+          "from": "B4",
+          "to": "B5",
+          "action_id": "marsh_to_chapel"
+        },
+        {
+          "from": "B5",
+          "to": "B4",
+          "action_id": "chapel_to_marsh"
+        },
+        {
+          "from": "B5",
+          "to": "B6",
+          "action_id": "chapel_to_village"
+        }
+      ]
     }
   ],
   "item_flags": {

@@ -730,7 +730,7 @@ function renderInventory(items) {
     li.classList.toggle("expanded", expanded.has(li.dataset.itemId));
     const equipped = (state.character?.equipment || []).some(entry =>
       (typeof entry === "string" ? entry : entry.name || entry.id) === name || entry === item.id);
-    const usable = ["heal", "restore"].includes(item.combat?.kind) && !state.session?.in_combat && !state.session?.game_over;
+    const usable = ["heal", "restore", "permanent"].includes(item.combat?.kind) && !state.session?.in_combat && !state.session?.game_over;
 
     const hasDetails = desc || effect || usable;
 

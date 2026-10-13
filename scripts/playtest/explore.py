@@ -26,7 +26,7 @@ SEEDS = (20261013, 20261014)
 FALLBACK_TEXTS = ("接続中のローカルLLMから応答を取得できませんでした", "運命の出目は",
                   "（GMとの通信が途切れたため、描写を省略した。結果は記録に反映されている。）")
 AREA_ORDER = {"capital": 0, "forest": 1, "goblin_fort": 1, "sealed_cave": 1, "burning_village": 2,
-              "dragon_valley": 3, "royal_return": 4, "general_mansion": 4}
+              "old_battlefield": 2, "dragon_valley": 3, "royal_return": 4, "general_mansion": 4}
 
 
 class OfflineRequests:
@@ -61,6 +61,26 @@ def flatten(choices: list[dict[str, Any]], depth: int = 0):
     for choice in choices:
         yield choice, depth
         yield from flatten(choice.get("children", []), depth + 1)
+
+
+def battlefield_action(session: dict[str, Any]) -> Optional[str]:
+    location = state.current_location_id(session)
+    flags = session["flags"]
+    if location == "old_battlefield":
+        return "battlefield_to_bones"
+    if location == "bone_field":
+        if not flags.get("passed_bone_field"):
+            return "sneak_bone_field"
+        return "bones_to_marsh" if flags.get("rested_watchtower") else "bones_to_tower"
+    if location == "ruined_watchtower":
+        return ("talk_old_soldier" if not flags.get("heard_old_soldier_ghost") else
+                "search_watchtower" if not flags.get("found_gravekeeper_cloak") else
+                "rest_watchtower" if not flags.get("rested_watchtower") else "tower_to_bones")
+    if location == "ghoul_marsh":
+        return "marsh_to_chapel" if flags.get("passed_ghoul_marsh") else "sneak_ghoul_marsh"
+    if location == "grave_chapel":
+        return "chapel_to_village" if flags.get("passed_grave_chapel") else "fight_grave_knight"
+    return None
 
 
 def explore(character: str, seed: int, max_steps: int = 150, *, output: Optional[Path] = None) -> dict[str, Any]:
@@ -141,6 +161,15 @@ def explore(character: str, seed: int, max_steps: int = 150, *, output: Optional
                         break
                     pick = min(options, key=lambda c: (taken[c["action_id"]],
                                                        "章" in (c.get("preview", "") + c["text"]), rng.random()))
+                    if location == "forest_exit" and seed % 2 and "old_battlefield" not in locations:
+                        pick = next(c for c in options if c["action_id"] == "enter_old_battlefield")
+                    preferred = battlefield_action(session)
+                    if preferred:
+                        if preferred == "sneak_bone_field":
+                            preferred = next((c["action_id"] for c in options if c["action_id"] == "show_curse_to_skeletons"), preferred)
+                        if preferred == "fight_grave_knight":
+                            preferred = next((c["action_id"] for c in options if c["action_id"] == "curse_pass_grave_knight"), preferred)
+                        pick = next(c for c in options if c["action_id"] == preferred)
                     taken[pick["action_id"]] += 1
                     lines.append(f"\n選択: {pick['text']}")
                     public = app.api_turn(session_id, app.TurnRequest(text=pick["text"], action_id=pick["action_id"]))
@@ -155,6 +184,7 @@ def explore(character: str, seed: int, max_steps: int = 150, *, output: Optional
                   "first_death": next((death for death in deaths if death["combat_defeat"]), None),
                   "deaths": deaths, "farthest_location": farthest[1], "visited_locations": locations,
                   "retry_visited_locations": after_retry_locations, "failures": failures}
+        result["battlefield_completed"] = bool(session["flags"].get("passed_grave_chapel") and "village_frozen_clue" in locations)
         repeated = [death for death in deaths if death["combat_defeat"]]
         result["repeat_death_candidate"] = len(repeated) > 1 and repeated[0]["location"] == repeated[-1]["location"]
         lines.extend(["\n## 検証結果\n", "```json", json.dumps(result, ensure_ascii=False, indent=2), "```", ""])
@@ -166,9 +196,10 @@ def explore(character: str, seed: int, max_steps: int = 150, *, output: Optional
 
 
 def write_report(results: list[dict[str, Any]], path: Path, transcript_dir: Path) -> None:
-    lines = ["# 029 离线试玩回归（2026-10-13）", "",
+    lines = ["# 离线试玩回归（2026-10-13）", "",
              "4 职业 × 2 固定种子（20261013、20261014），每局最多 150 步；战斗每个指令和结算各占一步。",
              "首次战斗死亡后重来一次，选择次数及随机流继续累计。选项、判定和战斗的随机数均固定。",
+             "031：奇数种子首次到森林出口时优先古戦場；进入后依次潜行骨野、访问塔、取外套休息、潜行沼地、通过礼拝堂。诅咒持有者使用专属放行，至少2局通过新地图。",
              "LLM 配置指向 127.0.0.1:1，并在请求适配器直接模拟连接失败；禁止真实网络。", "",
              "| 职业 | 种子 | 首次死亡 | 重来后结果 / 最终结果 | 最远地点 | 步数 |",
              "|---|---:|---|---|---|---:|"]
@@ -181,7 +212,10 @@ def write_report(results: list[dict[str, Any]], path: Path, transcript_dir: Path
               "", "重来后分布：" + json.dumps(dict(Counter(r["ending"] for r in results if r["retry_count"])), ensure_ascii=False), "",
               "## 不变量检查", ""]
     failures = [issue for result in results for issue in result["failures"]]
+    battlefield_visits = sum("old_battlefield" in result["visited_locations"] for result in results)
     lines += [f"- 异常、非战斗死路及兜底叙述：{len(failures)} 项。", *[f"- {issue}" for issue in failures],
+              f"- 古戦場到访：{battlefield_visits}/{len(results)}局。",
+              f"- 经礼拝堂到村后门：{sum(r['battlefield_completed'] for r in results)}/{len(results)}局。",
               "- 同一地点重来后再次死亡（仅作为循环候选，不能据此证明必死）：" +
               ", ".join(f"{r['character']}/{r['seed']} @ {r['final_location']}" for r in results if r["repeat_death_candidate"]),
               "", "## 逐步记录", ""]

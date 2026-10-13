@@ -1,0 +1,68 @@
+[
+  {
+    "hp": 45,
+    "damage": "2d6+3",
+    "marsh_dc": 25,
+    "rates": {
+      "hero": 1.0,
+      "cleric": 0.992,
+      "mage": 1.0,
+      "thief": 1.0
+    }
+  },
+  {
+    "hp": 60,
+    "damage": "2d6+4",
+    "marsh_dc": 25,
+    "rates": {
+      "hero": 0.996,
+      "cleric": 0.976,
+      "mage": 0.988,
+      "thief": 0.988
+    }
+  },
+  {
+    "hp": 45,
+    "damage": "2d8+5",
+    "marsh_dc": 25,
+    "rates": {
+      "hero": 1.0,
+      "cleric": 0.992,
+      "mage": 1.0,
+      "thief": 1.0
+    }
+  },
+  {
+    "hp": 45,
+    "damage": "2d6+3",
+    "marsh_dc": 30,
+    "rates": {
+      "hero": 1.0,
+      "cleric": 0.992,
+      "mage": 1.0,
+      "thief": 1.0
+    }
+  },
+  {
+    "hp": 60,
+    "damage": "2d6+4",
+    "marsh_dc": 30,
+    "rates": {
+      "hero": 0.996,
+      "cleric": 0.976,
+      "mage": 0.976,
+      "thief": 0.988
+    }
+  },
+  {
+    "hp": 45,
+    "damage": "2d8+5",
+    "marsh_dc": 30,
+    "rates": {
+      "hero": 1.0,
+      "cleric": 0.992,
+      "mage": 1.0,
+      "thief": 1.0
+    }
+  }
+]

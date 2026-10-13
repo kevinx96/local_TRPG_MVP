@@ -146,6 +146,28 @@ def use_item(session: dict[str, Any], item_id: str) -> str:
     item = _owned(session, item_id)
     spec = item_combat_spec(item)
     kind = spec.get("kind")
+    if kind == "permanent":
+        actor = session["character"]
+        amount = int(spec["amount"])
+        attribute = spec.get("attribute")
+        resource = spec.get("resource")
+        definitions = {entry["id"]: entry["name"] for entry in session["scenario_pack"].get("attribute_defs", [])}
+        if attribute in definitions:
+            attrs = actor.setdefault("attributes", {})
+            attrs[attribute] = int(attrs.get(attribute, 0)) + amount
+            label = definitions[attribute]
+        elif resource in {"hp", "mp"}:
+            actor[f"max_{resource}"] += amount
+            actor[resource] += amount
+            label = f"最大{resource.upper()}"
+        else:
+            raise ShopError("この行動は現在選択できません。")
+        apply_state_delta(session, {"inventory_remove": [{"name": item["name"], "quantity": 1}]})
+        text = f"{label}が永続的に{amount}上がった。"
+        record_state_event(session, "item_used", text,
+                           {"item_id": item_id, "attribute": attribute, "resource": resource, "amount": amount,
+                            "permanent": True})
+        return text
     if kind not in {"heal", "restore"}:
         raise ShopError("この行動は現在選択できません。")
     resource = "hp" if kind == "heal" else str(spec.get("resource") or "mp").lower()

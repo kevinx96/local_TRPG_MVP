@@ -203,7 +203,7 @@ class Chapter5Tests(unittest.TestCase):
                     self.finish(t, win)
                     self.assertEqual(state.current_location_id(t), 'inn')
                     self.assertIsNone(t['game_over'])
-                    self.assertEqual(t['character']['gold'], 0)
+                    self.assertEqual(t['character']['gold'], 40 if win else 0)
                     self.assertTrue(t['flags']['draco_journal'])
                     if win:
                         self.assertTrue(t['flags']['has_assassin_crest'])

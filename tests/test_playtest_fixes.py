@@ -147,12 +147,16 @@ class PlaytestFixTests(unittest.TestCase):
                     self.assertNotEqual(obj.get("preview"), obj["text"])
 
     def test_fixed_seed_app_playthroughs(self):
+        results = []
         for character in CHARACTERS:
             for seed in SEEDS:
                 with self.subTest(character=character, seed=seed):
                     result = explore(character, seed, 150)
+                    results.append(result)
                     self.assertEqual(result["failures"], [])
                     self.assertLessEqual(result["retry_count"], 1)
+        self.assertGreaterEqual(sum("old_battlefield" in r["visited_locations"] for r in results), 2)
+        self.assertGreaterEqual(sum(r["battlefield_completed"] for r in results), 2)
 
 
 if __name__ == "__main__":

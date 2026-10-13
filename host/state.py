@@ -443,7 +443,8 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     )
     player_portrait = str((public.get("character") or {}).get("character_image") or "")
     location_npcs = _location_npc_portraits(session, location)
-    dialogue_portrait = str((action or {}).get("portrait_image") or "")
+    dialogue_portrait = str((action or {}).get("portrait_image")
+                            or (session.get("last_action_result") or {}).get("arrival_portrait_image") or "")
     dialogue_active = bool(dialogue_portrait and dialogue_portrait != player_portrait)
     public["player_portrait_image"] = player_portrait
     public["location_npc_portraits"] = location_npcs
@@ -1252,6 +1253,13 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
             extra_text.append(str(bonus.get("text") or ""))
     if bonus_effects:
         delta = _effects_to_state_delta([*base_effects, *outcome_effects, *bonus_effects], session)
+    if branch_outcome == "success" and not replaces_branch and action.get("steal_encounter"):
+        from .item_mechanics import steal_reward
+        from .combat import _merge_combat_deltas
+
+        reward_delta, reward_text = steal_reward(session, action["steal_encounter"])
+        delta = _merge_combat_deltas(delta, reward_delta)
+        extra_text.append(reward_text)
     if action.get("once"):
         delta.setdefault("flags_set", []).append(str(action["once"]))
     before_events = {event["id"] for event in session.get("event_log", [])}
@@ -1259,6 +1267,9 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
     arrival_texts = [event["text"] for event in session.get("event_log", [])
                      if event["id"] not in before_events and event["kind"] == "location_hint"
                      and event.get("data", {}).get("narrate")]
+    arrival_portraits = [event["data"]["portrait_image"] for event in session.get("event_log", [])
+                        if event["id"] not in before_events and event["kind"] == "location_hint"
+                        and event.get("data", {}).get("narrate") and event.get("data", {}).get("portrait_image")]
     if arrival_texts:
         result_text = "\n".join(filter(None, [result_text, *arrival_texts]))
     if delta.get("start_combat") is True:
@@ -1275,6 +1286,7 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
         "source_location_id": source_location_id,
         "extra_text": "".join(extra_text),
         "result_text": result_text,
+        "arrival_portrait_image": arrival_portraits[-1] if arrival_portraits else "",
     }
     if action.get("open_shop"):
         result["open_shop"] = action["open_shop"]
@@ -2201,7 +2213,11 @@ def _apply_state_delta(
                     for event in location.get('entry_events', []):
                         if not session.get('flags', {}).get(event['once']) and _session_requirement_passes(event.get('requirements'), session):
                             session.setdefault('flags', {})[event['once']] = True
-                            record_state_event(session, 'location_hint', event['text'], {'location_id': location['id']})
+                            if event.get('effects'):
+                                _apply_state_delta(session, _effects_to_state_delta(event['effects'], session))
+                            record_state_event(session, 'location_hint', event['text'],
+                                               {'location_id': location['id'], 'narrate': bool(event.get('narrate')),
+                                                'portrait_image': str(event.get('portrait_image') or '')})
                     entry_effects = location.get("entry_effects", [])
                     if entry_effects:
                         entry_delta = _effects_to_state_delta(entry_effects, session)

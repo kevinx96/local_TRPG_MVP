@@ -11,10 +11,12 @@ from typing import Any, Optional
 from .gm_contract import sanitize_visible_text
 from .item_mechanics import (
     equipped_basic_attack_followups,
+    equipped_item_specs,
     effective_ability,
     effective_ability_cost,
     item_combat_spec,
     item_is_combat_usable,
+    one_time_reward,
     structured_item_effect,
 )
 from .scenario_context import find_scene
@@ -621,6 +623,11 @@ def _enemy_phase(session: dict[str, Any], rng: Any) -> None:
     for enemy in combat.get("enemies") or []:
         if _enemy_is_defeated(enemy) or _safe_int(session["character"].get("hp"), 0) <= 0:
             continue
+        if enemy.get("skip_rounds_remaining", 0) > 0:
+            enemy["skip_rounds_remaining"] -= 1
+            if enemy["skip_rounds_remaining"] == 0 and enemy.get("skip_recovery_text"):
+                _log(session, enemy["id"], "status", enemy["skip_recovery_text"], target=enemy)
+            continue
         ability = _choose_enemy_ability(enemy, session, rng)
         _pay_cost(enemy, ability)
         _execute_enemy_ability(session, enemy, ability, rng)
@@ -902,6 +909,11 @@ def _finish_combat(session: dict[str, Any], status: str, summary: str) -> None:
     if isinstance(result_texts, dict) and isinstance(result_texts.get(status), str):
         result["prepared_text"] = result_texts[status]
     if status == "victory":
+        from .state import _session_requirement_passes
+
+        for event in (combat.get("encounter") or {}).get("victory_events", []):
+            if _session_requirement_passes(event.get("requirements"), session):
+                result["prepared_text"] = "\n".join(filter(None, [result.get("prepared_text"), event["text"]]))
         defeated_phases = [*combat.get("completed_phases", []), *enemies]
         delta = _victory_delta(session, defeated_phases, combat.get("encounter") or {})
         combat["pending_state_delta"] = delta
@@ -934,7 +946,8 @@ def _finish_combat(session: dict[str, Any], status: str, summary: str) -> None:
 def _victory_delta(session: dict[str, Any], enemies: list[dict[str, Any]], encounter: dict[str, Any]) -> dict[str, Any]:
     from .state import _effects_to_state_delta
 
-    delta: dict[str, Any] = {"gold_change": 0, "inventory_add": [], "flags_set": []}
+    delta: dict[str, Any] = {"gold_change": _safe_int(encounter.get("victory_gold_bonus"), 0),
+                           "inventory_add": [], "flags_set": []}
     for enemy in enemies:
         rewards = enemy.get("rewards") if isinstance(enemy.get("rewards"), dict) else {}
         delta["gold_change"] += _safe_int(rewards.get("gold"), 0)
@@ -946,6 +959,9 @@ def _victory_delta(session: dict[str, Any], enemies: list[dict[str, Any]], encou
     extra = deepcopy(encounter.get("victory_effects")) if isinstance(encounter.get("victory_effects"), dict) else {}
     if isinstance(encounter.get("victory_effects"), list):
         extra = _effects_to_state_delta(encounter["victory_effects"], session)
+    extra = _merge_combat_deltas(extra, _effects_to_state_delta(encounter.get("victory_bonus_effects", []), session))
+    if encounter.get("encounter_class") not in {"scripted_loss", "guest"}:
+        extra = _merge_combat_deltas(extra, one_time_reward(session, encounter.get("one_time_reward", {})))
     by_character = encounter.get("victory_effects_by_character")
     character = session.get("character", {}) if isinstance(session.get("character"), dict) else {}
     character_id = str(character.get("id") or character.get("character_id") or "")
@@ -1065,6 +1081,16 @@ def _activate_encounter_modifiers(session: dict[str, Any]) -> None:
         if not _session_requirement_passes(modifier.get('requirements'), session):
             continue
         active.append(deepcopy(modifier))
+        if 'enemy_skip_rounds' in modifier:
+            for enemy in _alive_enemies(battle):
+                if modifier.get('enemy_ids') and enemy['template_id'] not in modifier['enemy_ids']:
+                    continue
+                applied = enemy.setdefault('applied_skip_modifiers', [])
+                if modifier['id'] not in applied:
+                    enemy['skip_rounds_remaining'] = max(enemy.get('skip_rounds_remaining', 0),
+                                                        int(modifier['enemy_skip_rounds']))
+                    enemy['skip_recovery_text'] = modifier.get('recovery_text', '')
+                    applied.append(modifier['id'])
         if 'enemy_hp_multiplier' in modifier:
             for enemy in _alive_enemies(battle):
                 if modifier.get('enemy_ids') and enemy['template_id'] not in modifier['enemy_ids']:
@@ -1091,20 +1117,35 @@ def _modified_received_damage(session: dict[str, Any], damage: int, element: str
             multiplier *= float(modifier.get('received_multiplier', 1))
         if modifier.get('enemy_skill') in (name, skill_id):
             multiplier *= float(modifier.get('damage_multiplier', 1))
-    return max(0, int(round(damage * multiplier)))
+    reduction = 0
+    from .state import _session_requirement_passes
+
+    for spec in equipped_item_specs(session['character']):
+        conditional = spec.get('conditional_defense', {})
+        if (conditional and _session_requirement_passes(conditional.get('requirements'), session)
+                and (not conditional.get('location_ids') or current_location_id(session) in conditional['location_ids'])
+                and (not conditional.get('enemy_ids') or enemy.get('template_id') in conditional['enemy_ids'])):
+            reduction += int(conditional.get('amount', 0))
+    return max(0, int(round(damage * multiplier)) - reduction)
 
 
 def _apply_ally_round_start_effects(session: dict[str, Any], companion: dict[str, Any], rng: Any,
                                   actor_id: str = "companion") -> None:
+    from .state import _session_requirement_passes
+
     combat = session["combat"]
     for effect in companion.get("round_start_effects") or []:
         if not isinstance(effect, dict):
+            continue
+        if not _session_requirement_passes(effect.get("requirements"), session):
             continue
         every = max(1, _safe_int(effect.get("every_n_rounds"), 1))
         if int(combat.get("round", 1)) % every:
             continue
         kind = str(effect.get("kind") or "")
         if kind == "heal_player":
+            if companion.get("id") in combat["encounter"].get("disable_companion_healing", []):
+                continue
             if "max_hp_ratio" in effect:
                 ratio = max(0.0, float(effect["max_hp_ratio"]))
                 amount = int(math.floor(session["character"]["max_hp"] * ratio + 0.5))
@@ -1201,6 +1242,12 @@ def _encounter_for_session(session: dict[str, Any], pack: dict[str, Any]) -> dic
     if not enemy_ids and isinstance(scene, dict):
         enemy_ids = _as_text_list(scene.get("enemy_ids"))
     encounter["enemy_ids"] = enemy_ids
+    from .state import _session_requirement_passes
+
+    for variant in encounter.get("enemy_variants", []):
+        if _session_requirement_passes(variant.get("requirements"), session):
+            encounter["enemy_ids"] = deepcopy(variant["enemy_ids"])
+            break
     encounter.setdefault("flee_allowed", True)
     return encounter
 

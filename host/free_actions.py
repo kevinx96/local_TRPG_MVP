@@ -370,6 +370,12 @@ def _pass_obstacle(session: dict[str, Any], plan: dict[str, Any], target: dict[s
         state.apply_state_delta(session, {"flags_set": [target["resolved_flag"]]})
     if target.get("pass_effects"):
         state.apply_state_delta(session, state._effects_to_state_delta(target["pass_effects"], session))
+    if plan.get("operation") == "sneak" and target.get("steal_encounter"):
+        from .item_mechanics import steal_reward
+
+        reward_delta, reward_text = steal_reward(session, target["steal_encounter"])
+        state.apply_state_delta(session, reward_delta)
+        result["text"] += reward_text
     state.apply_state_delta(session, {"current_location": destination}, allow_world_transition=True)
     result["text"] += f" {current_location_title(session)}へ進んだ。"
     if target.get("arrival_text"):

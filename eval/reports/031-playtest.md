@@ -1,0 +1,54 @@
+# 离线试玩回归（2026-10-13）
+
+4 职业 × 2 固定种子（20261013、20261014），每局最多 150 步；战斗每个指令和结算各占一步。
+首次战斗死亡后重来一次，选择次数及随机流继续累计。选项、判定和战斗的随机数均固定。
+031：奇数种子首次到森林出口时优先古戦場；进入后依次潜行骨野、访问塔、取外套休息、潜行沼地、通过礼拝堂。诅咒持有者使用专属放行，至少2局通过新地图。
+LLM 配置指向 127.0.0.1:1，并在请求适配器直接模拟连接失败；禁止真实网络。
+
+| 职业 | 种子 | 首次死亡 | 重来后结果 / 最终结果 | 最远地点 | 步数 |
+|---|---:|---|---|---|---:|
+| hero | 20261013 | 无 | step_limit @ dark_forest_loc | cave_prism_tree | 150 |
+| hero | 20261014 | 无 | step_limit @ dragon_valley_loc | dragon_valley_loc | 150 |
+| cleric | 20261013 | grave_chapel | step_limit @ xanxus_phantom_battle | xanxus_phantom_battle | 150 |
+| cleric | 20261014 | ice_elemental_encounter | ignis_purified @ castle_report | castle_report | 111 |
+| mage | 20261013 | ice_elemental_encounter | draco_defeated @ draco_battle | draco_battle | 98 |
+| mage | 20261014 | grave_chapel | frost_wolf_defeat @ frost_wolf_battle | village | 86 |
+| thief | 20261013 | ice_elemental_encounter | draco_defeated @ draco_battle | draco_battle | 108 |
+| thief | 20261014 | 无 | ignis_defeated @ castle_report | castle_report | 107 |
+
+最远地点口径：按主线章节、地图节点顺序取最大值；砦/洞窟归森林章、屋敷归王城归还章。同级支线没有唯一剧情顺序，完整到访记录见逐步日志。
+
+最终分布：{"step_limit": 3, "ignis_purified": 1, "draco_defeated": 2, "frost_wolf_defeat": 1, "ignis_defeated": 1}
+
+首次死亡地点：{"grave_chapel": 2, "ice_elemental_encounter": 3}
+
+重来后分布：{"step_limit": 1, "ignis_purified": 1, "draco_defeated": 2, "frost_wolf_defeat": 1}
+
+## 不变量检查
+
+- 异常、非战斗死路及兜底叙述：0 项。
+- 古戦場到访：7/8局。
+- 经礼拝堂到村后门：7/8局。
+- 同一地点重来后再次死亡（仅作为循环候选，不能据此证明必死）：
+
+## 逐步记录
+
+- [hero-20261013.md](031-playtest/hero-20261013.md)
+- [hero-20261014.md](031-playtest/hero-20261014.md)
+- [cleric-20261013.md](031-playtest/cleric-20261013.md)
+- [cleric-20261014.md](031-playtest/cleric-20261014.md)
+- [mage-20261013.md](031-playtest/mage-20261013.md)
+- [mage-20261014.md](031-playtest/mage-20261014.md)
+- [thief-20261013.md](031-playtest/thief-20261013.md)
+- [thief-20261014.md](031-playtest/thief-20261014.md)
+
+## 复现
+
+```powershell
+python -m scripts.playtest.explore
+```
+
+剧本 SHA-256：
+
+- dragon_rpg.json: `dd8ec45d54276c3530c18d03439fe214dc944c3f18b54869898055435ada0c05`
+- dragon_rpg_hybrid.json: `3efc1ae7bac9232cc6fd27aa8304fe8c49da3f8f6a1d89249966ef97df6c852f`

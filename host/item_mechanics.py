@@ -7,7 +7,7 @@ from typing import Any
 USABLE_ITEM_KINDS = {"heal", "restore", "damage", "flee", "status", "shrink"}
 EQUIPMENT_ITEM_KINDS = {"weapon", "armor", "equipment"}
 PASSIVE_ITEM_KINDS = {"passive"}
-SUPPORTED_ITEM_KINDS = USABLE_ITEM_KINDS | EQUIPMENT_ITEM_KINDS | PASSIVE_ITEM_KINDS
+SUPPORTED_ITEM_KINDS = USABLE_ITEM_KINDS | EQUIPMENT_ITEM_KINDS | PASSIVE_ITEM_KINDS | {"permanent"}
 
 
 def item_combat_spec(item: Any) -> dict[str, Any]:
@@ -39,6 +39,10 @@ def structured_item_effect(item: Any) -> str:
         defense = max(0, _as_int(spec.get("defense"), 0))
         if defense:
             parts.append(f"被ダメージを{defense}軽減")
+        if spec.get("conditional_defense"):
+            parts.append(str(spec["conditional_defense"].get("description") or ""))
+    elif kind == "permanent":
+        parts.append(f"{spec['label']}が永続的に{_as_int(spec.get('amount'), 0)}上がる")
     elif kind == "heal":
         healing = str(spec.get("healing") or spec.get("amount") or "").strip()
         if "max_hp_ratio" in spec:
@@ -67,9 +71,27 @@ def structured_item_effect(item: Any) -> str:
 
     modifiers = _modifier_parts(spec)
     parts.extend(modifiers)
-    if kind in USABLE_ITEM_KINDS and bool(spec.get("consumable", True)):
+    if kind in USABLE_ITEM_KINDS | {"permanent"} and bool(spec.get("consumable", True)):
         parts.append("消耗品")
     return " / ".join(parts)
+
+
+def one_time_reward(session: dict[str, Any], reward: dict[str, Any]) -> dict[str, Any]:
+    flag = str(reward.get("flag") or "")
+    flags = session.get("flags", {})
+    blocked = [flag, *reward.get("blocking_flags", [])]
+    if not flag or any(flags.get(key) for key in blocked):
+        return {}
+    return {"inventory_add": deepcopy(reward.get("items", [])),
+            "flags_set": [flag, *reward.get("shared_flags", [])]}
+
+
+def steal_reward(session: dict[str, Any], location_id: str) -> tuple[dict[str, Any], str]:
+    location = next((loc for loc in session.get("scenario_pack", {}).get("locations", [])
+                     if loc["id"] == location_id), {})
+    reward = location.get("combat", {}).get("one_time_reward", {})
+    delta = one_time_reward(session, reward)
+    return delta, str(reward.get("steal_text") or "") if delta else ""
 
 
 def item_mechanic_warning(item: Any) -> str:

@@ -1,0 +1,4262 @@
+{
+  "n": 1000,
+  "seed": 20261013,
+  "rows": [
+    {
+      "character": "hero",
+      "path": "village",
+      "cursed": false,
+      "warlock": false,
+      "n": 1000,
+      "success_rate": 0.959,
+      "failures": {
+        "village_fire_elemental": 41
+      },
+      "sample": {
+        "completed": false,
+        "failed_at": "village_fire_elemental",
+        "battles": [
+          {
+            "encounter": "village_fire_elemental",
+            "status": "defeat",
+            "continue": false,
+            "before": {
+              "hp": 28,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 0,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 2,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 0,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 2,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1
+              }
+            },
+            "consumables": {
+              "治療の巻物": 2,
+              "薬草": 2
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "village_approach",
+            "action": "approach_burning_village_carefully",
+            "roll": {
+              "expression": "1d20+int",
+              "rolls": [
+                8
+              ],
+              "total": 13,
+              "created_at": "2026-10-13T13:03:03.105583+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": false,
+              "base_total": 8,
+              "attr_mod": 5,
+              "attr_key": "int"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "character": "hero",
+      "path": "village",
+      "cursed": false,
+      "warlock": true,
+      "n": 1000,
+      "success_rate": 0.97,
+      "failures": {
+        "village_fire_elemental": 30
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "village_fire_elemental",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 28,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 10,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 10,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "魔力の果実": 1
+              }
+            },
+            "consumables": {}
+          }
+        ],
+        "steps": [
+          {
+            "location": "village_approach",
+            "action": "approach_burning_village_carefully",
+            "roll": {
+              "expression": "1d20+int",
+              "rolls": [
+                8
+              ],
+              "total": 13,
+              "created_at": "2026-10-13T13:03:08.243648+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": false,
+              "base_total": 8,
+              "attr_mod": 5,
+              "attr_key": "int"
+            }
+          },
+          {
+            "location": "burning_house",
+            "action": "leave_burning_house",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "hero",
+      "path": "battlefield",
+      "cursed": false,
+      "warlock": false,
+      "n": 1000,
+      "success_rate": 0.971,
+      "failures": {
+        "grave_chapel": 29
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "bone_field",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 28,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 17,
+              "mp": 9,
+              "sp": 3,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 17,
+              "mp": 9,
+              "sp": 3,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "grave_chapel",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 28,
+              "mp": 12,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 13,
+              "mp": 12,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 13,
+              "mp": 12,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1,
+                "生命の果実": 2
+              }
+            },
+            "consumables": {
+              "聖水": 2
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "sneak_bone_field",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                8
+              ],
+              "total": 13,
+              "created_at": "2026-10-13T13:03:14.266804+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 14,
+              "success": false,
+              "base_total": 8,
+              "attr_mod": 5,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                16
+              ],
+              "total": 21,
+              "created_at": "2026-10-13T13:03:14.275726+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": true,
+              "base_total": 16,
+              "attr_mod": 5,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "fight_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "hero",
+      "path": "battlefield",
+      "cursed": false,
+      "warlock": true,
+      "n": 1000,
+      "success_rate": 0.971,
+      "failures": {
+        "grave_chapel": 29
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "bone_field",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 28,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 17,
+              "mp": 9,
+              "sp": 3,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 17,
+              "mp": 9,
+              "sp": 3,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "grave_chapel",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 28,
+              "mp": 12,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 13,
+              "mp": 12,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 13,
+              "mp": 12,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1,
+                "生命の果実": 2
+              }
+            },
+            "consumables": {
+              "聖水": 2
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "sneak_bone_field",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                8
+              ],
+              "total": 13,
+              "created_at": "2026-10-13T13:03:35.527290+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 14,
+              "success": false,
+              "base_total": 8,
+              "attr_mod": 5,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                16
+              ],
+              "total": 21,
+              "created_at": "2026-10-13T13:03:35.537093+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": true,
+              "base_total": 16,
+              "attr_mod": 5,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "fight_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "hero",
+      "path": "battlefield",
+      "cursed": true,
+      "warlock": false,
+      "n": 1000,
+      "success_rate": 1.0,
+      "failures": {},
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "ghoul_marsh",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 28,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 28,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 28,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1,
+                "魔力の果実": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "show_curse_to_skeletons",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                8
+              ],
+              "total": 13,
+              "created_at": "2026-10-13T13:03:52.855304+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": false,
+              "base_total": 8,
+              "attr_mod": 5,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "curse_pass_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "hero",
+      "path": "battlefield",
+      "cursed": true,
+      "warlock": true,
+      "n": 1000,
+      "success_rate": 1.0,
+      "failures": {},
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "ghoul_marsh",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 28,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 28,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 28,
+              "mp": 9,
+              "sp": 12,
+              "level": 2,
+              "inventory": {
+                "革の鎧": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "氷鉄の大剣": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1,
+                "魔力の果実": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "show_curse_to_skeletons",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                8
+              ],
+              "total": 13,
+              "created_at": "2026-10-13T13:04:00.829152+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": false,
+              "base_total": 8,
+              "attr_mod": 5,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "curse_pass_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "cleric",
+      "path": "village",
+      "cursed": false,
+      "warlock": false,
+      "n": 1000,
+      "success_rate": 0.963,
+      "failures": {
+        "village_fire_elemental": 37
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "village_fire_slime",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 26,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 15,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 15,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "consumables": {}
+          }
+        ],
+        "steps": [
+          {
+            "location": "village_approach",
+            "action": "approach_burning_village_carefully",
+            "roll": {
+              "expression": "1d20+int",
+              "rolls": [
+                7
+              ],
+              "total": 22,
+              "created_at": "2026-10-13T13:04:08.819850+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": true,
+              "base_total": 7,
+              "attr_mod": 15,
+              "attr_key": "int"
+            }
+          },
+          {
+            "location": "burning_house",
+            "action": "leave_burning_house",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "cleric",
+      "path": "village",
+      "cursed": false,
+      "warlock": true,
+      "n": 1000,
+      "success_rate": 0.959,
+      "failures": {
+        "village_fire_elemental": 41
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "village_fire_slime",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 26,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 26,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 26,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "consumables": {}
+          }
+        ],
+        "steps": [
+          {
+            "location": "village_approach",
+            "action": "approach_burning_village_carefully",
+            "roll": {
+              "expression": "1d20+int",
+              "rolls": [
+                7
+              ],
+              "total": 22,
+              "created_at": "2026-10-13T13:04:14.264399+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": true,
+              "base_total": 7,
+              "attr_mod": 15,
+              "attr_key": "int"
+            }
+          },
+          {
+            "location": "burning_house",
+            "action": "leave_burning_house",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "cleric",
+      "path": "battlefield",
+      "cursed": false,
+      "warlock": false,
+      "n": 1000,
+      "success_rate": 0.915,
+      "failures": {
+        "grave_chapel": 80,
+        "bone_field": 5
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "ghoul_marsh",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 26,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 21,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 21,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1,
+                "魔力の果実": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          },
+          {
+            "encounter": "grave_chapel",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 21,
+              "mp": 19,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 17,
+              "mp": 7,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 17,
+              "mp": 7,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "墓守の外套": 1,
+                "生命の果実": 2
+              }
+            },
+            "consumables": {
+              "治療の巻物": 2,
+              "聖水": 1
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "sneak_bone_field",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                7
+              ],
+              "total": 15,
+              "created_at": "2026-10-13T13:04:21.323103+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 14,
+              "success": true,
+              "base_total": 7,
+              "attr_mod": 8,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                2
+              ],
+              "total": 10,
+              "created_at": "2026-10-13T13:04:21.326876+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": false,
+              "base_total": 2,
+              "attr_mod": 8,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "fight_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "cleric",
+      "path": "battlefield",
+      "cursed": false,
+      "warlock": true,
+      "n": 1000,
+      "success_rate": 0.915,
+      "failures": {
+        "grave_chapel": 80,
+        "bone_field": 5
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "ghoul_marsh",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 26,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 21,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 21,
+              "mp": 16,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1,
+                "魔力の果実": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          },
+          {
+            "encounter": "grave_chapel",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 21,
+              "mp": 19,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 17,
+              "mp": 7,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 17,
+              "mp": 7,
+              "sp": 9,
+              "level": 2,
+              "inventory": {
+                "聖なる杖": 1,
+                "ローブ": 1,
+                "薬草": 5,
+                "携帯食": 2,
+                "墓守の外套": 1,
+                "生命の果実": 2
+              }
+            },
+            "consumables": {
+              "治療の巻物": 2,
+              "聖水": 1
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "sneak_bone_field",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                7
+              ],
+              "total": 15,
+              "created_at": "2026-10-13T13:04:38.994670+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 14,
+              "success": true,
+              "base_total": 7,
+              "attr_mod": 8,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                2
+              ],
+              "total": 10,
+              "created_at": "2026-10-13T13:04:38.998028+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": false,
+              "base_total": 2,
+              "attr_mod": 8,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "fight_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "cleric",
+      "path": "battlefield",
+      "cursed": true,
+      "warlock": false,
+      "n": 1000,
+      "success_rate": 1.0,
+      "failures": {},
+      "sample": {
+        "completed": true,
+        "battles": [],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "show_curse_to_skeletons",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                7
+              ],
+              "total": 15,
+              "created_at": "2026-10-13T13:04:54.279247+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": true,
+              "base_total": 7,
+              "attr_mod": 8,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "curse_pass_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "cleric",
+      "path": "battlefield",
+      "cursed": true,
+      "warlock": true,
+      "n": 1000,
+      "success_rate": 1.0,
+      "failures": {},
+      "sample": {
+        "completed": true,
+        "battles": [],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "show_curse_to_skeletons",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                7
+              ],
+              "total": 15,
+              "created_at": "2026-10-13T13:05:03.749787+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": true,
+              "base_total": 7,
+              "attr_mod": 8,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "curse_pass_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "mage",
+      "path": "village",
+      "cursed": false,
+      "warlock": false,
+      "n": 1000,
+      "success_rate": 0.969,
+      "failures": {
+        "village_fire_elemental": 31
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "village_fire_slime",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 18,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 18,
+              "mp": 19,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 18,
+              "mp": 19,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "consumables": {}
+          }
+        ],
+        "steps": [
+          {
+            "location": "village_approach",
+            "action": "approach_burning_village_carefully",
+            "roll": {
+              "expression": "1d20+int",
+              "rolls": [
+                4
+              ],
+              "total": 22,
+              "created_at": "2026-10-13T13:05:13.455907+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": true,
+              "base_total": 4,
+              "attr_mod": 18,
+              "attr_key": "int"
+            }
+          },
+          {
+            "location": "burning_house",
+            "action": "leave_burning_house",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "mage",
+      "path": "village",
+      "cursed": false,
+      "warlock": true,
+      "n": 1000,
+      "success_rate": 0.971,
+      "failures": {
+        "village_fire_elemental": 29
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "village_fire_slime",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 18,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 18,
+              "mp": 19,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 18,
+              "mp": 19,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 4
+              }
+            },
+            "consumables": {}
+          }
+        ],
+        "steps": [
+          {
+            "location": "village_approach",
+            "action": "approach_burning_village_carefully",
+            "roll": {
+              "expression": "1d20+int",
+              "rolls": [
+                4
+              ],
+              "total": 22,
+              "created_at": "2026-10-13T13:05:17.514659+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": true,
+              "base_total": 4,
+              "attr_mod": 18,
+              "attr_key": "int"
+            }
+          },
+          {
+            "location": "burning_house",
+            "action": "leave_burning_house",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "mage",
+      "path": "battlefield",
+      "cursed": false,
+      "warlock": false,
+      "n": 1000,
+      "success_rate": 0.954,
+      "failures": {
+        "grave_chapel": 46
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "bone_field",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 18,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 18,
+              "mp": 13,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 18,
+              "mp": 13,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "ghoul_marsh",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 18,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 18,
+              "mp": 18,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 18,
+              "mp": 18,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1,
+                "魔力の果実": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          },
+          {
+            "encounter": "grave_chapel",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 18,
+              "mp": 21,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 8,
+              "mp": 16,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 8,
+              "mp": 16,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "治療の巻物": 2,
+                "墓守の外套": 1,
+                "生命の果実": 2
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "sneak_bone_field",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                4
+              ],
+              "total": 12,
+              "created_at": "2026-10-13T13:05:21.458967+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 14,
+              "success": false,
+              "base_total": 4,
+              "attr_mod": 8,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                2
+              ],
+              "total": 10,
+              "created_at": "2026-10-13T13:05:21.467067+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": false,
+              "base_total": 2,
+              "attr_mod": 8,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "fight_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "mage",
+      "path": "battlefield",
+      "cursed": false,
+      "warlock": true,
+      "n": 1000,
+      "success_rate": 0.954,
+      "failures": {
+        "grave_chapel": 46
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "bone_field",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 18,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 18,
+              "mp": 13,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 18,
+              "mp": 13,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "consumables": {}
+          },
+          {
+            "encounter": "ghoul_marsh",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 18,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 18,
+              "mp": 18,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 18,
+              "mp": 18,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1,
+                "魔力の果実": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          },
+          {
+            "encounter": "grave_chapel",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 18,
+              "mp": 21,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 8,
+              "mp": 16,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "治療の巻物": 2,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 8,
+              "mp": 16,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "治療の巻物": 2,
+                "墓守の外套": 1,
+                "生命の果実": 2
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "sneak_bone_field",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                4
+              ],
+              "total": 12,
+              "created_at": "2026-10-13T13:05:35.771951+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 14,
+              "success": false,
+              "base_total": 4,
+              "attr_mod": 8,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                2
+              ],
+              "total": 10,
+              "created_at": "2026-10-13T13:05:35.778965+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": false,
+              "base_total": 2,
+              "attr_mod": 8,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "fight_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "mage",
+      "path": "battlefield",
+      "cursed": true,
+      "warlock": false,
+      "n": 1000,
+      "success_rate": 1.0,
+      "failures": {},
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "ghoul_marsh",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 18,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 18,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 18,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1,
+                "魔力の果実": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "show_curse_to_skeletons",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                4
+              ],
+              "total": 12,
+              "created_at": "2026-10-13T13:05:49.600254+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": false,
+              "base_total": 4,
+              "attr_mod": 8,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "curse_pass_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "mage",
+      "path": "battlefield",
+      "cursed": true,
+      "warlock": true,
+      "n": 1000,
+      "success_rate": 1.0,
+      "failures": {},
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "ghoul_marsh",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 18,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 2,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 18,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 18,
+              "mp": 23,
+              "sp": 7,
+              "level": 2,
+              "inventory": {
+                "魔導書": 1,
+                "魔法のローブ": 1,
+                "薬草": 4,
+                "携帯食": 2,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1,
+                "魔力の果実": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "show_curse_to_skeletons",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                4
+              ],
+              "total": 12,
+              "created_at": "2026-10-13T13:05:58.091529+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": false,
+              "base_total": 4,
+              "attr_mod": 8,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "curse_pass_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "thief",
+      "path": "village",
+      "cursed": false,
+      "warlock": false,
+      "n": 1000,
+      "success_rate": 0.906,
+      "failures": {
+        "village_fire_elemental": 94
+      },
+      "sample": {
+        "completed": false,
+        "failed_at": "village_fire_elemental",
+        "battles": [
+          {
+            "encounter": "village_fire_elemental",
+            "status": "defeat",
+            "continue": false,
+            "before": {
+              "hp": 11,
+              "mp": 7,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 0,
+              "mp": 7,
+              "sp": 3,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 0,
+              "mp": 7,
+              "sp": 3,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2
+              }
+            },
+            "consumables": {
+              "治療の巻物": 2
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "village_approach",
+            "action": "approach_burning_village_carefully",
+            "roll": {
+              "expression": "1d20+int",
+              "rolls": [
+                1
+              ],
+              "total": 11,
+              "created_at": "2026-10-13T13:06:06.724615+00:00",
+              "critical_success": false,
+              "critical_failure": true,
+              "dc": 15,
+              "success": false,
+              "base_total": 1,
+              "attr_mod": 10,
+              "attr_key": "int"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "character": "thief",
+      "path": "village",
+      "cursed": false,
+      "warlock": true,
+      "n": 1000,
+      "success_rate": 0.918,
+      "failures": {
+        "village_fire_elemental": 82
+      },
+      "sample": {
+        "completed": false,
+        "failed_at": "village_fire_elemental",
+        "battles": [
+          {
+            "encounter": "village_fire_elemental",
+            "status": "defeat",
+            "continue": false,
+            "before": {
+              "hp": 11,
+              "mp": 7,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 0,
+              "mp": 7,
+              "sp": 4,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 2,
+                "聖水": 2
+              }
+            },
+            "after_resolution": {
+              "hp": 0,
+              "mp": 7,
+              "sp": 4,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 2,
+                "聖水": 2
+              }
+            },
+            "consumables": {
+              "治療の巻物": 2,
+              "薬草": 1
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "village_approach",
+            "action": "approach_burning_village_carefully",
+            "roll": {
+              "expression": "1d20+int",
+              "rolls": [
+                1
+              ],
+              "total": 11,
+              "created_at": "2026-10-13T13:06:11.456976+00:00",
+              "critical_success": false,
+              "critical_failure": true,
+              "dc": 15,
+              "success": false,
+              "base_total": 1,
+              "attr_mod": 10,
+              "attr_key": "int"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "character": "thief",
+      "path": "battlefield",
+      "cursed": false,
+      "warlock": false,
+      "n": 1000,
+      "success_rate": 0.982,
+      "failures": {
+        "grave_chapel": 18
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "bone_field",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 21,
+              "mp": 7,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 9,
+              "mp": 7,
+              "sp": 2,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 9,
+              "mp": 7,
+              "sp": 2,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "consumables": {
+              "治療の巻物": 1
+            }
+          },
+          {
+            "encounter": "grave_chapel",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 21,
+              "mp": 10,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2,
+                "治療の巻物": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 8,
+              "mp": 10,
+              "sp": 15,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "治療の巻物": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 8,
+              "mp": 10,
+              "sp": 15,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "治療の巻物": 1,
+                "墓守の外套": 1,
+                "生命の果実": 2
+              }
+            },
+            "consumables": {
+              "聖水": 2
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "sneak_bone_field",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                1
+              ],
+              "total": 19,
+              "created_at": "2026-10-13T13:06:16.201335+00:00",
+              "critical_success": false,
+              "critical_failure": true,
+              "dc": 14,
+              "success": true,
+              "base_total": 1,
+              "attr_mod": 18,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                18
+              ],
+              "total": 36,
+              "created_at": "2026-10-13T13:06:16.210539+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": true,
+              "base_total": 18,
+              "attr_mod": 18,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "fight_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "thief",
+      "path": "battlefield",
+      "cursed": false,
+      "warlock": true,
+      "n": 1000,
+      "success_rate": 0.982,
+      "failures": {
+        "grave_chapel": 18
+      },
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "bone_field",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 21,
+              "mp": 7,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2,
+                "治療の巻物": 2
+              }
+            },
+            "after_combat": {
+              "hp": 9,
+              "mp": 7,
+              "sp": 2,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 9,
+              "mp": 7,
+              "sp": 2,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2,
+                "治療の巻物": 1
+              }
+            },
+            "consumables": {
+              "治療の巻物": 1
+            }
+          },
+          {
+            "encounter": "grave_chapel",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 21,
+              "mp": 10,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2,
+                "治療の巻物": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 8,
+              "mp": 10,
+              "sp": 15,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "治療の巻物": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 8,
+              "mp": 10,
+              "sp": 15,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "治療の巻物": 1,
+                "墓守の外套": 1,
+                "生命の果実": 2
+              }
+            },
+            "consumables": {
+              "聖水": 2
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "sneak_bone_field",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                1
+              ],
+              "total": 19,
+              "created_at": "2026-10-13T13:06:29.324841+00:00",
+              "critical_success": false,
+              "critical_failure": true,
+              "dc": 14,
+              "success": true,
+              "base_total": 1,
+              "attr_mod": 18,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                18
+              ],
+              "total": 36,
+              "created_at": "2026-10-13T13:06:29.333334+00:00",
+              "critical_success": false,
+              "critical_failure": false,
+              "dc": 15,
+              "success": true,
+              "base_total": 18,
+              "attr_mod": 18,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "fight_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "thief",
+      "path": "battlefield",
+      "cursed": true,
+      "warlock": false,
+      "n": 1000,
+      "success_rate": 1.0,
+      "failures": {},
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "ghoul_marsh",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 21,
+              "mp": 7,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 21,
+              "mp": 7,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 21,
+              "mp": 7,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1,
+                "魔力の果実": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "show_curse_to_skeletons",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                1
+              ],
+              "total": 19,
+              "created_at": "2026-10-13T13:06:43.867520+00:00",
+              "critical_success": false,
+              "critical_failure": true,
+              "dc": 15,
+              "success": true,
+              "base_total": 1,
+              "attr_mod": 18,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "curse_pass_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    },
+    {
+      "character": "thief",
+      "path": "battlefield",
+      "cursed": true,
+      "warlock": true,
+      "n": 1000,
+      "success_rate": 1.0,
+      "failures": {},
+      "sample": {
+        "completed": true,
+        "battles": [
+          {
+            "encounter": "ghoul_marsh",
+            "status": "victory",
+            "continue": true,
+            "before": {
+              "hp": 21,
+              "mp": 7,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 2,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_combat": {
+              "hp": 21,
+              "mp": 7,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1
+              }
+            },
+            "after_resolution": {
+              "hp": 21,
+              "mp": 7,
+              "sp": 16,
+              "level": 2,
+              "inventory": {
+                "ダガー": 1,
+                "革の鎧": 1,
+                "盗賊道具": 1,
+                "携帯食": 2,
+                "薬草": 3,
+                "聖水": 1,
+                "治療の巻物": 2,
+                "呪われた短剣": 1,
+                "墓守の外套": 1,
+                "魔力の果実": 1
+              }
+            },
+            "consumables": {
+              "聖水": 1
+            }
+          }
+        ],
+        "steps": [
+          {
+            "location": "old_battlefield",
+            "action": "battlefield_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "show_curse_to_skeletons",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_tower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "search_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "rest_watchtower",
+            "roll": {}
+          },
+          {
+            "location": "ruined_watchtower",
+            "action": "tower_to_bones",
+            "roll": {}
+          },
+          {
+            "location": "bone_field",
+            "action": "bones_to_marsh",
+            "roll": {}
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "sneak_ghoul_marsh",
+            "roll": {
+              "expression": "1d20+dex",
+              "rolls": [
+                1
+              ],
+              "total": 19,
+              "created_at": "2026-10-13T13:06:53.086387+00:00",
+              "critical_success": false,
+              "critical_failure": true,
+              "dc": 15,
+              "success": true,
+              "base_total": 1,
+              "attr_mod": 18,
+              "attr_key": "dex"
+            }
+          },
+          {
+            "location": "ghoul_marsh",
+            "action": "marsh_to_chapel",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "curse_pass_grave_knight",
+            "roll": {}
+          },
+          {
+            "location": "grave_chapel",
+            "action": "chapel_to_village",
+            "roll": {}
+          }
+        ]
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "character": "hero",
+      "village": 0.959,
+      "plain": 0.971,
+      "cursed": 1.0,
+      "difference_pp": 1.200000000000001,
+      "curse_uplift_pp": 2.9000000000000026,
+      "warlock_uplift_pp": 0.0,
+      "village_warlock_pp": 1.100000000000001
+    },
+    {
+      "character": "cleric",
+      "village": 0.963,
+      "plain": 0.915,
+      "cursed": 1.0,
+      "difference_pp": -4.799999999999994,
+      "curse_uplift_pp": 8.499999999999996,
+      "warlock_uplift_pp": 0.0,
+      "village_warlock_pp": -0.40000000000000036
+    },
+    {
+      "character": "mage",
+      "village": 0.969,
+      "plain": 0.954,
+      "cursed": 1.0,
+      "difference_pp": -1.5000000000000013,
+      "curse_uplift_pp": 4.600000000000004,
+      "warlock_uplift_pp": 0.0,
+      "village_warlock_pp": 0.20000000000000018
+    },
+    {
+      "character": "thief",
+      "village": 0.906,
+      "plain": 0.982,
+      "cursed": 1.0,
+      "difference_pp": 7.599999999999996,
+      "curse_uplift_pp": 1.8000000000000016,
+      "warlock_uplift_pp": 0.0,
+      "village_warlock_pp": 1.200000000000001
+    }
+  ],
+  "snapshots": {
+    "hero": {
+      "level": 2,
+      "inventory": [
+        {
+          "name": "革の鎧",
+          "description": "なめした革で作られた軽量の鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ],
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "gold": 125,
+      "skills": [
+        {
+          "id": "power_slash",
+          "name": "渾身斬り",
+          "kind": "attack",
+          "description": "気合を込めた全力の一撃。",
+          "effect": "1d4+str判定ダメージ",
+          "damage": "1d10+str/2",
+          "dice_type": "1d10+str/2",
+          "accuracy": 85,
+          "element": "physical",
+          "cost": 3,
+          "cost_type": "sp"
+        },
+        {
+          "id": "divine_guard",
+          "name": "神聖の庇護",
+          "kind": "defend",
+          "description": "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。",
+          "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+          "guard_multiplier": 0.5,
+          "survive_at_one": true,
+          "cost": 0
+        }
+      ],
+      "attributes": {
+        "str": 14,
+        "dex": 5,
+        "int": 5,
+        "wis": 5,
+        "end": 11
+      },
+      "max_hp": 28,
+      "max_mp": 9,
+      "max_sp": 12,
+      "completed_milestones": [
+        "lv2"
+      ],
+      "companion": {
+        "id": "blue_robed_mage",
+        "name": "青いローブの魔法使い・ワーロック",
+        "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+        "round_start_effects": [
+          {
+            "kind": "heal_player",
+            "every_n_rounds": 2,
+            "max_hp_ratio": 0.15
+          }
+        ],
+        "image": "/static/images/npc_warlock.png",
+        "title": "青いローブの魔法使い・ワーロック",
+        "keywords": []
+      }
+    },
+    "cleric": {
+      "level": 2,
+      "inventory": [
+        {
+          "name": "聖なる杖",
+          "description": "神聖魔法を増幅する杖。",
+          "effect": "回復技能回復量+2",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_healing_bonus": 2,
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "ローブ",
+          "description": "僧侶の簡素な衣。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            },
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 5,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ],
+      "equipment": [
+        "聖なる杖",
+        "ローブ"
+      ],
+      "gold": 125,
+      "skills": [
+        {
+          "id": "healing_prayer",
+          "name": "治癒の祈り",
+          "kind": "heal",
+          "description": "聖なる祈りで傷を癒す。",
+          "effect": "HPを1d6+知力/4回復",
+          "healing": "1d6+int/4",
+          "dice_type": "1d6+int/4",
+          "cost": 4,
+          "cost_type": "mp"
+        },
+        {
+          "id": "holy_guard",
+          "name": "聖なる守護",
+          "kind": "defend",
+          "description": "聖光の盾で味方を守る。致死ダメージも耐え抜く。",
+          "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+          "guard_multiplier": 0.5,
+          "survive_at_one": true,
+          "cost": 6,
+          "cost_type": "mp"
+        }
+      ],
+      "attributes": {
+        "str": 6,
+        "dex": 8,
+        "int": 15,
+        "wis": 14,
+        "end": 15
+      },
+      "max_hp": 26,
+      "max_mp": 16,
+      "max_sp": 9,
+      "completed_milestones": [
+        "lv2"
+      ],
+      "companion": {
+        "id": "blue_robed_mage",
+        "name": "青いローブの魔法使い・ワーロック",
+        "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+        "round_start_effects": [
+          {
+            "kind": "heal_player",
+            "every_n_rounds": 2,
+            "max_hp_ratio": 0.15
+          }
+        ],
+        "image": "/static/images/npc_warlock.png",
+        "title": "青いローブの魔法使い・ワーロック",
+        "keywords": []
+      }
+    },
+    "mage": {
+      "level": 2,
+      "inventory": [
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃技能ダメージ+3",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_damage_bonus": 3,
+            "applies_to": [
+              "attack"
+            ]
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            }
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ],
+      "equipment": [
+        "魔導書",
+        "魔法のローブ"
+      ],
+      "gold": 125,
+      "skills": [
+        {
+          "id": "mage_lv3_b",
+          "name": "火球・改",
+          "kind": "attack",
+          "damage": "1d8+int/2",
+          "accuracy": 92,
+          "element": "fire",
+          "cost": 6,
+          "cost_type": "mp",
+          "all_targets": true,
+          "description": "火球で敵全体を攻撃する。",
+          "unlock_level": 2,
+          "effect": "敵全体に1d8+int/2ダメージを与える。",
+          "replaces": "火球"
+        },
+        {
+          "id": "ice_arrow",
+          "name": "氷の矢",
+          "kind": "attack",
+          "description": "冷気の矢を放つ。",
+          "effect": "int/2ダメージ，ｈｐ5０％以下に対して，1d6追加ダメージを与える",
+          "damage": "1d6+int/2",
+          "dice_type": "1d6+int/2",
+          "accuracy": 92,
+          "element": "ice",
+          "cost": 3,
+          "cost_type": "mp"
+        }
+      ],
+      "attributes": {
+        "str": 4,
+        "dex": 8,
+        "int": 18,
+        "wis": 11,
+        "end": 6
+      },
+      "max_hp": 18,
+      "max_mp": 23,
+      "max_sp": 7,
+      "completed_milestones": [
+        "lv2"
+      ],
+      "companion": {
+        "id": "blue_robed_mage",
+        "name": "青いローブの魔法使い・ワーロック",
+        "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+        "round_start_effects": [
+          {
+            "kind": "heal_player",
+            "every_n_rounds": 2,
+            "max_hp_ratio": 0.15
+          }
+        ],
+        "image": "/static/images/npc_warlock.png",
+        "title": "青いローブの魔法使い・ワーロック",
+        "keywords": []
+      }
+    },
+    "thief": {
+      "level": 2,
+      "inventory": [
+        {
+          "name": "ダガー",
+          "description": "軽量で扱いやすい短剣。",
+          "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+          "quantity": 1,
+          "combat": {
+            "kind": "weapon",
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "革の鎧",
+          "description": "動きやすさを重視した軽装鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "盗賊道具",
+          "description": "鍵開けや罠解除に使う道具一式。",
+          "effect": "",
+          "quantity": 1
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 3,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ],
+      "equipment": [
+        "ダガー",
+        "革の鎧"
+      ],
+      "gold": 125,
+      "skills": [
+        {
+          "id": "hide_in_shadow",
+          "name": "影隠れ",
+          "kind": "defend",
+          "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
+          "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
+          "guard_multiplier": 0.25,
+          "dice_type": "1d20+dex",
+          "cost": 2,
+          "cost_type": "sp"
+        },
+        {
+          "id": "vital_strike",
+          "name": "急所突き",
+          "kind": "attack",
+          "description": "敵の急所を正確に狙う。",
+          "effect": "3d6判定ダメージ",
+          "damage": "3d6",
+          "dice_type": "3d6",
+          "accuracy": 82,
+          "element": "physical",
+          "cost": 4,
+          "cost_type": "sp"
+        }
+      ],
+      "attributes": {
+        "str": 9,
+        "dex": 18,
+        "int": 10,
+        "wis": 6,
+        "end": 8
+      },
+      "max_hp": 21,
+      "max_mp": 7,
+      "max_sp": 16,
+      "completed_milestones": [
+        "lv2"
+      ],
+      "companion": {
+        "id": "blue_robed_mage",
+        "name": "青いローブの魔法使い・ワーロック",
+        "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+        "round_start_effects": [
+          {
+            "kind": "heal_player",
+            "every_n_rounds": 2,
+            "max_hp_ratio": 0.15
+          }
+        ],
+        "image": "/static/images/npc_warlock.png",
+        "title": "青いローブの魔法使い・ワーロック",
+        "keywords": []
+      }
+    }
+  },
+  "enemies": [
+    {
+      "id": "skeleton_soldier",
+      "name": "骸骨兵",
+      "description": "錆びた鎧をまとった、十年前の兵士の骸。",
+      "hp": 12,
+      "max_hp": 12,
+      "attributes": {},
+      "element": "dark",
+      "resistances": {
+        "holy": 1.5,
+        "physical": 1,
+        "ice": 1
+      },
+      "skills": [],
+      "combat": {
+        "defense": 0,
+        "evade": 0,
+        "basic_attack": {
+          "name": "攻撃",
+          "damage": "1d6+2",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_skeleton_soldier.png",
+      "mp": 0,
+      "max_mp": 0,
+      "sp": 0,
+      "max_sp": 0
+    },
+    {
+      "id": "ghoul",
+      "name": "屍鬼",
+      "description": "沼の泥から這い出す、腐った死者。",
+      "hp": 26,
+      "max_hp": 26,
+      "attributes": {},
+      "element": "dark",
+      "resistances": {
+        "holy": 1.5,
+        "physical": 1,
+        "ice": 1
+      },
+      "skills": [],
+      "combat": {
+        "defense": 0,
+        "evade": 0,
+        "basic_attack": {
+          "name": "攻撃",
+          "damage": "1d10+3",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_ghoul.png",
+      "mp": 0,
+      "max_mp": 0,
+      "sp": 0,
+      "max_sp": 0
+    },
+    {
+      "id": "wraith",
+      "name": "怨霊",
+      "description": "霧の中に浮かぶ、青白い死者の怨念。",
+      "hp": 12,
+      "max_hp": 12,
+      "attributes": {},
+      "element": "dark",
+      "resistances": {
+        "holy": 1.5,
+        "physical": 1,
+        "ice": 1
+      },
+      "skills": [],
+      "combat": {
+        "defense": 0,
+        "evade": 0,
+        "basic_attack": {
+          "name": "攻撃",
+          "damage": "1d6+2",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_wraith.png",
+      "mp": 0,
+      "max_mp": 0,
+      "sp": 0,
+      "max_sp": 0
+    },
+    {
+      "id": "grave_knight",
+      "name": "墓守の骸骨騎士",
+      "description": "礼拝堂を守り続ける、大剣の骸骨騎士。",
+      "hp": 60,
+      "max_hp": 60,
+      "attributes": {},
+      "element": "dark",
+      "resistances": {
+        "holy": 1.5,
+        "physical": 1,
+        "ice": 1
+      },
+      "skills": [],
+      "combat": {
+        "defense": 0,
+        "evade": 0,
+        "basic_attack": {
+          "name": "攻撃",
+          "damage": "2d8+5",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_grave_knight.png",
+      "mp": 0,
+      "max_mp": 0,
+      "sp": 0,
+      "max_sp": 0
+    }
+  ],
+  "fingerprints": {
+    "scripts\\balance\\battlefield.py": "cae01ac12a4357af90d27b173871c95b3b87a54f826da960211d2415b96d2b8e",
+    "host\\prompt\\processed\\dragon_rpg.json": "6a20f26656e15f2465c9c85bf0ee01c4f58b329e5e7b4c279da42a6530cc8c19"
+  }
+}

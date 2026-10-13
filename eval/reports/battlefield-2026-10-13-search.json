@@ -1,0 +1,62 @@
+[
+  {
+    "hp": 60,
+    "damage": "2d6+4",
+    "rates": {
+      "hero": 0.996,
+      "cleric": 0.984,
+      "mage": 0.996,
+      "thief": 1.0
+    }
+  },
+  {
+    "hp": 75,
+    "damage": "2d6+4",
+    "rates": {
+      "hero": 0.988,
+      "cleric": 0.98,
+      "mage": 0.948,
+      "thief": 0.996
+    }
+  },
+  {
+    "hp": 90,
+    "damage": "2d6+4",
+    "rates": {
+      "hero": 0.968,
+      "cleric": 0.968,
+      "mage": 0.92,
+      "thief": 0.984
+    }
+  },
+  {
+    "hp": 60,
+    "damage": "2d8+5",
+    "rates": {
+      "hero": 0.968,
+      "cleric": 0.928,
+      "mage": 0.956,
+      "thief": 0.988
+    }
+  },
+  {
+    "hp": 75,
+    "damage": "2d8+5",
+    "rates": {
+      "hero": 0.912,
+      "cleric": 0.86,
+      "mage": 0.864,
+      "thief": 0.972
+    }
+  },
+  {
+    "hp": 90,
+    "damage": "2d8+5",
+    "rates": {
+      "hero": 0.848,
+      "cleric": 0.8,
+      "mage": 0.836,
+      "thief": 0.968
+    }
+  }
+]
