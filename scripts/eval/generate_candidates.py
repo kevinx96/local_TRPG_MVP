@@ -36,6 +36,7 @@ def recipes() -> list[dict[str, Any]]:
         ("inn_dialogue_hero", "inn", 0, []),
         ("magic_shop_hero", "magic_shop", 0, []),
         ("forest_legacy_heal_hero", "dark_forest_loc", -5, []),
+        ("castle_town_hero", "castle_town", 0, []),
     ]
     return [{"id": identifier, "scenario": "host/prompt/processed/dragon_rpg.json", "gm_mode": "full",
              "character_id": "hero", "location_id": location, "flags": {}, "hp_delta": hp,
@@ -68,19 +69,19 @@ def generate() -> list[dict[str, Any]]:
         "ask_blue_mage_rumor": "青いローブの魔法使いに、邪竜の噂を尋ねる。",
         "continue_from_elf_spring": "泉での休憩はせずに、先に進もう。",
         "ignore_lost_goblin": "迷子のゴブリンには構わず進みたい。",
-        "return_castle_from_item_shop": "道具屋を出て王城に戻ろう。",
+        "return_castle_from_item_shop": "城下町に戻る",
         "ask_general_advice": "ドラコ将軍にどうすればよいか助言してもらう。",
         "ambush_xanxus": "Xanxusが動く前にこちらから攻撃する。",
         "show_sword_to_blacksmith": "持っている剣を鍛冶師に見てもらう。",
         "ask_ian_advice": "イアンに邪竜退治の助言をお願いする。",
         "invite_blue_mage": "青いローブの魔法使いを仲間に誘いたい。",
-        "check_supplies": "出発前の資金と装備を確かめておく。",
+        "check_supplies": "侍従から旅の支給品を受け取る",
         "flee_from_xanxus": "Xanxusからもう一度逃げようとする。",
-        "return_castle_from_forge": "鍛冶屋を出て城へ帰る。",
+        "return_castle_from_forge": "城下町に戻る",
         "invite_robin": "ロビンに一緒に冒険しないかと誘う。",
-        "return_castle_from_magic_shop": "魔法店から王城へ戻りたい。",
+        "return_castle_from_magic_shop": "城下町に戻る",
         "go_forge": "城下町の鍛冶屋へ行こう。",
-        "go_dark_forest": "王城を離れて闇の森を目指す。",
+        "go_dark_forest": "城門を出て闇の森へ向かう",
     }
     snapshots = {r["id"]: build_snapshot(r) for r in recipes()}
     actions = []

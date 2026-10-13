@@ -278,7 +278,7 @@ class DragonStoryTests(unittest.TestCase):
         for rolls, expected_turn_id in (([18], "castle_departure_success"), ([1], "castle_departure_failure")):
             with self.subTest(expected_turn_id=expected_turn_id):
                 session = self.create_runtime_session()
-                session["world_state"] = {"scene_id": "start", "location_id": "castle"}
+                session["world_state"] = {"scene_id": "throne_room", "location_id": "castle_town"}
                 action = state.resolve_action(session, action_id="go_dark_forest")
                 roll = state.roll_dice(session, *state.action_dice_settings(action), client_rolls=rolls)
                 state.apply_action_result(session, action, roll)

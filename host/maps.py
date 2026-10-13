@@ -61,9 +61,10 @@ def movement_action(session: dict[str, Any], node_id: str) -> dict[str, Any]:
                      and (not e.get("visible_after") or session.get("flags", {}).get(e["visible_after"]))), None)
         if not edge:
             raise ValueError("隣接する場所を選んでください。")
-        if not edge.get("action_id"):
+        action_id = edge.get("action_by_location", {}).get(location, edge.get("action_id"))
+        if not action_id:
             raise ValueError("この場所へは行動を選んで進んでください。")
-        action = resolve_action(session, action_id=edge["action_id"])
+        action = resolve_action(session, action_id=action_id)
         if action is None:
             raise ValueError("この行動はまだ選択できません。")
         enabled, reason = action_requirement_status(action, session)

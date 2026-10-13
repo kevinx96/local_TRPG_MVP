@@ -22,14 +22,16 @@
         {
           "id": "supplies",
           "location": "castle",
-          "step": "check_supplies",
+          "step": "@opening",
           "type": "story",
           "reward": {
-            "gold": "50"
+            "gold": "100"
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -58,7 +60,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -94,7 +98,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -153,7 +159,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -184,7 +192,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -222,7 +232,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -276,7 +288,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -313,7 +327,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -357,7 +373,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -417,7 +435,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -446,7 +466,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -482,7 +504,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -534,7 +558,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -555,9 +581,11 @@
               "@victory",
               "visit_village",
               "return_castle_from_village",
+              "go_castle_town",
               "go_item_shop",
               "shop:sarah_shop:ice_charm",
               "return_castle_from_item_shop",
+              "return_castle_from_town",
               "return_village",
               "go_dragon_valley",
               "@victory",
@@ -569,7 +597,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -597,9 +627,11 @@
               "@victory",
               "visit_village",
               "return_castle_from_village",
+              "go_castle_town",
               "go_item_shop",
               "shop:sarah_shop:ice_charm",
               "return_castle_from_item_shop",
+              "return_castle_from_town",
               "return_village",
               "go_dragon_valley",
               "@victory",
@@ -611,7 +643,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -644,9 +678,11 @@
               "@victory",
               "visit_village",
               "return_castle_from_village",
+              "go_castle_town",
               "go_item_shop",
               "shop:sarah_shop:ice_charm",
               "return_castle_from_item_shop",
+              "return_castle_from_town",
               "return_village",
               "go_dragon_valley",
               "@victory",
@@ -669,7 +705,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -690,9 +728,11 @@
               "@victory",
               "visit_village",
               "return_castle_from_village",
+              "go_castle_town",
               "go_forge",
               "forge_ice_charm",
               "return_castle_from_forge",
+              "return_castle_from_town",
               "return_village",
               "go_dragon_valley",
               "@victory",
@@ -704,7 +744,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -732,9 +774,11 @@
               "@victory",
               "visit_village",
               "return_castle_from_village",
+              "go_castle_town",
               "go_forge",
               "forge_ice_charm",
               "return_castle_from_forge",
+              "return_castle_from_town",
               "return_village",
               "go_dragon_valley",
               "@victory",
@@ -746,7 +790,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -779,9 +825,11 @@
               "@victory",
               "visit_village",
               "return_castle_from_village",
+              "go_castle_town",
               "go_forge",
               "forge_ice_charm",
               "return_castle_from_forge",
+              "return_castle_from_town",
               "return_village",
               "go_dragon_valley",
               "@victory",
@@ -805,7 +853,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -827,9 +877,11 @@
               "@victory",
               "visit_village",
               "return_castle_from_village",
+              "go_castle_town",
               "go_forge",
               "forge_ice_charm",
               "return_castle_from_forge",
+              "return_castle_from_town",
               "return_village",
               "go_dragon_valley",
               "@victory",
@@ -841,7 +893,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -870,9 +924,11 @@
               "@victory",
               "visit_village",
               "return_castle_from_village",
+              "go_castle_town",
               "go_forge",
               "forge_ice_charm",
               "return_castle_from_forge",
+              "return_castle_from_town",
               "return_village",
               "go_dragon_valley",
               "@victory",
@@ -884,7 +940,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -918,9 +976,11 @@
               "@victory",
               "visit_village",
               "return_castle_from_village",
+              "go_castle_town",
               "go_forge",
               "forge_ice_charm",
               "return_castle_from_forge",
+              "return_castle_from_town",
               "return_village",
               "go_dragon_valley",
               "@victory",
@@ -942,7 +1002,9 @@
           "reward": {},
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -972,7 +1034,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1009,7 +1073,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1071,7 +1137,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1100,7 +1168,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1136,7 +1206,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1188,7 +1260,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1224,7 +1298,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1267,7 +1343,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1326,7 +1404,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1340,7 +1420,9 @@
               "@victory",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "ask_general_advice:success",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -1360,7 +1442,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1381,7 +1465,9 @@
               "@victory",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "ask_general_advice:success",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -1401,7 +1487,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1427,7 +1515,9 @@
               "pass_cleared_wolves",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "ask_general_advice:success",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -1456,7 +1546,9 @@
           "reward": {},
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1485,7 +1577,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1521,7 +1615,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1582,7 +1678,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1619,7 +1717,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1655,7 +1755,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1715,7 +1817,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1760,7 +1864,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1796,7 +1902,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1864,7 +1972,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1910,7 +2020,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -1947,7 +2059,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2016,7 +2130,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2060,7 +2176,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2093,7 +2211,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2166,7 +2286,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2196,7 +2318,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2233,7 +2357,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2286,7 +2412,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2315,7 +2443,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2351,7 +2481,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2403,7 +2535,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2433,7 +2567,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2470,7 +2606,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2523,7 +2661,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2565,7 +2705,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2604,7 +2746,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2669,7 +2813,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2706,7 +2852,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2750,7 +2898,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2816,7 +2966,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2845,7 +2997,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2881,7 +3035,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2933,7 +3089,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -2969,7 +3127,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3012,7 +3172,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3071,7 +3233,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3107,7 +3271,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3150,7 +3316,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3207,7 +3375,9 @@
           "reward": {},
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3236,7 +3406,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3272,7 +3444,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3333,7 +3507,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3363,7 +3539,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3400,7 +3578,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3459,7 +3639,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3495,7 +3677,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3538,7 +3722,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3603,7 +3789,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3633,7 +3821,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3670,7 +3860,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3729,7 +3921,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3743,7 +3937,9 @@
               "@victory",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "observe:general_breath",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -3763,7 +3959,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3784,7 +3982,9 @@
               "@victory",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "observe:general_breath",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -3804,7 +4004,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3830,7 +4032,9 @@
               "pass_cleared_wolves",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "observe:general_breath",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -3861,7 +4065,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3875,7 +4081,9 @@
               "@victory",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "ask_general_advice:high",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -3895,7 +4103,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3916,7 +4126,9 @@
               "@victory",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "ask_general_advice:high",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -3936,7 +4148,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -3962,7 +4176,9 @@
               "pass_cleared_wolves",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "ask_general_advice:high",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -3993,7 +4209,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4026,7 +4244,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4066,7 +4286,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4128,7 +4350,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4159,7 +4383,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4197,7 +4423,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4251,7 +4479,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4285,7 +4515,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4326,7 +4558,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4383,7 +4617,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4411,7 +4647,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4446,7 +4684,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4503,7 +4743,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4538,7 +4780,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4580,7 +4824,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4638,7 +4884,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4677,7 +4925,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4723,7 +4973,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4791,7 +5043,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4820,7 +5074,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4856,7 +5112,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4908,7 +5166,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4950,7 +5210,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -4989,7 +5251,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5054,7 +5318,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5091,7 +5357,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5135,7 +5403,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5195,7 +5465,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5225,7 +5497,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5262,7 +5536,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5315,7 +5591,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5329,7 +5607,9 @@
               "@victory",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "observe:general_breath",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -5349,7 +5629,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5370,7 +5652,9 @@
               "@victory",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "observe:general_breath",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -5390,7 +5674,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5416,7 +5702,9 @@
               "pass_cleared_wolves",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "observe:general_breath",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -5447,7 +5735,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5461,7 +5751,9 @@
               "@victory",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "ask_general_advice:high",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -5481,7 +5773,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5502,7 +5796,9 @@
               "@victory",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "ask_general_advice:high",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -5522,7 +5818,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5548,7 +5846,9 @@
               "pass_cleared_wolves",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "ask_general_advice:high",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -5579,7 +5879,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5610,7 +5912,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5648,7 +5952,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5702,7 +6008,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5736,7 +6044,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5777,7 +6087,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5834,7 +6146,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5862,7 +6176,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5897,7 +6213,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5954,7 +6272,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -5983,7 +6303,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6019,7 +6341,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6071,7 +6395,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6107,7 +6433,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6150,7 +6478,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6209,7 +6539,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6223,7 +6555,9 @@
               "@victory",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "ask_general_advice:success",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -6243,7 +6577,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6264,7 +6600,9 @@
               "@victory",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "ask_general_advice:success",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -6284,7 +6622,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6310,7 +6650,9 @@
               "pass_cleared_wolves",
               "return_inn_after_forest",
               "return_castle_from_inn",
+              "return_castle_from_town",
               "ask_general_advice:success",
+              "go_castle_town",
               "go_inn",
               "return_forest_exit",
               "leave_forest_for_village",
@@ -6339,7 +6681,9 @@
           "reward": {},
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6369,7 +6713,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6406,7 +6752,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6467,7 +6815,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6502,7 +6852,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6544,7 +6896,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6608,7 +6962,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6638,7 +6994,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6675,7 +7033,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6728,7 +7088,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6757,7 +7119,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6793,7 +7157,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6845,7 +7211,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6875,7 +7243,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6912,7 +7282,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -6965,7 +7337,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -7007,7 +7381,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -7046,7 +7422,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -7111,7 +7489,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -7148,7 +7528,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -7192,7 +7574,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -7252,7 +7636,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -7287,7 +7673,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -7329,7 +7717,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -7393,7 +7783,9 @@
           },
           "witnesses": {
             "spring": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -7427,7 +7819,9 @@
               "go_report_hall"
             ],
             "fort": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",
@@ -7468,7 +7862,9 @@
               "go_report_hall"
             ],
             "cave": [
+              "@opening",
               "check_supplies",
+              "go_castle_town",
               "go_inn",
               "invite_robin:success",
               "ask_robin_rumor",

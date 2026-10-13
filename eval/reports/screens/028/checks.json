@@ -1,0 +1,147 @@
+[
+  {
+    "view": "start-1280x800",
+    "width": 1280,
+    "height": 800,
+    "touch": false,
+    "ok": true,
+    "checks": [
+      "exact viewport",
+      "story title and default Hybrid",
+      "reduced motion",
+      "scenario and model status in closed settings",
+      "responsive character rows",
+      "gender switches only the available portrait variant",
+      "character selection",
+      "start button fits viewport",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "view": "start-800x480",
+    "width": 800,
+    "height": 480,
+    "touch": false,
+    "ok": true,
+    "checks": [
+      "exact viewport",
+      "story title and default Hybrid",
+      "reduced motion",
+      "scenario and model status in closed settings",
+      "responsive character rows",
+      "gender switches only the available portrait variant",
+      "character selection",
+      "start button fits viewport",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "view": "start-375x812",
+    "width": 375,
+    "height": 812,
+    "touch": true,
+    "ok": true,
+    "checks": [
+      "exact viewport",
+      "story title and default Hybrid",
+      "reduced motion",
+      "scenario and model status in closed settings",
+      "responsive character rows",
+      "gender switches only the available portrait variant",
+      "character selection",
+      "start button fits viewport",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "view": "castle-town-1280x800",
+    "width": 1280,
+    "height": 800,
+    "touch": false,
+    "ok": true,
+    "checks": [
+      "exact viewport",
+      "correct pointer media query",
+      "desktop descriptions hidden in cards",
+      "keyboard focus updates fixed description",
+      "arrow key moves focus",
+      "at least six choices fit without scrolling",
+      "focus and hover do not change row heights",
+      "no horizontal choice scrolling",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "view": "castle-town-800x480",
+    "width": 800,
+    "height": 480,
+    "touch": false,
+    "ok": true,
+    "checks": [
+      "exact viewport",
+      "correct pointer media query",
+      "desktop descriptions hidden in cards",
+      "keyboard focus updates fixed description",
+      "arrow key moves focus",
+      "at least six choices fit without scrolling",
+      "focus and hover do not change row heights",
+      "no horizontal choice scrolling",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "view": "castle-town-hover-800x480",
+    "width": 800,
+    "height": 480,
+    "touch": false,
+    "ok": true,
+    "checks": [
+      "exact viewport",
+      "correct pointer media query",
+      "desktop descriptions hidden in cards",
+      "keyboard focus updates fixed description",
+      "arrow key moves focus",
+      "real hover updates description",
+      "at least six choices fit without scrolling",
+      "focus and hover do not change row heights",
+      "no horizontal choice scrolling",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "view": "magic-shop-1280x800",
+    "width": 1280,
+    "height": 800,
+    "touch": false,
+    "ok": true,
+    "checks": [
+      "exact viewport",
+      "correct pointer media query",
+      "desktop descriptions hidden in cards",
+      "keyboard focus updates fixed description",
+      "arrow key moves focus",
+      "focus and hover do not change row heights",
+      "no horizontal choice scrolling",
+      "unknown card has no label and cannot be selected",
+      "disabled card remains in place",
+      "disabled reason in footer",
+      "unknown focus keeps dashed outline",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "view": "magic-shop-touch-375x812",
+    "width": 375,
+    "height": 812,
+    "touch": true,
+    "ok": true,
+    "checks": [
+      "exact viewport",
+      "correct pointer media query",
+      "touch keeps inline descriptions",
+      "unknown card has no label and cannot be selected",
+      "disabled card remains in place",
+      "no horizontal overflow"
+    ]
+  }
+]

@@ -400,6 +400,7 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     public.pop("last_intent_resolution", None)
     public.pop("deviation_state", None)
     public.pop("event_log", None)
+    public.pop("known_item_names", None)
     public.pop("shop_stock", None)
     public["quests"] = public_quests(session)
     public["map"] = public_maps(session)
@@ -470,8 +471,9 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     if any(action.get("open_shop") or action.get("secret")
            for action in _iter_actions(current_actions_for_session(session))):
         public["choices"] = fallback_choices_for_session(session)
-    public["choices"] = annotate_choices_for_session(public.get("choices"), public)
+    public["choices"] = annotate_choices_for_session(public.get("choices"), session)
     public["choices"] = annotate_choices_for_character(public.get("choices"), public.get("character", {}))
+    public["choices"] = player_choices_for_session(public["choices"], session)
     if session.get("game_over"):
         public["choices"] = []
     public["system_logs"] = [
@@ -569,6 +571,72 @@ def annotate_choices_for_session(raw_choices: Any, session: dict[str, Any]) -> l
     return choices
 
 
+def _failed_choice_requirements(requirement: Any, session: dict[str, Any]) -> list[dict[str, Any]]:
+    if _session_requirement_passes(requirement, session):
+        return []
+    if isinstance(requirement, list):
+        return [leaf for child in requirement for leaf in _failed_choice_requirements(child, session)]
+    if isinstance(requirement, dict):
+        for mode in ("any", "all"):
+            if isinstance(requirement.get(mode), list):
+                return _failed_choice_requirements(requirement[mode], session)
+        return [requirement]
+    return []
+
+
+def known_item_names(session: dict[str, Any]) -> set[str]:
+    return (set(session.get("known_item_names", []))
+            | _inventory_item_names(session.get("character", {}))
+            | {str(event.get("data", {}).get("item")) for event in session.get("event_log", [])
+               if event.get("kind") == "item_added" and event.get("data", {}).get("item")})
+
+
+def choice_visibility(choice: dict[str, Any], session: dict[str, Any]) -> str:
+    requirements = choice.get("requirements")
+    if requirements is None:
+        requirements = _requirements_from_choice_text(choice)
+    failed = _failed_choice_requirements(requirements, session)
+    if not failed:
+        return "available" if choice.get("enabled", True) else "known"
+    if any("character_id" in leaf for leaf in failed):
+        return "hidden"
+    known = known_item_names(session)
+    for leaf in failed:
+        if any(key in leaf for key in ("flag", "not_flag", "flags_count_gte", "companion_id")):
+            return "unknown"
+        item = _requirement_item_name(leaf, ("has_item", "inventory_has", "requires_item"))
+        if item:
+            if item not in known:
+                return "unknown"
+        elif not any(key in leaf for key in ("gold_gte", "min_gold", "gold_lte", "max_gold",
+                                             "attribute", "attr", "hp_gte", "mp_gte", "sp_gte",
+                                             "lacks_item", "not_item", "missing_item")):
+            return "unknown"
+    return "known"
+
+
+def player_choices_for_session(choices: list[dict[str, Any]], session: dict[str, Any]) -> list[dict[str, Any]]:
+    """Redact only the public UI surface; planner and executable actions keep their original data."""
+    result = []
+    for source in choices:
+        visibility = choice_visibility(source, session)
+        if visibility == "hidden":
+            continue
+        if visibility == "unknown":
+            result.append({"text": "？？？", "visibility": "unknown", "enabled": False,
+                           "disabled_reason": "まだ知らない何かが必要なようだ。"})
+            continue
+        choice = {key: deepcopy(value) for key, value in source.items()
+                  if key in {"id", "action_id", "text", "preview", "risk", "enabled", "disabled_reason", "children", "open_shop"}}
+        choice["visibility"] = visibility
+        if isinstance(choice.get("children"), list):
+            choice["children"] = player_choices_for_session(choice["children"], session)
+            if not choice["children"]:
+                continue
+        result.append(choice)
+    return result
+
+
 def _current_scene_enemies(session: dict[str, Any]) -> list[dict[str, Any]]:
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
@@ -623,6 +691,8 @@ def record_state_event(
     }
     events = session.setdefault("event_log", [])
     events.append(event)
+    if kind == "item_added":
+        session["known_item_names"] = sorted(known_item_names(session))
     if len(events) > 240:
         session["event_log"] = events[-240:]
     if visible and text:
@@ -700,6 +770,9 @@ def apply_gm_payload(
     payload: Optional[dict[str, Any]],
     parse_warning: Optional[str] = None,
 ) -> None:
+    scripted_opening = bool(session.get("needs_opening") and (_current_location_record(session) or {}).get("opening_effects"))
+    if scripted_opening:
+        apply_opening_effects(session)
     current_dice_dc = session.get("next_dice_dc", 0)
     roll_failed = _latest_roll_failed(session, current_dice_dc)
     if roll_failed and _should_coerce_failed_roll_text(gm_text, payload, parse_warning):
@@ -736,7 +809,7 @@ def apply_gm_payload(
     if not isinstance(state_delta, dict):
         add_system_log(session, "GM応答のstate_deltaが不正だったため無視しました。")
         return
-    if _model_state_mutations_allowed(session):
+    if not scripted_opening and _model_state_mutations_allowed(session):
         _infer_state_delta_from_text(gm_text, session, state_delta)
         apply_state_delta(session, sanitize_model_state_delta(session, state_delta))
 
@@ -760,6 +833,16 @@ def apply_gm_payload(
     else:
         add_system_log(session, "choices fallback: model did not provide choices.")
     session["choices"] = _fallback_choices_after_model_failure(session, current_dice_dc)
+
+
+def apply_opening_effects(session: dict[str, Any]) -> dict[str, Any]:
+    if session.get("opening_effects_applied"):
+        return {}
+    effects = (_current_location_record(session) or {}).get("opening_effects", [])
+    delta = _effects_to_state_delta(effects, session)
+    apply_state_delta(session, delta)
+    session["opening_effects_applied"] = True
+    return delta
 
 
 def _normalize_choices(raw: list[Any]) -> list[dict[str, Any]]:

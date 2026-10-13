@@ -11,8 +11,7 @@ const state = {
   selectedCharacterImage: "/static/images/char_male_hero_v2.png",
   selectedCharacter: null,
   characters: [],
-  expandedCharacterId: "",
-  scenarioPath: "host/prompt/processed/dragon_rpg.json",
+  scenarioPath: "host/prompt/processed/dragon_rpg_hybrid.json",
   lastDiceLogLength: 0,
   lastDiceSignature: "",
   diceAnimationTimer: null,
@@ -39,6 +38,8 @@ const state = {
 const els = {
   /* Start screen */
   startScreen:     document.querySelector("#startScreen"),
+  startTitle:      document.querySelector("#startTitle"),
+  startError:      document.querySelector("#startError"),
   gameScreen:      document.querySelector("#gameScreen"),
   backendSelect:   document.querySelector("#backendSelect"),
   modelSelect:     document.querySelector("#modelSelect"),
@@ -97,6 +98,7 @@ const els = {
   goldText: document.querySelector("#goldText"),
   choicesArea: document.querySelector("#choicesArea"),
   choicesList: document.querySelector("#choicesList"),
+  choiceDescription: document.querySelector("#choiceDescription"),
   combatScreen: document.querySelector("#combatScreen"),
   combatIntro: document.querySelector("#combatIntro"),
   combatIntroText: document.querySelector("#combatIntroText"),
@@ -301,7 +303,7 @@ async function loadScenarios() {
     }
     els.scenarioSelect.addEventListener("change", onScenarioChange);
   } catch (err) {
-    els.backendStatus.textContent = `シナリオの読み込みに失敗しました: ${err.message}`;
+    showStartError(`シナリオの読み込みに失敗しました: ${err.message}`);
   }
 }
 
@@ -321,7 +323,8 @@ async function onScenarioChange() {
     const data = await fetchJson(`/api/scenarios/${encodeURIComponent(filename)}`);
     const characters = (data.scenario?.characters || []).filter((char) => char.selectable !== false);
     state.scenarioPath = `host/prompt/processed/${filename}`;
-    state.expandedCharacterId = "";
+    els.startTitle.textContent = data.scenario?.meta?.title || els.scenarioSelect.selectedOptions[0].textContent;
+    document.title = `${els.startTitle.textContent} — AI GM TRPG`;
     renderCharacterCards(characters);
   } catch (err) {
     els.characterCards.innerHTML = `<p class="start-backend">キャラクターの読み込みに失敗しました</p>`;
@@ -335,48 +338,22 @@ function renderCharacterCards(characters) {
     state.selectedCharacterImage = "";
     state.selectedCharacter = null;
     state.characters = [];
-    state.expandedCharacterId = "";
     els.heroNameInput.value = "";
-    els.genderSelect.style.display = "none";
     els.characterCards.innerHTML = `<p class="start-backend">このシナリオにキャラクター定義がありません</p>`;
     return;
   }
   const selectedId = characters.some((char) => char.id === state.selectedCharacterId)
     ? state.selectedCharacterId
     : characters[0].id;
-  const expandedId = characters.some((char) => char.id === state.expandedCharacterId)
-    ? state.expandedCharacterId
-    : "";
   els.characterCards.innerHTML = characters.map((char) => {
-    const attrs = char.attributes || {};
-    const attrText = Object.entries(attrs)
-      .map(([k, v]) => `<span class="char-attr">${escapeHtml(k)} ${v}</span>`)
-      .join("");
-    const inventoryText = (char.inventory || [])
-      .map((item) => `${item.name || ""}${item.quantity ? ` x${item.quantity}` : ""}`)
-      .filter(Boolean)
-      .map((text) => `<span class="char-chip">${escapeHtml(text)}</span>`)
-      .join("");
-    const equipmentText = (char.equipment || [])
-      .map((text) => `<span class="char-chip">${escapeHtml(text)}</span>`)
-      .join("");
     const isSelected = char.id === selectedId;
-    const isExpanded = char.id === expandedId;
-    const img = char.image || "";
-    return `<button class="char-card ${isSelected ? "selected" : ""} ${isExpanded ? "expanded" : ""}" data-char-id="${escapeAttr(char.id)}" type="button" aria-expanded="${isExpanded ? "true" : "false"}">
-      <div class="char-card-summary">
+    const description = (char.description || "").match(/[^。]+。?/)?.[0] || "";
+    return `<button class="char-card ${isSelected ? "selected" : ""}" data-char-id="${escapeAttr(char.id)}" type="button" aria-pressed="${isSelected}">
+      <div class="char-card-portrait"><img class="char-card-img" src="${escapeAttr(characterPortrait(char))}" alt="" /></div>
+      <div class="char-card-info">
         <strong>${escapeHtml(char.name || char.id)}</strong>
-        <span class="char-card-chevron">⌄</span>
-      </div>
-      <div class="char-card-details" ${isExpanded ? "" : "hidden"}>
-        <div class="char-card-img" style="background-image:url('${escapeAttr(img)}')"></div>
-        <div class="char-card-info">
-          <span class="char-card-stats">HP ${char.hp}/${char.max_hp} MP ${char.mp}/${char.max_mp} SP ${char.sp}/${char.max_sp}</span>
-          ${char.description ? `<p class="char-card-desc">${escapeHtml(char.description)}</p>` : ""}
-          <div class="char-card-attrs">${attrText}</div>
-          ${equipmentText ? `<div class="char-card-line"><span>装備</span><div>${equipmentText}</div></div>` : ""}
-          ${inventoryText ? `<div class="char-card-line"><span>所持</span><div>${inventoryText}</div></div>` : ""}
-        </div>
+        <p class="char-card-desc" title="${escapeAttr(char.description || "")}">${escapeHtml(description)}</p>
+        <span class="char-card-stats">HP ${char.hp} / MP ${char.mp}</span>
       </div>
     </button>`;
   }).join("");
@@ -385,44 +362,35 @@ function renderCharacterCards(characters) {
     card.addEventListener("click", () => {
       const charId = card.dataset.charId;
       const char = characters.find((c) => c.id === charId);
-      if (char) selectCharacter(char, { expanded: state.expandedCharacterId !== charId });
+      if (char) selectCharacter(char);
     });
   });
   const selected = characters.find((char) => char.id === selectedId) || characters[0];
-  selectCharacter(selected, { render: false });
+  selectCharacter(selected);
 }
 
-function selectCharacter(char, options = {}) {
+function selectCharacter(char) {
   state.selectedCharacterId = char.id;
   state.selectedCharacter = char;
   els.heroNameInput.value = char.default_name || char.name || "";
-  if (char.id === "hero") {
-    els.genderSection.style.display = "";
-    updateHeroImage(char);
-  } else {
-    els.genderSection.style.display = "none";
-    state.selectedCharacterImage = char.image || "";
-  }
-  if (Object.prototype.hasOwnProperty.call(options, "expanded")) {
-    state.expandedCharacterId = options.expanded ? char.id : "";
-  }
-  if (options.render === false) return;
+  state.selectedCharacterImage = characterPortrait(char);
   document.querySelectorAll(".char-card").forEach((card) => {
     const selected = card.dataset.charId === char.id;
-    const expanded = card.dataset.charId === state.expandedCharacterId;
     card.classList.toggle("selected", selected);
-    card.classList.toggle("expanded", expanded);
-    card.setAttribute("aria-expanded", expanded ? "true" : "false");
-    const details = card.querySelector(".char-card-details");
-    if (details) details.hidden = !expanded;
+    card.setAttribute("aria-pressed", String(selected));
   });
 }
 
-function updateHeroImage(char) {
+function characterPortrait(char) {
   const gender = document.querySelector('input[name="heroGender"]:checked')?.value || "男勇者";
-  state.selectedCharacterImage = gender === "女勇者" && char.image_female
+  return gender === "女勇者" && char.image_female
     ? char.image_female
     : char.image || "";
+}
+
+function showStartError(message) {
+  els.startError.textContent = message;
+  els.startError.hidden = !message;
 }
 
 async function startGame() {
@@ -435,6 +403,7 @@ async function startGame() {
   const characterId = selectedCharacter?.id || state.selectedCharacterId;
   const characterImage = characterImageForStart(selectedCharacter);
   localStorage.setItem("trpg.gmMode", gmMode);
+  showStartError("");
   setStartBusy(true);
   try {
     // Update config first
@@ -466,7 +435,7 @@ async function startGame() {
     els.gameScreen.style.display = "";
     renderSession(session);
   } catch (err) {
-    els.backendStatus.textContent = `エラー: ${err.message}`;
+    showStartError(`エラー: ${err.message}`);
   } finally {
     setStartBusy(false);
   }
@@ -486,11 +455,7 @@ function currentSelectedCharacter() {
 
 function characterImageForStart(char) {
   if (!char) return state.selectedCharacterImage || "";
-  if (char.id === "hero") {
-    updateHeroImage(char);
-    return state.selectedCharacterImage || char.image || "";
-  }
-  state.selectedCharacterImage = char.image || "";
+  state.selectedCharacterImage = characterPortrait(char);
   return state.selectedCharacterImage;
 }
 
@@ -1104,6 +1069,8 @@ function renderChoices(choices) {
     backCard.className = "choice-card choice-back";
     backCard.dataset.choiceIndex = "-1";
     backCard.dataset.choiceText = "__back__";
+    backCard.dataset.description = "";
+    backCard.setAttribute("aria-describedby", "choiceDescription");
     const numberDiv = document.createElement("div");
     numberDiv.className = "choice-number";
     numberDiv.innerHTML = "&#9664;";
@@ -1125,11 +1092,14 @@ function renderChoices(choices) {
     const risk = typeof choice === "object" ? (choice.risk || "") : "";
     const enabled = typeof choice === "object" && choice.enabled === false ? false : true;
     const disabledReason = typeof choice === "object" ? (choice.disabled_reason || "") : "";
+    const unknown = choice.visibility === "unknown";
     const hasChildren = typeof choice === "object" && Array.isArray(choice.children) && choice.children.length > 0;
 
     const card = document.createElement("button");
     card.type = "button";
-    card.disabled = !enabled;
+    card.setAttribute("aria-disabled", String(!enabled));
+    card.setAttribute("aria-describedby", "choiceDescription");
+    card.dataset.description = enabled ? preview : disabledReason;
     card.dataset.choiceIndex = String(i);
     card.dataset.choiceText = text;
     card.dataset.actionId = typeof choice === "object" ? (choice.action_id || choice.id || "") : "";
@@ -1139,6 +1109,7 @@ function renderChoices(choices) {
     } else {
       card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""} ${enabled ? "" : "disabled-choice"}`;
     }
+    card.classList.toggle("unknown-choice", unknown);
 
     const riskClass = classifyRisk(risk);
 
@@ -1154,18 +1125,19 @@ function renderChoices(choices) {
     bodyDiv.className = "choice-body";
     bodyDiv.appendChild(textDiv);
 
-    if (hasChildren) {
+    if (hasChildren && !unknown) {
       const hintSpan = document.createElement("span");
       hintSpan.className = "choice-group-hint";
       hintSpan.textContent = Array.isArray(choice.children) ? `${choice.children.length}件` : "";
       bodyDiv.appendChild(hintSpan);
-    } else if (preview) {
+    }
+    if (preview && !unknown) {
       const previewDiv = document.createElement("div");
       previewDiv.className = "choice-preview";
       previewDiv.textContent = preview;
       bodyDiv.appendChild(previewDiv);
     }
-    if (risk && !hasChildren) {
+    if (risk && !hasChildren && !unknown) {
       const riskSpan = document.createElement("span");
       riskSpan.className = `choice-risk ${riskClass}`;
       riskSpan.textContent = risk;
@@ -1185,9 +1157,18 @@ function renderChoices(choices) {
   }
 
   els.choicesArea.style.display = "";
+  highlightChoice(els.choicesList.querySelector(".choice-card"));
   els.dialogueBox.classList.remove("choices-ready");
   if (els.clickIndicator) els.clickIndicator.style.display = "none";
   choiceDebug("render-choices-visible", choiceLayoutDebug());
+}
+
+function highlightChoice(card) {
+  if (!card || !els.choicesList.contains(card)) return;
+  for (const row of els.choicesList.querySelectorAll(".choice-card")) {
+    row.classList.toggle("highlighted", row === card);
+  }
+  els.choiceDescription.textContent = card.dataset.description || "";
 }
 
 function isCombatChoice(text, preview, risk) {
@@ -1295,14 +1276,14 @@ function handleChoiceListClick(event) {
     targetTag: event.target?.tagName || "",
     targetClass: String(event.target?.className || ""),
     hasCard: Boolean(card),
-    cardDisabled: Boolean(card?.disabled),
+    cardDisabled: card?.getAttribute("aria-disabled") === "true",
     cardIndex: card?.dataset.choiceIndex || "",
     cardText: card?.dataset.choiceText || "",
     cardParent: card?.dataset.choiceParent || "",
     actionId: card?.dataset.actionId || "",
     layout: choiceLayoutDebug(),
   });
-  if (!card || !els.choicesList.contains(card) || card.disabled) return;
+  if (!card || !els.choicesList.contains(card) || card.getAttribute("aria-disabled") === "true") return;
 
   if (card.dataset.choiceText === "__back__") {
     if (state.choiceStack.length > 0) {
@@ -1632,13 +1613,11 @@ for (const input of els.gmModeInputs || []) {
 }
 for (const input of document.querySelectorAll('input[name="heroGender"]')) {
   input.addEventListener("change", () => {
-    if (state.selectedCharacterId === "hero" && state.selectedCharacter) {
-      const char = state.selectedCharacter;
-      const image = input.value === "女勇者" && char.image_female
-        ? char.image_female
-        : char.image || "";
-      state.selectedCharacterImage = image;
+    for (const card of els.characterCards.querySelectorAll(".char-card")) {
+      const char = state.characters.find((item) => item.id === card.dataset.charId);
+      if (char) card.querySelector("img").src = characterPortrait(char);
     }
+    if (state.selectedCharacter) state.selectedCharacterImage = characterPortrait(state.selectedCharacter);
   });
 }
 
@@ -1649,10 +1628,12 @@ if (configToggle && configPanel) {
   configToggle.addEventListener("click", (e) => {
     e.stopPropagation();
     configPanel.classList.toggle("open");
+    configToggle.setAttribute("aria-expanded", String(configPanel.classList.contains("open")));
   });
   document.addEventListener("click", (e) => {
     if (!configPanel.contains(e.target)) {
       configPanel.classList.remove("open");
+      configToggle.setAttribute("aria-expanded", "false");
     }
   });
 }
@@ -1665,7 +1646,21 @@ if (els.logCloseBtn) els.logCloseBtn.addEventListener("click", () => els.logOver
 if (els.inputToggleBtn) els.inputToggleBtn.addEventListener("click", () => {
   els.form.style.display = els.form.style.display === "none" ? "" : "none";
 });
-if (els.choicesList) els.choicesList.addEventListener("click", handleChoiceListClick);
+if (els.choicesList) {
+  els.choicesList.addEventListener("click", handleChoiceListClick);
+  for (const event of ["pointerover", "focusin"]) {
+    els.choicesList.addEventListener(event, (e) => highlightChoice(e.target.closest(".choice-card")));
+  }
+  els.choicesList.addEventListener("keydown", (event) => {
+    if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
+    const cards = [...els.choicesList.querySelectorAll(".choice-card")];
+    const index = cards.indexOf(document.activeElement);
+    const next = event.key === "Home" ? 0 : event.key === "End" ? cards.length - 1
+      : (index + (event.key === "ArrowDown" ? 1 : -1) + cards.length) % cards.length;
+    event.preventDefault();
+    cards[next]?.focus();
+  });
+}
 if (els.combatScreen) {
   els.combatScreen.addEventListener("click", (event) => {
     const target = event.target.closest("[data-combat-target]");

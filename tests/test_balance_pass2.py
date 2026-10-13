@@ -69,7 +69,7 @@ class BalancePass2Tests(unittest.TestCase):
                 self.assertEqual(holy["quantity"], 2)
                 self.assertEqual(holy["combat"]["element"], "holy")
                 self.assertEqual(holy["combat"]["damage"], "36")
-                self.assertEqual(session["character"]["gold"], gold + 50)
+                self.assertEqual(session["character"]["gold"], gold)
                 self.assertFalse(state.action_requirement_status(action, session)[0])
                 state.apply_action_result(session, action, {})
                 self.assertEqual(next(i for i in session["character"]["inventory"] if i.get("id") == "holy_water")["quantity"], 2)
@@ -119,7 +119,7 @@ class BalancePass2Tests(unittest.TestCase):
             for cid, actor in entry["characters"].items():
                 holy = next(i for i in actor["inventory"] if i.get("id") == "holy_water")
                 self.assertEqual(holy["quantity"], 1 if encounter == "xanxus_phantom_battle" else 2)
-                self.assertEqual(actor["sources"][0]["step"], "check_supplies")
+                self.assertEqual([source["step"] for source in actor["sources"][:2]], ["@opening", "check_supplies"])
                 if encounter == "warlock_rescue_battle":
                     continue
                 session = sim.prepare_session(self.pack, encounter, cid, cp)
@@ -132,7 +132,7 @@ class BalancePass2Tests(unittest.TestCase):
     def test_village_without_companion_and_valley_without_ian_reward(self):
         for cid in ("hero", "cleric", "mage", "thief"):
             session = checkpoints.fresh_session(deepcopy(self.pack), cid)
-            route = checkpoints.proposed_routes()["frost_wolf_battle"] + ["@victory"]
+            route = ["go_castle_town"] + checkpoints.proposed_routes()["frost_wolf_battle"] + ["@victory"]
             for step in route:
                 checkpoints.replay_step(session, step)
             self.assertTrue(session["flags"]["reached_village"])

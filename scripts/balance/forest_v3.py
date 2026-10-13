@@ -21,7 +21,7 @@ def early_checkpoints(pack: dict[str, Any]) -> dict[str, Any]:
         result["encounters"][encounter] = {"characters": {}}
         for char in CHARACTERS:
             session = checkpoints.fresh_session(pack, char)
-            for step in ("check_supplies", "go_magic_shop", "invite_blue_mage", "return_castle_from_magic_shop"):
+            for step in ("@opening", "check_supplies", "go_castle_town", "go_magic_shop", "invite_blue_mage", "return_castle_from_magic_shop"):
                 checkpoints.replay_step(session, step)
             actor = session["character"]
             result["encounters"][encounter]["characters"][char] = {

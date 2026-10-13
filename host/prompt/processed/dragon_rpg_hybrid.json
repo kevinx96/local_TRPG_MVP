@@ -7,7 +7,7 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-12-v026-support2",
+    "content_revision": "2026-10-13-v028-castle-town",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -42,7 +42,7 @@
     {
       "id": "throne_room",
       "title": "第1章：王の間",
-      "description": "白い石造りの王城。赤い絨毯、古い柱、王座に座る国王エドワード。その傍らには剣聖と称される将軍ドラコが立っている。国王は邪竜イグニス討伐を依頼し、支度金50ゴールドと薬草を渡す。",
+      "description": "白い石造りの王城。赤い絨毯、古い柱、王座に座る国王エドワード。その傍らには剣聖と称される将軍ドラコが立っている。国王は邪竜イグニス討伐を依頼し、支度金100ゴールドと薬草を渡す。",
       "goals": [
         "国王から使命を受ける",
         "邪竜と竜の谷について情報を得る",
@@ -57,10 +57,10 @@
         "王座"
       ],
       "location_ids": [
-        "castle"
+        "castle",
+        "castle_town"
       ],
       "next_scene_ids": [
-        "castle_town",
         "dark_forest",
         "village"
       ],
@@ -239,12 +239,8 @@
       "clue_ids": [],
       "enemy_ids": [],
       "connected_location_ids": [
-        "forge",
-        "inn",
-        "magic_shop",
-        "item_shop",
-        "alley",
-        "dark_forest_loc"
+        "castle_town",
+        "village"
       ],
       "choices": [
         {
@@ -258,46 +254,20 @@
           "risk": "筋力または耐久が10以上で1d20判定（DC15）"
         },
         {
-          "text": "支度金と装備を確認する",
-          "preview": "所持金、薬草、装備を整理します",
+          "text": "侍従から旅の支給品を受け取る",
+          "preview": "教会から届いた聖水を受け取ります",
           "risk": "判定不要"
         },
         {
-          "text": "城下町を探索する",
-          "preview": "鍛冶屋、宿屋、魔法店、道具屋、路地裏へ向かう",
-          "risk": "判定不要",
-          "children": [
-            {
-              "text": "鍛冶屋へ向かう",
-              "preview": "武器の強化や購入",
-              "risk": "判定不要"
-            },
-            {
-              "text": "宿屋へ向かう",
-              "preview": "休息や情報収集",
-              "risk": "判定不要"
-            },
-            {
-              "text": "魔法店へ向かう",
-              "preview": "魔法の品を購入",
-              "risk": "判定不要"
-            },
-            {
-              "text": "道具屋へ向かう",
-              "preview": "アイテムを購入",
-              "risk": "判定不要"
-            },
-            {
-              "text": "路地裏へ向かう",
-              "preview": "怪しい場所を探索",
-              "risk": "判定不要"
-            }
-          ]
+          "text": "城下町へ出る",
+          "preview": "王城の門前に広がる城下町へ",
+          "risk": "判定不要"
         },
         {
-          "text": "城を出て闇の森へ向かう",
-          "preview": "第2章へ進みます",
-          "risk": "1d20判定（DC10）"
+          "text": "麓の村へ向かう",
+          "preview": "麓の村へ向かう",
+          "risk": "判定不要",
+          "visible_after": "returned_from_village"
         }
       ],
       "hybrid": {
@@ -315,12 +285,12 @@
               "はじめ"
             ],
             "draft": {
-              "gm_text": "静寂に包まれたアルテリア王城の王の間。重厚な扉が開かれ、あなたの足音が赤い絨毯に吸い込まれていく。王座に鎮座する国王エドワードは、深いため息をつきながらあなたを見据えた。「若き冒険者よ、我が国を脅かす邪竜イグニスを討ち果たしてくれ。報酬は約束しよう。今はまず、この支度金を受け取ってくれ」国王はそう言うと、手元に50ゴールドと薬草を置いた。",
+              "gm_text": "静寂に包まれたアルテリア王城の王の間。重厚な扉が開かれ、あなたの足音が赤い絨毯に吸い込まれていく。王座に鎮座する国王エドワードは、深いため息をつきながらあなたを見据えた。「若き冒険者よ、我が国を脅かす邪竜イグニスを討ち果たしてくれ。報酬は約束しよう。今はまず、この支度金を受け取ってくれ」国王はそう言うと、手元に100ゴールドと薬草を置いた。",
               "system_log": "シナリオ開始。支度金と薬草の付与。",
               "dice_type": "null",
               "dice_dc": 0,
               "state_delta": {
-                "gold_change": 50,
+                "gold_change": 100,
                 "inventory_add": [
                   "薬草"
                 ],
@@ -338,46 +308,20 @@
                   "risk": "筋力または耐久が10以上で1d20判定（DC15）"
                 },
                 {
-                  "text": "支度金と装備を確認する",
-                  "preview": "所持金、薬草、装備を整理します",
+                  "text": "侍従から旅の支給品を受け取る",
+                  "preview": "教会から届いた聖水を受け取ります",
                   "risk": "判定不要"
                 },
                 {
-                  "text": "城下町を探索する",
-                  "preview": "鍛冶屋、宿屋、魔法店、道具屋、路地裏へ向かう",
-                  "risk": "判定不要",
-                  "children": [
-                    {
-                      "text": "鍛冶屋へ向かう",
-                      "preview": "武器の強化や購入",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "宿屋へ向かう",
-                      "preview": "休息や情報収集",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "魔法店へ向かう",
-                      "preview": "魔法の品を購入",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "道具屋へ向かう",
-                      "preview": "アイテムを購入",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "路地裏へ向かう",
-                      "preview": "怪しい場所を探索",
-                      "risk": "判定不要"
-                    }
-                  ]
+                  "text": "城下町へ出る",
+                  "preview": "王城の門前に広がる城下町へ",
+                  "risk": "判定不要"
                 },
                 {
-                  "text": "城を出て闇の森へ向かう",
-                  "preview": "第2章へ進みます",
-                  "risk": "1d20判定（DC10）"
+                  "text": "麓の村へ向かう",
+                  "preview": "麓の村へ向かう",
+                  "risk": "判定不要",
+                  "visible_after": "returned_from_village"
                 }
               ]
             },
@@ -406,51 +350,30 @@
               "state_delta": {},
               "choices": [
                 {
+                  "text": "国王に邪竜の詳しい話を聞く",
+                  "preview": "旅の目的と手がかりを確認できます",
+                  "risk": "判定不要"
+                },
+                {
                   "text": "将軍ドラコに助言を求める",
                   "preview": "実用的な戦術情報が得られるかもしれません",
                   "risk": "筋力または耐久が10以上で1d20判定（DC15）"
                 },
                 {
-                  "text": "支度金と装備を確認する",
-                  "preview": "所持金、薬草、装備を整理します",
+                  "text": "侍従から旅の支給品を受け取る",
+                  "preview": "教会から届いた聖水を受け取ります",
                   "risk": "判定不要"
                 },
                 {
-                  "text": "城下町を探索する",
-                  "preview": "鍛冶屋、宿屋、魔法店、道具屋、路地裏へ向かう",
-                  "risk": "判定不要",
-                  "children": [
-                    {
-                      "text": "鍛冶屋へ向かう",
-                      "preview": "武器の強化や購入",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "宿屋へ向かう",
-                      "preview": "休息や情報収集",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "魔法店へ向かう",
-                      "preview": "魔法の品を購入",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "道具屋へ向かう",
-                      "preview": "アイテムを購入",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "路地裏へ向かう",
-                      "preview": "怪しい場所を探索",
-                      "risk": "判定不要"
-                    }
-                  ]
+                  "text": "城下町へ出る",
+                  "preview": "王城の門前に広がる城下町へ",
+                  "risk": "判定不要"
                 },
                 {
-                  "text": "城を出て闇の森へ向かう",
-                  "preview": "第2章へ進みます",
-                  "risk": "1d20判定（DC10）"
+                  "text": "麓の村へ向かう",
+                  "preview": "麓の村へ向かう",
+                  "risk": "判定不要",
+                  "visible_after": "returned_from_village"
                 }
               ]
             },
@@ -493,46 +416,25 @@
                   "risk": "判定不要"
                 },
                 {
-                  "text": "支度金と装備を確認する",
-                  "preview": "所持金、薬草、装備を整理します",
+                  "text": "将軍ドラコに助言を求める",
+                  "preview": "実用的な戦術情報が得られるかもしれません",
+                  "risk": "筋力または耐久が10以上で1d20判定（DC15）"
+                },
+                {
+                  "text": "侍従から旅の支給品を受け取る",
+                  "preview": "教会から届いた聖水を受け取ります",
                   "risk": "判定不要"
                 },
                 {
-                  "text": "城下町を探索する",
-                  "preview": "鍛冶屋、宿屋、魔法店、道具屋、路地裏へ向かう",
-                  "risk": "判定不要",
-                  "children": [
-                    {
-                      "text": "鍛冶屋へ向かう",
-                      "preview": "武器の強化や購入",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "宿屋へ向かう",
-                      "preview": "休息や情報収集",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "魔法店へ向かう",
-                      "preview": "魔法の品を購入",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "道具屋へ向かう",
-                      "preview": "アイテムを購入",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "路地裏へ向かう",
-                      "preview": "怪しい場所を探索",
-                      "risk": "判定不要"
-                    }
-                  ]
+                  "text": "城下町へ出る",
+                  "preview": "王城の門前に広がる城下町へ",
+                  "risk": "判定不要"
                 },
                 {
-                  "text": "城を出て闇の森へ向かう",
-                  "preview": "第2章へ進みます",
-                  "risk": "1d20判定（DC10）"
+                  "text": "麓の村へ向かう",
+                  "preview": "麓の村へ向かう",
+                  "risk": "判定不要",
+                  "visible_after": "returned_from_village"
                 }
               ]
             },
@@ -574,46 +476,25 @@
                   "risk": "判定不要"
                 },
                 {
-                  "text": "支度金と装備を確認する",
-                  "preview": "所持金、薬草、装備を整理します",
+                  "text": "将軍ドラコに助言を求める",
+                  "preview": "実用的な戦術情報が得られるかもしれません",
+                  "risk": "筋力または耐久が10以上で1d20判定（DC15）"
+                },
+                {
+                  "text": "侍従から旅の支給品を受け取る",
+                  "preview": "教会から届いた聖水を受け取ります",
                   "risk": "判定不要"
                 },
                 {
-                  "text": "城下町を探索する",
-                  "preview": "鍛冶屋、宿屋、魔法店、道具屋、路地裏へ向かう",
-                  "risk": "判定不要",
-                  "children": [
-                    {
-                      "text": "鍛冶屋へ向かう",
-                      "preview": "武器の強化や購入",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "宿屋へ向かう",
-                      "preview": "休息や情報収集",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "魔法店へ向かう",
-                      "preview": "魔法の品を購入",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "道具屋へ向かう",
-                      "preview": "アイテムを購入",
-                      "risk": "判定不要"
-                    },
-                    {
-                      "text": "路地裏へ向かう",
-                      "preview": "怪しい場所を探索",
-                      "risk": "判定不要"
-                    }
-                  ]
+                  "text": "城下町へ出る",
+                  "preview": "王城の門前に広がる城下町へ",
+                  "risk": "判定不要"
                 },
                 {
-                  "text": "城を出て闇の森へ向かう",
-                  "preview": "第2章へ進みます",
-                  "risk": "1d20判定（DC10）"
+                  "text": "麓の村へ向かう",
+                  "preview": "麓の村へ向かう",
+                  "risk": "判定不要",
+                  "visible_after": "returned_from_village"
                 }
               ]
             },
@@ -624,48 +505,12 @@
             "outcome": "failure"
           },
           {
-            "id": "castle_departure_success",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "go_dark_forest",
-            "trigger_keywords": [],
-            "action_id": "go_dark_forest",
-            "outcome": "success",
-            "draft": {
-              "gm_text": "城門を抜けると石畳は次第に細い獣道へ変わり、湿った土と苔の匂いが濃くなっていく。やがて木々が陽光を遮り、闇の森の入口で青いスライムが進路を塞いだ。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
-          },
-          {
-            "id": "castle_departure_failure",
-            "purpose": "choice_response",
-            "source_choice": "",
-            "player_intent": "go_dark_forest",
-            "trigger_keywords": [],
-            "action_id": "go_dark_forest",
-            "outcome": "failure",
-            "draft": {
-              "gm_text": "城門を出たところで装備の留め具が外れ、森へ入る前に引き返すことになった。支度を整え直せば、もう一度出発できる。",
-              "system_log": "",
-              "state_delta": {},
-              "choices": []
-            },
-            "rewrite_notes": [
-              "確定済みのアクション結果だけを自然な日本語で描写してください。"
-            ]
-          },
-          {
             "id": "check_supplies_neutral",
             "purpose": "choice_response",
             "action_id": "check_supplies",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "装備を確認し、聖水を2個受け取った。",
+              "gm_text": "侍従が小箱を差し出した。「教会より、邪竜討伐に向かわれる方へ」中には清められた聖水が二本収められている。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -735,11 +580,11 @@
         },
         {
           "id": "check_supplies",
-          "text": "支度金と装備を確認する",
-          "preview": "所持金、薬草、装備を整理します",
+          "text": "侍従から旅の支給品を受け取る",
+          "preview": "教会から届いた聖水を受け取ります",
           "risk": "判定不要",
           "intent_keywords": [
-            "支度金と装備を確認する"
+            "侍従から旅の支給品を受け取る"
           ],
           "once": "checked_supplies",
           "effects": [
@@ -750,9 +595,6 @@
                 },
                 "then": [
                   {
-                    "gold_change": 50
-                  },
-                  {
                     "add_item": {
                       "id": "holy_water",
                       "name": "聖水",
@@ -762,135 +604,20 @@
                 ]
               }
             }
-          ]
+          ],
+          "result_text": "侍従が小箱を差し出した。「教会より、邪竜討伐に向かわれる方へ」中には清められた聖水が二本収められている。"
         },
         {
-          "id": "explore_castle_town",
-          "text": "城下町を探索する",
-          "preview": "鍛冶屋、宿屋、魔法店、道具屋、路地裏へ向かう",
+          "id": "go_castle_town",
+          "text": "城下町へ出る",
+          "preview": "王城の門前に広がる城下町へ",
           "risk": "判定不要",
           "intent_keywords": [
-            "城下町",
-            "街",
-            "町",
-            "探索",
-            "店",
-            "宿屋",
-            "鍛冶屋",
-            "魔法店",
-            "道具屋",
-            "路地裏"
+            "城下町へ出る"
           ],
-          "children": [
+          "effects": [
             {
-              "id": "go_forge",
-              "text": "鍛冶屋へ向かう",
-              "preview": "武器の強化や購入",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "鍛冶屋へ向かう"
-              ],
-              "effects": [
-                {
-                  "current_location": "forge"
-                }
-              ]
-            },
-            {
-              "id": "go_inn",
-              "text": "宿屋へ向かう",
-              "preview": "休息や情報収集",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "宿屋へ向かう"
-              ],
-              "effects": [
-                {
-                  "current_location": "inn"
-                }
-              ]
-            },
-            {
-              "id": "go_magic_shop",
-              "text": "魔法店へ向かう",
-              "preview": "魔法の品を購入",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "魔法店へ向かう"
-              ],
-              "effects": [
-                {
-                  "current_location": "magic_shop"
-                }
-              ]
-            },
-            {
-              "id": "go_item_shop",
-              "text": "道具屋へ向かう",
-              "preview": "アイテムを購入",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "道具屋へ向かう"
-              ],
-              "effects": [
-                {
-                  "current_location": "item_shop"
-                }
-              ]
-            },
-            {
-              "id": "go_alley",
-              "text": "路地裏へ向かう",
-              "preview": "怪しい場所を探索",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "路地裏へ向かう"
-              ],
-              "effects": [
-                {
-                  "current_location": "alley"
-                }
-              ]
-            },
-            {
-              "id": "ask_gald_rumor",
-              "text": "行商人ガルドに声をかける",
-              "preview": "行商人ガルドに声をかける",
-              "risk": "判定不要",
-              "intent_keywords": [
-                "行商人ガルドに声をかける"
-              ],
-              "effects": [
-                {
-                  "set_flag": "heard_gald_rumor"
-                }
-              ],
-              "visible_after": "saved_gald",
-              "result_text": "「将軍様の屋敷に、夜な夜な白い霧が出るって噂だぜ」",
-              "portrait_image": "/static/images/npc_gald.png"
-            }
-          ]
-        },
-        {
-          "id": "go_dark_forest",
-          "text": "城を出て闇の森へ向かう",
-          "preview": "第2章へ進みます",
-          "risk": "1d20判定（DC10）",
-          "intent_keywords": [
-            "城を出て闇の森へ向かう"
-          ],
-          "roll": {
-            "dice_type": "1d20",
-            "dc": 10
-          },
-          "success_effects": [
-            {
-              "current_location": "dark_forest_loc"
-            }
-          ],
-          "failure_effects": [
-            {
-              "set_flag": "forest_departure_failed"
+              "current_location": "castle_town"
             }
           ]
         },
@@ -937,6 +664,256 @@
           },
           "npc_id": "general"
         }
+      ],
+      "opening_effects": [
+        {
+          "gold_change": 100
+        },
+        {
+          "add_item": {
+            "name": "薬草",
+            "quantity": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "castle_town",
+      "scene_id": "throne_room",
+      "title": "アルテリア城下町",
+      "description": "王城の門前から石畳の大通りが延びる城下町。鍛冶屋の煙突からは煙が上がり、宿屋の看板が風に揺れ、魔法店の窓には青い灯りがともる。裏手には細い路地が口を開けている。邪竜の噂のせいか、行き交う人々の声はどこか低い。",
+      "keywords": [
+        "城下町",
+        "大通り",
+        "城門"
+      ],
+      "npc_ids": [
+        "gald"
+      ],
+      "npc_requirements": {
+        "gald": {
+          "flag": "saved_gald"
+        }
+      },
+      "actions": [
+        {
+          "id": "go_forge",
+          "text": "鍛冶屋へ向かう",
+          "preview": "武器の強化や購入",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鍛冶屋へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "forge"
+            }
+          ]
+        },
+        {
+          "id": "go_inn",
+          "text": "宿屋へ向かう",
+          "preview": "休息や情報収集",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "宿屋へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "inn"
+            }
+          ]
+        },
+        {
+          "id": "go_magic_shop",
+          "text": "魔法店へ向かう",
+          "preview": "魔法の品を購入",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "魔法店へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "magic_shop"
+            }
+          ]
+        },
+        {
+          "id": "go_item_shop",
+          "text": "道具屋へ向かう",
+          "preview": "アイテムを購入",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "道具屋へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "item_shop"
+            }
+          ]
+        },
+        {
+          "id": "go_alley",
+          "text": "路地裏へ向かう",
+          "preview": "怪しい場所を探索",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "路地裏へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "alley"
+            }
+          ]
+        },
+        {
+          "id": "ask_gald_rumor",
+          "text": "行商人ガルドに声をかける",
+          "preview": "行商人ガルドに声をかける",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "行商人ガルドに声をかける"
+          ],
+          "effects": [
+            {
+              "set_flag": "heard_gald_rumor"
+            }
+          ],
+          "visible_after": "saved_gald",
+          "result_text": "「将軍様の屋敷に、夜な夜な白い霧が出るって噂だぜ」",
+          "portrait_image": "/static/images/npc_gald.png"
+        },
+        {
+          "id": "return_castle_from_town",
+          "text": "王城へ戻る",
+          "preview": "王城へ戻る",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "王城へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "castle"
+            }
+          ]
+        },
+        {
+          "id": "go_dark_forest",
+          "text": "城門を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）",
+          "intent_keywords": [
+            "城門を出て闇の森へ向かう"
+          ],
+          "roll": {
+            "dice_type": "1d20",
+            "dc": 10
+          },
+          "success_effects": [
+            {
+              "current_location": "dark_forest_loc"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "forest_departure_failed"
+            }
+          ]
+        }
+      ],
+      "hybrid": {
+        "mode": "prepared_gm_turns",
+        "prepared_turns": [
+          {
+            "id": "castle_departure_success",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "go_dark_forest",
+            "trigger_keywords": [],
+            "action_id": "go_dark_forest",
+            "outcome": "success",
+            "draft": {
+              "gm_text": "城門を抜けると石畳は次第に細い獣道へ変わり、湿った土と苔の匂いが濃くなっていく。やがて木々が陽光を遮り、闇の森の入口で青いスライムが進路を塞いだ。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          },
+          {
+            "id": "castle_departure_failure",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "go_dark_forest",
+            "trigger_keywords": [],
+            "action_id": "go_dark_forest",
+            "outcome": "failure",
+            "draft": {
+              "gm_text": "城門を出たところで装備の留め具が外れ、森へ入る前に引き返すことになった。支度を整え直せば、もう一度出発できる。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          }
+        ]
+      },
+      "background_image": "/static/images/bg_castle_town.png",
+      "connected_location_ids": [
+        "forge",
+        "inn",
+        "magic_shop",
+        "item_shop",
+        "alley",
+        "castle",
+        "dark_forest_loc"
+      ],
+      "choices": [
+        {
+          "text": "鍛冶屋へ向かう",
+          "preview": "武器の強化や購入",
+          "risk": "判定不要"
+        },
+        {
+          "text": "宿屋へ向かう",
+          "preview": "休息や情報収集",
+          "risk": "判定不要"
+        },
+        {
+          "text": "魔法店へ向かう",
+          "preview": "魔法の品を購入",
+          "risk": "判定不要"
+        },
+        {
+          "text": "道具屋へ向かう",
+          "preview": "アイテムを購入",
+          "risk": "判定不要"
+        },
+        {
+          "text": "路地裏へ向かう",
+          "preview": "怪しい場所を探索",
+          "risk": "判定不要"
+        },
+        {
+          "text": "行商人ガルドに声をかける",
+          "preview": "行商人ガルドに声をかける",
+          "risk": "判定不要",
+          "visible_after": "saved_gald"
+        },
+        {
+          "text": "王城へ戻る",
+          "preview": "王城へ戻る",
+          "risk": "判定不要"
+        },
+        {
+          "text": "城門を出て闇の森へ向かう",
+          "preview": "第2章へ進みます",
+          "risk": "1d20判定（DC10）"
+        }
       ]
     },
     {
@@ -963,31 +940,17 @@
       "clue_ids": [],
       "enemy_ids": [],
       "connected_location_ids": [
-        "castle",
+        "castle_town",
         "inn",
         "magic_shop",
         "item_shop",
-        "alley",
-        "dark_forest_loc"
+        "alley"
       ],
       "choices": [
         {
-          "id": "open_forge_shop",
           "text": "店に入る",
           "preview": "ローベルト鍛冶店",
-          "risk": "判定不要",
-          "open_shop": "forge_shop",
-          "intent_keywords": [
-            "店に入る",
-            "買う",
-            "購入",
-            "売却",
-            "装備を買う",
-            "アダマンタイトの鎧を買う",
-            "アダマンタイトの鎧",
-            "氷の護符を買う",
-            "氷の護符"
-          ]
+          "risk": "判定不要"
         },
         {
           "text": "邪竜を討つ方法を聞く",
@@ -1003,14 +966,71 @@
           }
         },
         {
-          "text": "城に戻る",
-          "preview": "城内に戻る",
+          "text": "鍛冶師の提案を受け入れる",
+          "preview": "鉄の剣を氷鉄の大剣へ作り替える",
+          "risk": "判定不要",
+          "visible_after": "showed_hero_sword",
+          "requirements": {
+            "all": [
+              {
+                "character_id": "hero"
+              },
+              {
+                "has_item": "鉄の剣"
+              },
+              {
+                "lacks_item": "氷鉄の大剣"
+              }
+            ]
+          }
+        },
+        {
+          "text": "氷の護符を武器へ嵌め込み活性化する",
+          "preview": "通常攻撃に1d8+INT/2の氷属性追撃を加えます",
+          "risk": "判定不要",
+          "requirements": {
+            "all": [
+              {
+                "has_item": "氷の護符"
+              },
+              {
+                "lacks_item": "氷の護符(活性化済)"
+              }
+            ]
+          }
+        },
+        {
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
           "risk": "判定不要"
         },
         {
-          "text": "城を出て闇の森へ向かう",
-          "preview": "第2章へ進みます",
-          "risk": "1d20判定（DC10）"
+          "text": "氷の結晶を護符に加工する",
+          "preview": "氷の結晶を護符に加工する",
+          "risk": "判定不要",
+          "requirements": {
+            "all": [
+              {
+                "has_item": "氷の結晶"
+              },
+              {
+                "gold_gte": 20
+              }
+            ]
+          }
+        },
+        {
+          "text": "浮かない顔をしているが？",
+          "preview": "浮かない顔をしているが？",
+          "risk": "判定不要"
+        },
+        {
+          "text": "刻印のハンマーを返す",
+          "preview": "刻印のハンマーを返す",
+          "risk": "判定不要",
+          "requirements": {
+            "has_item": "刻印のハンマー"
+          }
         }
       ],
       "hybrid": {
@@ -1045,22 +1065,9 @@
               },
               "choices": [
                 {
-                  "id": "open_forge_shop",
                   "text": "店に入る",
                   "preview": "ローベルト鍛冶店",
-                  "risk": "判定不要",
-                  "open_shop": "forge_shop",
-                  "intent_keywords": [
-                    "店に入る",
-                    "買う",
-                    "購入",
-                    "売却",
-                    "装備を買う",
-                    "アダマンタイトの鎧を買う",
-                    "アダマンタイトの鎧",
-                    "氷の護符を買う",
-                    "氷の護符"
-                  ]
+                  "risk": "判定不要"
                 },
                 {
                   "text": "邪竜を討つ方法を聞く",
@@ -1076,14 +1083,71 @@
                   }
                 },
                 {
-                  "text": "城に戻る",
-                  "preview": "城内に戻る",
+                  "text": "鍛冶師の提案を受け入れる",
+                  "preview": "鉄の剣を氷鉄の大剣へ作り替える",
+                  "risk": "判定不要",
+                  "visible_after": "showed_hero_sword",
+                  "requirements": {
+                    "all": [
+                      {
+                        "character_id": "hero"
+                      },
+                      {
+                        "has_item": "鉄の剣"
+                      },
+                      {
+                        "lacks_item": "氷鉄の大剣"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "氷の護符を武器へ嵌め込み活性化する",
+                  "preview": "通常攻撃に1d8+INT/2の氷属性追撃を加えます",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "all": [
+                      {
+                        "has_item": "氷の護符"
+                      },
+                      {
+                        "lacks_item": "氷の護符(活性化済)"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "城下町に戻る",
+                  "preview": "大通りへ戻る",
                   "risk": "判定不要"
                 },
                 {
-                  "text": "城を出て闇の森へ向かう",
-                  "preview": "第2章へ進みます",
-                  "risk": "1d20判定（DC10）"
+                  "text": "氷の結晶を護符に加工する",
+                  "preview": "氷の結晶を護符に加工する",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "all": [
+                      {
+                        "has_item": "氷の結晶"
+                      },
+                      {
+                        "gold_gte": 20
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "浮かない顔をしているが？",
+                  "preview": "浮かない顔をしているが？",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "刻印のハンマーを返す",
+                  "preview": "刻印のハンマーを返す",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "has_item": "刻印のハンマー"
+                  }
                 }
               ]
             },
@@ -1121,22 +1185,9 @@
               },
               "choices": [
                 {
-                  "id": "open_forge_shop",
                   "text": "店に入る",
                   "preview": "ローベルト鍛冶店",
-                  "risk": "判定不要",
-                  "open_shop": "forge_shop",
-                  "intent_keywords": [
-                    "店に入る",
-                    "買う",
-                    "購入",
-                    "売却",
-                    "装備を買う",
-                    "アダマンタイトの鎧を買う",
-                    "アダマンタイトの鎧",
-                    "氷の護符を買う",
-                    "氷の護符"
-                  ]
+                  "risk": "判定不要"
                 },
                 {
                   "text": "邪竜を討つ方法を聞く",
@@ -1152,14 +1203,71 @@
                   }
                 },
                 {
-                  "text": "城に戻る",
-                  "preview": "城内に戻る",
+                  "text": "鍛冶師の提案を受け入れる",
+                  "preview": "鉄の剣を氷鉄の大剣へ作り替える",
+                  "risk": "判定不要",
+                  "visible_after": "showed_hero_sword",
+                  "requirements": {
+                    "all": [
+                      {
+                        "character_id": "hero"
+                      },
+                      {
+                        "has_item": "鉄の剣"
+                      },
+                      {
+                        "lacks_item": "氷鉄の大剣"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "氷の護符を武器へ嵌め込み活性化する",
+                  "preview": "通常攻撃に1d8+INT/2の氷属性追撃を加えます",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "all": [
+                      {
+                        "has_item": "氷の護符"
+                      },
+                      {
+                        "lacks_item": "氷の護符(活性化済)"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "城下町に戻る",
+                  "preview": "大通りへ戻る",
                   "risk": "判定不要"
                 },
                 {
-                  "text": "城を出て闇の森へ向かう",
-                  "preview": "第2章へ進みます",
-                  "risk": "1d20判定（DC10）"
+                  "text": "氷の結晶を護符に加工する",
+                  "preview": "氷の結晶を護符に加工する",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "all": [
+                      {
+                        "has_item": "氷の結晶"
+                      },
+                      {
+                        "gold_gte": 20
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "浮かない顔をしているが？",
+                  "preview": "浮かない顔をしているが？",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "刻印のハンマーを返す",
+                  "preview": "刻印のハンマーを返す",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "has_item": "刻印のハンマー"
+                  }
                 }
               ]
             },
@@ -1194,22 +1302,9 @@
               },
               "choices": [
                 {
-                  "id": "open_forge_shop",
                   "text": "店に入る",
                   "preview": "ローベルト鍛冶店",
-                  "risk": "判定不要",
-                  "open_shop": "forge_shop",
-                  "intent_keywords": [
-                    "店に入る",
-                    "買う",
-                    "購入",
-                    "売却",
-                    "装備を買う",
-                    "アダマンタイトの鎧を買う",
-                    "アダマンタイトの鎧",
-                    "氷の護符を買う",
-                    "氷の護符"
-                  ]
+                  "risk": "判定不要"
                 },
                 {
                   "text": "邪竜を討つ方法を聞く",
@@ -1225,14 +1320,71 @@
                   }
                 },
                 {
-                  "text": "城に戻る",
-                  "preview": "城内に戻る",
+                  "text": "鍛冶師の提案を受け入れる",
+                  "preview": "鉄の剣を氷鉄の大剣へ作り替える",
+                  "risk": "判定不要",
+                  "visible_after": "showed_hero_sword",
+                  "requirements": {
+                    "all": [
+                      {
+                        "character_id": "hero"
+                      },
+                      {
+                        "has_item": "鉄の剣"
+                      },
+                      {
+                        "lacks_item": "氷鉄の大剣"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "氷の護符を武器へ嵌め込み活性化する",
+                  "preview": "通常攻撃に1d8+INT/2の氷属性追撃を加えます",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "all": [
+                      {
+                        "has_item": "氷の護符"
+                      },
+                      {
+                        "lacks_item": "氷の護符(活性化済)"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "城下町に戻る",
+                  "preview": "大通りへ戻る",
                   "risk": "判定不要"
                 },
                 {
-                  "text": "城を出て闇の森へ向かう",
-                  "preview": "第2章へ進みます",
-                  "risk": "1d20判定（DC10）"
+                  "text": "氷の結晶を護符に加工する",
+                  "preview": "氷の結晶を護符に加工する",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "all": [
+                      {
+                        "has_item": "氷の結晶"
+                      },
+                      {
+                        "gold_gte": 20
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "浮かない顔をしているが？",
+                  "preview": "浮かない顔をしているが？",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "刻印のハンマーを返す",
+                  "preview": "刻印のハンマーを返す",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "has_item": "刻印のハンマー"
+                  }
                 }
               ]
             },
@@ -1279,22 +1431,9 @@
               },
               "choices": [
                 {
-                  "id": "open_forge_shop",
                   "text": "店に入る",
                   "preview": "ローベルト鍛冶店",
-                  "risk": "判定不要",
-                  "open_shop": "forge_shop",
-                  "intent_keywords": [
-                    "店に入る",
-                    "買う",
-                    "購入",
-                    "売却",
-                    "装備を買う",
-                    "アダマンタイトの鎧を買う",
-                    "アダマンタイトの鎧",
-                    "氷の護符を買う",
-                    "氷の護符"
-                  ]
+                  "risk": "判定不要"
                 },
                 {
                   "text": "邪竜を討つ方法を聞く",
@@ -1310,14 +1449,71 @@
                   }
                 },
                 {
-                  "text": "城に戻る",
-                  "preview": "城内に戻る",
+                  "text": "鍛冶師の提案を受け入れる",
+                  "preview": "鉄の剣を氷鉄の大剣へ作り替える",
+                  "risk": "判定不要",
+                  "visible_after": "showed_hero_sword",
+                  "requirements": {
+                    "all": [
+                      {
+                        "character_id": "hero"
+                      },
+                      {
+                        "has_item": "鉄の剣"
+                      },
+                      {
+                        "lacks_item": "氷鉄の大剣"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "氷の護符を武器へ嵌め込み活性化する",
+                  "preview": "通常攻撃に1d8+INT/2の氷属性追撃を加えます",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "all": [
+                      {
+                        "has_item": "氷の護符"
+                      },
+                      {
+                        "lacks_item": "氷の護符(活性化済)"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "城下町に戻る",
+                  "preview": "大通りへ戻る",
                   "risk": "判定不要"
                 },
                 {
-                  "text": "城を出て闇の森へ向かう",
-                  "preview": "第2章へ進みます",
-                  "risk": "1d20判定（DC10）"
+                  "text": "氷の結晶を護符に加工する",
+                  "preview": "氷の結晶を護符に加工する",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "all": [
+                      {
+                        "has_item": "氷の結晶"
+                      },
+                      {
+                        "gold_gte": 20
+                      }
+                    ]
+                  }
+                },
+                {
+                  "text": "浮かない顔をしているが？",
+                  "preview": "浮かない顔をしているが？",
+                  "risk": "判定不要"
+                },
+                {
+                  "text": "刻印のハンマーを返す",
+                  "preview": "刻印のハンマーを返す",
+                  "risk": "判定不要",
+                  "requirements": {
+                    "has_item": "刻印のハンマー"
+                  }
                 }
               ]
             },
@@ -1487,11 +1683,11 @@
         },
         {
           "id": "return_castle_from_forge",
-          "text": "城に戻る",
-          "preview": "城内に戻る",
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
           "risk": "判定不要",
           "intent_keywords": [
-            "城に戻る"
+            "城下町に戻る"
           ],
           "effects": [
             {
@@ -1506,33 +1702,10 @@
                 ],
                 "else": [
                   {
-                    "current_location": "castle"
+                    "current_location": "castle_town"
                   }
                 ]
               }
-            }
-          ]
-        },
-        {
-          "id": "go_dark_forest",
-          "text": "城を出て闇の森へ向かう",
-          "preview": "第2章へ進みます",
-          "risk": "1d20判定（DC10）",
-          "intent_keywords": [
-            "城を出て闇の森へ向かう"
-          ],
-          "roll": {
-            "dice_type": "1d20",
-            "dc": 10
-          },
-          "success_effects": [
-            {
-              "current_location": "dark_forest_loc"
-            }
-          ],
-          "failure_effects": [
-            {
-              "set_flag": "forest_departure_failed"
             }
           ]
         },
@@ -1668,33 +1841,80 @@
       "clue_ids": [],
       "enemy_ids": [],
       "connected_location_ids": [
-        "castle",
+        "castle_town",
         "forge",
         "magic_shop",
         "item_shop",
-        "alley",
-        "dark_forest_loc"
+        "alley"
       ],
       "choices": [
+        {
+          "text": "宿で休む（10G）",
+          "preview": "温かい食事と寝台で疲れを癒す",
+          "risk": "判定不要",
+          "requirements": {
+            "gold_gte": 10
+          }
+        },
         {
           "text": "イアンと会話する",
           "preview": "宿屋の店主と話す",
           "risk": "判定不要",
           "children": [
             {
+              "id": "ask_ian_legend",
               "text": "強力な氷属性武器の伝説について聞く",
               "preview": "伝説の武器の情報を得る",
-              "risk": "1d30判定（DC4）"
+              "risk": "1d30判定（DC4）",
+              "intent_keywords": [
+                "強力な氷属性武器の伝説について聞く"
+              ],
+              "roll": {
+                "dice_type": "1d30",
+                "dc": 4
+              },
+              "once": "asked_ian_legend",
+              "success_effects": [
+                {
+                  "set_flag": "heard_ice_weapon_legend"
+                }
+              ],
+              "failure_effects": [
+                {
+                  "set_flag": "ian_legend_refused"
+                }
+              ],
+              "portrait_image": "/static/images/npc_ian.png"
             },
             {
+              "id": "ask_ian_advice",
               "text": "邪竜を倒すアドバイスを求める",
               "preview": "イアンの意見を聞く",
-              "risk": "判定不要"
+              "risk": "判定不要",
+              "intent_keywords": [
+                "邪竜を倒すアドバイスを求める"
+              ],
+              "once": "asked_ian_advice",
+              "effects": [
+                {
+                  "set_flag": "heard_ian_advice"
+                }
+              ],
+              "portrait_image": "/static/images/npc_ian.png"
             },
             {
-              "text": "宿屋で一晩休む（1G）",
-              "preview": "夜まで休む",
-              "risk": "判定不要"
+              "id": "ask_ian_dragon_tale",
+              "text": "竜と人の昔話を聞く",
+              "preview": "竜と人の昔話を聞く",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "竜と人の昔話を聞く"
+              ],
+              "effects": [
+                {
+                  "set_flag": "heard_treaty_lore"
+                }
+              ]
             }
           ]
         },
@@ -1704,21 +1924,119 @@
           "risk": "判定不要",
           "children": [
             {
+              "id": "invite_robin",
               "text": "パーティに勧誘する",
               "preview": "ロビンを仲間に誘う",
-              "risk": "1d100+agi判定（DC60）"
+              "risk": "1d20+wis判定（DC12）",
+              "intent_keywords": [
+                "パーティに勧誘する",
+                "ロビンを仲間に誘う"
+              ],
+              "roll": {
+                "dice_type": "1d20+wis",
+                "dc": 12
+              },
+              "once": "invited_robin",
+              "success_effects": [
+                {
+                  "set_flag": "recruited_robin"
+                },
+                {
+                  "set_companion": "robin"
+                }
+              ],
+              "failure_effects": [
+                {
+                  "set_flag": "robin_refused"
+                }
+              ],
+              "portrait_image": "/static/images/npc_robin.png"
             },
             {
+              "id": "ask_robin_rumor",
               "text": "噂話を聞く",
               "preview": "ロビンから情報を得る",
-              "risk": "判定不要"
+              "risk": "判定不要",
+              "intent_keywords": [
+                "噂話を聞く"
+              ],
+              "once": "heard_robin_rumor",
+              "effects": [
+                {
+                  "set_flag": "heard_robin_rumor"
+                },
+                {
+                  "set_flag": "heard_robin_night_rumor"
+                }
+              ],
+              "portrait_image": "/static/images/npc_robin.png"
+            },
+            {
+              "id": "ask_robin_stolen_scale",
+              "secret": true,
+              "text": "将軍の部屋から盗んだ物を見せてもらう",
+              "preview": "将軍の部屋から盗んだ物を見せてもらう",
+              "risk": "判定不要",
+              "intent_keywords": [
+                "将軍の部屋から盗んだ物を見せてもらう"
+              ],
+              "effects": [
+                {
+                  "add_item": {
+                    "id": "white_dragon_scale",
+                    "name": "白い竜鱗",
+                    "quantity": 1
+                  }
+                }
+              ],
+              "once": "received_robin_scale",
+              "requirements": {
+                "all": [
+                  {
+                    "flag": "recruited_robin"
+                  },
+                  {
+                    "flag": "cleared_goblin_fort"
+                  }
+                ]
+              }
             }
           ]
         },
         {
-          "text": "城に戻る",
-          "preview": "城内に戻る",
+          "text": "ロビンの依頼を引き受ける",
+          "preview": "ロビンとゴブリンの砦へ向かう",
+          "risk": "判定不要",
+          "visible_after": "recruited_robin",
+          "requirements": {
+            "all": [
+              {},
+              {
+                "not_flag": "returned_to_capital"
+              }
+            ]
+          },
+          "secret": true
+        },
+        {
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
           "risk": "判定不要"
+        },
+        {
+          "text": "森を出て麓の村へ向かう",
+          "preview": "森を出て麓の村へ向かう",
+          "risk": "判定不要",
+          "visible_after": "returned_from_forest",
+          "requirements": {
+            "all": [
+              {},
+              {
+                "not_flag": "returned_to_capital"
+              }
+            ]
+          },
+          "secret": true
         }
       ],
       "hybrid": {
@@ -1792,8 +2110,8 @@
                   ]
                 },
                 {
-                  "text": "城に戻る",
-                  "preview": "城内に戻る",
+                  "text": "城下町に戻る",
+                  "preview": "大通りへ戻る",
                   "risk": "判定不要"
                 }
               ]
@@ -1875,8 +2193,8 @@
                   ]
                 },
                 {
-                  "text": "城に戻る",
-                  "preview": "城内に戻る",
+                  "text": "城下町に戻る",
+                  "preview": "大通りへ戻る",
                   "risk": "判定不要"
                 }
               ]
@@ -1953,8 +2271,8 @@
                   ]
                 },
                 {
-                  "text": "城に戻る",
-                  "preview": "城内に戻る",
+                  "text": "城下町に戻る",
+                  "preview": "大通りへ戻る",
                   "risk": "判定不要"
                 }
               ]
@@ -2031,8 +2349,8 @@
                   ]
                 },
                 {
-                  "text": "城に戻る",
-                  "preview": "城内に戻る",
+                  "text": "城下町に戻る",
+                  "preview": "大通りへ戻る",
                   "risk": "判定不要"
                 }
               ]
@@ -2112,8 +2430,8 @@
                   ]
                 },
                 {
-                  "text": "城に戻る",
-                  "preview": "城内に戻る",
+                  "text": "城下町に戻る",
+                  "preview": "大通りへ戻る",
                   "risk": "判定不要"
                 }
               ]
@@ -2190,8 +2508,8 @@
                   ]
                 },
                 {
-                  "text": "城に戻る",
-                  "preview": "城内に戻る",
+                  "text": "城下町に戻る",
+                  "preview": "大通りへ戻る",
                   "risk": "判定不要"
                 }
               ]
@@ -2268,8 +2586,8 @@
                   ]
                 },
                 {
-                  "text": "城に戻る",
-                  "preview": "城内に戻る",
+                  "text": "城下町に戻る",
+                  "preview": "大通りへ戻る",
                   "risk": "判定不要"
                 }
               ]
@@ -2580,11 +2898,11 @@
         },
         {
           "id": "return_castle_from_inn",
-          "text": "城に戻る",
-          "preview": "城内に戻る",
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
           "risk": "判定不要",
           "intent_keywords": [
-            "城に戻る"
+            "城下町に戻る"
           ],
           "effects": [
             {
@@ -2599,7 +2917,7 @@
                 ],
                 "else": [
                   {
-                    "current_location": "castle"
+                    "current_location": "castle_town"
                   }
                 ]
               }
@@ -3518,8 +3836,66 @@
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [],
-      "connected_location_ids": [],
-      "choices": [],
+      "connected_location_ids": [
+        "castle_town"
+      ],
+      "choices": [
+        {
+          "text": "店に入る",
+          "preview": "青のローブ魔法店",
+          "risk": "判定不要"
+        },
+        {
+          "text": "邪竜についての噂を聞く",
+          "preview": "魔法使いが知る不穏な噂",
+          "risk": "1d20+wis判定（DC14）"
+        },
+        {
+          "text": "パーティーへ招く",
+          "preview": "同行者として迎える",
+          "risk": "判定不要"
+        },
+        {
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
+          "risk": "判定不要"
+        },
+        {
+          "text": "泉の封印について尋ねる",
+          "preview": "泉の封印について尋ねる",
+          "risk": "判定不要",
+          "secret": true,
+          "requirements": {
+            "any": [
+              {
+                "flag": "mina_missing_heard"
+              },
+              {
+                "flag": "seen_cave_seal"
+              }
+            ]
+          }
+        },
+        {
+          "text": "虹晶の欠片を武器に仕立ててもらう",
+          "preview": "虹晶の欠片を武器に仕立ててもらう",
+          "risk": "判定不要",
+          "requirements": {
+            "has_item": "虹晶の欠片"
+          }
+        },
+        {
+          "text": "最近変わったことは？",
+          "preview": "最近変わったことは？",
+          "risk": "判定不要"
+        },
+        {
+          "text": "ミーナを無事に連れ帰ったと伝える",
+          "preview": "ミーナを無事に連れ帰ったと伝える",
+          "risk": "判定不要",
+          "visible_after": "mina_rescued"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "青いローブの銀髪の魔法使いが、杖を背に店番をしている。",
@@ -3704,11 +4080,11 @@
         },
         {
           "id": "return_castle_from_magic_shop",
-          "text": "城に戻る",
-          "preview": "",
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
           "risk": "判定不要",
           "intent_keywords": [
-            "城に戻る"
+            "城下町に戻る"
           ],
           "effects": [
             {
@@ -3723,7 +4099,7 @@
                 ],
                 "else": [
                   {
-                    "current_location": "castle"
+                    "current_location": "castle_town"
                   }
                 ]
               }
@@ -3743,7 +4119,18 @@
               "set_flag": "heard_seal_lore"
             }
           ],
-          "result_text": "「精霊の泉の裏に古い封印がある。泉と同じ律動を読めば、解くのは難しくない」"
+          "result_text": "「精霊の泉の裏に古い封印がある。泉と同じ律動を読めば、解くのは難しくない」",
+          "secret": true,
+          "requirements": {
+            "any": [
+              {
+                "flag": "mina_missing_heard"
+              },
+              {
+                "flag": "seen_cave_seal"
+              }
+            ]
+          }
         },
         {
           "id": "forge_prism_weapon",
@@ -4074,8 +4461,39 @@
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [],
-      "connected_location_ids": [],
-      "choices": [],
+      "connected_location_ids": [
+        "castle_town"
+      ],
+      "choices": [
+        {
+          "text": "店に入る",
+          "preview": "サラの道具屋",
+          "risk": "判定不要"
+        },
+        {
+          "text": "ペットの火コウモリ竜を借りる",
+          "preview": "懐いてくれるか確かめます",
+          "risk": "1d20+wis判定（DC13）"
+        },
+        {
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
+          "risk": "判定不要"
+        },
+        {
+          "text": "何か困っていることはある？",
+          "preview": "何か困っていることはある？",
+          "risk": "判定不要"
+        },
+        {
+          "text": "光苔を渡す",
+          "preview": "光苔を渡す",
+          "risk": "判定不要",
+          "requirements": {
+            "has_item": "光苔"
+          }
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "十歳ほどの金髪の少女サラと、小さな火コウモリ竜がいる。",
@@ -4183,11 +4601,11 @@
         },
         {
           "id": "return_castle_from_item_shop",
-          "text": "城に戻る",
-          "preview": "",
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
           "risk": "判定不要",
           "intent_keywords": [
-            "城に戻る"
+            "城下町に戻る"
           ],
           "effects": [
             {
@@ -4202,7 +4620,7 @@
                 ],
                 "else": [
                   {
-                    "current_location": "castle"
+                    "current_location": "castle_town"
                   }
                 ]
               }
@@ -4272,8 +4690,22 @@
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [],
-      "connected_location_ids": [],
-      "choices": [],
+      "connected_location_ids": [
+        "castle_town"
+      ],
+      "choices": [
+        {
+          "text": "夜まで待つ",
+          "preview": "ロビンから聞いた夜の路地を調べる",
+          "risk": "判定不要",
+          "visible_after": "heard_robin_night_rumor"
+        },
+        {
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
+          "risk": "判定不要"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "昼の路地には人影がなく、奥へ進む理由も見当たらない。",
@@ -4321,15 +4753,29 @@
         },
         {
           "id": "return_castle_from_alley",
-          "text": "城に戻る",
-          "preview": "",
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
           "risk": "判定不要",
           "intent_keywords": [
-            "城に戻る"
+            "城下町に戻る"
           ],
           "effects": [
             {
-              "current_location": "castle"
+              "branch": {
+                "requirements": {
+                  "flag": "returned_to_capital"
+                },
+                "then": [
+                  {
+                    "current_location": "festival_town"
+                  }
+                ],
+                "else": [
+                  {
+                    "current_location": "castle_town"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -4350,8 +4796,112 @@
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [],
-      "connected_location_ids": [],
-      "choices": [],
+      "connected_location_ids": [
+        "castle_town"
+      ],
+      "choices": [
+        {
+          "text": "怪しい商人の取引を聞く",
+          "preview": "自分に見合う呪具と代価を聞く",
+          "risk": "判定不要"
+        },
+        {
+          "text": "呪われた聖剣を受け取る",
+          "preview": "受け取った後に代価を求められる",
+          "risk": "判定不要",
+          "visible_after": "curse_offer_heard",
+          "requirements": {
+            "has_item": "鉄の剣"
+          }
+        },
+        {
+          "text": "怪しい商人の取引を聞く",
+          "preview": "自分に見合う呪具と代価を聞く",
+          "risk": "判定不要"
+        },
+        {
+          "text": "呪われた聖杖を受け取る",
+          "preview": "受け取った後に代価を求められる",
+          "risk": "判定不要",
+          "visible_after": "curse_offer_heard",
+          "requirements": {}
+        },
+        {
+          "text": "怪しい商人の取引を聞く",
+          "preview": "自分に見合う呪具と代価を聞く",
+          "risk": "判定不要"
+        },
+        {
+          "text": "呪われた水晶球を受け取る",
+          "preview": "受け取った後に代価を求められる",
+          "risk": "判定不要",
+          "visible_after": "curse_offer_heard",
+          "requirements": {}
+        },
+        {
+          "text": "怪しい商人の取引を聞く",
+          "preview": "自分に見合う呪具と代価を聞く",
+          "risk": "判定不要"
+        },
+        {
+          "text": "呪われた短剣を受け取る",
+          "preview": "受け取った後に代価を求められる",
+          "risk": "判定不要",
+          "visible_after": "curse_offer_heard",
+          "requirements": {}
+        },
+        {
+          "text": "おとなしく代価を払う",
+          "preview": "鉄の剣を渡す",
+          "risk": "判定不要",
+          "visible_after": "curse_bargain_pending"
+        },
+        {
+          "text": "おとなしく代価を払う",
+          "preview": "生命力を差し出し、耐久を1にする",
+          "risk": "判定不要",
+          "visible_after": "curse_bargain_pending"
+        },
+        {
+          "text": "おとなしく代価を払う",
+          "preview": "知識を差し出し、全技能を失う",
+          "risk": "判定不要",
+          "visible_after": "curse_bargain_pending"
+        },
+        {
+          "text": "おとなしく代価を払う",
+          "preview": "敏捷を差し出し、敏捷を1にする",
+          "risk": "判定不要",
+          "visible_after": "curse_bargain_pending"
+        },
+        {
+          "text": "反悔する",
+          "preview": "怪しい商人と戦う",
+          "risk": "危険（戦闘）",
+          "visible_after": "curse_bargain_pending"
+        },
+        {
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
+          "risk": "判定不要"
+        },
+        {
+          "secret": true,
+          "text": "白い鱗を買う",
+          "preview": "白い鱗を買う",
+          "risk": "判定不要",
+          "requirements": {
+            "all": [
+              {
+                "gold_gte": 60
+              },
+              {
+                "lacks_item": "白い竜鱗"
+              }
+            ]
+          }
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "街灯の届かない場所に、黒いローブの小柄で毛むくじゃらな商人が立っている。",
@@ -4916,15 +5466,29 @@
         },
         {
           "id": "leave_night_alley",
-          "text": "取引せず城へ戻る",
-          "preview": "",
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
           "risk": "判定不要",
           "intent_keywords": [
-            "取引せず城へ戻る"
+            "城下町に戻る"
           ],
           "effects": [
             {
-              "current_location": "castle"
+              "branch": {
+                "requirements": {
+                  "flag": "returned_to_capital"
+                },
+                "then": [
+                  {
+                    "current_location": "festival_town"
+                  }
+                ],
+                "else": [
+                  {
+                    "current_location": "castle_town"
+                  }
+                ]
+              }
             }
           ],
           "portrait_image": "/static/images/npc_suspicious_merchant.png"
@@ -5043,8 +5607,16 @@
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [],
-      "connected_location_ids": [],
-      "choices": [],
+      "connected_location_ids": [
+        "castle_town"
+      ],
+      "choices": [
+        {
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
+          "risk": "判定不要"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "怪しい商人の姿は消え、夜風だけが路地を抜けていく。",
@@ -5058,15 +5630,29 @@
       "actions": [
         {
           "id": "return_castle_after_curse",
-          "text": "城へ戻る",
-          "preview": "",
+          "text": "城下町に戻る",
+          "preview": "大通りへ戻る",
           "risk": "判定不要",
           "intent_keywords": [
-            "城へ戻る"
+            "城下町に戻る"
           ],
           "effects": [
             {
-              "current_location": "castle"
+              "branch": {
+                "requirements": {
+                  "flag": "returned_to_capital"
+                },
+                "then": [
+                  {
+                    "current_location": "festival_town"
+                  }
+                ],
+                "else": [
+                  {
+                    "current_location": "castle_town"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -9215,7 +9801,12 @@
       ],
       "background_image": "/static/images/bg_sealed_cave.png",
       "npc_ids": [],
-      "enemy_ids": []
+      "enemy_ids": [],
+      "entry_effects": [
+        {
+          "set_flag": "seen_cave_seal"
+        }
+      ]
     },
     {
       "id": "cave_heat_corridor",
@@ -14691,6 +15282,181 @@
     }
   ],
   "maps": [
+    {
+      "id": "capital",
+      "title": "アルテリア城下町",
+      "nodes": [
+        {
+          "id": "C1",
+          "label": "王城",
+          "kind": "start",
+          "x": 50,
+          "y": 12,
+          "location_ids": [
+            "castle"
+          ],
+          "description": "白い石造りの古城。王国の政治と軍事の中心。目の前には国王エドワードと将軍ドラコがいる。"
+        },
+        {
+          "id": "C2",
+          "label": "城下町",
+          "kind": "event",
+          "x": 50,
+          "y": 48,
+          "location_ids": [
+            "castle_town"
+          ],
+          "description": "王城の門前から石畳の大通りが延びる城下町。鍛冶屋の煙突からは煙が上がり、宿屋の看板が風に揺れ、魔法店の窓には青い灯りがともる。裏手には細い路地が口を開けている。邪竜の噂のせいか、行き交う人々の声はどこか低い。"
+        },
+        {
+          "id": "forge",
+          "label": "鍛冶屋",
+          "kind": "event",
+          "x": 18,
+          "y": 30,
+          "location_ids": [
+            "forge"
+          ],
+          "description": "城内の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。"
+        },
+        {
+          "id": "inn",
+          "label": "宿屋",
+          "kind": "rest",
+          "x": 18,
+          "y": 68,
+          "location_ids": [
+            "inn",
+            "inn_night_ambush"
+          ],
+          "description": "冒険者や旅人が休息を取るための宿屋。暖かい食事と清潔な寝台がある。"
+        },
+        {
+          "id": "magic_shop",
+          "label": "魔法店",
+          "kind": "event",
+          "x": 82,
+          "y": 30,
+          "location_ids": [
+            "magic_shop"
+          ],
+          "description": "青いローブの銀髪の魔法使いが、杖を背に店番をしている。"
+        },
+        {
+          "id": "item_shop",
+          "label": "道具屋",
+          "kind": "event",
+          "x": 82,
+          "y": 68,
+          "location_ids": [
+            "item_shop"
+          ],
+          "description": "十歳ほどの金髪の少女サラと、小さな火コウモリ竜がいる。"
+        },
+        {
+          "id": "alley",
+          "label": "路地裏",
+          "kind": "branch",
+          "x": 34,
+          "y": 88,
+          "location_ids": [
+            "alley",
+            "alley_night",
+            "alley_after",
+            "merchant_battle"
+          ],
+          "description": "昼の路地には人影がなく、奥へ進む理由も見当たらない。"
+        },
+        {
+          "id": "gate",
+          "label": "城門",
+          "kind": "branch",
+          "x": 66,
+          "y": 88,
+          "location_ids": [],
+          "description": "城下町の南にある大門。その先の街道は、闇の森へと続いている。"
+        }
+      ],
+      "edges": [
+        {
+          "from": "C2",
+          "to": "C1",
+          "action_id": "return_castle_from_town"
+        },
+        {
+          "from": "C1",
+          "to": "C2",
+          "action_id": "go_castle_town"
+        },
+        {
+          "from": "C2",
+          "to": "forge",
+          "action_id": "go_forge"
+        },
+        {
+          "from": "forge",
+          "to": "C2",
+          "action_id": "return_castle_from_forge"
+        },
+        {
+          "from": "C2",
+          "to": "inn",
+          "action_id": "go_inn"
+        },
+        {
+          "from": "inn",
+          "to": "C2",
+          "action_id": "return_castle_from_inn"
+        },
+        {
+          "from": "C2",
+          "to": "magic_shop",
+          "action_id": "go_magic_shop"
+        },
+        {
+          "from": "magic_shop",
+          "to": "C2",
+          "action_id": "return_castle_from_magic_shop"
+        },
+        {
+          "from": "C2",
+          "to": "item_shop",
+          "action_id": "go_item_shop"
+        },
+        {
+          "from": "item_shop",
+          "to": "C2",
+          "action_id": "return_castle_from_item_shop"
+        },
+        {
+          "from": "C2",
+          "to": "alley",
+          "action_id": "go_alley"
+        },
+        {
+          "from": "alley",
+          "to": "C2",
+          "action_id": "return_castle_from_alley",
+          "action_by_location": {
+            "alley_night": "leave_night_alley",
+            "alley_after": "return_castle_after_curse"
+          }
+        },
+        {
+          "from": "C2",
+          "to": "gate",
+          "action_id": "go_dark_forest"
+        },
+        {
+          "from": "gate",
+          "to": "C2",
+          "action_id": "go_castle_town"
+        }
+      ],
+      "requirements": {
+        "not_flag": "returned_to_capital"
+      }
+    },
     {
       "id": "goblin_fort",
       "title": "ゴブリン砦",

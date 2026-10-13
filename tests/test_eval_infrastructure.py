@@ -125,7 +125,7 @@ class InfrastructureTests(unittest.TestCase):
         attack = engine_result(self.session, valid_plan(kind="existing", action_id="attack_slime"), "スライムと戦う")
         self.assertTrue(attack["attack_or_combat"])
         castle = build_snapshot(recipes()[4])
-        movement = engine_result(castle, valid_plan(kind="existing", action_id="go_inn"), "宿屋へ向かう")
+        movement = engine_result(castle, valid_plan(kind="existing", action_id="go_castle_town"), "城下町へ出る")
         self.assertTrue(movement["changes"]["position"])
         self.assertEqual(castle["world_state"]["location_id"], "castle")
 

@@ -1,0 +1,12 @@
+{
+  "id": "castle_town_hero",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "castle_town",
+  "flags": {},
+  "hp_delta": 0,
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}

@@ -10,7 +10,7 @@ from .redundancy import MANIFEST, finish_witness
 
 
 def generate() -> dict[str, Any]:
-    start = ["check_supplies", "go_inn", "invite_robin:success", "ask_robin_rumor", "return_castle_from_inn", "go_dark_forest:success", "@victory"]
+    start = ["@opening", "check_supplies", "go_castle_town", "go_inn", "invite_robin:success", "ask_robin_rumor", "return_castle_from_inn", "go_dark_forest:success", "@victory"]
     fortress = ["help_lost_goblin", "enter_goblin_fort", "@victory", "@victory", "explore_fort_right", "bypass_hobgoblin:success", "give_correct_password", "@victory", "return_lost_goblin_box"]
     main = ["crossroads_forward", "continue_from_elf_spring", "@victory"]
     cave_trip = ["exit_back", "wolves_back", "inspect_spring_wall", "decode_seal:success", "@victory", "cave_right", "hot_spring_forward", "@victory", "@victory", "leave_prism_tree", "continue_from_elf_spring", "pass_cleared_wolves"]
@@ -41,20 +41,20 @@ def generate() -> dict[str, Any]:
         return {r: p + list(steps) for r, p in paths.items()}
 
     funding = key("supplies", 0)
-    add(funding, "supplies", "castle", "check_supplies", "story", {"gold": "50"}, tail(paths, "leave_forest_for_village"))
+    add(funding, "supplies", "castle", "@opening", "story", {"gold": "100"}, tail(paths, "leave_forest_for_village"))
     cold = key("ice_options", 2)
     add(cold, "village_shop", "village", "shop:village_shop:ice_charm", "purchase", {"item": "ice_charm", "name": "氷の護符"}, tail(village, "shop:village_shop:ice_charm"))
     add(cold, "fusion", "forge", "accept_sword_fusion", "quest", {"name": "氷鉄の大剣"}, tail(town, "go_forge", "show_sword_to_blacksmith", "accept_sword_fusion"))
     add(cold, "ian", "ian_ice_katana_aftermath", "accept_ian_request", "quest", {"name": "氷鉄の大剣"}, tail(after, "accept_ian_request"))
-    add(cold, "sarah", "item_shop", "shop:sarah_shop:ice_charm", "purchase", {"item": "ice_charm"}, tail(village, "return_castle_from_village", "go_item_shop", "shop:sarah_shop:ice_charm"))
-    craft = ["visit_village", "return_castle_from_village", "go_forge", "forge_ice_charm"]
+    add(cold, "sarah", "item_shop", "shop:sarah_shop:ice_charm", "purchase", {"item": "ice_charm"}, tail(village, "return_castle_from_village", "go_castle_town", "go_item_shop", "shop:sarah_shop:ice_charm"))
+    craft = ["visit_village", "return_castle_from_village", "go_castle_town", "go_forge", "forge_ice_charm"]
     add(cold, "ice_battle_craft", "ice_elemental_encounter", "@victory", "battle_craft", {"item": "ice_crystal"}, tail(after, *craft), crafted_item="ice_charm")
     add(cold, "ice_observe_craft", "ice_elemental_encounter", "observe:frost_crystal", "observe_craft", {"item": "ice_crystal"}, tail(ice, "observe:frost_crystal", "bypass_ice_elemental:success", "@victory", *craft), crafted_item="ice_charm")
     add(cold, "mage_ice", "dragon_valley_loc", "@skill:mage_lv5_a", "class_skill", {}, tail(after, *valley_steps, "@skill:mage_lv5_a"), character="mage", skill="mage_lv5_a", element="ice")
     holy = key("holy_options", 2)
     add(holy, "supplies", "castle", "check_supplies", "story", {"item": "holy_water"}, tail(paths, "leave_forest_for_village"))
     add(holy, "sarah", "item_shop", "shop:sarah_shop:holy_water", "purchase", {"item": "holy_water"}, tail(town, "go_item_shop", "shop:sarah_shop:holy_water"))
-    add(holy, "general", "castle", "ask_general_advice:success", "dialogue", {"item": "holy_water"}, tail(town, "ask_general_advice:success"))
+    add(holy, "general", "castle", "ask_general_advice:success", "dialogue", {"item": "holy_water"}, tail(town, "return_castle_from_town", "ask_general_advice:success"))
     add(holy, "cleric", "ian_ice_katana_aftermath", "accept_ian_request", "class_skill", {}, tail(after, "accept_ian_request"), character="cleric", skill="cleric_lv3_a", element="holy")
     password = key("knows_fort_password", 2)
     fort_paths = {r: (start if r == "fort" else town[r] + ["go_dark_forest:success", "pass_cleared_forest"]) for r in paths}
@@ -70,7 +70,7 @@ def generate() -> dict[str, Any]:
             witnesses["fort"] += ["enter_goblin_fort", "@victory"]
         if identifier == "robin":
             approach = ["accept_robin_goblin_quest", "@victory", "@victory", "explore_fort_right", "@victory", "@entry"]
-            witnesses = {r: (start[:4] + approach if r == "fort" else town[r] + ["go_inn", *approach]) for r in paths}
+            witnesses = {r: (start[:6] + approach if r == "fort" else town[r] + ["go_inn", *approach]) for r in paths}
         add(password, identifier, location, step, kind, {"flag": "knows_fort_password"}, witnesses)
     scale = key("white_dragon_scale", 3)
     add(scale, "frost_core", "village_frozen_clue", "inspect_frost_core:success", "exploration", {"item": "white_dragon_scale"}, tail(frozen, "inspect_frost_core:success"))
@@ -90,7 +90,7 @@ def generate() -> dict[str, Any]:
         ("frost_trace_seen", "village_frozen_clue", "inspect_frost_core:failure", tail(frozen, "inspect_frost_core:failure")),
         ("heard_human_caused_dragon_return", "magic_shop", "ask_blue_mage_rumor", tail(town, "go_magic_shop", "ask_blue_mage_rumor")),
         ("heard_ignis_last_words", "ignis_last_breath", "hear_ignis_last_words", tail(last, "hear_ignis_last_words")),
-        ("noticed_general_frost", "castle", "observe:general_breath", tail(town, "observe:general_breath")),
+        ("noticed_general_frost", "castle", "observe:general_breath", tail(town, "return_castle_from_town", "observe:general_breath")),
         ("heard_treaty_lore", "village", "ask_elder_treaty", tail(village, "ask_elder_treaty")),
     ]:
         sources = key(flag, 0)
@@ -99,7 +99,7 @@ def generate() -> dict[str, Any]:
             add(sources, "ian", "inn", "ask_ian_dragon_tale", "dialogue", {"flag": flag}, tail(town, "go_inn", "ask_ian_dragon_tale"))
             add(sources, "riku", "village", "return_riku", "quest", {"flag": flag}, tail(house, "break_burning_beam:success", "visit_village", "return_riku"))
         if flag == "noticed_general_frost":
-            add(sources, "general_high_roll", "castle", "ask_general_advice:high", "dialogue", {"flag": flag}, tail(town, "ask_general_advice:high"))
+            add(sources, "general_high_roll", "castle", "ask_general_advice:high", "dialogue", {"flag": flag}, tail(town, "return_castle_from_town", "ask_general_advice:high"))
     betrayal = key("heard_xanxus_betrayal", 0)
     phantom_paths = tail(frozen, "skip_frozen_clue_before_xanxus", "bluff_xanxus:failure", "@defeat", "accept_xanxus_fire_seed",
         "investigate_frozen_village", "@victory", "@victory", "accept_ian_request", "@victory", "cross_lava_bridge:success", "cleanse_fire_seed", "@victory")

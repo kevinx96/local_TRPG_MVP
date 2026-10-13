@@ -77,7 +77,9 @@ def proposed_routes() -> dict[str, list[str]]:
 
 def replay_step(session: dict[str, Any], step: str) -> dict[str, Any]:
     source = state.current_location_id(session)
-    if step == "@recover_hp":
+    if step == "@opening":
+        delta = state.apply_opening_effects(session)
+    elif step == "@recover_hp":
         from host.shops import use_item
 
         actor = session["character"]
@@ -136,7 +138,7 @@ def generate(path: Path = DEFAULT_SCENARIO) -> dict[str, Any]:
             "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
             "出城前邀请无需付费/判定的 blue_robed_mage；离开森林按剧情 clear_companion。没有叠加互斥同伴。",
             "勇者除商人支线、洞窟路线外先完成锻冶师换剑；原装备失去后由现有引擎自动装备新武器。",
-            "模板金币为 0，check_supplies 首次发放 50G；仅洞窟路线为僧侶/盗賊重放明确列出的折扣购物与出售。",
+            "模板金币为 0，@opening 重放国王发放 100G 和薬草；check_supplies 只发放聖水2个。仅洞窟路线为僧侶/盗賊重放明确列出的折扣购物与出售。",
             "森林主线经过 F1–F5；砦与洞窟为可选支路。砦三层选择无口令警卫战。",
             "洞窟 Lv2：勇者使用初始鉄の剣；僧侶/盗賊交付光苔并出售携帯食后购买氷の護符；魔法使い使用职业技能。C4/C5 先取 C3a 紅玉の護符。",
             "TODO(design): 跨战斗消耗、双狼/史莱姆/砦分支、火コウモリ竜及ロビン取舍不能由数据确定。",
@@ -146,7 +148,7 @@ def generate(path: Path = DEFAULT_SCENARIO) -> dict[str, Any]:
         entry: dict[str, Any] = {"status": "proposed", "characters": {}, "notes": []}
         for character_id in characters:
             session = fresh_session(pack, character_id)
-            steps = ["check_supplies", "go_magic_shop", "invite_blue_mage", "return_castle_from_magic_shop"]
+            steps = ["@opening", "check_supplies", "go_castle_town", "go_magic_shop", "invite_blue_mage", "return_castle_from_magic_shop"]
             if character_id == "hero" and encounter != "merchant_battle" and not encounter.startswith("cave_"):
                 steps += ["go_forge", "show_sword_to_blacksmith", "accept_sword_fusion", "return_castle_from_forge"]
             steps += [step.format(character=character_id) for step in route]

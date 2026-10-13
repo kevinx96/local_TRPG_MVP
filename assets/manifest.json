@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "task": "024",
+  "task": "028",
   "generator": "image_gen",
-  "generation_date": "2026-10-12",
+  "generation_date": "2026-10-13",
   "approved": false,
   "selection_policy": "工程按 spec 做暂选；所有素材须由设计负责人逐张验收。",
   "images": [
@@ -1595,6 +1595,51 @@
       "selection_status": "provisional",
       "selection_reason": "候选 02 破窗缺口、楼梯下碎片及涌入前景的冷气更明确，原参考的大厅家具布局基本保持。",
       "style_review": "保持木石笔触，亮度明显降低；窗形和局部小物有轻微生成差异。参考实际为大厅而非 spec 所称客房；公告纸为不可辨小纹理。"
+    },
+    {
+      "id": "bg_castle_town",
+      "file": "assets/candidates/028/bg_castle_town/candidate_01.png",
+      "purpose": "第1章城下町背景候选",
+      "prompt": "Use case: precise-object-edit. Asset type: opaque square fantasy visual-novel background, 1024x1024. Input image is the edit target and sole style/composition reference, bg_festival_town.png. Create candidate 01 of this same castle-town street during an ordinary day before the festival. Keep the exact street viewpoint, cobblestone perspective, shop buildings and stalls, distant royal castle silhouette, and the reference's detailed painterly semi-realistic anime fantasy brushwork, stone/wood materials and daylight palette. Remove ALL festival pennant strings, heraldic banners, flags, garlands and scattered flower petals; ordinary unadorned shop awnings remain. Reduce passersby to a sparse few; subdued, slightly anxious expressions and restrained poses, no waving or celebration. A single thin distant wisp of smoke rises toward the mountains, visible in a side gap beyond the town; royal castle remains visible. Normal daylight, calm open foreground. No readable text, no logos, no watermark. This is the same street and same art style, not a new street.",
+      "reference_images": [
+        "client/images/bg_festival_town.png"
+      ],
+      "generation_date": "2026-10-13",
+      "approved": false
+    },
+    {
+      "id": "bg_castle_town",
+      "file": "assets/candidates/028/bg_castle_town/candidate_02.png",
+      "purpose": "第1章城下町背景候选",
+      "prompt": "Use case: precise-object-edit. Asset type: opaque square fantasy visual-novel background, 1024x1024. Edit the supplied bg_festival_town.png as the same street on an ordinary weekday. Preserve the exact camera, cobblestone perspective, timber-and-stone shop architecture, distant royal castle and painterly fantasy illustration style, fine warm material brushwork and blue daylight. Candidate 02: sparse subdued pedestrians, mostly quiet shopkeepers and a few anxious passersby, with restrained closed poses; broad empty foreground. Remove EVERY festival decoration across the ENTIRE image, including distant gateway: no flags, no hanging banners, no pennant strings, no garlands, no scattered flower petals. Keep ordinary shop awnings in the reference colors, with no heraldic emblems or logos. The far castle must still be recognizable. In the mountains beyond the street a thin, faint smoke thread rises, distinguishable from clouds. Ordinary daytime, not celebration, slight unease without disaster or night lighting. No text, no logos, no watermark. Do not redesign the street, maintain reference painting style and perspective.",
+      "reference_images": [
+        "client/images/bg_festival_town.png"
+      ],
+      "generation_date": "2026-10-13",
+      "approved": false
+    },
+    {
+      "id": "bg_castle_town",
+      "file": "assets/candidates/028/bg_castle_town/candidate_03.png",
+      "purpose": "第1章城下町背景候选",
+      "prompt": "Use case: precise-object-edit. Asset type: opaque square background for a fantasy visual novel, 1024x1024. The supplied bg_festival_town.png is the edit target and exact reference for street identity and painting style. Candidate 03: an ordinary daytime version with fewer people and a slightly uneasy mood. Preserve the camera, street perspective, recognizable timber shops, stone road and far royal castle, the hand-painted fine textures and semi-realistic anime illustration style. Remove festival decoration at every distance: zero flags, banners, pennants, hanging garlands or flower petals, even through the far gate and on castle spires. Plain shop awnings only; no heraldic logos on signs or stall cloth. Quiet sparse shopkeepers and pedestrians have worried, restrained expressions and postures, no smiles or waving. Add just one thin gray smoke wisp in the direction of the distant mountains, not from the castle. Normal clear daytime with gently restrained light, not a storm, not a ruined street. Keep an open cobblestone foreground. No text, logo or watermark. Do not add narrative characters or change the architecture.",
+      "reference_images": [
+        "client/images/bg_festival_town.png"
+      ],
+      "generation_date": "2026-10-13",
+      "approved": false
+    },
+    {
+      "id": "bg_castle_town",
+      "file": "client/images/bg_castle_town.png",
+      "purpose": "第1章城下町背景工程暂选",
+      "prompt": "Use case: precise-object-edit. Asset type: opaque square fantasy visual-novel background, 1024x1024. Edit the supplied bg_festival_town.png as the same street on an ordinary weekday. Preserve the exact camera, cobblestone perspective, timber-and-stone shop architecture, distant royal castle and painterly fantasy illustration style, fine warm material brushwork and blue daylight. Candidate 02: sparse subdued pedestrians, mostly quiet shopkeepers and a few anxious passersby, with restrained closed poses; broad empty foreground. Remove EVERY festival decoration across the ENTIRE image, including distant gateway: no flags, no hanging banners, no pennant strings, no garlands, no scattered flower petals. Keep ordinary shop awnings in the reference colors, with no heraldic emblems or logos. The far castle must still be recognizable. In the mountains beyond the street a thin, faint smoke thread rises, distinguishable from clouds. Ordinary daytime, not celebration, slight unease without disaster or night lighting. No text, no logos, no watermark. Do not redesign the street, maintain reference painting style and perspective.",
+      "reference_images": [
+        "client/images/bg_festival_town.png"
+      ],
+      "source_candidate": "assets/candidates/028/bg_castle_town/candidate_02.png",
+      "generation_date": "2026-10-13",
+      "approved": false
     }
   ],
   "selections": [
@@ -1975,6 +2020,20 @@
       "approved": false,
       "selection_reason": "候选 02 破窗缺口、楼梯下碎片及涌入前景的冷气更明确，原参考的大厅家具布局基本保持。",
       "style_review": "保持木石笔触，亮度明显降低；窗形和局部小物有轻微生成差异。参考实际为大厅而非 spec 所称客房；公告纸为不可辨小纹理。"
+    },
+    {
+      "task": "028",
+      "id": "bg_castle_town",
+      "file": "client/images/bg_castle_town.png",
+      "candidates": [
+        "assets/candidates/028/bg_castle_town/candidate_01.png",
+        "assets/candidates/028/bg_castle_town/candidate_02.png",
+        "assets/candidates/028/bg_castle_town/candidate_03.png"
+      ],
+      "selected_candidate": "assets/candidates/028/bg_castle_town/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选02保留同一条街和王城，主要节庆装饰已移除；行人少、姿态收敛，远处细烟可见。",
+      "style_review": "木石笔触、蓝红遮棚和日照延续参考。远处烟缕与屋顶重叠；极远城门内的细小彩色纹理、行人不安程度需设计确认。03烟更粗，01远门处残留节庆色带更明显。"
     }
   ],
   "todo_design": [
@@ -1989,7 +2048,8 @@
     "024: 逐张验收 9 张工程暂选图与 19 张候选，全部 approved=false；最终选图及接线由设计负责人处理。",
     "024: 确认宿屋参考图与 spec 的客房描述冲突：本批优先保留 bg_inn.png 实际大厅布局，未另造客房。已向用户询问，制作时未收到回复。",
     "024: 确认刺客银发、护具、盘曲式白竜纹章及服装刺绣；确认番兵甲片尖锐度和冰蓝亮度。",
-    "024: 确认宅邸宫殿式规模、夜景暖灯、喷泉晶柱状冻结、书斋附加陈设与王室纹章的适用性。"
+    "024: 确认宅邸宫殿式规模、夜景暖灯、喷泉晶柱状冻结、书斋附加陈设与王室纹章的适用性。",
+    "028: 审定3张城下町候选及暂选02（approved=false）；确认远景细烟位置、城门内小纹理及行人的不安程度。第1章已用新图替代祭典占位。"
   ],
   "inferences": [
     "选图是按 spec 的工程暂选，不代表设计批准。",
@@ -2016,7 +2076,9 @@
     "024: 刺客银发、护具、纹章具体形态；番兵尖晶甲片；城门塔楼、盾徽、居民衣饰；宅邸规模、喷泉形制、窗灯；书斋仪器、胸像、植物；寝床和家具具体形式均为生成器对参考的延伸，须设计确认。",
     "024: 日志和书脊不写文字，公告纸保留不可辨纹理，以落实不画文字要求；未新增叙事。",
     "024: 方形背景虽明确请求 1024×1024，工具实际给出 1254×1254，按 016 允许的等比缩放缩小至参考尺寸；未裁切或重绘。",
-    "024: manifest 顶层 task/qa 表示最新批次，016/020 原记录保留，旧 QA 留存 batches。"
+    "024: manifest 顶层 task/qa 表示最新批次，016/020 原记录保留，旧 QA 留存 batches。",
+    "028: 沿用指定祭典参考的视点、木石材质与日光；候选只变人群姿態和烟缕，不定义新的剧情。",
+    "028: 028未另定像素尺寸，保留工具原生1254×1254，与参考1024×1024同为方形；没有裁切、缩放或后期重绘。"
   ],
   "deviations": [
     "蜘蛛生成 4 张候选，其余各 2 张；额外两张用于修正八足辨识。",
@@ -2027,29 +2089,33 @@
     "024: 按用户本轮明确要求及 024 说明免跑全量测试，执行素材与提交范围检查后直接提交。"
   ],
   "qa": {
-    "dimensions": "28 张交付 PNG：19 独立候选、9 暂选副本。番兵 1254×1254，刺客 1024×1536，6 项方形背景 1024×1024，宿屋 1672×941。12 张方形背景候选按 016 允许等比缩小；其余原生尺寸。",
-    "alpha": "5 张立绘候选为 RGBA，14 张背景候选为 RGB。立绘在深色、浅色、灰绿色底合成检查，未见明显白边、灰边或矩形背景光晕；原始 alpha 保留。",
-    "style": "逐项检查全部候选与已读参考的笔触、材质、光照和饱和度；暂选理由与风格偏差见 task=024 的 selections。生成过程直接查看原图，另以合成图检查 alpha。",
-    "validation_status": "passed_asset_checks",
-    "test_policy": "用户明确要求仅图片与 manifest，免跑全量测试，生成完直接提交；未修改代码或剧本。",
+    "dimensions": "3张候选及暂选副本均为1254×1254；保留原生尺寸。",
+    "alpha": "4张均为不透明RGB。",
+    "style": "逐张查看全部3候选，与bg_festival_town.png对比；暂选理由与偏差见task=028的selections。",
+    "validation_status": "passed",
+    "generator": "内置image_gen，完整提示词保存在images记录。",
     "validation": [
       {
-        "command": "??? Python/Pillow/JSON ?????python -?????????",
+        "command": "python -m unittest discover -s tests -q",
         "exit_code": 0,
-        "result": "28 PNG = 19 ???? + 9 ?????9 ??????????alpha????????????approved=false????????UTF-8 ? BOM ???????????? manifest ? 28 ?? PNG??? art/024?"
+        "result": "Ran 506 tests in 125.968s; OK (skipped=1)"
       },
       {
-        "command": "git diff --check",
+        "command": "node --check client/app.js",
         "exit_code": 0,
-        "result": "??????????"
+        "result": "无输出，语法检查通过。"
       },
       {
-        "command": "python -m unittest discover -s tests -q / node --check client/app.js",
-        "status": "not_run",
-        "result": "???????? 024 spec ?????????????????????????"
+        "command": "python -m scripts.screenshot_choices",
+        "exit_code": 0,
+        "result": "8 张截图、73 项离线 Chromium 检查通过；逐图目视复查；尺寸与截图检查结果见 eval/reports/screens/028/checks.json。"
+      },
+      {
+        "command": "Python/Pillow/JSON 素材检查",
+        "exit_code": 0,
+        "result": "3 张候选及暂选副本均为原生 1254×1254 RGB；4 份完整提示词、参考路径、approved=false 和暂选与候选02字节一致通过。"
       }
-    ],
-    "commit_gate": "??????????????? manifest???????? art/024????????"
+    ]
   },
   "batches": {
     "016": {
@@ -2149,12 +2215,45 @@
         ],
         "commit_gate": "??????????????? manifest???????? art/024????????"
       }
+    },
+    "028": {
+      "generation_date": "2026-10-13",
+      "qa": {
+        "dimensions": "3张候选及暂选副本均为1254×1254；保留原生尺寸。",
+        "alpha": "4张均为不透明RGB。",
+        "style": "逐张查看全部3候选，与bg_festival_town.png对比；暂选理由与偏差见task=028的selections。",
+        "validation_status": "passed",
+        "generator": "内置image_gen，完整提示词保存在images记录。",
+        "validation": [
+          {
+            "command": "python -m unittest discover -s tests -q",
+            "exit_code": 0,
+            "result": "Ran 506 tests in 125.968s; OK (skipped=1)"
+          },
+          {
+            "command": "node --check client/app.js",
+            "exit_code": 0,
+            "result": "无输出，语法检查通过。"
+          },
+          {
+            "command": "python -m scripts.screenshot_choices",
+            "exit_code": 0,
+            "result": "8 张截图、73 项离线 Chromium 检查通过；逐图目视复查；尺寸与截图检查结果见 eval/reports/screens/028/checks.json。"
+          },
+          {
+            "command": "Python/Pillow/JSON 素材检查",
+            "exit_code": 0,
+            "result": "3 张候选及暂选副本均为原生 1254×1254 RGB；4 份完整提示词、参考路径、approved=false 和暂选与候选02字节一致通过。"
+          }
+        ]
+      }
     }
   },
   "tasks": [
     "016",
     "020",
-    "024"
+    "024",
+    "028"
   ],
   "known_issues": [
     "020: 全量测试存在与美术无关的既有 benchmark 标签同步失败；未修改生成器或 benchmark。",

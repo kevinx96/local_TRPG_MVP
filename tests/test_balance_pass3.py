@@ -126,6 +126,7 @@ class BalancePass3Tests(unittest.TestCase):
             if enemy["id"] == "slime":
                 enemy.update(hp=1, max_hp=1)
         session = checkpoints.fresh_session(pack, "hero")
+        checkpoints.replay_step(session, "go_castle_town")
         checkpoints.replay_step(session, "go_dark_forest:success")
         session["character"]["hp"] = 12
         session["character"]["mp"] = 0
