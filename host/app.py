@@ -24,7 +24,7 @@ from .combat import (
     perform_combat_action,
 )
 from .gm_contract import STATE_MARKER, build_gm_contract_prompt, build_opening_prompt, split_visible_and_json
-from .llm_client import LLMClientError, chat_completion, debug_log
+from .llm_client import LLMBlockedError, LLMClientError, chat_completion, debug_log
 from . import llm_trace
 from .maps import movement_action
 from .shops import ShopError, public_shop, trade, use_item
@@ -777,7 +777,11 @@ def _run_free_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, A
         llm_trace.annotate(parse_status="invalid_plan" if isinstance(exc, InvalidPlan) else "request_error", fallback=True, outcome="rejected")
         # Do not replay the command, retry another model, or expose unvalidated prose.
         add_player_message(session, request.text.strip(), request.speaker)
-        add_assistant_message(session, "行動を読み取れませんでした。状況は変わっていません。言い換えるか、現在の選択肢から選んでください。")
+        if isinstance(exc, LLMClientError) and not isinstance(exc, LLMBlockedError):
+            # A transport failure (rate limit, quota, outage) is not the player's wording.
+            add_assistant_message(session, "GMとの通信に失敗しました。状況は変わっていません。少し待ってからもう一度試すか、現在の選択肢から選んでください。")
+        else:
+            add_assistant_message(session, "行動を読み取れませんでした。状況は変わっていません。言い換えるか、現在の選択肢から選んでください。")
         session["choices"] = fallback_choices_for_session(session)
         debug_log(f"Free action rejected session={session['id']} error_type={type(exc).__name__}")
     session["last_turn_metrics"] = {"model_calls": 1, "elapsed_ms": round((time.monotonic() - started) * 1000)}

@@ -310,6 +310,15 @@ class InfrastructureTests(unittest.TestCase):
         self.assertEqual(record["call_type"], "plan")
         self.assertNotIn("api_key", json.dumps(record))
 
+    def test_transport_failure_tells_player_it_was_not_their_wording(self):
+        before = deepcopy(self.session["character"])
+        with isolated_engine(), patch.object(app, "load_config", return_value=self.config), \
+             patch.object(app, "chat_completion", side_effect=llm_client.LLMClientError("429 Too Many Requests")), \
+             patch.object(llm_trace, "append_trace"):
+            result = app._run_free_turn(self.session, app.TurnRequest(text="攻撃しない。"))
+        self.assertEqual(self.session["character"], before)
+        self.assertIn("GMとの通信に失敗しました", result["messages"][-1]["text"])
+
     def test_trace_plan_and_outcome_and_request_only_latency(self):
         plan = valid_plan(kind="interact", operation="observe", target_id="forest_slime")
         with isolated_engine(), patch.object(app, "load_config", return_value=self.config), \
