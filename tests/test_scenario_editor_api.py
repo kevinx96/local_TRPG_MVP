@@ -1,4 +1,5 @@
 import json
+import shutil
 import unittest
 import uuid
 from pathlib import Path
@@ -19,6 +20,7 @@ class ScenarioEditorApiTests(unittest.TestCase):
 
     def tearDown(self):
         app_module.PROCESSED_SCENARIO_DIR = self.original_dir
+        shutil.rmtree(self.tmp_path, ignore_errors=True)
 
     def pack(self, title="Test Scenario"):
         return {
@@ -48,6 +50,10 @@ class ScenarioEditorApiTests(unittest.TestCase):
     def test_list_get_and_save_scenario(self):
         scenario_path = self.tmp_path / "demo.json"
         scenario_path.write_text(json.dumps(self.pack(), ensure_ascii=False), encoding="utf-8")
+        (self.tmp_path / "demo-restore.json").write_text(
+            json.dumps(self.pack("Backup"), ensure_ascii=False),
+            encoding="utf-8",
+        )
         (self.tmp_path / "scenario_pack.schema.json").write_text("{}", encoding="utf-8")
 
         listed = app_module.api_list_scenarios()
@@ -102,6 +108,11 @@ class ScenarioEditorApiTests(unittest.TestCase):
         self.assertEqual(backend["model"], "qwen")
         self.assertNotIn("api_key", backend)
         self.assertNotIn("headers", backend)
+
+    def test_html_entrypoints_are_not_cached(self):
+        for response in (app_module.index(), app_module.editor()):
+            self.assertEqual(response.headers.get("Cache-Control"), "no-store, max-age=0")
+            self.assertEqual(response.headers.get("Pragma"), "no-cache")
 
 
 if __name__ == "__main__":

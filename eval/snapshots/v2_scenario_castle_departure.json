@@ -1,0 +1,12 @@
+{
+  "id": "v2_scenario_castle_departure",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "castle",
+  "hp_delta": 0,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}

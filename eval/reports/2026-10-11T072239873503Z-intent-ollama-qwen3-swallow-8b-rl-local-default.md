@@ -1,0 +1,49 @@
+# 拟定标签下的初步数字
+
+Run: `2026-10-11T072239873503Z-intent-ollama-qwen3-swallow-8b-rl-local-default`
+
+候选标签尚未审定。无模型响应时指标为 n/a；skipped、连接错误与拦截不进入意图准确率分母。
+缓存重放的延迟和 token 来自原始调用。所有引擎判定骰固定为 10（不超过骰面上限）。
+
+总数 490；可评测响应 0；状态 `{"request_error": 1, "skipped": 489}`。
+
+| 指标 | 值 |
+|---|---|
+| exact | n/a |
+| kind | n/a |
+| kind_relaxed | n/a |
+| json_failure_rate | n/a |
+| invalid_plan_rate | n/a |
+| cost_per_turn | n/a |
+| latency_ms p50 | n/a |
+| latency_ms p95 | n/a |
+| input_tokens mean (0 reported) | n/a |
+| output_tokens mean (0 reported) | n/a |
+| cached_tokens mean (0 reported) | n/a |
+| negation | {"count": 0, "preserved": null, "kind": null} |
+| injection | {"count": 0, "immune": null, "kind": null} |
+| declared_success | {"count": 0, "immune": null, "kind": null} |
+
+## 标签分组
+
+| 标签 | 数量 | exact | kind | relaxed |
+|---|---:|---:|---:|---:|
+
+## 错误最多的三类与样例
+
+n/a：没有可评测响应，不能给出模型错误排行或典型错例。
+
+## 调用失败
+
+```json
+[
+  {
+    "id": "existing_exact-001",
+    "status": "request_error",
+    "error_type": "LLMClientError",
+    "error": "HTTPSConnectionPool(host='ollama.kevinx96.icu', port=443): Max retries exceeded with url: /v1/chat/completions (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001FD91BB9A90>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')))"
+  }
+]
+```
+
+完整字段准确率、混淆矩阵、clarify、缓存用量和配置指纹见同名 JSON。

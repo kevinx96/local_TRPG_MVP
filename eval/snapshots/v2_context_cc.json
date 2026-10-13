@@ -1,0 +1,17 @@
+{
+  "id": "v2_context_cc",
+  "scenario": "eval/benchmark/scenario_frozen/dragon_rpg@f41af9d.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "castle",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": [
+    {
+      "speaker": "GM",
+      "text": "国王に邪竜の詳しい話を聞きますか？"
+    }
+  ]
+}

@@ -1,0 +1,271 @@
+# 拟定标签下的初步数字
+
+Run: `2026-10-11T121149336492Z-intent-ollama-qwen3-swallow-8b-rl-local-union_schema_noenum`
+
+候选标签尚未审定。无模型响应时指标为 n/a；skipped、连接错误与拦截不进入意图准确率分母。
+缓存重放的延迟和 token 来自原始调用。所有引擎判定骰固定为 10（不超过骰面上限）。
+
+总数 194；可评测响应 194；状态 `{"ok": 121, "invalid_plan": 73}`。
+
+| 指标 | 值 |
+|---|---|
+| exact | 0.3505 |
+| kind | 0.3557 |
+| kind_relaxed | 0.3557 |
+| s0_s1_rate | 0.3505 |
+| s3_rate | 0.1649 |
+| engine_caught | 85 |
+| severity | {'S0': 54, 'S1': 14, 'S2': 94, 'S3': 32, 'S4': 0} |
+| json_failure_rate | 0.0000 |
+| invalid_plan_rate | 0.3763 |
+| conflict_count | n/a |
+| conflict_rate | n/a |
+| cost_per_turn | 0.00000000 |
+| cost_currency | USD |
+| cost_reported | 194 |
+| latency_ms p50 | 4685.5660 |
+| latency_ms p95 | 6474.0485 |
+| input_tokens mean (194 reported) | 833.9278 |
+| output_tokens mean (194 reported) | 57.3557 |
+| cached_tokens mean (194 reported) | 651.6392 |
+| negation | {"count": 8, "preserved": 0.875, "kind": 0.0} |
+| injection | {"count": 8, "no_state_change": 0.625, "kind": 0.0, "unearned_change": 0} |
+| declared_success | {"count": 8, "no_state_change": 0.25, "kind": 0.75, "unearned_change": 0, "reinterpreted_as_attempt": 6} |
+| 归一化次数 | 0 |
+| lenient 清理与 existing.operation | {"evaluated": 0, "cleared_fields": {}, "existing_operation_count": 0, "existing_operation_recovered": 0} |
+
+## 标签分组
+
+| 标签 | 数量 | exact | kind | relaxed | 归一化次数 | S3 | engine_caught |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| chitchat | 8 | 0 | 0 | 0 | 0 | 0 | 2 |
+| colloquial | 8 | 0.8750 | 1 | 1 | 0 | 0 | 0 |
+| conditional | 8 | 0 | 0 | 0 | 0 | 4 | 4 |
+| context_followup | 8 | 0.6250 | 0.6250 | 0.6250 | 0 | 0 | 2 |
+| declared_success | 8 | 0.7500 | 0.7500 | 0.7500 | 0 | 0 | 2 |
+| deixis_multi | 8 | 0 | 0 | 0 | 0 | 7 | 4 |
+| deixis_unique | 8 | 0.8750 | 0.8750 | 0.8750 | 0 | 0 | 1 |
+| dialogue | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
+| excluded_means | 8 | 0.6250 | 0.6250 | 0.6250 | 0 | 2 | 1 |
+| existing_exact | 8 | 1 | 1 | 1 | 0 | 0 | 0 |
+| existing_paraphrase | 8 | 1 | 1 | 1 | 0 | 0 | 0 |
+| impossible | 8 | 0 | 0 | 0 | 0 | 4 | 4 |
+| injection | 8 | 0 | 0 | 0 | 0 | 8 | 3 |
+| interact_distract | 8 | 0 | 0 | 0 | 0 | 0 | 8 |
+| interact_observe | 8 | 0 | 0 | 0 | 0 | 0 | 8 |
+| interact_prepare | 8 | 0 | 0 | 0 | 0 | 0 | 8 |
+| interact_sneak | 8 | 0 | 0 | 0 | 0 | 0 | 8 |
+| interact_use_item | 8 | 0 | 0 | 0 | 0 | 0 | 7 |
+| language_mix | 18 | 0.5556 | 0.5556 | 0.5556 | 0 | 1 | 6 |
+| missing_item | 8 | 0 | 0 | 0 | 0 | 1 | 8 |
+| negation | 8 | 0 | 0 | 0 | 0 | 4 | 6 |
+| parallel | 8 | 1 | 1 | 1 | 0 | 0 | 0 |
+| sequential | 8 | 0.5000 | 0.5000 | 0.5000 | 0 | 1 | 3 |
+
+## 错误最多的三类与样例
+
+### chitchat (8)
+
+```json
+[
+  {
+    "id": "v2-chitchat-002",
+    "input": "こう暗いと気分まで沈みそうだ。",
+    "raw_response": "{\n  \"action_id\": \"none\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"item_id\": \"\",\n  \"kind\": \"existing\",\n  \"operation\": \"\",\n  \"reply\": \"\",\n  \"target_id\": \"\"\n\n}",
+    "plan": {
+      "action_id": "none",
+      "advance": false,
+      "approach": "",
+      "item_id": "",
+      "kind": "existing",
+      "operation": "",
+      "reply": "",
+      "target_id": ""
+    },
+    "gold": [
+      {
+        "kind": "dialogue",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    ]
+  },
+  {
+    "id": "v2-chitchat-005",
+    "input": "鍛冶屋の空気って独特だね。",
+    "raw_response": "{\n  \"action_id\": \"ask_blacksmith_weakness\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"item_id\": \"\",\n  \"kind\": \"existing\",\n  \"operation\": \"\",\n  \"reply\": \"\",\n  \"target_id\": \"\"\n\n}",
+    "plan": {
+      "action_id": "ask_blacksmith_weakness",
+      "advance": false,
+      "approach": "",
+      "item_id": "",
+      "kind": "existing",
+      "operation": "",
+      "reply": "",
+      "target_id": ""
+    },
+    "gold": [
+      {
+        "kind": "dialogue",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    ]
+  }
+]
+```
+
+### conditional (8)
+
+```json
+[
+  {
+    "id": "v2-conditional-001",
+    "input": "向こうが襲ってきたら戦うけど、今は見ているだけ。",
+    "raw_response": "{\n  \"action_id\": \"observe\",\n  \"advance\": false,\n  \"approach\": \"\",\"item_id\": \"\",\"kind\": \"existing\",\n  \"operation\": \"\",\"reply\": \"\",\n  \"target_id\": \"\"\n\n}",
+    "plan": {
+      "action_id": "observe",
+      "advance": false,
+      "approach": "",
+      "item_id": "",
+      "kind": "existing",
+      "operation": "",
+      "reply": "",
+      "target_id": ""
+    },
+    "gold": [
+      {
+        "kind": "dialogue",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      },
+      {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "observe",
+        "target_id": "forest_slime",
+        "item_id": "",
+        "advance": false
+      },
+      {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "observe",
+        "target_id": "fallen_branches",
+        "item_id": "",
+        "advance": false
+      }
+    ]
+  },
+  {
+    "id": "v2-conditional-003",
+    "input": "携帯食が必要になったら使う。まだ出さない。",
+    "raw_response": "{\n  \"action_id\": \"use_item\",\n  \"advance\": false,\n  \"approach\": \"\",\"item_id\": \"\",\"kind\": \"existing\",\n  \"operation\": \"\",\"reply\": \"\",\n  \"target_id\": \"\"\n}",
+    "plan": {
+      "action_id": "use_item",
+      "advance": false,
+      "approach": "",
+      "item_id": "",
+      "kind": "existing",
+      "operation": "",
+      "reply": "",
+      "target_id": ""
+    },
+    "gold": [
+      {
+        "kind": "dialogue",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      },
+      {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "observe",
+        "target_id": "forest_slime",
+        "item_id": "",
+        "advance": false
+      },
+      {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "observe",
+        "target_id": "fallen_branches",
+        "item_id": "",
+        "advance": false
+      }
+    ]
+  }
+]
+```
+
+### deixis_multi (8)
+
+```json
+[
+  {
+    "id": "v2-deixis_multi-002",
+    "input": "あの人を呼んで話したいんだけど。",
+    "raw_response": "{\n  \"action_id\": \"ask_ian_legend\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"item_id\": \"\",\n  \"kind\": \"existing\",\n  \"operation\": \"\",\n  \"reply\": \"\",\n  \"target_id\": \"\"\n}",
+    "plan": {
+      "action_id": "ask_ian_legend",
+      "advance": false,
+      "approach": "",
+      "item_id": "",
+      "kind": "existing",
+      "operation": "",
+      "reply": "",
+      "target_id": ""
+    },
+    "gold": [
+      {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    ]
+  },
+  {
+    "id": "v2-deixis_multi-006",
+    "input": "あそこを使って何とかしよう。",
+    "raw_response": "{\n  \"action_id\": \"use_item\",\n  \"advance\": false,\n  \"approach\": \"\",\"item_id\":\"\",\n  \"kind\":\"existing\",\n  \"operation\":\"\",\n  \"reply\":\"\",\n  \"target_id\":\"\"\n}",
+    "plan": {
+      "action_id": "use_item",
+      "advance": false,
+      "approach": "",
+      "item_id": "",
+      "kind": "existing",
+      "operation": "",
+      "reply": "",
+      "target_id": ""
+    },
+    "gold": [
+      {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    ]
+  }
+]
+```
+
+
+完整字段准确率、混淆矩阵、clarify、缓存用量和配置指纹见同名 JSON。

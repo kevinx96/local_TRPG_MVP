@@ -1,0 +1,113 @@
+[
+  {
+    "ok": true,
+    "checks": [
+      "initial stock",
+      "buy quantity and stock refresh",
+      "key items excluded",
+      "sell refresh",
+      "sold out",
+      "inventory use refresh",
+      "quest notification",
+      "insufficient gold button",
+      "disabled reason",
+      "responsive columns",
+      "no horizontal overflow"
+    ],
+    "view": "shop"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "initial stock",
+      "buy quantity and stock refresh",
+      "key items excluded",
+      "sell refresh",
+      "sold out",
+      "inventory use refresh",
+      "quest notification",
+      "insufficient gold button",
+      "disabled reason",
+      "responsive columns",
+      "no horizontal overflow"
+    ],
+    "view": "shop-mobile"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "initial stock",
+      "buy quantity and stock refresh",
+      "key items excluded",
+      "sell refresh",
+      "sold out",
+      "inventory use refresh",
+      "quest notification",
+      "no horizontal overflow"
+    ],
+    "view": "quests"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "initial stock",
+      "buy quantity and stock refresh",
+      "key items excluded",
+      "sell refresh",
+      "sold out",
+      "inventory use refresh",
+      "quest notification",
+      "no horizontal overflow"
+    ],
+    "view": "inventory"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "minimap visible",
+      "unknown nodes visible",
+      "unvisited distant node hidden",
+      "no horizontal overflow"
+    ],
+    "view": "forest-map"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "minimap visible",
+      "submap selected",
+      "parent breadcrumb",
+      "no horizontal overflow"
+    ],
+    "view": "fort-map"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "minimap visible",
+      "submap selected",
+      "parent breadcrumb",
+      "no horizontal overflow"
+    ],
+    "view": "cave-map"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "minimap visible",
+      "prism boss visible",
+      "no horizontal overflow"
+    ],
+    "view": "prism-battle"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "minimap visible",
+      "unknown nodes visible",
+      "unvisited distant node hidden",
+      "no horizontal overflow"
+    ],
+    "view": "forest-mobile"
+  }
+]

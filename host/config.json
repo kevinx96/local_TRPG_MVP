@@ -1,11 +1,14 @@
 {
-  "active_backend": "ollama",
+  "active_backend": "gemini",
+  "archived_backends": ["ollama", "koboldcpp"],
   "backends": {
     "ollama": {
       "base_url": "http://localhost:11434/v1",
       "model": "qwen3-swallow-8b-rl-local",
       "fallback_models": [
         "qwen2.5-7b-instruct-local",
+        "qwen2.5-3b-instruct-q8-0-local",
+        "qwen2.5-3b-instruct-q5-k-m-local",
         "elyza-jp-8b-local"
       ],
       "api_key": "ollama"
@@ -16,12 +19,22 @@
       "fallback_models": [
         "qwen3-swallow-8b-rl-local",
         "qwen2.5-7b-instruct-local",
+        "qwen2.5-3b-instruct-q8-0-local",
+        "qwen2.5-3b-instruct-q5-k-m-local",
         "qwen2.5:7b-instruct"
       ],
       "api_key": "koboldcpp"
+    },
+    "gemini": {
+      "type": "gemini",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "model": "gemini-3.1-flash-lite",
+      "fallback_models": ["gemini-3.5-flash-lite", "gemini-3.6-flash"],
+      "api_key": ""
     }
   },
-  "request_timeout_seconds": 1800,
+  "request_timeout_seconds": 15,
+  "max_model_attempts": 2,
   "temperature": 0.8,
   "max_tokens": 2048,
   "response_format": "json_object",
@@ -32,5 +45,6 @@
     "action_history_item_chars": 80
   },
   "debug_llm": true,
+  "trace_llm": true,
   "demo_fallback_on_error": true
 }

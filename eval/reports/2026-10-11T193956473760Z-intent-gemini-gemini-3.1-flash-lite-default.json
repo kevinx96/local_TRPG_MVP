@@ -1,0 +1,375 @@
+{
+  "run_id": "2026-10-11T193956473760Z-intent-gemini-gemini-3.1-flash-lite-default",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "default",
+  "split": "all",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\candidates\\intent_v2_scenario.jsonl",
+  "cases_sha256": "f367cd7509d37e6d637a887ad3b352d340cb5365e8e76c840bc6c5c2356e8499",
+  "quota_exhausted": null,
+  "response_failures": {
+    "whitespace": 0,
+    "empty_object": 0,
+    "other": 4,
+    "no_response": 0
+  },
+  "metrics": {
+    "total": 50,
+    "evaluated": 50,
+    "statuses": {
+      "ok": 46,
+      "invalid_plan": 4
+    },
+    "normalizations": 0,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 33,
+      "S1": 1,
+      "S2": 15,
+      "S3": 1,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.68,
+    "s3_rate": 0.02,
+    "engine_caught": 0,
+    "exact": 0.68,
+    "kind": 0.76,
+    "kind_relaxed": 0.76,
+    "field_kind": 0.76,
+    "field_action_id": 0.82,
+    "field_operation": 0.92,
+    "field_target_id": 0.72,
+    "field_item_id": 0.92,
+    "field_advance": 0.92,
+    "confusion_matrix": {
+      "clarify|unsupported": {
+        "dialogue": 1
+      },
+      "dialogue": {
+        "existing": 1,
+        "dialogue": 6
+      },
+      "dialogue|unsupported": {
+        "dialogue": 8
+      },
+      "existing": {
+        "invalid": 4,
+        "existing": 11,
+        "dialogue": 4
+      },
+      "interact": {
+        "interact": 12
+      },
+      "unsupported": {
+        "dialogue": 2,
+        "unsupported": 1
+      }
+    },
+    "by_tag": {
+      "evidence_claim": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.5,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "lore_question": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.5,
+        "kind": 0.5,
+        "kind_relaxed": 0.5,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "observe_clue": {
+        "count": 16,
+        "normalizations": 0,
+        "exact": 0.8125,
+        "kind": 0.8125,
+        "kind_relaxed": 0.8125,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "report_choice": {
+        "count": 10,
+        "normalizations": 0,
+        "exact": 0.9,
+        "kind": 0.9,
+        "kind_relaxed": 0.9,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "scale_handling": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.5,
+        "kind": 0.5,
+        "kind_relaxed": 0.5,
+        "s3_count": 0,
+        "engine_caught": 0
+      }
+    },
+    "negation": {
+      "count": 0,
+      "preserved": null,
+      "kind": null
+    },
+    "injection": {
+      "count": 0,
+      "no_state_change": null,
+      "kind": null,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 0,
+      "no_state_change": null,
+      "kind": null,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 0
+    },
+    "clarify": {
+      "precision": null,
+      "recall": 0.0
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.08,
+    "latency_ms": {
+      "p50": 1193.098,
+      "p95": 1613.5107999999998
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 775.12,
+        "reported": 50
+      },
+      "output_tokens": {
+        "mean": 96.66,
+        "reported": 50
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.00033877,
+    "cost_currency": "USD",
+    "cost_reported": 50,
+    "top_errors": [
+      {
+        "tag": "evidence_claim",
+        "errors": 4,
+        "examples": [
+          {
+            "id": "v2-scenario-evidence_claim-001",
+            "input": "証拠なら持っています。将軍こそ白竜です。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"general\",\"item_id\":\"\",\"advance\":false,\"approach\":\"将軍が白竜であるという告発を国王に行う。\",\"reply\":\"「……なんと。アルス、それは聞き捨てならぬ言葉だ。将軍が白竜だという証拠、詳しく聞かせてもらおうか」\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "general",
+              "item_id": "",
+              "advance": false,
+              "approach": "将軍が白竜であるという告発を国王に行う。",
+              "reply": "「……なんと。アルス、それは聞き捨てならぬ言葉だ。将軍が白竜だという証拠、詳しく聞かせてもらおうか」"
+            },
+            "gold": [
+              {
+                "kind": "unsupported",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "king",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              }
+            ]
+          },
+          {
+            "id": "v2-scenario-evidence_claim-002",
+            "input": "白い竜鱗はもう手に入れた。これでドラコが白竜だと証明できるはずだ。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"general\",\"item_id\":\"\",\"advance\":false,\"approach\":\"将軍ドラコが白竜であるという証拠を提示し、糾弾する。\",\"reply\":\"「ほう、その鱗は……。アルス、貴殿は何を言っているのかね？ 根拠のない誹謗中傷は、この凱旋の場を汚すことになるぞ」\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "general",
+              "item_id": "",
+              "advance": false,
+              "approach": "将軍ドラコが白竜であるという証拠を提示し、糾弾する。",
+              "reply": "「ほう、その鱗は……。アルス、貴殿は何を言っているのかね？ 根拠のない誹謗中傷は、この凱旋の場を汚すことになるぞ」"
+            },
+            "gold": [
+              {
+                "kind": "unsupported",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "king",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "lore_question",
+        "errors": 4,
+        "examples": [
+          {
+            "id": "v2-scenario-lore_question-001",
+            "input": "長老、元素と人と竜の盟約が結ばれた頃のことを教えてください。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"elder\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"長老に古い盟約について詳しく尋ねる。\",\n  \"reply\": \"ふむ、よくぞ聞いてくれた。あれは遥か昔、竜と人が互いの領域を侵さぬと誓い合った夜のことじゃ。だが、その約束は今や風化しつつある……。\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "elder",
+              "item_id": "",
+              "advance": false,
+              "approach": "長老に古い盟約について詳しく尋ねる。",
+              "reply": "ふむ、よくぞ聞いてくれた。あれは遥か昔、竜と人が互いの領域を侵さぬと誓い合った夜のことじゃ。だが、その約束は今や風化しつつある……。"
+            },
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "ask_elder_treaty",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-scenario-lore_question-002",
+            "input": "互いを害さないという古い誓い、誰と誰が交わしたのか長老に聞く。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"elder\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"長老に対し、古い盟約の当事者について詳細を尋ねる。\",\n  \"reply\": \"ふむ、その盟約について知りたいのか。あれは遥か昔、我ら村の先祖と、山に住まう竜との間で交わされたものじゃよ。\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "elder",
+              "item_id": "",
+              "advance": false,
+              "approach": "長老に対し、古い盟約の当事者について詳細を尋ねる。",
+              "reply": "ふむ、その盟約について知りたいのか。あれは遥か昔、我ら村の先祖と、山に住まう竜との間で交わされたものじゃよ。"
+            },
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "ask_elder_treaty",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "scale_handling",
+        "errors": 4,
+        "examples": [
+          {
+            "id": "v2-scenario-scale_handling-001",
+            "input": "白い竜鱗を国王に見せて、将軍の正体を暴く証拠として突きつける。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"king\",\"item_id\":\"white_dragon_scale\",\"advance\":false,\"approach\":\"白い竜鱗を国王に見せ、将軍ドラコが邪竜と繋がっている証拠として告発する。\",\"reply\":\"国王エドワードは驚き、手にした竜鱗を凝視した。将軍ドラコは表情を変えず、静かにあなたを見つめている。\"}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "report_with_evidence",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-scenario-scale_handling-004",
+            "input": "この白い竜鱗はもういらない。床に投げ捨てる。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"\",\"item_id\":\"\",\"advance\":false,\"approach\":\"\",\"reply\":\"王の御前でそのような無礼な振る舞いはできません。何か別の目的があるのでしょうか？\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "王の御前でそのような無礼な振る舞いはできません。何か別の目的があるのでしょうか？"
+            },
+            "gold": [
+              {
+                "kind": "unsupported",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

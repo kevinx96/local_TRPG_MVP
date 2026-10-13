@@ -1,0 +1,40 @@
+[
+  {
+    "ok": true,
+    "checks": [
+      "minimap visible",
+      "unknown neighbors visible",
+      "visited nodes visible",
+      "no horizontal overflow"
+    ],
+    "view": "chapter3-map"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "minimap visible",
+      "unknown neighbors visible",
+      "visited nodes visible",
+      "no horizontal overflow"
+    ],
+    "view": "chapter4-map"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "minimap visible",
+      "story choices visible",
+      "no horizontal overflow"
+    ],
+    "view": "burning-house"
+  },
+  {
+    "ok": true,
+    "checks": [
+      "minimap visible",
+      "story choices visible",
+      "no horizontal overflow"
+    ],
+    "view": "xanxus-event"
+  }
+]

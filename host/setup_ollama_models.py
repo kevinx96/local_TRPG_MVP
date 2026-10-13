@@ -41,6 +41,20 @@ MODEL_SPECS = [
         "parameters": QWEN_CHAT_PARAMETERS,
     },
     {
+        "name": "qwen2.5-3b-instruct-q5-k-m-local",
+        "path": MODEL_ROOT / "qwen2.5-3b-instruct-q5_k_m.gguf",
+        "system": "あなたは日本語TRPGのゲームマスターです。自然な日本語で簡潔に応答してください。",
+        "template": QWEN_CHAT_TEMPLATE,
+        "parameters": QWEN_CHAT_PARAMETERS,
+    },
+    {
+        "name": "qwen2.5-3b-instruct-q8-0-local",
+        "path": MODEL_ROOT / "qwen2.5-3b-instruct-q8_0.gguf",
+        "system": "あなたは日本語TRPGのゲームマスターです。自然な日本語で簡潔に応答してください。",
+        "template": QWEN_CHAT_TEMPLATE,
+        "parameters": QWEN_CHAT_PARAMETERS,
+    },
+    {
         "name": "qwen3-swallow-8b-rl-local",
         "path": MODEL_ROOT / "Qwen3-Swallow-8B-RL-v0.2-Q4_K_M.gguf",
         "system": "あなたは日本語TRPGのゲームマスターです。自然な日本語で簡潔に応答してください。",
@@ -113,8 +127,15 @@ def list_ollama_models() -> list[str]:
     for line in result.stdout.splitlines()[1:]:
         parts = line.split()
         if parts:
-            names.append(parts[0])
+            names.append(normalize_ollama_model_name(parts[0]))
     return names
+
+
+def normalize_ollama_model_name(name: str) -> str:
+    base, separator, tag = name.rpartition(":")
+    if separator and tag == "latest":
+        return base
+    return name
 
 
 if __name__ == "__main__":

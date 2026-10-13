@@ -1,0 +1,7035 @@
+{
+  "n": 500,
+  "seed": 20261011,
+  "rows": [
+    {
+      "encounter": "dark_forest_loc",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.9149,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 8.46,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "dark_forest_loc",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.9102,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "dark_forest_loc",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.7706666666666666,
+      "healing_items_mean": {
+        "薬草": 0.042
+      },
+      "consumables_mean": {
+        "薬草": 0.042
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "dark_forest_loc",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.994,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.7550860719874805,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "5": 2,
+        "6": 1
+      },
+      "defeat_causes": {
+        "slime:1:体当たり @ round 5": 2,
+        "slime:1:体当たり @ round 6": 1
+      }
+    },
+    {
+      "encounter": "dark_forest_loc",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.998,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8730794923179692,
+      "healing_items_mean": {
+        "薬草": 0.038
+      },
+      "consumables_mean": {
+        "薬草": 0.038
+      },
+      "mp_spent_mean": 8.224,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 1
+      },
+      "defeat_causes": {
+        "slime:1:体当たり @ round 3": 1
+      }
+    },
+    {
+      "encounter": "dark_forest_loc",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.852,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.6046557120500783,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 33,
+        "4": 20,
+        "5": 16,
+        "6": 2,
+        "7": 3
+      },
+      "defeat_causes": {
+        "slime:1:体当たり @ round 3": 33,
+        "slime:1:体当たり @ round 4": 20,
+        "slime:1:体当たり @ round 5": 16,
+        "slime:1:体当たり @ round 7": 3,
+        "slime:1:体当たり @ round 6": 2
+      }
+    },
+    {
+      "encounter": "dark_forest_loc",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.83,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 12.16,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "dark_forest_loc",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.994,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.807703363035355,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "5": 3
+      },
+      "defeat_causes": {
+        "slime:1:体当たり @ round 5": 3
+      }
+    },
+    {
+      "encounter": "lost_goblin_crossroads",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9963,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 3.474,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "lost_goblin_crossroads",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.997,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "lost_goblin_crossroads",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.994,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "lost_goblin_crossroads",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.994,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "lost_goblin_crossroads",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9933333333333333,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 2.152,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "lost_goblin_crossroads",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9915,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "lost_goblin_crossroads",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9862857142857143,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 5.024,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "lost_goblin_crossroads",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9974285714285714,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "slime_ambush_one",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.9179,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 8.388,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "slime_ambush_one",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.9132,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "slime_ambush_one",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.7856666666666666,
+      "healing_items_mean": {
+        "治療の巻物": 0.05
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.05
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "slime_ambush_one",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.992,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.759744623655914,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "5": 3,
+        "6": 1
+      },
+      "defeat_causes": {
+        "slime:1:体当たり @ round 5": 3,
+        "slime:1:体当たり @ round 6": 1
+      }
+    },
+    {
+      "encounter": "slime_ambush_one",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.998,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8769205076820308,
+      "healing_items_mean": {
+        "薬草": 0.048
+      },
+      "consumables_mean": {
+        "薬草": 0.048
+      },
+      "mp_spent_mean": 8.592,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "5": 1
+      },
+      "defeat_causes": {
+        "slime:1:体当たり @ round 5": 1
+      }
+    },
+    {
+      "encounter": "slime_ambush_one",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.868,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.6132872503840245,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 25,
+        "4": 18,
+        "5": 17,
+        "6": 3,
+        "7": 2,
+        "8": 1
+      },
+      "defeat_causes": {
+        "slime:1:体当たり @ round 3": 25,
+        "slime:1:体当たり @ round 4": 18,
+        "slime:1:体当たり @ round 5": 17,
+        "slime:1:体当たり @ round 6": 3,
+        "slime:1:体当たり @ round 7": 2,
+        "slime:1:体当たり @ round 8": 1
+      }
+    },
+    {
+      "encounter": "slime_ambush_one",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.998,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.8435442313197824,
+      "healing_items_mean": {
+        "治療の巻物": 0.01,
+        "薬草": 0.004
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.01,
+        "薬草": 0.004
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 12.432,
+      "defeat_rounds": {
+        "4": 1
+      },
+      "defeat_causes": {
+        "slime:1:体当たり @ round 4": 1
+      }
+    },
+    {
+      "encounter": "slime_ambush_one",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.998,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.7791296879473232,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "5": 1
+      },
+      "defeat_causes": {
+        "slime:1:体当たり @ round 5": 1
+      }
+    },
+    {
+      "encounter": "slime_ambush_two",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.9075,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 8.55,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "slime_ambush_two",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.9053,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "slime_ambush_two",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.7921111111111111,
+      "healing_items_mean": {
+        "治療の巻物": 0.058
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.058
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "slime_ambush_two",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.986,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.763466306062655,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "5": 4,
+        "6": 1,
+        "7": 1,
+        "8": 1
+      },
+      "defeat_causes": {
+        "slime:1:体当たり @ round 5": 4,
+        "slime:1:体当たり @ round 6": 1,
+        "slime:1:体当たり @ round 7": 1,
+        "slime:1:体当たり @ round 8": 1
+      }
+    },
+    {
+      "encounter": "slime_ambush_two",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8841666666666667,
+      "healing_items_mean": {
+        "治療の巻物": 0.002,
+        "薬草": 0.042
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.002,
+        "薬草": 0.042
+      },
+      "mp_spent_mean": 8.312,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "slime_ambush_two",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.83,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.6040160642570281,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 30,
+        "4": 33,
+        "5": 18,
+        "6": 1,
+        "7": 2,
+        "8": 1
+      },
+      "defeat_causes": {
+        "slime:1:体当たり @ round 4": 33,
+        "slime:1:体当たり @ round 3": 30,
+        "slime:1:体当たり @ round 5": 18,
+        "slime:1:体当たり @ round 7": 2,
+        "slime:1:体当たり @ round 8": 1,
+        "slime:1:体当たり @ round 6": 1
+      }
+    },
+    {
+      "encounter": "slime_ambush_two",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.8422857142857143,
+      "healing_items_mean": {
+        "治療の巻物": 0.008,
+        "薬草": 0.008
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.008,
+        "薬草": 0.008
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 12.36,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "slime_ambush_two",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.998,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.7811336959633552,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "4": 1
+      },
+      "defeat_causes": {
+        "slime:1:体当たり @ round 4": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9954,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 3.456,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9962,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9912222222222222,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9912222222222222,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.987,
+      "healing_items_mean": {
+        "薬草": 0.002
+      },
+      "consumables_mean": {
+        "薬草": 0.002
+      },
+      "mp_spent_mean": 2.228,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.98,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9891428571428571,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 4.888,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.998,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_chest_fight",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 3,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9992666666666666,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 3.264,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_chest_fight",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 3,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9989333333333333,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_chest_fight",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 3,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9988571428571429,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 3.216,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_chest_fight",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 3,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9977857142857143,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_chest_fight",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 3,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9954444444444445,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 5.41,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_chest_fight",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 3,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9945555555555555,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_chest_fight",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 3,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9933636363636363,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 5.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_chest_fight",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 3,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9986363636363637,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "village_fire_slime",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9433714285714285,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "village_fire_slime",
+      "encounter_class": "trash",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9433714285714285,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "village_fire_slime",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.8872727272727273,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 9.006,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "village_fire_slime",
+      "encounter_class": "trash",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.7926666666666666,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "village_fire_slime",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9077142857142857,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 4.06,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "village_fire_slime",
+      "encounter_class": "trash",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.988,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.6250240987083092,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "4": 1,
+        "5": 3,
+        "6": 1,
+        "7": 1
+      },
+      "defeat_causes": {
+        "fire_slime:1:火の体当たり @ round 5": 3,
+        "fire_slime:1:火の体当たり @ round 4": 1,
+        "fire_slime:1:火の体当たり @ round 6": 1,
+        "fire_slime:1:火の体当たり @ round 7": 1
+      }
+    },
+    {
+      "encounter": "village_fire_slime",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.8498461538461538,
+      "healing_items_mean": {
+        "治療の巻物": 0.008
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.008
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 16.768,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "village_fire_slime",
+      "encounter_class": "trash",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.8308461538461539,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.998,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8869739478957915,
+      "healing_items_mean": {
+        "治療の巻物": 0.028
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.028
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 6.672,
+      "defeat_rounds": {
+        "3": 1
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 3": 1
+      }
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.998,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8487975951903808,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 1
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 3": 1
+      }
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.966,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.8043478260869565,
+      "healing_items_mean": {
+        "治療の巻物": 0.12
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.12
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 11,
+        "3": 5,
+        "5": 1
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 2": 11,
+        "forest_wolf:1:牙 @ round 3": 5,
+        "forest_wolf:1:牙 @ round 5": 1
+      }
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.952,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.7485994397759104,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 11,
+        "3": 11,
+        "4": 1,
+        "5": 1
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 3": 11,
+        "forest_wolf:1:牙 @ round 2": 11,
+        "forest_wolf:1:牙 @ round 5": 1,
+        "forest_wolf:1:牙 @ round 4": 1
+      }
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.93,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9050179211469535,
+      "healing_items_mean": {
+        "治療の巻物": 0.008,
+        "薬草": 0.094
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.008,
+        "薬草": 0.094
+      },
+      "mp_spent_mean": 3.432,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 26,
+        "2": 6,
+        "3": 2,
+        "4": 1
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 1": 26,
+        "forest_wolf:1:牙 @ round 2": 6,
+        "forest_wolf:1:牙 @ round 3": 2,
+        "forest_wolf:1:牙 @ round 4": 1
+      }
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.698,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.6396848137535817,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 36,
+        "2": 85,
+        "3": 24,
+        "4": 6
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 2": 85,
+        "forest_wolf:1:牙 @ round 1": 36,
+        "forest_wolf:1:牙 @ round 3": 24,
+        "forest_wolf:1:牙 @ round 4": 6
+      }
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.978,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8326029798422436,
+      "healing_items_mean": {
+        "治療の巻物": 0.024,
+        "薬草": 0.018
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.024,
+        "薬草": 0.018
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 9.48,
+      "defeat_rounds": {
+        "2": 5,
+        "3": 5,
+        "4": 1
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 3": 5,
+        "forest_wolf:1:牙 @ round 2": 5,
+        "forest_wolf:1:牙 @ round 4": 1
+      }
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.958,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.7734864300626305,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 16,
+        "3": 5
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 2": 16,
+        "forest_wolf:1:牙 @ round 3": 5
+      }
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9231,
+      "healing_items_mean": {
+        "治療の巻物": 0.002
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.002
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 7.386,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.923,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.996,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.8303212851405622,
+      "healing_items_mean": {
+        "治療の巻物": 0.036
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.036
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 2
+      },
+      "defeat_causes": {
+        "goblin_archer:2:粗末な矢 @ round 2": 2
+      }
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.988,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.815901934322987,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 2,
+        "3": 1,
+        "5": 3
+      },
+      "defeat_causes": {
+        "goblin_archer:2:粗末な矢 @ round 5": 3,
+        "goblin_archer:2:粗末な矢 @ round 2": 2,
+        "goblin_archer:2:粗末な矢 @ round 3": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.994,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8417169684775319,
+      "healing_items_mean": {
+        "治療の巻物": 0.012,
+        "薬草": 0.042
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.012,
+        "薬草": 0.042
+      },
+      "mp_spent_mean": 4.384,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 1,
+        "2": 2
+      },
+      "defeat_causes": {
+        "goblin_archer:2:粗末な矢 @ round 2": 2,
+        "goblin_archer:2:粗末な矢 @ round 1": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.952,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.6491596638655462,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 1,
+        "2": 3,
+        "3": 16,
+        "4": 2,
+        "5": 2
+      },
+      "defeat_causes": {
+        "goblin_archer:2:粗末な矢 @ round 3": 16,
+        "goblin_archer:2:粗末な矢 @ round 2": 3,
+        "goblin_archer:2:粗末な矢 @ round 5": 2,
+        "goblin_archer:2:粗末な矢 @ round 4": 2,
+        "goblin_archer:2:粗末な矢 @ round 1": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.998,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.86329802462067,
+      "healing_items_mean": {
+        "治療の巻物": 0.014,
+        "薬草": 0.012
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.014,
+        "薬草": 0.012
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 10.192,
+      "defeat_rounds": {
+        "3": 1
+      },
+      "defeat_causes": {
+        "goblin_archer:2:粗末な矢 @ round 3": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 1.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.8492857142857143,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9801,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 5.292,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9763,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9226666666666666,
+      "healing_items_mean": {
+        "治療の巻物": 0.002
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.002
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9221111111111111,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9888333333333333,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 2.204,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.996,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8657965194109772,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 1,
+        "5": 1
+      },
+      "defeat_causes": {
+        "hobgoblin:1:大棍棒 @ round 5": 1,
+        "hobgoblin:1:大棍棒 @ round 3": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9545714285714285,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 7.808,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9457142857142857,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_second_left",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.978,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.7422290388548057,
+      "healing_items_mean": {
+        "治療の巻物": 0.154
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.154
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 12.048,
+      "defeat_rounds": {
+        "3": 5,
+        "4": 4,
+        "5": 2
+      },
+      "defeat_causes": {
+        "war_hound:1:噛みつき @ round 3": 5,
+        "war_hound:1:噛みつき @ round 4": 4,
+        "war_hound:1:噛みつき @ round 5": 2
+      }
+    },
+    {
+      "encounter": "goblin_fort_second_left",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.926,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.6666306695464362,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 9,
+        "4": 8,
+        "5": 13,
+        "6": 3,
+        "7": 2,
+        "9": 1,
+        "10": 1
+      },
+      "defeat_causes": {
+        "war_hound:1:噛みつき @ round 5": 13,
+        "war_hound:1:噛みつき @ round 3": 9,
+        "war_hound:1:噛みつき @ round 4": 8,
+        "war_hound:1:噛みつき @ round 6": 3,
+        "war_hound:1:噛みつき @ round 7": 2,
+        "war_hound:1:噛みつき @ round 10": 1,
+        "war_hound:1:噛みつき @ round 9": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_second_left",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.808,
+      "rounds_median": 7.0,
+      "hp_left_mean": 0.7028327832783279,
+      "healing_items_mean": {
+        "治療の巻物": 0.756
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.756
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 28,
+        "4": 12,
+        "5": 23,
+        "6": 6,
+        "7": 13,
+        "8": 6,
+        "9": 6,
+        "10": 1,
+        "11": 1
+      },
+      "defeat_causes": {
+        "war_hound:1:噛みつき @ round 3": 28,
+        "war_hound:1:噛みつき @ round 5": 23,
+        "war_hound:1:噛みつき @ round 7": 13,
+        "war_hound:1:噛みつき @ round 4": 12,
+        "war_hound:1:噛みつき @ round 6": 6,
+        "war_hound:1:噛みつき @ round 8": 6,
+        "war_hound:1:噛みつき @ round 9": 6,
+        "war_hound:1:噛みつき @ round 10": 1,
+        "war_hound:1:噛みつき @ round 11": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_second_left",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.496,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.47871863799283154,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 59,
+        "4": 45,
+        "5": 82,
+        "6": 21,
+        "7": 29,
+        "8": 9,
+        "9": 6,
+        "10": 1
+      },
+      "defeat_causes": {
+        "war_hound:1:噛みつき @ round 5": 82,
+        "war_hound:1:噛みつき @ round 3": 59,
+        "war_hound:1:噛みつき @ round 4": 45,
+        "war_hound:1:噛みつき @ round 7": 29,
+        "war_hound:1:噛みつき @ round 6": 21,
+        "war_hound:1:噛みつき @ round 8": 9,
+        "war_hound:1:噛みつき @ round 9": 6,
+        "war_hound:1:噛みつき @ round 10": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_second_left",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.828,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.7709339774557166,
+      "healing_items_mean": {
+        "治療の巻物": 0.048,
+        "薬草": 0.406
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.048,
+        "薬草": 0.406
+      },
+      "mp_spent_mean": 6.18,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 46,
+        "3": 23,
+        "4": 11,
+        "5": 3,
+        "6": 2,
+        "10": 1
+      },
+      "defeat_causes": {
+        "war_hound:1:噛みつき @ round 2": 46,
+        "war_hound:1:噛みつき @ round 3": 23,
+        "war_hound:1:噛みつき @ round 4": 11,
+        "war_hound:1:噛みつき @ round 5": 3,
+        "war_hound:1:噛みつき @ round 6": 2,
+        "war_hound:1:噛みつき @ round 10": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_second_left",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.126,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.49603174603174605,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 71,
+        "3": 145,
+        "4": 73,
+        "5": 85,
+        "6": 32,
+        "7": 22,
+        "8": 7,
+        "9": 2
+      },
+      "defeat_causes": {
+        "war_hound:1:噛みつき @ round 3": 145,
+        "war_hound:1:噛みつき @ round 5": 85,
+        "war_hound:1:噛みつき @ round 4": 73,
+        "war_hound:1:噛みつき @ round 2": 71,
+        "war_hound:1:噛みつき @ round 6": 32,
+        "war_hound:1:噛みつき @ round 7": 22,
+        "war_hound:1:噛みつき @ round 8": 7,
+        "war_hound:1:噛みつき @ round 9": 2
+      }
+    },
+    {
+      "encounter": "goblin_fort_second_left",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.77,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.7194805194805195,
+      "healing_items_mean": {
+        "治療の巻物": 0.228,
+        "薬草": 0.104
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.228,
+        "薬草": 0.104
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 15.76,
+      "defeat_rounds": {
+        "2": 13,
+        "3": 39,
+        "4": 17,
+        "5": 25,
+        "6": 8,
+        "7": 13
+      },
+      "defeat_causes": {
+        "war_hound:1:噛みつき @ round 3": 39,
+        "war_hound:1:噛みつき @ round 5": 25,
+        "war_hound:1:噛みつき @ round 4": 17,
+        "war_hound:1:噛みつき @ round 7": 13,
+        "war_hound:1:噛みつき @ round 2": 13,
+        "war_hound:1:噛みつき @ round 6": 8
+      }
+    },
+    {
+      "encounter": "goblin_fort_second_left",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.542,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.503426462836057,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 13,
+        "3": 65,
+        "4": 51,
+        "5": 71,
+        "6": 16,
+        "7": 6,
+        "8": 3,
+        "9": 4
+      },
+      "defeat_causes": {
+        "war_hound:1:噛みつき @ round 5": 71,
+        "war_hound:1:噛みつき @ round 3": 65,
+        "war_hound:1:噛みつき @ round 4": 51,
+        "war_hound:1:噛みつき @ round 6": 16,
+        "war_hound:1:噛みつき @ round 2": 13,
+        "war_hound:1:噛みつき @ round 7": 6,
+        "war_hound:1:噛みつき @ round 9": 4,
+        "war_hound:1:噛みつき @ round 8": 3
+      }
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9796,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 5.304,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9775,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9238888888888889,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9238888888888889,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9933333333333333,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 2.16,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.998,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8658984635938544,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 1
+      },
+      "defeat_causes": {
+        "hobgoblin:1:大棍棒 @ round 3": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9461428571428572,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 7.888,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9462857142857143,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.996,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.7264486517498565,
+      "healing_items_mean": {
+        "治療の巻物": 0.212
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.212
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 1,
+        "7": 1
+      },
+      "defeat_causes": {
+        "fire_elemental:1:火炎の腕 @ round 2": 1,
+        "fire_elemental:1:火炎の腕 @ round 7": 1
+      }
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.966,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.6332446021887016,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 1,
+        "3": 10,
+        "4": 2,
+        "5": 3,
+        "6": 1
+      },
+      "defeat_causes": {
+        "fire_elemental:1:火炎の腕 @ round 3": 10,
+        "fire_elemental:1:火炎の腕 @ round 5": 3,
+        "fire_elemental:1:火炎の腕 @ round 4": 2,
+        "fire_elemental:1:火炎の腕 @ round 2": 1,
+        "fire_elemental:1:火炎の腕 @ round 6": 1
+      }
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.948,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.6430124025060734,
+      "healing_items_mean": {
+        "治療の巻物": 0.438,
+        "薬草": 0.02
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.438,
+        "薬草": 0.02
+      },
+      "mp_spent_mean": 10.482,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 7,
+        "3": 10,
+        "4": 7,
+        "5": 1,
+        "9": 1
+      },
+      "defeat_causes": {
+        "fire_elemental:1:火炎の腕 @ round 3": 10,
+        "fire_elemental:1:火炎の腕 @ round 2": 7,
+        "fire_elemental:1:火炎の腕 @ round 4": 7,
+        "fire_elemental:1:火炎の腕 @ round 9": 1,
+        "fire_elemental:1:火炎の腕 @ round 5": 1
+      }
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.428,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.34239592183517414,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 8,
+        "3": 104,
+        "4": 98,
+        "5": 52,
+        "6": 18,
+        "7": 5,
+        "8": 1
+      },
+      "defeat_causes": {
+        "fire_elemental:1:火炎の腕 @ round 3": 104,
+        "fire_elemental:1:火炎の腕 @ round 4": 98,
+        "fire_elemental:1:火炎の腕 @ round 5": 52,
+        "fire_elemental:1:火炎の腕 @ round 6": 18,
+        "fire_elemental:1:火炎の腕 @ round 2": 8,
+        "fire_elemental:1:火炎の腕 @ round 7": 5,
+        "fire_elemental:1:火炎の腕 @ round 8": 1
+      }
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.892,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.704996796925048,
+      "healing_items_mean": {
+        "治療の巻物": 0.38,
+        "薬草": 0.05
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.38,
+        "薬草": 0.05
+      },
+      "mp_spent_mean": 4.568,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 31,
+        "3": 10,
+        "4": 2,
+        "5": 6,
+        "6": 3,
+        "7": 2
+      },
+      "defeat_causes": {
+        "fire_elemental:1:火炎の腕 @ round 2": 31,
+        "fire_elemental:1:火炎の腕 @ round 3": 10,
+        "fire_elemental:1:火炎の腕 @ round 5": 6,
+        "fire_elemental:1:火炎の腕 @ round 6": 3,
+        "fire_elemental:1:火炎の腕 @ round 4": 2,
+        "fire_elemental:1:火炎の腕 @ round 7": 2
+      }
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.114,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.35421888053467,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 176,
+        "3": 153,
+        "4": 90,
+        "5": 21,
+        "6": 1,
+        "7": 2
+      },
+      "defeat_causes": {
+        "fire_elemental:1:火炎の腕 @ round 2": 176,
+        "fire_elemental:1:火炎の腕 @ round 3": 153,
+        "fire_elemental:1:火炎の腕 @ round 4": 90,
+        "fire_elemental:1:火炎の腕 @ round 5": 21,
+        "fire_elemental:1:火炎の腕 @ round 7": 2,
+        "fire_elemental:1:火炎の腕 @ round 6": 1
+      }
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.772,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.6538461538461539,
+      "healing_items_mean": {
+        "治療の巻物": 0.804,
+        "薬草": 0.1
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.804,
+        "薬草": 0.1
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 17.256,
+      "defeat_rounds": {
+        "2": 33,
+        "3": 28,
+        "4": 16,
+        "5": 9,
+        "6": 11,
+        "7": 6,
+        "8": 4,
+        "9": 3,
+        "10": 2,
+        "11": 1,
+        "12": 1
+      },
+      "defeat_causes": {
+        "fire_elemental:1:火炎の腕 @ round 2": 33,
+        "fire_elemental:1:火炎の腕 @ round 3": 28,
+        "fire_elemental:1:火炎の腕 @ round 4": 16,
+        "fire_elemental:1:火炎の腕 @ round 6": 11,
+        "fire_elemental:1:火炎の腕 @ round 5": 9,
+        "fire_elemental:1:火炎の腕 @ round 7": 6,
+        "fire_elemental:1:火炎の腕 @ round 8": 4,
+        "fire_elemental:1:火炎の腕 @ round 9": 3,
+        "fire_elemental:1:火炎の腕 @ round 10": 2,
+        "fire_elemental:1:火炎の腕 @ round 12": 1,
+        "fire_elemental:1:火炎の腕 @ round 11": 1
+      }
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.492,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.39352720450281425,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 47,
+        "3": 100,
+        "4": 71,
+        "5": 30,
+        "6": 5,
+        "7": 1
+      },
+      "defeat_causes": {
+        "fire_elemental:1:火炎の腕 @ round 3": 100,
+        "fire_elemental:1:火炎の腕 @ round 4": 71,
+        "fire_elemental:1:火炎の腕 @ round 2": 47,
+        "fire_elemental:1:火炎の腕 @ round 5": 30,
+        "fire_elemental:1:火炎の腕 @ round 6": 5,
+        "fire_elemental:1:火炎の腕 @ round 7": 1
+      }
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.998,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.7472659604924133,
+      "healing_items_mean": {
+        "治療の巻物": 0.098
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.098
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 8.334,
+      "defeat_rounds": {
+        "4": 1
+      },
+      "defeat_causes": {
+        "ice_elemental:1:氷柱 @ round 4": 1
+      }
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 7.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 17,
+        "4": 58,
+        "5": 79,
+        "6": 92,
+        "7": 76,
+        "8": 64,
+        "9": 41,
+        "10": 23,
+        "11": 26,
+        "12": 11,
+        "13": 6,
+        "14": 4,
+        "15": 2,
+        "17": 1
+      },
+      "defeat_causes": {
+        "ice_elemental:1:氷柱 @ round 6": 92,
+        "ice_elemental:1:氷柱 @ round 5": 79,
+        "ice_elemental:1:氷柱 @ round 7": 76,
+        "ice_elemental:1:氷柱 @ round 8": 64,
+        "ice_elemental:1:氷柱 @ round 4": 58,
+        "ice_elemental:1:氷柱 @ round 9": 41,
+        "ice_elemental:1:氷柱 @ round 11": 26,
+        "ice_elemental:1:氷柱 @ round 10": 23,
+        "ice_elemental:1:氷柱 @ round 3": 17,
+        "ice_elemental:1:氷柱 @ round 12": 11,
+        "ice_elemental:1:氷柱 @ round 13": 6,
+        "ice_elemental:1:氷柱 @ round 14": 4,
+        "ice_elemental:1:氷柱 @ round 15": 2,
+        "ice_elemental:1:氷柱 @ round 17": 1
+      }
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.994,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.7241021888909213,
+      "healing_items_mean": {
+        "治療の巻物": 0.122
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.122
+      },
+      "mp_spent_mean": 8.328,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 3
+      },
+      "defeat_causes": {
+        "ice_elemental:1:氷柱 @ round 3": 3
+      }
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.81,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.4775907220351665,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 43,
+        "4": 33,
+        "5": 16,
+        "6": 2,
+        "7": 1
+      },
+      "defeat_causes": {
+        "ice_elemental:1:氷柱 @ round 3": 43,
+        "ice_elemental:1:氷柱 @ round 4": 33,
+        "ice_elemental:1:氷柱 @ round 5": 16,
+        "ice_elemental:1:氷柱 @ round 6": 2,
+        "ice_elemental:1:氷柱 @ round 7": 1
+      }
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.988,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8538654328128013,
+      "healing_items_mean": {
+        "治療の巻物": 0.114
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.114
+      },
+      "mp_spent_mean": 8.6,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 5,
+        "3": 1
+      },
+      "defeat_causes": {
+        "ice_elemental:1:氷柱 @ round 2": 5,
+        "ice_elemental:1:氷柱 @ round 3": 1
+      }
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.488,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.39695550351288056,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 68,
+        "3": 133,
+        "4": 49,
+        "5": 4,
+        "6": 2
+      },
+      "defeat_causes": {
+        "ice_elemental:1:氷柱 @ round 3": 133,
+        "ice_elemental:1:氷柱 @ round 2": 68,
+        "ice_elemental:1:氷柱 @ round 4": 49,
+        "ice_elemental:1:氷柱 @ round 5": 4,
+        "ice_elemental:1:氷柱 @ round 6": 2
+      }
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.932,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.7083195774182899,
+      "healing_items_mean": {
+        "治療の巻物": 0.354
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.354
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 14.84,
+      "defeat_rounds": {
+        "2": 15,
+        "3": 11,
+        "4": 6,
+        "5": 2
+      },
+      "defeat_causes": {
+        "ice_elemental:1:氷柱 @ round 2": 15,
+        "ice_elemental:1:氷柱 @ round 3": 11,
+        "ice_elemental:1:氷柱 @ round 4": 6,
+        "ice_elemental:1:氷柱 @ round 5": 2
+      }
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.874,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.5279880302763598,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 10,
+        "3": 39,
+        "4": 13,
+        "6": 1
+      },
+      "defeat_causes": {
+        "ice_elemental:1:氷柱 @ round 3": 39,
+        "ice_elemental:1:氷柱 @ round 4": 13,
+        "ice_elemental:1:氷柱 @ round 2": 10,
+        "ice_elemental:1:氷柱 @ round 6": 1
+      }
+    },
+    {
+      "encounter": "slime_king_battle",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.952,
+      "rounds_median": 6.0,
+      "hp_left_mean": 0.6418067226890757,
+      "healing_items_mean": {
+        "治療の巻物": 0.264
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.264,
+        "聖水": 2.0
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 5.25,
+      "defeat_rounds": {
+        "4": 3,
+        "5": 13,
+        "6": 4,
+        "7": 3,
+        "8": 1
+      },
+      "defeat_causes": {
+        "slime_king:1:王の圧潰 @ round 5": 13,
+        "slime_king:1:王の圧潰 @ round 6": 4,
+        "slime_king:1:王の圧潰 @ round 4": 3,
+        "slime_king:1:王の圧潰 @ round 7": 3,
+        "slime_king:1:王の圧潰 @ round 8": 1
+      }
+    },
+    {
+      "encounter": "slime_king_battle",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.098,
+      "rounds_median": 6.0,
+      "hp_left_mean": 0.2724489795918367,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 18,
+        "4": 47,
+        "5": 115,
+        "6": 72,
+        "7": 106,
+        "8": 42,
+        "9": 37,
+        "10": 7,
+        "11": 5,
+        "13": 1,
+        "14": 1
+      },
+      "defeat_causes": {
+        "slime_king:1:王の圧潰 @ round 5": 115,
+        "slime_king:1:王の圧潰 @ round 7": 106,
+        "slime_king:1:王の圧潰 @ round 6": 72,
+        "slime_king:1:王の圧潰 @ round 4": 47,
+        "slime_king:1:王の圧潰 @ round 8": 42,
+        "slime_king:1:王の圧潰 @ round 9": 37,
+        "slime_king:1:王の圧潰 @ round 3": 18,
+        "slime_king:1:王の圧潰 @ round 10": 7,
+        "slime_king:1:王の圧潰 @ round 11": 5,
+        "slime_king:1:王の圧潰 @ round 14": 1,
+        "slime_king:1:王の圧潰 @ round 13": 1
+      }
+    },
+    {
+      "encounter": "slime_king_battle",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.772,
+      "rounds_median": 7.0,
+      "hp_left_mean": 0.6321243523316062,
+      "healing_items_mean": {
+        "治療の巻物": 0.768,
+        "薬草": 0.006
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.768,
+        "聖水": 2.0,
+        "薬草": 0.006
+      },
+      "mp_spent_mean": 12.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "4": 34,
+        "5": 44,
+        "6": 12,
+        "7": 11,
+        "8": 1,
+        "9": 1,
+        "10": 5,
+        "12": 2,
+        "14": 2,
+        "15": 1,
+        "17": 1
+      },
+      "defeat_causes": {
+        "slime_king:1:王の圧潰 @ round 5": 44,
+        "slime_king:1:王の圧潰 @ round 4": 34,
+        "slime_king:1:王の圧潰 @ round 6": 12,
+        "slime_king:1:王の圧潰 @ round 7": 11,
+        "slime_king:1:王の圧潰 @ round 10": 5,
+        "slime_king:1:王の圧潰 @ round 12": 2,
+        "slime_king:1:王の圧潰 @ round 14": 2,
+        "slime_king:1:王の圧潰 @ round 9": 1,
+        "slime_king:1:王の圧潰 @ round 17": 1,
+        "slime_king:1:王の圧潰 @ round 8": 1,
+        "slime_king:1:王の圧潰 @ round 15": 1
+      }
+    },
+    {
+      "encounter": "slime_king_battle",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 5.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 110,
+        "4": 97,
+        "5": 169,
+        "6": 52,
+        "7": 49,
+        "8": 10,
+        "9": 12,
+        "11": 1
+      },
+      "defeat_causes": {
+        "slime_king:1:王の圧潰 @ round 5": 169,
+        "slime_king:1:王の圧潰 @ round 3": 110,
+        "slime_king:1:王の圧潰 @ round 4": 97,
+        "slime_king:1:王の圧潰 @ round 6": 52,
+        "slime_king:1:王の圧潰 @ round 7": 49,
+        "slime_king:1:王の圧潰 @ round 9": 12,
+        "slime_king:1:王の圧潰 @ round 8": 10,
+        "slime_king:1:王の圧潰 @ round 11": 1
+      }
+    },
+    {
+      "encounter": "slime_king_battle",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.716,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.659217877094972,
+      "healing_items_mean": {
+        "治療の巻物": 0.072,
+        "薬草": 0.558
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.072,
+        "聖水": 2.0,
+        "薬草": 0.558
+      },
+      "mp_spent_mean": 3.632,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 104,
+        "3": 23,
+        "4": 12,
+        "5": 3
+      },
+      "defeat_causes": {
+        "slime_king:1:王の圧潰 @ round 2": 104,
+        "slime_king:1:王の圧潰 @ round 3": 23,
+        "slime_king:1:王の圧潰 @ round 4": 12,
+        "slime_king:1:王の圧潰 @ round 5": 3
+      }
+    },
+    {
+      "encounter": "slime_king_battle",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 143,
+        "3": 217,
+        "4": 73,
+        "5": 51,
+        "6": 11,
+        "7": 3,
+        "8": 1,
+        "12": 1
+      },
+      "defeat_causes": {
+        "slime_king:1:王の圧潰 @ round 3": 217,
+        "slime_king:1:王の圧潰 @ round 2": 143,
+        "slime_king:1:王の圧潰 @ round 4": 73,
+        "slime_king:1:王の圧潰 @ round 5": 51,
+        "slime_king:1:王の圧潰 @ round 6": 11,
+        "slime_king:1:王の圧潰 @ round 7": 3,
+        "slime_king:1:王の圧潰 @ round 8": 1,
+        "slime_king:1:王の圧潰 @ round 12": 1
+      }
+    },
+    {
+      "encounter": "slime_king_battle",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.762,
+      "rounds_median": 6.0,
+      "hp_left_mean": 0.6377952755905512,
+      "healing_items_mean": {
+        "治療の巻物": 0.27,
+        "薬草": 0.162
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.27,
+        "聖水": 2.0,
+        "薬草": 0.162
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 11.16,
+      "defeat_rounds": {
+        "4": 45,
+        "5": 34,
+        "6": 14,
+        "7": 11,
+        "8": 6,
+        "9": 3,
+        "10": 1,
+        "11": 1,
+        "12": 3,
+        "13": 1
+      },
+      "defeat_causes": {
+        "slime_king:1:王の圧潰 @ round 4": 45,
+        "slime_king:1:王の圧潰 @ round 5": 34,
+        "slime_king:1:王の圧潰 @ round 6": 14,
+        "slime_king:1:王の圧潰 @ round 7": 11,
+        "slime_king:1:王の圧潰 @ round 8": 6,
+        "slime_king:1:王の圧潰 @ round 9": 3,
+        "slime_king:1:王の圧潰 @ round 12": 3,
+        "slime_king:1:王の圧潰 @ round 11": 1,
+        "slime_king:1:王の圧潰 @ round 13": 1,
+        "slime_king:1:王の圧潰 @ round 10": 1
+      }
+    },
+    {
+      "encounter": "slime_king_battle",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.002,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.35714285714285715,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 26,
+        "3": 121,
+        "4": 98,
+        "5": 105,
+        "6": 54,
+        "7": 51,
+        "8": 17,
+        "9": 17,
+        "10": 5,
+        "11": 1,
+        "12": 3,
+        "13": 1
+      },
+      "defeat_causes": {
+        "slime_king:1:王の圧潰 @ round 3": 121,
+        "slime_king:1:王の圧潰 @ round 5": 105,
+        "slime_king:1:王の圧潰 @ round 4": 98,
+        "slime_king:1:王の圧潰 @ round 6": 54,
+        "slime_king:1:王の圧潰 @ round 7": 51,
+        "slime_king:1:王の圧潰 @ round 2": 26,
+        "slime_king:1:王の圧潰 @ round 8": 17,
+        "slime_king:1:王の圧潰 @ round 9": 17,
+        "slime_king:1:王の圧潰 @ round 10": 5,
+        "slime_king:1:王の圧潰 @ round 12": 3,
+        "slime_king:1:王の圧潰 @ round 13": 1,
+        "slime_king:1:王の圧潰 @ round 11": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.722,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.711634349030471,
+      "healing_items_mean": {
+        "治療の巻物": 0.284
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.284,
+        "聖水": 1.704
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 2.706,
+      "defeat_rounds": {
+        "2": 2,
+        "3": 123,
+        "4": 11,
+        "5": 2,
+        "6": 1
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 92,
+        "goblin_archer:2:粗末な矢 @ round 3": 31,
+        "goblin_king:1:王の戦斧 @ round 4": 6,
+        "goblin_archer:2:粗末な矢 @ round 4": 5,
+        "goblin_king:1:王の戦斧 @ round 5": 2,
+        "goblin_archer:2:粗末な矢 @ round 2": 2,
+        "goblin_archer:2:粗末な矢 @ round 6": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.156,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.507051282051282,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 71,
+        "2": 81,
+        "3": 115,
+        "4": 65,
+        "5": 57,
+        "6": 19,
+        "7": 11,
+        "8": 1,
+        "9": 2
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 90,
+        "goblin_king:1:王の戦斧 @ round 2": 55,
+        "goblin_king:1:王の戦斧 @ round 4": 48,
+        "goblin_king:1:王の戦斧 @ round 1": 47,
+        "goblin_king:1:王の戦斧 @ round 5": 41,
+        "goblin_archer:2:粗末な矢 @ round 2": 26,
+        "goblin_archer:2:粗末な矢 @ round 3": 25,
+        "goblin_archer:2:粗末な矢 @ round 1": 24,
+        "goblin_archer:2:粗末な矢 @ round 4": 17,
+        "goblin_archer:2:粗末な矢 @ round 5": 16,
+        "goblin_king:1:王の戦斧 @ round 6": 15,
+        "goblin_king:1:王の戦斧 @ round 7": 7,
+        "goblin_archer:2:粗末な矢 @ round 7": 4,
+        "goblin_archer:2:粗末な矢 @ round 6": 4,
+        "goblin_archer:2:粗末な矢 @ round 9": 2,
+        "goblin_king:1:王の戦斧 @ round 8": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.638,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.7143852316266109,
+      "healing_items_mean": {
+        "治療の巻物": 0.55
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.55,
+        "聖水": 1.586
+      },
+      "mp_spent_mean": 11.94,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 14,
+        "3": 135,
+        "4": 27,
+        "5": 4,
+        "7": 1
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 105,
+        "goblin_archer:2:粗末な矢 @ round 3": 30,
+        "goblin_king:1:王の戦斧 @ round 4": 20,
+        "goblin_archer:2:粗末な矢 @ round 2": 13,
+        "goblin_archer:2:粗末な矢 @ round 4": 7,
+        "goblin_king:1:王の戦斧 @ round 5": 2,
+        "goblin_archer:2:粗末な矢 @ round 5": 2,
+        "goblin_king:1:王の戦斧 @ round 7": 1,
+        "goblin_king:1:王の戦斧 @ round 2": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.006,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.6111111111111112,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 106,
+        "2": 108,
+        "3": 126,
+        "4": 59,
+        "5": 46,
+        "6": 22,
+        "7": 16,
+        "8": 7,
+        "9": 6,
+        "11": 1
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 88,
+        "goblin_king:1:王の戦斧 @ round 2": 81,
+        "goblin_king:1:王の戦斧 @ round 1": 68,
+        "goblin_king:1:王の戦斧 @ round 4": 44,
+        "goblin_archer:2:粗末な矢 @ round 3": 38,
+        "goblin_archer:2:粗末な矢 @ round 1": 38,
+        "goblin_king:1:王の戦斧 @ round 5": 30,
+        "goblin_archer:2:粗末な矢 @ round 2": 27,
+        "goblin_archer:2:粗末な矢 @ round 5": 16,
+        "goblin_king:1:王の戦斧 @ round 6": 16,
+        "goblin_archer:2:粗末な矢 @ round 4": 15,
+        "goblin_king:1:王の戦斧 @ round 7": 9,
+        "goblin_archer:2:粗末な矢 @ round 7": 7,
+        "goblin_archer:2:粗末な矢 @ round 6": 6,
+        "goblin_archer:2:粗末な矢 @ round 9": 5,
+        "goblin_king:1:王の戦斧 @ round 8": 5,
+        "goblin_archer:2:粗末な矢 @ round 8": 2,
+        "goblin_king:1:王の戦斧 @ round 9": 1,
+        "goblin_archer:2:粗末な矢 @ round 11": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.654,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.6967380224260958,
+      "healing_items_mean": {
+        "治療の巻物": 0.006,
+        "薬草": 0.148
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.006,
+        "聖水": 1.68,
+        "薬草": 0.148
+      },
+      "mp_spent_mean": 1.4,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 156,
+        "2": 17
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 1": 122,
+        "goblin_archer:2:粗末な矢 @ round 1": 34,
+        "goblin_archer:2:粗末な矢 @ round 2": 14,
+        "goblin_king:1:王の戦斧 @ round 2": 3
+      }
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 160,
+        "2": 131,
+        "3": 117,
+        "4": 53,
+        "5": 30,
+        "6": 7,
+        "7": 2
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 1": 125,
+        "goblin_king:1:王の戦斧 @ round 2": 105,
+        "goblin_king:1:王の戦斧 @ round 3": 78,
+        "goblin_archer:2:粗末な矢 @ round 3": 39,
+        "goblin_king:1:王の戦斧 @ round 4": 37,
+        "goblin_archer:2:粗末な矢 @ round 1": 35,
+        "goblin_archer:2:粗末な矢 @ round 2": 26,
+        "goblin_king:1:王の戦斧 @ round 5": 21,
+        "goblin_archer:2:粗末な矢 @ round 4": 16,
+        "goblin_archer:2:粗末な矢 @ round 5": 9,
+        "goblin_king:1:王の戦斧 @ round 6": 5,
+        "goblin_archer:2:粗末な矢 @ round 6": 2,
+        "goblin_king:1:王の戦斧 @ round 7": 1,
+        "goblin_archer:2:粗末な矢 @ round 7": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.776,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.6980854197349042,
+      "healing_items_mean": {
+        "治療の巻物": 0.06,
+        "薬草": 0.048
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.06,
+        "聖水": 1.78,
+        "薬草": 0.048
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 8.384,
+      "defeat_rounds": {
+        "3": 105,
+        "4": 6,
+        "5": 1
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 87,
+        "goblin_archer:2:粗末な矢 @ round 3": 18,
+        "goblin_archer:2:粗末な矢 @ round 4": 4,
+        "goblin_king:1:王の戦斧 @ round 4": 2,
+        "goblin_archer:2:粗末な矢 @ round 5": 1
+      }
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "win_rate": 0.05,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.4114285714285714,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 94,
+        "2": 84,
+        "3": 113,
+        "4": 64,
+        "5": 61,
+        "6": 28,
+        "7": 17,
+        "8": 5,
+        "9": 7,
+        "10": 2
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 93,
+        "goblin_king:1:王の戦斧 @ round 1": 82,
+        "goblin_king:1:王の戦斧 @ round 2": 69,
+        "goblin_king:1:王の戦斧 @ round 4": 51,
+        "goblin_king:1:王の戦斧 @ round 5": 44,
+        "goblin_king:1:王の戦斧 @ round 6": 22,
+        "goblin_archer:2:粗末な矢 @ round 3": 20,
+        "goblin_archer:2:粗末な矢 @ round 5": 17,
+        "goblin_archer:2:粗末な矢 @ round 2": 15,
+        "goblin_archer:2:粗末な矢 @ round 4": 13,
+        "goblin_archer:2:粗末な矢 @ round 1": 12,
+        "goblin_archer:2:粗末な矢 @ round 7": 9,
+        "goblin_king:1:王の戦斧 @ round 7": 8,
+        "goblin_archer:2:粗末な矢 @ round 6": 6,
+        "goblin_archer:2:粗末な矢 @ round 9": 6,
+        "goblin_king:1:王の戦斧 @ round 8": 3,
+        "goblin_archer:2:粗末な矢 @ round 8": 2,
+        "goblin_archer:2:粗末な矢 @ round 10": 2,
+        "goblin_king:1:王の戦斧 @ round 9": 1
+      }
+    },
+    {
+      "encounter": "merchant_battle",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.672,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.8700892857142857,
+      "healing_items_mean": {
+        "薬草": 0.242
+      },
+      "consumables_mean": {
+        "聖水": 2.0,
+        "薬草": 0.242
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "4": 1,
+        "5": 2,
+        "6": 2,
+        "7": 8,
+        "8": 7,
+        "9": 13,
+        "10": 12,
+        "11": 16,
+        "12": 8,
+        "13": 16,
+        "14": 12,
+        "15": 14,
+        "16": 12,
+        "17": 13,
+        "18": 8,
+        "19": 6,
+        "20": 3,
+        "21": 2,
+        "22": 1,
+        "23": 4,
+        "24": 1,
+        "25": 1,
+        "28": 1,
+        "29": 1
+      },
+      "defeat_causes": {
+        "zebok:1:暗黒の宴 @ round 13": 12,
+        "zebok:1:暗黒の宴 @ round 15": 10,
+        "zebok:1:暗黒の宴 @ round 10": 9,
+        "zebok:1:暗黒の宴 @ round 9": 8,
+        "zebok:1:亡霊召喚 @ round 11": 7,
+        "zebok:1:暗黒の宴 @ round 11": 7,
+        "zebok:1:亡霊召喚 @ round 16": 7,
+        "zebok:1:暗黒の宴 @ round 14": 6,
+        "zebok:1:暗黒の宴 @ round 8": 5,
+        "zebok:1:暗黒の宴 @ round 18": 5,
+        "zebok:1:亡霊召喚 @ round 12": 5,
+        "zebok:1:亡霊召喚 @ round 7": 5,
+        "zebok:1:undead_archmage @ round 14": 4,
+        "player:反動でHPを1失った。 @ round 17": 4,
+        "zebok:1:暗黒の宴 @ round 16": 4,
+        "zebok:1:亡霊召喚 @ round 9": 4,
+        "zebok:1:暗黒の宴 @ round 17": 4,
+        "zebok:1:亡霊召喚 @ round 17": 4,
+        "zebok:1:暗黒の宴 @ round 23": 3,
+        "zebok:1:亡霊召喚 @ round 15": 3,
+        "zebok:1:亡霊召喚 @ round 10": 3,
+        "zebok:1:暗黒の宴 @ round 12": 3,
+        "zebok:1:暗黒の宴 @ round 7": 3,
+        "zebok:1:亡霊召喚 @ round 19": 3,
+        "zebok:1:undead_archmage @ round 11": 2,
+        "zebok:1:暗黒の宴 @ round 20": 2,
+        "zebok:1:亡霊召喚 @ round 14": 2,
+        "zebok:1:亡霊召喚 @ round 18": 2,
+        "zebok:1:亡霊召喚 @ round 8": 2,
+        "zebok:1:暗黒の宴 @ round 5": 2,
+        "zebok:1:亡霊召喚 @ round 13": 2,
+        "player:反動でHPを1失った。 @ round 13": 2,
+        "zebok:1:undead_archmage @ round 16": 1,
+        "player:反動でHPを1失った。 @ round 15": 1,
+        "zebok:1:暗黒の宴 @ round 19": 1,
+        "zebok:1:undead_archmage @ round 28": 1,
+        "zebok:1:undead_archmage @ round 18": 1,
+        "player:反動でHPを1失った。 @ round 9": 1,
+        "zebok:1:亡霊召喚 @ round 22": 1,
+        "zebok:1:暗黒の宴 @ round 6": 1,
+        "zebok:1:亡霊召喚 @ round 21": 1,
+        "zebok:1:undead_archmage @ round 17": 1,
+        "zebok:1:暗黒の宴 @ round 25": 1,
+        "zebok:1:undead_archmage @ round 19": 1,
+        "zebok:1:亡霊召喚 @ round 20": 1,
+        "player:反動でHPを1失った。 @ round 19": 1,
+        "player:反動でHPを1失った。 @ round 29": 1,
+        "player:反動でHPを1失った。 @ round 23": 1,
+        "zebok:1:暗黒の宴 @ round 4": 1,
+        "zebok:1:亡霊召喚 @ round 6": 1,
+        "zebok:1:亡霊召喚 @ round 24": 1,
+        "zebok:1:暗黒の宴 @ round 21": 1
+      }
+    },
+    {
+      "encounter": "merchant_battle",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 8.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 18,
+        "4": 28,
+        "5": 67,
+        "6": 41,
+        "7": 88,
+        "8": 35,
+        "9": 54,
+        "10": 32,
+        "11": 39,
+        "12": 16,
+        "13": 27,
+        "14": 14,
+        "15": 17,
+        "16": 9,
+        "17": 8,
+        "18": 1,
+        "19": 1,
+        "20": 3,
+        "21": 1,
+        "22": 1
+      },
+      "defeat_causes": {
+        "zebok:1:暗黒の宴 @ round 7": 54,
+        "zebok:1:暗黒の宴 @ round 9": 35,
+        "zebok:1:暗黒の宴 @ round 5": 33,
+        "zebok:1:亡霊召喚 @ round 7": 29,
+        "zebok:1:暗黒の宴 @ round 6": 23,
+        "zebok:1:亡霊召喚 @ round 5": 23,
+        "zebok:1:暗黒の宴 @ round 10": 22,
+        "zebok:1:亡霊召喚 @ round 8": 19,
+        "zebok:1:亡霊召喚 @ round 6": 18,
+        "zebok:1:暗黒の宴 @ round 11": 18,
+        "zebok:1:暗黒の宴 @ round 4": 18,
+        "zebok:1:暗黒の宴 @ round 8": 16,
+        "zebok:1:亡霊召喚 @ round 9": 15,
+        "zebok:1:亡霊召喚 @ round 11": 14,
+        "zebok:1:暗黒の宴 @ round 12": 13,
+        "zebok:1:暗黒の宴 @ round 13": 12,
+        "zebok:1:亡霊召喚 @ round 13": 12,
+        "zebok:1:亡霊召喚 @ round 3": 11,
+        "player:反動でHPを1失った。 @ round 5": 11,
+        "zebok:1:亡霊召喚 @ round 4": 10,
+        "zebok:1:暗黒の宴 @ round 14": 10,
+        "zebok:1:亡霊召喚 @ round 10": 9,
+        "zebok:1:暗黒の宴 @ round 15": 8,
+        "zebok:1:暗黒の宴 @ round 16": 7,
+        "player:反動でHPを1失った。 @ round 11": 7,
+        "zebok:1:暗黒の宴 @ round 3": 7,
+        "zebok:1:暗黒の宴 @ round 17": 5,
+        "player:反動でHPを1失った。 @ round 7": 5,
+        "zebok:1:亡霊召喚 @ round 15": 5,
+        "player:反動でHPを1失った。 @ round 9": 4,
+        "zebok:1:undead_archmage @ round 20": 3,
+        "zebok:1:亡霊召喚 @ round 12": 3,
+        "zebok:1:亡霊召喚 @ round 14": 3,
+        "player:反動でHPを1失った。 @ round 15": 3,
+        "player:反動でHPを1失った。 @ round 13": 2,
+        "zebok:1:亡霊召喚 @ round 17": 2,
+        "zebok:1:undead_archmage @ round 10": 1,
+        "zebok:1:undead_archmage @ round 17": 1,
+        "zebok:1:undead_archmage @ round 14": 1,
+        "zebok:1:undead_archmage @ round 13": 1,
+        "zebok:1:undead_archmage @ round 16": 1,
+        "zebok:1:undead_archmage @ round 22": 1,
+        "zebok:1:undead_archmage @ round 15": 1,
+        "zebok:1:undead_archmage @ round 18": 1,
+        "zebok:1:暗黒の宴 @ round 19": 1,
+        "zebok:1:亡霊召喚 @ round 21": 1,
+        "zebok:1:亡霊召喚 @ round 16": 1
+      }
+    },
+    {
+      "encounter": "merchant_battle",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.792,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.9287317620650954,
+      "healing_items_mean": {
+        "薬草": 0.386
+      },
+      "consumables_mean": {
+        "聖水": 2.0,
+        "薬草": 0.386
+      },
+      "mp_spent_mean": 12.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 7,
+        "4": 5,
+        "5": 4,
+        "6": 7,
+        "7": 3,
+        "8": 5,
+        "9": 7,
+        "10": 12,
+        "11": 5,
+        "12": 13,
+        "13": 13,
+        "14": 6,
+        "15": 6,
+        "16": 5,
+        "17": 2,
+        "19": 1,
+        "21": 1,
+        "22": 1,
+        "33": 1
+      },
+      "defeat_causes": {
+        "zebok:1:亡霊召喚 @ round 12": 8,
+        "zebok:1:亡霊召喚 @ round 10": 6,
+        "zebok:1:暗黒の宴 @ round 10": 6,
+        "zebok:1:暗黒の宴 @ round 13": 6,
+        "zebok:1:亡霊召喚 @ round 13": 6,
+        "zebok:1:暗黒の宴 @ round 6": 5,
+        "zebok:1:暗黒の宴 @ round 8": 5,
+        "zebok:1:亡霊召喚 @ round 9": 5,
+        "zebok:1:暗黒の宴 @ round 12": 5,
+        "zebok:1:暗黒の宴 @ round 14": 4,
+        "zebok:1:亡霊召喚 @ round 3": 4,
+        "zebok:1:亡霊召喚 @ round 16": 3,
+        "zebok:1:暗黒の宴 @ round 3": 3,
+        "zebok:1:暗黒の宴 @ round 5": 3,
+        "zebok:1:亡霊召喚 @ round 4": 3,
+        "zebok:1:亡霊召喚 @ round 15": 3,
+        "zebok:1:暗黒の宴 @ round 11": 3,
+        "zebok:1:暗黒の宴 @ round 7": 2,
+        "zebok:1:暗黒の宴 @ round 4": 2,
+        "zebok:1:暗黒の宴 @ round 15": 2,
+        "zebok:1:暗黒の宴 @ round 9": 2,
+        "zebok:1:亡霊召喚 @ round 6": 2,
+        "zebok:1:亡霊召喚 @ round 11": 2,
+        "zebok:1:暗黒の宴 @ round 16": 2,
+        "zebok:1:undead_archmage @ round 14": 1,
+        "zebok:1:undead_archmage @ round 15": 1,
+        "zebok:1:暗黒の宴 @ round 33": 1,
+        "zebok:1:亡霊召喚 @ round 5": 1,
+        "zebok:1:亡霊召喚 @ round 7": 1,
+        "zebok:1:undead_archmage @ round 13": 1,
+        "zebok:1:暗黒の宴 @ round 22": 1,
+        "zebok:1:undead_archmage @ round 21": 1,
+        "zebok:1:暗黒の宴 @ round 17": 1,
+        "zebok:1:亡霊召喚 @ round 14": 1,
+        "zebok:1:亡霊召喚 @ round 17": 1,
+        "zebok:1:暗黒の宴 @ round 19": 1
+      }
+    },
+    {
+      "encounter": "merchant_battle",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 7.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 36,
+        "4": 40,
+        "5": 78,
+        "6": 40,
+        "7": 67,
+        "8": 33,
+        "9": 60,
+        "10": 23,
+        "11": 44,
+        "12": 23,
+        "13": 17,
+        "14": 11,
+        "15": 10,
+        "16": 1,
+        "17": 5,
+        "18": 5,
+        "19": 2,
+        "20": 1,
+        "22": 2,
+        "23": 2
+      },
+      "defeat_causes": {
+        "zebok:1:暗黒の宴 @ round 5": 45,
+        "zebok:1:暗黒の宴 @ round 7": 38,
+        "zebok:1:暗黒の宴 @ round 9": 38,
+        "zebok:1:亡霊召喚 @ round 5": 33,
+        "zebok:1:暗黒の宴 @ round 11": 31,
+        "zebok:1:亡霊召喚 @ round 7": 29,
+        "zebok:1:暗黒の宴 @ round 6": 28,
+        "zebok:1:暗黒の宴 @ round 4": 23,
+        "zebok:1:亡霊召喚 @ round 9": 22,
+        "zebok:1:暗黒の宴 @ round 3": 20,
+        "zebok:1:暗黒の宴 @ round 8": 19,
+        "zebok:1:亡霊召喚 @ round 4": 17,
+        "zebok:1:亡霊召喚 @ round 3": 16,
+        "zebok:1:亡霊召喚 @ round 8": 14,
+        "zebok:1:亡霊召喚 @ round 11": 13,
+        "zebok:1:暗黒の宴 @ round 12": 13,
+        "zebok:1:暗黒の宴 @ round 10": 13,
+        "zebok:1:亡霊召喚 @ round 6": 12,
+        "zebok:1:亡霊召喚 @ round 10": 10,
+        "zebok:1:亡霊召喚 @ round 12": 9,
+        "zebok:1:暗黒の宴 @ round 13": 8,
+        "zebok:1:暗黒の宴 @ round 14": 7,
+        "zebok:1:亡霊召喚 @ round 13": 7,
+        "zebok:1:暗黒の宴 @ round 15": 6,
+        "zebok:1:亡霊召喚 @ round 17": 4,
+        "zebok:1:亡霊召喚 @ round 15": 4,
+        "zebok:1:undead_archmage @ round 18": 3,
+        "zebok:1:undead_archmage @ round 14": 2,
+        "zebok:1:undead_archmage @ round 13": 2,
+        "zebok:1:亡霊召喚 @ round 14": 2,
+        "zebok:1:暗黒の宴 @ round 19": 2,
+        "zebok:1:亡霊召喚 @ round 16": 1,
+        "zebok:1:亡霊召喚 @ round 18": 1,
+        "zebok:1:亡霊召喚 @ round 20": 1,
+        "zebok:1:暗黒の宴 @ round 18": 1,
+        "zebok:1:暗黒の宴 @ round 17": 1,
+        "zebok:1:暗黒の宴 @ round 22": 1,
+        "zebok:1:undead_archmage @ round 23": 1,
+        "zebok:1:亡霊召喚 @ round 22": 1,
+        "zebok:1:undead_archmage @ round 12": 1,
+        "zebok:1:暗黒の宴 @ round 23": 1
+      }
+    },
+    {
+      "encounter": "merchant_battle",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.692,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8501926782273603,
+      "healing_items_mean": {
+        "薬草": 0.238
+      },
+      "consumables_mean": {
+        "聖水": 2.0,
+        "薬草": 0.238
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 13,
+        "3": 21,
+        "4": 11,
+        "5": 15,
+        "6": 19,
+        "7": 23,
+        "8": 18,
+        "9": 13,
+        "10": 7,
+        "11": 8,
+        "12": 1,
+        "13": 1,
+        "15": 1,
+        "16": 1,
+        "17": 1,
+        "18": 1
+      },
+      "defeat_causes": {
+        "zebok:1:暗黒の宴 @ round 3": 14,
+        "zebok:1:暗黒の宴 @ round 7": 13,
+        "zebok:1:暗黒の宴 @ round 6": 11,
+        "zebok:1:亡霊召喚 @ round 7": 10,
+        "zebok:1:暗黒の宴 @ round 8": 10,
+        "zebok:1:暗黒の宴 @ round 9": 9,
+        "zebok:1:亡霊召喚 @ round 5": 8,
+        "zebok:1:亡霊召喚 @ round 6": 8,
+        "zebok:1:亡霊召喚 @ round 8": 8,
+        "zebok:1:亡霊召喚 @ round 3": 7,
+        "zebok:1:暗黒の宴 @ round 2": 7,
+        "zebok:1:暗黒の宴 @ round 5": 7,
+        "zebok:1:暗黒の宴 @ round 11": 6,
+        "zebok:1:亡霊召喚 @ round 2": 6,
+        "zebok:1:暗黒の宴 @ round 4": 6,
+        "zebok:1:亡霊召喚 @ round 10": 5,
+        "zebok:1:亡霊召喚 @ round 4": 5,
+        "zebok:1:亡霊召喚 @ round 9": 4,
+        "zebok:1:亡霊召喚 @ round 11": 2,
+        "zebok:1:暗黒の宴 @ round 10": 2,
+        "zebok:1:亡霊召喚 @ round 16": 1,
+        "zebok:1:暗黒の宴 @ round 13": 1,
+        "zebok:1:亡霊召喚 @ round 12": 1,
+        "zebok:1:亡霊召喚 @ round 18": 1,
+        "zebok:1:暗黒の宴 @ round 17": 1,
+        "zebok:1:亡霊召喚 @ round 15": 1
+      }
+    },
+    {
+      "encounter": "merchant_battle",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 4.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 46,
+        "3": 149,
+        "4": 80,
+        "5": 90,
+        "6": 40,
+        "7": 39,
+        "8": 21,
+        "9": 19,
+        "10": 5,
+        "11": 6,
+        "12": 4,
+        "15": 1
+      },
+      "defeat_causes": {
+        "zebok:1:暗黒の宴 @ round 3": 92,
+        "zebok:1:亡霊召喚 @ round 3": 57,
+        "zebok:1:暗黒の宴 @ round 5": 54,
+        "zebok:1:暗黒の宴 @ round 4": 45,
+        "zebok:1:亡霊召喚 @ round 5": 36,
+        "zebok:1:亡霊召喚 @ round 4": 35,
+        "zebok:1:暗黒の宴 @ round 7": 26,
+        "zebok:1:暗黒の宴 @ round 2": 25,
+        "zebok:1:暗黒の宴 @ round 6": 24,
+        "zebok:1:亡霊召喚 @ round 2": 21,
+        "zebok:1:亡霊召喚 @ round 6": 16,
+        "zebok:1:亡霊召喚 @ round 7": 13,
+        "zebok:1:暗黒の宴 @ round 8": 12,
+        "zebok:1:暗黒の宴 @ round 9": 11,
+        "zebok:1:亡霊召喚 @ round 8": 9,
+        "zebok:1:亡霊召喚 @ round 9": 8,
+        "zebok:1:暗黒の宴 @ round 11": 5,
+        "zebok:1:暗黒の宴 @ round 10": 5,
+        "zebok:1:亡霊召喚 @ round 12": 2,
+        "zebok:1:暗黒の宴 @ round 12": 2,
+        "zebok:1:亡霊召喚 @ round 15": 1,
+        "zebok:1:亡霊召喚 @ round 11": 1
+      }
+    },
+    {
+      "encounter": "merchant_battle",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.662,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.853258523953388,
+      "healing_items_mean": {},
+      "consumables_mean": {
+        "聖水": 2.0
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 4.0,
+      "defeat_rounds": {
+        "4": 5,
+        "5": 19,
+        "6": 15,
+        "7": 25,
+        "8": 11,
+        "9": 23,
+        "10": 13,
+        "11": 17,
+        "12": 9,
+        "13": 5,
+        "14": 7,
+        "15": 4,
+        "16": 5,
+        "17": 5,
+        "19": 3,
+        "20": 1,
+        "21": 1,
+        "25": 1
+      },
+      "defeat_causes": {
+        "zebok:1:亡霊召喚 @ round 7": 15,
+        "zebok:1:暗黒の宴 @ round 9": 15,
+        "zebok:1:暗黒の宴 @ round 5": 14,
+        "zebok:1:暗黒の宴 @ round 10": 11,
+        "zebok:1:暗黒の宴 @ round 7": 10,
+        "zebok:1:暗黒の宴 @ round 11": 9,
+        "zebok:1:亡霊召喚 @ round 9": 8,
+        "zebok:1:亡霊召喚 @ round 6": 8,
+        "zebok:1:亡霊召喚 @ round 14": 7,
+        "zebok:1:亡霊召喚 @ round 11": 7,
+        "zebok:1:暗黒の宴 @ round 6": 7,
+        "zebok:1:亡霊召喚 @ round 8": 6,
+        "zebok:1:亡霊召喚 @ round 5": 5,
+        "zebok:1:暗黒の宴 @ round 8": 5,
+        "zebok:1:亡霊召喚 @ round 12": 5,
+        "zebok:1:暗黒の宴 @ round 17": 4,
+        "zebok:1:暗黒の宴 @ round 12": 4,
+        "zebok:1:暗黒の宴 @ round 15": 3,
+        "zebok:1:亡霊召喚 @ round 16": 3,
+        "zebok:1:暗黒の宴 @ round 4": 3,
+        "zebok:1:暗黒の宴 @ round 13": 3,
+        "zebok:1:亡霊召喚 @ round 13": 2,
+        "zebok:1:亡霊召喚 @ round 4": 2,
+        "zebok:1:undead_archmage @ round 19": 2,
+        "zebok:1:undead_archmage @ round 10": 1,
+        "zebok:1:亡霊召喚 @ round 15": 1,
+        "zebok:1:亡霊召喚 @ round 17": 1,
+        "zebok:1:暗黒の宴 @ round 19": 1,
+        "zebok:1:暗黒の宴 @ round 21": 1,
+        "zebok:1:暗黒の宴 @ round 25": 1,
+        "zebok:1:undead_archmage @ round 16": 1,
+        "zebok:1:undead_archmage @ round 11": 1,
+        "zebok:1:暗黒の宴 @ round 20": 1,
+        "zebok:1:亡霊召喚 @ round 10": 1,
+        "zebok:1:暗黒の宴 @ round 16": 1
+      }
+    },
+    {
+      "encounter": "merchant_battle",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 7.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 14,
+        "3": 58,
+        "4": 42,
+        "5": 57,
+        "6": 49,
+        "7": 60,
+        "8": 38,
+        "9": 40,
+        "10": 24,
+        "11": 32,
+        "12": 18,
+        "13": 20,
+        "14": 11,
+        "15": 9,
+        "16": 7,
+        "17": 7,
+        "18": 8,
+        "19": 3,
+        "22": 1,
+        "23": 1,
+        "24": 1
+      },
+      "defeat_causes": {
+        "zebok:1:暗黒の宴 @ round 7": 39,
+        "zebok:1:暗黒の宴 @ round 3": 36,
+        "zebok:1:亡霊召喚 @ round 5": 30,
+        "zebok:1:亡霊召喚 @ round 6": 29,
+        "zebok:1:暗黒の宴 @ round 5": 27,
+        "zebok:1:暗黒の宴 @ round 4": 27,
+        "zebok:1:暗黒の宴 @ round 9": 22,
+        "zebok:1:亡霊召喚 @ round 3": 22,
+        "zebok:1:暗黒の宴 @ round 8": 21,
+        "zebok:1:亡霊召喚 @ round 7": 21,
+        "zebok:1:暗黒の宴 @ round 6": 20,
+        "zebok:1:亡霊召喚 @ round 9": 18,
+        "zebok:1:暗黒の宴 @ round 11": 17,
+        "zebok:1:亡霊召喚 @ round 8": 17,
+        "zebok:1:亡霊召喚 @ round 4": 15,
+        "zebok:1:亡霊召喚 @ round 11": 14,
+        "zebok:1:暗黒の宴 @ round 10": 13,
+        "zebok:1:暗黒の宴 @ round 12": 12,
+        "zebok:1:暗黒の宴 @ round 13": 11,
+        "zebok:1:亡霊召喚 @ round 10": 11,
+        "zebok:1:亡霊召喚 @ round 13": 9,
+        "zebok:1:暗黒の宴 @ round 2": 8,
+        "zebok:1:暗黒の宴 @ round 15": 6,
+        "zebok:1:暗黒の宴 @ round 14": 6,
+        "zebok:1:亡霊召喚 @ round 2": 6,
+        "zebok:1:亡霊召喚 @ round 12": 5,
+        "zebok:1:暗黒の宴 @ round 17": 5,
+        "zebok:1:亡霊召喚 @ round 14": 5,
+        "zebok:1:undead_archmage @ round 18": 4,
+        "zebok:1:亡霊召喚 @ round 16": 4,
+        "zebok:1:暗黒の宴 @ round 18": 3,
+        "zebok:1:亡霊召喚 @ round 15": 3,
+        "zebok:1:亡霊召喚 @ round 17": 2,
+        "zebok:1:亡霊召喚 @ round 19": 2,
+        "zebok:1:undead_archmage @ round 16": 2,
+        "zebok:1:undead_archmage @ round 12": 1,
+        "zebok:1:undead_archmage @ round 11": 1,
+        "zebok:1:undead_archmage @ round 23": 1,
+        "zebok:1:亡霊召喚 @ round 22": 1,
+        "zebok:1:暗黒の宴 @ round 19": 1,
+        "zebok:1:暗黒の宴 @ round 24": 1,
+        "zebok:1:亡霊召喚 @ round 18": 1,
+        "zebok:1:暗黒の宴 @ round 16": 1
+      }
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.8084,
+      "healing_items_mean": {},
+      "consumables_mean": {
+        "聖水": 2.0
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 11.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "4": 2,
+        "5": 9,
+        "6": 17,
+        "7": 37,
+        "8": 44,
+        "9": 50,
+        "10": 67,
+        "11": 58,
+        "12": 51,
+        "13": 50,
+        "14": 29,
+        "15": 23,
+        "16": 26,
+        "17": 15,
+        "18": 8,
+        "19": 2,
+        "20": 3,
+        "21": 3,
+        "22": 2,
+        "23": 1,
+        "24": 1,
+        "25": 1,
+        "27": 1
+      },
+      "defeat_causes": {
+        "frost_dire_wolf:1:凍爪 @ round 10": 67,
+        "frost_dire_wolf:1:凍爪 @ round 11": 58,
+        "frost_dire_wolf:1:凍爪 @ round 12": 51,
+        "frost_dire_wolf:1:凍爪 @ round 13": 50,
+        "frost_dire_wolf:1:凍爪 @ round 9": 50,
+        "frost_dire_wolf:1:凍爪 @ round 8": 44,
+        "frost_dire_wolf:1:凍爪 @ round 7": 37,
+        "frost_dire_wolf:1:凍爪 @ round 14": 29,
+        "frost_dire_wolf:1:凍爪 @ round 16": 26,
+        "frost_dire_wolf:1:凍爪 @ round 15": 23,
+        "frost_dire_wolf:1:凍爪 @ round 6": 17,
+        "frost_dire_wolf:1:凍爪 @ round 17": 15,
+        "frost_dire_wolf:1:凍爪 @ round 5": 9,
+        "frost_dire_wolf:1:凍爪 @ round 18": 8,
+        "frost_dire_wolf:1:凍爪 @ round 20": 3,
+        "frost_dire_wolf:1:凍爪 @ round 21": 3,
+        "frost_dire_wolf:1:凍爪 @ round 4": 2,
+        "frost_dire_wolf:1:凍爪 @ round 22": 2,
+        "frost_dire_wolf:1:凍爪 @ round 19": 2,
+        "frost_dire_wolf:1:凍爪 @ round 24": 1,
+        "frost_dire_wolf:1:凍爪 @ round 23": 1,
+        "frost_dire_wolf:1:凍爪 @ round 27": 1,
+        "frost_dire_wolf:1:凍爪 @ round 25": 1
+      }
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.7549090909090909,
+      "healing_items_mean": {
+        "治療の巻物": 0.012
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.012,
+        "聖水": 2.0
+      },
+      "mp_spent_mean": 12.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.79,
+      "rounds_median": 6.0,
+      "hp_left_mean": 0.41534330648254697,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 1,
+        "4": 14,
+        "5": 32,
+        "6": 32,
+        "7": 15,
+        "8": 9,
+        "9": 2
+      },
+      "defeat_causes": {
+        "frost_dire_wolf:1:凍爪 @ round 5": 32,
+        "frost_dire_wolf:1:凍爪 @ round 6": 32,
+        "frost_dire_wolf:1:凍爪 @ round 7": 15,
+        "frost_dire_wolf:1:凍爪 @ round 4": 14,
+        "frost_dire_wolf:1:凍爪 @ round 8": 9,
+        "frost_dire_wolf:1:凍爪 @ round 9": 2,
+        "frost_dire_wolf:1:凍爪 @ round 3": 1
+      }
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.827047619047619,
+      "healing_items_mean": {},
+      "consumables_mean": {
+        "聖水": 2.0
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.372,
+      "rounds_median": 6.0,
+      "hp_left_mean": 0.35714285714285715,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 8,
+        "3": 50,
+        "4": 75,
+        "5": 74,
+        "6": 74,
+        "7": 23,
+        "8": 8,
+        "9": 2
+      },
+      "defeat_causes": {
+        "frost_dire_wolf:1:凍爪 @ round 4": 75,
+        "frost_dire_wolf:1:凍爪 @ round 5": 74,
+        "frost_dire_wolf:1:凍爪 @ round 6": 74,
+        "frost_dire_wolf:1:凍爪 @ round 3": 50,
+        "frost_dire_wolf:1:凍爪 @ round 7": 23,
+        "frost_dire_wolf:1:凍爪 @ round 2": 8,
+        "frost_dire_wolf:1:凍爪 @ round 8": 8,
+        "frost_dire_wolf:1:凍爪 @ round 9": 2
+      }
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.8293846153846154,
+      "healing_items_mean": {},
+      "consumables_mean": {
+        "聖水": 2.0
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 4.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.832,
+      "rounds_median": 6.0,
+      "hp_left_mean": 0.4831730769230769,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 8,
+        "4": 22,
+        "5": 37,
+        "6": 13,
+        "7": 4
+      },
+      "defeat_causes": {
+        "frost_dire_wolf:1:凍爪 @ round 5": 37,
+        "frost_dire_wolf:1:凍爪 @ round 4": 22,
+        "frost_dire_wolf:1:凍爪 @ round 6": 13,
+        "frost_dire_wolf:1:凍爪 @ round 3": 8,
+        "frost_dire_wolf:1:凍爪 @ round 7": 4
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "win_rate": 0.836,
+      "rounds_median": 9.0,
+      "hp_left_mean": 0.6519736842105264,
+      "healing_items_mean": {
+        "治療の巻物": 0.964
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.964,
+        "聖水": 2.0
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 8,
+        "4": 6,
+        "5": 14,
+        "6": 17,
+        "7": 12,
+        "8": 10,
+        "9": 8,
+        "10": 3,
+        "11": 4
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 6": 9,
+        "ignis:1:炎の息 @ round 6": 8,
+        "ignis:1:尻尾攻撃 @ round 8": 8,
+        "ignis:1:炎の息 @ round 5": 8,
+        "ignis:1:炎の息 @ round 7": 6,
+        "ignis:1:尻尾攻撃 @ round 7": 6,
+        "ignis:1:尻尾攻撃 @ round 5": 6,
+        "ignis:1:尻尾攻撃 @ round 3": 5,
+        "ignis:1:炎の息 @ round 9": 4,
+        "ignis:1:炎の息 @ round 4": 4,
+        "ignis:1:尻尾攻撃 @ round 9": 4,
+        "ignis:1:炎の息 @ round 3": 3,
+        "ignis:1:炎の息 @ round 11": 3,
+        "ignis:1:尻尾攻撃 @ round 10": 2,
+        "ignis:1:炎の息 @ round 8": 2,
+        "ignis:1:尻尾攻撃 @ round 4": 2,
+        "ignis:1:炎の息 @ round 10": 1,
+        "ignis:1:尻尾攻撃 @ round 11": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "win_rate": 0.28,
+      "rounds_median": 8.0,
+      "hp_left_mean": 0.3269642857142857,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 17,
+        "4": 33,
+        "5": 52,
+        "6": 63,
+        "7": 60,
+        "8": 60,
+        "9": 44,
+        "10": 16,
+        "11": 10,
+        "12": 3,
+        "14": 1,
+        "15": 1
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 7": 45,
+        "ignis:1:尻尾攻撃 @ round 8": 36,
+        "ignis:1:尻尾攻撃 @ round 6": 33,
+        "ignis:1:尻尾攻撃 @ round 5": 30,
+        "ignis:1:炎の息 @ round 6": 30,
+        "ignis:1:尻尾攻撃 @ round 9": 24,
+        "ignis:1:炎の息 @ round 8": 24,
+        "ignis:1:炎の息 @ round 5": 22,
+        "ignis:1:炎の息 @ round 9": 20,
+        "ignis:1:炎の息 @ round 4": 17,
+        "ignis:1:尻尾攻撃 @ round 4": 16,
+        "ignis:1:炎の息 @ round 7": 15,
+        "ignis:1:尻尾攻撃 @ round 10": 10,
+        "ignis:1:尻尾攻撃 @ round 3": 9,
+        "ignis:1:炎の息 @ round 3": 8,
+        "ignis:1:炎の息 @ round 11": 7,
+        "ignis:1:炎の息 @ round 10": 6,
+        "ignis:1:尻尾攻撃 @ round 11": 3,
+        "ignis:1:炎の息 @ round 12": 2,
+        "ignis:1:尻尾攻撃 @ round 14": 1,
+        "ignis:1:尻尾攻撃 @ round 12": 1,
+        "ignis:1:炎の息 @ round 15": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "win_rate": 0.722,
+      "rounds_median": 10.0,
+      "hp_left_mean": 0.668391893862079,
+      "healing_items_mean": {
+        "治療の巻物": 1.246
+      },
+      "consumables_mean": {
+        "治療の巻物": 1.246,
+        "聖水": 2.0
+      },
+      "mp_spent_mean": 0.052,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 11,
+        "3": 13,
+        "4": 16,
+        "5": 21,
+        "6": 16,
+        "7": 19,
+        "8": 18,
+        "9": 9,
+        "10": 8,
+        "11": 3,
+        "12": 2,
+        "13": 2,
+        "14": 1
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 5": 15,
+        "ignis:1:尻尾攻撃 @ round 7": 12,
+        "ignis:1:尻尾攻撃 @ round 6": 11,
+        "ignis:1:尻尾攻撃 @ round 8": 9,
+        "ignis:1:尻尾攻撃 @ round 2": 9,
+        "ignis:1:炎の息 @ round 8": 9,
+        "ignis:1:炎の息 @ round 4": 9,
+        "ignis:1:尻尾攻撃 @ round 3": 8,
+        "ignis:1:炎の息 @ round 7": 7,
+        "ignis:1:尻尾攻撃 @ round 4": 7,
+        "ignis:1:炎の息 @ round 5": 6,
+        "ignis:1:炎の息 @ round 6": 5,
+        "ignis:1:炎の息 @ round 9": 5,
+        "ignis:1:炎の息 @ round 3": 5,
+        "ignis:1:尻尾攻撃 @ round 10": 5,
+        "ignis:1:尻尾攻撃 @ round 9": 4,
+        "ignis:1:炎の息 @ round 10": 3,
+        "ignis:1:尻尾攻撃 @ round 11": 3,
+        "ignis:1:尻尾攻撃 @ round 12": 2,
+        "ignis:1:炎の息 @ round 2": 2,
+        "ignis:1:尻尾攻撃 @ round 13": 1,
+        "ignis:1:炎の息 @ round 13": 1,
+        "ignis:1:尻尾攻撃 @ round 14": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "win_rate": 0.132,
+      "rounds_median": 7.0,
+      "hp_left_mean": 0.29904306220095694,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 2,
+        "3": 34,
+        "4": 50,
+        "5": 66,
+        "6": 74,
+        "7": 71,
+        "8": 61,
+        "9": 40,
+        "10": 20,
+        "11": 8,
+        "12": 6,
+        "13": 2
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 6": 45,
+        "ignis:1:尻尾攻撃 @ round 5": 40,
+        "ignis:1:尻尾攻撃 @ round 7": 40,
+        "ignis:1:尻尾攻撃 @ round 8": 36,
+        "ignis:1:炎の息 @ round 7": 31,
+        "ignis:1:尻尾攻撃 @ round 4": 30,
+        "ignis:1:炎の息 @ round 6": 29,
+        "ignis:1:炎の息 @ round 5": 26,
+        "ignis:1:炎の息 @ round 8": 25,
+        "ignis:1:炎の息 @ round 9": 20,
+        "ignis:1:炎の息 @ round 3": 20,
+        "ignis:1:尻尾攻撃 @ round 9": 20,
+        "ignis:1:炎の息 @ round 4": 20,
+        "ignis:1:尻尾攻撃 @ round 3": 14,
+        "ignis:1:尻尾攻撃 @ round 10": 10,
+        "ignis:1:炎の息 @ round 10": 10,
+        "ignis:1:尻尾攻撃 @ round 11": 5,
+        "ignis:1:炎の息 @ round 12": 5,
+        "ignis:1:炎の息 @ round 11": 3,
+        "ignis:1:尻尾攻撃 @ round 2": 1,
+        "ignis:1:炎の息 @ round 2": 1,
+        "ignis:1:炎の息 @ round 13": 1,
+        "ignis:1:尻尾攻撃 @ round 12": 1,
+        "ignis:1:尻尾攻撃 @ round 13": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "win_rate": 0.704,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.7301136363636364,
+      "healing_items_mean": {
+        "治療の巻物": 0.836,
+        "薬草": 0.022
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.836,
+        "薬草": 0.022
+      },
+      "mp_spent_mean": 18.96,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 24,
+        "3": 51,
+        "4": 39,
+        "5": 17,
+        "6": 7,
+        "7": 6,
+        "9": 1,
+        "10": 1,
+        "11": 2
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 4": 28,
+        "ignis:1:尻尾攻撃 @ round 3": 27,
+        "ignis:1:炎の息 @ round 3": 24,
+        "ignis:1:尻尾攻撃 @ round 2": 15,
+        "ignis:1:尻尾攻撃 @ round 5": 11,
+        "ignis:1:炎の息 @ round 4": 11,
+        "ignis:1:炎の息 @ round 2": 9,
+        "ignis:1:炎の息 @ round 5": 6,
+        "ignis:1:尻尾攻撃 @ round 7": 5,
+        "ignis:1:尻尾攻撃 @ round 6": 4,
+        "ignis:1:炎の息 @ round 6": 3,
+        "ignis:1:尻尾攻撃 @ round 11": 2,
+        "ignis:1:尻尾攻撃 @ round 10": 1,
+        "ignis:1:炎の息 @ round 7": 1,
+        "ignis:1:尻尾攻撃 @ round 9": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "win_rate": 0.08,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.32395833333333335,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 51,
+        "3": 86,
+        "4": 66,
+        "5": 81,
+        "6": 79,
+        "7": 35,
+        "8": 30,
+        "9": 19,
+        "10": 4,
+        "11": 6,
+        "12": 1,
+        "13": 1,
+        "14": 1
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 3": 51,
+        "ignis:1:尻尾攻撃 @ round 5": 50,
+        "ignis:1:炎の息 @ round 6": 44,
+        "ignis:1:尻尾攻撃 @ round 4": 39,
+        "ignis:1:炎の息 @ round 3": 35,
+        "ignis:1:尻尾攻撃 @ round 6": 35,
+        "ignis:1:尻尾攻撃 @ round 2": 31,
+        "ignis:1:炎の息 @ round 5": 31,
+        "ignis:1:炎の息 @ round 4": 27,
+        "ignis:1:尻尾攻撃 @ round 7": 22,
+        "ignis:1:炎の息 @ round 2": 20,
+        "ignis:1:尻尾攻撃 @ round 8": 19,
+        "ignis:1:炎の息 @ round 7": 13,
+        "ignis:1:炎の息 @ round 8": 11,
+        "ignis:1:炎の息 @ round 9": 11,
+        "ignis:1:尻尾攻撃 @ round 9": 8,
+        "ignis:1:尻尾攻撃 @ round 11": 5,
+        "ignis:1:炎の息 @ round 10": 3,
+        "ignis:1:尻尾攻撃 @ round 12": 1,
+        "ignis:1:炎の息 @ round 11": 1,
+        "ignis:1:尻尾攻撃 @ round 10": 1,
+        "ignis:1:尻尾攻撃 @ round 14": 1,
+        "ignis:1:尻尾攻撃 @ round 13": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "win_rate": 0.77,
+      "rounds_median": 7.0,
+      "hp_left_mean": 0.7161904761904762,
+      "healing_items_mean": {
+        "治療の巻物": 0.624
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.624,
+        "聖水": 2.0
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 19.46,
+      "defeat_rounds": {
+        "2": 14,
+        "3": 24,
+        "4": 30,
+        "5": 18,
+        "6": 12,
+        "7": 8,
+        "9": 2,
+        "10": 4,
+        "11": 2,
+        "12": 1
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 4": 19,
+        "ignis:1:尻尾攻撃 @ round 3": 17,
+        "ignis:1:炎の息 @ round 4": 11,
+        "ignis:1:炎の息 @ round 5": 10,
+        "ignis:1:尻尾攻撃 @ round 5": 8,
+        "ignis:1:炎の息 @ round 3": 7,
+        "ignis:1:炎の息 @ round 2": 7,
+        "ignis:1:尻尾攻撃 @ round 2": 7,
+        "ignis:1:尻尾攻撃 @ round 6": 7,
+        "ignis:1:尻尾攻撃 @ round 7": 6,
+        "ignis:1:炎の息 @ round 6": 5,
+        "ignis:1:尻尾攻撃 @ round 10": 3,
+        "ignis:1:尻尾攻撃 @ round 9": 2,
+        "ignis:1:炎の息 @ round 7": 2,
+        "ignis:1:尻尾攻撃 @ round 12": 1,
+        "ignis:1:炎の息 @ round 11": 1,
+        "ignis:1:尻尾攻撃 @ round 11": 1,
+        "ignis:1:炎の息 @ round 10": 1
+      }
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 7.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 16,
+        "3": 43,
+        "4": 61,
+        "5": 67,
+        "6": 60,
+        "7": 55,
+        "8": 49,
+        "9": 35,
+        "10": 34,
+        "11": 22,
+        "12": 14,
+        "13": 9,
+        "14": 13,
+        "15": 7,
+        "16": 4,
+        "17": 4,
+        "18": 3,
+        "19": 2,
+        "22": 1,
+        "24": 1
+      },
+      "defeat_causes": {
+        "ignis:1:尻尾攻撃 @ round 5": 49,
+        "ignis:1:尻尾攻撃 @ round 6": 37,
+        "ignis:1:尻尾攻撃 @ round 7": 34,
+        "ignis:1:尻尾攻撃 @ round 4": 33,
+        "ignis:1:尻尾攻撃 @ round 8": 28,
+        "ignis:1:炎の息 @ round 4": 28,
+        "ignis:1:尻尾攻撃 @ round 3": 24,
+        "ignis:1:尻尾攻撃 @ round 10": 24,
+        "ignis:1:炎の息 @ round 6": 23,
+        "ignis:1:炎の息 @ round 8": 21,
+        "ignis:1:炎の息 @ round 7": 21,
+        "ignis:1:炎の息 @ round 3": 19,
+        "ignis:1:炎の息 @ round 5": 18,
+        "ignis:1:尻尾攻撃 @ round 9": 18,
+        "ignis:1:炎の息 @ round 9": 17,
+        "ignis:1:尻尾攻撃 @ round 11": 14,
+        "ignis:1:尻尾攻撃 @ round 12": 11,
+        "ignis:1:尻尾攻撃 @ round 2": 11,
+        "ignis:1:炎の息 @ round 10": 10,
+        "ignis:1:尻尾攻撃 @ round 14": 8,
+        "ignis:1:炎の息 @ round 11": 8,
+        "ignis:1:尻尾攻撃 @ round 15": 6,
+        "ignis:1:尻尾攻撃 @ round 13": 5,
+        "ignis:1:炎の息 @ round 14": 5,
+        "ignis:1:炎の息 @ round 2": 5,
+        "ignis:1:炎の息 @ round 13": 4,
+        "ignis:1:炎の息 @ round 12": 3,
+        "ignis:1:炎の息 @ round 18": 2,
+        "ignis:1:炎の息 @ round 17": 2,
+        "ignis:1:尻尾攻撃 @ round 19": 2,
+        "ignis:1:炎の息 @ round 16": 2,
+        "ignis:1:尻尾攻撃 @ round 16": 2,
+        "ignis:1:尻尾攻撃 @ round 17": 2,
+        "ignis:1:尻尾攻撃 @ round 18": 1,
+        "ignis:1:尻尾攻撃 @ round 22": 1,
+        "ignis:1:炎の息 @ round 24": 1,
+        "ignis:1:炎の息 @ round 15": 1
+      }
+    },
+    {
+      "encounter": "xanxus_battle",
+      "encounter_class": "scripted_loss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {
+        "治療の巻物": 0.546
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.546,
+        "聖水": 0.262
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 142,
+        "3": 358
+      },
+      "defeat_causes": {
+        "xanxus:1:火炎旋渦 @ round 3": 227,
+        "xanxus:1:隕石召喚 @ round 2": 142,
+        "xanxus:1:隕石召喚 @ round 3": 131
+      }
+    },
+    {
+      "encounter": "xanxus_battle",
+      "encounter_class": "scripted_loss",
+      "character": "hero",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 260,
+        "2": 240
+      },
+      "defeat_causes": {
+        "xanxus:1:隕石召喚 @ round 1": 260,
+        "xanxus:1:隕石召喚 @ round 2": 240
+      }
+    },
+    {
+      "encounter": "xanxus_battle",
+      "encounter_class": "scripted_loss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {
+        "治療の巻物": 0.576
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.576,
+        "聖水": 0.242
+      },
+      "mp_spent_mean": 8.544,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 167,
+        "3": 333
+      },
+      "defeat_causes": {
+        "xanxus:1:火炎旋渦 @ round 3": 212,
+        "xanxus:1:隕石召喚 @ round 2": 167,
+        "xanxus:1:隕石召喚 @ round 3": 121
+      }
+    },
+    {
+      "encounter": "xanxus_battle",
+      "encounter_class": "scripted_loss",
+      "character": "cleric",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 300,
+        "2": 200
+      },
+      "defeat_causes": {
+        "xanxus:1:隕石召喚 @ round 1": 300,
+        "xanxus:1:隕石召喚 @ round 2": 200
+      }
+    },
+    {
+      "encounter": "xanxus_battle",
+      "encounter_class": "scripted_loss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {
+        "聖水": 1.472
+      },
+      "mp_spent_mean": 0.008,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 264,
+        "2": 230,
+        "3": 6
+      },
+      "defeat_causes": {
+        "xanxus:1:隕石召喚 @ round 1": 264,
+        "xanxus:1:隕石召喚 @ round 2": 230,
+        "xanxus:1:火炎旋渦 @ round 3": 4,
+        "xanxus:1:隕石召喚 @ round 3": 2
+      }
+    },
+    {
+      "encounter": "xanxus_battle",
+      "encounter_class": "scripted_loss",
+      "character": "mage",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 279,
+        "2": 214,
+        "3": 7
+      },
+      "defeat_causes": {
+        "xanxus:1:隕石召喚 @ round 1": 279,
+        "xanxus:1:隕石召喚 @ round 2": 214,
+        "xanxus:1:火炎旋渦 @ round 3": 4,
+        "xanxus:1:隕石召喚 @ round 3": 3
+      }
+    },
+    {
+      "encounter": "xanxus_battle",
+      "encounter_class": "scripted_loss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 3.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {
+        "治療の巻物": 0.59
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.59,
+        "聖水": 0.272
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 4.0,
+      "defeat_rounds": {
+        "3": 398,
+        "4": 90,
+        "5": 12
+      },
+      "defeat_causes": {
+        "xanxus:1:隕石召喚 @ round 3": 215,
+        "xanxus:1:火炎旋渦 @ round 3": 183,
+        "xanxus:1:隕石召喚 @ round 4": 90,
+        "xanxus:1:隕石召喚 @ round 5": 12
+      }
+    },
+    {
+      "encounter": "xanxus_battle",
+      "encounter_class": "scripted_loss",
+      "character": "thief",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 4,
+      "enemy_count": 1,
+      "win_rate": 0.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": null,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 256,
+        "2": 216,
+        "3": 26,
+        "4": 2
+      },
+      "defeat_causes": {
+        "xanxus:1:隕石召喚 @ round 1": 256,
+        "xanxus:1:隕石召喚 @ round 2": 216,
+        "xanxus:1:隕石召喚 @ round 3": 26,
+        "xanxus:1:隕石召喚 @ round 4": 2
+      }
+    },
+    {
+      "encounter": "warlock_rescue_battle",
+      "encounter_class": "guest",
+      "character": "warlock",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 1.0,
+      "rounds_median": 5.0,
+      "hp_left_mean": 1.0,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {},
+      "defeat_causes": {}
+    },
+    {
+      "encounter": "warlock_rescue_battle",
+      "encounter_class": "guest",
+      "character": "warlock",
+      "policy": "attack_only",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261011,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "win_rate": 0.932,
+      "rounds_median": 41.5,
+      "hp_left_mean": 0.361587982832618,
+      "healing_items_mean": {},
+      "consumables_mean": {},
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "63": 1,
+        "64": 2,
+        "65": 3,
+        "66": 2,
+        "67": 4,
+        "68": 4,
+        "69": 5,
+        "70": 5,
+        "71": 3,
+        "72": 2,
+        "73": 3
+      },
+      "defeat_causes": {
+        "xanxus:1:火炎旋渦 @ round 70": 4,
+        "xanxus:1:火炎旋渦 @ round 67": 3,
+        "xanxus:1:隕石召喚 @ round 69": 3,
+        "xanxus:1:隕石召喚 @ round 65": 2,
+        "xanxus:1:火炎旋渦 @ round 68": 2,
+        "xanxus:1:火炎旋渦 @ round 69": 2,
+        "xanxus:1:隕石召喚 @ round 66": 2,
+        "xanxus:1:火炎旋渦 @ round 73": 2,
+        "xanxus:1:火炎旋渦 @ round 71": 2,
+        "xanxus:1:隕石召喚 @ round 68": 2,
+        "xanxus:1:火炎旋渦 @ round 72": 2,
+        "xanxus:1:隕石召喚 @ round 67": 1,
+        "xanxus:1:火炎旋渦 @ round 65": 1,
+        "xanxus:1:火炎旋渦 @ round 63": 1,
+        "xanxus:1:隕石召喚 @ round 70": 1,
+        "xanxus:1:隕石召喚 @ round 71": 1,
+        "xanxus:1:火炎旋渦 @ round 64": 1,
+        "xanxus:1:隕石召喚 @ round 64": 1,
+        "xanxus:1:隕石召喚 @ round 73": 1
+      }
+    }
+  ],
+  "elapsed_seconds": 297.2443436000067,
+  "confirmation": "Four disjoint encounter shards each executed sim --check --n 500; complete merged matrix checked again.",
+  "validation": [
+    "python -m unittest discover -s tests -q: Ran 331 tests in 33.120s; OK (skipped=1), exit 0.",
+    "node --check client/app.js: exit 0.",
+    "git diff --check: exit 0.",
+    "python -m scripts.balance.route --check --n 500: 8 route cells; 3 violations; exit 1.",
+    "python -m scripts.balance.sim --check --n 500 (four disjoint encounter shards): 162 cells; merged 41 hard violations; exit 1.",
+    "Both scenario mechanical deltas match (48 fields); protected fields and all route steps unchanged."
+  ],
+  "violations": [
+    {
+      "encounter": "forest_wolves",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.998,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.966,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.93,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.978,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.996,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.994,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.998,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_second_left",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.978,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.996,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.948,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.998,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.994,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.988,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.932,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "slime_king_battle",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.952,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "slime_king_battle",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.772,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "slime_king_battle",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.762,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.776,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "merchant_battle",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.792,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "attack_only_win_rate",
+      "value": 0.79,
+      "target": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "attack_only_win_rate",
+      "value": 0.372,
+      "target": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "attack_only_win_rate",
+      "value": 0.832,
+      "target": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.836,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "attack_only_win_rate",
+      "value": 0.28,
+      "target": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.77,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "goblin_fort_second_left",
+      "character": "all",
+      "defense_mode": "flat",
+      "metric": "class_spread",
+      "value": 0.20799999999999996,
+      "target": [
+        0,
+        0.15
+      ]
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "character": "all",
+      "defense_mode": "flat",
+      "metric": "class_spread",
+      "value": 0.22399999999999998,
+      "target": [
+        0,
+        0.15
+      ]
+    },
+    {
+      "encounter": "slime_king_battle",
+      "character": "all",
+      "defense_mode": "flat",
+      "metric": "class_spread",
+      "value": 0.236,
+      "target": [
+        0,
+        0.15
+      ]
+    }
+  ],
+  "route_violations": [
+    {
+      "route": "dragon_valley_loc",
+      "character": "hero",
+      "metric": "completion_rate",
+      "value": 0.808,
+      "target": [
+        0.55,
+        0.8
+      ]
+    },
+    {
+      "route": "dragon_valley_loc",
+      "character": "thief",
+      "metric": "completion_rate",
+      "value": 0.526,
+      "target": [
+        0.55,
+        0.8
+      ]
+    },
+    {
+      "route": "dragon_valley_loc",
+      "character": "all",
+      "metric": "class_spread",
+      "value": 0.28200000000000003,
+      "target": [
+        0,
+        0.2
+      ]
+    }
+  ],
+  "violations_after": [
+    {
+      "encounter": "forest_wolves",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.998,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.966,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.93,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.978,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.996,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.994,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_first_second",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.998,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_second_right",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_second_left",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.978,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "goblin_fort_third_guards",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.996,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.948,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.998,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.994,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.988,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "ice_elemental_encounter",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.932,
+      "target": [
+        0.75,
+        0.9
+      ]
+    },
+    {
+      "encounter": "slime_king_battle",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.952,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "slime_king_battle",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.772,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "slime_king_battle",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.762,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.776,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "merchant_battle",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.792,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "cleric",
+      "defense_mode": "flat",
+      "metric": "attack_only_win_rate",
+      "value": 0.79,
+      "target": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "mage",
+      "defense_mode": "flat",
+      "metric": "attack_only_win_rate",
+      "value": 0.372,
+      "target": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 1.0,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "frost_wolf_battle",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "attack_only_win_rate",
+      "value": 0.832,
+      "target": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.836,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "character": "hero",
+      "defense_mode": "flat",
+      "metric": "attack_only_win_rate",
+      "value": 0.28,
+      "target": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "character": "thief",
+      "defense_mode": "flat",
+      "metric": "win_rate",
+      "value": 0.77,
+      "target": [
+        0.6,
+        0.75
+      ]
+    },
+    {
+      "encounter": "goblin_fort_second_left",
+      "character": "all",
+      "defense_mode": "flat",
+      "metric": "class_spread",
+      "value": 0.20799999999999996,
+      "target": [
+        0,
+        0.15
+      ]
+    },
+    {
+      "encounter": "village_fire_elemental",
+      "character": "all",
+      "defense_mode": "flat",
+      "metric": "class_spread",
+      "value": 0.22399999999999998,
+      "target": [
+        0,
+        0.15
+      ]
+    },
+    {
+      "encounter": "slime_king_battle",
+      "character": "all",
+      "defense_mode": "flat",
+      "metric": "class_spread",
+      "value": 0.236,
+      "target": [
+        0,
+        0.15
+      ]
+    }
+  ],
+  "check_exit_code": 1,
+  "comparison": {
+    "pass3_hard_violations": 36,
+    "pass4_hard_violations": 41
+  },
+  "changes": [
+    {
+      "path": "/enemies/0/rewards/items",
+      "before": [],
+      "after": [
+        {
+          "name": "薬草",
+          "quantity": 2
+        },
+        {
+          "name": "治療の巻物",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "path": "/enemies/1/combat/basic_attack/damage",
+      "before": "1d20",
+      "after": "1d21"
+    },
+    {
+      "path": "/enemies/1/hp",
+      "before": 152,
+      "after": 168
+    },
+    {
+      "path": "/enemies/1/max_hp",
+      "before": 152,
+      "after": 168
+    },
+    {
+      "path": "/enemies/1/skills/0/damage",
+      "before": "1d20",
+      "after": "1d21"
+    },
+    {
+      "path": "/enemies/1/skills/0/dice_type",
+      "before": "1d20",
+      "after": "1d21"
+    },
+    {
+      "path": "/enemies/1/skills/1/damage",
+      "before": "1d20",
+      "after": "1d21"
+    },
+    {
+      "path": "/enemies/1/skills/1/dice_type",
+      "before": "1d20",
+      "after": "1d21"
+    },
+    {
+      "path": "/enemies/2/combat/basic_attack/accuracy",
+      "before": 100,
+      "after": 75
+    },
+    {
+      "path": "/enemies/2/combat/defense",
+      "before": 2,
+      "after": 0
+    },
+    {
+      "path": "/enemies/2/combat/evade",
+      "before": 12,
+      "after": 0
+    },
+    {
+      "path": "/enemies/2/hp",
+      "before": 8,
+      "after": 4
+    },
+    {
+      "path": "/enemies/2/max_hp",
+      "before": 8,
+      "after": 4
+    },
+    {
+      "path": "/enemies/2/rewards/items",
+      "before": [],
+      "after": [
+        {
+          "name": "治療の巻物",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "path": "/enemies/3/combat/basic_attack/accuracy",
+      "before": 100,
+      "after": 90
+    },
+    {
+      "path": "/enemies/3/combat/defense",
+      "before": 1,
+      "after": 0
+    },
+    {
+      "path": "/enemies/3/combat/evade",
+      "before": 10,
+      "after": 0
+    },
+    {
+      "path": "/enemies/3/hp",
+      "before": 16,
+      "after": 8
+    },
+    {
+      "path": "/enemies/3/max_hp",
+      "before": 16,
+      "after": 8
+    },
+    {
+      "path": "/enemies/3/rewards/items",
+      "before": [],
+      "after": [
+        {
+          "name": "治療の巻物",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "path": "/enemies/4/combat/basic_attack/accuracy",
+      "before": 100,
+      "after": 60
+    },
+    {
+      "path": "/enemies/4/combat/defense",
+      "before": 1,
+      "after": 0
+    },
+    {
+      "path": "/enemies/4/combat/evade",
+      "before": 5,
+      "after": 0
+    },
+    {
+      "path": "/enemies/4/hp",
+      "before": 44,
+      "after": 12
+    },
+    {
+      "path": "/enemies/4/max_hp",
+      "before": 44,
+      "after": 12
+    },
+    {
+      "path": "/enemies/4/rewards/items",
+      "before": [],
+      "after": [
+        {
+          "name": "薬草",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "path": "/enemies/6/combat/basic_attack/accuracy",
+      "before": 70,
+      "after": 60
+    },
+    {
+      "path": "/enemies/6/combat/basic_attack/damage",
+      "before": "1d10",
+      "after": "1d12"
+    },
+    {
+      "path": "/enemies/6/combat/defense",
+      "before": 2,
+      "after": 0
+    },
+    {
+      "path": "/enemies/6/hp",
+      "before": 32,
+      "after": 16
+    },
+    {
+      "path": "/enemies/6/max_hp",
+      "before": 32,
+      "after": 16
+    },
+    {
+      "path": "/enemies/8/combat/basic_attack/accuracy",
+      "before": 95,
+      "after": 50
+    },
+    {
+      "path": "/enemies/8/combat/basic_attack/damage",
+      "before": "1d10",
+      "after": "1d24"
+    },
+    {
+      "path": "/enemies/8/combat/defense",
+      "before": 1,
+      "after": 0
+    },
+    {
+      "path": "/enemies/8/hp",
+      "before": 64,
+      "after": 56
+    },
+    {
+      "path": "/enemies/8/max_hp",
+      "before": 64,
+      "after": 56
+    },
+    {
+      "path": "/enemies/10/rewards/items",
+      "before": [],
+      "after": [
+        {
+          "name": "治療の巻物",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "path": "/enemies/12/combat/basic_attack/accuracy",
+      "before": 35,
+      "after": 75
+    },
+    {
+      "path": "/enemies/12/combat/basic_attack/damage",
+      "before": "2d12",
+      "after": "1d16"
+    },
+    {
+      "path": "/enemies/12/combat/evade",
+      "before": 5,
+      "after": 0
+    },
+    {
+      "path": "/enemies/12/hp",
+      "before": 44,
+      "after": 28
+    },
+    {
+      "path": "/enemies/12/max_hp",
+      "before": 44,
+      "after": 28
+    },
+    {
+      "path": "/enemies/13/combat/basic_attack/accuracy",
+      "before": 65,
+      "after": 60
+    },
+    {
+      "path": "/enemies/13/combat/basic_attack/damage",
+      "before": "1d10",
+      "after": "1d12"
+    },
+    {
+      "path": "/enemies/13/combat/defense",
+      "before": 1,
+      "after": 0
+    },
+    {
+      "path": "/enemies/13/hp",
+      "before": 124,
+      "after": 48
+    },
+    {
+      "path": "/enemies/13/max_hp",
+      "before": 124,
+      "after": 48
+    },
+    {
+      "path": "/locations/2/actions/0/children/2/effects",
+      "before": [
+        {
+          "gold_change": -1
+        }
+      ],
+      "after": [
+        {
+          "gold_change": -1
+        },
+        {
+          "restore_full": true
+        }
+      ]
+    }
+  ],
+  "fingerprints": {
+    "host/prompt/processed/dragon_rpg.json": "ad991815d61b0ffd509dd62f2a6ea3602c2a7700a764c332aef4f56eddfe34c4",
+    "host/prompt/processed/dragon_rpg_hybrid.json": "f3c660b898042fb6616d7ad2619d290b2044df36ac5a4ee4ba21cd98b1e33d01",
+    "eval/balance/checkpoints.json": "06d83ccad80756d59c61cd2592561bce27457d0da31dbff3347330fc331ddbee",
+    "eval/balance/targets.json": "c49092bc37ff273294454868ba0341723a1e1d9ca037dd0a28efcc034dfa76e9",
+    "host/state.py": "3e942efce2a172eb611d0500a969d3c8fba815fd09d777b43f2326cd0bc70411",
+    "host/combat.py": "9f13b21fddea0c9f931bbefda71b98c100abbd4396b071e9ba097c3de4626cf4",
+    "host/item_mechanics.py": "722b17e14493a749f955ec642f262985e91876654454f1bacb5deb0c1c603846",
+    "scripts/balance/checkpoints.py": "80f4cf56361d0c4bb826dcd868a23ea1bac8dd0d4f96b532affec4e8ec501c1e",
+    "scripts/balance/route.py": "cc3ef38d58923ef4bc03c1eddf4d2b833cfbd0d1b5c27c93358f2597242b8f23",
+    "scripts/balance/sim.py": "3f3b65af4a326af0c1e29bace13671ce4697ae30efc49cea72fa954777f745a6",
+    "scripts/balance/pass4.py": "6bf37784abd6bf7ce68b1df85aaf361005fd18c63336166010a4abad3fc74831"
+  }
+}

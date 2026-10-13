@@ -1,4 +1,5 @@
 import unittest
+import shutil
 import uuid
 from pathlib import Path
 from zipfile import ZipFile
@@ -17,6 +18,7 @@ class ScenarioConverterTests(unittest.TestCase):
         root.mkdir(exist_ok=True)
         path = root / f"converter-{uuid.uuid4().hex}"
         path.mkdir()
+        self.addCleanup(shutil.rmtree, path, ignore_errors=True)
         return path
 
     def test_extract_docx_text_with_unicode_path(self):

@@ -1,0 +1,12 @@
+{
+  "id": "xanxus_confrontation_hero",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "xanxus_confrontation",
+  "flags": {},
+  "hp_delta": 0,
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}

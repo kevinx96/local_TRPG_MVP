@@ -1,0 +1,2377 @@
+{
+  "coarse": {
+    "n": 60,
+    "seed": 20261012,
+    "candidates": [
+      {
+        "enemy": "ice_sentinel",
+        "hp": 24,
+        "damage_multiplier": 1.0,
+        "rates": [
+          0.9833333333333333,
+          0.9833333333333333,
+          0.9833333333333333,
+          1.0
+        ],
+        "error": 0.34999999999999976
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 24,
+        "damage_multiplier": 1.5,
+        "rates": [
+          0.75,
+          0.8333333333333334,
+          0.9833333333333333,
+          0.9333333333333333
+        ],
+        "error": 0.11666666666666659
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 24,
+        "damage_multiplier": 2.0,
+        "rates": [
+          0.35,
+          0.43333333333333335,
+          0.9666666666666667,
+          0.9
+        ],
+        "error": 0.7833333333333333
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 24,
+        "damage_multiplier": 2.5,
+        "rates": [
+          0.18333333333333332,
+          0.2833333333333333,
+          0.9666666666666667,
+          0.7833333333333333
+        ],
+        "error": 1.1
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 32,
+        "damage_multiplier": 1.0,
+        "rates": [
+          0.9666666666666667,
+          0.95,
+          0.9833333333333333,
+          1.0
+        ],
+        "error": 0.2999999999999998
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 32,
+        "damage_multiplier": 1.5,
+        "rates": [
+          0.65,
+          0.6333333333333333,
+          0.8,
+          0.8333333333333334
+        ],
+        "error": 0.21666666666666667
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 32,
+        "damage_multiplier": 2.0,
+        "rates": [
+          0.23333333333333334,
+          0.23333333333333334,
+          0.65,
+          0.6833333333333333
+        ],
+        "error": 1.1999999999999997
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 32,
+        "damage_multiplier": 2.5,
+        "rates": [
+          0.06666666666666667,
+          0.13333333333333333,
+          0.5333333333333333,
+          0.6166666666666667
+        ],
+        "error": 1.65
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 40,
+        "damage_multiplier": 1.0,
+        "rates": [
+          0.9,
+          0.95,
+          0.9666666666666667,
+          1.0
+        ],
+        "error": 0.21666666666666656
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 40,
+        "damage_multiplier": 1.5,
+        "rates": [
+          0.45,
+          0.5166666666666667,
+          0.7166666666666667,
+          0.7333333333333333
+        ],
+        "error": 0.5833333333333333
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 40,
+        "damage_multiplier": 2.0,
+        "rates": [
+          0.16666666666666666,
+          0.1,
+          0.45,
+          0.5833333333333334
+        ],
+        "error": 1.7
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 40,
+        "damage_multiplier": 2.5,
+        "rates": [
+          0.016666666666666666,
+          0.03333333333333333,
+          0.36666666666666664,
+          0.5166666666666667
+        ],
+        "error": 2.0666666666666664
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 24,
+        "damage_multiplier": 1.0,
+        "rates": [
+          0.9666666666666667,
+          0.8833333333333333,
+          0.8666666666666667,
+          1.0
+        ],
+        "error": 0.16666666666666663
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 24,
+        "damage_multiplier": 1.5,
+        "rates": [
+          0.6666666666666666,
+          0.38333333333333336,
+          0.35,
+          0.7833333333333333
+        ],
+        "error": 0.8500000000000001
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 24,
+        "damage_multiplier": 2.0,
+        "rates": [
+          0.15,
+          0.05,
+          0.15,
+          0.5166666666666667
+        ],
+        "error": 2.1333333333333333
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 24,
+        "damage_multiplier": 2.5,
+        "rates": [
+          0.0,
+          0.0,
+          0.06666666666666667,
+          0.3333333333333333
+        ],
+        "error": 2.6
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 32,
+        "damage_multiplier": 1.0,
+        "rates": [
+          0.9333333333333333,
+          0.7666666666666667,
+          0.5333333333333333,
+          1.0
+        ],
+        "error": 0.35
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 32,
+        "damage_multiplier": 1.5,
+        "rates": [
+          0.43333333333333335,
+          0.13333333333333333,
+          0.16666666666666666,
+          0.7833333333333333
+        ],
+        "error": 1.5166666666666666
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 32,
+        "damage_multiplier": 2.0,
+        "rates": [
+          0.03333333333333333,
+          0.016666666666666666,
+          0.05,
+          0.5
+        ],
+        "error": 2.4
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 32,
+        "damage_multiplier": 2.5,
+        "rates": [
+          0.0,
+          0.0,
+          0.016666666666666666,
+          0.3333333333333333
+        ],
+        "error": 2.65
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 40,
+        "damage_multiplier": 1.0,
+        "rates": [
+          0.9166666666666666,
+          0.65,
+          0.4166666666666667,
+          1.0
+        ],
+        "error": 0.5499999999999998
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 40,
+        "damage_multiplier": 1.5,
+        "rates": [
+          0.3,
+          0.08333333333333333,
+          0.08333333333333333,
+          0.7333333333333333
+        ],
+        "error": 1.8
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 40,
+        "damage_multiplier": 2.0,
+        "rates": [
+          0.0,
+          0.0,
+          0.016666666666666666,
+          0.4666666666666667
+        ],
+        "error": 2.5166666666666666
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 40,
+        "damage_multiplier": 2.5,
+        "rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.2833333333333333
+        ],
+        "error": 2.716666666666667
+      }
+    ]
+  },
+  "refine": {
+    "n": 100,
+    "seed": 20261012,
+    "candidates": [
+      {
+        "enemy": "ice_sentinel",
+        "hp": 28,
+        "damage_multiplier": 1.1,
+        "refine": true,
+        "rates": [
+          0.97,
+          0.93,
+          0.97,
+          0.98
+        ],
+        "error": 0.2499999999999999
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 28,
+        "damage_multiplier": 1.2,
+        "refine": true,
+        "rates": [
+          0.87,
+          0.89,
+          0.91,
+          0.97
+        ],
+        "error": 0.07999999999999996
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 28,
+        "damage_multiplier": 1.3,
+        "refine": true,
+        "rates": [
+          0.82,
+          0.8,
+          0.88,
+          0.97
+        ],
+        "error": 0.06999999999999995
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 32,
+        "damage_multiplier": 1.1,
+        "refine": true,
+        "rates": [
+          0.93,
+          0.91,
+          0.96,
+          0.96
+        ],
+        "error": 0.15999999999999992
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 32,
+        "damage_multiplier": 1.2,
+        "refine": true,
+        "rates": [
+          0.85,
+          0.87,
+          0.9,
+          0.96
+        ],
+        "error": 0.05999999999999994
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 32,
+        "damage_multiplier": 1.3,
+        "refine": true,
+        "rates": [
+          0.77,
+          0.79,
+          0.87,
+          0.95
+        ],
+        "error": 0.04999999999999993
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 36,
+        "damage_multiplier": 1.1,
+        "refine": true,
+        "rates": [
+          0.89,
+          0.85,
+          0.95,
+          0.95
+        ],
+        "error": 0.09999999999999987
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 36,
+        "damage_multiplier": 1.2,
+        "refine": true,
+        "rates": [
+          0.83,
+          0.81,
+          0.9,
+          0.95
+        ],
+        "error": 0.04999999999999993
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 36,
+        "damage_multiplier": 1.3,
+        "refine": true,
+        "rates": [
+          0.73,
+          0.72,
+          0.86,
+          0.94
+        ],
+        "error": 0.08999999999999997
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 20,
+        "damage_multiplier": 1.1,
+        "refine": true,
+        "rates": [
+          0.88,
+          0.79,
+          0.88,
+          0.98
+        ],
+        "error": 0.07999999999999996
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 20,
+        "damage_multiplier": 1.2,
+        "refine": true,
+        "rates": [
+          0.74,
+          0.64,
+          0.77,
+          0.95
+        ],
+        "error": 0.16999999999999993
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 20,
+        "damage_multiplier": 1.3,
+        "refine": true,
+        "rates": [
+          0.76,
+          0.58,
+          0.69,
+          0.92
+        ],
+        "error": 0.2500000000000001
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 22,
+        "damage_multiplier": 1.1,
+        "refine": true,
+        "rates": [
+          0.85,
+          0.78,
+          0.82,
+          0.98
+        ],
+        "error": 0.07999999999999996
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 22,
+        "damage_multiplier": 1.2,
+        "refine": true,
+        "rates": [
+          0.72,
+          0.64,
+          0.68,
+          0.95
+        ],
+        "error": 0.2599999999999999
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 22,
+        "damage_multiplier": 1.3,
+        "refine": true,
+        "rates": [
+          0.71,
+          0.55,
+          0.63,
+          0.92
+        ],
+        "error": 0.38
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 24,
+        "damage_multiplier": 1.1,
+        "refine": true,
+        "rates": [
+          0.85,
+          0.72,
+          0.77,
+          0.98
+        ],
+        "error": 0.10999999999999999
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 24,
+        "damage_multiplier": 1.2,
+        "refine": true,
+        "rates": [
+          0.68,
+          0.55,
+          0.63,
+          0.95
+        ],
+        "error": 0.43999999999999984
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 24,
+        "damage_multiplier": 1.3,
+        "refine": true,
+        "rates": [
+          0.68,
+          0.51,
+          0.58,
+          0.92
+        ],
+        "error": 0.5
+      }
+    ]
+  },
+  "variance": {
+    "n": 100,
+    "seed": 20261012,
+    "candidates": [
+      {
+        "enemy": "ice_sentinel",
+        "hp": 32,
+        "damage_multiplier": 35,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.7,
+          0.68,
+          0.83,
+          0.9
+        ],
+        "error": 0.12
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 32,
+        "damage_multiplier": 45,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.55,
+          0.58,
+          0.76,
+          0.82
+        ],
+        "error": 0.37
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 32,
+        "damage_multiplier": 55,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.44,
+          0.48,
+          0.7,
+          0.78
+        ],
+        "error": 0.6300000000000001
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 36,
+        "damage_multiplier": 35,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.62,
+          0.64,
+          0.77,
+          0.89
+        ],
+        "error": 0.24
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 36,
+        "damage_multiplier": 45,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.47,
+          0.53,
+          0.69,
+          0.8
+        ],
+        "error": 0.56
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 36,
+        "damage_multiplier": 55,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.35,
+          0.41,
+          0.61,
+          0.76
+        ],
+        "error": 0.8800000000000001
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 40,
+        "damage_multiplier": 35,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.6,
+          0.59,
+          0.76,
+          0.88
+        ],
+        "error": 0.31000000000000005
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 40,
+        "damage_multiplier": 45,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.44,
+          0.5,
+          0.68,
+          0.79
+        ],
+        "error": 0.6299999999999999
+      },
+      {
+        "enemy": "ice_sentinel",
+        "hp": 40,
+        "damage_multiplier": 55,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.31,
+          0.35,
+          0.61,
+          0.73
+        ],
+        "error": 1.0
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 20,
+        "damage_multiplier": 35,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.96,
+          0.91,
+          0.94,
+          0.98
+        ],
+        "error": 0.18999999999999984
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 20,
+        "damage_multiplier": 45,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.89,
+          0.84,
+          0.89,
+          0.97
+        ],
+        "error": 0.06999999999999995
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 20,
+        "damage_multiplier": 55,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.84,
+          0.68,
+          0.76,
+          0.95
+        ],
+        "error": 0.11999999999999988
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 24,
+        "damage_multiplier": 35,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.93,
+          0.9,
+          0.94,
+          0.97
+        ],
+        "error": 0.1399999999999999
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 24,
+        "damage_multiplier": 45,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.84,
+          0.81,
+          0.88,
+          0.94
+        ],
+        "error": 0.039999999999999925
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 24,
+        "damage_multiplier": 55,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.78,
+          0.63,
+          0.73,
+          0.95
+        ],
+        "error": 0.18999999999999995
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 28,
+        "damage_multiplier": 35,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.91,
+          0.9,
+          0.9,
+          0.93
+        ],
+        "error": 0.040000000000000036
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 28,
+        "damage_multiplier": 45,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.83,
+          0.72,
+          0.78,
+          0.87
+        ],
+        "error": 0.030000000000000027
+      },
+      {
+        "enemy": "ice_assassin",
+        "hp": 28,
+        "damage_multiplier": 55,
+        "refine": false,
+        "variance": true,
+        "rates": [
+          0.72,
+          0.49,
+          0.66,
+          0.89
+        ],
+        "error": 0.38
+      }
+    ]
+  },
+  "burst": [
+    {
+      "hp": 28,
+      "damage": "1d40",
+      "accuracy": 20,
+      "rates": [
+        0.82,
+        0.825,
+        0.94,
+        0.895
+      ],
+      "n": 200,
+      "seed": 20261012
+    },
+    {
+      "hp": 28,
+      "damage": "1d40",
+      "accuracy": 24,
+      "rates": [
+        0.76,
+        0.79,
+        0.925,
+        0.845
+      ],
+      "n": 200,
+      "seed": 20261012
+    },
+    {
+      "hp": 28,
+      "damage": "1d40",
+      "accuracy": 28,
+      "rates": [
+        0.69,
+        0.715,
+        0.91,
+        0.82
+      ],
+      "n": 200,
+      "seed": 20261012
+    },
+    {
+      "hp": 32,
+      "damage": "1d40",
+      "accuracy": 20,
+      "rates": [
+        0.81,
+        0.765,
+        0.895,
+        0.875
+      ],
+      "n": 200,
+      "seed": 20261012
+    },
+    {
+      "hp": 32,
+      "damage": "1d40",
+      "accuracy": 24,
+      "rates": [
+        0.73,
+        0.745,
+        0.865,
+        0.805
+      ],
+      "n": 200,
+      "seed": 20261012
+    },
+    {
+      "hp": 32,
+      "damage": "1d40",
+      "accuracy": 28,
+      "rates": [
+        0.64,
+        0.665,
+        0.835,
+        0.77
+      ],
+      "n": 200,
+      "seed": 20261012
+    },
+    {
+      "hp": 36,
+      "damage": "1d40",
+      "accuracy": 20,
+      "rates": [
+        0.815,
+        0.735,
+        0.855,
+        0.87
+      ],
+      "n": 200,
+      "seed": 20261012
+    },
+    {
+      "hp": 36,
+      "damage": "1d40",
+      "accuracy": 24,
+      "rates": [
+        0.71,
+        0.705,
+        0.815,
+        0.8
+      ],
+      "n": 200,
+      "seed": 20261012
+    },
+    {
+      "hp": 36,
+      "damage": "1d40",
+      "accuracy": 28,
+      "rates": [
+        0.6,
+        0.59,
+        0.775,
+        0.76
+      ],
+      "n": 200,
+      "seed": 20261012
+    }
+  ],
+  "oil_2d6": [
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "standard",
+      "phase_rounds_mean": {
+        "draco_human": 3.282,
+        "draco_dragon": 4.646
+      },
+      "purify": false,
+      "outcomes": {
+        "defeat": 173,
+        "victory": 327
+      },
+      "rounds_mean": 6.928,
+      "success_rounds_mean": 5.314984709480123,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 500,
+        "draco_dragon": 500
+      },
+      "win_rate": 0.654,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.5751529051987767,
+      "healing_items_mean": {
+        "治療の巻物": 0.914,
+        "薬草": 0.17
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.914,
+        "火竜の油": 0.704,
+        "紅竜の炎核": 1.0,
+        "聖水": 1.422,
+        "薬草": 0.17
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 2.142,
+      "defeat_rounds": {
+        "4": 27,
+        "5": 26,
+        "6": 19,
+        "7": 9,
+        "8": 12,
+        "9": 11,
+        "10": 5,
+        "11": 2,
+        "12": 5,
+        "13": 8,
+        "14": 1,
+        "15": 4,
+        "16": 9,
+        "17": 10,
+        "18": 11,
+        "19": 3,
+        "20": 4,
+        "21": 1,
+        "22": 4,
+        "23": 1,
+        "25": 1
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 5": 18,
+        "draco_dragon:1:凍てつく吐息 @ round 4": 15,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 12,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 11,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 8,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 17": 8,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 8,
+        "draco_dragon:1:凍てつく吐息 @ round 18": 8,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 7,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 16": 6,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 12": 5,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 13": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 22": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 4,
+        "draco_dragon:1:凍てつく吐息 @ round 20": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 16": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 13": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 19": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 18": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 15": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 15": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 17": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 25": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 14": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 23": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 21": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "standard",
+      "phase_rounds_mean": {
+        "draco_human": 3.304,
+        "draco_dragon": 4.354
+      },
+      "purify": false,
+      "outcomes": {
+        "defeat": 181,
+        "victory": 319
+      },
+      "rounds_mean": 6.658,
+      "success_rounds_mean": 5.247648902821316,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 500,
+        "draco_dragon": 500
+      },
+      "win_rate": 0.638,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.6017983831050981,
+      "healing_items_mean": {
+        "治療の巻物": 1.018,
+        "薬草": 0.138
+      },
+      "consumables_mean": {
+        "治療の巻物": 1.018,
+        "火竜の油": 0.632,
+        "紅竜の炎核": 0.998,
+        "聖水": 1.45,
+        "薬草": 0.138
+      },
+      "mp_spent_mean": 12.966,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "4": 25,
+        "5": 28,
+        "6": 18,
+        "7": 14,
+        "8": 14,
+        "9": 13,
+        "10": 9,
+        "11": 11,
+        "12": 6,
+        "13": 7,
+        "14": 5,
+        "15": 6,
+        "16": 4,
+        "17": 8,
+        "18": 5,
+        "19": 4,
+        "20": 4
+      },
+      "defeat_causes": {
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 15,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 14,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 13,
+        "draco_dragon:1:凍てつく吐息 @ round 4": 11,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 11,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 10,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 9,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 8,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 7,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 7,
+        "draco_dragon:1:凍てつく吐息 @ round 17": 7,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 7,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 6,
+        "draco_dragon:1:凍てつく吐息 @ round 15": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 13": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 13": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 18": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 14": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 16": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 11": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 12": 3,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 12": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 20": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 20": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 18": 2,
+        "draco_dragon:1:凍てつく吐息 @ round 19": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 14": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 19": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 16": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 17": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "standard",
+      "phase_rounds_mean": {
+        "draco_human": 1,
+        "draco_dragon": 3.412
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 290,
+        "defeat": 210
+      },
+      "rounds_mean": 3.412,
+      "success_rounds_mean": 2.886206896551724,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 500,
+        "draco_dragon": 500
+      },
+      "win_rate": 0.58,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.7229885057471265,
+      "healing_items_mean": {
+        "治療の巻物": 0.91,
+        "薬草": 0.05
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.91,
+        "火竜の油": 0.378,
+        "紅竜の炎核": 0.996,
+        "聖水": 1.05,
+        "薬草": 0.05
+      },
+      "mp_spent_mean": 0.112,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 54,
+        "3": 53,
+        "4": 33,
+        "5": 13,
+        "6": 23,
+        "7": 16,
+        "8": 12,
+        "9": 4,
+        "11": 1,
+        "12": 1
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 3": 37,
+        "draco_dragon:1:凍てつく吐息 @ round 2": 31,
+        "draco_dragon:1:凍てつく吐息 @ round 4": 23,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 2": 23,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 3": 16,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 13,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 10,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 10,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 9,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 9,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 8,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 7,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 4,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 12": 1
+      }
+    },
+    {
+      "encounter": "draco_battle",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 500,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 5,
+      "enemy_count": 1,
+      "preparation": "standard",
+      "phase_rounds_mean": {
+        "draco_human": 3.138,
+        "draco_dragon": 3.706
+      },
+      "purify": false,
+      "outcomes": {
+        "defeat": 180,
+        "victory": 320
+      },
+      "rounds_mean": 5.844,
+      "success_rounds_mean": 5.525,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "draco_human": 500,
+        "draco_dragon": 500
+      },
+      "win_rate": 0.64,
+      "rounds_median": 5.0,
+      "hp_left_mean": 0.653125,
+      "healing_items_mean": {
+        "治療の巻物": 0.75,
+        "薬草": 0.022
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.75,
+        "火竜の油": 0.076,
+        "紅竜の炎核": 0.988,
+        "聖水": 0.012,
+        "薬草": 0.022
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 13.98,
+      "defeat_rounds": {
+        "4": 51,
+        "5": 28,
+        "6": 32,
+        "7": 26,
+        "8": 13,
+        "9": 9,
+        "10": 8,
+        "11": 2,
+        "12": 4,
+        "13": 2,
+        "14": 3,
+        "16": 1,
+        "17": 1
+      },
+      "defeat_causes": {
+        "draco_dragon:1:凍てつく吐息 @ round 4": 33,
+        "draco_dragon:1:凍てつく吐息 @ round 5": 18,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 4": 18,
+        "draco_dragon:1:凍てつく吐息 @ round 6": 18,
+        "draco_dragon:1:凍てつく吐息 @ round 7": 14,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 6": 14,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 7": 12,
+        "draco_dragon:1:凍てつく吐息 @ round 8": 10,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 5": 10,
+        "draco_dragon:1:凍てつく吐息 @ round 9": 5,
+        "draco_dragon:1:凍てつく吐息 @ round 10": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 9": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 10": 4,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 8": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 14": 3,
+        "draco_dragon:1:凍てつく吐息 @ round 12": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 12": 2,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 11": 1,
+        "draco_dragon:1:白翼の薙ぎ払い @ round 13": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 16": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 17": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 13": 1,
+        "draco_dragon:1:凍てつく吐息 @ round 11": 1
+      }
+    }
+  ],
+  "intermediate_elites": {
+    "n": 500,
+    "seed": 20261012,
+    "supports": [],
+    "elites": [
+      {
+        "encounter": "mansion_corridor",
+        "encounter_class": "elite",
+        "character": "hero",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "normal",
+        "phase_rounds_mean": {
+          "ice_sentinel": 8.342
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 372,
+          "defeat": 128
+        },
+        "rounds_mean": 8.342,
+        "success_rounds_mean": 9.64516129032258,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_sentinel": 500
+        },
+        "win_rate": 0.744,
+        "rounds_median": 9.0,
+        "hp_left_mean": 0.7315188172043011,
+        "healing_items_mean": {
+          "治療の巻物": 0.614
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.614
+        },
+        "mp_spent_mean": 0.0,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "1": 4,
+          "2": 20,
+          "3": 21,
+          "4": 26,
+          "5": 18,
+          "6": 16,
+          "7": 11,
+          "8": 4,
+          "9": 5,
+          "10": 2,
+          "12": 1
+        },
+        "defeat_causes": {
+          "ice_sentinel:2:氷槌 @ round 4": 24,
+          "ice_sentinel:2:氷槌 @ round 5": 14,
+          "ice_sentinel:2:氷槌 @ round 2": 14,
+          "ice_sentinel:2:氷槌 @ round 6": 14,
+          "ice_sentinel:2:氷槌 @ round 3": 12,
+          "ice_sentinel:2:氷槌 @ round 7": 11,
+          "ice_sentinel:1:氷槌 @ round 3": 9,
+          "ice_sentinel:1:氷槌 @ round 2": 6,
+          "ice_sentinel:2:氷槌 @ round 9": 5,
+          "ice_sentinel:2:氷槌 @ round 1": 4,
+          "ice_sentinel:2:氷槌 @ round 8": 4,
+          "ice_sentinel:1:氷槌 @ round 5": 4,
+          "ice_sentinel:1:氷槌 @ round 6": 2,
+          "ice_sentinel:1:氷槌 @ round 4": 2,
+          "ice_sentinel:2:氷槌 @ round 10": 2,
+          "ice_sentinel:2:氷槌 @ round 12": 1
+        }
+      },
+      {
+        "encounter": "mansion_corridor",
+        "encounter_class": "elite",
+        "character": "hero",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "alert",
+        "phase_rounds_mean": {
+          "ice_sentinel": 8.048
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 331,
+          "defeat": 169
+        },
+        "rounds_mean": 8.048,
+        "success_rounds_mean": 10.132930513595166,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_sentinel": 500
+        },
+        "win_rate": 0.662,
+        "rounds_median": 9.0,
+        "hp_left_mean": 0.7186555891238671,
+        "healing_items_mean": {
+          "治療の巻物": 0.7,
+          "薬草": 0.004
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.7,
+          "薬草": 0.004
+        },
+        "mp_spent_mean": 0.0,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "1": 32,
+          "2": 33,
+          "3": 18,
+          "4": 31,
+          "5": 18,
+          "6": 8,
+          "7": 10,
+          "8": 6,
+          "9": 4,
+          "10": 2,
+          "11": 4,
+          "12": 1,
+          "13": 2
+        },
+        "defeat_causes": {
+          "ice_sentinel:2:氷槌 @ round 1": 25,
+          "ice_sentinel:2:氷槌 @ round 4": 24,
+          "ice_sentinel:2:氷槌 @ round 2": 21,
+          "ice_sentinel:2:氷槌 @ round 3": 12,
+          "ice_sentinel:2:氷槌 @ round 5": 12,
+          "ice_sentinel:1:氷槌 @ round 2": 12,
+          "ice_sentinel:2:氷槌 @ round 7": 9,
+          "ice_sentinel:1:氷槌 @ round 4": 7,
+          "ice_sentinel:1:氷槌 @ round 1": 7,
+          "ice_sentinel:2:氷槌 @ round 6": 7,
+          "ice_sentinel:1:氷槌 @ round 5": 6,
+          "ice_sentinel:1:氷槌 @ round 3": 6,
+          "ice_sentinel:2:氷槌 @ round 8": 6,
+          "ice_sentinel:2:氷槌 @ round 9": 4,
+          "ice_sentinel:2:氷槌 @ round 11": 4,
+          "ice_sentinel:2:氷槌 @ round 10": 2,
+          "ice_sentinel:2:氷槌 @ round 13": 2,
+          "ice_sentinel:1:氷槌 @ round 7": 1,
+          "ice_sentinel:2:氷槌 @ round 12": 1,
+          "ice_sentinel:1:氷槌 @ round 6": 1
+        }
+      },
+      {
+        "encounter": "inn_night_ambush",
+        "encounter_class": "elite",
+        "character": "hero",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "normal",
+        "phase_rounds_mean": {
+          "ice_assassin": 9.146
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 430,
+          "defeat": 70
+        },
+        "rounds_mean": 9.146,
+        "success_rounds_mean": 10.05813953488372,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_assassin": 500
+        },
+        "win_rate": 0.86,
+        "rounds_median": 9.0,
+        "hp_left_mean": 0.6592441860465116,
+        "healing_items_mean": {
+          "治療の巻物": 1.39,
+          "薬草": 0.014
+        },
+        "consumables_mean": {
+          "治療の巻物": 1.39,
+          "薬草": 0.014
+        },
+        "mp_spent_mean": 0.0,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "1": 5,
+          "2": 20,
+          "3": 19,
+          "4": 8,
+          "5": 10,
+          "6": 2,
+          "7": 3,
+          "9": 2,
+          "13": 1
+        },
+        "defeat_causes": {
+          "ice_assassin:2:氷刃の連撃 @ round 3": 15,
+          "ice_assassin:2:氷刃の連撃 @ round 2": 15,
+          "ice_assassin:2:氷刃の連撃 @ round 5": 9,
+          "ice_assassin:2:氷刃の連撃 @ round 4": 4,
+          "ice_assassin:2:凍てつく毒 @ round 3": 4,
+          "ice_assassin:2:氷刃の連撃 @ round 1": 3,
+          "ice_assassin:2:凍てつく毒 @ round 2": 3,
+          "ice_assassin:1:氷刃の連撃 @ round 4": 3,
+          "ice_assassin:2:氷刃の連撃 @ round 6": 2,
+          "ice_assassin:1:氷刃の連撃 @ round 2": 2,
+          "ice_assassin:2:氷刃の連撃 @ round 9": 2,
+          "ice_assassin:2:凍てつく毒 @ round 1": 2,
+          "ice_assassin:2:氷刃の連撃 @ round 7": 2,
+          "ice_assassin:2:氷刃の連撃 @ round 13": 1,
+          "ice_assassin:2:凍てつく毒 @ round 4": 1,
+          "ice_assassin:2:凍てつく毒 @ round 7": 1,
+          "ice_assassin:2:凍てつく毒 @ round 5": 1
+        }
+      },
+      {
+        "encounter": "inn_night_ambush",
+        "encounter_class": "elite",
+        "character": "hero",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "robin",
+        "phase_rounds_mean": {
+          "ice_assassin": 9.42
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 460,
+          "defeat": 40
+        },
+        "rounds_mean": 9.42,
+        "success_rounds_mean": 9.821739130434782,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_assassin": 500
+        },
+        "win_rate": 0.92,
+        "rounds_median": 9.0,
+        "hp_left_mean": 0.6722282608695652,
+        "healing_items_mean": {
+          "治療の巻物": 1.192
+        },
+        "consumables_mean": {
+          "治療の巻物": 1.192
+        },
+        "mp_spent_mean": 0.0,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "2": 5,
+          "3": 11,
+          "4": 10,
+          "5": 2,
+          "6": 2,
+          "7": 2,
+          "8": 1,
+          "9": 5,
+          "10": 2
+        },
+        "defeat_causes": {
+          "ice_assassin:2:氷刃の連撃 @ round 3": 9,
+          "ice_assassin:2:氷刃の連撃 @ round 4": 7,
+          "ice_assassin:2:氷刃の連撃 @ round 2": 4,
+          "ice_assassin:2:氷刃の連撃 @ round 9": 4,
+          "ice_assassin:2:凍てつく毒 @ round 4": 3,
+          "ice_assassin:2:氷刃の連撃 @ round 6": 2,
+          "ice_assassin:2:氷刃の連撃 @ round 10": 2,
+          "ice_assassin:2:氷刃の連撃 @ round 7": 2,
+          "ice_assassin:2:氷刃の連撃 @ round 8": 1,
+          "ice_assassin:2:凍てつく毒 @ round 5": 1,
+          "ice_assassin:1:氷刃の連撃 @ round 2": 1,
+          "ice_assassin:2:凍てつく毒 @ round 9": 1,
+          "ice_assassin:1:氷刃の連撃 @ round 5": 1,
+          "ice_assassin:2:凍てつく毒 @ round 3": 1,
+          "ice_assassin:1:氷刃の連撃 @ round 3": 1
+        }
+      },
+      {
+        "encounter": "mansion_corridor",
+        "encounter_class": "elite",
+        "character": "cleric",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "normal",
+        "phase_rounds_mean": {
+          "ice_sentinel": 7.526
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 399,
+          "defeat": 101
+        },
+        "rounds_mean": 7.526,
+        "success_rounds_mean": 8.338345864661655,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_sentinel": 500
+        },
+        "win_rate": 0.798,
+        "rounds_median": 8.0,
+        "hp_left_mean": 0.7839335180055401,
+        "healing_items_mean": {
+          "治療の巻物": 0.648
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.648
+        },
+        "mp_spent_mean": 18.534,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "1": 10,
+          "2": 13,
+          "3": 21,
+          "4": 16,
+          "5": 12,
+          "6": 12,
+          "7": 6,
+          "8": 5,
+          "9": 3,
+          "10": 1,
+          "11": 2
+        },
+        "defeat_causes": {
+          "ice_sentinel:2:氷槌 @ round 3": 16,
+          "ice_sentinel:2:氷槌 @ round 4": 14,
+          "ice_sentinel:2:氷槌 @ round 6": 12,
+          "ice_sentinel:2:氷槌 @ round 5": 12,
+          "ice_sentinel:2:氷槌 @ round 1": 10,
+          "ice_sentinel:2:氷槌 @ round 2": 8,
+          "ice_sentinel:2:氷槌 @ round 7": 6,
+          "ice_sentinel:1:氷槌 @ round 2": 5,
+          "ice_sentinel:1:氷槌 @ round 3": 5,
+          "ice_sentinel:2:氷槌 @ round 8": 5,
+          "ice_sentinel:2:氷槌 @ round 9": 3,
+          "ice_sentinel:1:氷槌 @ round 4": 2,
+          "ice_sentinel:2:氷槌 @ round 11": 2,
+          "ice_sentinel:2:氷槌 @ round 10": 1
+        }
+      },
+      {
+        "encounter": "mansion_corridor",
+        "encounter_class": "elite",
+        "character": "cleric",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "alert",
+        "phase_rounds_mean": {
+          "ice_sentinel": 7.398
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 347,
+          "defeat": 153
+        },
+        "rounds_mean": 7.398,
+        "success_rounds_mean": 9.0835734870317,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_sentinel": 500
+        },
+        "win_rate": 0.694,
+        "rounds_median": 8.0,
+        "hp_left_mean": 0.7592901562263006,
+        "healing_items_mean": {
+          "治療の巻物": 0.752,
+          "薬草": 0.006
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.752,
+          "薬草": 0.006
+        },
+        "mp_spent_mean": 17.13,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "1": 36,
+          "2": 26,
+          "3": 19,
+          "4": 25,
+          "5": 15,
+          "6": 12,
+          "7": 11,
+          "8": 4,
+          "9": 4,
+          "10": 1
+        },
+        "defeat_causes": {
+          "ice_sentinel:2:氷槌 @ round 1": 27,
+          "ice_sentinel:2:氷槌 @ round 4": 20,
+          "ice_sentinel:2:氷槌 @ round 2": 20,
+          "ice_sentinel:2:氷槌 @ round 5": 15,
+          "ice_sentinel:2:氷槌 @ round 3": 13,
+          "ice_sentinel:2:氷槌 @ round 6": 12,
+          "ice_sentinel:2:氷槌 @ round 7": 11,
+          "ice_sentinel:1:氷槌 @ round 1": 9,
+          "ice_sentinel:1:氷槌 @ round 2": 6,
+          "ice_sentinel:1:氷槌 @ round 3": 6,
+          "ice_sentinel:1:氷槌 @ round 4": 5,
+          "ice_sentinel:2:氷槌 @ round 8": 4,
+          "ice_sentinel:2:氷槌 @ round 9": 4,
+          "ice_sentinel:2:氷槌 @ round 10": 1
+        }
+      },
+      {
+        "encounter": "inn_night_ambush",
+        "encounter_class": "elite",
+        "character": "cleric",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "normal",
+        "phase_rounds_mean": {
+          "ice_assassin": 7.668
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 406,
+          "defeat": 94
+        },
+        "rounds_mean": 7.668,
+        "success_rounds_mean": 8.60344827586207,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_assassin": 500
+        },
+        "win_rate": 0.812,
+        "rounds_median": 8.0,
+        "hp_left_mean": 0.6704044594244232,
+        "healing_items_mean": {
+          "治療の巻物": 1.336,
+          "薬草": 0.008
+        },
+        "consumables_mean": {
+          "治療の巻物": 1.336,
+          "薬草": 0.008
+        },
+        "mp_spent_mean": 17.202,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "1": 14,
+          "2": 28,
+          "3": 20,
+          "4": 9,
+          "5": 5,
+          "6": 6,
+          "7": 2,
+          "8": 2,
+          "9": 3,
+          "10": 4,
+          "17": 1
+        },
+        "defeat_causes": {
+          "ice_assassin:2:氷刃の連撃 @ round 2": 22,
+          "ice_assassin:2:氷刃の連撃 @ round 3": 15,
+          "ice_assassin:2:氷刃の連撃 @ round 1": 12,
+          "ice_assassin:2:氷刃の連撃 @ round 4": 8,
+          "ice_assassin:2:氷刃の連撃 @ round 6": 6,
+          "ice_assassin:1:氷刃の連撃 @ round 2": 4,
+          "ice_assassin:2:氷刃の連撃 @ round 10": 4,
+          "ice_assassin:2:凍てつく毒 @ round 3": 3,
+          "ice_assassin:2:氷刃の連撃 @ round 5": 3,
+          "ice_assassin:2:氷刃の連撃 @ round 7": 2,
+          "ice_assassin:2:氷刃の連撃 @ round 8": 2,
+          "ice_assassin:2:凍てつく毒 @ round 2": 2,
+          "ice_assassin:1:氷刃の連撃 @ round 3": 2,
+          "ice_assassin:2:氷刃の連撃 @ round 9": 2,
+          "ice_assassin:2:凍てつく毒 @ round 5": 1,
+          "ice_assassin:1:氷刃の連撃 @ round 5": 1,
+          "ice_assassin:2:氷刃の連撃 @ round 17": 1,
+          "ice_assassin:2:凍てつく毒 @ round 9": 1,
+          "ice_assassin:2:凍てつく毒 @ round 1": 1,
+          "ice_assassin:1:氷刃の連撃 @ round 4": 1,
+          "ice_assassin:1:氷刃の連撃 @ round 1": 1
+        }
+      },
+      {
+        "encounter": "inn_night_ambush",
+        "encounter_class": "elite",
+        "character": "cleric",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "robin",
+        "phase_rounds_mean": {
+          "ice_assassin": 7.956
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 451,
+          "defeat": 49
+        },
+        "rounds_mean": 7.956,
+        "success_rounds_mean": 8.325942350332594,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_assassin": 500
+        },
+        "win_rate": 0.902,
+        "rounds_median": 8.0,
+        "hp_left_mean": 0.6456996148908858,
+        "healing_items_mean": {
+          "治療の巻物": 1.08,
+          "薬草": 0.002
+        },
+        "consumables_mean": {
+          "治療の巻物": 1.08,
+          "薬草": 0.002
+        },
+        "mp_spent_mean": 18.468,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "1": 1,
+          "2": 12,
+          "3": 14,
+          "4": 7,
+          "5": 5,
+          "6": 1,
+          "7": 1,
+          "8": 3,
+          "10": 1,
+          "11": 2,
+          "16": 1,
+          "18": 1
+        },
+        "defeat_causes": {
+          "ice_assassin:2:氷刃の連撃 @ round 2": 11,
+          "ice_assassin:2:氷刃の連撃 @ round 3": 10,
+          "ice_assassin:2:氷刃の連撃 @ round 5": 5,
+          "ice_assassin:2:氷刃の連撃 @ round 4": 5,
+          "ice_assassin:1:氷刃の連撃 @ round 3": 3,
+          "ice_assassin:2:氷刃の連撃 @ round 8": 3,
+          "ice_assassin:2:氷刃の連撃 @ round 11": 2,
+          "ice_assassin:1:氷刃の連撃 @ round 4": 2,
+          "ice_assassin:2:凍てつく毒 @ round 3": 1,
+          "ice_assassin:2:凍てつく毒 @ round 2": 1,
+          "ice_assassin:2:氷刃の連撃 @ round 6": 1,
+          "ice_assassin:2:氷刃の連撃 @ round 18": 1,
+          "ice_assassin:2:氷刃の連撃 @ round 10": 1,
+          "ice_assassin:2:氷刃の連撃 @ round 16": 1,
+          "ice_assassin:2:氷刃の連撃 @ round 1": 1,
+          "ice_assassin:2:氷刃の連撃 @ round 7": 1
+        }
+      },
+      {
+        "encounter": "mansion_corridor",
+        "encounter_class": "elite",
+        "character": "mage",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "normal",
+        "phase_rounds_mean": {
+          "ice_sentinel": 2.228
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 427,
+          "defeat": 73
+        },
+        "rounds_mean": 2.228,
+        "success_rounds_mean": 2.4121779859484778,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_sentinel": 500
+        },
+        "win_rate": 0.854,
+        "rounds_median": 2.0,
+        "hp_left_mean": 0.9310109289617486,
+        "healing_items_mean": {
+          "治療の巻物": 0.094
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.094
+        },
+        "mp_spent_mean": 10.67,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "1": 63,
+          "2": 9,
+          "3": 1
+        },
+        "defeat_causes": {
+          "ice_sentinel:2:氷槌 @ round 1": 42,
+          "ice_sentinel:1:氷槌 @ round 1": 21,
+          "ice_sentinel:1:氷槌 @ round 2": 6,
+          "ice_sentinel:2:氷槌 @ round 2": 3,
+          "ice_sentinel:2:氷槌 @ round 3": 1
+        }
+      },
+      {
+        "encounter": "mansion_corridor",
+        "encounter_class": "elite",
+        "character": "mage",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "alert",
+        "phase_rounds_mean": {
+          "ice_sentinel": 2.238
+        },
+        "purify": false,
+        "outcomes": {
+          "defeat": 154,
+          "victory": 346
+        },
+        "rounds_mean": 2.238,
+        "success_rounds_mean": 2.684971098265896,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_sentinel": 500
+        },
+        "win_rate": 0.692,
+        "rounds_median": 2.0,
+        "hp_left_mean": 0.8868015414258189,
+        "healing_items_mean": {
+          "治療の巻物": 0.212
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.212
+        },
+        "mp_spent_mean": 9.46,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "1": 125,
+          "2": 23,
+          "3": 5,
+          "4": 1
+        },
+        "defeat_causes": {
+          "ice_sentinel:1:氷槌 @ round 1": 63,
+          "ice_sentinel:2:氷槌 @ round 1": 62,
+          "ice_sentinel:1:氷槌 @ round 2": 13,
+          "ice_sentinel:2:氷槌 @ round 2": 10,
+          "ice_sentinel:1:氷槌 @ round 3": 3,
+          "ice_sentinel:2:氷槌 @ round 3": 2,
+          "ice_sentinel:2:氷槌 @ round 4": 1
+        }
+      },
+      {
+        "encounter": "inn_night_ambush",
+        "encounter_class": "elite",
+        "character": "mage",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "normal",
+        "phase_rounds_mean": {
+          "ice_assassin": 2.922
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 407,
+          "defeat": 93
+        },
+        "rounds_mean": 2.922,
+        "success_rounds_mean": 3.1793611793611793,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_assassin": 500
+        },
+        "win_rate": 0.814,
+        "rounds_median": 3.0,
+        "hp_left_mean": 0.6825348075348076,
+        "healing_items_mean": {
+          "治療の巻物": 0.546
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.546
+        },
+        "mp_spent_mean": 11.6,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "1": 56,
+          "2": 19,
+          "3": 8,
+          "4": 4,
+          "5": 4,
+          "6": 1,
+          "7": 1
+        },
+        "defeat_causes": {
+          "ice_assassin:2:氷刃の連撃 @ round 1": 42,
+          "ice_assassin:2:氷刃の連撃 @ round 2": 11,
+          "ice_assassin:1:氷刃の連撃 @ round 1": 7,
+          "ice_assassin:2:凍てつく毒 @ round 1": 7,
+          "ice_assassin:1:氷刃の連撃 @ round 2": 4,
+          "ice_assassin:2:氷刃の連撃 @ round 3": 3,
+          "ice_assassin:1:氷刃の連撃 @ round 4": 3,
+          "ice_assassin:2:凍てつく毒 @ round 2": 3,
+          "ice_assassin:1:凍てつく毒 @ round 3": 2,
+          "ice_assassin:2:凍てつく毒 @ round 3": 2,
+          "ice_assassin:1:氷刃の連撃 @ round 5": 2,
+          "ice_assassin:1:氷刃の連撃 @ round 3": 1,
+          "ice_assassin:2:氷刃の連撃 @ round 4": 1,
+          "ice_assassin:2:氷刃の連撃 @ round 5": 1,
+          "ice_assassin:1:凍てつく毒 @ round 5": 1,
+          "ice_assassin:1:凍てつく毒 @ round 2": 1,
+          "ice_assassin:1:凍てつく毒 @ round 6": 1,
+          "ice_assassin:2:氷刃の連撃 @ round 7": 1
+        }
+      },
+      {
+        "encounter": "inn_night_ambush",
+        "encounter_class": "elite",
+        "character": "mage",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "robin",
+        "phase_rounds_mean": {
+          "ice_assassin": 2.786
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 460,
+          "defeat": 40
+        },
+        "rounds_mean": 2.786,
+        "success_rounds_mean": 2.8195652173913044,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_assassin": 500
+        },
+        "win_rate": 0.92,
+        "rounds_median": 2.0,
+        "hp_left_mean": 0.7649456521739131,
+        "healing_items_mean": {
+          "治療の巻物": 0.212
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.212
+        },
+        "mp_spent_mean": 12.81,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "1": 9,
+          "2": 18,
+          "3": 6,
+          "4": 3,
+          "5": 3,
+          "6": 1
+        },
+        "defeat_causes": {
+          "ice_assassin:2:氷刃の連撃 @ round 2": 9,
+          "ice_assassin:2:氷刃の連撃 @ round 1": 9,
+          "ice_assassin:1:氷刃の連撃 @ round 2": 8,
+          "ice_assassin:2:氷刃の連撃 @ round 3": 4,
+          "ice_assassin:2:凍てつく毒 @ round 3": 2,
+          "ice_assassin:2:氷刃の連撃 @ round 5": 2,
+          "ice_assassin:1:凍てつく毒 @ round 4": 1,
+          "ice_assassin:2:凍てつく毒 @ round 2": 1,
+          "ice_assassin:1:氷刃の連撃 @ round 6": 1,
+          "ice_assassin:2:氷刃の連撃 @ round 4": 1,
+          "ice_assassin:1:氷刃の連撃 @ round 4": 1,
+          "ice_assassin:2:凍てつく毒 @ round 5": 1
+        }
+      },
+      {
+        "encounter": "mansion_corridor",
+        "encounter_class": "elite",
+        "character": "thief",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "normal",
+        "phase_rounds_mean": {
+          "ice_sentinel": 4.606
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 457,
+          "defeat": 43
+        },
+        "rounds_mean": 4.606,
+        "success_rounds_mean": 4.824945295404814,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_sentinel": 500
+        },
+        "win_rate": 0.914,
+        "rounds_median": 4.0,
+        "hp_left_mean": 0.888183807439825,
+        "healing_items_mean": {
+          "治療の巻物": 0.242
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.242
+        },
+        "mp_spent_mean": 0.0,
+        "sp_spent_mean": 20.74,
+        "defeat_rounds": {
+          "1": 15,
+          "2": 9,
+          "3": 11,
+          "4": 8
+        },
+        "defeat_causes": {
+          "ice_sentinel:2:氷槌 @ round 1": 13,
+          "ice_sentinel:2:氷槌 @ round 3": 11,
+          "ice_sentinel:2:氷槌 @ round 4": 8,
+          "ice_sentinel:2:氷槌 @ round 2": 7,
+          "ice_sentinel:1:氷槌 @ round 1": 2,
+          "ice_sentinel:1:氷槌 @ round 2": 2
+        }
+      },
+      {
+        "encounter": "mansion_corridor",
+        "encounter_class": "elite",
+        "character": "thief",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "alert",
+        "phase_rounds_mean": {
+          "ice_sentinel": 4.662
+        },
+        "purify": false,
+        "outcomes": {
+          "defeat": 66,
+          "victory": 434
+        },
+        "rounds_mean": 4.662,
+        "success_rounds_mean": 5,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_sentinel": 500
+        },
+        "win_rate": 0.868,
+        "rounds_median": 5.0,
+        "hp_left_mean": 0.8635176651305684,
+        "healing_items_mean": {
+          "治療の巻物": 0.308
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.308
+        },
+        "mp_spent_mean": 0.0,
+        "sp_spent_mean": 20.61,
+        "defeat_rounds": {
+          "1": 22,
+          "2": 19,
+          "3": 10,
+          "4": 11,
+          "5": 2,
+          "7": 1,
+          "10": 1
+        },
+        "defeat_causes": {
+          "ice_sentinel:2:氷槌 @ round 2": 15,
+          "ice_sentinel:2:氷槌 @ round 1": 13,
+          "ice_sentinel:2:氷槌 @ round 4": 11,
+          "ice_sentinel:2:氷槌 @ round 3": 9,
+          "ice_sentinel:1:氷槌 @ round 1": 9,
+          "ice_sentinel:1:氷槌 @ round 2": 4,
+          "ice_sentinel:2:氷槌 @ round 5": 2,
+          "ice_sentinel:2:氷槌 @ round 7": 1,
+          "ice_sentinel:2:氷槌 @ round 10": 1,
+          "ice_sentinel:1:氷槌 @ round 3": 1
+        }
+      },
+      {
+        "encounter": "inn_night_ambush",
+        "encounter_class": "elite",
+        "character": "thief",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "normal",
+        "phase_rounds_mean": {
+          "ice_assassin": 4.724
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 457,
+          "defeat": 43
+        },
+        "rounds_mean": 4.724,
+        "success_rounds_mean": 4.927789934354486,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_assassin": 500
+        },
+        "win_rate": 0.914,
+        "rounds_median": 4.0,
+        "hp_left_mean": 0.7078045222465353,
+        "healing_items_mean": {
+          "治療の巻物": 0.524
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.524
+        },
+        "mp_spent_mean": 0.0,
+        "sp_spent_mean": 19.25,
+        "defeat_rounds": {
+          "1": 14,
+          "2": 13,
+          "3": 8,
+          "4": 2,
+          "5": 2,
+          "6": 3,
+          "10": 1
+        },
+        "defeat_causes": {
+          "ice_assassin:2:氷刃の連撃 @ round 1": 13,
+          "ice_assassin:2:氷刃の連撃 @ round 2": 10,
+          "ice_assassin:2:凍てつく毒 @ round 3": 5,
+          "ice_assassin:2:氷刃の連撃 @ round 6": 3,
+          "ice_assassin:2:凍てつく毒 @ round 2": 3,
+          "ice_assassin:2:氷刃の連撃 @ round 3": 3,
+          "ice_assassin:2:氷刃の連撃 @ round 5": 2,
+          "ice_assassin:2:氷刃の連撃 @ round 4": 2,
+          "ice_assassin:2:氷刃の連撃 @ round 10": 1,
+          "ice_assassin:1:氷刃の連撃 @ round 1": 1
+        }
+      },
+      {
+        "encounter": "inn_night_ambush",
+        "encounter_class": "elite",
+        "character": "thief",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 500,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 2,
+        "preparation": "robin",
+        "phase_rounds_mean": {
+          "ice_assassin": 4.582
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 478,
+          "defeat": 22
+        },
+        "rounds_mean": 4.582,
+        "success_rounds_mean": 4.633891213389122,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "ice_assassin": 500
+        },
+        "win_rate": 0.956,
+        "rounds_median": 4.0,
+        "hp_left_mean": 0.7293584379358438,
+        "healing_items_mean": {
+          "治療の巻物": 0.296
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.296
+        },
+        "mp_spent_mean": 0.0,
+        "sp_spent_mean": 19.8,
+        "defeat_rounds": {
+          "2": 7,
+          "3": 9,
+          "5": 3,
+          "6": 1,
+          "7": 2
+        },
+        "defeat_causes": {
+          "ice_assassin:2:氷刃の連撃 @ round 3": 7,
+          "ice_assassin:2:氷刃の連撃 @ round 2": 5,
+          "ice_assassin:2:氷刃の連撃 @ round 5": 3,
+          "ice_assassin:1:氷刃の連撃 @ round 2": 2,
+          "ice_assassin:2:氷刃の連撃 @ round 7": 2,
+          "ice_assassin:1:氷刃の連撃 @ round 3": 1,
+          "ice_assassin:2:凍てつく毒 @ round 3": 1,
+          "ice_assassin:2:氷刃の連撃 @ round 6": 1
+        }
+      }
+    ],
+    "violations": [
+      "hero/mansion_corridor: 0.744 outside [0.75,0.90]",
+      "thief/mansion_corridor: 0.914 outside [0.75,0.90]",
+      "thief/inn_night_ambush: 0.914 outside [0.75,0.90]"
+    ],
+    "fingerprints": {
+      "host\\prompt\\processed\\dragon_rpg.json": "43a396a5fe9554cab207aeba5897dca833048dcd439998d9a81070f7ddc1f0a1",
+      "scripts\\balance\\ch5.py": "ad8f9eb6123057aa383c0874c50f7aa338a83ebd15b7063094aec444505097b0",
+      "scripts\\balance\\sim.py": "6a7f06e722c0b16b194b95586d9aeeda88724f263162ffdd02f0a592a8e4512d",
+      "host\\combat.py": "4dc6608401dc9b62eb2bba0d877fa005b525d85916e8ba46e447b558139b07fd"
+    }
+  }
+}

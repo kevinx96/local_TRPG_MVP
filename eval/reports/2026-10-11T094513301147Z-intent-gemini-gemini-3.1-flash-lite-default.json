@@ -1,0 +1,90 @@
+{
+  "run_id": "2026-10-11T094513301147Z-intent-gemini-gemini-3.1-flash-lite-default",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "default",
+  "split": "all",
+  "live": false,
+  "labels": "proposed",
+  "cases": "eval\\candidates\\intent_v2.jsonl",
+  "cases_sha256": "965d96339218df5fe82495f0cff2db10d5d88f538cb0b3f6f01df46720cfb85c",
+  "metrics": {
+    "total": 486,
+    "evaluated": 0,
+    "statuses": {
+      "skipped": 486
+    },
+    "normalizations": 0,
+    "severity": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 0,
+      "S3": 0,
+      "S4": 0
+    },
+    "s0_s1_rate": null,
+    "s3_rate": null,
+    "engine_caught": 0,
+    "exact": null,
+    "kind": null,
+    "kind_relaxed": null,
+    "field_kind": null,
+    "field_action_id": null,
+    "field_operation": null,
+    "field_target_id": null,
+    "field_item_id": null,
+    "field_advance": null,
+    "confusion_matrix": {},
+    "by_tag": {},
+    "negation": {
+      "count": 0,
+      "preserved": null,
+      "kind": null
+    },
+    "injection": {
+      "count": 0,
+      "no_state_change": null,
+      "kind": null,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 0,
+      "no_state_change": null,
+      "kind": null,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 0
+    },
+    "clarify": {
+      "precision": null,
+      "recall": null
+    },
+    "json_failure_rate": null,
+    "invalid_plan_rate": null,
+    "latency_ms": {
+      "p50": null,
+      "p95": null
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": null,
+        "reported": 0
+      },
+      "output_tokens": {
+        "mean": null,
+        "reported": 0
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": null,
+    "top_errors": []
+  },
+  "errors": []
+}

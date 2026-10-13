@@ -1,0 +1,2166 @@
+{
+  "schema_version": 1,
+  "task": "024",
+  "generator": "image_gen",
+  "generation_date": "2026-10-12",
+  "approved": false,
+  "selection_policy": "工程按 spec 做暂选；所有素材须由设计负责人逐张验收。",
+  "images": [
+    {
+      "id": "enemy_draco_human",
+      "file": "assets/candidates/016/enemy_draco_human/candidate_01.png",
+      "purpose": "将军ドラコ战斗立绘",
+      "prompt": "Use case: identity-preserve. Edit the supplied npc_general.png into a battle sprite of the SAME general ドラコ. Preserve exactly his mature stern face, swept-back dark greying hair, short beard, silver plate armor with gold dragon ornament, red and gold cloak, body proportions and detailed anime semi-realistic painted style. Draw his sword ready to fight: blade ice-like pale cyan white, frost at his boots and cloak hem, faint white glow in both eyes, cold haughty expression. Full body head to boots and entire sword visible with small safe margins, 1024x1536 portrait. Match reference upper-left highlights and controlled saturation. Actual transparent background with clean alpha, no white/gray fringe, no backdrop, no text, letters, logo or watermark. Candidate 01: restrained battle-ready stance with sword held diagonally.",
+      "reference_images": [
+        "client/images/npc_general.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_draco_human",
+      "file": "assets/candidates/016/enemy_draco_human/candidate_02.png",
+      "purpose": "将军ドラコ战斗立绘",
+      "prompt": "Use case: identity-preserve. Edit the supplied npc_general.png into a battle sprite of the SAME general ドラコ. Preserve exactly his mature stern face, swept-back dark greying hair, short beard, silver plate armor with gold dragon ornament, red and gold cloak, body proportions and detailed anime semi-realistic painted style. Draw his sword ready to fight: blade ice-like pale cyan white, frost at his boots and cloak hem, faint white glow in both eyes, cold haughty expression. Full body head to boots and entire sword visible with small safe margins, 1024x1536 portrait. Match reference upper-left highlights and controlled saturation. Actual transparent background with clean alpha, no white/gray fringe, no backdrop, no text, letters, logo or watermark. Candidate 02: upright guarded battle stance, unsheathed sword lifted slightly across the body. Frost stays attached to boots and lower cloak; keep it subtle. Absolutely no ambient fog, no gray gradient, no colored background glow, no ground plane. Empty pixels outside the silhouette must have alpha zero, opaque armor must be opaque.",
+      "reference_images": [
+        "client/images/npc_general.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_draco_dragon",
+      "file": "assets/candidates/016/enemy_draco_dragon/candidate_01.png",
+      "purpose": "白竜ヴァイス敌人立绘",
+      "prompt": "Create 白竜ヴァイス, a white dragon equal to Ignis in bulk, imposing boss presence and anatomical complexity, his cold opposite. Image 1 is the dragon scale/style reference; image 2 controls the exact snow-white and ice-blue color family. Snow-white scales, translucent wing membranes with icy blue veins, ice crystal horns, blue luminous chest fissures corresponding to Ignis's lava chest, glowing icy blue eyes. Calm, oppressive expression, not roaring. Full body, both wings and entire tail visible. Detailed painted fantasy illustration, strong directional rim light and fine surface strokes like the references, not a 3D render. Square 1254x1254 full-body sprite with small safe margins. Real transparent alpha outside subject, no backdrop, ground, fog halo, letters, text, logos or watermark. Candidate 01: broad wings open, upright calm and imposing stance.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_draco_dragon",
+      "file": "assets/candidates/016/enemy_draco_dragon/candidate_02.png",
+      "purpose": "白竜ヴァイス敌人立绘",
+      "prompt": "Create 白竜ヴァイス, a white dragon equal to Ignis in bulk, imposing boss presence and anatomical complexity, his cold opposite. Image 1 is the dragon scale/style reference; image 2 controls the exact snow-white and ice-blue color family. Snow-white scales, translucent wing membranes with icy blue veins, ice crystal horns, blue luminous chest fissures corresponding to Ignis's lava chest, glowing icy blue eyes. Calm, oppressive expression, not roaring. Full body, both wings and entire tail visible. Detailed painted fantasy illustration, strong directional rim light and fine surface strokes like the references, not a 3D render. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: slight three-quarter turn, head held high, calm closed mouth, wings opened with all outer tips inside canvas, slightly restrained cyan glow.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "npc_ignis_calm",
+      "file": "assets/candidates/016/npc_ignis_calm/candidate_01.png",
+      "purpose": "净化后的イグニス立绘",
+      "prompt": "Use case: identity-preserve. Edit image 1, enemy_ignis, to depict the SAME dragon after purification. Preserve his exact dark red scale armor, crown horns, face anatomy, spikes, wing membranes, body mass, and lava pattern layout. Only soften lava glow, change furious red eyes to peaceful gold, relax pose with wings half folded and head slightly lowered, mouth at ease. Keep full body and tail visible. Match reference detailed fantasy painting, brushwork, rim lighting and colors. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 01: relaxed standing pose, both wings half folded, lowered head, quiet golden eyes and gently glowing lava markings.",
+      "reference_images": [
+        "client/images/enemy_ignis.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "npc_ignis_calm",
+      "file": "assets/candidates/016/npc_ignis_calm/candidate_02.png",
+      "purpose": "净化后的イグニス立绘",
+      "prompt": "Use case: identity-preserve. Edit image 1, enemy_ignis, to depict the SAME dragon after purification. Preserve his exact dark red scale armor, crown horns, face anatomy, spikes, wing membranes, body mass, and lava pattern layout. Only soften lava glow, change furious red eyes to peaceful gold, relax pose with wings half folded and head slightly lowered, mouth at ease. Keep full body and tail visible. Match reference detailed fantasy painting, brushwork, rim lighting and colors. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: head gently bowed, arms relaxed, wings visibly half folded close to shoulders, peaceful closed mouth, golden eyes, subdued warm lava seams. Preserve original orientation and anatomy.",
+      "reference_images": [
+        "client/images/enemy_ignis.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_heat_lizard",
+      "file": "assets/candidates/016/enemy_heat_lizard/candidate_01.png",
+      "purpose": "熱岩トカゲ敌人立绘",
+      "prompt": "Create 熱岩トカゲ: one large lizard, quadruped with a long tail, back covered in cooling lava armor shells, orange light escaping between dark cooling plates. Match image 1's painted fantasy style, flame orange-yellow color family, intricate strokes and rim lighting. Full body dynamic creature silhouette with all four legs and tail visible. No humanoid features. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 01: low three-quarter creeping pose, readable cooling black lava plates, orange seams, long curling tail.",
+      "reference_images": [
+        "client/images/enemy_fire_elemental.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_heat_lizard",
+      "file": "assets/candidates/016/enemy_heat_lizard/candidate_02.png",
+      "purpose": "熱岩トカゲ敌人立绘",
+      "prompt": "Create 熱岩トカゲ: one large lizard, quadruped with a long tail, back covered in cooling lava armor shells, orange light escaping between dark cooling plates. Match image 1's painted fantasy style, flame orange-yellow color family, intricate strokes and rim lighting. Full body dynamic creature silhouette with all four legs and tail visible. No humanoid features. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: heavy low crawling lizard, mostly dark cooling rock armor, thin orange cracks only, avoid covering whole body in open flame. Four anatomically distinct legs, tail curving around rear. Match fine painterly strokes.",
+      "reference_images": [
+        "client/images/enemy_fire_elemental.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_fire_wisp",
+      "file": "assets/candidates/016/enemy_fire_wisp/candidate_01.png",
+      "purpose": "炎のウィスプ敌人立绘",
+      "prompt": "Create 炎のウィスプ: exactly ONE small nimble flame spirit with simple eyes, curling flame body and a few drifting sparks. Match image 1's intricate painted fire texture, brilliant orange-yellow palette and edge light, while being a small spirit rather than a humanoid giant. Full silhouette visible, compact and agile. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 01: one hovering teardrop-shaped flame sprite, curling tip and simple luminous eyes, sparse detached sparks.",
+      "reference_images": [
+        "client/images/enemy_fire_elemental.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_fire_wisp",
+      "file": "assets/candidates/016/enemy_fire_wisp/candidate_02.png",
+      "purpose": "炎のウィスプ敌人立绘",
+      "prompt": "Create 炎のウィスプ: exactly ONE small nimble flame spirit with simple eyes, curling flame body and a few drifting sparks. Match image 1's intricate painted fire texture, brilliant orange-yellow palette and edge light, while being a small spirit rather than a humanoid giant. Full silhouette visible, compact and agile. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: one compact rounded dancing flame, asymmetrical curled top, two simple eyes, no mouth or limbs, small drifting sparks separated from body.",
+      "reference_images": [
+        "client/images/enemy_fire_elemental.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_ruby_golem",
+      "file": "assets/candidates/016/enemy_ruby_golem/candidate_01.png",
+      "purpose": "紅晶ゴーレム敌人立绘",
+      "prompt": "Create 紅晶ゴーレム: a massive broad humanoid golem assembled from RED crystal blocks, internal molten glow visible at joints. Image 1 supplies detailed fantasy painted finish and imposing creature lighting; image 2 supplies faceted translucent crystalline material only. Establish shared crystal material: sharp planar facets, translucent colored depth, painted internal refraction, crisp rim highlights, controlled glow, not plastic or smooth glass. Full body dramatic pose with both hands and feet visible. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 01: broad planted stance, massive block shoulders and fists, ruby-red faceted crystal blocks with molten orange joint light, no dragon anatomy.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_ruby_golem",
+      "file": "assets/candidates/016/enemy_ruby_golem/candidate_02.png",
+      "purpose": "紅晶ゴーレム敌人立绘",
+      "prompt": "Create 紅晶ゴーレム: a massive broad humanoid golem assembled from RED crystal blocks, internal molten glow visible at joints. Image 1 supplies detailed fantasy painted finish and imposing creature lighting; image 2 supplies faceted translucent crystalline material only. Establish shared crystal material: sharp planar facets, translucent colored depth, painted internal refraction, crisp rim highlights, controlled glow, not plastic or smooth glass. Full body dramatic pose with both hands and feet visible. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: slight three-quarter advancing stance, broad shoulders, block-built fists, darker ruby facets contrasted against orange light restricted mainly to joints. Whole feet inside frame.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_sapphire_moth",
+      "file": "assets/candidates/016/enemy_sapphire_moth/candidate_01.png",
+      "purpose": "蒼晶の蝶敌人立绘",
+      "prompt": "Create 蒼晶の蝶: one butterfly/moth creature roughly half a human's body length, wings made of thin BLUE crystal sheets, shedding sparse cold luminous scale powder. No human scale figure. Image 1 controls detailed fantasy painted finish, blue crystalline facets and cold rim highlights. Shared crystal material: sharp planar facets, translucent colored depth, painted internal refraction, crisp rim highlights, controlled glow, not plastic or smooth glass. Entire body, antennae and wings visible. Image 2 is the shared crystal material reference; match its facet rendering but use blue thin sheets. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 01: open wings seen almost frontally, delicate thin sapphire crystal sheets, pale blue falling scale particles, full antennae and wing edges inside frame.",
+      "reference_images": [
+        "client/images/enemy_frost_dire_wolf.png",
+        "assets/candidates/016/enemy_ruby_golem/candidate_01.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_sapphire_moth",
+      "file": "assets/candidates/016/enemy_sapphire_moth/candidate_02.png",
+      "purpose": "蒼晶の蝶敌人立绘",
+      "prompt": "Create 蒼晶の蝶: one butterfly/moth creature roughly half a human's body length, wings made of thin BLUE crystal sheets, shedding sparse cold luminous scale powder. No human scale figure. Image 1 controls detailed fantasy painted finish, blue crystalline facets and cold rim highlights. Shared crystal material: sharp planar facets, translucent colored depth, painted internal refraction, crisp rim highlights, controlled glow, not plastic or smooth glass. Entire body, antennae and wings visible. Image 2 is the shared crystal material reference; match its facet rendering but use blue thin sheets. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: slightly tilted hovering pose, thin sheet-like blue crystal wings, sparse tiny falling luminous scale DUST rather than big floating crystal rocks. Keep entire wings within safe margins.",
+      "reference_images": [
+        "client/images/enemy_frost_dire_wolf.png",
+        "assets/candidates/016/enemy_ruby_golem/candidate_01.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_emerald_spider",
+      "file": "assets/candidates/016/enemy_emerald_spider/candidate_01.png",
+      "purpose": "翠晶の蜘蛛敌人立绘",
+      "prompt": "Create 翠晶の蜘蛛: one spider with exactly eight sharp GREEN crystal legs and poisonous green light inside its abdomen. Image 1 controls detailed fantasy painted finish and crystalline material, but replace blue with emerald green. Shared crystal material: sharp planar facets, translucent colored depth, painted internal refraction, crisp rim highlights, controlled glow, not plastic or smooth glass. Full body and all eight legs visible in a dramatic tense stance. Image 2 supplies shared crystal facets, rendered in emerald instead of ruby. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 01: three-quarter low spider stance, eight separated pointed emerald crystal legs, bulky glowing green abdomen, no web or scenery.",
+      "reference_images": [
+        "client/images/enemy_frost_dire_wolf.png",
+        "assets/candidates/016/enemy_ruby_golem/candidate_01.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_emerald_spider",
+      "file": "assets/candidates/016/enemy_emerald_spider/candidate_02.png",
+      "purpose": "翠晶の蜘蛛敌人立绘",
+      "prompt": "Create 翠晶の蜘蛛: one spider with exactly eight sharp GREEN crystal legs and poisonous green light inside its abdomen. Image 1 controls detailed fantasy painted finish and crystalline material, but replace blue with emerald green. Shared crystal material: sharp planar facets, translucent colored depth, painted internal refraction, crisp rim highlights, controlled glow, not plastic or smooth glass. Full body and all eight legs visible in a dramatic tense stance. Image 2 supplies shared crystal facets, rendered in emerald instead of ruby. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: slightly elevated front view, EXACTLY EIGHT legs clearly separated, four on each side, all tips fully visible. Keep emerald crystalline body, toxic green glowing abdomen. Avoid leg overlap.",
+      "reference_images": [
+        "client/images/enemy_frost_dire_wolf.png",
+        "assets/candidates/016/enemy_ruby_golem/candidate_01.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_prism_tree",
+      "file": "assets/candidates/016/enemy_prism_tree/candidate_01.png",
+      "purpose": "虹晶樹 Boss 立绘",
+      "prompt": "Create 虹晶樹 boss: a huge tree made of seven-colored crystal, twisted trunk, branches terminating in prismatic crystal clusters, roots entangled around broken crystalline monsters. Internal light refracts into a rainbow. Equal imposing boss presence to image 1's Ignis; match its detailed painted fantasy strokes and rim lighting. Images 2, 3 and 4 are the ruby golem, sapphire moth and emerald spider: match their faceted crystal material exactly. Shared crystal material: sharp planar facets, translucent colored depth, painted internal refraction, crisp rim highlights, controlled glow. Whole tree canopy, trunk and roots visible, isolated creature sprite, no landscape. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 01: broad towering canopy of seven-colored crystal prisms, twisted crystal trunk, spreading roots clutching broken ruby golem blocks, blue wing shards and green spider leg pieces.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "assets/candidates/016/enemy_ruby_golem/candidate_01.png",
+        "assets/candidates/016/enemy_sapphire_moth/candidate_01.png",
+        "assets/candidates/016/enemy_emerald_spider/candidate_01.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_prism_tree",
+      "file": "assets/candidates/016/enemy_prism_tree/candidate_02.png",
+      "purpose": "虹晶樹 Boss 立绘",
+      "prompt": "Create 虹晶樹 boss: a huge tree made of seven-colored crystal, twisted trunk, branches terminating in prismatic crystal clusters, roots entangled around broken crystalline monsters. Internal light refracts into a rainbow. Equal imposing boss presence to image 1's Ignis; match its detailed painted fantasy strokes and rim lighting. Images 2, 3 and 4 are the ruby golem, sapphire moth and emerald spider: match their faceted crystal material exactly. Shared crystal material: sharp planar facets, translucent colored depth, painted internal refraction, crisp rim highlights, controlled glow. Whole tree canopy, trunk and roots visible, isolated creature sprite, no landscape. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: twisted massive trunk with clearly branch-tip elongated hexagonal crystal PRISMS instead of leaves, seven-color internal refraction, roots tightly entangling BROKEN monster fragments rather than whole living monsters. Grand ominous boss silhouette.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "assets/candidates/016/enemy_ruby_golem/candidate_01.png",
+        "assets/candidates/016/enemy_sapphire_moth/candidate_01.png",
+        "assets/candidates/016/enemy_emerald_spider/candidate_01.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "npc_mina",
+      "file": "assets/candidates/016/npc_mina/candidate_01.png",
+      "purpose": "見習い魔法使いミーナ立绘",
+      "prompt": "Create 見習い魔法使いミーナ: a 14–15-year-old girl apprentice mage, fully clothed in a modest long BLUE robe in the same blue family and tailoring tradition as image 1 npc_warlock; holding one book to her chest, curious yet slightly timid expression. Image 2 supplies youthful anime face rendering style only; depict a teenager, not a small child. Match references' detailed anime semi-realistic painted full-body standing sprite, clear contour, fabric strokes and upper-left lighting. Entire head, robe and boots visible. No text on the book. Output dimensions 1024x1536. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 01: quiet standing pose hugging a closed book, curious eyes and hesitant small smile, apprentice version of the blue robe, age-appropriate proportions and modest clothing.",
+      "reference_images": [
+        "client/images/npc_warlock.png",
+        "client/images/npc_sarah.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "npc_mina",
+      "file": "assets/candidates/016/npc_mina/candidate_02.png",
+      "purpose": "見習い魔法使いミーナ立绘",
+      "prompt": "Create 見習い魔法使いミーナ: a 14–15-year-old girl apprentice mage, fully clothed in a modest long BLUE robe in the same blue family and tailoring tradition as image 1 npc_warlock; holding one book to her chest, curious yet slightly timid expression. Image 2 supplies youthful anime face rendering style only; depict a teenager, not a small child. Match references' detailed anime semi-realistic painted full-body standing sprite, clear contour, fabric strokes and upper-left lighting. Entire head, robe and boots visible. No text on the book. Output dimensions 1024x1536. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: standing with slight three-quarter turn, hugging one closed book, curious gaze lifted slightly, shy restrained smile, simpler apprentice robe in the same deep blue and silver family. Full boots visible.",
+      "reference_images": [
+        "client/images/npc_warlock.png",
+        "client/images/npc_sarah.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "npc_gald",
+      "file": "assets/candidates/016/npc_gald/candidate_01.png",
+      "purpose": "行商人ガルド立绘",
+      "prompt": "Create 行商人ガルド: a burly sun-tanned man in his forties with a hearty friendly smile, carrying a LARGE traveling merchant's wooden pack frame on his back, various small pouches hanging at his waist. Image 1 npc_ian is style and clothing-world reference, not an identity edit. Match detailed anime semi-realistic painted full-body standing sprite, natural cloth/leather colors, clear contour, upper-left lighting and brushwork. Entire head, pack and boots visible. No mug, no lettering. Output dimensions 1024x1536. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 01: friendly sturdy standing pose with one hand on pack strap, large wooden merchant pack frame visible above shoulders, assorted waist pouches, natural earth-tone clothing.",
+      "reference_images": [
+        "client/images/npc_ian.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "npc_gald",
+      "file": "assets/candidates/016/npc_gald/candidate_02.png",
+      "purpose": "行商人ガルド立绘",
+      "prompt": "Create 行商人ガルド: a burly sun-tanned man in his forties with a hearty friendly smile, carrying a LARGE traveling merchant's wooden pack frame on his back, various small pouches hanging at his waist. Image 1 npc_ian is style and clothing-world reference, not an identity edit. Match detailed anime semi-realistic painted full-body standing sprite, natural cloth/leather colors, clear contour, upper-left lighting and brushwork. Entire head, pack and boots visible. No mug, no lettering. Output dimensions 1024x1536. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: a different individual from Ian while keeping the same art style: weathered middle-aged tanned burly merchant with hearty open smile, three-quarter stance under a large loaded wooden pack frame, clearly visible many small belt pouches.",
+      "reference_images": [
+        "client/images/npc_ian.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "bg_sealed_cave",
+      "file": "assets/candidates/016/bg_sealed_cave/candidate_01.png",
+      "purpose": "封印洞窟入口背景",
+      "prompt": "Create a background behind the spring in image 1: moss-covered rock wall carved with a HUGE magic circle shimmering in seven colors, weak heat glow coming through behind its seal. Preserve the same cool blue enchanted spring world and detailed painterly fantasy background style, layered foliage, wet rocks and water, atmospheric depth, soft directional light. Magic circle uses abstract geometry only, no letters or writing. Wide landscape, open foreground space for game sprites, no people or monsters. Output dimensions 1672x941. Opaque edge-to-edge landscape background. No text, letters, logos or watermark. Candidate 01: view facing the mossy sealed rock wall just beyond the spring, enormous seven-color geometric magic circle embedded in rock, faint warm light behind it, cool spring foreground.",
+      "reference_images": [
+        "client/images/bg_elf_spring.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "bg_sealed_cave",
+      "file": "assets/candidates/016/bg_sealed_cave/candidate_02.png",
+      "purpose": "封印洞窟入口背景",
+      "prompt": "Create a background behind the spring in image 1: moss-covered rock wall carved with a HUGE magic circle shimmering in seven colors, weak heat glow coming through behind its seal. Preserve the same cool blue enchanted spring world and detailed painterly fantasy background style, layered foliage, wet rocks and water, atmospheric depth, soft directional light. Magic circle uses abstract geometry only, no letters or writing. Wide landscape, open foreground space for game sprites, no people or monsters. Output dimensions 1672x941. Opaque edge-to-edge landscape background. No text, letters, logos or watermark. Candidate 02: closer approach behind the spring, mossy wall with large carved seven-color circle fully visible, restrained warm cracks behind the seal. Preserve cool forest light and usable dry foreground.",
+      "reference_images": [
+        "client/images/bg_elf_spring.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "bg_lava_cave",
+      "file": "assets/candidates/016/bg_lava_cave/candidate_01.png",
+      "purpose": "熔岩回廊背景",
+      "prompt": "Create a scorching rock corridor inside a lava cave, red glowing lava flows, visible heat distortion in the air. Match these references' detailed painterly fantasy background brushwork, atmospheric depth, grounded rock surfaces and foreground space for game sprites. Natural cave, no fortress furnishings. Wide landscape, strong red lava illumination with readable dark rock shapes, no people or monsters. Output dimensions 1672x941. Opaque edge-to-edge landscape background. No text, letters, logos or watermark. Candidate 01: deep natural rocky passage, red-orange molten streams along floor fissures, heat shimmer distorting the far corridor, dark stone foreground with room for sprites.",
+      "reference_images": [
+        "client/images/bg_goblin_fort.png",
+        "client/images/bg_elf_spring.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "bg_lava_cave",
+      "file": "assets/candidates/016/bg_lava_cave/candidate_02.png",
+      "purpose": "熔岩回廊背景",
+      "prompt": "Create a scorching rock corridor inside a lava cave, red glowing lava flows, visible heat distortion in the air. Match these references' detailed painterly fantasy background brushwork, atmospheric depth, grounded rock surfaces and foreground space for game sprites. Natural cave, no fortress furnishings. Wide landscape, strong red lava illumination with readable dark rock shapes, no people or monsters. Output dimensions 1672x941. Opaque edge-to-edge landscape background. No text, letters, logos or watermark. Candidate 02: narrower winding rock corridor with a molten red river along one side, shimmering heat haze at depth, visible dry rock path into distance and open dark foreground, natural irregular cave architecture.",
+      "reference_images": [
+        "client/images/bg_goblin_fort.png",
+        "client/images/bg_elf_spring.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "bg_crystal_cave",
+      "file": "assets/candidates/016/bg_crystal_cave/candidate_01.png",
+      "purpose": "水晶洞窟深处背景",
+      "prompt": "Create deep within a cavern whose walls are covered in RED, BLUE and GREEN crystals; far in the distance, only a faint silhouette of a tree glowing in seven colors. Match reference images' detailed painterly fantasy background brushwork, layered atmospheric perspective and open foreground space for game sprites. Sharp faceted crystals with colored translucent depth and controlled internal light. Tree distant and subtle. Wide landscape, no people. Output dimensions 1672x941. Opaque edge-to-edge landscape background. No text, letters, logos or watermark. Candidate 01: deep crystal cavern, red blue green clusters growing on walls, distant small hazy seven-color tree silhouette framed by cave passage, open rocky foreground.",
+      "reference_images": [
+        "client/images/bg_elf_spring.png",
+        "client/images/bg_goblin_fort.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "bg_crystal_cave",
+      "file": "assets/candidates/016/bg_crystal_cave/candidate_02.png",
+      "purpose": "水晶洞窟深处背景",
+      "prompt": "Create deep within a cavern whose walls are covered in RED, BLUE and GREEN crystals; far in the distance, only a faint silhouette of a tree glowing in seven colors. Match reference images' detailed painterly fantasy background brushwork, layered atmospheric perspective and open foreground space for game sprites. Sharp faceted crystals with colored translucent depth and controlled internal light. Tree distant and subtle. Wide landscape, no people. Output dimensions 1672x941. Opaque edge-to-edge landscape background. No text, letters, logos or watermark. Candidate 02: a dry rocky passage deep inside cavern, walls densely lined with red blue green crystals; far away a barely visible seven-color luminous tree silhouette through atmospheric haze, no foreground water pool, painterly open foreground.",
+      "reference_images": [
+        "client/images/bg_elf_spring.png",
+        "client/images/bg_goblin_fort.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_emerald_spider",
+      "file": "assets/candidates/016/enemy_emerald_spider/candidate_03.png",
+      "purpose": "翠晶の蜘蛛敌人立绘",
+      "prompt": "Use case: precise-object-edit. Edit this emerald crystal spider sprite. Preserve the emerald faceted material, poisonous green luminous abdomen, painted fantasy rendering and face. Correct its anatomy so it has EIGHT long walking legs: FOUR visibly separate legs extending from each side of the thorax, each with a distinct pointed foot. In particular add a clearly separated rear leg on each side, extending toward the upper left and upper right beyond existing legs. Use slightly elevated view to expose all eight attachment directions. The short mouth fangs do NOT count as legs. Keep all eight feet within 1254x1254 square with transparent margins. Actual transparent background, clean alpha, no ground or backdrop, no text, logo or watermark. Candidate 03 anatomy correction.",
+      "reference_images": [
+        "assets/candidates/016/enemy_emerald_spider/candidate_02.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_emerald_spider",
+      "file": "assets/candidates/016/enemy_emerald_spider/candidate_04.png",
+      "purpose": "翠晶の蜘蛛敌人立绘",
+      "prompt": "Create a NEW emerald crystal SPIDER game sprite, viewed from ABOVE with its back fully visible. Anatomically correct arachnid: small cephalothorax, big poisonous luminous green abdomen, and EIGHT walking legs clearly countable in silhouette, FOUR on left and FOUR on right. Fan four separate long angular legs out on EACH side with large transparent gaps: first pair points forward, second pair forward-diagonal, third pair sideways, fourth pair backward-diagonal. Each of eight legs ends in a separate green crystal point. Do not make an insect with six legs. Reference image is a ruby golem ONLY for finely painted faceted crystal texture; change material to emerald green. Detailed hand-painted fantasy illustration with strong rim highlights, translucent green crystal and internal toxic glow, same game art style. Whole spider and all eight feet fit with 5 percent transparent margins in 1254x1254. Actual clean transparent alpha, no background, no white fringe, no text, logos or watermark. Candidate 04.",
+      "reference_images": [
+        "assets/candidates/016/enemy_ruby_golem/candidate_01.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false
+    },
+    {
+      "id": "enemy_draco_human",
+      "file": "client/images/enemy_draco_human.png",
+      "purpose": "将军ドラコ战斗立绘",
+      "prompt": "Use case: identity-preserve. Edit the supplied npc_general.png into a battle sprite of the SAME general ドラコ. Preserve exactly his mature stern face, swept-back dark greying hair, short beard, silver plate armor with gold dragon ornament, red and gold cloak, body proportions and detailed anime semi-realistic painted style. Draw his sword ready to fight: blade ice-like pale cyan white, frost at his boots and cloak hem, faint white glow in both eyes, cold haughty expression. Full body head to boots and entire sword visible with small safe margins, 1024x1536 portrait. Match reference upper-left highlights and controlled saturation. Actual transparent background with clean alpha, no white/gray fringe, no backdrop, no text, letters, logo or watermark. Candidate 02: upright guarded battle stance, unsheathed sword lifted slightly across the body. Frost stays attached to boots and lower cloak; keep it subtle. Absolutely no ambient fog, no gray gradient, no colored background glow, no ground plane. Empty pixels outside the silhouette must have alpha zero, opaque armor must be opaque.",
+      "reference_images": [
+        "client/images/npc_general.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/enemy_draco_human/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "举剑迎战的动作更明确，霜光比候选 01 收敛，脸、发型、银金甲与红披风可对应参考。",
+      "style_review": "冰霜覆盖仍比文字描述偏多；剑形与部分甲片细节由生成器重绘。"
+    },
+    {
+      "id": "enemy_draco_dragon",
+      "file": "client/images/enemy_draco_dragon.png",
+      "purpose": "白竜ヴァイス敌人立绘",
+      "prompt": "Create 白竜ヴァイス, a white dragon equal to Ignis in bulk, imposing boss presence and anatomical complexity, his cold opposite. Image 1 is the dragon scale/style reference; image 2 controls the exact snow-white and ice-blue color family. Snow-white scales, translucent wing membranes with icy blue veins, ice crystal horns, blue luminous chest fissures corresponding to Ignis's lava chest, glowing icy blue eyes. Calm, oppressive expression, not roaring. Full body, both wings and entire tail visible. Detailed painted fantasy illustration, strong directional rim light and fine surface strokes like the references, not a 3D render. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: slight three-quarter turn, head held high, calm closed mouth, wings opened with all outer tips inside canvas, slightly restrained cyan glow.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/enemy_draco_dragon/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "闭口、抬头的姿态更冷静；胸口冰纹、冰晶角与冰蓝眼睛清楚，体量与イグニス对应。",
+      "style_review": "整体亮度高于イグニス，符合白竜与霜狼配色；翼膜的半透明主要以材质绘制表现。"
+    },
+    {
+      "id": "npc_ignis_calm",
+      "file": "client/images/npc_ignis_calm.png",
+      "purpose": "净化后的イグニス立绘",
+      "prompt": "Use case: identity-preserve. Edit image 1, enemy_ignis, to depict the SAME dragon after purification. Preserve his exact dark red scale armor, crown horns, face anatomy, spikes, wing membranes, body mass, and lava pattern layout. Only soften lava glow, change furious red eyes to peaceful gold, relax pose with wings half folded and head slightly lowered, mouth at ease. Keep full body and tail visible. Match reference detailed fantasy painting, brushwork, rim lighting and colors. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: head gently bowed, arms relaxed, wings visibly half folded close to shoulders, peaceful closed mouth, golden eyes, subdued warm lava seams. Preserve original orientation and anatomy.",
+      "reference_images": [
+        "client/images/enemy_ignis.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/npc_ignis_calm/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "低头、收翼与放松双臂更明显，金色眼睛和较柔和胸纹可辨。",
+      "style_review": "胸口仍有较亮熔光，是否足够柔和待设计验收。"
+    },
+    {
+      "id": "enemy_heat_lizard",
+      "file": "client/images/enemy_heat_lizard.png",
+      "purpose": "熱岩トカゲ敌人立绘",
+      "prompt": "Create 熱岩トカゲ: one large lizard, quadruped with a long tail, back covered in cooling lava armor shells, orange light escaping between dark cooling plates. Match image 1's painted fantasy style, flame orange-yellow color family, intricate strokes and rim lighting. Full body dynamic creature silhouette with all four legs and tail visible. No humanoid features. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: heavy low crawling lizard, mostly dark cooling rock armor, thin orange cracks only, avoid covering whole body in open flame. Four anatomically distinct legs, tail curving around rear. Match fine painterly strokes.",
+      "reference_images": [
+        "client/images/enemy_fire_elemental.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/enemy_heat_lizard/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "冷却岩壳占比更高，橙色裂隙与黑色甲壳区分更清楚。",
+      "style_review": "尾端仍有明火，熔光较强；远侧后腿受躯干遮挡。"
+    },
+    {
+      "id": "enemy_fire_wisp",
+      "file": "client/images/enemy_fire_wisp.png",
+      "purpose": "炎のウィスプ敌人立绘",
+      "prompt": "Create 炎のウィスプ: exactly ONE small nimble flame spirit with simple eyes, curling flame body and a few drifting sparks. Match image 1's intricate painted fire texture, brilliant orange-yellow palette and edge light, while being a small spirit rather than a humanoid giant. Full silhouette visible, compact and agile. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: one compact rounded dancing flame, asymmetrical curled top, two simple eyes, no mouth or limbs, small drifting sparks separated from body.",
+      "reference_images": [
+        "client/images/enemy_fire_elemental.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/enemy_fire_wisp/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "圆形简洁眼睛和卷曲小轮廓更符合灵动精灵，单只与火星均清楚。",
+      "style_review": "比火元素参考更可爱；实际小型显示比例由后续接线确定。"
+    },
+    {
+      "id": "enemy_ruby_golem",
+      "file": "client/images/enemy_ruby_golem.png",
+      "purpose": "紅晶ゴーレム敌人立绘",
+      "prompt": "Create 紅晶ゴーレム: a massive broad humanoid golem assembled from RED crystal blocks, internal molten glow visible at joints. Image 1 supplies detailed fantasy painted finish and imposing creature lighting; image 2 supplies faceted translucent crystalline material only. Establish shared crystal material: sharp planar facets, translucent colored depth, painted internal refraction, crisp rim highlights, controlled glow, not plastic or smooth glass. Full body dramatic pose with both hands and feet visible. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 01: broad planted stance, massive block shoulders and fists, ruby-red faceted crystal blocks with molten orange joint light, no dragon anatomy.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/enemy_ruby_golem/candidate_01.png",
+      "selection_status": "provisional",
+      "selection_reason": "魁梧的块状肩、拳、脚和稳定姿态更符合巨人，关节熔光清楚。",
+      "style_review": "红色晶面饱和度较高，部分胸纹受イグニス参考影响。"
+    },
+    {
+      "id": "enemy_sapphire_moth",
+      "file": "client/images/enemy_sapphire_moth.png",
+      "purpose": "蒼晶の蝶敌人立绘",
+      "prompt": "Create 蒼晶の蝶: one butterfly/moth creature roughly half a human's body length, wings made of thin BLUE crystal sheets, shedding sparse cold luminous scale powder. No human scale figure. Image 1 controls detailed fantasy painted finish, blue crystalline facets and cold rim highlights. Shared crystal material: sharp planar facets, translucent colored depth, painted internal refraction, crisp rim highlights, controlled glow, not plastic or smooth glass. Entire body, antennae and wings visible. Image 2 is the shared crystal material reference; match its facet rendering but use blue thin sheets. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 01: open wings seen almost frontally, delicate thin sapphire crystal sheets, pale blue falling scale particles, full antennae and wing edges inside frame.",
+      "reference_images": [
+        "client/images/enemy_frost_dire_wolf.png",
+        "assets/candidates/016/enemy_ruby_golem/candidate_01.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/enemy_sapphire_moth/candidate_01.png",
+      "selection_status": "provisional",
+      "selection_reason": "正面展翼使薄片蓝晶与完整虫体更易读，轮廓比候选 02 更均衡。",
+      "style_review": "冷光鳞粉偏向碎晶颗粒；半人体长需后续显示比例体现。"
+    },
+    {
+      "id": "enemy_emerald_spider",
+      "file": "client/images/enemy_emerald_spider.png",
+      "purpose": "翠晶の蜘蛛敌人立绘",
+      "prompt": "Create a NEW emerald crystal SPIDER game sprite, viewed from ABOVE with its back fully visible. Anatomically correct arachnid: small cephalothorax, big poisonous luminous green abdomen, and EIGHT walking legs clearly countable in silhouette, FOUR on left and FOUR on right. Fan four separate long angular legs out on EACH side with large transparent gaps: first pair points forward, second pair forward-diagonal, third pair sideways, fourth pair backward-diagonal. Each of eight legs ends in a separate green crystal point. Do not make an insect with six legs. Reference image is a ruby golem ONLY for finely painted faceted crystal texture; change material to emerald green. Detailed hand-painted fantasy illustration with strong rim highlights, translucent green crystal and internal toxic glow, same game art style. Whole spider and all eight feet fit with 5 percent transparent margins in 1254x1254. Actual clean transparent alpha, no background, no white fringe, no text, logos or watermark. Candidate 04.",
+      "reference_images": [
+        "assets/candidates/016/enemy_ruby_golem/candidate_01.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/enemy_emerald_spider/candidate_04.png",
+      "selection_status": "provisional",
+      "selection_reason": "前三张步足有缺失或重叠歧义；第四张八足清楚，腹部绿光与晶腿完整。",
+      "style_review": "俯视角与多数敌人的正面或三分之四视角不同，待设计确认。"
+    },
+    {
+      "id": "enemy_prism_tree",
+      "file": "client/images/enemy_prism_tree.png",
+      "purpose": "虹晶樹 Boss 立绘",
+      "prompt": "Create 虹晶樹 boss: a huge tree made of seven-colored crystal, twisted trunk, branches terminating in prismatic crystal clusters, roots entangled around broken crystalline monsters. Internal light refracts into a rainbow. Equal imposing boss presence to image 1's Ignis; match its detailed painted fantasy strokes and rim lighting. Images 2, 3 and 4 are the ruby golem, sapphire moth and emerald spider: match their faceted crystal material exactly. Shared crystal material: sharp planar facets, translucent colored depth, painted internal refraction, crisp rim highlights, controlled glow. Whole tree canopy, trunk and roots visible, isolated creature sprite, no landscape. Output dimensions 1254x1254. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: twisted massive trunk with clearly branch-tip elongated hexagonal crystal PRISMS instead of leaves, seven-color internal refraction, roots tightly entangling BROKEN monster fragments rather than whole living monsters. Grand ominous boss silhouette.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "assets/candidates/016/enemy_ruby_golem/candidate_01.png",
+        "assets/candidates/016/enemy_sapphire_moth/candidate_01.png",
+        "assets/candidates/016/enemy_emerald_spider/candidate_01.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/enemy_prism_tree/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "枝端棱柱比候选 01 更清楚，扭曲树干、七色折射和根部缠绕残骸同时可辨。",
+      "style_review": "彩色晶面较密、饱和度高；残骸仍有可辨头部，破碎程度待设计验收。"
+    },
+    {
+      "id": "npc_mina",
+      "file": "client/images/npc_mina.png",
+      "purpose": "見習い魔法使いミーナ立绘",
+      "prompt": "Create 見習い魔法使いミーナ: a 14–15-year-old girl apprentice mage, fully clothed in a modest long BLUE robe in the same blue family and tailoring tradition as image 1 npc_warlock; holding one book to her chest, curious yet slightly timid expression. Image 2 supplies youthful anime face rendering style only; depict a teenager, not a small child. Match references' detailed anime semi-realistic painted full-body standing sprite, clear contour, fabric strokes and upper-left lighting. Entire head, robe and boots visible. No text on the book. Output dimensions 1024x1536. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 01: quiet standing pose hugging a closed book, curious eyes and hesitant small smile, apprentice version of the blue robe, age-appropriate proportions and modest clothing.",
+      "reference_images": [
+        "client/images/npc_warlock.png",
+        "client/images/npc_sarah.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/npc_mina/candidate_01.png",
+      "selection_status": "provisional",
+      "selection_reason": "相对候选 02，年龄感较成熟，抱书与好奇而怯生的表情更贴近十四五岁；蓝袍材质对应法师。",
+      "style_review": "蓝袍装饰较华丽；金发辫与书封花纹未在 spec 定稿，外观接近サラ的同系风格。"
+    },
+    {
+      "id": "npc_gald",
+      "file": "client/images/npc_gald.png",
+      "purpose": "行商人ガルド立绘",
+      "prompt": "Create 行商人ガルド: a burly sun-tanned man in his forties with a hearty friendly smile, carrying a LARGE traveling merchant's wooden pack frame on his back, various small pouches hanging at his waist. Image 1 npc_ian is style and clothing-world reference, not an identity edit. Match detailed anime semi-realistic painted full-body standing sprite, natural cloth/leather colors, clear contour, upper-left lighting and brushwork. Entire head, pack and boots visible. No mug, no lettering. Output dimensions 1024x1536. Full-body isolated sprite, small safe margins. Real transparent alpha background, no ground plane or ambient fog. Clean antialiased silhouette, no white or gray matte fringe. No text, letters, logos or watermark. Candidate 02: a different individual from Ian while keeping the same art style: weathered middle-aged tanned burly merchant with hearty open smile, three-quarter stance under a large loaded wooden pack frame, clearly visible many small belt pouches.",
+      "reference_images": [
+        "client/images/npc_ian.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/npc_gald/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "体格更壮、肤色较深、笑容更爽朗，背架和腰袋完整；与イアン的发型及脸部有区分。",
+      "style_review": "服装仍与イアン接近；发型、胡须、货物细节为生成候选，需设计确认。"
+    },
+    {
+      "id": "bg_sealed_cave",
+      "file": "client/images/bg_sealed_cave.png",
+      "purpose": "封印洞窟入口背景",
+      "prompt": "Create a background behind the spring in image 1: moss-covered rock wall carved with a HUGE magic circle shimmering in seven colors, weak heat glow coming through behind its seal. Preserve the same cool blue enchanted spring world and detailed painterly fantasy background style, layered foliage, wet rocks and water, atmospheric depth, soft directional light. Magic circle uses abstract geometry only, no letters or writing. Wide landscape, open foreground space for game sprites, no people or monsters. Output dimensions 1672x941. Opaque edge-to-edge landscape background. No text, letters, logos or watermark. Candidate 02: closer approach behind the spring, mossy wall with large carved seven-color circle fully visible, restrained warm cracks behind the seal. Preserve cool forest light and usable dry foreground.",
+      "reference_images": [
+        "client/images/bg_elf_spring.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/bg_sealed_cave/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "魔法阵完整置于岩壁，七色线条与背后暖色裂隙清楚，泉水环境和前景延续参考。",
+      "style_review": "魔法阵亮度略高，具体几何纹样为生成候选；未绘制文字。"
+    },
+    {
+      "id": "bg_lava_cave",
+      "file": "client/images/bg_lava_cave.png",
+      "purpose": "熔岩回廊背景",
+      "prompt": "Create a scorching rock corridor inside a lava cave, red glowing lava flows, visible heat distortion in the air. Match these references' detailed painterly fantasy background brushwork, atmospheric depth, grounded rock surfaces and foreground space for game sprites. Natural cave, no fortress furnishings. Wide landscape, strong red lava illumination with readable dark rock shapes, no people or monsters. Output dimensions 1672x941. Opaque edge-to-edge landscape background. No text, letters, logos or watermark. Candidate 02: narrower winding rock corridor with a molten red river along one side, shimmering heat haze at depth, visible dry rock path into distance and open dark foreground, natural irregular cave architecture.",
+      "reference_images": [
+        "client/images/bg_goblin_fort.png",
+        "client/images/bg_elf_spring.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/bg_lava_cave/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "弯曲岩石通路和旁侧熔岩河更符合回廊，前景可用空间充足。",
+      "style_review": "熔岩自发光主导，光源方向与原背景不同；热扭曲较含蓄。"
+    },
+    {
+      "id": "bg_crystal_cave",
+      "file": "client/images/bg_crystal_cave.png",
+      "purpose": "水晶洞窟深处背景",
+      "prompt": "Create deep within a cavern whose walls are covered in RED, BLUE and GREEN crystals; far in the distance, only a faint silhouette of a tree glowing in seven colors. Match reference images' detailed painterly fantasy background brushwork, layered atmospheric perspective and open foreground space for game sprites. Sharp faceted crystals with colored translucent depth and controlled internal light. Tree distant and subtle. Wide landscape, no people. Output dimensions 1672x941. Opaque edge-to-edge landscape background. No text, letters, logos or watermark. Candidate 01: deep crystal cavern, red blue green clusters growing on walls, distant small hazy seven-color tree silhouette framed by cave passage, open rocky foreground.",
+      "reference_images": [
+        "client/images/bg_elf_spring.png",
+        "client/images/bg_goblin_fort.png"
+      ],
+      "generation_date": "2026-10-12",
+      "approved": false,
+      "source_candidate": "assets/candidates/016/bg_crystal_cave/candidate_01.png",
+      "selection_status": "provisional",
+      "selection_reason": "远处树较小、较朦胧，更接近隐约可见；红蓝绿晶体与洞窟纵深均明确。",
+      "style_review": "沿用泉参考的水面与瀑布元素；spec 未指定水体，列为待确认。"
+    },
+    {
+      "task": "020",
+      "id": "enemy_ash_wraith",
+      "file": "assets/candidates/020/enemy_ash_wraith/candidate_01.png",
+      "purpose": "煤の亡霊敌人立绘",
+      "prompt": "Create 煤の亡霊: a humanoid resentful spirit made of coal ash and embers. Face is an EMPTY hollow void, lower body dissolves into smoke, scattered DARK RED embers inside its ashen body. Use image 1 for spectral painted detail only, image 2 for elemental brushwork only. No armor, staff, horn crown or cyan magic copied from the reference. Charcoal ash dominates, not bright yellow flames. Square 1254x1254. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 01: Arms reaching outward, upright silhouette, lower body trailing in a loose taper of smoke.",
+      "reference_images": [
+        "client/images/enemy_zebok.png",
+        "client/images/enemy_fire_elemental.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "enemy_ash_wraith",
+      "file": "assets/candidates/020/enemy_ash_wraith/candidate_02.png",
+      "purpose": "煤の亡霊敌人立绘",
+      "prompt": "Create 煤の亡霊: a humanoid resentful spirit made of coal ash and embers. Face is an EMPTY hollow void, lower body dissolves into smoke, scattered DARK RED embers inside its ashen body. Use image 1 for spectral painted detail only, image 2 for elemental brushwork only. No armor, staff, horn crown or cyan magic copied from the reference. Charcoal ash dominates, not bright yellow flames. Square 1254x1254. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: Slight three-quarter turn, one arm reaching forward, ash folds and smoke curling close to the lower silhouette. Keep the full smoke taper inside canvas with generous empty margins; reduce ember brightness to dim dark red pinpoints.",
+      "reference_images": [
+        "client/images/enemy_zebok.png",
+        "client/images/enemy_fire_elemental.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "enemy_ash_wraith",
+      "file": "client/images/enemy_ash_wraith.png",
+      "purpose": "煤の亡霊敌人立绘",
+      "prompt": "Create 煤の亡霊: a humanoid resentful spirit made of coal ash and embers. Face is an EMPTY hollow void, lower body dissolves into smoke, scattered DARK RED embers inside its ashen body. Use image 1 for spectral painted detail only, image 2 for elemental brushwork only. No armor, staff, horn crown or cyan magic copied from the reference. Charcoal ash dominates, not bright yellow flames. Square 1254x1254. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: Slight three-quarter turn, one arm reaching forward, ash folds and smoke curling close to the lower silhouette. Keep the full smoke taper inside canvas with generous empty margins; reduce ember brightness to dim dark red pinpoints.",
+      "reference_images": [
+        "client/images/enemy_zebok.png",
+        "client/images/enemy_fire_elemental.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/enemy_ash_wraith/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "火星较候选 01 收敛，空洞面部和完整烟尾更明确，煤灰占主体。",
+      "style_review": "灰烬卷曲笔触比ゼボク的衣料更密，局部火星仍偏橙红；整体暗色与火元素的厚涂细节相容。"
+    },
+    {
+      "task": "020",
+      "id": "enemy_lava_drake",
+      "file": "assets/candidates/020/enemy_lava_drake/candidate_01.png",
+      "purpose": "溶岩ドレイク敌人立绘",
+      "prompt": "Create 溶岩ドレイク, a horse-sized lesser beast of イグニス. Image 1 defines its family: same red-black overlapping lava scales, swept horns, spiny head profile and red wing membranes with glowing molten veins. Image 2 is only a painted material reference. This is a smaller animalistic quadruped with FOUR separate walking legs PLUS TWO wings attached to the back, six appendages total, long tail, low beastlike body. All four feet clearly separated and visible, no biped stance. Square 1254x1254. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 01: Three-quarter side view, tense prowling stance, wings partly spread and lifted clear of the four legs.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "client/images/enemy_heat_lizard.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "enemy_lava_drake",
+      "file": "assets/candidates/020/enemy_lava_drake/candidate_02.png",
+      "purpose": "溶岩ドレイク敌人立绘",
+      "prompt": "Create 溶岩ドレイク, a horse-sized lesser beast of イグニス. Image 1 defines its family: same red-black overlapping lava scales, swept horns, spiny head profile and red wing membranes with glowing molten veins. Image 2 is only a painted material reference. This is a smaller animalistic quadruped with FOUR separate walking legs PLUS TWO wings attached to the back, six appendages total, long tail, low beastlike body. All four feet clearly separated and visible, no biped stance. Square 1254x1254. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: Side-biased three-quarter view, alert low head, wings raised in a narrower arch, four feet staggered clearly.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "client/images/enemy_heat_lizard.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "enemy_lava_drake",
+      "file": "client/images/enemy_lava_drake.png",
+      "purpose": "溶岩ドレイク敌人立绘",
+      "prompt": "Create 溶岩ドレイク, a horse-sized lesser beast of イグニス. Image 1 defines its family: same red-black overlapping lava scales, swept horns, spiny head profile and red wing membranes with glowing molten veins. Image 2 is only a painted material reference. This is a smaller animalistic quadruped with FOUR separate walking legs PLUS TWO wings attached to the back, six appendages total, long tail, low beastlike body. All four feet clearly separated and visible, no biped stance. Square 1254x1254. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 01: Three-quarter side view, tense prowling stance, wings partly spread and lifted clear of the four legs.",
+      "reference_images": [
+        "client/images/enemy_ignis.png",
+        "client/images/enemy_heat_lizard.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/enemy_lava_drake/candidate_01.png",
+      "selection_status": "provisional",
+      "selection_reason": "四只足爪更分开，前倾姿态更像野兽；角、头部和熔岩翼膜可辨识为イグニス同族。",
+      "style_review": "熔岩裂纹比イグニス更密亮，右侧翼尖及尾部距画布边缘较近；相对马的体型需显示比例体现。"
+    },
+    {
+      "task": "020",
+      "id": "enemy_xanxus_phantom",
+      "file": "assets/candidates/020/enemy_xanxus_phantom/candidate_01.png",
+      "purpose": "Xanxusの分身敌人立绘",
+      "prompt": "Use case: identity-preserve. EDIT the supplied npc_xanxus.png into Xanxusの分身, the SAME burning skeletal mage. Preserve exact skull shape and grin, red glowing eyes, crimson high-collar robe, gold trim, red chest and waist gems, spiked shoulders, staff on image-left, casting hand on image-right, full-body pose and proportions. Change his ENTIRE body, robe and staff into translucent flame substance, partially transparent throughout, with wavering contours. Preserve recognizable red robe design and skeletal face instead of a generic fire elemental. Flame highlights can be stronger, but large interior areas of skull, torso, robe and limbs must carry genuine partial alpha. 1024x1536 portrait. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 01: Moderately translucent crimson flame apparition, fine wavering tongues at existing silhouette edges, clear skull and robe ornaments.",
+      "reference_images": [
+        "client/images/npc_xanxus.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "enemy_xanxus_phantom",
+      "file": "assets/candidates/020/enemy_xanxus_phantom/candidate_02.png",
+      "purpose": "Xanxusの分身敌人立绘",
+      "prompt": "Use case: identity-preserve. EDIT the supplied npc_xanxus.png into Xanxusの分身, the SAME burning skeletal mage. Preserve exact skull shape and grin, red glowing eyes, crimson high-collar robe, gold trim, red chest and waist gems, spiked shoulders, staff on image-left, casting hand on image-right, full-body pose and proportions. Change his ENTIRE body, robe and staff into translucent flame substance, partially transparent throughout, with wavering contours. Preserve recognizable red robe design and skeletal face instead of a generic fire elemental. Flame highlights can be stronger, but large interior areas of skull, torso, robe and limbs must carry genuine partial alpha. 1024x1536 portrait. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: More visibly ethereal flickering apparition, wavering translucent crimson robes and staff, identity details still readable. Strictly isolated cutout. No orange atmospheric aura, no glow filling empty space, no background gradient. Background empty alpha=0. Translucency must be in the mage itself, not simulated by painting him over an orange backdrop.",
+      "reference_images": [
+        "client/images/npc_xanxus.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "enemy_xanxus_phantom",
+      "file": "client/images/enemy_xanxus_phantom.png",
+      "purpose": "Xanxusの分身敌人立绘",
+      "prompt": "Use case: identity-preserve. EDIT the supplied npc_xanxus.png into Xanxusの分身, the SAME burning skeletal mage. Preserve exact skull shape and grin, red glowing eyes, crimson high-collar robe, gold trim, red chest and waist gems, spiked shoulders, staff on image-left, casting hand on image-right, full-body pose and proportions. Change his ENTIRE body, robe and staff into translucent flame substance, partially transparent throughout, with wavering contours. Preserve recognizable red robe design and skeletal face instead of a generic fire elemental. Flame highlights can be stronger, but large interior areas of skull, torso, robe and limbs must carry genuine partial alpha. 1024x1536 portrait. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: More visibly ethereal flickering apparition, wavering translucent crimson robes and staff, identity details still readable. Strictly isolated cutout. No orange atmospheric aura, no glow filling empty space, no background gradient. Background empty alpha=0. Translucency must be in the mage itself, not simulated by painting him over an orange backdrop.",
+      "reference_images": [
+        "client/images/npc_xanxus.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/enemy_xanxus_phantom/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "胸腹、衣摆与肢体出现更多透光区域，保持骷髅面部、赤红高领法衣、宝石和法杖的角色辨识度。",
+      "style_review": "火焰亮度与饱和度明显高于原角色；头骨及部分金饰仍较实，半透明程度需设计验收。"
+    },
+    {
+      "task": "020",
+      "id": "npc_riku",
+      "file": "assets/candidates/020/npc_riku/candidate_01.png",
+      "purpose": "長老の孫リク NPC 立绘",
+      "prompt": "Create 長老の孫リク, a seven- or eight-year-old BOY, soot smudges on his face and scorch marks on clothing. Both hands tightly clasp ONE small protective amulet near his chest. Expression shaken and frightened but resilient. Image 1 defines village clothing: muted olive green and ivory layers, simple botanical border, cloth sash and brown boots, adapted to a village child. Image 2 only guides youthful anime semi-realistic painted face and fabric rendering; do not copy her robe, book or braids. Child proportions, full body head to boots. 1024x1536 portrait. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 01: Front three-quarter stance, shoulders drawn in slightly, steady brave gaze despite worried eyebrows, small amulet visible between clasped hands.",
+      "reference_images": [
+        "client/images/npc_elder.png",
+        "client/images/npc_mina.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "npc_riku",
+      "file": "assets/candidates/020/npc_riku/candidate_02.png",
+      "purpose": "長老の孫リク NPC 立绘",
+      "prompt": "Create 長老の孫リク, a seven- or eight-year-old BOY, soot smudges on his face and scorch marks on clothing. Both hands tightly clasp ONE small protective amulet near his chest. Expression shaken and frightened but resilient. Image 1 defines village clothing: muted olive green and ivory layers, simple botanical border, cloth sash and brown boots, adapted to a village child. Image 2 only guides youthful anime semi-realistic painted face and fabric rendering; do not copy her robe, book or braids. Child proportions, full body head to boots. 1024x1536 portrait. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: Nearly frontal stance, feet close together, hands clutching the small amulet, tense mouth and determined eyes. Clothing has limited scorched edges and soot marks, not extensive ragged holes. Keep resilient determination as visible as fear.",
+      "reference_images": [
+        "client/images/npc_elder.png",
+        "client/images/npc_mina.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "npc_riku",
+      "file": "client/images/npc_riku.png",
+      "purpose": "長老の孫リク NPC 立绘",
+      "prompt": "Create 長老の孫リク, a seven- or eight-year-old BOY, soot smudges on his face and scorch marks on clothing. Both hands tightly clasp ONE small protective amulet near his chest. Expression shaken and frightened but resilient. Image 1 defines village clothing: muted olive green and ivory layers, simple botanical border, cloth sash and brown boots, adapted to a village child. Image 2 only guides youthful anime semi-realistic painted face and fabric rendering; do not copy her robe, book or braids. Child proportions, full body head to boots. 1024x1536 portrait. Detailed painterly fantasy illustration matching the supplied references, fine brushwork, dramatic directional rim light, controlled saturation. Full body and all extremities visible with safe margins. Genuine transparent background: alpha zero outside the subject, clean antialiased edges, no white or gray matte, no ground plane or backdrop glow. No text, letters, logo or watermark. Candidate 02: Nearly frontal stance, feet close together, hands clutching the small amulet, tense mouth and determined eyes. Clothing has limited scorched edges and soot marks, not extensive ragged holes. Keep resilient determination as visible as fear.",
+      "reference_images": [
+        "client/images/npc_elder.png",
+        "client/images/npc_mina.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/npc_riku/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "双手握住护符、紧张而咬紧牙关的表情更明确；相比候选 01 衣服破洞收敛，绿白衣料对应长老。",
+      "style_review": "边缘暖光较长老明显，衣摆局部仍有余烬亮点；金色短发、护符纹样和腰包由生成器沿参考延伸。"
+    },
+    {
+      "task": "020",
+      "id": "bg_lava_bridge",
+      "file": "assets/candidates/020/bg_lava_bridge/candidate_01.png",
+      "purpose": "熔岩河吊桥背景",
+      "prompt": "Create a scene in the same volcanic valley as image 1. A boiling lava river crossed by ONE solitary dilapidated rope suspension bridge, charred wooden planks and visibly fraying nearly broken ropes, hot wind distorting the air. Dark jagged rocks, lava-red light and smoky crimson sky from reference. Bridge remains a recognizable crossing spanning both banks. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 01: View from rocky approach toward the bridge leading diagonally across the river, foreground shore visible.",
+      "reference_images": [
+        "client/images/bg_dragon_valley.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_lava_bridge",
+      "file": "assets/candidates/020/bg_lava_bridge/candidate_02.png",
+      "purpose": "熔岩河吊桥背景",
+      "prompt": "Create a scene in the same volcanic valley as image 1. A boiling lava river crossed by ONE solitary dilapidated rope suspension bridge, charred wooden planks and visibly fraying nearly broken ropes, hot wind distorting the air. Dark jagged rocks, lava-red light and smoky crimson sky from reference. Bridge remains a recognizable crossing spanning both banks. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: More frontal approach with the bridge receding across the lava river, broken plank gaps and frayed ropes clearly readable.",
+      "reference_images": [
+        "client/images/bg_dragon_valley.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_lava_bridge",
+      "file": "client/images/bg_lava_bridge.png",
+      "purpose": "熔岩河吊桥背景",
+      "prompt": "Create a scene in the same volcanic valley as image 1. A boiling lava river crossed by ONE solitary dilapidated rope suspension bridge, charred wooden planks and visibly fraying nearly broken ropes, hot wind distorting the air. Dark jagged rocks, lava-red light and smoky crimson sky from reference. Bridge remains a recognizable crossing spanning both banks. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 01: View from rocky approach toward the bridge leading diagonally across the river, foreground shore visible.",
+      "reference_images": [
+        "client/images/bg_dragon_valley.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/bg_lava_bridge/candidate_01.png",
+      "selection_status": "provisional",
+      "selection_reason": "两岸桥头及双侧绳索更容易辨认，斜向吊桥形成明确路线，焦黑木板与破绳均可见。",
+      "style_review": "岩石与天空和参考接近，熔岩亮度更高；热风扭曲较含蓄，主要表现为热雾，桥的破损程度待验收。"
+    },
+    {
+      "task": "020",
+      "id": "bg_dragon_nest",
+      "file": "assets/candidates/020/bg_dragon_nest/candidate_01.png",
+      "purpose": "竜の巣入口背景",
+      "prompt": "Create the entrance to 竜の巣 in the volcanic valley of image 1: a gigantic natural cavern entrance, scorching wind, scattered old bones and heat-melted deformed treasure around its rocky threshold; deep inside glows red. Keep dark jagged volcanic stone and lava-red atmosphere matching reference. Treasure should look fused and warped by heat. No dragon visible. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 01: Broad cave mouth seen from outside at ground level, sparse bones and distorted treasure along its edges, ominous red depths.",
+      "reference_images": [
+        "client/images/bg_dragon_valley.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_dragon_nest",
+      "file": "assets/candidates/020/bg_dragon_nest/candidate_02.png",
+      "purpose": "竜の巣入口背景",
+      "prompt": "Create the entrance to 竜の巣 in the volcanic valley of image 1: a gigantic natural cavern entrance, scorching wind, scattered old bones and heat-melted deformed treasure around its rocky threshold; deep inside glows red. Keep dark jagged volcanic stone and lava-red atmosphere matching reference. Treasure should look fused and warped by heat. No dragon visible. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: Slight oblique approach to enormous cavern opening, red inner glow through heat shimmer, bones and warped metal treasures clustered by the threshold.",
+      "reference_images": [
+        "client/images/bg_dragon_valley.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_dragon_nest",
+      "file": "client/images/bg_dragon_nest.png",
+      "purpose": "竜の巣入口背景",
+      "prompt": "Create the entrance to 竜の巣 in the volcanic valley of image 1: a gigantic natural cavern entrance, scorching wind, scattered old bones and heat-melted deformed treasure around its rocky threshold; deep inside glows red. Keep dark jagged volcanic stone and lava-red atmosphere matching reference. Treasure should look fused and warped by heat. No dragon visible. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: Slight oblique approach to enormous cavern opening, red inner glow through heat shimmer, bones and warped metal treasures clustered by the threshold.",
+      "reference_images": [
+        "client/images/bg_dragon_valley.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/bg_dragon_nest/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "巨洞与纵深红光更突出，骨骸和熔化变形的金属财宝集中在入口两侧，前景留白充分。",
+      "style_review": "延续参考火山岩与红天，热光更强；大型兽骨、武器与金属器物具体形态属于生成细节。"
+    },
+    {
+      "task": "020",
+      "id": "bg_burning_house",
+      "file": "assets/candidates/020/bg_burning_house/candidate_01.png",
+      "purpose": "燃烧民家正面背景",
+      "prompt": "Create the FRONT of one burning village house from the same village as image 1. Match its timber-frame upper walls, stone base, steep tiled roof and firelit dark atmosphere. Entrance is visibly BLOCKED by a fallen burning roof beam across the doorway; flames glow through windows. Maintain front facade as the clear subject, ground foreground visible. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 01: Straight frontal view, full doorway and burning obstructing beam clear, smoke rolling from roof.",
+      "reference_images": [
+        "client/images/bg_burning_village.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_burning_house",
+      "file": "assets/candidates/020/bg_burning_house/candidate_02.png",
+      "purpose": "燃烧民家正面背景",
+      "prompt": "Create the FRONT of one burning village house from the same village as image 1. Match its timber-frame upper walls, stone base, steep tiled roof and firelit dark atmosphere. Entrance is visibly BLOCKED by a fallen burning roof beam across the doorway; flames glow through windows. Maintain front facade as the clear subject, ground foreground visible. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: Slightly off-center frontal view, charred beam lying diagonally across the blocked entrance, firelit windows and damaged roof readable.",
+      "reference_images": [
+        "client/images/bg_burning_village.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_burning_house",
+      "file": "client/images/bg_burning_house.png",
+      "purpose": "燃烧民家正面背景",
+      "prompt": "Create the FRONT of one burning village house from the same village as image 1. Match its timber-frame upper walls, stone base, steep tiled roof and firelit dark atmosphere. Entrance is visibly BLOCKED by a fallen burning roof beam across the doorway; flames glow through windows. Maintain front facade as the clear subject, ground foreground visible. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: Slightly off-center frontal view, charred beam lying diagonally across the blocked entrance, firelit windows and damaged roof readable.",
+      "reference_images": [
+        "client/images/bg_burning_village.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/bg_burning_house/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "房梁与碎木明确封堵入口，窗内火光和民家正面清楚，建筑材料与村庄参考一致。",
+      "style_review": "房屋的具体山墙和窗户布局为新构图；火光较参考近景更集中，木梁数量多于单根。"
+    },
+    {
+      "task": "020",
+      "id": "bg_hot_spring",
+      "file": "assets/candidates/020/bg_hot_spring/candidate_01.png",
+      "purpose": "地底小温泉背景",
+      "prompt": "Create a SMALL underground hot spring: natural rocks ring a gently steaming warm pool, luminous moss grows on cavern walls. Mood softer and calmer than the lava cave. Image 1 guides the same natural volcanic cavern rock forms and painted texture; image 2 guides softly luminous underground atmosphere and water rendering only. Replace dramatic lava lighting with subdued moss glow and warm steam. No giant crystals, glowing tree or architecture. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 01: Intimate pool at midground, low rock rim, soft steam drifting upward, small luminous moss patches on enclosing walls.",
+      "reference_images": [
+        "client/images/bg_lava_cave.png",
+        "client/images/bg_crystal_cave.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_hot_spring",
+      "file": "assets/candidates/020/bg_hot_spring/candidate_02.png",
+      "purpose": "地底小温泉背景",
+      "prompt": "Create a SMALL underground hot spring: natural rocks ring a gently steaming warm pool, luminous moss grows on cavern walls. Mood softer and calmer than the lava cave. Image 1 guides the same natural volcanic cavern rock forms and painted texture; image 2 guides softly luminous underground atmosphere and water rendering only. Replace dramatic lava lighting with subdued moss glow and warm steam. No giant crystals, glowing tree or architecture. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: Slightly angled view into a small oval rock-ringed pool, gentle layered steam and restrained glowing wall moss, quiet rocky foreground. The luminous moss must read as soft organic green moss clumps coating rocks, not sharp crystal clusters. Pool compact and secluded, steam clearly rising off water.",
+      "reference_images": [
+        "client/images/bg_lava_cave.png",
+        "client/images/bg_crystal_cave.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false
+    },
+    {
+      "task": "020",
+      "id": "bg_hot_spring",
+      "file": "client/images/bg_hot_spring.png",
+      "purpose": "地底小温泉背景",
+      "prompt": "Create a SMALL underground hot spring: natural rocks ring a gently steaming warm pool, luminous moss grows on cavern walls. Mood softer and calmer than the lava cave. Image 1 guides the same natural volcanic cavern rock forms and painted texture; image 2 guides softly luminous underground atmosphere and water rendering only. Replace dramatic lava lighting with subdued moss glow and warm steam. No giant crystals, glowing tree or architecture. Detailed painterly fantasy visual-novel background matching the references' brushwork, rock textures and atmospheric perspective. Wide landscape 1672x941, opaque edge-to-edge. Readable open foreground for character sprites. No characters, creatures, text, letters, logo or watermark. Candidate 02: Slightly angled view into a small oval rock-ringed pool, gentle layered steam and restrained glowing wall moss, quiet rocky foreground. The luminous moss must read as soft organic green moss clumps coating rocks, not sharp crystal clusters. Pool compact and secluded, steam clearly rising off water.",
+      "reference_images": [
+        "client/images/bg_lava_cave.png",
+        "client/images/bg_crystal_cave.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "source_candidate": "assets/candidates/020/bg_hot_spring/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "苔藓呈绿色有机团簇，温泉池更紧凑，蒸汽和柔和光照清楚，岩石笔触延续熔岩洞窟。",
+      "style_review": "相较熔岩参考大幅降低红色饱和度；池缘暖光与小段进水沿用参考水体表现，池缘局部仍较明亮。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_sentinel",
+      "file": "assets/candidates/024/enemy_ice_sentinel/candidate_01.png",
+      "purpose": "氷の番兵",
+      "prompt": "Use case: stylized-concept. Create 氷の番兵, a heavy full-body guard whose entire plate armor and war hammer are made of ice. Empty helmet contains only icy blue cold light, no human face. Massive weighty stance. Image 1 and image 2 are style and ice-family references only: match the white dragon and frost wolf snow-white palette, crystalline ice-blue facets, detailed painted fantasy brushwork and strong directional rim highlights. Not a dragon or wolf, no fur. Square 1254x1254 sprite, full body and entire hammer inside frame with safe margins. Actual transparent background, alpha zero outside silhouette, clean edges without white/gray matte or diffuse background glow, no ground plane. No text, letters, logos, watermark. Candidate 01: braced broad stance, heavy ice hammer held down diagonally beside the body.",
+      "reference_images": [
+        "client/images/enemy_draco_dragon.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_sentinel",
+      "file": "assets/candidates/024/enemy_ice_sentinel/candidate_02.png",
+      "purpose": "氷の番兵",
+      "prompt": "Use case: stylized-concept. Create 氷の番兵, a heavy full-body guard whose entire plate armor and war hammer are made of ice. Empty helmet contains only icy blue cold light, no human face. Massive weighty stance. Image 1 and image 2 are style and ice-family references only: match the white dragon and frost wolf snow-white palette, crystalline ice-blue facets, detailed painted fantasy brushwork and strong directional rim highlights. Not a dragon or wolf, no fur. Square 1254x1254 sprite, full body and entire hammer inside frame with safe margins. Actual transparent background, alpha zero outside silhouette, clean edges without white/gray matte or diffuse background glow, no ground plane. No text, letters, logos, watermark. Candidate 02: slow heavy forward step, both hands gripping the long ice hammer across the torso; distinct readable helmet and massive shoulder armor.",
+      "reference_images": [
+        "client/images/enemy_draco_dragon.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_sentinel",
+      "file": "assets/candidates/024/enemy_ice_sentinel/candidate_03.png",
+      "purpose": "氷の番兵",
+      "prompt": "Use case: stylized-concept. Create 氷の番兵, a heavy full-body guard whose entire plate armor and war hammer are made of ice. Empty helmet contains only icy blue cold light, no human face. Massive weighty stance. Image 1 and image 2 are style and ice-family references only: match the white dragon and frost wolf snow-white palette, crystalline ice-blue facets, detailed painted fantasy brushwork and strong directional rim highlights. Not a dragon or wolf, no fur. Square 1254x1254 sprite, full body and entire hammer inside frame with safe margins. Actual transparent background, alpha zero outside silhouette, clean edges without white/gray matte or diffuse background glow, no ground plane. No text, letters, logos, watermark. Candidate 03: heavy braced stance holding an ice war hammer diagonally downward. Critical framing: make the entire sentinel occupy only the central 85 percent of the square canvas, with clearly visible empty transparent margins on ALL four sides. Every helmet spike, both boots, hammer shaft and hammer head must be fully inside canvas, never touching an edge. Slightly reduce cyan saturation relative to the references.",
+      "reference_images": [
+        "client/images/enemy_draco_dragon.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_assassin",
+      "file": "assets/candidates/024/enemy_ice_assassin/candidate_01.png",
+      "purpose": "氷の刺客",
+      "prompt": "Use case: stylized-concept. Create 氷の刺客, a masked assassin in white clothing, agile low crouching combat pose, exactly one ice blade held in each hand, a clearly visible white dragon emblem on the chest. Reference image is for detailed anime semi-realistic painted style, directional upper-left highlights, clothing texture and pale cyan-white ice blade material only; do not copy the general's identity, red cape or heavy armor. Full body head to both boots and both complete blades inside frame, 1024x1536 portrait with generous safe margins. White clothing with icy blue shadows. Genuine transparent alpha background, clean antialiased edges, no white/gray fringe, no background gradient, no glow behind body, no ground plane, no text, letters, logo or watermark. Candidate 01: compact crouch, torso turned three-quarters toward viewer so the chest emblem is readable, blades separated at either side.",
+      "reference_images": [
+        "client/images/enemy_draco_human.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1024,
+        1536
+      ],
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_assassin",
+      "file": "assets/candidates/024/enemy_ice_assassin/candidate_02.png",
+      "purpose": "氷の刺客",
+      "prompt": "Use case: stylized-concept. Create 氷の刺客, a masked assassin in white clothing, agile low crouching combat pose, exactly one ice blade held in each hand, a clearly visible white dragon emblem on the chest. Reference image is for detailed anime semi-realistic painted style, directional upper-left highlights, clothing texture and pale cyan-white ice blade material only; do not copy the general's identity, red cape or heavy armor. Full body head to both boots and both complete blades inside frame, 1024x1536 portrait with generous safe margins. White clothing with icy blue shadows. Genuine transparent alpha background, clean antialiased edges, no white/gray fringe, no background gradient, no glow behind body, no ground plane, no text, letters, logo or watermark. Candidate 02: low forward-ready crouch with one knee deeply bent and the other leg extended, two ice knives held at distinct angles, chest white-dragon embroidery visible.",
+      "reference_images": [
+        "client/images/enemy_draco_human.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1024,
+        1536
+      ],
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_royal_gate",
+      "file": "assets/candidates/024/bg_royal_gate/candidate_01.png",
+      "purpose": "凱旋の城門",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create the royal city gate welcoming a triumphant return, drifting flower petals, crowds along the sides waving their hands in welcome, bright sunshine. Use the reference throne room's pale stone, gilded Gothic detailing, blue-and-gold and red banners to establish the same kingdom's exterior. Open central approach for game sprites; no named hero or prominent foreground protagonist. Candidate 01: Frontal approach with the grand arch in the middle distance and sun from upper left.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_royal_gate",
+      "file": "assets/candidates/024/bg_royal_gate/candidate_02.png",
+      "purpose": "凱旋の城門",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create the royal city gate welcoming a triumphant return, drifting flower petals, crowds along the sides waving their hands in welcome, bright sunshine. Use the reference throne room's pale stone, gilded Gothic detailing, blue-and-gold and red banners to establish the same kingdom's exterior. Open central approach for game sprites; no named hero or prominent foreground protagonist. Candidate 02: Slightly oblique approach, welcoming townsfolk flank the path, bright gate towers frame blue sky.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_festival_town",
+      "file": "assets/candidates/024/bg_festival_town/candidate_01.png",
+      "purpose": "凱旋の城下町",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a festive castle town street, colorful pennants, flower garlands, market stalls and crowds. Image 1 establishes the kingdom's architecture and banner colors, image 2 the wooden market furniture and painted everyday materials. Open central cobbled lane and lively side stalls; no named foreground protagonist. Do not reproduce the shop reference's UI parchment panel. Candidate 01: Street receding gently toward the castle, overhead pennants and flower garlands.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_item_shop.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_festival_town",
+      "file": "assets/candidates/024/bg_festival_town/candidate_02.png",
+      "purpose": "凱旋の城下町",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a festive castle town street, colorful pennants, flower garlands, market stalls and crowds. Image 1 establishes the kingdom's architecture and banner colors, image 2 the wooden market furniture and painted everyday materials. Open central cobbled lane and lively side stalls; no named foreground protagonist. Do not reproduce the shop reference's UI parchment panel. Candidate 02: Slight turn in the street, garlands above, stalls on both sides with ordinary welcoming townspeople.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_item_shop.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_garden",
+      "file": "assets/candidates/024/bg_mansion_garden/candidate_01.png",
+      "purpose": "将軍の屋敷・夜の庭",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a noble mansion garden under moonlight. The central fountain is completely frozen solid, including its jets and basins; thin frost covers the ground. Quiet empty garden, mansion behind it. Image 1 guides ornate pale-stone architecture; image 2 guides finely painted cool nocturnal vegetation and depth. No people, no liquid running water. Candidate 01: View along the garden path toward the central frozen fountain and mansion.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_elf_spring.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_garden",
+      "file": "assets/candidates/024/bg_mansion_garden/candidate_02.png",
+      "purpose": "将軍の屋敷・夜の庭",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a noble mansion garden under moonlight. The central fountain is completely frozen solid, including its jets and basins; thin frost covers the ground. Quiet empty garden, mansion behind it. Image 1 guides ornate pale-stone architecture; image 2 guides finely painted cool nocturnal vegetation and depth. No people, no liquid running water. Candidate 02: Slightly oblique view of the frozen central fountain, frosted paths frame the silent mansion. The ice should look like frozen fountain water: solid frozen jets and sheets, hanging icicles and sealed basins, not ornamental crystal clusters. Keep frost thin and mansion scale restrained.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_elf_spring.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_corridor",
+      "file": "assets/candidates/024/bg_mansion_corridor/candidate_01.png",
+      "purpose": "将軍の屋敷・凍てつく回廊",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a luxurious noble mansion corridor whose walls and floor are coated with THIN ice, with ONE closed door at the far end. Use the reference's carved pale-stone arches, gilded architectural details and blue accents but at domestic mansion scale, no throne. Cold subdued light reflecting along thin icy surfaces, preserve visible wall carvings and floor tiles beneath ice, no giant ice cave. Empty of people. Candidate 01: Straight centered perspective toward the single end door.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_corridor",
+      "file": "assets/candidates/024/bg_mansion_corridor/candidate_02.png",
+      "purpose": "将軍の屋敷・凍てつく回廊",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a luxurious noble mansion corridor whose walls and floor are coated with THIN ice, with ONE closed door at the far end. Use the reference's carved pale-stone arches, gilded architectural details and blue accents but at domestic mansion scale, no throne. Cold subdued light reflecting along thin icy surfaces, preserve visible wall carvings and floor tiles beneath ice, no giant ice cave. Empty of people. Candidate 02: Slightly offset perspective, fine ice across floor and wall panels, end door clearly readable.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_study",
+      "file": "assets/candidates/024/bg_mansion_study/candidate_01.png",
+      "purpose": "将軍の屋敷・書斎",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a noble mansion study filled with ancient books. On the desk lies ONE open journal with unlettered pages; in a corner is a SMALL box decorated with white scales, clearly identifiable. Moonlight enters through the window. Image 1 controls refined architectural details; image 2 painted timber, bookshelves, and warm material texture under cool light. No people, no legible marks or writing in journal or book spines. Candidate 01: Desk in the middle ground with open journal, small white-scale decorated box in a visible room corner.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_inn.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_study",
+      "file": "assets/candidates/024/bg_mansion_study/candidate_02.png",
+      "purpose": "将軍の屋敷・書斎",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a noble mansion study filled with ancient books. On the desk lies ONE open journal with unlettered pages; in a corner is a SMALL box decorated with white scales, clearly identifiable. Moonlight enters through the window. Image 1 controls refined architectural details; image 2 painted timber, bookshelves, and warm material texture under cool light. No people, no legible marks or writing in journal or book spines. Candidate 02: Angled view across the desk toward tall bookshelves and moonlit window, small white-scaled box at the corner beside the shelves. Moonlight should dominate; keep only a few dim warm candle accents, much less warm lighting than the inn reference. Ancient books should also form small readable piles. The small box's overlapping white scales should be recognizable.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_inn.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_king_room",
+      "file": "assets/candidates/024/bg_king_room/candidate_01.png",
+      "purpose": "王の私室",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create the king's luxurious but silent private bedchamber in moonlight, composed near the window. Use the reference's pale carved stone, gilded details, blue-and-gold textiles and delicate fantasy painting style. An ornate bed, quiet floor space near the window, moonlight falling through the window; no king or other people, no throne-room duplication. Candidate 01: View by a tall arched window, moonlight crosses the empty foreground with bed set farther inside the chamber.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_king_room",
+      "file": "assets/candidates/024/bg_king_room/candidate_02.png",
+      "purpose": "王の私室",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create the king's luxurious but silent private bedchamber in moonlight, composed near the window. Use the reference's pale carved stone, gilded details, blue-and-gold textiles and delicate fantasy painting style. An ornate bed, quiet floor space near the window, moonlight falling through the window; no king or other people, no throne-room duplication. Candidate 02: A slightly diagonal near-window view, soft cool moonlight on rich bed drapery and gilded pale-stone details. Emphasize the moonlit quiet: restrained dim candle accents only, no bright daytime lighting.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_inn_night",
+      "file": "assets/candidates/024/bg_inn_night/candidate_01.png",
+      "purpose": "宿屋・深夜",
+      "prompt": "Use case: lighting-weather. EDIT TARGET: the supplied bg_inn.png. Create 宿屋・深夜, the SAME inn interior at deep night after the window has frozen and shattered, cold air flowing inside. Preserve the reference camera, exact room layout, left stone fireplace and table, central reception counter and arched door, upstairs wooden balcony, staircase on the right, right noticeboard and wall furniture. Preserve the detailed painted fantasy brushwork and original 1672x941 landscape dimensions. The right upper arched window is iced over and visibly broken: jagged frost-covered remaining glass around a clear opening, fallen icy glass nearby, cold blue moonlight and a low stream of freezing mist entering there. Dim the warm lamps and fireplace to subdued embers; night outside. No people, no new bedroom or bed. Fully opaque full-bleed background, no text, letters, logos, watermark or UI; notice papers remain unlettered shapes. Candidate 01: restrained inward curling cold mist from the shattered upper-right window, fine frost spreading down the stair railing and nearby floor.",
+      "reference_images": [
+        "client/images/bg_inn.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1672,
+        941
+      ],
+      "dimensions": [
+        1672,
+        941
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "bg_inn_night",
+      "file": "assets/candidates/024/bg_inn_night/candidate_02.png",
+      "purpose": "宿屋・深夜",
+      "prompt": "Use case: lighting-weather. EDIT TARGET: the supplied bg_inn.png. Create 宿屋・深夜, the SAME inn interior at deep night after the window has frozen and shattered, cold air flowing inside. Preserve the reference camera, exact room layout, left stone fireplace and table, central reception counter and arched door, upstairs wooden balcony, staircase on the right, right noticeboard and wall furniture. Preserve the detailed painted fantasy brushwork and original 1672x941 landscape dimensions. The right upper arched window is iced over and visibly broken: jagged frost-covered remaining glass around a clear opening, fallen icy glass nearby, cold blue moonlight and a low stream of freezing mist entering there. Dim the warm lamps and fireplace to subdued embers; night outside. No people, no new bedroom or bed. Fully opaque full-bleed background, no text, letters, logos, watermark or UI; notice papers remain unlettered shapes. Candidate 02: clearly readable jagged hole in the iced upper-right window, cool air flows down the stairs and across the open foreground; keep original architecture and furniture unchanged.",
+      "reference_images": [
+        "client/images/bg_inn.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1672,
+        941
+      ],
+      "dimensions": [
+        1672,
+        941
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_sentinel",
+      "file": "client/images/enemy_ice_sentinel.png",
+      "purpose": "氷の番兵",
+      "prompt": "Use case: stylized-concept. Create 氷の番兵, a heavy full-body guard whose entire plate armor and war hammer are made of ice. Empty helmet contains only icy blue cold light, no human face. Massive weighty stance. Image 1 and image 2 are style and ice-family references only: match the white dragon and frost wolf snow-white palette, crystalline ice-blue facets, detailed painted fantasy brushwork and strong directional rim highlights. Not a dragon or wolf, no fur. Square 1254x1254 sprite, full body and entire hammer inside frame with safe margins. Actual transparent background, alpha zero outside silhouette, clean edges without white/gray matte or diffuse background glow, no ground plane. No text, letters, logos, watermark. Candidate 03: heavy braced stance holding an ice war hammer diagonally downward. Critical framing: make the entire sentinel occupy only the central 85 percent of the square canvas, with clearly visible empty transparent margins on ALL four sides. Every helmet spike, both boots, hammer shaft and hammer head must be fully inside canvas, never touching an edge. Slightly reduce cyan saturation relative to the references.",
+      "reference_images": [
+        "client/images/enemy_draco_dragon.png",
+        "client/images/enemy_frost_dire_wolf.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。",
+      "source_candidate": "assets/candidates/024/enemy_ice_sentinel/candidate_03.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 03 的头盔、双足和冰锤均有边距，厚重站姿及空头盔冷光明确；01/02 边距过紧。",
+      "style_review": "晶面与白竜、霜狼同族，但甲片更密、更尖锐；冰蓝高光较强。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_assassin",
+      "file": "client/images/enemy_ice_assassin.png",
+      "purpose": "氷の刺客",
+      "prompt": "Use case: stylized-concept. Create 氷の刺客, a masked assassin in white clothing, agile low crouching combat pose, exactly one ice blade held in each hand, a clearly visible white dragon emblem on the chest. Reference image is for detailed anime semi-realistic painted style, directional upper-left highlights, clothing texture and pale cyan-white ice blade material only; do not copy the general's identity, red cape or heavy armor. Full body head to both boots and both complete blades inside frame, 1024x1536 portrait with generous safe margins. White clothing with icy blue shadows. Genuine transparent alpha background, clean antialiased edges, no white/gray fringe, no background gradient, no glow behind body, no ground plane, no text, letters, logo or watermark. Candidate 02: low forward-ready crouch with one knee deeply bent and the other leg extended, two ice knives held at distinct angles, chest white-dragon embroidery visible.",
+      "reference_images": [
+        "client/images/enemy_draco_human.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1024,
+        1536
+      ],
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。",
+      "source_candidate": "assets/candidates/024/enemy_ice_assassin/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 02 双冰刃与双足完整，低伏姿态及胸前白竜纹章清楚，边距优于 01。",
+      "style_review": "银发、护具与繁复刺绣由生成器延伸；白竜胸章偏盘曲龙形，未沿用有翼白竜的完整轮廓；侧边刀尖仍较近画布边缘。"
+    },
+    {
+      "task": "024",
+      "id": "bg_royal_gate",
+      "file": "client/images/bg_royal_gate.png",
+      "purpose": "凱旋の城門",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create the royal city gate welcoming a triumphant return, drifting flower petals, crowds along the sides waving their hands in welcome, bright sunshine. Use the reference throne room's pale stone, gilded Gothic detailing, blue-and-gold and red banners to establish the same kingdom's exterior. Open central approach for game sprites; no named hero or prominent foreground protagonist. Candidate 02: Slightly oblique approach, welcoming townsfolk flank the path, bright gate towers frame blue sky.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。",
+      "source_candidate": "assets/candidates/024/bg_royal_gate/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 02 两侧挥手人群更清楚，城门、花瓣和日照完整，中央通道可用。",
+      "style_review": "金饰和塔楼比王座厅参考更繁复，明度较高；狮、鸟与四分盾徽为参考纹样的延伸。"
+    },
+    {
+      "task": "024",
+      "id": "bg_festival_town",
+      "file": "client/images/bg_festival_town.png",
+      "purpose": "凱旋の城下町",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a festive castle town street, colorful pennants, flower garlands, market stalls and crowds. Image 1 establishes the kingdom's architecture and banner colors, image 2 the wooden market furniture and painted everyday materials. Open central cobbled lane and lively side stalls; no named foreground protagonist. Do not reproduce the shop reference's UI parchment panel. Candidate 02: Slight turn in the street, garlands above, stalls on both sides with ordinary welcoming townspeople.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_item_shop.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。",
+      "source_candidate": "assets/candidates/024/bg_festival_town/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 02 人群和摊位活动更清楚，彩旗、花环及街道纵深均明确。",
+      "style_review": "摊位延续道具店木材与杂货质感；节庆蓝金红配色更明亮，王城天际线与居民服饰细节未定稿。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_garden",
+      "file": "client/images/bg_mansion_garden.png",
+      "purpose": "将軍の屋敷・夜の庭",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a noble mansion garden under moonlight. The central fountain is completely frozen solid, including its jets and basins; thin frost covers the ground. Quiet empty garden, mansion behind it. Image 1 guides ornate pale-stone architecture; image 2 guides finely painted cool nocturnal vegetation and depth. No people, no liquid running water. Candidate 02: Slightly oblique view of the frozen central fountain, frosted paths frame the silent mansion. The ice should look like frozen fountain water: solid frozen jets and sheets, hanging icicles and sealed basins, not ornamental crystal clusters. Keep frost thin and mansion scale restrained.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_elf_spring.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。",
+      "source_candidate": "assets/candidates/024/bg_mansion_garden/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 02 冻结喷流和封冻池面更明确，霜地与月夜庭院清楚；01 的晶簇更突出。",
+      "style_review": "宅邸仍偏宫殿规模，窗灯偏暖且较多；喷泉中央仍有晶柱状冰，霜的局部厚度较明显。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_corridor",
+      "file": "client/images/bg_mansion_corridor.png",
+      "purpose": "将軍の屋敷・凍てつく回廊",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a luxurious noble mansion corridor whose walls and floor are coated with THIN ice, with ONE closed door at the far end. Use the reference's carved pale-stone arches, gilded architectural details and blue accents but at domestic mansion scale, no throne. Cold subdued light reflecting along thin icy surfaces, preserve visible wall carvings and floor tiles beneath ice, no giant ice cave. Empty of people. Candidate 01: Straight centered perspective toward the single end door.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。",
+      "source_candidate": "assets/candidates/024/bg_mansion_corridor/candidate_01.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 01 中央尽头门与墙地薄冰最直观，原有雕饰和地砖在冰下可见。",
+      "style_review": "回廊拱顶及金饰接近王宫规模；烛光较亮，门为一处双开门，墙边有小冰挂。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_study",
+      "file": "client/images/bg_mansion_study.png",
+      "purpose": "将軍の屋敷・書斎",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create a noble mansion study filled with ancient books. On the desk lies ONE open journal with unlettered pages; in a corner is a SMALL box decorated with white scales, clearly identifiable. Moonlight enters through the window. Image 1 controls refined architectural details; image 2 painted timber, bookshelves, and warm material texture under cool light. No people, no legible marks or writing in journal or book spines. Candidate 02: Angled view across the desk toward tall bookshelves and moonlit window, small white-scaled box at the corner beside the shelves. Moonlight should dominate; keep only a few dim warm candle accents, much less warm lighting than the inn reference. Ancient books should also form small readable piles. The small box's overlapping white scales should be recognizable.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png",
+        "client/images/bg_inn.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。",
+      "source_candidate": "assets/candidates/024/bg_mansion_study/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 02 日志在近景可辨，角落小箱的重叠白鳞清楚，月光比 01 更突出。",
+      "style_review": "木料笔触延续宿屋，蓝金装饰延续王城；新增地球仪、浑天仪与胸像等陈设，局部烛光仍偏暖；日志无文字。"
+    },
+    {
+      "task": "024",
+      "id": "bg_king_room",
+      "file": "client/images/bg_king_room.png",
+      "purpose": "王の私室",
+      "prompt": "Use case: illustration-story. Opaque 1024x1024 square visual-novel background. Match supplied references' finely painted fantasy illustration, detailed brushwork, architectural perspective, controlled saturation and legible foreground. Full-bleed environment, no interface, border, text, letters, logos or watermark. Create the king's luxurious but silent private bedchamber in moonlight, composed near the window. Use the reference's pale carved stone, gilded details, blue-and-gold textiles and delicate fantasy painting style. An ornate bed, quiet floor space near the window, moonlight falling through the window; no king or other people, no throne-room duplication. Candidate 01: View by a tall arched window, moonlight crosses the empty foreground with bed set farther inside the chamber.",
+      "reference_images": [
+        "client/images/bg_dragon_rpg.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1254,
+        1254
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "postprocessing": "Pillow LANCZOS 等比缩小 1254×1254 → 1024×1024；无裁切、填充或内容修改。",
+      "source_candidate": "assets/candidates/024/bg_king_room/candidate_01.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 01 寝床、月光窗及窗边空地清晰，留给立绘的前景空间较 02 充足。",
+      "style_review": "蓝金装饰与参考同系但繁复度较高；保留暖色烛光，与冷月光形成较强对比。"
+    },
+    {
+      "task": "024",
+      "id": "bg_inn_night",
+      "file": "client/images/bg_inn_night.png",
+      "purpose": "宿屋・深夜",
+      "prompt": "Use case: lighting-weather. EDIT TARGET: the supplied bg_inn.png. Create 宿屋・深夜, the SAME inn interior at deep night after the window has frozen and shattered, cold air flowing inside. Preserve the reference camera, exact room layout, left stone fireplace and table, central reception counter and arched door, upstairs wooden balcony, staircase on the right, right noticeboard and wall furniture. Preserve the detailed painted fantasy brushwork and original 1672x941 landscape dimensions. The right upper arched window is iced over and visibly broken: jagged frost-covered remaining glass around a clear opening, fallen icy glass nearby, cold blue moonlight and a low stream of freezing mist entering there. Dim the warm lamps and fireplace to subdued embers; night outside. No people, no new bedroom or bed. Fully opaque full-bleed background, no text, letters, logos, watermark or UI; notice papers remain unlettered shapes. Candidate 02: clearly readable jagged hole in the iced upper-right window, cool air flows down the stairs and across the open foreground; keep original architecture and furniture unchanged.",
+      "reference_images": [
+        "client/images/bg_inn.png"
+      ],
+      "generation_date": "2026-10-12",
+      "generator": "image_gen",
+      "approved": false,
+      "original_dimensions": [
+        1672,
+        941
+      ],
+      "dimensions": [
+        1672,
+        941
+      ],
+      "postprocessing": "原生尺寸与 alpha 保留，无图像修改。",
+      "source_candidate": "assets/candidates/024/bg_inn_night/candidate_02.png",
+      "selection_status": "provisional",
+      "selection_reason": "候选 02 破窗缺口、楼梯下碎片及涌入前景的冷气更明确，原参考的大厅家具布局基本保持。",
+      "style_review": "保持木石笔触，亮度明显降低；窗形和局部小物有轻微生成差异。参考实际为大厅而非 spec 所称客房；公告纸为不可辨小纹理。"
+    }
+  ],
+  "selections": [
+    {
+      "id": "enemy_draco_human",
+      "file": "client/images/enemy_draco_human.png",
+      "candidates": [
+        "assets/candidates/016/enemy_draco_human/candidate_01.png",
+        "assets/candidates/016/enemy_draco_human/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/enemy_draco_human/candidate_02.png",
+      "selection_reason": "举剑迎战的动作更明确，霜光比候选 01 收敛，脸、发型、银金甲与红披风可对应参考。",
+      "style_review": "冰霜覆盖仍比文字描述偏多；剑形与部分甲片细节由生成器重绘。"
+    },
+    {
+      "id": "enemy_draco_dragon",
+      "file": "client/images/enemy_draco_dragon.png",
+      "candidates": [
+        "assets/candidates/016/enemy_draco_dragon/candidate_01.png",
+        "assets/candidates/016/enemy_draco_dragon/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/enemy_draco_dragon/candidate_02.png",
+      "selection_reason": "闭口、抬头的姿态更冷静；胸口冰纹、冰晶角与冰蓝眼睛清楚，体量与イグニス对应。",
+      "style_review": "整体亮度高于イグニス，符合白竜与霜狼配色；翼膜的半透明主要以材质绘制表现。"
+    },
+    {
+      "id": "npc_ignis_calm",
+      "file": "client/images/npc_ignis_calm.png",
+      "candidates": [
+        "assets/candidates/016/npc_ignis_calm/candidate_01.png",
+        "assets/candidates/016/npc_ignis_calm/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/npc_ignis_calm/candidate_02.png",
+      "selection_reason": "低头、收翼与放松双臂更明显，金色眼睛和较柔和胸纹可辨。",
+      "style_review": "胸口仍有较亮熔光，是否足够柔和待设计验收。"
+    },
+    {
+      "id": "enemy_heat_lizard",
+      "file": "client/images/enemy_heat_lizard.png",
+      "candidates": [
+        "assets/candidates/016/enemy_heat_lizard/candidate_01.png",
+        "assets/candidates/016/enemy_heat_lizard/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/enemy_heat_lizard/candidate_02.png",
+      "selection_reason": "冷却岩壳占比更高，橙色裂隙与黑色甲壳区分更清楚。",
+      "style_review": "尾端仍有明火，熔光较强；远侧后腿受躯干遮挡。"
+    },
+    {
+      "id": "enemy_fire_wisp",
+      "file": "client/images/enemy_fire_wisp.png",
+      "candidates": [
+        "assets/candidates/016/enemy_fire_wisp/candidate_01.png",
+        "assets/candidates/016/enemy_fire_wisp/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/enemy_fire_wisp/candidate_02.png",
+      "selection_reason": "圆形简洁眼睛和卷曲小轮廓更符合灵动精灵，单只与火星均清楚。",
+      "style_review": "比火元素参考更可爱；实际小型显示比例由后续接线确定。"
+    },
+    {
+      "id": "enemy_ruby_golem",
+      "file": "client/images/enemy_ruby_golem.png",
+      "candidates": [
+        "assets/candidates/016/enemy_ruby_golem/candidate_01.png",
+        "assets/candidates/016/enemy_ruby_golem/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/enemy_ruby_golem/candidate_01.png",
+      "selection_reason": "魁梧的块状肩、拳、脚和稳定姿态更符合巨人，关节熔光清楚。",
+      "style_review": "红色晶面饱和度较高，部分胸纹受イグニス参考影响。"
+    },
+    {
+      "id": "enemy_sapphire_moth",
+      "file": "client/images/enemy_sapphire_moth.png",
+      "candidates": [
+        "assets/candidates/016/enemy_sapphire_moth/candidate_01.png",
+        "assets/candidates/016/enemy_sapphire_moth/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/enemy_sapphire_moth/candidate_01.png",
+      "selection_reason": "正面展翼使薄片蓝晶与完整虫体更易读，轮廓比候选 02 更均衡。",
+      "style_review": "冷光鳞粉偏向碎晶颗粒；半人体长需后续显示比例体现。"
+    },
+    {
+      "id": "enemy_emerald_spider",
+      "file": "client/images/enemy_emerald_spider.png",
+      "candidates": [
+        "assets/candidates/016/enemy_emerald_spider/candidate_01.png",
+        "assets/candidates/016/enemy_emerald_spider/candidate_02.png",
+        "assets/candidates/016/enemy_emerald_spider/candidate_03.png",
+        "assets/candidates/016/enemy_emerald_spider/candidate_04.png"
+      ],
+      "selected_candidate": "assets/candidates/016/enemy_emerald_spider/candidate_04.png",
+      "selection_reason": "前三张步足有缺失或重叠歧义；第四张八足清楚，腹部绿光与晶腿完整。",
+      "style_review": "俯视角与多数敌人的正面或三分之四视角不同，待设计确认。"
+    },
+    {
+      "id": "enemy_prism_tree",
+      "file": "client/images/enemy_prism_tree.png",
+      "candidates": [
+        "assets/candidates/016/enemy_prism_tree/candidate_01.png",
+        "assets/candidates/016/enemy_prism_tree/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/enemy_prism_tree/candidate_02.png",
+      "selection_reason": "枝端棱柱比候选 01 更清楚，扭曲树干、七色折射和根部缠绕残骸同时可辨。",
+      "style_review": "彩色晶面较密、饱和度高；残骸仍有可辨头部，破碎程度待设计验收。"
+    },
+    {
+      "id": "npc_mina",
+      "file": "client/images/npc_mina.png",
+      "candidates": [
+        "assets/candidates/016/npc_mina/candidate_01.png",
+        "assets/candidates/016/npc_mina/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/npc_mina/candidate_01.png",
+      "selection_reason": "相对候选 02，年龄感较成熟，抱书与好奇而怯生的表情更贴近十四五岁；蓝袍材质对应法师。",
+      "style_review": "蓝袍装饰较华丽；金发辫与书封花纹未在 spec 定稿，外观接近サラ的同系风格。"
+    },
+    {
+      "id": "npc_gald",
+      "file": "client/images/npc_gald.png",
+      "candidates": [
+        "assets/candidates/016/npc_gald/candidate_01.png",
+        "assets/candidates/016/npc_gald/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/npc_gald/candidate_02.png",
+      "selection_reason": "体格更壮、肤色较深、笑容更爽朗，背架和腰袋完整；与イアン的发型及脸部有区分。",
+      "style_review": "服装仍与イアン接近；发型、胡须、货物细节为生成候选，需设计确认。"
+    },
+    {
+      "id": "bg_sealed_cave",
+      "file": "client/images/bg_sealed_cave.png",
+      "candidates": [
+        "assets/candidates/016/bg_sealed_cave/candidate_01.png",
+        "assets/candidates/016/bg_sealed_cave/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/bg_sealed_cave/candidate_02.png",
+      "selection_reason": "魔法阵完整置于岩壁，七色线条与背后暖色裂隙清楚，泉水环境和前景延续参考。",
+      "style_review": "魔法阵亮度略高，具体几何纹样为生成候选；未绘制文字。"
+    },
+    {
+      "id": "bg_lava_cave",
+      "file": "client/images/bg_lava_cave.png",
+      "candidates": [
+        "assets/candidates/016/bg_lava_cave/candidate_01.png",
+        "assets/candidates/016/bg_lava_cave/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/bg_lava_cave/candidate_02.png",
+      "selection_reason": "弯曲岩石通路和旁侧熔岩河更符合回廊，前景可用空间充足。",
+      "style_review": "熔岩自发光主导，光源方向与原背景不同；热扭曲较含蓄。"
+    },
+    {
+      "id": "bg_crystal_cave",
+      "file": "client/images/bg_crystal_cave.png",
+      "candidates": [
+        "assets/candidates/016/bg_crystal_cave/candidate_01.png",
+        "assets/candidates/016/bg_crystal_cave/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/016/bg_crystal_cave/candidate_01.png",
+      "selection_reason": "远处树较小、较朦胧，更接近隐约可见；红蓝绿晶体与洞窟纵深均明确。",
+      "style_review": "沿用泉参考的水面与瀑布元素；spec 未指定水体，列为待确认。"
+    },
+    {
+      "task": "020",
+      "id": "enemy_ash_wraith",
+      "file": "client/images/enemy_ash_wraith.png",
+      "candidates": [
+        "assets/candidates/020/enemy_ash_wraith/candidate_01.png",
+        "assets/candidates/020/enemy_ash_wraith/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/enemy_ash_wraith/candidate_02.png",
+      "approved": false,
+      "selection_reason": "火星较候选 01 收敛，空洞面部和完整烟尾更明确，煤灰占主体。",
+      "style_review": "灰烬卷曲笔触比ゼボク的衣料更密，局部火星仍偏橙红；整体暗色与火元素的厚涂细节相容。"
+    },
+    {
+      "task": "020",
+      "id": "enemy_lava_drake",
+      "file": "client/images/enemy_lava_drake.png",
+      "candidates": [
+        "assets/candidates/020/enemy_lava_drake/candidate_01.png",
+        "assets/candidates/020/enemy_lava_drake/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/enemy_lava_drake/candidate_01.png",
+      "approved": false,
+      "selection_reason": "四只足爪更分开，前倾姿态更像野兽；角、头部和熔岩翼膜可辨识为イグニス同族。",
+      "style_review": "熔岩裂纹比イグニス更密亮，右侧翼尖及尾部距画布边缘较近；相对马的体型需显示比例体现。"
+    },
+    {
+      "task": "020",
+      "id": "enemy_xanxus_phantom",
+      "file": "client/images/enemy_xanxus_phantom.png",
+      "candidates": [
+        "assets/candidates/020/enemy_xanxus_phantom/candidate_01.png",
+        "assets/candidates/020/enemy_xanxus_phantom/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/enemy_xanxus_phantom/candidate_02.png",
+      "approved": false,
+      "selection_reason": "胸腹、衣摆与肢体出现更多透光区域，保持骷髅面部、赤红高领法衣、宝石和法杖的角色辨识度。",
+      "style_review": "火焰亮度与饱和度明显高于原角色；头骨及部分金饰仍较实，半透明程度需设计验收。"
+    },
+    {
+      "task": "020",
+      "id": "npc_riku",
+      "file": "client/images/npc_riku.png",
+      "candidates": [
+        "assets/candidates/020/npc_riku/candidate_01.png",
+        "assets/candidates/020/npc_riku/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/npc_riku/candidate_02.png",
+      "approved": false,
+      "selection_reason": "双手握住护符、紧张而咬紧牙关的表情更明确；相比候选 01 衣服破洞收敛，绿白衣料对应长老。",
+      "style_review": "边缘暖光较长老明显，衣摆局部仍有余烬亮点；金色短发、护符纹样和腰包由生成器沿参考延伸。"
+    },
+    {
+      "task": "020",
+      "id": "bg_lava_bridge",
+      "file": "client/images/bg_lava_bridge.png",
+      "candidates": [
+        "assets/candidates/020/bg_lava_bridge/candidate_01.png",
+        "assets/candidates/020/bg_lava_bridge/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/bg_lava_bridge/candidate_01.png",
+      "approved": false,
+      "selection_reason": "两岸桥头及双侧绳索更容易辨认，斜向吊桥形成明确路线，焦黑木板与破绳均可见。",
+      "style_review": "岩石与天空和参考接近，熔岩亮度更高；热风扭曲较含蓄，主要表现为热雾，桥的破损程度待验收。"
+    },
+    {
+      "task": "020",
+      "id": "bg_dragon_nest",
+      "file": "client/images/bg_dragon_nest.png",
+      "candidates": [
+        "assets/candidates/020/bg_dragon_nest/candidate_01.png",
+        "assets/candidates/020/bg_dragon_nest/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/bg_dragon_nest/candidate_02.png",
+      "approved": false,
+      "selection_reason": "巨洞与纵深红光更突出，骨骸和熔化变形的金属财宝集中在入口两侧，前景留白充分。",
+      "style_review": "延续参考火山岩与红天，热光更强；大型兽骨、武器与金属器物具体形态属于生成细节。"
+    },
+    {
+      "task": "020",
+      "id": "bg_burning_house",
+      "file": "client/images/bg_burning_house.png",
+      "candidates": [
+        "assets/candidates/020/bg_burning_house/candidate_01.png",
+        "assets/candidates/020/bg_burning_house/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/bg_burning_house/candidate_02.png",
+      "approved": false,
+      "selection_reason": "房梁与碎木明确封堵入口，窗内火光和民家正面清楚，建筑材料与村庄参考一致。",
+      "style_review": "房屋的具体山墙和窗户布局为新构图；火光较参考近景更集中，木梁数量多于单根。"
+    },
+    {
+      "task": "020",
+      "id": "bg_hot_spring",
+      "file": "client/images/bg_hot_spring.png",
+      "candidates": [
+        "assets/candidates/020/bg_hot_spring/candidate_01.png",
+        "assets/candidates/020/bg_hot_spring/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/020/bg_hot_spring/candidate_02.png",
+      "approved": false,
+      "selection_reason": "苔藓呈绿色有机团簇，温泉池更紧凑，蒸汽和柔和光照清楚，岩石笔触延续熔岩洞窟。",
+      "style_review": "相较熔岩参考大幅降低红色饱和度；池缘暖光与小段进水沿用参考水体表现，池缘局部仍较明亮。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_sentinel",
+      "file": "client/images/enemy_ice_sentinel.png",
+      "candidates": [
+        "assets/candidates/024/enemy_ice_sentinel/candidate_01.png",
+        "assets/candidates/024/enemy_ice_sentinel/candidate_02.png",
+        "assets/candidates/024/enemy_ice_sentinel/candidate_03.png"
+      ],
+      "selected_candidate": "assets/candidates/024/enemy_ice_sentinel/candidate_03.png",
+      "approved": false,
+      "selection_reason": "候选 03 的头盔、双足和冰锤均有边距，厚重站姿及空头盔冷光明确；01/02 边距过紧。",
+      "style_review": "晶面与白竜、霜狼同族，但甲片更密、更尖锐；冰蓝高光较强。"
+    },
+    {
+      "task": "024",
+      "id": "enemy_ice_assassin",
+      "file": "client/images/enemy_ice_assassin.png",
+      "candidates": [
+        "assets/candidates/024/enemy_ice_assassin/candidate_01.png",
+        "assets/candidates/024/enemy_ice_assassin/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/enemy_ice_assassin/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选 02 双冰刃与双足完整，低伏姿态及胸前白竜纹章清楚，边距优于 01。",
+      "style_review": "银发、护具与繁复刺绣由生成器延伸；白竜胸章偏盘曲龙形，未沿用有翼白竜的完整轮廓；侧边刀尖仍较近画布边缘。"
+    },
+    {
+      "task": "024",
+      "id": "bg_royal_gate",
+      "file": "client/images/bg_royal_gate.png",
+      "candidates": [
+        "assets/candidates/024/bg_royal_gate/candidate_01.png",
+        "assets/candidates/024/bg_royal_gate/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_royal_gate/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选 02 两侧挥手人群更清楚，城门、花瓣和日照完整，中央通道可用。",
+      "style_review": "金饰和塔楼比王座厅参考更繁复，明度较高；狮、鸟与四分盾徽为参考纹样的延伸。"
+    },
+    {
+      "task": "024",
+      "id": "bg_festival_town",
+      "file": "client/images/bg_festival_town.png",
+      "candidates": [
+        "assets/candidates/024/bg_festival_town/candidate_01.png",
+        "assets/candidates/024/bg_festival_town/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_festival_town/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选 02 人群和摊位活动更清楚，彩旗、花环及街道纵深均明确。",
+      "style_review": "摊位延续道具店木材与杂货质感；节庆蓝金红配色更明亮，王城天际线与居民服饰细节未定稿。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_garden",
+      "file": "client/images/bg_mansion_garden.png",
+      "candidates": [
+        "assets/candidates/024/bg_mansion_garden/candidate_01.png",
+        "assets/candidates/024/bg_mansion_garden/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_mansion_garden/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选 02 冻结喷流和封冻池面更明确，霜地与月夜庭院清楚；01 的晶簇更突出。",
+      "style_review": "宅邸仍偏宫殿规模，窗灯偏暖且较多；喷泉中央仍有晶柱状冰，霜的局部厚度较明显。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_corridor",
+      "file": "client/images/bg_mansion_corridor.png",
+      "candidates": [
+        "assets/candidates/024/bg_mansion_corridor/candidate_01.png",
+        "assets/candidates/024/bg_mansion_corridor/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_mansion_corridor/candidate_01.png",
+      "approved": false,
+      "selection_reason": "候选 01 中央尽头门与墙地薄冰最直观，原有雕饰和地砖在冰下可见。",
+      "style_review": "回廊拱顶及金饰接近王宫规模；烛光较亮，门为一处双开门，墙边有小冰挂。"
+    },
+    {
+      "task": "024",
+      "id": "bg_mansion_study",
+      "file": "client/images/bg_mansion_study.png",
+      "candidates": [
+        "assets/candidates/024/bg_mansion_study/candidate_01.png",
+        "assets/candidates/024/bg_mansion_study/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_mansion_study/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选 02 日志在近景可辨，角落小箱的重叠白鳞清楚，月光比 01 更突出。",
+      "style_review": "木料笔触延续宿屋，蓝金装饰延续王城；新增地球仪、浑天仪与胸像等陈设，局部烛光仍偏暖；日志无文字。"
+    },
+    {
+      "task": "024",
+      "id": "bg_king_room",
+      "file": "client/images/bg_king_room.png",
+      "candidates": [
+        "assets/candidates/024/bg_king_room/candidate_01.png",
+        "assets/candidates/024/bg_king_room/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_king_room/candidate_01.png",
+      "approved": false,
+      "selection_reason": "候选 01 寝床、月光窗及窗边空地清晰，留给立绘的前景空间较 02 充足。",
+      "style_review": "蓝金装饰与参考同系但繁复度较高；保留暖色烛光，与冷月光形成较强对比。"
+    },
+    {
+      "task": "024",
+      "id": "bg_inn_night",
+      "file": "client/images/bg_inn_night.png",
+      "candidates": [
+        "assets/candidates/024/bg_inn_night/candidate_01.png",
+        "assets/candidates/024/bg_inn_night/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/024/bg_inn_night/candidate_02.png",
+      "approved": false,
+      "selection_reason": "候选 02 破窗缺口、楼梯下碎片及涌入前景的冷气更明确，原参考的大厅家具布局基本保持。",
+      "style_review": "保持木石笔触，亮度明显降低；窗形和局部小物有轻微生成差异。参考实际为大厅而非 spec 所称客房；公告纸为不可辨小纹理。"
+    }
+  ],
+  "todo_design": [
+    "逐张验收 14 张暂选图，确认后再批准并接线。",
+    "确认ミーナ与ガルド未指定的发型、发色、面部与服装装饰细节。",
+    "确认水晶蝶碎晶式鳞粉、水晶蜘蛛俯视角、虹晶樹饱和度与残骸破碎程度。",
+    "确认水晶洞窟新增水体、封印魔法阵几何纹样与熔岩热扭曲表现。",
+    "020: 逐张验收 8 张工程暂选图，全部 approved=false；确认后由设计负责人批准并接线。",
+    "020: 确认煤の亡霊火星色相、溶岩ドレイク相对马的体型与熔岩亮度、Xanxus 分身头骨和金饰的半透明程度。",
+    "020: 确认リク金色短发、护符纹样、腰包、衣摆余烬与表情是否符合角色定稿。",
+    "020: 确认吊桥破损及热风表现、龙巢兽骨和财宝形态、民家房梁布局、温泉苔藓和池缘暖光。",
+    "024: 逐张验收 9 张工程暂选图与 19 张候选，全部 approved=false；最终选图及接线由设计负责人处理。",
+    "024: 确认宿屋参考图与 spec 的客房描述冲突：本批优先保留 bg_inn.png 实际大厅布局，未另造客房。已向用户询问，制作时未收到回复。",
+    "024: 确认刺客银发、护具、盘曲式白竜纹章及服装刺绣；确认番兵甲片尖锐度和冰蓝亮度。",
+    "024: 确认宅邸宫殿式规模、夜景暖灯、喷泉晶柱状冻结、书斋附加陈设与王室纹章的适用性。"
+  ],
+  "inferences": [
+    "选图是按 spec 的工程暂选，不代表设计批准。",
+    "候选用姿态、视角、发光强弱或构图变化区分，未定义为剧情差异。",
+    "四种水晶怪使用霜狼晶面作为起点，再互引生成候选统一材质；火元素和イグニス用于笔触及光照参考。",
+    "参考中人物高光多在左上方，提示词按此归纳；自发光敌人与熔岩背景保留自身发光。",
+    "ミーナ追加 npc_sarah 作为年轻面部画风参考；生成器沿用金发、辫子。ガルド生成短发、胡须及货架杂物。细节均待设计确认。",
+    "新背景未逐一指定参考的部分使用已有背景的笔触、透视与空前景构图；水晶洞窟候选 01 沿用泉水元素。",
+    "独立立绘无法验证相对人体的世界尺寸；炎のウィスプ与蒼晶の蝶显示比例待接线。",
+    "manifest 采用逐文件记录，最终图通过 source_candidate 指向其原候选；候选记录提示词全文，无缩写模板。",
+    "020: 沿用 016 的工程暂选流程；最终图路径表示交付位置，不代表设计批准。",
+    "020: 两候选仅以姿态、视角、构图和发光强弱区分，不定义剧情差异。",
+    "020: 溶岩ドレイク追加已采用的熱岩トカゲ作材质参考；リク追加ミーナ作年轻脸部与布料画风参考。",
+    "020: 从长老参考归纳绿白衣料、植物边饰和棕靴；リク的金色短发、圆形护符花纹与腰包由生成器延伸，未定稿。",
+    "020: 同一火山地区沿用竜の谷的红天、黑岩及远处废墟；龙巢的兽骨、剑和金属器物形态并未由 spec 指定。",
+    "020: 温泉发光苔藓采用绿色，池水采用参考的蓝绿色，池缘暖光与小进水并未由 spec 明确指定。",
+    "020: 沿用背景参考开放前景；绝对体型与年龄只能由画面比例暗示，ドレイク如马的体型需后续接线验证。",
+    "020: manifest 顶层 task/qa 表示最新批次；016 原图和选图记录保留，其原验证记录存入 batches.016。",
+    "024: 沿用 016/020 工程暂选流程，交付路径不表示设计批准；全部保留 approved=false。",
+    "024: 未指定参考的宅邸建筑沿用 bg_dragon_rpg 的浅石、金饰、拱顶与蓝金织物；庭院另以 bg_elf_spring 参照植被和冷色笔触，书斋另以 bg_inn 参照书架和木材。",
+    "024: 两候选以姿态、视角或光照强弱区别，未定义剧情差异；冰番兵多一版用于边距修正。",
+    "024: 王的私室中的“窗边”按窗边构图和空地理解；人物未在 spec 指定，未添加国王。",
+    "024: 宿屋按明确的参考编辑要求保留大厅，破窗选用参考已有右上拱窗；深夜灯火衰减为弱光与余烬。",
+    "024: 刺客银发、护具、纹章具体形态；番兵尖晶甲片；城门塔楼、盾徽、居民衣饰；宅邸规模、喷泉形制、窗灯；书斋仪器、胸像、植物；寝床和家具具体形式均为生成器对参考的延伸，须设计确认。",
+    "024: 日志和书脊不写文字，公告纸保留不可辨纹理，以落实不画文字要求；未新增叙事。",
+    "024: 方形背景虽明确请求 1024×1024，工具实际给出 1254×1254，按 016 允许的等比缩放缩小至参考尺寸；未裁切或重绘。",
+    "024: manifest 顶层 task/qa 表示最新批次，016/020 原记录保留，旧 QA 留存 batches。"
+  ],
+  "deviations": [
+    "蜘蛛生成 4 张候选，其余各 2 张；额外两张用于修正八足辨识。",
+    "未改代码或剧本、未新增项目依赖或测试代码；仅素材和 manifest。",
+    "020: 无范围偏离。新增 16 张独立候选和 8 张暂选副本，仅更新 manifest；未新增代码、剧本、依赖或测试文件。",
+    "024: 冰番兵生成 3 张，其余每项 2 张，超过最低两候选要求以修正贴边。",
+    "024: bg_inn_night 保留实际参考的大厅，而非文字描述的客房；参考与文字不一致，优先执行参考编辑要求，留 TODO(design)。",
+    "024: 按用户本轮明确要求及 024 说明免跑全量测试，执行素材与提交范围检查后直接提交。"
+  ],
+  "qa": {
+    "dimensions": "28 张交付 PNG：19 独立候选、9 暂选副本。番兵 1254×1254，刺客 1024×1536，6 项方形背景 1024×1024，宿屋 1672×941。12 张方形背景候选按 016 允许等比缩小；其余原生尺寸。",
+    "alpha": "5 张立绘候选为 RGBA，14 张背景候选为 RGB。立绘在深色、浅色、灰绿色底合成检查，未见明显白边、灰边或矩形背景光晕；原始 alpha 保留。",
+    "style": "逐项检查全部候选与已读参考的笔触、材质、光照和饱和度；暂选理由与风格偏差见 task=024 的 selections。生成过程直接查看原图，另以合成图检查 alpha。",
+    "validation_status": "passed_asset_checks",
+    "test_policy": "用户明确要求仅图片与 manifest，免跑全量测试，生成完直接提交；未修改代码或剧本。",
+    "validation": [
+      {
+        "command": "??? Python/Pillow/JSON ?????python -?????????",
+        "exit_code": 0,
+        "result": "28 PNG = 19 ???? + 9 ?????9 ??????????alpha????????????approved=false????????UTF-8 ? BOM ???????????? manifest ? 28 ?? PNG??? art/024?"
+      },
+      {
+        "command": "git diff --check",
+        "exit_code": 0,
+        "result": "??????????"
+      },
+      {
+        "command": "python -m unittest discover -s tests -q / node --check client/app.js",
+        "status": "not_run",
+        "result": "???????? 024 spec ?????????????????????????"
+      }
+    ],
+    "commit_gate": "??????????????? manifest???????? art/024????????"
+  },
+  "batches": {
+    "016": {
+      "generation_date": "2026-10-12",
+      "qa": {
+        "dimensions": "全部候选原生达到目标尺寸，无缩放或填充。",
+        "alpha": "11 项立绘为 RGBA，3 项背景为 RGB。暂选立绘在深色、浅色、灰绿色背景合成检查，未见明显白边或灰边。",
+        "portrait_alpha_note": "三个 1024x1536 人物系列的生成 alpha 最大值为 254（非 255），部分外部像素 alpha 为 1；视觉合成未见明显雾光。原始 alpha 未改动。",
+        "style": "逐项参考并排比较笔触、光照和饱和度；差异见 selections[].style_review。",
+        "validation_status": "passed",
+        "validation": [
+          {
+            "command": "python -m unittest discover -s tests -q",
+            "exit_code": 0,
+            "result": "Ran 373 tests in 39.507s; OK (skipped=1)"
+          },
+          {
+            "command": "node --check client/app.js",
+            "exit_code": 0,
+            "result": "无输出，语法检查通过"
+          },
+          {
+            "command": "git diff --check",
+            "exit_code": 0,
+            "result": "无空白错误"
+          },
+          {
+            "command": "一次性 Pillow/JSON 素材检查（未新增代码文件）",
+            "exit_code": 0,
+            "result": "44 图片文件；14 暂选、30 独立候选；尺寸、模式、alpha 范围、参考路径、完整提示词、approved=false、暂选与候选字节一致、UTF-8 无 BOM 全部通过"
+          }
+        ]
+      }
+    },
+    "020": {
+      "generation_date": "2026-10-12",
+      "qa": {
+        "dimensions": "本批 24 张交付图片全部原生达到指定尺寸，未缩放或填充。",
+        "alpha": "8 张候选立绘为 RGBA，8 张候选背景为 RGB；全部立绘候选在深色、浅色、灰绿色底合成检查，未见明显白边、灰边或矩形光晕。原始 alpha 保留。",
+        "alpha_note": "生成器部分外部像素 alpha=1，人物 alpha 最大值 254；橙色/暖色原始 RGB 光晕在实际 alpha 合成中不可见。Xanxus 02 的胸腹及衣摆存在明显局部半透明，部分头骨与金饰较实。",
+        "style": "逐图与指定参考及 016 风格基准对照；选择理由及风格偏差见 task=020 的 selections[].style_review。",
+        "validation_status": "blocked_by_existing_test_failure",
+        "validation": [
+          {
+            "command": "python -m unittest discover -s tests -q",
+            "exit_code": 1,
+            "result": "Ran 417 tests in 69.987s; FAILED (failures=1, skipped=1). test_current_generator_preserves_labels_and_does_not_mutate_sources: needs_review 与 design_reviewed_mismatches 不一致。"
+          },
+          {
+            "command": "python -m unittest discover -s tests -p test_benchmark_pinning_and_secrets.py -q",
+            "exit_code": 1,
+            "result": "Ran 7 tests in 1.057s; 同一失败复现。该测试只比较 benchmark/快照，不读取图片或 manifest；tests/scripts/eval/host/client/app.js 对 HEAD 无差异。"
+          },
+          {
+            "command": "node --check client/app.js",
+            "exit_code": 0,
+            "result": "无输出，语法检查通过。"
+          },
+          {
+            "command": "git diff --check",
+            "exit_code": 0,
+            "result": "无空白错误。"
+          },
+          {
+            "command": "一次性 Pillow/JSON 素材检查（未新增代码文件）",
+            "exit_code": 0,
+            "result": "24 张图片：16 独立候选、8 暂选副本；尺寸、模式、alpha、参考路径、完整提示词、approved=false、候选与暂选字节一致、UTF-8 无 BOM 均通过；016 原图记录、选图记录和 QA 保留。"
+          }
+        ],
+        "commit_gate": "AGENTS.md 要求提交前两项验证必须通过；因既有 benchmark 测试失败，等待用户明确豁免后提交，禁止为通过验证修改本任务范围外文件。"
+      }
+    },
+    "024": {
+      "generation_date": "2026-10-12",
+      "qa": {
+        "dimensions": "28 张交付 PNG：19 独立候选、9 暂选副本。番兵 1254×1254，刺客 1024×1536，6 项方形背景 1024×1024，宿屋 1672×941。12 张方形背景候选按 016 允许等比缩小；其余原生尺寸。",
+        "alpha": "5 张立绘候选为 RGBA，14 张背景候选为 RGB。立绘在深色、浅色、灰绿色底合成检查，未见明显白边、灰边或矩形背景光晕；原始 alpha 保留。",
+        "style": "逐项检查全部候选与已读参考的笔触、材质、光照和饱和度；暂选理由与风格偏差见 task=024 的 selections。生成过程直接查看原图，另以合成图检查 alpha。",
+        "validation_status": "passed_asset_checks",
+        "test_policy": "用户明确要求仅图片与 manifest，免跑全量测试，生成完直接提交；未修改代码或剧本。",
+        "validation": [
+          {
+            "command": "??? Python/Pillow/JSON ?????python -?????????",
+            "exit_code": 0,
+            "result": "28 PNG = 19 ???? + 9 ?????9 ??????????alpha????????????approved=false????????UTF-8 ? BOM ???????????? manifest ? 28 ?? PNG??? art/024?"
+          },
+          {
+            "command": "git diff --check",
+            "exit_code": 0,
+            "result": "??????????"
+          },
+          {
+            "command": "python -m unittest discover -s tests -q / node --check client/app.js",
+            "status": "not_run",
+            "result": "???????? 024 spec ?????????????????????????"
+          }
+        ],
+        "commit_gate": "??????????????? manifest???????? art/024????????"
+      }
+    }
+  },
+  "tasks": [
+    "016",
+    "020",
+    "024"
+  ],
+  "known_issues": [
+    "020: 全量测试存在与美术无关的既有 benchmark 标签同步失败；未修改生成器或 benchmark。",
+    "020: 原始 alpha 有少量值为 1 的外部像素，实际合成未见背景雾光；Xanxus 的部分头骨和金饰接近不透明，待设计验收。",
+    "024: 原始立绘外部有少量 alpha=1 像素，刺客 alpha 最大值为 254；深浅及灰绿底合成未见明显矩形雾光或白灰边，保留原始 alpha。",
+    "024: 番兵候选 01/02 边距过紧，暂选 03；刺客候选 02 侧边刀尖仍较近边缘。",
+    "024: 宿屋大厅/客房描述冲突、白竜纹章形状和宅邸规模待设计确认；全部为未批准候选。"
+  ]
+}

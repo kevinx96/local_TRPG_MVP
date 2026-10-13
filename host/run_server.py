@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+import sys
 import threading
+import time
 import webbrowser
 
 import uvicorn
@@ -22,16 +24,22 @@ def main() -> None:
     args = parser.parse_args()
 
     url = f"http://{args.host}:{args.port}/"
+    browser_url = f"{url}?_trpg_reload={int(time.time())}"
     if not args.no_browser:
-        timer = threading.Timer(1.0, _open_browser, args=(url,))
+        timer = threading.Timer(1.0, _open_browser, args=(browser_url,))
         timer.daemon = True
         timer.start()
     print(f"[TRPG] Host starting at {url}", flush=True)
+    frozen = bool(getattr(sys, "frozen", False))
+    if frozen:
+        from host.app import app as target  # import strings cannot be resolved inside a frozen bundle
+    else:
+        target = "host.app:app"
     uvicorn.run(
-        "host.app:app",
+        target,
         host=args.host,
         port=args.port,
-        reload=args.reload,
+        reload=args.reload and not frozen,
         timeout_graceful_shutdown=args.graceful_shutdown_timeout,
     )
 

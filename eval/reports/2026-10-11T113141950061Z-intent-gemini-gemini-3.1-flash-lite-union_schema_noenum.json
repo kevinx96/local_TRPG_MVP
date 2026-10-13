@@ -1,0 +1,465 @@
+{
+  "run_id": "2026-10-11T113141950061Z-intent-gemini-gemini-3.1-flash-lite-union_schema_noenum",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "union_schema_noenum",
+  "split": "dev",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\benchmark\\intent_v2.jsonl",
+  "cases_sha256": "f1ea8689cf7f0a28c9123167ecae4c99834eeabeb729eca18a98beb388285875",
+  "quota_exhausted": null,
+  "metrics": {
+    "total": 194,
+    "evaluated": 194,
+    "statuses": {
+      "json_error": 133,
+      "invalid_plan": 61
+    },
+    "normalizations": 0,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 194,
+      "S3": 0,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.0,
+    "s3_rate": 0.0,
+    "engine_caught": 0,
+    "exact": 0.0,
+    "kind": 0.0,
+    "kind_relaxed": 0.0,
+    "field_kind": 0.0,
+    "field_action_id": 0.0,
+    "field_operation": 0.0,
+    "field_target_id": 0.0,
+    "field_item_id": 0.0,
+    "field_advance": 0.0,
+    "confusion_matrix": {
+      "clarify": {
+        "invalid": 8
+      },
+      "clarify|dialogue|existing": {
+        "invalid": 2
+      },
+      "clarify|dialogue|unsupported": {
+        "invalid": 8
+      },
+      "clarify|existing": {
+        "invalid": 10
+      },
+      "clarify|existing|interact": {
+        "invalid": 5
+      },
+      "clarify|interact": {
+        "invalid": 8
+      },
+      "clarify|unsupported": {
+        "invalid": 18
+      },
+      "dialogue": {
+        "invalid": 29
+      },
+      "dialogue|existing|unsupported": {
+        "invalid": 6
+      },
+      "dialogue|interact": {
+        "invalid": 6
+      },
+      "dialogue|interact|unsupported": {
+        "invalid": 2
+      },
+      "existing": {
+        "invalid": 46
+      },
+      "interact": {
+        "invalid": 46
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "colloquial": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "conditional": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "context_followup": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "declared_success": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_multi": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_unique": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "dialogue": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "excluded_means": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_exact": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "impossible": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "injection": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_distract": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_observe": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_prepare": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_sneak": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_use_item": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 18,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "missing_item": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "negation": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "parallel": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "sequential": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      }
+    },
+    "negation": {
+      "count": 8,
+      "preserved": 1.0,
+      "kind": 0.0
+    },
+    "injection": {
+      "count": 8,
+      "no_state_change": 1.0,
+      "kind": 0.0,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 8,
+      "no_state_change": 1.0,
+      "kind": 0.0,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 0
+    },
+    "clarify": {
+      "precision": null,
+      "recall": 0.0
+    },
+    "json_failure_rate": 0.6855670103092784,
+    "invalid_plan_rate": 1.0,
+    "latency_ms": {
+      "p50": 2039.6785,
+      "p95": 2504.6798
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 706.0309278350516,
+        "reported": 194
+      },
+      "output_tokens": {
+        "mean": 475.9072164948454,
+        "reported": 194
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.000890368556701031,
+    "cost_currency": "USD",
+    "cost_reported": 194,
+    "top_errors": [
+      {
+        "tag": "language_mix",
+        "errors": 18,
+        "examples": [
+          {
+            "id": "v2-language_mix-001",
+            "input": "陛下、邪竜のdetailsを聞かせてください。",
+            "raw_response": "{\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "ask_king_info",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-language_mix-002",
+            "input": "鍛冶師さん、この剣をcheckしてもらうね。",
+            "raw_response": "{\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "show_sword_to_blacksmith",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "chitchat",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-chitchat-002",
+            "input": "こう暗いと気分まで沈みそうだ。",
+            "raw_response": "{\n  }",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-chitchat-005",
+            "input": "鍛冶屋の空気って独特だね。",
+            "raw_response": "{\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "colloquial",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-colloquial-001",
+            "input": "宿屋いこっか。",
+            "raw_response": "{\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "go_inn",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-colloquial-003",
+            "input": "ロビン、なんか噂ない？ 聞かせてよ。",
+            "raw_response": "{\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "ask_robin_rumor",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

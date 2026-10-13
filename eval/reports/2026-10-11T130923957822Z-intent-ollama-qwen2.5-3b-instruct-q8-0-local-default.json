@@ -1,0 +1,465 @@
+{
+  "run_id": "2026-10-11T130923957822Z-intent-ollama-qwen2.5-3b-instruct-q8-0-local-default",
+  "backend": "ollama",
+  "model": "qwen2.5-3b-instruct-q8-0-local",
+  "variant": "default",
+  "split": "dev",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\benchmark\\intent_v2.jsonl",
+  "cases_sha256": "f1ea8689cf7f0a28c9123167ecae4c99834eeabeb729eca18a98beb388285875",
+  "quota_exhausted": null,
+  "metrics": {
+    "total": 194,
+    "evaluated": 194,
+    "statuses": {
+      "invalid_plan": 192,
+      "json_error": 2
+    },
+    "normalizations": 0,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 194,
+      "S3": 0,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.0,
+    "s3_rate": 0.0,
+    "engine_caught": 0,
+    "exact": 0.0,
+    "kind": 0.0,
+    "kind_relaxed": 0.0,
+    "field_kind": 0.0,
+    "field_action_id": 0.0,
+    "field_operation": 0.0,
+    "field_target_id": 0.0,
+    "field_item_id": 0.0,
+    "field_advance": 0.0,
+    "confusion_matrix": {
+      "clarify": {
+        "invalid": 8
+      },
+      "clarify|dialogue|existing": {
+        "invalid": 2
+      },
+      "clarify|dialogue|unsupported": {
+        "invalid": 8
+      },
+      "clarify|existing": {
+        "invalid": 10
+      },
+      "clarify|existing|interact": {
+        "invalid": 5
+      },
+      "clarify|interact": {
+        "invalid": 8
+      },
+      "clarify|unsupported": {
+        "invalid": 18
+      },
+      "dialogue": {
+        "invalid": 29
+      },
+      "dialogue|existing|unsupported": {
+        "invalid": 6
+      },
+      "dialogue|interact": {
+        "invalid": 6
+      },
+      "dialogue|interact|unsupported": {
+        "invalid": 2
+      },
+      "existing": {
+        "invalid": 46
+      },
+      "interact": {
+        "invalid": 46
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "colloquial": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "conditional": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "context_followup": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "declared_success": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_multi": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_unique": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "dialogue": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "excluded_means": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_exact": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "impossible": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "injection": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_distract": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_observe": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_prepare": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_sneak": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_use_item": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 18,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "missing_item": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "negation": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "parallel": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "sequential": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      }
+    },
+    "negation": {
+      "count": 8,
+      "preserved": 1.0,
+      "kind": 0.0
+    },
+    "injection": {
+      "count": 8,
+      "no_state_change": 1.0,
+      "kind": 0.0,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 8,
+      "no_state_change": 1.0,
+      "kind": 0.0,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 0
+    },
+    "clarify": {
+      "precision": null,
+      "recall": 0.0
+    },
+    "json_failure_rate": 0.010309278350515464,
+    "invalid_plan_rate": 1.0,
+    "latency_ms": {
+      "p50": 3974.312,
+      "p95": 4506.05135
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 829.9278350515464,
+        "reported": 194
+      },
+      "output_tokens": {
+        "mean": 111.6082474226804,
+        "reported": 194
+      },
+      "cached_tokens": {
+        "mean": 678.2783505154639,
+        "reported": 194
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.0,
+    "cost_currency": "USD",
+    "cost_reported": 194,
+    "top_errors": [
+      {
+        "tag": "language_mix",
+        "errors": 18,
+        "examples": [
+          {
+            "id": "v2-language_mix-001",
+            "input": "陛下、邪竜のdetailsを聞かせてください。",
+            "raw_response": "{\"action_id\":\"ask_king_info\",\"advance\":false,\"approach\":\"アルスは国王エドワードに邪竜の詳細を尋ねる\",\"item_id\":\"\",\"kind\":\"clarify\",\"operation\":\"observe\",\"reply\":\"国王エドワードは深々と息をつき、邪竜の復活についての危惧を告げ、その詳細を語り始める。\",\"target_id\":\"king\"}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "ask_king_info",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-language_mix-002",
+            "input": "鍛冶師さん、この剣をcheckしてもらうね。",
+            "raw_response": "{\"action_id\":\"show_sword_to_blacksmith\",\"advance\":false,\"approach\":\"剣を鍛冶師ローベルトに見せる\",\"item_id\":\"iron_sword\",\"kind\":\"dialogue\",\"operation\":\"observe\",\"reply\":\"鍛冶師ローベルトが剣を手に取り、慎重に調べ始めました。\",\"target_id\":\"blacksmith\"}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "show_sword_to_blacksmith",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "chitchat",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-chitchat-002",
+            "input": "こう暗いと気分まで沈みそうだ。",
+            "raw_response": "{\"action_id\":\"observe\",\"advance\":false,\"approach\":\"ゴウダンはスライムの様子を観察し、倒れた枝を組み合わせて足止めの準備をする。\",\"item_id\":\"fallen_branches\",\"kind\":\"dialogue\",\"operation\":\"observe\",\"reply\":\"森の暗さは確かに心を落ち着かせるが、スライムの存在は不安を呼び起こす。倒れた枝を組み合わせれば、スライムの視界を遮る準備が整うだろう。\",\"target_id\":\"forest_slime\"}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-chitchat-005",
+            "input": "鍛冶屋の空気って独特だね。",
+            "raw_response": "{\"action_id\":\"observe\",\"advance\":false,\"approach\":\"\",\"item_id\":\"\",\"kind\":\"dialogue\",\"operation\":\"distract\",\"reply\":\"鍛冶師は邪竜討伐の秘訣を教えてくれるよ。何か手伝うことはできるかな？\",\"target_id\":\"blacksmith\"}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "colloquial",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-colloquial-001",
+            "input": "宿屋いこっか。",
+            "raw_response": "{\"action_id\":\"go_inn\",\"advance\":false,\"approach\":\"宿屋へ向かう、食事と休息を取る\",\"item_id\":\"trail_ration\",\"kind\":\"dialogue\",\"operation\":\"observe\",\"reply\":\"将軍ドラコがいるらしい。宿屋の雰囲気は落ち着いているが、国王エドワードと将軍ドラコの会話は緊張感がある。\",\"target_id\":\"inn\"}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "go_inn",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-colloquial-003",
+            "input": "ロビン、なんか噂ない？ 聞かせてよ。",
+            "raw_response": "{\"action_id\": \"ask_robin_rumor\", \"advance\": false, \"approach\": \"ロビンに噂話を聞くよう尋ねる\", \"item_id\": \"\", \"kind\": \"interact\", \"operation\": \"observe\", \"reply\": \"ロビンは頷き、耳を傾け始めました。\", \"target_id\": \"robin\"}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "ask_robin_rumor",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

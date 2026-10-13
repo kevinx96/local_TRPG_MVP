@@ -1,0 +1,17 @@
+{
+  "id": "v2cur_context_cd",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "mage",
+  "location_id": "ice_elemental_encounter",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": [
+    {
+      "speaker": "GM",
+      "text": "氷の精霊を迂回しますか？"
+    }
+  ]
+}

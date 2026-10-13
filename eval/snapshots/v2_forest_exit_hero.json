@@ -1,0 +1,12 @@
+{
+  "id": "v2_forest_exit_hero",
+  "scenario": "eval/benchmark/scenario_frozen/dragon_rpg@f41af9d.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "forest_exit",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}

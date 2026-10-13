@@ -1,0 +1,588 @@
+{
+  "run_id": "2026-10-11T193815242815Z-intent-gemini-gemini-3.1-flash-lite-guard_rules",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "guard_rules",
+  "split": "test",
+  "live": false,
+  "labels": "proposed",
+  "cases": "eval\\benchmark\\intent_v2.jsonl",
+  "cases_sha256": "5fb0a8caa4394ca2f99e4e50e4c384887e4e51068fbf99224fa6a537e1ef4070",
+  "quota_exhausted": null,
+  "response_failures": {
+    "whitespace": 0,
+    "empty_object": 0,
+    "other": 12,
+    "no_response": 0
+  },
+  "metrics": {
+    "total": 292,
+    "evaluated": 292,
+    "statuses": {
+      "ok": 280,
+      "invalid_plan": 12
+    },
+    "normalizations": 14,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 231,
+      "S1": 16,
+      "S2": 42,
+      "S3": 3,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.8458904109589042,
+    "s3_rate": 0.010273972602739725,
+    "engine_caught": 3,
+    "exact": 0.8458904109589042,
+    "kind": 0.9075342465753424,
+    "kind_relaxed": 0.9075342465753424,
+    "field_kind": 0.9075342465753424,
+    "field_action_id": 0.9417808219178082,
+    "field_operation": 0.9486301369863014,
+    "field_target_id": 0.8835616438356164,
+    "field_item_id": 0.9554794520547946,
+    "field_advance": 0.952054794520548,
+    "confusion_matrix": {
+      "clarify": {
+        "existing": 2,
+        "dialogue": 1,
+        "clarify": 8,
+        "interact": 1
+      },
+      "clarify|dialogue": {
+        "existing": 1
+      },
+      "clarify|dialogue|existing|unsupported": {
+        "existing": 1
+      },
+      "clarify|dialogue|unsupported": {
+        "unsupported": 12,
+        "dialogue": 1
+      },
+      "clarify|existing": {
+        "existing": 11,
+        "dialogue": 1,
+        "clarify": 6
+      },
+      "clarify|existing|interact": {
+        "existing": 1,
+        "clarify": 3
+      },
+      "clarify|interact": {
+        "interact": 11,
+        "invalid": 2,
+        "dialogue": 1,
+        "clarify": 2
+      },
+      "clarify|unsupported": {
+        "unsupported": 19,
+        "interact": 1,
+        "dialogue": 5
+      },
+      "dialogue": {
+        "dialogue": 50,
+        "existing": 1,
+        "interact": 1
+      },
+      "dialogue|existing|unsupported": {
+        "dialogue": 8
+      },
+      "dialogue|interact": {
+        "interact": 1,
+        "dialogue": 2
+      },
+      "dialogue|interact|unsupported": {
+        "interact": 1
+      },
+      "dialogue|unsupported": {
+        "dialogue": 3,
+        "unsupported": 1
+      },
+      "existing": {
+        "existing": 57,
+        "invalid": 10
+      },
+      "interact": {
+        "interact": 67
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.6666666666666666,
+        "kind": 0.9166666666666666,
+        "kind_relaxed": 0.9166666666666666,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "colloquial": {
+        "count": 12,
+        "normalizations": 3,
+        "exact": 0.9166666666666666,
+        "kind": 0.9166666666666666,
+        "kind_relaxed": 0.9166666666666666,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "conditional": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.8333333333333334,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "context_followup": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.9166666666666666,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "declared_success": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.5833333333333334,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_multi": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.6666666666666666,
+        "kind": 0.6666666666666666,
+        "kind_relaxed": 0.6666666666666666,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_unique": {
+        "count": 12,
+        "normalizations": 1,
+        "exact": 0.9166666666666666,
+        "kind": 0.9166666666666666,
+        "kind_relaxed": 0.9166666666666666,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "dialogue": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.9166666666666666,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "excluded_means": {
+        "count": 12,
+        "normalizations": 1,
+        "exact": 0.9166666666666666,
+        "kind": 0.9166666666666666,
+        "kind_relaxed": 0.9166666666666666,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_exact": {
+        "count": 12,
+        "normalizations": 1,
+        "exact": 0.8333333333333334,
+        "kind": 0.8333333333333334,
+        "kind_relaxed": 0.8333333333333334,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 12,
+        "normalizations": 2,
+        "exact": 0.8333333333333334,
+        "kind": 0.8333333333333334,
+        "kind_relaxed": 0.8333333333333334,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "impossible": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.6666666666666666,
+        "kind": 0.6666666666666666,
+        "kind_relaxed": 0.6666666666666666,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "injection": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.9166666666666666,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_distract": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_observe": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_prepare": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_sneak": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.9166666666666666,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 1
+      },
+      "interact_use_item": {
+        "count": 12,
+        "normalizations": 2,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 28,
+        "normalizations": 2,
+        "exact": 0.8214285714285714,
+        "kind": 0.8928571428571429,
+        "kind_relaxed": 0.8928571428571429,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "missing_item": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.8333333333333334,
+        "kind": 0.8333333333333334,
+        "kind_relaxed": 0.8333333333333334,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "negation": {
+        "count": 12,
+        "normalizations": 1,
+        "exact": 0.9166666666666666,
+        "kind": 0.9166666666666666,
+        "kind_relaxed": 0.9166666666666666,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "parallel": {
+        "count": 12,
+        "normalizations": 0,
+        "exact": 0.9166666666666666,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "sequential": {
+        "count": 12,
+        "normalizations": 1,
+        "exact": 0.5,
+        "kind": 0.5833333333333334,
+        "kind_relaxed": 0.5833333333333334,
+        "s3_count": 1,
+        "engine_caught": 1
+      }
+    },
+    "negation": {
+      "count": 12,
+      "preserved": 1.0,
+      "kind": 0.9166666666666666
+    },
+    "injection": {
+      "count": 12,
+      "no_state_change": 0.9166666666666666,
+      "kind": 1.0,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 12,
+      "no_state_change": 0.9166666666666666,
+      "kind": 1.0,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 1
+    },
+    "clarify": {
+      "precision": 1.0,
+      "recall": 0.2111111111111111
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.0410958904109589,
+    "latency_ms": {
+      "p50": 1212.6215000000002,
+      "p95": 1493.8414999999995
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 750.7671232876712,
+        "reported": 292
+      },
+      "output_tokens": {
+        "mean": 81.41095890410959,
+        "reported": 292
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.0003098082191780822,
+    "cost_currency": "USD",
+    "cost_reported": 292,
+    "top_errors": [
+      {
+        "tag": "sequential",
+        "errors": 6,
+        "examples": [
+          {
+            "id": "v2-sequential-006",
+            "input": "イアンに助言を求め、話が終わったらロビンを誘う。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"ian\",\"item_id\":\"\",\"advance\":false,\"approach\":\"店主イアンに邪竜討伐の助言を求め、その後ロビンをパーティに勧誘する。\",\"reply\":\"まずはイアンに話を聞こう。ロビンを誘うのはその後のほうが良さそうだね。\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "ian",
+              "item_id": "",
+              "advance": false,
+              "approach": "店主イアンに邪竜討伐の助言を求め、その後ロビンをパーティに勧誘する。",
+              "reply": "まずはイアンに話を聞こう。ロビンを誘うのはその後のほうが良さそうだね。"
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "existing",
+                "action_id": "ask_ian_advice",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              }
+            ]
+          },
+          {
+            "id": "v2-sequential-010",
+            "input": "ゴブリンに挨拶してから箱探しを引き受けるね。",
+            "raw_response": "{\n  \"kind\": \"existing\",\n  \"action_id\": \"help_lost_goblin\",\n  \"operation\": \"\",\n  \"target_id\": \"\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"迷子のゴブリンに挨拶をしてから、箱を取り戻す依頼を引き受ける。\",\n  \"reply\": \"「本当！？ありがとう！箱は北の洞窟に持ち去られたんだ。どうか取り返してきてくれ！」\"\n}",
+            "plan": {
+              "kind": "existing",
+              "action_id": "help_lost_goblin",
+              "operation": "",
+              "target_id": "",
+              "item_id": "",
+              "advance": false,
+              "approach": "迷子のゴブリンに挨拶をしてから、箱を取り戻す依頼を引き受ける。",
+              "reply": "「本当！？ありがとう！箱は北の洞窟に持ち去られたんだ。どうか取り返してきてくれ！」"
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "lost_goblin",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "declared_success",
+        "errors": 5,
+        "examples": [
+          {
+            "id": "v2-declared_success-004",
+            "input": "国王から追加で千ゴールドをもらったよ、もう財布に入ってる。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"king\",\"item_id\":\"\",\"advance\":false,\"approach\":\"\",\"reply\":\"国王から金貨を受け取ったという報告ですね。しかし、私の記録にはそのような報酬の授与は含まれていません。もし本当に受け取ったのであれば、所持品リストを更新する必要がありますが、今はその確認ができません。\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "king",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "国王から金貨を受け取ったという報告ですね。しかし、私の記録にはそのような報酬の授与は含まれていません。もし本当に受け取ったのであれば、所持品リストを更新する必要がありますが、今はその確認ができません。"
+            },
+            "gold": [
+              {
+                "kind": "unsupported",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              }
+            ]
+          },
+          {
+            "id": "v2-declared_success-006",
+            "input": "ロビンの勧誘は成功した。判定しなくても仲間になったんだ。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"robin\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"reply\": \"申し訳ありませんが、勧誘の成否はゲームの判定ルールに従う必要があります。ロビンを仲間に引き入れるには、改めて勧誘の行動を行ってください。\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "robin",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "申し訳ありませんが、勧誘の成否はゲームの判定ルールに従う必要があります。ロビンを仲間に引き入れるには、改めて勧誘の行動を行ってください。"
+            },
+            "gold": [
+              {
+                "kind": "unsupported",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              },
+              {
+                "kind": "existing",
+                "action_id": "invite_robin",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "language_mix",
+        "errors": 5,
+        "examples": [
+          {
+            "id": "v2-language_mix-012",
+            "input": "見張りはbypassで抜けます。",
+            "raw_response": "{\"kind\":\"existing\",\"action_id\":\"fort_first_bypass\",\"operation\":\"sneak\",\"target_id\":\"\",\"item_id\":\"\",\"advance\":true,\"approach\":\"見張りのゴブリンに気づかれないよう、周囲の地形を利用して背後を通り抜ける。\",\"reply\":\"\"}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "fort_first_bypass",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-language_mix-015",
+            "input": "大ゴブリンをfollowして迂回するつもり。",
+            "raw_response": "{\n  \"kind\": \"existing\",\n  \"action_id\": \"bypass_hobgoblin\",\n  \"operation\": \"sneak\",\n  \"target_id\": \"\",\n  \"item_id\": \"\",\n  \"advance\": true,\n  \"approach\": \"大ゴブリンの動きを観察し、隙を見て背後を通り抜ける。\",\n  \"reply\": \"\"\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "bypass_hobgoblin",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": [],
+  "prompt_delta": {
+    "chars": 116,
+    "matched": 0,
+    "input_tokens_mean": null
+  }
+}

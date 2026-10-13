@@ -1,0 +1,51 @@
+{
+  "total": 50,
+  "primary_tags": {
+    "observe_clue": 16,
+    "report_choice": 10,
+    "evidence_claim": 8,
+    "scale_handling": 8,
+    "lore_question": 8
+  },
+  "split": {
+    "dev": 50
+  },
+  "actors": {
+    "hero": 34,
+    "thief": 8,
+    "mage": 8
+  },
+  "snapshot_tags": {
+    "v2_scenario_castle_departure": {
+      "observe_clue": 4
+    },
+    "v2_scenario_third_gate": {
+      "observe_clue": 4
+    },
+    "v2_scenario_ice_elemental": {
+      "observe_clue": 4
+    },
+    "v2_scenario_ignis_last_breath": {
+      "observe_clue": 4
+    },
+    "v2_scenario_report_evidence": {
+      "report_choice": 7,
+      "scale_handling": 7
+    },
+    "v2_scenario_report_no_evidence": {
+      "report_choice": 3,
+      "evidence_claim": 8,
+      "scale_handling": 1
+    },
+    "v2_scenario_elder": {
+      "lore_question": 4
+    },
+    "v2_scenario_ian": {
+      "lore_question": 4
+    }
+  },
+  "gold_checked": 77,
+  "errors": [],
+  "violation_count": 0,
+  "violations": []
+}

@@ -1,0 +1,17 @@
+{
+  "n": 500,
+  "seed": 20261011,
+  "workers": 8,
+  "elapsed_seconds": 2156.7382192999994,
+  "fingerprint": "0fe4f2e91bbec7f2eb246a71e0b68a11d4a6f9db0d9621f049492711c18a6dd2",
+  "cached_jobs": 0,
+  "matrix_worker_seconds": 728.4187910000092,
+  "search_worker_seconds": 16252.679527699996,
+  "postprocessing": {
+    "class_spread_tolerance": 1e-12,
+    "ties_listed": true,
+    "resampled": false
+  },
+  "cells": 7089,
+  "trials": 3544500
+}

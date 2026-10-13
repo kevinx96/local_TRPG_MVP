@@ -1,43 +1,76 @@
 from __future__ import annotations
 
 import json
+import re
+import time
+from copy import deepcopy
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, conint
 
+from .combat import (
+    CombatError,
+    clear_combat_after_resolution,
+    combat_is_active,
+    combat_needs_resolution,
+    combat_result_for_llm,
+    consume_combat_state_delta,
+    ensure_combat_started,
+    perform_combat_action,
+)
 from .gm_contract import STATE_MARKER, build_gm_contract_prompt, build_opening_prompt, split_visible_and_json
 from .llm_client import LLMClientError, chat_completion, debug_log
+from . import llm_trace
+from .maps import movement_action
+from .shops import ShopError, public_shop, trade, use_item
+from .free_actions import InvalidPlan, adjudicate, build_plan_messages, parse_plan, planner_config
 from .scenario_context import (
     fallback_choices_for_session,
+    has_hybrid_prepared_turn,
     hybrid_context_debug,
     normalize_scenario_pack,
     scenario_context_debug,
     scene_title,
     select_hybrid_context,
+    select_hybrid_prepared_turn,
     select_scenario_context,
 )
 from .state import (
     HOST_ROOT,
     PROJECT_ROOT,
+    USER_ROOT,
+    add_assistant_message,
     add_player_message,
+    add_system_log,
+    action_dice_settings,
+    action_requirement_status,
+    apply_state_delta,
+    apply_action_result,
     apply_gm_payload,
     build_llm_messages,
+    choice_requirement_status,
     create_session,
     load_config,
     load_session,
     public_session,
+    record_state_event,
+    resolve_player_intent,
     roll_dice,
     save_config,
     save_session,
+    track_intent_resolution,
 )
+from .world_state import current_location_id, current_location_title
 
 
 CLIENT_ROOT = PROJECT_ROOT / "client"
 PROCESSED_SCENARIO_DIR = HOST_ROOT / "prompt" / "processed"
+DEBUG_COMPLETION_DIR = USER_ROOT / "debug" / "completions"
 SCENARIO_SCHEMA_FILENAME = "scenario_pack.schema.json"
 
 app = FastAPI(title="Local TRPG Host", version="0.2.0")
@@ -53,7 +86,13 @@ class CreateSessionRequest(BaseModel):
 
 class TurnRequest(BaseModel):
     text: str
+    action_id: Optional[str] = None
     speaker: str = "プレイヤー"
+    client_dice: Optional[dict[str, Any]] = None
+
+
+class MapMoveRequest(BaseModel):
+    node_id: str
 
 
 class ScenarioSaveRequest(BaseModel):
@@ -65,14 +104,95 @@ class ScenarioCreateRequest(BaseModel):
     scenario: dict[str, Any]
 
 
+class ClientDebugRequest(BaseModel):
+    event: str
+    detail: dict[str, Any] = {}
+
+
+class CombatActionRequest(BaseModel):
+    action_type: str
+    action_id: str = ""
+    target_id: str = ""
+
+
+class ItemUseRequest(BaseModel):
+    item_id: str
+
+
+class ShopTradeRequest(ItemUseRequest):
+    quantity: conint(strict=True, gt=0)
+
+
+@app.post("/api/sessions/{session_id}/items/use")
+def api_use_item(session_id: str, request: ItemUseRequest) -> dict[str, Any]:
+    try:
+        session = load_session(session_id)
+        message = use_item(session, request.item_id)
+        save_session(session)
+        return {"session": public_session(session), "message": message}
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ShopError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.get("/api/sessions/{session_id}/shops/{shop_id}")
+def api_get_shop(session_id: str, shop_id: str) -> dict[str, Any]:
+    try:
+        return public_shop(load_session(session_id), shop_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ShopError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+def _shop_trade(session_id: str, shop_id: str, request: ShopTradeRequest, *, selling: bool) -> dict[str, Any]:
+    try:
+        session = load_session(session_id)
+        trade(session, shop_id, request.item_id, request.quantity, selling=selling)
+        shop = public_shop(session, shop_id)
+        save_session(session)
+        return {"session": public_session(session), "shop": shop,
+                "message": shop["sell_line" if selling else "buy_line"]}
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ShopError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.post("/api/sessions/{session_id}/shops/{shop_id}/buy")
+def api_buy(session_id: str, shop_id: str, request: ShopTradeRequest) -> dict[str, Any]:
+    return _shop_trade(session_id, shop_id, request, selling=False)
+
+
+@app.post("/api/sessions/{session_id}/shops/{shop_id}/sell")
+def api_sell(session_id: str, shop_id: str, request: ShopTradeRequest) -> dict[str, Any]:
+    return _shop_trade(session_id, shop_id, request, selling=True)
+
+
 @app.get("/")
 def index() -> FileResponse:
-    return FileResponse(CLIENT_ROOT / "index.html")
+    return FileResponse(
+        CLIENT_ROOT / "index.html",
+        headers={"Cache-Control": "no-store, max-age=0", "Pragma": "no-cache"},
+    )
 
 
 @app.get("/editor")
 def editor() -> FileResponse:
-    return FileResponse(CLIENT_ROOT / "editor.html")
+    return FileResponse(
+        CLIENT_ROOT / "editor.html",
+        headers={"Cache-Control": "no-store, max-age=0", "Pragma": "no-cache"},
+    )
+
+
+@app.post("/api/client-debug")
+def api_client_debug(request: ClientDebugRequest) -> dict[str, bool]:
+    detail = json.dumps(request.detail, ensure_ascii=False, default=str)
+    if len(detail) > 1200:
+        detail = detail[:1200] + "...(truncated)"
+    debug_log(f"Client choice debug event={request.event} detail={detail}")
+    return {"ok": True}
 
 
 def _ollama_proxy_info() -> tuple[str, dict[str, str]]:
@@ -124,13 +244,16 @@ def api_ollama_shutdown_ping() -> dict[str, Any]:
 @app.get("/api/config")
 def config_info() -> dict[str, Any]:
     config = load_config()
-    backend_name = config.get("active_backend", "ollama")
+    backend_name = config.get("active_backend", "gemini")
     backend = (config.get("backends") or {}).get(backend_name, {})
     return {
         "active_backend": backend_name,
         "base_url": backend.get("base_url"),
         "model": backend.get("model"),
-        "backends": _public_backends(config.get("backends", {})),
+        "backends": _public_backends({
+            name: profile for name, profile in config.get("backends", {}).items()
+            if name not in config.get("archived_backends", [])
+        }),
     }
 
 
@@ -143,7 +266,7 @@ class UpdateConfigRequest(BaseModel):
 def api_update_config(request: UpdateConfigRequest) -> dict[str, Any]:
     config = load_config()
     backends = config.get("backends", {})
-    if request.active_backend not in backends:
+    if request.active_backend not in backends or request.active_backend in config.get("archived_backends", []):
         raise HTTPException(status_code=400, detail="Invalid backend selected.")
     config["active_backend"] = request.active_backend
     backend = backends[request.active_backend]
@@ -182,7 +305,7 @@ def api_list_scenarios() -> dict[str, Any]:
     scenarios = []
     PROCESSED_SCENARIO_DIR.mkdir(parents=True, exist_ok=True)
     for path in sorted(PROCESSED_SCENARIO_DIR.glob("*.json"), key=lambda item: item.name.lower()):
-        if path.name == SCENARIO_SCHEMA_FILENAME:
+        if path.name == SCENARIO_SCHEMA_FILENAME or re.search(r"(?:^|[-_ ])restore(?:$|[-_ ])", path.stem, re.IGNORECASE):
             continue
         summary = _scenario_summary(path)
         if summary:
@@ -316,12 +439,65 @@ def api_turn(session_id: str, request: TurnRequest) -> dict[str, Any]:
     return _run_turn(session, request)
 
 
+@app.post("/api/sessions/{session_id}/map/move")
+def api_map_move(session_id: str, request: MapMoveRequest) -> dict[str, Any]:
+    try:
+        session = load_session(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    try:
+        action = movement_action(session, request.node_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    return _run_turn(session, TurnRequest(text=action["text"], action_id=action["id"]))
+
+
+@app.post("/api/sessions/{session_id}/combat/actions")
+def api_combat_action(session_id: str, request: CombatActionRequest) -> dict[str, Any]:
+    try:
+        session = load_session(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    try:
+        result = perform_combat_action(
+            session,
+            request.action_type,
+            action_id=request.action_id,
+            target_id=request.target_id,
+        )
+        state_delta = consume_combat_state_delta(session)
+        if state_delta:
+            apply_state_delta(session, state_delta, allow_world_transition=True)
+        save_session(session)
+        debug_log(
+            "Combat action "
+            f"session={session_id} type={request.action_type} action_id={request.action_id} "
+            f"target_id={request.target_id} status={result.get('status')} round={result.get('round')}"
+        )
+        return public_session(session)
+    except CombatError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@app.post("/api/sessions/{session_id}/combat/resolve")
+def api_combat_resolve(session_id: str) -> dict[str, Any]:
+    try:
+        session = load_session(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    try:
+        return _run_combat_resolution(session)
+    except CombatError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@llm_trace.game_trace
 def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
     config = load_config()
     debug_enabled = bool(config.get("debug_llm", True))
 
     latest_roll = {"expression": "opening", "rolls": [], "total": 0}
-    messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
+    messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt(opening=True))
     opening_prompt = _opening_prompt_for_mode(session)
     messages.append({"role": "user", "content": opening_prompt})
 
@@ -335,53 +511,188 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
         )
 
     full_response = ""
+    completion_source = "llm"
+    t0 = time.time()
     try:
-        full_response = chat_completion(config, messages)
+        full_response = llm_trace.completion(chat_completion, session, config, messages, "opening")
     except LLMClientError as exc:
+        full_response = _prepared_fallback_response(session, opening=True)
+        completion_source = "prepared_fallback" if full_response else "demo_fallback"
         if debug_enabled:
-            debug_log(f"Opening LLM failure; demo_fallback={config.get('demo_fallback_on_error', True)} error={exc}")
-        if not config.get("demo_fallback_on_error", True):
-            raise HTTPException(status_code=502, detail=f"LLM接続エラー: {exc}") from exc
-        full_response = _demo_opening(session, str(exc))
+            debug_log(
+                "Opening LLM failure; "
+                f"fallback={completion_source} error={_redact_secrets(str(exc))}"
+            )
+        if not full_response and not config.get("demo_fallback_on_error", True):
+            raise HTTPException(
+                status_code=502,
+                detail=f"LLM接続エラー: {_redact_secrets(str(exc))}",
+            ) from exc
+        if not full_response:
+            full_response = _demo_opening(session, _redact_secrets(str(exc)))
+    if debug_enabled and full_response:
+        completion_path = _save_completion_debug(session, "opening", full_response, completion_source)
+        debug_log(f"Opening completion saved path={completion_path}")
 
     visible_text, payload, warning = split_visible_and_json(full_response)
     visible_text = _visible_text_from_payload(visible_text, payload)
     if not visible_text.strip():
+        llm_trace.annotate(fallback=True)
         if debug_enabled:
-            debug_log("Opening model returned no player-visible text; using local fallback.")
+            debug_log(
+                "Opening model returned no player-visible text; using local fallback. "
+                f"payload_keys={_payload_keys(payload)} raw_preview={_raw_preview(full_response)}"
+            )
         full_response = _demo_opening(session, "opening response had no player-visible text")
         visible_text, payload, warning = split_visible_and_json(full_response)
         visible_text = _visible_text_from_payload(visible_text, payload)
     if debug_enabled:
+        elapsed_ms = (time.time() - t0) * 1000
         debug_log(
             "Opening model result "
             f"raw_chars={len(full_response)} visible_chars={len(visible_text)} "
-            f"json_ok={payload is not None} warning={warning!r}"
+            f"json_ok={payload is not None} warning={warning!r} elapsed_ms={elapsed_ms:.0f}"
         )
     apply_gm_payload(session, visible_text, payload, warning)
     session["needs_opening"] = False
+    ensure_combat_started(session, intro_text=visible_text)
     save_session(session)
     return public_session(session)
 
 
-def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
-    add_player_message(session, request.text.strip(), request.speaker)
+@llm_trace.game_trace
+def _run_turn(session: dict[str, Any], request: TurnRequest, *, allow_narration: bool = True) -> dict[str, Any]:
+    if session.get("game_over"):
+        raise HTTPException(status_code=409, detail="物語はすでに終了しています。")
+    if combat_is_active(session):
+        raise HTTPException(status_code=409, detail="戦闘中は戦闘コマンドを使用してください。")
+    if combat_needs_resolution(session):
+        raise HTTPException(status_code=409, detail="戦闘結果を確定してください。")
+    action_text = request.text.strip()
+    if not action_text and not request.action_id:
+        raise HTTPException(status_code=400, detail="行動を入力してください。")
+    intent_resolution = resolve_player_intent(session, action_text, request.action_id)
+    if not request.action_id and intent_resolution.get("status") != "legacy":
+        return _run_free_turn(session, request)
+    intent_state = track_intent_resolution(session, intent_resolution, action_text)
+    intent_status = str(intent_resolution.get("status") or "unmatched")
+    resolved_action = intent_resolution.get("action") if intent_status == "resolved" else None
+    session["last_action_result"] = {}
+    if request.action_id and intent_status == "invalid_action_id":
+        add_system_log(session, "選択肢が古くなっています。現在の選択肢から選び直してください。")
+        session["choices"] = fallback_choices_for_session(session)
+        save_session(session)
+        return public_session(session)
+    if intent_status == "ambiguous":
+        add_player_message(session, action_text, request.speaker)
+        add_assistant_message(session, "その行動は複数の可能性に当てはまります。現在できる行動から、意図に近いものを選んでください。")
+        session["choices"] = fallback_choices_for_session(session)
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+        save_session(session)
+        return public_session(session)
+    if resolved_action:
+        enabled, reason = action_requirement_status(resolved_action, session)
+        if not enabled:
+            add_system_log(session, reason or "この行動は現在選択できません。")
+            save_session(session)
+            return public_session(session)
+    choice = _matching_choice(session.get("choices"), action_text)
+    if choice:
+        enabled, reason = choice_requirement_status(choice, session.get("character", {}))
+        if not enabled:
+            add_system_log(session, reason or "この行動は条件を満たしていません。")
+            save_session(session)
+            return public_session(session)
+    else:
+        scenario_choice = _matching_scenario_choice(session, action_text)
+        if scenario_choice:
+            enabled, reason = choice_requirement_status(scenario_choice, session.get("character", {}))
+            if not enabled:
+                add_system_log(session, reason or "この行動は条件を満たしていません。")
+                save_session(session)
+                return public_session(session)
 
-    dice_type = session.get("next_dice_type", "1d20")
-    latest_roll = roll_dice(session, dice_type)
+    add_player_message(session, action_text, request.speaker)
+    session["last_turn_narrated"] = False
+
+    if resolved_action:
+        dice_type, dice_dc = action_dice_settings(
+            resolved_action,
+            "1d20",
+            0,
+            session=session,
+        )
+    elif intent_status == "legacy":
+        dice_type, dice_dc = _dice_settings_for_turn(session, action_text)
+    else:
+        dice_type, dice_dc = "none", 0
+        session["next_dice_type"] = "1d20"
+        session["next_dice_dc"] = 0
+    if int(dice_dc or 0) <= 0:
+        latest_roll = {"expression": dice_type, "rolls": [], "total": 0, "dc": 0}
+    else:
+        try:
+            latest_roll = roll_dice(session, dice_type, int(dice_dc))
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail="この行動の判定設定に不備があるため実行できません。") from exc
+    action_result = apply_action_result(session, resolved_action, latest_roll) if resolved_action else {}
+
+    if action_result.get("open_shop") or action_result.get("result_text"):
+        if action_result.get("result_text"):
+            add_assistant_message(session, action_result["result_text"])
+            session["last_turn_narrated"] = True
+        ensure_combat_started(session)
+        save_session(session)
+        return public_session(session)
+
+    prepared_combat_intro = _prepared_combat_intro(session, action_text)
+    if prepared_combat_intro and ensure_combat_started(session, intro_text=prepared_combat_intro):
+        add_assistant_message(session, prepared_combat_intro)
+        session["last_turn_narrated"] = True
+        save_session(session)
+        debug_log(
+            "Combat started with prepared intro "
+            f"session={session['id']} action_id={action_result.get('action_id', '')} "
+            f"location={current_location_id(session)} chars={len(prepared_combat_intro)}"
+        )
+        return public_session(session)
+
+    if _should_skip_turn_narration(session, resolved_action, action_result, action_text):
+        ensure_combat_started(session)
+        save_session(session)
+        debug_log(
+            "Turn narration skipped "
+            f"session={session['id']} action_id={action_result.get('action_id', '')} "
+            f"location={current_location_id(session)}"
+        )
+        return public_session(session)
+
+    prepared = select_hybrid_prepared_turn(session, action_text)
+    prepared_text = str((prepared.get("draft") or {}).get("gm_text") or "")
+    if resolved_action and (not allow_narration or (session.get("gm_mode") == "semi" and prepared_text)):
+        add_assistant_message(session, prepared_text or _engine_action_text(session, action_result))
+        session["last_turn_narrated"] = True
+        ensure_combat_started(session)
+        save_session(session)
+        return public_session(session)
 
     config = load_config()
-    messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt())
+    messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt(narration_only=bool(resolved_action)))
     debug_enabled = bool(config.get("debug_llm", True))
 
     if debug_enabled:
-        dice_dc = session.get("next_dice_dc", 10)
         context_debug = _context_debug_for_mode(session, request.text.strip(), opening=False)
         debug_log(
             "Turn start "
             f"session={session['id']} speaker={request.speaker!r} "
             f"text_len={len(request.text.strip())} dice={latest_roll['expression']} "
-            f"total={latest_roll['total']} dc={dice_dc}"
+            f"total={latest_roll['total']} dc={dice_dc} "
+            f"intent_status={intent_status} intent_method={intent_state.get('method', '')} "
+            f"intent_confidence={intent_state.get('confidence', 0)} "
+            f"intent_candidates={intent_state.get('candidate_action_ids', [])} "
+            f"deviation_turn={intent_state.get('turns', 0)} "
+            f"resolved_action_id={action_result.get('action_id', '')} outcome={action_result.get('outcome', '')}"
         )
         debug_log(
             "Turn scenario context "
@@ -389,24 +700,45 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
             f"matches={context_debug['matches']}"
         )
 
+    t0 = time.time()
+    completion_source = "llm"
     try:
-        full_response = chat_completion(config, messages)
+        full_response = llm_trace.completion(chat_completion, session, config, messages, "narration")
     except LLMClientError as exc:
+        full_response = _prepared_fallback_response(session, request.text.strip())
+        completion_source = "prepared_fallback" if full_response else "demo_fallback"
         if debug_enabled:
-            debug_log(f"LLM failure; demo_fallback={config.get('demo_fallback_on_error', True)} error={exc}")
-        if not config.get("demo_fallback_on_error", True):
-            raise HTTPException(status_code=502, detail=f"LLM接続エラー: {exc}") from exc
-        full_response = _demo_response(session, request.text, latest_roll, str(exc))
+            debug_log(
+                "LLM failure; "
+                f"fallback={completion_source} error={_redact_secrets(str(exc))}"
+            )
+        if not full_response and not config.get("demo_fallback_on_error", True):
+            raise HTTPException(
+                status_code=502,
+                detail=f"LLM接続エラー: {_redact_secrets(str(exc))}",
+            ) from exc
+        if not full_response:
+            full_response = _demo_response(session, request.text, latest_roll, _redact_secrets(str(exc)))
+    if debug_enabled and full_response:
+        completion_path = _save_completion_debug(session, "turn", full_response, completion_source)
+        debug_log(f"Turn completion saved path={completion_path}")
 
     visible_text, payload, warning = split_visible_and_json(full_response)
     visible_text = _visible_text_from_payload(visible_text, payload)
+    if debug_enabled and not visible_text.strip():
+        debug_log(
+            "Turn model returned no player-visible text. "
+            f"payload_keys={_payload_keys(payload)} raw_preview={_raw_preview(full_response)}"
+        )
     if debug_enabled:
+        elapsed_ms = (time.time() - t0) * 1000
         debug_log(
             "Turn model result "
             f"raw_chars={len(full_response)} visible_chars={len(visible_text)} "
-            f"json_ok={payload is not None} warning={warning!r}"
+            f"json_ok={payload is not None} warning={warning!r} elapsed_ms={elapsed_ms:.0f}"
         )
     apply_gm_payload(session, visible_text, payload, warning)
+    ensure_combat_started(session, intro_text=visible_text)
     save_session(session)
     if debug_enabled:
         debug_log(
@@ -417,6 +749,264 @@ def _run_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
     return public_session(session)
 
 
+@llm_trace.game_trace
+def _run_free_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, Any]:
+    started = time.monotonic()
+    config = planner_config(load_config())
+    session.pop("deviation_state", None)
+    session["last_action_result"] = {}
+    session["next_dice_type"], session["next_dice_dc"] = "1d20", 0
+    session["last_intent_resolution"] = {"status": "unmatched", "method": "api", "player_text": request.text[:240]}
+    try:
+        plan = parse_plan(llm_trace.completion(chat_completion, session, config, build_plan_messages(session, request.text.strip()), "plan"),
+                          session.get("character", {}).get("character_id", ""))
+        llm_trace.annotate(parse_status="ok", plan=plan)
+        if plan["kind"] == "existing":
+            resolution = resolve_player_intent(session, action_id=plan["action_id"])
+            if resolution.get("status") != "resolved":
+                raise InvalidPlan("unavailable action")
+            _run_turn(session, TurnRequest(text=request.text, speaker=request.speaker, action_id=plan["action_id"]), allow_narration=False)
+        else:
+            add_player_message(session, request.text.strip(), request.speaker)
+            result = adjudicate(session, plan)
+            llm_trace.annotate(outcome=result.get("outcome"))
+            add_assistant_message(session, result["text"])
+            session["last_turn_narrated"] = True
+            session["choices"] = fallback_choices_for_session(session)
+    except (LLMClientError, InvalidPlan) as exc:
+        llm_trace.annotate(parse_status="invalid_plan" if isinstance(exc, InvalidPlan) else "request_error", fallback=True, outcome="rejected")
+        # Do not replay the command, retry another model, or expose unvalidated prose.
+        add_player_message(session, request.text.strip(), request.speaker)
+        add_assistant_message(session, "行動を読み取れませんでした。状況は変わっていません。言い換えるか、現在の選択肢から選んでください。")
+        session["choices"] = fallback_choices_for_session(session)
+        debug_log(f"Free action rejected session={session['id']} error_type={type(exc).__name__}")
+    session["last_turn_metrics"] = {"model_calls": 1, "elapsed_ms": round((time.monotonic() - started) * 1000)}
+    save_session(session)
+    return public_session(session)
+
+
+def _engine_action_text(session: dict[str, Any], result: dict[str, Any]) -> str:
+    label = {"neutral": "完了", "success": "成功", "failure": "失敗",
+             "critical_success": "大成功", "critical_failure": "大失敗"}.get(result.get("outcome"), "完了")
+    return f"「{result.get('text', '行動')}」：{label}。現在地は{current_location_title(session)}。"
+
+
+def _prepared_combat_intro(session: dict[str, Any], player_text: str) -> str:
+    if session.get("gm_mode") != "semi":
+        return ""
+    action_result = session.get("last_action_result") if isinstance(session.get("last_action_result"), dict) else {}
+    if not action_result.get("action_id"):
+        return ""
+    prepared = select_hybrid_prepared_turn(session, player_text)
+    draft = prepared.get("draft") if isinstance(prepared.get("draft"), dict) else {}
+    text = str(draft.get("combat_text") or draft.get("gm_text") or "").strip()
+    if text and not re.search(r"戦闘|戦い|襲|飛びかか|攻撃|待ち伏せ|立ちはだか|武器|短剣|牙|殺意", text):
+        text = f"{text}\n\n敵が退路を塞ぎ、戦闘が始まる。"
+    return text
+
+
+def _should_skip_turn_narration(
+    session: dict[str, Any],
+    resolved_action: Any,
+    action_result: dict[str, Any],
+    player_text: str,
+) -> bool:
+    if not isinstance(resolved_action, dict) or not action_result:
+        return False
+    if resolved_action.get("silent") is True or str(resolved_action.get("narration") or "").lower() == "none":
+        return True
+    silent_outcomes = {
+        str(outcome)
+        for outcome in resolved_action.get("silent_outcomes", [])
+        if outcome is not None
+    }
+    if str(action_result.get("outcome") or "") in silent_outcomes:
+        return True
+    if session.get("gm_mode") != "semi" or action_result.get("outcome") != "neutral":
+        return False
+    delta = action_result.get("state_delta") if isinstance(action_result.get("state_delta"), dict) else {}
+    meaningful_keys = {
+        key for key, value in delta.items()
+        if value not in (None, "", 0, [], {})
+    }
+    position_keys = {"current_scene", "current_location"}
+    if not meaningful_keys or not meaningful_keys.intersection(position_keys):
+        return False
+    if meaningful_keys.difference(position_keys):
+        return False
+    return not has_hybrid_prepared_turn(session, player_text)
+
+
+@llm_trace.game_trace
+def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
+    result = combat_result_for_llm(session)
+    if result.get("outcome") == "victory":
+        _record_obstacle_victory(session)
+    player = result.get("player") if isinstance(result.get("player"), dict) else {}
+    outcome = str(result.get("outcome") or "")
+    outcome_label = {"victory": "勝利", "defeat": "敗北", "fled": "逃走", "purified": "浄化"}.get(outcome, outcome)
+    event_text = (
+        f"戦闘に{outcome_label}しました。"
+        f" HP {player.get('hp', 0)}/{player.get('max_hp', 0)}、"
+        f"MP {player.get('mp', 0)}/{player.get('max_mp', 0)}、"
+        f"SP {player.get('sp', 0)}/{player.get('max_sp', 0)}。"
+    )
+    combat_event = record_state_event(
+        session,
+        "combat_resolved",
+        event_text,
+        {
+            "outcome": outcome,
+            "rounds": result.get("rounds"),
+            "player": player,
+            "enemies": result.get("enemies", []),
+        },
+    )
+    result.setdefault("committed_events", []).append({
+        "kind": combat_event["kind"],
+        "text": combat_event["text"],
+        "data": deepcopy(combat_event["data"]),
+    })
+    if isinstance(session.get("combat"), dict):
+        session["combat"]["result"] = deepcopy(result)
+    clear_combat_after_resolution(session)
+    if session.get("game_over"):
+        add_assistant_message(session, str(session["game_over"]["reason"]))
+        session["choices"] = []
+        session["last_turn_narrated"] = True
+        save_session(session)
+        return public_session(session)
+    session["last_action_result"] = {
+        "action_id": f"combat:{result.get('combat_id', '')}",
+        "outcome": result.get("outcome"),
+        "combat_result": result,
+    }
+    prepared_text = str(result.get("prepared_text") or "").strip()
+    if prepared_text:
+        add_assistant_message(session, prepared_text)
+        session["last_turn_narrated"] = True
+        session["last_action_result"] = {}
+        ensure_combat_started(session, intro_text=prepared_text)
+        if not combat_is_active(session):
+            session["choices"] = fallback_choices_for_session(session)
+        save_session(session)
+        debug_log(
+            "Combat result used prepared text "
+            f"session={session['id']} outcome={result.get('outcome')} chars={len(prepared_text)}"
+        )
+        return public_session(session)
+    latest_roll = {"expression": "combat_result", "rolls": [], "total": 0}
+    messages = build_llm_messages(session, latest_roll, build_gm_contract_prompt(narration_only=True))
+    messages.append({
+        "role": "user",
+        "content": (
+            "以下はゲームエンジンが確定した戦闘結果です。数値、勝敗、報酬を変更せず、"
+            "70〜220文字の日本語で戦闘後の情景を描写してください。次の非戦闘行動候補も提示してください。\n"
+            + json.dumps(result, ensure_ascii=False)
+        ),
+    })
+    config = load_config()
+    debug_enabled = bool(config.get("debug_llm", True))
+    completion_source = "llm"
+    t0 = time.time()
+    try:
+        full_response = llm_trace.completion(chat_completion, session, config, messages, "narration")
+        llm_trace.annotate(outcome=result.get("outcome"))
+    except LLMClientError as exc:
+        completion_source = "demo_fallback"
+        if not config.get("demo_fallback_on_error", True):
+            raise HTTPException(
+                status_code=502,
+                detail=f"LLM接続エラー: {_redact_secrets(str(exc))}",
+            ) from exc
+        llm_trace.annotate(outcome=result.get("outcome"), fallback=True)
+        full_response = _demo_combat_resolution(session, result, _redact_secrets(str(exc)))
+    if debug_enabled and full_response:
+        completion_path = _save_completion_debug(session, "combat_result", full_response, completion_source)
+        debug_log(f"Combat result completion saved path={completion_path}")
+    visible_text, payload, warning = split_visible_and_json(full_response)
+    visible_text = _visible_text_from_payload(visible_text, payload)
+    if not visible_text.strip():
+        llm_trace.annotate(outcome=result.get("outcome"), fallback=True)
+        full_response = _demo_combat_resolution(session, result, "combat result had no player-visible text")
+        visible_text, payload, warning = split_visible_and_json(full_response)
+        visible_text = _visible_text_from_payload(visible_text, payload)
+    apply_gm_payload(session, visible_text, payload, warning)
+    session["last_action_result"] = {}
+    ensure_combat_started(session, intro_text=visible_text)
+    save_session(session)
+    if debug_enabled:
+        debug_log(
+            "Combat result narrated "
+            f"session={session['id']} outcome={result.get('outcome')} "
+            f"visible_chars={len(visible_text)} elapsed_ms={(time.time() - t0) * 1000:.0f}"
+        )
+    return public_session(session)
+
+
+def _record_obstacle_victory(session: dict[str, Any]) -> None:
+    source = str((session.get("combat") or {}).get("location_id") or "")
+    location = next((loc for loc in session.get("scenario_pack", {}).get("locations", []) if loc.get("id") == source), {})
+    for obstacle in location.get("obstacles", []):
+        if obstacle.get("enemy_id") not in location.get("enemy_ids", []):
+            continue
+        data = {"resolution": "defeated", "enemy_defeated": True,
+                "actor_id": session.get("character", {}).get("character_id") or "self"}
+        event = record_state_event(session, "obstacle_resolved", "", {"location_id": source, "target_id": obstacle["id"], **data}, visible=False)
+        data["source_event_id"] = event["id"]
+        session.setdefault("scene_changes", {}).setdefault(source, {})[obstacle["id"]] = data
+
+
+def _dice_settings_for_turn(session: dict[str, Any], action_text: str) -> tuple[str, int]:
+    dice_type = str(session.get("next_dice_type") or "1d20")
+    dice_dc = int(session.get("next_dice_dc", 0) or 0)
+    choice = _matching_choice(session.get("choices"), action_text)
+    if not choice:
+        return dice_type, max(dice_dc, 0)
+
+    risk = str(choice.get("risk") or "")
+    if "判定不要" in risk:
+        return dice_type, 0
+
+    expr_match = re.search(r"(\d+d\d+(?:\+[A-Za-z_][A-Za-z0-9_]*)?)", risk, re.IGNORECASE)
+    if expr_match:
+        dice_type = expr_match.group(1)
+
+    dc_match = re.search(r"DC\s*(\d+)", risk, re.IGNORECASE)
+    if dc_match:
+        dice_dc = int(dc_match.group(1))
+    elif "判定" in risk and dice_dc <= 0:
+        dice_dc = 10
+    return dice_type, dice_dc
+
+
+def _matching_choice(raw_choices: Any, action_text: str) -> Optional[dict[str, Any]]:
+    if not isinstance(raw_choices, list) or not action_text:
+        return None
+    normalized_action = action_text.strip()
+    for choice in raw_choices:
+        if not isinstance(choice, dict):
+            continue
+        if str(choice.get("text") or "").strip() == normalized_action:
+            return choice
+        child_match = _matching_choice(choice.get("children"), normalized_action)
+        if child_match:
+            return child_match
+    return None
+
+
+def _matching_scenario_choice(session: dict[str, Any], action_text: str) -> Optional[dict[str, Any]]:
+    pack = session.get("scenario_pack")
+    if not isinstance(pack, dict):
+        return None
+    location_id = current_location_id(session)
+    for location in pack.get("locations", []):
+        if not isinstance(location, dict) or str(location.get("id") or "") != location_id:
+            continue
+        return _matching_choice(location.get("choices"), action_text)
+    return None
+
+
 def _visible_text_from_payload(visible_text: str, payload: Optional[dict[str, Any]]) -> str:
     if visible_text.strip() or not isinstance(payload, dict):
         return visible_text
@@ -424,10 +1014,58 @@ def _visible_text_from_payload(visible_text: str, payload: Optional[dict[str, An
     return str(gm_text or "")
 
 
+def _payload_keys(payload: Optional[dict[str, Any]]) -> list[str]:
+    if not isinstance(payload, dict):
+        return []
+    return sorted(str(key) for key in payload.keys())[:20]
+
+
+def _raw_preview(text: str, limit: int = 320) -> str:
+    compact = re.sub(r"\s+", " ", text).strip()
+    return compact[:limit]
+
+
+def _redact_secrets(text: str) -> str:
+    redacted = re.sub(
+        r"([?&](?:key|api_key|token|access_token)=)[^&\s'\"]+",
+        r"\1[REDACTED]",
+        str(text or ""),
+        flags=re.IGNORECASE,
+    )
+    redacted = re.sub(r"\bBearer\s+[^\s,;]+", "Bearer [REDACTED]", redacted, flags=re.IGNORECASE)
+    return re.sub(r"\bAIza[0-9A-Za-z_-]{20,}\b", "[REDACTED]", redacted)
+
+
+def _save_completion_debug(session: dict[str, Any], phase: str, completion: str, source: str) -> str:
+    DEBUG_COMPLETION_DIR.mkdir(parents=True, exist_ok=True)
+    created_at = datetime.now(timezone.utc)
+    timestamp = created_at.strftime("%Y%m%dT%H%M%S%fZ")
+    session_id = re.sub(r"[^A-Za-z0-9_-]+", "_", str(session.get("id") or "unknown"))[:64]
+    safe_phase = re.sub(r"[^A-Za-z0-9_-]+", "_", phase)[:32]
+    safe_source = re.sub(r"[^A-Za-z0-9_-]+", "_", source)[:32]
+    path = DEBUG_COMPLETION_DIR / f"{timestamp}_{session_id}_{safe_phase}_{safe_source}.json"
+    path.write_text(
+        json.dumps(
+            {
+                "session_id": session.get("id"),
+                "phase": phase,
+                "source": source,
+                "created_at": created_at.isoformat(),
+                "chars": len(completion),
+                "completion": completion,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    return str(path)
+
+
 def _opening_prompt_for_mode(session: dict[str, Any]) -> str:
-    if session.get("gm_mode") == "full":
+    if session.get("gm_mode") == "semi" and has_hybrid_prepared_turn(session, "", opening=True):
         return (
-            "FULL/HYBRIDモードのprepared openingターンを完成済みのGM応答として扱ってください。"
+            "SEMI/HYBRIDモードのprepared openingターンを完成済みのGM応答として扱ってください。"
             "キャラクター名など現在状態に矛盾する最小部分だけを書き換えてください。"
             "開始時は文体・出来事・NPC台詞・報酬内容・選択肢を原則として変えないでください。"
             "gm_text, system_log, choices は日本語だけで出力してください。英語を混ぜないでください。"
@@ -436,9 +1074,33 @@ def _opening_prompt_for_mode(session: dict[str, Any]) -> str:
     return build_opening_prompt(session)
 
 
+def _prepared_fallback_response(
+    session: dict[str, Any],
+    player_text: str = "",
+    *,
+    opening: bool = False,
+) -> str:
+    if session.get("gm_mode") != "semi":
+        return ""
+    prepared = select_hybrid_prepared_turn(session, player_text, opening=opening)
+    draft = prepared.get("draft") if isinstance(prepared.get("draft"), dict) else {}
+    gm_text = str(draft.get("gm_text") or "").strip()
+    if not gm_text:
+        return ""
+    payload = {
+        "gm_text": gm_text,
+        "system_log": str(draft.get("system_log") or "") if opening else "",
+        "dice_type": str(draft.get("dice_type") or "1d20"),
+        "dice_dc": int(draft.get("dice_dc") or 0),
+        "state_delta": deepcopy(draft.get("state_delta") or {}) if opening else {},
+        "choices": fallback_choices_for_session(session),
+    }
+    return gm_text + "\n" + STATE_MARKER + "\n" + json.dumps(payload, ensure_ascii=False)
+
+
 def _context_debug_for_mode(session: dict[str, Any], player_text: str, opening: bool = False) -> dict[str, Any]:
-    if session.get("gm_mode") == "full":
-        debug = hybrid_context_debug(select_hybrid_context(session, player_text, opening=opening))
+    if session.get("gm_mode") == "semi" and has_hybrid_prepared_turn(session, player_text, opening=opening):
+        debug = hybrid_context_debug(select_hybrid_context(session, player_text, opening=opening, include_debug=True))
         return {
             "chars": debug["chars"],
             "scene": debug["scene"],
@@ -505,6 +1167,26 @@ def _demo_response(session: dict[str, Any], player_text: str, roll: dict[str, An
             "background_image": None,
             "character_image": None,
         },
+        "choices": fallback_choices_for_session(session),
+        "debug_error": error,
+    }
+    return gm_text + "\n" + STATE_MARKER + "\n" + json.dumps(payload, ensure_ascii=False)
+
+
+def _demo_combat_resolution(session: dict[str, Any], result: dict[str, Any], error: str) -> str:
+    outcome = str(result.get("outcome") or "")
+    if outcome == "victory":
+        gm_text = "最後の一撃が決まり、敵は地に伏した。荒い息を整えると、戦場に静けさが戻る。傷と消耗は残っているが、道を阻む脅威は退けられた。"
+    elif outcome == "fled":
+        gm_text = "追撃を振り切り、どうにか安全な距離まで退いた。敵の気配はまだ遠くに残っている。体勢を立て直し、別の手段を考える必要がありそうだ。"
+    else:
+        gm_text = "力尽きて膝をつき、戦いは敗北に終わった。今の装備と戦術では押し切れない。回復と準備を整えてから、改めて挑む必要がある。"
+    payload = {
+        "gm_text": gm_text,
+        "system_log": f"戦闘結果: {outcome}",
+        "dice_type": "1d20",
+        "dice_dc": 0,
+        "state_delta": {},
         "choices": fallback_choices_for_session(session),
         "debug_error": error,
     }

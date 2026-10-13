@@ -1,0 +1,17 @@
+{
+  "id": "v2cur_context_ch",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "dark_forest_loc",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": [
+    {
+      "speaker": "GM",
+      "text": "携帯食を一つ投げてスライムを誘い、その間に通り抜けますか？"
+    }
+  ]
+}

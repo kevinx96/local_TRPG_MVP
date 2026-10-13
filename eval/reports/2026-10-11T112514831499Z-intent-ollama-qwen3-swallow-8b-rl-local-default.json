@@ -1,0 +1,464 @@
+{
+  "run_id": "2026-10-11T112514831499Z-intent-ollama-qwen3-swallow-8b-rl-local-default",
+  "backend": "ollama",
+  "model": "qwen3-swallow-8b-rl-local",
+  "variant": "default",
+  "split": "dev",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\benchmark\\intent_v2.jsonl",
+  "cases_sha256": "f1ea8689cf7f0a28c9123167ecae4c99834eeabeb729eca18a98beb388285875",
+  "quota_exhausted": null,
+  "metrics": {
+    "total": 194,
+    "evaluated": 194,
+    "statuses": {
+      "invalid_plan": 194
+    },
+    "normalizations": 0,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 0,
+      "S1": 0,
+      "S2": 194,
+      "S3": 0,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.0,
+    "s3_rate": 0.0,
+    "engine_caught": 0,
+    "exact": 0.0,
+    "kind": 0.0,
+    "kind_relaxed": 0.0,
+    "field_kind": 0.0,
+    "field_action_id": 0.0,
+    "field_operation": 0.0,
+    "field_target_id": 0.0,
+    "field_item_id": 0.0,
+    "field_advance": 0.0,
+    "confusion_matrix": {
+      "clarify": {
+        "invalid": 8
+      },
+      "clarify|dialogue|existing": {
+        "invalid": 2
+      },
+      "clarify|dialogue|unsupported": {
+        "invalid": 8
+      },
+      "clarify|existing": {
+        "invalid": 10
+      },
+      "clarify|existing|interact": {
+        "invalid": 5
+      },
+      "clarify|interact": {
+        "invalid": 8
+      },
+      "clarify|unsupported": {
+        "invalid": 18
+      },
+      "dialogue": {
+        "invalid": 29
+      },
+      "dialogue|existing|unsupported": {
+        "invalid": 6
+      },
+      "dialogue|interact": {
+        "invalid": 6
+      },
+      "dialogue|interact|unsupported": {
+        "invalid": 2
+      },
+      "existing": {
+        "invalid": 46
+      },
+      "interact": {
+        "invalid": 46
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "colloquial": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "conditional": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "context_followup": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "declared_success": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_multi": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_unique": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "dialogue": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "excluded_means": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_exact": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "impossible": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "injection": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_distract": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_observe": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_prepare": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_sneak": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_use_item": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 18,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "missing_item": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "negation": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "parallel": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "sequential": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 0,
+        "kind_relaxed": 0,
+        "s3_count": 0,
+        "engine_caught": 0
+      }
+    },
+    "negation": {
+      "count": 8,
+      "preserved": 1.0,
+      "kind": 0.0
+    },
+    "injection": {
+      "count": 8,
+      "no_state_change": 1.0,
+      "kind": 0.0,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 8,
+      "no_state_change": 1.0,
+      "kind": 0.0,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 0
+    },
+    "clarify": {
+      "precision": null,
+      "recall": 0.0
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 1.0,
+    "latency_ms": {
+      "p50": 5951.2474999999995,
+      "p95": 10362.546199999999
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 833.9278350515464,
+        "reported": 194
+      },
+      "output_tokens": {
+        "mean": 125.56701030927834,
+        "reported": 194
+      },
+      "cached_tokens": {
+        "mean": 704.8659793814433,
+        "reported": 194
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.0,
+    "cost_currency": "USD",
+    "cost_reported": 194,
+    "top_errors": [
+      {
+        "tag": "language_mix",
+        "errors": 18,
+        "examples": [
+          {
+            "id": "v2-language_mix-001",
+            "input": "陛下、邪竜のdetailsを聞かせてください。",
+            "raw_response": "{\n  \"action_id\": \"ask_king_info\",\n  \"advance\": false,\n  \"approach\": \"邪竜の詳細を国王エドワードに尋ねる\",\n  \"item_id\": \"\",\n  \"kind\": \"dialogue\",\n  \"operation\": \"observe\",\n  \"reply\": \"「邪竜は古代の封印が解け、王国を脅かす存在だ。復活の儀式は王城の地下に隠された石板に記されている。」\",\n  \"target_id\": \"king\"\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "ask_king_info",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-language_mix-002",
+            "input": "鍛冶師さん、この剣をcheckしてもらうね。",
+            "raw_response": "{\n  \"action_id\": \"show_sword_to_blacksmith\",\n  \"advance\": false,\n  \"approach\": \"鍛冶師に剣を見せて、状態チェックと必要なら修理を依頼する。\",\n  \"item_id\": \"iron_sword\",\n  \"kind\": \"dialogue\",\n  \"operation\": \"observe\",\n  \"reply\": \"「この剣、錆びが目立つな。すぐに研ぎ直すと、切れ味が戻るだろう。修理費は5ゴールドだ。」\",\n  \"target_id\": \"blacksmith\"\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "show_sword_to_blacksmith",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "chitchat",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-chitchat-002",
+            "input": "こう暗いと気分まで沈みそうだ。",
+            "raw_response": "{\n  \"action_id\": \"none\",\n  \"advance\": false,\n  \"approach\": \"暗い森の雰囲気を描写し、気分が沈む様子を語る。\",\n  \"item_id\": \"\",\n  \"kind\": \"dialogue\",\n  \"operation\": \"observe\",\n  \"reply\": \"ゴウダンは薄暗い森の入口に足を踏み入れ、木漏れ日すら届かない闇に包まれた。スライムの湿った息遣いが耳元で鳴り、地面に散らばる木の実の匂いが鼻を刺激する。ゴウダンの心は重く、まるで闇そのものが彼の胸を締め付けているかのようだ。\",\n  \"target_id\": \"forest_slime\"\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-chitchat-005",
+            "input": "鍛冶屋の空気って独特だね。",
+            "raw_response": "{\n  \"action_id\": \"ask_blacksmith_weakness\",\n  \"advance\": false,\n  \"approach\": \"鍛冶屋の独特な空気に触れながら、鍛冶師ローベルトに邪竜討伐の方法を尋ねる。\",\n  \"item_id\": \"none\",\n  \"kind\": \"dialogue\",\n  \"operation\": \"observe\",\n  \"reply\": \"「この鍛冶屋の匂いは、鋼の熱と汗が混ざった独特なものだな。だが、邪竜の討伐については、まずはその弱点を知る必要がある。」\",\n  \"target_id\": \"blacksmith\"\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "colloquial",
+        "errors": 8,
+        "examples": [
+          {
+            "id": "v2-colloquial-001",
+            "input": "宿屋いこっか。",
+            "raw_response": "{\n  \"action_id\": \"go_inn\",\n  \"advance\": false,\n  \"approach\": \"宿屋へ向かう\",\n  \"item_id\": \"\",\n  \"kind\": \"dialogue\",\n  \"operation\": \"observe\",\n  \"reply\": \"「宿屋へ行こうか。」と、アルスは城の門をくぐり、石畳の道を進む。\",\n  \"target_id\": \"inn\"\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "go_inn",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v2-colloquial-003",
+            "input": "ロビン、なんか噂ない？ 聞かせてよ。",
+            "raw_response": "{\n  \"action_id\": \"ask_robin_rumor\",\n  \"advance\": false,\n  \"approach\": \"ロビンに噂話を聞く\",\n  \"item_id\": \"robin\",\n  \"kind\": \"dialogue\",\n  \"operation\": \"observe\",\n  \"reply\": \"「ああ、噂か…最近、闇の森の奥で光る石が落ちているらしいんだ。誰かがそれを拾って、闇の竜の巣に持ち込んだらしいよ。」\",\n  \"target_id\": \"robin\"\n}",
+            "plan": null,
+            "gold": [
+              {
+                "kind": "existing",
+                "action_id": "ask_robin_rumor",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

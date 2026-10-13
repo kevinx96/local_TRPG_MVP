@@ -1,0 +1,15 @@
+{
+  "id": "forest_missing_supplies_hero",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "dark_forest_loc",
+  "flags": {},
+  "hp_delta": -5,
+  "inventory_add": [],
+  "inventory_remove": [
+    "trail_ration",
+    "薬草"
+  ],
+  "recent_messages": []
+}

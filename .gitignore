@@ -5,14 +5,19 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .tmp-test/
+eval/runs/
+eval/cache/
+.codex-runs/
 .venv/
 venv/
 
 # Local runtime data
 host/saves/
+host/debug/
 host/prompt/processed/*
 !host/prompt/processed/
 !host/prompt/processed/dragon_rpg.json
+!host/prompt/processed/dragon_rpg_hybrid.json
 !host/prompt/processed/scenario_pack.schema.json
 
 # Large local model files
@@ -28,3 +33,13 @@ host/auto_tagger.py
 host/gemini_api_key.*
 *gemini*api*key*
 *gemini*apikey*
+
+# Third-party source material (kept locally, never committed)
+host/prompt/raw/
+
+# Agent worktrees
+.claude/worktrees/
+
+# PyInstaller output
+build/
+dist/

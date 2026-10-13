@@ -1,0 +1,240 @@
+{
+  "status": "proposed",
+  "note": "TODO(design): 技能名称复用现有词汇作为候选，效果与数值待审定；不加入剧本。",
+  "candidates": [
+    {
+      "character": "hero",
+      "level": 3,
+      "variant": "A",
+      "skill": {
+        "id": "hero_lv3_a",
+        "name": "渾身斬り",
+        "kind": "attack",
+        "damage": "1d8+str/2",
+        "accuracy": 92,
+        "element": "physical",
+        "cost": 3,
+        "cost_type": "sp"
+      }
+    },
+    {
+      "character": "hero",
+      "level": 3,
+      "variant": "B",
+      "skill": {
+        "id": "hero_lv3_b",
+        "name": "神聖の庇護",
+        "kind": "defend",
+        "guard_multiplier": 0.25,
+        "survive_at_one": true,
+        "cost": 2,
+        "cost_type": "sp"
+      }
+    },
+    {
+      "character": "hero",
+      "level": 5,
+      "variant": "A",
+      "skill": {
+        "id": "hero_lv5_a",
+        "name": "渾身斬り",
+        "kind": "attack",
+        "damage": "2d6+str/2",
+        "accuracy": 92,
+        "element": "physical",
+        "cost": 5,
+        "cost_type": "sp"
+      }
+    },
+    {
+      "character": "hero",
+      "level": 5,
+      "variant": "B",
+      "skill": {
+        "id": "hero_lv5_b",
+        "name": "神聖の庇護",
+        "kind": "defend",
+        "guard_multiplier": 0.25,
+        "survive_at_one": true,
+        "cost": 2,
+        "cost_type": "sp"
+      }
+    },
+    {
+      "character": "cleric",
+      "level": 3,
+      "variant": "A",
+      "skill": {
+        "id": "cleric_lv3_a",
+        "name": "聖なる守護",
+        "kind": "attack",
+        "damage": "1d8+wis/2",
+        "accuracy": 92,
+        "element": "holy",
+        "cost": 3,
+        "cost_type": "mp"
+      }
+    },
+    {
+      "character": "cleric",
+      "level": 3,
+      "variant": "B",
+      "skill": {
+        "id": "cleric_lv3_b",
+        "name": "治癒の祈り",
+        "kind": "heal",
+        "healing": "1d6+wis/2",
+        "cost": 4,
+        "cost_type": "mp"
+      }
+    },
+    {
+      "character": "cleric",
+      "level": 5,
+      "variant": "A",
+      "skill": {
+        "id": "cleric_lv5_a",
+        "name": "聖なる守護",
+        "kind": "attack",
+        "damage": "2d6+wis/2",
+        "accuracy": 92,
+        "element": "holy",
+        "cost": 5,
+        "cost_type": "mp"
+      }
+    },
+    {
+      "character": "cleric",
+      "level": 5,
+      "variant": "B",
+      "skill": {
+        "id": "cleric_lv5_b",
+        "name": "治癒の祈り",
+        "kind": "heal",
+        "healing": "2d6+wis/2",
+        "cost": 4,
+        "cost_type": "mp"
+      }
+    },
+    {
+      "character": "mage",
+      "level": 3,
+      "variant": "A",
+      "skill": {
+        "id": "mage_lv3_a",
+        "name": "氷の矢",
+        "kind": "attack",
+        "damage": "1d8+int/2",
+        "accuracy": 92,
+        "element": "ice",
+        "cost": 3,
+        "cost_type": "mp"
+      }
+    },
+    {
+      "character": "mage",
+      "level": 3,
+      "variant": "B",
+      "skill": {
+        "id": "mage_lv3_b",
+        "name": "火球",
+        "kind": "attack",
+        "damage": "1d8+int/2",
+        "accuracy": 92,
+        "element": "fire",
+        "cost": 6,
+        "cost_type": "mp",
+        "all_targets": true
+      }
+    },
+    {
+      "character": "mage",
+      "level": 5,
+      "variant": "A",
+      "skill": {
+        "id": "mage_lv5_a",
+        "name": "氷の矢",
+        "kind": "attack",
+        "damage": "2d6+int/2",
+        "accuracy": 92,
+        "element": "ice",
+        "cost": 5,
+        "cost_type": "mp"
+      }
+    },
+    {
+      "character": "mage",
+      "level": 5,
+      "variant": "B",
+      "skill": {
+        "id": "mage_lv5_b",
+        "name": "火球",
+        "kind": "attack",
+        "damage": "2d6+int/2",
+        "accuracy": 92,
+        "element": "fire",
+        "cost": 8,
+        "cost_type": "mp",
+        "all_targets": true
+      }
+    },
+    {
+      "character": "thief",
+      "level": 3,
+      "variant": "A",
+      "skill": {
+        "id": "thief_lv3_a",
+        "name": "急所突き",
+        "kind": "attack",
+        "damage": "1d8+dex/2",
+        "accuracy": 92,
+        "element": "physical",
+        "cost": 3,
+        "cost_type": "sp"
+      }
+    },
+    {
+      "character": "thief",
+      "level": 3,
+      "variant": "B",
+      "skill": {
+        "id": "thief_lv3_b",
+        "name": "影隠れ",
+        "kind": "defend",
+        "guard_multiplier": 0.25,
+        "survive_at_one": true,
+        "cost": 2,
+        "cost_type": "sp"
+      }
+    },
+    {
+      "character": "thief",
+      "level": 5,
+      "variant": "A",
+      "skill": {
+        "id": "thief_lv5_a",
+        "name": "急所突き",
+        "kind": "attack",
+        "damage": "2d6+dex/2",
+        "accuracy": 92,
+        "element": "physical",
+        "cost": 5,
+        "cost_type": "sp"
+      }
+    },
+    {
+      "character": "thief",
+      "level": 5,
+      "variant": "B",
+      "skill": {
+        "id": "thief_lv5_b",
+        "name": "影隠れ",
+        "kind": "defend",
+        "guard_multiplier": 0.25,
+        "survive_at_one": true,
+        "cost": 2,
+        "cost_type": "sp"
+      }
+    }
+  ]
+}

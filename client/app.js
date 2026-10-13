@@ -5,13 +5,34 @@
 const state = {
   sessionId: null,
   pendingChoices: [],
+  choiceStack: [],
   choicesRevealed: false,
   selectedCharacterId: "hero",
-  selectedCharacterImage: "/static/images/char_male_hero.png",
+  selectedCharacterImage: "/static/images/char_male_hero_v2.png",
   selectedCharacter: null,
   characters: [],
   expandedCharacterId: "",
   scenarioPath: "host/prompt/processed/dragon_rpg.json",
+  lastDiceLogLength: 0,
+  lastDiceSignature: "",
+  diceAnimationTimer: null,
+  nextDiceDc: 0,
+  nextDiceType: "1d20",
+  character: null,
+  combatTargetId: "",
+  combatActionTab: "attack",
+  combatBusy: false,
+  combatActions: [],
+  combatIntroSeenId: "",
+  session: null,
+  serviceBusy: false,
+  turnBusy: false,
+  shop: null,
+  shopTab: "buy",
+  shopItemId: "",
+  shopQuantity: 1,
+  shopEventId: "",
+  questLogIds: new Set(),
 };
 
 /* ── DOM References ── */
@@ -34,11 +55,17 @@ const els = {
 
   /* Game screen */
   background:      document.querySelector("#background"),
-  portrait:        document.querySelector("#portrait"),
+  spriteLayer:     document.querySelector("#spriteLayer"),
+  locationPortraits:document.querySelector("#locationPortraits"),
+  playerPortrait:  document.querySelector("#playerPortrait"),
+  npcPortrait:     document.querySelector("#npcPortrait"),
   menuToggleBtn:   document.querySelector("#menuToggleBtn"),
   dialogueBox:     document.querySelector("#dialogueBox"),
   speakerName:     document.querySelector("#speakerName"),
   messageText:     document.querySelector("#messageText"),
+  diceBanner:      document.querySelector("#diceBanner"),
+  diceBannerText:  document.querySelector("#diceBannerText"),
+  diceRollFace:    document.querySelector(".dice-roll-face"),
   logToggleBtn:    document.querySelector("#logToggleBtn"),
   inputToggleBtn:  document.querySelector("#inputToggleBtn"),
   logOverlay:      document.querySelector("#logOverlay"),
@@ -56,6 +83,8 @@ const els = {
   clickIndicator:  document.querySelector("#clickIndicator"),
   characterName:   document.querySelector("#characterName"),
   characterDescription:document.querySelector("#characterDescription"),
+  characterAttributes:document.querySelector("#characterAttributes"),
+  companionInfo:   document.querySelector("#companionInfo"),
   inventory:       document.querySelector("#inventory"),
   diceLog:         document.querySelector("#diceLog"),
   systemLogs:      document.querySelector("#systemLogs"),
@@ -68,18 +97,142 @@ const els = {
   goldText: document.querySelector("#goldText"),
   choicesArea: document.querySelector("#choicesArea"),
   choicesList: document.querySelector("#choicesList"),
+  combatScreen: document.querySelector("#combatScreen"),
+  combatIntro: document.querySelector("#combatIntro"),
+  combatIntroText: document.querySelector("#combatIntroText"),
+  combatIntroContinue: document.querySelector("#combatIntroContinue"),
+  combatTitle: document.querySelector("#combatTitle"),
+  combatRound: document.querySelector("#combatRound"),
+  combatPlayerName: document.querySelector("#combatPlayerName"),
+  combatPlayerImage: document.querySelector("#combatPlayerImage"),
+  combatPlayerHp: document.querySelector("#combatPlayerHp"),
+  combatPlayerMp: document.querySelector("#combatPlayerMp"),
+  combatPlayerSp: document.querySelector("#combatPlayerSp"),
+  combatPlayerHpBar: document.querySelector("#combatPlayerHpBar"),
+  combatPlayerMpBar: document.querySelector("#combatPlayerMpBar"),
+  combatPlayerSpBar: document.querySelector("#combatPlayerSpBar"),
+  combatEnemies: document.querySelector("#combatEnemies"),
+  combatLog: document.querySelector("#combatLog"),
+  combatActionTabs: document.querySelector("#combatActionTabs"),
+  combatActions: document.querySelector("#combatActions"),
+  combatResult: document.querySelector("#combatResult"),
+  combatResultTitle: document.querySelector("#combatResultTitle"),
+  combatResultText: document.querySelector("#combatResultText"),
+  combatResolveButton: document.querySelector("#combatResolveButton"),
+  endingOverlay: document.querySelector("#endingOverlay"),
+  endingTitle: document.querySelector("#endingTitle"),
+  endingReason: document.querySelector("#endingReason"),
+  endingRestartButton: document.querySelector("#endingRestartButton"),
 };
 
 let cachedConfig = null;
+
+function choiceDebug(event, detail = {}) {
+  const payload = {
+    ...detail,
+    sessionId: state.sessionId,
+    pendingChoices: state.pendingChoices.length,
+    revealed: state.choicesRevealed,
+    choicesAreaDisplay: els.choicesArea ? getComputedStyle(els.choicesArea).display : "",
+  };
+  console.debug("[TRPG-CHOICE-DEBUG]", event, payload);
+  try {
+    fetch("/api/client-debug", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event, detail: payload }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    /* Debug logging must never break gameplay. */
+  }
+}
+
+function choiceLayoutDebug() {
+  const firstCard = els.choicesList?.querySelector(".choice-card");
+  if (!firstCard) return {};
+  const rect = firstCard.getBoundingClientRect();
+  const x = Math.round(rect.left + rect.width / 2);
+  const y = Math.round(rect.top + rect.height / 2);
+  const top = document.elementFromPoint(x, y);
+  return {
+    firstCardRect: {
+      left: Math.round(rect.left),
+      top: Math.round(rect.top),
+      width: Math.round(rect.width),
+      height: Math.round(rect.height),
+    },
+    topElementAtFirstCardCenter: top ? {
+      tag: top.tagName,
+      id: top.id || "",
+      className: String(top.className || ""),
+      text: (top.textContent || "").trim().slice(0, 80),
+    } : null,
+    choicesAreaZIndex: els.choicesArea ? getComputedStyle(els.choicesArea).zIndex : "",
+    choicesAreaPointerEvents: els.choicesArea ? getComputedStyle(els.choicesArea).pointerEvents : "",
+  };
+}
+
+function ensureDiceBannerElement() {
+  const existingBanner = document.querySelector("#diceBanner");
+  if (existingBanner) {
+    els.diceBanner = existingBanner;
+    els.diceBannerText = existingBanner.querySelector("#diceBannerText") || document.querySelector("#diceBannerText");
+    els.diceRollFace = existingBanner.querySelector(".dice-roll-face") || document.querySelector(".dice-roll-face");
+    return;
+  }
+
+  const dialogueBox = els.dialogueBox || document.querySelector("#dialogueBox");
+  if (!dialogueBox) return;
+  const bottomArea = dialogueBox.closest(".gal-bottom-area") || dialogueBox.parentElement;
+  if (!bottomArea) return;
+
+  const banner = document.createElement("div");
+  banner.id = "diceBanner";
+  banner.className = "gal-dice-banner";
+  banner.style.display = "none";
+  banner.setAttribute("aria-live", "polite");
+
+  const face = document.createElement("span");
+  face.className = "dice-roll-face";
+  face.textContent = "?";
+  banner.appendChild(face);
+
+  const text = document.createElement("span");
+  text.id = "diceBannerText";
+  text.className = "dice-banner-text";
+  text.textContent = "判定中...";
+  banner.appendChild(text);
+
+  bottomArea.insertBefore(banner, dialogueBox);
+  els.diceBanner = banner;
+  els.diceBannerText = text;
+  els.diceRollFace = face;
+}
 
 /* ═══════════════════════════════════════════════════
    INIT
    ═══════════════════════════════════════════════════ */
 
 async function init() {
+  ensureDiceBannerElement();
   restoreGmMode();
   await loadConfig();
   await loadScenarios();
+  await resumeSessionFromUrl();
+}
+
+async function resumeSessionFromUrl() {
+  const sessionId = new URLSearchParams(window.location.search).get("session");
+  if (!sessionId || !/^[a-f0-9]{32}$/i.test(sessionId)) return;
+  try {
+    const session = await fetchJson(`/api/sessions/${sessionId}`);
+    els.startScreen.style.display = "none";
+    els.gameScreen.style.display = "";
+    renderSession(session);
+  } catch (error) {
+    if (els.backendStatus) els.backendStatus.textContent = `存档读取失败: ${error.message}`;
+  }
 }
 
 async function loadConfig() {
@@ -137,9 +290,11 @@ async function loadScenarios() {
     const data = await fetchJson("/api/scenarios");
     const scenarios = data.scenarios || [];
     els.scenarioSelect.innerHTML = scenarios
-      .map((s) => `<option value="${escapeHtml(s.filename)}">${escapeHtml(s.title || s.filename)}</option>`)
+      .map((s) => `<option value="${escapeHtml(s.filename)}">${escapeHtml(scenarioOptionLabel(s, scenarios))}</option>`)
       .join("");
-    const preferred = scenarios.find((s) => s.filename === "dragon_rpg.json") || scenarios[0];
+    const preferred = scenarios.find((s) => s.filename === "dragon_rpg_hybrid.json")
+      || scenarios.find((s) => s.filename === "dragon_rpg.json")
+      || scenarios[0];
     if (preferred) {
       els.scenarioSelect.value = preferred.filename;
       await onScenarioChange();
@@ -150,12 +305,21 @@ async function loadScenarios() {
   }
 }
 
+function scenarioOptionLabel(scenario, scenarios) {
+  const filename = scenario.filename || "";
+  const title = scenario.title || filename;
+  if (filename.endsWith("_hybrid.json")) return `${title}（Hybrid）`;
+  const hybridFilename = filename.replace(/\.json$/i, "_hybrid.json");
+  if (scenarios.some((item) => item.filename === hybridFilename)) return `${title}（Base）`;
+  return title;
+}
+
 async function onScenarioChange() {
   const filename = els.scenarioSelect.value;
   if (!filename) return;
   try {
     const data = await fetchJson(`/api/scenarios/${encodeURIComponent(filename)}`);
-    const characters = data.scenario?.characters || [];
+    const characters = (data.scenario?.characters || []).filter((char) => char.selectable !== false);
     state.scenarioPath = `host/prompt/processed/${filename}`;
     state.expandedCharacterId = "";
     renderCharacterCards(characters);
@@ -263,7 +427,7 @@ function updateHeroImage(char) {
 
 async function startGame() {
   const heroName = els.heroNameInput.value.trim() || "アルス";
-  const backend = els.backendSelect ? els.backendSelect.value : "ollama";
+  const backend = els.backendSelect ? els.backendSelect.value : "gemini";
   const model = els.modelSelect ? els.modelSelect.value : "";
   const gmMode = document.querySelector('input[name="gmMode"]:checked')?.value || "semi";
   const scenarioPath = state.scenarioPath;
@@ -296,6 +460,7 @@ async function startGame() {
       }),
     });
     state.sessionId = session.id;
+    window.history.replaceState({}, "", `/?session=${encodeURIComponent(session.id)}`);
     /* Transition to game screen */
     els.startScreen.style.display = "none";
     els.gameScreen.style.display = "";
@@ -347,9 +512,21 @@ function setStartBusy(busy) {
 async function newSession() {
   /* Show start screen again */
   state.pendingChoices = [];
+  state.choiceStack = [];
   state.choicesRevealed = false;
+  state.lastDiceLogLength = 0;
+  state.lastDiceSignature = "";
+  state.nextDiceDc = 0;
+  state.nextDiceType = "1d20";
+  state.combatTargetId = "";
+  state.combatActionTab = "attack";
+  state.combatBusy = false;
+  window.history.replaceState({}, "", "/");
+  stopDiceRollAnimation();
+  hideDiceBanner();
   els.gameScreen.style.display = "none";
   els.startScreen.style.display = "";
+  if (els.endingOverlay) els.endingOverlay.style.display = "none";
   els.messages.innerHTML = "";
   hideChoices();
 }
@@ -360,48 +537,58 @@ async function newSession() {
 
 async function submitTurn(event) {
   event.preventDefault();
+  if (state.serviceBusy || state.turnBusy) return;
   const text = els.input.value.trim();
   if (!text || !state.sessionId) return;
   els.input.value = "";
   addMessage("user", "プレイヤー", text);
   hideChoices();
   clearPendingChoices();
+  hideDiceBanner();
   setBusy(true);
   try {
+    const body = { text };
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
+      body: JSON.stringify(body),
     });
     if (!response.ok || !response.body) {
       throw new Error(await response.text());
     }
     renderSession(await response.json());
   } catch (error) {
+    stopDiceRollAnimation();
     addMessage("assistant", "GM", `エラー: ${error.message}`);
   } finally {
     setBusy(false);
   }
 }
 
-/* Submit a choice as a turn */
-async function submitChoice(choiceText) {
+async function submitChoice(choiceText, actionId = "") {
+  if (state.serviceBusy || state.turnBusy) return;
+  choiceDebug("submit-choice-start", { choiceText, actionId });
   if (!choiceText || !state.sessionId) return;
   addMessage("user", "プレイヤー", choiceText);
   hideChoices();
   clearPendingChoices();
+  hideDiceBanner();
   setBusy(true);
   try {
+    const body = { text: choiceText };
+    if (actionId) body.action_id = actionId;
     const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: choiceText }),
+      body: JSON.stringify(body),
     });
     if (!response.ok) {
       throw new Error(await response.text());
     }
     renderSession(await response.json());
   } catch (error) {
+    choiceDebug("submit-choice-error", { choiceText, error: error.message });
+    stopDiceRollAnimation();
     addMessage("assistant", "GM", `エラー: ${error.message}`);
   } finally {
     setBusy(false);
@@ -413,32 +600,61 @@ async function submitChoice(choiceText) {
    ═══════════════════════════════════════════════════ */
 
 function renderSession(session) {
+  const sameSession = state.session?.id === session.id;
+  if (!sameSession) {
+    closeShop();
+    state.shopEventId = session.last_action_result?.event_id || "";
+    state.questLogIds.clear();
+    document.querySelector("#notifications").replaceChildren();
+  }
+  state.session = session;
   state.sessionId = session.id;
+  renderMaps();
+  if (els.input) els.input.placeholder = session.free_input_hint || "行動や台詞を自由に入力してください";
+  state.nextDiceDc = Number(session.next_dice_dc || 0);
+  state.nextDiceType = session.next_dice_type || "1d20";
+  state.character = session.character || null;
   const character = session.character;
 
   /* Scene */
-  if (els.sceneTitle) els.sceneTitle.textContent = session.current_scene_title || session.current_scene || session.scenario_title || "開始";
+  if (els.sceneTitle) {
+    els.sceneTitle.textContent = session.current_location_title || session.current_scene_title || session.current_location || session.current_scene || session.scenario_title || "開始";
+    els.sceneTitle.title = session.current_scene_title && session.current_location_title !== session.current_scene_title
+      ? session.current_scene_title
+      : "";
+  }
 
   if (els.background) {
-    if (character.background_image) {
-      els.background.style.backgroundImage = `url(${character.background_image})`;
+    const backgroundImage = session.location_background_image || character.background_image;
+    if (backgroundImage) {
+      els.background.style.backgroundImage = `url(${backgroundImage})`;
+      els.background.dataset.placeholder = '';
+      const probe = new Image();
+      probe.onerror = () => {
+        if (state.session?.location_background_image === backgroundImage) {
+          els.background.style.backgroundImage = '';
+          els.background.dataset.placeholder = session.current_location_title || '';
+        }
+      };
+      probe.src = backgroundImage;
     } else {
       els.background.style.backgroundImage = "";
     }
   }
 
-  if (els.portrait) {
-    if (character.character_image) {
-      els.portrait.src = character.character_image;
-      els.portrait.style.display = "";
-    } else {
-      els.portrait.style.display = "none";
-    }
-  }
+  renderScenePortraits(session, character);
 
   /* Character info */
   if (els.characterName) els.characterName.textContent = character.name || "冒険者";
   if (els.characterDescription) els.characterDescription.textContent = character.description || "";
+  renderCharacterAttributes(character.attributes || {});
+  if (els.companionInfo) {
+    const companion = session.companion;
+    els.companionInfo.hidden = !companion;
+    els.companionInfo.innerHTML = companion
+      ? `${companion.image ? `<img src="${escapeAttr(companion.image)}" alt="" />` : ""}<span>同行者　${escapeHtml(companion.name || companion.id || "不明")}</span>`
+      : "";
+  }
 
   /* Meters */
   renderMeter("hp", character);
@@ -448,9 +664,25 @@ function renderSession(session) {
 
   /* Inventory (item objects) */
   renderInventory(character.inventory || []);
+  renderQuests(session.quests || []);
+  for (const entry of session.system_logs || []) {
+    if (!/^クエスト(更新|達成)：/.test(entry.text)) continue;
+    const key = entry.event_id || `${entry.created_at}:${entry.text}`;
+    if (sameSession && !state.questLogIds.has(key)) showNotification(entry.text);
+    state.questLogIds.add(key);
+  }
+  const shopAction = session.last_action_result || {};
+  if (state.shop && (state.shop.location_id !== session.current_location || session.in_combat || session.game_over)) closeShop();
+  if (sameSession && shopAction.open_shop && shopAction.event_id !== state.shopEventId && !session.in_combat && !session.game_over) {
+    state.shopEventId = shopAction.event_id;
+    openShop(shopAction.open_shop);
+  }
   renderEnemies(session.enemies || []);
+  renderCombat(session);
+  renderEnding(session.game_over);
 
   /* Dice log */
+  renderLatestDiceResult(session.dice_log || []);
   renderList(
     els.diceLog,
     (session.dice_log || []).slice(-5).reverse().map(
@@ -468,9 +700,17 @@ function renderSession(session) {
 
   /* Messages */
   renderMessages(session.messages || []);
+  els.dialogueBox.classList.toggle("no-narration", session.last_turn_narrated === false);
+  if (session.last_turn_narrated === false) {
+    if (els.speakerName) els.speakerName.textContent = "";
+    if (els.messageText) els.messageText.textContent = "";
+  }
 
   /* Choices */
-  setPendingChoices(session.choices || []);
+  setPendingChoices(
+    session.in_combat ? [] : (session.choices || []),
+    session.last_turn_narrated === false,
+  );
 }
 
 /* ═══════════════════════════════════════════════════
@@ -490,6 +730,7 @@ function renderMeter(stat, character) {
    ═══════════════════════════════════════════════════ */
 
 function renderInventory(items) {
+  const expanded = new Set([...els.inventory.querySelectorAll(".expanded")].map(row => row.dataset.itemId));
   els.inventory.innerHTML = "";
   if (!items.length) {
     const li = document.createElement("li");
@@ -498,7 +739,18 @@ function renderInventory(items) {
     els.inventory.append(li);
     return;
   }
-  for (const item of items) {
+  // TODO(design): Items without category stay ungrouped until their category is specified.
+  const groups = { consumable: "消耗品", equipment: "装備", material: "素材", key: "重要", "": "" };
+  for (const [category, label] of Object.entries(groups)) {
+    const grouped = items.filter(item => (item.category || "") === category);
+    if (!grouped.length) continue;
+    if (label) {
+      const heading = document.createElement("li");
+      heading.className = "inventory-group";
+      heading.innerHTML = `<h3>${label}</h3>`;
+      els.inventory.append(heading);
+    }
+    for (const item of grouped) {
     const name = typeof item === "string" ? item : (item.name || "不明");
     const desc = typeof item === "object" ? (item.description || "") : "";
     const effect = typeof item === "object" ? (item.effect || "") : "";
@@ -506,13 +758,20 @@ function renderInventory(items) {
 
     const li = document.createElement("li");
     li.className = "inventory-item";
+    li.dataset.itemId = item.id || name;
+    li.classList.toggle("expanded", expanded.has(li.dataset.itemId));
+    const equipped = (state.character?.equipment || []).some(entry =>
+      (typeof entry === "string" ? entry : entry.name || entry.id) === name || entry === item.id);
+    const usable = ["heal", "restore"].includes(item.combat?.kind) && !state.session?.in_combat && !state.session?.game_over;
 
-    const hasDetails = desc || effect;
+    const hasDetails = desc || effect || usable;
 
     li.innerHTML = `
-      <div class="item-header">
+      <div class="item-header" role="button" tabindex="0" aria-expanded="${li.classList.contains("expanded")}">
         <span class="item-name">${escapeHtml(name)}</span>
         <span style="display:flex;align-items:center;gap:6px">
+          ${equipped ? '<span class="item-qty equipped-tag">装備中</span>' : ''}
+          ${item.key_item ? '<span class="item-qty key-tag">重要</span>' : ''}
           <span class="item-qty">×${qty}</span>
           ${hasDetails ? '<span class="item-toggle">▼</span>' : ''}
         </span>
@@ -521,15 +780,191 @@ function renderInventory(items) {
         <div class="item-details">
           ${desc ? `<div class="item-desc">${escapeHtml(desc)}</div>` : ''}
           ${effect ? `<div class="item-effect">${escapeHtml(effect)}</div>` : ''}
+          ${usable ? '<button type="button" class="start-btn item-use">使う</button>' : ''}
         </div>
       ` : ''}
     `;
 
     if (hasDetails) {
-      li.addEventListener("click", () => li.classList.toggle("expanded"));
+      const header = li.querySelector(".item-header");
+      const toggle = () => header.setAttribute("aria-expanded", li.classList.toggle("expanded"));
+      header.addEventListener("click", toggle);
+      header.addEventListener("keydown", event => {
+        if (["Enter", " "].includes(event.key)) { event.preventDefault(); toggle(); }
+      });
     }
+    li.querySelector(".item-use")?.addEventListener("click", () => useInventoryItem(item.id || name));
 
     els.inventory.append(li);
+    }
+  }
+}
+
+function showNotification(text) {
+  const toast = document.createElement("div");
+  toast.className = "notification";
+  toast.textContent = text;
+  document.querySelector("#notifications").append(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+function renderQuests(quests) {
+  const root = document.querySelector("#quests");
+  const expanded = new Set([...root.querySelectorAll("details[open]")].map(row => row.dataset.questId));
+  root.replaceChildren();
+  const labels = { main: "メイン", side: "サブ", mystery: "謎" };
+  for (const quest of [...quests.filter(q => q.status === "active"), ...quests.filter(q => q.status !== "active")]) {
+    const ended = quest.status !== "active";
+    const card = document.createElement(ended ? "details" : "article");
+    card.className = `inventory-item quest-card quest-${quest.kind}`;
+    card.dataset.questId = quest.id;
+    if (ended) card.open = expanded.has(quest.id);
+    const heading = `<span class="item-qty quest-kind">${labels[quest.kind] || ""}</span> <strong>${escapeHtml(quest.title)}</strong>
+      ${ended ? `<span class="quest-${quest.status}">${quest.status === "completed" ? "達成" : "失敗"}</span>` : ""}`;
+    card.innerHTML = `${ended ? `<summary>${heading}</summary>` : `<div>${heading}</div>`}
+      <p class="item-desc">${escapeHtml(quest.description)}</p>
+      ${quest.clue_count !== undefined ? `<p class="item-desc">手がかり：${quest.clue_count}</p>` : ""}
+      ${(quest.completed_stages || []).map(text => `<p class="quest-done">${escapeHtml(text)}</p>`).join("")}
+      ${quest.current_objective ? `<p>▶ ${escapeHtml(quest.current_objective)}</p>` : ""}`;
+    root.append(card);
+  }
+}
+
+async function serviceRequest(path, body) {
+  const response = await fetch(`/api/sessions/${state.sessionId}/${path}`, body === undefined ? {} : {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(typeof data.detail === "string" ? data.detail : "この行動は現在選択できません。");
+  return data;
+}
+
+async function useInventoryItem(itemId) {
+  if (state.serviceBusy || state.turnBusy) return;
+  state.serviceBusy = true;
+  try {
+    const result = await serviceRequest("items/use", { item_id: itemId });
+    renderSession(result.session);
+    showNotification(result.message);
+  } catch (error) {
+    showNotification(error.message);
+  } finally {
+    state.serviceBusy = false;
+  }
+}
+
+function closeShop() {
+  document.querySelector("#shopOverlay").style.display = "none";
+  state.shop = null;
+  state.shopFocus?.focus();
+  state.shopFocus = null;
+}
+
+async function openShop(shopId) {
+  const sessionId = state.sessionId;
+  try {
+    const shop = await serviceRequest(`shops/${encodeURIComponent(shopId)}`);
+    if (sessionId !== state.sessionId || shop.location_id !== state.session.current_location) return;
+    state.shop = shop;
+    state.shopTab = "buy";
+    state.shopItemId = "";
+    state.shopQuantity = 1;
+    state.shopFocus = document.activeElement;
+    document.querySelector("#shopOverlay").style.display = "flex";
+    document.querySelector("#shopLine").textContent = shop.greeting;
+    renderShop();
+    document.querySelector("#shopCloseBtn").focus();
+  } catch (error) { showNotification(error.message); }
+}
+
+function shopLimit(item) {
+  if (!item) return 0;
+  if (state.shopTab === "sell") return Number(item.quantity || 0);
+  if (item.enabled === false) return 0;
+  return Math.min(item.stock === null ? Infinity : item.stock,
+    item.price > 0 ? Math.floor(state.shop.gold / item.price) : Number.MAX_SAFE_INTEGER);
+}
+
+function renderShop() {
+  const shop = state.shop;
+  if (!shop) return;
+  const selling = state.shopTab === "sell";
+  document.querySelector("#shopTitle").textContent = shop.title;
+  document.querySelector("#shopGold").textContent = Number(shop.gold).toLocaleString("ja-JP");
+  const portrait = document.querySelector("#shopPortrait");
+  portrait.hidden = !shop.portrait_image;
+  portrait.src = shop.portrait_image || "";
+  for (const [id, selected] of [["shopBuyTab", !selling], ["shopSellTab", selling]]) {
+    document.querySelector(`#${id}`).setAttribute("aria-selected", selected);
+    document.querySelector(`#${id}`).disabled = state.serviceBusy;
+  }
+  document.querySelector("#shopSellTab").disabled = !shop.buys || state.serviceBusy;
+  const items = selling ? shop.sell_items : shop.items;
+  if (!items.some(item => item.item_id === state.shopItemId)) state.shopItemId = items[0]?.item_id || "";
+  const list = document.querySelector("#shopItems");
+  list.replaceChildren();
+  for (const item of items) {
+    const row = document.createElement("button");
+    row.type = "button";
+    row.className = "inventory-item shop-row";
+    row.classList.toggle("selected", item.item_id === state.shopItemId);
+    row.classList.toggle("sold-out", item.stock === 0);
+    row.setAttribute("aria-pressed", item.item_id === state.shopItemId);
+    row.disabled = state.serviceBusy;
+    row.innerHTML = `<div class="item-name">${escapeHtml(item.name)}</div><div class="item-desc shop-effect">${escapeHtml(item.effect || "")}</div>
+      <div class="shop-row-bottom"><span class="shop-price ${!selling && item.price > shop.gold ? "unaffordable" : ""}">${item.price} G</span>
+      <span class="item-qty">${item.stock === null ? "∞" : `${selling ? "所持：" : "在庫 "}${item.stock}`}</span>
+      ${item.stock === 0 ? '<span class="item-desc">売り切れ</span>' : ""}</div>`;
+    row.addEventListener("click", () => {
+      state.shopItemId = item.item_id;
+      state.shopQuantity = 1;
+      document.querySelector("#shopLine").textContent = shop.greeting;
+      renderShop();
+    });
+    list.append(row);
+  }
+  if (!items.length) list.innerHTML = '<p class="item-desc">所持品なし</p>';
+  const item = items.find(entry => entry.item_id === state.shopItemId);
+  const detail = document.querySelector("#shopDetail");
+  if (!item) { detail.replaceChildren(); return; }
+  const limit = shopLimit(item);
+  state.shopQuantity = Math.max(0, Math.min(state.shopQuantity || 1, limit));
+  const owned = (state.character.inventory || []).find(entry => entry.id === item.item_id || entry.name === item.name)?.quantity || 0;
+  const reason = selling ? "" : item.stock === 0 ? "売り切れ" : item.enabled === false ? item.reason : limit < 1 ? shop.poor_line : "";
+  if (reason === shop.poor_line) document.querySelector("#shopLine").textContent = shop.poor_line;
+  detail.innerHTML = `<h3>${escapeHtml(item.name)}</h3><p class="item-desc">${escapeHtml(item.description || "")}</p>
+    <p class="item-effect">${escapeHtml(item.effect || "")}</p><p>所持：${owned}</p>
+    <div class="shop-purchase"><div class="shop-quantity">
+      <button type="button" class="gal-menu-btn" id="shopMinus" ${state.shopQuantity <= 1 || state.serviceBusy ? "disabled" : ""}>−</button>
+      <output>${state.shopQuantity}</output>
+      <button type="button" class="gal-menu-btn" id="shopPlus" ${state.shopQuantity >= limit || state.serviceBusy ? "disabled" : ""}>+</button>
+      <span class="shop-price">${item.price * state.shopQuantity} G</span></div>
+      <button type="button" class="start-btn" id="shopTrade" ${limit < 1 || state.serviceBusy ? "disabled" : ""}>${selling ? "売却する" : "購入する"}</button>
+      <p class="item-desc">${escapeHtml(reason)}</p></div>`;
+  document.querySelector("#shopMinus").onclick = () => { state.shopQuantity--; renderShop(); };
+  document.querySelector("#shopPlus").onclick = () => { state.shopQuantity++; renderShop(); };
+  document.querySelector("#shopTrade").onclick = performShopTrade;
+}
+
+async function performShopTrade() {
+  if (!state.shop || state.serviceBusy || state.turnBusy) return;
+  const shopId = state.shop.id;
+  state.serviceBusy = true;
+  renderShop();
+  try {
+    const result = await serviceRequest(`shops/${encodeURIComponent(shopId)}/${state.shopTab}`, {
+      item_id: state.shopItemId, quantity: state.shopQuantity,
+    });
+    renderSession(result.session);
+    if (state.shop?.id === shopId) {
+      state.shop = result.shop;
+      document.querySelector("#shopLine").textContent = result.message;
+    }
+  } catch (error) {
+    if (state.shop?.id === shopId) document.querySelector("#shopLine").textContent = error.message;
+  } finally {
+    state.serviceBusy = false;
+    renderShop();
   }
 }
 
@@ -569,44 +1004,190 @@ function skillLabel(skill) {
 }
 
 /* ═══════════════════════════════════════════════════
+   DICE FEEDBACK
+   ═══════════════════════════════════════════════════ */
+
+function stopDiceRollAnimation() {
+  if (state.diceAnimationTimer) {
+    window.clearInterval(state.diceAnimationTimer);
+    state.diceAnimationTimer = null;
+  }
+  if (els.diceBanner) els.diceBanner.classList.remove("rolling");
+}
+
+function hideDiceBanner() {
+  if (els.diceBanner) els.diceBanner.style.display = "none";
+}
+
+function renderLatestDiceResult(diceLog) {
+  if (!Array.isArray(diceLog) || !diceLog.length) {
+    state.lastDiceLogLength = 0;
+    state.lastDiceSignature = "";
+    return;
+  }
+  const latest = diceLog[diceLog.length - 1];
+  const signature = diceSignature(latest);
+  const hasNewRoll = diceLog.length !== state.lastDiceLogLength || signature !== state.lastDiceSignature;
+  state.lastDiceLogLength = diceLog.length;
+  state.lastDiceSignature = signature;
+  if (!hasNewRoll) return;
+  if (isCheckRoll(latest)) {
+    showDiceResult(latest);
+  }
+}
+
+function diceSignature(roll) {
+  if (!roll || typeof roll !== "object") return "";
+  const rolls = Array.isArray(roll.rolls) ? roll.rolls.join(",") : "";
+  return [roll.expression || "", rolls, roll.total ?? "", roll.dc ?? "", roll.success ?? ""].join("|");
+}
+
+function isCheckRoll(roll) {
+  return Number(roll?.dc || 0) > 0;
+}
+
+function showDiceResult(roll) {
+  if (!els.diceBanner || !els.diceRollFace || !els.diceBannerText || !roll) return;
+  stopDiceRollAnimation();
+  const rolls = Array.isArray(roll.rolls) ? roll.rolls : [];
+  const total = Number(roll.total ?? 0);
+  const dc = Number(roll.dc ?? 0);
+  const hasCheck = dc > 0;
+  const success = !roll.critical_failure && (roll.success === true || (hasCheck && total >= dc));
+  els.diceBanner.style.display = "";
+  els.diceBanner.classList.toggle("success", hasCheck && success);
+  els.diceBanner.classList.toggle("failure", hasCheck && !success);
+  els.diceBanner.classList.toggle("neutral", !hasCheck);
+  els.diceRollFace.textContent = String(total);
+
+  const parts = [`${roll.expression || "判定"}: ${rolls.join(" + ") || total}`];
+  if (typeof roll.attr_mod === "number" && roll.attr_mod !== 0) {
+    const sign = roll.attr_mod > 0 ? "+" : "";
+    parts.push(`${sign}${roll.attr_mod}`);
+  }
+  parts.push(`= ${total}`);
+  if (hasCheck) {
+    parts.push(` / DC${dc}`);
+    if (roll.critical_success) parts.push("大成功");
+    else if (roll.critical_failure) parts.push("大失敗");
+    else parts.push(success ? "成功" : "失敗");
+  }
+  els.diceBannerText.textContent = parts.join(" ");
+}
+
+/* ═══════════════════════════════════════════════════
    CHOICES
    ═══════════════════════════════════════════════════ */
 
 function renderChoices(choices) {
+  choiceDebug("render-choices-start", {
+    count: Array.isArray(choices) ? choices.length : 0,
+    choices: Array.isArray(choices) ? choices.map((choice) => ({
+      text: typeof choice === "string" ? choice : (choice.text || ""),
+      risk: typeof choice === "object" ? (choice.risk || "") : "",
+      enabled: typeof choice === "object" && choice.enabled === false ? false : true,
+      disabledReason: typeof choice === "object" ? (choice.disabled_reason || "") : "",
+      hasChildren: typeof choice === "object" && Array.isArray(choice.children) && choice.children.length > 0,
+    })) : [],
+  });
   if (!choices || !choices.length) {
     hideChoices();
     return;
   }
 
   els.choicesList.innerHTML = "";
+  const hasParentStack = state.choiceStack.length > 0;
+
+  if (hasParentStack) {
+    const backCard = document.createElement("button");
+    backCard.type = "button";
+    backCard.className = "choice-card choice-back";
+    backCard.dataset.choiceIndex = "-1";
+    backCard.dataset.choiceText = "__back__";
+    const numberDiv = document.createElement("div");
+    numberDiv.className = "choice-number";
+    numberDiv.innerHTML = "&#9664;";
+    const textDiv = document.createElement("div");
+    textDiv.className = "choice-text";
+    textDiv.textContent = "戻る";
+    const bodyDiv = document.createElement("div");
+    bodyDiv.className = "choice-body";
+    bodyDiv.appendChild(textDiv);
+    backCard.appendChild(numberDiv);
+    backCard.appendChild(bodyDiv);
+    els.choicesList.append(backCard);
+  }
+
   for (let i = 0; i < choices.length; i++) {
     const choice = choices[i];
     const text = typeof choice === "string" ? choice : (choice.text || "");
     const preview = typeof choice === "object" ? (choice.preview || "") : "";
     const risk = typeof choice === "object" ? (choice.risk || "") : "";
+    const enabled = typeof choice === "object" && choice.enabled === false ? false : true;
+    const disabledReason = typeof choice === "object" ? (choice.disabled_reason || "") : "";
+    const hasChildren = typeof choice === "object" && Array.isArray(choice.children) && choice.children.length > 0;
 
     const card = document.createElement("button");
     card.type = "button";
-    card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""}`;
+    card.disabled = !enabled;
+    card.dataset.choiceIndex = String(i);
+    card.dataset.choiceText = text;
+    card.dataset.actionId = typeof choice === "object" ? (choice.action_id || choice.id || "") : "";
+    if (hasChildren) {
+      card.dataset.choiceParent = "true";
+      card.className = `choice-card choice-group ${enabled ? "" : "disabled-choice"}`;
+    } else {
+      card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""} ${enabled ? "" : "disabled-choice"}`;
+    }
 
     const riskClass = classifyRisk(risk);
 
-    card.innerHTML = `
-      <div class="choice-number">${i + 1}</div>
-      <div class="choice-body">
-        <div class="choice-text">${escapeHtml(text)}</div>
-        ${preview ? `<div class="choice-preview">${escapeHtml(preview)}</div>` : ''}
-        ${risk ? `<span class="choice-risk ${riskClass}">${escapeHtml(risk)}</span>` : ''}
-      </div>
-    `;
+    const numberDiv = document.createElement("div");
+    numberDiv.className = "choice-number";
+    numberDiv.textContent = String(i + 1);
 
-    card.addEventListener("click", () => submitChoice(text));
+    const textDiv = document.createElement("div");
+    textDiv.className = "choice-text";
+    textDiv.textContent = text;
+
+    const bodyDiv = document.createElement("div");
+    bodyDiv.className = "choice-body";
+    bodyDiv.appendChild(textDiv);
+
+    if (hasChildren) {
+      const hintSpan = document.createElement("span");
+      hintSpan.className = "choice-group-hint";
+      hintSpan.textContent = Array.isArray(choice.children) ? `${choice.children.length}件` : "";
+      bodyDiv.appendChild(hintSpan);
+    } else if (preview) {
+      const previewDiv = document.createElement("div");
+      previewDiv.className = "choice-preview";
+      previewDiv.textContent = preview;
+      bodyDiv.appendChild(previewDiv);
+    }
+    if (risk && !hasChildren) {
+      const riskSpan = document.createElement("span");
+      riskSpan.className = `choice-risk ${riskClass}`;
+      riskSpan.textContent = risk;
+      bodyDiv.appendChild(riskSpan);
+    }
+    if (disabledReason) {
+      const reasonSpan = document.createElement("span");
+      reasonSpan.className = "choice-disabled-reason";
+      reasonSpan.textContent = disabledReason;
+      bodyDiv.appendChild(reasonSpan);
+    }
+
+    card.appendChild(numberDiv);
+    card.appendChild(bodyDiv);
+
     els.choicesList.append(card);
   }
 
   els.choicesArea.style.display = "";
   els.dialogueBox.classList.remove("choices-ready");
   if (els.clickIndicator) els.clickIndicator.style.display = "none";
+  choiceDebug("render-choices-visible", choiceLayoutDebug());
 }
 
 function isCombatChoice(text, preview, risk) {
@@ -619,23 +1200,315 @@ function hideChoices() {
   els.choicesList.innerHTML = "";
 }
 
-function setPendingChoices(choices) {
+function setPendingChoices(choices, revealImmediately = false) {
   state.pendingChoices = Array.isArray(choices) ? choices : [];
+  state.choiceStack = [];
   state.choicesRevealed = false;
   hideChoices();
+  if (revealImmediately && state.pendingChoices.length) {
+    state.choicesRevealed = true;
+    renderChoices(state.pendingChoices);
+    return;
+  }
   updateDialogueAdvanceState();
+}
+
+function renderScenePortraits(session, character) {
+  if (!els.spriteLayer) return;
+  const playerImage = session.player_portrait_image || character.character_image || "";
+  const npcImage = session.dialogue_portrait_image || "";
+  const locationNpcs = Array.isArray(session.location_npc_portraits)
+    ? session.location_npc_portraits.filter((npc) => npc && npc.image)
+    : [];
+  const dialogueActive = Boolean(session.dialogue_active && playerImage && npcImage);
+  els.spriteLayer.classList.toggle("dialogue-mode", dialogueActive);
+  els.spriteLayer.classList.toggle("ensemble-mode", !dialogueActive && locationNpcs.length > 0);
+  els.spriteLayer.classList.toggle("solo-mode", !dialogueActive && locationNpcs.length === 0 && Boolean(playerImage));
+
+  els.locationPortraits.innerHTML = dialogueActive ? "" : locationNpcs.map((npc) => (
+    `<figure class="location-portrait"><img src="${escapeAttr(npc.image)}" alt="" /><figcaption>${escapeHtml(npc.name || "")}</figcaption></figure>`
+  )).join("");
+  els.locationPortraits.dataset.count = String(locationNpcs.length);
+  els.locationPortraits.style.display = !dialogueActive && locationNpcs.length ? "" : "none";
+
+  els.playerPortrait.src = playerImage;
+  els.playerPortrait.style.display = dialogueActive || (!locationNpcs.length && playerImage) ? "" : "none";
+  els.npcPortrait.src = npcImage;
+  els.npcPortrait.style.display = dialogueActive ? "" : "none";
+}
+
+function renderCharacterAttributes(attributes) {
+  if (!els.characterAttributes) return;
+  const labels = {
+    str: "STR", dex: "DEX", int: "INT", wis: "WIS",
+    end: "END", agi: "AGI", cha: "CHA", char: "CHA",
+  };
+  const entries = Object.entries(attributes || {}).filter(([key]) => labels[key]);
+  els.characterAttributes.innerHTML = entries.length
+    ? entries.map(([key, value]) => `<div><span>${labels[key]}</span><strong>${Number(value || 0)}</strong></div>`).join("")
+    : '<p class="empty-attributes">能力値なし</p>';
+}
+
+function renderEnding(gameOver) {
+  if (!els.endingOverlay) return;
+  if (!gameOver) {
+    els.endingOverlay.style.display = "none";
+    return;
+  }
+  els.endingTitle.textContent = gameOver.title || "敗北";
+  const complete = ["ignis_defeated", "ignis_purified", "draco_defeated", "draco_defeated_with_ignis"].includes(gameOver.ending);
+  els.endingOverlay.classList.toggle("complete", complete);
+  const endingLabel = document.querySelector("#endingLabel");
+  if (endingLabel) endingLabel.textContent = complete ? "ADVENTURE COMPLETE" : "GAME OVER";
+  els.endingReason.textContent = gameOver.reason || "物語はここで終わりました。";
+  const epilogue = document.querySelector("#endingEpilogue");
+  if (epilogue) {
+    epilogue.replaceChildren(...(gameOver.epilogue || []).map((line, index) => {
+      const item = document.createElement("li");
+      item.textContent = line;
+      item.style.animationDelay = `${0.6 + index * 0.5}s`;
+      return item;
+    }));
+  }
+  els.endingOverlay.style.display = "";
 }
 
 function clearPendingChoices() {
   state.pendingChoices = [];
+  state.choiceStack = [];
   state.choicesRevealed = false;
   updateDialogueAdvanceState();
 }
 
 function revealPendingChoices() {
+  choiceDebug("reveal-choices", {
+    blocked: state.choicesRevealed || !state.pendingChoices.length,
+  });
   if (state.choicesRevealed || !state.pendingChoices.length) return;
   state.choicesRevealed = true;
   renderChoices(state.pendingChoices);
+}
+
+function handleChoiceListClick(event) {
+  const card = event.target.closest(".choice-card");
+  choiceDebug("choice-click", {
+    targetTag: event.target?.tagName || "",
+    targetClass: String(event.target?.className || ""),
+    hasCard: Boolean(card),
+    cardDisabled: Boolean(card?.disabled),
+    cardIndex: card?.dataset.choiceIndex || "",
+    cardText: card?.dataset.choiceText || "",
+    cardParent: card?.dataset.choiceParent || "",
+    actionId: card?.dataset.actionId || "",
+    layout: choiceLayoutDebug(),
+  });
+  if (!card || !els.choicesList.contains(card) || card.disabled) return;
+
+  if (card.dataset.choiceText === "__back__") {
+    if (state.choiceStack.length > 0) {
+      const previous = state.choiceStack.pop();
+      state.pendingChoices = previous;
+      state.choicesRevealed = true;
+      renderChoices(state.pendingChoices);
+    }
+    return;
+  }
+
+  const index = Number.parseInt(card.dataset.choiceIndex || "", 10);
+  const choice = Number.isInteger(index) ? state.pendingChoices[index] : null;
+  if (!choice || typeof choice !== "object") return;
+
+  const hasChildren = Array.isArray(choice.children) && choice.children.length > 0;
+  if (hasChildren) {
+    state.choiceStack.push(state.pendingChoices);
+    state.pendingChoices = choice.children;
+    state.choicesRevealed = true;
+    renderChoices(state.pendingChoices);
+    return;
+  }
+
+  const text = card.dataset.choiceText || (typeof choice === "string" ? choice : (choice && typeof choice === "object" ? choice.text : ""));
+  if (text) submitChoice(text, card.dataset.actionId || "");
+}
+
+function renderCombat(session) {
+  const combat = session.combat;
+  const active = Boolean(session.in_combat && combat && combat.status);
+  els.gameScreen.classList.toggle("combat-active", active);
+  if (!active) {
+    els.combatScreen.style.display = "none";
+    if (els.combatIntro) els.combatIntro.style.display = "none";
+    state.combatTargetId = "";
+    return;
+  }
+
+  els.combatScreen.style.display = "";
+  renderCombatIntro(combat);
+  els.combatScreen.classList.toggle("busy", state.combatBusy);
+  const enemies = Array.isArray(combat.enemies) ? combat.enemies : [];
+  const alive = enemies.filter((enemy) => Number(enemy.hp || 0) > 0);
+  if (!alive.some((enemy) => enemy.id === state.combatTargetId)) {
+    state.combatTargetId = alive[0]?.id || "";
+  }
+  els.combatTitle.textContent = enemies.length
+    ? `VS ${enemies.map((enemy) => enemy.name || enemy.id).join(" / ")}`
+    : "戦闘";
+  els.combatRound.textContent = String(combat.round || 1);
+  els.combatPlayerName.textContent = session.character?.name || "冒険者";
+  const playerImage = session.player_portrait_image || session.character?.character_image || "";
+  els.combatPlayerImage.src = playerImage;
+  els.combatPlayerImage.style.display = playerImage ? "" : "none";
+  setCombatResource("PlayerHp", session.character, "hp");
+  setCombatResource("PlayerMp", session.character, "mp");
+  setCombatResource("PlayerSp", session.character, "sp");
+
+  els.combatEnemies.classList.toggle("many-enemies", enemies.length >= 3);
+  els.combatEnemies.innerHTML = enemies.map((enemy) => {
+    const hp = Number(enemy.hp || 0);
+    const maxHp = Math.max(1, Number(enemy.max_hp || hp || 1));
+    const percent = Math.max(0, Math.min(100, (hp / maxHp) * 100));
+    const selected = enemy.id === state.combatTargetId;
+    const enemyImage = enemy.image
+      ? `<img class="combat-enemy-image" src="${escapeAttr(enemy.image)}" alt="" />`
+      : "";
+    return `<button type="button" class="combat-enemy ${selected ? "selected" : ""} ${hp <= 0 ? "defeated" : ""}"
+      data-combat-target="${escapeAttr(enemy.id || "")}" ${hp <= 0 ? "disabled" : ""}>
+      ${enemyImage}
+      <span class="combatant-side">ENEMY</span>
+      <h3>${escapeHtml(enemy.name || enemy.id || "敵")}</h3>
+      <div class="combat-resource hp"><span>HP</span><i><b style="width:${percent}%"></b></i><strong>${hp}/${maxHp}</strong></div>
+      ${enemy.description ? `<p>${escapeHtml(enemy.description)}</p>` : ""}
+      ${renderAbilityTags(enemy.skills || [], true)}
+    </button>`;
+  }).join("");
+
+  const logs = Array.isArray(combat.log) ? combat.log : [];
+  els.combatLog.innerHTML = logs.length
+    ? logs.map((entry) => `<div class="combat-log-entry ${escapeAttr(entry.kind || "")}"><strong>R${entry.round || 1}</strong><span>${escapeHtml(entry.text || "")}</span></div>`).join("")
+    : '<div class="combat-log-entry"><strong>R1</strong><span>行動を選択してください。</span></div>';
+  els.combatLog.scrollTop = els.combatLog.scrollHeight;
+
+  const terminal = combat.status !== "active";
+  els.combatScreen.classList.toggle("combat-terminal", terminal);
+  els.combatScreen.classList.toggle("combat-defeat", combat.status === "defeat");
+  els.combatScreen.classList.toggle("combat-victory", combat.status === "victory");
+  els.combatResult.style.display = terminal ? "" : "none";
+  els.combatActionTabs.style.display = terminal ? "none" : "";
+  els.combatActions.style.display = terminal ? "none" : "grid";
+  if (terminal) {
+    const labels = { victory: "勝利", defeat: "敗北", fled: "撤退成功", purified: "浄化" };
+    els.combatResultTitle.textContent = labels[combat.status] || "戦闘終了";
+    els.combatResultText.textContent = combat.result?.summary || "戦闘結果が確定しました。";
+    els.combatResolveButton.disabled = state.combatBusy || !combat.pending_resolution;
+  } else {
+    state.combatActions = Array.isArray(combat.actions) ? combat.actions : [];
+    renderCombatActions(state.combatActions);
+  }
+}
+
+function setCombatResource(suffix, actor, stat) {
+  const value = Number(actor?.[stat] || 0);
+  const max = Math.max(1, Number(actor?.[`max_${stat}`] || value || 1));
+  els[`combat${suffix}`].textContent = `${value}/${max}`;
+  els[`combat${suffix}Bar`].style.width = `${Math.max(0, Math.min(100, (value / max) * 100))}%`;
+}
+
+function renderCombatActions(actions) {
+  const groups = [
+    { id: "attack", label: "攻撃", types: ["attack"] },
+    { id: "skill", label: "技能", types: ["skill"] },
+    { id: "item", label: "道具", types: ["item"] },
+    { id: "tactics", label: "戦術", types: ["special", "defend", "flee"] },
+  ].filter((group) => actions.some((action) => group.types.includes(action.type)));
+  if (!groups.some((group) => group.id === state.combatActionTab)) {
+    state.combatActionTab = groups[0]?.id || "attack";
+  }
+  els.combatActionTabs.innerHTML = groups.map((group) => `<button type="button" class="combat-tab ${group.id === state.combatActionTab ? "active" : ""}" data-combat-tab="${group.id}">${group.label}</button>`).join("");
+  const current = groups.find((group) => group.id === state.combatActionTab);
+  const visible = current ? actions.filter((action) => current.types.includes(action.type)) : [];
+  els.combatActions.innerHTML = visible.map((action) => {
+    const cost = action.cost ? `${String(action.cost_item_name || action.cost_type || "").toUpperCase()} ${action.cost}` : "";
+    const description = action.enabled === false ? (action.disabled_reason || "使用できません") : (action.description || "");
+    return `<button type="button" class="combat-action" data-combat-action-type="${escapeAttr(action.type || "")}" data-combat-action-id="${escapeAttr(action.id || "")}" ${action.enabled === false ? "disabled" : ""}>
+      <strong>${escapeHtml(action.name || action.id || "行動")}</strong>
+      ${cost ? `<em>${escapeHtml(cost)}</em>` : ""}
+      ${renderAbilityTags([action])}
+      <span>${escapeHtml(description)}</span>
+    </button>`;
+  }).join("");
+}
+
+function renderCombatIntro(combat) {
+  if (!els.combatIntro || !els.combatIntroText || !els.combatIntroContinue) return;
+  const combatId = String(combat?.id || "");
+  const introText = String(combat?.intro_text || "").trim();
+  const visible = Boolean(combatId && introText && combat?.status === "active" && state.combatIntroSeenId !== combatId);
+  els.combatIntro.dataset.combatId = combatId;
+  els.combatIntroText.textContent = introText;
+  els.combatIntro.style.display = visible ? "" : "none";
+  els.combatScreen.classList.toggle("intro-active", visible);
+}
+
+function renderAbilityTags(abilities, compact = false) {
+  const tags = [];
+  for (const ability of abilities || []) {
+    if (!ability || typeof ability !== "object") continue;
+    if (ability.damage) tags.push(`威力 ${ability.damage}`);
+    if (ability.healing) tags.push(`回復 ${ability.healing}`);
+    if (ability.accuracy !== undefined) tags.push(`命中 ${ability.accuracy}%`);
+    if (ability.element) tags.push(String(ability.element).toUpperCase());
+    if (ability.all_targets) tags.push("全体");
+    if (ability.hits_per_element) tags.push(`${ability.hits_per_element}回×${(ability.multi_elements || []).length || 1}属性`);
+    if (ability.check?.dc) tags.push(`判定 DC${ability.check.dc}`);
+    for (const followup of ability.followups || []) {
+      if (followup?.damage) tags.push(`追撃 ${followup.damage}`);
+      if (followup?.element) tags.push(`追撃 ${String(followup.element).toUpperCase()}`);
+    }
+    if (compact && ability.name) tags.unshift(ability.name);
+  }
+  if (!tags.length) return "";
+  return `<div class="combat-effect-tags">${tags.slice(0, compact ? 4 : 6).map((tag) => `<i>${escapeHtml(tag)}</i>`).join("")}</div>`;
+}
+
+async function submitCombatAction(actionType, actionId) {
+  if (!state.sessionId || state.combatBusy) return;
+  state.combatBusy = true;
+  els.combatScreen.classList.add("busy");
+  try {
+    const session = await fetchJson(`/api/sessions/${state.sessionId}/combat/actions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action_type: actionType, action_id: actionId, target_id: state.combatTargetId }),
+    });
+    state.combatBusy = false;
+    renderSession(session);
+  } catch (error) {
+    const errorEntry = document.createElement("div");
+    errorEntry.className = "combat-log-entry error";
+    errorEntry.innerHTML = `<strong>ERROR</strong><span>${escapeHtml(error.message)}</span>`;
+    els.combatLog.append(errorEntry);
+    els.combatLog.scrollTop = els.combatLog.scrollHeight;
+  } finally {
+    state.combatBusy = false;
+    els.combatScreen.classList.remove("busy");
+  }
+}
+
+async function resolveCombatResult() {
+  if (!state.sessionId || state.combatBusy) return;
+  state.combatBusy = true;
+  els.combatScreen.classList.add("busy");
+  els.combatResultText.textContent = "戦闘終了を処理しています…";
+  try {
+    const session = await fetchJson(`/api/sessions/${state.sessionId}/combat/resolve`, { method: "POST" });
+    state.combatBusy = false;
+    renderSession(session);
+  } catch (error) {
+    els.combatResultText.textContent = `結果処理エラー: ${error.message}`;
+  } finally {
+    state.combatBusy = false;
+    els.combatScreen.classList.remove("busy");
+  }
 }
 
 function updateDialogueAdvanceState() {
@@ -719,6 +1592,7 @@ async function fetchJson(url, options) {
 }
 
 function setBusy(isBusy) {
+  state.turnBusy = isBusy;
   els.sendButton.disabled = isBusy;
   els.newSessionButton.disabled = isBusy;
   if (isBusy) {
@@ -745,6 +1619,7 @@ function escapeAttr(value) {
 els.form.addEventListener("submit", submitTurn);
 els.startButton.addEventListener("click", startGame);
 els.newSessionButton.addEventListener("click", newSession);
+if (els.endingRestartButton) els.endingRestartButton.addEventListener("click", newSession);
 if (els.backendSelect) {
   els.backendSelect.addEventListener("change", () => {
     if (cachedConfig) populateModelSelect(cachedConfig);
@@ -790,6 +1665,37 @@ if (els.logCloseBtn) els.logCloseBtn.addEventListener("click", () => els.logOver
 if (els.inputToggleBtn) els.inputToggleBtn.addEventListener("click", () => {
   els.form.style.display = els.form.style.display === "none" ? "" : "none";
 });
+if (els.choicesList) els.choicesList.addEventListener("click", handleChoiceListClick);
+if (els.combatScreen) {
+  els.combatScreen.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-combat-target]");
+    if (target && !target.disabled) {
+      state.combatTargetId = target.dataset.combatTarget || "";
+      els.combatEnemies.querySelectorAll(".combat-enemy").forEach((enemy) => {
+        enemy.classList.toggle("selected", enemy.dataset.combatTarget === state.combatTargetId);
+      });
+      return;
+    }
+    const tab = event.target.closest("[data-combat-tab]");
+    if (tab) {
+      state.combatActionTab = tab.dataset.combatTab || "attack";
+      renderCombatActions(state.combatActions);
+      return;
+    }
+    const action = event.target.closest("[data-combat-action-type]");
+    if (action && !action.disabled) {
+      submitCombatAction(action.dataset.combatActionType || "", action.dataset.combatActionId || "");
+    }
+  });
+}
+if (els.combatResolveButton) els.combatResolveButton.addEventListener("click", resolveCombatResult);
+if (els.combatIntroContinue) {
+  els.combatIntroContinue.addEventListener("click", () => {
+    state.combatIntroSeenId = els.combatIntro?.dataset.combatId || "";
+    if (els.combatIntro) els.combatIntro.style.display = "none";
+    if (els.combatScreen) els.combatScreen.classList.remove("intro-active");
+  });
+}
 if (els.dialogueBox) {
   els.dialogueBox.addEventListener("click", revealPendingChoices);
   els.dialogueBox.addEventListener("keydown", (event) => {
@@ -808,5 +1714,101 @@ els.heroNameInput.addEventListener("keydown", (e) => {
   }
 });
 
+document.querySelector("#shopCloseBtn").addEventListener("click", closeShop);
+for (const [id, tab] of [["shopBuyTab", "buy"], ["shopSellTab", "sell"]]) {
+  document.querySelector(`#${id}`).addEventListener("click", () => {
+    state.shopTab = tab;
+    state.shopItemId = "";
+    state.shopQuantity = 1;
+    renderShop();
+  });
+}
+document.querySelector("#shopOverlay").addEventListener("keydown", event => {
+  if (event.key === "Escape") { event.preventDefault(); closeShop(); }
+  if (event.key !== "Tab") return;
+  const buttons = [...event.currentTarget.querySelectorAll("button:not(:disabled)")];
+  const first = buttons[0], last = buttons[buttons.length - 1];
+  if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+  if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+});
+
 /* Boot */
 init();
+
+/* Maps use public, visibility-filtered node data only. */
+function mapMarkup(map, mini = false) {
+  const nodes = map.nodes.filter(node => node.visibility !== 'hidden');
+  const symbols = {start:'●', battle:'⚔', event:'✦', rest:'☾', boss:'♛', branch:'✦', exit:'⌂', locked:'🔒', treasure:'◆'};
+  const lines = map.edges.map(edge => {
+    const a = nodes.find(n => n.id === edge.from), b = nodes.find(n => n.id === edge.to);
+    return a && b ? `<line x1="${a.x}%" y1="${a.y}%" x2="${b.x}%" y2="${b.y}%" class="${edge.visited ? 'visited' : ''}" />` : '';
+  }).join('');
+  return `<svg class="map-lines" aria-hidden="true">${lines}</svg>` + nodes.map(node => {
+    const unknown = node.visibility === 'adjacent-unknown';
+    const label = unknown ? '？' : node.label;
+    return `<${mini ? 'span' : 'button type="button"'} class="map-node ${node.visibility} ${node.current ? 'current' : ''} ${node.submap ? 'submap' : ''}"
+      style="left:${node.x}%;top:${node.y}%" data-node-id="${escapeAttr(node.id)}" aria-label="${escapeAttr(label)}">
+      <span class="map-symbol">${unknown ? '？' : node.visibility === 'locked' ? '🔒' : symbols[node.kind] || '●'}</span>
+      ${mini ? '' : `<span class="map-label">${escapeHtml(label)}</span>`}</${mini ? 'span' : 'button'}>`;
+  }).join('');
+}
+
+function renderMaps(selectedId) {
+  const data = state.session?.map;
+  const current = data?.maps.find(m => m.id === data.current_map_id);
+  const mini = document.querySelector('#miniMap');
+  document.querySelector('#mapToggleBtn').disabled = !current;
+  mini.hidden = !current;
+  if (!current) { document.querySelector('#mapOverlay').style.display = 'none'; return; }
+  mini.innerHTML = mapMarkup(current, true);
+  const selected = data.maps.find(m => m.id === selectedId) || current;
+  const parent = data.maps.find(m => m.id === selected.parent);
+  const breadcrumb = document.querySelector('#mapBreadcrumb');
+  breadcrumb.innerHTML = `${parent ? `<button type="button" data-map-id="${escapeAttr(parent.id)}">${escapeHtml(parent.title)}</button> › ` : ''}<strong>${escapeHtml(selected.title)}</strong>`;
+  breadcrumb.querySelector('button')?.addEventListener('click', () => renderMaps(parent.id));
+  const full = document.querySelector('#fullMap');
+  full.innerHTML = mapMarkup(selected);
+  document.querySelector('#mapDetail').textContent = '';
+  for (const button of full.querySelectorAll('[data-node-id]')) {
+    const node = selected.nodes.find(n => n.id === button.dataset.nodeId);
+    const describe = () => { document.querySelector('#mapDetail').textContent = [node.label || '？', node.recommended, node.description].filter(Boolean).join('　'); };
+    button.addEventListener('mouseenter', describe);
+    button.addEventListener('focus', describe);
+    button.addEventListener('click', async () => {
+      describe();
+      if (state.turnBusy || state.serviceBusy || state.session.in_combat || state.session.game_over) return;
+      if (selected.id !== current.id) {
+        if (node.submap && data.maps.some(m => m.id === node.submap)) renderMaps(node.submap);
+        return;
+      }
+      state.turnBusy = true;
+      try { renderSession(await serviceRequest('map/move', {node_id: node.id})); }
+      catch (error) { document.querySelector('#mapDetail').textContent = error.message; }
+      finally { state.turnBusy = false; }
+    });
+  }
+}
+
+function openMap() {
+  renderMaps();
+  document.querySelector('#mapOverlay').style.display = '';
+  document.querySelector('#mapCloseBtn').focus();
+}
+document.querySelector('#mapToggleBtn').addEventListener('click', openMap);
+document.querySelector('#miniMap').addEventListener('click', openMap);
+document.querySelector('#mapCloseBtn').addEventListener('click', () => {
+  document.querySelector('#mapOverlay').style.display = 'none';
+  document.querySelector('#mapToggleBtn').focus();
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') document.querySelector('#mapOverlay').style.display = 'none';
+});
+document.addEventListener('error', event => {
+  const img = event.target;
+  if (img.tagName !== 'IMG') return;
+  img.classList.add('asset-placeholder');
+  img.alt = img.alt || img.closest('figure')?.textContent || img.closest('.combat-enemy')?.querySelector('h3')?.textContent || '✦';
+}, true);
+document.addEventListener('load', event => {
+  if (event.target.tagName === 'IMG') event.target.classList.remove('asset-placeholder');
+}, true);

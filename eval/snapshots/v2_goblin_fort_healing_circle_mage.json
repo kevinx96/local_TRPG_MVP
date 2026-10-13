@@ -1,0 +1,12 @@
+{
+  "id": "v2_goblin_fort_healing_circle_mage",
+  "scenario": "eval/benchmark/scenario_frozen/dragon_rpg@f41af9d.json",
+  "gm_mode": "full",
+  "character_id": "mage",
+  "location_id": "goblin_fort_healing_circle",
+  "hp_delta": -5,
+  "flags": {},
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}
