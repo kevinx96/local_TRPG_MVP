@@ -152,9 +152,9 @@ async function playCombatEvents(previous, next) {
         if (visual.target_side === "enemy") {
           animate(portrait, [{ filter: "brightness(1)" }, { filter: "brightness(4)" }, { filter: "brightness(1)" }], 80);
           animate(portrait, [0, -6, 6, -6, 6, 0].map(x => ({ transform: `translateX(${x}px)` })), 240);
-          const element = visual.weakness || visual.element === "rainbow" ? "rainbow" : ({ fire: "fire", ice: "ice", holy: "holy", light: "holy", physical: "physical" }[visual.element]);
+          const element = visual.weakness || visual.element === "rainbow" ? "rainbow" : ({ fire: "fire", ice: "ice", holy: "holy", light: "holy", physical: "physical", dark: "dark", cursed: "dark",
+            earth: "earth", arcane: "arcane", water: "water" }[visual.element] || "physical");
           if (element) particles(card, element);
-          // TODO(design): other engine elements have no specified impact vocabulary.
         } else {
           const background = getComputedStyle(card).backgroundColor;
           animate(card, [{ backgroundColor: background }, { backgroundColor: "var(--red-dim)" }, { backgroundColor: background }], 120);

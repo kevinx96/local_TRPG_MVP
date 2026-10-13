@@ -1625,7 +1625,7 @@ def _log(session: dict[str, Any], actor: str, kind: str, text: str, data: Option
             "kind": visual_kind, "actor_id": actor, "actor_side": actor_side,
             "target_id": target_id, "target_side": "party" if player_target else "enemy",
             "hit": visual_kind != "miss", "critical": False,
-            # TODO(design): combat has no critical-hit rule; do not invent a roll or multiplier.
+            # No critical-hit rule by design (2026-10-13): adding one would shift every balance target.
             "amount": amount, "resource": details.get("resource", "hp"),
             "element": details.get("element", "physical"), "weakness": bool(details.get("weakness")),
             "knocked_down": (_safe_int(target.get("hp"), 0) <= 0 if player_target else _enemy_is_defeated(target)),

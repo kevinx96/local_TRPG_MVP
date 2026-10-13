@@ -25,6 +25,8 @@
   --green-dim:rgba(101, 184, 106, .12);
   --purple:   #a78bfa;
   --orange:   #f0a050;
+  --cyan:     #7fd0e8;
+  --earth:    #b08a5a;
 
   --radius:   10px;
   --radius-sm:6px;
@@ -1631,10 +1633,13 @@ button, select, textarea, input { font: inherit; }
 .impact-physical::before, .impact-physical::after { left: 22%; top: 30%; width: 62%; height: 3px; transform: rotate(-38deg); background: var(--text); box-shadow: 0 0 10px var(--text); }
 .impact-physical::after { top: 42%; left: 34%; width: 46%; }
 .impact-holy::before { left: 43%; top: 5%; width: 14%; height: 80%; background: linear-gradient(transparent, var(--gold), var(--text), var(--gold), transparent); box-shadow: 0 0 24px var(--gold-glow); }
-/* TODO(design): cyan and a complete seven-hue palette are absent; keep the approved variables. */
-.impact-rainbow::before { inset: 10% 10% 35%; border-radius: 50%; padding: 8px; background: conic-gradient(var(--red), var(--orange), var(--gold), var(--green), var(--blue), var(--purple), var(--red)); mask: linear-gradient(var(--text), var(--text)) content-box, linear-gradient(var(--text), var(--text)); mask-composite: exclude; }
+.impact-rainbow::before { inset: 10% 10% 35%; border-radius: 50%; padding: 8px; background: conic-gradient(var(--red), var(--orange), var(--gold), var(--green), var(--cyan), var(--blue), var(--purple), var(--red)); mask: linear-gradient(var(--text), var(--text)) content-box, linear-gradient(var(--text), var(--text)); mask-composite: exclude; }
 .combat-impact i { position: absolute; width: 6px; height: 12px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
 .impact-fire { color: var(--orange); }
+.impact-ice { color: var(--cyan); }
+.impact-dark { color: var(--purple); }
+.impact-earth { color: var(--earth); }
+.impact-arcane, .impact-water { color: var(--blue); }
 .impact-ice i { width: 9px; height: 19px; border-radius: 0; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
 .impact-heal i { background: var(--green); color: var(--green); }
 .impact-buff i { background: var(--gold); color: var(--gold); }
