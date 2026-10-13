@@ -1,0 +1,51 @@
+# 029 离线试玩回归（2026-10-13）
+
+4 职业 × 2 固定种子（20261013、20261014），每局最多 150 步；战斗每个指令和结算各占一步。
+首次战斗死亡后重来一次，选择次数及随机流继续累计。选项、判定和战斗的随机数均固定。
+LLM 配置指向 127.0.0.1:1，并在请求适配器直接模拟连接失败；禁止真实网络。
+
+| 职业 | 种子 | 首次死亡 | 重来后结果 / 最终结果 | 最远地点 | 步数 |
+|---|---:|---|---|---|---:|
+| hero | 20261013 | 无 | step_limit @ dark_forest_loc | cave_prism_tree | 150 |
+| hero | 20261014 | 无 | step_limit @ ignis_last_breath | dragon_valley_loc | 150 |
+| cleric | 20261013 | goblin_fort_fourth | dragon_valley_defeat @ valley_entrance | valley_entrance | 82 |
+| cleric | 20261014 | 无 | ignis_purified @ castle_report | castle_report | 91 |
+| mage | 20261013 | dragon_valley_loc | ignis_defeated @ castle_report | castle_report | 99 |
+| mage | 20261014 | 无 | ignis_defeated @ castle_report | castle_report | 89 |
+| thief | 20261013 | 无 | ignis_purified @ castle_report | castle_report | 77 |
+| thief | 20261014 | frost_wolf_battle | ignis_purified @ castle_report | castle_report | 97 |
+
+最远地点口径：按主线章节、地图节点顺序取最大值；砦/洞窟归森林章、屋敷归王城归还章。同级支线没有唯一剧情顺序，完整到访记录见逐步日志。
+
+最终分布：{"step_limit": 2, "dragon_valley_defeat": 1, "ignis_purified": 3, "ignis_defeated": 2}
+
+首次死亡地点：{"goblin_fort_fourth": 1, "dragon_valley_loc": 1, "frost_wolf_battle": 1}
+
+重来后分布：{"dragon_valley_defeat": 1, "ignis_defeated": 1, "ignis_purified": 1}
+
+## 不变量检查
+
+- 异常、非战斗死路及兜底叙述：0 项。
+- 同一地点重来后再次死亡（仅作为循环候选，不能据此证明必死）：
+
+## 逐步记录
+
+- [hero-20261013.md](030-playtest/hero-20261013.md)
+- [hero-20261014.md](030-playtest/hero-20261014.md)
+- [cleric-20261013.md](030-playtest/cleric-20261013.md)
+- [cleric-20261014.md](030-playtest/cleric-20261014.md)
+- [mage-20261013.md](030-playtest/mage-20261013.md)
+- [mage-20261014.md](030-playtest/mage-20261014.md)
+- [thief-20261013.md](030-playtest/thief-20261013.md)
+- [thief-20261014.md](030-playtest/thief-20261014.md)
+
+## 复现
+
+```powershell
+python -m scripts.playtest.explore
+```
+
+剧本 SHA-256：
+
+- dragon_rpg.json: `3b11739aaa8723945f23266b88e30d3a740bbab0d8c2e0633dad8044ff125821`
+- dragon_rpg_hybrid.json: `87b18def438dc09e23290d9386256ef7daf76d23659bc210cf033d9ff98ee8a5`

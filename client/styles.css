@@ -1613,6 +1613,37 @@ button, select, textarea, input { font: inherit; }
 .mini-map { position: relative; width: 200px; height: 140px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--panel) 85%, transparent); cursor: pointer; }
 /* The battle layout uses the top-right corner for the enemy panel; the MAP button stays available. */
 .combat-active .mini-map { display: none; }
+
+/* 030: generated combat effects, using the existing palette. */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.combat-fx-layer { position: fixed; inset: 0; z-index: 39; pointer-events: none; overflow: hidden; }
+.combat-number, .combat-impact, .combat-phase-ghost { position: absolute; pointer-events: none; }
+.combat-number { color: var(--text); font-size: 26px; font-weight: 900; text-align: center; text-shadow: 0 2px 4px var(--bg); }
+.combat-number > span { display: inline-block; margin-top: 6px; }
+.combat-number.critical { color: var(--gold); font-size: 39px; }
+.combat-number.heal { color: var(--green); }
+.combat-number.miss { color: var(--muted); }
+.combat-resource i { position: relative; }
+.combat-resource b { position: relative; z-index: 1; transition: none; }
+.combat-delay-bar { position: absolute; inset: 0 auto 0 0; background: var(--text-dim); }
+.combat-enemy.defeated .combat-enemy-image { filter: grayscale(1); opacity: 0; }
+.combat-impact::before, .combat-impact::after { content: ""; position: absolute; }
+.impact-physical::before, .impact-physical::after { left: 22%; top: 30%; width: 62%; height: 3px; transform: rotate(-38deg); background: var(--text); box-shadow: 0 0 10px var(--text); }
+.impact-physical::after { top: 42%; left: 34%; width: 46%; }
+.impact-holy::before { left: 43%; top: 5%; width: 14%; height: 80%; background: linear-gradient(transparent, var(--gold), var(--text), var(--gold), transparent); box-shadow: 0 0 24px var(--gold-glow); }
+/* TODO(design): cyan and a complete seven-hue palette are absent; keep the approved variables. */
+.impact-rainbow::before { inset: 10% 10% 35%; border-radius: 50%; padding: 8px; background: conic-gradient(var(--red), var(--orange), var(--gold), var(--green), var(--blue), var(--purple), var(--red)); mask: linear-gradient(var(--text), var(--text)) content-box, linear-gradient(var(--text), var(--text)); mask-composite: exclude; }
+.combat-impact i { position: absolute; width: 6px; height: 12px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
+.impact-fire { color: var(--orange); }
+.impact-ice i { width: 9px; height: 19px; border-radius: 0; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.impact-heal i { background: var(--green); color: var(--green); }
+.impact-buff i { background: var(--gold); color: var(--gold); }
+.combat-phase-flash { position: absolute; inset: 0; background: var(--text); }
+.combat-phase-ghost img { width: 100%; height: min(18vh, 150px); object-fit: contain; margin-top: 18px; }
+@media (prefers-reduced-motion: reduce) {
+  .combat-delay-bar { display: none; }
+  .combat-screen *, .combat-screen *::before, .combat-screen *::after { animation: none !important; transition: none !important; }
+}
 .map-overlay { z-index: 100; }
 .full-map { position: relative; flex: 1; min-height: 300px; margin: 30px 5%; }
 .map-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }

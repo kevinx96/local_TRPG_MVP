@@ -189,19 +189,27 @@ def perform_combat_action(
     if normalized_type not in {"attack", "skill", "item", "defend", "flee", "special"}:
         raise CombatError("不明な戦闘行動です。")
 
-    before_index = len(combat.get("log") or [])
-    if normalized_type == "attack":
-        _player_attack(session, target_id, random_source)
-    elif normalized_type == "skill":
-        _player_skill(session, action_id, target_id, random_source)
-    elif normalized_type == "item":
-        _player_item(session, action_id, target_id, random_source)
-    elif normalized_type == "defend":
-        _player_defend(session)
-    elif normalized_type == "special":
-        _player_special_action(session, action_id)
-    else:
-        _player_flee(session, random_source)
+    previous_events = combat.get("action_events")
+    combat["action_events"] = []
+    try:
+        if normalized_type == "attack":
+            _player_attack(session, target_id, random_source)
+        elif normalized_type == "skill":
+            _player_skill(session, action_id, target_id, random_source)
+        elif normalized_type == "item":
+            _player_item(session, action_id, target_id, random_source)
+        elif normalized_type == "defend":
+            _player_defend(session)
+        elif normalized_type == "special":
+            _player_special_action(session, action_id)
+        else:
+            _player_flee(session, random_source)
+    except CombatError:
+        if previous_events is None:
+            combat.pop("action_events", None)
+        else:
+            combat["action_events"] = previous_events
+        raise
 
     if combat.get("status") == "active":
         _check_victory_or_defeat(session)
@@ -223,7 +231,7 @@ def perform_combat_action(
         if int(combat["round"]) > max_rounds:
             _finish_combat(session, "defeat", "長期戦に耐えきれず敗北した。")
 
-    events = deepcopy((combat.get("log") or [])[before_index:])
+    events = deepcopy(combat.get("action_events") or [])
     return {
         "status": combat.get("status"),
         "round": combat.get("round"),
@@ -316,6 +324,8 @@ def public_combat(session: dict[str, Any]) -> Optional[dict[str, Any]]:
         "result": deepcopy(combat.get("result")),
         "intro_text": str(combat.get("intro_text") or ""),
         "actions": [],
+        "events": deepcopy(combat.get("action_events") or []),
+        "presentation_state": _presentation_state(session),
     }
     if combat.get("status") == "active":
         public["actions"] = combat_actions(session)
@@ -575,9 +585,9 @@ def _player_item(session: dict[str, Any], item_id: str, target_id: str, rng: Any
                 target["hp"] = min(-1, _safe_int(target.get("hp"), -1) // 10)
             else:
                 target["hp"] = max(1, _safe_int(target.get("hp"), 1) // 10)
-            _log(session, "player", "status", f"{target.get('name', '敵')}が縮小した。", {"roll": roll, "chance": chance})
+            _log(session, "player", "status", f"{target.get('name', '敵')}が縮小した。", {"roll": roll, "chance": chance}, target=target)
         else:
-            _log(session, "player", "miss", f"{item.get('name', '道具')}は効かなかった。", {"roll": roll, "chance": chance})
+            _log(session, "player", "miss", f"{item.get('name', '道具')}は効かなかった。", {"roll": roll, "chance": chance}, target=target)
     else:
         raise CombatError("未対応の道具効果です。")
     if spec.get("consumable", True):
@@ -651,7 +661,7 @@ def _execute_enemy_ability(session: dict[str, Any], enemy: dict[str, Any], abili
         _log(session, actor_id, "defend", f"{enemy.get('name')}は{ability['name']}で守りを固めた。")
     elif kind == "status" and ability.get("status_effect") == "break_guard":
         session["combat"].setdefault("player_status", {})["guard_disabled_round"] = session["combat"]["round"] + 1
-        _log(session, actor_id, "status", f"{enemy.get('name')}は{ability['name']}を使用した。")
+        _log(session, actor_id, "status", f"{enemy.get('name')}は{ability['name']}を使用した。", target=session["character"])
     else:
         for _ in range(max(1, int(ability.get('hits', 1)))):
             if session['character']['hp'] <= 0:
@@ -698,7 +708,7 @@ def _apply_direct_formula_damage(
     if defender is session.get('character'):
         damage = _modified_received_damage(session, damage, element, attacker, name)
     defender["hp"] = max(0, _safe_int(defender.get("hp"), 0) - damage)
-    _log(session, str(attacker.get("id") or "enemy"), "field_damage", f"{name}が{damage}ダメージを与えた。", {"damage": damage, "formula": detail, "element": element})
+    _log(session, str(attacker.get("id") or "enemy"), "field_damage", f"{name}が{damage}ダメージを与えた。", {"damage": damage, "formula": detail, "element": element}, target=defender)
 
 
 def _trigger_enemy_auto_abilities(session: dict[str, Any], enemy: dict[str, Any], rng: Any) -> None:
@@ -749,7 +759,7 @@ def _resolve_attack(
     hit_roll = rng.randint(1, 100)
     defender_name = str(defender.get("name") or "敵")
     if hit_roll > chance:
-        _log(session, actor_id, "miss", f"{name}は{defender_name}に当たらなかった。", {"roll": hit_roll, "chance": chance})
+        _log(session, actor_id, "miss", f"{name}は{defender_name}に当たらなかった。", {"roll": hit_roll, "chance": chance, "element": ability.get("element", "physical")}, target=defender)
         return
 
     formula = str(ability.get("damage") or ability.get("dice_type") or "1d4")
@@ -794,7 +804,9 @@ def _resolve_attack(
         actor_id,
         "damage",
         f"{name}が{defender_name}に{damage}ダメージ。",
-        {"damage": damage, "raw_damage": raw_damage, "formula": detail, "element": element, "hit_roll": hit_roll, "hit_chance": chance},
+        {"damage": damage, "raw_damage": raw_damage, "formula": detail, "element": element, "hit_roll": hit_roll, "hit_chance": chance,
+         "weakness": multiplier > 1 or ability.get("element") == "weakness" or bool(ability.get("multi_elements"))},
+        target=defender,
     )
     status_spec = ability.get("on_hit_status")
     if isinstance(status_spec, dict) and damage > 0:
@@ -805,6 +817,7 @@ def _resolve_attack(
             "status",
             f"{defender_name}は{status_spec.get('name') or status_spec.get('id') or '状態異常'}を受けた。",
             {"status": deepcopy(status_spec)},
+            target=defender,
         )
     self_damage = max(0, _safe_int(ability.get("self_damage"), 0))
     if self_damage and attacker is session.get("character"):
@@ -849,7 +862,8 @@ def _check_victory_or_defeat(session: dict[str, Any]) -> None:
         combat.setdefault("phase_transitions", []).append(
             {"round": combat["round"], "from": enemy["template_id"], "to": replacement["template_id"]})
         _log(session, "system", "phase_transition", str(enemy.get("phase_transition_text") or ""),
-             {"from": enemy["template_id"], "to": replacement["template_id"]})
+             {"from": enemy["template_id"], "to": replacement["template_id"],
+              "from_id": enemy["id"], "replacement": deepcopy(replacement)}, target=replacement)
         _activate_phase_allies(session)
         _activate_encounter_modifiers(session)
     if enemies and all(_enemy_is_defeated(enemy) for enemy in enemies):
@@ -1132,6 +1146,7 @@ def _tick_enemy_statuses(session: dict[str, Any], rng: Any) -> None:
                     "status_damage",
                     f"{enemy.get('name', '敵')}は{status.get('name') or status.get('id') or '状態異常'}で{damage}ダメージを受けた。",
                     {"damage": damage, "stacks": stacks, "formula": detail},
+                    target=enemy,
                 )
             remaining = status.get("remaining_rounds")
             if isinstance(remaining, int):
@@ -1172,7 +1187,7 @@ def _apply_undead_conversion(session: dict[str, Any], actor_id: str) -> None:
         return
     part = sequence[len(parts)]
     parts.append(part)
-    _log(session, actor_id, "status", f"{part}が永久に亡霊化しました。", {"part": part, "count": len(parts)})
+    _log(session, actor_id, "status", f"{part}が永久に亡霊化しました。", {"part": part, "count": len(parts)}, target=character)
 
 
 def _encounter_for_session(session: dict[str, Any], pack: dict[str, Any]) -> dict[str, Any]:
@@ -1567,20 +1582,59 @@ def _merge_dict(base: Any, override: Any) -> dict[str, Any]:
     return result
 
 
-def _log(session: dict[str, Any], actor: str, kind: str, text: str, data: Optional[dict[str, Any]] = None) -> None:
+def _presentation_state(session: dict[str, Any]) -> dict[str, Any]:
+    actors = {"player": session.get("character", {})}
+    actors.update({enemy["id"]: enemy for enemy in (session.get("combat") or {}).get("enemies", [])})
+    return {actor_id: {**{key: actor.get(key, 0) for key in ("hp", "max_hp", "mp", "max_mp", "sp", "max_sp")},
+                       "defeated": (_safe_int(actor.get("hp"), 0) <= 0 if actor_id == "player" else _enemy_is_defeated(actor))}
+            for actor_id, actor in actors.items()}
+
+
+def _log(session: dict[str, Any], actor: str, kind: str, text: str, data: Optional[dict[str, Any]] = None,
+         *, target: Optional[dict[str, Any]] = None) -> None:
     combat = session.get("combat")
     if not isinstance(combat, dict):
         return
+    combat["event_sequence"] = int(combat.get("event_sequence", 0)) + 1
     entry = {
+        "sequence": combat["event_sequence"],
         "round": combat.get("round", 1),
         "actor": actor,
         "kind": kind,
         "text": text,
         "created_at": utc_now(),
+        "state": _presentation_state(session),
     }
     if data:
         entry["data"] = deepcopy(data)
+    details = data or {}
+    enemies = combat.get("enemies", [])
+    actor_side = "enemy" if any(enemy["id"] == actor for enemy in enemies) else "party"
+    visual_kind = {"damage": "damage", "field_damage": "damage", "status_damage": "damage",
+                   "self_damage": "damage", "heal": "heal", "miss": "miss", "defend": "buff",
+                   "stance": "buff", "status": "buff", "phase_transition": "phase"}.get(kind)
+    if kind == "item" and "amount" in details:
+        visual_kind = "heal"
+    if target is None and visual_kind:
+        target = next((enemy for enemy in enemies if enemy["id"] == actor), session.get("character", {}))
+    if visual_kind and target is not None:
+        player_target = target is session.get("character")
+        target_id = "player" if player_target else target.get("id")
+        amount = details.get("damage", details.get("amount", 0))
+        entry["visual"] = {
+            "kind": visual_kind, "actor_id": actor, "actor_side": actor_side,
+            "target_id": target_id, "target_side": "party" if player_target else "enemy",
+            "hit": visual_kind != "miss", "critical": False,
+            # TODO(design): combat has no critical-hit rule; do not invent a roll or multiplier.
+            "amount": amount, "resource": details.get("resource", "hp"),
+            "element": details.get("element", "physical"), "weakness": bool(details.get("weakness")),
+            "knocked_down": (_safe_int(target.get("hp"), 0) <= 0 if player_target else _enemy_is_defeated(target)),
+            "heavy": visual_kind == "damage" and player_target and actor_side == "enemy"
+                     and amount >= max(1, _safe_int(target.get("max_hp"), 1)) * 0.25,
+        }
     combat.setdefault("log", []).append(entry)
+    if "action_events" in combat:
+        combat["action_events"].append(deepcopy(entry))
     if len(combat["log"]) > 80:
         combat["log"] = combat["log"][-80:]
 

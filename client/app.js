@@ -6,6 +6,7 @@ const state = {
   sessionId: null,
   pendingChoices: [],
   choiceStack: [],
+  choicePortrait: null,
   choicesRevealed: false,
   selectedCharacterId: "hero",
   selectedCharacterImage: "/static/images/char_male_hero_v2.png",
@@ -21,6 +22,7 @@ const state = {
   combatTargetId: "",
   combatActionTab: "attack",
   combatBusy: false,
+  combatPlayback: null,
   combatActions: [],
   combatIntroSeenId: "",
   session: null,
@@ -1185,6 +1187,7 @@ function hideChoices() {
 function setPendingChoices(choices, revealImmediately = false) {
   state.pendingChoices = Array.isArray(choices) ? choices : [];
   state.choiceStack = [];
+  restoreChoicePortrait(null);
   state.choicesRevealed = false;
   hideChoices();
   if (revealImmediately && state.pendingChoices.length) {
@@ -1198,11 +1201,11 @@ function setPendingChoices(choices, revealImmediately = false) {
 function renderScenePortraits(session, character) {
   if (!els.spriteLayer) return;
   const playerImage = session.player_portrait_image || character.character_image || "";
-  const npcImage = session.dialogue_portrait_image || "";
+  const npcImage = state.choicePortrait || session.dialogue_portrait_image || "";
   const locationNpcs = Array.isArray(session.location_npc_portraits)
     ? session.location_npc_portraits.filter((npc) => npc && npc.image)
     : [];
-  const dialogueActive = Boolean(session.dialogue_active && playerImage && npcImage);
+  const dialogueActive = Boolean((state.choicePortrait || session.dialogue_active) && playerImage && npcImage);
   els.spriteLayer.classList.toggle("dialogue-mode", dialogueActive);
   els.spriteLayer.classList.toggle("ensemble-mode", !dialogueActive && locationNpcs.length > 0);
   els.spriteLayer.classList.toggle("solo-mode", !dialogueActive && locationNpcs.length === 0 && Boolean(playerImage));
@@ -1217,6 +1220,22 @@ function renderScenePortraits(session, character) {
   els.playerPortrait.style.display = dialogueActive || (!locationNpcs.length && playerImage) ? "" : "none";
   els.npcPortrait.src = npcImage;
   els.npcPortrait.style.display = dialogueActive ? "" : "none";
+}
+
+function restoreChoicePortrait(portrait) {
+  state.choicePortrait = portrait;
+  if (state.session) renderScenePortraits(state.session, state.session.character || {});
+}
+
+function parentChoicePortrait(choice) {
+  if (choice.portrait_image) return choice.portrait_image;
+  const images = new Set();
+  const visit = children => children.forEach(child => {
+    if (child.portrait_image) images.add(child.portrait_image);
+    if (child.children) visit(child.children);
+  });
+  visit(choice.children || []);
+  return images.size === 1 ? [...images][0] : null;
 }
 
 function renderCharacterAttributes(attributes) {
@@ -1275,6 +1294,7 @@ async function retryArea() {
 function clearPendingChoices() {
   state.pendingChoices = [];
   state.choiceStack = [];
+  restoreChoicePortrait(null);
   state.choicesRevealed = false;
   updateDialogueAdvanceState();
 }
@@ -1306,7 +1326,8 @@ function handleChoiceListClick(event) {
   if (card.dataset.choiceText === "__back__") {
     if (state.choiceStack.length > 0) {
       const previous = state.choiceStack.pop();
-      state.pendingChoices = previous;
+      state.pendingChoices = previous.choices;
+      restoreChoicePortrait(previous.portrait);
       state.choicesRevealed = true;
       renderChoices(state.pendingChoices);
     }
@@ -1319,7 +1340,8 @@ function handleChoiceListClick(event) {
 
   const hasChildren = Array.isArray(choice.children) && choice.children.length > 0;
   if (hasChildren) {
-    state.choiceStack.push(state.pendingChoices);
+    state.choiceStack.push({ choices: state.pendingChoices, portrait: state.choicePortrait });
+    restoreChoicePortrait(parentChoicePortrait(choice) || state.choicePortrait);
     state.pendingChoices = choice.children;
     state.choicesRevealed = true;
     renderChoices(state.pendingChoices);
@@ -1345,7 +1367,8 @@ function renderCombat(session) {
   renderCombatIntro(combat);
   els.combatScreen.classList.toggle("busy", state.combatBusy);
   const enemies = Array.isArray(combat.enemies) ? combat.enemies : [];
-  const alive = enemies.filter((enemy) => Number(enemy.hp || 0) > 0);
+  const alive = enemies.filter((enemy) => combat.presentation_state?.[enemy.id]
+    ? !combat.presentation_state[enemy.id].defeated : Number(enemy.hp || 0) > 0);
   if (!alive.some((enemy) => enemy.id === state.combatTargetId)) {
     state.combatTargetId = alive[0]?.id || "";
   }
@@ -1362,28 +1385,11 @@ function renderCombat(session) {
   setCombatResource("PlayerSp", session.character, "sp");
 
   els.combatEnemies.classList.toggle("many-enemies", enemies.length >= 3);
-  els.combatEnemies.innerHTML = enemies.map((enemy) => {
-    const hp = Number(enemy.hp || 0);
-    const maxHp = Math.max(1, Number(enemy.max_hp || hp || 1));
-    const percent = Math.max(0, Math.min(100, (hp / maxHp) * 100));
-    const selected = enemy.id === state.combatTargetId;
-    const enemyImage = enemy.image
-      ? `<img class="combat-enemy-image" src="${escapeAttr(enemy.image)}" alt="" />`
-      : "";
-    return `<button type="button" class="combat-enemy ${selected ? "selected" : ""} ${hp <= 0 ? "defeated" : ""}"
-      data-combat-target="${escapeAttr(enemy.id || "")}" ${hp <= 0 ? "disabled" : ""}>
-      ${enemyImage}
-      <span class="combatant-side">ENEMY</span>
-      <h3>${escapeHtml(enemy.name || enemy.id || "敵")}</h3>
-      <div class="combat-resource hp"><span>HP</span><i><b style="width:${percent}%"></b></i><strong>${hp}/${maxHp}</strong></div>
-      ${enemy.description ? `<p>${escapeHtml(enemy.description)}</p>` : ""}
-      ${renderAbilityTags(enemy.skills || [], true)}
-    </button>`;
-  }).join("");
+  els.combatEnemies.innerHTML = enemies.map(enemy => combatEnemyMarkup(enemy, combat.presentation_state?.[enemy.id])).join("");
 
   const logs = Array.isArray(combat.log) ? combat.log : [];
   els.combatLog.innerHTML = logs.length
-    ? logs.map((entry) => `<div class="combat-log-entry ${escapeAttr(entry.kind || "")}"><strong>R${entry.round || 1}</strong><span>${escapeHtml(entry.text || "")}</span></div>`).join("")
+    ? logs.map(combatLogMarkup).join("")
     : '<div class="combat-log-entry"><strong>R1</strong><span>行動を選択してください。</span></div>';
   els.combatLog.scrollTop = els.combatLog.scrollHeight;
 
@@ -1403,6 +1409,30 @@ function renderCombat(session) {
     state.combatActions = Array.isArray(combat.actions) ? combat.actions : [];
     renderCombatActions(state.combatActions);
   }
+}
+
+function combatLogMarkup(entry) {
+  return `<div class="combat-log-entry ${escapeAttr(entry.kind || "")}" data-event-sequence="${entry.sequence || 0}"><strong>R${entry.round || 1}</strong><span>${escapeHtml(entry.text || "")}</span></div>`;
+}
+
+function combatEnemyMarkup(enemy, resources) {
+    const hp = Number(enemy.hp || 0);
+    const maxHp = Math.max(1, Number(enemy.max_hp || hp || 1));
+    const percent = Math.max(0, Math.min(100, (hp / maxHp) * 100));
+    const selected = enemy.id === state.combatTargetId;
+    const defeated = resources ? resources.defeated : hp <= 0;
+    const enemyImage = enemy.image
+      ? `<img class="combat-enemy-image" src="${escapeAttr(enemy.image)}" alt="" />`
+      : "";
+    return `<button type="button" class="combat-enemy ${selected ? "selected" : ""} ${defeated ? "defeated" : ""}"
+      data-combat-target="${escapeAttr(enemy.id || "")}" ${defeated ? "disabled" : ""}>
+      ${enemyImage}
+      <span class="combatant-side">ENEMY</span>
+      <h3>${escapeHtml(enemy.name || enemy.id || "敵")}</h3>
+      <div class="combat-resource hp"><span>HP</span><i><b style="width:${percent}%"></b></i><strong>${hp}/${maxHp}</strong></div>
+      ${enemy.description ? `<p>${escapeHtml(enemy.description)}</p>` : ""}
+      ${renderAbilityTags(enemy.skills || [], true)}
+    </button>`;
 }
 
 function setCombatResource(suffix, actor, stat) {
@@ -1428,7 +1458,8 @@ function renderCombatActions(actions) {
   els.combatActions.innerHTML = visible.map((action) => {
     const cost = action.cost ? `${String(action.cost_item_name || action.cost_type || "").toUpperCase()} ${action.cost}` : "";
     const description = action.enabled === false ? (action.disabled_reason || "使用できません") : (action.description || "");
-    return `<button type="button" class="combat-action" data-combat-action-type="${escapeAttr(action.type || "")}" data-combat-action-id="${escapeAttr(action.id || "")}" ${action.enabled === false ? "disabled" : ""}>
+    const label = [action.name || action.id || "行動", ...abilityTagTexts([action]), cost, description].filter(Boolean).join(" ");
+    return `<button type="button" class="combat-action" aria-label="${escapeAttr(label)}" data-combat-action-type="${escapeAttr(action.type || "")}" data-combat-action-id="${escapeAttr(action.id || "")}" ${action.enabled === false ? "disabled" : ""}>
       <strong>${escapeHtml(action.name || action.id || "行動")}</strong>
       ${cost ? `<em>${escapeHtml(cost)}</em>` : ""}
       ${renderAbilityTags([action])}
@@ -1448,7 +1479,7 @@ function renderCombatIntro(combat) {
   els.combatScreen.classList.toggle("intro-active", visible);
 }
 
-function renderAbilityTags(abilities, compact = false) {
+function abilityTagTexts(abilities, compact = false) {
   const tags = [];
   for (const ability of abilities || []) {
     if (!ability || typeof ability !== "object") continue;
@@ -1465,6 +1496,11 @@ function renderAbilityTags(abilities, compact = false) {
     }
     if (compact && ability.name) tags.unshift(ability.name);
   }
+  return tags;
+}
+
+function renderAbilityTags(abilities, compact = false) {
+  const tags = abilityTagTexts(abilities, compact);
   if (!tags.length) return "";
   return `<div class="combat-effect-tags">${tags.slice(0, compact ? 4 : 6).map((tag) => `<i>${escapeHtml(tag)}</i>`).join("")}</div>`;
 }
@@ -1479,6 +1515,7 @@ async function submitCombatAction(actionType, actionId) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action_type: actionType, action_id: actionId, target_id: state.combatTargetId }),
     });
+    await playCombatEvents(state.session, session);
     state.combatBusy = false;
     renderSession(session);
   } catch (error) {

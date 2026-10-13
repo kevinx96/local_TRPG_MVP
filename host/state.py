@@ -650,7 +650,21 @@ def player_choices_for_session(choices: list[dict[str, Any]], session: dict[str,
                            "disabled_reason": "まだ知らない何かが必要なようだ。"})
             continue
         choice = {key: deepcopy(value) for key, value in source.items()
-                  if key in {"id", "action_id", "text", "preview", "risk", "enabled", "disabled_reason", "children", "open_shop"}}
+                  if key in {"id", "action_id", "text", "preview", "risk", "enabled", "disabled_reason", "children", "open_shop", "portrait_image"}}
+        if source.get("risk_source") == "destination":
+            from .maps import public_maps
+            destinations = _risk_destinations_for_session(source.get("effects", []), session)
+            if (public_maps(session).get("current_map_id") != "capital"
+                    and destinations.difference(session.get("visited_locations", []))):
+                choice["risk"] = "不明"
+            elif destinations and choice.get("risk") == "危険（戦闘）":
+                locations = {loc["id"]: loc for loc in session.get("scenario_pack", {}).get("locations", [])}
+                enemies = [(destination, enemy) for destination in destinations
+                           for enemy in locations.get(destination, {}).get("combat", {}).get(
+                               "enemy_ids", locations.get(destination, {}).get("enemy_ids", []))]
+                if enemies and all(session.get("flags", {}).get(f"combat_defeated:{location}:{enemy}")
+                                   for location, enemy in enemies):
+                    choice["risk"] = "判定不要"
         choice["visibility"] = visibility
         if isinstance(choice.get("children"), list):
             choice["children"] = player_choices_for_session(choice["children"], session)
@@ -658,6 +672,20 @@ def player_choices_for_session(choices: list[dict[str, Any]], session: dict[str,
                 continue
         result.append(choice)
     return result
+
+
+def _risk_destinations_for_session(effects: list[Any], session: dict[str, Any]) -> set[str]:
+    destinations = set()
+    for effect in effects:
+        if not isinstance(effect, dict):
+            continue
+        if effect.get("current_location"):
+            destinations.add(str(effect["current_location"]))
+        branch = effect.get("branch")
+        if isinstance(branch, dict):
+            side = "then" if _session_requirement_passes(branch.get("requirements"), session) else "else"
+            destinations.update(_risk_destinations_for_session(branch.get(side, []), session))
+    return destinations
 
 
 def _current_scene_enemies(session: dict[str, Any]) -> list[dict[str, Any]]:

@@ -503,7 +503,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_king.png",
-          "result_text": "「イグニスは炎を操る恐ろしい竜だ」と国王は杖を強く握りしめる。「だが、竜の谷の古文書によれば、奴は冷気を帯びた攻撃を極端に嫌うそうだ。氷の魔力を持つ武器か、その性質を突く工夫が必要になるだろう」。その言葉には、かつて多くの騎士たちが挑み、そして散った無念が滲んでいる。"
+          "result_text": "「イグニスは炎を操る恐ろしい竜だ」と国王は杖を強く握りしめる。「だが、竜の谷の古文書によれば、奴は冷気を帯びた攻撃を極端に嫌うそうだ。氷の魔力を持つ武器か、その性質を突く工夫が必要になるだろう」。その言葉には、かつて多くの騎士たちが挑み、そして散った無念が滲んでいる。",
+          "risk_source": "action"
         },
         {
           "id": "ask_general_advice",
@@ -546,7 +547,8 @@
               ],
               "text": "話し終えた将軍の吐息が、なぜか白く凍っていた。"
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "check_supplies",
@@ -575,7 +577,8 @@
               }
             }
           ],
-          "result_text": "侍従が小箱を差し出した。「教会より、邪竜討伐に向かわれる方へ」中には清められた聖水が二本収められている。"
+          "result_text": "侍従が小箱を差し出した。「教会より、邪竜討伐に向かわれる方へ」中には清められた聖水が二本収められている。",
+          "risk_source": "action"
         },
         {
           "id": "go_castle_town",
@@ -589,7 +592,8 @@
             {
               "current_location": "castle_town"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_dragon_rpg.png",
@@ -660,7 +664,8 @@
             {
               "current_location": "forge"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "go_inn",
@@ -674,7 +679,8 @@
             {
               "current_location": "inn"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "go_magic_shop",
@@ -688,7 +694,8 @@
             {
               "current_location": "magic_shop"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "go_item_shop",
@@ -702,7 +709,8 @@
             {
               "current_location": "item_shop"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "go_alley",
@@ -716,7 +724,8 @@
             {
               "current_location": "alley"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "ask_gald_rumor",
@@ -733,7 +742,8 @@
           ],
           "visible_after": "saved_gald",
           "result_text": "「将軍様の屋敷に、夜な夜な白い霧が出るって噂だぜ」",
-          "portrait_image": "/static/images/npc_gald.png"
+          "portrait_image": "/static/images/npc_gald.png",
+          "risk_source": "action"
         },
         {
           "id": "return_castle_from_town",
@@ -747,7 +757,8 @@
             {
               "current_location": "castle"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "go_dark_forest",
@@ -761,7 +772,8 @@
             {
               "current_location": "dark_forest_loc"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "return_village",
@@ -780,7 +792,8 @@
             }
           ],
           "visible_after": "returned_from_village",
-          "result_text": "城門を出て街道を下り、闇の森を抜けると、焼け跡の残る麓の村が見えてきた。"
+          "result_text": "城門を出て街道を下り、闇の森を抜けると、焼け跡の残る麓の村が見えてきた。",
+          "risk_source": "destination"
         },
         {
           "id": "return_forest_exit",
@@ -804,7 +817,8 @@
               }
             ]
           },
-          "secret": true
+          "secret": true,
+          "risk_source": "destination"
         }
       ],
       "hybrid": {
@@ -1549,7 +1563,8 @@
             "アダマンタイトの鎧",
             "氷の護符を買う",
             "氷の護符"
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "ask_blacksmith_weakness",
@@ -1566,7 +1581,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_blacksmith.png",
-          "result_text": "鍛冶師ローベルトは手を止め、低い声で語り始めた。「通常の物理攻撃や炎は、あの邪竜イグニスには一切通用せん。だが、『氷の護符』の力を武器に纏わせれば、自身の攻撃を氷属性に変換できる。それなら奴にも傷を負わせられるはずだ」"
+          "result_text": "鍛冶師ローベルトは手を止め、低い声で語り始めた。「通常の物理攻撃や炎は、あの邪竜イグニスには一切通用せん。だが、『氷の護符』の力を武器に纏わせれば、自身の攻撃を氷属性に変換できる。それなら奴にも傷を負わせられるはずだ」",
+          "risk_source": "action"
         },
         {
           "id": "show_sword_to_blacksmith",
@@ -1586,7 +1602,8 @@
             "character_id": "hero"
           },
           "portrait_image": "/static/images/npc_blacksmith.png",
-          "result_text": "ローベルトは君の鉄の剣をじっと見つめ、少し言葉を濁した。「お前の剣……氷の護符を埋め込むことはできるが、今の剣はボロボロすぎて耐えられん。俺が打った上質な剣に護符を融合させてやろう。護符の代金は要らん、その鉄の剣を置いていくならな」"
+          "result_text": "ローベルトは君の鉄の剣をじっと見つめ、少し言葉を濁した。「お前の剣……氷の護符を埋め込むことはできるが、今の剣はボロボロすぎて耐えられん。俺が打った上質な剣に護符を融合させてやろう。護符の代金は要らん、その鉄の剣を置いていくならな」",
+          "risk_source": "action"
         },
         {
           "id": "accept_sword_fusion",
@@ -1631,7 +1648,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_blacksmith.png",
-          "result_text": "「よし、少し待っていろ」ローベルトは鉄の剣を受け取ると、奥から見事な大剣を取り出し、氷の護符を柄に埋め込んだ。目も眩むような青い輝きが剣を包み込む。「完成だ。名付けて『氷鉄の大剣』。邪竜の鱗も容易く貫き、お前の魔力に応じた追撃も発生する至高の品だ」"
+          "result_text": "「よし、少し待っていろ」ローベルトは鉄の剣を受け取ると、奥から見事な大剣を取り出し、氷の護符を柄に埋め込んだ。目も眩むような青い輝きが剣を包み込む。「完成だ。名付けて『氷鉄の大剣』。邪竜の鱗も容易く貫き、お前の魔力に応じた追撃も発生する至高の品だ」",
+          "risk_source": "action"
         },
         {
           "id": "activate_ice_charm",
@@ -1673,7 +1691,8 @@
               "set_flag": "activated_ice_charm"
             }
           ],
-          "portrait_image": "/static/images/npc_blacksmith.png"
+          "portrait_image": "/static/images/npc_blacksmith.png",
+          "risk_source": "action"
         },
         {
           "id": "return_castle_from_forge",
@@ -1701,7 +1720,8 @@
                 ]
               }
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "forge_ice_charm",
@@ -1740,7 +1760,8 @@
               }
             ]
           },
-          "result_text": "ローベルトは氷の結晶を炉の脇で慎重に削り、銀の枠にはめ込んだ。「ほらよ。冷気が逃げねえように仕上げておいた」手渡された護符は、ひやりと冷たい。"
+          "result_text": "ローベルトは氷の結晶を炉の脇で慎重に削り、銀の枠にはめ込んだ。「ほらよ。冷気が逃げねえように仕上げておいた」手渡された護符は、ひやりと冷たい。",
+          "risk_source": "action"
         },
         {
           "id": "ask_robert_hammer",
@@ -1756,7 +1777,8 @@
             }
           ],
           "once": "asked_robert_hammer",
-          "result_text": "「……親父の形見のハンマーを、ゴブリンどもに盗まれた」"
+          "result_text": "「……親父の形見のハンマーを、ゴブリンどもに盗まれた」",
+          "risk_source": "action"
         },
         {
           "id": "return_robert_hammer",
@@ -1811,7 +1833,8 @@
             "has_item": "刻印のハンマー"
           },
           "once": "robert_hammer_returned",
-          "result_text": "「……それは。どこでこれを」ローベルトは長い間ハンマーを握りしめていた。「礼だ。好きな防具を一つ、仕立て直してやる」"
+          "result_text": "「……それは。どこでこれを」ローベルトは長い間ハンマーを握りしめていた。「礼だ。好きな防具を一つ、仕立て直してやる」",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_forge.png",
@@ -2868,7 +2891,8 @@
               },
               "text": ""
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "ask_ian",
@@ -2902,7 +2926,8 @@
                   "set_flag": "ian_legend_refused"
                 }
               ],
-              "portrait_image": "/static/images/npc_ian.png"
+              "portrait_image": "/static/images/npc_ian.png",
+              "risk_source": "action"
             },
             {
               "id": "ask_ian_advice",
@@ -2918,7 +2943,8 @@
                   "set_flag": "heard_ian_advice"
                 }
               ],
-              "portrait_image": "/static/images/npc_ian.png"
+              "portrait_image": "/static/images/npc_ian.png",
+              "risk_source": "action"
             },
             {
               "id": "ask_ian_dragon_tale",
@@ -2932,7 +2958,9 @@
                 {
                   "set_flag": "heard_treaty_lore"
                 }
-              ]
+              ],
+              "portrait_image": "/static/images/npc_ian.png",
+              "risk_source": "action"
             }
           ],
           "portrait_image": "/static/images/npc_ian.png"
@@ -2973,7 +3001,8 @@
                   "set_flag": "robin_refused"
                 }
               ],
-              "portrait_image": "/static/images/npc_robin.png"
+              "portrait_image": "/static/images/npc_robin.png",
+              "risk_source": "action"
             },
             {
               "id": "ask_robin_rumor",
@@ -2993,7 +3022,8 @@
                 }
               ],
               "portrait_image": "/static/images/npc_robin.png",
-              "result_text": "ロビンは声を落とした。「王城の路地裏には、夜だけ現れる黒い商人がいるそうよ。昼に行っても何も見つからないわ」"
+              "result_text": "ロビンは声を落とした。「王城の路地裏には、夜だけ現れる黒い商人がいるそうよ。昼に行っても何も見つからないわ」",
+              "risk_source": "action"
             },
             {
               "id": "ask_robin_stolen_scale",
@@ -3023,7 +3053,9 @@
                     "flag": "cleared_goblin_fort"
                   }
                 ]
-              }
+              },
+              "portrait_image": "/static/images/npc_robin.png",
+              "risk_source": "action"
             }
           ],
           "portrait_image": "/static/images/npc_robin.png"
@@ -3056,7 +3088,8 @@
           },
           "secret": true,
           "result_text": "「決まりね」ロビンは弓を背負い直して立ち上がった。「近道を知ってるの。ついてきて」彼女の案内で森の獣道を抜けると、木々の間にゴブリンの砦が黒くそびえていた。",
-          "hidden_after": "defeated_goblin_king"
+          "hidden_after": "defeated_goblin_king",
+          "risk_source": "destination"
         },
         {
           "id": "return_castle_from_inn",
@@ -3084,7 +3117,8 @@
                 ]
               }
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_inn.png",
@@ -3322,7 +3356,8 @@
                   "set_flag": "heard_dragon_weakness"
                 }
               ],
-              "portrait_image": "/static/images/npc_elder.png"
+              "portrait_image": "/static/images/npc_elder.png",
+              "risk_source": "action"
             },
             {
               "id": "ask_elder_treaty",
@@ -3336,7 +3371,9 @@
                 {
                   "set_flag": "heard_treaty_lore"
                 }
-              ]
+              ],
+              "portrait_image": "/static/images/npc_elder.png",
+              "risk_source": "action"
             }
           ],
           "portrait_image": "/static/images/npc_elder.png"
@@ -3354,13 +3391,14 @@
             "売却",
             "道具屋で氷の護符を買う",
             "氷の護符"
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "go_dragon_valley",
           "text": "竜の谷へ向かう",
           "preview": "第4章へ進みます",
-          "risk": "危険",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "竜の谷へ向かう"
           ],
@@ -3370,7 +3408,8 @@
               "flags_set": []
             }
           ],
-          "result_text": "長老たちに見送られて村を出る。山道を登るにつれて空気は熱を帯び、やがて硫黄の霧が谷の入口を覆っていた。"
+          "result_text": "長老たちに見送られて村を出る。山道を登るにつれて空気は熱を帯び、やがて硫黄の霧が谷の入口を覆っていた。",
+          "risk_source": "destination"
         },
         {
           "id": "return_castle_from_village",
@@ -3388,7 +3427,8 @@
               "current_location": "castle_town"
             }
           ],
-          "result_text": "村を発ち、来た道を引き返す。森を抜けて城門をくぐると、見慣れた城下町の大通りが広がっていた。"
+          "result_text": "村を発ち、来た道を引き返す。森を抜けて城門をくぐると、見慣れた城下町の大通りが広がっていた。",
+          "risk_source": "destination"
         },
         {
           "id": "return_frozen_clue",
@@ -3402,7 +3442,8 @@
             {
               "current_location": "village_frozen_clue"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "open_gald_shop",
@@ -3414,7 +3455,8 @@
           ],
           "effects": [],
           "open_shop": "gald_shop",
-          "visible_after": "saved_gald"
+          "visible_after": "saved_gald",
+          "risk_source": "action"
         },
         {
           "id": "rest_at_refuge",
@@ -3435,7 +3477,8 @@
           "requirements": {
             "gold_gte": 5
           },
-          "result_text": "村人が分けてくれた粥をすすり、毛布にくるまって眠った。"
+          "result_text": "村人が分けてくれた粥をすすり、毛布にくるまって眠った。",
+          "risk_source": "action"
         },
         {
           "id": "return_riku",
@@ -3458,7 +3501,8 @@
           ],
           "visible_after": "riku_rescued",
           "once": "riku_returned",
-          "result_text": "「リク！……よく無事で」長老は孫を抱きしめ、深く頭を下げた。「礼をさせてくれ。これは村に伝わる竜の秘薬じゃ。それと……この話も伝えておこう。昔、白き竜がこの村に霜を降らせたことがある、と」"
+          "result_text": "「リク！……よく無事で」長老は孫を抱きしめ、深く頭を下げた。「礼をさせてくれ。これは村に伝わる竜の秘薬じゃ。それと……この話も伝えておこう。昔、白き竜がこの村に霜を降らせたことがある、と」",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_village.png",
@@ -3941,7 +3985,8 @@
             "治療の巻物",
             "火球術の巻物を買う（10G）",
             "火球術の巻物"
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "ask_blue_mage_rumor",
@@ -3982,7 +4027,8 @@
           "silent_outcomes": [
             "critical_failure"
           ],
-          "portrait_image": "/static/images/npc_warlock.png"
+          "portrait_image": "/static/images/npc_warlock.png",
+          "risk_source": "action"
         },
         {
           "id": "invite_blue_mage",
@@ -4001,7 +4047,8 @@
               "set_flag": "warlock_rescue_available"
             }
           ],
-          "portrait_image": "/static/images/npc_warlock.png"
+          "portrait_image": "/static/images/npc_warlock.png",
+          "risk_source": "action"
         },
         {
           "id": "return_castle_from_magic_shop",
@@ -4029,7 +4076,8 @@
                 ]
               }
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "ask_seal_lore",
@@ -4055,7 +4103,8 @@
                 "flag": "seen_cave_seal"
               }
             ]
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "forge_prism_weapon",
@@ -4306,7 +4355,8 @@
               },
               "text": "「師匠の代わりに私がやります！助けてもらったお礼です」"
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "ask_mina_missing",
@@ -4325,7 +4375,8 @@
             }
           ],
           "once": "asked_mina_missing",
-          "result_text": "「弟子のミーナが戻らない。泉の封印の話をした翌日からだ……」"
+          "result_text": "「弟子のミーナが戻らない。泉の封印の話をした翌日からだ……」",
+          "risk_source": "action"
         },
         {
           "id": "report_mina_safe",
@@ -4360,7 +4411,8 @@
           ],
           "visible_after": "mina_rescued",
           "once": "mina_quest_done",
-          "result_text": "「……世話をかけたな。礼を言う」"
+          "result_text": "「……世話をかけたな。礼を言う」",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_magic_shop.png",
@@ -4509,7 +4561,8 @@
             "氷の護符",
             "火球術の巻物を買う（40G）",
             "火球術の巻物"
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "borrow_fire_bat_dragon",
@@ -4538,7 +4591,8 @@
               "set_flag": "fire_bat_dragon_dislikes_player"
             }
           ],
-          "portrait_image": "/static/images/companion_fire_bat_dragon.png"
+          "portrait_image": "/static/images/companion_fire_bat_dragon.png",
+          "risk_source": "action"
         },
         {
           "id": "return_castle_from_item_shop",
@@ -4566,7 +4620,8 @@
                 ]
               }
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "ask_sarah_request",
@@ -4582,7 +4637,8 @@
             }
           ],
           "once": "asked_sarah_request",
-          "result_text": "「お母さんの薬を作りたいんだけど、光苔が足りないの。森の暗いところに生えてるんだって」"
+          "result_text": "「お母さんの薬を作りたいんだけど、光苔が足りないの。森の暗いところに生えてるんだって」",
+          "risk_source": "action"
         },
         {
           "id": "give_moss_to_sarah",
@@ -4613,7 +4669,8 @@
             "has_item": "光苔"
           },
           "once": "sarah_moss_done",
-          "result_text": "「わあ、ありがとう！これでお母さんの薬が作れる！お礼に、これからはずっと安くしてあげるね」"
+          "result_text": "「わあ、ありがとう！これでお母さんの薬が作れる！お礼に、これからはずっと安くしてあげるね」",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_item_shop.png",
@@ -4706,7 +4763,8 @@
             {
               "current_location": "alley_night"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "return_castle_from_alley",
@@ -4734,7 +4792,8 @@
                 ]
               }
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_alley_day.png"
@@ -5132,7 +5191,8 @@
               "set_flag": "curse_offer_heard"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "action"
         },
         {
           "id": "accept_curse_offer_hero",
@@ -5162,7 +5222,8 @@
               "set_flag": "curse_bargain_pending"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "action"
         },
         {
           "id": "hear_curse_offer_cleric",
@@ -5179,7 +5240,8 @@
               "set_flag": "curse_offer_heard"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "action"
         },
         {
           "id": "accept_curse_offer_cleric",
@@ -5207,7 +5269,8 @@
               "set_flag": "curse_bargain_pending"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "action"
         },
         {
           "id": "hear_curse_offer_mage",
@@ -5224,7 +5287,8 @@
               "set_flag": "curse_offer_heard"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "action"
         },
         {
           "id": "accept_curse_offer_mage",
@@ -5252,7 +5316,8 @@
               "set_flag": "curse_bargain_pending"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "action"
         },
         {
           "id": "hear_curse_offer_thief",
@@ -5269,7 +5334,8 @@
               "set_flag": "curse_offer_heard"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "action"
         },
         {
           "id": "accept_curse_offer_thief",
@@ -5297,7 +5363,8 @@
               "set_flag": "curse_bargain_pending"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "action"
         },
         {
           "id": "pay_curse_price_hero",
@@ -5324,7 +5391,8 @@
               "current_location": "alley_after"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "destination"
         },
         {
           "id": "pay_curse_price_cleric",
@@ -5350,7 +5418,8 @@
               "current_location": "alley_after"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "destination"
         },
         {
           "id": "pay_curse_price_mage",
@@ -5374,7 +5443,8 @@
               "current_location": "alley_after"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "destination"
         },
         {
           "id": "pay_curse_price_thief",
@@ -5400,7 +5470,8 @@
               "current_location": "alley_after"
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "destination"
         },
         {
           "id": "betray_cursed_merchant",
@@ -5419,7 +5490,8 @@
               "start_combat": true
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "action"
         },
         {
           "id": "leave_night_alley",
@@ -5448,7 +5520,8 @@
               }
             }
           ],
-          "portrait_image": "/static/images/npc_suspicious_merchant.png"
+          "portrait_image": "/static/images/npc_suspicious_merchant.png",
+          "risk_source": "destination"
         },
         {
           "id": "buy_white_scale",
@@ -5480,7 +5553,8 @@
                 "lacks_item": "白い竜鱗"
               }
             ]
-          }
+          },
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_alley_night.png",
@@ -5611,7 +5685,8 @@
                 ]
               }
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_alley_night.png"
@@ -5698,13 +5773,14 @@
               "start_combat": true
             }
           ],
-          "hidden_after": "forest_entrance_resolved"
+          "hidden_after": "forest_entrance_resolved",
+          "risk_source": "action"
         },
         {
           "id": "pass_cleared_forest",
           "text": "分かっている道を通って十字路へ進む",
           "preview": "敵を倒す必要はありません",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "分かっている道を通って十字路へ進む"
           ],
@@ -5713,7 +5789,8 @@
             {
               "current_location": "lost_goblin_crossroads"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
@@ -5922,7 +5999,8 @@
                 "not_flag": "resolved_lost_goblin_box"
               }
             ]
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "ignore_lost_goblin",
@@ -5977,7 +6055,8 @@
                 "not_flag": "resolved_lost_goblin_box"
               }
             ]
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "crossroads_forward",
@@ -5991,13 +6070,14 @@
             {
               "current_location": "elf_spring"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "enter_goblin_fort",
           "text": "ゴブリン砦へ向かう",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "ゴブリン砦へ向かう"
           ],
@@ -6007,13 +6087,14 @@
             }
           ],
           "visible_after": "lost_goblin_quest",
-          "hidden_after": "defeated_goblin_king"
+          "hidden_after": "defeated_goblin_king",
+          "risk_source": "destination"
         },
         {
           "id": "crossroads_back",
           "text": "森の入口へ戻る",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "森の入口へ戻る"
           ],
@@ -6021,7 +6102,8 @@
             {
               "current_location": "dark_forest_loc"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "fort_shortcut",
@@ -6045,7 +6127,8 @@
                 "flag": "passed_forest_wolves"
               }
             ]
-          }
+          },
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
@@ -6170,13 +6253,14 @@
                 ]
               }
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "continue_from_elf_spring",
           "text": "休まず先へ進む",
           "preview": "森の奥へ進む",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "休まず先へ進む"
           ],
@@ -6185,7 +6269,8 @@
               "current_location": "forest_wolves"
             }
           ],
-          "result_text": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。"
+          "result_text": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。",
+          "risk_source": "destination"
         },
         {
           "id": "inspect_spring_wall",
@@ -6199,13 +6284,14 @@
             {
               "current_location": "cave_seal"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "spring_back",
           "text": "十字路へ戻る",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "十字路へ戻る"
           ],
@@ -6213,7 +6299,8 @@
             {
               "current_location": "lost_goblin_crossroads"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_elf_spring.png",
@@ -6277,7 +6364,6 @@
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [
-        "forest_wolf",
         "forest_wolf"
       ],
       "connected_location_ids": [],
@@ -6364,7 +6450,8 @@
             }
           ],
           "hidden_after": "passed_forest_wolves",
-          "result_text": "荷車の前へ飛び出すと、森狼たちは低く唸り、狙いをこちらへ変えた。"
+          "result_text": "荷車の前へ飛び出すと、森狼たちは低く唸り、狙いをこちらへ変えた。",
+          "risk_source": "action"
         },
         {
           "id": "distract_forest_wolves",
@@ -6381,7 +6468,8 @@
             "item_id": "trail_ration",
             "advance": true
           },
-          "hidden_after": "passed_forest_wolves"
+          "hidden_after": "passed_forest_wolves",
+          "risk_source": "action"
         },
         {
           "id": "sneak_forest_wolves",
@@ -6398,7 +6486,8 @@
             "item_id": "",
             "advance": true
           },
-          "hidden_after": "passed_forest_wolves"
+          "hidden_after": "passed_forest_wolves",
+          "risk_source": "action"
         },
         {
           "id": "pass_cleared_wolves",
@@ -6413,7 +6502,8 @@
               "current_location": "forest_exit"
             }
           ],
-          "visible_after": "passed_forest_wolves"
+          "visible_after": "passed_forest_wolves",
+          "risk_source": "destination"
         },
         {
           "id": "wolves_back",
@@ -6427,7 +6517,8 @@
             {
               "current_location": "elf_spring"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "abandon_gald",
@@ -6449,7 +6540,8 @@
             }
           ],
           "hidden_after": "passed_forest_wolves",
-          "result_text": "背後で荷車の倒れる音がした。振り返らずに森を抜けた。"
+          "result_text": "背後で荷車の倒れる音がした。振り返らずに森を抜けた。",
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
@@ -6488,8 +6580,6 @@
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [
-        "slime",
-        "slime",
         "slime"
       ],
       "connected_location_ids": [],
@@ -6536,8 +6626,6 @@
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [
-        "slime",
-        "slime",
         "slime"
       ],
       "connected_location_ids": [],
@@ -6721,7 +6809,8 @@
               },
               "text": "森を抜けて村へ近づくにつれ、空が赤く染まり、焦げた匂いが濃くなる。村はすでに一面の火海となっていた。森を抜けたところで振り返ると、青いローブの魔法使いの姿が消えていた。"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "return_inn_after_forest",
@@ -6735,13 +6824,14 @@
             {
               "current_location": "castle_town"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "exit_back",
           "text": "狼の縄張りへ戻る",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "狼の縄張りへ戻る"
           ],
@@ -6749,7 +6839,8 @@
             {
               "current_location": "forest_wolves"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
@@ -6870,7 +6961,8 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "fort_first_bypass",
@@ -6893,13 +6985,14 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "leave_goblin_fort",
           "text": "砦を出て十字路へ戻る",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "砦を出る",
             "引き返す",
@@ -6910,7 +7003,8 @@
               "current_location": "lost_goblin_crossroads"
             }
           ],
-          "result_text": "見張りに気づかれる前に踵を返し、森の十字路まで引き返した。"
+          "result_text": "見張りに気づかれる前に踵を返し、森の十字路まで引き返した。",
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -6928,7 +7022,6 @@
       "clue_ids": [],
       "enemy_ids": [
         "goblin",
-        "goblin_archer",
         "goblin_archer"
       ],
       "connected_location_ids": [],
@@ -7040,7 +7133,8 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "fort_second_bypass",
@@ -7063,7 +7157,8 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -7116,7 +7211,7 @@
           "id": "explore_fort_right",
           "text": "右の通路を探索する",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "右の通路を探索する"
           ],
@@ -7124,7 +7219,8 @@
             {
               "current_location": "goblin_fort_second_right"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "explore_fort_left",
@@ -7141,7 +7237,8 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -7260,7 +7357,8 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "bypass_hobgoblin",
@@ -7292,7 +7390,8 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -7309,10 +7408,6 @@
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [
-        "war_hound",
-        "war_hound",
-        "war_hound",
-        "war_hound",
         "war_hound"
       ],
       "connected_location_ids": [],
@@ -7393,7 +7488,8 @@
               "current_location": "goblin_fort_third_gate"
             }
           ],
-          "result_text": "法陣の中央に立つと、淡い光が足元から立ちのぼり、傷口がみるみる塞がっていった。息が整ったところで、奥の階段を上る。"
+          "result_text": "法陣の中央に立つと、淡い光が足元から立ちのぼり、傷口がみるみる塞がっていった。息が整ったところで、奥の階段を上る。",
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -7514,7 +7610,8 @@
           ],
           "requirements": {
             "flag": "knows_fort_password"
-          }
+          },
+          "risk_source": "destination"
         },
         {
           "id": "invent_goblin_password",
@@ -7543,7 +7640,8 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "admit_no_password",
@@ -7560,7 +7658,8 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png",
@@ -7621,8 +7720,6 @@
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [
-        "hobgoblin",
-        "hobgoblin",
         "hobgoblin"
       ],
       "connected_location_ids": [],
@@ -7670,7 +7767,6 @@
       "clue_ids": [],
       "enemy_ids": [
         "goblin_king",
-        "goblin_archer",
         "goblin_archer"
       ],
       "connected_location_ids": [],
@@ -7803,7 +7899,7 @@
           "id": "return_lost_goblin_box",
           "text": "迷子のゴブリンに箱を返す",
           "preview": "約束を守って砦を出る",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "迷子のゴブリンに箱を返す"
           ],
@@ -7817,7 +7913,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_lost_goblin.png",
-          "hidden_after": "combat_defeated:lost_goblin_crossroads:goblin"
+          "hidden_after": "combat_defeated:lost_goblin_crossroads:goblin",
+          "risk_source": "destination"
         },
         {
           "id": "steal_lost_goblin_box",
@@ -7840,13 +7937,14 @@
             }
           ],
           "portrait_image": "/static/images/npc_lost_goblin.png",
-          "hidden_after": "combat_defeated:lost_goblin_crossroads:goblin"
+          "hidden_after": "combat_defeated:lost_goblin_crossroads:goblin",
+          "risk_source": "action"
         },
         {
           "id": "take_abandoned_goblin_box",
           "text": "箱を持ち帰る",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "visible_after": "combat_defeated:lost_goblin_crossroads:goblin",
           "once": "resolved_lost_goblin_box",
           "result_text": "主を失った箱は、金貨の山の陰に転がっていた。蓋の留め金を外し、中身ごと持ち帰ることにした。",
@@ -7863,7 +7961,8 @@
             {
               "current_location": "lost_goblin_crossroads"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_goblin_treasure.png",
@@ -8128,7 +8227,8 @@
             {
               "set_flag": "burned_at_village_approach"
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "enter_burning_village_directly",
@@ -8145,7 +8245,8 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "escape_from_burning_village",
@@ -8160,7 +8261,8 @@
             {
               "current_location": "xanxus_confrontation"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_burning_village.png"
@@ -8361,7 +8463,8 @@
               "start_combat": true
             }
           ],
-          "portrait_image": "/static/images/npc_xanxus.png"
+          "portrait_image": "/static/images/npc_xanxus.png",
+          "risk_source": "action"
         },
         {
           "id": "ambush_xanxus",
@@ -8387,7 +8490,8 @@
               "start_combat": true
             }
           ],
-          "portrait_image": "/static/images/npc_xanxus.png"
+          "portrait_image": "/static/images/npc_xanxus.png",
+          "risk_source": "action"
         },
         {
           "id": "flee_from_xanxus",
@@ -8413,7 +8517,8 @@
               "start_combat": true
             }
           ],
-          "portrait_image": "/static/images/npc_xanxus.png"
+          "portrait_image": "/static/images/npc_xanxus.png",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_burning_village.png",
@@ -8576,7 +8681,8 @@
               "current_location": "village_frozen_clue"
             }
           ],
-          "portrait_image": "/static/images/npc_xanxus.png"
+          "portrait_image": "/static/images/npc_xanxus.png",
+          "risk_source": "destination"
         },
         {
           "id": "refuse_xanxus_with_rescue",
@@ -8598,7 +8704,8 @@
               "start_combat": true
             }
           ],
-          "portrait_image": "/static/images/npc_xanxus.png"
+          "portrait_image": "/static/images/npc_xanxus.png",
+          "risk_source": "action"
         },
         {
           "id": "refuse_xanxus_without_rescue",
@@ -8617,7 +8724,8 @@
               }
             }
           ],
-          "portrait_image": "/static/images/npc_xanxus.png"
+          "portrait_image": "/static/images/npc_xanxus.png",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_burning_village.png",
@@ -8787,7 +8895,7 @@
           "id": "investigate_frozen_village",
           "text": "結氷した場所を探索する",
           "preview": "炎の中に残る冷気を追います",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "結氷した場所を探索する"
           ],
@@ -8795,13 +8903,14 @@
             {
               "current_location": "ice_elemental_encounter"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "skip_frozen_clue_after_xanxus",
           "text": "探索せず先へ進む",
           "preview": "第4章へ向かいます",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "探索せず先へ進む"
           ],
@@ -8811,7 +8920,8 @@
               "current_location": "valley_entrance",
               "flags_set": []
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "skip_frozen_clue_before_xanxus",
@@ -8826,7 +8936,8 @@
             {
               "current_location": "xanxus_confrontation"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "inspect_frost_core",
@@ -8858,7 +8969,8 @@
             {
               "set_flag": "frost_trace_seen"
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "visit_village",
@@ -8875,7 +8987,8 @@
                 "reached_village"
               ]
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_frozen_village.png"
@@ -8998,7 +9111,8 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "bypass_ice_elemental",
@@ -9021,7 +9135,8 @@
             {
               "start_combat": true
             }
-          ]
+          ],
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_frozen_village.png",
@@ -9197,7 +9312,7 @@
           "id": "accept_ian_request",
           "text": "イアンの頼みを受ける",
           "preview": "元凶を追う約束をし、武器を受け取ります",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "イアンの頼みを受ける"
           ],
@@ -9216,13 +9331,14 @@
               "flags_set": []
             }
           ],
-          "portrait_image": "/static/images/npc_ian_serious.png"
+          "portrait_image": "/static/images/npc_ian_serious.png",
+          "risk_source": "destination"
         },
         {
           "id": "refuse_ian_after_xanxus",
           "text": "イアンの頼みを断る",
           "preview": "村を出て第4章へ進みます",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "イアンの頼みを断る"
           ],
@@ -9233,7 +9349,8 @@
               "flags_set": []
             }
           ],
-          "portrait_image": "/static/images/npc_ian_serious.png"
+          "portrait_image": "/static/images/npc_ian_serious.png",
+          "risk_source": "destination"
         },
         {
           "id": "refuse_ian_before_xanxus",
@@ -9249,7 +9366,8 @@
               "current_location": "xanxus_confrontation"
             }
           ],
-          "portrait_image": "/static/images/npc_ian_serious.png"
+          "portrait_image": "/static/images/npc_ian_serious.png",
+          "risk_source": "destination"
         },
         {
           "id": "visit_village",
@@ -9266,7 +9384,8 @@
                 "reached_village"
               ]
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "background_image": "/static/images/bg_frozen_village.png",
@@ -9301,7 +9420,8 @@
               "set_flag": "examined_ignis_wound"
             }
           ],
-          "once": "examined_ignis_wound"
+          "once": "examined_ignis_wound",
+          "risk_source": "action"
         },
         {
           "id": "hear_ignis_last_words",
@@ -9316,7 +9436,8 @@
               "set_flag": "heard_ignis_last_words"
             }
           ],
-          "once": "heard_ignis_last_words"
+          "once": "heard_ignis_last_words",
+          "risk_source": "action"
         },
         {
           "id": "return_to_castle_report",
@@ -9330,7 +9451,8 @@
             {
               "current_location": "royal_gate"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [],
@@ -9448,7 +9570,8 @@
               },
               "text": "あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」あなたが日誌を掲げると、ドラコの表情から初めて笑みが消えた。"
             }
-          ]
+          ],
+          "risk_source": "action"
         },
         {
           "id": "report_normally",
@@ -9490,7 +9613,8 @@
                 ]
               }
             }
-          ]
+          ],
+          "risk_source": "action"
         }
       ],
       "npc_ids": [
@@ -9728,7 +9852,8 @@
           ],
           "once": "heard_ignis_testimony",
           "requirements": {},
-          "portrait_image": "/static/images/npc_ignis_calm.png"
+          "portrait_image": "/static/images/npc_ignis_calm.png",
+          "risk_source": "action"
         },
         {
           "id": "receive_ignis_scale",
@@ -9749,7 +9874,8 @@
           ],
           "once": "received_ignis_scale",
           "requirements": {},
-          "portrait_image": "/static/images/npc_ignis_calm.png"
+          "portrait_image": "/static/images/npc_ignis_calm.png",
+          "risk_source": "action"
         },
         {
           "id": "ask_ignis_aid",
@@ -9769,7 +9895,8 @@
           "requirements": {
             "flag": "heard_ignis_testimony"
           },
-          "portrait_image": "/static/images/npc_ignis_calm.png"
+          "portrait_image": "/static/images/npc_ignis_calm.png",
+          "risk_source": "action"
         },
         {
           "id": "return_to_castle_report",
@@ -9783,7 +9910,8 @@
             {
               "current_location": "royal_gate"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [
@@ -9913,7 +10041,8 @@
           "result_texts": {
             "success": "魔法陣の線を一本ずつなぞると、七色の光がほどけるように消えた。",
             "failure": "光が弾け、指先に痺れが走った。もう一度試すこともできる。"
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "pray_at_seal",
@@ -9946,7 +10075,8 @@
           "result_texts": {
             "success": "泉の水面が光り、その輝きが岩壁の魔法陣を静かに溶かしていった。",
             "failure": "泉は静まり返ったままだ。"
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "force_seal",
@@ -9979,13 +10109,14 @@
           "result_texts": {
             "success": "渾身の一撃で魔法陣ごと岩壁がひび割れ、通路が口を開けた。",
             "failure": "魔法陣に弾き返され、体が岩に叩きつけられた。"
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "pour_holy_water_on_seal",
           "text": "聖水を魔法陣に注ぐ",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "聖水を魔法陣に注ぐ"
           ],
@@ -10007,13 +10138,14 @@
             "has_item": "聖水"
           },
           "hidden_after": "cave_seal_broken",
-          "result_text": "聖水が触れた瞬間、魔法陣は白い煙を上げて砕け散った。"
+          "result_text": "聖水が触れた瞬間、魔法陣は白い煙を上げて砕け散った。",
+          "risk_source": "destination"
         },
         {
           "id": "enter_open_cave",
           "text": "洞窟へ進む",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "洞窟へ進む"
           ],
@@ -10022,7 +10154,8 @@
               "current_location": "cave_heat_corridor"
             }
           ],
-          "visible_after": "cave_seal_broken"
+          "visible_after": "cave_seal_broken",
+          "risk_source": "destination"
         },
         {
           "id": "leave_seal",
@@ -10036,7 +10169,8 @@
             {
               "current_location": "elf_spring"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "objects": [
@@ -10090,7 +10224,8 @@
             }
           ],
           "hidden_after": "cleared_cave_heat_corridor",
-          "result_text": "熱気の中へ踏み出すと、岩陰から二匹の熱岩トカゲが、溶岩の滴る口を開けて這い出してきた。"
+          "result_text": "熱気の中へ踏み出すと、岩陰から二匹の熱岩トカゲが、溶岩の滴る口を開けて這い出してきた。",
+          "risk_source": "action"
         },
         {
           "id": "sneak_heat",
@@ -10123,7 +10258,8 @@
           "result_texts": {
             "success": "赤く光る岩肌の影だけを選んで進み、トカゲたちの舌の音を背に回廊を抜けた。",
             "failure": "足元の小石が転がり、熱岩トカゲが一斉にこちらを向いた。"
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "pass_heat_corridor",
@@ -10138,7 +10274,8 @@
               "current_location": "cave_fork"
             }
           ],
-          "visible_after": "cleared_cave_heat_corridor"
+          "visible_after": "cleared_cave_heat_corridor",
+          "risk_source": "destination"
         },
         {
           "id": "heat_back",
@@ -10152,7 +10289,8 @@
             {
               "current_location": "cave_seal"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "objects": [],
@@ -10228,7 +10366,7 @@
           "id": "cave_left",
           "text": "左の通路へ進む",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "左の通路へ進む"
           ],
@@ -10236,7 +10374,8 @@
             {
               "current_location": "cave_lava_room"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "cave_right",
@@ -10250,13 +10389,14 @@
             {
               "current_location": "cave_hot_spring"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "fork_back",
           "text": "熱気の回廊へ戻る",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "熱気の回廊へ戻る"
           ],
@@ -10264,7 +10404,8 @@
             {
               "current_location": "cave_heat_corridor"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "objects": [],
@@ -10305,7 +10446,8 @@
           ],
           "visible_after": "cleared_cave_lava_room",
           "once": "opened_lava_chest",
-          "result_text": "箱の中には、熱を帯びた巻物と赤い宝石の護符が収められていた。"
+          "result_text": "箱の中には、熱を帯びた巻物と赤い宝石の護符が収められていた。",
+          "risk_source": "action"
         },
         {
           "id": "lava_back",
@@ -10319,13 +10461,14 @@
             {
               "current_location": "cave_fork"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "lava_forward",
           "text": "奥へ進む",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "奥へ進む"
           ],
@@ -10333,7 +10476,8 @@
             {
               "current_location": "cave_crystal_corridor"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "objects": [],
@@ -10388,7 +10532,8 @@
             }
           ],
           "once": "rested_hot_spring",
-          "result_text": "熱い湯に浸かると、疲れがじんわりと溶けていく。"
+          "result_text": "熱い湯に浸かると、疲れがじんわりと溶けていく。",
+          "risk_source": "action"
         },
         {
           "id": "hot_spring_back",
@@ -10402,13 +10547,14 @@
             {
               "current_location": "cave_fork"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "hot_spring_forward",
           "text": "奥へ進む",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "奥へ進む"
           ],
@@ -10416,7 +10562,8 @@
             {
               "current_location": "cave_crystal_corridor"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "talk_mina",
@@ -10433,7 +10580,8 @@
           ],
           "hidden_after": "mina_rescued",
           "result_text": "「た、助けて……！封印を抜けたら戻れなくなっちゃって。奥の大きな水晶の木が怖くて動けないの」",
-          "portrait_image": "/static/images/npc_mina.png"
+          "portrait_image": "/static/images/npc_mina.png",
+          "risk_source": "action"
         },
         {
           "id": "escort_mina",
@@ -10463,7 +10611,8 @@
               }
             ]
           },
-          "result_text": "「一緒に帰ろう」と手を差し出すと、ミーナは涙を拭って頷き、ローブの裾を握りしめて立ち上がった。"
+          "result_text": "「一緒に帰ろう」と手を差し出すと、ミーナは涙を拭って頷き、ローブの裾を握りしめて立ち上がった。",
+          "risk_source": "action"
         },
         {
           "id": "leave_mina_wait",
@@ -10480,7 +10629,8 @@
           ],
           "visible_after": "met_mina",
           "hidden_after": "mina_rescued",
-          "result_text": "「すぐ戻る。ここで待っていてくれ」と告げると、ミーナは小さく頷き、湯気の向こうで膝を抱え直した。"
+          "result_text": "「すぐ戻る。ここで待っていてくれ」と告げると、ミーナは小さく頷き、湯気の向こうで膝を抱え直した。",
+          "risk_source": "action"
         }
       ],
       "objects": [
@@ -10585,7 +10735,8 @@
             }
           ],
           "hidden_after": "cleared_cave_crystal_corridor",
-          "result_text": "剣を構えた瞬間、水晶が甲高く鳴り、紅晶のゴーレムと蒼晶の蝶、翠晶の蜘蛛が壁から剥がれるように姿を現した。"
+          "result_text": "剣を構えた瞬間、水晶が甲高く鳴り、紅晶のゴーレムと蒼晶の蝶、翠晶の蜘蛛が壁から剥がれるように姿を現した。",
+          "risk_source": "action"
         },
         {
           "id": "sneak_crystal",
@@ -10621,13 +10772,14 @@
           "result_texts": {
             "success": "壁際で息を殺していると、水晶の震えは少しずつ静まり、形を取りかけた魔物たちも元の結晶へ戻っていった。その隙に回廊を抜ける。",
             "failure": "漏れた吐息に水晶が共鳴し、甲高い音とともに魔物たちが一斉に襲いかかってきた。"
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "pass_crystal_corridor",
           "text": "奥へ進む",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "奥へ進む"
           ],
@@ -10636,7 +10788,8 @@
               "current_location": "cave_prism_tree"
             }
           ],
-          "visible_after": "cleared_cave_crystal_corridor"
+          "visible_after": "cleared_cave_crystal_corridor",
+          "risk_source": "destination"
         },
         {
           "id": "crystal_back",
@@ -10650,7 +10803,8 @@
             {
               "current_location": "cave_fork"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "objects": [],
@@ -10732,13 +10886,14 @@
               "current_location": "elf_spring"
             }
           ],
-          "visible_after": "cleared_cave_prism_tree"
+          "visible_after": "cleared_cave_prism_tree",
+          "risk_source": "destination"
         },
         {
           "id": "prism_back",
           "text": "水晶の回廊へ戻る",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "水晶の回廊へ戻る"
           ],
@@ -10747,7 +10902,8 @@
               "current_location": "cave_crystal_corridor"
             }
           ],
-          "visible_after": "cleared_cave_prism_tree"
+          "visible_after": "cleared_cave_prism_tree",
+          "risk_source": "destination"
         }
       ],
       "objects": [],
@@ -10822,7 +10978,8 @@
           "result_texts": {
             "success": "梁を蹴り砕いて飛び込むと、煙の中で小さな男の子がうずくまっていた。",
             "failure": "梁は思ったより重く、熱に腕を焼かれた。"
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "climb_to_window",
@@ -10853,7 +11010,8 @@
           "result_texts": {
             "success": "壁をよじ登って窓から入り込み、男の子を抱えて外へ飛び降りた。",
             "failure": "足を滑らせ、焼けた壁にしたたかに打ちつけた。"
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "douse_with_ice",
@@ -10893,7 +11051,8 @@
               }
             ]
           },
-          "result_text": "冷気を放つと炎が一瞬で退き、その隙に男の子を連れ出した。"
+          "result_text": "冷気を放つと炎が一瞬で退き、その隙に男の子を連れ出した。",
+          "risk_source": "destination"
         },
         {
           "id": "leave_burning_house",
@@ -10911,7 +11070,8 @@
               "current_location": "village_frozen_clue"
             }
           ],
-          "result_text": "泣き声を背に、燃える通りを駆け抜けた。"
+          "result_text": "泣き声を背に、燃える通りを駆け抜けた。",
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [],
@@ -10963,7 +11123,8 @@
               "start_combat": true
             }
           ],
-          "result_text": "霧を割って進むと、煤をまとった二つの人影がこちらへ向き直り、焦げた腕を伸ばしてきた。"
+          "result_text": "霧を割って進むと、煤をまとった二つの人影がこちらへ向き直り、焦げた腕を伸ばしてきた。",
+          "risk_source": "action"
         },
         {
           "id": "sneak_through_ash",
@@ -10994,7 +11155,8 @@
           "result_texts": {
             "success": "硫黄の霧が濃くなる瞬間を待ち、亡霊たちの間を音もなく抜けた。",
             "failure": "霧が晴れた一瞬、煤の亡霊と目が合った。先に動いたのは向こうだった。"
-          }
+          },
+          "risk_source": "action"
         }
       ],
       "npc_ids": [],
@@ -11087,13 +11249,14 @@
           "result_texts": {
             "success": "揺れる板を一枚ずつ踏みしめ、向こう岸へたどり着いた。",
             "failure": "板が一枚抜け落ち、熱風に焼かれながら必死にしがみついて渡りきった。"
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "take_ledge_path",
           "text": "岩棚の迂回路を進む",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "岩棚の迂回路を進む"
           ],
@@ -11102,7 +11265,8 @@
               "current_location": "valley_ledge"
             }
           ],
-          "result_text": "吊り橋を避け、崖に張り出した岩棚へ足をかけた。足元から熱風が吹き上げてくる。"
+          "result_text": "吊り橋を避け、崖に張り出した岩棚へ足をかけた。足元から熱風が吹き上げてくる。",
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [],
@@ -11190,7 +11354,7 @@
           "id": "enter_dragon_nest",
           "text": "竜の巣へ踏み込む",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "竜の巣へ踏み込む"
           ],
@@ -11200,7 +11364,8 @@
             }
           ],
           "start_combat": true,
-          "result_text": "灼熱の風に逆らって洞穴へ踏み込む。闇の奥で、巨大な何かがゆっくりと目を開けた。"
+          "result_text": "灼熱の風に逆らって洞穴へ踏み込む。闇の奥で、巨大な何かがゆっくりと目を開けた。",
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [],
@@ -11286,7 +11451,8 @@
               "current_location": "valley_nest_gate"
             }
           ],
-          "result_text": "Xanxusは満足げに笑い、炎とともに消えた。"
+          "result_text": "Xanxusは満足げに笑い、炎とともに消えた。",
+          "risk_source": "destination"
         },
         {
           "id": "cleanse_fire_seed",
@@ -11341,7 +11507,8 @@
               }
             ]
           },
-          "result_text": "聖なる光が胸の火種を包み込み、その炎が弱まっていく。Xanxusが怒りに吠える。『小癪な……火種を消される前に、力ずくで奪うまでだ！』"
+          "result_text": "聖なる光が胸の火種を包み込み、その炎が弱まっていく。Xanxusが怒りに吠える。『小癪な……火種を消される前に、力ずくで奪うまでだ！』",
+          "risk_source": "action"
         },
         {
           "id": "call_warlock",
@@ -11372,7 +11539,8 @@
           "requirements": {
             "flag": "warlock_rescue_available"
           },
-          "result_text": "青い光が走り、ワーロックがあなたの前に立った。彼の杖が火種を凍らせて砕く。「Xanxus、もう白竜の手先は終わりだ」Xanxusは舌打ちし、炎の中へ消えた。ワーロックは振り返る。「あの骸骨は、白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ」"
+          "result_text": "青い光が走り、ワーロックがあなたの前に立った。彼の杖が火種を凍らせて砕く。「Xanxus、もう白竜の手先は終わりだ」Xanxusは舌打ちし、炎の中へ消えた。ワーロックは振り返る。「あの骸骨は、白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ」",
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [
@@ -11458,7 +11626,8 @@
             {
               "current_location": "valley_nest_gate"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [],
@@ -11491,7 +11660,8 @@
             {
               "current_location": "festival_town"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [],
@@ -11524,7 +11694,8 @@
             {
               "current_location": "inn"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "go_item_shop",
@@ -11538,7 +11709,8 @@
             {
               "current_location": "item_shop"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "go_magic_shop",
@@ -11552,7 +11724,8 @@
             {
               "current_location": "magic_shop"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "go_forge",
@@ -11566,7 +11739,8 @@
             {
               "current_location": "forge"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "go_general_mansion",
@@ -11598,7 +11772,8 @@
             ]
           },
           "secret": true,
-          "unlock_flag": "mansion_unlocked"
+          "unlock_flag": "mansion_unlocked",
+          "risk_source": "destination"
         },
         {
           "id": "request_king_audience",
@@ -11650,7 +11825,8 @@
               }
             ]
           },
-          "secret": true
+          "secret": true,
+          "risk_source": "destination"
         },
         {
           "id": "go_report_hall",
@@ -11664,7 +11840,8 @@
             {
               "current_location": "castle_report"
             }
-          ]
+          ],
+          "risk_source": "destination"
         },
         {
           "id": "open_gald_capital_shop",
@@ -11679,7 +11856,8 @@
             "flag": "saved_gald"
           },
           "secret": true,
-          "open_shop": "gald_capital_shop"
+          "open_shop": "gald_capital_shop",
+          "risk_source": "action"
         }
       ],
       "npc_ids": [
@@ -11769,13 +11947,14 @@
           "result_texts": {
             "success": "物音ひとつ立てず、裏口の錠を外した。",
             "failure": "扉が軋み、屋敷の奥で何かが動く気配がした。"
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "robin_picks_lock",
           "text": "ロビンに錠を開けてもらう",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "ロビンに錠を開けてもらう"
           ],
@@ -11790,7 +11969,8 @@
           "requirements": {
             "flag": "recruited_robin"
           },
-          "result_text": "ロビンが細い針金を差し込むと、錠はあっさりと外れた。「将軍様の屋敷ってのは、案外ちょろいもんだね」"
+          "result_text": "ロビンが細い針金を差し込むと、錠はあっさりと外れた。「将軍様の屋敷ってのは、案外ちょろいもんだね」",
+          "risk_source": "destination"
         },
         {
           "id": "leave_mansion",
@@ -11804,7 +11984,8 @@
             {
               "current_location": "festival_town"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [],
@@ -11860,7 +12041,8 @@
               "start_combat": true
             }
           ],
-          "result_text": "一歩近づくと、氷の番兵が軋む音を立てて槍を構え、扉の前を塞いだ。"
+          "result_text": "一歩近づくと、氷の番兵が軋む音を立てて槍を構え、扉の前を塞いだ。",
+          "risk_source": "action"
         },
         {
           "id": "evade_ice_sentinels",
@@ -11891,7 +12073,8 @@
           "result_texts": {
             "success": "二体の番兵が向きを変える一瞬を見計らい、凍った床を滑るように扉の内側へ抜けた。",
             "failure": "凍った床がきしみ、番兵の兜がこちらを向いた。冷たい槍が先に突き出される。"
-          }
+          },
+          "risk_source": "action"
         },
         {
           "id": "pass_cleared_sentinels",
@@ -11906,7 +12089,8 @@
               "current_location": "mansion_study"
             }
           ],
-          "visible_after": "combat_defeated:mansion_corridor:ice_sentinel"
+          "visible_after": "combat_defeated:mansion_corridor:ice_sentinel",
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [],
@@ -11987,7 +12171,8 @@
             }
           ],
           "once": "draco_journal",
-          "result_text": "日誌には、十年前に紅竜の傷へ霜を打ち込んだこと、Xanxusと交わした密約、そして王国を手に入れる計画が、几帳面な文字で記されていた。"
+          "result_text": "日誌には、十年前に紅竜の傷へ霜を打ち込んだこと、Xanxusと交わした密約、そして王国を手に入れる計画が、几帳面な文字で記されていた。",
+          "risk_source": "action"
         },
         {
           "id": "open_scale_box",
@@ -12006,7 +12191,8 @@
             }
           ],
           "once": "opened_scale_box",
-          "result_text": "小箱の中には、白い鱗を編み込んだ護符が収められていた。添えられた札には「我が冷気を鎮めるもの」とある。"
+          "result_text": "小箱の中には、白い鱗を編み込んだ護符が収められていた。添えられた札には「我が冷気を鎮めるもの」とある。",
+          "risk_source": "action"
         },
         {
           "id": "leave_mansion_study",
@@ -12020,7 +12206,8 @@
             {
               "current_location": "festival_town"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [],
@@ -12051,7 +12238,8 @@
           ],
           "effects": [],
           "once": "king_trust",
-          "result_text": "王は長い沈黙の後、重い口を開いた。「……十年前、竜の谷へ兵を送れと進言したのは、ドラコだった。わしはそれを信じ、紅竜を怒らせてしまった。もしそなたの言う通りなら……その時は、わしが近衛兵に命じよう。そなたを守れ、と」"
+          "result_text": "王は長い沈黙の後、重い口を開いた。「……十年前、竜の谷へ兵を送れと進言したのは、ドラコだった。わしはそれを信じ、紅竜を怒らせてしまった。もしそなたの言う通りなら……その時は、わしが近衛兵に命じよう。そなたを守れ、と」",
+          "risk_source": "action"
         },
         {
           "id": "ask_king_rest",
@@ -12069,7 +12257,8 @@
           "requirements": {
             "flag": "king_trust"
           },
-          "result_text": "王の計らいで、城の客室に通された。衛兵が扉の前に立ち、あなたは久しぶりに安心して眠った。"
+          "result_text": "王の計らいで、城の客室に通された。衛兵が扉の前に立ち、あなたは久しぶりに安心して眠った。",
+          "risk_source": "action"
         },
         {
           "id": "leave_king_room",
@@ -12083,7 +12272,8 @@
             {
               "current_location": "festival_town"
             }
-          ]
+          ],
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [
