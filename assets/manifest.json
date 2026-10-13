@@ -1627,19 +1627,19 @@
         "client/images/bg_festival_town.png"
       ],
       "generation_date": "2026-10-13",
-      "approved": false
+      "approved": true
     },
     {
       "id": "bg_castle_town",
       "file": "client/images/bg_castle_town.png",
-      "purpose": "第1章城下町背景工程暂选",
+      "purpose": "第1章城下町背景（设计负责人定稿）",
       "prompt": "Use case: precise-object-edit. Asset type: opaque square fantasy visual-novel background, 1024x1024. Edit the supplied bg_festival_town.png as the same street on an ordinary weekday. Preserve the exact camera, cobblestone perspective, timber-and-stone shop architecture, distant royal castle and painterly fantasy illustration style, fine warm material brushwork and blue daylight. Candidate 02: sparse subdued pedestrians, mostly quiet shopkeepers and a few anxious passersby, with restrained closed poses; broad empty foreground. Remove EVERY festival decoration across the ENTIRE image, including distant gateway: no flags, no hanging banners, no pennant strings, no garlands, no scattered flower petals. Keep ordinary shop awnings in the reference colors, with no heraldic emblems or logos. The far castle must still be recognizable. In the mountains beyond the street a thin, faint smoke thread rises, distinguishable from clouds. Ordinary daytime, not celebration, slight unease without disaster or night lighting. No text, no logos, no watermark. Do not redesign the street, maintain reference painting style and perspective.",
       "reference_images": [
         "client/images/bg_festival_town.png"
       ],
-      "source_candidate": "assets/candidates/028/bg_castle_town/candidate_02.png",
+      "source_candidate": "assets/candidates/028/bg_castle_town/candidate_03.png",
       "generation_date": "2026-10-13",
-      "approved": false
+      "approved": true
     }
   ],
   "selections": [
@@ -2030,9 +2030,9 @@
         "assets/candidates/028/bg_castle_town/candidate_02.png",
         "assets/candidates/028/bg_castle_town/candidate_03.png"
       ],
-      "selected_candidate": "assets/candidates/028/bg_castle_town/candidate_02.png",
-      "approved": false,
-      "selection_reason": "候选02保留同一条街和王城，主要节庆装饰已移除；行人少、姿态收敛，远处细烟可见。",
+      "selected_candidate": "assets/candidates/028/bg_castle_town/candidate_03.png",
+      "approved": true,
+      "selection_reason": "设计负责人定稿：03 的远处黑烟最明显、行人神情最低落，最符合「平常白天但略带不安」。",
       "style_review": "木石笔触、蓝红遮棚和日照延续参考。远处烟缕与屋顶重叠；极远城门内的细小彩色纹理、行人不安程度需设计确认。03烟更粗，01远门处残留节庆色带更明显。"
     }
   ],
