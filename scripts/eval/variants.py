@@ -166,4 +166,6 @@ VARIANTS = {"default": Variant(), "lenient": Variant(replay_only=True),
             "guard_sequence": Variant(system_prompt=free_actions.PLAN_PROMPT_PRE_SEQUENCE,
                                       prompt_suffix="\n" + GUARD_SEQUENCE),
             "guard_sequence_item": Variant(system_prompt=free_actions.PLAN_PROMPT_PRE_SEQUENCE,
-                                           prompt_suffix="\n" + GUARD_SEQUENCE_ITEM)}
+                                           prompt_suffix="\n" + GUARD_SEQUENCE_ITEM),
+            # Since 2026-10-13 the default prompt also includes PLAN_OFFTOPIC_RULE.
+            "pre_offtopic": Variant(system_prompt=free_actions.PLAN_PROMPT_PRE_OFFTOPIC)}

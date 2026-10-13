@@ -56,7 +56,10 @@ class SchemaEncodingTests(unittest.TestCase):
         self.assertEqual(guarded[0]["content"], free_actions.PLAN_PROMPT_PRE_SEQUENCE)
         self.assertEqual(pre_guard[0]["content"], free_actions.PLAN_PROMPT_BASE)
         sequenced, _ = VARIANTS["guard_sequence_item"].prepare(self.session, self.case["input"], self.config)
-        self.assertEqual(sequenced[0]["content"], free_actions.PLAN_PROMPT)
+        self.assertEqual(sequenced[0]["content"], free_actions.PLAN_PROMPT_PRE_OFFTOPIC)
+        pre_offtopic, _ = VARIANTS["pre_offtopic"].prepare(self.session, self.case["input"], self.config)
+        self.assertEqual(pre_offtopic[0]["content"], free_actions.PLAN_PROMPT_PRE_OFFTOPIC)
+        self.assertEqual(free_actions.PLAN_PROMPT, free_actions.PLAN_PROMPT_PRE_OFFTOPIC + "\n" + free_actions.PLAN_OFFTOPIC_RULE)
 
     def test_all_encodings_on_all_dev_snapshots_preserve_defaults_and_descriptions(self):
         cases = [json.loads(line) for line in (ROOT / "eval/benchmark/intent_v2.jsonl").read_text(encoding="utf-8").splitlines()]
