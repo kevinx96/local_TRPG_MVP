@@ -2039,7 +2039,7 @@
         ],
         "defeat_effects": {
           "game_over": {
-            "reason": "邪竜イグニスに敗れ、竜の谷で力尽きました。",
+            "reason": "邪竜イグニスに敗れ、竜の谷で力尽きた。",
             "ending": "dragon_valley_defeat"
           }
         },
@@ -4079,7 +4079,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "闇の森・入口で力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "闇の森・入口で力尽きた。冒険はここで終わりを迎える。",
             "ending": "dark_forest_loc_defeat"
           }
         },
@@ -4289,7 +4289,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "闇の森・迷子のゴブリンで力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "闇の森・迷子のゴブリンで力尽きた。冒険はここで終わりを迎える。",
             "ending": "lost_goblin_crossroads_defeat"
           }
         },
@@ -4745,7 +4745,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "闇の森・狼の縄張りで力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "闇の森・狼の縄張りで力尽きた。冒険はここで終わりを迎える。",
             "ending": "forest_wolves_defeat"
           }
         },
@@ -4917,7 +4917,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "精霊の泉・第一波で力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "精霊の泉・第一波で力尽きた。冒険はここで終わりを迎える。",
             "ending": "slime_ambush_one_defeat"
           }
         },
@@ -4965,7 +4965,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "精霊の泉・第二波で力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "精霊の泉・第二波で力尽きた。冒険はここで終わりを迎える。",
             "ending": "slime_ambush_two_defeat"
           }
         },
@@ -5012,7 +5012,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "精霊の泉・スライム王で力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "精霊の泉・スライム王で力尽きた。冒険はここで終わりを迎える。",
             "ending": "slime_king_battle_defeat"
           }
         },
@@ -5253,7 +5253,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "ゴブリン砦・一階前半で力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "ゴブリン砦・一階前半で力尽きた。冒険はここで終わりを迎える。",
             "ending": "goblin_fort_defeat"
           }
         },
@@ -5423,7 +5423,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "ゴブリン砦・一階後半で力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "ゴブリン砦・一階後半で力尽きた。冒険はここで終わりを迎える。",
             "ending": "goblin_fort_first_second_defeat"
           }
         },
@@ -5643,7 +5643,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "ゴブリン砦・二階右で力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "ゴブリン砦・二階右で力尽きた。冒険はここで終わりを迎える。",
             "ending": "goblin_fort_second_right_defeat"
           }
         },
@@ -5740,7 +5740,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "ゴブリン砦・二階左で力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "ゴブリン砦・二階左で力尽きた。冒険はここで終わりを迎える。",
             "ending": "goblin_fort_second_left_defeat"
           }
         },
@@ -6050,7 +6050,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "ゴブリン砦・三階警備戦で力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "ゴブリン砦・三階警備戦で力尽きた。冒険はここで終わりを迎える。",
             "ending": "goblin_fort_third_guards_defeat"
           }
         },
@@ -6110,7 +6110,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "ゴブリン砦・四階財宝庫で力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "ゴブリン砦・四階財宝庫で力尽きた。冒険はここで終わりを迎える。",
             "ending": "goblin_fort_fourth_defeat"
           }
         },
@@ -6343,7 +6343,7 @@
         "defeat_effects": {
           "hp": 0,
           "game_over": {
-            "reason": "ゴブリン砦・箱の争奪で力尽きました。冒険はここで終わりを迎えます。",
+            "reason": "ゴブリン砦・箱の争奪で力尽きた。冒険はここで終わりを迎える。",
             "ending": "goblin_fort_chest_fight_defeat"
           }
         },

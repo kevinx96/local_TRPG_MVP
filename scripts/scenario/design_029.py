@@ -42,17 +42,30 @@ def _drafts(pack: dict) -> dict:
     return drafts
 
 
+PLAIN_ENDINGS = (("で力尽きました。冒険はここで終わりを迎えます。", "で力尽きた。冒険はここで終わりを迎える。"),
+                 ("で力尽きました。", "で力尽きた。"))
+
+
+def _plain(value):
+    """Defeat lines are narration, so they use the plain style everywhere they appear (reasons, result texts)."""
+    if isinstance(value, dict):
+        return {key: _plain(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_plain(item) for item in value]
+    if isinstance(value, str):
+        for polite, plain in PLAIN_ENDINGS:
+            value = value.replace(polite, plain)
+    return value
+
+
 def apply(pack: dict, hybrid_drafts: dict, is_base: bool) -> None:
     pack["meta"]["content_revision"] = "2026-10-13-v029-design"
+    pack["locations"] = _plain(pack["locations"])
     locations = _locations(pack)
     fort = locations["goblin_fort"]
     if not any(action["id"] == FORT_EXIT["id"] for action in fort["actions"]):
         fort["actions"].append(json.loads(json.dumps(FORT_EXIT, ensure_ascii=False)))
     for location in pack["locations"]:
-        result_texts = (location.get("combat") or {}).get("result_texts") or {}
-        defeat = result_texts.get("defeat")
-        if isinstance(defeat, str):
-            result_texts["defeat"] = defeat.replace("で力尽きました。冒険はここで終わりを迎えます。", "で力尽きた。冒険はここで終わりを迎える。")
         for turn in (location.get("hybrid") or {}).get("prepared_turns", []):
             if turn.get("id") == "dragon_valley_opening":
                 turn["draft"]["gm_text"] = VALLEY_OPENING

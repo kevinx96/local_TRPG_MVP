@@ -1547,6 +1547,9 @@ button, select, textarea, input { font: inherit; }
   cursor: pointer;
 }
 
+/* Retrying is the main way forward after a defeat; going back to the title is secondary. */
+.ending-overlay #endingRestartButton { background: transparent; color: var(--gold); }
+
 @media (max-width: 768px) {
   .gal-sprite,
   .dialogue-mode .gal-sprite { width: auto; height: 68vh; max-width: none; }
@@ -1608,6 +1611,8 @@ button, select, textarea, input { font: inherit; }
 .asset-placeholder { background: var(--panel-3); border: 1px dashed var(--gold); color: var(--gold); object-fit: contain; }
 .gal-bg[data-placeholder]:not([data-placeholder=""])::after { content: attr(data-placeholder); position: absolute; inset: 25% 15%; display: grid; place-items: center; color: var(--muted); border: 1px dashed var(--line); font-size: 28px; }
 .mini-map { position: relative; width: 200px; height: 140px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--panel) 85%, transparent); cursor: pointer; }
+/* The battle layout uses the top-right corner for the enemy panel; the MAP button stays available. */
+.combat-active .mini-map { display: none; }
 .map-overlay { z-index: 100; }
 .full-map { position: relative; flex: 1; min-height: 300px; margin: 30px 5%; }
 .map-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
