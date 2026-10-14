@@ -19,9 +19,9 @@ TEXTS = {
 
 # Every companion states what it does in battle; Robin gets the covering fire she was always described with.
 COMPANIONS = {
-    "robin": {"description": "闇の森に詳しい女レンジャー。毎ラウンド開始時に、弓の援護射撃で敵一体へ1d4+1の物理ダメージを与える。罠の扱いにも長けている。",
-              "round_start_effects": [{"kind": "damage_enemy", "name": "援護射撃", "damage": "1d4+1", "element": "physical",
-                                       "random_target": True}]},
+    "robin": {"description": "闇の森に詳しい女レンジャー。毎ラウンド開始時に、弓の援護射撃でHPが最も高い敵へ2d4+1の物理ダメージを与える。罠の扱いにも長けている。",
+              "round_start_effects": [{"kind": "damage_enemy", "name": "援護射撃", "damage": "2d4+1", "element": "physical",
+                                       "target": "highest_hp"}]},
     "blue_robed_mage": {"description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。"},
     "fire_bat_dragon": {"description": "サラが飼っている小さな火竜。毎ラウンド開始時に敵へ2d3の火属性ダメージを与え、プレイヤーのHPを3回復する（虹晶を食べると6回復）。"},
     "mina": {"description": "魔法店の弟子。好奇心が強く、師匠の言いつけを破って封印の洞窟に入り込んだ。2ラウンドごとに、氷の魔法で敵一体へ1d6のダメージを与える。"},
