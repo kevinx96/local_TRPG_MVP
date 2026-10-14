@@ -1,6 +1,6 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "80233b688900549e08156c14bfad5b4917a8f3c6b1d83d6ef23147ecbb3b6813",
+  "scenario_sha256": "b3a1c35ef624a7b25304b17bc1870059df731f3e4a4ece36acf3ea1b9687cd12",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
@@ -159,7 +159,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -521,7 +521,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -964,7 +964,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -1329,7 +1329,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -1780,7 +1780,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -2184,7 +2184,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -2669,7 +2669,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -3076,7 +3076,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -3592,7 +3592,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -4081,7 +4081,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -4651,7 +4651,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -5143,7 +5143,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -5713,7 +5713,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -6217,7 +6217,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -6802,7 +6802,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -7309,7 +7309,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -7825,7 +7825,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -8070,7 +8070,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -8270,7 +8270,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -8472,7 +8472,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -8687,7 +8687,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -8969,7 +8969,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -9206,7 +9206,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -9445,7 +9445,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -9684,7 +9684,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -10007,7 +10007,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -10285,7 +10285,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -10565,7 +10565,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -10845,7 +10845,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -11170,7 +11170,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -11450,7 +11450,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -11732,7 +11732,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -12014,7 +12014,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -12361,7 +12361,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -12663,7 +12663,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -12967,7 +12967,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -13271,7 +13271,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -13640,7 +13640,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -13964,7 +13964,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -14290,7 +14290,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -14616,7 +14616,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -14916,7 +14916,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -15171,7 +15171,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -15428,7 +15428,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -15685,7 +15685,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -16002,7 +16002,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -16274,7 +16274,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -16548,7 +16548,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -16837,7 +16837,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -17205,7 +17205,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -17528,7 +17528,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -17853,7 +17853,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -18178,7 +18178,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -18547,7 +18547,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -18871,7 +18871,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -19197,7 +19197,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -19523,7 +19523,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -19917,7 +19917,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -20266,7 +20266,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -20617,7 +20617,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -20968,7 +20968,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -21379,7 +21379,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -21745,7 +21745,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -22113,7 +22113,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -22508,7 +22508,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -23001,7 +23001,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -23438,7 +23438,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -23877,7 +23877,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -44736,7 +44736,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -45025,7 +45025,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -45334,7 +45334,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",
@@ -45627,7 +45627,7 @@
           "companion": {
             "id": "blue_robed_mage",
             "name": "青いローブの魔法使い・ワーロック",
-            "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+            "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
             "round_start_effects": [
               {
                 "kind": "heal_player",

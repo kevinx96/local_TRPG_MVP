@@ -138,6 +138,10 @@ def trade(session: dict[str, Any], shop_id: str, item_id: str, quantity: int, *,
     return delta
 
 
+# Gear bought or found outside an equip_on_buy offer is equipped from the bag.
+EQUIPPABLE_KINDS = {"weapon", "armor", "equipment"}
+
+
 def use_item(session: dict[str, Any], item_id: str) -> str:
     from . import combat
     from .state import apply_state_delta, record_state_event
@@ -167,6 +171,13 @@ def use_item(session: dict[str, Any], item_id: str) -> str:
         record_state_event(session, "item_used", text,
                            {"item_id": item_id, "attribute": attribute, "resource": resource, "amount": amount,
                             "permanent": True})
+        return text
+    if kind in EQUIPPABLE_KINDS:
+        if item["name"] in (session["character"].get("equipment") or []):
+            raise ShopError("すでに装備している。")
+        apply_state_delta(session, {"equip_item": item["name"]})
+        text = f"{item['name']}を装備した。"
+        record_state_event(session, "item_equipped", text, {"item_id": item_id})
         return text
     if kind not in {"heal", "restore"}:
         raise ShopError("この行動は現在選択できません。")

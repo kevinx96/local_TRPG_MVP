@@ -3000,7 +3000,7 @@
             {
               "id": "invite_robin",
               "text": "パーティに勧誘する",
-              "preview": "ロビンを仲間に誘う",
+              "preview": "ロビンを仲間に誘う（毎ラウンド弓で援護）",
               "risk": "1d20+wis判定（DC12）",
               "intent_keywords": [
                 "パーティに勧誘する",
@@ -4056,7 +4056,7 @@
         {
           "id": "invite_blue_mage",
           "text": "パーティーへ招く",
-          "preview": "同行者として迎える",
+          "preview": "同行者として迎える（2ラウンドごとにHPを回復）",
           "risk": "判定不要",
           "intent_keywords": [
             "パーティーへ招く"
@@ -4590,7 +4590,7 @@
         {
           "id": "borrow_fire_bat_dragon",
           "text": "ペットの火コウモリ竜を借りる",
-          "preview": "懐いてくれるか確かめます",
+          "preview": "懐いてくれるか確かめる（毎ラウンド敵を焼き、HPを回復）",
           "risk": "1d20+wis判定（DC13）",
           "intent_keywords": [
             "ペットの火コウモリ竜を借りる"
@@ -10891,7 +10891,7 @@
         {
           "id": "escort_mina",
           "text": "ミーナを連れて行く",
-          "preview": "",
+          "preview": "同行者にする（2ラウンドごとに氷の魔法で援護）",
           "risk": "判定不要",
           "intent_keywords": [
             "ミーナを連れて行く"
@@ -16780,14 +16780,22 @@
     {
       "id": "robin",
       "name": "ロビン",
-      "description": "闇の森に詳しい女レンジャー。",
-      "round_start_effects": [],
+      "description": "闇の森に詳しい女レンジャー。毎ラウンド開始時に、弓の援護射撃で敵一体へ1d4+1の物理ダメージを与える。罠の扱いにも長けている。",
+      "round_start_effects": [
+        {
+          "kind": "damage_enemy",
+          "name": "援護射撃",
+          "damage": "1d4+1",
+          "element": "physical",
+          "random_target": true
+        }
+      ],
       "image": "/static/images/npc_robin.png"
     },
     {
       "id": "blue_robed_mage",
       "name": "青いローブの魔法使い・ワーロック",
-      "description": "2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
+      "description": "元素魔法を極めた青いローブの魔法使い。2ラウンドごとに、プレイヤーの最大HPの15%を回復する。",
       "round_start_effects": [
         {
           "kind": "heal_player",
@@ -16800,7 +16808,7 @@
     {
       "id": "fire_bat_dragon",
       "name": "火コウモリ竜",
-      "description": "毎ラウンド開始時に敵へ2d3の火属性ダメージを与え、プレイヤーのHPを3回復する（虹晶を食べた後は6回復）。",
+      "description": "サラが飼っている小さな火竜。毎ラウンド開始時に敵へ2d3の火属性ダメージを与え、プレイヤーのHPを3回復する（虹晶を食べると6回復）。",
       "round_start_effects": [
         {
           "kind": "damage_enemy",
@@ -16829,7 +16837,7 @@
       "id": "mina",
       "name": "見習い魔法使いミーナ",
       "image": "/static/images/npc_mina.png",
-      "description": "魔法店の弟子。好奇心が強く、師匠の言いつけを破って封印の洞窟に入り込んだ。",
+      "description": "魔法店の弟子。好奇心が強く、師匠の言いつけを破って封印の洞窟に入り込んだ。2ラウンドごとに、氷の魔法で敵一体へ1d6のダメージを与える。",
       "round_start_effects": [
         {
           "kind": "damage_enemy",

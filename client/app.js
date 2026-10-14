@@ -377,6 +377,8 @@ function selectCharacter(char) {
   state.selectedCharacter = char;
   els.heroNameInput.value = char.default_name || char.name || "";
   state.selectedCharacterImage = characterPortrait(char);
+  // Only classes with a female portrait (the hero) offer the gender choice.
+  if (els.genderSection) els.genderSection.hidden = !char.image_female;
   document.querySelectorAll(".char-card").forEach((card) => {
     const selected = card.dataset.charId === char.id;
     card.classList.toggle("selected", selected);
@@ -620,7 +622,7 @@ function renderSession(session) {
     const companion = session.companion;
     els.companionInfo.hidden = !companion;
     els.companionInfo.innerHTML = companion
-      ? `${companion.image ? `<img src="${escapeAttr(companion.image)}" alt="" />` : ""}<span>同行者　${escapeHtml(companion.name || companion.id || "不明")}</span>`
+      ? `${companion.image ? `<img src="${escapeAttr(companion.image)}" alt="" />` : ""}<span>同行者　${escapeHtml(companion.name || companion.id || "不明")}${companion.description ? `<small class="companion-role">${escapeHtml(companion.description)}</small>` : ""}</span>`
       : "";
   }
 
@@ -730,7 +732,9 @@ function renderInventory(items) {
     li.classList.toggle("expanded", expanded.has(li.dataset.itemId));
     const equipped = (state.character?.equipment || []).some(entry =>
       (typeof entry === "string" ? entry : entry.name || entry.id) === name || entry === item.id);
-    const usable = ["heal", "restore", "permanent"].includes(item.combat?.kind) && !state.session?.in_combat && !state.session?.game_over;
+    const idle = !state.session?.in_combat && !state.session?.game_over;
+    const equippable = ["weapon", "armor", "equipment"].includes(item.combat?.kind) && !equipped && idle;
+    const usable = (["heal", "restore", "permanent"].includes(item.combat?.kind) && idle) || equippable;
 
     const hasDetails = desc || effect || usable;
 
@@ -748,7 +752,7 @@ function renderInventory(items) {
         <div class="item-details">
           ${desc ? `<div class="item-desc">${escapeHtml(desc)}</div>` : ''}
           ${effect ? `<div class="item-effect">${escapeHtml(effect)}</div>` : ''}
-          ${usable ? '<button type="button" class="start-btn item-use">使う</button>' : ''}
+          ${usable ? `<button type="button" class="start-btn item-use">${equippable ? "装備する" : "使う"}</button>` : ''}
         </div>
       ` : ''}
     `;
