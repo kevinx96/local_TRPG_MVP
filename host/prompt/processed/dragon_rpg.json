@@ -14795,7 +14795,7 @@
             ]
           },
           "quantity": 1,
-          "slot": "weapon"
+          "slot": "accessory"
         },
         {
           "name": "ローブ",
@@ -14928,7 +14928,7 @@
             ]
           },
           "quantity": 1,
-          "slot": "weapon"
+          "slot": "accessory"
         },
         {
           "name": "魔法のローブ",

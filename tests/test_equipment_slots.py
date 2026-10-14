@@ -83,9 +83,10 @@ class EquipmentSlotsTests(unittest.TestCase):
             state.commit_world_position(session, location_id=shop["location_id"])
             session["character"]["gold"] = 1000
             shops.trade(session, shop["id"], offer["item_id"], 1)
-            self.assertNotIn("魔導書", session["character"]["equipment"])
+            # The tome is an aid, so a bought weapon fills the empty weapon slot instead of replacing it.
+            self.assertIn("魔導書", session["character"]["equipment"])
             self.assert_slots(session["character"])
-            self.assertIn("魔導書を外し、", session["system_logs"][-1]["text"])
+            self.assertNotIn("を外し、", session["system_logs"][-1]["text"])
 
     def test_story_equip_effects_replace_all_slots(self):
         identifiers = [item["id"] for item in self.pack["items"] if item_slot(item)]
@@ -114,13 +115,15 @@ class EquipmentSlotsTests(unittest.TestCase):
         session = self.session("cleric")
         actor = session["character"]
         base = deepcopy(actor["combat"]["basic_attack"])
-        self.give(session, "cursed_holy_staff")
-        shops.use_item(session, "cursed_holy_staff")
+        self.give(session, "cursed_holy_staff")  # an empty weapon slot is filled on pickup
+        self.assertIn("呪われた聖杖", actor["equipment"])
         self.assertEqual(combat._player_actions_per_round(session), 2)
-        shops.use_item(session, "聖なる杖")
+        self.give(session, "earth_staff")
+        shops.use_item(session, "earth_staff")
         self.assertEqual(combat._player_actions_per_round(session), 1)
         self.assertIsNone(combat._equipped_effect(actor, "healing_harms_humans"))
-        self.assertEqual(actor["combat"]["basic_attack"], base)
+        self.assertNotEqual(actor["combat"]["basic_attack"], base)
+        self.assertNotIn("呪われた聖杖", actor["equipment"])
         heal = effective_ability(actor, {"kind": "heal", "healing": "10"})
         self.assertNotIn("healing_multiplier", heal)
         self.assertEqual(heal["healing"], "10+2")
@@ -154,7 +157,7 @@ class EquipmentSlotsTests(unittest.TestCase):
             robin = next(c for c in self.pack["companions"] if c["id"] == "robin")
             self.assertEqual(loaded["companion"]["description"], robin["description"])
             self.assertEqual(loaded["companion"]["round_start_effects"], robin["round_start_effects"])
-            self.assertEqual(loaded["character"]["equipment"], ["墓守の外套", "紅玉の護符", "魔導書"])
+            self.assertEqual(loaded["character"]["equipment"], ["大地の杖", "墓守の外套", "魔導書"])
             self.assertEqual(combat._actor_defense(loaded["character"]), 2)
             self.assertEqual(loaded["area_snapshots"]["forest"]["state"]["character"]["equipment"],
                              loaded["character"]["equipment"])

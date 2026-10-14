@@ -9,7 +9,9 @@ from typing import Any
 PACK_DIR = Path(__file__).resolve().parents[2] / "host/prompt/processed"
 PACKS = ("dragon_rpg.json", "dragon_rpg_hybrid.json")
 SLOTS = {
-    "聖なる杖": "weapon", "魔導書": "weapon",
+    # Design decision (2026-10-15): the cleric's staff and the mage's tome are aids, not weapons, so a gifted
+    # weapon such as イアン's ice blade still fills the empty weapon slot; the trade-off moves to the aid slot.
+    "聖なる杖": "accessory", "魔導書": "accessory",
     "革の鎧": "armor", "ローブ": "armor", "魔法のローブ": "armor",
     "アダマンタイトの鎧": "armor", "墓守の外套": "armor",
     "氷の護符(活性化済)": "accessory", "紅玉の護符": "accessory",

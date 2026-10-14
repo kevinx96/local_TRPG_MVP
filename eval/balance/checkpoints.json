@@ -1,6 +1,6 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "59acc82eb7fa7a5ef35dd3c3cdbe08c6d9c8df8aa0b73c3576998b968e2f7ad0",
+  "scenario_sha256": "73c26e3501c7c86c50188861749ffe635916a0cd301dd394200c266125811e9e",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
@@ -414,7 +414,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -877,7 +877,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -2077,7 +2077,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -2582,7 +2582,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -3953,7 +3953,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -4096,7 +4096,6 @@
             }
           ],
           "equipment": [
-            "聖なる杖",
             "ローブ",
             "紅玉の護符"
           ],
@@ -4545,7 +4544,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -4670,7 +4669,6 @@
             }
           ],
           "equipment": [
-            "魔導書",
             "魔法のローブ",
             "紅玉の護符"
           ],
@@ -6105,7 +6103,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -6248,7 +6246,6 @@
             }
           ],
           "equipment": [
-            "聖なる杖",
             "ローブ",
             "紅玉の護符"
           ],
@@ -6712,7 +6709,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -6837,7 +6834,6 @@
             }
           ],
           "equipment": [
-            "魔導書",
             "魔法のローブ",
             "紅玉の護符"
           ],
@@ -8056,7 +8052,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -8261,7 +8257,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -8952,7 +8948,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -9194,7 +9190,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -10000,7 +9996,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -10283,7 +10279,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -11173,7 +11169,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -11458,7 +11454,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -12374,7 +12370,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -12681,7 +12677,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -13663,7 +13659,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -13992,7 +13988,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -14949,7 +14945,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -15209,7 +15205,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -16045,7 +16041,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -16322,7 +16318,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -17243,7 +17239,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -17571,7 +17567,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -18595,7 +18591,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -18924,7 +18920,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -19975,7 +19971,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -20329,7 +20325,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -21447,7 +21443,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -21818,7 +21814,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -23055,7 +23051,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -23497,7 +23493,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -24763,7 +24759,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -25095,7 +25091,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -26140,7 +26136,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -26472,7 +26468,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -27562,7 +27558,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -27939,7 +27935,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -29142,7 +29138,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -29542,7 +29538,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -30759,7 +30755,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -31125,7 +31121,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -32320,7 +32316,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -32734,7 +32730,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -34092,7 +34088,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -34245,7 +34241,8 @@
           ],
           "equipment": [
             "聖なる杖",
-            "ローブ"
+            "ローブ",
+            "氷鉄の大剣"
           ],
           "gold": 196,
           "companion": null,
@@ -34589,7 +34586,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -34739,7 +34736,8 @@
           ],
           "equipment": [
             "魔導書",
-            "魔法のローブ"
+            "魔法のローブ",
+            "氷鉄の大剣"
           ],
           "gold": 196,
           "companion": null,
@@ -36141,7 +36139,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -36294,7 +36292,8 @@
           ],
           "equipment": [
             "聖なる杖",
-            "ローブ"
+            "ローブ",
+            "氷鉄の大剣"
           ],
           "gold": 231,
           "companion": null,
@@ -36666,7 +36665,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -36816,7 +36815,8 @@
           ],
           "equipment": [
             "魔導書",
-            "魔法のローブ"
+            "魔法のローブ",
+            "氷鉄の大剣"
           ],
           "gold": 231,
           "companion": null,
@@ -38378,7 +38378,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -38550,7 +38550,8 @@
           ],
           "equipment": [
             "聖なる杖",
-            "ローブ"
+            "ローブ",
+            "氷鉄の大剣"
           ],
           "gold": 231,
           "companion": null,
@@ -38984,7 +38985,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -39153,7 +39154,8 @@
           ],
           "equipment": [
             "魔導書",
-            "魔法のローブ"
+            "魔法のローブ",
+            "氷鉄の大剣"
           ],
           "gold": 231,
           "companion": null,
@@ -40791,7 +40793,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -40944,7 +40946,8 @@
           ],
           "equipment": [
             "聖なる杖",
-            "ローブ"
+            "ローブ",
+            "氷鉄の大剣"
           ],
           "gold": 231,
           "companion": null,
@@ -41332,7 +41335,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -41482,7 +41485,8 @@
           ],
           "equipment": [
             "魔導書",
-            "魔法のローブ"
+            "魔法のローブ",
+            "氷鉄の大剣"
           ],
           "gold": 231,
           "companion": null,
@@ -43097,7 +43101,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -43266,7 +43270,8 @@
           ],
           "equipment": [
             "聖なる杖",
-            "ローブ"
+            "ローブ",
+            "氷鉄の大剣"
           ],
           "gold": 331,
           "companion": null,
@@ -43724,7 +43729,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -43890,7 +43895,8 @@
           ],
           "equipment": [
             "魔導書",
-            "魔法のローブ"
+            "魔法のローブ",
+            "氷鉄の大剣"
           ],
           "gold": 331,
           "companion": null,
@@ -45256,7 +45262,7 @@
                   "heal"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -45337,6 +45343,7 @@
             }
           ],
           "equipment": [
+            "聖なる杖",
             "ローブ",
             "呪われた聖杖"
           ],
@@ -45552,7 +45559,7 @@
                   "attack"
                 ]
               },
-              "slot": "weapon",
+              "slot": "accessory",
               "category": "equipment"
             },
             {
@@ -45649,7 +45656,6 @@
             }
           ],
           "equipment": [
-            "魔導書",
             "魔法のローブ",
             "呪われた水晶球"
           ],

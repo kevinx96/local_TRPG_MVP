@@ -700,7 +700,7 @@ function renderMeter(stat, character) {
    ═══════════════════════════════════════════════════ */
 
 function renderInventory(items) {
-  const slotLabels = { weapon: "武器", armor: "防具", accessory: "装飾品" };
+  const slotLabels = { weapon: "武器", armor: "防具", accessory: "補助" };
   const isEquipped = item => Boolean(slotLabels[item.slot]) && (state.character?.equipment || []).some(entry =>
     (typeof entry === "string" ? entry : entry.name || entry.id) === item.name || entry === item.id);
   const expanded = new Set([...els.inventory.querySelectorAll(".expanded")].map(row => row.dataset.itemId));
