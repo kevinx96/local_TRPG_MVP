@@ -12,6 +12,8 @@ from .gm_contract import sanitize_visible_text
 from .item_mechanics import (
     equipped_basic_attack_followups,
     equipped_item_specs,
+    equipped_items,
+    item_slot,
     effective_ability,
     effective_ability_cost,
     item_combat_spec,
@@ -1158,7 +1160,12 @@ def _apply_ally_round_start_effects(session: dict[str, Any], companion: dict[str
         elif kind == "damage_enemy":
             targets = list(_alive_enemies(combat))
             if not effect.get("all_targets") and targets:
-                targets = [rng.choice(targets)] if effect.get("random_target") else targets[:1]
+                if effect.get("random_target"):
+                    targets = [rng.choice(targets)]
+                elif effect.get("target") == "highest_hp":
+                    targets = [max(targets, key=lambda enemy: _safe_int(enemy.get("hp"), 0))]
+                else:
+                    targets = targets[:1]
             for target in targets:
                 ability = {
                     "name": str(effect.get("name") or companion.get("name") or "同行者の攻撃"),
@@ -1358,25 +1365,14 @@ def _enemy_is_defeated(enemy: dict[str, Any]) -> bool:
 
 def _player_actions_per_round(session: dict[str, Any]) -> int:
     character = session.get("character") if isinstance(session.get("character"), dict) else {}
-    equipped = {str(value) for value in character.get("equipment") or [] if str(value)}
-    extra = 0
-    for item in character.get("inventory") or []:
-        if not isinstance(item, dict):
-            continue
-        if str(item.get("name") or "") not in equipped and str(item.get("id") or "") not in equipped:
-            continue
-        extra += max(0, _safe_int(item_combat_spec(item).get("extra_actions_per_round"), 0))
+    extra = sum(max(0, _safe_int(spec.get("extra_actions_per_round"), 0))
+                for spec in equipped_item_specs(character))
     return max(1, 1 + extra)
 
 
 def _equipped_effect(character: dict[str, Any], key: str) -> Any:
-    equipped = {str(value) for value in character.get("equipment") or [] if str(value)}
-    for item in character.get("inventory") or []:
-        if not isinstance(item, dict):
-            continue
-        if str(item.get("name") or "") not in equipped and str(item.get("id") or "") not in equipped:
-            continue
-        value = item_combat_spec(item).get(key)
+    for spec in equipped_item_specs(character):
+        value = spec.get(key)
         if value:
             return value
     return None
@@ -1384,13 +1380,7 @@ def _equipped_effect(character: dict[str, Any], key: str) -> Any:
 
 def _available_skills(character: dict[str, Any]) -> list[dict[str, Any]]:
     skills = [deepcopy(skill) for skill in character.get("skills") or [] if isinstance(skill, dict)]
-    equipped = {str(value) for value in character.get("equipment") or [] if str(value)}
-    for item in character.get("inventory") or []:
-        if not isinstance(item, dict):
-            continue
-        if str(item.get("name") or "") not in equipped and str(item.get("id") or "") not in equipped:
-            continue
-        spec = item_combat_spec(item)
+    for spec in equipped_item_specs(character):
         for skill in spec.get("grants_skills") or []:
             if not isinstance(skill, dict):
                 continue
@@ -1417,13 +1407,7 @@ def _entry_id(entry: dict[str, Any], prefix: str, index: int) -> str:
 
 
 def _equipped_weapon_attack(character: dict[str, Any]) -> dict[str, Any]:
-    equipment = character.get("equipment") if isinstance(character.get("equipment"), list) else []
-    inventory = character.get("inventory") if isinstance(character.get("inventory"), list) else []
-    for raw in inventory:
-        item = raw if isinstance(raw, dict) else {"name": str(raw)}
-        if str(item.get("name") or "") not in equipment:
-            continue
-        spec = item.get("combat") if isinstance(item.get("combat"), dict) else {}
+    for spec in equipped_item_specs(character):
         if str(spec.get("kind") or "") == "weapon":
             return deepcopy(spec)
     return {}
@@ -1467,14 +1451,8 @@ def _restore_actor_resource(actor: dict[str, Any], resource: str, amount: int) -
 def _actor_defense(actor: dict[str, Any]) -> int:
     combat = actor.get("combat") if isinstance(actor.get("combat"), dict) else {}
     explicit = _safe_int(combat.get("defense", actor.get("defense")), 0)
-    equipment = actor.get("equipment") if isinstance(actor.get("equipment"), list) else []
-    inventory = actor.get("inventory") if isinstance(actor.get("inventory"), list) else []
     derived = 0
-    for raw in inventory:
-        item = raw if isinstance(raw, dict) else {"name": str(raw)}
-        if str(item.get("name") or "") not in equipment:
-            continue
-        item_combat = item.get("combat") if isinstance(item.get("combat"), dict) else {}
+    for item_combat in equipped_item_specs(actor):
         if isinstance(item_combat.get("defense"), (int, float)):
             derived += int(item_combat["defense"])
     return max(0, explicit + derived)
@@ -1530,11 +1508,12 @@ def _resistance_multiplier(actor: dict[str, Any], element: str) -> float:
         multiplier = max(0.0, float(raw))
     except (TypeError, ValueError):
         multiplier = 1.0
+    selected = equipped_items(actor)
     for item in actor.get("inventory") or []:
         if not isinstance(item, dict):
             continue
         spec = item_combat_spec(item)
-        if spec.get("requires_equipped") and item.get("name") not in actor.get("equipment", []):
+        if (item_slot(item) or spec.get("requires_equipped")) and item not in selected:
             continue
         passive = spec.get("damage_taken_multipliers")
         if not isinstance(passive, dict):

@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any, Optional, Union
 
 from .intent_resolver import resolve_intent
-from .item_mechanics import item_combat_spec, structured_item_effect
+from .item_mechanics import equipped_items, item_combat_spec, item_slot, structured_item_effect
 from .quests import public_quests, record_quest_changes
 from .maps import public_maps
 from .shops import item_category
@@ -49,10 +49,12 @@ DEFAULT_SCENARIO = HOST_ROOT / "prompt" / "processed" / "dragon_rpg.json"
 
 DEFAULT_ITEM_CATALOG: dict[str, dict[str, Any]] = {
     "鉄の剣": {
+        "slot": "weapon",
         "description": "鍛冶屋で打たれた頑丈な剣。冒険者の基本装備。",
         "combat": {"kind": "weapon", "name": "鉄の剣", "damage": "1d8+str/3", "accuracy": 90, "element": "physical"},
     },
     "革の鎧": {
+        "slot": "armor",
         "description": "なめした革で作られた軽量の鎧。動きやすさと防御力を両立。",
         "combat": {"kind": "armor", "defense": 1},
     },
@@ -211,7 +213,7 @@ def create_session(
         other = {k: v for k, v in character_overrides.items() if k != "name"}
         if other:
             _deep_update(character, other)
-        _normalize_character(character)
+    _normalize_character(character)
 
     meta = scenario_pack.get("meta", {})
     session = {
@@ -293,6 +295,11 @@ def load_session(session_id: str) -> dict[str, Any]:
         session["choices"] = fallback_choices_for_session(session)
     changed = _recover_legacy_defeat_dead_end(session) or changed
     character = session.get("character") if isinstance(session.get("character"), dict) else {}
+    before_character = deepcopy(character)
+    template = _find_character_in_pack(session.get("scenario_pack", {}), character.get("character_id")) or {}
+    base_attack = template.get("combat", {}).get("basic_attack")
+    if base_attack:
+        character.setdefault("combat", {}).setdefault("base_attack", deepcopy(base_attack))
     _initialize_milestones(session)
     inventory = character.get("inventory") if isinstance(character.get("inventory"), list) else []
     _merge_inventory_catalog(inventory, session.get("scenario_pack"))
@@ -300,8 +307,22 @@ def load_session(session_id: str) -> dict[str, Any]:
     before_skills = deepcopy(character.get("skills", []))
     before_cleared_level = character.get("skills_cleared_through_level")
     _unlock_level_skills(session, restoring=True)
-    changed = (before_skills != character.get("skills", [])
+    changed = (before_character != character or before_skills != character.get("skills", [])
                or before_cleared_level != character.get("skills_cleared_through_level") or changed)
+    saved_characters = [snapshot.get("state", {}).get("character")
+                        for snapshot in session.get("area_snapshots", {}).values()]
+    saved_characters.append((session.get("combat") or {}).get("original_character"))
+    for saved_character in saved_characters:
+        if not isinstance(saved_character, dict):
+            continue
+        before = deepcopy(saved_character)
+        saved_template = _find_character_in_pack(session.get("scenario_pack", {}), saved_character.get("character_id")) or {}
+        saved_attack = saved_template.get("combat", {}).get("basic_attack")
+        if saved_attack:
+            saved_character.setdefault("combat", {}).setdefault("base_attack", deepcopy(saved_attack))
+        _merge_inventory_catalog(saved_character.get("inventory", []), session.get("scenario_pack"))
+        _normalize_character(saved_character)
+        changed = saved_character != before or changed
     if changed:
         save_session(session)
     return session
@@ -333,6 +354,8 @@ def _refresh_session_scenario_pack(session: dict[str, Any]) -> bool:
         latest_companion = next((c for c in latest_pack.get("companions", []) if c.get("id") == companion.get("id")), None)
         if latest_companion is not None:
             companion["round_start_effects"] = deepcopy(latest_companion.get("round_start_effects", []))
+            if "description" in latest_companion:
+                companion["description"] = latest_companion["description"]
     character = session.get("character", {})
     character_id = character.get("character_id")
     previous_template = _find_character_in_pack(current_pack, character_id) or {}
@@ -341,6 +364,8 @@ def _refresh_session_scenario_pack(session: dict[str, Any]) -> bool:
     latest_attack = latest_template.get("combat", {}).get("basic_attack")
     if previous_attack and latest_attack and character.get("combat", {}).get("basic_attack") == previous_attack:
         character["combat"]["basic_attack"] = deepcopy(latest_attack)
+    if previous_attack and latest_attack and character.get("combat", {}).get("base_attack") == previous_attack:
+        character["combat"]["base_attack"] = deepcopy(latest_attack)
     ensure_world_state(session)
     active_combat = session.get("combat")
     if isinstance(active_combat, dict):
@@ -2112,10 +2137,11 @@ def _apply_state_delta(
                 {"item": item_name, "quantity": removed_qty},
             )
 
-    _synchronize_equipment(character)
     equip_item = str(delta.get("equip_item") or "").strip()
     if equip_item:
-        _equip_inventory_item(character, equip_item)
+        _equip_inventory_item(session, equip_item)
+    else:
+        _synchronize_equipment(character)
 
     if delta.get("clear_skills") is True:
         removed_skills = len(character.get("skills") or [])
@@ -2354,7 +2380,8 @@ def _set_companion(session: dict[str, Any], raw_companion: Any) -> None:
         )
 
 
-def _equip_inventory_item(character: dict[str, Any], item_name_or_id: str) -> None:
+def _equip_inventory_item(session: dict[str, Any], item_name_or_id: str) -> str:
+    character = session["character"]
     inventory = character.get("inventory") if isinstance(character.get("inventory"), list) else []
     target = next(
         (
@@ -2364,22 +2391,23 @@ def _equip_inventory_item(character: dict[str, Any], item_name_or_id: str) -> No
         ),
         None,
     )
-    if not target:
-        return
+    if not target or not item_slot(target) or int(target.get("quantity", 1)) <= 0:
+        _synchronize_equipment(character)
+        return ""
     target_name = str(target.get("name") or target.get("id") or "").strip()
-    equipment = _as_text_list(character.get("equipment"))
-    target_kind = str(item_combat_spec(target).get("kind") or "").lower()
-    if target_kind == "weapon":
-        weapon_names = {
-            str(item.get("name") or item.get("id") or "")
-            for item in inventory
-            if isinstance(item, dict) and str(item_combat_spec(item).get("kind") or "").lower() == "weapon"
-        }
-        equipment = [name for name in equipment if name not in weapon_names]
-    if target_name and target_name not in equipment:
-        equipment.append(target_name)
-    character["equipment"] = equipment
+    current = equipped_items(character)
+    previous = next((item for item in current if item_slot(item) == item_slot(target)), None)
+    character["equipment"] = [str(item.get("name") or item["id"]) for item in current
+                              if item_slot(item) != item_slot(target)] + [target_name]
     _synchronize_equipment(character)
+    if previous is target:
+        return ""
+    prefix = f"{previous.get('name') or previous['id']}を外し、" if previous else ""
+    text = f"{prefix}{target_name}を装備した。"
+    record_state_event(session, "item_equipped", text,
+                       {"item_id": target.get("id") or target_name, "slot": item_slot(target),
+                        "removed": previous.get("name") if previous else None})
+    return text
 
 
 def _enrich_item(item: dict[str, Any], scenario_pack: Optional[dict[str, Any]] = None) -> dict[str, Any]:
@@ -2407,7 +2435,7 @@ def _enrich_item(item: dict[str, Any], scenario_pack: Optional[dict[str, Any]] =
         "effect": structured_item_effect(merged) or str(merged.get("effect") or ""),
         "quantity": _safe_quantity(item.get("quantity"), 1),
     }
-    for key in ("id", "icon", "combat", "traits", "category", "key_item", "non_removable"):
+    for key in ("id", "icon", "combat", "traits", "category", "key_item", "non_removable", "slot"):
         if key in merged:
             enriched[key] = deepcopy(merged[key])
     category = item_category(enriched)
@@ -2725,30 +2753,13 @@ def _synchronize_equipment(character: dict[str, Any]) -> None:
     inventory = character.get("inventory") if isinstance(character.get("inventory"), list) else []
     inventory_items = [item for item in inventory if isinstance(item, dict)]
 
-    equipped_items: list[dict[str, Any]] = []
-    normalized_equipment: list[str] = []
-    for equipped_value in _as_text_list(character.get("equipment")):
-        matched = next(
-            (
-                item for item in inventory_items
-                if equipped_value in {str(item.get("name") or ""), str(item.get("id") or "")}
-            ),
-            None,
-        )
-        if not matched:
-            continue
-        canonical_name = str(matched.get("name") or matched.get("id") or "").strip()
-        if canonical_name and canonical_name not in normalized_equipment:
-            normalized_equipment.append(canonical_name)
-            equipped_items.append(matched)
-
-    equipped_weapon = next(
-        (item for item in equipped_items if str(item_combat_spec(item).get("kind") or "").lower() == "weapon"),
-        None,
-    )
+    selected = equipped_items(character)
+    normalized_equipment = [str(item.get("name") or item["id"]) for item in selected]
+    equipped_weapon = next((item for item in selected if item_slot(item) == "weapon"), None)
     if not equipped_weapon:
         equipped_weapon = next(
-            (item for item in inventory_items if str(item_combat_spec(item).get("kind") or "").lower() == "weapon"),
+            (item for item in inventory_items if item_slot(item) == "weapon"
+             and item_combat_spec(item).get("kind") == "weapon" and int(item.get("quantity", 1)) > 0),
             None,
         )
         if equipped_weapon:
@@ -2757,14 +2768,17 @@ def _synchronize_equipment(character: dict[str, Any]) -> None:
                 normalized_equipment.append(weapon_name)
 
     character["equipment"] = normalized_equipment
-    if equipped_weapon:
+    combat = character.setdefault("combat", {})
+    if not isinstance(combat, dict):
+        combat = {}
+        character["combat"] = combat
+    combat.setdefault("base_attack", deepcopy(combat.get("basic_attack", {})))
+    if equipped_weapon and item_combat_spec(equipped_weapon).get("kind") == "weapon":
         weapon_attack = item_combat_spec(equipped_weapon)
         weapon_attack.pop("kind", None)
-        combat = character.setdefault("combat", {})
-        if not isinstance(combat, dict):
-            combat = {}
-            character["combat"] = combat
         combat["basic_attack"] = weapon_attack
+    else:
+        combat["basic_attack"] = deepcopy(combat["base_attack"])
 
 
 def _ensure_item_object(item: Any) -> dict[str, Union[str, int]]:
@@ -2815,6 +2829,8 @@ def _merge_inventory_catalog(inventory: list[Any], scenario_pack: Optional[dict[
     if not isinstance(scenario_pack, dict):
         return
     catalog = [item for item in scenario_pack.get("items", []) if isinstance(item, dict)]
+    catalog += [item for template in scenario_pack.get("characters", [])
+                for item in template.get("inventory", []) if isinstance(item, dict)]
     for index, raw in enumerate(inventory):
         entry = raw if isinstance(raw, dict) else {"name": str(raw), "quantity": 1}
         name = str(entry.get("name") or "")

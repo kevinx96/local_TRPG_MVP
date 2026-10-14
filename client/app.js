@@ -700,6 +700,9 @@ function renderMeter(stat, character) {
    ═══════════════════════════════════════════════════ */
 
 function renderInventory(items) {
+  const slotLabels = { weapon: "武器", armor: "防具", accessory: "装飾品" };
+  const isEquipped = item => Boolean(slotLabels[item.slot]) && (state.character?.equipment || []).some(entry =>
+    (typeof entry === "string" ? entry : entry.name || entry.id) === item.name || entry === item.id);
   const expanded = new Set([...els.inventory.querySelectorAll(".expanded")].map(row => row.dataset.itemId));
   els.inventory.innerHTML = "";
   if (!items.length) {
@@ -730,17 +733,19 @@ function renderInventory(items) {
     li.className = "inventory-item";
     li.dataset.itemId = item.id || name;
     li.classList.toggle("expanded", expanded.has(li.dataset.itemId));
-    const equipped = (state.character?.equipment || []).some(entry =>
-      (typeof entry === "string" ? entry : entry.name || entry.id) === name || entry === item.id);
+    const slotLabel = slotLabels[item.slot] || "";
+    const equipped = isEquipped(item);
     const idle = !state.session?.in_combat && !state.session?.game_over;
-    const equippable = ["weapon", "armor", "equipment"].includes(item.combat?.kind) && !equipped && idle;
+    const equippable = Boolean(slotLabel) && !equipped && idle;
+    const replacement = equippable ? items.find(other => other.slot === item.slot && isEquipped(other)) : null;
+    const equipLabel = replacement ? `装備する（${replacement.name}と入れ替え）` : "装備する";
     const usable = (["heal", "restore", "permanent"].includes(item.combat?.kind) && idle) || equippable;
 
     const hasDetails = desc || effect || usable;
 
     li.innerHTML = `
       <div class="item-header" role="button" tabindex="0" aria-expanded="${li.classList.contains("expanded")}">
-        <span class="item-name">${escapeHtml(name)}</span>
+        <span class="item-name">${escapeHtml(name)}${slotLabel ? ` <span class="item-qty">${slotLabel}</span>` : ''}</span>
         <span style="display:flex;align-items:center;gap:6px">
           ${equipped ? '<span class="item-qty equipped-tag">装備中</span>' : ''}
           ${item.key_item ? '<span class="item-qty key-tag">重要</span>' : ''}
@@ -752,7 +757,7 @@ function renderInventory(items) {
         <div class="item-details">
           ${desc ? `<div class="item-desc">${escapeHtml(desc)}</div>` : ''}
           ${effect ? `<div class="item-effect">${escapeHtml(effect)}</div>` : ''}
-          ${usable ? `<button type="button" class="start-btn item-use">${equippable ? "装備する" : "使う"}</button>` : ''}
+          ${usable ? `<button type="button" class="start-btn item-use">${equippable ? escapeHtml(equipLabel) : "使う"}</button>` : ''}
         </div>
       ` : ''}
     `;

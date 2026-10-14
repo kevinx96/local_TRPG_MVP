@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-13-v031",
+    "content_revision": "2026-10-15-v032",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -951,11 +951,15 @@
             {
               "add_item": {
                 "name": "氷鉄の大剣",
-                "quantity": 1
+                "quantity": 1,
+                "slot": "weapon"
               }
             },
             {
               "set_flag": "accepted_sword_fusion"
+            },
+            {
+              "equip_item": "氷鉄の大剣"
             }
           ],
           "portrait_image": "/static/images/npc_blacksmith.png",
@@ -992,7 +996,8 @@
             {
               "add_item": {
                 "name": "氷の護符(活性化済)",
-                "quantity": 1
+                "quantity": 1,
+                "slot": "accessory"
               }
             },
             {
@@ -1130,7 +1135,8 @@
                   {
                     "add_item": {
                       "name": "アダマンタイトの鎧",
-                      "quantity": 1
+                      "quantity": 1,
+                      "slot": "armor"
                     }
                   },
                   {
@@ -2574,7 +2580,8 @@
                               "accuracy": 95,
                               "element": "weakness"
                             },
-                            "quantity": 1
+                            "quantity": 1,
+                            "slot": "weapon"
                           }
                         }
                       ],
@@ -2592,7 +2599,8 @@
                               "accuracy": 92,
                               "element": "weakness"
                             },
-                            "quantity": 1
+                            "quantity": 1,
+                            "slot": "weapon"
                           }
                         }
                       ]
@@ -2630,7 +2638,8 @@
                               "element": "weakness",
                               "skill_healing_bonus": 2
                             },
-                            "quantity": 1
+                            "quantity": 1,
+                            "slot": "weapon"
                           }
                         }
                       ],
@@ -2649,7 +2658,8 @@
                               "element": "weakness",
                               "skill_healing_bonus": 2
                             },
-                            "quantity": 1
+                            "quantity": 1,
+                            "slot": "weapon"
                           }
                         }
                       ]
@@ -2686,7 +2696,8 @@
                               "accuracy": 95,
                               "element": "weakness"
                             },
-                            "quantity": 1
+                            "quantity": 1,
+                            "slot": "weapon"
                           }
                         }
                       ],
@@ -2704,7 +2715,8 @@
                               "accuracy": 92,
                               "element": "weakness"
                             },
-                            "quantity": 1
+                            "quantity": 1,
+                            "slot": "weapon"
                           }
                         }
                       ]
@@ -2741,7 +2753,8 @@
                               "accuracy": 95,
                               "element": "weakness"
                             },
-                            "quantity": 1
+                            "quantity": 1,
+                            "slot": "weapon"
                           }
                         }
                       ],
@@ -2759,7 +2772,8 @@
                               "accuracy": 92,
                               "element": "weakness"
                             },
-                            "quantity": 1
+                            "quantity": 1,
+                            "slot": "weapon"
                           }
                         }
                       ]
@@ -3640,7 +3654,8 @@
             {
               "add_item": {
                 "name": "呪われた聖剣",
-                "quantity": 1
+                "quantity": 1,
+                "slot": "weapon"
               }
             },
             {
@@ -3687,7 +3702,8 @@
             {
               "add_item": {
                 "name": "呪われた聖杖",
-                "quantity": 1
+                "quantity": 1,
+                "slot": "weapon"
               }
             },
             {
@@ -3734,7 +3750,8 @@
             {
               "add_item": {
                 "name": "呪われた水晶球",
-                "quantity": 1
+                "quantity": 1,
+                "slot": "accessory"
               }
             },
             {
@@ -3781,7 +3798,8 @@
             {
               "add_item": {
                 "name": "呪われた短剣",
-                "quantity": 1
+                "quantity": 1,
+                "slot": "weapon"
               }
             },
             {
@@ -4023,7 +4041,8 @@
           "inventory_add": [
             {
               "name": "暗黒の水晶球",
-              "quantity": 1
+              "quantity": 1,
+              "slot": "accessory"
             }
           ],
           "flags_set": [
@@ -7986,7 +8005,8 @@
             {
               "add_item": {
                 "name": "氷鉄の大剣",
-                "quantity": 1
+                "quantity": 1,
+                "slot": "weapon"
               }
             },
             {
@@ -9126,7 +9146,8 @@
             {
               "add_item": {
                 "name": "紅玉の護符",
-                "quantity": 1
+                "quantity": 1,
+                "slot": "accessory"
               }
             },
             {
@@ -11532,7 +11553,8 @@
               "add_item": {
                 "id": "gravekeeper_cloak",
                 "name": "墓守の外套",
-                "quantity": 1
+                "quantity": 1,
+                "slot": "armor"
               }
             },
             {
@@ -12325,7 +12347,8 @@
         "剣",
         "武器"
       ],
-      "category": "equipment"
+      "category": "equipment",
+      "slot": "weapon"
     },
     {
       "id": "herb",
@@ -12414,7 +12437,8 @@
         "鎧",
         "防具"
       ],
-      "category": "equipment"
+      "category": "equipment",
+      "slot": "armor"
     },
     {
       "id": "ice_iron_greatsword",
@@ -12434,7 +12458,8 @@
         "氷属性",
         "武器"
       ],
-      "category": "equipment"
+      "category": "equipment",
+      "slot": "weapon"
     },
     {
       "id": "ice_katana",
@@ -12454,7 +12479,8 @@
         "氷属性",
         "自動攻撃"
       ],
-      "category": "equipment"
+      "category": "equipment",
+      "slot": "weapon"
     },
     {
       "id": "earth_staff",
@@ -12481,7 +12507,8 @@
           }
         ]
       },
-      "category": "equipment"
+      "category": "equipment",
+      "slot": "weapon"
     },
     {
       "id": "healing_scroll",
@@ -12551,7 +12578,8 @@
         "element": "cursed",
         "self_damage": 1
       },
-      "category": "equipment"
+      "category": "equipment",
+      "slot": "weapon"
     },
     {
       "id": "cursed_holy_staff",
@@ -12568,7 +12596,8 @@
         "skill_healing_bonus": 10,
         "healing_harms_humans": true
       },
-      "category": "equipment"
+      "category": "equipment",
+      "slot": "weapon"
     },
     {
       "id": "cursed_crystal_ball",
@@ -12604,7 +12633,8 @@
           }
         ]
       },
-      "category": "equipment"
+      "category": "equipment",
+      "slot": "accessory"
     },
     {
       "id": "dark_crystal_ball",
@@ -12640,7 +12670,8 @@
           }
         ]
       },
-      "category": "equipment"
+      "category": "equipment",
+      "slot": "accessory"
     },
     {
       "id": "cursed_dagger",
@@ -12659,7 +12690,8 @@
           "stackable": true
         }
       },
-      "category": "equipment"
+      "category": "equipment",
+      "slot": "weapon"
     },
     {
       "id": "rusted_crown",
@@ -12714,7 +12746,8 @@
           "element": "ice"
         }
       },
-      "category": "equipment"
+      "category": "equipment",
+      "slot": "accessory"
     },
     {
       "id": "trail_ration",
@@ -12789,7 +12822,8 @@
         "damage_taken_multipliers": {
           "fire": 0.7
         }
-      }
+      },
+      "slot": "accessory"
     },
     {
       "id": "glowing_moss",
@@ -12815,7 +12849,8 @@
         "damage": "3d6+str/3+14",
         "accuracy": 92,
         "element": "weakness"
-      }
+      },
+      "slot": "weapon"
     },
     {
       "id": "prism_weapon_cleric",
@@ -12829,7 +12864,8 @@
         "accuracy": 92,
         "element": "weakness",
         "skill_healing_bonus": 2
-      }
+      },
+      "slot": "weapon"
     },
     {
       "id": "prism_weapon_mage",
@@ -12842,7 +12878,8 @@
         "damage": "1d20+int/3+20",
         "accuracy": 92,
         "element": "weakness"
-      }
+      },
+      "slot": "weapon"
     },
     {
       "id": "prism_weapon_thief",
@@ -12855,7 +12892,8 @@
         "damage": "4d4+dex/4+16",
         "accuracy": 92,
         "element": "weakness"
-      }
+      },
+      "slot": "weapon"
     },
     {
       "id": "dragon_elixir",
@@ -12933,7 +12971,8 @@
           "amount": 1,
           "description": "霧の古戦場：被ダメージをさらに1軽減"
         }
-      }
+      },
+      "slot": "armor"
     },
     {
       "id": "elixir_str",
@@ -14625,7 +14664,8 @@
             "accuracy": 90,
             "element": "physical"
           },
-          "quantity": 1
+          "quantity": 1,
+          "slot": "weapon"
         },
         {
           "name": "革の鎧",
@@ -14635,7 +14675,8 @@
             "kind": "armor",
             "defense": 1
           },
-          "quantity": 1
+          "quantity": 1,
+          "slot": "armor"
         },
         {
           "name": "薬草",
@@ -14753,7 +14794,8 @@
               "heal"
             ]
           },
-          "quantity": 1
+          "quantity": 1,
+          "slot": "weapon"
         },
         {
           "name": "ローブ",
@@ -14768,7 +14810,8 @@
               "heal"
             ]
           },
-          "quantity": 1
+          "quantity": 1,
+          "slot": "armor"
         },
         {
           "name": "薬草",
@@ -14884,7 +14927,8 @@
               "attack"
             ]
           },
-          "quantity": 1
+          "quantity": 1,
+          "slot": "weapon"
         },
         {
           "name": "魔法のローブ",
@@ -14896,7 +14940,8 @@
               "mp": 1
             }
           },
-          "quantity": 1
+          "quantity": 1,
+          "slot": "armor"
         },
         {
           "name": "薬草",
@@ -15021,7 +15066,8 @@
             "accuracy": 95,
             "element": "physical"
           },
-          "quantity": 1
+          "quantity": 1,
+          "slot": "weapon"
         },
         {
           "name": "革の鎧",
@@ -15031,7 +15077,8 @@
             "kind": "armor",
             "defense": 1
           },
-          "quantity": 1
+          "quantity": 1,
+          "slot": "armor"
         },
         {
           "name": "盗賊道具",
@@ -15196,14 +15243,14 @@
     {
       "id": "robin",
       "name": "ロビン",
-      "description": "闇の森に詳しい女レンジャー。毎ラウンド開始時に、弓の援護射撃で敵一体へ1d4+1の物理ダメージを与える。罠の扱いにも長けている。",
+      "description": "闇の森に詳しい女レンジャー。毎ラウンド開始時に、弓の援護射撃でHPが最も高い敵へ2d4+1の物理ダメージを与える。罠の扱いにも長けている。",
       "round_start_effects": [
         {
           "kind": "damage_enemy",
           "name": "援護射撃",
-          "damage": "1d4+1",
+          "damage": "2d4+1",
           "element": "physical",
-          "random_target": true
+          "target": "highest_hp"
         }
       ],
       "image": "/static/images/npc_robin.png"
@@ -15806,7 +15853,7 @@
       "items": [
         {
           "item_id": "adamantite_armor",
-          "price": 20,
+          "price": 60,
           "stock": 1,
           "requirements": {
             "all": [

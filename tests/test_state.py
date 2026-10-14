@@ -1712,6 +1712,7 @@ class StateTests(unittest.TestCase):
             {
                 "id": "ice_iron_greatsword",
                 "name": "氷鉄の大剣",
+                "slot": "weapon",
                 "description": "冷気を帯びた大剣。",
                 "combat": {
                     "kind": "weapon",
@@ -1750,6 +1751,7 @@ class StateTests(unittest.TestCase):
             {
                 "name": "氷鉄の大剣",
                 "quantity": 1,
+                "slot": "weapon",
                 "combat": {
                     "kind": "weapon",
                     "name": "氷鉄の大剣",
@@ -2048,7 +2050,7 @@ class StateTests(unittest.TestCase):
 
                 shop = next(shop for shop in pack["shops"] if shop["id"] == "forge_shop")
                 armor = next(item for item in shop["items"] if item["item_id"] == "adamantite_armor")
-                self.assertEqual((armor["price"], armor["stock"]), (20, 1))
+                self.assertEqual((armor["price"], armor["stock"]), (60, 1))
                 self.assertEqual(all_actions["open_forge_shop"]["open_shop"], "forge_shop")
 
     def test_dragon_rpg_robin_quest_has_an_executable_route_to_goblin_fort(self):
@@ -2203,7 +2205,7 @@ class StateTests(unittest.TestCase):
         session = state.load_session(public["id"])
         accepted, reason = state.commit_world_position(session, location_id="forge")
         self.assertTrue(accepted, reason)
-        session["character"]["gold"] = 50
+        session["character"]["gold"] = 100
         session["character"]["attributes"]["end"] = 10
         session["choices"] = current_action_choices(session)
 
@@ -2263,7 +2265,7 @@ class StateTests(unittest.TestCase):
 
         from host.shops import trade
         trade(session, "forge_shop", "adamantite_armor", 1)
-        self.assertEqual(session["character"]["gold"], 30)
+        self.assertEqual(session["character"]["gold"], 40)
         self.assertTrue(
             any(item.get("name") == "アダマンタイトの鎧" for item in session["character"]["inventory"])
         )

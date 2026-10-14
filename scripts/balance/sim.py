@@ -179,6 +179,7 @@ def prepare_session(pack: dict[str, Any], encounter: str, character_id: str,
                 session["character"][key] = deepcopy(entry[key])
         session["completed_milestones"] = deepcopy(entry.get("completed_milestones", []))
         session["companion"] = deepcopy(entry["companion"])
+        state._merge_inventory_catalog(session["character"]["inventory"], pack)
         state._normalize_character(session["character"])
     if skill_variant not in {"none", "A"}:
         raise ValueError("Unknown skill variant")

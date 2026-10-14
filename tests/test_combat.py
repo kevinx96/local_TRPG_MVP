@@ -204,6 +204,7 @@ class CombatEngineTests(unittest.TestCase):
             "attributes": {},
             "inventory": [{
                 "name": "呪われた聖杖",
+                "slot": "weapon",
                 "quantity": 1,
                 "combat": {"kind": "equipment", "extra_actions_per_round": 1},
             }],
@@ -315,6 +316,7 @@ class CombatEngineTests(unittest.TestCase):
             "inventory": [{
                 "id": "mage_robe",
                 "name": "mage robe",
+                "slot": "armor",
                 "quantity": 1,
                 "combat": {"kind": "equipment", "cost_reduction": {"mp": 1}},
             }],

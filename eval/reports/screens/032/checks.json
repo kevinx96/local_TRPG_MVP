@@ -1,0 +1,19 @@
+[
+  {
+    "width": 1440,
+    "height": 1080,
+    "ok": true,
+    "checks": [
+      "three explicit slot labels",
+      "adamantite_armor: replacement button",
+      "ice_iron_greatsword: replacement button",
+      "ruby_charm: replacement button",
+      "inactive charm is not equippable",
+      "no horizontal overflow",
+      "replaced armor remains in inventory",
+      "new armor marked equipped",
+      "replacement log from engine",
+      "no browser exceptions"
+    ]
+  }
+]

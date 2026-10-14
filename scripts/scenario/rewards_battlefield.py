@@ -306,6 +306,8 @@ def upgrade(pack: dict[str, Any]) -> None:
             if loc["id"] in bonuses:
                 loc["combat"]["victory_gold_bonus"] = bonuses[loc["id"]]
     annotate_risks(pack)
+    from scripts.scenario.equipment_slots import apply as apply_slots
+    apply_slots(pack)
 
 
 def main() -> None:

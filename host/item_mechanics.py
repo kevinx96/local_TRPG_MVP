@@ -8,6 +8,26 @@ USABLE_ITEM_KINDS = {"heal", "restore", "damage", "flee", "status", "shrink"}
 EQUIPMENT_ITEM_KINDS = {"weapon", "armor", "equipment"}
 PASSIVE_ITEM_KINDS = {"passive"}
 SUPPORTED_ITEM_KINDS = USABLE_ITEM_KINDS | EQUIPMENT_ITEM_KINDS | PASSIVE_ITEM_KINDS | {"permanent"}
+EQUIPMENT_SLOTS = {"weapon", "armor", "accessory"}
+
+
+def item_slot(item: Any) -> str:
+    slot = item.get("slot") if isinstance(item, dict) else None
+    return slot if isinstance(slot, str) and slot in EQUIPMENT_SLOTS else ""
+
+
+def equipped_items(actor: dict[str, Any]) -> list[dict[str, Any]]:
+    inventory = [item for item in actor.get("inventory", []) if isinstance(item, dict)]
+    selected: list[dict[str, Any]] = []
+    slots: set[str] = set()
+    for value in reversed(actor.get("equipment") or []):
+        item = next((item for item in inventory if value in {item.get("id"), item.get("name")}), None)
+        slot = item_slot(item)
+        if not slot or slot in slots or _as_int(item.get("quantity"), 1) <= 0:
+            continue
+        selected.append(item)
+        slots.add(slot)
+    return list(reversed(selected))
 
 
 def item_combat_spec(item: Any) -> dict[str, Any]:
@@ -141,12 +161,8 @@ def effective_ability_cost(actor: dict[str, Any], ability: dict[str, Any]) -> in
 
 
 def equipped_item_specs(actor: dict[str, Any]) -> list[dict[str, Any]]:
-    equipped = set(str(value) for value in actor.get("equipment", []) if str(value))
     specs: list[dict[str, Any]] = []
-    for raw in actor.get("inventory", []) if isinstance(actor.get("inventory"), list) else []:
-        item = raw if isinstance(raw, dict) else {"name": str(raw)}
-        if str(item.get("name") or "") not in equipped and str(item.get("id") or "") not in equipped:
-            continue
+    for item in equipped_items(actor):
         spec = item_combat_spec(item)
         if spec:
             specs.append(spec)

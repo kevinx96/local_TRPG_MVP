@@ -861,6 +861,10 @@ def _should_skip_turn_narration(
 @llm_trace.game_trace
 def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
     result = combat_result_for_llm(session)
+    state_delta = consume_combat_state_delta(session)
+    if state_delta:
+        apply_state_delta(session, state_delta, allow_world_transition=True)
+        result = combat_result_for_llm(session)
     if result.get("outcome") == "victory":
         _record_obstacle_victory(session)
     player = result.get("player") if isinstance(result.get("player"), dict) else {}
