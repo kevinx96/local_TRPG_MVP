@@ -13856,7 +13856,7 @@
       "id": "oaksdawn_water_gate",
       "scene_id": "oaksdawn",
       "title": "オークスドーンの水門",
-      "description": "水路の出口は、鉄格子の水門で塞がれていた。格子の向こうから、鎧の擦れる音と誰何の声が響く。「止まれ！ 何者だ！」",
+      "description": "城塞の水門。鉄格子の向こうでは、洞窟から続く地下水路が暗く口を開けている。",
       "background_image": "/static/images/bg_cave_waterway.png",
       "npc_ids": [],
       "enemy_ids": [],
@@ -14014,7 +14014,7 @@
               "current_location": "oaksdawn_chapel"
             }
           ],
-          "result_text": "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。",
+          "result_text": "高い窓から朝の光が差し込む礼拝堂。祭壇の前には、死者を弔う白い花が供えられている。",
           "risk_source": "destination"
         },
         {
@@ -14062,7 +14062,7 @@
               "current_location": "oaksdawn_wall"
             }
           ],
-          "result_text": "城壁の上からは、南に霧の古戦場、東に白く凍りついた峠が見渡せる。",
+          "result_text": "城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の道は、崩れ落ちた大岩でふさがれている。",
           "risk_source": "destination"
         },
         {
@@ -14078,7 +14078,7 @@
               "current_location": "oaksdawn_water_gate"
             }
           ],
-          "result_text": "水路の出口は、鉄格子の水門で塞がれていた。格子の向こうから、鎧の擦れる音と誰何の声が響く。「止まれ！ 何者だ！」",
+          "result_text": "城塞の水門。鉄格子の向こうでは、洞窟から続く地下水路が暗く口を開けている。",
           "risk_source": "destination"
         }
       ],
@@ -14129,6 +14129,9 @@
       "entry_effects": [
         {
           "set_flag": "visited_oaksdawn"
+        },
+        {
+          "set_flag": "opened_oaksdawn_gate"
         }
       ]
     },
@@ -14154,7 +14157,7 @@
           "effects": [],
           "once": "greeted_walter",
           "hidden_after": "greeted_walter",
-          "result_text": "「森の水路を抜けてきたとは、物好きな冒険者だ。わしはヴァルター、暁の守護団の団長をしておる。……邪竜を討ちに行くのか。ならば一つ忠告しておこう。竜の谷の炎が本当にあの紅竜だけのものか、よく確かめることだ」",
+          "result_text": "「この砦まで辿り着くとは、物好きな冒険者だ。わしはヴァルター、暁の守護団の団長をしておる。……邪竜を討ちに行くのか。ならば一つ忠告しておこう。竜の谷の炎が本当にあの紅竜だけのものか、よく確かめることだ」",
           "risk_source": "action"
         },
         {
@@ -14255,7 +14258,7 @@
       "id": "oaksdawn_chapel",
       "scene_id": "oaksdawn",
       "title": "暁の礼拝堂",
-      "description": "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。",
+      "description": "高い窓から朝の光が差し込む礼拝堂。祭壇の前には、死者を弔う白い花が供えられている。",
       "background_image": "/static/images/bg_oaksdawn_chapel.png",
       "npc_ids": [
         "liese"
@@ -14286,11 +14289,11 @@
         },
         {
           "id": "talk_liese",
-          "text": "女騎士に話しかける",
+          "text": "祈りを捧げる女騎士に話しかける",
           "preview": "",
           "risk": "判定不要",
           "intent_keywords": [
-            "女騎士に話しかける"
+            "祈りを捧げる女騎士に話しかける"
           ],
           "effects": [],
           "once": "met_liese",
@@ -14442,7 +14445,7 @@
           }
         },
         {
-          "text": "女騎士に話しかける",
+          "text": "祈りを捧げる女騎士に話しかける",
           "preview": "",
           "risk": "判定不要",
           "once": "met_liese",
@@ -14512,6 +14515,14 @@
         "enemy_ids": [],
         "auto_start": false
       },
+      "description_variants": [
+        {
+          "requirements": {
+            "not_flag": "recruited_liese"
+          },
+          "text": "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。"
+        }
+      ],
       "npc_requirements": {
         "liese": {
           "not_flag": "recruited_liese"
@@ -14643,7 +14654,7 @@
           "effects": [],
           "once": "heard_pass_rumor",
           "hidden_after": "heard_pass_rumor",
-          "result_text": "「東の峠が、季節外れの霜で閉ざされちまった。夜中に、白くてでかい影が谷の方へ飛んでいくのを見たって奴もいる」",
+          "result_text": "「東の峠が、ひと晩で崩れた岩に塞がれちまった。その夜、白くてでかい影が谷の方へ飛んでいくのを見たって奴もいる」",
           "risk_source": "action"
         },
         {
@@ -14697,7 +14708,7 @@
       "id": "oaksdawn_wall",
       "scene_id": "oaksdawn",
       "title": "城壁の見張り台",
-      "description": "城壁の上からは、南に霧の古戦場、東に白く凍りついた峠が見渡せる。",
+      "description": "城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の道は、崩れ落ちた大岩でふさがれている。",
       "background_image": "/static/images/bg_oaksdawn_wall.png",
       "npc_ids": [],
       "enemy_ids": [],
@@ -14728,7 +14739,7 @@
           ],
           "effects": [],
           "enabled": false,
-          "disabled_reason": "峠は霜で閉ざされていて、今は通れない。",
+          "disabled_reason": "峠は崩れた大岩で塞がれていて、今は通れない。",
           "requirements": {},
           "risk_source": "action"
         },
@@ -14760,7 +14771,7 @@
           "preview": "",
           "risk": "判定不要",
           "enabled": false,
-          "disabled_reason": "峠は霜で閉ざされていて、今は通れない。",
+          "disabled_reason": "峠は崩れた大岩で塞がれていて、今は通れない。",
           "requirements": {}
         },
         {
@@ -14995,6 +15006,11 @@
       "name": "鍛冶師ブリギッテ",
       "description": "分厚い前掛けの女鍛冶師",
       "image": "/static/images/npc_brigitte.png"
+    },
+    {
+      "id": "oaksdawn_priest",
+      "name": "礼拝堂の老司祭",
+      "description": "暁の礼拝堂を守る老司祭。"
     }
   ],
   "items": [
@@ -18692,10 +18708,12 @@
     {
       "id": "oaksdawn_chapel_shop",
       "location_id": "oaksdawn_chapel",
-      "keeper_npc": "liese",
+      "keeper_npc": "oaksdawn_priest",
       "title": "暁の礼拝堂",
       "buys": false,
-      "poor_line": "金が足りん。",
+      "greeting": "死者の弔いに、聖水をお持ちなさい。",
+      "buy_line": "光のご加護がありますように。",
+      "poor_line": "……お代が少し足りないようですな。",
       "items": [
         {
           "item_id": "holy_water",
@@ -18710,7 +18728,9 @@
       "keeper_npc": "brigitte",
       "title": "城塞工房",
       "buys": false,
-      "poor_line": "金が足りん。",
+      "greeting": "守護団の鎧なら任せな。体に合わせて仕立ててやるよ",
+      "buy_line": "毎度。きつかったら言いな、すぐ詰め直してやる",
+      "poor_line": "金が足りないね。出直してきな",
       "items": [
         {
           "item_id": "guardian_chainmail",
@@ -20026,7 +20046,7 @@
           "location_ids": [
             "oaksdawn_water_gate"
           ],
-          "description": "水路の出口は、鉄格子の水門で塞がれていた。格子の向こうから、鎧の擦れる音と誰何の声が響く。「止まれ！ 何者だ！」"
+          "description": "城塞の水門。鉄格子の向こうでは、洞窟から続く地下水路が暗く口を開けている。"
         },
         {
           "id": "G1",
@@ -20059,7 +20079,7 @@
           "location_ids": [
             "oaksdawn_chapel"
           ],
-          "description": "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。"
+          "description": "高い窓から朝の光が差し込む礼拝堂。祭壇の前には、死者を弔う白い花が供えられている。"
         },
         {
           "id": "G4",
@@ -20092,7 +20112,7 @@
           "location_ids": [
             "oaksdawn_wall"
           ],
-          "description": "城壁の上からは、南に霧の古戦場、東に白く凍りついた峠が見渡せる。"
+          "description": "城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の道は、崩れ落ちた大岩でふさがれている。"
         }
       ],
       "edges": [

@@ -70,11 +70,11 @@ try {
       check(await evaluate("els.messageText.textContent.includes('銀の鎧')"), "authored chapel narration");
     }
     if (view === "wall") {
-      check(await evaluate("(() => { const choice = state.session.choices.find(c=>c.action_id==='oaksdawn_east_pass'); return choice.visibility==='known' && !choice.enabled && choice.text==='東の峠へ向かう' && choice.disabled_reason==='峠は霜で閉ざされていて、今は通れない。'; })()"), "eastern pass known and disabled with exact reason");
+      check(await evaluate("(() => { const choice = state.session.choices.find(c=>c.action_id==='oaksdawn_east_pass'); return choice.visibility==='known' && !choice.enabled && choice.text==='東の峠へ向かう' && choice.disabled_reason==='峠は崩れた大岩で塞がれていて、今は通れない。'; })()"), "eastern pass known and disabled with exact reason");
       check(await evaluate("document.querySelector('[data-action-id=oaksdawn_east_pass]').textContent.includes('東の峠へ向かう')"), "eastern pass label is not redacted");
       const point = await evaluate("(() => {const r=document.querySelector('[data-action-id=oaksdawn_east_pass]').getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2};})()");
       await cdp("Input.dispatchMouseEvent", { type: "mouseMoved", ...point });
-      await waitFor("els.choiceDescription.textContent.includes('峠は霜で閉ざされていて、今は通れない。')");
+      await waitFor("els.choiceDescription.textContent.includes('峠は崩れた大岩で塞がれていて、今は通れない。')");
       check(await evaluate("els.choiceDescription.getClientRects().length > 0"), "blocked reason visibly rendered");
     }
     if (view === "battle") {

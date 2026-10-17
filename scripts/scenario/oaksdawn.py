@@ -11,16 +11,19 @@ from .upgrade_forest import upsert
 UNDEAD = ("skeleton_soldier", "ghoul", "wraith", "grave_knight", "ash_wraith", "xanxus_phantom", "zebok")
 CLUES = ("heard_guardian_refusal", "heard_pass_rumor")
 RECRUIT_PREVIEW = "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）"
+# Shown when arriving from the cave for the first time, and to the model while Liese still prays in the chapel.
+GATE_CHALLENGE = "水路の出口は、鉄格子の水門で塞がれていた。格子の向こうから、鎧の擦れる音と誰何の声が響く。「止まれ！ 何者だ！」"
+CHAPEL_WITH_LIESE = "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。"
 LIESE_DESCRIPTION = "暁の守護団の若き聖騎士。毎ラウンド開始時、プレイヤーのHPが半分未満なら「癒しの祈り」で最大HPの25%を回復し、そうでなければ「聖光の一撃」で敵へ2d3の光属性ダメージを与える（不死の敵を優先して狙う）。"
 DESCRIPTIONS = {
     "cave_waterway": ("地底の水路", "温泉の湯は細い水路となって、岩の奥へ流れていく。水音を頼りに進むと、壁に古い騎士団の紋章――樫の葉と昇る太陽――が刻まれていた。"),
-    "oaksdawn_water_gate": ("オークスドーンの水門", "水路の出口は、鉄格子の水門で塞がれていた。格子の向こうから、鎧の擦れる音と誰何の声が響く。「止まれ！ 何者だ！」"),
+    "oaksdawn_water_gate": ("オークスドーンの水門", "城塞の水門。鉄格子の向こうでは、洞窟から続く地下水路が暗く口を開けている。"),
     "oaksdawn_square": ("城塞の大通り", "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。"),
     "oaksdawn_hq": ("守護団本営", "地図と剣が並ぶ質素な広間。白髪の老騎士――守護団長ヴァルターが、卓上の地図から顔を上げた。"),
-    "oaksdawn_chapel": ("暁の礼拝堂", "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。"),
+    "oaksdawn_chapel": ("暁の礼拝堂", "高い窓から朝の光が差し込む礼拝堂。祭壇の前には、死者を弔う白い花が供えられている。"),
     "oaksdawn_workshop": ("城塞工房", "炉の熱と槌の音が響く工房。分厚い前掛けの女鍛冶師が、白銀の剣に光の紋を刻んでいる。"),
     "oaksdawn_inn": ("樫の葉亭", "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが、干し肉をかじりながら峠の噂話をしている。"),
-    "oaksdawn_wall": ("城壁の見張り台", "城壁の上からは、南に霧の古戦場、東に白く凍りついた峠が見渡せる。"),
+    "oaksdawn_wall": ("城壁の見張り台", "城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の道は、崩れ落ちた大岩でふさがれている。"),
 }
 
 
@@ -46,7 +49,7 @@ def apply(pack: dict[str, Any]) -> None:
         return action(identifier, text, [{"current_location": destination}], **extra)
 
     upsert(locations["cave_hot_spring"]["actions"], travel("follow_hot_spring_water", "湯の流れを辿る", "cave_waterway"))
-    locations["cave_waterway"]["actions"] = [travel("waterway_to_gate", "水路の先へ進む", "oaksdawn_water_gate"),
+    locations["cave_waterway"]["actions"] = [travel("waterway_to_gate", "水路の先へ進む", "oaksdawn_water_gate", result_text=GATE_CHALLENGE),
         travel("waterway_to_spring", "温泉へ戻る", "cave_hot_spring")]
     gate = locations["oaksdawn_water_gate"]
     gate["actions"] = [
@@ -56,11 +59,12 @@ def apply(pack: dict[str, Any]) -> None:
         travel("enter_oaksdawn", "城塞へ入る", "oaksdawn_square", visible_after="opened_oaksdawn_gate"),
         travel("gate_back_before", "水路を戻る", "cave_waterway", hidden_after="opened_oaksdawn_gate", requirements={"not_flag": "opened_oaksdawn_gate"}),
         travel("gate_back", "水路へ戻る", "cave_waterway", visible_after="opened_oaksdawn_gate")]
-    # TODO(design): 水門開通後とリーゼ加入後の地点説明は未提供。定稿の初回説明を保持。
     destinations = [("hq", "守護団本営へ向かう"), ("chapel", "暁の礼拝堂へ向かう"), ("workshop", "城塞工房へ向かう"),
                     ("inn", "樫の葉亭へ向かう"), ("wall", "城壁の見張り台へ上る"), ("water_gate", "水門へ向かう")]
     locations["oaksdawn_square"]["actions"] = [travel(f"square_to_{suffix}", text, f"oaksdawn_{suffix}") for suffix, text in destinations]
-    locations["oaksdawn_square"]["entry_effects"] = [{"set_flag": "visited_oaksdawn"}]
+    # Reaching the square by any road means the guards know you; the water gate is then just a passage.
+    locations["oaksdawn_square"]["entry_effects"] = [{"set_flag": "visited_oaksdawn"}, {"set_flag": "opened_oaksdawn_gate"}]
+    locations["oaksdawn_chapel"]["description_variants"] = [{"requirements": {"not_flag": "recruited_liese"}, "text": CHAPEL_WITH_LIESE}]
     for suffix in ("hq", "chapel", "workshop", "inn", "wall"):
         locations[f"oaksdawn_{suffix}"]["actions"] = [travel(f"{suffix}_to_square", "大通りへ戻る", "oaksdawn_square")]
 
@@ -72,7 +76,7 @@ def apply(pack: dict[str, Any]) -> None:
         locations[f"oaksdawn_{suffix}"].update(npc_ids=[identifier], portrait_image=f"/static/images/npc_{identifier}.png")
     locations["oaksdawn_hq"]["actions"][:0] = [
         action("greet_walter", "団長に挨拶する", once="greeted_walter", hidden_after="greeted_walter",
-               result_text="「森の水路を抜けてきたとは、物好きな冒険者だ。わしはヴァルター、暁の守護団の団長をしておる。……邪竜を討ちに行くのか。ならば一つ忠告しておこう。竜の谷の炎が本当にあの紅竜だけのものか、よく確かめることだ」"),
+               result_text="「この砦まで辿り着くとは、物好きな冒険者だ。わしはヴァルター、暁の守護団の団長をしておる。……邪竜を討ちに行くのか。ならば一つ忠告しておこう。竜の谷の炎が本当にあの紅竜だけのものか、よく確かめることだ」"),
         action("ask_guardian_refusal", "十年前の遠征について聞く", once="heard_guardian_refusal", hidden_after="heard_guardian_refusal", visible_after="greeted_walter",
                result_text="「十年前、将軍ドラコは竜の谷への出兵を命じた。我ら守護団は盟約を理由にそれを拒み、それ以来、王都からは見捨てられた砦よ。あの時に谷へ向かった兵は、一人も帰ってこなかった」"),
         action("request_guardian_letter", "推薦状を願い出る", [{"add_item": {"id": "guardian_letter", "name": "守護団の推薦状", "quantity": 1}}],
@@ -89,7 +93,7 @@ def apply(pack: dict[str, Any]) -> None:
     chapel["actions"][:0] = [
         action("pray_oaksdawn", "祈りを捧げてもらう", [{"gold_change": -5}, {"restore_full": True}], requirements={"gold_gte": 5},
                result_text="祭壇の前で目を閉じると、温かな光が体を包み、疲れが消えていった。"),
-        action("talk_liese", "女騎士に話しかける", once="met_liese", hidden_after="met_liese",
+        action("talk_liese", "祈りを捧げる女騎士に話しかける", once="met_liese", hidden_after="met_liese",
                result_text="「私はリーゼ。暁の守護団の聖騎士です。……南の古戦場から、夜ごと弔いの鐘が聞こえるのです。死者がまだ眠れずにいる。いつか、確かめに行かなければ」"),
         action("recruit_liese_letter", "守護団の推薦状を見せる", deepcopy(recruit), **common,
                requirements={"all": [{"has_item": "守護団の推薦状"}, {"not_flag": "recruited_liese"}]},
@@ -114,18 +118,25 @@ def apply(pack: dict[str, Any]) -> None:
         action("rest_oaksdawn", "宿で休む", [{"gold_change": -10}, {"restore_full": True}], requirements={"gold_gte": 10},
                result_text="樫の香りのする寝台で、久しぶりにぐっすりと眠った。"),
         action("ask_oaksdawn_rumor", "噂話を聞く", once="heard_pass_rumor", hidden_after="heard_pass_rumor",
-               result_text="「東の峠が、季節外れの霜で閉ざされちまった。夜中に、白くてでかい影が谷の方へ飛んでいくのを見たって奴もいる」")]
+               result_text="「東の峠が、ひと晩で崩れた岩に塞がれちまった。その夜、白くてでかい影が谷の方へ飛んでいくのを見たって奴もいる」")]
     locations["oaksdawn_inn"]["actions"][0]["preview"] = "10G"
     locations["oaksdawn_wall"]["actions"][:0] = [
         travel("oaksdawn_to_battlefield", "城塞の街道を南へ下る", "old_battlefield",
                result_text="城門を出て街道を南へ下ると、やがて白い霧が足元から立ちのぼってきた。"),
-        action("oaksdawn_east_pass", "東の峠へ向かう", enabled=False, disabled_reason="峠は霜で閉ざされていて、今は通れない。", requirements={})]
+        action("oaksdawn_east_pass", "東の峠へ向かう", enabled=False, disabled_reason="峠は崩れた大岩で塞がれていて、今は通れない。", requirements={})]
     upsert(locations["old_battlefield"]["actions"], travel("battlefield_to_oaksdawn", "城塞の街道を北へ向かう", "oaksdawn_square"))
-    for suffix, npc, item, price in [("chapel", "liese", "holy_water", 12), ("workshop", "brigitte", "guardian_chainmail", 40)]:
-        # TODO(design): 店舗専用の挨拶・購入台詞は未提供。既存商店UIの汎用表示を使用。
+    # The chapel shop is kept by an old priest, so it still makes sense after Liese joins the party.
+    upsert(pack["npcs"], dict(id="oaksdawn_priest", name="礼拝堂の老司祭", description="暁の礼拝堂を守る老司祭。"))
+    shop_lines = {
+        "chapel": ("oaksdawn_priest", "holy_water", 12, "死者の弔いに、聖水をお持ちなさい。", "光のご加護がありますように。",
+                   "……お代が少し足りないようですな。"),
+        "workshop": ("brigitte", "guardian_chainmail", 40, "守護団の鎧なら任せな。体に合わせて仕立ててやるよ", "毎度。きつかったら言いな、すぐ詰め直してやる",
+                     "金が足りないね。出直してきな"),
+    }
+    for suffix, (npc, item, price, greeting, buy_line, poor_line) in shop_lines.items():
         upsert(pack["shops"], dict(id=f"oaksdawn_{suffix}_shop", location_id=f"oaksdawn_{suffix}", keeper_npc=npc,
-                                  title=locations[f"oaksdawn_{suffix}"]["title"], buys=False, poor_line="金が足りん。",
-                                  items=[dict(item_id=item, price=price, stock=None)]))
+                                  title=locations[f"oaksdawn_{suffix}"]["title"], buys=False, greeting=greeting,
+                                  buy_line=buy_line, poor_line=poor_line, items=[dict(item_id=item, price=price, stock=None)]))
     upsert(pack["companions"], dict(id="paladin_liese", name="聖騎士リーゼ", image="/static/images/npc_liese.png",
         description=LIESE_DESCRIPTION, round_start_effects=[
             dict(kind="heal_player", name="癒しの祈り", max_hp_ratio=.25, requirements={"player_hp_ratio_lt": .5}),

@@ -135,11 +135,12 @@ class OaksdawnTests(unittest.TestCase):
         blocked = next(c for c in self.choices(session) if c.get("action_id") == "oaksdawn_east_pass")
         self.assertEqual(blocked["text"], "東の峠へ向かう")
         self.assertEqual(blocked["visibility"], "known")
-        self.assertEqual(blocked["disabled_reason"], "峠は霜で閉ざされていて、今は通れない。")
+        self.assertEqual(blocked["disabled_reason"], "峠は崩れた大岩で塞がれていて、今は通れない。")
         self.assertFalse(blocked["enabled"])
         self.resolve(session, "oaksdawn_to_battlefield")
         self.assertEqual(north()["risk"], "判定不要")
-        self.assertFalse(session["flags"].get("opened_oaksdawn_gate"))
+        # Arriving by road makes the guards know you, so the water gate opens without the first challenge.
+        self.assertTrue(session["flags"].get("opened_oaksdawn_gate"))
         for map_id in ("sealed_cave", "old_battlefield"):
             map_data = next(m for m in maps.public_maps(session)["maps"] if m["id"] == map_id)
             city = next(n for n in map_data["nodes"] if n["id"] == "oaksdawn")

@@ -2065,7 +2065,7 @@
         "client/images/bg_inn.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false
+      "approved": true
     },
     {
       "task": "033",
@@ -2091,7 +2091,7 @@
         "client/images/bg_inn.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false
+      "approved": true
     },
     {
       "task": "033",
@@ -2117,7 +2117,7 @@
         "client/images/bg_inn.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false
+      "approved": true
     },
     {
       "task": "033",
@@ -2156,7 +2156,7 @@
         "client/images/bg_inn.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false
+      "approved": true
     },
     {
       "task": "033",
@@ -2169,7 +2169,7 @@
         "client/images/bg_inn.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false
+      "approved": true
     },
     {
       "task": "033",
@@ -2220,7 +2220,7 @@
         "client/images/npc_blacksmith.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false
+      "approved": true
     },
     {
       "task": "033",
@@ -2244,7 +2244,7 @@
         "client/images/npc_blacksmith.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false
+      "approved": true
     },
     {
       "task": "033",
@@ -2268,7 +2268,7 @@
         "client/images/npc_blacksmith.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false
+      "approved": true
     },
     {
       "task": "033",
@@ -2308,7 +2308,7 @@
         "client/images/bg_inn.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "source_candidate": "assets/candidates/033/bg_oaksdawn_square/candidate_01.png",
       "preview_only": true
     },
@@ -2323,7 +2323,7 @@
         "client/images/bg_inn.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "source_candidate": "assets/candidates/033/bg_oaksdawn_hq/candidate_01.png",
       "preview_only": true
     },
@@ -2338,7 +2338,7 @@
         "client/images/bg_inn.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "source_candidate": "assets/candidates/033/bg_oaksdawn_chapel/candidate_01.png",
       "preview_only": true
     },
@@ -2353,8 +2353,8 @@
         "client/images/bg_inn.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false,
-      "source_candidate": "assets/candidates/033/bg_oaksdawn_workshop/candidate_01.png",
+      "approved": true,
+      "source_candidate": "assets/candidates/033/bg_oaksdawn_workshop/candidate_02.png",
       "preview_only": true
     },
     {
@@ -2368,7 +2368,7 @@
         "client/images/bg_inn.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "source_candidate": "assets/candidates/033/bg_oaksdawn_inn/candidate_01.png",
       "preview_only": true
     },
@@ -2397,7 +2397,7 @@
         "client/images/npc_blacksmith.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "source_candidate": "assets/candidates/033/npc_walter/candidate_01.png",
       "preview_only": true
     },
@@ -2411,7 +2411,7 @@
         "client/images/npc_blacksmith.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "source_candidate": "assets/candidates/033/npc_liese/candidate_01.png",
       "preview_only": true
     },
@@ -2425,7 +2425,7 @@
         "client/images/npc_blacksmith.png"
       ],
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "source_candidate": "assets/candidates/033/npc_brigitte/candidate_01.png",
       "preview_only": true
     }
@@ -2964,7 +2964,7 @@
       "selected_candidate": "assets/candidates/033/bg_cave_waterway/candidate_01.png",
       "approved": false,
       "preview_only": true,
-      "selection_reason": "工程按编号01提供运行预览，不作审美取舍；TODO(design): 最终选图由设计负责人决定。"
+      "selection_reason": "设计负责人：暂用预览。墙上视野有雪景（与改为落石的设定冲突）／水路过于宏大，034 重新生成。"
     },
     {
       "task": "033",
@@ -2975,9 +2975,9 @@
         "assets/candidates/033/bg_oaksdawn_square/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/033/bg_oaksdawn_square/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "工程按编号01提供运行预览，不作审美取舍；TODO(design): 最终选图由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：城门后升起的太阳与太阳旗"
     },
     {
       "task": "033",
@@ -2988,9 +2988,9 @@
         "assets/candidates/033/bg_oaksdawn_hq/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/033/bg_oaksdawn_hq/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "工程按编号01提供运行预览，不作审美取舍；TODO(design): 最终选图由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：墙上的地图和长桌最清楚"
     },
     {
       "task": "033",
@@ -3001,9 +3001,9 @@
         "assets/candidates/033/bg_oaksdawn_chapel/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/033/bg_oaksdawn_chapel/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "工程按编号01提供运行预览，不作审美取舍；TODO(design): 最终选图由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：祭坛清楚，装饰比 02 克制"
     },
     {
       "task": "033",
@@ -3013,10 +3013,10 @@
         "assets/candidates/033/bg_oaksdawn_workshop/candidate_01.png",
         "assets/candidates/033/bg_oaksdawn_workshop/candidate_02.png"
       ],
-      "selected_candidate": "assets/candidates/033/bg_oaksdawn_workshop/candidate_01.png",
-      "approved": false,
+      "selected_candidate": "assets/candidates/033/bg_oaksdawn_workshop/candidate_02.png",
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "工程按编号01提供运行预览，不作审美取舍；TODO(design): 最终选图由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：白银剑上发光的纹路最清楚"
     },
     {
       "task": "033",
@@ -3027,9 +3027,9 @@
         "assets/candidates/033/bg_oaksdawn_inn/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/033/bg_oaksdawn_inn/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "工程按编号01提供运行预览，不作审美取舍；TODO(design): 最终选图由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：樫木梁与休息的守护团员"
     },
     {
       "task": "033",
@@ -3042,7 +3042,7 @@
       "selected_candidate": "assets/candidates/033/bg_oaksdawn_wall/candidate_01.png",
       "approved": false,
       "preview_only": true,
-      "selection_reason": "工程按编号01提供运行预览，不作审美取舍；TODO(design): 最终选图由设计负责人决定。"
+      "selection_reason": "设计负责人：暂用预览。墙上视野有雪景（与改为落石的设定冲突）／水路过于宏大，034 重新生成。"
     },
     {
       "task": "033",
@@ -3053,9 +3053,9 @@
         "assets/candidates/033/npc_walter/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/033/npc_walter/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "工程按编号01提供运行预览，不作审美取舍；TODO(design): 最终选图由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：剑尖朝下立着，太阳纹章披风，威严"
     },
     {
       "task": "033",
@@ -3066,9 +3066,9 @@
         "assets/candidates/033/npc_liese/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/033/npc_liese/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "工程按编号01提供运行预览，不作审美取舍；TODO(design): 最终选图由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：披风更完整"
     },
     {
       "task": "033",
@@ -3079,9 +3079,9 @@
         "assets/candidates/033/npc_brigitte/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/033/npc_brigitte/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "工程按编号01提供运行预览，不作审美取舍；TODO(design): 最终选图由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：铁锤与完整的前掛け"
     }
   ],
   "todo_design": [
