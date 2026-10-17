@@ -1,0 +1,256 @@
+[
+  {
+    "task": "033",
+    "id": "bg_cave_waterway",
+    "file": "assets/candidates/033/bg_cave_waterway/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_cave_waterway, candidate 01. Primary request: 温泉の湯が流れる地下水路、壁の騎士団紋章（樫の葉と昇る太陽）。A narrow underground stone waterway carrying warm hot-spring water deeper through natural rock, an old knightly emblem of oak leaves and a rising sun carved in the wall. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy environments, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 background composition, readable environment for a visual novel. No foreground characters, no text, letters, UI, watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_cave_waterway",
+    "file": "assets/candidates/033/bg_cave_waterway/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_cave_waterway, candidate 02. Primary request: 温泉の湯が流れる地下水路、壁の騎士団紋章（樫の葉と昇る太陽）。Narrow rock waterway carrying hot-spring water, an old oak-leaf and rising-sun knight emblem carved in the rock wall. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 2: alternate viewpoint or pose of the same described subject. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_oaksdawn_square",
+    "file": "assets/candidates/033/bg_oaksdawn_square/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_square, candidate 01. Primary request: 樫と石の城塞都市の大通り、白い外套の兵士、昇る太陽の旗。Cobblestone main street flanked by oak-timber barracks and workshops, white-cloaked guards on stone walls watching an eastern pass, rising-sun headquarters banner. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 1: balanced frontal view. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_oaksdawn_square",
+    "file": "assets/candidates/033/bg_oaksdawn_square/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_square, candidate 02. Primary request: 樫と石の城塞都市の大通り、白い外套の兵士、昇る太陽の旗。Cobblestone main street flanked by oak-timber barracks and workshops, white-cloaked guards on stone walls watching an eastern pass, rising-sun headquarters banner. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 2: alternate viewpoint or pose of the same described subject. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_oaksdawn_hq",
+    "file": "assets/candidates/033/bg_oaksdawn_hq/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_hq, candidate 01. Primary request: 守護団本営。地図と剣が並ぶ質素な広間。A modest knightly headquarters hall with maps and swords and a map on the table; oak and rising sun insignia. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 1: balanced frontal view. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_oaksdawn_hq",
+    "file": "assets/candidates/033/bg_oaksdawn_hq/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_hq, candidate 02. Primary request: 守護団本営。地図と剣が並ぶ質素な広間。A modest knightly headquarters hall with maps and swords and a map on the table; oak and rising sun insignia. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 2: alternate viewpoint or pose of the same described subject. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_oaksdawn_chapel",
+    "file": "assets/candidates/033/bg_oaksdawn_chapel/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_chapel, candidate 01. Primary request: 暁の礼拝堂。高い窓から朝の光が差し込む礼拝堂、祭壇。Chapel with high windows admitting morning light, altar. Leave foreground clear for separate NPC portrait. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 1: balanced frontal view. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_oaksdawn_chapel",
+    "file": "assets/candidates/033/bg_oaksdawn_chapel/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_chapel, candidate 02. Primary request: 暁の礼拝堂。高い窓から朝の光が差し込む礼拝堂、祭壇。Chapel with high windows admitting morning light, altar. Leave foreground clear for separate NPC portrait. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 2: alternate viewpoint or pose of the same described subject. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_oaksdawn_workshop",
+    "file": "assets/candidates/033/bg_oaksdawn_workshop/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_workshop, candidate 01. Primary request: 城塞工房。炉の熱と槌の音が響く工房。白銀の剣に光の紋。Fortress smithy with furnace, anvils and a silver-white sword being engraved with a light emblem; leave foreground clear for separate NPC portrait. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 1: balanced frontal view. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_oaksdawn_workshop",
+    "file": "assets/candidates/033/bg_oaksdawn_workshop/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_workshop, candidate 02. Primary request: 城塞工房。炉の熱と槌の音が響く工房。白銀の剣に光の紋。Fortress smithy with furnace, anvils and a silver-white sword being engraved with a light emblem; leave foreground clear for separate NPC portrait. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 2: alternate viewpoint or pose of the same described subject. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_oaksdawn_inn",
+    "file": "assets/candidates/033/bg_oaksdawn_inn/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_inn, candidate 01. Primary request: 樫の葉亭。樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが、干し肉をかじりながら峠の噂話をしている。Oak-beamed tavern and inn, off-duty white-cloaked guardians eating dried meat and talking. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 1: balanced frontal view. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_oaksdawn_inn",
+    "file": "assets/candidates/033/bg_oaksdawn_inn/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_inn, candidate 02. Primary request: 樫の葉亭。樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが、干し肉をかじりながら峠の噂話をしている。Oak-beamed tavern and inn, off-duty white-cloaked guardians eating dried meat and talking. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 2: alternate viewpoint or pose of the same described subject. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_oaksdawn_wall",
+    "file": "assets/candidates/033/bg_oaksdawn_wall/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_wall, candidate 01. Primary request: 城壁の見張り台。城壁の上からは、南に霧の古戦場、東に白く凍りついた峠が見渡せる。View from fortress stone battlements overlooking misty old battlefield to the south and frost-covered mountain pass to the east. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 1: balanced frontal view. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "bg_oaksdawn_wall",
+    "file": "assets/candidates/033/bg_oaksdawn_wall/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_wall, candidate 02. Primary request: 城壁の見張り台。城壁の上からは、南に霧の古戦場、東に白く凍りついた峠が見渡せる。View from fortress stone battlements overlooking misty old battlefield to the south and frost-covered mountain pass to the east. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 2: alternate viewpoint or pose of the same described subject. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/bg_festival_town.png",
+      "client/images/bg_forge.png",
+      "client/images/bg_inn.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "npc_walter",
+    "file": "assets/candidates/033/npc_walter/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel standing NPC sprite, npc_walter, candidate 01. Primary request: 守護団長ヴァルター。白髪の老騎士、白い外套、樫と太陽の紋章。Elderly white-haired knight commander in white cloak bearing oak-leaf and rising-sun insignia. Style: match the viewed project references npc_robin.png and npc_blacksmith.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Portrait 2:3 composition, entire character and all weapons/tools from head to boots fully visible with safe margins. Actual transparent background with clean alpha, no ground plane, no shadow rectangle, no scenery, no white matte. Candidate 1: balanced frontal view. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/npc_robin.png",
+      "client/images/npc_blacksmith.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "npc_walter",
+    "file": "assets/candidates/033/npc_walter/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel standing NPC sprite, npc_walter, candidate 02. Primary request: 守護団長ヴァルター。白髪の老騎士、白い外套、樫と太陽の紋章。Elderly white-haired knight commander in white cloak bearing oak-leaf and rising-sun insignia. Style: match the viewed project references npc_robin.png and npc_blacksmith.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Portrait 2:3 composition, entire character and all weapons/tools from head to boots fully visible with safe margins. Actual transparent background with clean alpha, no ground plane, no shadow rectangle, no scenery, no white matte. Candidate 2: alternate viewpoint or pose of the same described subject. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/npc_robin.png",
+      "client/images/npc_blacksmith.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "npc_liese",
+    "file": "assets/candidates/033/npc_liese/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel standing NPC sprite, npc_liese, candidate 01. Primary request: 聖騎士リーゼ。銀の鎧の若い女性聖騎士、白い外套、片手剣と小盾、穏やかだが芯の強い表情。Young adult woman paladin in silver armor and white cloak, one-handed sword and small shield, gentle but resolute expression. Style: match the viewed project references npc_robin.png and npc_blacksmith.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Portrait 2:3 composition, entire character and all weapons/tools from head to boots fully visible with safe margins. Actual transparent background with clean alpha, no ground plane, no shadow rectangle, no scenery, no white matte. Candidate 1: balanced frontal view. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/npc_robin.png",
+      "client/images/npc_blacksmith.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "npc_liese",
+    "file": "assets/candidates/033/npc_liese/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel standing NPC sprite, npc_liese, candidate 02. Primary request: 聖騎士リーゼ。銀の鎧の若い女性聖騎士、白い外套、片手剣と小盾、穏やかだが芯の強い表情。Young adult woman paladin in silver armor and white cloak, one-handed sword and small shield, gentle but resolute expression. Style: match the viewed project references npc_robin.png and npc_blacksmith.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Portrait 2:3 composition, entire character and all weapons/tools from head to boots fully visible with safe margins. Actual transparent background with clean alpha, no ground plane, no shadow rectangle, no scenery, no white matte. Candidate 2: alternate viewpoint or pose of the same described subject. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/npc_robin.png",
+      "client/images/npc_blacksmith.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "npc_brigitte",
+    "file": "assets/candidates/033/npc_brigitte/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel standing NPC sprite, npc_brigitte, candidate 01. Primary request: 鍛冶師ブリギッテ。分厚い前掛けの女鍛冶師、腕まくり、槌。Adult woman blacksmith in thick apron with rolled-up sleeves and hammer. Style: match the viewed project references npc_robin.png and npc_blacksmith.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Portrait 2:3 composition, entire character and all weapons/tools from head to boots fully visible with safe margins. Actual transparent background with clean alpha, no ground plane, no shadow rectangle, no scenery, no white matte. Candidate 1: balanced frontal view. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/npc_robin.png",
+      "client/images/npc_blacksmith.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  },
+  {
+    "task": "033",
+    "id": "npc_brigitte",
+    "file": "assets/candidates/033/npc_brigitte/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel standing NPC sprite, npc_brigitte, candidate 02. Primary request: 鍛冶師ブリギッテ。分厚い前掛けの女鍛冶師、腕まくり、槌。Adult woman blacksmith in thick apron with rolled-up sleeves and hammer. Style: match the viewed project references npc_robin.png and npc_blacksmith.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Portrait 2:3 composition, entire character and all weapons/tools from head to boots fully visible with safe margins. Actual transparent background with clean alpha, no ground plane, no shadow rectangle, no scenery, no white matte. Candidate 2: alternate viewpoint or pose of the same described subject. No text, letters, UI, logo or watermark. One image only.",
+    "reference_images": [
+      "client/images/npc_robin.png",
+      "client/images/npc_blacksmith.png"
+    ],
+    "generation_date": "2026-10-17",
+    "approved": false
+  }
+]

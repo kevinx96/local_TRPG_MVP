@@ -812,7 +812,7 @@ def _resolve_attack(
         session,
         actor_id,
         "damage",
-        f"{name}が{defender_name}に{damage}ダメージ。",
+        f"{name}が{defender_name}に{damage}{'光属性' if element == 'holy' else ''}ダメージ。",
         {"damage": damage, "raw_damage": raw_damage, "formula": detail, "element": element, "hit_roll": hit_roll, "hit_chance": chance,
          "weakness": multiplier > 1 or ability.get("element") == "weakness" or bool(ability.get("multi_elements"))},
         target=defender,
@@ -1136,11 +1136,10 @@ def _apply_ally_round_start_effects(session: dict[str, Any], companion: dict[str
     from .state import _session_requirement_passes
 
     combat = session["combat"]
-    for effect in companion.get("round_start_effects") or []:
-        if not isinstance(effect, dict):
-            continue
-        if not _session_requirement_passes(effect.get("requirements"), session):
-            continue
+    # Freeze eligibility before healing can cross a conditional HP threshold.
+    effects = [effect for effect in companion.get("round_start_effects") or []
+               if isinstance(effect, dict) and _session_requirement_passes(effect.get("requirements"), session)]
+    for effect in effects:
         every = max(1, _safe_int(effect.get("every_n_rounds"), 1))
         if int(combat.get("round", 1)) % every:
             continue
@@ -1156,13 +1155,16 @@ def _apply_ally_round_start_effects(session: dict[str, Any], companion: dict[str
                 amount, detail = _roll_formula(str(effect.get("amount") or "0"), session["character"], rng)
             healed = _heal_actor(session["character"], amount)
             if healed > 0:
-                _log(session, "companion", "heal", f"{companion.get('name', '同行者')}がHPを{healed}回復した。", {"amount": healed, "formula": detail})
+                name = effect.get("name") or companion.get("name", "同行者")
+                _log(session, actor_id, "heal", f"{name}がHPを{healed}回復した。", {"amount": healed, "formula": detail})
         elif kind == "damage_enemy":
             targets = list(_alive_enemies(combat))
             if not effect.get("all_targets") and targets:
                 if effect.get("random_target"):
                     targets = [rng.choice(targets)]
-                elif effect.get("target") == "highest_hp":
+                elif effect.get("target") in {"highest_hp", "undead_first"}:
+                    if effect["target"] == "undead_first":
+                        targets = [enemy for enemy in targets if "undead" in enemy.get("tags", [])] or targets
                     targets = [max(targets, key=lambda enemy: _safe_int(enemy.get("hp"), 0))]
                 else:
                     targets = targets[:1]

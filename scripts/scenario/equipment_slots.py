@@ -13,7 +13,7 @@ SLOTS = {
     # weapon such as イアン's ice blade still fills the empty weapon slot; the trade-off moves to the aid slot.
     "聖なる杖": "accessory", "魔導書": "accessory",
     "革の鎧": "armor", "ローブ": "armor", "魔法のローブ": "armor",
-    "アダマンタイトの鎧": "armor", "墓守の外套": "armor",
+    "アダマンタイトの鎧": "armor", "墓守の外套": "armor", "守護団の鎖帷子": "armor",
     "氷の護符(活性化済)": "accessory", "紅玉の護符": "accessory",
     "呪われた水晶球": "accessory", "暗黒の水晶球": "accessory",
 }

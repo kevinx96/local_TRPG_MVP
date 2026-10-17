@@ -1676,6 +1676,13 @@ def _session_requirement_passes(requirement: Any, session: Optional[dict[str, An
         companion = session.get("companion", {}) if isinstance(session, dict) and isinstance(session.get("companion"), dict) else {}
         return str(companion.get("id") or "") == str(requirement["companion_id"])
     character = session.get("character", {}) if isinstance(session, dict) and isinstance(session.get("character"), dict) else {}
+    if "player_hp_ratio_lt" in requirement or "player_hp_ratio_gte" in requirement:
+        maximum = character.get("max_hp", 0)
+        if maximum <= 0:
+            return False
+        ratio = character.get("hp", 0) / maximum
+        return (("player_hp_ratio_lt" not in requirement or ratio < requirement["player_hp_ratio_lt"])
+                and ("player_hp_ratio_gte" not in requirement or ratio >= requirement["player_hp_ratio_gte"]))
     attrs = character.get("attributes", {}) if isinstance(character.get("attributes"), dict) else {}
     return _requirement_passes(requirement, attrs, character)
 

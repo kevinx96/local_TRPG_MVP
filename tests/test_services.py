@@ -249,7 +249,7 @@ class ServiceTests(unittest.TestCase):
                 ids = {action["id"] for action in state._iter_actions(location.get("actions", []))}
                 self.assertFalse(ids & {"sarah_shop", "blue_mage_shop", "buy_equipment", "buy_ice_amulet"})
             self.assertEqual(len(pack["quests"]), 12)
-            self.assertEqual(len(pack["shops"]), 6)
+            self.assertEqual(len(pack["shops"]), 8)
 
 
 if __name__ == "__main__":

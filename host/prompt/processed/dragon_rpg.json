@@ -4,12 +4,13 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-15-v032",
+    "content_revision": "2026-10-17-v033",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
     "chapter5_v5": true,
-    "rewards_battlefield_v031": true
+    "rewards_battlefield_v031": true,
+    "oaksdawn_v033": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -105,7 +106,8 @@
         "cave_lava_room",
         "cave_hot_spring",
         "cave_crystal_corridor",
-        "cave_prism_tree"
+        "cave_prism_tree",
+        "cave_waterway"
       ],
       "hybrid": {
         "mode": "prepared_gm_turns",
@@ -215,7 +217,32 @@
       ],
       "next_scene_ids": [
         "dark_forest",
-        "village"
+        "village",
+        "oaksdawn"
+      ]
+    },
+    {
+      "id": "oaksdawn",
+      "title": "城塞都市オークスドーン",
+      "description": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
+      "location_ids": [
+        "oaksdawn_water_gate",
+        "oaksdawn_square",
+        "oaksdawn_hq",
+        "oaksdawn_chapel",
+        "oaksdawn_workshop",
+        "oaksdawn_inn",
+        "oaksdawn_wall"
+      ],
+      "npc_ids": [
+        "walter",
+        "liese",
+        "brigitte"
+      ],
+      "enemy_ids": [],
+      "next_scene_ids": [
+        "dark_forest",
+        "old_battlefield"
       ]
     }
   ],
@@ -8240,7 +8267,9 @@
                     "heard_gald_rumor",
                     "heard_xanxus_betrayal",
                     "has_assassin_crest",
-                    "heard_old_soldier_ghost"
+                    "heard_old_soldier_ghost",
+                    "heard_guardian_refusal",
+                    "heard_pass_rumor"
                   ],
                   "count": 2
                 }
@@ -9362,6 +9391,22 @@
           "hidden_after": "mina_rescued",
           "result_text": "「すぐ戻る。ここで待っていてくれ」と告げると、ミーナは小さく頷き、湯気の向こうで膝を抱え直した。",
           "risk_source": "action"
+        },
+        {
+          "id": "follow_hot_spring_water",
+          "text": "湯の流れを辿る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "湯の流れを辿る"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_waterway"
+            }
+          ],
+          "result_text": "温泉の湯は細い水路となって、岩の奥へ流れていく。水音を頼りに進むと、壁に古い騎士団の紋章――樫の葉と昇る太陽――が刻まれていた。",
+          "risk_source": "destination"
         }
       ],
       "objects": [
@@ -9443,7 +9488,17 @@
           "risk": "判定不要",
           "visible_after": "met_mina",
           "hidden_after": "mina_rescued"
+        },
+        {
+          "text": "湯の流れを辿る",
+          "preview": "",
+          "risk": "判定不要"
         }
+      ],
+      "connected_location_ids": [
+        "cave_fork",
+        "cave_crystal_corridor",
+        "cave_waterway"
       ]
     },
     {
@@ -11297,12 +11352,38 @@
           ],
           "result_text": "木々の隙間から麓の村と山道が見えている。",
           "risk_source": "destination"
+        },
+        {
+          "id": "battlefield_to_oaksdawn",
+          "text": "城塞の街道を北へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城塞の街道を北へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_square"
+            }
+          ],
+          "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
+          "risk_source": "destination"
         }
       ],
       "npc_ids": [],
       "enemy_ids": [],
-      "connected_location_ids": [],
-      "choices": [],
+      "connected_location_ids": [
+        "bone_field",
+        "forest_exit",
+        "oaksdawn_square"
+      ],
+      "choices": [
+        {
+          "text": "城塞の街道を北へ向かう",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ],
       "entry_events": [
         {
           "once": "battlefield_warlock_warned",
@@ -12110,6 +12191,995 @@
         },
         "victory_gold_bonus": 60
       }
+    },
+    {
+      "id": "cave_waterway",
+      "scene_id": "dark_forest",
+      "title": "地底の水路",
+      "description": "温泉の湯は細い水路となって、岩の奥へ流れていく。水音を頼りに進むと、壁に古い騎士団の紋章――樫の葉と昇る太陽――が刻まれていた。",
+      "background_image": "/static/images/bg_cave_waterway.png",
+      "npc_ids": [],
+      "enemy_ids": [],
+      "actions": [
+        {
+          "id": "waterway_to_gate",
+          "text": "水路の先へ進む",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "水路の先へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_water_gate"
+            }
+          ],
+          "result_text": "水路の出口は、鉄格子の水門で塞がれていた。格子の向こうから、鎧の擦れる音と誰何の声が響く。「止まれ！ 何者だ！」",
+          "risk_source": "destination"
+        },
+        {
+          "id": "waterway_to_spring",
+          "text": "温泉へ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "温泉へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_hot_spring"
+            }
+          ],
+          "result_text": "湯気の立ち込める小さな温泉がある。岩の隙間に、ローブ姿の少女が膝を抱えて座り込んでいる。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "水路の先へ進む",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "温泉へ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ],
+      "connected_location_ids": [
+        "oaksdawn_water_gate",
+        "cave_hot_spring"
+      ],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      }
+    },
+    {
+      "id": "oaksdawn_water_gate",
+      "scene_id": "oaksdawn",
+      "title": "オークスドーンの水門",
+      "description": "水路の出口は、鉄格子の水門で塞がれていた。格子の向こうから、鎧の擦れる音と誰何の声が響く。「止まれ！ 何者だ！」",
+      "background_image": "/static/images/bg_cave_waterway.png",
+      "npc_ids": [],
+      "enemy_ids": [],
+      "actions": [
+        {
+          "id": "open_oaksdawn_gate",
+          "text": "名乗って門を開けてもらう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "名乗って門を開けてもらう"
+          ],
+          "effects": [
+            {
+              "set_flag": "opened_oaksdawn_gate"
+            },
+            {
+              "current_location": "oaksdawn_square"
+            }
+          ],
+          "once": "opened_oaksdawn_gate",
+          "hidden_after": "opened_oaksdawn_gate",
+          "result_text": "見張りの兵士は松明を掲げてこちらの顔を確かめると、渋々と格子を上げた。「森から水路を抜けてきただと……？ 団長に報告しておく。中へ入れ」",
+          "risk_source": "destination"
+        },
+        {
+          "id": "enter_oaksdawn",
+          "text": "城塞へ入る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城塞へ入る"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_square"
+            }
+          ],
+          "visible_after": "opened_oaksdawn_gate",
+          "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "gate_back_before",
+          "text": "水路を戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "水路を戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_waterway"
+            }
+          ],
+          "hidden_after": "opened_oaksdawn_gate",
+          "requirements": {
+            "not_flag": "opened_oaksdawn_gate"
+          },
+          "result_text": "温泉の湯は細い水路となって、岩の奥へ流れていく。水音を頼りに進むと、壁に古い騎士団の紋章――樫の葉と昇る太陽――が刻まれていた。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "gate_back",
+          "text": "水路へ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "水路へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "cave_waterway"
+            }
+          ],
+          "visible_after": "opened_oaksdawn_gate",
+          "result_text": "温泉の湯は細い水路となって、岩の奥へ流れていく。水音を頼りに進むと、壁に古い騎士団の紋章――樫の葉と昇る太陽――が刻まれていた。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "名乗って門を開けてもらう",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "opened_oaksdawn_gate",
+          "hidden_after": "opened_oaksdawn_gate"
+        },
+        {
+          "text": "城塞へ入る",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "opened_oaksdawn_gate"
+        },
+        {
+          "text": "水路を戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "hidden_after": "opened_oaksdawn_gate",
+          "requirements": {
+            "not_flag": "opened_oaksdawn_gate"
+          }
+        },
+        {
+          "text": "水路へ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "opened_oaksdawn_gate"
+        }
+      ],
+      "connected_location_ids": [
+        "oaksdawn_square",
+        "cave_waterway"
+      ],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      }
+    },
+    {
+      "id": "oaksdawn_square",
+      "scene_id": "oaksdawn",
+      "title": "城塞の大通り",
+      "description": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
+      "background_image": "/static/images/bg_oaksdawn_square.png",
+      "npc_ids": [],
+      "enemy_ids": [],
+      "actions": [
+        {
+          "id": "square_to_hq",
+          "text": "守護団本営へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "守護団本営へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_hq"
+            }
+          ],
+          "result_text": "地図と剣が並ぶ質素な広間。白髪の老騎士――守護団長ヴァルターが、卓上の地図から顔を上げた。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "square_to_chapel",
+          "text": "暁の礼拝堂へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "暁の礼拝堂へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_chapel"
+            }
+          ],
+          "result_text": "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "square_to_workshop",
+          "text": "城塞工房へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城塞工房へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_workshop"
+            }
+          ],
+          "result_text": "炉の熱と槌の音が響く工房。分厚い前掛けの女鍛冶師が、白銀の剣に光の紋を刻んでいる。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "square_to_inn",
+          "text": "樫の葉亭へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "樫の葉亭へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_inn"
+            }
+          ],
+          "result_text": "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが、干し肉をかじりながら峠の噂話をしている。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "square_to_wall",
+          "text": "城壁の見張り台へ上る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城壁の見張り台へ上る"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_wall"
+            }
+          ],
+          "result_text": "城壁の上からは、南に霧の古戦場、東に白く凍りついた峠が見渡せる。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "square_to_water_gate",
+          "text": "水門へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "水門へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_water_gate"
+            }
+          ],
+          "result_text": "水路の出口は、鉄格子の水門で塞がれていた。格子の向こうから、鎧の擦れる音と誰何の声が響く。「止まれ！ 何者だ！」",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "守護団本営へ向かう",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "暁の礼拝堂へ向かう",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "城塞工房へ向かう",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "樫の葉亭へ向かう",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "城壁の見張り台へ上る",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "水門へ向かう",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ],
+      "connected_location_ids": [
+        "oaksdawn_hq",
+        "oaksdawn_chapel",
+        "oaksdawn_workshop",
+        "oaksdawn_inn",
+        "oaksdawn_wall",
+        "oaksdawn_water_gate"
+      ],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      },
+      "entry_effects": [
+        {
+          "set_flag": "visited_oaksdawn"
+        }
+      ]
+    },
+    {
+      "id": "oaksdawn_hq",
+      "scene_id": "oaksdawn",
+      "title": "守護団本営",
+      "description": "地図と剣が並ぶ質素な広間。白髪の老騎士――守護団長ヴァルターが、卓上の地図から顔を上げた。",
+      "background_image": "/static/images/bg_oaksdawn_hq.png",
+      "npc_ids": [
+        "walter"
+      ],
+      "enemy_ids": [],
+      "actions": [
+        {
+          "id": "greet_walter",
+          "text": "団長に挨拶する",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "団長に挨拶する"
+          ],
+          "effects": [],
+          "once": "greeted_walter",
+          "hidden_after": "greeted_walter",
+          "result_text": "「森の水路を抜けてきたとは、物好きな冒険者だ。わしはヴァルター、暁の守護団の団長をしておる。……邪竜を討ちに行くのか。ならば一つ忠告しておこう。竜の谷の炎が本当にあの紅竜だけのものか、よく確かめることだ」",
+          "risk_source": "action"
+        },
+        {
+          "id": "ask_guardian_refusal",
+          "text": "十年前の遠征について聞く",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "十年前の遠征について聞く"
+          ],
+          "effects": [],
+          "once": "heard_guardian_refusal",
+          "hidden_after": "heard_guardian_refusal",
+          "visible_after": "greeted_walter",
+          "result_text": "「十年前、将軍ドラコは竜の谷への出兵を命じた。我ら守護団は盟約を理由にそれを拒み、それ以来、王都からは見捨てられた砦よ。あの時に谷へ向かった兵は、一人も帰ってこなかった」",
+          "risk_source": "action"
+        },
+        {
+          "id": "request_guardian_letter",
+          "text": "推薦状を願い出る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "推薦状を願い出る"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "id": "guardian_letter",
+                "name": "守護団の推薦状",
+                "quantity": 1
+              }
+            }
+          ],
+          "once": "received_guardian_letter",
+          "hidden_after": "received_guardian_letter",
+          "visible_after": "heard_guardian_refusal",
+          "result_text": "ヴァルターは羽根ペンを走らせ、封蝋を押した。「礼拝堂のリーゼに見せるといい。あの子は古戦場の鐘のことで、ずっと胸を痛めておる」",
+          "risk_source": "action"
+        },
+        {
+          "id": "hq_to_square",
+          "text": "大通りへ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "大通りへ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_square"
+            }
+          ],
+          "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "団長に挨拶する",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "greeted_walter",
+          "hidden_after": "greeted_walter"
+        },
+        {
+          "text": "十年前の遠征について聞く",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "heard_guardian_refusal",
+          "hidden_after": "heard_guardian_refusal",
+          "visible_after": "greeted_walter"
+        },
+        {
+          "text": "推薦状を願い出る",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "received_guardian_letter",
+          "hidden_after": "received_guardian_letter",
+          "visible_after": "heard_guardian_refusal"
+        },
+        {
+          "text": "大通りへ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ],
+      "connected_location_ids": [
+        "oaksdawn_square"
+      ],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      },
+      "portrait_image": "/static/images/npc_walter.png"
+    },
+    {
+      "id": "oaksdawn_chapel",
+      "scene_id": "oaksdawn",
+      "title": "暁の礼拝堂",
+      "description": "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。",
+      "background_image": "/static/images/bg_oaksdawn_chapel.png",
+      "npc_ids": [
+        "liese"
+      ],
+      "enemy_ids": [],
+      "actions": [
+        {
+          "id": "pray_oaksdawn",
+          "text": "祈りを捧げてもらう",
+          "preview": "5G",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "祈りを捧げてもらう"
+          ],
+          "effects": [
+            {
+              "gold_change": -5
+            },
+            {
+              "restore_full": true
+            }
+          ],
+          "requirements": {
+            "gold_gte": 5
+          },
+          "result_text": "祭壇の前で目を閉じると、温かな光が体を包み、疲れが消えていった。",
+          "risk_source": "action"
+        },
+        {
+          "id": "talk_liese",
+          "text": "女騎士に話しかける",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "女騎士に話しかける"
+          ],
+          "effects": [],
+          "once": "met_liese",
+          "hidden_after": "met_liese",
+          "result_text": "「私はリーゼ。暁の守護団の聖騎士です。……南の古戦場から、夜ごと弔いの鐘が聞こえるのです。死者がまだ眠れずにいる。いつか、確かめに行かなければ」",
+          "risk_source": "action"
+        },
+        {
+          "id": "recruit_liese_letter",
+          "text": "守護団の推薦状を見せる",
+          "preview": "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "守護団の推薦状を見せる"
+          ],
+          "effects": [
+            {
+              "set_companion": "paladin_liese"
+            },
+            {
+              "set_flag": "recruited_liese"
+            }
+          ],
+          "visible_after": "met_liese",
+          "hidden_after": "recruited_liese",
+          "portrait_image": "/static/images/npc_liese.png",
+          "requirements": {
+            "all": [
+              {
+                "has_item": "守護団の推薦状"
+              },
+              {
+                "not_flag": "recruited_liese"
+              }
+            ]
+          },
+          "result_text": "リーゼは推薦状の封蝋を確かめ、静かに頷いた。「団長がお認めになったのなら、私もこの剣を預けましょう」",
+          "risk_source": "action"
+        },
+        {
+          "id": "recruit_liese_water",
+          "text": "聖水を祭壇に捧げる",
+          "preview": "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "聖水を祭壇に捧げる"
+          ],
+          "effects": [
+            {
+              "remove_item": {
+                "name": "聖水",
+                "quantity": 1
+              }
+            },
+            {
+              "set_companion": "paladin_liese"
+            },
+            {
+              "set_flag": "recruited_liese"
+            }
+          ],
+          "visible_after": "met_liese",
+          "hidden_after": "recruited_liese",
+          "portrait_image": "/static/images/npc_liese.png",
+          "requirements": {
+            "all": [
+              {
+                "has_item": "聖水"
+              },
+              {
+                "not_flag": "recruited_liese"
+              }
+            ]
+          },
+          "result_text": "祭壇に聖水を注ぐと、リーゼは目を見開いた。「死者を弔う心をお持ちなのですね。……ご一緒させてください」",
+          "risk_source": "action"
+        },
+        {
+          "id": "recruit_liese_persuade",
+          "text": "共に死者を弔いたいと説く",
+          "preview": "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）",
+          "risk": "1d20+wis判定（DC13）",
+          "intent_keywords": [
+            "共に死者を弔いたいと説く"
+          ],
+          "effects": [],
+          "visible_after": "met_liese",
+          "hidden_after": "recruited_liese",
+          "portrait_image": "/static/images/npc_liese.png",
+          "once": "persuaded_liese",
+          "requirements": {
+            "not_flag": "recruited_liese"
+          },
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 13
+          },
+          "success_effects": [
+            {
+              "set_companion": "paladin_liese"
+            },
+            {
+              "set_flag": "recruited_liese"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "「……その言葉、信じます。ご一緒させてください」",
+            "failure": "「お気持ちは嬉しいのですが、私は守護団の務めを離れられません」"
+          },
+          "risk_source": "action"
+        },
+        {
+          "id": "open_oaksdawn_chapel_shop",
+          "text": "聖水を分けてもらう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "聖水を分けてもらう"
+          ],
+          "effects": [],
+          "open_shop": "oaksdawn_chapel_shop",
+          "risk_source": "action"
+        },
+        {
+          "id": "chapel_to_square",
+          "text": "大通りへ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "大通りへ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_square"
+            }
+          ],
+          "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "祈りを捧げてもらう",
+          "preview": "5G",
+          "risk": "判定不要",
+          "requirements": {
+            "gold_gte": 5
+          }
+        },
+        {
+          "text": "女騎士に話しかける",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "met_liese",
+          "hidden_after": "met_liese"
+        },
+        {
+          "text": "守護団の推薦状を見せる",
+          "preview": "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）",
+          "risk": "判定不要",
+          "visible_after": "met_liese",
+          "hidden_after": "recruited_liese",
+          "requirements": {
+            "all": [
+              {
+                "has_item": "守護団の推薦状"
+              },
+              {
+                "not_flag": "recruited_liese"
+              }
+            ]
+          }
+        },
+        {
+          "text": "聖水を祭壇に捧げる",
+          "preview": "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）",
+          "risk": "判定不要",
+          "visible_after": "met_liese",
+          "hidden_after": "recruited_liese",
+          "requirements": {
+            "all": [
+              {
+                "has_item": "聖水"
+              },
+              {
+                "not_flag": "recruited_liese"
+              }
+            ]
+          }
+        },
+        {
+          "text": "共に死者を弔いたいと説く",
+          "preview": "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）",
+          "risk": "1d20+wis判定（DC13）",
+          "visible_after": "met_liese",
+          "hidden_after": "recruited_liese",
+          "once": "persuaded_liese",
+          "requirements": {
+            "not_flag": "recruited_liese"
+          }
+        },
+        {
+          "text": "聖水を分けてもらう",
+          "preview": "",
+          "risk": "判定不要",
+          "open_shop": "oaksdawn_chapel_shop"
+        },
+        {
+          "text": "大通りへ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ],
+      "connected_location_ids": [
+        "oaksdawn_square"
+      ],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      },
+      "npc_requirements": {
+        "liese": {
+          "not_flag": "recruited_liese"
+        }
+      }
+    },
+    {
+      "id": "oaksdawn_workshop",
+      "scene_id": "oaksdawn",
+      "title": "城塞工房",
+      "description": "炉の熱と槌の音が響く工房。分厚い前掛けの女鍛冶師が、白銀の剣に光の紋を刻んでいる。",
+      "background_image": "/static/images/bg_oaksdawn_workshop.png",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "enemy_ids": [],
+      "actions": [
+        {
+          "id": "talk_brigitte",
+          "text": "鍛冶師に話しかける",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鍛冶師に話しかける"
+          ],
+          "effects": [],
+          "once": "met_brigitte",
+          "hidden_after": "met_brigitte",
+          "result_text": "「守護団の鎧なら、いくらでも打ってやるよ。光の紋を刻んだ武器は……材料が揃ったら、また来な」",
+          "risk_source": "action"
+        },
+        {
+          "id": "open_oaksdawn_workshop_shop",
+          "text": "店に入る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "店に入る"
+          ],
+          "effects": [],
+          "open_shop": "oaksdawn_workshop_shop",
+          "risk_source": "action"
+        },
+        {
+          "id": "workshop_to_square",
+          "text": "大通りへ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "大通りへ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_square"
+            }
+          ],
+          "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "鍛冶師に話しかける",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "met_brigitte",
+          "hidden_after": "met_brigitte"
+        },
+        {
+          "text": "店に入る",
+          "preview": "",
+          "risk": "判定不要",
+          "open_shop": "oaksdawn_workshop_shop"
+        },
+        {
+          "text": "大通りへ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ],
+      "connected_location_ids": [
+        "oaksdawn_square"
+      ],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      },
+      "portrait_image": "/static/images/npc_brigitte.png"
+    },
+    {
+      "id": "oaksdawn_inn",
+      "scene_id": "oaksdawn",
+      "title": "樫の葉亭",
+      "description": "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが、干し肉をかじりながら峠の噂話をしている。",
+      "background_image": "/static/images/bg_oaksdawn_inn.png",
+      "npc_ids": [],
+      "enemy_ids": [],
+      "actions": [
+        {
+          "id": "rest_oaksdawn",
+          "text": "宿で休む",
+          "preview": "10G",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "宿で休む"
+          ],
+          "effects": [
+            {
+              "gold_change": -10
+            },
+            {
+              "restore_full": true
+            }
+          ],
+          "requirements": {
+            "gold_gte": 10
+          },
+          "result_text": "樫の香りのする寝台で、久しぶりにぐっすりと眠った。",
+          "risk_source": "action"
+        },
+        {
+          "id": "ask_oaksdawn_rumor",
+          "text": "噂話を聞く",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "噂話を聞く"
+          ],
+          "effects": [],
+          "once": "heard_pass_rumor",
+          "hidden_after": "heard_pass_rumor",
+          "result_text": "「東の峠が、季節外れの霜で閉ざされちまった。夜中に、白くてでかい影が谷の方へ飛んでいくのを見たって奴もいる」",
+          "risk_source": "action"
+        },
+        {
+          "id": "inn_to_square",
+          "text": "大通りへ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "大通りへ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_square"
+            }
+          ],
+          "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "宿で休む",
+          "preview": "10G",
+          "risk": "判定不要",
+          "requirements": {
+            "gold_gte": 10
+          }
+        },
+        {
+          "text": "噂話を聞く",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "heard_pass_rumor",
+          "hidden_after": "heard_pass_rumor"
+        },
+        {
+          "text": "大通りへ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ],
+      "connected_location_ids": [
+        "oaksdawn_square"
+      ],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      }
+    },
+    {
+      "id": "oaksdawn_wall",
+      "scene_id": "oaksdawn",
+      "title": "城壁の見張り台",
+      "description": "城壁の上からは、南に霧の古戦場、東に白く凍りついた峠が見渡せる。",
+      "background_image": "/static/images/bg_oaksdawn_wall.png",
+      "npc_ids": [],
+      "enemy_ids": [],
+      "actions": [
+        {
+          "id": "oaksdawn_to_battlefield",
+          "text": "城塞の街道を南へ下る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城塞の街道を南へ下る"
+          ],
+          "effects": [
+            {
+              "current_location": "old_battlefield"
+            }
+          ],
+          "result_text": "城門を出て街道を南へ下ると、やがて白い霧が足元から立ちのぼってきた。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "oaksdawn_east_pass",
+          "text": "東の峠へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "東の峠へ向かう"
+          ],
+          "effects": [],
+          "enabled": false,
+          "disabled_reason": "峠は霜で閉ざされていて、今は通れない。",
+          "requirements": {},
+          "risk_source": "action"
+        },
+        {
+          "id": "wall_to_square",
+          "text": "大通りへ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "大通りへ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_square"
+            }
+          ],
+          "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "城塞の街道を南へ下る",
+          "preview": "",
+          "risk": "判定不要"
+        },
+        {
+          "text": "東の峠へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "enabled": false,
+          "disabled_reason": "峠は霜で閉ざされていて、今は通れない。",
+          "requirements": {}
+        },
+        {
+          "text": "大通りへ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ],
+      "connected_location_ids": [
+        "old_battlefield",
+        "oaksdawn_square"
+      ],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      }
     }
   ],
   "fallback_choices": [
@@ -12327,6 +13397,24 @@
       "name": "亡霊の兵士",
       "description": "半透明の若い兵士",
       "image": "/static/images/npc_old_soldier_ghost.png"
+    },
+    {
+      "id": "walter",
+      "name": "守護団長ヴァルター",
+      "description": "白髪の老騎士",
+      "image": "/static/images/npc_walter.png"
+    },
+    {
+      "id": "liese",
+      "name": "聖騎士リーゼ",
+      "description": "暁の守護団の若き聖騎士。",
+      "image": "/static/images/npc_liese.png"
+    },
+    {
+      "id": "brigitte",
+      "name": "鍛冶師ブリギッテ",
+      "description": "分厚い前掛けの女鍛冶師",
+      "image": "/static/images/npc_brigitte.png"
     }
   ],
   "items": [
@@ -13064,6 +14152,24 @@
         "resource": "mp",
         "label": "最大MP"
       }
+    },
+    {
+      "id": "guardian_letter",
+      "name": "守護団の推薦状",
+      "category": "key",
+      "key_item": true,
+      "description": "暁の守護団長ヴァルターの署名入りの推薦状。"
+    },
+    {
+      "id": "guardian_chainmail",
+      "name": "守護団の鎖帷子",
+      "category": "equipment",
+      "slot": "armor",
+      "description": "守護団員が身につける、目の細かい鎖帷子。",
+      "combat": {
+        "kind": "armor",
+        "defense": 2
+      }
     }
   ],
   "clues": [
@@ -13515,7 +14621,10 @@
           "ai_weight": 3
         }
       ],
-      "image": "/static/images/enemy_zebok.png"
+      "image": "/static/images/enemy_zebok.png",
+      "tags": [
+        "undead"
+      ]
     },
     {
       "id": "fire_slime",
@@ -14180,7 +15289,7 @@
         "evade": 0
       },
       "resistances": {
-        "holy": 1.4,
+        "holy": 1.5,
         "physical": 0.7,
         "fire": 0.5
       },
@@ -14215,7 +15324,10 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_ash_wraith.png"
+      "image": "/static/images/enemy_ash_wraith.png",
+      "tags": [
+        "undead"
+      ]
     },
     {
       "id": "lava_drake",
@@ -14325,7 +15437,10 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_xanxus_phantom.png"
+      "image": "/static/images/enemy_xanxus_phantom.png",
+      "tags": [
+        "undead"
+      ]
     },
     {
       "id": "ice_sentinel",
@@ -14475,7 +15590,10 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_skeleton_soldier.png"
+      "image": "/static/images/enemy_skeleton_soldier.png",
+      "tags": [
+        "undead"
+      ]
     },
     {
       "id": "ghoul",
@@ -14506,7 +15624,10 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_ghoul.png"
+      "image": "/static/images/enemy_ghoul.png",
+      "tags": [
+        "undead"
+      ]
     },
     {
       "id": "wraith",
@@ -14537,7 +15658,10 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_wraith.png"
+      "image": "/static/images/enemy_wraith.png",
+      "tags": [
+        "undead"
+      ]
     },
     {
       "id": "grave_knight",
@@ -14568,7 +15692,10 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_grave_knight.png"
+      "image": "/static/images/enemy_grave_knight.png",
+      "tags": [
+        "undead"
+      ]
     }
   ],
   "combat_choices": [
@@ -15310,6 +16437,32 @@
           "random_target": true
         }
       ]
+    },
+    {
+      "id": "paladin_liese",
+      "name": "聖騎士リーゼ",
+      "image": "/static/images/npc_liese.png",
+      "description": "暁の守護団の若き聖騎士。毎ラウンド開始時、プレイヤーのHPが半分未満なら「癒しの祈り」で最大HPの25%を回復し、そうでなければ「聖光の一撃」で敵へ2d3の光属性ダメージを与える（不死の敵を優先して狙う）。",
+      "round_start_effects": [
+        {
+          "kind": "heal_player",
+          "name": "癒しの祈り",
+          "max_hp_ratio": 0.25,
+          "requirements": {
+            "player_hp_ratio_lt": 0.5
+          }
+        },
+        {
+          "kind": "damage_enemy",
+          "name": "聖光の一撃",
+          "damage": "2d3",
+          "element": "holy",
+          "target": "undead_first",
+          "requirements": {
+            "player_hp_ratio_gte": 0.5
+          }
+        }
+      ]
     }
   ],
   "milestones": [
@@ -15949,6 +17102,36 @@
           "stock": 2
         }
       ]
+    },
+    {
+      "id": "oaksdawn_chapel_shop",
+      "location_id": "oaksdawn_chapel",
+      "keeper_npc": "liese",
+      "title": "暁の礼拝堂",
+      "buys": false,
+      "poor_line": "金が足りん。",
+      "items": [
+        {
+          "item_id": "holy_water",
+          "price": 12,
+          "stock": null
+        }
+      ]
+    },
+    {
+      "id": "oaksdawn_workshop_shop",
+      "location_id": "oaksdawn_workshop",
+      "keeper_npc": "brigitte",
+      "title": "城塞工房",
+      "buys": false,
+      "poor_line": "金が足りん。",
+      "items": [
+        {
+          "item_id": "guardian_chainmail",
+          "price": 40,
+          "stock": null
+        }
+      ]
     }
   ],
   "maps": [
@@ -16358,6 +17541,28 @@
           ],
           "description": "洞窟の最奥に、七色の水晶でできた大樹がそびえている。枝の一本一本が脈打ち、根元には砕けた魔物たちの水晶が積み重なっている。",
           "recommended": "推奨 Lv2"
+        },
+        {
+          "id": "C6",
+          "label": "地底の水路",
+          "kind": "event",
+          "x": 75,
+          "y": 90,
+          "location_ids": [
+            "cave_waterway"
+          ],
+          "description": "温泉の湯は細い水路となって、岩の奥へ流れていく。水音を頼りに進むと、壁に古い騎士団の紋章――樫の葉と昇る太陽――が刻まれていた。"
+        },
+        {
+          "id": "oaksdawn",
+          "label": "オークスドーン",
+          "kind": "event",
+          "x": 95,
+          "y": 90,
+          "location_ids": [],
+          "description": "オークスドーン",
+          "submap": "oaksdawn",
+          "known_after": "visited_oaksdawn"
         }
       ],
       "edges": [
@@ -16425,6 +17630,21 @@
           "from": "C1",
           "to": "C0",
           "action_id": "heat_back"
+        },
+        {
+          "from": "C3b",
+          "to": "C6",
+          "action_id": "follow_hot_spring_water"
+        },
+        {
+          "from": "C6",
+          "to": "C3b",
+          "action_id": "waterway_to_spring"
+        },
+        {
+          "from": "C6",
+          "to": "oaksdawn",
+          "action_id": "waterway_to_gate"
         }
       ]
     },
@@ -16525,7 +17745,8 @@
             "cave_lava_room",
             "cave_hot_spring",
             "cave_crystal_corridor",
-            "cave_prism_tree"
+            "cave_prism_tree",
+            "cave_waterway"
           ],
           "description": "泉の裏手の岩壁に、七色に揺らめく魔法陣が刻まれている。陣の奥から、かすかに熱い風が吹き出している。",
           "submap": "sealed_cave",
@@ -17140,6 +18361,17 @@
           "y": 50,
           "location_ids": [],
           "description": "村の裏門"
+        },
+        {
+          "id": "oaksdawn",
+          "label": "オークスドーン",
+          "kind": "event",
+          "x": 10,
+          "y": 15,
+          "location_ids": [],
+          "description": "オークスドーン",
+          "submap": "oaksdawn",
+          "known_after": "visited_oaksdawn"
         }
       ],
       "edges": [
@@ -17187,6 +18419,159 @@
           "from": "B5",
           "to": "B6",
           "action_id": "chapel_to_village"
+        },
+        {
+          "from": "B1",
+          "to": "oaksdawn",
+          "action_id": "battlefield_to_oaksdawn"
+        }
+      ]
+    },
+    {
+      "id": "oaksdawn",
+      "title": "城塞都市オークスドーン",
+      "nodes": [
+        {
+          "id": "G0",
+          "label": "水門",
+          "kind": "event",
+          "x": 8,
+          "y": 55,
+          "location_ids": [
+            "oaksdawn_water_gate"
+          ],
+          "description": "水路の出口は、鉄格子の水門で塞がれていた。格子の向こうから、鎧の擦れる音と誰何の声が響く。「止まれ！ 何者だ！」"
+        },
+        {
+          "id": "G1",
+          "label": "大通り",
+          "kind": "event",
+          "x": 45,
+          "y": 55,
+          "location_ids": [
+            "oaksdawn_square"
+          ],
+          "description": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。"
+        },
+        {
+          "id": "G2",
+          "label": "本営",
+          "kind": "event",
+          "x": 45,
+          "y": 15,
+          "location_ids": [
+            "oaksdawn_hq"
+          ],
+          "description": "地図と剣が並ぶ質素な広間。白髪の老騎士――守護団長ヴァルターが、卓上の地図から顔を上げた。"
+        },
+        {
+          "id": "G3",
+          "label": "礼拝堂",
+          "kind": "event",
+          "x": 20,
+          "y": 25,
+          "location_ids": [
+            "oaksdawn_chapel"
+          ],
+          "description": "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。"
+        },
+        {
+          "id": "G4",
+          "label": "工房",
+          "kind": "event",
+          "x": 72,
+          "y": 22,
+          "location_ids": [
+            "oaksdawn_workshop"
+          ],
+          "description": "炉の熱と槌の音が響く工房。分厚い前掛けの女鍛冶師が、白銀の剣に光の紋を刻んでいる。"
+        },
+        {
+          "id": "G5",
+          "label": "樫の葉亭",
+          "kind": "event",
+          "x": 25,
+          "y": 85,
+          "location_ids": [
+            "oaksdawn_inn"
+          ],
+          "description": "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが、干し肉をかじりながら峠の噂話をしている。"
+        },
+        {
+          "id": "G6",
+          "label": "見張り台",
+          "kind": "event",
+          "x": 80,
+          "y": 75,
+          "location_ids": [
+            "oaksdawn_wall"
+          ],
+          "description": "城壁の上からは、南に霧の古戦場、東に白く凍りついた峠が見渡せる。"
+        }
+      ],
+      "edges": [
+        {
+          "from": "G1",
+          "to": "G0",
+          "action_id": "square_to_water_gate"
+        },
+        {
+          "from": "G0",
+          "to": "G1",
+          "action_ids": [
+            "open_oaksdawn_gate",
+            "enter_oaksdawn"
+          ]
+        },
+        {
+          "from": "G1",
+          "to": "G2",
+          "action_id": "square_to_hq"
+        },
+        {
+          "from": "G2",
+          "to": "G1",
+          "action_id": "hq_to_square"
+        },
+        {
+          "from": "G1",
+          "to": "G3",
+          "action_id": "square_to_chapel"
+        },
+        {
+          "from": "G3",
+          "to": "G1",
+          "action_id": "chapel_to_square"
+        },
+        {
+          "from": "G1",
+          "to": "G4",
+          "action_id": "square_to_workshop"
+        },
+        {
+          "from": "G4",
+          "to": "G1",
+          "action_id": "workshop_to_square"
+        },
+        {
+          "from": "G1",
+          "to": "G5",
+          "action_id": "square_to_inn"
+        },
+        {
+          "from": "G5",
+          "to": "G1",
+          "action_id": "inn_to_square"
+        },
+        {
+          "from": "G1",
+          "to": "G6",
+          "action_id": "square_to_wall"
+        },
+        {
+          "from": "G6",
+          "to": "G1",
+          "action_id": "wall_to_square"
         }
       ]
     }

@@ -32,7 +32,7 @@ def narration_gaps(pack: dict[str, Any]) -> list[dict[str, str]]:
     for location in pack["locations"]:
         turns = location.get("hybrid", {}).get("prepared_turns", [])
         for action in _walk(location.get("actions", [])):
-            if action.get("children"):
+            if action.get("children") or action.get("enabled") is False:
                 continue
             outcomes = ("success", "failure") if action.get("roll") else ("neutral",)
             for outcome in outcomes:

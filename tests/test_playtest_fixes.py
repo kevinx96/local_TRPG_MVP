@@ -106,7 +106,8 @@ class PlaytestFixTests(unittest.TestCase):
 
     def test_no_stationary_narration_gaps_beyond_documented_exceptions(self):
         shops = {("forge", "open_forge_shop"), ("village", "open_village_shop"), ("village", "open_gald_shop"),
-                 ("magic_shop", "open_magic_shop"), ("item_shop", "open_sarah_shop"), ("festival_town", "open_gald_capital_shop")}
+                 ("magic_shop", "open_magic_shop"), ("item_shop", "open_sarah_shop"), ("festival_town", "open_gald_capital_shop"),
+                 ("oaksdawn_chapel", "open_oaksdawn_chapel_shop"), ("oaksdawn_workshop", "open_oaksdawn_workshop_shop")}
         impossible = {("xanxus_confrontation", action, "success")
                       for action in ("bluff_xanxus", "ambush_xanxus", "flee_from_xanxus")}
         for filename, session in zip(PACKS, self.sessions()):

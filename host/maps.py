@@ -69,6 +69,11 @@ def movement_action(session: dict[str, Any], node_id: str) -> dict[str, Any]:
         if not edge:
             raise ValueError("隣接する場所を選んでください。")
         action_id = edge.get("action_by_location", {}).get(location, edge.get("action_id"))
+        if edge.get("action_ids"):
+            for candidate in edge["action_ids"]:
+                action = resolve_action(session, action_id=candidate)
+                if action is not None and action_requirement_status(action, session)[0]:
+                    return action
         if not action_id:
             raise ValueError("この場所へは行動を選んで進んでください。")
         action = resolve_action(session, action_id=action_id)
