@@ -26,9 +26,13 @@ WEAPONS = {
 MATERIALS = {
     "holy_silver": ("聖銀", "光を通すと淡く輝く銀。ブリギッテの工房で、光の紋を刻む武器の材料になる。"),
     # TODO(design): spec未提供独立道具说明文；先复用拾取叙述，不补写设定。
-    "baked_lava_stone": ("焼けた溶岩石", "熱の残る黒い石を布でくるみ、背嚢に押し込んだ。"),
+    "baked_lava_stone": ("焼けた溶岩石", "溶岩の熱を吸って黒く焼けた石。今もほんのりと温かい。"),
 }
 
+# Quest logs summarise in the narrator's voice, as the older quests do; the NPC lines stay in the dialogue.
+BELL_QUEST_LOG = "聖騎士リーゼは、古戦場の礼拝堂に残る鐘を正しく鳴らせば、眠れぬ死者を送れると信じている。"
+HEARTH_QUEST_LOG = "城塞工房の炉の火床が割れた。鍛冶師ブリギッテは、熱に強い溶岩で焼けた石を探している。"
+PICK_STONE_TEXT = "熱の残る黒い石を布でくるみ、背嚢に押し込んだ。"
 
 def apply(pack: dict[str, Any]) -> None:
     locations = {loc["id"]: loc for loc in pack["locations"]}
@@ -108,20 +112,21 @@ def apply(pack: dict[str, Any]) -> None:
         once="accepted_workshop_hearth", hidden_after="accepted_workshop_hearth", visible_after="met_brigitte",
         result_text=f"「{FORGE_REQUEST}」"))
     add_action("cave_lava_room", action("pick_baked_lava_stone", "溶岩で焼けた石を拾う", [give("baked_lava_stone")],
-        once="picked_baked_lava_stone", hidden_after="picked_baked_lava_stone", result_text=MATERIALS["baked_lava_stone"][1]))
+        once="picked_baked_lava_stone", hidden_after="picked_baked_lava_stone", result_text=PICK_STONE_TEXT))
     add_action("oaksdawn_workshop", action("deliver_baked_lava_stone", "焼けた石を渡す",
         [{"remove_item": {"name": "焼けた溶岩石", "quantity": 1}},
          {"reforge_armor": {"defense_bonus": 1, "suffix": "＋", "fallback_item": "守護団の鎖帷子"}}],
         once="rewarded_workshop_hearth", hidden_after="rewarded_workshop_hearth", visible_after="accepted_workshop_hearth",
         requirements={"has_item": "焼けた溶岩石"}, result_text=FORGE_TEXT))
     # TODO(design): 日志的独立说明和阶段文案未提供，复用定稿对白与选项。
-    upsert(pack["quests"], dict(id="side_battlefield_bell", title="古戦場の鐘", description=BELL_REQUEST, kind="side",
+    upsert(pack["quests"], dict(id="side_battlefield_bell", title="古戦場の鐘", description=BELL_QUEST_LOG, kind="side",
         start_flag=["accepted_battlefield_bell", "laid_battlefield_to_rest"], complete_flags=["rewarded_battlefield_bell"],
-        fail_flags=[], stages=[dict(text="弔いの鐘を鳴らす", done_flag="laid_battlefield_to_rest"),
-                               dict(text="鐘を鳴らしたことを伝える", done_flag="rewarded_battlefield_bell")]))
-    upsert(pack["quests"], dict(id="side_workshop_hearth", title="工房の火床", description=FORGE_REQUEST, kind="side",
+        fail_flags=[], stages=[dict(text="古戦場の礼拝堂で、弔いの鐘を鳴らす", done_flag="laid_battlefield_to_rest"),
+                               dict(text="リーゼか団長ヴァルターに報告する", done_flag="rewarded_battlefield_bell")]))
+    upsert(pack["quests"], dict(id="side_workshop_hearth", title="工房の火床", description=HEARTH_QUEST_LOG, kind="side",
         start_flag="accepted_workshop_hearth", complete_flags=["rewarded_workshop_hearth"], fail_flags=[],
-        stages=[dict(text="焼けた石を渡す", done_flag="rewarded_workshop_hearth")]))
+        stages=[dict(text="焼けた溶岩石をブリギッテに渡す（洞窟の溶岩の小部屋か、溶岩ドレイクから手に入る）",
+                     done_flag="rewarded_workshop_hearth")]))
     locations["oaksdawn_water_gate"]["background_image"] = "/static/images/bg_oaksdawn_water_gate.png"
     pack["meta"]["oaksdawn_v034"] = True
     pack["meta"]["content_revision"] = max(pack["meta"].get("content_revision", ""), "2026-10-17-v034")

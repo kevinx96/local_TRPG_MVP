@@ -16143,7 +16143,7 @@
     {
       "id": "baked_lava_stone",
       "name": "焼けた溶岩石",
-      "description": "熱の残る黒い石を布でくるみ、背嚢に押し込んだ。",
+      "description": "溶岩の熱を吸って黒く焼けた石。今もほんのりと温かい。",
       "category": "material",
       "icon": "/static/images/icon_baked_lava_stone.png"
     },
@@ -18974,7 +18974,7 @@
     {
       "id": "side_battlefield_bell",
       "title": "古戦場の鐘",
-      "description": "古戦場の外れの礼拝堂に、昔の鐘が残っているのです。誰かがあの鐘を正しく鳴らせば、死者は眠りにつけるはず……",
+      "description": "聖騎士リーゼは、古戦場の礼拝堂に残る鐘を正しく鳴らせば、眠れぬ死者を送れると信じている。",
       "kind": "side",
       "start_flag": [
         "accepted_battlefield_bell",
@@ -18986,11 +18986,11 @@
       "fail_flags": [],
       "stages": [
         {
-          "text": "弔いの鐘を鳴らす",
+          "text": "古戦場の礼拝堂で、弔いの鐘を鳴らす",
           "done_flag": "laid_battlefield_to_rest"
         },
         {
-          "text": "鐘を鳴らしたことを伝える",
+          "text": "リーゼか団長ヴァルターに報告する",
           "done_flag": "rewarded_battlefield_bell"
         }
       ]
@@ -18998,7 +18998,7 @@
     {
       "id": "side_workshop_hearth",
       "title": "工房の火床",
-      "description": "炉の火床が割れちまってね。熱に強い石が要るんだ。森の洞窟の奥に、溶岩で焼けた石があるって聞いたけど……",
+      "description": "城塞工房の炉の火床が割れた。鍛冶師ブリギッテは、熱に強い溶岩で焼けた石を探している。",
       "kind": "side",
       "start_flag": "accepted_workshop_hearth",
       "complete_flags": [
@@ -19007,7 +19007,7 @@
       "fail_flags": [],
       "stages": [
         {
-          "text": "焼けた石を渡す",
+          "text": "焼けた溶岩石をブリギッテに渡す（洞窟の溶岩の小部屋か、溶岩ドレイクから手に入る）",
           "done_flag": "rewarded_workshop_hearth"
         }
       ]

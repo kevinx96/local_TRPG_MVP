@@ -2418,7 +2418,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": false
     },
     {
@@ -2429,7 +2429,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": false
     },
     {
@@ -2440,7 +2440,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": false
     },
     {
@@ -2473,7 +2473,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true
     },
     {
@@ -2484,7 +2484,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true
     },
     {
@@ -2495,7 +2495,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "revision_prompt": "Use case: precise-object-edit. Edit target: the supplied 暁光の錫杖 inventory icon. Keep exactly the same painted silver ringed staff, engraved light markings, colors and square transparent canvas. Only reframe: make the entire staff smaller, centered, with a clearly empty transparent margin of at least 8 percent on all four sides, so neither tip touches or extends beyond the image edges. Preserve the thick-painted semi-realistic style and actual transparent alpha. No other objects, no text, no frame, no matte.",
       "revision_reason": "初稿两端过于贴边；只缩小物体、补足透明留白。"
@@ -2508,7 +2508,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true
     },
     {
@@ -2519,7 +2519,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true
     },
     {
@@ -2530,7 +2530,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true
     },
     {
@@ -2541,7 +2541,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true
     },
     {
@@ -2552,9 +2552,9 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": false,
-      "source_candidate": "assets/candidates/034/bg_oaksdawn_wall/candidate_01.png",
+      "source_candidate": "assets/candidates/034/bg_oaksdawn_wall/candidate_02.png",
       "preview_only": true
     },
     {
@@ -2565,7 +2565,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": false,
       "source_candidate": "assets/candidates/034/bg_cave_waterway/candidate_01.png",
       "preview_only": true
@@ -2578,7 +2578,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": false,
       "source_candidate": "assets/candidates/034/bg_oaksdawn_water_gate/candidate_01.png",
       "preview_only": true
@@ -2591,7 +2591,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "source_candidate": "assets/candidates/034/icons/icon_holy_silver.png",
       "preview_only": true
@@ -2604,7 +2604,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "source_candidate": "assets/candidates/034/icons/icon_dawn_sword.png",
       "preview_only": true
@@ -2617,7 +2617,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "revision_prompt": "Use case: precise-object-edit. Edit target: the supplied 暁光の錫杖 inventory icon. Keep exactly the same painted silver ringed staff, engraved light markings, colors and square transparent canvas. Only reframe: make the entire staff smaller, centered, with a clearly empty transparent margin of at least 8 percent on all four sides, so neither tip touches or extends beyond the image edges. Preserve the thick-painted semi-realistic style and actual transparent alpha. No other objects, no text, no frame, no matte.",
       "revision_reason": "初稿两端过于贴边；只缩小物体、补足透明留白。",
@@ -2632,7 +2632,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "source_candidate": "assets/candidates/034/icons/icon_dawn_staff.png",
       "preview_only": true
@@ -2645,7 +2645,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "source_candidate": "assets/candidates/034/icons/icon_dawn_dagger.png",
       "preview_only": true
@@ -2658,7 +2658,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "source_candidate": "assets/candidates/034/icons/icon_guardian_small_shield.png",
       "preview_only": true
@@ -2671,7 +2671,7 @@
       "reference_images": [],
       "generator": "image_gen",
       "generation_date": "2026-10-17",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "source_candidate": "assets/candidates/034/icons/icon_baked_lava_stone.png",
       "preview_only": true
@@ -3312,10 +3312,10 @@
         "assets/candidates/034/bg_oaksdawn_wall/candidate_01.png",
         "assets/candidates/034/bg_oaksdawn_wall/candidate_02.png"
       ],
-      "selected_candidate": "assets/candidates/034/bg_oaksdawn_wall/candidate_01.png",
-      "approved": false,
+      "selected_candidate": "assets/candidates/034/bg_oaksdawn_wall/candidate_02.png",
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：道をふさぐ大岩がより明確"
     },
     {
       "task": "034",
@@ -3326,9 +3326,9 @@
         "assets/candidates/034/bg_cave_waterway/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/034/bg_cave_waterway/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：狭い水路と紋章が最もはっきりしている"
     },
     {
       "task": "034",
@@ -3339,9 +3339,9 @@
         "assets/candidates/034/bg_oaksdawn_water_gate/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/034/bg_oaksdawn_water_gate/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：格子越しの松明の光が明確"
     },
     {
       "task": "034",
@@ -3351,9 +3351,9 @@
         "assets/candidates/034/icons/icon_holy_silver.png"
       ],
       "selected_candidate": "assets/candidates/034/icons/icon_holy_silver.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：试点图标全部采用。"
     },
     {
       "task": "034",
@@ -3363,9 +3363,9 @@
         "assets/candidates/034/icons/icon_dawn_sword.png"
       ],
       "selected_candidate": "assets/candidates/034/icons/icon_dawn_sword.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：试点图标全部采用。"
     },
     {
       "task": "034",
@@ -3375,9 +3375,9 @@
         "assets/candidates/034/icons/icon_dawn_khakkhara.png"
       ],
       "selected_candidate": "assets/candidates/034/icons/icon_dawn_khakkhara.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：试点图标全部采用。"
     },
     {
       "task": "034",
@@ -3387,9 +3387,9 @@
         "assets/candidates/034/icons/icon_dawn_staff.png"
       ],
       "selected_candidate": "assets/candidates/034/icons/icon_dawn_staff.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：试点图标全部采用。"
     },
     {
       "task": "034",
@@ -3399,9 +3399,9 @@
         "assets/candidates/034/icons/icon_dawn_dagger.png"
       ],
       "selected_candidate": "assets/candidates/034/icons/icon_dawn_dagger.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：试点图标全部采用。"
     },
     {
       "task": "034",
@@ -3411,9 +3411,9 @@
         "assets/candidates/034/icons/icon_guardian_small_shield.png"
       ],
       "selected_candidate": "assets/candidates/034/icons/icon_guardian_small_shield.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：试点图标全部采用。"
     },
     {
       "task": "034",
@@ -3423,9 +3423,9 @@
         "assets/candidates/034/icons/icon_baked_lava_stone.png"
       ],
       "selected_candidate": "assets/candidates/034/icons/icon_baked_lava_stone.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+      "selection_reason": "设计负责人定稿：试点图标全部采用。"
     }
   ],
   "todo_design": [
