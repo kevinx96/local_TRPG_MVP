@@ -1,0 +1,1014 @@
+{
+  "n": 500,
+  "seed": 20261017,
+  "rows": [
+    {
+      "location": "bone_field",
+      "character": "hero",
+      "weapon": "baseline",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 7.578,
+      "rounds": 3.396,
+      "basic_attacks": 0.026,
+      "basic_estimates": {
+        "skeleton_soldier": 8.8
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "level": 2,
+      "max_hp": 28
+    },
+    {
+      "location": "bone_field",
+      "character": "hero",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 3.81,
+      "rounds": 2.174,
+      "basic_attacks": 2.17,
+      "basic_estimates": {
+        "skeleton_soldier": 18.400000000000002
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "暁光の剣"
+      ],
+      "level": 2,
+      "max_hp": 28
+    },
+    {
+      "location": "ghoul_marsh",
+      "character": "hero",
+      "weapon": "baseline",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 5.094,
+      "rounds": 2.644,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "ghoul": 8.8,
+        "wraith": 8.8
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "level": 2,
+      "max_hp": 28
+    },
+    {
+      "location": "ghoul_marsh",
+      "character": "hero",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 3.502,
+      "rounds": 2.1,
+      "basic_attacks": 1.1,
+      "basic_estimates": {
+        "ghoul": 18.400000000000002,
+        "wraith": 18.400000000000002
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "暁光の剣"
+      ],
+      "level": 2,
+      "max_hp": 28
+    },
+    {
+      "location": "grave_chapel",
+      "character": "hero",
+      "weapon": "baseline",
+      "n": 500,
+      "win_rate": 0.884,
+      "hp_loss": 12.222,
+      "rounds": 4.29,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "grave_knight": 8.8
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "level": 2,
+      "max_hp": 28
+    },
+    {
+      "location": "grave_chapel",
+      "character": "hero",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 0.884,
+      "hp_loss": 12.222,
+      "rounds": 4.29,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "grave_knight": 18.400000000000002
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "暁光の剣"
+      ],
+      "level": 2,
+      "max_hp": 28
+    },
+    {
+      "location": "dragon_valley_loc",
+      "character": "hero",
+      "weapon": "ice_iron_greatsword",
+      "n": 500,
+      "win_rate": 0.9,
+      "hp_loss": 16.256,
+      "rounds": 9.424,
+      "basic_attacks": 6.418,
+      "basic_estimates": {
+        "ignis": 16.8
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "level": 5,
+      "max_hp": 40
+    },
+    {
+      "location": "dragon_valley_loc",
+      "character": "hero",
+      "weapon": "ice_katana",
+      "n": 500,
+      "win_rate": 0.924,
+      "hp_loss": 14.686,
+      "rounds": 7.09,
+      "basic_attacks": 4.438,
+      "basic_estimates": {
+        "ignis": 26.4
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "氷の太刀"
+      ],
+      "level": 5,
+      "max_hp": 40
+    },
+    {
+      "location": "dragon_valley_loc",
+      "character": "hero",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 0.822,
+      "hp_loss": 18.706,
+      "rounds": 12.162,
+      "basic_attacks": 8.68,
+      "basic_estimates": {
+        "ignis": 11.44
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "暁光の剣"
+      ],
+      "level": 5,
+      "max_hp": 40
+    },
+    {
+      "location": "draco_battle",
+      "character": "hero",
+      "weapon": "ice_iron_greatsword",
+      "n": 500,
+      "win_rate": 0.582,
+      "hp_loss": 26.094,
+      "rounds": 7.588,
+      "basic_attacks": 0.022,
+      "basic_estimates": {
+        "draco_human": 8.8,
+        "draco_dragon": 0.88
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "level": 5,
+      "max_hp": 40
+    },
+    {
+      "location": "draco_battle",
+      "character": "hero",
+      "weapon": "ice_katana",
+      "n": 500,
+      "win_rate": 0.604,
+      "hp_loss": 25.592,
+      "rounds": 7.368,
+      "basic_attacks": 1.5,
+      "basic_estimates": {
+        "draco_human": 14.72,
+        "draco_dragon": 1.84
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "氷の太刀"
+      ],
+      "level": 5,
+      "max_hp": 40
+    },
+    {
+      "location": "draco_battle",
+      "character": "hero",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 0.588,
+      "hp_loss": 25.924,
+      "rounds": 7.378,
+      "basic_attacks": 1.532,
+      "basic_estimates": {
+        "draco_human": 11.96,
+        "draco_dragon": 1.84
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "暁光の剣"
+      ],
+      "level": 5,
+      "max_hp": 40
+    },
+    {
+      "location": "bone_field",
+      "character": "cleric",
+      "weapon": "baseline",
+      "n": 500,
+      "win_rate": 0.994,
+      "hp_loss": 7.864,
+      "rounds": 3.636,
+      "basic_attacks": 3.37,
+      "basic_estimates": {
+        "skeleton_soldier": 9.68
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "聖なる杖",
+        "ローブ"
+      ],
+      "level": 2,
+      "max_hp": 26
+    },
+    {
+      "location": "bone_field",
+      "character": "cleric",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 5.36,
+      "rounds": 2.562,
+      "basic_attacks": 2.488,
+      "basic_estimates": {
+        "skeleton_soldier": 14.72
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "聖なる杖",
+        "ローブ",
+        "暁光の錫杖"
+      ],
+      "level": 2,
+      "max_hp": 26
+    },
+    {
+      "location": "ghoul_marsh",
+      "character": "cleric",
+      "weapon": "baseline",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 5.972,
+      "rounds": 2.712,
+      "basic_attacks": 1.686,
+      "basic_estimates": {
+        "ghoul": 9.68,
+        "wraith": 9.68
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "聖なる杖",
+        "ローブ"
+      ],
+      "level": 2,
+      "max_hp": 26
+    },
+    {
+      "location": "ghoul_marsh",
+      "character": "cleric",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 4.568,
+      "rounds": 2.22,
+      "basic_attacks": 1.214,
+      "basic_estimates": {
+        "ghoul": 14.72,
+        "wraith": 14.72
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "聖なる杖",
+        "ローブ",
+        "暁光の錫杖"
+      ],
+      "level": 2,
+      "max_hp": 26
+    },
+    {
+      "location": "grave_chapel",
+      "character": "cleric",
+      "weapon": "baseline",
+      "n": 500,
+      "win_rate": 0.706,
+      "hp_loss": 14.112,
+      "rounds": 4.24,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "grave_knight": 9.68
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "聖なる杖",
+        "ローブ"
+      ],
+      "level": 2,
+      "max_hp": 26
+    },
+    {
+      "location": "grave_chapel",
+      "character": "cleric",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 0.708,
+      "hp_loss": 14.082,
+      "rounds": 4.234,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "grave_knight": 14.72
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "聖なる杖",
+        "ローブ",
+        "暁光の錫杖"
+      ],
+      "level": 2,
+      "max_hp": 26
+    },
+    {
+      "location": "dragon_valley_loc",
+      "character": "cleric",
+      "weapon": "ice_iron_greatsword",
+      "n": 500,
+      "win_rate": 0.792,
+      "hp_loss": 17.284,
+      "rounds": 9.784,
+      "basic_attacks": 6.492,
+      "basic_estimates": {
+        "ignis": 15.12
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "聖なる杖",
+        "ローブ",
+        "氷鉄の大剣"
+      ],
+      "level": 5,
+      "max_hp": 38
+    },
+    {
+      "location": "dragon_valley_loc",
+      "character": "cleric",
+      "weapon": "ice_katana",
+      "n": 500,
+      "win_rate": 0.876,
+      "hp_loss": 14.894,
+      "rounds": 6.672,
+      "basic_attacks": 3.946,
+      "basic_estimates": {
+        "ignis": 27.28
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "聖なる杖",
+        "ローブ",
+        "氷の太刀"
+      ],
+      "level": 5,
+      "max_hp": 38
+    },
+    {
+      "location": "dragon_valley_loc",
+      "character": "cleric",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 0.668,
+      "hp_loss": 20.676,
+      "rounds": 12.326,
+      "basic_attacks": 2.234,
+      "basic_estimates": {
+        "ignis": 8.8
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "聖なる杖",
+        "ローブ",
+        "暁光の錫杖"
+      ],
+      "level": 5,
+      "max_hp": 38
+    },
+    {
+      "location": "draco_battle",
+      "character": "cleric",
+      "weapon": "ice_iron_greatsword",
+      "n": 500,
+      "win_rate": 0.59,
+      "hp_loss": 23.846,
+      "rounds": 7.03,
+      "basic_attacks": 0.398,
+      "basic_estimates": {
+        "draco_human": 8.8,
+        "draco_dragon": 0.88
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "聖なる杖",
+        "ローブ",
+        "氷鉄の大剣"
+      ],
+      "level": 5,
+      "max_hp": 38
+    },
+    {
+      "location": "draco_battle",
+      "character": "cleric",
+      "weapon": "ice_katana",
+      "n": 500,
+      "win_rate": 0.61,
+      "hp_loss": 23.438,
+      "rounds": 6.894,
+      "basic_attacks": 1.072,
+      "basic_estimates": {
+        "draco_human": 15.64,
+        "draco_dragon": 2.7600000000000002
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "聖なる杖",
+        "ローブ",
+        "氷の太刀"
+      ],
+      "level": 5,
+      "max_hp": 38
+    },
+    {
+      "location": "draco_battle",
+      "character": "cleric",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 0.588,
+      "hp_loss": 23.918,
+      "rounds": 6.938,
+      "basic_attacks": 0.356,
+      "basic_estimates": {
+        "draco_human": 9.200000000000001,
+        "draco_dragon": 0.92
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "聖なる杖",
+        "ローブ",
+        "暁光の錫杖"
+      ],
+      "level": 5,
+      "max_hp": 38
+    },
+    {
+      "location": "bone_field",
+      "character": "mage",
+      "weapon": "baseline",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 0.59,
+      "rounds": 1.148,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "skeleton_soldier": 5.4
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "魔導書",
+        "魔法のローブ"
+      ],
+      "level": 2,
+      "max_hp": 18
+    },
+    {
+      "location": "bone_field",
+      "character": "mage",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 0.59,
+      "rounds": 1.148,
+      "basic_attacks": 0.138,
+      "basic_estimates": {
+        "skeleton_soldier": 20.240000000000002
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "暁光の杖"
+      ],
+      "level": 2,
+      "max_hp": 18
+    },
+    {
+      "location": "ghoul_marsh",
+      "character": "mage",
+      "weapon": "baseline",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 3.902,
+      "rounds": 2.114,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "ghoul": 5.4,
+        "wraith": 5.4
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "魔導書",
+        "魔法のローブ"
+      ],
+      "level": 2,
+      "max_hp": 18
+    },
+    {
+      "location": "ghoul_marsh",
+      "character": "mage",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 3.902,
+      "rounds": 2.114,
+      "basic_attacks": 1.094,
+      "basic_estimates": {
+        "ghoul": 20.240000000000002,
+        "wraith": 20.240000000000002
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "暁光の杖"
+      ],
+      "level": 2,
+      "max_hp": 18
+    },
+    {
+      "location": "grave_chapel",
+      "character": "mage",
+      "weapon": "baseline",
+      "n": 500,
+      "win_rate": 0.776,
+      "hp_loss": 6.454,
+      "rounds": 2.428,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "grave_knight": 5.4
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "魔導書",
+        "魔法のローブ"
+      ],
+      "level": 2,
+      "max_hp": 18
+    },
+    {
+      "location": "grave_chapel",
+      "character": "mage",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 0.776,
+      "hp_loss": 6.454,
+      "rounds": 2.428,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "grave_knight": 20.240000000000002
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "暁光の杖"
+      ],
+      "level": 2,
+      "max_hp": 18
+    },
+    {
+      "location": "dragon_valley_loc",
+      "character": "mage",
+      "weapon": "ice_iron_greatsword",
+      "n": 500,
+      "win_rate": 0.694,
+      "hp_loss": 11.844,
+      "rounds": 5.512,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "ignis": 16.8
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "氷鉄の大剣"
+      ],
+      "level": 5,
+      "max_hp": 24
+    },
+    {
+      "location": "dragon_valley_loc",
+      "character": "mage",
+      "weapon": "ice_katana",
+      "n": 500,
+      "win_rate": 0.694,
+      "hp_loss": 11.844,
+      "rounds": 5.512,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "ignis": 29.04
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "氷の太刀"
+      ],
+      "level": 5,
+      "max_hp": 24
+    },
+    {
+      "location": "dragon_valley_loc",
+      "character": "mage",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 0.694,
+      "hp_loss": 11.844,
+      "rounds": 5.512,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "ignis": 12.32
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "暁光の杖"
+      ],
+      "level": 5,
+      "max_hp": 24
+    },
+    {
+      "location": "draco_battle",
+      "character": "mage",
+      "weapon": "ice_iron_greatsword",
+      "n": 500,
+      "win_rate": 0.706,
+      "hp_loss": 12.332,
+      "rounds": 3.272,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "draco_human": 8.8,
+        "draco_dragon": 0.88
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "氷鉄の大剣"
+      ],
+      "level": 5,
+      "max_hp": 24
+    },
+    {
+      "location": "draco_battle",
+      "character": "mage",
+      "weapon": "ice_katana",
+      "n": 500,
+      "win_rate": 0.706,
+      "hp_loss": 12.332,
+      "rounds": 3.272,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "draco_human": 16.560000000000002,
+        "draco_dragon": 2.7600000000000002
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "氷の太刀"
+      ],
+      "level": 5,
+      "max_hp": 24
+    },
+    {
+      "location": "draco_battle",
+      "character": "mage",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 0.706,
+      "hp_loss": 12.332,
+      "rounds": 3.272,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "draco_human": 12.88,
+        "draco_dragon": 1.84
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "暁光の杖"
+      ],
+      "level": 5,
+      "max_hp": 24
+    },
+    {
+      "location": "bone_field",
+      "character": "thief",
+      "weapon": "baseline",
+      "n": 500,
+      "win_rate": 0.984,
+      "hp_loss": 6.598,
+      "rounds": 4.364,
+      "basic_attacks": 0.122,
+      "basic_estimates": {
+        "skeleton_soldier": 7.6
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "ダガー",
+        "革の鎧"
+      ],
+      "level": 2,
+      "max_hp": 21
+    },
+    {
+      "location": "bone_field",
+      "character": "thief",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 3.274,
+      "rounds": 2.082,
+      "basic_attacks": 2.072,
+      "basic_estimates": {
+        "skeleton_soldier": 17.28
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "暁光の短剣"
+      ],
+      "level": 2,
+      "max_hp": 21
+    },
+    {
+      "location": "ghoul_marsh",
+      "character": "thief",
+      "weapon": "baseline",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 4.764,
+      "rounds": 2.976,
+      "basic_attacks": 0.002,
+      "basic_estimates": {
+        "ghoul": 7.6,
+        "wraith": 7.6
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "ダガー",
+        "革の鎧"
+      ],
+      "level": 2,
+      "max_hp": 21
+    },
+    {
+      "location": "ghoul_marsh",
+      "character": "thief",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 1,
+      "hp_loss": 2.796,
+      "rounds": 2.044,
+      "basic_attacks": 1.044,
+      "basic_estimates": {
+        "ghoul": 17.28,
+        "wraith": 17.28
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "暁光の短剣"
+      ],
+      "level": 2,
+      "max_hp": 21
+    },
+    {
+      "location": "grave_chapel",
+      "character": "thief",
+      "weapon": "baseline",
+      "n": 500,
+      "win_rate": 0.848,
+      "hp_loss": 8.02,
+      "rounds": 4.294,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "grave_knight": 7.6
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "ダガー",
+        "革の鎧"
+      ],
+      "level": 2,
+      "max_hp": 21
+    },
+    {
+      "location": "grave_chapel",
+      "character": "thief",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 0.848,
+      "hp_loss": 8.02,
+      "rounds": 4.294,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "grave_knight": 17.28
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "暁光の短剣"
+      ],
+      "level": 2,
+      "max_hp": 21
+    },
+    {
+      "location": "dragon_valley_loc",
+      "character": "thief",
+      "weapon": "ice_iron_greatsword",
+      "n": 500,
+      "win_rate": 0.782,
+      "hp_loss": 13.42,
+      "rounds": 6.618,
+      "basic_attacks": 0.156,
+      "basic_estimates": {
+        "ignis": 15.12
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "level": 5,
+      "max_hp": 30
+    },
+    {
+      "location": "dragon_valley_loc",
+      "character": "thief",
+      "weapon": "ice_katana",
+      "n": 500,
+      "win_rate": 0.79,
+      "hp_loss": 12.772,
+      "rounds": 6.534,
+      "basic_attacks": 3.982,
+      "basic_estimates": {
+        "ignis": 26.4
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "氷の太刀"
+      ],
+      "level": 5,
+      "max_hp": 30
+    },
+    {
+      "location": "dragon_valley_loc",
+      "character": "thief",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 0.782,
+      "hp_loss": 13.484,
+      "rounds": 6.644,
+      "basic_attacks": 0.176,
+      "basic_estimates": {
+        "ignis": 11.040000000000001
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "暁光の短剣"
+      ],
+      "level": 5,
+      "max_hp": 30
+    },
+    {
+      "location": "draco_battle",
+      "character": "thief",
+      "weapon": "ice_iron_greatsword",
+      "n": 500,
+      "win_rate": 0.65,
+      "hp_loss": 17.048,
+      "rounds": 5.594,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "draco_human": 8.8,
+        "draco_dragon": 0.88
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "level": 5,
+      "max_hp": 30
+    },
+    {
+      "location": "draco_battle",
+      "character": "thief",
+      "weapon": "ice_katana",
+      "n": 500,
+      "win_rate": 0.65,
+      "hp_loss": 17.048,
+      "rounds": 5.594,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "draco_human": 14.72,
+        "draco_dragon": 1.84
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "氷の太刀"
+      ],
+      "level": 5,
+      "max_hp": 30
+    },
+    {
+      "location": "draco_battle",
+      "character": "thief",
+      "weapon": "dawn",
+      "n": 500,
+      "win_rate": 0.65,
+      "hp_loss": 17.048,
+      "rounds": 5.594,
+      "basic_attacks": 0,
+      "basic_estimates": {
+        "draco_human": 11.52,
+        "draco_dragon": 1.92
+      },
+      "nonterminal": 0,
+      "equipment": [
+        "革の鎧",
+        "暁光の短剣"
+      ],
+      "level": 5,
+      "max_hp": 30
+    }
+  ],
+  "fingerprints": {
+    "scripts\\balance\\dawn.py": "c83b59237c33b92740b8c6139a4b25975c444cf2d6162051416b6f94ea52691e",
+    "host\\prompt\\processed\\dragon_rpg.json": "f194d53eaedad791006efb2aa0b9d2db0fcfbe1c21f49765ce27381a7cc58a14",
+    "host\\combat.py": "c1998d92976990214dbac2a2859aa7a37db269dbc586efeedd5f5aa0d2bf7929",
+    "host\\state.py": "5283aa41f4c712db51ce15bbcf17dc1cc4cba634f0f38ba60537d33607f3d1e1",
+    "host\\item_mechanics.py": "9114c15157e52402de2481306ff4cce5782b207390aabfdef6a30a8e257fdf42",
+    "scripts\\balance\\sim.py": "dc0596c91bdcfb1f2a60b9d40b6a251df451e6d77213fba5d0bdbcae3edc1b8e",
+    "scripts\\balance\\liese.py": "a82f8680a353f07384ca41257d1880d9bae20798d129cc92d9ec1e7e0505fffb",
+    "scripts\\balance\\checkpoints.py": "69f80add42f9ff019014566e77abc1f25f422d23fbf03076a36652e9f80543f5"
+  }
+}

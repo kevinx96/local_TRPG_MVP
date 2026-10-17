@@ -4,13 +4,14 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-17-v033",
+    "content_revision": "2026-10-17-v034",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
     "chapter5_v5": true,
     "rewards_battlefield_v031": true,
-    "oaksdawn_v033": true
+    "oaksdawn_v033": true,
+    "oaksdawn_v034": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -5380,7 +5381,15 @@
             }
           ],
           "result_text": "森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "laid_battlefield_to_rest"
+              },
+              "text": "森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。鐘が鳴って以来、霧は少しだけ薄くなった。"
+            }
+          ]
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
@@ -9217,6 +9226,28 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "pick_baked_lava_stone",
+          "text": "溶岩で焼けた石を拾う",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "溶岩で焼けた石を拾う"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "id": "baked_lava_stone",
+                "name": "焼けた溶岩石",
+                "quantity": 1
+              }
+            }
+          ],
+          "once": "picked_baked_lava_stone",
+          "hidden_after": "picked_baked_lava_stone",
+          "result_text": "熱の残る黒い石を布でくるみ、背嚢に押し込んだ。",
+          "risk_source": "action"
         }
       ],
       "objects": [],
@@ -10238,7 +10269,17 @@
             "reward_claimed:valley_ledge"
           ]
         },
-        "victory_gold_bonus": 10
+        "victory_gold_bonus": 10,
+        "victory_reward": {
+          "flag": "reward_claimed:baked_lava_stone",
+          "items": [
+            {
+              "id": "baked_lava_stone",
+              "name": "焼けた溶岩石",
+              "quantity": 1
+            }
+          ]
+        }
       }
     },
     {
@@ -11418,7 +11459,15 @@
       "combat": {
         "enemy_ids": [],
         "auto_start": false
-      }
+      },
+      "description_variants": [
+        {
+          "requirements": {
+            "flag": "laid_battlefield_to_rest"
+          },
+          "text": "森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。鐘が鳴って以来、霧は少しだけ薄くなった。"
+        }
+      ]
     },
     {
       "id": "bone_field",
@@ -11557,7 +11606,15 @@
           ],
           "result_text": "森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。",
           "visible_after": "passed_bone_field",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "laid_battlefield_to_rest"
+              },
+              "text": "森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。鐘が鳴って以来、霧は少しだけ薄くなった。"
+            }
+          ]
         }
       ],
       "npc_ids": [],
@@ -12051,6 +12108,33 @@
           ],
           "result_text": "黒い水が淀む沼地。泥の中から、腐った腕が何本も突き出している。",
           "risk_source": "destination"
+        },
+        {
+          "id": "ring_battlefield_bell",
+          "text": "弔いの鐘を鳴らす",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "弔いの鐘を鳴らす"
+          ],
+          "effects": [
+            {
+              "set_flag": "laid_battlefield_to_rest"
+            }
+          ],
+          "visible_after": "passed_grave_chapel",
+          "once": "laid_battlefield_to_rest",
+          "hidden_after": "laid_battlefield_to_rest",
+          "result_text": "錆びた鐘の綱を引くと、澄んだ音が古戦場に響き渡った。霧の向こうで、無数の影が静かに頭を垂れ、消えていった。",
+          "result_variants": [
+            {
+              "requirements": {
+                "companion_id": "paladin_liese"
+              },
+              "text": "錆びた鐘の綱を引くと、澄んだ音が古戦場に響き渡った。霧の向こうで、無数の影が静かに頭を垂れ、消えていった。\nリーゼは鐘の音が消えるまで目を閉じていた。「……ありがとう。これで、皆が眠れます」"
+            }
+          ],
+          "risk_source": "action"
         }
       ],
       "npc_ids": [],
@@ -12147,6 +12231,15 @@
           "narrate": true,
           "text": "祭壇の陰に、毛むくじゃらの小柄な影が見えた。「人の子か。ここは死者の道……生者が通る道ではないぞ」影は喉の奥で笑い、霧の中へ消えた。",
           "portrait_image": "/static/images/npc_zebok_merchant.png"
+        },
+        {
+          "once": "accepted_battlefield_bell",
+          "requirements": {
+            "companion_id": "paladin_liese"
+          },
+          "narrate": true,
+          "text": "「古戦場の外れの礼拝堂に、昔の鐘が残っているのです。誰かがあの鐘を正しく鳴らせば、死者は眠りにつけるはず……」",
+          "portrait_image": "/static/images/npc_liese.png"
         }
       ],
       "combat": {
@@ -12189,7 +12282,17 @@
             "reason": "墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。"
           }
         },
-        "victory_gold_bonus": 60
+        "victory_gold_bonus": 60,
+        "victory_reward": {
+          "flag": "reward_claimed:holy_silver",
+          "items": [
+            {
+              "id": "holy_silver",
+              "name": "聖銀",
+              "quantity": 1
+            }
+          ]
+        }
       }
     },
     {
@@ -12260,7 +12363,7 @@
       "scene_id": "oaksdawn",
       "title": "オークスドーンの水門",
       "description": "城塞の水門。鉄格子の向こうでは、洞窟から続く地下水路が暗く口を開けている。",
-      "background_image": "/static/images/bg_cave_waterway.png",
+      "background_image": "/static/images/bg_oaksdawn_water_gate.png",
       "npc_ids": [],
       "enemy_ids": [],
       "actions": [
@@ -12616,6 +12719,42 @@
           ],
           "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
           "risk_source": "destination"
+        },
+        {
+          "id": "report_battlefield_bell_hq",
+          "text": "鐘を鳴らしたことを伝える",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鐘を鳴らしたことを伝える"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "id": "holy_silver",
+                "name": "聖銀",
+                "quantity": 1
+              }
+            },
+            {
+              "gold_change": 100
+            },
+            {
+              "add_item": {
+                "id": "guardian_small_shield",
+                "name": "守護団の小盾",
+                "quantity": 1,
+                "slot": "accessory"
+              }
+            }
+          ],
+          "once": "rewarded_battlefield_bell",
+          "hidden_after": "rewarded_battlefield_bell",
+          "visible_after": "laid_battlefield_to_rest",
+          "visible_requirements": {},
+          "requirements": {},
+          "result_text": "ヴァルターは長いこと黙っていた。「十年、あの鐘の音を待っておった。礼を言う」",
+          "risk_source": "action"
         }
       ],
       "choices": [
@@ -12836,6 +12975,61 @@
           ],
           "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
           "risk_source": "destination"
+        },
+        {
+          "id": "ask_battlefield_bell",
+          "text": "鐘のことを詳しく聞く",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鐘のことを詳しく聞く"
+          ],
+          "effects": [],
+          "once": "accepted_battlefield_bell",
+          "hidden_after": "accepted_battlefield_bell",
+          "visible_after": "met_liese",
+          "result_text": "「古戦場の外れの礼拝堂に、昔の鐘が残っているのです。誰かがあの鐘を正しく鳴らせば、死者は眠りにつけるはず……」",
+          "risk_source": "action"
+        },
+        {
+          "id": "report_battlefield_bell_chapel",
+          "text": "鐘を鳴らしたことを伝える",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鐘を鳴らしたことを伝える"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "id": "holy_silver",
+                "name": "聖銀",
+                "quantity": 1
+              }
+            },
+            {
+              "gold_change": 100
+            },
+            {
+              "add_item": {
+                "id": "guardian_small_shield",
+                "name": "守護団の小盾",
+                "quantity": 1,
+                "slot": "accessory"
+              }
+            }
+          ],
+          "once": "rewarded_battlefield_bell",
+          "hidden_after": "rewarded_battlefield_bell",
+          "visible_after": "laid_battlefield_to_rest",
+          "visible_requirements": {
+            "not_companion_id": "paladin_liese"
+          },
+          "requirements": {
+            "not_companion_id": "paladin_liese"
+          },
+          "result_text": "リーゼは胸に手を当てて、深く頭を下げた。「団長にも伝えておきます。……これは、守護団からのお礼です」",
+          "risk_source": "action"
         }
       ],
       "choices": [
@@ -12984,6 +13178,170 @@
           ],
           "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
           "risk_source": "destination"
+        },
+        {
+          "id": "forge_dawn_weapon",
+          "text": "光の紋を刻んでもらう",
+          "preview": "聖銀 ×1 / 30G",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "光の紋を刻んでもらう"
+          ],
+          "effects": [
+            {
+              "remove_item": {
+                "name": "聖銀",
+                "quantity": 1
+              }
+            },
+            {
+              "gold_change": -30
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "character_id": "hero"
+                },
+                "then": [
+                  {
+                    "add_item": {
+                      "id": "dawn_sword",
+                      "name": "暁光の剣",
+                      "quantity": 1,
+                      "slot": "weapon"
+                    }
+                  },
+                  {
+                    "equip_item": "暁光の剣"
+                  }
+                ]
+              }
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "character_id": "cleric"
+                },
+                "then": [
+                  {
+                    "add_item": {
+                      "id": "dawn_khakkhara",
+                      "name": "暁光の錫杖",
+                      "quantity": 1,
+                      "slot": "weapon"
+                    }
+                  },
+                  {
+                    "equip_item": "暁光の錫杖"
+                  }
+                ]
+              }
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "character_id": "mage"
+                },
+                "then": [
+                  {
+                    "add_item": {
+                      "id": "dawn_staff",
+                      "name": "暁光の杖",
+                      "quantity": 1,
+                      "slot": "weapon"
+                    }
+                  },
+                  {
+                    "equip_item": "暁光の杖"
+                  }
+                ]
+              }
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "character_id": "thief"
+                },
+                "then": [
+                  {
+                    "add_item": {
+                      "id": "dawn_dagger",
+                      "name": "暁光の短剣",
+                      "quantity": 1,
+                      "slot": "weapon"
+                    }
+                  },
+                  {
+                    "equip_item": "暁光の短剣"
+                  }
+                ]
+              }
+            }
+          ],
+          "once": "forged_dawn_weapon",
+          "hidden_after": "forged_dawn_weapon",
+          "visible_requirements": {
+            "has_item": "聖銀"
+          },
+          "requirements": {
+            "all": [
+              {
+                "has_item": "聖銀"
+              },
+              {
+                "gold_gte": 30
+              }
+            ]
+          },
+          "result_text": "ブリギッテは聖銀を炉にくべ、打ち延ばした刃に細い光の紋を一本ずつ刻んでいった。「ほらよ。死者相手なら、こいつがいちばん効く」",
+          "risk_source": "action"
+        },
+        {
+          "id": "ask_workshop_hearth",
+          "text": "何か困っていることは？",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "何か困っていることは？"
+          ],
+          "effects": [],
+          "once": "accepted_workshop_hearth",
+          "hidden_after": "accepted_workshop_hearth",
+          "visible_after": "met_brigitte",
+          "result_text": "「炉の火床が割れちまってね。熱に強い石が要るんだ。森の洞窟の奥に、溶岩で焼けた石があるって聞いたけど……」",
+          "risk_source": "action"
+        },
+        {
+          "id": "deliver_baked_lava_stone",
+          "text": "焼けた石を渡す",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "焼けた石を渡す"
+          ],
+          "effects": [
+            {
+              "remove_item": {
+                "name": "焼けた溶岩石",
+                "quantity": 1
+              }
+            },
+            {
+              "reforge_armor": {
+                "defense_bonus": 1,
+                "suffix": "＋",
+                "fallback_item": "守護団の鎖帷子"
+              }
+            }
+          ],
+          "once": "rewarded_workshop_hearth",
+          "hidden_after": "rewarded_workshop_hearth",
+          "visible_after": "accepted_workshop_hearth",
+          "requirements": {
+            "has_item": "焼けた溶岩石"
+          },
+          "result_text": "ブリギッテは石を叩いて音を確かめ、にやりと笑った。「上等だ。礼に、あんたの鎧を打ち直してやるよ」",
+          "risk_source": "action"
         }
       ],
       "choices": [
@@ -13130,7 +13488,15 @@
             }
           ],
           "result_text": "城門を出て街道を南へ下ると、やがて白い霧が足元から立ちのぼってきた。",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "laid_battlefield_to_rest"
+              },
+              "text": "城門を出て街道を南へ下ると、やがて白い霧が足元から立ちのぼってきた。鐘が鳴って以来、霧は少しだけ薄くなった。"
+            }
+          ]
         },
         {
           "id": "oaksdawn_east_pass",
@@ -14186,6 +14552,93 @@
         "kind": "armor",
         "defense": 2
       }
+    },
+    {
+      "id": "holy_silver",
+      "name": "聖銀",
+      "description": "光を通すと淡く輝く銀。ブリギッテの工房で、光の紋を刻む武器の材料になる。",
+      "category": "material",
+      "icon": "/static/images/icon_holy_silver.png"
+    },
+    {
+      "id": "baked_lava_stone",
+      "name": "焼けた溶岩石",
+      "description": "熱の残る黒い石を布でくるみ、背嚢に押し込んだ。",
+      "category": "material",
+      "icon": "/static/images/icon_baked_lava_stone.png"
+    },
+    {
+      "id": "dawn_sword",
+      "name": "暁光の剣",
+      "description": "刃に昇る太陽の紋を刻んだ聖銀の剣。",
+      "category": "equipment",
+      "slot": "weapon",
+      "combat": {
+        "kind": "weapon",
+        "name": "暁光の剣",
+        "damage": "2d6+str/3+2",
+        "accuracy": 92,
+        "element": "holy"
+      },
+      "icon": "/static/images/icon_dawn_sword.png"
+    },
+    {
+      "id": "dawn_khakkhara",
+      "name": "暁光の錫杖",
+      "description": "光の紋が祈りを増幅する聖銀の錫杖。",
+      "category": "equipment",
+      "slot": "weapon",
+      "combat": {
+        "kind": "weapon",
+        "name": "暁光の錫杖",
+        "damage": "1d8+wis/3+2",
+        "accuracy": 92,
+        "element": "holy",
+        "skill_healing_bonus": 2
+      },
+      "icon": "/static/images/icon_dawn_khakkhara.png"
+    },
+    {
+      "id": "dawn_staff",
+      "name": "暁光の杖",
+      "description": "先端の聖銀が、魔力を光に変える杖。",
+      "category": "equipment",
+      "slot": "weapon",
+      "combat": {
+        "kind": "weapon",
+        "name": "暁光の杖",
+        "damage": "1d8+int/3+4",
+        "accuracy": 92,
+        "element": "holy"
+      },
+      "icon": "/static/images/icon_dawn_staff.png"
+    },
+    {
+      "id": "dawn_dagger",
+      "name": "暁光の短剣",
+      "description": "闇に紛れても淡く光る、聖銀の短剣。",
+      "category": "equipment",
+      "slot": "weapon",
+      "combat": {
+        "kind": "weapon",
+        "name": "暁光の短剣",
+        "damage": "2d4+dex/4+3",
+        "accuracy": 96,
+        "element": "holy"
+      },
+      "icon": "/static/images/icon_dawn_dagger.png"
+    },
+    {
+      "id": "guardian_small_shield",
+      "name": "守護団の小盾",
+      "category": "equipment",
+      "slot": "accessory",
+      "description": "樫と太陽の紋章を描いた小さな盾。",
+      "combat": {
+        "kind": "armor",
+        "defense": 1
+      },
+      "icon": "/static/images/icon_guardian_small_shield.png"
     }
   ],
   "clues": [
@@ -16931,6 +17384,47 @@
         }
       ],
       "fail_flags": []
+    },
+    {
+      "id": "side_battlefield_bell",
+      "title": "古戦場の鐘",
+      "description": "古戦場の外れの礼拝堂に、昔の鐘が残っているのです。誰かがあの鐘を正しく鳴らせば、死者は眠りにつけるはず……",
+      "kind": "side",
+      "start_flag": [
+        "accepted_battlefield_bell",
+        "laid_battlefield_to_rest"
+      ],
+      "complete_flags": [
+        "rewarded_battlefield_bell"
+      ],
+      "fail_flags": [],
+      "stages": [
+        {
+          "text": "弔いの鐘を鳴らす",
+          "done_flag": "laid_battlefield_to_rest"
+        },
+        {
+          "text": "鐘を鳴らしたことを伝える",
+          "done_flag": "rewarded_battlefield_bell"
+        }
+      ]
+    },
+    {
+      "id": "side_workshop_hearth",
+      "title": "工房の火床",
+      "description": "炉の火床が割れちまってね。熱に強い石が要るんだ。森の洞窟の奥に、溶岩で焼けた石があるって聞いたけど……",
+      "kind": "side",
+      "start_flag": "accepted_workshop_hearth",
+      "complete_flags": [
+        "rewarded_workshop_hearth"
+      ],
+      "fail_flags": [],
+      "stages": [
+        {
+          "text": "焼けた石を渡す",
+          "done_flag": "rewarded_workshop_hearth"
+        }
+      ]
     }
   ],
   "shops": [
@@ -17149,6 +17643,11 @@
         {
           "item_id": "guardian_chainmail",
           "price": 40,
+          "stock": null
+        },
+        {
+          "item_id": "holy_silver",
+          "price": 120,
           "stock": null
         }
       ]

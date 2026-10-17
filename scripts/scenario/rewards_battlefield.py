@@ -276,7 +276,8 @@ def finish_battlefield(pack: dict[str, Any]) -> None:
     for identifier in ("old_battlefield", "ruined_watchtower"):
         locations[identifier]["combat"] = {"enemy_ids": [], "auto_start": False}
     for event in locations["grave_chapel"]["entry_events"]:
-        event["portrait_image"] = "/static/images/npc_zebok_merchant.png"
+        if event.get("once") == "battlefield_zebok_seen":
+            event["portrait_image"] = "/static/images/npc_zebok_merchant.png"
     knight = next(enemy for enemy in pack["enemies"] if enemy["id"] == "grave_knight")
     knight.update(hp=60, max_hp=60)
     knight["combat"]["basic_attack"]["damage"] = "2d8+5"

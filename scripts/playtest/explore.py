@@ -222,7 +222,7 @@ def explore(character: str, seed: int, max_steps: int = 150, *, output: Optional
 
 
 def write_report(results: list[dict[str, Any]], path: Path, transcript_dir: Path) -> None:
-    lines = ["# 离线试玩回归（033）", "",
+    lines = [f"# 离线试玩回归（{path.stem}）", "",
              "4 职业 × 2 固定种子（20261013、20261014），每局最多 150 步；战斗每个指令和结算各占一步。",
              "首次战斗死亡后重来一次，选择次数及随机流继续累计。选项、判定和战斗的随机数均固定。",
              "031：奇数种子首次到森林出口时优先古戦場；进入后依次潜行骨野、访问塔、取外套休息、潜行沼地、通过礼拝堂。诅咒持有者使用专属放行，至少2局通过新地图。",
@@ -250,7 +250,7 @@ def write_report(results: list[dict[str, Any]], path: Path, transcript_dir: Path
     for result in results:
         name = f"{result['character']}-{result['seed']}.md"
         lines.append(f"- [{name}]({transcript_dir.name}/{name})")
-    lines += ["", "## 复现", "", "```powershell", "python -m scripts.playtest.explore", "```", "",
+    lines += ["", "## 复现", "", "```powershell", f'python -m scripts.playtest.explore --output "{path.as_posix()}"', "```", "",
               "剧本 SHA-256：", ""]
     for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
         digest = hashlib.sha256((ROOT / "host/prompt/processed" / filename).read_bytes()).hexdigest()

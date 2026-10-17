@@ -1,0 +1,84 @@
+[
+  {
+    "view": "workshop",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "craft choice visible",
+      "craft requirements met",
+      "material and gold cost visible",
+      "no page horizontal overflow",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "inventory",
+    "width": 1440,
+    "height": 1080,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "four earned item icons shown",
+      "icons decoded at 32px with decorative alt",
+      "legacy items without icons render",
+      "crafted weapon equipped",
+      "inventory has no horizontal overflow",
+      "icon row remains interactive",
+      "no page horizontal overflow",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "wall",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "no page horizontal overflow",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "waterway",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "no page horizontal overflow",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "water_gate",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "water gate has dedicated background",
+      "no page horizontal overflow",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "inventory_mobile",
+    "width": 390,
+    "height": 844,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "four earned item icons shown",
+      "icons decoded at 32px with decorative alt",
+      "legacy items without icons render",
+      "crafted weapon equipped",
+      "inventory has no horizontal overflow",
+      "icon row remains interactive",
+      "no page horizontal overflow",
+      "no browser exceptions"
+    ]
+  }
+]

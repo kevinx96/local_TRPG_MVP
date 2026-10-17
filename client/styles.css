@@ -935,6 +935,7 @@ button, select, textarea, input { font: inherit; }
 .inventory-item:hover { border-color: rgba(212,169,75,.4); background: var(--panel-3); }
 .item-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .item-name { font-weight: 700; font-size: 13px; color: var(--text); }
+.item-icon { width: 32px; height: 32px; object-fit: contain; vertical-align: middle; margin-right: 8px; border-radius: var(--radius-sm); }
 .item-toggle { font-size: 10px; color: var(--muted); transition: transform 0.2s; }
 .inventory-item.expanded .item-toggle { transform: rotate(180deg); }
 .item-details { display: none; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); font-size: 12px; line-height: 1.6; }

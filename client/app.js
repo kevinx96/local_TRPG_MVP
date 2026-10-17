@@ -762,6 +762,17 @@ function renderInventory(items) {
       ` : ''}
     `;
 
+    if (typeof item.icon === "string" && item.icon.trim()) {
+      const icon = document.createElement("img");
+      icon.className = "item-icon";
+      icon.alt = "";
+      icon.width = 32;
+      icon.height = 32;
+      icon.addEventListener("error", () => icon.remove(), { once: true });
+      icon.src = item.icon;
+      li.querySelector(".item-name").prepend(icon);
+    }
+
     if (hasDetails) {
       const header = li.querySelector(".item-header");
       const toggle = () => header.setAttribute("aria-expanded", li.classList.toggle("expanded"));

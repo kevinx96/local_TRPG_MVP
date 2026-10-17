@@ -964,6 +964,7 @@ def _victory_delta(session: dict[str, Any], enemies: list[dict[str, Any]], encou
     extra = _merge_combat_deltas(extra, _effects_to_state_delta(encounter.get("victory_bonus_effects", []), session))
     if encounter.get("encounter_class") not in {"scripted_loss", "guest"}:
         extra = _merge_combat_deltas(extra, one_time_reward(session, encounter.get("one_time_reward", {})))
+        extra = _merge_combat_deltas(extra, one_time_reward(session, encounter.get("victory_reward", {})))
     by_character = encounter.get("victory_effects_by_character")
     character = session.get("character", {}) if isinstance(session.get("character"), dict) else {}
     character_id = str(character.get("id") or character.get("character_id") or "")

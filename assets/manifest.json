@@ -2284,21 +2284,6 @@
     },
     {
       "task": "033",
-      "id": "bg_cave_waterway",
-      "file": "client/images/bg_cave_waterway.png",
-      "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_cave_waterway, candidate 01. Primary request: 温泉の湯が流れる地下水路、壁の騎士団紋章（樫の葉と昇る太陽）。A narrow underground stone waterway carrying warm hot-spring water deeper through natural rock, an old knightly emblem of oak leaves and a rising sun carved in the wall. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy environments, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 background composition, readable environment for a visual novel. No foreground characters, no text, letters, UI, watermark. One image only.",
-      "reference_images": [
-        "client/images/bg_festival_town.png",
-        "client/images/bg_forge.png",
-        "client/images/bg_inn.png"
-      ],
-      "generation_date": "2026-10-17",
-      "approved": false,
-      "source_candidate": "assets/candidates/033/bg_cave_waterway/candidate_01.png",
-      "preview_only": true
-    },
-    {
-      "task": "033",
       "id": "bg_oaksdawn_square",
       "file": "client/images/bg_oaksdawn_square.png",
       "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_square, candidate 01. Primary request: 樫と石の城塞都市の大通り、白い外套の兵士、昇る太陽の旗。Cobblestone main street flanked by oak-timber barracks and workshops, white-cloaked guards on stone walls watching an eastern pass, rising-sun headquarters banner. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 1: balanced frontal view. No text, letters, UI, logo or watermark. One image only.",
@@ -2374,21 +2359,6 @@
     },
     {
       "task": "033",
-      "id": "bg_oaksdawn_wall",
-      "file": "client/images/bg_oaksdawn_wall.png",
-      "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_oaksdawn_wall, candidate 01. Primary request: 城壁の見張り台。城壁の上からは、南に霧の古戦場、東に白く凍りついた峠が見渡せる。View from fortress stone battlements overlooking misty old battlefield to the south and frost-covered mountain pass to the east. Style: match the viewed project references bg_festival_town.png, bg_forge.png and bg_inn.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Wide 16:9 composition, readable environment for visual novel. No large foreground character. Candidate 1: balanced frontal view. No text, letters, UI, logo or watermark. One image only.",
-      "reference_images": [
-        "client/images/bg_festival_town.png",
-        "client/images/bg_forge.png",
-        "client/images/bg_inn.png"
-      ],
-      "generation_date": "2026-10-17",
-      "approved": false,
-      "source_candidate": "assets/candidates/033/bg_oaksdawn_wall/candidate_01.png",
-      "preview_only": true
-    },
-    {
-      "task": "033",
       "id": "npc_walter",
       "file": "client/images/npc_walter.png",
       "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel standing NPC sprite, npc_walter, candidate 01. Primary request: 守護団長ヴァルター。白髪の老騎士、白い外套、樫と太陽の紋章。Elderly white-haired knight commander in white cloak bearing oak-leaf and rising-sun insignia. Style: match the viewed project references npc_robin.png and npc_blacksmith.png, detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, atmospheric dimensional lighting and controlled saturation. Portrait 2:3 composition, entire character and all weapons/tools from head to boots fully visible with safe margins. Actual transparent background with clean alpha, no ground plane, no shadow rectangle, no scenery, no white matte. Candidate 1: balanced frontal view. No text, letters, UI, logo or watermark. One image only.",
@@ -2427,6 +2397,283 @@
       "generation_date": "2026-10-17",
       "approved": true,
       "source_candidate": "assets/candidates/033/npc_brigitte/candidate_01.png",
+      "preview_only": true
+    },
+    {
+      "task": "034",
+      "id": "bg_oaksdawn_wall",
+      "file": "assets/candidates/034/bg_oaksdawn_wall/candidate_01.png",
+      "prompt": "Use case: stylized-concept. Asset type: visual novel fantasy background, 16:9 landscape. Style: detailed semi-realistic Japanese fantasy painting, thick painterly brushwork, textured stone, warm directional light and restrained saturation matching the project's Oaksdawn backgrounds. No text, letters, labels, watermark, UI or prominent characters. Primary request: 城壁の上の見張り台。雪なし。南に白い霧に沈む古戦場、東に岩肌のむき出しになった峠と、道をふさぐ崩れた大岩。朝の光。 View outward from a stone fortress rampart watch platform; battlefield in low white fog to the south, exposed rocky mountain pass and huge collapsed boulders clearly blocking the road to the east. No snow or frost anywhere. Candidate 01.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": false
+    },
+    {
+      "task": "034",
+      "id": "bg_cave_waterway",
+      "file": "assets/candidates/034/bg_cave_waterway/candidate_01.png",
+      "prompt": "Use case: stylized-concept. Asset type: visual novel fantasy background, 16:9 landscape. Style: detailed semi-realistic Japanese fantasy painting, thick painterly brushwork, textured stone, warm directional light and restrained saturation matching the project's Oaksdawn backgrounds. No text, letters, labels, watermark, UI or prominent characters. Primary request: 狭い天然の岩のトンネル、足元を流れる温かい湯気の立つ細い水路、岩壁にかすかに残る樫の葉と昇る太陽の紋章。 Human-sized very narrow natural rock passage, low close walls, only a thin ankle-width rivulet at the feet with faint warm steam. A faint old oak-leaf and rising-sun emblem carved into nearby rock. No grand hall, broad river, pool, waterfall, snow or monumental architecture. Candidate 01.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": false
+    },
+    {
+      "task": "034",
+      "id": "bg_oaksdawn_water_gate",
+      "file": "assets/candidates/034/bg_oaksdawn_water_gate/candidate_01.png",
+      "prompt": "Use case: stylized-concept. Asset type: visual novel fantasy background, 16:9 landscape. Style: detailed semi-realistic Japanese fantasy painting, thick painterly brushwork, textured stone, warm directional light and restrained saturation matching the project's Oaksdawn backgrounds. No text, letters, labels, watermark, UI or prominent characters. Primary request: トンネルの出口をふさぐ鉄格子の水門、格子の向こうに松明の光と城塞の石壁。 Looking out from a confined natural rocky tunnel at an iron barred water gate fully blocking the exit. A thin trickle of water at the feet. Through the bars, torchlight illuminates the stone walls of a fortress. Human-scale confined space; no large cavern or waterfall. Candidate 01.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": false
+    },
+    {
+      "task": "034",
+      "id": "bg_oaksdawn_wall",
+      "file": "assets/candidates/034/bg_oaksdawn_wall/candidate_02.png",
+      "prompt": "Use case: stylized-concept. Asset type: visual novel fantasy background, 16:9 landscape. Style: detailed semi-realistic Japanese fantasy painting, thick painterly brushwork, textured stone, warm directional light and restrained saturation matching the project's Oaksdawn backgrounds. No text, letters, labels, watermark, UI or prominent characters. Primary request: 城壁の上の見張り台。雪なし。南に白い霧に沈む古戦場、東に岩肌のむき出しになった峠と、道をふさぐ崩れた大岩。朝の光。 View outward from a stone fortress rampart watch platform; battlefield in low white fog to the south, exposed rocky mountain pass and huge collapsed boulders clearly blocking the road to the east. No snow or frost anywhere. Candidate 02, independent second composition.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": false
+    },
+    {
+      "task": "034",
+      "id": "bg_cave_waterway",
+      "file": "assets/candidates/034/bg_cave_waterway/candidate_02.png",
+      "prompt": "Use case: stylized-concept. Asset type: visual novel fantasy background, 16:9 landscape. Style: detailed semi-realistic Japanese fantasy painting, thick painterly brushwork, textured stone, warm directional light and restrained saturation matching the project's Oaksdawn backgrounds. No text, letters, labels, watermark, UI or prominent characters. Primary request: 狭い天然の岩のトンネル、足元を流れる温かい湯気の立つ細い水路、岩壁にかすかに残る樫の葉と昇る太陽の紋章。 Human-sized very narrow natural rock passage, low close walls, only a thin ankle-width rivulet at the feet with faint warm steam. A faint old oak-leaf and rising-sun emblem carved into nearby rock. No grand hall, broad river, pool, waterfall, snow or monumental architecture. Candidate 02, independent second composition.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": false
+    },
+    {
+      "task": "034",
+      "id": "bg_oaksdawn_water_gate",
+      "file": "assets/candidates/034/bg_oaksdawn_water_gate/candidate_02.png",
+      "prompt": "Use case: stylized-concept. Asset type: visual novel fantasy background, 16:9 landscape. Style: detailed semi-realistic Japanese fantasy painting, thick painterly brushwork, textured stone, warm directional light and restrained saturation matching the project's Oaksdawn backgrounds. No text, letters, labels, watermark, UI or prominent characters. Primary request: トンネルの出口をふさぐ鉄格子の水門、格子の向こうに松明の光と城塞の石壁。 Looking out from a confined natural rocky tunnel at an iron barred water gate fully blocking the exit. A thin trickle of water at the feet. Through the bars, torchlight illuminates the stone walls of a fortress. Human-scale confined space; no large cavern or waterfall. Candidate 02, independent second composition.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": false
+    },
+    {
+      "task": "034",
+      "id": "icon_holy_silver",
+      "file": "assets/candidates/034/icons/icon_holy_silver.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured metal and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, safe margins, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 聖銀。光を通すと淡く輝く銀。ブリギッテの工房で、光の紋を刻む武器の材料になる。 One piece of silver forging material, faintly glowing in light.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true
+    },
+    {
+      "task": "034",
+      "id": "icon_dawn_sword",
+      "file": "assets/candidates/034/icons/icon_dawn_sword.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured silver metal and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, safe margins, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 暁光の剣。刃に昇る太陽の紋を刻んだ聖銀の剣。 One holy silver sword with a rising-sun emblem engraved on its blade and fine lines of pale light; full blade, guard and grip in a diagonal composition.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true
+    },
+    {
+      "task": "034",
+      "id": "icon_dawn_khakkhara",
+      "file": "assets/candidates/034/icons/icon_dawn_khakkhara.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured silver metal and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, safe margins, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 暁光の錫杖。光の紋が祈りを増幅する聖銀の錫杖。 One holy silver cleric's khakkhara ringed staff with engraved light markings, full shaft and ringed finial visible diagonally.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true,
+      "revision_prompt": "Use case: precise-object-edit. Edit target: the supplied 暁光の錫杖 inventory icon. Keep exactly the same painted silver ringed staff, engraved light markings, colors and square transparent canvas. Only reframe: make the entire staff smaller, centered, with a clearly empty transparent margin of at least 8 percent on all four sides, so neither tip touches or extends beyond the image edges. Preserve the thick-painted semi-realistic style and actual transparent alpha. No other objects, no text, no frame, no matte.",
+      "revision_reason": "初稿两端过于贴边；只缩小物体、补足透明留白。"
+    },
+    {
+      "task": "034",
+      "id": "icon_dawn_staff",
+      "file": "assets/candidates/034/icons/icon_dawn_staff.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured silver metal and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, safe margins, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 暁光の杖。先端の聖銀が、魔力を光に変える杖。 One mage's staff with holy silver at its tip converting magical energy into restrained pale light. Full shaft and silver tip visible diagonally.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true
+    },
+    {
+      "task": "034",
+      "id": "icon_dawn_dagger",
+      "file": "assets/candidates/034/icons/icon_dawn_dagger.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured materials and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, 8 percent transparent margin on every side, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 暁光の短剣。闇に紛れても淡く光る、聖銀の短剣。 One short holy silver dagger with fine engraved lines of pale light, full short blade, guard and grip visible diagonally.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true
+    },
+    {
+      "task": "034",
+      "id": "icon_guardian_small_shield",
+      "file": "assets/candidates/034/icons/icon_guardian_small_shield.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured materials and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, 8 percent transparent margin on every side, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 守護団の小盾。樫と太陽の紋章を描いた小さな盾。 One small shield bearing a painted oak and sun emblem, medieval fortress guardians' equipment.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true
+    },
+    {
+      "task": "034",
+      "id": "icon_baked_lava_stone",
+      "file": "assets/candidates/034/icons/icon_baked_lava_stone.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured materials and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, 8 percent transparent margin on every side, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 焼けた溶岩石。溶岩で焼けた石。熱の残る黒い石。 One heat-resistant black stone baked by lava, dark cooled rough rocky surface with faint remaining heat.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true
+    },
+    {
+      "task": "034",
+      "id": "bg_oaksdawn_wall",
+      "file": "client/images/bg_oaksdawn_wall.png",
+      "prompt": "Use case: stylized-concept. Asset type: visual novel fantasy background, 16:9 landscape. Style: detailed semi-realistic Japanese fantasy painting, thick painterly brushwork, textured stone, warm directional light and restrained saturation matching the project's Oaksdawn backgrounds. No text, letters, labels, watermark, UI or prominent characters. Primary request: 城壁の上の見張り台。雪なし。南に白い霧に沈む古戦場、東に岩肌のむき出しになった峠と、道をふさぐ崩れた大岩。朝の光。 View outward from a stone fortress rampart watch platform; battlefield in low white fog to the south, exposed rocky mountain pass and huge collapsed boulders clearly blocking the road to the east. No snow or frost anywhere. Candidate 01.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": false,
+      "source_candidate": "assets/candidates/034/bg_oaksdawn_wall/candidate_01.png",
+      "preview_only": true
+    },
+    {
+      "task": "034",
+      "id": "bg_cave_waterway",
+      "file": "client/images/bg_cave_waterway.png",
+      "prompt": "Use case: stylized-concept. Asset type: visual novel fantasy background, 16:9 landscape. Style: detailed semi-realistic Japanese fantasy painting, thick painterly brushwork, textured stone, warm directional light and restrained saturation matching the project's Oaksdawn backgrounds. No text, letters, labels, watermark, UI or prominent characters. Primary request: 狭い天然の岩のトンネル、足元を流れる温かい湯気の立つ細い水路、岩壁にかすかに残る樫の葉と昇る太陽の紋章。 Human-sized very narrow natural rock passage, low close walls, only a thin ankle-width rivulet at the feet with faint warm steam. A faint old oak-leaf and rising-sun emblem carved into nearby rock. No grand hall, broad river, pool, waterfall, snow or monumental architecture. Candidate 01.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": false,
+      "source_candidate": "assets/candidates/034/bg_cave_waterway/candidate_01.png",
+      "preview_only": true
+    },
+    {
+      "task": "034",
+      "id": "bg_oaksdawn_water_gate",
+      "file": "client/images/bg_oaksdawn_water_gate.png",
+      "prompt": "Use case: stylized-concept. Asset type: visual novel fantasy background, 16:9 landscape. Style: detailed semi-realistic Japanese fantasy painting, thick painterly brushwork, textured stone, warm directional light and restrained saturation matching the project's Oaksdawn backgrounds. No text, letters, labels, watermark, UI or prominent characters. Primary request: トンネルの出口をふさぐ鉄格子の水門、格子の向こうに松明の光と城塞の石壁。 Looking out from a confined natural rocky tunnel at an iron barred water gate fully blocking the exit. A thin trickle of water at the feet. Through the bars, torchlight illuminates the stone walls of a fortress. Human-scale confined space; no large cavern or waterfall. Candidate 01.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": false,
+      "source_candidate": "assets/candidates/034/bg_oaksdawn_water_gate/candidate_01.png",
+      "preview_only": true
+    },
+    {
+      "task": "034",
+      "id": "icon_holy_silver",
+      "file": "client/images/icon_holy_silver.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured metal and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, safe margins, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 聖銀。光を通すと淡く輝く銀。ブリギッテの工房で、光の紋を刻む武器の材料になる。 One piece of silver forging material, faintly glowing in light.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true,
+      "source_candidate": "assets/candidates/034/icons/icon_holy_silver.png",
+      "preview_only": true
+    },
+    {
+      "task": "034",
+      "id": "icon_dawn_sword",
+      "file": "client/images/icon_dawn_sword.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured silver metal and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, safe margins, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 暁光の剣。刃に昇る太陽の紋を刻んだ聖銀の剣。 One holy silver sword with a rising-sun emblem engraved on its blade and fine lines of pale light; full blade, guard and grip in a diagonal composition.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true,
+      "source_candidate": "assets/candidates/034/icons/icon_dawn_sword.png",
+      "preview_only": true
+    },
+    {
+      "task": "034",
+      "id": "icon_dawn_khakkhara",
+      "file": "client/images/icon_dawn_khakkhara.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured silver metal and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, safe margins, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 暁光の錫杖。光の紋が祈りを増幅する聖銀の錫杖。 One holy silver cleric's khakkhara ringed staff with engraved light markings, full shaft and ringed finial visible diagonally.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true,
+      "revision_prompt": "Use case: precise-object-edit. Edit target: the supplied 暁光の錫杖 inventory icon. Keep exactly the same painted silver ringed staff, engraved light markings, colors and square transparent canvas. Only reframe: make the entire staff smaller, centered, with a clearly empty transparent margin of at least 8 percent on all four sides, so neither tip touches or extends beyond the image edges. Preserve the thick-painted semi-realistic style and actual transparent alpha. No other objects, no text, no frame, no matte.",
+      "revision_reason": "初稿两端过于贴边；只缩小物体、补足透明留白。",
+      "source_candidate": "assets/candidates/034/icons/icon_dawn_khakkhara.png",
+      "preview_only": true
+    },
+    {
+      "task": "034",
+      "id": "icon_dawn_staff",
+      "file": "client/images/icon_dawn_staff.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured silver metal and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, safe margins, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 暁光の杖。先端の聖銀が、魔力を光に変える杖。 One mage's staff with holy silver at its tip converting magical energy into restrained pale light. Full shaft and silver tip visible diagonally.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true,
+      "source_candidate": "assets/candidates/034/icons/icon_dawn_staff.png",
+      "preview_only": true
+    },
+    {
+      "task": "034",
+      "id": "icon_dawn_dagger",
+      "file": "client/images/icon_dawn_dagger.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured materials and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, 8 percent transparent margin on every side, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 暁光の短剣。闇に紛れても淡く光る、聖銀の短剣。 One short holy silver dagger with fine engraved lines of pale light, full short blade, guard and grip visible diagonally.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true,
+      "source_candidate": "assets/candidates/034/icons/icon_dawn_dagger.png",
+      "preview_only": true
+    },
+    {
+      "task": "034",
+      "id": "icon_guardian_small_shield",
+      "file": "client/images/icon_guardian_small_shield.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured materials and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, 8 percent transparent margin on every side, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 守護団の小盾。樫と太陽の紋章を描いた小さな盾。 One small shield bearing a painted oak and sun emblem, medieval fortress guardians' equipment.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true,
+      "source_candidate": "assets/candidates/034/icons/icon_guardian_small_shield.png",
+      "preview_only": true
+    },
+    {
+      "task": "034",
+      "id": "icon_baked_lava_stone",
+      "file": "client/images/icon_baked_lava_stone.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square inventory item icon, readable at 32px. Detailed Japanese fantasy thick-painted semi-realistic illustration, textured materials and subtle directional highlights matching the game's painted character portraits. Single centered object entirely visible, 8 percent transparent margin on every side, no frame, no labels, no letters, no watermark, no person, no ground, actual transparent background with clean alpha. Subject: 焼けた溶岩石。溶岩で焼けた石。熱の残る黒い石。 One heat-resistant black stone baked by lava, dark cooled rough rocky surface with faint remaining heat.",
+      "reference_images": [],
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "transparent_background": true,
+      "source_candidate": "assets/candidates/034/icons/icon_baked_lava_stone.png",
       "preview_only": true
     }
   ],
@@ -2955,19 +3202,6 @@
     },
     {
       "task": "033",
-      "id": "bg_cave_waterway",
-      "file": "client/images/bg_cave_waterway.png",
-      "candidates": [
-        "assets/candidates/033/bg_cave_waterway/candidate_01.png",
-        "assets/candidates/033/bg_cave_waterway/candidate_02.png"
-      ],
-      "selected_candidate": "assets/candidates/033/bg_cave_waterway/candidate_01.png",
-      "approved": false,
-      "preview_only": true,
-      "selection_reason": "设计负责人：暂用预览。墙上视野有雪景（与改为落石的设定冲突）／水路过于宏大，034 重新生成。"
-    },
-    {
-      "task": "033",
       "id": "bg_oaksdawn_square",
       "file": "client/images/bg_oaksdawn_square.png",
       "candidates": [
@@ -3033,19 +3267,6 @@
     },
     {
       "task": "033",
-      "id": "bg_oaksdawn_wall",
-      "file": "client/images/bg_oaksdawn_wall.png",
-      "candidates": [
-        "assets/candidates/033/bg_oaksdawn_wall/candidate_01.png",
-        "assets/candidates/033/bg_oaksdawn_wall/candidate_02.png"
-      ],
-      "selected_candidate": "assets/candidates/033/bg_oaksdawn_wall/candidate_01.png",
-      "approved": false,
-      "preview_only": true,
-      "selection_reason": "设计负责人：暂用预览。墙上视野有雪景（与改为落石的设定冲突）／水路过于宏大，034 重新生成。"
-    },
-    {
-      "task": "033",
       "id": "npc_walter",
       "file": "client/images/npc_walter.png",
       "candidates": [
@@ -3082,6 +3303,129 @@
       "approved": true,
       "preview_only": true,
       "selection_reason": "设计负责人定稿：铁锤与完整的前掛け"
+    },
+    {
+      "task": "034",
+      "id": "bg_oaksdawn_wall",
+      "file": "client/images/bg_oaksdawn_wall.png",
+      "candidates": [
+        "assets/candidates/034/bg_oaksdawn_wall/candidate_01.png",
+        "assets/candidates/034/bg_oaksdawn_wall/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/034/bg_oaksdawn_wall/candidate_01.png",
+      "approved": false,
+      "preview_only": true,
+      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+    },
+    {
+      "task": "034",
+      "id": "bg_cave_waterway",
+      "file": "client/images/bg_cave_waterway.png",
+      "candidates": [
+        "assets/candidates/034/bg_cave_waterway/candidate_01.png",
+        "assets/candidates/034/bg_cave_waterway/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/034/bg_cave_waterway/candidate_01.png",
+      "approved": false,
+      "preview_only": true,
+      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+    },
+    {
+      "task": "034",
+      "id": "bg_oaksdawn_water_gate",
+      "file": "client/images/bg_oaksdawn_water_gate.png",
+      "candidates": [
+        "assets/candidates/034/bg_oaksdawn_water_gate/candidate_01.png",
+        "assets/candidates/034/bg_oaksdawn_water_gate/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/034/bg_oaksdawn_water_gate/candidate_01.png",
+      "approved": false,
+      "preview_only": true,
+      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+    },
+    {
+      "task": "034",
+      "id": "icon_holy_silver",
+      "file": "client/images/icon_holy_silver.png",
+      "candidates": [
+        "assets/candidates/034/icons/icon_holy_silver.png"
+      ],
+      "selected_candidate": "assets/candidates/034/icons/icon_holy_silver.png",
+      "approved": false,
+      "preview_only": true,
+      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+    },
+    {
+      "task": "034",
+      "id": "icon_dawn_sword",
+      "file": "client/images/icon_dawn_sword.png",
+      "candidates": [
+        "assets/candidates/034/icons/icon_dawn_sword.png"
+      ],
+      "selected_candidate": "assets/candidates/034/icons/icon_dawn_sword.png",
+      "approved": false,
+      "preview_only": true,
+      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+    },
+    {
+      "task": "034",
+      "id": "icon_dawn_khakkhara",
+      "file": "client/images/icon_dawn_khakkhara.png",
+      "candidates": [
+        "assets/candidates/034/icons/icon_dawn_khakkhara.png"
+      ],
+      "selected_candidate": "assets/candidates/034/icons/icon_dawn_khakkhara.png",
+      "approved": false,
+      "preview_only": true,
+      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+    },
+    {
+      "task": "034",
+      "id": "icon_dawn_staff",
+      "file": "client/images/icon_dawn_staff.png",
+      "candidates": [
+        "assets/candidates/034/icons/icon_dawn_staff.png"
+      ],
+      "selected_candidate": "assets/candidates/034/icons/icon_dawn_staff.png",
+      "approved": false,
+      "preview_only": true,
+      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+    },
+    {
+      "task": "034",
+      "id": "icon_dawn_dagger",
+      "file": "client/images/icon_dawn_dagger.png",
+      "candidates": [
+        "assets/candidates/034/icons/icon_dawn_dagger.png"
+      ],
+      "selected_candidate": "assets/candidates/034/icons/icon_dawn_dagger.png",
+      "approved": false,
+      "preview_only": true,
+      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+    },
+    {
+      "task": "034",
+      "id": "icon_guardian_small_shield",
+      "file": "client/images/icon_guardian_small_shield.png",
+      "candidates": [
+        "assets/candidates/034/icons/icon_guardian_small_shield.png"
+      ],
+      "selected_candidate": "assets/candidates/034/icons/icon_guardian_small_shield.png",
+      "approved": false,
+      "preview_only": true,
+      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
+    },
+    {
+      "task": "034",
+      "id": "icon_baked_lava_stone",
+      "file": "client/images/icon_baked_lava_stone.png",
+      "candidates": [
+        "assets/candidates/034/icons/icon_baked_lava_stone.png"
+      ],
+      "selected_candidate": "assets/candidates/034/icons/icon_baked_lava_stone.png",
+      "approved": false,
+      "preview_only": true,
+      "selection_reason": "背景按编号01接入，图标按spec每项一张；TODO(design): 最终美术验收由设计负责人决定。"
     }
   ],
   "todo_design": [
@@ -3325,6 +3669,96 @@
         "prompts": "assets/candidates/033/generation.json",
         "browser_checks": "eval/reports/screens/033/checks.json"
       }
+    },
+    "034": {
+      "task": "034",
+      "generator": "image_gen",
+      "generation_date": "2026-10-17",
+      "approved": false,
+      "candidate_count": 13,
+      "preview_count": 10,
+      "qa": [
+        {
+          "file": "assets/candidates/034/bg_oaksdawn_wall/candidate_01.png",
+          "width": 1672,
+          "height": 941,
+          "rgba": false
+        },
+        {
+          "file": "assets/candidates/034/bg_cave_waterway/candidate_01.png",
+          "width": 1672,
+          "height": 941,
+          "rgba": false
+        },
+        {
+          "file": "assets/candidates/034/bg_oaksdawn_water_gate/candidate_01.png",
+          "width": 1672,
+          "height": 941,
+          "rgba": false
+        },
+        {
+          "file": "assets/candidates/034/bg_oaksdawn_wall/candidate_02.png",
+          "width": 1672,
+          "height": 941,
+          "rgba": false
+        },
+        {
+          "file": "assets/candidates/034/bg_cave_waterway/candidate_02.png",
+          "width": 1672,
+          "height": 941,
+          "rgba": false
+        },
+        {
+          "file": "assets/candidates/034/bg_oaksdawn_water_gate/candidate_02.png",
+          "width": 1672,
+          "height": 941,
+          "rgba": false
+        },
+        {
+          "file": "assets/candidates/034/icons/icon_holy_silver.png",
+          "width": 1254,
+          "height": 1254,
+          "rgba": true
+        },
+        {
+          "file": "assets/candidates/034/icons/icon_dawn_sword.png",
+          "width": 1254,
+          "height": 1254,
+          "rgba": true
+        },
+        {
+          "file": "assets/candidates/034/icons/icon_dawn_khakkhara.png",
+          "width": 1254,
+          "height": 1254,
+          "rgba": true
+        },
+        {
+          "file": "assets/candidates/034/icons/icon_dawn_staff.png",
+          "width": 1254,
+          "height": 1254,
+          "rgba": true
+        },
+        {
+          "file": "assets/candidates/034/icons/icon_dawn_dagger.png",
+          "width": 1254,
+          "height": 1254,
+          "rgba": true
+        },
+        {
+          "file": "assets/candidates/034/icons/icon_guardian_small_shield.png",
+          "width": 1254,
+          "height": 1254,
+          "rgba": true
+        },
+        {
+          "file": "assets/candidates/034/icons/icon_baked_lava_stone.png",
+          "width": 1254,
+          "height": 1254,
+          "rgba": true
+        }
+      ],
+      "prompts": "assets/candidates/034/generation.json",
+      "browser_checks": "eval/reports/screens/034/checks.json"
     }
   },
   "tasks": [
@@ -3333,7 +3767,8 @@
     "024",
     "028",
     "031",
-    "033"
+    "033",
+    "034"
   ],
   "known_issues": [
     "020: 全量测试存在与美术无关的既有 benchmark 标签同步失败；未修改生成器或 benchmark。",

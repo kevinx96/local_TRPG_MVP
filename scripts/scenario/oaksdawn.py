@@ -35,7 +35,7 @@ def action(identifier: str, text: str, effects: list[dict[str, Any]] | None = No
 def apply(pack: dict[str, Any]) -> None:
     locations = {loc["id"]: loc for loc in pack["locations"]}
     for identifier, (title, description) in DESCRIPTIONS.items():
-        # TODO(design): 水門未提供独立背景，暂用地下水路；候选最终选图由设计负责人决定。
+        # Spec 034 replaces the shared gate preview with its dedicated background below.
         background = "bg_cave_waterway" if identifier == "oaksdawn_water_gate" else f"bg_{identifier}"
         loc = dict(id=identifier, scene_id="dark_forest" if identifier == "cave_waterway" else "oaksdawn",
                    title=title, description=description, background_image=f"/static/images/{background}.png",
@@ -185,6 +185,10 @@ def apply(pack: dict[str, Any]) -> None:
     add_maps(pack, locations)
     pack["meta"]["oaksdawn_v033"] = True
     pack["meta"]["content_revision"] = max(pack["meta"].get("content_revision", ""), "2026-10-17-v033")
+    if pack["meta"].get("oaksdawn_v034"):
+        from .oaksdawn_quests import apply as apply_quests
+
+        apply_quests(pack)
 
 
 def add_maps(pack: dict[str, Any], locations: dict[str, Any]) -> None:

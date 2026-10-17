@@ -55,7 +55,7 @@ def structured_item_effect(item: Any) -> str:
             parts.append(f"命中率{_as_int(spec.get('accuracy'), 100)}%")
         if spec.get("element"):
             parts.append(f"{spec['element']}属性")
-    elif kind == "armor":
+    elif kind in {"armor", "equipment"}:
         defense = max(0, _as_int(spec.get("defense"), 0))
         if defense:
             parts.append(f"被ダメージを{defense}軽減")

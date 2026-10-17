@@ -541,6 +541,9 @@
               },
               "key_item": {
                 "type": "boolean"
+              },
+              "icon": {
+                "type": "string"
               }
             }
           }

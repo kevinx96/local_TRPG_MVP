@@ -593,6 +593,8 @@ def annotate_choices_for_session(raw_choices: Any, session: dict[str, Any]) -> l
             continue
         if choice.get("secret") and not action_requirement_status(choice, session)[0]:
             continue
+        if not _session_requirement_passes(choice.get("visible_requirements"), session):
+            continue
         visible_flag = str(choice.get("visible_after") or "")
         if visible_flag and not flags.get(visible_flag):
             continue
@@ -1107,6 +1109,8 @@ def _intent_action_surfaces(
         for action in actions:
             if not isinstance(action, dict):
                 continue
+            if not _session_requirement_passes(action.get("visible_requirements"), session):
+                continue
             visible_after = str(action.get("visible_after") or "")
             if visible_after and not flags.get(visible_after):
                 continue
@@ -1210,6 +1214,8 @@ def intent_control_prompt(session: dict[str, Any]) -> str:
 
 def action_requirement_status(action: dict[str, Any], session: dict[str, Any]) -> tuple[bool, str]:
     flags = session.get("flags") if isinstance(session.get("flags"), dict) else {}
+    if not _session_requirement_passes(action.get("visible_requirements"), session):
+        return False, "この行動はまだ選択できません。"
     visible_flag = str(action.get("visible_after") or "")
     if visible_flag and not flags.get(visible_flag):
         return False, "この行動はまだ選択できません。"
@@ -1594,6 +1600,8 @@ def _effects_to_state_delta(effects: list[Any], session: Optional[dict[str, Any]
             delta["clear_skills"] = True
         if isinstance(effect.get("equip_item"), str):
             delta["equip_item"] = effect["equip_item"]
+        if isinstance(effect.get("reforge_armor"), dict):
+            delta["reforge_armor"] = deepcopy(effect["reforge_armor"])
         if isinstance(effect.get("game_over"), (str, dict)):
             delta["game_over"] = deepcopy(effect["game_over"])
         if effect.get("restore_full") is True:
@@ -1675,6 +1683,9 @@ def _session_requirement_passes(requirement: Any, session: Optional[dict[str, An
     if isinstance(requirement.get("companion_id"), str):
         companion = session.get("companion", {}) if isinstance(session, dict) and isinstance(session.get("companion"), dict) else {}
         return str(companion.get("id") or "") == str(requirement["companion_id"])
+    if isinstance(requirement.get("not_companion_id"), str):
+        companion = (session.get("companion") or {}) if isinstance(session, dict) else {}
+        return str(companion.get("id") or "") != requirement["not_companion_id"]
     character = session.get("character", {}) if isinstance(session, dict) and isinstance(session.get("character"), dict) else {}
     if "player_hp_ratio_lt" in requirement or "player_hp_ratio_gte" in requirement:
         maximum = character.get("max_hp", 0)
@@ -2144,6 +2155,9 @@ def _apply_state_delta(
                 {"item": item_name, "quantity": removed_qty},
             )
 
+    if isinstance(delta.get("reforge_armor"), dict):
+        _reforge_equipped_armor(session, delta["reforge_armor"])
+
     equip_item = str(delta.get("equip_item") or "").strip()
     if equip_item:
         _equip_inventory_item(session, equip_item)
@@ -2415,6 +2429,27 @@ def _equip_inventory_item(session: dict[str, Any], item_name_or_id: str) -> str:
                        {"item_id": target.get("id") or target_name, "slot": item_slot(target),
                         "removed": previous.get("name") if previous else None})
     return text
+
+
+def _reforge_equipped_armor(session: dict[str, Any], spec: dict[str, Any]) -> None:
+    character = session["character"]
+    armor = next((item for item in equipped_items(character) if item_slot(item) == "armor"), None)
+    if armor is None:
+        fallback = str(spec["fallback_item"])
+        _apply_state_delta(session, {"inventory_add": [{"name": fallback, "quantity": 1}], "equip_item": fallback})
+        return
+    upgraded = deepcopy(armor)
+    upgraded["name"] += str(spec["suffix"])
+    upgraded["id"] = str(armor.get("id") or armor["name"]) + "_reforged"
+    upgraded["quantity"] = 1
+    upgraded.setdefault("combat", {})["defense"] = _safe_int(armor.get("combat", {}).get("defense"), 0) + int(spec["defense_bonus"])
+    upgraded["effect"] = structured_item_effect(upgraded)
+    if int(armor.get("quantity", 1)) > 1:
+        armor["quantity"] -= 1
+        character["inventory"].append(upgraded)
+    else:
+        character["inventory"][character["inventory"].index(armor)] = upgraded
+    _equip_inventory_item(session, upgraded["id"])
 
 
 def _enrich_item(item: dict[str, Any], scenario_pack: Optional[dict[str, Any]] = None) -> dict[str, Any]:
