@@ -35,7 +35,8 @@
       "ヴァイス": "Weiss",
       "ザンザス": "Xanxus"
     },
-    "checks_v2_v040": true
+    "checks_v2_v040": true,
+    "checks_e": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -337,6 +338,12 @@
           "text": "城下町へ出る",
           "preview": "王城の門前に広がる城下町へ",
           "risk": "判定不要"
+        },
+        {
+          "text": "十年前のことを王に尋ねる",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC10",
+          "once": "ask_king_ten_years_done"
         }
       ],
       "actions": [
@@ -447,6 +454,34 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "ask_king_ten_years",
+          "text": "十年前のことを王に尋ねる",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC10",
+          "intent_keywords": [
+            "十年前のことを王に尋ねる"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "洞察"
+          },
+          "success_effects": [
+            {
+              "set_flag": "heard_human_caused_dragon_return"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "王は言葉を選ぶように目を伏せた。「……あの遠征は、わしの過ちだった。竜の谷へ兵を送れと、強く勧めた者がいたのだ」 王の視線が、一瞬だけ将軍へ向いた。",
+            "failure": "「昔の話はよい。今は竜のことだけを考えてくれ」 王はそれ以上語らなかった。"
+          },
+          "risk_source": "action",
+          "once": "ask_king_ten_years_done",
+          "npc_id": "king"
         }
       ],
       "background_image": "/static/images/bg_dragon_rpg.png",
@@ -713,6 +748,39 @@
           },
           "secret": true,
           "risk_source": "destination"
+        },
+        {
+          "id": "ask_gald_extra",
+          "text": "ガルドにおまけを頼み込む",
+          "preview": "",
+          "risk": "説得（知恵）判定・DC10",
+          "intent_keywords": [
+            "ガルドにおまけを頼み込む"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "説得"
+          },
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "herb",
+                "name": "薬草",
+                "quantity": 1
+              }
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "「参ったね、あんたには敵わない」 ガルドは笑って、薬草を一束放ってよこした。",
+            "failure": "「悪いが、これ以上は負けられないね」"
+          },
+          "risk_source": "action",
+          "once": "ask_gald_extra_done",
+          "npc_id": "gald",
+          "visible_after": "saved_gald"
         }
       ],
       "hybrid": {
@@ -812,6 +880,37 @@
             ]
           },
           "secret": true
+        },
+        {
+          "text": "ガルドにおまけを頼み込む",
+          "preview": "",
+          "risk": "説得（知恵）判定・DC10",
+          "once": "ask_gald_extra_done",
+          "visible_after": "saved_gald"
+        }
+      ],
+      "objects": [
+        {
+          "id": "town_well",
+          "name": "広場の井戸",
+          "description": "広場の古い石の井戸。",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+wis",
+              "dc": 10,
+              "skill": "知覚"
+            },
+            "success_text": "井戸の縁に、誰かが落とした銅貨が引っかかっていた。",
+            "failure_text": "暗い水面が揺れているだけだ。",
+            "success_effects": [
+              {
+                "gold_change": 5
+              }
+            ],
+            "failure_effects": [],
+            "once": "observed_town_well"
+          }
         }
       ]
     },
@@ -930,6 +1029,12 @@
           "requirements": {
             "has_item": "刻印のハンマー"
           }
+        },
+        {
+          "text": "鉄くずの山を漁る",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "once": "dig_forge_scrap_done"
         }
       ],
       "actions": [
@@ -1227,6 +1332,42 @@
           "once": "robert_hammer_returned",
           "result_text": "「……それは。どこでこれを」ローベルトは長い間ハンマーを握りしめていた。「礼だ。好きな防具を一つ、仕立て直してやる」",
           "risk_source": "action"
+        },
+        {
+          "id": "dig_forge_scrap",
+          "text": "鉄くずの山を漁る",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "intent_keywords": [
+            "鉄くずの山を漁る"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "調査"
+          },
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "poison_dart",
+                "name": "毒矢",
+                "quantity": 1
+              }
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -1
+            }
+          ],
+          "result_texts": {
+            "success": "鉄くずの底から、まだ使えそうな毒矢が一本出てきた。ローベルトは「持っていけ」とだけ言った。",
+            "failure": "錆びた鉄片で指を切った。"
+          },
+          "risk_source": "action",
+          "once": "dig_forge_scrap_done",
+          "npc_id": "blacksmith"
         }
       ],
       "background_image": "/static/images/bg_forge.png",
@@ -1384,6 +1525,19 @@
           "text": "城下町に戻る",
           "preview": "大通りへ戻る",
           "risk": "判定不要"
+        },
+        {
+          "text": "酔客の話に耳を傾ける",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "once": "listen_inn_gossip_done"
+        },
+        {
+          "text": "ロビンに弓の手ほどきを頼む",
+          "preview": "",
+          "risk": "軽業（敏捷）判定・DC10",
+          "once": "robin_archery_done",
+          "hidden_after": "recruited_robin"
         }
       ],
       "actions": [
@@ -1736,6 +1890,70 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "listen_inn_gossip",
+          "text": "酔客の話に耳を傾ける",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "intent_keywords": [
+            "酔客の話に耳を傾ける"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "知覚"
+          },
+          "success_effects": [
+            {
+              "set_flag": "scouted_fort_patrol"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "「砦のゴブリンども、見張りの交代は鐘一つごとだってよ。交代の時は、門の前ががら空きになるんだと」",
+            "failure": "酔客の話は、昨日の喧嘩の自慢ばかりだった。"
+          },
+          "risk_source": "action",
+          "once": "listen_inn_gossip_done"
+        },
+        {
+          "id": "robin_archery",
+          "text": "ロビンに弓の手ほどきを頼む",
+          "preview": "",
+          "risk": "軽業（敏捷）判定・DC10",
+          "intent_keywords": [
+            "ロビンに弓の手ほどきを頼む"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 10,
+            "skill": "軽業"
+          },
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "poison_dart",
+                "name": "毒矢",
+                "quantity": 2
+              }
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -1
+            }
+          ],
+          "result_texts": {
+            "success": "「筋は悪くないね」 ロビンは笑って、矢筒から毒矢を二本抜いて渡してくれた。",
+            "failure": "弦が跳ねて頬を打った。ロビンが肩を震わせて笑っている。"
+          },
+          "risk_source": "action",
+          "once": "robin_archery_done",
+          "npc_id": "robin",
+          "hidden_after": "recruited_robin"
         }
       ],
       "hybrid": {
@@ -1833,7 +2051,31 @@
         ]
       },
       "background_image": "/static/images/bg_inn.png",
-      "portrait_image": "/static/images/npc_ian.png"
+      "portrait_image": "/static/images/npc_ian.png",
+      "objects": [
+        {
+          "id": "inn_notice_board",
+          "name": "宿屋の掲示板",
+          "description": "宿屋の壁の掲示板。依頼や手配書が何枚も重ねて貼られている。",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+wis",
+              "dc": 8,
+              "skill": "知覚"
+            },
+            "success_text": "古い手配書の間に、ゴブリン砦の見取り図が挟まっていた。",
+            "failure_text": "色あせた張り紙ばかりだった。",
+            "success_effects": [
+              {
+                "set_flag": "scouted_fort_patrol"
+              }
+            ],
+            "failure_effects": [],
+            "once": "observed_inn_notice_board"
+          }
+        }
+      ]
     },
     {
       "id": "village",
@@ -1946,6 +2188,18 @@
               }
             ]
           }
+        },
+        {
+          "text": "負傷者の手当てを手伝う",
+          "preview": "",
+          "risk": "信仰（知恵）判定・DC10",
+          "once": "tend_refugees_done"
+        },
+        {
+          "text": "長老に昔話をせがむ",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC10",
+          "once": "ask_elder_legend_done"
         }
       ],
       "actions": [
@@ -2181,6 +2435,61 @@
           },
           "result_text": "欠片を竈に落とすと、赤い火がふわりと立ち上がった。避難所に、粥の匂いが広がっていく。「助かったよ。少ないけど、持っていっておくれ」",
           "risk_source": "action"
+        },
+        {
+          "id": "tend_refugees",
+          "text": "負傷者の手当てを手伝う",
+          "preview": "",
+          "risk": "信仰（知恵）判定・DC10",
+          "intent_keywords": [
+            "負傷者の手当てを手伝う"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "信仰"
+          },
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "holy_water",
+                "name": "聖水",
+                "quantity": 1
+              }
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "祈りながら包帯を巻くうちに、傷の浅い者から立ち上がり始めた。村の女が、礼にと聖水を差し出す。",
+            "failure": "慣れない手当てに手間取ってしまった。村人は黙って頭を下げた。"
+          },
+          "risk_source": "action",
+          "once": "tend_refugees_done"
+        },
+        {
+          "id": "ask_elder_legend",
+          "text": "長老に昔話をせがむ",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC10",
+          "intent_keywords": [
+            "長老に昔話をせがむ"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "洞察"
+          },
+          "success_effects": [],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "「氷の太刀を打ったのは、この村の鍛冶屋じゃった。……今は王都で宿をやっとると聞く」",
+            "failure": "長老は咳き込み、話を途中でやめてしまった。"
+          },
+          "risk_source": "action",
+          "once": "ask_elder_legend_done",
+          "npc_id": "elder"
         }
       ],
       "background_image": "/static/images/bg_village.png",
@@ -2504,6 +2813,12 @@
           "preview": "",
           "risk": "判定不要",
           "visible_after": "mina_rescued"
+        },
+        {
+          "text": "棚の魔導書を読み解く",
+          "preview": "",
+          "risk": "魔法学（知力）判定・DC10",
+          "once": "read_magic_tomes_done"
         }
       ],
       "hybrid": {
@@ -3079,6 +3394,38 @@
           "once": "mina_quest_done",
           "result_text": "「……世話をかけたな。礼を言う」",
           "risk_source": "action"
+        },
+        {
+          "id": "read_magic_tomes",
+          "text": "棚の魔導書を読み解く",
+          "preview": "",
+          "risk": "魔法学（知力）判定・DC10",
+          "intent_keywords": [
+            "棚の魔導書を読み解く"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "魔法学"
+          },
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "magic_scroll",
+                "name": "魔法の巻物",
+                "quantity": 1
+              }
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "魔導書の余白に書き込まれた術式を、白紙の巻物に写し取った。ワーロックが片眉を上げる。「……ほう。持っていくといい」",
+            "failure": "文字が頭の中でほどけて、軽い眩暈がした。"
+          },
+          "risk_source": "action",
+          "once": "read_magic_tomes_done",
+          "npc_id": "blue_robed_mage"
         }
       ],
       "background_image": "/static/images/bg_magic_shop.png",
@@ -3185,6 +3532,12 @@
               }
             ]
           }
+        },
+        {
+          "text": "サラの棚卸しを手伝う",
+          "preview": "",
+          "risk": "運動（筋力）判定・DC8",
+          "once": "help_sarah_shelves_done"
         }
       ],
       "hybrid": {
@@ -3471,6 +3824,34 @@
           "result_text": "サラは毛皮を抱きしめて、ぱっと笑った。「ありがとう！ 母さん、きっと喜ぶよ。これ、お礼！」",
           "portrait_image": "/static/images/npc_sarah.png",
           "risk_source": "action"
+        },
+        {
+          "id": "help_sarah_shelves",
+          "text": "サラの棚卸しを手伝う",
+          "preview": "",
+          "risk": "運動（筋力）判定・DC8",
+          "intent_keywords": [
+            "サラの棚卸しを手伝う"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+str",
+            "dc": 8,
+            "skill": "運動"
+          },
+          "success_effects": [
+            {
+              "gold_change": 10
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "重い木箱を棚の上まで運び終えると、サラが小さな袋を差し出した。「ありがとう！ これ、お駄賃！」",
+            "failure": "木箱を取り落としてしまった。サラは「大丈夫、割れ物じゃないから」と笑ってくれた。"
+          },
+          "risk_source": "action",
+          "once": "help_sarah_shelves_done",
+          "npc_id": "sarah"
         }
       ],
       "background_image": "/static/images/bg_item_shop.png",
@@ -3502,6 +3883,12 @@
           "text": "城下町に戻る",
           "preview": "大通りへ戻る",
           "risk": "判定不要"
+        },
+        {
+          "text": "路地裏の物陰を探る",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "once": "search_alley_day_done"
         }
       ],
       "hybrid": {
@@ -3594,6 +3981,33 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "search_alley_day",
+          "text": "路地裏の物陰を探る",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "intent_keywords": [
+            "路地裏の物陰を探る"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "知覚"
+          },
+          "success_effects": [
+            {
+              "gold_change": 15
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "積まれた樽の陰に、銀貨が数枚落ちていた。",
+            "failure": "物陰から飛び出したネズミに驚いて、尻もちをついた。"
+          },
+          "risk_source": "action",
+          "once": "search_alley_day_done"
         }
       ],
       "background_image": "/static/images/bg_alley_day.png"
@@ -3716,6 +4130,12 @@
               }
             ]
           }
+        },
+        {
+          "text": "商人の正体を見極める",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC12",
+          "once": "see_through_merchant_done"
         }
       ],
       "hybrid": {
@@ -4362,6 +4782,30 @@
             ]
           },
           "risk_source": "action"
+        },
+        {
+          "id": "see_through_merchant",
+          "text": "商人の正体を見極める",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC12",
+          "intent_keywords": [
+            "商人の正体を見極める"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 12,
+            "skill": "洞察"
+          },
+          "success_effects": [],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "フードの奥で、獣のような目が一瞬だけ光った。この取引には、必ず裏がある。差し出された品から、かすかに死者の匂いがする。",
+            "failure": "商人の顔はフードの影に沈んで、何も読み取れなかった。"
+          },
+          "risk_source": "action",
+          "once": "see_through_merchant_done",
+          "npc_id": "suspicious_merchant"
         }
       ],
       "background_image": "/static/images/bg_alley_night.png",
@@ -4526,7 +4970,14 @@
         "tutorial_slime"
       ],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "獣道の足跡を読む",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC8",
+          "once": "read_forest_tracks_done"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "薄暗い森の入口で、一匹のスライムが道を塞いでいる。",
@@ -4622,6 +5073,37 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "read_forest_tracks",
+          "text": "獣道の足跡を読む",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC8",
+          "intent_keywords": [
+            "獣道の足跡を読む"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 8,
+            "skill": "知覚"
+          },
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "herb",
+                "name": "薬草",
+                "quantity": 1
+              }
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "大きな足跡が泉の方へ続いている。森の奥には狼の群れがいるらしい。足跡のそばで、薬草を一株見つけた。",
+            "failure": "落ち葉に埋もれて、足跡はよく見えなかった。"
+          },
+          "risk_source": "action",
+          "once": "read_forest_tracks_done"
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
@@ -4758,6 +5240,12 @@
               }
             ]
           }
+        },
+        {
+          "text": "ゴブリンの話の真偽を確かめる",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC10",
+          "once": "question_lost_goblin_done"
         }
       ],
       "hybrid": {
@@ -5017,6 +5505,34 @@
             ]
           },
           "risk_source": "destination"
+        },
+        {
+          "id": "question_lost_goblin",
+          "text": "ゴブリンの話の真偽を確かめる",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC10",
+          "intent_keywords": [
+            "ゴブリンの話の真偽を確かめる"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "洞察"
+          },
+          "success_effects": [
+            {
+              "set_flag": "scouted_fort_patrol"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "ゴブリンの目は嘘をついていない。箱は本当にこいつの一族のものだ。「砦の見張りはな、夜明け前がいちばん眠そうなんだ」",
+            "failure": "ゴブリンはおびえて口ごもり、それ以上は何も言わなかった。"
+          },
+          "risk_source": "action",
+          "once": "question_lost_goblin_done",
+          "npc_id": "lost_goblin"
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
@@ -5045,6 +5561,26 @@
             ]
           },
           "text": ""
+        }
+      ],
+      "objects": [
+        {
+          "id": "crossroads_signpost",
+          "name": "古い道標",
+          "description": "十字路に立つ、傾いた古い道標。",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+int",
+              "dc": 8,
+              "skill": "調査"
+            },
+            "success_text": "東は砦、北は泉。かすれた文字の横に、誰かが「狼注意」と刻んでいる。",
+            "failure_text": "文字はかすれて読めない。",
+            "success_effects": [],
+            "failure_effects": [],
+            "once": "observed_crossroads_signpost"
+          }
         }
       ]
     },
@@ -5088,6 +5624,12 @@
           "risk": "判定不要",
           "once": "drew_spirit_spring_water",
           "hidden_after": "drew_spirit_spring_water"
+        },
+        {
+          "text": "泉の精霊の声に耳を澄ます",
+          "preview": "",
+          "risk": "信仰（知恵）判定・DC10",
+          "once": "commune_spring_done"
         }
       ],
       "hybrid": {
@@ -5218,6 +5760,33 @@
           "hidden_after": "drew_spirit_spring_water",
           "result_text": "澄んだ泉の水を、空の水筒に汲んだ。水面が、ほのかに光っている。",
           "risk_source": "action"
+        },
+        {
+          "id": "commune_spring",
+          "text": "泉の精霊の声に耳を澄ます",
+          "preview": "",
+          "risk": "信仰（知恵）判定・DC10",
+          "intent_keywords": [
+            "泉の精霊の声に耳を澄ます"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "信仰"
+          },
+          "success_effects": [
+            {
+              "hp_change": 5
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "水面がかすかに揺れ、冷たい風が頬をなでた。体の芯から疲れが抜けていく。",
+            "failure": "泉は静かなままだった。"
+          },
+          "risk_source": "action",
+          "once": "commune_spring_done"
         }
       ],
       "background_image": "/static/images/bg_elf_spring.png",
@@ -5686,6 +6255,12 @@
           "text": "狼の縄張りへ戻る",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "高台から周囲を見渡す",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "once": "survey_from_hill_done"
         }
       ],
       "hybrid": {
@@ -5817,6 +6392,33 @@
               "text": "森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。鐘が鳴って以来、霧は少しだけ薄くなった。"
             }
           ]
+        },
+        {
+          "id": "survey_from_hill",
+          "text": "高台から周囲を見渡す",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "intent_keywords": [
+            "高台から周囲を見渡す"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "知覚"
+          },
+          "success_effects": [
+            {
+              "set_flag": "read_battlefield_mist"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "南の街道は白い霧に沈み、東の空は赤く燃えている。霧は谷から吹き下ろす風に沿って流れているようだ。",
+            "failure": "木々に遮られて、遠くまでは見えなかった。"
+          },
+          "risk_source": "action",
+          "once": "survey_from_hill_done"
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
@@ -5841,7 +6443,14 @@
         "goblin"
       ],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "砦の外壁を偵察する",
+          "preview": "",
+          "risk": "隠密（敏捷）判定・DC10",
+          "once": "scout_fort_walls_done"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "砦へ入ると、一匹のゴブリンが通路を見張っている。",
@@ -5952,7 +6561,23 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 10,
-            "skill": "隠密"
+            "skill": "隠密",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "scouted_fort_patrol"
+                },
+                "reason": "見張りの交代を知っている"
+              }
+            ],
+            "disadvantage": [
+              {
+                "requirements": {
+                  "flag": "fort_alerted"
+                },
+                "reason": "見張りが警戒している"
+              }
+            ]
           },
           "success_effects": [
             {
@@ -5983,9 +6608,64 @@
           ],
           "result_text": "見張りに気づかれる前に踵を返し、森の十字路まで引き返した。",
           "risk_source": "destination"
+        },
+        {
+          "id": "scout_fort_walls",
+          "text": "砦の外壁を偵察する",
+          "preview": "",
+          "risk": "隠密（敏捷）判定・DC10",
+          "intent_keywords": [
+            "砦の外壁を偵察する"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 10,
+            "skill": "隠密"
+          },
+          "success_effects": [
+            {
+              "set_flag": "scouted_fort_patrol"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "fort_alerted"
+            }
+          ],
+          "result_texts": {
+            "success": "外壁に張りついて覗くと、見張りが交代する短い隙が見えた。",
+            "failure": "小石を蹴ってしまい、見張りがこちらの茂みを睨んだ。"
+          },
+          "risk_source": "action",
+          "once": "scout_fort_walls_done"
         }
       ],
-      "background_image": "/static/images/bg_goblin_fort.png"
+      "background_image": "/static/images/bg_goblin_fort.png",
+      "objects": [
+        {
+          "id": "fort_drain",
+          "name": "砦の排水口",
+          "description": "砦の外壁の根元に開いた、格子付きの排水口。",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+wis",
+              "dc": 10,
+              "skill": "知覚"
+            },
+            "success_text": "排水口の奥から、見張りの寝息が聞こえる。交代までは間がありそうだ。",
+            "failure_text": "汚水の臭いしかしない。",
+            "success_effects": [
+              {
+                "set_flag": "scouted_fort_patrol"
+              }
+            ],
+            "failure_effects": [],
+            "once": "observed_fort_drain"
+          }
+        }
+      ]
     },
     {
       "id": "goblin_fort_first_second",
@@ -6147,7 +6827,15 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 12,
-            "skill": "隠密"
+            "skill": "隠密",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "scouted_fort_patrol"
+                },
+                "reason": "見張りの交代を知っている"
+              }
+            ]
           },
           "success_effects": [
             {
@@ -6178,7 +6866,14 @@
       "clue_ids": [],
       "enemy_ids": [],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "通路の奥に耳を澄ます",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "once": "listen_fort_corridors_done"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "二階の通路は左右に分かれている。右から話し声、左から獣の唸り声が聞こえる。",
@@ -6241,6 +6936,29 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "listen_fort_corridors",
+          "text": "通路の奥に耳を澄ます",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "intent_keywords": [
+            "通路の奥に耳を澄ます"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "知覚"
+          },
+          "success_effects": [],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "右の通路からは重い足音が一つ。左からは水の滴る音と、かすかな呻き声が聞こえる。",
+            "failure": "砦の喧騒に紛れて、何も聞き分けられなかった。"
+          },
+          "risk_source": "action",
+          "once": "listen_fort_corridors_done"
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -6395,7 +7113,15 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 12,
-            "skill": "隠密"
+            "skill": "隠密",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "scouted_fort_patrol"
+                },
+                "reason": "見張りの交代を知っている"
+              }
+            ]
           },
           "success_effects": [
             {
@@ -6507,6 +7233,12 @@
           "text": "回復法陣を使う",
           "preview": "全状態を回復する",
           "risk": "判定不要"
+        },
+        {
+          "text": "法陣の紋様を読み解く",
+          "preview": "",
+          "risk": "魔法学（知力）判定・DC10",
+          "once": "study_healing_circle_done"
         }
       ],
       "hybrid": {
@@ -6538,6 +7270,33 @@
           ],
           "result_text": "法陣の中央に立つと、淡い光が足元から立ちのぼり、傷口がみるみる塞がっていった。息が整ったところで、奥の階段を上る。",
           "risk_source": "destination"
+        },
+        {
+          "id": "study_healing_circle",
+          "text": "法陣の紋様を読み解く",
+          "preview": "",
+          "risk": "魔法学（知力）判定・DC10",
+          "intent_keywords": [
+            "法陣の紋様を読み解く"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "魔法学"
+          },
+          "success_effects": [
+            {
+              "sp_change": 3
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "紋様の流れをなぞると、法陣の光が一段強まった。息が軽くなる。",
+            "failure": "紋様は古すぎて、意味が読み取れなかった。"
+          },
+          "risk_source": "action",
+          "once": "study_healing_circle_done"
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png"
@@ -6970,6 +7729,13 @@
           "preview": "",
           "risk": "判定不要",
           "visible_after": "combat_defeated:lost_goblin_crossroads:goblin"
+        },
+        {
+          "text": "箱の作りを確かめる",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "once": "appraise_goblin_box_done",
+          "hidden_after": "resolved_lost_goblin_box"
         }
       ],
       "hybrid": {
@@ -7088,6 +7854,34 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "appraise_goblin_box",
+          "text": "箱の作りを確かめる",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "intent_keywords": [
+            "箱の作りを確かめる"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "調査"
+          },
+          "success_effects": [
+            {
+              "gold_change": 20
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "箱の底を叩くと、乾いた音がした。二重底の隠しに、金貨が数枚挟まっている。",
+            "failure": "ただの古い木箱にしか見えなかった。"
+          },
+          "risk_source": "action",
+          "once": "appraise_goblin_box_done",
+          "hidden_after": "resolved_lost_goblin_box"
         }
       ],
       "background_image": "/static/images/bg_goblin_treasure.png",
@@ -7188,7 +7982,14 @@
       "clue_ids": [],
       "enemy_ids": [],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "炎の広がり方を見極める",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "once": "read_fire_spread_done"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "村は一面の火海となり、家々の間を怪物が徘徊している。生存者の姿は見当たらない。",
@@ -7320,7 +8121,15 @@
           "roll": {
             "dice_type": "1d20+wis",
             "dc": 10,
-            "skill": "知覚"
+            "skill": "知覚",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "fire_upwind_known"
+                },
+                "reason": "風上を知っている"
+              }
+            ]
           },
           "success_effects": [
             {
@@ -7390,6 +8199,37 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "read_fire_spread",
+          "text": "炎の広がり方を見極める",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "intent_keywords": [
+            "炎の広がり方を見極める"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "調査"
+          },
+          "success_effects": [
+            {
+              "set_flag": "fire_upwind_known"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -2
+            }
+          ],
+          "result_texts": {
+            "success": "炎は風下へ流れている。風上から回り込めば、焼けずに村へ入れそうだ。",
+            "failure": "煙を吸い込んで、激しくむせた。"
+          },
+          "risk_source": "action",
+          "once": "read_fire_spread_done"
         }
       ],
       "background_image": "/static/images/bg_burning_village.png"
@@ -8425,7 +9265,14 @@
       "clue_ids": [],
       "enemy_ids": [],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "イアンの様子をうかがう",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC10",
+          "once": "read_ian_grief_done"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
         "summary": "店主イアンが現れ、凍死するほどの力が残る破片に触れないよう制止した。",
@@ -8571,6 +9418,34 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "read_ian_grief",
+          "text": "イアンの様子をうかがう",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC10",
+          "intent_keywords": [
+            "イアンの様子をうかがう"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "洞察"
+          },
+          "success_effects": [
+            {
+              "set_flag": "frost_trace_seen"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "「……あの太刀は、俺の最後の仕事だった。砕いたのは氷の精霊じゃない。誰かが、芯に霜を仕込んでいたんだ」",
+            "failure": "イアンは砕けた刃を見つめたまま、何も言わなかった。"
+          },
+          "risk_source": "action",
+          "once": "read_ian_grief_done",
+          "npc_id": "ian"
         }
       ],
       "background_image": "/static/images/bg_frozen_village.png",
@@ -9433,7 +10308,15 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 10,
-            "skill": "隠密"
+            "skill": "隠密",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "heat_rhythm_known"
+                },
+                "reason": "熱風の切れ目を知っている"
+              }
+            ]
           },
           "critical_enabled": false,
           "hidden_after": "cleared_cave_heat_corridor",
@@ -9487,6 +10370,37 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "read_heat_flow",
+          "text": "熱風の流れを読む",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "intent_keywords": [
+            "熱風の流れを読む"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "知覚"
+          },
+          "success_effects": [
+            {
+              "set_flag": "heat_rhythm_known"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -2
+            }
+          ],
+          "result_texts": {
+            "success": "熱風は一定の間隔で弱まる。その切れ目なら、岩陰を伝って抜けられそうだ。",
+            "failure": "熱気にあてられて、頭がくらくらした。"
+          },
+          "risk_source": "action",
+          "once": "read_heat_flow_done"
         }
       ],
       "objects": [],
@@ -9570,6 +10484,12 @@
           "text": "封印の岩壁へ戻る",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "熱風の流れを読む",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "once": "read_heat_flow_done"
         }
       ]
     },
@@ -9623,9 +10543,55 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "listen_cave_fork",
+          "text": "分かれ道の奥を探る",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC8",
+          "intent_keywords": [
+            "分かれ道の奥を探る"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 8,
+            "skill": "知覚"
+          },
+          "success_effects": [],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "左の通路からは熱気。右からは湯気と、少女のすすり泣くような声がする。",
+            "failure": "水音が反響して、どちらからの音か分からなかった。"
+          },
+          "risk_source": "action",
+          "once": "listen_cave_fork_done"
         }
       ],
-      "objects": [],
+      "objects": [
+        {
+          "id": "fork_markings",
+          "name": "壁の刻み目",
+          "description": "分かれ道の岩壁に残る、細かな刻み目。",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+int",
+              "dc": 10,
+              "skill": "調査"
+            },
+            "success_text": "小さな刃物で付けたような、新しい刻み目が右の通路へ続いている。",
+            "failure_text": "古い傷と見分けがつかない。",
+            "success_effects": [
+              {
+                "set_flag": "mina_tracks_found"
+              }
+            ],
+            "failure_effects": [],
+            "once": "observed_fork_markings"
+          }
+        }
+      ],
       "background_image": "/static/images/bg_lava_cave.png",
       "npc_ids": [],
       "enemy_ids": []
@@ -9718,6 +10684,41 @@
           "hidden_after": "picked_baked_lava_stone",
           "result_text": "熱の残る黒い石を布でくるみ、背嚢に押し込んだ。",
           "risk_source": "action"
+        },
+        {
+          "id": "search_lava_room",
+          "text": "溶岩の縁を探る",
+          "preview": "",
+          "risk": "軽業（敏捷）判定・DC12",
+          "intent_keywords": [
+            "溶岩の縁を探る"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 12,
+            "skill": "軽業"
+          },
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "ember_shard",
+                "name": "残り火の欠片",
+                "quantity": 1
+              }
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -3
+            }
+          ],
+          "result_texts": {
+            "success": "溶岩の縁に身を乗り出し、冷えかけた赤い欠片をすくい上げた。",
+            "failure": "熱で指先を焼いた。"
+          },
+          "risk_source": "action",
+          "once": "search_lava_room_done"
         }
       ],
       "objects": [],
@@ -9908,6 +10909,36 @@
           ],
           "result_text": "温泉の湯は細い水路となって、岩の奥へ流れていく。水音を頼りに進むと、壁に古い騎士団の紋章――樫の葉と昇る太陽――が刻まれていた。",
           "risk_source": "destination"
+        },
+        {
+          "id": "calm_mina",
+          "text": "ミーナを落ち着かせる",
+          "preview": "",
+          "risk": "説得（知恵）判定・DC8",
+          "intent_keywords": [
+            "ミーナを落ち着かせる"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 8,
+            "skill": "説得"
+          },
+          "success_effects": [
+            {
+              "set_flag": "calmed_crystals"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "ミーナは深呼吸して、ぽつりぽつりと話し始めた。「あの水晶の木、近づくと共鳴するの。でも、じっとしてれば襲ってこない」",
+            "failure": "ミーナは膝に顔を埋めたまま、泣き止まなかった。"
+          },
+          "risk_source": "action",
+          "once": "calm_mina_done",
+          "npc_id": "mina",
+          "visible_after": "met_mina",
+          "hidden_after": "mina_rescued"
         }
       ],
       "objects": [
@@ -9994,6 +11025,14 @@
           "text": "湯の流れを辿る",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "ミーナを落ち着かせる",
+          "preview": "",
+          "risk": "説得（知恵）判定・DC8",
+          "once": "calm_mina_done",
+          "visible_after": "met_mina",
+          "hidden_after": "mina_rescued"
         }
       ],
       "connected_location_ids": [
@@ -10037,7 +11076,15 @@
           "roll": {
             "dice_type": "1d20+wis",
             "dc": 10,
-            "skill": "知覚"
+            "skill": "知覚",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "calmed_crystals"
+                },
+                "reason": "水晶の共鳴を知っている"
+              }
+            ]
           },
           "critical_enabled": false,
           "hidden_after": "cleared_cave_crystal_corridor",
@@ -10094,6 +11141,37 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "tune_crystals",
+          "text": "水晶の音色を聴き分ける",
+          "preview": "",
+          "risk": "魔法学（知力）判定・DC10",
+          "intent_keywords": [
+            "水晶の音色を聴き分ける"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "魔法学"
+          },
+          "success_effects": [
+            {
+              "set_flag": "calmed_crystals"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -2
+            }
+          ],
+          "result_texts": {
+            "success": "共鳴には周期がある。音が途切れる瞬間を数えられるようになった。",
+            "failure": "甲高い音に、頭が割れそうになった。"
+          },
+          "risk_source": "action",
+          "once": "tune_crystals_done"
         }
       ],
       "objects": [],
@@ -10174,6 +11252,12 @@
           "text": "分かれ道へ戻る",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "水晶の音色を聴き分ける",
+          "preview": "",
+          "risk": "魔法学（知力）判定・DC10",
+          "once": "tune_crystals_done"
         }
       ]
     },
@@ -10320,7 +11404,15 @@
           "roll": {
             "dice_type": "1d20+str",
             "dc": 10,
-            "skill": "運動"
+            "skill": "運動",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "child_at_window"
+                },
+                "reason": "子どもが窓辺にいる"
+              }
+            ]
           },
           "success_effects": [
             {
@@ -10353,7 +11445,15 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 10,
-            "skill": "軽業"
+            "skill": "軽業",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "child_at_window"
+                },
+                "reason": "子どもが窓辺にいる"
+              }
+            ]
           },
           "success_effects": [
             {
@@ -10433,6 +11533,33 @@
           ],
           "result_text": "泣き声を背に、燃える通りを駆け抜けた。",
           "risk_source": "destination"
+        },
+        {
+          "id": "call_to_child",
+          "text": "中の子どもに声をかける",
+          "preview": "",
+          "risk": "説得（知恵）判定・DC10",
+          "intent_keywords": [
+            "中の子どもに声をかける"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "説得"
+          },
+          "success_effects": [
+            {
+              "set_flag": "child_at_window"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "「窓のところまで来られるか！」 泣き声がやみ、二階の窓辺へ這ってくる小さな影が見えた。",
+            "failure": "炎の音にかき消されて、声は届かなかった。"
+          },
+          "risk_source": "action",
+          "once": "call_to_child_done"
         }
       ],
       "npc_ids": [],
@@ -10499,7 +11626,15 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 10,
-            "skill": "隠密"
+            "skill": "隠密",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "knows_ash_wind"
+                },
+                "reason": "煤の流れを知っている"
+              }
+            ]
           },
           "success_effects": [
             {
@@ -10520,6 +11655,70 @@
           },
           "risk_source": "action",
           "steal_encounter": "valley_entrance"
+        },
+        {
+          "id": "read_ash_wind",
+          "text": "煤の流れを読む",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC12",
+          "intent_keywords": [
+            "煤の流れを読む"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 12,
+            "skill": "知覚"
+          },
+          "success_effects": [
+            {
+              "set_flag": "knows_ash_wind"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -3
+            }
+          ],
+          "result_texts": {
+            "success": "煤は谷底から吹き上げる熱風に乗って、一定の向きに流れている。その流れに紛れれば、亡霊の目を逃れられる。",
+            "failure": "煤を吸い込み、喉が焼けるように痛んだ。"
+          },
+          "risk_source": "action",
+          "once": "read_ash_wind_done"
+        },
+        {
+          "id": "turn_ash_wraiths",
+          "text": "祈りで亡霊を鎮める",
+          "preview": "",
+          "risk": "信仰（知恵）判定・DC10",
+          "intent_keywords": [
+            "祈りで亡霊を鎮める"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "信仰"
+          },
+          "success_effects": [
+            {
+              "current_location": "valley_lava_bridge"
+            }
+          ],
+          "failure_effects": [
+            {
+              "start_combat": true
+            },
+            {
+              "enemy_first": true
+            }
+          ],
+          "result_texts": {
+            "success": "聖句を唱えると、煤の亡霊たちは苦しげに身をよじり、霧の奥へ退いていった。",
+            "failure": "祈りは煤にかき消された。亡霊たちが一斉にこちらへ向き直る。"
+          },
+          "risk_source": "action"
         }
       ],
       "npc_ids": [],
@@ -10585,6 +11784,17 @@
           "text": "霧に紛れてやり過ごす",
           "preview": "",
           "risk": "1d20+dex判定（DC14）"
+        },
+        {
+          "text": "煤の流れを読む",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC12",
+          "once": "read_ash_wind_done"
+        },
+        {
+          "text": "祈りで亡霊を鎮める",
+          "preview": "",
+          "risk": "信仰（知恵）判定・DC10"
         }
       ]
     },
@@ -10781,6 +11991,33 @@
           "start_combat": true,
           "result_text": "灼熱の風に逆らって洞穴へ踏み込む。闇の奥で、巨大な何かがゆっくりと目を開けた。",
           "risk_source": "destination"
+        },
+        {
+          "id": "steel_resolve",
+          "text": "呼吸を整え、覚悟を決める",
+          "preview": "",
+          "risk": "信仰（知恵）判定・DC10",
+          "intent_keywords": [
+            "呼吸を整え、覚悟を決める"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "信仰"
+          },
+          "success_effects": [
+            {
+              "hp_change": 5
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "目を閉じて呼吸を数えると、震えが静まっていった。今なら、どんな炎にも向き合える。",
+            "failure": "震えは止まらなかった。それでも、前に進むしかない。"
+          },
+          "risk_source": "action",
+          "once": "steel_resolve_done"
         }
       ],
       "npc_ids": [],
@@ -10840,6 +12077,12 @@
           "text": "竜の巣へ踏み込む",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "呼吸を整え、覚悟を決める",
+          "preview": "",
+          "risk": "信仰（知恵）判定・DC10",
+          "once": "steel_resolve_done"
         }
       ]
     },
@@ -11089,6 +12332,33 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "bless_before_report",
+          "text": "城門の祠で祈る",
+          "preview": "",
+          "risk": "信仰（知恵）判定・DC10",
+          "intent_keywords": [
+            "城門の祠で祈る"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "信仰"
+          },
+          "success_effects": [
+            {
+              "hp_change": 5
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "古い祠に手を合わせると、温かな光が胸に灯った。",
+            "failure": "祠は苔むして、祈りは届かなかったようだ。"
+          },
+          "risk_source": "action",
+          "once": "bless_before_report_done"
         }
       ],
       "npc_ids": [],
@@ -11286,6 +12556,70 @@
           "secret": true,
           "open_shop": "gald_capital_shop",
           "risk_source": "action"
+        },
+        {
+          "id": "read_crowd_rumor",
+          "text": "祝宴の噂に耳を傾ける",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "intent_keywords": [
+            "祝宴の噂に耳を傾ける"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "知覚"
+          },
+          "success_effects": [
+            {
+              "set_flag": "mansion_patrol_known"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "「将軍様の屋敷じゃ、夜番の交代が真夜中に一度きりだとさ」",
+            "failure": "祝宴の喧騒で、何も聞き取れなかった。"
+          },
+          "risk_source": "action",
+          "once": "read_crowd_rumor_done"
+        },
+        {
+          "id": "appraise_festival_goods",
+          "text": "露店の品を目利きする",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "intent_keywords": [
+            "露店の品を目利きする"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "調査"
+          },
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "dragon_elixir",
+                "name": "竜の秘薬",
+                "quantity": 1
+              }
+            },
+            {
+              "gold_change": -20
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "安値で並んでいた古い瓶は、本物の竜の秘薬だった。店主は気づかずに笑っている。",
+            "failure": "どれも本物に見えて、決めきれなかった。"
+          },
+          "risk_source": "action",
+          "once": "appraise_festival_goods_done",
+          "requirements": {
+            "gold_gte": 20
+          }
         }
       ],
       "npc_ids": [
@@ -11335,6 +12669,30 @@
         {
           "set_flag": "entered_festival_town"
         }
+      ],
+      "objects": [
+        {
+          "id": "parade_banners",
+          "name": "祝宴の旗",
+          "description": "大通りに掲げられた、王国と諸侯の祝宴の旗。",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+wis",
+              "dc": 10,
+              "skill": "知覚"
+            },
+            "success_text": "王国の旗に並ぶ将軍家の旗だけ、竜の刺繍が霜のような白糸で縫われている。",
+            "failure_text": "色とりどりの旗が風に揺れているだけだ。",
+            "success_effects": [
+              {
+                "set_flag": "noticed_general_frost"
+              }
+            ],
+            "failure_effects": [],
+            "once": "observed_parade_banners"
+          }
+        }
       ]
     },
     {
@@ -11355,7 +12713,23 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 12,
-            "skill": "隠密"
+            "skill": "隠密",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "mansion_patrol_known"
+                },
+                "reason": "夜番の交代を知っている"
+              }
+            ],
+            "disadvantage": [
+              {
+                "requirements": {
+                  "flag": "mansion_alerted"
+                },
+                "reason": "番犬に気づかれている"
+              }
+            ]
           },
           "success_effects": [
             {
@@ -11415,6 +12789,37 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "case_mansion",
+          "text": "屋敷の窓明かりを観察する",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC12",
+          "intent_keywords": [
+            "屋敷の窓明かりを観察する"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 12,
+            "skill": "知覚"
+          },
+          "success_effects": [
+            {
+              "set_flag": "mansion_patrol_known"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "mansion_alerted"
+            }
+          ],
+          "result_texts": {
+            "success": "窓明かりが消える順番で、夜番の巡回路が読めた。",
+            "failure": "足音に気づいた番犬が、低く唸り始めた。"
+          },
+          "risk_source": "action",
+          "once": "case_mansion_done"
         }
       ],
       "npc_ids": [],
@@ -11485,7 +12890,15 @@
           "roll": {
             "dice_type": "1d20+wis",
             "dc": 12,
-            "skill": "知覚"
+            "skill": "知覚",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "mansion_patrol_known"
+                },
+                "reason": "夜番の交代を知っている"
+              }
+            ]
           },
           "success_effects": [
             {
@@ -11596,6 +13009,26 @@
           "risk": "判定不要",
           "visible_after": "combat_defeated:mansion_corridor:ice_sentinel"
         }
+      ],
+      "objects": [
+        {
+          "id": "frozen_armor",
+          "name": "番兵の鎧",
+          "description": "回廊に立つ、氷の番兵の鎧。",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+int",
+              "dc": 10,
+              "skill": "魔法学"
+            },
+            "success_text": "氷の番兵の首の後ろに、魔力の核が透けて見える。",
+            "failure_text": "氷の鎧は、ただ冷たく光っている。",
+            "success_effects": [],
+            "failure_effects": [],
+            "once": "observed_frozen_armor"
+          }
+        }
       ]
     },
     {
@@ -11658,6 +13091,33 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "search_hidden_drawer",
+          "text": "机の隠し引き出しを探す",
+          "preview": "",
+          "risk": "調査（知力）判定・DC12",
+          "intent_keywords": [
+            "机の隠し引き出しを探す"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 12,
+            "skill": "調査"
+          },
+          "success_effects": [
+            {
+              "set_flag": "heard_xanxus_betrayal"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "引き出しの奥の板を外すと、封書が一通出てきた。宛名は「ザンザス殿」。",
+            "failure": "引き出しは空だった。"
+          },
+          "risk_source": "action",
+          "once": "search_hidden_drawer_done"
         }
       ],
       "npc_ids": [],
@@ -11724,6 +13184,30 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "gauge_king_resolve",
+          "text": "王の決意を確かめる",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC12",
+          "intent_keywords": [
+            "王の決意を確かめる"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 12,
+            "skill": "洞察"
+          },
+          "success_effects": [],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "王は震える手を握りしめた。「……もしドラコが偽りの者なら、わしの前で正体を暴いてくれ。わしが証人になろう」",
+            "failure": "王の表情からは、何も読み取れなかった。"
+          },
+          "risk_source": "action",
+          "once": "gauge_king_resolve_done",
+          "npc_id": "king"
         }
       ],
       "npc_ids": [
@@ -11888,6 +13372,33 @@
           ],
           "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
           "risk_source": "destination"
+        },
+        {
+          "id": "read_mist_flow",
+          "text": "霧の流れを読む",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "intent_keywords": [
+            "霧の流れを読む"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "知覚"
+          },
+          "success_effects": [
+            {
+              "set_flag": "read_battlefield_mist"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "霧は谷からの風に沿って、骨の野から沼へ流れている。霧の濃い側を選べば、気づかれずに進めそうだ。",
+            "failure": "霧の中で、一瞬方角を見失いかけた。"
+          },
+          "risk_source": "action",
+          "once": "read_mist_flow_done"
         }
       ],
       "npc_ids": [],
@@ -11902,6 +13413,12 @@
           "text": "城塞の街道を北へ向かう",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "霧の流れを読む",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "once": "read_mist_flow_done"
         }
       ],
       "entry_events": [
@@ -11946,6 +13463,34 @@
           },
           "text": "森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。鐘が鳴って以来、霧は少しだけ薄くなった。"
         }
+      ],
+      "objects": [
+        {
+          "id": "rusted_helmets",
+          "name": "錆びた兜",
+          "description": "草むらに転がる、錆びた兜。",
+          "traits": [],
+          "observe_reveals": {
+            "roll": {
+              "dice_type": "1d20+int",
+              "dc": 10,
+              "skill": "調査"
+            },
+            "success_text": "兜の内側に、錆びた徽章が引っかかっていた。",
+            "failure_text": "中は泥で詰まっていた。",
+            "success_effects": [
+              {
+                "add_item": {
+                  "id": "rusted_badge",
+                  "name": "錆びた兵士の徽章",
+                  "quantity": 1
+                }
+              }
+            ],
+            "failure_effects": [],
+            "once": "observed_rusted_helmets"
+          }
+        }
       ]
     },
     {
@@ -11984,7 +13529,15 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 10,
-            "skill": "隠密"
+            "skill": "隠密",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "read_battlefield_mist"
+                },
+                "reason": "霧の流れを知っている"
+              }
+            ]
           },
           "hidden_after": "passed_bone_field",
           "success_effects": [
@@ -12095,6 +13648,37 @@
               "text": "森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。鐘が鳴って以来、霧は少しだけ薄くなった。"
             }
           ]
+        },
+        {
+          "id": "identify_old_banner",
+          "text": "折れた軍旗を調べる",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "intent_keywords": [
+            "折れた軍旗を調べる"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "調査"
+          },
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "rusted_badge",
+                "name": "錆びた兵士の徽章",
+                "quantity": 1
+              }
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "色あせた紋章は、王国軍の第三軍団のものだ。十年前、竜の谷へ送られた部隊。旗の根元に、錆びた徽章が一つ落ちていた。",
+            "failure": "泥にまみれて、紋章は読み取れなかった。"
+          },
+          "risk_source": "action",
+          "once": "identify_old_banner_done"
         }
       ],
       "npc_ids": [],
@@ -12103,7 +13687,14 @@
         "skeleton_soldier"
       ],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "折れた軍旗を調べる",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "once": "identify_old_banner_done"
+        }
+      ],
       "combat": {
         "enemy_ids": [
           "skeleton_soldier",
@@ -12215,6 +13806,34 @@
           ],
           "result_text": "霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。",
           "risk_source": "destination"
+        },
+        {
+          "id": "pray_for_ghost",
+          "text": "亡霊のために祈る",
+          "preview": "",
+          "risk": "信仰（知恵）判定・DC10",
+          "intent_keywords": [
+            "亡霊のために祈る"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "信仰"
+          },
+          "success_effects": [
+            {
+              "set_flag": "marsh_path_known"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "亡霊の表情が、少しだけ和らいだ。「……ありがとう。沼を渡るなら、縁の苔を踏め。あそこだけは沈まない」",
+            "failure": "祈りの言葉は、冷たい風に吹き散らされた。"
+          },
+          "risk_source": "action",
+          "once": "pray_for_ghost_done",
+          "npc_id": "old_soldier_ghost"
         }
       ],
       "npc_ids": [
@@ -12222,7 +13841,14 @@
       ],
       "enemy_ids": [],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "亡霊のために祈る",
+          "preview": "",
+          "risk": "信仰（知恵）判定・DC10",
+          "once": "pray_for_ghost_done"
+        }
+      ],
       "combat": {
         "enemy_ids": [],
         "auto_start": false
@@ -12264,7 +13890,21 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 12,
-            "skill": "隠密"
+            "skill": "隠密",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "read_battlefield_mist"
+                },
+                "reason": "霧の流れを知っている"
+              },
+              {
+                "requirements": {
+                  "flag": "marsh_path_known"
+                },
+                "reason": "沈まない足場を知っている"
+              }
+            ]
           },
           "hidden_after": "passed_ghoul_marsh",
           "success_effects": [
@@ -12318,6 +13958,37 @@
           "visible_after": "passed_ghoul_marsh",
           "portrait_image": "/static/images/npc_zebok_merchant.png",
           "risk_source": "destination"
+        },
+        {
+          "id": "probe_marsh_depth",
+          "text": "枝で沼の深さを探る",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "intent_keywords": [
+            "枝で沼の深さを探る"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "調査"
+          },
+          "success_effects": [
+            {
+              "set_flag": "marsh_path_known"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -2
+            }
+          ],
+          "result_texts": {
+            "success": "枝を差し込んでいくと、縁の苔の下にだけ硬い地面があった。",
+            "failure": "足を取られ、膝まで泥に沈んだ。"
+          },
+          "risk_source": "action",
+          "once": "probe_marsh_depth_done"
         }
       ],
       "npc_ids": [],
@@ -12326,7 +13997,14 @@
         "wraith"
       ],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "枝で沼の深さを探る",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "once": "probe_marsh_depth_done"
+        }
+      ],
       "combat": {
         "enemy_ids": [
           "ghoul",
@@ -12616,6 +14294,29 @@
             }
           ],
           "risk_source": "action"
+        },
+        {
+          "id": "read_knight_epitaph",
+          "text": "騎士の墓碑を読む",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "intent_keywords": [
+            "騎士の墓碑を読む"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "調査"
+          },
+          "success_effects": [],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "苔をぬぐうと、古い文字が現れた。「我が剣、竜と人の盟約を守る者にのみ譲らん」",
+            "failure": "文字はすり減って、ほとんど読めなかった。"
+          },
+          "risk_source": "action",
+          "once": "read_knight_epitaph_done"
         }
       ],
       "npc_ids": [],
@@ -12623,7 +14324,14 @@
         "grave_knight"
       ],
       "connected_location_ids": [],
-      "choices": [],
+      "choices": [
+        {
+          "text": "騎士の墓碑を読む",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "once": "read_knight_epitaph_done"
+        }
+      ],
       "entry_events": [
         {
           "once": "battlefield_zebok_seen",
@@ -13067,6 +14775,37 @@
           ],
           "result_text": "城塞の水門。鉄格子の向こうでは、洞窟から続く地下水路が暗く口を開けている。",
           "risk_source": "destination"
+        },
+        {
+          "id": "chat_guardsmen",
+          "text": "守護団員と雑談する",
+          "preview": "",
+          "risk": "説得（知恵）判定・DC10",
+          "intent_keywords": [
+            "守護団員と雑談する"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "説得"
+          },
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "trail_ration",
+                "name": "携帯食",
+                "quantity": 1
+              }
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "「峠の岩か？ 団長に頼めば、すぐどけてくれるさ」 若い団員は、干し肉を一切れ分けてくれた。",
+            "failure": "「悪いが、今は見回り中だ」と追い払われた。"
+          },
+          "risk_source": "action",
+          "once": "chat_guardsmen_done"
         }
       ],
       "choices": [
@@ -13099,6 +14838,12 @@
           "text": "水門へ向かう",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "守護団員と雑談する",
+          "preview": "",
+          "risk": "説得（知恵）判定・DC10",
+          "once": "chat_guardsmen_done"
         }
       ],
       "connected_location_ids": [
@@ -13255,6 +15000,33 @@
           "hidden_after": "gorge_path_open",
           "result_text": "「峠を越えるだと？ ……いいだろう、守護団員に岩をどけさせよう。だが峡谷には近ごろ、岩でできた獣が出るそうだ。気をつけて行け」",
           "risk_source": "action"
+        },
+        {
+          "id": "study_war_map",
+          "text": "卓上の地図を読み解く",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "intent_keywords": [
+            "卓上の地図を読み解く"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "調査"
+          },
+          "success_effects": [
+            {
+              "set_flag": "gorge_tremor_rhythm"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "峡谷の地図の余白に、鉱夫が記した書き込みがある。「地鳴り、二十数えるごとに一度」",
+            "failure": "地図の書き込みは細かすぎて、読み取れなかった。"
+          },
+          "risk_source": "action",
+          "once": "study_war_map_done"
         }
       ],
       "choices": [
@@ -13293,6 +15065,12 @@
           "visible_after": "greeted_walter",
           "once": "gorge_path_open",
           "hidden_after": "gorge_path_open"
+        },
+        {
+          "text": "卓上の地図を読み解く",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "once": "study_war_map_done"
         }
       ],
       "connected_location_ids": [
@@ -13942,6 +15720,38 @@
           },
           "result_text": "ブリギッテは石を叩いて音を確かめ、にやりと笑った。「上等だ。礼に、あんたの鎧を打ち直してやるよ」",
           "risk_source": "action"
+        },
+        {
+          "id": "assist_brigitte",
+          "text": "ブリギッテの槌打ちを手伝う",
+          "preview": "",
+          "risk": "運動（筋力）判定・DC10",
+          "intent_keywords": [
+            "ブリギッテの槌打ちを手伝う"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+str",
+            "dc": 10,
+            "skill": "運動"
+          },
+          "success_effects": [
+            {
+              "gold_change": 25
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -2
+            }
+          ],
+          "result_texts": {
+            "success": "交互に槌を振るううちに、刃がまっすぐに伸びていった。「筋がいいね。礼だよ」",
+            "failure": "火の粉が腕に飛んだ。"
+          },
+          "risk_source": "action",
+          "once": "assist_brigitte_done",
+          "npc_id": "brigitte"
         }
       ],
       "choices": [
@@ -13962,6 +15772,12 @@
           "text": "大通りへ戻る",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "ブリギッテの槌打ちを手伝う",
+          "preview": "",
+          "risk": "運動（筋力）判定・DC10",
+          "once": "assist_brigitte_done"
         }
       ],
       "connected_location_ids": [
@@ -14159,6 +15975,36 @@
             "failure": "「悪いけど、僕はひとりで調べる方が性に合っていてね」"
           },
           "risk_source": "action"
+        },
+        {
+          "id": "swap_tales_elio",
+          "text": "エリオと旅の話を交わす",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC8",
+          "intent_keywords": [
+            "エリオと旅の話を交わす"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 8,
+            "skill": "洞察"
+          },
+          "success_effects": [
+            {
+              "set_flag": "gorge_tremor_rhythm"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "「峡谷の地鳴りには間がある。水脈が詰まって、また流れる。その繰り返しさ」",
+            "failure": "話は弾んだが、役に立ちそうなことは聞けなかった。"
+          },
+          "risk_source": "action",
+          "once": "swap_tales_elio_done",
+          "npc_id": "elio",
+          "visible_after": "met_elio",
+          "hidden_after": "recruited_elio"
         }
       ],
       "choices": [
@@ -14233,6 +16079,14 @@
           "requirements": {
             "not_flag": "recruited_elio"
           }
+        },
+        {
+          "text": "エリオと旅の話を交わす",
+          "preview": "",
+          "risk": "洞察（知恵）判定・DC8",
+          "once": "swap_tales_elio_done",
+          "visible_after": "met_elio",
+          "hidden_after": "recruited_elio"
         }
       ],
       "connected_location_ids": [
@@ -14336,6 +16190,33 @@
           "visible_after": "gorge_path_open",
           "result_text": "守護団員たちがどけた岩の間を抜け、東の峠へ踏み込んだ。",
           "risk_source": "destination"
+        },
+        {
+          "id": "watch_from_wall",
+          "text": "峠の向こうを見張る",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "intent_keywords": [
+            "峠の向こうを見張る"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "知覚"
+          },
+          "success_effects": [
+            {
+              "set_flag": "saw_white_claw"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "峠をふさぐ大岩の断面に、白く光る三本の爪痕が見えた。",
+            "failure": "峠には霞がかかって、何も見えなかった。"
+          },
+          "risk_source": "action",
+          "once": "watch_from_wall_done"
         }
       ],
       "choices": [
@@ -14363,6 +16244,12 @@
           "preview": "",
           "risk": "判定不要",
           "visible_after": "gorge_path_open"
+        },
+        {
+          "text": "峠の向こうを見張る",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "once": "watch_from_wall_done"
         }
       ],
       "connected_location_ids": [
@@ -14429,6 +16316,37 @@
           ],
           "result_text": "城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の道は、崩れ落ちた大岩でふさがれている。",
           "risk_source": "destination"
+        },
+        {
+          "id": "count_tremors",
+          "text": "地鳴りの間隔を数える",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "intent_keywords": [
+            "地鳴りの間隔を数える"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "知覚"
+          },
+          "success_effects": [
+            {
+              "set_flag": "gorge_tremor_rhythm"
+            }
+          ],
+          "failure_effects": [
+            {
+              "hp_change": -2
+            }
+          ],
+          "result_texts": {
+            "success": "地鳴りと地鳴りの間に、決まった静けさがある。その間に動けばいい。",
+            "failure": "落石が肩をかすめた。"
+          },
+          "risk_source": "action",
+          "once": "count_tremors_done"
         }
       ],
       "choices": [
@@ -14441,6 +16359,12 @@
           "text": "城塞へ戻る",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "地鳴りの間隔を数える",
+          "preview": "",
+          "risk": "知覚（知恵）判定・DC10",
+          "once": "count_tremors_done"
         }
       ],
       "npc_ids": [],
@@ -14491,7 +16415,15 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 10,
-            "skill": "隠密"
+            "skill": "隠密",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "gorge_tremor_rhythm"
+                },
+                "reason": "地鳴りの間隔を知っている"
+              }
+            ]
           },
           "success_effects": [
             {
@@ -14693,6 +16625,33 @@
           ],
           "result_text": "崩れた岩が転がる細い道。岩陰から、砂利を固めたような甲虫が二匹、顎を鳴らして這い出してきた。",
           "risk_source": "destination"
+        },
+        {
+          "id": "search_miner_tent",
+          "text": "天幕の下を探る",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "intent_keywords": [
+            "天幕の下を探る"
+          ],
+          "effects": [],
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "調査"
+          },
+          "success_effects": [
+            {
+              "gold_change": 20
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "崩れた天幕の下から、鉱夫が隠していた小袋が出てきた。",
+            "failure": "天幕の支柱が崩れて、埃をかぶった。"
+          },
+          "risk_source": "action",
+          "once": "search_miner_tent_done"
         }
       ],
       "choices": [
@@ -14714,6 +16673,12 @@
           "text": "落石の道へ戻る",
           "preview": "",
           "risk": "危険（戦闘）"
+        },
+        {
+          "text": "天幕の下を探る",
+          "preview": "",
+          "risk": "調査（知力）判定・DC10",
+          "once": "search_miner_tent_done"
         }
       ],
       "npc_ids": [],
@@ -14847,7 +16812,15 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 12,
-            "skill": "隠密"
+            "skill": "隠密",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "gorge_tremor_rhythm"
+                },
+                "reason": "地鳴りの間隔を知っている"
+              }
+            ]
           },
           "success_effects": [
             {
@@ -15021,7 +16994,15 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 12,
-            "skill": "隠密"
+            "skill": "隠密",
+            "advantage": [
+              {
+                "requirements": {
+                  "flag": "gorge_tremor_rhythm"
+                },
+                "reason": "地鳴りの間隔を知っている"
+              }
+            ]
           },
           "success_effects": [
             {

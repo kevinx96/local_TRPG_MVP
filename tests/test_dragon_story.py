@@ -223,7 +223,7 @@ class DragonStoryTests(unittest.TestCase):
 
                 self.assertEqual(
                     [action["id"] for action in locations["alley"]["actions"]],
-                    ["wait_for_night_in_alley", "return_castle_from_alley"],
+                    ["wait_for_night_in_alley", "return_castle_from_alley", "search_alley_day"],
                 )
                 self.assertEqual(enemies["zebok"]["hp"], -96)
                 self.assertEqual(enemies["zebok"]["combat"]["life_rule"], "negative_undead")

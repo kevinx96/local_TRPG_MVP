@@ -9,7 +9,7 @@ from unittest.mock import patch
 
 from host import app, free_actions, state
 from scripts.balance import checkpoints, class_aware
-from scripts.scenario import checks_v2
+from scripts.scenario import checks_e, checks_v2
 
 
 class ChecksV2Tests(unittest.TestCase):
@@ -228,7 +228,8 @@ class ChecksV2Tests(unittest.TestCase):
             self.assertEqual(original, migrated)
             actions = {a["id"]: a for loc in migrated["locations"] for a in checks_v2.walk(loc.get("actions", []))}
             self.assertEqual(sum(a.get("roll", {}).get("dc") == 999 for a in actions.values()), 3)
-            self.assertEqual(sum(bool(a.get("roll", {}).get("skill")) for a in actions.values()), 31)
+            extra = len(checks_e.CHECKS) if migrated["meta"].get("checks_e") else 0
+            self.assertEqual(sum(bool(a.get("roll", {}).get("skill")) for a in actions.values()), 31 + extra)
             for identifier, skill, dc in (("ask_ian_legend", "洞察", 8), ("invite_robin", "説得", 10)):
                 self.assertEqual(actions[identifier]["roll"], {"dice_type": "1d20+wis", "skill": skill, "dc": dc})
                 self.assertEqual(actions[identifier]["risk"], f"{skill}（知恵）判定・DC{dc}")
