@@ -9,7 +9,7 @@ function client({ reducedMotion = false } = {}) {
   const timers = new Map(), nodes = new Map(), requests = [], rendered = [], messages = [];
   class Element {
     constructor() {
-      this.style = {};
+      this.style = { setProperty(name, value) { this[name] = value; } };
       this.dataset = {};
       this.attributes = {};
       this.listeners = {};
@@ -57,6 +57,7 @@ function client({ reducedMotion = false } = {}) {
       setTimeout: (fn, ms) => schedule(fn, ms), clearTimeout: id => timers.delete(id),
       setInterval: (fn, ms) => schedule(fn, ms, true), clearInterval: id => timers.delete(id),
       matchMedia: () => ({ matches: reducedMotion }), location: { search: "" },
+      getComputedStyle: () => ({ transform: "matrix(0, 1, -1, 0, 0, -4)", opacity: "0.4" }),
     },
     fetch: (url, options) => new Promise((resolve, reject) => requests.push({ url, options, resolve, reject })),
     rendered, messages,
@@ -158,15 +159,18 @@ test("Enter and Space submit exactly one server-only roll request", async () => 
     assert.equal(c.rendered.length, 0);
     c.answer();
     await c.flush();
+    assert.equal(c.els.diceCheckCard.classList.contains("settling"), true);
+    assert.equal(c.els.diceNatural.hidden, true);
+    await c.tick(120);
     assert.equal(c.els.diceNatural.textContent, "14");
-    await c.tick(1600);
+    await c.tick(1480);
     assert.equal(c.rendered.length, 1);
     assert.equal(c.state.turnBusy, false);
     assert.equal(c.timers.size, 0);
   }
 });
 
-test("fast response still rolls for 900ms, reveals natural/modifier/DC in order, then holds 1200ms", async () => {
+test("900ms roll, 120ms settle and 80ms fade preserve the original total duration", async () => {
   const c = client();
   c.openDiceCheck(c.choice, c.card);
   const done = c.confirmDiceCheck();
@@ -175,9 +179,24 @@ test("fast response still rolls for 900ms, reveals natural/modifier/DC in order,
   assert.equal(c.els.diceCheckCard.classList.contains("rolling"), true);
   assert.equal(c.rendered.length, 0);
   await c.tick(1);
+  assert.equal(c.els.diceCheckCard.classList.contains("rolling"), false);
+  assert.equal(c.els.diceCheckCard.classList.contains("settling"), true);
+  assert.equal(c.els.diceNatural.hidden, true);
+  assert.equal(c.els.diceCheckCard.style["--dice-settle-duration"], "120ms");
+  assert.equal(c.els.diceCheckCard.style["--dice-number-duration"], "80ms");
+  assert.equal(c.els.diceFirst.style["--dice-settle-transform"], "matrix(0, 1, -1, 0, 0, -4)");
+  assert.equal(c.els.diceFirst.style["--dice-settle-shadow-opacity"], "0.4");
+  await c.tick(119);
+  assert.equal(c.els.diceNatural.hidden, true);
+  await c.tick(1);
   assert.equal(c.els.diceNatural.textContent, "14");
+  assert.equal(c.els.diceNatural.hidden, false);
+  assert.equal(c.els.diceCheckCard.classList.contains("settling"), false);
+  assert.equal(c.els.diceCheckCard.classList.contains("faces-visible"), true);
   assert.equal(c.els.diceCalculation.hidden, true);
-  await c.tick(200);
+  await c.tick(79);
+  assert.equal(c.els.diceCalculation.hidden, true);
+  await c.tick(1);
   assert.equal(c.els.diceCalculation.textContent, "＋5 ＝ 19");
   assert.equal(c.els.diceOutcome.textContent, "");
   await c.tick(200);
@@ -202,8 +221,11 @@ test("free input starts its 600ms animation only after the server response", asy
   await c.tick(599);
   assert.equal(c.els.diceCheckCard.classList.contains("rolling"), true);
   await c.tick(1);
+  assert.equal(c.els.diceCheckCard.classList.contains("settling"), true);
+  assert.equal(c.els.diceNatural.hidden, true);
+  await c.tick(120);
   assert.equal(c.els.diceNatural.textContent, "14");
-  await c.tick(1600);
+  await c.tick(1480);
   await done;
   assert.equal(c.rendered.length, 1);
 });
@@ -449,4 +471,73 @@ test("disabled extremes show only their points and the engine outcome", async ()
     await done;
     assert.doesNotMatch(c.els.diceBannerText.textContent, /大成功|大失敗/);
   }
+});
+
+test("both dice keep rolling without visible numbers until a slow server returns", async () => {
+  const c = client();
+  c.choice.check.advantage = "advantage";
+  c.openDiceCheck(c.choice, c.card);
+  const done = c.confirmDiceCheck();
+  await c.tick(5000);
+  assert.equal(c.els.diceSecond.hidden, false);
+  assert.equal(c.els.diceNatural.hidden, true);
+  assert.equal(c.els.diceNaturalSecond.hidden, true);
+  assert.equal(c.els.diceCheckCard.classList.contains("rolling"), true);
+  assert.equal(c.els.diceCheckCard.classList.contains("settling"), false);
+  assert.equal(c.rendered.length, 0);
+  const session = c.response(17);
+  Object.assign(session.dice_log[0], { rolls: [3, 17], advantage: "advantage", selected_index: 1, selected_roll: 17 });
+  c.answer(session);
+  await c.tick(120);
+  assert.equal(c.els.diceNatural.textContent, "3");
+  assert.equal(c.els.diceNaturalSecond.textContent, "17");
+  assert.equal(c.els.diceNaturalSecond.hidden, false);
+  assert.equal(c.els.diceFirst.classList.contains("discarded"), true);
+  assert.equal(c.els.diceSecond.classList.contains("selected"), true);
+  await c.tick(1479);
+  assert.equal(c.rendered.length, 0);
+  await c.tick(1);
+  await done;
+  assert.equal(c.rendered.length, 1);
+  assert.equal(c.timers.size, 0);
+});
+
+test("skipping during settling, number fade or calculation leaves no delayed animation", async () => {
+  for (const elapsed of [600, 719, 720, 799, 800, 999]) {
+    const c = client();
+    const done = c.renderTurnResponse(c.response());
+    await c.tick(elapsed);
+    c.event("click");
+    await c.flush();
+    assert.equal(c.els.diceCheckCard.classList.contains("rolling"), false);
+    assert.equal(c.els.diceCheckCard.classList.contains("settling"), false);
+    assert.equal(c.els.diceCheckCard.classList.contains("instant-result"), true);
+    assert.equal(c.els.diceNatural.hidden, false);
+    assert.equal(c.els.diceOutcome.textContent, "DC 14　成功");
+    c.event("click");
+    await done;
+    assert.equal(c.timers.size, 0);
+    assert.equal(c.rendered.length, 1);
+  }
+});
+
+test("a new roll clears the previous cracked pair, selection and visible numbers", async () => {
+  const c = client();
+  const first = c.renderTurnResponse(c.response(1));
+  await c.tick(1000);
+  assert.equal(c.els.diceCheckCard.classList.contains("critical-failure"), true);
+  c.event("click");
+  await first;
+  c.openDiceCheck(c.choice, c.card);
+  assert.equal(c.els.diceCheckCard.classList.contains("critical-failure"), false);
+  assert.equal(c.els.diceCheckCard.classList.contains("faces-visible"), false);
+  const next = c.confirmDiceCheck();
+  assert.equal(c.els.diceNatural.hidden, true);
+  assert.equal(c.els.diceNaturalSecond.hidden, true);
+  assert.equal(c.els.diceSecond.hidden, true);
+  c.answer(c.response(7));
+  await c.tick(2500);
+  await next;
+  assert.equal(c.els.diceCheckCard.classList.contains("critical-failure"), false);
+  assert.equal(c.timers.size, 0);
 });

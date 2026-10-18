@@ -1024,7 +1024,21 @@ function stopDiceRollAnimation() {
     state.diceAnimationTimer = null;
   }
   if (els.diceBanner) els.diceBanner.classList.remove("rolling");
-  if (els.diceCheckCard) els.diceCheckCard.classList.remove("rolling");
+  if (els.diceCheckCard) els.diceCheckCard.classList.remove("rolling", "settling");
+}
+
+function settleDice() {
+  for (const die of [els.diceFirst, els.diceSecond]) {
+    const body = window.getComputedStyle(die.querySelector(".dice-body"));
+    const flight = window.getComputedStyle(die.querySelector(".dice-flight"));
+    const shadow = window.getComputedStyle(die.querySelector(".dice-shadow"));
+    die.style.setProperty("--dice-settle-transform", body.transform);
+    die.style.setProperty("--dice-settle-flight", flight.transform);
+    die.style.setProperty("--dice-settle-shadow-transform", shadow.transform);
+    die.style.setProperty("--dice-settle-shadow-opacity", shadow.opacity);
+  }
+  stopDiceRollAnimation();
+  els.diceCheckCard.classList.add("settling");
 }
 
 function openDiceCheck(choice, focus) {
@@ -1050,7 +1064,7 @@ function showDiceCheckCard(check, title) {
   els.diceOutcome.classList.remove("success", "failure");
   els.diceCheckSummary.hidden = !check;
   els.diceCheckFormula.hidden = !check;
-  els.diceCheckCard.classList.remove("rolling", "critical-success", "critical-failure", "instant-result");
+  els.diceCheckCard.classList.remove("rolling", "settling", "faces-visible", "critical-success", "critical-failure", "instant-result");
   els.diceCheckCard.style.display = "";
   els.diceCheckBackdrop.hidden = false;
   els.gameScreen.classList.add("dice-active");
@@ -1073,8 +1087,11 @@ function diceFacesText(roll) {
 
 function showDiceFaces(roll) {
   els.diceNatural.textContent = String(roll.rolls[0]);
+  els.diceNatural.hidden = false;
   els.diceSecond.hidden = !(roll.advantage && roll.rolls.length === 2);
   els.diceNaturalSecond.textContent = String(roll.rolls[1] ?? "?");
+  els.diceNaturalSecond.hidden = els.diceSecond.hidden;
+  els.diceCheckCard.classList.add("faces-visible");
   [els.diceFirst, els.diceSecond].forEach((die, index) => {
     die.classList.toggle("selected", !els.diceSecond.hidden && index === roll.selected_index);
     die.classList.toggle("discarded", !els.diceSecond.hidden && index !== roll.selected_index);
@@ -1120,18 +1137,16 @@ function startDicePresentation(check, title) {
   els.diceCheckAnimation.hidden = false;
   els.diceNatural.textContent = "?";
   els.diceNaturalSecond.textContent = "?";
+  els.diceNatural.hidden = true;
+  els.diceNaturalSecond.hidden = true;
   els.diceCalculation.hidden = true;
   els.diceCritical.hidden = true;
   els.diceOutcome.textContent = "判定中…";
   els.diceCheckCard.focus();
   if (!presentation.reducedMotion) {
     els.diceCheckCard.classList.add("rolling");
-    let face = 1;
-    state.diceAnimationTimer = window.setInterval(() => {
-      face = (face + 7) % 20;
-      els.diceNatural.textContent = String(face + 1);
-      els.diceNaturalSecond.textContent = String((face + 11) % 20 + 1);
-    }, 60);
+  } else {
+    els.diceCheckCard.classList.add("instant-result");
   }
   return presentation;
 }
@@ -1206,10 +1221,17 @@ async function renderTurnResponse(session, title = "判定") {
     const immediate = () => presentation.skipped || presentation.reducedMotion;
     await waitForDice(presentation, immediate() ? 0 : presentation.minimum - (performance.now() - presentation.startedAt));
     if (state.dicePresentation !== presentation) return;
-    stopDiceRollAnimation();
-    showDiceFaces(roll);
     els.diceOutcome.textContent = "";
-    await waitForDice(presentation, immediate() ? 0 : 200);
+    // Settle and fade within 039's existing 200ms face reveal budget.
+    els.diceCheckCard.style.setProperty("--dice-settle-duration", "120ms");
+    els.diceCheckCard.style.setProperty("--dice-number-duration", "80ms");
+    if (immediate()) stopDiceRollAnimation();
+    else settleDice();
+    await waitForDice(presentation, immediate() ? 0 : 120);
+    if (state.dicePresentation !== presentation) return;
+    els.diceCheckCard.classList.remove("settling");
+    showDiceFaces(roll);
+    await waitForDice(presentation, immediate() ? 0 : 80);
     if (state.dicePresentation !== presentation) return;
     showDiceCalculation(roll);
     await waitForDice(presentation, immediate() ? 0 : 200);

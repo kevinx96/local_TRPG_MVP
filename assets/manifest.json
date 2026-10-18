@@ -4003,6 +4003,537 @@
       "transparent_background": true,
       "retained_from": null,
       "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: 巨人の苔石。岩の巨人の体から剥がれた、苔むした石。  Front view with a slight view from above."
+    },
+    {
+      "id": "dice_bone_01",
+      "task": "042",
+      "purpose": "旧象牙／骨 d20",
+      "prompt": "Use case: stylized-concept. Asset type: a single transparent d20 dice sprite for a Japanese fantasy visual novel, final 512x512. One aged ivory/bone twenty-sided die, centered, whole silhouette visible, roughly 8 percent clear margins. Clear physically plausible icosahedron triangular facets, one large FRONT TRIANGULAR FACE facing the viewer, its center at image center; that face must be completely blank for a later CSS number. Warm off-white ivory, fine hairline age cracks, subtle wear. Other faces may have faint indistinct incised marks but NO readable numbers, letters or symbols. Thick-painted semi-realistic fantasy inventory icon matching spec 036: clearly visible brushwork and painted material texture, restrained saturation, upper-left light, lower-right shading, not a flat polygon/vector outline and not a glossy 3D render. No cast shadow (CSS supplies it), no ground, no props, no frame, no text, no glow. Genuine transparent alpha background, no checkerboard painted in. Candidate A01. Blank central face is the priority.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/originals/dice_bone_01.png",
+      "bytes": 1678856,
+      "width": 1254,
+      "height": 1254,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "61a016504c462c3c9f0a315f72a7bc677abb709f3d8ca76291d7905b0e288ee7"
+    },
+    {
+      "id": "dice_bone_01",
+      "task": "042",
+      "purpose": "旧象牙／骨 d20",
+      "prompt": "Use case: stylized-concept. Asset type: a single transparent d20 dice sprite for a Japanese fantasy visual novel, final 512x512. One aged ivory/bone twenty-sided die, centered, whole silhouette visible, roughly 8 percent clear margins. Clear physically plausible icosahedron triangular facets, one large FRONT TRIANGULAR FACE facing the viewer, its center at image center; that face must be completely blank for a later CSS number. Warm off-white ivory, fine hairline age cracks, subtle wear. Other faces may have faint indistinct incised marks but NO readable numbers, letters or symbols. Thick-painted semi-realistic fantasy inventory icon matching spec 036: clearly visible brushwork and painted material texture, restrained saturation, upper-left light, lower-right shading, not a flat polygon/vector outline and not a glossy 3D render. No cast shadow (CSS supplies it), no ground, no props, no frame, no text, no glow. Genuine transparent alpha background, no checkerboard painted in. Candidate A01. Blank central face is the priority.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/dice_bone_01.png",
+      "bytes": 301570,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "89c146c3409c79ae52c431fd30539ea2043196b9a0db3c063d2feaa56563bbc8"
+    },
+    {
+      "id": "dice_bone_01",
+      "task": "042",
+      "purpose": "旧象牙／骨 d20",
+      "prompt": "Use case: stylized-concept. Asset type: a single transparent d20 dice sprite for a Japanese fantasy visual novel, final 512x512. One aged ivory/bone twenty-sided die, centered, whole silhouette visible, roughly 8 percent clear margins. Clear physically plausible icosahedron triangular facets, one large FRONT TRIANGULAR FACE facing the viewer, its center at image center; that face must be completely blank for a later CSS number. Warm off-white ivory, fine hairline age cracks, subtle wear. Other faces may have faint indistinct incised marks but NO readable numbers, letters or symbols. Thick-painted semi-realistic fantasy inventory icon matching spec 036: clearly visible brushwork and painted material texture, restrained saturation, upper-left light, lower-right shading, not a flat polygon/vector outline and not a glossy 3D render. No cast shadow (CSS supplies it), no ground, no props, no frame, no text, no glow. Genuine transparent alpha background, no checkerboard painted in. Candidate A01. Blank central face is the priority.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "client/images/dice_bone.webp",
+      "bytes": 50100,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "69c28ead5f091bad8f76057edc9dd18871d0724b941dcee0f9264ecc782f1fff"
+    },
+    {
+      "id": "dice_bone_02",
+      "task": "042",
+      "purpose": "旧象牙／骨 d20",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent d20 die sprite for a Japanese fantasy visual novel, final 512x512. Single physically plausible twenty-sided icosahedron, clear triangular facets, centered and wholly visible with 8 percent margins. One large FRONT TRIANGULAR FACE directly faces the viewer, apex up, triangle centroid near image center; leave this face BLANK to overlay a number later. NO readable digits, text, letters, runes or symbols anywhere. Thick-painted semi-realistic fantasy inventory illustration matching spec 036: visible brushwork, upper-left lighting, restrained saturation, painted textures, not flat vector polygons, not glossy 3D render. Genuine transparent alpha, no shadow (CSS supplies it), no ground, props, frame, glow outside the silhouette. Material A: aged ivory/bone, warm off-white, fine hairline cracks. Candidate 02: an independent second candidate for the same specification and frontal angle.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/originals/dice_bone_02.png",
+      "bytes": 1774813,
+      "width": 1254,
+      "height": 1254,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "d97d2ba2dff3864227454b968081b4146f312f55e57a93a9851d0f8b4d264134"
+    },
+    {
+      "id": "dice_bone_02",
+      "task": "042",
+      "purpose": "旧象牙／骨 d20",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent d20 die sprite for a Japanese fantasy visual novel, final 512x512. Single physically plausible twenty-sided icosahedron, clear triangular facets, centered and wholly visible with 8 percent margins. One large FRONT TRIANGULAR FACE directly faces the viewer, apex up, triangle centroid near image center; leave this face BLANK to overlay a number later. NO readable digits, text, letters, runes or symbols anywhere. Thick-painted semi-realistic fantasy inventory illustration matching spec 036: visible brushwork, upper-left lighting, restrained saturation, painted textures, not flat vector polygons, not glossy 3D render. Genuine transparent alpha, no shadow (CSS supplies it), no ground, props, frame, glow outside the silhouette. Material A: aged ivory/bone, warm off-white, fine hairline cracks. Candidate 02: an independent second candidate for the same specification and frontal angle.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/dice_bone_02.png",
+      "bytes": 308024,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "bff3810abad31dc51b78f7d5f53a43a5587aa5c955da96afc86284db79c2484c"
+    },
+    {
+      "id": "dice_bone_cracked",
+      "task": "042",
+      "purpose": "旧象牙／骨 d20",
+      "prompt": "Use case: precise-object-edit. Asset type: alternate critical-failure d20 sprite, final 512x512 transparent PNG. Input image 1 is the EDIT TARGET: preserve this exact die, exact angle, scale, silhouette, facet layout, upper-left lighting, thick painted texture, material and colors. Change ONLY surface damage: add clearly visible deep branching cracks across its front and adjoining facets so it visibly looks cracked, while the die remains a single intact silhouette. Do not break off pieces or rotate any face. Keep the front triangular face free of all digits/text; the overlaid number will be provided by CSS. No letters, numbers, emblems, glow, ground or exterior cast shadow. Preserve genuine transparent alpha. Same original framing and pixel alignment.",
+      "reference_images": [
+        "assets/candidates/042/originals/dice_bone_01.png"
+      ],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/originals/dice_bone_cracked.png",
+      "bytes": 1800364,
+      "width": 1254,
+      "height": 1254,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "5f87dd6829da6d3de3fba50f6aed551e267d8a11022f74da48351448274f3626"
+    },
+    {
+      "id": "dice_bone_cracked",
+      "task": "042",
+      "purpose": "旧象牙／骨 d20",
+      "prompt": "Use case: precise-object-edit. Asset type: alternate critical-failure d20 sprite, final 512x512 transparent PNG. Input image 1 is the EDIT TARGET: preserve this exact die, exact angle, scale, silhouette, facet layout, upper-left lighting, thick painted texture, material and colors. Change ONLY surface damage: add clearly visible deep branching cracks across its front and adjoining facets so it visibly looks cracked, while the die remains a single intact silhouette. Do not break off pieces or rotate any face. Keep the front triangular face free of all digits/text; the overlaid number will be provided by CSS. No letters, numbers, emblems, glow, ground or exterior cast shadow. Preserve genuine transparent alpha. Same original framing and pixel alignment.",
+      "reference_images": [
+        "assets/candidates/042/originals/dice_bone_01.png"
+      ],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/dice_bone_cracked.png",
+      "bytes": 330181,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "47491e4b33ea18fad8d709fb092d50f5bca4f04a7d1c4f12673d45eec8ee2cae"
+    },
+    {
+      "id": "dice_bone_cracked",
+      "task": "042",
+      "purpose": "旧象牙／骨 d20",
+      "prompt": "Use case: precise-object-edit. Asset type: alternate critical-failure d20 sprite, final 512x512 transparent PNG. Input image 1 is the EDIT TARGET: preserve this exact die, exact angle, scale, silhouette, facet layout, upper-left lighting, thick painted texture, material and colors. Change ONLY surface damage: add clearly visible deep branching cracks across its front and adjoining facets so it visibly looks cracked, while the die remains a single intact silhouette. Do not break off pieces or rotate any face. Keep the front triangular face free of all digits/text; the overlaid number will be provided by CSS. No letters, numbers, emblems, glow, ground or exterior cast shadow. Preserve genuine transparent alpha. Same original framing and pixel alignment.",
+      "reference_images": [
+        "assets/candidates/042/originals/dice_bone_01.png"
+      ],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "client/images/dice_bone_cracked.webp",
+      "bytes": 52508,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "ee27207b47b682a3241a1f6ad64b78fc6b4fa4a8a90e33f23d361e6a58b16342"
+    },
+    {
+      "id": "dice_ruby_01",
+      "task": "042",
+      "purpose": "深红宝石 d20",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent d20 die sprite for a Japanese fantasy visual novel, final 512x512. Single physically plausible twenty-sided icosahedron, clear triangular facets, centered and wholly visible with 8 percent margins. One large FRONT TRIANGULAR FACE directly faces the viewer, apex up, triangle centroid near image center; leave this face BLANK to overlay a number later. NO readable digits, text, letters, runes or symbols anywhere. Thick-painted semi-realistic fantasy inventory illustration matching spec 036: visible brushwork, upper-left lighting, restrained saturation, painted textures, not flat vector polygons, not glossy 3D render. Genuine transparent alpha, no shadow (CSS supplies it), no ground, props, frame, glow outside the silhouette. Material B: deep red ruby, translucent dark red stone with subtle contained internal light and painted crystalline depth. Candidate 01.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/originals/dice_ruby_01.png",
+      "bytes": 1719975,
+      "width": 1254,
+      "height": 1254,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "fd68777c770fb7a9ba95df98e1c8fd56c06822fed09174d85879b2034898f3dc"
+    },
+    {
+      "id": "dice_ruby_01",
+      "task": "042",
+      "purpose": "深红宝石 d20",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent d20 die sprite for a Japanese fantasy visual novel, final 512x512. Single physically plausible twenty-sided icosahedron, clear triangular facets, centered and wholly visible with 8 percent margins. One large FRONT TRIANGULAR FACE directly faces the viewer, apex up, triangle centroid near image center; leave this face BLANK to overlay a number later. NO readable digits, text, letters, runes or symbols anywhere. Thick-painted semi-realistic fantasy inventory illustration matching spec 036: visible brushwork, upper-left lighting, restrained saturation, painted textures, not flat vector polygons, not glossy 3D render. Genuine transparent alpha, no shadow (CSS supplies it), no ground, props, frame, glow outside the silhouette. Material B: deep red ruby, translucent dark red stone with subtle contained internal light and painted crystalline depth. Candidate 01.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/dice_ruby_01.png",
+      "bytes": 318898,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "8e0456d2b3ffe29d771c85e40ac16ac559a867351e9c5694f503596d1a90a8bb"
+    },
+    {
+      "id": "dice_ruby_01",
+      "task": "042",
+      "purpose": "深红宝石 d20",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent d20 die sprite for a Japanese fantasy visual novel, final 512x512. Single physically plausible twenty-sided icosahedron, clear triangular facets, centered and wholly visible with 8 percent margins. One large FRONT TRIANGULAR FACE directly faces the viewer, apex up, triangle centroid near image center; leave this face BLANK to overlay a number later. NO readable digits, text, letters, runes or symbols anywhere. Thick-painted semi-realistic fantasy inventory illustration matching spec 036: visible brushwork, upper-left lighting, restrained saturation, painted textures, not flat vector polygons, not glossy 3D render. Genuine transparent alpha, no shadow (CSS supplies it), no ground, props, frame, glow outside the silhouette. Material B: deep red ruby, translucent dark red stone with subtle contained internal light and painted crystalline depth. Candidate 01.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "client/images/dice_ruby.webp",
+      "bytes": 58768,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "70f2d83cd399105889fa6ce5983cd623d70454d7f828321fae56404669a12a5e"
+    },
+    {
+      "id": "dice_ruby_02",
+      "task": "042",
+      "purpose": "深红宝石 d20",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent d20 die sprite for a Japanese fantasy visual novel, final 512x512. Single physically plausible twenty-sided icosahedron, clear triangular facets, centered and wholly visible with 8 percent margins. One large FRONT TRIANGULAR FACE directly faces the viewer, apex up, triangle centroid near image center; leave this face BLANK to overlay a number later. NO readable digits, text, letters, runes or symbols anywhere. Thick-painted semi-realistic fantasy inventory illustration matching spec 036: visible brushwork, upper-left lighting, restrained saturation, painted textures, not flat vector polygons, not glossy 3D render. Genuine transparent alpha, no shadow (CSS supplies it), no ground, props, frame, glow outside the silhouette. Material B: deep red ruby, translucent dark red stone with subtle contained internal light and painted crystalline depth. Candidate 02: an independent second candidate for the identical material, style, and frontal angle.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/originals/dice_ruby_02.png",
+      "bytes": 1635601,
+      "width": 1254,
+      "height": 1254,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "e451daa1c63ddee3bb98ef927759972f76d19f3d74e4a42080ab181fd99b4f8c"
+    },
+    {
+      "id": "dice_ruby_02",
+      "task": "042",
+      "purpose": "深红宝石 d20",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent d20 die sprite for a Japanese fantasy visual novel, final 512x512. Single physically plausible twenty-sided icosahedron, clear triangular facets, centered and wholly visible with 8 percent margins. One large FRONT TRIANGULAR FACE directly faces the viewer, apex up, triangle centroid near image center; leave this face BLANK to overlay a number later. NO readable digits, text, letters, runes or symbols anywhere. Thick-painted semi-realistic fantasy inventory illustration matching spec 036: visible brushwork, upper-left lighting, restrained saturation, painted textures, not flat vector polygons, not glossy 3D render. Genuine transparent alpha, no shadow (CSS supplies it), no ground, props, frame, glow outside the silhouette. Material B: deep red ruby, translucent dark red stone with subtle contained internal light and painted crystalline depth. Candidate 02: an independent second candidate for the identical material, style, and frontal angle.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/dice_ruby_02.png",
+      "bytes": 302479,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "39579fff5f842c1c3f15695347c6a097354327f6370e85c1ec21c3a65eb6c3b2"
+    },
+    {
+      "id": "dice_ruby_cracked",
+      "task": "042",
+      "purpose": "深红宝石 d20",
+      "prompt": "Use case: precise-object-edit. Asset type: alternate critical-failure d20 sprite, final 512x512 transparent PNG. Input image 1 is the EDIT TARGET: preserve this exact die, exact angle, scale, silhouette, facet layout, upper-left lighting, thick painted texture, material and colors. Change ONLY surface damage: add clearly visible deep branching cracks across its front and adjoining facets so it visibly looks cracked, while the die remains a single intact silhouette. Do not break off pieces or rotate any face. Keep the front triangular face free of all digits/text; the overlaid number will be provided by CSS. No letters, numbers, emblems, glow, ground or exterior cast shadow. Preserve genuine transparent alpha. Same original framing and pixel alignment.",
+      "reference_images": [
+        "assets/candidates/042/originals/dice_ruby_01.png"
+      ],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/originals/dice_ruby_cracked.png",
+      "bytes": 1803196,
+      "width": 1254,
+      "height": 1254,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "d99496bfd4a5d9991dee1c585de69729a3ae3da797e2660cbee212f043dd2688"
+    },
+    {
+      "id": "dice_ruby_cracked",
+      "task": "042",
+      "purpose": "深红宝石 d20",
+      "prompt": "Use case: precise-object-edit. Asset type: alternate critical-failure d20 sprite, final 512x512 transparent PNG. Input image 1 is the EDIT TARGET: preserve this exact die, exact angle, scale, silhouette, facet layout, upper-left lighting, thick painted texture, material and colors. Change ONLY surface damage: add clearly visible deep branching cracks across its front and adjoining facets so it visibly looks cracked, while the die remains a single intact silhouette. Do not break off pieces or rotate any face. Keep the front triangular face free of all digits/text; the overlaid number will be provided by CSS. No letters, numbers, emblems, glow, ground or exterior cast shadow. Preserve genuine transparent alpha. Same original framing and pixel alignment.",
+      "reference_images": [
+        "assets/candidates/042/originals/dice_ruby_01.png"
+      ],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/dice_ruby_cracked.png",
+      "bytes": 343385,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "5280bb316d4d7cd5ecacd67036c709b5ae3d7f46172cfc0e4710a7577282eec1"
+    },
+    {
+      "id": "dice_ruby_cracked",
+      "task": "042",
+      "purpose": "深红宝石 d20",
+      "prompt": "Use case: precise-object-edit. Asset type: alternate critical-failure d20 sprite, final 512x512 transparent PNG. Input image 1 is the EDIT TARGET: preserve this exact die, exact angle, scale, silhouette, facet layout, upper-left lighting, thick painted texture, material and colors. Change ONLY surface damage: add clearly visible deep branching cracks across its front and adjoining facets so it visibly looks cracked, while the die remains a single intact silhouette. Do not break off pieces or rotate any face. Keep the front triangular face free of all digits/text; the overlaid number will be provided by CSS. No letters, numbers, emblems, glow, ground or exterior cast shadow. Preserve genuine transparent alpha. Same original framing and pixel alignment.",
+      "reference_images": [
+        "assets/candidates/042/originals/dice_ruby_01.png"
+      ],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "client/images/dice_ruby_cracked.webp",
+      "bytes": 62342,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "b335969974252f62affc044a9d88c1dbb11b3735746074065f12f1eea31f7efb"
+    },
+    {
+      "id": "dice_iron_01",
+      "task": "042",
+      "purpose": "黑铁 d20",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent d20 die sprite for a Japanese fantasy visual novel, final 512x512. Single physically plausible twenty-sided icosahedron, clear triangular facets, centered and wholly visible with 8 percent margins. One large FRONT TRIANGULAR FACE directly faces the viewer, apex up, triangle centroid near image center; leave this face BLANK to overlay a number later. NO readable digits, text, letters, runes or symbols anywhere. Thick-painted semi-realistic fantasy inventory illustration matching spec 036: visible brushwork, upper-left lighting, restrained saturation, painted textures, not flat vector polygons, not glossy 3D render. Genuine transparent alpha, no shadow (CSS supplies it), no ground, props, frame, glow outside the silhouette. Material C: blackened forged iron, visible forged metal surface, worn edges polished to a muted silver. Candidate 01.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/originals/dice_iron_01.png",
+      "bytes": 2093442,
+      "width": 1254,
+      "height": 1254,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "87007425d4b4b13c22770ecbd31d67ebd46eca9507d959d68c413e6e01a432c7"
+    },
+    {
+      "id": "dice_iron_01",
+      "task": "042",
+      "purpose": "黑铁 d20",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent d20 die sprite for a Japanese fantasy visual novel, final 512x512. Single physically plausible twenty-sided icosahedron, clear triangular facets, centered and wholly visible with 8 percent margins. One large FRONT TRIANGULAR FACE directly faces the viewer, apex up, triangle centroid near image center; leave this face BLANK to overlay a number later. NO readable digits, text, letters, runes or symbols anywhere. Thick-painted semi-realistic fantasy inventory illustration matching spec 036: visible brushwork, upper-left lighting, restrained saturation, painted textures, not flat vector polygons, not glossy 3D render. Genuine transparent alpha, no shadow (CSS supplies it), no ground, props, frame, glow outside the silhouette. Material C: blackened forged iron, visible forged metal surface, worn edges polished to a muted silver. Candidate 01.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/dice_iron_01.png",
+      "bytes": 340507,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "32d6ce07563abc2fb415cb473dc5ae10fc1eba068717bf15d3aae69302420b9e"
+    },
+    {
+      "id": "dice_iron_01",
+      "task": "042",
+      "purpose": "黑铁 d20",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent d20 die sprite for a Japanese fantasy visual novel, final 512x512. Single physically plausible twenty-sided icosahedron, clear triangular facets, centered and wholly visible with 8 percent margins. One large FRONT TRIANGULAR FACE directly faces the viewer, apex up, triangle centroid near image center; leave this face BLANK to overlay a number later. NO readable digits, text, letters, runes or symbols anywhere. Thick-painted semi-realistic fantasy inventory illustration matching spec 036: visible brushwork, upper-left lighting, restrained saturation, painted textures, not flat vector polygons, not glossy 3D render. Genuine transparent alpha, no shadow (CSS supplies it), no ground, props, frame, glow outside the silhouette. Material C: blackened forged iron, visible forged metal surface, worn edges polished to a muted silver. Candidate 01.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "client/images/dice_iron.webp",
+      "bytes": 62362,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "9f08dee909cdbe9f333a4bd4337c49a3add8497e6ce00cf564e093bd736c7076"
+    },
+    {
+      "id": "dice_iron_02",
+      "task": "042",
+      "purpose": "黑铁 d20",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent d20 die sprite for a Japanese fantasy visual novel, final 512x512. Single physically plausible twenty-sided icosahedron, clear triangular facets, centered and wholly visible with 8 percent margins. One large FRONT TRIANGULAR FACE directly faces the viewer, apex up, triangle centroid near image center; leave this face BLANK to overlay a number later. NO readable digits, text, letters, runes or symbols anywhere. Thick-painted semi-realistic fantasy inventory illustration matching spec 036: visible brushwork, upper-left lighting, restrained saturation, painted textures, not flat vector polygons, not glossy 3D render. Genuine transparent alpha, no shadow (CSS supplies it), no ground, props, frame, glow outside the silhouette. Material C: blackened forged iron, visible forged metal surface, worn edges polished to a muted silver. Candidate 02: an independent second candidate for the identical material, style, and frontal angle.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/originals/dice_iron_02.png",
+      "bytes": 2085416,
+      "width": 1254,
+      "height": 1254,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "7dde893592aa241457be6290a4a9ee48ab6506b1c66abdab978f9e2375620853"
+    },
+    {
+      "id": "dice_iron_02",
+      "task": "042",
+      "purpose": "黑铁 d20",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent d20 die sprite for a Japanese fantasy visual novel, final 512x512. Single physically plausible twenty-sided icosahedron, clear triangular facets, centered and wholly visible with 8 percent margins. One large FRONT TRIANGULAR FACE directly faces the viewer, apex up, triangle centroid near image center; leave this face BLANK to overlay a number later. NO readable digits, text, letters, runes or symbols anywhere. Thick-painted semi-realistic fantasy inventory illustration matching spec 036: visible brushwork, upper-left lighting, restrained saturation, painted textures, not flat vector polygons, not glossy 3D render. Genuine transparent alpha, no shadow (CSS supplies it), no ground, props, frame, glow outside the silhouette. Material C: blackened forged iron, visible forged metal surface, worn edges polished to a muted silver. Candidate 02: an independent second candidate for the identical material, style, and frontal angle.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/dice_iron_02.png",
+      "bytes": 348229,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "113fc84e68965a13f9c9e70bde6279ccc8563403cdf24e0436104e4eb00103fe"
+    },
+    {
+      "id": "dice_iron_cracked",
+      "task": "042",
+      "purpose": "黑铁 d20",
+      "prompt": "Use case: precise-object-edit. Asset type: alternate critical-failure d20 sprite, final 512x512 transparent PNG. Input image 1 is the EDIT TARGET: preserve this exact die, exact angle, scale, silhouette, facet layout, upper-left lighting, thick painted texture, material and colors. Change ONLY surface damage: add clearly visible deep branching cracks across its front and adjoining facets so it visibly looks cracked, while the die remains a single intact silhouette. Do not break off pieces or rotate any face. Keep the front triangular face free of all digits/text; the overlaid number will be provided by CSS. No letters, numbers, emblems, glow, ground or exterior cast shadow. Preserve genuine transparent alpha. Same original framing and pixel alignment.",
+      "reference_images": [
+        "assets/candidates/042/originals/dice_iron_01.png"
+      ],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/originals/dice_iron_cracked.png",
+      "bytes": 2134634,
+      "width": 1254,
+      "height": 1254,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "2e259128c1c5ce9b43f0a997cb588f5113b11cdc35ed2d490e8b3f9f233ff9c5"
+    },
+    {
+      "id": "dice_iron_cracked",
+      "task": "042",
+      "purpose": "黑铁 d20",
+      "prompt": "Use case: precise-object-edit. Asset type: alternate critical-failure d20 sprite, final 512x512 transparent PNG. Input image 1 is the EDIT TARGET: preserve this exact die, exact angle, scale, silhouette, facet layout, upper-left lighting, thick painted texture, material and colors. Change ONLY surface damage: add clearly visible deep branching cracks across its front and adjoining facets so it visibly looks cracked, while the die remains a single intact silhouette. Do not break off pieces or rotate any face. Keep the front triangular face free of all digits/text; the overlaid number will be provided by CSS. No letters, numbers, emblems, glow, ground or exterior cast shadow. Preserve genuine transparent alpha. Same original framing and pixel alignment.",
+      "reference_images": [
+        "assets/candidates/042/originals/dice_iron_01.png"
+      ],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/dice_iron_cracked.png",
+      "bytes": 353233,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "ad7069d080d56d2109925221e130c9e958447f204c84cc0440575b6f9d5eeac6"
+    },
+    {
+      "id": "dice_iron_cracked",
+      "task": "042",
+      "purpose": "黑铁 d20",
+      "prompt": "Use case: precise-object-edit. Asset type: alternate critical-failure d20 sprite, final 512x512 transparent PNG. Input image 1 is the EDIT TARGET: preserve this exact die, exact angle, scale, silhouette, facet layout, upper-left lighting, thick painted texture, material and colors. Change ONLY surface damage: add clearly visible deep branching cracks across its front and adjoining facets so it visibly looks cracked, while the die remains a single intact silhouette. Do not break off pieces or rotate any face. Keep the front triangular face free of all digits/text; the overlaid number will be provided by CSS. No letters, numbers, emblems, glow, ground or exterior cast shadow. Preserve genuine transparent alpha. Same original framing and pixel alignment.",
+      "reference_images": [
+        "assets/candidates/042/originals/dice_iron_01.png"
+      ],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "client/images/dice_iron_cracked.webp",
+      "bytes": 59706,
+      "width": 512,
+      "height": 512,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "174c88b8123a4d3590fc79cb32cf2a25294c978d8308c61452d85f672f0bc07a"
+    },
+    {
+      "id": "dice_tray",
+      "task": "042",
+      "purpose": "深色绒布木框骰盘",
+      "prompt": "Use case: stylized-concept. Asset type: transparent dice tray background sprite for a Japanese fantasy visual novel, wide 2:1 canvas for final about 800x400. Exactly one empty circular dice tray seen from above with slight perspective so its rim reads as a horizontal ellipse. Dark velvet interior and simple wooden rim, no decoration or carving. Thick-painted semi-realistic fantasy inventory illustration matching spec 036, visible brushwork, restrained saturation, upper-left lighting. Fill the width with small clear margins, entire outer silhouette visible. Genuine transparent alpha outside the tray, no ground plane or exterior cast shadow, no dice, no props, no readable text, no letters, logo or watermark. Do not paint a checkerboard.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/originals/dice_tray.png",
+      "bytes": 2132972,
+      "width": 1774,
+      "height": 887,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "800277914b1882292cf7ddcdb16ffb43704065fd685cb8b0dcee372160bdc826"
+    },
+    {
+      "id": "dice_tray",
+      "task": "042",
+      "purpose": "深色绒布木框骰盘",
+      "prompt": "Use case: stylized-concept. Asset type: transparent dice tray background sprite for a Japanese fantasy visual novel, wide 2:1 canvas for final about 800x400. Exactly one empty circular dice tray seen from above with slight perspective so its rim reads as a horizontal ellipse. Dark velvet interior and simple wooden rim, no decoration or carving. Thick-painted semi-realistic fantasy inventory illustration matching spec 036, visible brushwork, restrained saturation, upper-left lighting. Fill the width with small clear margins, entire outer silhouette visible. Genuine transparent alpha outside the tray, no ground plane or exterior cast shadow, no dice, no props, no readable text, no letters, logo or watermark. Do not paint a checkerboard.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "assets/candidates/042/dice_tray.png",
+      "bytes": 400251,
+      "width": 800,
+      "height": 400,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "21030fc4751ebc4b23e39ad7ac5ec1597d968a9b6b8129a95bed79efe0029d91"
+    },
+    {
+      "id": "dice_tray",
+      "task": "042",
+      "purpose": "深色绒布木框骰盘",
+      "prompt": "Use case: stylized-concept. Asset type: transparent dice tray background sprite for a Japanese fantasy visual novel, wide 2:1 canvas for final about 800x400. Exactly one empty circular dice tray seen from above with slight perspective so its rim reads as a horizontal ellipse. Dark velvet interior and simple wooden rim, no decoration or carving. Thick-painted semi-realistic fantasy inventory illustration matching spec 036, visible brushwork, restrained saturation, upper-left lighting. Fill the width with small clear margins, entire outer silhouette visible. Genuine transparent alpha outside the tray, no ground plane or exterior cast shadow, no dice, no props, no readable text, no letters, logo or watermark. Do not paint a checkerboard.",
+      "reference_images": [],
+      "generation_date": "2026-10-19",
+      "generator": "image_gen",
+      "approved": false,
+      "file": "client/images/dice_tray.webp",
+      "bytes": 54308,
+      "width": 800,
+      "height": 400,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "sha256": "9c8e6a33de067f3804ced463cf8f48351eb2707eff978d8404029dfed80fe880"
     }
   ],
   "selections": [
@@ -5940,6 +6471,93 @@
       ],
       "prompts": "assets/candidates/038/generation.json",
       "sheet": "eval/reports/screens/038/icons-sheet.png"
+    },
+    "042": {
+      "approved": false,
+      "runtime_bytes": 400094,
+      "runtime_budget": 1500000,
+      "default": "client/images/dice_bone.webp",
+      "runtime": [
+        {
+          "file": "client/images/dice_bone.webp",
+          "bytes": 50100,
+          "width": 512,
+          "height": 512,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "sha256": "69c28ead5f091bad8f76057edc9dd18871d0724b941dcee0f9264ecc782f1fff"
+        },
+        {
+          "file": "client/images/dice_bone_cracked.webp",
+          "bytes": 52508,
+          "width": 512,
+          "height": 512,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "sha256": "ee27207b47b682a3241a1f6ad64b78fc6b4fa4a8a90e33f23d361e6a58b16342"
+        },
+        {
+          "file": "client/images/dice_ruby.webp",
+          "bytes": 58768,
+          "width": 512,
+          "height": 512,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "sha256": "70f2d83cd399105889fa6ce5983cd623d70454d7f828321fae56404669a12a5e"
+        },
+        {
+          "file": "client/images/dice_ruby_cracked.webp",
+          "bytes": 62342,
+          "width": 512,
+          "height": 512,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "sha256": "b335969974252f62affc044a9d88c1dbb11b3735746074065f12f1eea31f7efb"
+        },
+        {
+          "file": "client/images/dice_iron.webp",
+          "bytes": 62362,
+          "width": 512,
+          "height": 512,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "sha256": "9f08dee909cdbe9f333a4bd4337c49a3add8497e6ce00cf564e093bd736c7076"
+        },
+        {
+          "file": "client/images/dice_iron_cracked.webp",
+          "bytes": 59706,
+          "width": 512,
+          "height": 512,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "sha256": "174c88b8123a4d3590fc79cb32cf2a25294c978d8308c61452d85f672f0bc07a"
+        },
+        {
+          "file": "client/images/dice_tray.webp",
+          "bytes": 54308,
+          "width": 800,
+          "height": 400,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "sha256": "9c8e6a33de067f3804ced463cf8f48351eb2707eff978d8404029dfed80fe880"
+        }
+      ],
+      "prompts": "assets/candidates/042/generation.json",
+      "sheet": "eval/reports/screens/042/dice-sheet.png"
     }
   },
   "tasks": [
@@ -5952,7 +6570,8 @@
     "034",
     "035",
     "036",
-    "038"
+    "038",
+    "042"
   ],
   "known_issues": [
     "020: 全量测试存在与美术无关的既有 benchmark 标签同步失败；未修改生成器或 benchmark。",
