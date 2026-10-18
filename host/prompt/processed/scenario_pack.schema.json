@@ -1438,11 +1438,31 @@
       "type": "object",
       "additionalProperties": true,
       "properties": {
+        "skill": {
+          "enum": ["運動", "軽業", "隠密", "知覚", "洞察", "説得", "信仰", "調査", "魔法学", "はったり"]
+        },
+        "advantage": {
+          "$ref": "#/$defs/check_conditions"
+        },
+        "disadvantage": {
+          "$ref": "#/$defs/check_conditions"
+        },
         "dice_type": {
           "type": "string"
         },
         "dc": {
           "type": "integer"
+        }
+      }
+    },
+    "check_conditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["requirements", "reason"],
+        "properties": {
+          "requirements": { "$ref": "#/$defs/choice_requirements" },
+          "reason": { "type": "string", "minLength": 1 }
         }
       }
     },

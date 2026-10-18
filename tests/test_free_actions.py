@@ -126,9 +126,11 @@ class FreeActionTests(unittest.TestCase):
         location["objects"].append({"id": "wooden_crate", "name": "木箱", "traits": ["movable"], "description": "動かせる空の木箱。"})
         self.turn(session, plan(operation="prepare", item_id="wooden_crate", advance=False), "木箱を動かして視界を遮る準備をする")
         self.turn(session, plan(operation="prepare", item_id="wooden_crate", advance=False), "さらに箱を積む")
-        with patch.object(state.random, "randint", return_value=6):
+        with patch.object(state.random, "randint", side_effect=[6, 10]):
             self.turn(session, plan(operation="sneak", item_id=""), "箱の陰から進む")
-        self.assertEqual(session["dice_log"][-1]["dc"], 11)
+        self.assertEqual(session["dice_log"][-1]["dc"], 10)
+        self.assertEqual(session["dice_log"][-1]["rolls"], [6, 10])
+        self.assertEqual(session["dice_log"][-1]["advantage"], "advantage")
         self.assertEqual(state.current_location_id(session), "lost_goblin_crossroads")
         self.assertNotIn("prepared", session["scene_changes"]["dark_forest_loc"]["forest_slime"])
 

@@ -245,6 +245,15 @@ def _consume(session: dict[str, Any], item: dict[str, Any]) -> None:
     state.apply_state_delta(session, {"inventory_remove": [{"name": item["name"], "quantity": 1}]})
 
 
+def sneak_roll_spec(target: dict[str, Any], target_state: dict[str, Any]) -> dict[str, Any]:
+    spec: dict[str, Any] = {"dice_type": "1d20+dex", "skill": "隠密", "dc": int(target.get("sneak_dc", 10))}
+    if target_state.get("prepared"):
+        spec["advantage"] = [{"requirements": {}, "reason": "遮蔽の準備"}]
+    if target_state.get("alertness"):
+        spec["disadvantage"] = [{"requirements": {}, "reason": "相手の警戒"}]
+    return spec
+
+
 def adjudicate(session: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]:
     """Apply a validated plan atomically; reject plans before spending resources."""
     trial = deepcopy(session)
@@ -282,12 +291,17 @@ def _adjudicate(session: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]
         reveal = target.get("observe_reveals")
         if isinstance(reveal, dict):
             once = str(reveal.get("once") or "")
-            if once and session.get("flags", {}).get(once):
+            if (once and session.get("flags", {}).get(once)) or changes[target["id"]].get("observe_check"):
                 return _commit(session, plan, _result("完了済みです。", "observed"), changes)
-            dice, dc = state.action_dice_settings(reveal)
-            roll = state.roll_dice(session, dice, dc) if dc > 0 else {"expression": "none", "rolls": [], "dc": 0, "success": True}
-            success = bool(roll["success"] and not roll.get("critical_failure"))
+            dice, dc = state.action_dice_settings(reveal, session=session)
+            roll = state.roll_dice(session, dice, dc, roll=reveal.get("roll"),
+                                   critical_enabled=reveal.get("critical_enabled") is not False) if dc > 0 and dice != "none" else {
+                                       "expression": "none", "rolls": [], "dc": 0, "success": True}
+            success = state._action_outcome(roll, reveal.get("critical_enabled") is not False) in {"success", "critical_success"} if roll["rolls"] else True
             branch = "success" if success else "failure"
+            if roll["rolls"]:
+                roll["outcome"] = branch
+                changes[target["id"]]["observe_check"] = deepcopy(roll)
             delta = state._effects_to_state_delta(reveal.get(f"{branch}_effects", []), session)
             if once:
                 delta.setdefault("flags_set", []).append(once)
@@ -310,8 +324,8 @@ def _adjudicate(session: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]
             return _result("足止めや遮蔽に使える、近くの素材を指定してください。")
         if target_state.get("prepared"):
             return _result("準備は整っています。次の潜行で利用でき、重ねても効果は増えません。")
-        target_state["prepared"] = {"material_id": material["id"], "bonus": 3, "expires": "next_sneak_attempt"}
-        text = f"{material['name']}で足止めと遮蔽の準備を整えた。まだ相手を捕らえてはいないが、次の潜行判定の難度が3下がる。"
+        target_state["prepared"] = {"material_id": material["id"], "expires": "next_sneak_attempt"}
+        text = f"{material['name']}で足止めと遮蔽の準備を整えた。まだ相手を捕らえてはいないが、次の潜行判定が有利になる。"
         return _commit(session, plan, _result(text, "prepared"), changes)
     if operation == "distract":
         item = _owned_item(session, plan["item_id"])
@@ -336,15 +350,16 @@ def _adjudicate(session: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]
                                   "相手が餌に気を取られている間に、静かに脇を通り抜けた。", "distracted")
         if int(session.get("character", {}).get("sp", 0)) < 1:
             return _result("潜行する体力が足りません。別の方法を試すか、休息してください。")
-        preparation = target_state.pop("prepared", {})
-        dc = int(target.get("sneak_dc", 14)) + min(3, int(target_state.get("alertness", 0))) * 2
-        dc -= int(preparation.get("bonus", 0))
-        roll = state.roll_dice(session, "1d20+dex", dc)
+        spec = sneak_roll_spec(target, target_state)
+        roll = state.roll_dice(session, spec["dice_type"], spec["dc"], roll=spec)
+        target_state.pop("prepared", None)
+        target_state.pop("alertness", None)
+        roll["outcome"] = state._action_outcome(roll)
         state.apply_state_delta(session, {"sp_change": -1})
-        if roll["success"] and not roll["critical_failure"]:
+        if roll["outcome"] in {"success", "critical_success"}:
             return _pass_obstacle(session, plan, target, target_state, changes,
                                   "葉を踏む音を抑え、相手の視界を避けて道を通り抜けた。", "sneaked", roll)
-        target_state["alertness"] = min(3, int(target_state.get("alertness", 0)) + 1)
+        target_state["alertness"] = 1
         return _commit(session, plan, _result(
             "枝の音に相手が振り向いた。移動できず、SPを1消費した。相手の警戒が強まったが、餌で誘う方法はまだ使える。",
             "failure", roll=roll), changes)

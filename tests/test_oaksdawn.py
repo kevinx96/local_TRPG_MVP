@@ -97,7 +97,7 @@ class OaksdawnTests(unittest.TestCase):
         session = self.session("oaksdawn_chapel")
         self.resolve(session, "talk_liese")
         check = state.resolve_action(session, action_id="recruit_liese_persuade")
-        self.assertEqual(state.action_dice_settings(check, session=session), ("1d20+wis", 13))
+        self.assertEqual(state.action_dice_settings(check, session=session), ("1d20+wis", 10))
         self.resolve(session, "recruit_liese_persuade", {"success": False, "dc": 13})
         self.assertIsNone(session["companion"])
         self.assertFalse(state.action_requirement_status(check, session)[0])

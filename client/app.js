@@ -79,11 +79,15 @@ const els = {
   diceCheckTitle:  document.querySelector("#diceCheckTitle"),
   diceCheckSummary: document.querySelector("#diceCheckSummary"),
   diceCheckFormula: document.querySelector("#diceCheckFormula"),
+  diceCheckAdvantage: document.querySelector("#diceCheckAdvantage"),
   diceCheckActions: document.querySelector("#diceCheckActions"),
   diceCheckRoll:   document.querySelector("#diceCheckRoll"),
   diceCheckCancel: document.querySelector("#diceCheckCancel"),
   diceCheckAnimation: document.querySelector("#diceCheckAnimation"),
   diceNatural:     document.querySelector("#diceNatural"),
+  diceFirst:       document.querySelector("#diceFirst"),
+  diceSecond:      document.querySelector("#diceSecond"),
+  diceNaturalSecond: document.querySelector("#diceNaturalSecond"),
   diceCalculation: document.querySelector("#diceCalculation"),
   diceOutcome:     document.querySelector("#diceOutcome"),
   diceCritical:    document.querySelector("#diceCritical"),
@@ -670,7 +674,7 @@ function renderSession(session) {
   renderList(
     els.diceLog,
     (session.dice_log || []).slice(-5).reverse().map(
-      (roll) => `🎲 ${roll.expression}: ${roll.rolls.join(", ")} = ${roll.total}`
+      (roll) => `🎲 ${roll.expression}: ${diceFacesText(roll)} = ${roll.total}`
     ),
     "判定なし",
   );
@@ -1035,16 +1039,46 @@ function openDiceCheck(choice, focus) {
 
 function showDiceCheckCard(check, title) {
   els.diceCheckTitle.innerHTML = rubyHtml(title || "判定");
-  els.diceCheckSummary.textContent = check ? `${check.attribute_label || ""}判定　DC ${check.dc}` : "";
+  const label = check?.skill ? `${check.skill}（${check.attribute_label}）` : check?.attribute_label || "";
+  els.diceCheckSummary.textContent = check ? `${label}判定　DC ${check.dc}` : "";
   els.diceCheckFormula.textContent = check
-    ? `${check.dice} ${check.modifier < 0 ? "−" : "＋"} ${Math.abs(check.modifier)}${check.attribute_label ? `（${check.attribute_label}）` : ""}`
+    ? `${check.dice} ${check.modifier < 0 ? "−" : "＋"} ${Math.abs(check.modifier)}${check.attribute_label ? `（${check.attribute_label}${check.proficiency_bonus ? "＋熟練" : ""}）` : ""}`
     : "";
+  showDiceAdvantage(check);
+  els.diceSecond.hidden = !check?.advantage;
+  for (const die of [els.diceFirst, els.diceSecond]) die.classList.remove("selected", "discarded");
+  els.diceOutcome.classList.remove("success", "failure");
   els.diceCheckSummary.hidden = !check;
   els.diceCheckFormula.hidden = !check;
   els.diceCheckCard.classList.remove("rolling", "critical-success", "critical-failure", "instant-result");
   els.diceCheckCard.style.display = "";
   els.diceCheckBackdrop.hidden = false;
   els.gameScreen.classList.add("dice-active");
+}
+
+function showDiceAdvantage(check) {
+  els.diceCheckAdvantage.textContent = check?.advantage
+    ? `${check.advantage === "advantage" ? "有利" : "不利"}：${(check.advantage_reasons || []).join("、")}` : "";
+  els.diceCheckAdvantage.hidden = !check?.advantage;
+}
+
+function selectedDiceFace(roll) {
+  return Number(roll.selected_roll ?? roll.rolls[0]);
+}
+
+function diceFacesText(roll) {
+  return roll.advantage && roll.rolls?.length === 2
+    ? `[${roll.rolls.join(", ")}] → ${selectedDiceFace(roll)}` : (roll.rolls || []).join(" + ");
+}
+
+function showDiceFaces(roll) {
+  els.diceNatural.textContent = String(roll.rolls[0]);
+  els.diceSecond.hidden = !(roll.advantage && roll.rolls.length === 2);
+  els.diceNaturalSecond.textContent = String(roll.rolls[1] ?? "?");
+  [els.diceFirst, els.diceSecond].forEach((die, index) => {
+    die.classList.toggle("selected", !els.diceSecond.hidden && index === roll.selected_index);
+    die.classList.toggle("discarded", !els.diceSecond.hidden && index !== roll.selected_index);
+  });
 }
 
 function cancelDiceCheck() {
@@ -1085,6 +1119,7 @@ function startDicePresentation(check, title) {
   els.diceCheckActions.hidden = true;
   els.diceCheckAnimation.hidden = false;
   els.diceNatural.textContent = "?";
+  els.diceNaturalSecond.textContent = "?";
   els.diceCalculation.hidden = true;
   els.diceCritical.hidden = true;
   els.diceOutcome.textContent = "判定中…";
@@ -1095,6 +1130,7 @@ function startDicePresentation(check, title) {
     state.diceAnimationTimer = window.setInterval(() => {
       face = (face + 7) % 20;
       els.diceNatural.textContent = String(face + 1);
+      els.diceNaturalSecond.textContent = String((face + 11) % 20 + 1);
     }, 60);
   }
   return presentation;
@@ -1115,20 +1151,23 @@ function waitForDice(presentation, milliseconds) {
 function showDiceCalculation(roll) {
   const modifier = Number(roll.attr_mod || 0);
   els.diceCalculation.textContent = `${modifier < 0 ? "−" : "＋"}${Math.abs(modifier)} ＝ ${roll.total}`;
-  els.diceCalculation.setAttribute("aria-label", `${roll.rolls[0]} ${els.diceCalculation.textContent}`);
+  els.diceCalculation.setAttribute("aria-label", `${diceFacesText(roll)} ${els.diceCalculation.textContent}`);
   els.diceCalculation.hidden = false;
 }
 
 function diceCheckSucceeded(roll) {
   if (roll.outcome) return ["success", "critical_success"].includes(roll.outcome);
-  return !roll.critical_failure && (roll.success === true || Number(roll.total) >= Number(roll.dc));
+  if (roll.critical_enabled !== false && roll.critical_failure) return false;
+  if (roll.critical_enabled !== false && roll.critical_success) return true;
+  return roll.success === true || Number(roll.total) >= Number(roll.dc);
 }
 
 function showDiceOutcome(roll) {
-  const natural = Number(roll.rolls[0]);
+  const natural = roll.critical_enabled === false ? null : selectedDiceFace(roll);
   const success = diceCheckSucceeded(roll);
   els.diceOutcome.textContent = `DC ${roll.dc}　${success ? "成功" : "失敗"}`;
-  // TODO(design): 039 requires natural 1/20 labels even when an action disables critical outcomes.
+  els.diceOutcome.classList.toggle("success", success);
+  els.diceOutcome.classList.toggle("failure", !success);
   els.diceCritical.textContent = natural === 20 ? "大成功" : natural === 1 ? "大失敗" : "";
   els.diceCritical.hidden = !els.diceCritical.textContent;
   els.diceCheckCard.classList.toggle("critical-success", natural === 20);
@@ -1142,8 +1181,10 @@ function skipDicePresentation() {
   stopDiceRollAnimation();
   els.diceCheckCard.classList.add("instant-result");
   // Until the response arrives, no final number is known on the client.
-  els.diceNatural.textContent = presentation.roll ? String(presentation.roll.rolls[0]) : "?";
+  els.diceNatural.textContent = "?";
+  els.diceNaturalSecond.textContent = "?";
   if (presentation.roll) {
+    showDiceFaces(presentation.roll);
     showDiceCalculation(presentation.roll);
     showDiceOutcome(presentation.roll);
   }
@@ -1160,11 +1201,13 @@ async function renderTurnResponse(session, title = "判定") {
     document.querySelector("#mapOverlay").style.display = "none";
     const presentation = state.dicePresentation || startDicePresentation(null, title);
     presentation.roll = roll;
+    els.diceSecond.hidden = !(roll.advantage && roll.rolls.length === 2);
+    showDiceAdvantage(roll);
     const immediate = () => presentation.skipped || presentation.reducedMotion;
     await waitForDice(presentation, immediate() ? 0 : presentation.minimum - (performance.now() - presentation.startedAt));
     if (state.dicePresentation !== presentation) return;
     stopDiceRollAnimation();
-    els.diceNatural.textContent = String(roll.rolls[0]);
+    showDiceFaces(roll);
     els.diceOutcome.textContent = "";
     await waitForDice(presentation, immediate() ? 0 : 200);
     if (state.dicePresentation !== presentation) return;
@@ -1216,7 +1259,6 @@ function isCheckRoll(roll) {
 function showDiceResult(roll) {
   if (!els.diceBanner || !els.diceRollFace || !els.diceBannerText || !roll) return;
   stopDiceRollAnimation();
-  const rolls = Array.isArray(roll.rolls) ? roll.rolls : [];
   const total = Number(roll.total ?? 0);
   const dc = Number(roll.dc ?? 0);
   const hasCheck = dc > 0;
@@ -1227,7 +1269,7 @@ function showDiceResult(roll) {
   els.diceBanner.classList.toggle("neutral", !hasCheck);
   els.diceRollFace.textContent = String(total);
 
-  const parts = [`${roll.expression || "判定"}: ${rolls.join(" + ") || total}`];
+  const parts = [`${roll.expression || "判定"}: ${diceFacesText(roll) || total}`];
   if (typeof roll.attr_mod === "number" && roll.attr_mod !== 0) {
     const sign = roll.attr_mod > 0 ? "+" : "";
     parts.push(`${sign}${roll.attr_mod}`);
@@ -1235,8 +1277,8 @@ function showDiceResult(roll) {
   parts.push(`= ${total}`);
   if (hasCheck) {
     parts.push(` / DC${dc}`);
-    if (roll.critical_success) parts.push("大成功");
-    else if (roll.critical_failure) parts.push("大失敗");
+    if (roll.critical_enabled !== false && roll.critical_success) parts.push("大成功");
+    else if (roll.critical_enabled !== false && roll.critical_failure) parts.push("大失敗");
     else parts.push(success ? "成功" : "失敗");
   }
   els.diceBannerText.textContent = parts.join(" ");

@@ -27,7 +27,8 @@ class PlayerDiceRollTests(unittest.TestCase):
                 expression = f"1d20+{attribute}"
                 check = self.choices(dict(text="周囲を見る", roll=dict(dice_type=expression, dc=14)))[0]["check"]
                 self.assertEqual(check, {"dice": "1d20", "attribute": attribute, "attribute_label": label,
-                                         "modifier": self.session["character"]["attributes"][attribute], "dc": 14})
+                                         "modifier": 0, "dc": 14, "skill": "", "proficiency_bonus": 0,
+                                         "advantage": None, "advantage_reasons": []})
                 with patch.object(state.random, "randint", return_value=14):
                     roll = state.roll_dice(self.session, expression, 14)
                 self.assertEqual(check["modifier"], roll["attr_mod"])
@@ -37,14 +38,15 @@ class PlayerDiceRollTests(unittest.TestCase):
     def test_no_attribute_has_zero_modifier_and_preview_does_not_roll(self):
         with patch.object(state.random, "randint", side_effect=AssertionError("Preview must not roll")):
             check = self.choices(dict(text="周囲を見る", roll=dict(dice="1d20", dc=10)))[0]["check"]
-        self.assertEqual(check, {"dice": "1d20", "attribute": "", "attribute_label": "", "modifier": 0, "dc": 10})
+        self.assertEqual(check, {"dice": "1d20", "attribute": "", "attribute_label": "", "modifier": 0, "dc": 10,
+                                 "skill": "", "proficiency_bonus": 0, "advantage": None, "advantage_reasons": []})
         self.assertEqual(self.session["dice_log"], [])
         with patch.object(state.random, "randint", return_value=12):
             roll = state.roll_dice(self.session, "1d20", 10)
         self.assertEqual(roll["total"], 12 + check["modifier"])
 
-    def test_preview_and_actual_turn_apply_dc_override(self):
-        for known, expected_dc in ((False, 15), (True, 8)):
+    def test_preview_and_actual_turn_apply_clue_advantage(self):
+        for known, expected_dc in ((False, 10), (True, 10)):
             with self.subTest(known=known):
                 state.commit_world_position(self.session, location_id="cave_seal")
                 self.session["flags"] = {"seal_pattern_known": known}
@@ -52,14 +54,17 @@ class PlayerDiceRollTests(unittest.TestCase):
                 choice = next(c for c in state.public_session(self.session)["choices"] if c.get("id") == "decode_seal")
                 check = choice["check"]
                 self.assertEqual(check["dc"], expected_dc)
+                self.assertEqual(check["advantage"], "advantage" if known else None)
                 with patch.object(state.random, "randint", return_value=10), patch.object(app, "save_session"):
                     result = app._run_turn(self.session, app.TurnRequest(text=choice["text"], action_id=choice["id"]),
                                            allow_narration=False)
                 self.assertEqual(result["dice_log"][-1]["dc"], check["dc"])
                 self.assertEqual(result["dice_log"][-1]["attr_mod"], check["modifier"])
+                self.assertEqual(result["dice_log"][-1]["advantage"], check["advantage"])
+                self.assertEqual(len(result["dice_log"][-1]["rolls"]), 2 if known else 1)
 
     def test_current_attributes_and_aliases_share_the_roll_calculation(self):
-        for expression, expected in (("1d20+agi", 5), ("1d20-dex", -5), ("1d20+3", 3), ("1d20-2", -2)):
+        for expression, expected in (("1d20+agi", 0), ("1d20-dex", 0), ("1d20+3", 3), ("1d20-2", -2)):
             with self.subTest(expression=expression):
                 check = self.choices(dict(text="周囲を見る", roll=dict(dice=expression, dc=10)))[0]["check"]
                 with patch.object(state.random, "randint", return_value=10):
@@ -68,9 +73,10 @@ class PlayerDiceRollTests(unittest.TestCase):
                 self.assertEqual(roll["total"], 10 + expected)
         self.session["character"]["attributes"]["dex"] = 11
         check = self.choices(dict(text="周囲を見る", roll=dict(dice="1d20+dex", dc=10)))[0]["check"]
-        self.assertEqual(check["modifier"], 11)
+        self.assertEqual(check["modifier"], 0)
 
     def test_presentation_receives_actual_outcome_without_changing_critical_rules(self):
+        self.session["character"]["attributes"]["dex"] = 20
         for critical_enabled, expected in ((False, "success"), (True, "critical_failure")):
             with self.subTest(critical_enabled=critical_enabled):
                 with patch.object(state.random, "randint", return_value=1):
@@ -80,6 +86,7 @@ class PlayerDiceRollTests(unittest.TestCase):
                 self.assertTrue(roll["success"])
                 self.assertEqual(result["outcome"], expected)
                 self.assertEqual(state.public_session(self.session)["dice_log"][-1]["outcome"], expected)
+                self.assertEqual(roll["critical_enabled"], critical_enabled)
 
     def test_no_preview_for_unknown_impossible_or_non_roll_choices(self):
         result = self.choices(
@@ -101,7 +108,7 @@ class PlayerDiceRollTests(unittest.TestCase):
         ])
         original = deepcopy(source)
         choices = self.choices(source)
-        self.assertEqual(choices[0]["children"][0]["check"]["modifier"], 5)
+        self.assertEqual(choices[0]["children"][0]["check"]["modifier"], 0)
         self.assertNotIn("check", choices[0]["children"][1])
         self.assertEqual(source, original)
         self.assertEqual(self.session["choices"], [original])

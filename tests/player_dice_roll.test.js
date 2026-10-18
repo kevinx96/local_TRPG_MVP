@@ -297,10 +297,14 @@ test("success line follows the engine outcome even when natural extremes are dis
   session.dice_log[0].dc = 5;
   session.dice_log[0].success = true;
   session.dice_log[0].outcome = "success";
+  session.dice_log[0].critical_enabled = false;
   const done = c.renderTurnResponse(session);
   await c.flush();
   assert.equal(c.els.diceOutcome.textContent, "DC 5　成功");
-  assert.equal(c.els.diceCritical.textContent, "大失敗");
+  assert.equal(c.els.diceCritical.textContent, "");
+  assert.equal(c.els.diceCritical.hidden, true);
+  assert.equal(c.els.diceCheckCard.classList.contains("critical-failure"), false);
+  assert.equal(c.els.diceOutcome.classList.contains("success"), true);
   await c.tick(1200);
   await done;
   assert.equal(c.els.diceBanner.classList.contains("success"), true);
@@ -363,4 +367,86 @@ test("repeated session data does not replay a roll, but a new identical roll doe
   assert.equal(c.els.diceCheckCard.style.display, "");
   await c.tick(1200);
   await done;
+});
+
+test("skill and proficiency labels accompany both dice and their selected result", async () => {
+  for (const [mode, faces, selected, index, reason] of [
+    ["advantage", [3, 14], 14, 1, "ロビンの助言"],
+    ["disadvantage", [3, 20], 3, 0, "傷が痛む"],
+  ]) {
+    const c = client({ reducedMotion: true });
+    Object.assign(c.choice.check, { skill: "隠密", proficiency_bonus: 2, dc: 10,
+      advantage: mode, advantage_reasons: [reason] });
+    c.openDiceCheck(c.choice, c.card);
+    assert.equal(c.els.diceCheckSummary.textContent, "隠密（敏捷）判定　DC 10");
+    assert.equal(c.els.diceCheckFormula.textContent, "1d20 ＋ 5（敏捷＋熟練）");
+    assert.equal(c.els.diceCheckAdvantage.textContent, `${mode === "advantage" ? "有利" : "不利"}：${reason}`);
+    const done = c.confirmDiceCheck();
+    const session = c.response(selected);
+    Object.assign(session.dice_log[0], { rolls: faces, selected_roll: selected, selected_index: index,
+      advantage: mode, advantage_reasons: [reason] });
+    c.answer(session);
+    await c.flush();
+    assert.equal(c.els.diceNatural.textContent, String(faces[0]));
+    assert.equal(c.els.diceNaturalSecond.textContent, String(faces[1]));
+    assert.equal(c.els.diceSecond.hidden, false);
+    assert.equal(c.els.diceFirst.classList.contains("selected"), index === 0);
+    assert.equal(c.els.diceSecond.classList.contains("selected"), index === 1);
+    assert.equal(c.els.diceFirst.classList.contains("discarded"), index === 1);
+    assert.equal(c.els.diceSecond.classList.contains("discarded"), index === 0);
+    assert.equal(c.els.diceCritical.hidden, true);
+    assert.equal(c.els.diceOutcome.classList.contains(selected === 14 ? "success" : "failure"), true);
+    await c.tick(1200);
+    await done;
+    assert.match(c.els.diceBannerText.textContent, new RegExp(`\\[${faces.join(", ")}\\] → ${selected}`));
+  }
+});
+
+test("free observation animates both dice for 600ms and uses the selected extreme", async () => {
+  const c = client();
+  const session = c.response(20);
+  Object.assign(session.dice_log[0], { rolls: [1, 20], selected_roll: 20, selected_index: 1,
+    advantage: "advantage", advantage_reasons: ["ロビンの助言"] });
+  const done = c.renderTurnResponse(session);
+  await c.tick(599);
+  assert.equal(c.els.diceSecond.hidden, false);
+  assert.equal(c.els.diceCheckActions.hidden, true);
+  assert.equal(c.els.diceCheckCard.classList.contains("rolling"), true);
+  await c.tick(401);
+  assert.equal(c.els.diceCritical.textContent, "大成功");
+  assert.equal(c.els.diceSecond.classList.contains("selected"), true);
+  await c.tick(1200);
+  await done;
+});
+
+test("cancelled advantage uses one die and resets the previous pair's highlight", async () => {
+  const c = client({ reducedMotion: true });
+  c.els.diceSecond.hidden = false;
+  c.els.diceFirst.classList.add("discarded");
+  c.choice.check.advantage = null;
+  c.choice.check.advantage_reasons = ["ロビンの助言", "傷が痛む"];
+  c.openDiceCheck(c.choice, c.card);
+  assert.equal(c.els.diceSecond.hidden, true);
+  assert.equal(c.els.diceFirst.classList.contains("discarded"), false);
+  assert.equal(c.els.diceCheckAdvantage.hidden, true);
+  c.cancelDiceCheck();
+});
+
+test("disabled extremes show only their points and the engine outcome", async () => {
+  for (const natural of [1, 20]) {
+    const c = client({ reducedMotion: true });
+    const session = c.response(natural);
+    Object.assign(session.dice_log[0], { critical_enabled: false, outcome: "failure", success: false });
+    const done = c.renderTurnResponse(session);
+    await c.flush();
+    assert.equal(c.els.diceNatural.textContent, String(natural));
+    assert.equal(c.els.diceCritical.hidden, true);
+    assert.equal(c.els.diceCheckCard.classList.contains("critical-success"), false);
+    assert.equal(c.els.diceCheckCard.classList.contains("critical-failure"), false);
+    assert.equal(c.els.diceOutcome.textContent, "DC 14　失敗");
+    assert.equal(c.els.diceOutcome.classList.contains("failure"), true);
+    await c.tick(1200);
+    await done;
+    assert.doesNotMatch(c.els.diceBannerText.textContent, /大成功|大失敗/);
+  }
 });

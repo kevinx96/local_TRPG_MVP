@@ -130,19 +130,12 @@ def _dice(expression: str) -> tuple[int, str]:
 
 
 def check_distribution(session: dict[str, Any], expression: str, dc: int, *,
-                       critical: bool = True, natural_one_fails: bool = False) -> dict[str, tuple[float, int]]:
-    """P(outcome) for one die + full attribute value against dc, with a representative face per outcome."""
+                       critical: bool = True, natural_one_fails: bool = False,
+                       roll: Optional[dict[str, Any]] = None) -> dict[str, tuple[float, int]]:
+    """Exact v2 outcome weights, with one representative selected face per outcome."""
     sides, _ = _dice(expression)
-    match = state._DICE_ATTR_RE.match(expression)
-    modifier = match.group(3) or ""
-    sign = -1 if match.group(2) == "-" else 1
-    if modifier.isdigit():
-        bonus = sign * int(modifier)
-    elif modifier:
-        attrs = state._normalize_attribute_map(session["character"].get("attributes", {}))
-        bonus = sign * state._attr_value(attrs, state._canonical_attr_key(modifier))
-    else:
-        bonus = 0
+    check = state.dice_check_info(session, expression, dc, roll=roll)
+    bonus = check["modifier"]
     outcomes: dict[str, list[int]] = {}
     for face in range(1, sides + 1):
         if critical and face == sides:
@@ -154,20 +147,26 @@ def check_distribution(session: dict[str, Any], expression: str, dc: int, *,
         else:
             label = "success" if face + bonus >= dc else "failure"
         outcomes.setdefault(label, []).append(face)
-    return {label: (len(faces) / sides, faces[0]) for label, faces in outcomes.items()}
+    def weight(face: int) -> int:
+        if check["advantage"] == "advantage":
+            return 2 * face - 1
+        if check["advantage"] == "disadvantage":
+            return 2 * (sides - face) + 1
+        return 1
+    denominator = sides ** (2 if check["advantage"] else 1)
+    return {label: (sum(weight(face) for face in faces) / denominator, faces[0]) for label, faces in outcomes.items()}
 
 
-def sneak_check(session: dict[str, Any], action: dict[str, Any]) -> Optional[tuple[str, int]]:
+def sneak_check(session: dict[str, Any], action: dict[str, Any]) -> Optional[dict[str, Any]]:
     """Displayed obstacle sneak: same dc rule as free_actions._adjudicate."""
-    from host.free_actions import _obstacles, location_changes
+    from host.free_actions import _obstacles, location_changes, sneak_roll_spec
 
     plan = action["free_action"]
     target = next((o for o in _obstacles(session) if o["id"] == plan["target_id"]), {})
     target_state = location_changes(session).get(target.get("id"), {})
     if not target or target_state.get("distracted"):
         return None
-    dc = int(target.get("sneak_dc", 14)) + min(3, int(target_state.get("alertness", 0))) * 2
-    return "1d20+dex", dc - int(target_state.get("prepared", {}).get("bonus", 0))
+    return sneak_roll_spec(target, target_state)
 
 
 def outcome_faces(session: dict[str, Any], action: dict[str, Any]) -> list[tuple[float, Optional[int]]]:
@@ -175,13 +174,14 @@ def outcome_faces(session: dict[str, Any], action: dict[str, Any]) -> list[tuple
         if action["free_action"].get("operation") == "sneak":
             check = sneak_check(session, action)
             if check:
-                distribution = check_distribution(session, *check, critical=False, natural_one_fails=True)
+                distribution = check_distribution(session, check["dice_type"], check["dc"], roll=check)
                 return list(distribution.values())
         return [(1.0, None)]
     dice, dc = state.action_dice_settings(action, session=session)
     if dc <= 0:
         return [(1.0, None)]
-    return list(check_distribution(session, dice, dc, critical=action.get("critical_enabled") is not False).values())
+    return list(check_distribution(session, dice, dc, critical=action.get("critical_enabled") is not False,
+                                   roll=action.get("roll")).values())
 
 
 def apply_action(session: dict[str, Any], action: dict[str, Any], face: Optional[int]) -> None:
@@ -190,7 +190,9 @@ def apply_action(session: dict[str, Any], action: dict[str, Any], face: Optional
         state.apply_action_result(session, action, {})
         return
     dice, dc = state.action_dice_settings(action, session=session)
-    roll = state.roll_dice(session, dice, dc, client_rolls=[face]) if dc > 0 else {}
+    count = 2 if dc > 0 and state.dice_check_info(session, dice, dc, roll=action.get("roll"))["advantage"] else 1
+    roll = state.roll_dice(session, dice, dc, client_rolls=[face] * count, roll=action.get("roll"),
+                           critical_enabled=action.get("critical_enabled") is not False) if dc > 0 else {}
     state.apply_action_result(session, action, roll)
 
 
@@ -391,7 +393,8 @@ def act(session: dict[str, Any], action_id: str, rng: random.Random, *, forced: 
     elif forced:
         roll = {"dc": dc, "success": True}
     else:
-        roll = state.roll_dice(session, dice, dc, client_rolls=[rng.randint(1, _dice(dice)[0])])
+        roll = state.roll_dice(session, dice, dc, roll=action.get("roll"), rng=rng,
+                               critical_enabled=action.get("critical_enabled") is not False)
     state.apply_action_result(session, action, roll)
     return action
 

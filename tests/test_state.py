@@ -1487,7 +1487,7 @@ class StateTests(unittest.TestCase):
         path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
         public = state.create_session(str(path))
         session = state.load_session(public["id"])
-        session["character"]["attributes"] = {"wis": 5}
+        session["character"]["attributes"] = {"wis": 20}
         model_response = json.dumps(
             {"gm_text": "ルーンの意味を読み解いた。", "state_delta": {}, "choices": []},
             ensure_ascii=False,

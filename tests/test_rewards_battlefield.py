@@ -113,7 +113,7 @@ class RewardsBattlefieldTests(unittest.TestCase):
             plan = dict(kind="interact", operation=operation, target_id="forest_wolves",
                         item_id="trail_ration" if operation == "distract" else "", advance=True,
                         action_id="", approach="潜行する", reply="")
-            with patch.object(state, "roll_dice", return_value={"success": True, "critical_failure": False}):
+            with patch.object(state.random, "randint", return_value=20):
                 result = free_actions.adjudicate(session, plan)
             self.assertEqual(result["outcome"], "success")
             self.assertEqual(bool(session["flags"].get("reward_claimed:forest_wolves")), operation == "sneak")

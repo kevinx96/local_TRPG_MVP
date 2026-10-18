@@ -34,7 +34,8 @@
       "ゼボク": "Zebok",
       "ヴァイス": "Weiss",
       "ザンザス": "Xanxus"
-    }
+    },
+    "checks_v2_v040": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -361,13 +362,14 @@
           "id": "ask_general_advice",
           "text": "将軍ドラコに助言を求める",
           "preview": "実用的な戦術情報が得られるかもしれません",
-          "risk": "筋力または耐久が10以上で1d20判定（DC15）",
+          "risk": "筋力または耐久が10以上で運動（筋力）判定・DC10",
           "intent_keywords": [
             "将軍ドラコに助言を求める"
           ],
           "roll": {
-            "dice_type": "1d20",
-            "dc": 15
+            "dice_type": "1d20+str",
+            "dc": 10,
+            "skill": "運動"
           },
           "once": "asked_general_advice",
           "success_effects": [
@@ -497,7 +499,8 @@
           "observe_reveals": {
             "roll": {
               "dice_type": "1d20+wis",
-              "dc": 16
+              "dc": 12,
+              "skill": "知覚"
             },
             "once": "observed_general_breath",
             "success_effects": [
@@ -1486,13 +1489,14 @@
               "id": "ask_ian_legend",
               "text": "強力な氷属性武器の伝説について聞く",
               "preview": "伝説の武器の情報を得る",
-              "risk": "1d20判定（DC3）",
+              "risk": "洞察（知恵）判定・DC8",
               "intent_keywords": [
                 "強力な氷属性武器の伝説について聞く"
               ],
               "roll": {
-                "dice_type": "1d20",
-                "dc": 3
+                "dice_type": "1d20+wis",
+                "dc": 8,
+                "skill": "洞察"
               },
               "once": "asked_ian_legend",
               "success_effects": [
@@ -1557,14 +1561,15 @@
               "id": "invite_robin",
               "text": "パーティに勧誘する",
               "preview": "ロビンを仲間に誘う（毎ラウンド弓で援護）",
-              "risk": "1d20+wis判定（DC12）",
+              "risk": "説得（知恵）判定・DC10",
               "intent_keywords": [
                 "パーティに勧誘する",
                 "ロビンを仲間に誘う"
               ],
               "roll": {
                 "dice_type": "1d20+wis",
-                "dc": 12
+                "dc": 10,
+                "skill": "説得"
               },
               "once": "invited_robin",
               "success_effects": [
@@ -2644,13 +2649,14 @@
           "id": "ask_blue_mage_rumor",
           "text": "邪竜についての噂を聞く",
           "preview": "魔法使いが知る不穏な噂",
-          "risk": "1d20+wis判定（DC14）",
+          "risk": "洞察（知恵）判定・DC10",
           "intent_keywords": [
             "邪竜についての噂を聞く"
           ],
           "roll": {
             "dice_type": "1d20+wis",
-            "dc": 14
+            "dc": 10,
+            "skill": "洞察"
           },
           "once": "asked_blue_mage_rumor",
           "success_effects": [
@@ -3278,13 +3284,14 @@
           "id": "borrow_fire_bat_dragon",
           "text": "ペットの火コウモリ竜を借りる",
           "preview": "懐いてくれるか確かめる（毎ラウンド敵を焼き、HPを回復）",
-          "risk": "1d20+wis判定（DC13）",
+          "risk": "説得（知恵）判定・DC10",
           "intent_keywords": [
             "ペットの火コウモリ竜を借りる"
           ],
           "roll": {
             "dice_type": "1d20+wis",
-            "dc": 13
+            "dc": 10,
+            "skill": "説得"
           },
           "once": "asked_to_borrow_fire_bat_dragon",
           "critical_enabled": false,
@@ -4640,8 +4647,8 @@
             "food_motivated"
           ],
           "bypassable": true,
-          "sneak_dc": 14,
-          "hint": "携帯食で誘えば確実に道を空ける。潜行はSPを1使い、失敗すると警戒が上がる。枝で準備すると次の潜行の難度が3下がる。",
+          "sneak_dc": 10,
+          "hint": "携帯食で誘えば確実に道を空ける。潜行はSPを1使い、失敗すると警戒が上がる。枝で準備すると次の潜行判定が有利になる。",
           "destination": "lost_goblin_crossroads",
           "resolved_flag": "forest_entrance_resolved",
           "arrival_text": "十字路では一匹のゴブリンが、盗まれた箱を取り戻してほしいと助けを求めている。"
@@ -4853,13 +4860,14 @@
           "id": "ignore_lost_goblin",
           "text": "迷子のゴブリンを無視する",
           "preview": "背を向けた隙に何か起きるかもしれない",
-          "risk": "未知の感知判定",
+          "risk": "洞察（知恵）判定・DC10",
           "intent_keywords": [
             "迷子のゴブリンを無視する"
           ],
           "roll": {
             "dice_type": "1d20+wis",
-            "dc": 15
+            "dc": 10,
+            "skill": "洞察"
           },
           "once": "ignored_lost_goblin",
           "success_effects": [
@@ -5222,7 +5230,8 @@
           "observe_reveals": {
             "roll": {
               "dice_type": "1d20+wis",
-              "dc": 10
+              "dc": 8,
+              "skill": "知覚"
             },
             "success_text": "小さな足跡が、泉の裏の岩壁へと続いている。",
             "failure_text": "",
@@ -5403,7 +5412,7 @@
           "id": "sneak_forest_wolves",
           "text": "森狼の脇を潜行して通る",
           "preview": "",
-          "risk": "1d20+dex判定（DC14）・SP1消費",
+          "risk": "隠密（敏捷）判定・DC10・SP1消費",
           "intent_keywords": [
             "森狼の脇を潜行して通る"
           ],
@@ -5483,8 +5492,8 @@
             "food_motivated"
           ],
           "bypassable": true,
-          "sneak_dc": 14,
-          "hint": "携帯食で誘えば確実に道を空ける。潜行はSPを1使い、失敗すると警戒が上がる。枝で準備すると次の潜行の難度が3下がる。",
+          "sneak_dc": 10,
+          "hint": "携帯食で誘えば確実に道を空ける。潜行はSPを1使い、失敗すると警戒が上がる。枝で準備すると次の潜行判定が有利になる。",
           "destination": "forest_exit",
           "resolved_flag": "passed_forest_wolves",
           "arrival_text": "「助かった！命の恩人だ。俺はガルド、村でも商売してる。見かけたら寄ってくれ」",
@@ -5936,13 +5945,14 @@
           "id": "fort_first_bypass",
           "text": "見張りを迂回する",
           "preview": "一階最初の戦闘を避ける",
-          "risk": "1d20+dex判定（DC13）",
+          "risk": "隠密（敏捷）判定・DC10",
           "intent_keywords": [
             "見張りを迂回する"
           ],
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 13
+            "dc": 10,
+            "skill": "隠密"
           },
           "success_effects": [
             {
@@ -6130,13 +6140,14 @@
           "id": "fort_second_bypass",
           "text": "見張りの二匹を迂回する",
           "preview": "一階後半の戦闘を避ける",
-          "risk": "1d20+dex判定（DC16）",
+          "risk": "隠密（敏捷）判定・DC12",
           "intent_keywords": [
             "見張りの二匹を迂回する"
           ],
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 16
+            "dc": 12,
+            "skill": "隠密"
           },
           "success_effects": [
             {
@@ -6377,13 +6388,14 @@
           "id": "bypass_hobgoblin",
           "text": "大ゴブリンを尾行して迂回する",
           "preview": "私室を探る",
-          "risk": "1d20+dex判定（DC17）",
+          "risk": "隠密（敏捷）判定・DC12",
           "intent_keywords": [
             "大ゴブリンを尾行して迂回する"
           ],
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 17
+            "dc": 12,
+            "skill": "隠密"
           },
           "success_effects": [
             {
@@ -6661,13 +6673,14 @@
           "id": "invent_goblin_password",
           "text": "暗号を適当に作る",
           "preview": "知力で門番を騙す",
-          "risk": "1d20+int判定（DC18）",
+          "risk": "はったり（知力）判定・DC12",
           "intent_keywords": [
             "暗号を適当に作る"
           ],
           "roll": {
             "dice_type": "1d20+int",
-            "dc": 18
+            "dc": 12,
+            "skill": "はったり"
           },
           "success_effects": [
             {
@@ -6734,7 +6747,8 @@
           "observe_reveals": {
             "roll": {
               "dice_type": "1d20+wis",
-              "dc": 13
+              "dc": 10,
+              "skill": "知覚"
             },
             "once": "observed_iron_gate_window",
             "success_effects": [
@@ -7299,13 +7313,14 @@
           "id": "approach_burning_village_carefully",
           "text": "慎重に村へ近づく",
           "preview": "炎と怪物の動きを見極めます",
-          "risk": "1d20+int判定（DC15）",
+          "risk": "知覚（知恵）判定・DC10",
           "intent_keywords": [
             "慎重に村へ近づく"
           ],
           "roll": {
-            "dice_type": "1d20+int",
-            "dc": 15
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "知覚"
           },
           "success_effects": [
             {
@@ -8076,15 +8091,16 @@
           "id": "inspect_frost_core",
           "text": "結氷の中心を調べる",
           "preview": "",
-          "risk": "1d20+wis判定（DC12）",
+          "risk": "調査（知力）判定・DC10",
           "intent_keywords": [
             "結氷の中心を調べる"
           ],
           "effects": [],
           "once": "inspected_frost_core",
           "roll": {
-            "dice_type": "1d20+wis",
-            "dc": 12
+            "dice_type": "1d20+int",
+            "dc": 10,
+            "skill": "調査"
           },
           "success_effects": [
             {
@@ -8271,13 +8287,14 @@
           "id": "bypass_ice_elemental",
           "text": "氷の精霊を迂回する",
           "preview": "冷気の薄い経路を探します",
-          "risk": "1d20+int判定（DC14）",
+          "risk": "魔法学（知力）判定・DC10",
           "intent_keywords": [
             "氷の精霊を迂回する"
           ],
           "roll": {
             "dice_type": "1d20+int",
-            "dc": 14
+            "dc": 10,
+            "skill": "魔法学"
           },
           "success_effects": [
             {
@@ -8302,7 +8319,8 @@
           "observe_reveals": {
             "roll": {
               "dice_type": "1d20+wis",
-              "dc": 12
+              "dc": 10,
+              "skill": "知覚"
             },
             "once": "observed_frost_crystal",
             "success_effects": [
@@ -9171,15 +9189,16 @@
           "id": "decode_seal",
           "text": "魔法陣を解読する",
           "preview": "",
-          "risk": "1d20+int判定（DC15）",
+          "risk": "魔法学（知力）判定・DC10",
           "intent_keywords": [
             "魔法陣を解読する"
           ],
           "effects": [],
           "roll": {
             "dice_type": "1d20+int",
-            "dc": 15,
-            "dc_overrides": [
+            "dc": 10,
+            "skill": "魔法学",
+            "advantage": [
               {
                 "requirements": {
                   "any": [
@@ -9191,7 +9210,7 @@
                     }
                   ]
                 },
-                "dc": 8
+                "reason": "封印の知識"
               }
             ]
           },
@@ -9220,14 +9239,15 @@
           "id": "pray_at_seal",
           "text": "泉の精霊に祈る",
           "preview": "",
-          "risk": "1d20+wis判定（DC14）",
+          "risk": "信仰（知恵）判定・DC10",
           "intent_keywords": [
             "泉の精霊に祈る"
           ],
           "effects": [],
           "roll": {
             "dice_type": "1d20+wis",
-            "dc": 14
+            "dc": 10,
+            "skill": "信仰"
           },
           "critical_enabled": false,
           "hidden_after": "cave_seal_broken",
@@ -9254,14 +9274,15 @@
           "id": "force_seal",
           "text": "力ずくで岩壁を砕く",
           "preview": "",
-          "risk": "1d20+str判定（DC17）",
+          "risk": "運動（筋力）判定・DC12",
           "intent_keywords": [
             "力ずくで岩壁を砕く"
           ],
           "effects": [],
           "roll": {
             "dice_type": "1d20+str",
-            "dc": 17
+            "dc": 12,
+            "skill": "運動"
           },
           "critical_enabled": false,
           "hidden_after": "cave_seal_broken",
@@ -9354,7 +9375,8 @@
           "observe_reveals": {
             "roll": {
               "dice_type": "1d20+int",
-              "dc": 12
+              "dc": 10,
+              "skill": "魔法学"
             },
             "success_text": "文様の一部が、精霊の泉の水面と同じ律動で明滅している。泉の力で解ける封印らしい。",
             "failure_text": "複雑な文様の意味は読み取れなかった。",
@@ -9403,14 +9425,15 @@
           "id": "sneak_heat",
           "text": "岩陰を伝って抜ける",
           "preview": "",
-          "risk": "1d20+dex判定（DC13）",
+          "risk": "隠密（敏捷）判定・DC10",
           "intent_keywords": [
             "岩陰を伝って抜ける"
           ],
           "effects": [],
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 13
+            "dc": 10,
+            "skill": "隠密"
           },
           "critical_enabled": false,
           "hidden_after": "cleared_cave_heat_corridor",
@@ -10006,14 +10029,15 @@
           "id": "sneak_crystal",
           "text": "水晶の共鳴が収まるまで息を潜める",
           "preview": "",
-          "risk": "1d20+wis判定（DC15）",
+          "risk": "知覚（知恵）判定・DC10",
           "intent_keywords": [
             "水晶の共鳴が収まるまで息を潜める"
           ],
           "effects": [],
           "roll": {
             "dice_type": "1d20+wis",
-            "dc": 15
+            "dc": 10,
+            "skill": "知覚"
           },
           "critical_enabled": false,
           "hidden_after": "cleared_cave_crystal_corridor",
@@ -10288,14 +10312,15 @@
           "id": "break_burning_beam",
           "text": "燃える梁を叩き壊す",
           "preview": "",
-          "risk": "1d20+str判定（DC13）",
+          "risk": "運動（筋力）判定・DC10",
           "intent_keywords": [
             "燃える梁を叩き壊す"
           ],
           "effects": [],
           "roll": {
             "dice_type": "1d20+str",
-            "dc": 13
+            "dc": 10,
+            "skill": "運動"
           },
           "success_effects": [
             {
@@ -10320,14 +10345,15 @@
           "id": "climb_to_window",
           "text": "裏手の窓からよじ登る",
           "preview": "",
-          "risk": "1d20+dex判定（DC13）",
+          "risk": "軽業（敏捷）判定・DC10",
           "intent_keywords": [
             "裏手の窓からよじ登る"
           ],
           "effects": [],
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 13
+            "dc": 10,
+            "skill": "軽業"
           },
           "success_effects": [
             {
@@ -10465,14 +10491,15 @@
           "id": "sneak_through_ash",
           "text": "霧に紛れてやり過ごす",
           "preview": "",
-          "risk": "1d20+dex判定（DC14）",
+          "risk": "隠密（敏捷）判定・DC10",
           "intent_keywords": [
             "霧に紛れてやり過ごす"
           ],
           "effects": [],
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 14
+            "dc": 10,
+            "skill": "隠密"
           },
           "success_effects": [
             {
@@ -10572,7 +10599,7 @@
           "id": "cross_lava_bridge",
           "text": "吊り橋を渡る",
           "preview": "",
-          "risk": "1d20+dex判定（DC12）",
+          "risk": "軽業（敏捷）判定・DC12",
           "intent_keywords": [
             "吊り橋を渡る"
           ],
@@ -10580,12 +10607,13 @@
           "roll": {
             "dice_type": "1d20+dex",
             "dc": 12,
-            "dc_overrides": [
+            "skill": "軽業",
+            "advantage": [
               {
                 "requirements": {
                   "flag": "bridge_safe_side_known"
                 },
-                "dc": 6
+                "reason": "焦げた縄"
               }
             ]
           },
@@ -10637,7 +10665,8 @@
           "observe_reveals": {
             "roll": {
               "dice_type": "1d20+wis",
-              "dc": 10
+              "dc": 8,
+              "skill": "知覚"
             },
             "success_text": "右側の縄はまだしっかりしている。右端を伝えば安全に渡れそうだ。",
             "failure_text": "",
@@ -11318,14 +11347,15 @@
           "id": "sneak_into_mansion",
           "text": "裏口から忍び込む",
           "preview": "",
-          "risk": "1d20+dex判定（DC13）",
+          "risk": "隠密（敏捷）判定・DC12",
           "intent_keywords": [
             "裏口から忍び込む"
           ],
           "effects": [],
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 13
+            "dc": 12,
+            "skill": "隠密"
           },
           "success_effects": [
             {
@@ -11447,14 +11477,15 @@
           "id": "evade_ice_sentinels",
           "text": "番兵の巡回の隙を突く",
           "preview": "",
-          "risk": "1d20+wis判定（DC15）",
+          "risk": "知覚（知恵）判定・DC12",
           "intent_keywords": [
             "番兵の巡回の隙を突く"
           ],
           "effects": [],
           "roll": {
             "dice_type": "1d20+wis",
-            "dc": 15
+            "dc": 12,
+            "skill": "知覚"
           },
           "success_effects": [
             {
@@ -11945,14 +11976,15 @@
           "id": "sneak_bone_field",
           "text": "霧に紛れて抜ける",
           "preview": "",
-          "risk": "1d20+dex判定（DC14）",
+          "risk": "隠密（敏捷）判定・DC10",
           "intent_keywords": [
             "霧に紛れて抜ける"
           ],
           "effects": [],
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 14
+            "dc": 10,
+            "skill": "隠密"
           },
           "hidden_after": "passed_bone_field",
           "success_effects": [
@@ -12224,14 +12256,15 @@
           "id": "sneak_ghoul_marsh",
           "text": "沼の縁を伝って抜ける",
           "preview": "",
-          "risk": "1d20+dex判定（DC15）",
+          "risk": "隠密（敏捷）判定・DC12",
           "intent_keywords": [
             "沼の縁を伝って抜ける"
           ],
           "effects": [],
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 15
+            "dc": 12,
+            "skill": "隠密"
           },
           "hidden_after": "passed_ghoul_marsh",
           "success_effects": [
@@ -13392,7 +13425,7 @@
           "id": "recruit_liese_persuade",
           "text": "共に死者を弔いたいと説く",
           "preview": "同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ）",
-          "risk": "1d20+wis判定（DC13）",
+          "risk": "説得（知恵）判定・DC10",
           "intent_keywords": [
             "共に死者を弔いたいと説く"
           ],
@@ -13406,7 +13439,8 @@
           },
           "roll": {
             "dice_type": "1d20+wis",
-            "dc": 13
+            "dc": 10,
+            "skill": "説得"
           },
           "success_effects": [
             {
@@ -14094,7 +14128,7 @@
           "id": "recruit_elio_persuade",
           "text": "地鳴りの謎を一緒に調べようと誘う",
           "preview": "同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減）",
-          "risk": "1d20+int判定（DC13）",
+          "risk": "説得（知恵）判定・DC10",
           "intent_keywords": [
             "地鳴りの謎を一緒に調べようと誘う"
           ],
@@ -14107,8 +14141,9 @@
             "not_flag": "recruited_elio"
           },
           "roll": {
-            "dice_type": "1d20+int",
-            "dc": 13
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "説得"
           },
           "success_effects": [
             {
@@ -14447,7 +14482,7 @@
           "id": "sneak_gorge_rockfall_path",
           "text": "岩陰を縫って抜ける",
           "preview": "",
-          "risk": "1d20+dex判定（DC13）",
+          "risk": "隠密（敏捷）判定・DC10",
           "intent_keywords": [
             "岩陰を縫って抜ける"
           ],
@@ -14455,7 +14490,8 @@
           "hidden_after": "passed_gorge_rockfall_path",
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 13
+            "dc": 10,
+            "skill": "隠密"
           },
           "success_effects": [
             {
@@ -14802,7 +14838,7 @@
           "id": "sneak_gorge_giant_path",
           "text": "巨人の足元をくぐり抜ける",
           "preview": "",
-          "risk": "1d20+dex判定（DC17）",
+          "risk": "隠密（敏捷）判定・DC12",
           "intent_keywords": [
             "巨人の足元をくぐり抜ける"
           ],
@@ -14810,7 +14846,8 @@
           "hidden_after": "passed_gorge_giant_path",
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 17
+            "dc": 12,
+            "skill": "隠密"
           },
           "success_effects": [
             {
@@ -14975,7 +15012,7 @@
           "id": "sneak_gorge_worm_lair",
           "text": "地鳴りの合間を縫って駆け抜ける",
           "preview": "",
-          "risk": "1d20+dex判定（DC17）",
+          "risk": "隠密（敏捷）判定・DC12",
           "intent_keywords": [
             "地鳴りの合間を縫って駆け抜ける"
           ],
@@ -14983,7 +15020,8 @@
           "hidden_after": "passed_gorge_worm_lair",
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 17
+            "dc": 12,
+            "skill": "隠密"
           },
           "success_effects": [
             {
@@ -18457,6 +18495,11 @@
           "unlock_level": 5,
           "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
         }
+      ],
+      "check_proficiencies": [
+        "運動",
+        "説得",
+        "知覚"
       ]
     },
     {
@@ -18594,6 +18637,11 @@
           "unlock_level": 5,
           "effect": "HPを2d6+wis/2回復する。"
         }
+      ],
+      "check_proficiencies": [
+        "信仰",
+        "洞察",
+        "説得"
       ]
     },
     {
@@ -18737,6 +18785,11 @@
           "effect": "敵に2d8+int/2ダメージを与える。",
           "replaces": "氷の矢"
         }
+      ],
+      "check_proficiencies": [
+        "魔法学",
+        "調査",
+        "知覚"
       ]
     },
     {
@@ -18874,6 +18927,11 @@
           "effect": "敵に8d8+dex/2ダメージを与える。",
           "replaces": "急所突き"
         }
+      ],
+      "check_proficiencies": [
+        "隠密",
+        "軽業",
+        "はったり"
       ]
     },
     {
@@ -18972,7 +19030,14 @@
           "target": "highest_hp"
         }
       ],
-      "image": "/static/images/npc_robin.png"
+      "image": "/static/images/npc_robin.png",
+      "check_assistance": {
+        "skills": [
+          "隠密",
+          "知覚"
+        ],
+        "reason": "ロビンの助言"
+      }
     },
     {
       "id": "blue_robed_mage",
@@ -18985,7 +19050,14 @@
           "max_hp_ratio": 0.15
         }
       ],
-      "image": "/static/images/npc_warlock.png"
+      "image": "/static/images/npc_warlock.png",
+      "check_assistance": {
+        "skills": [
+          "魔法学",
+          "調査"
+        ],
+        "reason": "ワーロックの助言"
+      }
     },
     {
       "id": "fire_bat_dragon",
@@ -19013,7 +19085,13 @@
           }
         }
       ],
-      "image": "/static/images/companion_fire_bat_dragon.png"
+      "image": "/static/images/companion_fire_bat_dragon.png",
+      "check_assistance": {
+        "skills": [
+          "運動"
+        ],
+        "reason": "火コウモリ竜の助言"
+      }
     },
     {
       "id": "mina",
@@ -19028,7 +19106,13 @@
           "element": "ice",
           "random_target": true
         }
-      ]
+      ],
+      "check_assistance": {
+        "skills": [
+          "魔法学"
+        ],
+        "reason": "ミーナの助言"
+      }
     },
     {
       "id": "paladin_liese",
@@ -19054,7 +19138,14 @@
             "player_hp_ratio_gte": 0.5
           }
         }
-      ]
+      ],
+      "check_assistance": {
+        "skills": [
+          "信仰",
+          "説得"
+        ],
+        "reason": "リーゼの助言"
+      }
     },
     {
       "id": "hydromancer_elio",
@@ -19075,7 +19166,14 @@
           "multiplier": 0.5,
           "every_n_rounds": 4
         }
-      ]
+      ],
+      "check_assistance": {
+        "skills": [
+          "知覚",
+          "調査"
+        ],
+        "reason": "エリオの助言"
+      }
     }
   ],
   "milestones": [

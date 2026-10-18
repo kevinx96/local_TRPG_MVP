@@ -42,7 +42,7 @@ class ScenarioInvariantTests(unittest.TestCase):
             ("goblin_fort_second_choice", "explore_fort_right", "goblin_fort_second_right", "不明", "危険（戦闘）"),
             ("goblin_fort_second_choice", "explore_fort_left", "goblin_fort_second_left", "不明", "危険（戦闘）"),
             ("cave_fork", "cave_right", "cave_hot_spring", "不明", "判定不要"),
-            ("goblin_fort", "fort_first_bypass", "goblin_fort_first_second", "1d20+dex判定（DC13）", "1d20+dex判定（DC13）"),
+            ("goblin_fort", "fort_first_bypass", "goblin_fort_first_second", "隠密（敏捷）判定・DC10", "隠密（敏捷）判定・DC10"),
             ("goblin_fort", "fight_fort_first_guard", "goblin_fort", "危険（戦闘）", "危険（戦闘）"),
             ("goblin_fort_third_gate", "admit_no_password", "goblin_fort_third_guards", "危険（戦闘）", "危険（戦闘）"),
             ("castle_town", "go_inn", "inn", "判定不要", "判定不要"),

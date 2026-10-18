@@ -77,13 +77,17 @@ def expected_risk(action: dict[str, Any], location: dict[str, Any], items: dict[
         return None  # deliberately hidden checks
     if "以上で" in risk:
         return None  # labels that also state an eligibility requirement are written by hand
+    if isinstance(roll, dict) and roll.get("skill"):
+        from .checks_v2 import risk_label
+
+        return risk_label(roll["skill"], roll["dc"]) + ("・SP1消費" if "SP1消費" in risk else "")
     if isinstance(roll, dict) and roll.get("dc") is not None:
         return f"{roll.get('dice_type') or '1d20'}判定（DC{roll['dc']}）"
     free = action.get("free_action")
     if isinstance(free, dict):
         obstacle = next((o for o in location.get("obstacles") or [] if o.get("id") == free.get("target_id")), {})
         if free.get("operation") == "sneak" and obstacle.get("sneak_dc"):
-            return f"1d20+dex判定（DC{obstacle['sneak_dc']}）・SP1消費"
+            return f"隠密（敏捷）判定・DC{obstacle['sneak_dc']}・SP1消費"
         if free.get("operation") == "distract" and free.get("item_id"):
             return f"{items.get(free['item_id'], free['item_id'])}を1つ消費"
     if _starts_combat(action):

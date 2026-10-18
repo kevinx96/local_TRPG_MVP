@@ -1,0 +1,746 @@
+{
+  "before": [
+    {
+      "action": "ask_general_advice",
+      "skill": "運動",
+      "level": 1,
+      "dc": 15,
+      "rates": {
+        "hero": 0.3,
+        "cleric": 0.3,
+        "mage": 0.3,
+        "thief": 0.3
+      }
+    },
+    {
+      "action": "ask_blue_mage_rumor",
+      "skill": "洞察",
+      "level": 1,
+      "dc": 14,
+      "rates": {
+        "hero": 0.6,
+        "cleric": 0.95,
+        "mage": 0.85,
+        "thief": 0.65
+      }
+    },
+    {
+      "action": "borrow_fire_bat_dragon",
+      "skill": "説得",
+      "level": 1,
+      "dc": 13,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.95,
+        "mage": 0.9,
+        "thief": 0.7
+      }
+    },
+    {
+      "action": "ignore_lost_goblin",
+      "skill": "洞察",
+      "level": 1,
+      "dc": 15,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.9,
+        "mage": 0.8,
+        "thief": 0.6
+      }
+    },
+    {
+      "action": "fort_first_bypass",
+      "skill": "隠密",
+      "level": 2,
+      "dc": 13,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.8,
+        "mage": 0.8,
+        "thief": 0.95
+      }
+    },
+    {
+      "action": "fort_second_bypass",
+      "skill": "隠密",
+      "level": 2,
+      "dc": 16,
+      "rates": {
+        "hero": 0.5,
+        "cleric": 0.65,
+        "mage": 0.65,
+        "thief": 0.95
+      }
+    },
+    {
+      "action": "bypass_hobgoblin",
+      "skill": "隠密",
+      "level": 2,
+      "dc": 17,
+      "rates": {
+        "hero": 0.45,
+        "cleric": 0.6,
+        "mage": 0.6,
+        "thief": 0.95
+      }
+    },
+    {
+      "action": "invent_goblin_password",
+      "skill": "はったり",
+      "level": 2,
+      "dc": 18,
+      "rates": {
+        "hero": 0.4,
+        "cleric": 0.9,
+        "mage": 0.95,
+        "thief": 0.65
+      }
+    },
+    {
+      "action": "decode_seal",
+      "skill": "魔法学",
+      "level": 2,
+      "dc": 15,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.95,
+        "mage": 0.95,
+        "thief": 0.8
+      }
+    },
+    {
+      "action": "pray_at_seal",
+      "skill": "信仰",
+      "level": 2,
+      "dc": 14,
+      "rates": {
+        "hero": 0.6,
+        "cleric": 0.95,
+        "mage": 0.9,
+        "thief": 0.65
+      }
+    },
+    {
+      "action": "force_seal",
+      "skill": "運動",
+      "level": 2,
+      "dc": 17,
+      "rates": {
+        "hero": 0.9,
+        "cleric": 0.5,
+        "mage": 0.4,
+        "thief": 0.65
+      }
+    },
+    {
+      "action": "sneak_heat",
+      "skill": "隠密",
+      "level": 2,
+      "dc": 13,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.8,
+        "mage": 0.8,
+        "thief": 0.95
+      }
+    },
+    {
+      "action": "sneak_crystal",
+      "skill": "知覚",
+      "level": 2,
+      "dc": 15,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.95,
+        "mage": 0.85,
+        "thief": 0.6
+      }
+    },
+    {
+      "action": "approach_burning_village_carefully",
+      "skill": "知覚",
+      "level": 3,
+      "dc": 15,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.95,
+        "mage": 0.95,
+        "thief": 0.8
+      }
+    },
+    {
+      "action": "inspect_frost_core",
+      "skill": "調査",
+      "level": 3,
+      "dc": 12,
+      "rates": {
+        "hero": 0.7,
+        "cleric": 0.95,
+        "mage": 0.95,
+        "thief": 0.75
+      }
+    },
+    {
+      "action": "bypass_ice_elemental",
+      "skill": "魔法学",
+      "level": 3,
+      "dc": 14,
+      "rates": {
+        "hero": 0.6,
+        "cleric": 0.95,
+        "mage": 0.95,
+        "thief": 0.85
+      }
+    },
+    {
+      "action": "break_burning_beam",
+      "skill": "運動",
+      "level": 3,
+      "dc": 13,
+      "rates": {
+        "hero": 0.95,
+        "cleric": 0.7,
+        "mage": 0.6,
+        "thief": 0.9
+      }
+    },
+    {
+      "action": "climb_to_window",
+      "skill": "軽業",
+      "level": 3,
+      "dc": 13,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.8,
+        "mage": 0.8,
+        "thief": 0.95
+      }
+    },
+    {
+      "action": "sneak_through_ash",
+      "skill": "隠密",
+      "level": 3,
+      "dc": 14,
+      "rates": {
+        "hero": 0.6,
+        "cleric": 0.75,
+        "mage": 0.75,
+        "thief": 0.95
+      }
+    },
+    {
+      "action": "sneak_bone_field",
+      "skill": "隠密",
+      "level": 3,
+      "dc": 14,
+      "rates": {
+        "hero": 0.6,
+        "cleric": 0.75,
+        "mage": 0.75,
+        "thief": 0.95
+      }
+    },
+    {
+      "action": "sneak_ghoul_marsh",
+      "skill": "隠密",
+      "level": 3,
+      "dc": 15,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.7,
+        "mage": 0.7,
+        "thief": 0.95
+      }
+    },
+    {
+      "action": "recruit_liese_persuade",
+      "skill": "説得",
+      "level": 3,
+      "dc": 13,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.95,
+        "mage": 0.95,
+        "thief": 0.7
+      }
+    },
+    {
+      "action": "recruit_elio_persuade",
+      "skill": "説得",
+      "level": 3,
+      "dc": 13,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.95,
+        "mage": 0.95,
+        "thief": 0.9
+      }
+    },
+    {
+      "action": "sneak_gorge_rockfall_path",
+      "skill": "隠密",
+      "level": 3,
+      "dc": 13,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.8,
+        "mage": 0.8,
+        "thief": 0.95
+      }
+    },
+    {
+      "action": "sneak_gorge_giant_path",
+      "skill": "隠密",
+      "level": 3,
+      "dc": 17,
+      "rates": {
+        "hero": 0.45,
+        "cleric": 0.6,
+        "mage": 0.6,
+        "thief": 0.95
+      }
+    },
+    {
+      "action": "sneak_gorge_worm_lair",
+      "skill": "隠密",
+      "level": 3,
+      "dc": 17,
+      "rates": {
+        "hero": 0.45,
+        "cleric": 0.6,
+        "mage": 0.6,
+        "thief": 0.95
+      }
+    },
+    {
+      "action": "cross_lava_bridge",
+      "skill": "軽業",
+      "level": 4,
+      "dc": 12,
+      "rates": {
+        "hero": 0.7,
+        "cleric": 0.85,
+        "mage": 0.85,
+        "thief": 0.95
+      }
+    },
+    {
+      "action": "evade_ice_sentinels",
+      "skill": "知覚",
+      "level": 4,
+      "dc": 15,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.95,
+        "mage": 0.95,
+        "thief": 0.6
+      }
+    },
+    {
+      "action": "sneak_into_mansion",
+      "skill": "隠密",
+      "level": 5,
+      "dc": 13,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.8,
+        "mage": 0.8,
+        "thief": 0.95
+      }
+    }
+  ],
+  "after": [
+    {
+      "action": "ask_general_advice",
+      "skill": "運動",
+      "level": 1,
+      "dc": 10,
+      "rates": {
+        "hero": 0.7,
+        "cleric": 0.55,
+        "mage": 0.55,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "ask_blue_mage_rumor",
+      "skill": "洞察",
+      "level": 1,
+      "dc": 10,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.7,
+        "mage": 0.55,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "borrow_fire_bat_dragon",
+      "skill": "説得",
+      "level": 1,
+      "dc": 10,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.7,
+        "mage": 0.55,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "ignore_lost_goblin",
+      "skill": "洞察",
+      "level": 1,
+      "dc": 10,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.7,
+        "mage": 0.55,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "fort_first_bypass",
+      "skill": "隠密",
+      "level": 2,
+      "dc": 10,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.55,
+        "mage": 0.55,
+        "thief": 0.85
+      }
+    },
+    {
+      "action": "fort_second_bypass",
+      "skill": "隠密",
+      "level": 2,
+      "dc": 12,
+      "rates": {
+        "hero": 0.45,
+        "cleric": 0.45,
+        "mage": 0.45,
+        "thief": 0.75
+      }
+    },
+    {
+      "action": "bypass_hobgoblin",
+      "skill": "隠密",
+      "level": 2,
+      "dc": 12,
+      "rates": {
+        "hero": 0.45,
+        "cleric": 0.45,
+        "mage": 0.45,
+        "thief": 0.75
+      }
+    },
+    {
+      "action": "invent_goblin_password",
+      "skill": "はったり",
+      "level": 2,
+      "dc": 12,
+      "rates": {
+        "hero": 0.45,
+        "cleric": 0.55,
+        "mage": 0.65,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "decode_seal",
+      "skill": "魔法学",
+      "level": 2,
+      "dc": 10,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.65,
+        "mage": 0.85,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "pray_at_seal",
+      "skill": "信仰",
+      "level": 2,
+      "dc": 10,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.75,
+        "mage": 0.55,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "force_seal",
+      "skill": "運動",
+      "level": 2,
+      "dc": 12,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.45,
+        "mage": 0.45,
+        "thief": 0.45
+      }
+    },
+    {
+      "action": "sneak_heat",
+      "skill": "隠密",
+      "level": 2,
+      "dc": 10,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.55,
+        "mage": 0.55,
+        "thief": 0.85
+      }
+    },
+    {
+      "action": "sneak_crystal",
+      "skill": "知覚",
+      "level": 2,
+      "dc": 10,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.65,
+        "mage": 0.65,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "approach_burning_village_carefully",
+      "skill": "知覚",
+      "level": 3,
+      "dc": 10,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.7,
+        "mage": 0.7,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "inspect_frost_core",
+      "skill": "調査",
+      "level": 3,
+      "dc": 10,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.7,
+        "mage": 0.9,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "bypass_ice_elemental",
+      "skill": "魔法学",
+      "level": 3,
+      "dc": 10,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.7,
+        "mage": 0.9,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "break_burning_beam",
+      "skill": "運動",
+      "level": 3,
+      "dc": 10,
+      "rates": {
+        "hero": 0.8,
+        "cleric": 0.55,
+        "mage": 0.55,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "climb_to_window",
+      "skill": "軽業",
+      "level": 3,
+      "dc": 10,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.55,
+        "mage": 0.55,
+        "thief": 0.9
+      }
+    },
+    {
+      "action": "sneak_through_ash",
+      "skill": "隠密",
+      "level": 3,
+      "dc": 10,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.55,
+        "mage": 0.55,
+        "thief": 0.9
+      }
+    },
+    {
+      "action": "sneak_bone_field",
+      "skill": "隠密",
+      "level": 3,
+      "dc": 10,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.55,
+        "mage": 0.55,
+        "thief": 0.9
+      }
+    },
+    {
+      "action": "sneak_ghoul_marsh",
+      "skill": "隠密",
+      "level": 3,
+      "dc": 12,
+      "rates": {
+        "hero": 0.45,
+        "cleric": 0.45,
+        "mage": 0.45,
+        "thief": 0.8
+      }
+    },
+    {
+      "action": "recruit_liese_persuade",
+      "skill": "説得",
+      "level": 3,
+      "dc": 10,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.8,
+        "mage": 0.6,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "recruit_elio_persuade",
+      "skill": "説得",
+      "level": 3,
+      "dc": 10,
+      "rates": {
+        "hero": 0.65,
+        "cleric": 0.8,
+        "mage": 0.6,
+        "thief": 0.55
+      }
+    },
+    {
+      "action": "sneak_gorge_rockfall_path",
+      "skill": "隠密",
+      "level": 3,
+      "dc": 10,
+      "rates": {
+        "hero": 0.55,
+        "cleric": 0.55,
+        "mage": 0.55,
+        "thief": 0.9
+      }
+    },
+    {
+      "action": "sneak_gorge_giant_path",
+      "skill": "隠密",
+      "level": 3,
+      "dc": 12,
+      "rates": {
+        "hero": 0.45,
+        "cleric": 0.45,
+        "mage": 0.45,
+        "thief": 0.8
+      }
+    },
+    {
+      "action": "sneak_gorge_worm_lair",
+      "skill": "隠密",
+      "level": 3,
+      "dc": 12,
+      "rates": {
+        "hero": 0.45,
+        "cleric": 0.45,
+        "mage": 0.45,
+        "thief": 0.8
+      }
+    },
+    {
+      "action": "cross_lava_bridge",
+      "skill": "軽業",
+      "level": 4,
+      "dc": 12,
+      "rates": {
+        "hero": 0.45,
+        "cleric": 0.45,
+        "mage": 0.45,
+        "thief": 0.9
+      }
+    },
+    {
+      "action": "evade_ice_sentinels",
+      "skill": "知覚",
+      "level": 4,
+      "dc": 12,
+      "rates": {
+        "hero": 0.6,
+        "cleric": 0.65,
+        "mage": 0.65,
+        "thief": 0.45
+      }
+    },
+    {
+      "action": "sneak_into_mansion",
+      "skill": "隠密",
+      "level": 5,
+      "dc": 12,
+      "rates": {
+        "hero": 0.45,
+        "cleric": 0.45,
+        "mage": 0.45,
+        "thief": 0.95
+      }
+    }
+  ],
+  "summary_before": {
+    "hero": {
+      "average": 0.596551724137931,
+      "only_natural_one_fails": 1,
+      "at_most_40_percent": 2
+    },
+    "cleric": {
+      "average": 0.8017241379310345,
+      "only_natural_one_fails": 11,
+      "at_most_40_percent": 1
+    },
+    "mage": {
+      "average": 0.7827586206896552,
+      "only_natural_one_fails": 8,
+      "at_most_40_percent": 2
+    },
+    "thief": {
+      "average": 0.8086206896551724,
+      "only_natural_one_fails": 13,
+      "at_most_40_percent": 1
+    }
+  },
+  "summary_after": {
+    "hero": {
+      "average": 0.5586206896551724,
+      "only_natural_one_fails": 0,
+      "at_most_40_percent": 0
+    },
+    "cleric": {
+      "average": 0.5879310344827586,
+      "only_natural_one_fails": 0,
+      "at_most_40_percent": 0
+    },
+    "mage": {
+      "average": 0.5758620689655173,
+      "only_natural_one_fails": 0,
+      "at_most_40_percent": 0
+    },
+    "thief": {
+      "average": 0.6775862068965518,
+      "only_natural_one_fails": 1,
+      "at_most_40_percent": 0
+    }
+  }
+}

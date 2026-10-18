@@ -1,6 +1,6 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "76c23f0b6d1a80b1f30e2c49cf19b57facd606cc222b184c019c0a2d2cd91a52",
+  "scenario_sha256": "ec0e1e87d14cdd7edd3a56af1dfdb28991316de0334e802a576f257c5e773715",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
@@ -207,6 +207,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -624,6 +631,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -1121,6 +1135,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -1542,6 +1563,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -2058,6 +2086,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -2538,6 +2573,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -3098,6 +3140,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -3582,6 +3631,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -4176,6 +4232,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -4761,6 +4824,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -5426,6 +5496,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -6016,6 +6093,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -6692,6 +6776,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -7324,6 +7415,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -8036,6 +8134,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -8673,6 +8778,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -9261,6 +9373,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -9515,6 +9634,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -9722,6 +9848,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -9932,6 +10065,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -10165,6 +10305,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -10472,6 +10619,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -10732,6 +10886,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -10995,6 +11156,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -11267,6 +11435,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -11630,6 +11805,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -11946,6 +12128,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -12265,6 +12454,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -12583,6 +12779,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -12948,6 +13151,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -13266,6 +13476,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -13587,6 +13804,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -13907,6 +14131,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -14299,6 +14530,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -14644,6 +14882,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -14992,6 +15237,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -15339,6 +15591,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -15758,6 +16017,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -16130,6 +16396,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -16505,6 +16778,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -16869,6 +17149,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -17194,6 +17481,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -17472,6 +17766,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -17753,6 +18054,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -18043,6 +18351,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -18400,6 +18715,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -18710,6 +19032,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -19023,6 +19352,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -19351,6 +19687,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -19770,6 +20113,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -20142,6 +20492,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -20517,6 +20874,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -20891,6 +21255,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -21311,6 +21682,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -21684,6 +22062,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -22060,6 +22445,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -22435,6 +22827,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -22885,6 +23284,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -23288,6 +23694,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -23694,6 +24107,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -24099,6 +24519,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -24571,6 +24998,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -24996,6 +25430,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -25424,6 +25865,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -25880,6 +26328,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -26446,6 +26901,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -26954,6 +27416,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -27465,6 +27934,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -52248,6 +52724,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -52547,6 +53030,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -52865,6 +53355,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -53169,6 +53666,13 @@
               }
             ],
             "image": "/static/images/npc_warlock.png",
+            "check_assistance": {
+              "skills": [
+                "魔法学",
+                "調査"
+              ],
+              "reason": "ワーロックの助言"
+            },
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },

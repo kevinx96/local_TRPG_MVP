@@ -57,9 +57,10 @@ class ForestCaveTests(unittest.TestCase):
         for flag in ("seal_pattern_known", "heard_seal_lore"):
             s = self.session("cave_seal")
             a = state.resolve_action(s, action_id="decode_seal")
-            self.assertEqual(state.action_dice_settings(a, session=s)[1], 15)
+            self.assertEqual(state.action_dice_settings(a, session=s)[1], 10)
             s["flags"][flag] = True
-            self.assertEqual(state.action_dice_settings(a, session=s)[1], 8)
+            self.assertEqual(state.action_dice_settings(a, session=s)[1], 10)
+            self.assertEqual(state.dice_check_info(s, *state.action_dice_settings(a), roll=a["roll"])["advantage"], "advantage")
         s = self.session("cave_seal")
         state.apply_state_delta(s, {"inventory_add": [{"name": "聖水", "quantity": 1}]})
         self.act(s, "pour_holy_water_on_seal")

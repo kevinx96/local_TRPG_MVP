@@ -701,7 +701,7 @@ def player_choices_for_session(choices: list[dict[str, Any]], session: dict[str,
             expression, dc = action_dice_settings(source, session=session)
             if 0 < dc < 100:
                 try:
-                    choice["check"] = dice_check_info(session, expression, dc)
+                    choice["check"] = dice_check_info(session, expression, dc, roll=source["roll"])
                 except ValueError:
                     pass  # Invalid checks still use the turn endpoint's existing error handling.
         if source.get("risk_source") == "destination":
@@ -828,9 +828,21 @@ def _valid_client_roll(val: Any, sides: int) -> bool:
         return False
 
 
-def dice_check_info(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None) -> dict[str, Any]:
+CHECK_SKILLS = {
+    "運動": "str", "軽業": "dex", "隠密": "dex", "知覚": "wis", "洞察": "wis",
+    "説得": "wis", "信仰": "wis", "調査": "int", "魔法学": "int", "はったり": "int",
+}
+CHECK_ATTRIBUTE_LABELS = {"str": "筋力", "dex": "敏捷", "int": "知力", "wis": "知恵", "end": "耐久", "cha": "魅力"}
+
+
+def dice_check_info(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None, *,
+                    roll: Optional[dict[str, Any]] = None) -> dict[str, Any]:
     """Resolve the dice and modifier once for both previews and server rolls."""
-    expr = str(expression or "").strip() or "1d20"
+    spec = roll or {}
+    skill = str(spec.get("skill") or "")
+    if skill and skill not in CHECK_SKILLS:
+        raise ValueError(f"Unknown check skill: {skill}")
+    expr = f"1d20+{CHECK_SKILLS[skill]}" if skill else str(expression or "").strip() or "1d20"
     dice_match = _DICE_ATTR_RE.match(expr)
     if not dice_match:
         raise ValueError(f"Unsupported dice expression: {expr}")
@@ -840,28 +852,64 @@ def dice_check_info(session: dict[str, Any], expression: str = "1d20", dc: Optio
     fixed_modifier = sign * int(modifier) if modifier.isdigit() else 0
     attr_key = _canonical_attr_key(modifier) if modifier and not modifier.isdigit() else ""
     attrs = _normalize_attribute_map(session.get("character", {}).get("attributes", {}))
-    if attr_key and attr_key not in attrs:
+    if attr_key and attr_key not in attrs and attr_key not in CHECK_ATTRIBUTE_LABELS:
         raise ValueError(f"Unknown dice attribute: {attr_key}")
-    attr_mod = sign * _attr_value(attrs, attr_key) if attr_key else fixed_modifier
-    labels = {"str": "筋力", "dex": "敏捷", "int": "知力", "wis": "知恵", "end": "耐久", "cha": "魅力"}
-    return {"dice": dice_part, "attribute": attr_key, "attribute_label": labels.get(attr_key, attr_key),
-            "modifier": attr_mod, "dc": dc}
+    attr_mod = sign * max(0, (_attr_value(attrs, attr_key) - 10) // 2) if attr_key else fixed_modifier
+    actor = session.get("character", {})
+    pack = session.get("scenario_pack", {})
+    template = _find_character_in_pack(pack, actor.get("character_id", "")) or actor
+    proficient = bool(skill and skill in template.get("check_proficiencies", []))
+    proficiency = (3 if int(actor.get("level", 1)) >= 4 else 2) if proficient else 0
+    reasons: dict[str, list[str]] = {"advantage": [], "disadvantage": []}
+    for mode in reasons:
+        for condition in spec.get(mode, []):
+            if _session_requirement_passes(condition.get("requirements"), session):
+                reasons[mode].append(str(condition["reason"]))
+    companion = session.get("companion") or {}
+    companion = next((c for c in pack.get("companions", []) if c.get("id") == companion.get("id")), companion)
+    assistance = companion.get("check_assistance", {})
+    if skill and skill in assistance.get("skills", []):
+        reasons["advantage"].append(assistance["reason"])
+    if skill in {"運動", "軽業", "隠密"} and 0 <= actor.get("hp", 0) * 4 < actor.get("max_hp", 0):
+        reasons["disadvantage"].append("傷が痛む")
+    mode = None
+    if bool(reasons["advantage"]) != bool(reasons["disadvantage"]):
+        mode = "advantage" if reasons["advantage"] else "disadvantage"
+    if mode and dice_part != "1d20":
+        raise ValueError("Advantage requires 1d20")
+    return {"dice": dice_part, "attribute": attr_key, "attribute_label": CHECK_ATTRIBUTE_LABELS.get(attr_key, attr_key),
+            "modifier": attr_mod + proficiency, "dc": dc, "skill": skill, "proficiency_bonus": proficiency,
+            "advantage": mode, "advantage_reasons": list(dict.fromkeys(reasons["advantage"] + reasons["disadvantage"]))}
 
 
-def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None, client_rolls: Optional[list[int]] = None) -> dict[str, Any]:
+def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None,
+              client_rolls: Optional[list[int]] = None, *, roll: Optional[dict[str, Any]] = None,
+              rng: Any = None, critical_enabled: bool = True) -> dict[str, Any]:
     expr = str(expression or "").strip() or "1d20"
-    check = dice_check_info(session, expr, dc)
+    check = dice_check_info(session, expr, dc, roll=roll)
+    if check["skill"]:
+        expr = f"1d20+{check['attribute']}"
     count, sides = _parse_dice_expression(check["dice"])
+    if check["advantage"]:
+        count = 2
     if client_rolls and isinstance(client_rolls, list) and len(client_rolls) == count and all(_valid_client_roll(r, sides) for r in client_rolls):
         rolls = [int(r) for r in client_rolls]
     else:
-        rolls = [random.randint(1, sides) for _ in range(count)]
+        rolls = [(rng or random).randint(1, sides) for _ in range(count)]
     base_total = sum(rolls)
+    selected_index = 0
+    if check["advantage"]:
+        base_total = (max if check["advantage"] == "advantage" else min)(rolls)
+        selected_index = rolls.index(base_total)
     attr_mod = check["modifier"]
     total = base_total + attr_mod
     entry: dict[str, Any] = {"expression": expr, "rolls": rolls, "total": total, "created_at": utc_now()}
-    entry["critical_success"] = bool(rolls and all(value == sides for value in rolls))
-    entry["critical_failure"] = bool(rolls and all(value == 1 for value in rolls))
+    entry.update({key: check[key] for key in ("skill", "proficiency_bonus", "advantage", "advantage_reasons")})
+    entry["critical_enabled"] = critical_enabled
+    entry["selected_roll"] = base_total
+    entry["selected_index"] = selected_index
+    entry["critical_success"] = critical_enabled and base_total == (sides if check["advantage"] else count * sides)
+    entry["critical_failure"] = critical_enabled and base_total == (1 if check["advantage"] else count)
     if isinstance(dc, int):
         entry["dc"] = dc
         if dc > 0:
@@ -1270,6 +1318,8 @@ def action_dice_settings(action: Optional[dict[str, Any]], default_type: str = "
         return default_type, max(int(default_dc or 0), 0)
     roll = action.get("roll") if isinstance(action.get("roll"), dict) else {}
     dice_type = str(roll.get("dice_type") or roll.get("dice") or action.get("dice_type") or default_type or "1d20")
+    if roll.get("skill") in CHECK_SKILLS:
+        dice_type = f"1d20+{CHECK_SKILLS[roll['skill']]}"
     dice_dc = roll.get("dc", roll.get("dice_dc", action.get("dice_dc", default_dc)))
     for variant in roll.get("dc_overrides", []):
         if session is not None and _session_requirement_passes(variant.get("requirements"), session):
@@ -1301,6 +1351,7 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
     outcome = _action_outcome(latest_roll, action.get("critical_enabled") is not False)
     if latest_roll.get("rolls"):
         latest_roll["outcome"] = outcome
+        latest_roll["critical_enabled"] = action.get("critical_enabled") is not False
     base_effects = _as_list(action.get("effects"))
     branch_outcome = {
         "critical_success": "success",

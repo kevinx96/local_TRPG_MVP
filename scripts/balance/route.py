@@ -115,7 +115,8 @@ def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, c
                 if source["step"].split(":", 1)[0] == "cross_lava_bridge":
                     action = state.resolve_action(session, action_id="cross_lava_bridge")
                     dice, dc = state.action_dice_settings(action, session=session)
-                    roll = state.roll_dice(session, dice, dc, client_rolls=[rng.randint(1, 20)])
+                    roll = state.roll_dice(session, dice, dc, roll=action.get("roll"), rng=rng,
+                                           critical_enabled=action.get("critical_enabled") is not False)
                     state.apply_action_result(session, action, roll)
                 else:
                     checkpoints.replay_step(session, source["step"])

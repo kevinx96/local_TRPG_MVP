@@ -54,7 +54,8 @@ def action(session: dict[str, Any], identifier: str, rng: random.Random) -> dict
     roll = {}
     if entry.get("roll"):
         dice, dc = state.action_dice_settings(entry, session=session)
-        roll = state.roll_dice(session, dice, dc, client_rolls=[rng.randint(1, 20)])
+        roll = state.roll_dice(session, dice, dc, roll=entry.get("roll"), rng=rng,
+                               critical_enabled=entry.get("critical_enabled") is not False)
     state.apply_action_result(session, entry, roll)
     return dict(location=location, action=identifier, roll=roll)
 

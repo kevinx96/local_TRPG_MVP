@@ -650,7 +650,9 @@ def _run_turn(session: dict[str, Any], request: TurnRequest, *, allow_narration:
         latest_roll = {"expression": dice_type, "rolls": [], "total": 0, "dc": 0}
     else:
         try:
-            latest_roll = roll_dice(session, dice_type, int(dice_dc))
+            latest_roll = roll_dice(session, dice_type, int(dice_dc),
+                                    roll=(resolved_action or {}).get("roll"),
+                                    critical_enabled=(resolved_action or {}).get("critical_enabled") is not False)
         except ValueError as exc:
             raise HTTPException(status_code=422, detail="この行動の判定設定に不備があるため実行できません。") from exc
     action_result = apply_action_result(session, resolved_action, latest_roll) if resolved_action else {}

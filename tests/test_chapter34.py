@@ -277,7 +277,8 @@ class Chapter34Tests(unittest.TestCase):
             self.assertEqual(state.action_dice_settings(a, session=s)[1], 12)
             with patch.object(state.random, "randint", return_value=20):
                 checkpoints.replay_step(s, "observe:bridge_ropes")
-            self.assertEqual(state.action_dice_settings(a, session=s)[1], 6)
+            self.assertEqual(state.action_dice_settings(a, session=s)[1], 12)
+            self.assertEqual(state.dice_check_info(s, *state.action_dice_settings(a), roll=a["roll"])["advantage"], "advantage")
             self.act(s, "cross_lava_bridge", False)
             self.assertEqual(s["character"]["hp"], s["character"]["max_hp"])
             self.assertEqual(s["character"]["level"], 5)

@@ -186,6 +186,9 @@ def apply(pack: dict[str, Any]) -> None:
     if pack["meta"].get("loot_economy_v038"):
         from .loot_economy import apply as apply_loot
         apply_loot(pack)
+    if pack["meta"].get("checks_v2_v040"):
+        from .checks_v2 import upgrade as apply_checks
+        apply_checks(pack)
 
 
 def add_elio(pack: dict[str, Any], locations: dict[str, Any]) -> None:

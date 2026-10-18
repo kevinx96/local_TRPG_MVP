@@ -22,15 +22,15 @@ class ClassAwareRouteTests(unittest.TestCase):
         session["character"].update(hp=20, max_hp=20)
         return session
 
-    def test_check_distribution_uses_full_attribute_and_naturals(self):
+    def test_check_distribution_uses_v2_modifier_and_naturals(self):
         session = self.session("valley_entrance", dex=4)
         result = class_aware.check_distribution(session, "1d20+dex", 14)
         probabilities = {k: v[0] for k, v in result.items()}
-        self.assertEqual(probabilities, {"critical_failure": .05, "failure": .4, "success": .5, "critical_success": .05})
-        self.assertEqual(result["success"][1] + 4, 14)
+        self.assertEqual(probabilities, {"critical_failure": .05, "failure": .6, "success": .3, "critical_success": .05})
+        self.assertEqual(result["success"][1], 14)
         plain = class_aware.check_distribution(session, "1d20+dex", 14, critical=False, natural_one_fails=True)
-        self.assertAlmostEqual(plain["success"][0], .55)
-        self.assertAlmostEqual(plain["failure"][0], .45)
+        self.assertAlmostEqual(plain["success"][0], .35)
+        self.assertAlmostEqual(plain["failure"][0], .65)
         self.assertAlmostEqual(class_aware.check_distribution(session, "1d30", 4, critical=False)["success"][0], 27 / 30)
 
     def test_resource_score_counts_consumables_and_death(self):
@@ -56,7 +56,7 @@ class ClassAwareRouteTests(unittest.TestCase):
             values = class_aware.Evaluator(depth=0).values(session, "valley_entrance")
         score = class_aware.resource_score(session)
         self.assertAlmostEqual(values["fight"], .5)
-        self.assertAlmostEqual(values["sneak"], .55 * score + .45 * .25)
+        self.assertAlmostEqual(values["sneak"], .65 * score + .35 * .25)
         self.assertIn(True, seen)
 
     def test_retry_check_value_and_lethal_attempts(self):
@@ -66,12 +66,12 @@ class ClassAwareRouteTests(unittest.TestCase):
         self.assertEqual(set(values), {"beam", "climb"})
         score = class_aware.resource_score(session)
         # Past the lookahead a still-blocked node is worth 0.
-        self.assertAlmostEqual(values["climb"], .95 * score)
-        self.assertAlmostEqual(values["beam"], .8 * score)
+        self.assertAlmostEqual(values["climb"], .8 * score)
+        self.assertAlmostEqual(values["beam"], .55 * score)
         hurt = class_aware.clone(session)
         hurt["character"]["hp"] -= 3
         deeper = class_aware.Evaluator(["riku"], depth=1).values(session, "burning_house")
-        self.assertAlmostEqual(deeper["climb"], .95 * score + .05 * .95 * class_aware.resource_score(hurt))
+        self.assertAlmostEqual(deeper["climb"], .8 * score + .2 * .8 * class_aware.resource_score(hurt))
         self.assertLess(deeper["beam"], deeper["climb"])
         session["character"]["hp"] = 4
         self.assertEqual([o[0] for o in class_aware.node_options(session, "burning_house", frozenset({"riku"}))], ["climb"])

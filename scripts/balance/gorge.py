@@ -71,7 +71,8 @@ def route_trial(template: dict[str, Any], seed: int, *, companion: bool = False)
             roll = {}
             if action.get("roll"):
                 dice, dc = state.action_dice_settings(action, session=session)
-                roll = state.roll_dice(session, dice, dc, client_rolls=[rng.randint(1, 20)])
+                roll = state.roll_dice(session, dice, dc, roll=action.get("roll"), rng=rng,
+                                       critical_enabled=action.get("critical_enabled") is not False)
             state.apply_action_result(session, action, roll)
             steps.append(dict(location=location, action=identifier, roll=roll))
             if not session.get("combat_start_requested"):

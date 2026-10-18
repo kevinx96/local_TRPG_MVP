@@ -194,7 +194,7 @@ class RumblingGorgeTests(unittest.TestCase):
         self.resolve(session, "gorge_to_rockfall")
         choices = {c["action_id"]: c for c in self.choices(session)}
         self.assertEqual(choices["fight_gorge_rockfall_path"]["risk"], "危険（戦闘）")
-        self.assertEqual(choices["sneak_gorge_rockfall_path"]["risk"], "1d20+dex判定（DC13）")
+        self.assertEqual(choices["sneak_gorge_rockfall_path"]["risk"], "隠密（敏捷）判定・DC10")
         self.assertFalse(combat.ensure_combat_started(session))
 
     def test_water_curtain_reduces_actual_multi_hit_attacks_without_affecting_outgoing_damage(self):

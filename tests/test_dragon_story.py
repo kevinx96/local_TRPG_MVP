@@ -98,7 +98,7 @@ class DragonStoryTests(unittest.TestCase):
                     ["earth_staff", "healing_scroll", "fireball_scroll"],
                 )
                 self.assertEqual(records(pack, "shops")["magic_shop"]["items"][0]["price"], 40)
-                self.assertEqual(magic_actions["ask_blue_mage_rumor"]["roll"]["dc"], 14)
+                self.assertEqual(magic_actions["ask_blue_mage_rumor"]["roll"]["dc"], 10)
                 self.assertIn("critical_failure", magic_actions["ask_blue_mage_rumor"]["silent_outcomes"])
 
                 item_actions = {action["id"]: action for action in iter_actions(locations["item_shop"]["actions"])}
