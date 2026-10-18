@@ -4,9 +4,13 @@ from typing import Any
 
 
 def public_quests(session: dict[str, Any]) -> list[dict[str, Any]]:
+    from .npc_combat import related_available
+
     flags = session.get("flags", {})
     result = []
     for quest in session.get("scenario_pack", {}).get("quests", []):
+        if not related_available(session, quest):
+            continue
         start = quest.get("start_flag", "")
         starts = start if isinstance(start, list) else [start]
         start_items = quest.get('start_items', [quest.get('start_item')])

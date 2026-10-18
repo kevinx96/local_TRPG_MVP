@@ -7,7 +7,7 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-19-ruby",
+    "content_revision": "2026-10-19-ruby-041-npc-combat",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -36,10 +36,13 @@
       "エリオ": "Elio",
       "ゼボク": "Zebok",
       "ヴァイス": "Weiss",
-      "ザンザス": "Xanxus"
+      "ザンザス": "Xanxus",
+      "ガレス": "Gareth",
+      "ノクス": "Nox"
     },
     "checks_v2_v040": true,
-    "checks_e": true
+    "checks_e": true,
+    "npc_combat_v041": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -207,7 +210,8 @@
         "valley_nest_gate",
         "xanxus_at_nest",
         "xanxus_phantom_battle",
-        "warlock_at_nest"
+        "warlock_at_nest",
+        "dragon_valley_return"
       ],
       "next_scene_ids": [
         "castle_return"
@@ -765,7 +769,8 @@
             "quantity": 1
           }
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "castle_town",
@@ -877,7 +882,8 @@
           "visible_after": "saved_gald",
           "result_text": "「将軍様の屋敷に、夜な夜な白い霧が出るって噂だぜ」「古戦場の街道は村の裏手への近道だが、亡者が出る。教会の聖水を忘れるなよ」",
           "portrait_image": "/static/images/npc_gald.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "gald"
         },
         {
           "id": "return_castle_from_town",
@@ -1117,7 +1123,8 @@
             "once": "observed_town_well"
           }
         }
-      ]
+      ],
+      "town_npc_combat": true
     },
     {
       "id": "forge",
@@ -1769,7 +1776,8 @@
             "氷の護符を買う",
             "氷の護符"
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "blacksmith"
         },
         {
           "id": "ask_blacksmith_weakness",
@@ -1787,7 +1795,8 @@
           ],
           "portrait_image": "/static/images/npc_blacksmith.png",
           "result_text": "鍛冶師ローベルトは手を止め、低い声で語り始めた。「通常の物理攻撃や炎は、あの邪竜イグニスには一切通用せん。だが、『氷の護符』の力を武器に纏わせれば、自身の攻撃を氷属性に変換できる。それなら奴にも傷を負わせられるはずだ」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "blacksmith"
         },
         {
           "id": "show_sword_to_blacksmith",
@@ -1808,7 +1817,8 @@
           },
           "portrait_image": "/static/images/npc_blacksmith.png",
           "result_text": "ローベルトは君の鉄の剣をじっと見つめ、少し言葉を濁した。「お前の剣……氷の護符を埋め込むことはできるが、今の剣はボロボロすぎて耐えられん。俺が打った上質な剣に護符を融合させてやろう。護符の代金は要らん、その鉄の剣を置いていくならな」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "blacksmith"
         },
         {
           "id": "accept_sword_fusion",
@@ -1858,7 +1868,8 @@
           ],
           "portrait_image": "/static/images/npc_blacksmith.png",
           "result_text": "「よし、少し待っていろ」ローベルトは鉄の剣を受け取ると、奥から見事な大剣を取り出し、氷の護符を柄に埋め込んだ。目も眩むような青い輝きが剣を包み込む。「完成だ。名付けて『氷鉄の大剣』。邪竜の鱗も容易く貫き、お前の魔力に応じた追撃も発生する至高の品だ」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "blacksmith"
         },
         {
           "id": "activate_ice_charm",
@@ -1902,7 +1913,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_blacksmith.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "blacksmith"
         },
         {
           "id": "return_castle_from_forge",
@@ -1971,7 +1983,8 @@
             ]
           },
           "result_text": "ローベルトは氷の結晶を炉の脇で慎重に削り、銀の枠にはめ込んだ。「ほらよ。冷気が逃げねえように仕上げておいた」手渡された護符は、ひやりと冷たい。",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "blacksmith"
         },
         {
           "id": "ask_robert_hammer",
@@ -1988,7 +2001,8 @@
           ],
           "once": "asked_robert_hammer",
           "result_text": "「……親父の形見のハンマーを、ゴブリンどもに盗まれた」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "blacksmith"
         },
         {
           "id": "return_robert_hammer",
@@ -2045,7 +2059,8 @@
           },
           "once": "robert_hammer_returned",
           "result_text": "「……それは。どこでこれを」ローベルトは長い間ハンマーを握りしめていた。「礼だ。好きな防具を一つ、仕立て直してやる」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "blacksmith"
         },
         {
           "id": "dig_forge_scrap",
@@ -2085,7 +2100,8 @@
         }
       ],
       "background_image": "/static/images/bg_forge.png",
-      "portrait_image": "/static/images/npc_blacksmith.png"
+      "portrait_image": "/static/images/npc_blacksmith.png",
+      "town_npc_combat": true
     },
     {
       "id": "inn",
@@ -3173,7 +3189,8 @@
               "text": ""
             }
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "ian"
         },
         {
           "id": "ask_ian",
@@ -3209,7 +3226,8 @@
                 }
               ],
               "portrait_image": "/static/images/npc_ian.png",
-              "risk_source": "action"
+              "risk_source": "action",
+              "npc_id": "ian"
             },
             {
               "id": "ask_ian_advice",
@@ -3226,7 +3244,8 @@
                 }
               ],
               "portrait_image": "/static/images/npc_ian.png",
-              "risk_source": "action"
+              "risk_source": "action",
+              "npc_id": "ian"
             },
             {
               "id": "ask_ian_dragon_tale",
@@ -3242,10 +3261,12 @@
                 }
               ],
               "portrait_image": "/static/images/npc_ian.png",
-              "risk_source": "action"
+              "risk_source": "action",
+              "npc_id": "ian"
             }
           ],
-          "portrait_image": "/static/images/npc_ian.png"
+          "portrait_image": "/static/images/npc_ian.png",
+          "npc_id": "ian"
         },
         {
           "id": "ask_robin",
@@ -3285,7 +3306,8 @@
                 }
               ],
               "portrait_image": "/static/images/npc_robin.png",
-              "risk_source": "action"
+              "risk_source": "action",
+              "npc_id": "robin"
             },
             {
               "id": "ask_robin_rumor",
@@ -3306,7 +3328,8 @@
               ],
               "portrait_image": "/static/images/npc_robin.png",
               "result_text": "ロビンは声を落とした。「王城の路地裏には、夜だけ現れる黒い商人がいるそうよ。昼に行っても何も見つからないわ」",
-              "risk_source": "action"
+              "risk_source": "action",
+              "npc_id": "robin"
             },
             {
               "id": "ask_robin_stolen_scale",
@@ -3338,10 +3361,12 @@
                 ]
               },
               "portrait_image": "/static/images/npc_robin.png",
-              "risk_source": "action"
+              "risk_source": "action",
+              "npc_id": "robin"
             }
           ],
-          "portrait_image": "/static/images/npc_robin.png"
+          "portrait_image": "/static/images/npc_robin.png",
+          "npc_id": "robin"
         },
         {
           "id": "accept_robin_goblin_quest",
@@ -3373,7 +3398,8 @@
           "result_text": "「決まりね」ロビンは弓を背負い直して立ち上がった。「近道を知ってるの。ついてきて」彼女の案内で森の獣道を抜けると、木々の間にゴブリンの砦が黒くそびえていた。",
           "hidden_after": "defeated_goblin_king",
           "risk_source": "destination",
-          "preparation_warning": "（強敵の気配がする。心もとないなら、一度王都か城塞へ戻って補給するのも手だ）"
+          "preparation_warning": "（強敵の気配がする。心もとないなら、一度王都か城塞へ戻って補給するのも手だ）",
+          "npc_id": "robin"
         },
         {
           "id": "rush_fort_third_gate_inn",
@@ -3526,7 +3552,8 @@
             "once": "observed_inn_notice_board"
           }
         }
-      ]
+      ],
+      "town_npc_combat": true
     },
     {
       "id": "village",
@@ -3541,7 +3568,8 @@
       "npc_ids": [
         "elder",
         "gald",
-        "riku"
+        "riku",
+        "shopkeeper"
       ],
       "clue_ids": [
         "dragon_weakness"
@@ -3803,7 +3831,8 @@
                 }
               ],
               "portrait_image": "/static/images/npc_elder.png",
-              "risk_source": "action"
+              "risk_source": "action",
+              "npc_id": "elder"
             },
             {
               "id": "ask_elder_treaty",
@@ -3819,10 +3848,12 @@
                 }
               ],
               "portrait_image": "/static/images/npc_elder.png",
-              "risk_source": "action"
+              "risk_source": "action",
+              "npc_id": "elder"
             }
           ],
-          "portrait_image": "/static/images/npc_elder.png"
+          "portrait_image": "/static/images/npc_elder.png",
+          "npc_id": "elder"
         },
         {
           "id": "open_village_shop",
@@ -3838,7 +3869,8 @@
             "道具屋で氷の護符を買う",
             "氷の護符"
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "shopkeeper"
         },
         {
           "id": "go_dragon_valley",
@@ -3903,7 +3935,8 @@
           "effects": [],
           "open_shop": "gald_shop",
           "visible_after": "saved_gald",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "gald"
         },
         {
           "id": "rest_at_refuge",
@@ -3925,7 +3958,8 @@
             "gold_gte": 5
           },
           "result_text": "村人が分けてくれた粥をすすり、毛布にくるまって眠った。",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "elder"
         },
         {
           "id": "return_riku",
@@ -3949,7 +3983,11 @@
           "visible_after": "riku_rescued",
           "once": "riku_returned",
           "result_text": "「リク！……よく無事で」長老は孫を抱きしめ、深く頭を下げた。「礼をさせてくれ。これは村に伝わる竜の秘薬じゃ。それと……この話も伝えておこう。昔、白き竜がこの村に霜を降らせたことがある、と」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "riku",
+          "npc_ids_required": [
+            "elder"
+          ]
         },
         {
           "id": "accept_refuge_hearth",
@@ -4122,7 +4160,8 @@
         }
       ],
       "entry_text": "長老は焼け跡を見つめ、黙り込んでいる",
-      "narrate_entry": true
+      "narrate_entry": true,
+      "town_npc_combat": true
     },
     {
       "id": "dragon_valley_loc",
@@ -4335,7 +4374,8 @@
         ]
       },
       "actions": [],
-      "background_image": "/static/images/bg_dragon_valley.png"
+      "background_image": "/static/images/bg_dragon_valley.png",
+      "town_npc_combat": false
     },
     {
       "id": "magic_shop",
@@ -4555,7 +4595,8 @@
             "火球術の巻物を買う（10G）",
             "火球術の巻物"
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "blue_robed_mage"
         },
         {
           "id": "ask_blue_mage_rumor",
@@ -4954,7 +4995,8 @@
           ],
           "once": "asked_mina_missing",
           "result_text": "「弟子のミーナが戻らない。泉の封印の話をした翌日からだ……」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "mina"
         },
         {
           "id": "report_mina_safe",
@@ -4990,7 +5032,8 @@
           "visible_after": "mina_rescued",
           "once": "mina_quest_done",
           "result_text": "「……世話をかけたな。礼を言う」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "mina"
         },
         {
           "id": "read_magic_tomes",
@@ -5031,7 +5074,8 @@
         "mina": {
           "flag": "mina_quest_done"
         }
-      }
+      },
+      "town_npc_combat": true
     },
     {
       "id": "item_shop",
@@ -5228,7 +5272,8 @@
             "火球術の巻物を買う（40G）",
             "火球術の巻物"
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "sarah"
         },
         {
           "id": "borrow_fire_bat_dragon",
@@ -5259,7 +5304,11 @@
             }
           ],
           "portrait_image": "/static/images/companion_fire_bat_dragon.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "sarah",
+          "npc_ids_required": [
+            "fire_bat_dragon"
+          ]
         },
         {
           "id": "return_castle_from_item_shop",
@@ -5305,7 +5354,8 @@
           ],
           "once": "asked_sarah_request",
           "result_text": "「お母さんの薬を作りたいんだけど、光苔が足りないの。森の暗いところに生えてるんだって」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "sarah"
         },
         {
           "id": "give_moss_to_sarah",
@@ -5337,7 +5387,8 @@
           },
           "once": "sarah_moss_done",
           "result_text": "「わあ、ありがとう！これでお母さんの薬が作れる！お礼に、これからはずっと安くしてあげるね」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "sarah"
         },
         {
           "id": "accept_sarah_scarf",
@@ -5372,7 +5423,8 @@
             ]
           },
           "portrait_image": "/static/images/npc_sarah.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "sarah"
         },
         {
           "id": "deliver_sarah_scarf",
@@ -5420,7 +5472,8 @@
           },
           "result_text": "サラは毛皮を抱きしめて、ぱっと笑った。「ありがとう！ 母さん、きっと喜ぶよ。これ、お礼！」",
           "portrait_image": "/static/images/npc_sarah.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "sarah"
         },
         {
           "id": "help_sarah_shelves",
@@ -5452,7 +5505,8 @@
         }
       ],
       "background_image": "/static/images/bg_item_shop.png",
-      "portrait_image": "/static/images/npc_sarah.png"
+      "portrait_image": "/static/images/npc_sarah.png",
+      "town_npc_combat": true
     },
     {
       "id": "alley",
@@ -5607,7 +5661,8 @@
           "once": "search_alley_day_done"
         }
       ],
-      "background_image": "/static/images/bg_alley_day.png"
+      "background_image": "/static/images/bg_alley_day.png",
+      "town_npc_combat": true
     },
     {
       "id": "alley_night",
@@ -6009,7 +6064,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "accept_curse_offer_hero",
@@ -6041,7 +6097,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "hear_curse_offer_cleric",
@@ -6059,7 +6116,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "accept_curse_offer_cleric",
@@ -6089,7 +6147,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "hear_curse_offer_mage",
@@ -6107,7 +6166,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "accept_curse_offer_mage",
@@ -6137,7 +6197,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "hear_curse_offer_thief",
@@ -6155,7 +6216,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "accept_curse_offer_thief",
@@ -6185,7 +6247,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "pay_curse_price_hero",
@@ -6213,7 +6276,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "pay_curse_price_cleric",
@@ -6240,7 +6304,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "pay_curse_price_mage",
@@ -6265,7 +6330,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "pay_curse_price_thief",
@@ -6292,7 +6358,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "betray_cursed_merchant",
@@ -6315,7 +6382,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "leave_night_alley",
@@ -6378,7 +6446,8 @@
               }
             ]
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "suspicious_merchant"
         },
         {
           "id": "see_through_merchant",
@@ -6406,7 +6475,8 @@
         }
       ],
       "background_image": "/static/images/bg_alley_night.png",
-      "portrait_image": "/static/images/npc_suspicious_merchant.png"
+      "portrait_image": "/static/images/npc_suspicious_merchant.png",
+      "town_npc_combat": true
     },
     {
       "id": "merchant_battle",
@@ -6481,11 +6551,19 @@
           ],
           "steal_text": "すれ違いざまに祈りの霊薬をくすねた。"
         },
-        "victory_gold_bonus": 85
+        "victory_gold_bonus": 85,
+        "npc_participants": [
+          "suspicious_merchant"
+        ],
+        "npc_enemy_map": {
+          "zebok": "suspicious_merchant"
+        },
+        "npc_town": true
       },
       "actions": [],
       "background_image": "/static/images/bg_alley_night.png",
-      "portrait_image": "/static/images/enemy_zebok.png"
+      "portrait_image": "/static/images/enemy_zebok.png",
+      "town_npc_combat": false
     },
     {
       "id": "alley_after",
@@ -6550,7 +6628,8 @@
           "risk_source": "destination"
         }
       ],
-      "background_image": "/static/images/bg_alley_night.png"
+      "background_image": "/static/images/bg_alley_night.png",
+      "town_npc_combat": false
     },
     {
       "id": "dark_forest_loc",
@@ -6732,7 +6811,8 @@
           "resolved_flag": "forest_entrance_resolved",
           "arrival_text": "十字路では一匹のゴブリンが、盗まれた箱を取り戻してほしいと助けを求めている。"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "lost_goblin_crossroads",
@@ -6906,7 +6986,14 @@
           "defeat": "闇の森・迷子のゴブリンで力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "trash",
-        "victory_gold_bonus": 0
+        "victory_gold_bonus": 0,
+        "npc_participants": [
+          "lost_goblin"
+        ],
+        "npc_enemy_map": {
+          "goblin": "lost_goblin"
+        },
+        "npc_town": false
       },
       "actions": [
         {
@@ -6939,7 +7026,8 @@
               }
             ]
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "lost_goblin"
         },
         {
           "id": "ignore_lost_goblin",
@@ -6996,7 +7084,8 @@
               }
             ]
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "lost_goblin"
         },
         {
           "id": "crossroads_forward",
@@ -7179,7 +7268,8 @@
             "once": "observed_crossroads_signpost"
           }
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "elf_spring",
@@ -7432,7 +7522,8 @@
             "once": "gathered_glowing_moss_patch"
           }
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "forest_wolves",
@@ -7502,8 +7593,7 @@
         "victory_effects": {
           "current_location": "forest_exit",
           "flags_set": [
-            "passed_forest_wolves",
-            "saved_gald"
+            "passed_forest_wolves"
           ]
         },
         "defeat_effects": {
@@ -7536,7 +7626,22 @@
             "reward_claimed:forest_wolves"
           ]
         },
-        "victory_gold_bonus": 15
+        "victory_gold_bonus": 15,
+        "victory_bonus_effects": [
+          {
+            "branch": {
+              "requirements": {
+                "not_flag": "npc_gone_gald"
+              },
+              "then": [
+                {
+                  "set_flag": "saved_gald"
+                }
+              ]
+            }
+          }
+        ],
+        "npc_absence_effects": true
       },
       "actions": [
         {
@@ -7644,7 +7749,8 @@
           ],
           "hidden_after": "passed_forest_wolves",
           "result_text": "背後で荷車の倒れる音がした。振り返らずに森を抜けた。",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "npc_id": "gald"
         }
       ],
       "background_image": "/static/images/bg_dark_forest.png",
@@ -7665,12 +7771,22 @@
           "arrival_text": "「助かった！命の恩人だ。俺はガルド、村でも商売してる。見かけたら寄ってくれ」",
           "pass_effects": [
             {
-              "set_flag": "saved_gald"
+              "branch": {
+                "requirements": {
+                  "not_flag": "npc_gone_gald"
+                },
+                "then": [
+                  {
+                    "set_flag": "saved_gald"
+                  }
+                ]
+              }
             }
           ],
           "steal_encounter": "forest_wolves"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "slime_ambush_one",
@@ -7717,7 +7833,8 @@
         "victory_gold_bonus": 0
       },
       "actions": [],
-      "background_image": "/static/images/bg_elf_spring.png"
+      "background_image": "/static/images/bg_elf_spring.png",
+      "town_npc_combat": false
     },
     {
       "id": "slime_ambush_two",
@@ -7764,7 +7881,8 @@
         "victory_gold_bonus": 0
       },
       "actions": [],
-      "background_image": "/static/images/bg_elf_spring.png"
+      "background_image": "/static/images/bg_elf_spring.png",
+      "town_npc_combat": false
     },
     {
       "id": "slime_king_battle",
@@ -7822,7 +7940,8 @@
         "victory_gold_bonus": 75
       },
       "actions": [],
-      "background_image": "/static/images/bg_elf_spring.png"
+      "background_image": "/static/images/bg_elf_spring.png",
+      "town_npc_combat": false
     },
     {
       "id": "forest_exit",
@@ -8023,7 +8142,8 @@
         {
           "set_flag": "returned_from_forest"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "goblin_fort",
@@ -8262,7 +8382,8 @@
             "once": "observed_fort_drain"
           }
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "goblin_fort_first_second",
@@ -8448,7 +8569,8 @@
           "steal_encounter": "goblin_fort_first_second"
         }
       ],
-      "background_image": "/static/images/bg_goblin_fort.png"
+      "background_image": "/static/images/bg_goblin_fort.png",
+      "town_npc_combat": false
     },
     {
       "id": "goblin_fort_second_choice",
@@ -8558,7 +8680,8 @@
           "once": "listen_fort_corridors_done"
         }
       ],
-      "background_image": "/static/images/bg_goblin_fort.png"
+      "background_image": "/static/images/bg_goblin_fort.png",
+      "town_npc_combat": false
     },
     {
       "id": "goblin_fort_second_right",
@@ -8743,7 +8866,8 @@
           "steal_encounter": "goblin_fort_second_right"
         }
       ],
-      "background_image": "/static/images/bg_goblin_fort.png"
+      "background_image": "/static/images/bg_goblin_fort.png",
+      "town_npc_combat": false
     },
     {
       "id": "goblin_fort_second_left",
@@ -8810,7 +8934,8 @@
         "victory_gold_bonus": 20
       },
       "actions": [],
-      "background_image": "/static/images/bg_goblin_fort.png"
+      "background_image": "/static/images/bg_goblin_fort.png",
+      "town_npc_combat": false
     },
     {
       "id": "goblin_fort_healing_circle",
@@ -8896,7 +9021,8 @@
           "once": "study_healing_circle_done"
         }
       ],
-      "background_image": "/static/images/bg_goblin_fort.png"
+      "background_image": "/static/images/bg_goblin_fort.png",
+      "town_npc_combat": false
     },
     {
       "id": "goblin_fort_third_gate",
@@ -9139,7 +9265,8 @@
           }
         }
       ],
-      "entry_text": "ロビンが暗号を教えてくれた。"
+      "entry_text": "ロビンが暗号を教えてくれた。",
+      "town_npc_combat": false
     },
     {
       "id": "goblin_fort_third_guards",
@@ -9207,7 +9334,8 @@
         "victory_gold_bonus": 0
       },
       "actions": [],
-      "background_image": "/static/images/bg_goblin_fort.png"
+      "background_image": "/static/images/bg_goblin_fort.png",
+      "town_npc_combat": false
     },
     {
       "id": "goblin_fort_fourth",
@@ -9291,7 +9419,8 @@
         "victory_gold_bonus": 0
       },
       "actions": [],
-      "background_image": "/static/images/bg_goblin_treasure.png"
+      "background_image": "/static/images/bg_goblin_treasure.png",
+      "town_npc_combat": false
     },
     {
       "id": "goblin_fort_chest_choice",
@@ -9402,7 +9531,8 @@
           ],
           "portrait_image": "/static/images/npc_lost_goblin.png",
           "hidden_after": "combat_defeated:lost_goblin_crossroads:goblin",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "npc_id": "lost_goblin"
         },
         {
           "id": "steal_lost_goblin_box",
@@ -9426,7 +9556,8 @@
           ],
           "portrait_image": "/static/images/npc_lost_goblin.png",
           "hidden_after": "combat_defeated:lost_goblin_crossroads:goblin",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "lost_goblin"
         },
         {
           "id": "take_abandoned_goblin_box",
@@ -9448,6 +9579,20 @@
             },
             {
               "current_location": "lost_goblin_crossroads"
+            }
+          ],
+          "risk_source": "destination"
+        },
+        {
+          "id": "leave_without_goblin",
+          "text": "森の出口へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "npc_gone_lost_goblin",
+          "result_text": "迷子のゴブリンはもうここにはいない。",
+          "effects": [
+            {
+              "current_location": "forest_exit"
             }
           ],
           "risk_source": "destination"
@@ -9508,7 +9653,8 @@
           },
           "text": "主を失った箱は、金貨の山の陰に転がっていた。"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "goblin_fort_chest_fight",
@@ -9560,11 +9706,19 @@
           "defeat": "ゴブリン砦・箱の争奪で力尽きた。冒険はここで終わりを迎える。"
         },
         "encounter_class": "trash",
-        "victory_gold_bonus": 0
+        "victory_gold_bonus": 0,
+        "npc_participants": [
+          "lost_goblin"
+        ],
+        "npc_enemy_map": {
+          "goblin": "lost_goblin"
+        },
+        "npc_town": false
       },
       "actions": [],
       "background_image": "/static/images/bg_goblin_treasure.png",
-      "portrait_image": "/static/images/npc_lost_goblin.png"
+      "portrait_image": "/static/images/npc_lost_goblin.png",
+      "town_npc_combat": false
     },
     {
       "id": "village_approach",
@@ -9829,7 +9983,8 @@
           "once": "read_fire_spread_done"
         }
       ],
-      "background_image": "/static/images/bg_burning_village.png"
+      "background_image": "/static/images/bg_burning_village.png",
+      "town_npc_combat": false
     },
     {
       "id": "village_fire_slime",
@@ -9875,7 +10030,8 @@
         "victory_gold_bonus": 0
       },
       "actions": [],
-      "background_image": "/static/images/bg_burning_village.png"
+      "background_image": "/static/images/bg_burning_village.png",
+      "town_npc_combat": false
     },
     {
       "id": "village_fire_elemental",
@@ -9940,7 +10096,8 @@
         "victory_gold_bonus": 10
       },
       "actions": [],
-      "background_image": "/static/images/bg_burning_village.png"
+      "background_image": "/static/images/bg_burning_village.png",
+      "town_npc_combat": false
     },
     {
       "id": "xanxus_confrontation",
@@ -10107,7 +10264,8 @@
         }
       ],
       "background_image": "/static/images/bg_burning_village.png",
-      "portrait_image": "/static/images/npc_xanxus.png"
+      "portrait_image": "/static/images/npc_xanxus.png",
+      "town_npc_combat": false
     },
     {
       "id": "xanxus_battle",
@@ -10160,7 +10318,8 @@
       },
       "actions": [],
       "background_image": "/static/images/bg_burning_village.png",
-      "portrait_image": "/static/images/npc_xanxus.png"
+      "portrait_image": "/static/images/npc_xanxus.png",
+      "town_npc_combat": false
     },
     {
       "id": "xanxus_ultimatum",
@@ -10314,7 +10473,8 @@
         }
       ],
       "background_image": "/static/images/bg_burning_village.png",
-      "portrait_image": "/static/images/npc_xanxus.png"
+      "portrait_image": "/static/images/npc_xanxus.png",
+      "town_npc_combat": false
     },
     {
       "id": "warlock_rescue_battle",
@@ -10370,7 +10530,8 @@
       },
       "actions": [],
       "background_image": "/static/images/bg_burning_village.png",
-      "portrait_image": "/static/images/npc_warlock.png"
+      "portrait_image": "/static/images/npc_warlock.png",
+      "town_npc_combat": false
     },
     {
       "id": "village_frozen_clue",
@@ -10574,10 +10735,12 @@
               ]
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "npc_id": "elder"
         }
       ],
-      "background_image": "/static/images/bg_frozen_village.png"
+      "background_image": "/static/images/bg_frozen_village.png",
+      "town_npc_combat": false
     },
     {
       "id": "ice_elemental_encounter",
@@ -10774,7 +10937,8 @@
             "failure_text": "拾おうとした結晶は、触れた瞬間に砕けてしまった。"
           }
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "frost_wolf_battle",
@@ -10842,7 +11006,8 @@
         "victory_gold_bonus": 10
       },
       "actions": [],
-      "background_image": "/static/images/bg_frozen_village.png"
+      "background_image": "/static/images/bg_frozen_village.png",
+      "town_npc_combat": false
     },
     {
       "id": "ian_ice_katana_aftermath",
@@ -10961,7 +11126,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_ian_serious.png",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "npc_id": "ian"
         },
         {
           "id": "refuse_ian_after_xanxus",
@@ -10979,7 +11145,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_ian_serious.png",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "npc_id": "ian"
         },
         {
           "id": "refuse_ian_before_xanxus",
@@ -10996,7 +11163,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_ian_serious.png",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "npc_id": "ian"
         },
         {
           "id": "visit_village",
@@ -11012,6 +11180,21 @@
               "flags_set": [
                 "reached_village"
               ]
+            }
+          ],
+          "risk_source": "destination",
+          "npc_id": "elder"
+        },
+        {
+          "id": "leave_without_ian",
+          "text": "先へ進む",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "visible_after": "npc_gone_ian",
+          "result_text": "イアンはもうここにはいない。",
+          "effects": [
+            {
+              "current_location": "valley_entrance"
             }
           ],
           "risk_source": "destination"
@@ -11049,7 +11232,8 @@
       "portrait_image": "/static/images/npc_ian_serious.png",
       "npc_portrait_overrides": {
         "ian": "/static/images/npc_ian_serious.png"
-      }
+      },
+      "town_npc_combat": true
     },
     {
       "id": "ignis_last_breath",
@@ -11100,22 +11284,59 @@
           "id": "return_to_castle_report",
           "text": "王城へ戻り、国王に報告する",
           "preview": "凱旋し、討伐を報告する",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "王城へ戻り、国王に報告する"
           ],
           "effects": [
             {
-              "current_location": "royal_gate"
+              "branch": {
+                "requirements": {
+                  "all": [
+                    {
+                      "flag": "town_blood"
+                    },
+                    {
+                      "not_flag": "dragon_knight_defeated"
+                    }
+                  ]
+                },
+                "then": [
+                  {
+                    "current_location": "dragon_valley_return"
+                  }
+                ],
+                "else": [
+                  {
+                    "current_location": "royal_gate"
+                  }
+                ]
+              }
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "result_variants": [
+            {
+              "requirements": {
+                "all": [
+                  {
+                    "flag": "town_blood"
+                  },
+                  {
+                    "not_flag": "dragon_knight_defeated"
+                  }
+                ]
+              },
+              "text": "谷を抜けようとしたとき、頭上を大きな影が横切った。灰色の飛竜が岩棚に降り立ち、その背から竜騎士が槍を構える。「竜を討った英雄、か。だが町の者の血は、竜の血では洗い流せない」「ここで裁く。ノクス、行くぞ」"
+            }
+          ]
         }
       ],
       "npc_ids": [],
       "enemy_ids": [],
       "connected_location_ids": [
-        "royal_gate"
+        "royal_gate",
+        "dragon_valley_return"
       ],
       "background_image": "/static/images/bg_dragon_valley.png",
       "hybrid": {
@@ -11163,7 +11384,8 @@
         }
       ],
       "entry_text": "「約束の品はもらっていくぞ」ザンザスの声とともに、紅竜の心臓の炎が宙へ吸い上げられていった。",
-      "narrate_entry": true
+      "narrate_entry": true,
+      "town_npc_combat": false
     },
     {
       "id": "castle_report",
@@ -11314,7 +11536,8 @@
             }
           }
         ]
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "draco_battle",
@@ -11491,7 +11714,8 @@
             ]
           }
         ]
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "ignis_purified",
@@ -11564,16 +11788,52 @@
           "id": "return_to_castle_report",
           "text": "王城へ戻り、国王に報告する",
           "preview": "",
-          "risk": "判定不要",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "王城へ戻り、国王に報告する"
           ],
           "effects": [
             {
-              "current_location": "royal_gate"
+              "branch": {
+                "requirements": {
+                  "all": [
+                    {
+                      "flag": "town_blood"
+                    },
+                    {
+                      "not_flag": "dragon_knight_defeated"
+                    }
+                  ]
+                },
+                "then": [
+                  {
+                    "current_location": "dragon_valley_return"
+                  }
+                ],
+                "else": [
+                  {
+                    "current_location": "royal_gate"
+                  }
+                ]
+              }
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "result_variants": [
+            {
+              "requirements": {
+                "all": [
+                  {
+                    "flag": "town_blood"
+                  },
+                  {
+                    "not_flag": "dragon_knight_defeated"
+                  }
+                ]
+              },
+              "text": "谷を抜けようとしたとき、頭上を大きな影が横切った。灰色の飛竜が岩棚に降り立ち、その背から竜騎士が槍を構える。「竜を討った英雄、か。だが町の者の血は、竜の血では洗い流せない」「ここで裁く。ノクス、行くぞ」"
+            }
+          ]
         }
       ],
       "npc_ids": [
@@ -11581,7 +11841,8 @@
       ],
       "enemy_ids": [],
       "connected_location_ids": [
-        "royal_gate"
+        "royal_gate",
+        "dragon_valley_return"
       ],
       "background_image": "/static/images/bg_dragon_valley.png",
       "character_image": "/static/images/enemy_ignis.png",
@@ -11649,7 +11910,8 @@
         }
       ],
       "entry_text": "遠くで、ザンザスの怒りに満ちた咆哮が聞こえた",
-      "narrate_entry": true
+      "narrate_entry": true,
+      "town_npc_combat": false
     },
     {
       "id": "cave_seal",
@@ -11868,7 +12130,8 @@
         {
           "set_flag": "seen_cave_seal"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "cave_heat_corridor",
@@ -12088,7 +12351,8 @@
           "risk": "知覚（知恵）判定・DC10",
           "once": "read_heat_flow_done"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "cave_fork",
@@ -12191,7 +12455,8 @@
       ],
       "background_image": "/static/images/bg_lava_cave.png",
       "npc_ids": [],
-      "enemy_ids": []
+      "enemy_ids": [],
+      "town_npc_combat": false
     },
     {
       "id": "cave_lava_room",
@@ -12369,7 +12634,8 @@
           ]
         },
         "victory_gold_bonus": 20
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "cave_hot_spring",
@@ -12440,7 +12706,8 @@
           "hidden_after": "mina_rescued",
           "result_text": "「た、助けて……！封印を抜けたら戻れなくなっちゃって。奥の大きな水晶の木が怖くて動けないの」",
           "portrait_image": "/static/images/npc_mina.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "mina"
         },
         {
           "id": "escort_mina",
@@ -12471,7 +12738,8 @@
             ]
           },
           "result_text": "「一緒に帰ろう」と手を差し出すと、ミーナは涙を拭って頷き、ローブの裾を握りしめて立ち上がった。",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "mina"
         },
         {
           "id": "leave_mina_wait",
@@ -12489,7 +12757,8 @@
           "visible_after": "met_mina",
           "hidden_after": "mina_rescued",
           "result_text": "「すぐ戻る。ここで待っていてくれ」と告げると、ミーナは小さく頷き、湯気の向こうで膝を抱え直した。",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "mina"
         },
         {
           "id": "follow_hot_spring_water",
@@ -12636,7 +12905,8 @@
         "cave_fork",
         "cave_crystal_corridor",
         "cave_waterway"
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "cave_crystal_corridor",
@@ -12856,7 +13126,8 @@
           "risk": "魔法学（知力）判定・DC10",
           "once": "tune_crystals_done"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "cave_prism_tree",
@@ -12980,7 +13251,8 @@
           }
         ],
         "victory_gold_bonus": 190
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "burning_house",
@@ -13028,7 +13300,8 @@
             "success": "梁を蹴り砕いて飛び込むと、煙の中で小さな男の子がうずくまっていた。",
             "failure": "梁は思ったより重く、熱に腕を焼かれた。"
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "riku"
         },
         {
           "id": "climb_to_window",
@@ -13069,7 +13342,8 @@
             "success": "壁をよじ登って窓から入り込み、男の子を抱えて外へ飛び降りた。",
             "failure": "足を滑らせ、焼けた壁にしたたかに打ちつけた。"
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "riku"
         },
         {
           "id": "douse_with_ice",
@@ -13110,7 +13384,8 @@
             ]
           },
           "result_text": "冷気を放つと炎が一瞬で退き、その隙に男の子を連れ出した。",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "npc_id": "riku"
         },
         {
           "id": "leave_burning_house",
@@ -13186,7 +13461,8 @@
             "once": ""
           }
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "valley_entrance",
@@ -13393,7 +13669,8 @@
           "preview": "",
           "risk": "信仰（知恵）判定・DC10"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "valley_lava_bridge",
@@ -13497,7 +13774,8 @@
           "preview": "",
           "risk": "判定不要"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "valley_ledge",
@@ -13563,7 +13841,8 @@
             }
           ]
         }
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "valley_nest_gate",
@@ -13681,7 +13960,8 @@
           "risk": "信仰（知恵）判定・DC10",
           "once": "steel_resolve_done"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "xanxus_at_nest",
@@ -13810,7 +14090,8 @@
         {
           "set_flag": "xanxus_nest_seen"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "xanxus_phantom_battle",
@@ -13872,7 +14153,8 @@
           "steal_text": "すれ違いざまに魔力の果実をくすねた。"
         },
         "victory_gold_bonus": 75
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "warlock_at_nest",
@@ -13907,7 +14189,8 @@
       ],
       "entry_text": "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。ザンザスは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。",
       "portrait_image": "/static/images/npc_warlock.png",
-      "narrate_entry": true
+      "narrate_entry": true,
+      "town_npc_combat": false
     },
     {
       "id": "royal_gate",
@@ -13968,7 +14251,8 @@
         }
       ],
       "entry_text": "城門をくぐると、花びらと歓声があなたを迎えた。邪竜の脅威が去ったことは、すでに城下町じゅうに知れ渡っている。人混みの向こうで、将軍ドラコが穏やかに手を振っていた。",
-      "narrate_entry": true
+      "narrate_entry": true,
+      "town_npc_combat": false
     },
     {
       "id": "festival_town",
@@ -14152,7 +14436,8 @@
           },
           "secret": true,
           "open_shop": "gald_capital_shop",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "gald"
         },
         {
           "id": "read_crowd_rumor",
@@ -14290,7 +14575,8 @@
             "once": "observed_parade_banners"
           }
         }
-      ]
+      ],
+      "town_npc_combat": true
     },
     {
       "id": "mansion_garden",
@@ -14451,7 +14737,8 @@
         {
           "set_flag": "entered_mansion_garden"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "mansion_corridor",
@@ -14626,7 +14913,8 @@
             "once": "observed_frozen_armor"
           }
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "mansion_study",
@@ -14727,7 +15015,8 @@
         {
           "set_flag": "entered_mansion_study"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "king_private_room",
@@ -14819,7 +15108,8 @@
         {
           "set_flag": "entered_king_private_room"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "inn_night_ambush",
@@ -14913,7 +15203,8 @@
         {
           "set_flag": "entered_inn_night_ambush"
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "old_battlefield",
@@ -15088,7 +15379,8 @@
             "once": "observed_rusted_helmets"
           }
         }
-      ]
+      ],
+      "town_npc_combat": false
     },
     {
       "id": "bone_field",
@@ -15320,7 +15612,8 @@
           }
         },
         "victory_gold_bonus": 15
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "ruined_watchtower",
@@ -15449,7 +15742,8 @@
       "combat": {
         "enemy_ids": [],
         "auto_start": false
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "ghoul_marsh",
@@ -15718,7 +16012,8 @@
           }
         },
         "victory_gold_bonus": 30
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "grave_chapel",
@@ -16079,7 +16374,8 @@
             }
           ]
         }
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "cave_waterway",
@@ -16142,7 +16438,8 @@
       "combat": {
         "enemy_ids": [],
         "auto_start": false
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "oaksdawn_water_gate",
@@ -16266,7 +16563,8 @@
       "combat": {
         "enemy_ids": [],
         "auto_start": false
-      }
+      },
+      "town_npc_combat": true
     },
     {
       "id": "oaksdawn_square",
@@ -16462,7 +16760,8 @@
         {
           "set_flag": "opened_oaksdawn_gate"
         }
-      ]
+      ],
+      "town_npc_combat": true
     },
     {
       "id": "oaksdawn_hq",
@@ -16487,7 +16786,8 @@
           "once": "greeted_walter",
           "hidden_after": "greeted_walter",
           "result_text": "「この砦まで辿り着くとは、物好きな冒険者だ。わしはヴァルター、暁の守護団の団長をしておる。……邪竜を討ちに行くのか。ならば一つ忠告しておこう。竜の谷の炎が本当にあの紅竜だけのものか、よく確かめることだ」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "walter"
         },
         {
           "id": "ask_guardian_refusal",
@@ -16502,7 +16802,8 @@
           "hidden_after": "heard_guardian_refusal",
           "visible_after": "greeted_walter",
           "result_text": "「十年前、将軍ドラコは竜の谷への出兵を命じた。我ら守護団は盟約を理由にそれを拒み、それ以来、王都からは見捨てられた砦よ。あの時に谷へ向かった兵は、一人も帰ってこなかった」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "walter"
         },
         {
           "id": "request_guardian_letter",
@@ -16525,7 +16826,8 @@
           "hidden_after": "received_guardian_letter",
           "visible_after": "heard_guardian_refusal",
           "result_text": "ヴァルターは羽根ペンを走らせ、封蝋を押した。「礼拝堂のリーゼに見せるといい。あの子は古戦場の鐘のことで、ずっと胸を痛めておる」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "walter"
         },
         {
           "id": "hq_to_square",
@@ -16577,7 +16879,8 @@
           "visible_requirements": {},
           "requirements": {},
           "result_text": "ヴァルターは長いこと黙っていた。「十年、あの鐘の音を待っておった。礼を言う」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "walter"
         },
         {
           "id": "open_gorge_path",
@@ -16596,7 +16899,8 @@
           "once": "gorge_path_open",
           "hidden_after": "gorge_path_open",
           "result_text": "「峠を越えるだと？ ……いいだろう、守護団員に岩をどけさせよう。だが峡谷には近ごろ、岩でできた獣が出るそうだ。気をつけて行け」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "walter"
         },
         {
           "id": "study_war_map",
@@ -16677,7 +16981,8 @@
         "enemy_ids": [],
         "auto_start": false
       },
-      "portrait_image": "/static/images/npc_walter.png"
+      "portrait_image": "/static/images/npc_walter.png",
+      "town_npc_combat": true
     },
     {
       "id": "oaksdawn_chapel",
@@ -16686,7 +16991,8 @@
       "description": "高い窓から朝の光が差し込む礼拝堂。祭壇の前には、死者を弔う白い花が供えられている。",
       "background_image": "/static/images/bg_oaksdawn_chapel.png",
       "npc_ids": [
-        "liese"
+        "liese",
+        "oaksdawn_priest"
       ],
       "enemy_ids": [],
       "actions": [
@@ -16710,7 +17016,8 @@
             "gold_gte": 5
           },
           "result_text": "祭壇の前で目を閉じると、温かな光が体を包み、疲れが消えていった。",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "oaksdawn_priest"
         },
         {
           "id": "talk_liese",
@@ -16724,7 +17031,8 @@
           "once": "met_liese",
           "hidden_after": "met_liese",
           "result_text": "「私はリーゼ。暁の守護団の聖騎士です。……南の古戦場から、夜ごと弔いの鐘が聞こえるのです。死者がまだ眠れずにいる。いつか、確かめに行かなければ」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "liese"
         },
         {
           "id": "recruit_liese_letter",
@@ -16756,7 +17064,8 @@
             ]
           },
           "result_text": "リーゼは推薦状の封蝋を確かめ、静かに頷いた。「団長がお認めになったのなら、私もこの剣を預けましょう」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "liese"
         },
         {
           "id": "recruit_liese_water",
@@ -16794,7 +17103,8 @@
             ]
           },
           "result_text": "祭壇に聖水を注ぐと、リーゼは目を見開いた。「死者を弔う心をお持ちなのですね。……ご一緒させてください」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "liese"
         },
         {
           "id": "recruit_liese_persuade",
@@ -16830,7 +17140,8 @@
             "success": "「……その言葉、信じます。ご一緒させてください」",
             "failure": "「お気持ちは嬉しいのですが、私は守護団の務めを離れられません」"
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "liese"
         },
         {
           "id": "open_oaksdawn_chapel_shop",
@@ -16842,7 +17153,8 @@
           ],
           "effects": [],
           "open_shop": "oaksdawn_chapel_shop",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "oaksdawn_priest"
         },
         {
           "id": "chapel_to_square",
@@ -16873,7 +17185,8 @@
           "hidden_after": "accepted_battlefield_bell",
           "visible_after": "met_liese",
           "result_text": "「古戦場の外れの礼拝堂に、昔の鐘が残っているのです。誰かがあの鐘を正しく鳴らせば、死者は眠りにつけるはず……」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "liese"
         },
         {
           "id": "report_battlefield_bell_chapel",
@@ -16913,7 +17226,8 @@
             "not_companion_id": "paladin_liese"
           },
           "result_text": "リーゼは胸に手を当てて、深く頭を下げた。「団長にも伝えておきます。……これは、守護団からのお礼です」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "liese"
         },
         {
           "id": "accept_nameless_soldiers",
@@ -16927,7 +17241,8 @@
           "once": "accepted_nameless_soldiers",
           "hidden_after": "accepted_nameless_soldiers",
           "result_text": "「古戦場で倒れた兵たちは、名前すら故郷に届いておりません。もし徽章を見つけたら、ここへ持ってきてはくださらんか」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "oaksdawn_priest"
         },
         {
           "id": "deliver_nameless_soldiers",
@@ -16974,7 +17289,8 @@
             ]
           },
           "result_text": "司祭は徽章の錆を指でぬぐい、刻まれた名前を一つずつ読み上げた。「……これで、皆の家族に知らせを出せます。光のご加護を」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "oaksdawn_priest"
         }
       ],
       "choices": [
@@ -17099,7 +17415,8 @@
         "liese": {
           "not_flag": "recruited_liese"
         }
-      }
+      },
+      "town_npc_combat": true
     },
     {
       "id": "oaksdawn_workshop",
@@ -17124,7 +17441,8 @@
           "once": "met_brigitte",
           "hidden_after": "met_brigitte",
           "result_text": "「守護団の鎧なら、いくらでも打ってやるよ。光の紋を刻んだ武器は……材料が揃ったら、また来な」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "brigitte"
         },
         {
           "id": "open_oaksdawn_workshop_shop",
@@ -17136,7 +17454,8 @@
           ],
           "effects": [],
           "open_shop": "oaksdawn_workshop_shop",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "brigitte"
         },
         {
           "id": "workshop_to_square",
@@ -17269,7 +17588,8 @@
             ]
           },
           "result_text": "ブリギッテは聖銀を炉にくべ、打ち延ばした刃に細い光の紋を一本ずつ刻んでいった。「ほらよ。死者相手なら、こいつがいちばん効く」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "brigitte"
         },
         {
           "id": "ask_workshop_hearth",
@@ -17284,7 +17604,8 @@
           "hidden_after": "accepted_workshop_hearth",
           "visible_after": "met_brigitte",
           "result_text": "「炉の火床が割れちまってね。熱に強い石が要るんだ。森の洞窟の奥に、溶岩で焼けた石があるって聞いたけど……」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "brigitte"
         },
         {
           "id": "deliver_baked_lava_stone",
@@ -17316,7 +17637,8 @@
             "has_item": "焼けた溶岩石"
           },
           "result_text": "ブリギッテは石を叩いて音を確かめ、にやりと笑った。「上等だ。礼に、あんたの鎧を打ち直してやるよ」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "brigitte"
         },
         {
           "id": "assist_brigitte",
@@ -17384,7 +17706,8 @@
         "enemy_ids": [],
         "auto_start": false
       },
-      "portrait_image": "/static/images/npc_brigitte.png"
+      "portrait_image": "/static/images/npc_brigitte.png",
+      "town_npc_combat": true
     },
     {
       "id": "oaksdawn_inn",
@@ -17462,7 +17785,8 @@
           "hidden_after": "met_elio",
           "portrait_image": "/static/images/npc_elio.png",
           "result_text": "「やあ。僕はエリオ、流れの水術士さ。東の峡谷の地鳴りを調べに来たんだけど、道が塞がれていてね。……君も峠を越えるつもりかい？」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "elio"
         },
         {
           "id": "recruit_elio_gold",
@@ -17497,7 +17821,8 @@
             ]
           },
           "result_text": "「契約成立だね。水の届くところなら、どこでも役に立ってみせるよ」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "elio"
         },
         {
           "id": "recruit_elio_water",
@@ -17535,7 +17860,8 @@
             ]
           },
           "result_text": "エリオは水差しの水を光にかざし、目を輝かせた。「精霊の泉の水だ……！ こんなものをもらったら、断れないよ。一緒に行こう」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "elio"
         },
         {
           "id": "recruit_elio_persuade",
@@ -17571,7 +17897,8 @@
             "success": "「……面白い。君となら、あの地鳴りの正体に辿り着けそうだ」",
             "failure": "「悪いけど、僕はひとりで調べる方が性に合っていてね」"
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "elio"
         },
         {
           "id": "swap_tales_elio",
@@ -17705,7 +18032,8 @@
           },
           "text": "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが峠の噂話をする隅で、青い外套の青年が水差しの水面をじっと見つめている。"
         }
-      ]
+      ],
+      "town_npc_combat": true
     },
     {
       "id": "oaksdawn_wall",
@@ -17713,7 +18041,9 @@
       "title": "城壁の見張り台",
       "description": "城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の道は、崩れ落ちた大岩でふさがれている。",
       "background_image": "/static/images/bg_oaksdawn_wall.png",
-      "npc_ids": [],
+      "npc_ids": [
+        "dragon_knight"
+      ],
       "enemy_ids": [],
       "actions": [
         {
@@ -17789,6 +18119,30 @@
           "risk_source": "destination"
         },
         {
+          "id": "talk_dragon_knight",
+          "text": "竜騎士と話す",
+          "preview": "",
+          "risk": "判定不要",
+          "effects": [],
+          "npc_id": "dragon_knight",
+          "dragon_knight": true,
+          "result_text": "「ノクスは南風が好きでな。霧の古戦場から風が吹く日は、機嫌が悪い」",
+          "hidden_after": "town_blood",
+          "risk_source": "action"
+        },
+        {
+          "id": "challenge_dragon_knight",
+          "text": "竜騎士に話しかける",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "npc_id": "dragon_knight",
+          "dragon_knight": true,
+          "visible_after": "town_blood",
+          "result_text": "ガレスは槍を手に取ると、あなたの前に静かに立ちはだかった。背後で、灰色の飛竜が低く喉を鳴らす。「……血の匂いがする。町の者を手にかけたのは、お前だな」「守護団は民を守るためにある。ここで終わらせる」",
+          "effects": [],
+          "risk_source": "action"
+        },
+        {
           "id": "watch_from_wall",
           "text": "峠の向こうを見張る",
           "preview": "",
@@ -17843,6 +18197,18 @@
           "visible_after": "gorge_path_open"
         },
         {
+          "text": "竜騎士と話す",
+          "preview": "",
+          "risk": "判定不要",
+          "hidden_after": "town_blood"
+        },
+        {
+          "text": "竜騎士に話しかける",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "visible_after": "town_blood"
+        },
+        {
           "text": "峠の向こうを見張る",
           "preview": "",
           "risk": "知覚（知恵）判定・DC10",
@@ -17865,7 +18231,8 @@
           },
           "text": "城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の大岩はどけられ、細い道が東へ続いている。"
         }
-      ]
+      ],
+      "town_npc_combat": true
     },
     {
       "id": "gorge_entrance",
@@ -17973,7 +18340,8 @@
       "combat": {
         "enemy_ids": [],
         "auto_start": false
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "gorge_rockfall_path",
@@ -18158,7 +18526,8 @@
           "defeat": "落石の道で力尽きた。冒険はここで終わりを迎える。"
         },
         "victory_gold_bonus": 25
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "gorge_miner_camp",
@@ -18286,7 +18655,8 @@
       "combat": {
         "enemy_ids": [],
         "auto_start": false
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "gorge_claw_cliff",
@@ -18370,7 +18740,8 @@
       "combat": {
         "enemy_ids": [],
         "auto_start": false
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "gorge_giant_path",
@@ -18552,7 +18923,8 @@
           "steal_text": "すれ違いざまに生命の果実をくすねた。"
         },
         "victory_gold_bonus": 25
-      }
+      },
+      "town_npc_combat": false
     },
     {
       "id": "gorge_worm_lair",
@@ -18639,7 +19011,8 @@
           "secret": true,
           "hidden_after": "passed_gorge_worm_lair",
           "result_text": "エリオが杖を掲げると、峡谷の湧き水が渦を巻いて巣穴へ流れ込んだ。地中で何かが苦しげにのたうち、地鳴りが遠ざかっていく。「今のうちだ、行こう！」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "elio"
         },
         {
           "id": "gorge_to_village",
@@ -18758,6 +19131,58 @@
           ]
         },
         "victory_gold_bonus": 55
+      },
+      "town_npc_combat": false
+    },
+    {
+      "id": "dragon_valley_return",
+      "scene_id": "dragon_valley",
+      "title": "竜の谷・帰路",
+      "description": "谷を抜けようとしたとき、頭上を大きな影が横切った。灰色の飛竜が岩棚に降り立ち、その背から竜騎士が槍を構える。「竜を討った英雄、か。だが町の者の血は、竜の血では洗い流せない」「ここで裁く。ノクス、行くぞ」",
+      "background_image": "/static/images/bg_dragon_valley.png",
+      "npc_ids": [],
+      "enemy_ids": [
+        "dragon_knight_mounted"
+      ],
+      "actions": [],
+      "choices": [],
+      "connected_location_ids": [
+        "royal_gate"
+      ],
+      "combat": {
+        "enemy_ids": [
+          "dragon_knight_mounted"
+        ],
+        "boss": true,
+        "encounter_class": "boss",
+        "auto_start": true,
+        "flee_allowed": false,
+        "victory_effects": {
+          "gold_change": 30,
+          "inventory_add": [
+            {
+              "id": "grey_dragon_scale",
+              "name": "灰竜の鱗",
+              "quantity": 1
+            }
+          ],
+          "flags_set": [
+            "dragon_knight_defeated"
+          ],
+          "current_location": "royal_gate"
+        },
+        "result_texts": {
+          "victory": "ガレスは槍を杖にして膝をついた。「民の血を……忘れるな」 飛竜が主をくわえ、灰色の空へ飛び去っていった。",
+          "defeat": "竜騎士の槍があなたを貫いた。「守護団の名において」"
+        },
+        "defeat_effects": {
+          "hp": 0,
+          "game_over": {
+            "ending": "combat_defeat",
+            "reason": "竜騎士の槍があなたを貫いた。「守護団の名において」"
+          }
+        },
+        "intro_text": "谷を抜けようとしたとき、頭上を大きな影が横切った。灰色の飛竜が岩棚に降り立ち、その背から竜騎士が槍を構える。「竜を討った英雄、か。だが町の者の血は、竜の血では洗い流せない」「ここで裁く。ノクス、行くぞ」"
       }
     }
   ],
@@ -18771,7 +19196,15 @@
         "エドワード",
         "王"
       ],
-      "image": "/static/images/npc_king.png"
+      "image": "/static/images/npc_king.png",
+      "npc_combat": {
+        "category": "treason",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": false,
+        "guardians": [],
+        "aftermath": "none",
+        "ending_text": "剣を抜いた瞬間、将軍ドラコの刃が先にあなたの喉元へ届いていた。「陛下に刃を向けるとは。……愚かな」 視界が白く凍りつき、あなたの名は反逆者として記録された。"
+      }
     },
     {
       "id": "blacksmith",
@@ -18783,7 +19216,16 @@
         "鍛造屋",
         "鍛冶屋"
       ],
-      "image": "/static/images/npc_blacksmith.png"
+      "image": "/static/images/npc_blacksmith.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [],
+        "aftermath": "dead",
+        "fallen_text": "ローベルトは金槌を取り落とし、炉の前に崩れ落ちた。炉の火だけが、変わらず燃えている。",
+        "enemy_id": "npc_blacksmith"
+      }
     },
     {
       "id": "elder",
@@ -18802,7 +19244,19 @@
           },
           "text": "古い伝承を知る老人。邪竜は冷気を嫌うと語る。長老は焼け跡を見つめ、黙り込んでいる"
         }
-      ]
+      ],
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [],
+        "aftermath": "dead",
+        "fallen_text": "長老は杖を取り落とし、静かに目を閉じた。",
+        "enemy_id": "npc_elder",
+        "flee_dependents": [
+          "riku"
+        ]
+      }
     },
     {
       "id": "shopkeeper",
@@ -18813,7 +19267,16 @@
         "道具屋",
         "商人"
       ],
-      "image": "/static/images/npc_shopkeeper.png"
+      "image": "/static/images/npc_shopkeeper.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [],
+        "aftermath": "dead",
+        "fallen_text": "店主は帳簿を抱えたまま、棚の前に倒れ込んだ。",
+        "enemy_id": "npc_shopkeeper"
+      }
     },
     {
       "id": "general",
@@ -18824,7 +19287,15 @@
         "将軍",
         "ドラコ"
       ],
-      "image": "/static/images/npc_general.png"
+      "image": "/static/images/npc_general.png",
+      "npc_combat": {
+        "category": "treason",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": false,
+        "guardians": [],
+        "aftermath": "none",
+        "ending_text": "踏み込んだはずの一歩より早く、白い刃があなたの胸を貫いていた。「剣聖に挑むには、早すぎたな」 王城の床に霜が広がり、あなたの名は反逆者として記録された。"
+      }
     },
     {
       "id": "ian",
@@ -18835,7 +19306,20 @@
         "イアン",
         "宿屋"
       ],
-      "image": "/static/images/npc_ian.png"
+      "image": "/static/images/npc_ian.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [
+          {
+            "npc_id": "robin"
+          }
+        ],
+        "aftermath": "dead",
+        "fallen_text": "イアンは古い金槌を握ったまま、カウンターの陰に崩れ落ちた。",
+        "enemy_id": "npc_ian"
+      }
     },
     {
       "id": "robin",
@@ -18846,7 +19330,21 @@
         "レンジャー",
         "義賊"
       ],
-      "image": "/static/images/npc_robin.png"
+      "image": "/static/images/npc_robin.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [
+          {
+            "npc_id": "ian"
+          }
+        ],
+        "aftermath": "dead",
+        "fallen_text": "ロビンの弓が床に落ちた。「……あんたを、信じてたのに」",
+        "enemy_id": "npc_robin",
+        "companion_id": "robin"
+      }
     },
     {
       "id": "blue_robed_mage",
@@ -18857,7 +19355,14 @@
         "銀髪",
         "魔法使い"
       ],
-      "image": "/static/images/npc_warlock.png"
+      "image": "/static/images/npc_warlock.png",
+      "npc_combat": {
+        "category": "protected",
+        "blocked_text": "杖を振るより早く、見えない壁があなたの腕を押し戻した。ワーロックは本から目を上げもしない。「店の中では静かに頼むよ」",
+        "town": false,
+        "guardians": [],
+        "aftermath": "none"
+      }
     },
     {
       "id": "sarah",
@@ -18868,7 +19373,19 @@
         "金髪",
         "道具屋"
       ],
-      "image": "/static/images/npc_sarah.png"
+      "image": "/static/images/npc_sarah.png",
+      "npc_combat": {
+        "category": "child",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [
+          {
+            "npc_id": "fire_bat_dragon"
+          }
+        ],
+        "aftermath": "fled",
+        "fallen_text": "火コウモリ竜が床に落ちると、サラは悲鳴を上げて店の奥から逃げ出していった。道具屋には、もう誰もいない。"
+      }
     },
     {
       "id": "suspicious_merchant",
@@ -18880,7 +19397,16 @@
         "夜の路地"
       ],
       "image": "/static/images/npc_zebok_merchant.png",
-      "portrait_image": "/static/images/npc_zebok_merchant.png"
+      "portrait_image": "/static/images/npc_zebok_merchant.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [],
+        "aftermath": "dead",
+        "fallen_text": "黒いローブがしぼむように崩れ、中身は煙のように消えた。後には、毛の束と小さな袋だけが残っている。",
+        "enemy_id": "npc_suspicious_merchant"
+      }
     },
     {
       "id": "lost_goblin",
@@ -18891,7 +19417,16 @@
         "ゴブリン",
         "箱"
       ],
-      "image": "/static/images/npc_lost_goblin.png"
+      "image": "/static/images/npc_lost_goblin.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": false,
+        "guardians": [],
+        "aftermath": "dead",
+        "fallen_text": "ゴブリンは小さく鳴いて、動かなくなった。",
+        "enemy_id": "npc_lost_goblin"
+      }
     },
     {
       "id": "xanxus",
@@ -18902,7 +19437,14 @@
         "ザンザス",
         "赤いローブの魔法使い"
       ],
-      "image": "/static/images/npc_xanxus.png"
+      "image": "/static/images/npc_xanxus.png",
+      "npc_combat": {
+        "category": "protected",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": false,
+        "guardians": [],
+        "aftermath": "none"
+      }
     },
     {
       "id": "warlock",
@@ -18912,7 +19454,14 @@
         "ワーロック",
         "青いローブの魔法使い"
       ],
-      "image": "/static/images/npc_warlock.png"
+      "image": "/static/images/npc_warlock.png",
+      "npc_combat": {
+        "category": "protected",
+        "blocked_text": "杖を振るより早く、見えない壁があなたの腕を押し戻した。ワーロックは本から目を上げもしない。「店の中では静かに頼むよ」",
+        "town": false,
+        "guardians": [],
+        "aftermath": "none"
+      }
     },
     {
       "id": "fire_bat_dragon",
@@ -18923,19 +19472,58 @@
         "ペット",
         "翼竜"
       ],
-      "image": "/static/images/companion_fire_bat_dragon.png"
+      "image": "/static/images/companion_fire_bat_dragon.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [],
+        "aftermath": "dead",
+        "fallen_text": "小さな炎が消え、火コウモリ竜は動かなくなった。",
+        "enemy_id": "npc_fire_bat_dragon",
+        "companion_id": "fire_bat_dragon",
+        "flee_dependents": [
+          "sarah"
+        ]
+      }
     },
     {
       "id": "mina",
       "name": "見習い魔法使いミーナ",
       "description": "魔法店の弟子。好奇心が強く、師匠の言いつけを破って封印の洞窟に入り込んだ。",
-      "image": "/static/images/npc_mina.png"
+      "image": "/static/images/npc_mina.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": false,
+        "guardians": [],
+        "aftermath": "dead",
+        "fallen_text": "ミーナは杖を握ったまま、湯けむりの中に倒れた。",
+        "enemy_id": "npc_mina",
+        "companion_id": "mina",
+        "locations": {
+          "magic_shop": {
+            "category": "protected",
+            "blocked_text": "見えない壁があなたの腕を押し戻した。ワーロックが静かに本を閉じる。「弟子に手を出すのはやめてもらおうか」",
+            "town": true
+          }
+        }
+      }
     },
     {
       "id": "gald",
       "name": "行商人ガルド",
       "description": "各地を巡る陽気な行商人。森で狼の群れに追われていた。",
-      "image": "/static/images/npc_gald.png"
+      "image": "/static/images/npc_gald.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [],
+        "aftermath": "dead",
+        "fallen_text": "陽気な行商人は、荷車にもたれるようにして動かなくなった。",
+        "enemy_id": "npc_gald"
+      }
     },
     {
       "id": "ignis_calm",
@@ -18946,48 +19534,165 @@
         "紅竜",
         "竜"
       ],
-      "image": "/static/images/npc_ignis_calm.png"
+      "image": "/static/images/npc_ignis_calm.png",
+      "npc_combat": {
+        "category": "protected",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": false,
+        "guardians": [],
+        "aftermath": "none"
+      }
     },
     {
       "id": "riku",
       "name": "長老の孫リク",
       "description": "村の長老の孫。火事の夜、家に取り残されていた。",
-      "image": "/static/images/npc_riku.png"
+      "image": "/static/images/npc_riku.png",
+      "npc_combat": {
+        "category": "child",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [
+          {
+            "npc_id": "elder"
+          }
+        ],
+        "aftermath": "fled",
+        "fallen_text": "リクは泣きながら避難所の外へ駆けていった。"
+      }
     },
     {
       "id": "old_soldier_ghost",
       "name": "亡霊の兵士",
       "description": "半透明の若い兵士",
-      "image": "/static/images/npc_old_soldier_ghost.png"
+      "image": "/static/images/npc_old_soldier_ghost.png",
+      "npc_combat": {
+        "category": "protected",
+        "blocked_text": "刃は半透明の体をすり抜け、冷たい風だけが残った。亡霊の兵士は悲しげにあなたを見つめている。",
+        "town": false,
+        "guardians": [],
+        "aftermath": "none"
+      }
     },
     {
       "id": "walter",
       "name": "守護団長ヴァルター",
       "description": "白髪の老騎士",
-      "image": "/static/images/npc_walter.png"
+      "image": "/static/images/npc_walter.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [
+          {
+            "npc_id": "guardian_guard",
+            "count": 2
+          }
+        ],
+        "aftermath": "dead",
+        "fallen_text": "老騎士は剣を支えに膝をつき、そのまま倒れた。「守護団に……栄光を」",
+        "enemy_id": "npc_walter"
+      }
     },
     {
       "id": "liese",
       "name": "聖騎士リーゼ",
       "description": "暁の守護団の若き聖騎士。",
-      "image": "/static/images/npc_liese.png"
+      "image": "/static/images/npc_liese.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [],
+        "aftermath": "dead",
+        "fallen_text": "リーゼの盾が石床に転がった。「光よ……この人を、お赦しください」",
+        "enemy_id": "npc_liese",
+        "companion_id": "paladin_liese"
+      }
     },
     {
       "id": "brigitte",
       "name": "鍛冶師ブリギッテ",
       "description": "分厚い前掛けの女鍛冶師",
-      "image": "/static/images/npc_brigitte.png"
+      "image": "/static/images/npc_brigitte.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [
+          {
+            "npc_id": "guardian_guard"
+          }
+        ],
+        "aftermath": "dead",
+        "fallen_text": "ブリギッテは前掛けを血に染めて、金床の横に崩れ落ちた。",
+        "enemy_id": "npc_brigitte"
+      }
     },
     {
       "id": "oaksdawn_priest",
       "name": "礼拝堂の老司祭",
-      "description": "暁の礼拝堂を守る老司祭。"
+      "description": "暁の礼拝堂を守る老司祭。",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [
+          {
+            "npc_id": "liese",
+            "requirements": {
+              "not_flag": "recruited_liese"
+            }
+          }
+        ],
+        "aftermath": "dead",
+        "fallen_text": "老司祭は祈りの言葉を最後まで言えずに、祭壇の前に倒れた。",
+        "enemy_id": "npc_oaksdawn_priest"
+      }
     },
     {
       "id": "elio",
       "name": "水術士エリオ",
       "description": "流れの水術士。",
-      "image": "/static/images/npc_elio.png"
+      "image": "/static/images/npc_elio.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [],
+        "aftermath": "dead",
+        "fallen_text": "エリオの周りの水が、ただの水たまりになって床に広がった。",
+        "enemy_id": "npc_elio",
+        "companion_id": "hydromancer_elio"
+      }
+    },
+    {
+      "id": "dragon_knight",
+      "name": "竜騎士ガレス",
+      "description": "暁の守護団の竜騎士。飛竜ノクスと城壁の見張り台を巡る。",
+      "image": "/static/images/npc_dragon_knight.png",
+      "npc_combat": {
+        "category": "special",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": false,
+        "guardians": [],
+        "aftermath": "withdrawn"
+      }
+    },
+    {
+      "id": "guardian_guard",
+      "name": "守護団の衛兵",
+      "description": "守護団の衛兵",
+      "image": "/static/images/npc_walter.png",
+      "npc_combat": {
+        "category": "killable",
+        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "town": true,
+        "guardians": [],
+        "aftermath": "dead",
+        "fallen_text": "",
+        "enemy_id": "npc_guardian_guard"
+      }
     }
   ],
   "items": [
@@ -19976,6 +20681,14 @@
       "description": "岩の巨人の体から剥がれた、苔むした石。",
       "category": "loot",
       "icon": "/static/images/icon_giant_mossstone.png"
+    },
+    {
+      "id": "grey_dragon_scale",
+      "name": "灰竜の鱗",
+      "category": "loot",
+      "sell_price": 30,
+      "description": "灰竜の鱗",
+      "icon": "/static/images/icon_grey_dragon_scale.png"
     },
     {
       "id": "travel_potion",
@@ -21804,6 +22517,445 @@
       }
     },
     {
+      "id": "npc_blacksmith",
+      "npc_id": "blacksmith",
+      "name": "鍛冶師ローベルト",
+      "hp": 14,
+      "max_hp": 14,
+      "image": "/static/images/npc_blacksmith.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d6+2",
+          "accuracy": 65,
+          "element": "physical"
+        }
+      }
+    },
+    {
+      "id": "npc_elder",
+      "npc_id": "elder",
+      "name": "村の長老",
+      "hp": 8,
+      "max_hp": 8,
+      "image": "/static/images/npc_elder.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d4",
+          "accuracy": 60,
+          "element": "physical"
+        }
+      }
+    },
+    {
+      "id": "npc_shopkeeper",
+      "npc_id": "shopkeeper",
+      "name": "道具屋の店主",
+      "hp": 8,
+      "max_hp": 8,
+      "image": "/static/images/npc_shopkeeper.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d4",
+          "accuracy": 60,
+          "element": "physical"
+        }
+      }
+    },
+    {
+      "id": "npc_ian",
+      "npc_id": "ian",
+      "name": "店主イアン",
+      "hp": 14,
+      "max_hp": 14,
+      "image": "/static/images/npc_ian.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d6+2",
+          "accuracy": 65,
+          "element": "physical"
+        }
+      }
+    },
+    {
+      "id": "npc_robin",
+      "npc_id": "robin",
+      "name": "女レンジャー ロビン",
+      "hp": 28,
+      "max_hp": 28,
+      "image": "/static/images/npc_robin.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d8+3",
+          "accuracy": 85,
+          "element": "physical"
+        }
+      }
+    },
+    {
+      "id": "npc_suspicious_merchant",
+      "npc_id": "suspicious_merchant",
+      "name": "怪しい商人",
+      "hp": 24,
+      "max_hp": 24,
+      "image": "/static/images/npc_zebok_merchant.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d8+2",
+          "accuracy": 75,
+          "element": "physical"
+        },
+        "evade": 15
+      }
+    },
+    {
+      "id": "npc_lost_goblin",
+      "npc_id": "lost_goblin",
+      "name": "迷子のゴブリン",
+      "hp": 6,
+      "max_hp": 6,
+      "image": "/static/images/npc_lost_goblin.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d4",
+          "accuracy": 60,
+          "element": "physical"
+        }
+      }
+    },
+    {
+      "id": "npc_fire_bat_dragon",
+      "npc_id": "fire_bat_dragon",
+      "name": "火コウモリ竜",
+      "hp": 22,
+      "max_hp": 22,
+      "image": "/static/images/companion_fire_bat_dragon.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d6+3",
+          "accuracy": 85,
+          "element": "fire"
+        }
+      }
+    },
+    {
+      "id": "npc_mina",
+      "npc_id": "mina",
+      "name": "見習い魔法使いミーナ",
+      "hp": 16,
+      "max_hp": 16,
+      "image": "/static/images/npc_mina.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d8+3",
+          "accuracy": 85,
+          "element": "ice"
+        }
+      }
+    },
+    {
+      "id": "npc_gald",
+      "npc_id": "gald",
+      "name": "行商人ガルド",
+      "hp": 10,
+      "max_hp": 10,
+      "image": "/static/images/npc_gald.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d4+1",
+          "accuracy": 60,
+          "element": "physical"
+        }
+      }
+    },
+    {
+      "id": "npc_walter",
+      "npc_id": "walter",
+      "name": "守護団長ヴァルター",
+      "hp": 40,
+      "max_hp": 40,
+      "image": "/static/images/npc_walter.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d8+3",
+          "accuracy": 90,
+          "element": "physical"
+        }
+      }
+    },
+    {
+      "id": "npc_liese",
+      "npc_id": "liese",
+      "name": "聖騎士リーゼ",
+      "hp": 36,
+      "max_hp": 36,
+      "image": "/static/images/npc_liese.png",
+      "attributes": {},
+      "skills": [
+        {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d8+3",
+          "accuracy": 90,
+          "element": "holy"
+        },
+        {
+          "id": "healing_prayer",
+          "name": "癒しの祈り",
+          "kind": "heal",
+          "healing": "7",
+          "use_below_hp_ratio": 0.5
+        }
+      ],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d8+3",
+          "accuracy": 90,
+          "element": "holy"
+        }
+      }
+    },
+    {
+      "id": "npc_brigitte",
+      "npc_id": "brigitte",
+      "name": "鍛冶師ブリギッテ",
+      "hp": 14,
+      "max_hp": 14,
+      "image": "/static/images/npc_brigitte.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d6+2",
+          "accuracy": 65,
+          "element": "physical"
+        }
+      }
+    },
+    {
+      "id": "npc_oaksdawn_priest",
+      "npc_id": "oaksdawn_priest",
+      "name": "礼拝堂の老司祭",
+      "hp": 8,
+      "max_hp": 8,
+      "image": "",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d4",
+          "accuracy": 60,
+          "element": "physical"
+        }
+      }
+    },
+    {
+      "id": "npc_elio",
+      "npc_id": "elio",
+      "name": "水術士エリオ",
+      "hp": 26,
+      "max_hp": 26,
+      "image": "/static/images/npc_elio.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d8+3",
+          "accuracy": 85,
+          "element": "water"
+        }
+      }
+    },
+    {
+      "id": "npc_guardian_guard",
+      "npc_id": "guardian_guard",
+      "name": "守護団の衛兵",
+      "hp": 18,
+      "max_hp": 18,
+      "image": "/static/images/npc_walter.png",
+      "attributes": {},
+      "skills": [],
+      "combat": {
+        "basic_attack": {
+          "id": "attack",
+          "name": "攻撃",
+          "kind": "attack",
+          "damage": "1d8+1",
+          "accuracy": 75,
+          "element": "physical"
+        }
+      }
+    },
+    {
+      "id": "dragon_knight_mounted",
+      "name": "竜騎士ガレスと飛竜ノクス",
+      "hp": 90,
+      "max_hp": 90,
+      "attributes": {},
+      "image": "/static/images/enemy_dragon_knight_mounted.png",
+      "combat": {
+        "defense": 2,
+        "evade": 6,
+        "basic_attack": {
+          "id": "dragon_charge",
+          "name": "竜槍の突撃",
+          "kind": "attack",
+          "damage": "1d8+4",
+          "accuracy": 85,
+          "element": "physical"
+        }
+      },
+      "skills": [
+        {
+          "id": "dragon_charge",
+          "name": "竜槍の突撃",
+          "kind": "attack",
+          "damage": "1d8+4",
+          "accuracy": 85,
+          "element": "physical"
+        },
+        {
+          "id": "grey_wind",
+          "name": "灰風の息吹",
+          "kind": "attack",
+          "damage": "1d8+4",
+          "accuracy": 90,
+          "element": "wind"
+        },
+        {
+          "id": "dive",
+          "name": "急降下",
+          "kind": "attack",
+          "damage": "1d8+4",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      ],
+      "resistances": {
+        "physical": 0.75,
+        "wind": 0,
+        "ice": 1.5,
+        "lightning": 1.5
+      },
+      "next_phase": "dragon_knight_human",
+      "phase_transition_text": "飛竜ノクスが翼を裂かれ、地に落ちた。ガレスは竜の背から飛び降り、その首を一度だけ撫でる。「……下がっていろ、ノクス」 その瞳が、竜と同じ金色に染まっていく。"
+    },
+    {
+      "id": "dragon_knight_human",
+      "name": "竜騎士ガレス",
+      "hp": 65,
+      "max_hp": 65,
+      "attributes": {},
+      "image": "/static/images/enemy_dragon_knight.png",
+      "combat": {
+        "defense": 3,
+        "evade": 10,
+        "basic_attack": {
+          "id": "dragon_blood_spear",
+          "name": "竜血の槍",
+          "kind": "attack",
+          "damage": "1d10+5",
+          "accuracy": 90,
+          "element": "physical"
+        }
+      },
+      "skills": [
+        {
+          "id": "dragon_blood_spear",
+          "name": "竜血の槍",
+          "kind": "attack",
+          "damage": "1d10+5",
+          "accuracy": 90,
+          "element": "physical"
+        },
+        {
+          "id": "piercing_spear",
+          "name": "穿竜突き",
+          "kind": "attack",
+          "damage": "1d10+5",
+          "accuracy": 100,
+          "element": "physical",
+          "ignores_defense": true
+        },
+        {
+          "id": "dragon_stance",
+          "name": "竜騎士の構え",
+          "kind": "defend"
+        }
+      ],
+      "resistances": {
+        "physical": 0.85,
+        "wind": 0.5
+      }
+    },
+    {
       "id": "tutorial_slime",
       "name": "スライム",
       "description": "森の入口に棲みついたスライム。妙に酸っぱい匂いがする。",
@@ -22604,7 +23756,8 @@
           "知覚"
         ],
         "reason": "ロビンの助言"
-      }
+      },
+      "npc_id": "robin"
     },
     {
       "id": "blue_robed_mage",
@@ -22658,7 +23811,8 @@
           "運動"
         ],
         "reason": "火コウモリ竜の助言"
-      }
+      },
+      "npc_id": "fire_bat_dragon"
     },
     {
       "id": "mina",
@@ -22679,7 +23833,8 @@
           "魔法学"
         ],
         "reason": "ミーナの助言"
-      }
+      },
+      "npc_id": "mina"
     },
     {
       "id": "paladin_liese",
@@ -22712,7 +23867,8 @@
           "説得"
         ],
         "reason": "リーゼの助言"
-      }
+      },
+      "npc_id": "liese"
     },
     {
       "id": "hydromancer_elio",
@@ -22740,7 +23896,8 @@
           "調査"
         ],
         "reason": "エリオの助言"
-      }
+      },
+      "npc_id": "elio"
     }
   ],
   "milestones": [
@@ -22972,7 +24129,8 @@
       ],
       "fail_flags": [
         "betrayed_lost_goblin"
-      ]
+      ],
+      "npc_id": "lost_goblin"
     },
     {
       "id": "side_robin",
@@ -22989,7 +24147,8 @@
       "complete_flags": [
         "cleared_goblin_fort"
       ],
-      "fail_flags": []
+      "fail_flags": [],
+      "npc_id": "robin"
     },
     {
       "id": "side_ian",
@@ -23006,7 +24165,8 @@
       "complete_flags": [
         "draco_revealed"
       ],
-      "fail_flags": []
+      "fail_flags": [],
+      "npc_id": "ian"
     },
     {
       "id": "side_mina",
@@ -23035,7 +24195,8 @@
           "text": "魔法店に報告する",
           "done_flag": "mina_quest_done"
         }
-      ]
+      ],
+      "npc_id": "mina"
     },
     {
       "id": "side_sarah",
@@ -23052,7 +24213,8 @@
           "text": "光苔を渡す",
           "done_flag": "sarah_moss_done"
         }
-      ]
+      ],
+      "npc_id": "sarah"
     },
     {
       "id": "side_gald",
@@ -23069,7 +24231,8 @@
           "text": "村でガルドの店を訪ねる",
           "done_flag": "visited_gald_shop"
         }
-      ]
+      ],
+      "npc_id": "gald"
     },
     {
       "id": "side_robert",
@@ -23087,7 +24250,8 @@
           "done_flag": "robert_hammer_returned"
         }
       ],
-      "start_item": "robert_hammer"
+      "start_item": "robert_hammer",
+      "npc_id": "blacksmith"
     },
     {
       "id": "side_riku",
@@ -23110,7 +24274,8 @@
           "text": "避難所の長老のもとへ連れて行く",
           "done_flag": "riku_returned"
         }
-      ]
+      ],
+      "npc_id": "riku"
     },
     {
       "id": "fire_seed_curse",
@@ -23216,7 +24381,8 @@
           "text": "リーゼか団長ヴァルターに報告する",
           "done_flag": "rewarded_battlefield_bell"
         }
-      ]
+      ],
+      "npc_id": "liese"
     },
     {
       "id": "side_workshop_hearth",
@@ -23233,7 +24399,8 @@
           "text": "焼けた溶岩石をブリギッテに渡す（洞窟の溶岩の小部屋か、溶岩ドレイクから手に入る）",
           "done_flag": "rewarded_workshop_hearth"
         }
-      ]
+      ],
+      "npc_id": "brigitte"
     },
     {
       "id": "side_sarah_scarf",
@@ -23250,7 +24417,8 @@
           "text": "獣の毛皮を二枚、サラに渡す",
           "done_flag": "completed_sarah_scarf"
         }
-      ]
+      ],
+      "npc_id": "sarah"
     },
     {
       "id": "side_nameless_soldiers",
@@ -23267,7 +24435,8 @@
           "text": "錆びた兵士の徽章を三つ、司祭に渡す",
           "done_flag": "completed_nameless_soldiers"
         }
-      ]
+      ],
+      "npc_id": "oaksdawn_priest"
     },
     {
       "id": "side_refuge_hearth",
@@ -23333,7 +24502,8 @@
       "discount": {
         "flag": "sarah_moss_done",
         "multiplier": 0.8
-      }
+      },
+      "counter_gold": 30
     },
     {
       "id": "magic_shop",
@@ -23362,7 +24532,8 @@
           "stock": null
         }
       ],
-      "buys": true
+      "buys": true,
+      "counter_gold": 0
     },
     {
       "id": "forge_shop",
@@ -23394,7 +24565,8 @@
           "stock": 1
         }
       ],
-      "buys": true
+      "buys": true,
+      "counter_gold": 40
     },
     {
       "id": "village_shop",
@@ -23417,7 +24589,8 @@
           "stock": null
         }
       ],
-      "buys": true
+      "buys": true,
+      "counter_gold": 20
     },
     {
       "id": "gald_shop",
@@ -23454,7 +24627,8 @@
           "price": 12,
           "stock": null
         }
-      ]
+      ],
+      "counter_gold": 50
     },
     {
       "id": "gald_capital_shop",
@@ -23476,7 +24650,8 @@
           "price": 40,
           "stock": 2
         }
-      ]
+      ],
+      "counter_gold": 50
     },
     {
       "id": "oaksdawn_chapel_shop",
@@ -23498,7 +24673,8 @@
           "price": 10,
           "stock": null
         }
-      ]
+      ],
+      "counter_gold": 0
     },
     {
       "id": "oaksdawn_workshop_shop",
@@ -23525,7 +24701,8 @@
         "loot",
         "equipment"
       ],
-      "sell_line": "いい素材だね。工房で使わせてもらうよ"
+      "sell_line": "いい素材だね。工房で使わせてもらうよ",
+      "counter_gold": 60
     }
   ],
   "maps": [
@@ -24421,7 +25598,8 @@
           "location_ids": [
             "dragon_valley_loc",
             "ignis_last_breath",
-            "ignis_purified"
+            "ignis_purified",
+            "dragon_valley_return"
           ],
           "description": "黒い岩肌と硫黄の匂いが漂う荒涼たる谷。"
         }
@@ -25187,7 +26365,10 @@
       "requirements": {
         "flag": "mina_quest_done"
       },
-      "text": "ミーナは師匠のもとで修行を続け、のちに『虹晶の魔法使い』と呼ばれるようになった。"
+      "text": "ミーナは師匠のもとで修行を続け、のちに『虹晶の魔法使い』と呼ばれるようになった。",
+      "npc_ids_required": [
+        "mina"
+      ]
     },
     {
       "id": "mina_alone",
@@ -25233,7 +26414,10 @@
       "requirements": {
         "flag": "recruited_robin"
       },
-      "text": "ロビンは礼の一言もなく姿を消した。ただ、王都の貧しい家々の戸口に、ときおり金貨が置かれるようになった。"
+      "text": "ロビンは礼の一言もなく姿を消した。ただ、王都の貧しい家々の戸口に、ときおり金貨が置かれるようになった。",
+      "npc_ids_required": [
+        "robin"
+      ]
     },
     {
       "id": "sarah",
@@ -25246,7 +26430,10 @@
       "requirements": {
         "flag": "sarah_moss_done"
       },
-      "text": "サラの母親は光苔の薬で快復した。道具屋には今日も明るい声が響いている。"
+      "text": "サラの母親は光苔の薬で快復した。道具屋には今日も明るい声が響いている。",
+      "npc_ids_required": [
+        "sarah"
+      ]
     },
     {
       "id": "gald_saved",
@@ -25259,7 +26446,10 @@
       "requirements": {
         "flag": "saved_gald"
       },
-      "text": "行商人ガルドは王都と麓の村を結ぶ交易路を開き、『英雄の荷車』を名乗って今日も旅を続けている。"
+      "text": "行商人ガルドは王都と麓の村を結ぶ交易路を開き、『英雄の荷車』を名乗って今日も旅を続けている。",
+      "npc_ids_required": [
+        "gald"
+      ]
     },
     {
       "id": "gald_abandoned",
@@ -25285,7 +26475,10 @@
       "requirements": {
         "flag": "robert_hammer_returned"
       },
-      "text": "ローベルトは父の形見のハンマーを手に、再び竜の鱗をも断つ剣を打ち始めた。"
+      "text": "ローベルトは父の形見のハンマーを手に、再び竜の鱗をも断つ剣を打ち始めた。",
+      "npc_ids_required": [
+        "blacksmith"
+      ]
     },
     {
       "id": "riku_returned",
@@ -25298,7 +26491,10 @@
       "requirements": {
         "flag": "riku_returned"
       },
-      "text": "麓の村は少しずつ再建されている。リクは毎朝、村の入口で旅人に手を振っている。"
+      "text": "麓の村は少しずつ再建されている。リクは毎朝、村の入口で旅人に手を振っている。",
+      "npc_ids_required": [
+        "riku"
+      ]
     },
     {
       "id": "riku_abandoned",
@@ -25311,7 +26507,10 @@
       "requirements": {
         "flag": "riku_abandoned"
       },
-      "text": "麓の村が再建されても、長老はあの夜のことを決して語ろうとしなかった。"
+      "text": "麓の村が再建されても、長老はあの夜のことを決して語ろうとしなかった。",
+      "npc_ids_required": [
+        "elder"
+      ]
     },
     {
       "id": "goblin_returned",
@@ -25324,7 +26523,10 @@
       "requirements": {
         "flag": "returned_lost_goblin_box"
       },
-      "text": "迷子のゴブリンは箱を抱えて一族のもとへ帰った。それ以来、闇の森の小鬼たちは旅人を襲わなくなったという。"
+      "text": "迷子のゴブリンは箱を抱えて一族のもとへ帰った。それ以来、闇の森の小鬼たちは旅人を襲わなくなったという。",
+      "npc_ids_required": [
+        "lost_goblin"
+      ]
     },
     {
       "id": "goblin_betrayed",
@@ -25375,6 +26577,1326 @@
         "flag": "king_trust"
       },
       "text": "国王は祝宴の席で、時おり将軍の横顔を静かに見つめていた。"
+    },
+    {
+      "id": "town_blood",
+      "endings": [
+        "ignis_defeated",
+        "ignis_purified",
+        "draco_defeated",
+        "draco_defeated_with_ignis"
+      ],
+      "requirements": {
+        "flag": "town_blood"
+      },
+      "text": "町の人々は、あの日の惨劇を忘れていない。英雄の名が語られるとき、そこには必ず血の影がつきまとった。"
+    }
+  ],
+  "npc_combat": {
+    "dialogue": [
+      "「ノクスは南風が好きでな。霧の古戦場から風が吹く日は、機嫌が悪い」",
+      "「竜が人に懐くのは珍しいと言われる。だが、こいつは卵の時から俺の外套の中で育った」",
+      "「見張りは退屈なくらいがちょうどいい。何も起きないのが一番だ」",
+      "「人に飼われた竜がいるなら、人を憎む竜がいても不思議はない。……谷の紅竜も、何かあったのかもしれんな」"
+    ],
+    "challenge_text": "ガレスは槍を手に取ると、あなたの前に静かに立ちはだかった。背後で、灰色の飛竜が低く喉を鳴らす。「……血の匂いがする。町の者を手にかけたのは、お前だな」「守護団は民を守るためにある。ここで終わらせる」",
+    "interception_text": "谷を抜けようとしたとき、頭上を大きな影が横切った。灰色の飛竜が岩棚に降り立ち、その背から竜騎士が槍を構える。「竜を討った英雄、か。だが町の者の血は、竜の血では洗い流せない」「ここで裁く。ノクス、行くぞ」",
+    "dragon_encounter": {
+      "enemy_ids": [
+        "dragon_knight_mounted"
+      ],
+      "boss": true,
+      "encounter_class": "boss",
+      "auto_start": true,
+      "flee_allowed": false,
+      "victory_effects": {
+        "gold_change": 30,
+        "inventory_add": [
+          {
+            "id": "grey_dragon_scale",
+            "name": "灰竜の鱗",
+            "quantity": 1
+          }
+        ],
+        "flags_set": [
+          "dragon_knight_defeated"
+        ]
+      },
+      "result_texts": {
+        "victory": "ガレスは槍を杖にして膝をついた。「民の血を……忘れるな」 飛竜が主をくわえ、灰色の空へ飛び去っていった。",
+        "defeat": "竜騎士の槍があなたを貫いた。「守護団の名において」"
+      },
+      "defeat_effects": {
+        "hp": 0,
+        "game_over": {
+          "ending": "combat_defeat",
+          "reason": "竜騎士の槍があなたを貫いた。「守護団の名において」"
+        }
+      }
+    }
+  },
+  "npc_absence_texts": [
+    {
+      "text": "「よし、少し待っていろ」ローベルトは鉄の剣を受け取ると、奥から見事な大剣を取り出し、氷の護符を柄に埋め込んだ。目も眩むような青い輝きが剣を包み込む。「完成だ。名付けて『氷鉄の大剣』。邪竜の鱗も容易く貫き、お前の魔力に応じた追撃も発生する至高の品だ」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/accept_sword_fusion/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "宿屋の扉を開けると、温かい食事の匂いと和やかな喧噪が包み込んできた。カウンターの奥では店主のイアンがグラスを磨いており、隅の席では闇の森を拠点とする女レンジャーのロビンがくつろいでいる。「いらっしゃい、休んでいくかい？」とイアンが声をかけてきた。",
+      "npc_ids": [
+        "ian",
+        "robin"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/inn_opening/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。 ロビンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。",
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ローベルトは君の鉄の剣をじっと見つめ、少し言葉を濁した。「お前の剣……氷の護符を埋め込むことはできるが、今の剣はボロボロすぎて耐えられん。俺が打った上質な剣に護符を融合させてやろう。護符の代金は要らん、その鉄の剣を置いていくならな」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/show_sword_to_blacksmith/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "鍛冶師ローベルトは手を止め、低い声で語り始めた。「通常の物理攻撃や炎は、あの邪竜イグニスには一切通用せん。だが、『氷の護符』の力を武器に纏わせれば、自身の攻撃を氷属性に変換できる。それなら奴にも傷を負わせられるはずだ」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/ask_blacksmith_weakness/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "王城の門前から石畳の大通りが延びる城下町。鍛冶屋の煙突からは煙が上がり、宿屋の看板が風に揺れ、魔法店の窓には青い灯りがともる。裏手には細い路地が口を開けている。邪竜の噂のせいか、行き交う人々の声はどこか低い。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/castle_town/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「この砦まで辿り着くとは、物好きな冒険者だ。わしはヴァルター、暁の守護団の団長をしておる。……邪竜を討ちに行くのか。ならば一つ忠告しておこう。竜の谷の炎が本当にあの紅竜だけのものか、よく確かめることだ」",
+      "npc_ids": [
+        "walter"
+      ],
+      "path": "/locations/oaksdawn_hq/actions/greet_walter/result_text",
+      "replacement": "ヴァルターはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "差し出しかけた代価を引き戻し、取引を拒絶する。怪しい商人の笑みが消え、黒衣の内側から死霊の気配が噴き出した。『契約を違えるなら、魂で払ってもらおう』小さな姿は膨れ上がり、亡霊主宰ゼボクが正体を現す。",
+      "npc_ids": [
+        "suspicious_merchant"
+      ],
+      "path": "/locations/alley_night/hybrid/prepared_turns/curse_bargain_betrayal/draft/gm_text",
+      "replacement": "怪しい商人はもうここにはいない。",
+      "replacements": {
+        "suspicious_merchant": "怪しい商人はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "城下町の小さな鍛冶屋に足を踏み入れると、熱気と鉄を打つ音があなたを出迎えた。無骨だが腕の立つ鍛冶師ローベルトが、汗を拭いながらこちらを見ている。「武器の点検か？それとも新しい武具が要るのか？」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/hybrid/prepared_turns/forge_opening/draft/gm_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」",
+      "npc_ids": [
+        "elder",
+        "shopkeeper"
+      ],
+      "path": "/locations/village/hybrid/prepared_turns/visit_elder/draft/gm_text",
+      "replacement": "長老はもうここにはいない。 道具屋の店主はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。",
+        "shopkeeper": "道具屋の店主はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「リク！……よく無事で」長老は孫を抱きしめ、深く頭を下げた。「礼をさせてくれ。これは村に伝わる竜の秘薬じゃ。それと……この話も伝えておこう。昔、白き竜がこの村に霜を降らせたことがある、と」",
+      "npc_ids": [
+        "elder",
+        "riku"
+      ],
+      "path": "/locations/village/actions/return_riku/result_text",
+      "replacement": "長老はもうここにはいない。 リクはもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。",
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンは、幼い頃に自分の故郷も同じように滅ぼされたと語る。『これを起こした元凶を止めてくれ。太刀は俺が打ち直す』約束を受けると、彼は破片から鍛えた氷鉄の大剣を差し出した。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/ian_ice_katana_aftermath/hybrid/prepared_turns/ian_request_accepted/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "扉の鈴が鳴ると、棚の陰から金髪の少女サラが顔を出した。肩の上では小さな火コウモリ竜が、ぱちぱちと火の粉を散らしている。「いらっしゃいませ！今日は何をお探しですか？」",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/locations/item_shop/hybrid/prepared_turns/item_shop_opening/draft/gm_text",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンはため息をついた。「邪竜は過去に何度も倒されているが、そのたびに蘇る。国王にとっちゃ、討伐は定期的な仕事みたいなもんさ。言われた通りにしておくのが一番だ」",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/ask_ian_advice/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「決まりね」ロビンは弓を背負い直して立ち上がった。「近道を知ってるの。ついてきて」彼女の案内で森の獣道を抜けると、木々の間にゴブリンの砦が黒くそびえていた。",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/accept_robin_goblin_quest/result_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ローベルトは武器の柄へ氷の護符を嵌め込み、槌で魔力の流れを整えた。青白い光が刃を走る。「活性化は済んだ。これからは斬撃のたびに冷気が追い打ちをかける」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/hybrid/prepared_turns/activate_ice_charm_at_forge/draft/gm_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「私はリーゼ。暁の守護団の聖騎士です。……南の古戦場から、夜ごと弔いの鐘が聞こえるのです。死者がまだ眠れずにいる。いつか、確かめに行かなければ」",
+      "npc_ids": [
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/talk_liese/result_text",
+      "replacement": "リーゼはもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "エリオが杖を掲げると、峡谷の湧き水が渦を巻いて巣穴へ流れ込んだ。地中で何かが苦しげにのたうち、地鳴りが遠ざかっていく。「今のうちだ、行こう！」",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/gorge_worm_lair/actions/elio_flood_worm/result_text",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ローベルトは氷の結晶を炉の脇で慎重に削り、銀の枠にはめ込んだ。「ほらよ。冷気が逃げねえように仕上げておいた」手渡された護符は、ひやりと冷たい。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/forge_ice_charm/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。長老が人々を励まし、行商人の荷車の周りには小さな人だかりができている。",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/maps/burning_village/nodes/V8/description",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "サラが飼っている小さな火竜。毎ラウンド開始時に敵へ2d3の火属性ダメージを与え、プレイヤーのHPを3回復する（虹晶を食べると6回復）。",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/companions/fire_bat_dragon/description",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンは笑って頷いた。「同行してもいいわよ。でもその前に、私の手伝いをしてくれない？王国商人の荷物が、闇の森のゴブリンに奪われたの」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/invite_robin_success/draft/gm_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「やあ。僕はエリオ、流れの水術士さ。東の峡谷の地鳴りを調べに来たんだけど、道が塞がれていてね。……君も峠を越えるつもりかい？」",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/oaksdawn_inn/actions/talk_elio/result_text",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ヴァルターは羽根ペンを走らせ、封蝋を押した。「礼拝堂のリーゼに見せるといい。あの子は古戦場の鐘のことで、ずっと胸を痛めておる」",
+      "npc_ids": [
+        "walter",
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_hq/actions/request_guardian_letter/result_text",
+      "replacement": "ヴァルターはもうここにはいない。 リーゼはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。",
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ブリギッテは聖銀を炉にくべ、打ち延ばした刃に細い光の紋を一本ずつ刻んでいった。「ほらよ。死者相手なら、こいつがいちばん効く」",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "path": "/locations/oaksdawn_workshop/actions/forge_dawn_weapon/result_text",
+      "replacement": "ブリギッテはもうここにはいない。",
+      "replacements": {
+        "brigitte": "ブリギッテはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンは遠い目をして、かつて麓の村で語られていた伝説の「氷の太刀」の話をしてくれた。「詳しいことは村の長老に聞くといい」",
+      "npc_ids": [
+        "ian",
+        "elder"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/ask_ian_legend_success/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。 長老はもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。",
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "エリオは水差しの水を光にかざし、目を輝かせた。「精霊の泉の水だ……！ こんなものをもらったら、断れないよ。一緒に行こう」",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/oaksdawn_inn/actions/recruit_elio_water/result_text",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが峠の噂話をする隅で、青い外套の青年が水差しの水面をじっと見つめている。",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/oaksdawn_inn/description_variants/0/text",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "司祭は徽章の錆を指でぬぐい、刻まれた名前を一つずつ読み上げた。「……これで、皆の家族に知らせを出せます。光のご加護を」",
+      "npc_ids": [
+        "oaksdawn_priest"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/deliver_nameless_soldiers/result_text",
+      "replacement": "老司祭はもうここにはいない。",
+      "replacements": {
+        "oaksdawn_priest": "老司祭はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「……それは。どこでこれを」ローベルトは長い間ハンマーを握りしめていた。「礼だ。好きな防具を一つ、仕立て直してやる」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/return_robert_hammer/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ミーナは深呼吸して、ぽつりぽつりと話し始めた。「あの水晶の木、近づくと共鳴するの。でも、じっとしてれば襲ってこない」",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/actions/calm_mina/result_texts/success",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "火コウモリ竜はあなたの匂いを嗅ぐと肩へ飛び乗った。サラは嬉しそうに笑い、「ちゃんと連れて帰ってね」と送り出した。",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/locations/item_shop/hybrid/prepared_turns/fire_bat_borrow_success/draft/gm_text",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンは声を落とした。「王城の路地裏には、夜だけ現れる黒い商人がいるそうよ。昼に行っても何も見つからないわ」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/ask_robin/children/ask_robin_rumor/result_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/festival_town/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "祭壇に聖水を注ぐと、リーゼは目を見開いた。「死者を弔う心をお持ちなのですね。……ご一緒させてください」",
+      "npc_ids": [
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/recruit_liese_water/result_text",
+      "replacement": "リーゼはもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "長老たちに見送られて村を出る。山道を登るにつれて空気は熱を帯び、やがて硫黄の霧が谷の入口を覆っていた。",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/locations/village/actions/go_dragon_valley/result_text",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "リーゼは推薦状の封蝋を確かめ、静かに頷いた。「団長がお認めになったのなら、私もこの剣を預けましょう」",
+      "npc_ids": [
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/recruit_liese_letter/result_text",
+      "replacement": "リーゼはもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "リーゼは胸に手を当てて、深く頭を下げた。「団長にも伝えておきます。……これは、守護団からのお礼です」",
+      "npc_ids": [
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/report_battlefield_bell_chapel/result_text",
+      "replacement": "リーゼはもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンが細い針金を差し込むと、錠はあっさりと外れた。「将軍様の屋敷ってのは、案外ちょろいもんだね」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/mansion_garden/actions/robin_picks_lock/result_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "火コウモリ竜は羽を逆立て、サラの背後へ隠れた。どうやら今は、あなたをあまり気に入っていないようだ。",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/locations/item_shop/hybrid/prepared_turns/fire_bat_borrow_failure/draft/gm_text",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「すぐ戻る。ここで待っていてくれ」と告げると、ミーナは小さく頷き、湯気の向こうで膝を抱え直した。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/actions/leave_mina_wait/result_text",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンの頼みを断って村を離れる。その先の街道で、赤い炎をまとった骸骨の魔法使いが待ち受けていた。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/ian_ice_katana_aftermath/hybrid/prepared_turns/ian_request_refused_before/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ブリギッテは石を叩いて音を確かめ、にやりと笑った。「上等だ。礼に、あんたの鎧を打ち直してやるよ」",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "path": "/locations/oaksdawn_workshop/actions/deliver_baked_lava_stone/result_text",
+      "replacement": "ブリギッテはもうここにはいない。",
+      "replacements": {
+        "brigitte": "ブリギッテはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「一緒に帰ろう」と手を差し出すと、ミーナは涙を拭って頷き、ローブの裾を握りしめて立ち上がった。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/actions/escort_mina/result_text",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "重い木箱を棚の上まで運び終えると、サラが小さな袋を差し出した。「ありがとう！ これ、お駄賃！」",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/locations/item_shop/actions/help_sarah_shelves/result_texts/success",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが、干し肉をかじりながら峠の噂話をしている。",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/oaksdawn_inn/description",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。",
+      "npc_ids": [
+        "liese",
+        "oaksdawn_priest"
+      ],
+      "path": "/locations/oaksdawn_chapel/description_variants/0/text",
+      "replacement": "リーゼはもうここにはいない。 老司祭はもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。",
+        "oaksdawn_priest": "老司祭はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "サラは毛皮を抱きしめて、ぱっと笑った。「ありがとう！ 母さん、きっと喜ぶよ。これ、お礼！」",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/locations/item_shop/actions/deliver_sarah_scarf/result_text",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "地図と剣が並ぶ質素な広間。白髪の老騎士――守護団長ヴァルターが、卓上の地図から顔を上げた。",
+      "npc_ids": [
+        "walter"
+      ],
+      "path": "/maps/oaksdawn/nodes/G2/description",
+      "replacement": "ヴァルターはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/forest_wolves/obstacles/forest_wolves/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "鉄くずの底から、まだ使えそうな毒矢が一本出てきた。ローベルトは「持っていけ」とだけ言った。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/dig_forge_scrap/result_texts/success",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "湯気の立ち込める小さな温泉がある。岩の隙間に、ローブ姿の少女が膝を抱えて座り込んでいる。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「窓のところまで来られるか！」 泣き声がやみ、二階の窓辺へ這ってくる小さな影が見えた。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/call_to_child/result_texts/success",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンは辛い記憶に触れたのか、顔をしかめて口を閉ざした。これ以上は聞き出せそうにない。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/ask_ian_legend_fail/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "炉の熱と槌の音が響く工房。分厚い前掛けの女鍛冶師が、白銀の剣に光の紋を刻んでいる。",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "path": "/locations/oaksdawn_workshop/description",
+      "replacement": "ブリギッテはもうここにはいない。",
+      "replacements": {
+        "brigitte": "ブリギッテはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "高い窓から朝の光が差し込む礼拝堂。祭壇の前には、死者を弔う白い花が供えられている。",
+      "npc_ids": [
+        "liese",
+        "oaksdawn_priest"
+      ],
+      "path": "/locations/oaksdawn_chapel/description",
+      "replacement": "リーゼはもうここにはいない。 老司祭はもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。",
+        "oaksdawn_priest": "老司祭はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "崩れかけた民家の奥から、子どもの泣き声が聞こえる。入口は燃える梁で塞がれている。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/entry_text",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "木箱を取り落としてしまった。サラは「大丈夫、割れ物じゃないから」と笑ってくれた。",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/locations/item_shop/actions/help_sarah_shelves/result_texts/failure",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "第3章「麓の村」における、情報収集、道具屋での護符入手、竜の谷への出発をカバー。",
+      "npc_ids": [
+        "elder",
+        "gald",
+        "riku",
+        "shopkeeper"
+      ],
+      "path": "/locations/village/hybrid/summary",
+      "replacement": "長老はもうここにはいない。 ガルドはもうここにはいない。 リクはもうここにはいない。 道具屋の店主はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。",
+        "gald": "ガルドはもうここにはいない。",
+        "riku": "リクはもうここにはいない。",
+        "shopkeeper": "道具屋の店主はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「助かった！命の恩人だ。俺はガルド、村でも商売してる。見かけたら寄ってくれ」",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/forest_wolves/combat/result_texts/victory",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「参ったね、あんたには敵わない」 ガルドは笑って、薬草を一束放ってよこした。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/castle_town/actions/ask_gald_extra/result_texts/success",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ヴァルターは長いこと黙っていた。「十年、あの鐘の音を待っておった。礼を言う」",
+      "npc_ids": [
+        "walter"
+      ],
+      "path": "/locations/oaksdawn_hq/actions/report_battlefield_bell_hq/result_text",
+      "replacement": "ヴァルターはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「筋は悪くないね」 ロビンは笑って、矢筒から毒矢を二本抜いて渡してくれた。",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/robin_archery/result_texts/success",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "戦いが終わると迷子のゴブリンが現れ、自分の箱を見つけて抱き寄せようとする。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/locations/goblin_fort_chest_choice/hybrid/summary",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "代価が渡されると、怪しい商人は満足そうに身を引き、夜の闇へ溶けていった。",
+      "npc_ids": [
+        "suspicious_merchant"
+      ],
+      "path": "/locations/alley_night/hybrid/prepared_turns/curse_paid_thief/draft/gm_text",
+      "replacement": "怪しい商人はもうここにはいない。",
+      "replacements": {
+        "suspicious_merchant": "怪しい商人はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "光を通すと淡く輝く銀。ブリギッテの工房で、光の紋を刻む武器の材料になる。",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "path": "/items/holy_silver/description",
+      "replacement": "ブリギッテはもうここにはいない。",
+      "replacements": {
+        "brigitte": "ブリギッテはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "街灯の届かない場所に、黒いローブの小柄で毛むくじゃらな商人が立っている。",
+      "npc_ids": [
+        "suspicious_merchant"
+      ],
+      "path": "/locations/alley_night/hybrid/summary",
+      "replacement": "怪しい商人はもうここにはいない。",
+      "replacements": {
+        "suspicious_merchant": "怪しい商人はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "スライム、迷子のゴブリン、精霊の泉、四階建てのゴブリン砦を巡る分岐章。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/scenes/dark_forest/description",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "城下町の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/maps/royal_return/nodes/forge/description",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "迷子のゴブリンが、別の一族に盗まれた箱を取り戻してほしいと頼んでいる。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/maps/forest/nodes/F2/description",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "店主イアンが現れ、凍死するほどの力が残る破片に触れないよう制止した。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/maps/burning_village/nodes/V6/description",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "冒険者や旅人が休息を取るための宿屋。暖かい食事と清潔な寝台がある。",
+      "npc_ids": [
+        "ian",
+        "robin"
+      ],
+      "path": "/locations/inn/description",
+      "replacement": "イアンはもうここにはいない。 ロビンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。",
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "梁を蹴り砕いて飛び込むと、煙の中で小さな男の子がうずくまっていた。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/break_burning_beam/result_texts/success",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「弟子のミーナが戻らない。泉の封印の話をした翌日からだ……」",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/ask_mina_missing/result_text",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンは肩をすくめた。「悪いけど、今は忙しいの。また今度ね」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/invite_robin_fail/draft/gm_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "壁をよじ登って窓から入り込み、男の子を抱えて外へ飛び降りた。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/climb_to_window/result_texts/success",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "宿屋の壁の掲示板。依頼や手配書が何枚も重ねて貼られている。",
+      "npc_ids": [
+        "ian",
+        "robin"
+      ],
+      "path": "/locations/inn/objects/inn_notice_board/description",
+      "replacement": "イアンはもうここにはいない。 ロビンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。",
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンの頼みを断り、燃える村を後にして竜の谷へ向かった。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/ian_ice_katana_aftermath/hybrid/prepared_turns/ian_request_refused_after/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "冷気を放つと炎が一瞬で退き、その隙に男の子を連れ出した。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/douse_with_ice/result_text",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "刃の色が敵に応じて移ろう剣。相手の弱点を自ら探り当てる。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/forge_prism_weapon/effects/1/branch/then/0/branch/else/0/add_item/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "十歳ほどの金髪の少女サラと、小さな火コウモリ竜がいる。",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/maps/royal_return/nodes/item_shop/description",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "弦が跳ねて頬を打った。ロビンが肩を震わせて笑っている。",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/robin_archery/result_texts/failure",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "青いローブの銀髪の魔法使いが、杖を背に店番をしている。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/hybrid/summary",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンは砕けた刃を見つめたまま、何も言わなかった。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/ian_ice_katana_aftermath/actions/read_ian_grief/result_texts/failure",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "怪しい商人の姿は消え、夜風だけが路地を抜けていく。",
+      "npc_ids": [
+        "suspicious_merchant"
+      ],
+      "path": "/locations/alley_after/hybrid/summary",
+      "replacement": "怪しい商人はもうここにはいない。",
+      "replacements": {
+        "suspicious_merchant": "怪しい商人はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/items/robert_hammer/description",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ミーナは膝に顔を埋めたまま、泣き止まなかった。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/actions/calm_mina/result_texts/failure",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "祈りの光を七色に分ける杖。癒やしの力も高める。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/forge_prism_weapon/effects/2/branch/then/0/branch/else/0/add_item/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "箱を奪われまいと、迷子のゴブリンが短剣を抜く。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/locations/goblin_fort_chest_fight/hybrid/summary",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "主を失った箱は、金貨の山の陰に転がっていた。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/locations/goblin_fort_chest_choice/description_variants/0/text",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "刺すたびに色を変える短剣。急所を逃さない。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/forge_prism_weapon/effects/4/branch/then/0/branch/else/0/add_item/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "大通りに掲げられた、王国と諸侯の祝宴の旗。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/festival_town/objects/parade_banners/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "暁の守護団長ヴァルターの署名入りの推薦状。",
+      "npc_ids": [
+        "walter"
+      ],
+      "path": "/items/guardian_letter/description",
+      "replacement": "ヴァルターはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "長老は咳き込み、話を途中でやめてしまった。",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/locations/village/actions/ask_elder_legend/result_texts/failure",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "泣き声を背に、燃える通りを駆け抜けた。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/leave_burning_house/result_text",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "氷の護符と上質な剣を融合させた大剣。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/hybrid/prepared_turns/accept_sword_fusion/draft/state_delta/inventory_add/0/description",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "長老は焼け跡を見つめ、黙り込んでいる",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/locations/village/entry_text",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "魔力を敵の弱点の属性へ変える宝珠。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/forge_prism_weapon/effects/3/branch/then/0/branch/else/0/add_item/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "十字路に立つ、傾いた古い道標。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/locations/lost_goblin_crossroads/objects/crossroads_signpost/description",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンが暗号を教えてくれた。",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/goblin_fort_third_gate/entry_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "広場の古い石の井戸。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/castle_town/objects/town_well/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "温泉の壁の苔",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/objects/moss_on_wall/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "行商人の荷車",
+      "npc_ids": [
+        "elder",
+        "gald",
+        "riku",
+        "shopkeeper"
+      ],
+      "path": "/locations/village/objects/gald_cart/description",
+      "replacement": "長老はもうここにはいない。 ガルドはもうここにはいない。 リクはもうここにはいない。 道具屋の店主はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。",
+        "gald": "ガルドはもうここにはいない。",
+        "riku": "リクはもうここにはいない。",
+        "shopkeeper": "道具屋の店主はもうここにはいない。"
+      },
+      "status": "TODO(design)"
     }
   ]
 }

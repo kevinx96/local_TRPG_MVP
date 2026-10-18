@@ -127,7 +127,7 @@ def catalog() -> list[dict[str, Any]]:
                            else "Armor shown straight from the front." if group == "防具"
                            else "Front view with a slight view from above.")
             file = f"client/images/icon_{identifier}.png"
-            unique[identifier] = dict(task="038" if group == "戦利品" else "036", id=f"icon_{identifier}", name=item["name"], group=group,
+            unique[identifier] = dict(task="041" if identifier == "grey_dragon_scale" else "038" if group == "戦利品" else "036", id=f"icon_{identifier}", name=item["name"], group=group,
                 file=file, generator="image_gen", approved=approved.get(file, False) if identifier in PILOTS else False,
                 transparent_background=True, retained_from="034" if identifier in PILOTS else None,
                 prompt=STYLE + f"Subject: {item['name']}。{item.get('description', '')} "

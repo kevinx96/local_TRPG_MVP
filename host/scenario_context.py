@@ -130,11 +130,14 @@ def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) ->
     pack["epilogues"] = [deepcopy(entry) for entry in _as_list(raw.get("epilogues")) if isinstance(entry, dict)]
     pack['chapter_locks'] = deepcopy(raw.get('chapter_locks', []))
     pack['item_flags'] = deepcopy(raw.get('item_flags', {}))
+    pack["npc_combat"] = deepcopy(raw.get("npc_combat", {}))
+    pack["npc_absence_texts"] = deepcopy(raw.get("npc_absence_texts", []))
     return pack
 
 
 def select_scenario_context(session: dict[str, Any], player_text: str = "") -> dict[str, Any]:
     from .state import _session_requirement_passes
+    from .npc_combat import absence_context, gone
 
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
@@ -181,7 +184,8 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
         if group == "npcs":
             requirements = (_find_location_in_pack(pack, current_location_id(session)) or {}).get("npc_requirements", {})
             matched[group] = [record for record in matched[group]
-                              if _session_requirement_passes(requirements.get(record["id"]), session)]
+                              if not gone(session, record["id"])
+                              and _session_requirement_passes(requirements.get(record["id"]), session)]
         for public_record in matched[group]:
             for variant in records.get(public_record["id"], {}).get("description_variants", []):
                 if _session_requirement_passes(variant.get("requirements"), session):
@@ -201,7 +205,7 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
         "current_scene": _trim_record(_public_record(scene)),
         "matched": matched,
         "available_actions": _trim_choices(current_action_choices(session)),
-        "fallback_choices": _trim_choices(_merged_choices_for_context(pack, current_scene, current_location_id(session))),
+        "fallback_choices": _context_fallback_choices(session, pack, current_scene, current_location_id(session)),
     }
     location = _find_location_in_pack(pack, current_location_id(session)) or {}
     context["current_location"] = {key: deepcopy(location[key]) for key in ("id", "title", "description") if key in location}
@@ -219,7 +223,7 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
             if hint_text:
                 context["narrative_hint"] = hint_text
                 context["hint_choices"] = prepared["draft"].get("choices", [])
-    return context
+    return absence_context(session, context)
 
 
 def select_hybrid_context(
@@ -253,14 +257,16 @@ def select_hybrid_context(
         "prepared_turn": _prepared_turn_for_llm(prepared_turn, str(meta.get("language") or "")),
         "action_result": session.get("last_action_result", {}),
         "available_actions": _trim_choices(current_action_choices(session)),
-        "fallback_choices": _trim_choices(_merged_choices_for_context(pack, current_scene, location_id)),
+        "fallback_choices": _context_fallback_choices(session, pack, current_scene, location_id),
     }
     if include_debug:
         context["_debug"] = {
             "prepared_turn": str(prepared_turn.get("id") or "") if isinstance(prepared_turn, dict) else "",
             "purpose": str(prepared_turn.get("purpose") or "") if isinstance(prepared_turn, dict) else "",
         }
-    return context
+    from .npc_combat import absence_context
+
+    return absence_context(session, context)
 
 
 def has_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", opening: bool = False) -> bool:
@@ -272,6 +278,12 @@ def has_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", ope
 
 
 def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", opening: bool = False) -> dict[str, Any]:
+    from .npc_combat import absence_context
+
+    return absence_context(session, _select_hybrid_prepared_turn(session, player_text, opening))
+
+
+def _select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", opening: bool = False) -> dict[str, Any]:
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return {}
@@ -356,6 +368,10 @@ def fallback_choices_for_session(session: dict[str, Any]) -> list[dict[str, str]
 
 
 def current_actions_for_session(session: dict[str, Any]) -> list[dict[str, Any]]:
+    from .npc_combat import confirmation_actions, filter_actions
+
+    if session.get("pending_npc_attack"):
+        return confirmation_actions(session)
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return []
@@ -368,7 +384,7 @@ def current_actions_for_session(session: dict[str, Any]) -> list[dict[str, Any]]
         if isinstance(source, dict):
             actions.extend(normalize_actions(source.get("actions")))
     if actions:
-        return _dedupe_actions(actions)
+        return filter_actions(session, _dedupe_actions(actions))
     return []
 
 
@@ -409,6 +425,13 @@ def fallback_choices_for_scene(pack: dict[str, Any], scene_id: str) -> list[dict
         if choices:
             return choices
     return normalize_choices(pack.get("fallback_choices")) or deepcopy(DEFAULT_FALLBACK_CHOICES)
+
+
+def _context_fallback_choices(session: dict[str, Any], pack: dict[str, Any], scene_id: str, location_id: str) -> list[dict[str, Any]]:
+    if session.get("pending_npc_attack") or any(value for key, value in session.get("flags", {}).items()
+                                               if key.startswith("npc_gone_") or key == "dragon_knight_defeated"):
+        return _trim_choices(current_action_choices(session))
+    return _trim_choices(_merged_choices_for_context(pack, scene_id, location_id))
 
 
 def _merged_choices_for_context(pack: dict[str, Any], scene_id: str, location_id: str) -> list[dict[str, Any]]:

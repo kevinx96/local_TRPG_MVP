@@ -440,6 +440,8 @@ def save_session(session: dict[str, Any]) -> None:
 
 
 def public_session(session: dict[str, Any]) -> dict[str, Any]:
+    from .npc_combat import gone
+
     world = ensure_world_state(session)
     combat = public_combat(session)
     public = deepcopy(session)
@@ -451,6 +453,7 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     public.pop("known_item_names", None)
     public.pop("shop_stock", None)
     public.pop("area_snapshots", None)
+    public.pop("pending_npc_attack", None)
     public["can_retry_area"] = retry_snapshot(session) is not None
     from .item_mechanics import ELEMENT_LABELS
     meta = (session.get("scenario_pack") or {}).get("meta") or {}
@@ -473,6 +476,8 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
         public["free_input_hint"] = str(location.get("free_input_hint") or "行動や台詞を自由に入力してください")
         public["location_background_image"] = str(location.get("background_image") or "")
         public["location_portrait_image"] = str(location.get("portrait_image") or "")
+        if location.get("npc_ids") and all(gone(session, identifier) for identifier in location["npc_ids"]):
+            public["location_portrait_image"] = ""
     else:
         public["location_background_image"] = ""
         public["location_portrait_image"] = ""
@@ -488,6 +493,12 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     location_npcs = _location_npc_portraits(session, location)
     dialogue_portrait = str((action or {}).get("portrait_image")
                             or (session.get("last_action_result") or {}).get("arrival_portrait_image") or "")
+    from .npc_combat import portrait_available
+
+    if not portrait_available(session, dialogue_portrait):
+        dialogue_portrait = ""
+    if not portrait_available(session, public["location_portrait_image"]):
+        public["location_portrait_image"] = ""
     dialogue_active = bool(dialogue_portrait and dialogue_portrait != player_portrait)
     public["player_portrait_image"] = player_portrait
     public["location_npc_portraits"] = location_npcs
@@ -531,6 +542,12 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     public["choices"] = annotate_choices_for_session(public.get("choices"), session)
     public["choices"] = annotate_choices_for_character(public.get("choices"), public.get("character", {}))
     public["choices"] = player_choices_for_session(public["choices"], session)
+    if session.get("pending_npc_attack"):
+        public["choices"] = player_choices_for_session(fallback_choices_for_session(session), session)
+    elif any(value for key, value in session.get("flags", {}).items()
+             if key.startswith("npc_gone_") or key == "dragon_knight_defeated"):
+        public["choices"] = [] if public["in_combat"] else player_choices_for_session(
+            annotate_choices_for_session(fallback_choices_for_session(session), session), session)
     if session.get("game_over"):
         public["choices"] = []
     public["system_logs"] = [
@@ -554,6 +571,8 @@ def _location_npc_portraits(
     session: dict[str, Any],
     location: Optional[dict[str, Any]],
 ) -> list[dict[str, str]]:
+    from .npc_combat import gone
+
     if not isinstance(location, dict):
         return []
     pack = session.get("scenario_pack")
@@ -569,7 +588,7 @@ def _location_npc_portraits(
     if not isinstance(portrait_overrides, dict):
         portrait_overrides = {}
     for npc_id in location.get("npc_ids", []):
-        if not _session_requirement_passes(location.get("npc_requirements", {}).get(npc_id), session):
+        if gone(session, npc_id) or not _session_requirement_passes(location.get("npc_requirements", {}).get(npc_id), session):
             continue
         record = catalogs.get(str(npc_id))
         if not isinstance(record, dict) or not record.get("image"):
@@ -579,7 +598,8 @@ def _location_npc_portraits(
             "name": str(record.get("name") or npc_id),
             "image": str(portrait_overrides.get(str(npc_id)) or record["image"]),
         })
-    if not portraits and location.get("portrait_image"):
+    if (not portraits and location.get("portrait_image")
+            and not any(gone(session, identifier) for identifier in location.get("npc_ids", []))):
         portraits.append({
             "id": str(location.get("id") or "location_npc"),
             "name": "",
@@ -805,6 +825,9 @@ def add_player_message(session: dict[str, Any], text: str, speaker: str = "プ�
 
 
 def add_assistant_message(session: dict[str, Any], text: str, speaker: str = "GM") -> None:
+    from .npc_combat import absence_text
+
+    text = absence_text(session, text)
     session["messages"].append({"role": "assistant", "speaker": speaker, "text": text, "created_at": utc_now()})
     session["last_turn_narrated"] = bool(str(text).strip())
 
@@ -822,6 +845,10 @@ def record_state_event(
     *,
     visible: bool = True,
 ) -> dict[str, Any]:
+    if kind == "location_hint":
+        from .npc_combat import absence_text
+
+        text = absence_text(session, text)
     event = {
         "id": uuid.uuid4().hex,
         "kind": str(kind),
@@ -1329,6 +1356,10 @@ def intent_control_prompt(session: dict[str, Any]) -> str:
 
 
 def action_requirement_status(action: dict[str, Any], session: dict[str, Any]) -> tuple[bool, str]:
+    from .npc_combat import related_available
+
+    if not related_available(session, action):
+        return False, "この行動は現在選択できません。"
     flags = session.get("flags") if isinstance(session.get("flags"), dict) else {}
     if not _session_requirement_passes(action.get("visible_requirements"), session):
         return False, "この行動はまだ選択できません。"
@@ -1370,7 +1401,16 @@ def action_dice_settings(action: Optional[dict[str, Any]], default_type: str = "
 
 
 def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_roll: dict[str, Any]) -> dict[str, Any]:
+    from .npc_combat import absence_text, dragon_action
+
     source_location_id = current_location_id(session)
+    if action.get("dragon_knight"):
+        text = dragon_action(session)
+        result = {"action_id": action["id"], "text": action["text"], "outcome": "neutral",
+                  "result_text": text, "state_delta": {}, "source_location_id": source_location_id}
+        session["last_action_result"] = result
+        session["choices"] = [] if session.get("combat") else fallback_choices_for_session(session)
+        return result
     if action.get("free_action"):
         from .free_actions import adjudicate
 
@@ -1445,7 +1485,7 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
         "prepared_turn_id": str(action.get("prepared_turn_id") or ""),
         "source_location_id": source_location_id,
         "extra_text": "".join(extra_text),
-        "result_text": result_text,
+        "result_text": absence_text(session, result_text),
         "arrival_portrait_image": arrival_portraits[-1] if arrival_portraits else "",
     }
     if action.get("open_shop"):
@@ -1789,7 +1829,9 @@ def _epilogue_lines(session: dict[str, Any], game_over: dict[str, Any]) -> list[
         endings = entry.get("endings") or []
         if endings and ending not in endings:
             continue
-        if _session_requirement_passes(entry.get("requirements"), session):
+        from .npc_combat import related_available
+
+        if related_available(session, entry) and _session_requirement_passes(entry.get("requirements"), session):
             lines.append(str(entry["text"]))
     return lines
 
@@ -2523,6 +2565,10 @@ def _set_companion(session: dict[str, Any], raw_companion: Any) -> None:
         if companion is None:
             companion = {"id": companion_id, "name": companion_id}
 
+    from .npc_combat import gone
+
+    if companion and gone(session, str(companion.get("npc_id") or companion.get("id") or "")):
+        return
     previous_id = str(previous.get("id") or "") if previous else ""
     companion_id = str(companion.get("id") or "") if companion else ""
     if previous and previous_id != companion_id:

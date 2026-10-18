@@ -1,0 +1,15 @@
+{
+  "run_id": "2026-10-18T222457933717Z-intent-gemini-gemini-3.1-flash-lite-guard_rules",
+  "live": false,
+  "total": 194,
+  "cache_hits": 194,
+  "severity": {
+    "S0": 173,
+    "S1": 12,
+    "S2": 8,
+    "S3": 1,
+    "S4": 0
+  },
+  "baseline": "2026-10-12T062656092753Z-intent-gemini-gemini-3.1-flash-lite-guard_rules",
+  "severity_unchanged": true
+}

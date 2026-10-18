@@ -7,6 +7,7 @@ from .world_state import current_location_id
 
 
 def public_maps(session: dict[str, Any]) -> dict[str, Any]:
+    from .npc_combat import absence_text
     from .state import _session_requirement_passes
 
     location = current_location_id(session)
@@ -41,6 +42,8 @@ def public_maps(session: dict[str, Any]) -> dict[str, Any]:
                         break
                 if node.get("locked_until") and flags.get(node["locked_until"]):
                     public["kind"] = "branch"
+                if public.get("description"):
+                    public["description"] = absence_text(session, public["description"])
             nodes.append(public)
         visible = {n["id"] for n in nodes if n["visibility"] != "hidden"}
         result.append({"id": source["id"], "title": source["title"], "parent": source.get("parent"),

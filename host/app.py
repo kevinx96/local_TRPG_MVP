@@ -588,6 +588,21 @@ def _run_turn(session: dict[str, Any], request: TurnRequest, *, allow_narration:
     action_text = request.text.strip()
     if not action_text and not request.action_id:
         raise HTTPException(status_code=400, detail="行動を入力してください。")
+    if session.get("pending_npc_attack"):
+        from .npc_combat import confirmation_actions, resolve_confirmation
+
+        choices = confirmation_actions(session)
+        action = next((choice for choice in choices if choice["id"] == request.action_id
+                       or (not request.action_id and choice["text"] == action_text)), None)
+        if action:
+            track_intent_resolution(session, {"status": "resolved", "method": "npc_confirmation", "action": action}, action["text"])
+            add_player_message(session, action["text"], request.speaker)
+            add_assistant_message(session, resolve_confirmation(session, action["id"]))
+            session["last_action_result"] = {}
+        session["choices"] = [] if combat_is_active(session) else fallback_choices_for_session(session)
+        session["last_turn_metrics"] = {"model_calls": 0, "elapsed_ms": 0}
+        save_session(session)
+        return public_session(session)
     intent_resolution = resolve_player_intent(session, action_text, request.action_id)
     if not request.action_id and intent_resolution.get("status") != "legacy":
         return _run_free_turn(session, request)
@@ -862,6 +877,8 @@ def _should_skip_turn_narration(
 
 @llm_trace.game_trace
 def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
+    from .npc_combat import absence_text
+
     result = combat_result_for_llm(session)
     state_delta = consume_combat_state_delta(session)
     if state_delta:
@@ -897,6 +914,8 @@ def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
     if isinstance(session.get("combat"), dict):
         session["combat"]["result"] = deepcopy(result)
     clear_combat_after_resolution(session)
+    for text in result.get("npc_aftermath", []):
+        record_state_event(session, "npc_aftermath", text)
     if session.get("game_over"):
         add_assistant_message(session, str(session["game_over"]["reason"]))
         session["choices"] = []
@@ -908,7 +927,7 @@ def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
         "outcome": result.get("outcome"),
         "combat_result": result,
     }
-    prepared_text = str(result.get("prepared_text") or "").strip()
+    prepared_text = absence_text(session, str(result.get("prepared_text") or "").strip())
     if prepared_text:
         add_assistant_message(session, prepared_text)
         session["last_turn_narrated"] = True
@@ -972,6 +991,8 @@ def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
 
 
 def _record_obstacle_victory(session: dict[str, Any]) -> None:
+    if (session.get("combat") or {}).get("encounter", {}).get("npc_target"):
+        return
     source = str((session.get("combat") or {}).get("location_id") or "")
     location = next((loc for loc in session.get("scenario_pack", {}).get("locations", []) if loc.get("id") == source), {})
     for obstacle in location.get("obstacles", []):

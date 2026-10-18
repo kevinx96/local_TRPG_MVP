@@ -4540,6 +4540,160 @@
         255
       ],
       "sha256": "9c8e6a33de067f3804ced463cf8f48351eb2707eff978d8404029dfed80fe880"
+    },
+    {
+      "task": "041",
+      "id": "npc_dragon_knight",
+      "file": "assets/candidates/041/npc_dragon_knight/candidate_01.png",
+      "generator": "image_gen",
+      "generation_date": "2026-10-19",
+      "approved": false,
+      "prompt": "Use case: identity-preserve. Asset type: full-body NPC sprite, portrait 1024x1536, true transparent alpha background. Use the provided image as the identity and costume reference for the middle-aged 竜騎士ガレス. Produce a second calm full-body standing portrait with the long spear angled slightly outward, preserving the SAME middle-aged face, brown tousled hair, short stubble, golden eyes, grey-silver dragon-scale armor, white cloak with oak-and-rising-sun embroidery, belt, boots and spear design. Keep the detailed semi-realistic anime painterly style. Show the whole body and entire spear, no scenery, no floor, no text, no watermark. Transparent background without a painted halo.",
+      "reference_images": [
+        "assets/candidates/041/npc_dragon_knight/candidate_02.png"
+      ],
+      "use_case": "identity-preserve"
+    },
+    {
+      "task": "041",
+      "id": "npc_dragon_knight",
+      "file": "assets/candidates/041/npc_dragon_knight/candidate_02.png",
+      "generator": "image_gen",
+      "generation_date": "2026-10-19",
+      "approved": false,
+      "prompt": "Use case: stylized-concept. Asset type: transparent full-body NPC illustration for a Japanese fantasy visual novel, portrait 1024x1536. Reference images: npc_walter.png for painterly rendering, silver armor and the white cloak oak-and-rising-sun emblem; npc_robin.png for semi-realistic anime painterly character style and clean isolated silhouette. Create a new person: 竜騎士ガレス, a middle-aged dragon knight, grey-silver dragon-scale armor, white cloak of the 暁の守護団 with oak and rising-sun embroidery, long spear, golden eyes, calm and steady expression. Whole body and entire spear within frame, generous transparent margin, clean actual alpha background. Detailed painterly fantasy illustration matching the references. No text, no watermark, no scenery. Candidate 02. He is visibly middle-aged, not an elderly white-haired knight. Create a distinct middle-aged face; do not copy Walter's face. Preserve the same provided knight concept and style.",
+      "reference_images": [
+        "client/images/npc_walter.png",
+        "client/images/npc_robin.png"
+      ],
+      "use_case": "identity-preserve"
+    },
+    {
+      "task": "041",
+      "id": "enemy_dragon_knight_mounted",
+      "file": "assets/candidates/041/enemy_dragon_knight_mounted/candidate_01.png",
+      "generator": "image_gen",
+      "generation_date": "2026-10-19",
+      "approved": false,
+      "prompt": "Use case: identity-preserve, full-body transparent RPG battle sprite. First reference is the exact middle-aged dragon knight Gareth face and costume; second is a riding pose and grey wyvern Nox reference. Preserve the same man, brown tousled hair, short stubble, gold eyes, silver-grey dragon scale armor, white cloak with oak and rising sun emblem, and long spear. Generate a new candidate 01: Gareth riding Nox in a full-body three-quarter battle-ready standing pose. CRITICAL: zoom the whole subject far enough out that both wing tips, all feet, entire tail, spear tip, and cloak are fully visible, surrounded by a generous transparent margin on all sides. Use a square 1536x1536 composition. Keep the grey scaled flying wyvern and knight complete, no cropping. Semi-realistic painterly anime fantasy style matching reference one, detailed materials. No scenery, no floor, no vignette, no cast shadow outside the subject, no text, no watermark.",
+      "reference_images": [
+        "assets/candidates/041/npc_dragon_knight/candidate_01.png",
+        "assets/candidates/041/enemy_dragon_knight_mounted/candidate_02.png"
+      ],
+      "use_case": "identity-preserve"
+    },
+    {
+      "task": "041",
+      "id": "enemy_dragon_knight_mounted",
+      "file": "assets/candidates/041/enemy_dragon_knight_mounted/candidate_02.png",
+      "generator": "image_gen",
+      "generation_date": "2026-10-19",
+      "approved": false,
+      "prompt": "Use case: identity-preserve. Asset type: transparent battle sprite for a Japanese fantasy visual novel, square composition 1024x1024. Input image is the identity and costume reference. Keep EXACTLY the same middle-aged 竜騎士ガレス: same face, brown hair, short stubble, golden eyes, grey-silver dragon-scale armor, white oak-and-rising-sun embroidered cloak and same long spear. Show him mounted on 飛竜ノクス, a tamed grey-scaled wyvern, in a full-body battle pose. Knight rides on the wyvern's back with spear ready; two legs and two wing-arms, entire wings, head, tail and spear visible with clear margin. Matching semi-realistic anime painterly fantasy style, dramatic rim light. Truly transparent background, no scenery, no ground platform, no text, no watermark. Candidate 02. Frame the entire wyvern and rider as a smaller figure occupying no more than 78% of canvas, with a wide empty transparent border. Both wing tips must fit comfortably inside the canvas. Wings half-folded while launching into flight, no clipped limbs or wings.",
+      "reference_images": [
+        "assets/candidates/041/npc_dragon_knight/candidate_01.png"
+      ],
+      "use_case": "identity-preserve"
+    },
+    {
+      "task": "041",
+      "id": "enemy_dragon_knight",
+      "file": "assets/candidates/041/enemy_dragon_knight/candidate_01.png",
+      "generator": "image_gen",
+      "generation_date": "2026-10-19",
+      "approved": false,
+      "prompt": "Use case: identity-preserve. Asset type: transparent full-body battle sprite, portrait 1024x1536. Input is the identity and costume reference of 竜騎士ガレス. Keep exactly the same middle-aged face, brown tousled hair, short stubble, grey-silver dragon-scale armor, white oak-and-rising-sun embroidered cloak, boots, belt and long spear. Change only his stance and expression for combat on foot: braced feet, holding the same long spear ready to strike, determined expression, eyes glowing gold. Same semi-realistic anime painterly fantasy rendering and rim light. Full body including feet and spear tip, comfortable transparent margins. No wyvern in this image, no background or platform, no text, no watermark. Candidate 01.",
+      "reference_images": [
+        "assets/candidates/041/npc_dragon_knight/candidate_01.png"
+      ],
+      "use_case": "identity-preserve"
+    },
+    {
+      "task": "041",
+      "id": "enemy_dragon_knight",
+      "file": "assets/candidates/041/enemy_dragon_knight/candidate_02.png",
+      "generator": "image_gen",
+      "generation_date": "2026-10-19",
+      "approved": false,
+      "prompt": "Use case: identity-preserve. Asset type: transparent full-body battle sprite, portrait 1024x1536. Input is the identity and costume reference of 竜騎士ガレス. Keep exactly the same middle-aged face, brown tousled hair, short stubble, grey-silver dragon-scale armor, white oak-and-rising-sun embroidered cloak, boots, belt and long spear. Change only his stance and expression for combat on foot: braced feet, holding the same long spear ready to strike, determined expression, eyes glowing gold. Same semi-realistic anime painterly fantasy rendering and rim light. Full body including feet and spear tip, comfortable transparent margins. No wyvern in this image, no background or platform, no text, no watermark. Candidate 01. Candidate 02 variant: turn the torso three quarters to the right, spear held in a different defensive thrust pose, with the full long spear, both feet, and entire fluttering cloak fully inside the canvas. Maintain precisely the same face and age. Gold eyes visibly luminous.",
+      "reference_images": [
+        "assets/candidates/041/npc_dragon_knight/candidate_01.png"
+      ],
+      "use_case": "identity-preserve"
+    },
+    {
+      "task": "041",
+      "id": "icon_grey_dragon_scale",
+      "file": "assets/candidates/041/icon_grey_dragon_scale/source.png",
+      "generator": "image_gen",
+      "generation_date": "2026-10-19",
+      "approved": false,
+      "prompt": "Create a fantasy RPG inventory icon for 灰竜の鱗, one grey wyvern scale. Match the first reference's thick painterly style, front slightly top-down viewpoint, single object centered, upper-left light. Replace its red molten color with cool slate grey and silver, ridged leathery mineral-like surface, a subtle soft steel highlight, no fire or lava. A single large grey scale from Nox, simple recognizable teardrop scale silhouette, crisp enough to read at 128x128. Square native output, transparent background, no text, no border, no frame, no scenery, no ground shadow. Keep a small transparent safety margin.",
+      "reference_images": [
+        "client/images/icon_drake_scale.png"
+      ],
+      "use_case": "inventory-icon"
+    },
+    {
+      "task": "041",
+      "id": "npc_dragon_knight",
+      "file": "client/images/npc_dragon_knight.png",
+      "generator": "image_gen",
+      "generation_date": "2026-10-19",
+      "approved": false,
+      "prompt": "Use case: identity-preserve. Asset type: full-body NPC sprite, portrait 1024x1536, true transparent alpha background. Use the provided image as the identity and costume reference for the middle-aged 竜騎士ガレス. Produce a second calm full-body standing portrait with the long spear angled slightly outward, preserving the SAME middle-aged face, brown tousled hair, short stubble, golden eyes, grey-silver dragon-scale armor, white cloak with oak-and-rising-sun embroidery, belt, boots and spear design. Keep the detailed semi-realistic anime painterly style. Show the whole body and entire spear, no scenery, no floor, no text, no watermark. Transparent background without a painted halo.",
+      "reference_images": [
+        "assets/candidates/041/npc_dragon_knight/candidate_02.png"
+      ],
+      "use_case": "identity-preserve",
+      "source_candidate": "assets/candidates/041/npc_dragon_knight/candidate_01.png",
+      "preview_only": true
+    },
+    {
+      "task": "041",
+      "id": "enemy_dragon_knight_mounted",
+      "file": "client/images/enemy_dragon_knight_mounted.png",
+      "generator": "image_gen",
+      "generation_date": "2026-10-19",
+      "approved": false,
+      "prompt": "Use case: identity-preserve, full-body transparent RPG battle sprite. First reference is the exact middle-aged dragon knight Gareth face and costume; second is a riding pose and grey wyvern Nox reference. Preserve the same man, brown tousled hair, short stubble, gold eyes, silver-grey dragon scale armor, white cloak with oak and rising sun emblem, and long spear. Generate a new candidate 01: Gareth riding Nox in a full-body three-quarter battle-ready standing pose. CRITICAL: zoom the whole subject far enough out that both wing tips, all feet, entire tail, spear tip, and cloak are fully visible, surrounded by a generous transparent margin on all sides. Use a square 1536x1536 composition. Keep the grey scaled flying wyvern and knight complete, no cropping. Semi-realistic painterly anime fantasy style matching reference one, detailed materials. No scenery, no floor, no vignette, no cast shadow outside the subject, no text, no watermark.",
+      "reference_images": [
+        "assets/candidates/041/npc_dragon_knight/candidate_01.png",
+        "assets/candidates/041/enemy_dragon_knight_mounted/candidate_02.png"
+      ],
+      "use_case": "identity-preserve",
+      "source_candidate": "assets/candidates/041/enemy_dragon_knight_mounted/candidate_01.png",
+      "preview_only": true
+    },
+    {
+      "task": "041",
+      "id": "enemy_dragon_knight",
+      "file": "client/images/enemy_dragon_knight.png",
+      "generator": "image_gen",
+      "generation_date": "2026-10-19",
+      "approved": false,
+      "prompt": "Use case: identity-preserve. Asset type: transparent full-body battle sprite, portrait 1024x1536. Input is the identity and costume reference of 竜騎士ガレス. Keep exactly the same middle-aged face, brown tousled hair, short stubble, grey-silver dragon-scale armor, white oak-and-rising-sun embroidered cloak, boots, belt and long spear. Change only his stance and expression for combat on foot: braced feet, holding the same long spear ready to strike, determined expression, eyes glowing gold. Same semi-realistic anime painterly fantasy rendering and rim light. Full body including feet and spear tip, comfortable transparent margins. No wyvern in this image, no background or platform, no text, no watermark. Candidate 01.",
+      "reference_images": [
+        "assets/candidates/041/npc_dragon_knight/candidate_01.png"
+      ],
+      "use_case": "identity-preserve",
+      "source_candidate": "assets/candidates/041/enemy_dragon_knight/candidate_01.png",
+      "preview_only": true
+    },
+    {
+      "task": "041",
+      "id": "icon_grey_dragon_scale",
+      "file": "client/images/icon_grey_dragon_scale.png",
+      "generator": "image_gen",
+      "generation_date": "2026-10-19",
+      "approved": false,
+      "prompt": "Create a fantasy RPG inventory icon for 灰竜の鱗, one grey wyvern scale. Match the first reference's thick painterly style, front slightly top-down viewpoint, single object centered, upper-left light. Replace its red molten color with cool slate grey and silver, ridged leathery mineral-like surface, a subtle soft steel highlight, no fire or lava. A single large grey scale from Nox, simple recognizable teardrop scale silhouette, crisp enough to read at 128x128. Square native output, transparent background, no text, no border, no frame, no scenery, no ground shadow. Keep a small transparent safety margin.",
+      "reference_images": [
+        "client/images/icon_drake_scale.png"
+      ],
+      "use_case": "inventory-icon",
+      "source_candidate": "assets/candidates/041/icon_grey_dragon_scale/source.png",
+      "preview_only": true
     }
   ],
   "selections": [
@@ -5434,6 +5588,53 @@
       "approved": true,
       "preview_only": true,
       "selection_reason": "设计负责人定稿：杖周围的水流符合水术士"
+    },
+    {
+      "task": "041",
+      "id": "npc_dragon_knight",
+      "file": "client/images/npc_dragon_knight.png",
+      "candidates": [
+        "assets/candidates/041/npc_dragon_knight/candidate_01.png",
+        "assets/candidates/041/npc_dragon_knight/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/041/npc_dragon_knight/candidate_01.png",
+      "approved": false,
+      "note": "按 spec 安装候选 01；TODO(design): 最终选图由设计负责人决定。"
+    },
+    {
+      "task": "041",
+      "id": "enemy_dragon_knight_mounted",
+      "file": "client/images/enemy_dragon_knight_mounted.png",
+      "candidates": [
+        "assets/candidates/041/enemy_dragon_knight_mounted/candidate_01.png",
+        "assets/candidates/041/enemy_dragon_knight_mounted/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/041/enemy_dragon_knight_mounted/candidate_01.png",
+      "approved": false,
+      "note": "按 spec 安装候选 01；TODO(design): 最终选图由设计负责人决定。"
+    },
+    {
+      "task": "041",
+      "id": "enemy_dragon_knight",
+      "file": "client/images/enemy_dragon_knight.png",
+      "candidates": [
+        "assets/candidates/041/enemy_dragon_knight/candidate_01.png",
+        "assets/candidates/041/enemy_dragon_knight/candidate_02.png"
+      ],
+      "selected_candidate": "assets/candidates/041/enemy_dragon_knight/candidate_01.png",
+      "approved": false,
+      "note": "按 spec 安装候选 01；TODO(design): 最终选图由设计负责人决定。"
+    },
+    {
+      "task": "041",
+      "id": "icon_grey_dragon_scale",
+      "file": "client/images/icon_grey_dragon_scale.png",
+      "candidates": [
+        "assets/candidates/041/icon_grey_dragon_scale/source.png"
+      ],
+      "selected_candidate": "assets/candidates/041/icon_grey_dragon_scale/source.png",
+      "approved": false,
+      "note": "按 spec 安装候选 01；TODO(design): 最终选图由设计负责人决定。"
     }
   ],
   "todo_design": [
@@ -6564,6 +6765,20 @@
       ],
       "prompts": "assets/candidates/042/generation.json",
       "sheet": "eval/reports/screens/042/dice-sheet.png"
+    },
+    "041": {
+      "task": "041",
+      "generator": "image_gen",
+      "generation_date": "2026-10-19",
+      "approved": false,
+      "candidate_count": 6,
+      "icon_count": 1,
+      "preview_count": 4,
+      "qa": {
+        "prompts": "assets/candidates/041/generation.json",
+        "sheet": "eval/reports/screens/041/dragon-knight-sheet.png",
+        "notes": "逐张检查；保留原生立绘与战斗图，图标按036缩为128×128。持枪、人脸、鳞甲细节及灰竜装饰待设计审定。"
+      }
     }
   },
   "tasks": [
@@ -6577,7 +6792,8 @@
     "035",
     "036",
     "038",
-    "042"
+    "042",
+    "041"
   ],
   "known_issues": [
     "020: 全量测试存在与美术无关的既有 benchmark 标签同步失败；未修改生成器或 benchmark。",

@@ -1,0 +1,16 @@
+{
+  "id": "041_npc_oaksdawn_chapel",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "oaksdawn_chapel",
+  "flags": {
+    "saved_gald": true,
+    "riku_rescued": true,
+    "mina_quest_done": true
+  },
+  "hp_delta": 0,
+  "inventory_add": [],
+  "inventory_remove": [],
+  "recent_messages": []
+}

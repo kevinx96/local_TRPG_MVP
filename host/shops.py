@@ -14,7 +14,7 @@ class ShopError(ValueError):
 def require_exploration(session: dict[str, Any]) -> None:
     if session.get("game_over"):
         raise ShopError("物語はここで終わりました。")
-    if session.get("combat") or session.get("combat_start_requested"):
+    if session.get("combat") or session.get("combat_start_requested") or session.get("pending_npc_attack"):
         raise ShopError("戦闘中です。")
 
 
@@ -34,10 +34,12 @@ def item_category(item: dict[str, Any]) -> str:
 
 def _shop(session: dict[str, Any], shop_id: str) -> dict[str, Any]:
     from .state import _session_requirement_passes
+    from .npc_combat import gone
 
     require_exploration(session)
     shop = next((s for s in session.get("scenario_pack", {}).get("shops", []) if s["id"] == shop_id), None)
-    if not shop or shop["location_id"] != current_location_id(session) or not _session_requirement_passes(shop.get("requirements"), session):
+    if (not shop or shop["location_id"] != current_location_id(session) or gone(session, shop["keeper_npc"])
+            or not _session_requirement_passes(shop.get("requirements"), session)):
         raise ShopError("この行動は現在選択できません。")
     return shop
 

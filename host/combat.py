@@ -806,6 +806,8 @@ def _resolve_attack(
     defense = _actor_defense(defender)
     if defender is not session.get('character'):
         defense = max(0, defense + sum(int(m.get('enemy_defense', 0)) for m in _encounter_modifiers(session, defender)))
+    if ability.get("ignores_defense"):
+        defense = 0
     damage = damage_after_defense(raw_damage, multiplier, defense, _combat_rules(session))
     if true_damage:
         # True damage always hits and ignores defense, resistances, guarding and damage modifiers.
@@ -968,6 +970,12 @@ def _finish_combat(session: dict[str, Any], status: str, summary: str) -> None:
         combat["pending_state_delta"] = defeat_delta
         if isinstance(defeat_delta.get("game_over"), dict) and (combat.get("encounter") or {}).get("encounter_class") != "scripted_loss":
             defeat_delta["game_over"]["combat_defeat"] = True
+    from .npc_combat import aftermath
+
+    npc_delta, npc_texts = aftermath(session, combat)
+    if npc_delta:
+        combat["pending_state_delta"] = _merge_combat_deltas(combat.get("pending_state_delta", {}), npc_delta)
+        result["npc_aftermath"] = npc_texts
     combat["result"] = result
     _log(session, "system", status, summary)
 
@@ -1295,6 +1303,8 @@ def _apply_undead_conversion(session: dict[str, Any], actor_id: str) -> None:
 
 
 def _encounter_for_session(session: dict[str, Any], pack: dict[str, Any]) -> dict[str, Any]:
+    if session.get("npc_encounter_override"):
+        return deepcopy(session["npc_encounter_override"])
     location_id = current_location_id(session)
     location = next((item for item in pack.get("locations", []) if isinstance(item, dict) and str(item.get("id") or "") == location_id), None)
     scene = find_scene(pack, current_scene_id(session))

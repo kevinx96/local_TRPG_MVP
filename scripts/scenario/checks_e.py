@@ -312,6 +312,10 @@ def apply(pack: dict[str, Any]) -> None:
             _add_condition(actions[target], kind, flag_name, reason)
     pack["meta"]["checks_e"] = True
     pack["meta"]["content_revision"] = max(pack["meta"].get("content_revision", ""), REVISION)
+    if pack["meta"].get("npc_combat_v041"):
+        from .npc_combat import apply as apply_npc_combat
+
+        apply_npc_combat(pack)
 
 
 def main() -> None:

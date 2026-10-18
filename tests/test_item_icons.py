@@ -24,7 +24,7 @@ class ItemIconTests(unittest.TestCase):
                     self.assertRegex(icon, r"^/static/images/icon_[a-z0-9_]+\.png$")
                     self.assertTrue((ROOT / "client" / icon.removeprefix("/static/")).is_file(), icon)
                     self.assertEqual(shared.setdefault(item["name"], icon), icon)
-        self.assertEqual(len(shared), 77)
+        self.assertEqual(len(shared), 78)
 
     def test_all_icons_are_128px_rgba_and_under_two_megabytes(self):
         icons = list((ROOT / "client/images").glob("icon_*.png"))

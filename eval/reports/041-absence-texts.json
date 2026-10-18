@@ -1,0 +1,2474 @@
+{
+  "dragon_rpg.json": [
+    {
+      "text": "「よし、少し待っていろ」ローベルトは鉄の剣を受け取ると、奥から見事な大剣を取り出し、氷の護符を柄に埋め込んだ。目も眩むような青い輝きが剣を包み込む。「完成だ。名付けて『氷鉄の大剣』。邪竜の鱗も容易く貫き、お前の魔力に応じた追撃も発生する至高の品だ」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/accept_sword_fusion/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ローベルトは君の鉄の剣をじっと見つめ、少し言葉を濁した。「お前の剣……氷の護符を埋め込むことはできるが、今の剣はボロボロすぎて耐えられん。俺が打った上質な剣に護符を融合させてやろう。護符の代金は要らん、その鉄の剣を置いていくならな」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/show_sword_to_blacksmith/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "鍛冶師ローベルトは手を止め、低い声で語り始めた。「通常の物理攻撃や炎は、あの邪竜イグニスには一切通用せん。だが、『氷の護符』の力を武器に纏わせれば、自身の攻撃を氷属性に変換できる。それなら奴にも傷を負わせられるはずだ」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/ask_blacksmith_weakness/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "王城の門前から石畳の大通りが延びる城下町。鍛冶屋の煙突からは煙が上がり、宿屋の看板が風に揺れ、魔法店の窓には青い灯りがともる。裏手には細い路地が口を開けている。邪竜の噂のせいか、行き交う人々の声はどこか低い。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/castle_town/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「この砦まで辿り着くとは、物好きな冒険者だ。わしはヴァルター、暁の守護団の団長をしておる。……邪竜を討ちに行くのか。ならば一つ忠告しておこう。竜の谷の炎が本当にあの紅竜だけのものか、よく確かめることだ」",
+      "npc_ids": [
+        "walter"
+      ],
+      "path": "/locations/oaksdawn_hq/actions/greet_walter/result_text",
+      "replacement": "ヴァルターはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "差し出しかけた代価を引き戻し、取引を拒絶する。怪しい商人の笑みが消え、黒衣の内側から死霊の気配が噴き出した。『契約を違えるなら、魂で払ってもらおう』小さな姿は膨れ上がり、亡霊主宰ゼボクが正体を現す。",
+      "npc_ids": [
+        "suspicious_merchant"
+      ],
+      "path": "/locations/alley_night/hybrid/prepared_turns/curse_bargain_betrayal/draft/gm_text",
+      "replacement": "怪しい商人はもうここにはいない。",
+      "replacements": {
+        "suspicious_merchant": "怪しい商人はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」",
+      "npc_ids": [
+        "elder",
+        "shopkeeper"
+      ],
+      "path": "/locations/village/hybrid/prepared_turns/visit_elder/draft/gm_text",
+      "replacement": "長老はもうここにはいない。 道具屋の店主はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。",
+        "shopkeeper": "道具屋の店主はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「リク！……よく無事で」長老は孫を抱きしめ、深く頭を下げた。「礼をさせてくれ。これは村に伝わる竜の秘薬じゃ。それと……この話も伝えておこう。昔、白き竜がこの村に霜を降らせたことがある、と」",
+      "npc_ids": [
+        "elder",
+        "riku"
+      ],
+      "path": "/locations/village/actions/return_riku/result_text",
+      "replacement": "長老はもうここにはいない。 リクはもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。",
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンは、幼い頃に自分の故郷も同じように滅ぼされたと語る。『これを起こした元凶を止めてくれ。太刀は俺が打ち直す』約束を受けると、彼は破片から鍛えた氷鉄の大剣を差し出した。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/ian_ice_katana_aftermath/hybrid/prepared_turns/ian_request_accepted/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "扉の鈴が鳴ると、棚の陰から金髪の少女サラが顔を出した。肩の上では小さな火コウモリ竜が、ぱちぱちと火の粉を散らしている。「いらっしゃいませ！今日は何をお探しですか？」",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/locations/item_shop/hybrid/prepared_turns/item_shop_opening/draft/gm_text",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンはため息をついた。「邪竜は過去に何度も倒されているが、そのたびに蘇る。国王にとっちゃ、討伐は定期的な仕事みたいなもんさ。言われた通りにしておくのが一番だ」",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/ask_ian_advice/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「決まりね」ロビンは弓を背負い直して立ち上がった。「近道を知ってるの。ついてきて」彼女の案内で森の獣道を抜けると、木々の間にゴブリンの砦が黒くそびえていた。",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/accept_robin_goblin_quest/result_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ローベルトは武器の柄へ氷の護符を嵌め込み、槌で魔力の流れを整えた。青白い光が刃を走る。「活性化は済んだ。これからは斬撃のたびに冷気が追い打ちをかける」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/hybrid/prepared_turns/activate_ice_charm_at_forge/draft/gm_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「私はリーゼ。暁の守護団の聖騎士です。……南の古戦場から、夜ごと弔いの鐘が聞こえるのです。死者がまだ眠れずにいる。いつか、確かめに行かなければ」",
+      "npc_ids": [
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/talk_liese/result_text",
+      "replacement": "リーゼはもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "エリオが杖を掲げると、峡谷の湧き水が渦を巻いて巣穴へ流れ込んだ。地中で何かが苦しげにのたうち、地鳴りが遠ざかっていく。「今のうちだ、行こう！」",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/gorge_worm_lair/actions/elio_flood_worm/result_text",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ローベルトは氷の結晶を炉の脇で慎重に削り、銀の枠にはめ込んだ。「ほらよ。冷気が逃げねえように仕上げておいた」手渡された護符は、ひやりと冷たい。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/forge_ice_charm/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。長老が人々を励まし、行商人の荷車の周りには小さな人だかりができている。",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/maps/burning_village/nodes/V8/description",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "サラが飼っている小さな火竜。毎ラウンド開始時に敵へ2d3の火属性ダメージを与え、プレイヤーのHPを3回復する（虹晶を食べると6回復）。",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/companions/fire_bat_dragon/description",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンは笑って頷いた。「同行してもいいわよ。でもその前に、私の手伝いをしてくれない？王国商人の荷物が、闇の森のゴブリンに奪われたの」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/invite_robin_success/draft/gm_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「やあ。僕はエリオ、流れの水術士さ。東の峡谷の地鳴りを調べに来たんだけど、道が塞がれていてね。……君も峠を越えるつもりかい？」",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/oaksdawn_inn/actions/talk_elio/result_text",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ヴァルターは羽根ペンを走らせ、封蝋を押した。「礼拝堂のリーゼに見せるといい。あの子は古戦場の鐘のことで、ずっと胸を痛めておる」",
+      "npc_ids": [
+        "walter",
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_hq/actions/request_guardian_letter/result_text",
+      "replacement": "ヴァルターはもうここにはいない。 リーゼはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。",
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ブリギッテは聖銀を炉にくべ、打ち延ばした刃に細い光の紋を一本ずつ刻んでいった。「ほらよ。死者相手なら、こいつがいちばん効く」",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "path": "/locations/oaksdawn_workshop/actions/forge_dawn_weapon/result_text",
+      "replacement": "ブリギッテはもうここにはいない。",
+      "replacements": {
+        "brigitte": "ブリギッテはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンは遠い目をして、かつて麓の村で語られていた伝説の「氷の太刀」の話をしてくれた。「詳しいことは村の長老に聞くといい」",
+      "npc_ids": [
+        "ian",
+        "elder"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/ask_ian_legend_success/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。 長老はもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。",
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "エリオは水差しの水を光にかざし、目を輝かせた。「精霊の泉の水だ……！ こんなものをもらったら、断れないよ。一緒に行こう」",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/oaksdawn_inn/actions/recruit_elio_water/result_text",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが峠の噂話をする隅で、青い外套の青年が水差しの水面をじっと見つめている。",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/oaksdawn_inn/description_variants/0/text",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "司祭は徽章の錆を指でぬぐい、刻まれた名前を一つずつ読み上げた。「……これで、皆の家族に知らせを出せます。光のご加護を」",
+      "npc_ids": [
+        "oaksdawn_priest"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/deliver_nameless_soldiers/result_text",
+      "replacement": "老司祭はもうここにはいない。",
+      "replacements": {
+        "oaksdawn_priest": "老司祭はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「……それは。どこでこれを」ローベルトは長い間ハンマーを握りしめていた。「礼だ。好きな防具を一つ、仕立て直してやる」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/return_robert_hammer/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ミーナは深呼吸して、ぽつりぽつりと話し始めた。「あの水晶の木、近づくと共鳴するの。でも、じっとしてれば襲ってこない」",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/actions/calm_mina/result_texts/success",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "火コウモリ竜はあなたの匂いを嗅ぐと肩へ飛び乗った。サラは嬉しそうに笑い、「ちゃんと連れて帰ってね」と送り出した。",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/locations/item_shop/hybrid/prepared_turns/fire_bat_borrow_success/draft/gm_text",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンは声を落とした。「王城の路地裏には、夜だけ現れる黒い商人がいるそうよ。昼に行っても何も見つからないわ」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/ask_robin/children/ask_robin_rumor/result_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/festival_town/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "祭壇に聖水を注ぐと、リーゼは目を見開いた。「死者を弔う心をお持ちなのですね。……ご一緒させてください」",
+      "npc_ids": [
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/recruit_liese_water/result_text",
+      "replacement": "リーゼはもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "長老たちに見送られて村を出る。山道を登るにつれて空気は熱を帯び、やがて硫黄の霧が谷の入口を覆っていた。",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/locations/village/actions/go_dragon_valley/result_text",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "リーゼは推薦状の封蝋を確かめ、静かに頷いた。「団長がお認めになったのなら、私もこの剣を預けましょう」",
+      "npc_ids": [
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/recruit_liese_letter/result_text",
+      "replacement": "リーゼはもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "リーゼは胸に手を当てて、深く頭を下げた。「団長にも伝えておきます。……これは、守護団からのお礼です」",
+      "npc_ids": [
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/report_battlefield_bell_chapel/result_text",
+      "replacement": "リーゼはもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンが細い針金を差し込むと、錠はあっさりと外れた。「将軍様の屋敷ってのは、案外ちょろいもんだね」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/mansion_garden/actions/robin_picks_lock/result_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "火コウモリ竜は羽を逆立て、サラの背後へ隠れた。どうやら今は、あなたをあまり気に入っていないようだ。",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/locations/item_shop/hybrid/prepared_turns/fire_bat_borrow_failure/draft/gm_text",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「すぐ戻る。ここで待っていてくれ」と告げると、ミーナは小さく頷き、湯気の向こうで膝を抱え直した。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/actions/leave_mina_wait/result_text",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンの頼みを断って村を離れる。その先の街道で、赤い炎をまとった骸骨の魔法使いが待ち受けていた。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/ian_ice_katana_aftermath/hybrid/prepared_turns/ian_request_refused_before/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ブリギッテは石を叩いて音を確かめ、にやりと笑った。「上等だ。礼に、あんたの鎧を打ち直してやるよ」",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "path": "/locations/oaksdawn_workshop/actions/deliver_baked_lava_stone/result_text",
+      "replacement": "ブリギッテはもうここにはいない。",
+      "replacements": {
+        "brigitte": "ブリギッテはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「一緒に帰ろう」と手を差し出すと、ミーナは涙を拭って頷き、ローブの裾を握りしめて立ち上がった。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/actions/escort_mina/result_text",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "重い木箱を棚の上まで運び終えると、サラが小さな袋を差し出した。「ありがとう！ これ、お駄賃！」",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/locations/item_shop/actions/help_sarah_shelves/result_texts/success",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが、干し肉をかじりながら峠の噂話をしている。",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/oaksdawn_inn/description",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。",
+      "npc_ids": [
+        "liese",
+        "oaksdawn_priest"
+      ],
+      "path": "/locations/oaksdawn_chapel/description_variants/0/text",
+      "replacement": "リーゼはもうここにはいない。 老司祭はもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。",
+        "oaksdawn_priest": "老司祭はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "サラは毛皮を抱きしめて、ぱっと笑った。「ありがとう！ 母さん、きっと喜ぶよ。これ、お礼！」",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/locations/item_shop/actions/deliver_sarah_scarf/result_text",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "地図と剣が並ぶ質素な広間。白髪の老騎士――守護団長ヴァルターが、卓上の地図から顔を上げた。",
+      "npc_ids": [
+        "walter"
+      ],
+      "path": "/maps/oaksdawn/nodes/G2/description",
+      "replacement": "ヴァルターはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/forest_wolves/obstacles/forest_wolves/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "鉄くずの底から、まだ使えそうな毒矢が一本出てきた。ローベルトは「持っていけ」とだけ言った。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/dig_forge_scrap/result_texts/success",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "湯気の立ち込める小さな温泉がある。岩の隙間に、ローブ姿の少女が膝を抱えて座り込んでいる。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「窓のところまで来られるか！」 泣き声がやみ、二階の窓辺へ這ってくる小さな影が見えた。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/call_to_child/result_texts/success",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンは辛い記憶に触れたのか、顔をしかめて口を閉ざした。これ以上は聞き出せそうにない。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/ask_ian_legend_fail/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "炉の熱と槌の音が響く工房。分厚い前掛けの女鍛冶師が、白銀の剣に光の紋を刻んでいる。",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "path": "/locations/oaksdawn_workshop/description",
+      "replacement": "ブリギッテはもうここにはいない。",
+      "replacements": {
+        "brigitte": "ブリギッテはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "高い窓から朝の光が差し込む礼拝堂。祭壇の前には、死者を弔う白い花が供えられている。",
+      "npc_ids": [
+        "liese",
+        "oaksdawn_priest"
+      ],
+      "path": "/locations/oaksdawn_chapel/description",
+      "replacement": "リーゼはもうここにはいない。 老司祭はもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。",
+        "oaksdawn_priest": "老司祭はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "崩れかけた民家の奥から、子どもの泣き声が聞こえる。入口は燃える梁で塞がれている。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/entry_text",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "木箱を取り落としてしまった。サラは「大丈夫、割れ物じゃないから」と笑ってくれた。",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/locations/item_shop/actions/help_sarah_shelves/result_texts/failure",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「助かった！命の恩人だ。俺はガルド、村でも商売してる。見かけたら寄ってくれ」",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/forest_wolves/combat/result_texts/victory",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「参ったね、あんたには敵わない」 ガルドは笑って、薬草を一束放ってよこした。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/castle_town/actions/ask_gald_extra/result_texts/success",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ヴァルターは長いこと黙っていた。「十年、あの鐘の音を待っておった。礼を言う」",
+      "npc_ids": [
+        "walter"
+      ],
+      "path": "/locations/oaksdawn_hq/actions/report_battlefield_bell_hq/result_text",
+      "replacement": "ヴァルターはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「筋は悪くないね」 ロビンは笑って、矢筒から毒矢を二本抜いて渡してくれた。",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/robin_archery/result_texts/success",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "戦いが終わると迷子のゴブリンが現れ、自分の箱を見つけて抱き寄せようとする。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/locations/goblin_fort_chest_choice/hybrid/summary",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "代価が渡されると、怪しい商人は満足そうに身を引き、夜の闇へ溶けていった。",
+      "npc_ids": [
+        "suspicious_merchant"
+      ],
+      "path": "/locations/alley_night/hybrid/prepared_turns/curse_paid_thief/draft/gm_text",
+      "replacement": "怪しい商人はもうここにはいない。",
+      "replacements": {
+        "suspicious_merchant": "怪しい商人はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "光を通すと淡く輝く銀。ブリギッテの工房で、光の紋を刻む武器の材料になる。",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "path": "/items/holy_silver/description",
+      "replacement": "ブリギッテはもうここにはいない。",
+      "replacements": {
+        "brigitte": "ブリギッテはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "街灯の届かない場所に、黒いローブの小柄で毛むくじゃらな商人が立っている。",
+      "npc_ids": [
+        "suspicious_merchant"
+      ],
+      "path": "/locations/alley_night/hybrid/summary",
+      "replacement": "怪しい商人はもうここにはいない。",
+      "replacements": {
+        "suspicious_merchant": "怪しい商人はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "スライム、迷子のゴブリン、精霊の泉、四階建てのゴブリン砦を巡る分岐章。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/scenes/dark_forest/description",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "城下町の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/maps/royal_return/nodes/forge/description",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "迷子のゴブリンが、別の一族に盗まれた箱を取り戻してほしいと頼んでいる。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/maps/forest/nodes/F2/description",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "店主イアンが現れ、凍死するほどの力が残る破片に触れないよう制止した。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/maps/burning_village/nodes/V6/description",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "冒険者や旅人が休息を取るための宿屋。暖かい食事と清潔な寝台がある。",
+      "npc_ids": [
+        "ian",
+        "robin"
+      ],
+      "path": "/locations/inn/description",
+      "replacement": "イアンはもうここにはいない。 ロビンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。",
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "梁を蹴り砕いて飛び込むと、煙の中で小さな男の子がうずくまっていた。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/break_burning_beam/result_texts/success",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「弟子のミーナが戻らない。泉の封印の話をした翌日からだ……」",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/ask_mina_missing/result_text",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンは肩をすくめた。「悪いけど、今は忙しいの。また今度ね」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/invite_robin_fail/draft/gm_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "壁をよじ登って窓から入り込み、男の子を抱えて外へ飛び降りた。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/climb_to_window/result_texts/success",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "宿屋の壁の掲示板。依頼や手配書が何枚も重ねて貼られている。",
+      "npc_ids": [
+        "ian",
+        "robin"
+      ],
+      "path": "/locations/inn/objects/inn_notice_board/description",
+      "replacement": "イアンはもうここにはいない。 ロビンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。",
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンの頼みを断り、燃える村を後にして竜の谷へ向かった。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/ian_ice_katana_aftermath/hybrid/prepared_turns/ian_request_refused_after/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "冷気を放つと炎が一瞬で退き、その隙に男の子を連れ出した。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/douse_with_ice/result_text",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "刃の色が敵に応じて移ろう剣。相手の弱点を自ら探り当てる。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/forge_prism_weapon/effects/1/branch/then/0/branch/else/0/add_item/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "十歳ほどの金髪の少女サラと、小さな火コウモリ竜がいる。",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/maps/royal_return/nodes/item_shop/description",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "弦が跳ねて頬を打った。ロビンが肩を震わせて笑っている。",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/robin_archery/result_texts/failure",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "青いローブの銀髪の魔法使いが、杖を背に店番をしている。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/hybrid/summary",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンは砕けた刃を見つめたまま、何も言わなかった。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/ian_ice_katana_aftermath/actions/read_ian_grief/result_texts/failure",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "怪しい商人の姿は消え、夜風だけが路地を抜けていく。",
+      "npc_ids": [
+        "suspicious_merchant"
+      ],
+      "path": "/locations/alley_after/hybrid/summary",
+      "replacement": "怪しい商人はもうここにはいない。",
+      "replacements": {
+        "suspicious_merchant": "怪しい商人はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/items/robert_hammer/description",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ミーナは膝に顔を埋めたまま、泣き止まなかった。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/actions/calm_mina/result_texts/failure",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "祈りの光を七色に分ける杖。癒やしの力も高める。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/forge_prism_weapon/effects/2/branch/then/0/branch/else/0/add_item/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "箱を奪われまいと、迷子のゴブリンが短剣を抜く。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/locations/goblin_fort_chest_fight/hybrid/summary",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "主を失った箱は、金貨の山の陰に転がっていた。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/locations/goblin_fort_chest_choice/description_variants/0/text",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "刺すたびに色を変える短剣。急所を逃さない。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/forge_prism_weapon/effects/4/branch/then/0/branch/else/0/add_item/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "大通りに掲げられた、王国と諸侯の祝宴の旗。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/festival_town/objects/parade_banners/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "暁の守護団長ヴァルターの署名入りの推薦状。",
+      "npc_ids": [
+        "walter"
+      ],
+      "path": "/items/guardian_letter/description",
+      "replacement": "ヴァルターはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "長老は咳き込み、話を途中でやめてしまった。",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/locations/village/actions/ask_elder_legend/result_texts/failure",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "泣き声を背に、燃える通りを駆け抜けた。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/leave_burning_house/result_text",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "長老は焼け跡を見つめ、黙り込んでいる",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/locations/village/entry_text",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "魔力を敵の弱点の属性へ変える宝珠。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/forge_prism_weapon/effects/3/branch/then/0/branch/else/0/add_item/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "十字路に立つ、傾いた古い道標。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/locations/lost_goblin_crossroads/objects/crossroads_signpost/description",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンが暗号を教えてくれた。",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/goblin_fort_third_gate/entry_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "広場の古い石の井戸。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/castle_town/objects/town_well/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "温泉の壁の苔",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/objects/moss_on_wall/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "行商人の荷車",
+      "npc_ids": [
+        "elder",
+        "gald",
+        "riku",
+        "shopkeeper"
+      ],
+      "path": "/locations/village/objects/gald_cart/description",
+      "replacement": "長老はもうここにはいない。 ガルドはもうここにはいない。 リクはもうここにはいない。 道具屋の店主はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。",
+        "gald": "ガルドはもうここにはいない。",
+        "riku": "リクはもうここにはいない。",
+        "shopkeeper": "道具屋の店主はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    }
+  ],
+  "dragon_rpg_hybrid.json": [
+    {
+      "text": "「よし、少し待っていろ」ローベルトは鉄の剣を受け取ると、奥から見事な大剣を取り出し、氷の護符を柄に埋め込んだ。目も眩むような青い輝きが剣を包み込む。「完成だ。名付けて『氷鉄の大剣』。邪竜の鱗も容易く貫き、お前の魔力に応じた追撃も発生する至高の品だ」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/accept_sword_fusion/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "宿屋の扉を開けると、温かい食事の匂いと和やかな喧噪が包み込んできた。カウンターの奥では店主のイアンがグラスを磨いており、隅の席では闇の森を拠点とする女レンジャーのロビンがくつろいでいる。「いらっしゃい、休んでいくかい？」とイアンが声をかけてきた。",
+      "npc_ids": [
+        "ian",
+        "robin"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/inn_opening/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。 ロビンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。",
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ローベルトは君の鉄の剣をじっと見つめ、少し言葉を濁した。「お前の剣……氷の護符を埋め込むことはできるが、今の剣はボロボロすぎて耐えられん。俺が打った上質な剣に護符を融合させてやろう。護符の代金は要らん、その鉄の剣を置いていくならな」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/show_sword_to_blacksmith/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "鍛冶師ローベルトは手を止め、低い声で語り始めた。「通常の物理攻撃や炎は、あの邪竜イグニスには一切通用せん。だが、『氷の護符』の力を武器に纏わせれば、自身の攻撃を氷属性に変換できる。それなら奴にも傷を負わせられるはずだ」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/ask_blacksmith_weakness/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "王城の門前から石畳の大通りが延びる城下町。鍛冶屋の煙突からは煙が上がり、宿屋の看板が風に揺れ、魔法店の窓には青い灯りがともる。裏手には細い路地が口を開けている。邪竜の噂のせいか、行き交う人々の声はどこか低い。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/castle_town/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「この砦まで辿り着くとは、物好きな冒険者だ。わしはヴァルター、暁の守護団の団長をしておる。……邪竜を討ちに行くのか。ならば一つ忠告しておこう。竜の谷の炎が本当にあの紅竜だけのものか、よく確かめることだ」",
+      "npc_ids": [
+        "walter"
+      ],
+      "path": "/locations/oaksdawn_hq/actions/greet_walter/result_text",
+      "replacement": "ヴァルターはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "差し出しかけた代価を引き戻し、取引を拒絶する。怪しい商人の笑みが消え、黒衣の内側から死霊の気配が噴き出した。『契約を違えるなら、魂で払ってもらおう』小さな姿は膨れ上がり、亡霊主宰ゼボクが正体を現す。",
+      "npc_ids": [
+        "suspicious_merchant"
+      ],
+      "path": "/locations/alley_night/hybrid/prepared_turns/curse_bargain_betrayal/draft/gm_text",
+      "replacement": "怪しい商人はもうここにはいない。",
+      "replacements": {
+        "suspicious_merchant": "怪しい商人はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "城下町の小さな鍛冶屋に足を踏み入れると、熱気と鉄を打つ音があなたを出迎えた。無骨だが腕の立つ鍛冶師ローベルトが、汗を拭いながらこちらを見ている。「武器の点検か？それとも新しい武具が要るのか？」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/hybrid/prepared_turns/forge_opening/draft/gm_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」",
+      "npc_ids": [
+        "elder",
+        "shopkeeper"
+      ],
+      "path": "/locations/village/hybrid/prepared_turns/visit_elder/draft/gm_text",
+      "replacement": "長老はもうここにはいない。 道具屋の店主はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。",
+        "shopkeeper": "道具屋の店主はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「リク！……よく無事で」長老は孫を抱きしめ、深く頭を下げた。「礼をさせてくれ。これは村に伝わる竜の秘薬じゃ。それと……この話も伝えておこう。昔、白き竜がこの村に霜を降らせたことがある、と」",
+      "npc_ids": [
+        "elder",
+        "riku"
+      ],
+      "path": "/locations/village/actions/return_riku/result_text",
+      "replacement": "長老はもうここにはいない。 リクはもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。",
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンは、幼い頃に自分の故郷も同じように滅ぼされたと語る。『これを起こした元凶を止めてくれ。太刀は俺が打ち直す』約束を受けると、彼は破片から鍛えた氷鉄の大剣を差し出した。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/ian_ice_katana_aftermath/hybrid/prepared_turns/ian_request_accepted/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "扉の鈴が鳴ると、棚の陰から金髪の少女サラが顔を出した。肩の上では小さな火コウモリ竜が、ぱちぱちと火の粉を散らしている。「いらっしゃいませ！今日は何をお探しですか？」",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/locations/item_shop/hybrid/prepared_turns/item_shop_opening/draft/gm_text",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンはため息をついた。「邪竜は過去に何度も倒されているが、そのたびに蘇る。国王にとっちゃ、討伐は定期的な仕事みたいなもんさ。言われた通りにしておくのが一番だ」",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/ask_ian_advice/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「決まりね」ロビンは弓を背負い直して立ち上がった。「近道を知ってるの。ついてきて」彼女の案内で森の獣道を抜けると、木々の間にゴブリンの砦が黒くそびえていた。",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/accept_robin_goblin_quest/result_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ローベルトは武器の柄へ氷の護符を嵌め込み、槌で魔力の流れを整えた。青白い光が刃を走る。「活性化は済んだ。これからは斬撃のたびに冷気が追い打ちをかける」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/hybrid/prepared_turns/activate_ice_charm_at_forge/draft/gm_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「私はリーゼ。暁の守護団の聖騎士です。……南の古戦場から、夜ごと弔いの鐘が聞こえるのです。死者がまだ眠れずにいる。いつか、確かめに行かなければ」",
+      "npc_ids": [
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/talk_liese/result_text",
+      "replacement": "リーゼはもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "エリオが杖を掲げると、峡谷の湧き水が渦を巻いて巣穴へ流れ込んだ。地中で何かが苦しげにのたうち、地鳴りが遠ざかっていく。「今のうちだ、行こう！」",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/gorge_worm_lair/actions/elio_flood_worm/result_text",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ローベルトは氷の結晶を炉の脇で慎重に削り、銀の枠にはめ込んだ。「ほらよ。冷気が逃げねえように仕上げておいた」手渡された護符は、ひやりと冷たい。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/forge_ice_charm/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。長老が人々を励まし、行商人の荷車の周りには小さな人だかりができている。",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/maps/burning_village/nodes/V8/description",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "サラが飼っている小さな火竜。毎ラウンド開始時に敵へ2d3の火属性ダメージを与え、プレイヤーのHPを3回復する（虹晶を食べると6回復）。",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/companions/fire_bat_dragon/description",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンは笑って頷いた。「同行してもいいわよ。でもその前に、私の手伝いをしてくれない？王国商人の荷物が、闇の森のゴブリンに奪われたの」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/invite_robin_success/draft/gm_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「やあ。僕はエリオ、流れの水術士さ。東の峡谷の地鳴りを調べに来たんだけど、道が塞がれていてね。……君も峠を越えるつもりかい？」",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/oaksdawn_inn/actions/talk_elio/result_text",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ヴァルターは羽根ペンを走らせ、封蝋を押した。「礼拝堂のリーゼに見せるといい。あの子は古戦場の鐘のことで、ずっと胸を痛めておる」",
+      "npc_ids": [
+        "walter",
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_hq/actions/request_guardian_letter/result_text",
+      "replacement": "ヴァルターはもうここにはいない。 リーゼはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。",
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ブリギッテは聖銀を炉にくべ、打ち延ばした刃に細い光の紋を一本ずつ刻んでいった。「ほらよ。死者相手なら、こいつがいちばん効く」",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "path": "/locations/oaksdawn_workshop/actions/forge_dawn_weapon/result_text",
+      "replacement": "ブリギッテはもうここにはいない。",
+      "replacements": {
+        "brigitte": "ブリギッテはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンは遠い目をして、かつて麓の村で語られていた伝説の「氷の太刀」の話をしてくれた。「詳しいことは村の長老に聞くといい」",
+      "npc_ids": [
+        "ian",
+        "elder"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/ask_ian_legend_success/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。 長老はもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。",
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "エリオは水差しの水を光にかざし、目を輝かせた。「精霊の泉の水だ……！ こんなものをもらったら、断れないよ。一緒に行こう」",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/oaksdawn_inn/actions/recruit_elio_water/result_text",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが峠の噂話をする隅で、青い外套の青年が水差しの水面をじっと見つめている。",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/oaksdawn_inn/description_variants/0/text",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "司祭は徽章の錆を指でぬぐい、刻まれた名前を一つずつ読み上げた。「……これで、皆の家族に知らせを出せます。光のご加護を」",
+      "npc_ids": [
+        "oaksdawn_priest"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/deliver_nameless_soldiers/result_text",
+      "replacement": "老司祭はもうここにはいない。",
+      "replacements": {
+        "oaksdawn_priest": "老司祭はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「……それは。どこでこれを」ローベルトは長い間ハンマーを握りしめていた。「礼だ。好きな防具を一つ、仕立て直してやる」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/return_robert_hammer/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ミーナは深呼吸して、ぽつりぽつりと話し始めた。「あの水晶の木、近づくと共鳴するの。でも、じっとしてれば襲ってこない」",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/actions/calm_mina/result_texts/success",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "火コウモリ竜はあなたの匂いを嗅ぐと肩へ飛び乗った。サラは嬉しそうに笑い、「ちゃんと連れて帰ってね」と送り出した。",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/locations/item_shop/hybrid/prepared_turns/fire_bat_borrow_success/draft/gm_text",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンは声を落とした。「王城の路地裏には、夜だけ現れる黒い商人がいるそうよ。昼に行っても何も見つからないわ」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/ask_robin/children/ask_robin_rumor/result_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/festival_town/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "祭壇に聖水を注ぐと、リーゼは目を見開いた。「死者を弔う心をお持ちなのですね。……ご一緒させてください」",
+      "npc_ids": [
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/recruit_liese_water/result_text",
+      "replacement": "リーゼはもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "長老たちに見送られて村を出る。山道を登るにつれて空気は熱を帯び、やがて硫黄の霧が谷の入口を覆っていた。",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/locations/village/actions/go_dragon_valley/result_text",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "リーゼは推薦状の封蝋を確かめ、静かに頷いた。「団長がお認めになったのなら、私もこの剣を預けましょう」",
+      "npc_ids": [
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/recruit_liese_letter/result_text",
+      "replacement": "リーゼはもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "リーゼは胸に手を当てて、深く頭を下げた。「団長にも伝えておきます。……これは、守護団からのお礼です」",
+      "npc_ids": [
+        "liese"
+      ],
+      "path": "/locations/oaksdawn_chapel/actions/report_battlefield_bell_chapel/result_text",
+      "replacement": "リーゼはもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンが細い針金を差し込むと、錠はあっさりと外れた。「将軍様の屋敷ってのは、案外ちょろいもんだね」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/mansion_garden/actions/robin_picks_lock/result_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "火コウモリ竜は羽を逆立て、サラの背後へ隠れた。どうやら今は、あなたをあまり気に入っていないようだ。",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/locations/item_shop/hybrid/prepared_turns/fire_bat_borrow_failure/draft/gm_text",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「すぐ戻る。ここで待っていてくれ」と告げると、ミーナは小さく頷き、湯気の向こうで膝を抱え直した。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/actions/leave_mina_wait/result_text",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンの頼みを断って村を離れる。その先の街道で、赤い炎をまとった骸骨の魔法使いが待ち受けていた。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/ian_ice_katana_aftermath/hybrid/prepared_turns/ian_request_refused_before/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ブリギッテは石を叩いて音を確かめ、にやりと笑った。「上等だ。礼に、あんたの鎧を打ち直してやるよ」",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "path": "/locations/oaksdawn_workshop/actions/deliver_baked_lava_stone/result_text",
+      "replacement": "ブリギッテはもうここにはいない。",
+      "replacements": {
+        "brigitte": "ブリギッテはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「一緒に帰ろう」と手を差し出すと、ミーナは涙を拭って頷き、ローブの裾を握りしめて立ち上がった。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/actions/escort_mina/result_text",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "重い木箱を棚の上まで運び終えると、サラが小さな袋を差し出した。「ありがとう！ これ、お駄賃！」",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/locations/item_shop/actions/help_sarah_shelves/result_texts/success",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが、干し肉をかじりながら峠の噂話をしている。",
+      "npc_ids": [
+        "elio"
+      ],
+      "path": "/locations/oaksdawn_inn/description",
+      "replacement": "エリオはもうここにはいない。",
+      "replacements": {
+        "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。",
+      "npc_ids": [
+        "liese",
+        "oaksdawn_priest"
+      ],
+      "path": "/locations/oaksdawn_chapel/description_variants/0/text",
+      "replacement": "リーゼはもうここにはいない。 老司祭はもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。",
+        "oaksdawn_priest": "老司祭はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "サラは毛皮を抱きしめて、ぱっと笑った。「ありがとう！ 母さん、きっと喜ぶよ。これ、お礼！」",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/locations/item_shop/actions/deliver_sarah_scarf/result_text",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "地図と剣が並ぶ質素な広間。白髪の老騎士――守護団長ヴァルターが、卓上の地図から顔を上げた。",
+      "npc_ids": [
+        "walter"
+      ],
+      "path": "/maps/oaksdawn/nodes/G2/description",
+      "replacement": "ヴァルターはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/forest_wolves/obstacles/forest_wolves/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "鉄くずの底から、まだ使えそうな毒矢が一本出てきた。ローベルトは「持っていけ」とだけ言った。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/dig_forge_scrap/result_texts/success",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "湯気の立ち込める小さな温泉がある。岩の隙間に、ローブ姿の少女が膝を抱えて座り込んでいる。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「窓のところまで来られるか！」 泣き声がやみ、二階の窓辺へ這ってくる小さな影が見えた。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/call_to_child/result_texts/success",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンは辛い記憶に触れたのか、顔をしかめて口を閉ざした。これ以上は聞き出せそうにない。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/ask_ian_legend_fail/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "炉の熱と槌の音が響く工房。分厚い前掛けの女鍛冶師が、白銀の剣に光の紋を刻んでいる。",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "path": "/locations/oaksdawn_workshop/description",
+      "replacement": "ブリギッテはもうここにはいない。",
+      "replacements": {
+        "brigitte": "ブリギッテはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "高い窓から朝の光が差し込む礼拝堂。祭壇の前には、死者を弔う白い花が供えられている。",
+      "npc_ids": [
+        "liese",
+        "oaksdawn_priest"
+      ],
+      "path": "/locations/oaksdawn_chapel/description",
+      "replacement": "リーゼはもうここにはいない。 老司祭はもうここにはいない。",
+      "replacements": {
+        "liese": "リーゼはもうここにはいない。",
+        "oaksdawn_priest": "老司祭はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "崩れかけた民家の奥から、子どもの泣き声が聞こえる。入口は燃える梁で塞がれている。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/entry_text",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "木箱を取り落としてしまった。サラは「大丈夫、割れ物じゃないから」と笑ってくれた。",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/locations/item_shop/actions/help_sarah_shelves/result_texts/failure",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "第3章「麓の村」における、情報収集、道具屋での護符入手、竜の谷への出発をカバー。",
+      "npc_ids": [
+        "elder",
+        "gald",
+        "riku",
+        "shopkeeper"
+      ],
+      "path": "/locations/village/hybrid/summary",
+      "replacement": "長老はもうここにはいない。 ガルドはもうここにはいない。 リクはもうここにはいない。 道具屋の店主はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。",
+        "gald": "ガルドはもうここにはいない。",
+        "riku": "リクはもうここにはいない。",
+        "shopkeeper": "道具屋の店主はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「助かった！命の恩人だ。俺はガルド、村でも商売してる。見かけたら寄ってくれ」",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/forest_wolves/combat/result_texts/victory",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「参ったね、あんたには敵わない」 ガルドは笑って、薬草を一束放ってよこした。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/castle_town/actions/ask_gald_extra/result_texts/success",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ヴァルターは長いこと黙っていた。「十年、あの鐘の音を待っておった。礼を言う」",
+      "npc_ids": [
+        "walter"
+      ],
+      "path": "/locations/oaksdawn_hq/actions/report_battlefield_bell_hq/result_text",
+      "replacement": "ヴァルターはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「筋は悪くないね」 ロビンは笑って、矢筒から毒矢を二本抜いて渡してくれた。",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/robin_archery/result_texts/success",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "戦いが終わると迷子のゴブリンが現れ、自分の箱を見つけて抱き寄せようとする。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/locations/goblin_fort_chest_choice/hybrid/summary",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "代価が渡されると、怪しい商人は満足そうに身を引き、夜の闇へ溶けていった。",
+      "npc_ids": [
+        "suspicious_merchant"
+      ],
+      "path": "/locations/alley_night/hybrid/prepared_turns/curse_paid_thief/draft/gm_text",
+      "replacement": "怪しい商人はもうここにはいない。",
+      "replacements": {
+        "suspicious_merchant": "怪しい商人はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "光を通すと淡く輝く銀。ブリギッテの工房で、光の紋を刻む武器の材料になる。",
+      "npc_ids": [
+        "brigitte"
+      ],
+      "path": "/items/holy_silver/description",
+      "replacement": "ブリギッテはもうここにはいない。",
+      "replacements": {
+        "brigitte": "ブリギッテはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "街灯の届かない場所に、黒いローブの小柄で毛むくじゃらな商人が立っている。",
+      "npc_ids": [
+        "suspicious_merchant"
+      ],
+      "path": "/locations/alley_night/hybrid/summary",
+      "replacement": "怪しい商人はもうここにはいない。",
+      "replacements": {
+        "suspicious_merchant": "怪しい商人はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "スライム、迷子のゴブリン、精霊の泉、四階建てのゴブリン砦を巡る分岐章。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/scenes/dark_forest/description",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "城下町の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/maps/royal_return/nodes/forge/description",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "迷子のゴブリンが、別の一族に盗まれた箱を取り戻してほしいと頼んでいる。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/maps/forest/nodes/F2/description",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "店主イアンが現れ、凍死するほどの力が残る破片に触れないよう制止した。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/maps/burning_village/nodes/V6/description",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "冒険者や旅人が休息を取るための宿屋。暖かい食事と清潔な寝台がある。",
+      "npc_ids": [
+        "ian",
+        "robin"
+      ],
+      "path": "/locations/inn/description",
+      "replacement": "イアンはもうここにはいない。 ロビンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。",
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "梁を蹴り砕いて飛び込むと、煙の中で小さな男の子がうずくまっていた。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/break_burning_beam/result_texts/success",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "「弟子のミーナが戻らない。泉の封印の話をした翌日からだ……」",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/ask_mina_missing/result_text",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンは肩をすくめた。「悪いけど、今は忙しいの。また今度ね」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/hybrid/prepared_turns/invite_robin_fail/draft/gm_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "壁をよじ登って窓から入り込み、男の子を抱えて外へ飛び降りた。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/climb_to_window/result_texts/success",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "宿屋の壁の掲示板。依頼や手配書が何枚も重ねて貼られている。",
+      "npc_ids": [
+        "ian",
+        "robin"
+      ],
+      "path": "/locations/inn/objects/inn_notice_board/description",
+      "replacement": "イアンはもうここにはいない。 ロビンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。",
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンの頼みを断り、燃える村を後にして竜の谷へ向かった。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/ian_ice_katana_aftermath/hybrid/prepared_turns/ian_request_refused_after/draft/gm_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "冷気を放つと炎が一瞬で退き、その隙に男の子を連れ出した。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/douse_with_ice/result_text",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "刃の色が敵に応じて移ろう剣。相手の弱点を自ら探り当てる。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/forge_prism_weapon/effects/1/branch/then/0/branch/else/0/add_item/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "十歳ほどの金髪の少女サラと、小さな火コウモリ竜がいる。",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/maps/royal_return/nodes/item_shop/description",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "弦が跳ねて頬を打った。ロビンが肩を震わせて笑っている。",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/robin_archery/result_texts/failure",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "青いローブの銀髪の魔法使いが、杖を背に店番をしている。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/hybrid/summary",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "イアンは砕けた刃を見つめたまま、何も言わなかった。",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/ian_ice_katana_aftermath/actions/read_ian_grief/result_texts/failure",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "怪しい商人の姿は消え、夜風だけが路地を抜けていく。",
+      "npc_ids": [
+        "suspicious_merchant"
+      ],
+      "path": "/locations/alley_after/hybrid/summary",
+      "replacement": "怪しい商人はもうここにはいない。",
+      "replacements": {
+        "suspicious_merchant": "怪しい商人はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/items/robert_hammer/description",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ミーナは膝に顔を埋めたまま、泣き止まなかった。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/actions/calm_mina/result_texts/failure",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "祈りの光を七色に分ける杖。癒やしの力も高める。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/forge_prism_weapon/effects/2/branch/then/0/branch/else/0/add_item/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "箱を奪われまいと、迷子のゴブリンが短剣を抜く。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/locations/goblin_fort_chest_fight/hybrid/summary",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "主を失った箱は、金貨の山の陰に転がっていた。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/locations/goblin_fort_chest_choice/description_variants/0/text",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "刺すたびに色を変える短剣。急所を逃さない。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/forge_prism_weapon/effects/4/branch/then/0/branch/else/0/add_item/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "大通りに掲げられた、王国と諸侯の祝宴の旗。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/festival_town/objects/parade_banners/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "暁の守護団長ヴァルターの署名入りの推薦状。",
+      "npc_ids": [
+        "walter"
+      ],
+      "path": "/items/guardian_letter/description",
+      "replacement": "ヴァルターはもうここにはいない。",
+      "replacements": {
+        "walter": "ヴァルターはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "長老は咳き込み、話を途中でやめてしまった。",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/locations/village/actions/ask_elder_legend/result_texts/failure",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "泣き声を背に、燃える通りを駆け抜けた。",
+      "npc_ids": [
+        "riku"
+      ],
+      "path": "/locations/burning_house/actions/leave_burning_house/result_text",
+      "replacement": "リクはもうここにはいない。",
+      "replacements": {
+        "riku": "リクはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "氷の護符と上質な剣を融合させた大剣。",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/hybrid/prepared_turns/accept_sword_fusion/draft/state_delta/inventory_add/0/description",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "長老は焼け跡を見つめ、黙り込んでいる",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/locations/village/entry_text",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "魔力を敵の弱点の属性へ変える宝珠。",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/forge_prism_weapon/effects/3/branch/then/0/branch/else/0/add_item/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "十字路に立つ、傾いた古い道標。",
+      "npc_ids": [
+        "lost_goblin"
+      ],
+      "path": "/locations/lost_goblin_crossroads/objects/crossroads_signpost/description",
+      "replacement": "迷子のゴブリンはもうここにはいない。",
+      "replacements": {
+        "lost_goblin": "迷子のゴブリンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ロビンが暗号を教えてくれた。",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/goblin_fort_third_gate/entry_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "広場の古い石の井戸。",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/castle_town/objects/town_well/description",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "温泉の壁の苔",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/cave_hot_spring/objects/moss_on_wall/description",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "行商人の荷車",
+      "npc_ids": [
+        "elder",
+        "gald",
+        "riku",
+        "shopkeeper"
+      ],
+      "path": "/locations/village/objects/gald_cart/description",
+      "replacement": "長老はもうここにはいない。 ガルドはもうここにはいない。 リクはもうここにはいない。 道具屋の店主はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。",
+        "gald": "ガルドはもうここにはいない。",
+        "riku": "リクはもうここにはいない。",
+        "shopkeeper": "道具屋の店主はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    }
+  ]
+}

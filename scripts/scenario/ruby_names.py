@@ -16,6 +16,7 @@ NAMES = {
     "ワーロック": "Warlock", "サラ": "Sarah", "ミーナ": "Mina", "ガルド": "Gald", "イグニス": "Ignis",
     "リク": "Riku", "ヴァルター": "Walter", "リーゼ": "Liese", "ブリギッテ": "Brigitte", "エリオ": "Elio",
     "ゼボク": "Zebok", "ヴァイス": "Weiss", "ザンザス": "Xanxus",
+    "ガレス": "Gareth", "ノクス": "Nox",
 }
 ENGLISH_ELEMENT = re.compile(r"(?<![A-Za-z])(" + "|".join(ELEMENT_LABELS) + r")属性")
 REVISION = "2026-10-19-ruby"

@@ -15,6 +15,7 @@ TURN_STATE_FIELDS = (
     "combat_start_requested", "enemy_first_requested", "combat_blocked_location",
     "needs_client_resync", "last_intent_resolution", "deviation_state",
     "last_free_action", "last_turn_metrics",
+    "pending_npc_attack", "npc_encounter_override",
 )
 
 

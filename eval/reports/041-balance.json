@@ -1,0 +1,175 @@
+{
+  "n": 1000,
+  "seed": 20261019,
+  "rows": [
+    {
+      "character": "hero",
+      "level": 5,
+      "n": 1000,
+      "dragon_valley_loc": 0.848,
+      "dragon_valley_return": 0.856,
+      "draco_battle": 0.614,
+      "ignis_survivors": 889,
+      "consecutive_wins": 579,
+      "consecutive_rate": 0.579,
+      "conditional_rate": 0.6512935883014623
+    },
+    {
+      "character": "cleric",
+      "level": 5,
+      "n": 1000,
+      "dragon_valley_loc": 0.751,
+      "dragon_valley_return": 0.606,
+      "draco_battle": 0.587,
+      "ignis_survivors": 780,
+      "consecutive_wins": 307,
+      "consecutive_rate": 0.307,
+      "conditional_rate": 0.3935897435897436
+    },
+    {
+      "character": "mage",
+      "level": 5,
+      "n": 1000,
+      "dragon_valley_loc": 0.702,
+      "dragon_valley_return": 0.325,
+      "draco_battle": 0.69,
+      "ignis_survivors": 704,
+      "consecutive_wins": 298,
+      "consecutive_rate": 0.298,
+      "conditional_rate": 0.42329545454545453
+    },
+    {
+      "character": "thief",
+      "level": 5,
+      "n": 1000,
+      "dragon_valley_loc": 0.776,
+      "dragon_valley_return": 0.861,
+      "draco_battle": 0.636,
+      "ignis_survivors": 799,
+      "consecutive_wins": 523,
+      "consecutive_rate": 0.523,
+      "conditional_rate": 0.6545682102628285
+    }
+  ],
+  "means": {
+    "dragon_valley_loc": 0.76925,
+    "dragon_valley_return": 0.662,
+    "draco_battle": 0.63175
+  },
+  "target_met": true,
+  "checkpoint": "Gareth copies dragon_valley_loc; Draco uses draco_battle; all Lv5 with full HP/MP/SP and the existing checkpoint loadout",
+  "enemies": [
+    {
+      "id": "dragon_knight_mounted",
+      "name": "竜騎士ガレスと飛竜ノクス",
+      "hp": 90,
+      "max_hp": 90,
+      "attributes": {},
+      "image": "/static/images/enemy_dragon_knight_mounted.png",
+      "combat": {
+        "defense": 2,
+        "evade": 6,
+        "basic_attack": {
+          "id": "dragon_charge",
+          "name": "竜槍の突撃",
+          "kind": "attack",
+          "damage": "1d8+4",
+          "accuracy": 85,
+          "element": "physical"
+        }
+      },
+      "skills": [
+        {
+          "id": "dragon_charge",
+          "name": "竜槍の突撃",
+          "kind": "attack",
+          "damage": "1d8+4",
+          "accuracy": 85,
+          "element": "physical"
+        },
+        {
+          "id": "grey_wind",
+          "name": "灰風の息吹",
+          "kind": "attack",
+          "damage": "1d8+4",
+          "accuracy": 90,
+          "element": "wind"
+        },
+        {
+          "id": "dive",
+          "name": "急降下",
+          "kind": "attack",
+          "damage": "1d8+4",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      ],
+      "resistances": {
+        "physical": 0.75,
+        "wind": 0,
+        "ice": 1.5,
+        "lightning": 1.5
+      },
+      "next_phase": "dragon_knight_human",
+      "phase_transition_text": "飛竜ノクスが翼を裂かれ、地に落ちた。ガレスは竜の背から飛び降り、その首を一度だけ撫でる。「……下がっていろ、ノクス」 その瞳が、竜と同じ金色に染まっていく。",
+      "description": "",
+      "mp": 0,
+      "max_mp": 0,
+      "sp": 0,
+      "max_sp": 0
+    },
+    {
+      "id": "dragon_knight_human",
+      "name": "竜騎士ガレス",
+      "hp": 65,
+      "max_hp": 65,
+      "attributes": {},
+      "image": "/static/images/enemy_dragon_knight.png",
+      "combat": {
+        "defense": 3,
+        "evade": 10,
+        "basic_attack": {
+          "id": "dragon_blood_spear",
+          "name": "竜血の槍",
+          "kind": "attack",
+          "damage": "1d10+5",
+          "accuracy": 90,
+          "element": "physical"
+        }
+      },
+      "skills": [
+        {
+          "id": "dragon_blood_spear",
+          "name": "竜血の槍",
+          "kind": "attack",
+          "damage": "1d10+5",
+          "accuracy": 90,
+          "element": "physical"
+        },
+        {
+          "id": "piercing_spear",
+          "name": "穿竜突き",
+          "kind": "attack",
+          "damage": "1d10+5",
+          "accuracy": 100,
+          "element": "physical",
+          "ignores_defense": true
+        },
+        {
+          "id": "dragon_stance",
+          "name": "竜騎士の構え",
+          "kind": "defend"
+        }
+      ],
+      "resistances": {
+        "physical": 0.85,
+        "wind": 0.5
+      },
+      "description": "",
+      "mp": 0,
+      "max_mp": 0,
+      "sp": 0,
+      "max_sp": 0
+    }
+  ]
+}

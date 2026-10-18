@@ -238,7 +238,8 @@ def main(argv: list[str] = None) -> int:
 def run_evaluation(args: argparse.Namespace, config: dict[str, Any]) -> dict[str, Any]:
     # The frozen benchmark was cached with raw element ids in item effects; keep them for replay.
     frozen = (ROOT / "eval" / "benchmark") in args.cases.resolve().parents
-    with patch.object(item_mechanics, "LEGACY_ELEMENT_IDS", frozen):
+    with patch.object(item_mechanics, "LEGACY_ELEMENT_IDS", frozen), patch.object(free_actions, "LEGACY_PLAN", frozen), \
+            patch.object(free_actions, "OPERATIONS", free_actions.LEGACY_OPERATIONS if frozen else free_actions.OPERATIONS):
         return _run_evaluation(args, config)
 
 

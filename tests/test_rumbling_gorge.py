@@ -284,7 +284,7 @@ class RumblingGorgeTests(unittest.TestCase):
 
     def test_outside_comparison_covers_every_non_scripted_companion_encounter(self):
         locations = set(gorge.outside_locations(self.pack))
-        self.assertEqual(len(locations), 32)
+        self.assertEqual(len(locations), 33)
         self.assertTrue({"merchant_battle", "mansion_corridor", "inn_night_ambush", "grave_chapel", "draco_battle"} <= locations)
         self.assertFalse(locations & {"xanxus_battle", "warlock_rescue_battle", *gorge.BATTLES})
 

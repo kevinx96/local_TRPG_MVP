@@ -150,6 +150,10 @@ def apply(pack: dict[str, Any]) -> None:
                     location["connected_location_ids"].append(destination)
     pack["meta"]["loot_economy_v038"] = True
     pack["meta"]["content_revision"] = max(pack["meta"].get("content_revision", ""), "2026-10-18-v038")
+    if pack["meta"].get("npc_combat_v041"):
+        from .npc_combat import apply as apply_npc_combat
+
+        apply_npc_combat(pack)
 
 
 def main() -> None:

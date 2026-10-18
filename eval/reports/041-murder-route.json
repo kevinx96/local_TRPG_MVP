@@ -1,0 +1,3596 @@
+[
+  {
+    "seed": 41,
+    "ending": "combat_defeat",
+    "completed": false,
+    "town_blood": true,
+    "intercepted": true,
+    "dragon_knight_defeated": false,
+    "invariants": {
+      "exceptions": 0,
+      "noncombat_dead_ends": 0
+    },
+    "failures": [],
+    "events": [
+      {
+        "location": "castle",
+        "action": "check_supplies"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion"
+      },
+      {
+        "location": "forge",
+        "action": "npc_attack_confirm"
+      },
+      {
+        "location": "forge",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 10
+        }
+      },
+      {
+        "location": "forge",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime"
+      },
+      {
+        "location": "dark_forest_loc",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 19,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 1
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves"
+      },
+      {
+        "location": "forest_wolves",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 19,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 1
+        }
+      },
+      {
+        "location": "forest_exit",
+        "combat": "victory",
+        "resources": {
+          "level": 2,
+          "hp": 25,
+          "max_hp": 25,
+          "mp": 9,
+          "sp": 12
+        }
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully"
+      },
+      {
+        "location": "village_fire_slime",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 32,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 32,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 25,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 9
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 25,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 9
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 17,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 12
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths"
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 17,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 12
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 17,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 13
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "cross_lava_bridge"
+      },
+      {
+        "location": "warlock_at_nest",
+        "action": "continue_after_warlock"
+      },
+      {
+        "location": "valley_nest_gate",
+        "action": "enter_dragon_nest"
+      },
+      {
+        "location": "dragon_valley_loc",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 40,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "ignis_last_breath",
+        "combat": "victory",
+        "resources": {
+          "level": 5,
+          "hp": 28,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "ignis_last_breath",
+        "action": "return_to_castle_report"
+      },
+      {
+        "location": "dragon_valley_return",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 28,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "dragon_valley_return",
+        "combat": "defeat",
+        "resources": {
+          "level": 5,
+          "hp": 0,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 7
+        }
+      }
+    ]
+  },
+  {
+    "seed": 42,
+    "ending": "dragon_valley_defeat",
+    "completed": false,
+    "town_blood": true,
+    "intercepted": false,
+    "dragon_knight_defeated": false,
+    "invariants": {
+      "exceptions": 0,
+      "noncombat_dead_ends": 0
+    },
+    "failures": [],
+    "events": [
+      {
+        "location": "castle",
+        "action": "check_supplies"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion"
+      },
+      {
+        "location": "forge",
+        "action": "npc_attack_confirm"
+      },
+      {
+        "location": "forge",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 10
+        }
+      },
+      {
+        "location": "forge",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 18,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime"
+      },
+      {
+        "location": "dark_forest_loc",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 18,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 12,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 1
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves"
+      },
+      {
+        "location": "forest_wolves",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 12,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 1
+        }
+      },
+      {
+        "location": "forest_exit",
+        "combat": "victory",
+        "resources": {
+          "level": 2,
+          "hp": 25,
+          "max_hp": 25,
+          "mp": 9,
+          "sp": 12
+        }
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully"
+      },
+      {
+        "location": "village_fire_elemental",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 13,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 13,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 30,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 10
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 30,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 10
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 15,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 13
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths"
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 15,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 13
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 15,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 14
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "cross_lava_bridge"
+      },
+      {
+        "location": "warlock_at_nest",
+        "action": "continue_after_warlock"
+      },
+      {
+        "location": "valley_nest_gate",
+        "action": "enter_dragon_nest"
+      },
+      {
+        "location": "dragon_valley_loc",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 40,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "dragon_valley_loc",
+        "combat": "defeat",
+        "resources": {
+          "level": 5,
+          "hp": 0,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      }
+    ]
+  },
+  {
+    "seed": 43,
+    "ending": "combat_defeat",
+    "completed": false,
+    "town_blood": true,
+    "intercepted": true,
+    "dragon_knight_defeated": false,
+    "invariants": {
+      "exceptions": 0,
+      "noncombat_dead_ends": 0
+    },
+    "failures": [],
+    "events": [
+      {
+        "location": "castle",
+        "action": "check_supplies"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion"
+      },
+      {
+        "location": "forge",
+        "action": "npc_attack_confirm"
+      },
+      {
+        "location": "forge",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 10
+        }
+      },
+      {
+        "location": "forge",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 17,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 3
+        }
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime"
+      },
+      {
+        "location": "dark_forest_loc",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 17,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 3
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 11,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 2
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves"
+      },
+      {
+        "location": "forest_wolves",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 11,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 2
+        }
+      },
+      {
+        "location": "forest_exit",
+        "combat": "victory",
+        "resources": {
+          "level": 2,
+          "hp": 25,
+          "max_hp": 25,
+          "mp": 9,
+          "sp": 12
+        }
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully"
+      },
+      {
+        "location": "village_fire_elemental",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 33,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 33,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 30,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 9
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 30,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 9
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 24,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 12
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths"
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 24,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 12
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 24,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 13
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "cross_lava_bridge"
+      },
+      {
+        "location": "warlock_at_nest",
+        "action": "continue_after_warlock"
+      },
+      {
+        "location": "valley_nest_gate",
+        "action": "enter_dragon_nest"
+      },
+      {
+        "location": "dragon_valley_loc",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 40,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "ignis_last_breath",
+        "combat": "victory",
+        "resources": {
+          "level": 5,
+          "hp": 37,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "ignis_last_breath",
+        "action": "return_to_castle_report"
+      },
+      {
+        "location": "dragon_valley_return",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 37,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "dragon_valley_return",
+        "combat": "defeat",
+        "resources": {
+          "level": 5,
+          "hp": 0,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 4
+        }
+      }
+    ]
+  },
+  {
+    "seed": 44,
+    "ending": "dragon_valley_defeat",
+    "completed": false,
+    "town_blood": true,
+    "intercepted": false,
+    "dragon_knight_defeated": false,
+    "invariants": {
+      "exceptions": 0,
+      "noncombat_dead_ends": 0
+    },
+    "failures": [],
+    "events": [
+      {
+        "location": "castle",
+        "action": "check_supplies"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion"
+      },
+      {
+        "location": "forge",
+        "action": "npc_attack_confirm"
+      },
+      {
+        "location": "forge",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 10
+        }
+      },
+      {
+        "location": "forge",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 7
+        }
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime"
+      },
+      {
+        "location": "dark_forest_loc",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 7
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 16,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 1
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves"
+      },
+      {
+        "location": "forest_wolves",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 16,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 1
+        }
+      },
+      {
+        "location": "forest_exit",
+        "combat": "victory",
+        "resources": {
+          "level": 2,
+          "hp": 25,
+          "max_hp": 25,
+          "mp": 9,
+          "sp": 12
+        }
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully"
+      },
+      {
+        "location": "village_fire_slime",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 32,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 32,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 24,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 9
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 24,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 9
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 15,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 12
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths"
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 15,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 12
+        }
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "defeat",
+        "resources": {
+          "level": 4,
+          "hp": 0,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 12
+        }
+      }
+    ]
+  },
+  {
+    "seed": 45,
+    "ending": "ignis_defeated",
+    "completed": true,
+    "town_blood": true,
+    "intercepted": true,
+    "dragon_knight_defeated": true,
+    "invariants": {
+      "exceptions": 0,
+      "noncombat_dead_ends": 0
+    },
+    "failures": [],
+    "events": [
+      {
+        "location": "castle",
+        "action": "check_supplies"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion"
+      },
+      {
+        "location": "forge",
+        "action": "npc_attack_confirm"
+      },
+      {
+        "location": "forge",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 10
+        }
+      },
+      {
+        "location": "forge",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime"
+      },
+      {
+        "location": "dark_forest_loc",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 16,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 0
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves"
+      },
+      {
+        "location": "forest_wolves",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 16,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 0
+        }
+      },
+      {
+        "location": "forest_exit",
+        "combat": "victory",
+        "resources": {
+          "level": 2,
+          "hp": 25,
+          "max_hp": 25,
+          "mp": 9,
+          "sp": 12
+        }
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully"
+      },
+      {
+        "location": "village_fire_slime",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 25,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 7
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 25,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 7
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 23,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 10
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths"
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 23,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 10
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 23,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 11
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "cross_lava_bridge"
+      },
+      {
+        "location": "warlock_at_nest",
+        "action": "continue_after_warlock"
+      },
+      {
+        "location": "valley_nest_gate",
+        "action": "enter_dragon_nest"
+      },
+      {
+        "location": "dragon_valley_loc",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 40,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "ignis_last_breath",
+        "combat": "victory",
+        "resources": {
+          "level": 5,
+          "hp": 22,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "ignis_last_breath",
+        "action": "return_to_castle_report"
+      },
+      {
+        "location": "dragon_valley_return",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 22,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "royal_gate",
+        "combat": "victory",
+        "resources": {
+          "level": 5,
+          "hp": 3,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 2
+        }
+      },
+      {
+        "location": "royal_gate",
+        "action": "enter_festival_town"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_report_hall"
+      },
+      {
+        "location": "castle_report",
+        "action": "report_normally"
+      }
+    ]
+  },
+  {
+    "seed": 46,
+    "ending": "dragon_valley_defeat",
+    "completed": false,
+    "town_blood": true,
+    "intercepted": false,
+    "dragon_knight_defeated": false,
+    "invariants": {
+      "exceptions": 0,
+      "noncombat_dead_ends": 0
+    },
+    "failures": [],
+    "events": [
+      {
+        "location": "castle",
+        "action": "check_supplies"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion"
+      },
+      {
+        "location": "forge",
+        "action": "npc_attack_confirm"
+      },
+      {
+        "location": "forge",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 10
+        }
+      },
+      {
+        "location": "forge",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 19,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime"
+      },
+      {
+        "location": "dark_forest_loc",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 19,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 14,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 0
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves"
+      },
+      {
+        "location": "forest_wolves",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 14,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 0
+        }
+      },
+      {
+        "location": "forest_exit",
+        "combat": "victory",
+        "resources": {
+          "level": 2,
+          "hp": 25,
+          "max_hp": 25,
+          "mp": 9,
+          "sp": 12
+        }
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully"
+      },
+      {
+        "location": "village_fire_elemental",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 28,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 28,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 20,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 11
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 20,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 11
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 19,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 14
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths"
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 19,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 14
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 19,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 15
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "cross_lava_bridge"
+      },
+      {
+        "location": "warlock_at_nest",
+        "action": "continue_after_warlock"
+      },
+      {
+        "location": "valley_nest_gate",
+        "action": "enter_dragon_nest"
+      },
+      {
+        "location": "dragon_valley_loc",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 40,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "dragon_valley_loc",
+        "combat": "defeat",
+        "resources": {
+          "level": 5,
+          "hp": 0,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      }
+    ]
+  },
+  {
+    "seed": 47,
+    "ending": "ignis_defeated",
+    "completed": true,
+    "town_blood": true,
+    "intercepted": true,
+    "dragon_knight_defeated": true,
+    "invariants": {
+      "exceptions": 0,
+      "noncombat_dead_ends": 0
+    },
+    "failures": [],
+    "events": [
+      {
+        "location": "castle",
+        "action": "check_supplies"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion"
+      },
+      {
+        "location": "forge",
+        "action": "npc_attack_confirm"
+      },
+      {
+        "location": "forge",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 10
+        }
+      },
+      {
+        "location": "forge",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 19,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime"
+      },
+      {
+        "location": "dark_forest_loc",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 19,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 13,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 1
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves"
+      },
+      {
+        "location": "forest_wolves",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 13,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 1
+        }
+      },
+      {
+        "location": "forest_exit",
+        "combat": "victory",
+        "resources": {
+          "level": 2,
+          "hp": 25,
+          "max_hp": 25,
+          "mp": 9,
+          "sp": 12
+        }
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully"
+      },
+      {
+        "location": "village_fire_slime",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 30,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 11
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 30,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 11
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 30,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 14
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths"
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 30,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 14
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 16,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "cross_lava_bridge"
+      },
+      {
+        "location": "warlock_at_nest",
+        "action": "continue_after_warlock"
+      },
+      {
+        "location": "valley_nest_gate",
+        "action": "enter_dragon_nest"
+      },
+      {
+        "location": "dragon_valley_loc",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 40,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "ignis_last_breath",
+        "combat": "victory",
+        "resources": {
+          "level": 5,
+          "hp": 27,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "ignis_last_breath",
+        "action": "return_to_castle_report"
+      },
+      {
+        "location": "dragon_valley_return",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 27,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "royal_gate",
+        "combat": "victory",
+        "resources": {
+          "level": 5,
+          "hp": 23,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 0
+        }
+      },
+      {
+        "location": "royal_gate",
+        "action": "enter_festival_town"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_report_hall"
+      },
+      {
+        "location": "castle_report",
+        "action": "report_normally"
+      }
+    ]
+  },
+  {
+    "seed": 48,
+    "ending": "ignis_defeated",
+    "completed": true,
+    "town_blood": true,
+    "intercepted": true,
+    "dragon_knight_defeated": true,
+    "invariants": {
+      "exceptions": 0,
+      "noncombat_dead_ends": 0
+    },
+    "failures": [],
+    "events": [
+      {
+        "location": "castle",
+        "action": "check_supplies"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion"
+      },
+      {
+        "location": "forge",
+        "action": "npc_attack_confirm"
+      },
+      {
+        "location": "forge",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 10
+        }
+      },
+      {
+        "location": "forge",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 19,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 3
+        }
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime"
+      },
+      {
+        "location": "dark_forest_loc",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 19,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 3
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 15,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 0
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves"
+      },
+      {
+        "location": "forest_wolves",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 15,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 0
+        }
+      },
+      {
+        "location": "forest_exit",
+        "combat": "victory",
+        "resources": {
+          "level": 2,
+          "hp": 25,
+          "max_hp": 25,
+          "mp": 9,
+          "sp": 12
+        }
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully"
+      },
+      {
+        "location": "village_fire_slime",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 34,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 34,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 26,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 9
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 26,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 9
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 25,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 12
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths"
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 25,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 12
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 25,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 13
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "cross_lava_bridge"
+      },
+      {
+        "location": "warlock_at_nest",
+        "action": "continue_after_warlock"
+      },
+      {
+        "location": "valley_nest_gate",
+        "action": "enter_dragon_nest"
+      },
+      {
+        "location": "dragon_valley_loc",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 40,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "ignis_last_breath",
+        "combat": "victory",
+        "resources": {
+          "level": 5,
+          "hp": 37,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "ignis_last_breath",
+        "action": "return_to_castle_report"
+      },
+      {
+        "location": "dragon_valley_return",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 37,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "royal_gate",
+        "combat": "victory",
+        "resources": {
+          "level": 5,
+          "hp": 23,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 0
+        }
+      },
+      {
+        "location": "royal_gate",
+        "action": "enter_festival_town"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_report_hall"
+      },
+      {
+        "location": "castle_report",
+        "action": "report_normally"
+      }
+    ]
+  },
+  {
+    "seed": 49,
+    "ending": "dragon_valley_defeat",
+    "completed": false,
+    "town_blood": true,
+    "intercepted": false,
+    "dragon_knight_defeated": false,
+    "invariants": {
+      "exceptions": 0,
+      "noncombat_dead_ends": 0
+    },
+    "failures": [],
+    "events": [
+      {
+        "location": "castle",
+        "action": "check_supplies"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion"
+      },
+      {
+        "location": "forge",
+        "action": "npc_attack_confirm"
+      },
+      {
+        "location": "forge",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 10
+        }
+      },
+      {
+        "location": "forge",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime"
+      },
+      {
+        "location": "dark_forest_loc",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 17,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 2
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves"
+      },
+      {
+        "location": "forest_wolves",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 17,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 2
+        }
+      },
+      {
+        "location": "forest_exit",
+        "combat": "victory",
+        "resources": {
+          "level": 2,
+          "hp": 25,
+          "max_hp": 25,
+          "mp": 9,
+          "sp": 12
+        }
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully"
+      },
+      {
+        "location": "village_fire_elemental",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 16,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 16,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 27,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 10
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 27,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 10
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 21,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 13
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths"
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 21,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 13
+        }
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "defeat",
+        "resources": {
+          "level": 4,
+          "hp": 0,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 14
+        }
+      }
+    ]
+  },
+  {
+    "seed": 50,
+    "ending": "ignis_defeated",
+    "completed": true,
+    "town_blood": true,
+    "intercepted": true,
+    "dragon_knight_defeated": true,
+    "invariants": {
+      "exceptions": 0,
+      "noncombat_dead_ends": 0
+    },
+    "failures": [],
+    "events": [
+      {
+        "location": "castle",
+        "action": "check_supplies"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion"
+      },
+      {
+        "location": "forge",
+        "action": "npc_attack_confirm"
+      },
+      {
+        "location": "forge",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 10
+        }
+      },
+      {
+        "location": "forge",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 18,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime"
+      },
+      {
+        "location": "dark_forest_loc",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 18,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 14,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 2
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves"
+      },
+      {
+        "location": "forest_wolves",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 14,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 2
+        }
+      },
+      {
+        "location": "forest_exit",
+        "combat": "victory",
+        "resources": {
+          "level": 2,
+          "hp": 25,
+          "max_hp": 25,
+          "mp": 9,
+          "sp": 12
+        }
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully"
+      },
+      {
+        "location": "village_fire_slime",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 11
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 11
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 34,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 14
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths"
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 34,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 14
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 34,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 15
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "cross_lava_bridge"
+      },
+      {
+        "location": "warlock_at_nest",
+        "action": "continue_after_warlock"
+      },
+      {
+        "location": "valley_nest_gate",
+        "action": "enter_dragon_nest"
+      },
+      {
+        "location": "dragon_valley_loc",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 40,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "ignis_last_breath",
+        "combat": "victory",
+        "resources": {
+          "level": 5,
+          "hp": 25,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "ignis_last_breath",
+        "action": "return_to_castle_report"
+      },
+      {
+        "location": "dragon_valley_return",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 25,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "royal_gate",
+        "combat": "victory",
+        "resources": {
+          "level": 5,
+          "hp": 1,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 3
+        }
+      },
+      {
+        "location": "royal_gate",
+        "action": "enter_festival_town"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_report_hall"
+      },
+      {
+        "location": "castle_report",
+        "action": "report_normally"
+      }
+    ]
+  },
+  {
+    "seed": 51,
+    "ending": "dragon_valley_defeat",
+    "completed": false,
+    "town_blood": true,
+    "intercepted": false,
+    "dragon_knight_defeated": false,
+    "invariants": {
+      "exceptions": 0,
+      "noncombat_dead_ends": 0
+    },
+    "failures": [],
+    "events": [
+      {
+        "location": "castle",
+        "action": "check_supplies"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion"
+      },
+      {
+        "location": "forge",
+        "action": "npc_attack_confirm"
+      },
+      {
+        "location": "forge",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 10
+        }
+      },
+      {
+        "location": "forge",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 7
+        }
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime"
+      },
+      {
+        "location": "dark_forest_loc",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 7
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 14,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 0
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves"
+      },
+      {
+        "location": "forest_wolves",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 14,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 0
+        }
+      },
+      {
+        "location": "forest_exit",
+        "combat": "victory",
+        "resources": {
+          "level": 2,
+          "hp": 25,
+          "max_hp": 25,
+          "mp": 9,
+          "sp": 12
+        }
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully"
+      },
+      {
+        "location": "village_fire_slime",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 34,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 34,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 28,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 9
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 28,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 9
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 26,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 12
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths"
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 26,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 12
+        }
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "defeat",
+        "resources": {
+          "level": 4,
+          "hp": 0,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 12
+        }
+      }
+    ]
+  },
+  {
+    "seed": 52,
+    "ending": "dragon_valley_defeat",
+    "completed": false,
+    "town_blood": true,
+    "intercepted": false,
+    "dragon_knight_defeated": false,
+    "invariants": {
+      "exceptions": 0,
+      "noncombat_dead_ends": 0
+    },
+    "failures": [],
+    "events": [
+      {
+        "location": "castle",
+        "action": "check_supplies"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion"
+      },
+      {
+        "location": "forge",
+        "action": "npc_attack_confirm"
+      },
+      {
+        "location": "forge",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 10
+        }
+      },
+      {
+        "location": "forge",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime"
+      },
+      {
+        "location": "dark_forest_loc",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 20,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 5
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "combat": "victory",
+        "resources": {
+          "level": 1,
+          "hp": 14,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 1
+        }
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves"
+      },
+      {
+        "location": "forest_wolves",
+        "combat": "started",
+        "resources": {
+          "level": 1,
+          "hp": 14,
+          "max_hp": 20,
+          "mp": 8,
+          "sp": 1
+        }
+      },
+      {
+        "location": "forest_exit",
+        "combat": "victory",
+        "resources": {
+          "level": 2,
+          "hp": 25,
+          "max_hp": 25,
+          "mp": 9,
+          "sp": 12
+        }
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully"
+      },
+      {
+        "location": "village_fire_slime",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 35,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 34,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 34,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 16
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 25,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 10
+        }
+      },
+      {
+        "location": "frost_wolf_battle",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 25,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 10
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 25,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 13
+        }
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths"
+      },
+      {
+        "location": "valley_entrance",
+        "combat": "started",
+        "resources": {
+          "level": 4,
+          "hp": 25,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 13
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "combat": "victory",
+        "resources": {
+          "level": 4,
+          "hp": 25,
+          "max_hp": 35,
+          "mp": 11,
+          "sp": 14
+        }
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "cross_lava_bridge"
+      },
+      {
+        "location": "warlock_at_nest",
+        "action": "continue_after_warlock"
+      },
+      {
+        "location": "valley_nest_gate",
+        "action": "enter_dragon_nest"
+      },
+      {
+        "location": "dragon_valley_loc",
+        "combat": "started",
+        "resources": {
+          "level": 5,
+          "hp": 40,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      },
+      {
+        "location": "dragon_valley_loc",
+        "combat": "defeat",
+        "resources": {
+          "level": 5,
+          "hp": 0,
+          "max_hp": 40,
+          "mp": 12,
+          "sp": 18
+        }
+      }
+    ]
+  }
+]
