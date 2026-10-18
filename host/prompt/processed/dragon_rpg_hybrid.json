@@ -7,7 +7,7 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-18-v038",
+    "content_revision": "2026-10-19-ruby",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -17,7 +17,27 @@
     "oaksdawn_v034": true,
     "rumbling_gorge_v035": true,
     "item_icons_v036": true,
-    "loot_economy_v038": true
+    "loot_economy_v038": true,
+    "ruby_names": {
+      "エドワード": "Edward",
+      "ローベルト": "Robert",
+      "ドラコ": "Draco",
+      "イアン": "Ian",
+      "ロビン": "Robin",
+      "ワーロック": "Warlock",
+      "サラ": "Sarah",
+      "ミーナ": "Mina",
+      "ガルド": "Gald",
+      "イグニス": "Ignis",
+      "リク": "Riku",
+      "ヴァルター": "Walter",
+      "リーゼ": "Liese",
+      "ブリギッテ": "Brigitte",
+      "エリオ": "Elio",
+      "ゼボク": "Zebok",
+      "ヴァイス": "Weiss",
+      "ザンザス": "Xanxus"
+    }
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -127,10 +147,10 @@
     {
       "id": "village",
       "title": "第3章：炎上する麓の村",
-      "description": "火海となった村でXanxusの陰謀と氷の太刀の痕跡を追う分岐章。",
+      "description": "火海となった村でザンザスの陰謀と氷の太刀の痕跡を追う分岐章。",
       "goals": [
         "炎の怪物を突破する",
-        "Xanxusとの遭遇を生き延びる",
+        "ザンザスとの遭遇を生き延びる",
         "氷霜の巨狼と砕けた氷の太刀の真相を追う"
       ],
       "keywords": [
@@ -4143,7 +4163,7 @@
             "action_id": "ask_blue_mage_rumor",
             "outcome": "critical_success",
             "draft": {
-              "gm_text": "Xanxus",
+              "gm_text": "ザンザス",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -8855,7 +8875,7 @@
             "action_id": "escape_from_burning_village",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "Xanxusの名が脳裏をよぎり、村から離れようとする。だがまだ遠くへ行かないうちに、赤い法衣と炎に包まれた骸骨が道を塞いだ。",
+              "gm_text": "ザンザスの名が脳裏をよぎり、村から離れようとする。だがまだ遠くへ行かないうちに、赤い法衣と炎に包まれた骸骨が道を塞いだ。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -8940,7 +8960,7 @@
         {
           "id": "escape_from_burning_village",
           "text": "直ちに逃げる",
-          "preview": "Xanxusの名を思い出し、村から離れます",
+          "preview": "ザンザスの名を思い出し、村から離れます",
           "risk": "判定不要",
           "intent_keywords": [
             "直ちに逃げる"
@@ -9070,10 +9090,10 @@
     {
       "id": "xanxus_confrontation",
       "scene_id": "village",
-      "title": "燃える街道・Xanxusの尋問",
-      "description": "赤い法衣をまとい、全身を炎に包まれた骸骨の魔法使いXanxusが退路を塞いでいる。",
+      "title": "燃える街道・ザンザスの尋問",
+      "description": "赤い法衣をまとい、全身を炎に包まれた骸骨の魔法使いザンザスが退路を塞いでいる。",
       "keywords": [
-        "燃える街道・Xanxusの尋問"
+        "燃える街道・ザンザスの尋問"
       ],
       "npc_ids": [
         "xanxus"
@@ -9085,7 +9105,7 @@
       "choices": [],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "赤い法衣をまとい、全身を炎に包まれた骸骨の魔法使いXanxusが退路を塞いでいる。",
+        "summary": "赤い法衣をまとい、全身を炎に包まれた骸骨の魔法使いザンザスが退路を塞いでいる。",
         "prepared_turns": [
           {
             "id": "xanxus_bluff_failed",
@@ -9096,7 +9116,7 @@
             "action_id": "bluff_xanxus",
             "outcome": "failure",
             "draft": {
-              "gm_text": "Xanxusは乾いた笑い声を上げた。『その目は何かを知った者の目だ。浅い嘘で私を欺けると思ったか』杖の一振りで炎の壁が街道を閉ざし、燃える骸骨は明確な殺意を向けて戦闘態勢に入る。",
+              "gm_text": "ザンザスは乾いた笑い声を上げた。『その目は何かを知った者の目だ。浅い嘘で私を欺けると思ったか』杖の一振りで炎の壁が街道を閉ざし、燃える骸骨は明確な殺意を向けて戦闘態勢に入る。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -9114,7 +9134,7 @@
             "action_id": "ambush_xanxus",
             "outcome": "failure",
             "draft": {
-              "gm_text": "攻撃を放つより早く、Xanxusの炎が武器ごと身体を弾き返した。『先手を取ったつもりか？』着地点を炎の輪が囲み、Xanxusは陨石を呼ぶように片手を天へ掲げる。",
+              "gm_text": "攻撃を放つより早く、ザンザスの炎が武器ごと身体を弾き返した。『先手を取ったつもりか？』着地点を炎の輪が囲み、ザンザスは陨石を呼ぶように片手を天へ掲げる。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -9132,7 +9152,7 @@
             "action_id": "flee_from_xanxus",
             "outcome": "failure",
             "draft": {
-              "gm_text": "一歩踏み出した瞬間、炎の壁が行く手を封じた。背後にも火柱が立ち、逃げ場は完全に消える。Xanxusは指先をこちらへ向け、『ならば力ずくで進ませよう』と戦いを強いる。",
+              "gm_text": "一歩踏み出した瞬間、炎の壁が行く手を封じた。背後にも火柱が立ち、逃げ場は完全に消える。ザンザスは指先をこちらへ向け、『ならば力ずくで進ませよう』と戦いを強いる。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -9179,7 +9199,7 @@
         {
           "id": "ambush_xanxus",
           "text": "先手を打って攻撃する",
-          "preview": "Xanxusが動く前に仕掛けます",
+          "preview": "ザンザスが動く前に仕掛けます",
           "risk": "危険",
           "intent_keywords": [
             "先手を打って攻撃する"
@@ -9237,10 +9257,10 @@
     {
       "id": "xanxus_battle",
       "scene_id": "village",
-      "title": "Xanxus戦",
-      "description": "Xanxusの炎が周囲を閉ざし、逃げ道を焼き払った。",
+      "title": "ザンザス戦",
+      "description": "ザンザスの炎が周囲を閉ざし、逃げ道を焼き払った。",
       "keywords": [
-        "Xanxus戦"
+        "ザンザス戦"
       ],
       "npc_ids": [],
       "item_ids": [],
@@ -9252,7 +9272,7 @@
       "choices": [],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "Xanxusの炎が周囲を閉ざし、逃げ道を焼き払った。",
+        "summary": "ザンザスの炎が周囲を閉ざし、逃げ道を焼き払った。",
         "prepared_turns": []
       },
       "combat": {
@@ -9278,8 +9298,8 @@
           "current_location": "xanxus_ultimatum"
         },
         "result_texts": {
-          "victory": "Xanxusを包んでいた炎が次第に消えていく。骸骨は崩れ落ちながら、『まさか、お前は奇術師が化けていたのか……』と呟き、そのまま動かなくなった。",
-          "defeat": "Xanxusは倒れたあなたを見下ろした。『大人しく先を探索しろ。そして私の火種を飲め。任務を放棄すれば、その場で爆ぜさせる』"
+          "victory": "ザンザスを包んでいた炎が次第に消えていく。骸骨は崩れ落ちながら、『まさか、お前は奇術師が化けていたのか……』と呟き、そのまま動かなくなった。",
+          "defeat": "ザンザスは倒れたあなたを見下ろした。『大人しく先を探索しろ。そして私の火種を飲め。任務を放棄すれば、その場で爆ぜさせる』"
         },
         "encounter_class": "scripted_loss"
       },
@@ -9290,10 +9310,10 @@
     {
       "id": "xanxus_ultimatum",
       "scene_id": "village",
-      "title": "Xanxusの最後通告",
-      "description": "Xanxusは燃える火種を差し出し、服従を迫っている。",
+      "title": "ザンザスの最後通告",
+      "description": "ザンザスは燃える火種を差し出し、服従を迫っている。",
       "keywords": [
-        "Xanxusの最後通告"
+        "ザンザスの最後通告"
       ],
       "npc_ids": [
         "xanxus"
@@ -9305,7 +9325,7 @@
       "choices": [],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "Xanxusは燃える火種を差し出し、服従を迫っている。",
+        "summary": "ザンザスは燃える火種を差し出し、服従を迫っている。",
         "prepared_turns": [
           {
             "id": "accept_fire_seed",
@@ -9334,7 +9354,7 @@
             "action_id": "refuse_xanxus_with_rescue",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "Xanxusがとどめの炎を放とうとした瞬間、青い光が火線を切り裂いた。姿を消していたワーロックがあなたを背後へ庇う。『Xanxus、それは少しやり過ぎだ』青いローブの周囲に八属性の水晶球が展開し、二人の魔法使いの戦闘が始まる。",
+              "gm_text": "ザンザスがとどめの炎を放とうとした瞬間、青い光が火線を切り裂いた。姿を消していたワーロックがあなたを背後へ庇う。『ザンザス、それは少しやり過ぎだ』青いローブの周囲に八属性の水晶球が展開し、二人の魔法使いの戦闘が始まる。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -9352,7 +9372,7 @@
             "action_id": "refuse_xanxus_without_rescue",
             "outcome": "neutral",
             "draft": {
-              "gm_text": "Xanxusは一切の躊躇なく炎を解き放った。逃げ場はなく、視界は赤一色に染まった。",
+              "gm_text": "ザンザスは一切の躊躇なく炎を解き放った。逃げ場はなく、視界は赤一色に染まった。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -9397,7 +9417,7 @@
         {
           "id": "refuse_xanxus_with_rescue",
           "text": "死んでも従わない",
-          "preview": "Xanxusの要求を拒絶します",
+          "preview": "ザンザスの要求を拒絶します",
           "risk": "危険（戦闘）",
           "intent_keywords": [
             "死んでも従わない"
@@ -9420,7 +9440,7 @@
         {
           "id": "refuse_xanxus_without_rescue",
           "text": "死んでも従わない",
-          "preview": "Xanxusの要求を拒絶します",
+          "preview": "ザンザスの要求を拒絶します",
           "risk": "判定不要",
           "intent_keywords": [
             "死んでも従わない"
@@ -9429,7 +9449,7 @@
           "effects": [
             {
               "game_over": {
-                "reason": "Xanxusの要求を拒み、その炎に焼き尽くされました。",
+                "reason": "ザンザスの要求を拒み、その炎に焼き尽くされました。",
                 "ending": "defied_xanxus"
               }
             }
@@ -9444,10 +9464,10 @@
     {
       "id": "warlock_rescue_battle",
       "scene_id": "village",
-      "title": "ワーロック対Xanxus",
+      "title": "ワーロック対ザンザス",
       "description": "ワーロックがあなたを背後へ庇い、元素の水晶球を展開する。",
       "keywords": [
-        "ワーロック対Xanxus"
+        "ワーロック対ザンザス"
       ],
       "npc_ids": [
         "warlock",
@@ -9483,13 +9503,13 @@
         },
         "defeat_effects": {
           "game_over": {
-            "reason": "Xanxusは『こんなに長くかかったが、ようやく一度お前に勝てた』と笑い、続けてプレイヤーを炎で貫きました。",
+            "reason": "ザンザスは『こんなに長くかかったが、ようやく一度お前に勝てた』と笑い、続けてプレイヤーを炎で貫きました。",
             "ending": "warlock_lost"
           }
         },
         "result_texts": {
-          "victory": "Xanxusは頭を抱えて炎の彼方へ逃げ去った。ワーロックは、かつて元素・人類・竜が互いを害さない条約を結び、竜と人類は友好関係にあったと説明する。邪竜の暴走には誰かの思惑があり、多くの者が別々の狙いを抱えている。『くれぐれも用心してください。私は背後から見守っています』そう告げると、ワーロックは姿を消した。",
-          "defeat": "Xanxusは天を仰いで笑った。『こんなに長くかかったが、ようやく一度お前に勝てた！』ワーロックを退けた炎は、そのまま背後のあなたを貫いた。"
+          "victory": "ザンザスは頭を抱えて炎の彼方へ逃げ去った。ワーロックは、かつて元素・人類・竜が互いを害さない条約を結び、竜と人類は友好関係にあったと説明する。邪竜の暴走には誰かの思惑があり、多くの者が別々の狙いを抱えている。『くれぐれも用心してください。私は背後から見守っています』そう告げると、ワーロックは姿を消した。",
+          "defeat": "ザンザスは天を仰いで笑った。『こんなに長くかかったが、ようやく一度お前に勝てた！』ワーロックを退けた炎は、そのまま背後のあなたを貫いた。"
         },
         "encounter_class": "guest"
       },
@@ -10249,7 +10269,7 @@
           }
         }
       ],
-      "entry_text": "「約束の品はもらっていくぞ」Xanxusの声とともに、紅竜の心臓の炎が宙へ吸い上げられていった。",
+      "entry_text": "「約束の品はもらっていくぞ」ザンザスの声とともに、紅竜の心臓の炎が宙へ吸い上げられていった。",
       "narrate_entry": true
     },
     {
@@ -10735,7 +10755,7 @@
           }
         }
       ],
-      "entry_text": "遠くで、Xanxusの怒りに満ちた咆哮が聞こえた",
+      "entry_text": "遠くで、ザンザスの怒りに満ちた咆哮が聞こえた",
       "narrate_entry": true
     },
     {
@@ -12393,8 +12413,8 @@
     },
     {
       "id": "xanxus_at_nest",
-      "title": "竜の巣の前・Xanxus",
-      "description": "炎の中からXanxusが現れた。あなたの胸の火種が、呼応するように熱を帯びる。「よく来た。紅竜を倒したら、その心臓を我に捧げよ。火種を持つ限り、お前は我に逆らえぬ」",
+      "title": "竜の巣の前・ザンザス",
+      "description": "炎の中からザンザスが現れた。あなたの胸の火種が、呼応するように熱を帯びる。「よく来た。紅竜を倒したら、その心臓を我に捧げよ。火種を持つ限り、お前は我に逆らえぬ」",
       "scene_id": "dragon_valley",
       "background_image": "/static/images/bg_dragon_nest.png",
       "actions": [
@@ -12414,7 +12434,7 @@
               "current_location": "valley_nest_gate"
             }
           ],
-          "result_text": "Xanxusは満足げに笑い、炎とともに消えた。",
+          "result_text": "ザンザスは満足げに笑い、炎とともに消えた。",
           "risk_source": "destination"
         },
         {
@@ -12470,7 +12490,7 @@
               }
             ]
           },
-          "result_text": "聖なる光が胸の火種を包み込み、その炎が弱まっていく。Xanxusが怒りに吠える。『小癪な……火種を消される前に、力ずくで奪うまでだ！』",
+          "result_text": "聖なる光が胸の火種を包み込み、その炎が弱まっていく。ザンザスが怒りに吠える。『小癪な……火種を消される前に、力ずくで奪うまでだ！』",
           "risk_source": "action"
         },
         {
@@ -12502,7 +12522,7 @@
           "requirements": {
             "flag": "warlock_rescue_available"
           },
-          "result_text": "青い光が走り、ワーロックがあなたの前に立った。彼の杖が火種を凍らせて砕く。「Xanxus、もう白竜の手先は終わりだ」Xanxusは舌打ちし、炎の中へ消えた。ワーロックは振り返る。「あの骸骨は、白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ」",
+          "result_text": "青い光が走り、ワーロックがあなたの前に立った。彼の杖が火種を凍らせて砕く。「ザンザス、もう白竜の手先は終わりだ」ザンザスは舌打ちし、炎の中へ消えた。ワーロックは振り返る。「あの骸骨は、白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ」",
           "risk_source": "destination"
         }
       ],
@@ -12512,7 +12532,7 @@
       "enemy_ids": [],
       "connected_location_ids": [],
       "portrait_image": "/static/images/npc_xanxus.png",
-      "entry_text": "炎の中からXanxusが現れた。あなたの胸の火種が、呼応するように熱を帯びる。「よく来た。紅竜を倒したら、その心臓を我に捧げよ。火種を持つ限り、お前は我に逆らえぬ」",
+      "entry_text": "炎の中からザンザスが現れた。あなたの胸の火種が、呼応するように熱を帯びる。「よく来た。紅竜を倒したら、その心臓を我に捧げよ。火種を持つ限り、お前は我に逆らえぬ」",
       "narrate_entry": true,
       "entry_effects": [
         {
@@ -12522,8 +12542,8 @@
     },
     {
       "id": "xanxus_phantom_battle",
-      "title": "Xanxusの分身",
-      "description": "Xanxusが自らの炎を分けて作り出した分身。本体ほどの力はない。",
+      "title": "ザンザスの分身",
+      "description": "ザンザスが自らの炎を分けて作り出した分身。本体ほどの力はない。",
       "scene_id": "dragon_valley",
       "background_image": "/static/images/bg_dragon_nest.png",
       "actions": [],
@@ -12565,7 +12585,7 @@
           "current_location": "valley_nest_gate"
         },
         "result_texts": {
-          "victory": "分身が崩れ落ちる間際、Xanxusの声が響いた。「白竜め……約束が違うではないか……」",
+          "victory": "分身が崩れ落ちる間際、ザンザスの声が響いた。「白竜め……約束が違うではないか……」",
           "defeat": "炎に呑まれ、気がつくと巣の前に倒れていた。胸の火種は、まだ脈打っている。"
         },
         "one_time_reward": {
@@ -12585,7 +12605,7 @@
     {
       "id": "warlock_at_nest",
       "title": "竜の巣の前",
-      "description": "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。Xanxusは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。",
+      "description": "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。ザンザスは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。",
       "scene_id": "dragon_valley",
       "background_image": "/static/images/bg_dragon_nest.png",
       "actions": [
@@ -12613,7 +12633,7 @@
           "set_flag": "heard_xanxus_betrayal"
         }
       ],
-      "entry_text": "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。Xanxusは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。",
+      "entry_text": "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。ザンザスは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。",
       "portrait_image": "/static/images/npc_warlock.png",
       "narrate_entry": true
     },
@@ -13167,7 +13187,7 @@
             }
           ],
           "once": "draco_journal",
-          "result_text": "日誌には、十年前に紅竜の傷へ霜を打ち込んだこと、Xanxusと交わした密約、そして王国を手に入れる計画が、几帳面な文字で記されていた。",
+          "result_text": "日誌には、十年前に紅竜の傷へ霜を打ち込んだこと、ザンザスと交わした密約、そして王国を手に入れる計画が、几帳面な文字で記されていた。",
           "risk_source": "action"
         },
         {
@@ -16856,7 +16876,7 @@
     },
     {
       "id": "xanxus",
-      "name": "赤いローブの魔法使い・Xanxus",
+      "name": "赤いローブの魔法使い・ザンザス",
       "description": "赤い法衣をまとい、全身を炎に包まれた骸骨の魔法使い。",
       "keywords": [
         "Xanxus",
@@ -16956,7 +16976,7 @@
       "id": "iron_sword",
       "name": "鉄の剣",
       "description": "一見質素な一振りの剣……",
-      "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性",
+      "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
       "combat": {
         "kind": "weapon",
         "name": "鉄の剣",
@@ -16994,7 +17014,7 @@
       "id": "magic_scroll",
       "name": "魔法の巻物",
       "description": "封じられた攻撃魔法を一度だけ解放できる巻物。",
-      "effect": "2d6+int/2ダメージ / 命中率100% / arcane属性 / 消耗品",
+      "effect": "2d6+int/2ダメージ / 命中率100% / 秘術属性 / 消耗品",
       "combat": {
         "kind": "damage",
         "damage": "2d6+int/2",
@@ -17034,7 +17054,7 @@
       "id": "ice_charm",
       "name": "氷の護符",
       "description": "冷気の力を宿した護符。",
-      "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+      "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
       "combat": {
         "kind": "damage",
         "damage": "1d8+int/2",
@@ -17072,7 +17092,7 @@
       "id": "ice_iron_greatsword",
       "name": "氷鉄の大剣",
       "description": "氷の護符と上質な剣を融合させた大剣。",
-      "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+      "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
       "combat": {
         "kind": "weapon",
         "name": "氷鉄の大剣",
@@ -17117,7 +17137,7 @@
       "id": "ice_katana",
       "name": "氷の太刀",
       "description": "麓の村に伝わる伝説の強力な氷属性武器。",
-      "effect": "通常攻撃 2d10+str/3+int/3ダメージ / 命中率92% / ice属性",
+      "effect": "通常攻撃 2d10+str/3+int/3ダメージ / 命中率92% / 氷属性",
       "combat": {
         "kind": "weapon",
         "name": "氷の太刀",
@@ -17378,7 +17398,7 @@
     {
       "id": "fire_seed",
       "name": "火種",
-      "description": "Xanxusが作った火種。受ける炎属性ダメージを半減する一方、氷・水属性ダメージが倍になる。随時爆発しそうな様子をしている。",
+      "description": "ザンザスが作った火種。受ける炎属性ダメージを半減する一方、氷・水属性ダメージが倍になる。随時爆発しそうな様子をしている。",
       "non_removable": true,
       "combat": {
         "kind": "passive",
@@ -17568,7 +17588,7 @@
     {
       "id": "draco_journal",
       "name": "白竜の日誌",
-      "description": "将軍ドラコの日誌。紅竜への呪いとXanxusとの密約が記されている。",
+      "description": "将軍ドラコの日誌。紅竜への呪いとザンザスとの密約が記されている。",
       "effect": "証拠品",
       "category": "key",
       "key_item": true,
@@ -18617,7 +18637,7 @@
     },
     {
       "id": "xanxus",
-      "name": "赤炎骸骨Xanxus",
+      "name": "赤炎骸骨ザンザス",
       "description": "赤い法衣と業火に包まれた骸骨の大魔法使い。",
       "element": "fire",
       "hp": 999,
@@ -19266,8 +19286,8 @@
     },
     {
       "id": "xanxus_phantom",
-      "name": "Xanxusの分身",
-      "description": "Xanxusが自らの炎を分けて作り出した分身。",
+      "name": "ザンザスの分身",
+      "description": "ザンザスが自らの炎を分けて作り出した分身。",
       "hp": 147,
       "max_hp": 147,
       "element": "fire",
@@ -19279,7 +19299,7 @@
       },
       "combat": {
         "basic_attack": {
-          "name": "Xanxusの分身",
+          "name": "ザンザスの分身",
           "damage": "1d24",
           "accuracy": 80,
           "element": "fire"
@@ -19921,7 +19941,7 @@
         {
           "name": "鉄の剣",
           "description": "一見質素な一振りの剣……",
-          "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性",
+          "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
           "combat": {
             "kind": "weapon",
             "name": "鉄の剣",
@@ -20339,7 +20359,7 @@
         {
           "name": "ダガー",
           "description": "軽量で扱いやすい短剣。",
-          "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+          "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
           "combat": {
             "kind": "weapon",
             "name": "ダガー",
@@ -21016,7 +21036,7 @@
     {
       "id": "fire_seed_curse",
       "title": "火種の呪い",
-      "description": "Xanxusに植え付けられた火種が、胸の中で脈打っている。",
+      "description": "ザンザスに植え付けられた火種が、胸の中で脈打っている。",
       "kind": "side",
       "start_flag": "accepted_fire_seed",
       "complete_flags": [
@@ -22196,7 +22216,7 @@
             "xanxus_ultimatum",
             "warlock_rescue_battle"
           ],
-          "description": "赤い法衣をまとい、全身を炎に包まれた骸骨の魔法使いXanxusが退路を塞いでいる。"
+          "description": "赤い法衣をまとい、全身を炎に包まれた骸骨の魔法使いザンザスが退路を塞いでいる。"
         },
         {
           "id": "V8",
@@ -23251,7 +23271,7 @@
       "requirements": {
         "flag": "fire_seed_removed"
       },
-      "text": "胸の火種は消え去った。骸骨の魔法使いXanxusの行方を知る者はいない。"
+      "text": "胸の火種は消え去った。骸骨の魔法使いザンザスの行方を知る者はいない。"
     },
     {
       "id": "xanxus_core",
@@ -23264,7 +23284,7 @@
       "requirements": {
         "flag": "xanxus_took_core"
       },
-      "text": "紅竜の心臓を手にしたXanxusは、どこかで新たな企みを巡らせているという。"
+      "text": "紅竜の心臓を手にしたザンザスは、どこかで新たな企みを巡らせているという。"
     },
     {
       "id": "king_trust_only",

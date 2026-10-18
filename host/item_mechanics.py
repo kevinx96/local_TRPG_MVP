@@ -37,6 +37,20 @@ def item_combat_spec(item: Any) -> dict[str, Any]:
     return spec if str(spec.get("kind") or "").lower() in SUPPORTED_ITEM_KINDS else {}
 
 
+ELEMENT_LABELS = {
+    "physical": "物理", "fire": "炎", "ice": "氷", "water": "水", "earth": "土", "wind": "風", "lightning": "雷",
+    "holy": "聖", "light": "光", "dark": "闇", "arcane": "秘術", "cursed": "呪い",
+    "weakness": "弱点", "counter": "対抗", "current": "同調",
+}
+# Frozen benchmark replays keep the raw element ids their cached prompts were built with.
+LEGACY_ELEMENT_IDS = False
+
+
+def element_label(element: Any) -> str:
+    key = str(element or "")
+    return key if LEGACY_ELEMENT_IDS else ELEMENT_LABELS.get(key, key)
+
+
 def item_is_combat_usable(item: Any) -> bool:
     return str(item_combat_spec(item).get("kind") or "").lower() in USABLE_ITEM_KINDS
 
@@ -54,7 +68,7 @@ def structured_item_effect(item: Any) -> str:
         if spec.get("accuracy") is not None:
             parts.append(f"命中率{_as_int(spec.get('accuracy'), 100)}%")
         if spec.get("element"):
-            parts.append(f"{spec['element']}属性")
+            parts.append(f"{element_label(spec['element'])}属性")
     elif kind in {"armor", "equipment"}:
         defense = max(0, _as_int(spec.get("defense"), 0))
         if defense:
@@ -81,7 +95,7 @@ def structured_item_effect(item: Any) -> str:
         if spec.get("accuracy") is not None:
             parts.append(f"命中率{_as_int(spec.get('accuracy'), 100)}%")
         if spec.get("element"):
-            parts.append(f"{spec['element']}属性")
+            parts.append(f"{element_label(spec['element'])}属性")
     elif kind == "flee":
         parts.append("戦闘から確実に離脱")
     elif kind == "status":

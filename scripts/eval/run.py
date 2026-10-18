@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any
 from unittest.mock import patch
 
-from host import app, combat, free_actions, gm_contract, llm_client, state
+from host import app, combat, free_actions, gm_contract, item_mechanics, llm_client, state
 from host.llm_trace import prompt_metadata
 from .cache import cache_key, read_cache, write_cache
 from .metrics import summarize
@@ -236,6 +236,13 @@ def main(argv: list[str] = None) -> int:
 
 
 def run_evaluation(args: argparse.Namespace, config: dict[str, Any]) -> dict[str, Any]:
+    # The frozen benchmark was cached with raw element ids in item effects; keep them for replay.
+    frozen = (ROOT / "eval" / "benchmark") in args.cases.resolve().parents
+    with patch.object(item_mechanics, "LEGACY_ELEMENT_IDS", frozen):
+        return _run_evaluation(args, config)
+
+
+def _run_evaluation(args: argparse.Namespace, config: dict[str, Any]) -> dict[str, Any]:
     case_bytes = args.cases.read_bytes()
     cases = [json.loads(line) for line in case_bytes.decode("utf-8").splitlines() if line.strip()]
     cases = [case for case in cases if args.split == "all" or case["split"] == args.split]

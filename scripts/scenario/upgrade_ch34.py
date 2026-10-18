@@ -7,12 +7,12 @@ from typing import Any
 from .upgrade_forest import ROOT, action, move, observe, upsert
 
 BETRAYAL = "heard_xanxus_betrayal"
-STOLEN = "「約束の品はもらっていくぞ」Xanxusの声とともに、紅竜の心臓の炎が宙へ吸い上げられていった。"
-ANGER = "遠くで、Xanxusの怒りに満ちた咆哮が聞こえた"
-WARLOCK = "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。Xanxusは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。"
+STOLEN = "「約束の品はもらっていくぞ」ザンザスの声とともに、紅竜の心臓の炎が宙へ吸い上げられていった。"
+ANGER = "遠くで、ザンザスの怒りに満ちた咆哮が聞こえた"
+WARLOCK = "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。ザンザスは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。"
 REMOVE_SEED = [{"remove_item": {"name": "火種", "quantity": 1, "force": True}},
                {"set_flag": "fire_seed_removed"}, {"set_flag": BETRAYAL}]
-CLEANSE = "聖なる光が胸の火種を包み込み、その炎が弱まっていく。Xanxusが怒りに吠える。『小癪な……火種を消される前に、力ずくで奪うまでだ！』"
+CLEANSE = "聖なる光が胸の火種を包み込み、その炎が弱まっていく。ザンザスが怒りに吠える。『小癪な……火種を消される前に、力ずくで奪うまでだ！』"
 
 
 def fix_ch34(pack: dict[str, Any]) -> None:
@@ -133,23 +133,23 @@ def upgrade(pack: dict[str, Any]) -> None:
     bridge["actions"][0]["risk"] = "1d20判定（DC12）"
     bridge["objects"] = [observe("bridge_ropes", "焦げた縄", "右側の縄はまだしっかりしている。右端を伝えば安全に渡れそうだ。",
         [{"set_flag": "bridge_safe_side_known"}], dict(dice_type="1d20+wis", dc=10))]
-    nest = location("xanxus_at_nest", "竜の巣の前・Xanxus", "炎の中からXanxusが現れた。あなたの胸の火種が、呼応するように熱を帯びる。「よく来た。紅竜を倒したら、その心臓を我に捧げよ。火種を持つ限り、お前は我に逆らえぬ」", "dragon_valley", "bg_dragon_nest")
+    nest = location("xanxus_at_nest", "竜の巣の前・ザンザス", "炎の中からザンザスが現れた。あなたの胸の火種が、呼応するように熱を帯びる。「よく来た。紅竜を倒したら、その心臓を我に捧げよ。火種を持つ限り、お前は我に逆らえぬ」", "dragon_valley", "bg_dragon_nest")
     nest.update(npc_ids=["xanxus"], portrait_image="/static/images/npc_xanxus.png")
     nest.update(entry_text=nest["description"], narrate_entry=True, entry_effects=[{"set_flag": "xanxus_nest_seen"}])
-    nest["actions"] = [action("obey_xanxus_core", "従う", [{"set_flag": "promised_core_to_xanxus"}, {"current_location": "valley_nest_gate"}], result_text="Xanxusは満足げに笑い、炎とともに消えた。"),
+    nest["actions"] = [action("obey_xanxus_core", "従う", [{"set_flag": "promised_core_to_xanxus"}, {"current_location": "valley_nest_gate"}], result_text="ザンザスは満足げに笑い、炎とともに消えた。"),
         action("cleanse_fire_seed", "聖なる力で火種を浄化する", [branch({"has_item": "聖水"}, [{"remove_item": {"name": "聖水", "quantity": 1}}], [{"mp_change": -6}]),
             {"current_location": "xanxus_phantom_battle"}, {"start_combat": True}],
             requirements={"any": [{"has_item": "聖水"}, {"all": [{"character_id": "cleric"}, {"mp_gte": 6}]}]},
             result_text=CLEANSE),
         action("call_warlock", "ワーロックの名を呼ぶ", deepcopy(REMOVE_SEED) + [{"current_location": "valley_nest_gate"}],
             requirements={"flag": "warlock_rescue_available"},
-            result_text="青い光が走り、ワーロックがあなたの前に立った。彼の杖が火種を凍らせて砕く。「Xanxus、もう白竜の手先は終わりだ」Xanxusは舌打ちし、炎の中へ消えた。ワーロックは振り返る。「あの骸骨は、白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ」")]
-    phantom = location("xanxus_phantom_battle", "Xanxusの分身", "Xanxusが自らの炎を分けて作り出した分身。本体ほどの力はない。", "dragon_valley", "bg_dragon_nest")
+            result_text="青い光が走り、ワーロックがあなたの前に立った。彼の杖が火種を凍らせて砕く。「ザンザス、もう白竜の手先は終わりだ」ザンザスは舌打ちし、炎の中へ消えた。ワーロックは振り返る。「あの骸骨は、白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ」")]
+    phantom = location("xanxus_phantom_battle", "ザンザスの分身", "ザンザスが自らの炎を分けて作り出した分身。本体ほどの力はない。", "dragon_valley", "bg_dragon_nest")
     phantom["enemy_ids"] = ["xanxus_phantom"]
     phantom["combat"] = dict(auto_start=True, enemy_ids=["xanxus_phantom"], flee_allowed=False, encounter_class="boss",
         victory_effects=deepcopy(REMOVE_SEED) + [{"current_location": "valley_nest_gate"}],
         defeat_effects=dict(hp=1, flags_set=["promised_core_to_xanxus"], current_location="valley_nest_gate"),
-        result_texts=dict(victory="分身が崩れ落ちる間際、Xanxusの声が響いた。「白竜め……約束が違うではないか……」", defeat="炎に呑まれ、気がつくと巣の前に倒れていた。胸の火種は、まだ脈打っている。"))
+        result_texts=dict(victory="分身が崩れ落ちる間際、ザンザスの声が響いた。「白竜め……約束が違うではないか……」", defeat="炎に呑まれ、気がつくと巣の前に倒れていた。胸の火種は、まだ脈打っている。"))
     cameo = location("warlock_at_nest", "竜の巣の前", WARLOCK, "dragon_valley", "bg_dragon_nest", entry_effects=[{"set_flag": BETRAYAL}], entry_text=WARLOCK)
     cameo["portrait_image"] = next(n["image"] for n in pack["npcs"] if n["id"] == "blue_robed_mage")
     cameo["narrate_entry"] = True
@@ -176,7 +176,7 @@ def upgrade(pack: dict[str, Any]) -> None:
         ("lava_drake", "溶岩ドレイク", "竜の谷に棲む小型の竜。イグニスの眷属とされる。", 20, "1d5", "fire", {"ice": 1.5, "fire": .5}, 8,
          [dict(id="lava_breath", name="溶岩の吐息", kind="attack", damage="1d6", accuracy=80, element="fire", ai_weight=2),
           dict(id="hook_claw", name="鉤爪", kind="attack", damage="1d5", accuracy=85, element="physical", ai_weight=1)]),
-        ("xanxus_phantom", "Xanxusの分身", "Xanxusが自らの炎を分けて作り出した分身。", 110, "1d8", "fire", {"ice": 1.5, "holy": 1.5, "fire": .5}, 3,
+        ("xanxus_phantom", "ザンザスの分身", "ザンザスが自らの炎を分けて作り出した分身。", 110, "1d8", "fire", {"ice": 1.5, "holy": 1.5, "fire": .5}, 3,
          [dict(id="flame_vortex", name="火炎旋渦", kind="field", round_damage="2", element="fire", ai_weight=2),
           dict(id="summon_meteor", name="隕石召喚", kind="attack", damage="2d8", accuracy=85, element="fire", ai_weight=3)])]:
         upsert(pack["enemies"], dict(id=identifier, name=name, description=description, hp=hp, max_hp=hp, element=element,
@@ -185,7 +185,7 @@ def upgrade(pack: dict[str, Any]) -> None:
 
     pack["quests"][-1:-1] = [dict(id="side_riku", title="燃える家の子ども", description="燃える民家に子どもが取り残されている。", kind="side", start_flag="found_burning_house",
         complete_flags=["riku_returned"], fail_flags=["riku_abandoned"], stages=[dict(text="子どもを助け出す", done_flag="riku_rescued"), dict(text="避難所の長老のもとへ連れて行く", done_flag="riku_returned")]),
-        dict(id="fire_seed_curse", title="火種の呪い", description="Xanxusに植え付けられた火種が、胸の中で脈打っている。", kind="side", start_flag="accepted_fire_seed",
+        dict(id="fire_seed_curse", title="火種の呪い", description="ザンザスに植え付けられた火種が、胸の中で脈打っている。", kind="side", start_flag="accepted_fire_seed",
              complete_flags=["fire_seed_removed"], fail_flags=["xanxus_took_core"], stages=[dict(text="火種を取り除く方法を探す", done_flag="fire_seed_removed")])]
     def clues(value: Any) -> None:
         if isinstance(value, dict):

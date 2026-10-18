@@ -210,7 +210,7 @@ class Chapter34Tests(unittest.TestCase):
                 self.add(s, "聖水")
                 self.gate(s)
                 result = self.act(s, "cleanse_fire_seed")
-                self.assertEqual(result["result_text"], "聖なる光が胸の火種を包み込み、その炎が弱まっていく。Xanxusが怒りに吠える。『小癪な……火種を消される前に、力ずくで奪うまでだ！』")
+                self.assertEqual(result["result_text"], "聖なる光が胸の火種を包み込み、その炎が弱まっていく。ザンザスが怒りに吠える。『小癪な……火種を消される前に、力ずくで奪うまでだ！』")
                 self.assertTrue(self.has(s, "火種"))
                 self.assertFalse(s["flags"].get("fire_seed_removed", False))
                 self.assertFalse(self.has(s, "聖水"))

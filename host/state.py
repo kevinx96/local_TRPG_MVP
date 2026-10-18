@@ -79,7 +79,7 @@ DEFAULT_CHARACTER: dict[str, Any] = {
     "attributes": {},
     "skills": [],
     "inventory": [
-        {"name": "鉄の剣", "description": DEFAULT_ITEM_CATALOG["鉄の剣"]["description"], "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性", "combat": deepcopy(DEFAULT_ITEM_CATALOG["鉄の剣"]["combat"]), "quantity": 1},
+        {"name": "鉄の剣", "description": DEFAULT_ITEM_CATALOG["鉄の剣"]["description"], "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性", "combat": deepcopy(DEFAULT_ITEM_CATALOG["鉄の剣"]["combat"]), "quantity": 1},
         {"name": "革の鎧", "description": DEFAULT_ITEM_CATALOG["革の鎧"]["description"], "effect": "被ダメージを1軽減", "combat": deepcopy(DEFAULT_ITEM_CATALOG["革の鎧"]["combat"]), "quantity": 1},
         {"name": "薬草", "description": DEFAULT_ITEM_CATALOG["薬草"]["description"], "effect": "HPを10回復 / 消耗品", "combat": deepcopy(DEFAULT_ITEM_CATALOG["薬草"]["combat"]), "quantity": 1},
     ],
@@ -452,6 +452,9 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     public.pop("shop_stock", None)
     public.pop("area_snapshots", None)
     public["can_retry_area"] = retry_snapshot(session) is not None
+    from .item_mechanics import ELEMENT_LABELS
+    meta = (session.get("scenario_pack") or {}).get("meta") or {}
+    public["ruby"] = {"names": dict(meta.get("ruby_names") or {}), "elements": dict(ELEMENT_LABELS)}
     public["last_action_result"] = {key: deepcopy(value)
                                     for key, value in (session.get("last_action_result") or {}).items()
                                     if key in {"action_id", "event_id", "open_shop"}}

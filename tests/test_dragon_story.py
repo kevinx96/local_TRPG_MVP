@@ -288,7 +288,7 @@ class DragonStoryTests(unittest.TestCase):
     def test_lost_goblin_and_xanxus_show_intro_before_combat_without_llm(self):
         cases = (
             ("dark_forest", "lost_goblin_crossroads", "ignore_lost_goblin", [10], "財布"),
-            ("village", "xanxus_confrontation", "bluff_xanxus", [10], "Xanxus"),
+            ("village", "xanxus_confrontation", "bluff_xanxus", [10], "ザンザス"),
         )
         for scene_id, location_id, action_id, rolls, expected_text in cases:
             with self.subTest(action_id=action_id):

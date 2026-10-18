@@ -593,7 +593,7 @@ function renderSession(session) {
 
   /* Scene */
   if (els.sceneTitle) {
-    els.sceneTitle.textContent = session.current_location_title || session.current_scene_title || session.current_location || session.current_scene || session.scenario_title || "開始";
+    els.sceneTitle.innerHTML = rubyHtml(session.current_location_title || session.current_scene_title || session.current_location || session.current_scene || session.scenario_title || "開始");
     els.sceneTitle.title = session.current_scene_title && session.current_location_title !== session.current_scene_title
       ? session.current_scene_title
       : "";
@@ -627,7 +627,7 @@ function renderSession(session) {
     const companion = session.companion;
     els.companionInfo.hidden = !companion;
     els.companionInfo.innerHTML = companion
-      ? `${companion.image ? `<img src="${escapeAttr(companion.image)}" alt="" />` : ""}<span>同行者　${escapeHtml(companion.name || companion.id || "不明")}${companion.description ? `<small class="companion-role">${escapeHtml(companion.description)}</small>` : ""}</span>`
+      ? `${companion.image ? `<img src="${escapeAttr(companion.image)}" alt="" />` : ""}<span>同行者　${rubyHtml(companion.name || companion.id || "不明")}${companion.description ? `<small class="companion-role">${rubyHtml(companion.description)}</small>` : ""}</span>`
       : "";
   }
 
@@ -671,6 +671,7 @@ function renderSession(session) {
     els.systemLogs,
     (session.system_logs || []).slice(-8).reverse().map((entry) => entry.text),
     "ログなし",
+    true,
   );
 
   /* Messages */
@@ -772,8 +773,8 @@ function renderInventory(items) {
       </div>
       ${hasDetails ? `
         <div class="item-details">
-          ${desc ? `<div class="item-desc">${escapeHtml(desc)}</div>` : ''}
-          ${effect ? `<div class="item-effect">${escapeHtml(effect)}</div>` : ''}
+          ${desc ? `<div class="item-desc">${rubyHtml(desc)}</div>` : ''}
+          ${effect ? `<div class="item-effect">${rubyHtml(effect)}</div>` : ''}
           ${usable ? `<button type="button" class="start-btn item-use">${equippable ? escapeHtml(equipLabel) : "使う"}</button>` : ''}
         </div>
       ` : ''}
@@ -815,13 +816,13 @@ function renderQuests(quests) {
     card.className = `inventory-item quest-card quest-${quest.kind}`;
     card.dataset.questId = quest.id;
     if (ended) card.open = expanded.has(quest.id);
-    const heading = `<span class="item-qty quest-kind">${labels[quest.kind] || ""}</span> <strong>${escapeHtml(quest.title)}</strong>
+    const heading = `<span class="item-qty quest-kind">${labels[quest.kind] || ""}</span> <strong>${rubyHtml(quest.title)}</strong>
       ${ended ? `<span class="quest-${quest.status}">${quest.status === "completed" ? "達成" : "失敗"}</span>` : ""}`;
     card.innerHTML = `${ended ? `<summary>${heading}</summary>` : `<div>${heading}</div>`}
-      <p class="item-desc">${escapeHtml(quest.description)}</p>
+      <p class="item-desc">${rubyHtml(quest.description)}</p>
       ${quest.clue_count !== undefined ? `<p class="item-desc">手がかり：${quest.clue_count}</p>` : ""}
-      ${(quest.completed_stages || []).map(text => `<p class="quest-done">${escapeHtml(text)}</p>`).join("")}
-      ${quest.current_objective ? `<p>▶ ${escapeHtml(quest.current_objective)}</p>` : ""}`;
+      ${(quest.completed_stages || []).map(text => `<p class="quest-done">${rubyHtml(text)}</p>`).join("")}
+      ${quest.current_objective ? `<p>▶ ${rubyHtml(quest.current_objective)}</p>` : ""}`;
     root.append(card);
   }
 }
@@ -907,7 +908,7 @@ function renderShop() {
     row.classList.toggle("sold-out", item.stock === 0);
     row.setAttribute("aria-pressed", item.item_id === state.shopItemId);
     row.disabled = state.serviceBusy;
-    row.innerHTML = `<div class="item-name">${escapeHtml(item.name)}</div><div class="item-desc shop-effect">${escapeHtml(item.effect || "")}</div>
+    row.innerHTML = `<div class="item-name">${escapeHtml(item.name)}</div><div class="item-desc shop-effect">${rubyHtml(item.effect || "")}</div>
       <div class="shop-row-bottom"><span class="shop-price ${!selling && item.price > shop.gold ? "unaffordable" : ""}">${item.price} G</span>
       <span class="item-qty">${item.stock === null ? "∞" : `${selling ? "所持：" : "在庫 "}${item.stock}`}</span>
       ${item.stock === 0 ? '<span class="item-desc">売り切れ</span>' : ""}</div>`;
@@ -929,8 +930,8 @@ function renderShop() {
   const owned = (state.character.inventory || []).find(entry => entry.id === item.item_id || entry.name === item.name)?.quantity || 0;
   const reason = selling ? "" : item.stock === 0 ? "売り切れ" : item.enabled === false ? item.reason : limit < 1 ? shop.poor_line : "";
   if (reason === shop.poor_line) document.querySelector("#shopLine").textContent = shop.poor_line;
-  detail.innerHTML = `<h3>${escapeHtml(item.name)}</h3><p class="item-desc">${escapeHtml(item.description || "")}</p>
-    <p class="item-effect">${escapeHtml(item.effect || "")}</p><p>所持：${owned}</p>
+  detail.innerHTML = `<h3>${escapeHtml(item.name)}</h3><p class="item-desc">${rubyHtml(item.description || "")}</p>
+    <p class="item-effect">${rubyHtml(item.effect || "")}</p><p>所持：${owned}</p>
     <div class="shop-purchase"><div class="shop-quantity">
       <button type="button" class="gal-menu-btn" id="shopMinus" ${state.shopQuantity <= 1 || state.serviceBusy ? "disabled" : ""}>−</button>
       <output>${state.shopQuantity}</output>
@@ -987,7 +988,7 @@ function renderEnemies(enemies) {
         <span>HP ${hp}/${maxHp}</span>
       </div>
       <div class="enemy-hp"><i style="width:${percent}%"></i></div>
-      ${enemy.description ? `<p>${escapeHtml(enemy.description)}</p>` : ""}
+      ${enemy.description ? `<p>${rubyHtml(enemy.description)}</p>` : ""}
       ${skills ? `<div class="enemy-skills">${skills}</div>` : ""}
     </section>`;
   }).join("");
@@ -1151,7 +1152,7 @@ function renderChoices(choices) {
 
     const textDiv = document.createElement("div");
     textDiv.className = "choice-text";
-    textDiv.textContent = text;
+    textDiv.innerHTML = rubyHtml(text);
 
     const bodyDiv = document.createElement("div");
     bodyDiv.className = "choice-body";
@@ -1166,7 +1167,7 @@ function renderChoices(choices) {
     if (preview && !unknown) {
       const previewDiv = document.createElement("div");
       previewDiv.className = "choice-preview";
-      previewDiv.textContent = preview;
+      previewDiv.innerHTML = rubyHtml(preview);
       bodyDiv.appendChild(previewDiv);
     }
     if (risk && !hasChildren && !unknown) {
@@ -1200,7 +1201,7 @@ function highlightChoice(card) {
   for (const row of els.choicesList.querySelectorAll(".choice-card")) {
     row.classList.toggle("highlighted", row === card);
   }
-  els.choiceDescription.textContent = card.dataset.description || "";
+  els.choiceDescription.innerHTML = rubyHtml(card.dataset.description || "");
 }
 
 function isCombatChoice(text, preview, risk) {
@@ -1240,7 +1241,7 @@ function renderScenePortraits(session, character) {
   els.spriteLayer.classList.toggle("solo-mode", !dialogueActive && locationNpcs.length === 0 && Boolean(playerImage));
 
   els.locationPortraits.innerHTML = dialogueActive ? "" : locationNpcs.map((npc) => (
-    `<figure class="location-portrait"><img src="${escapeAttr(npc.image)}" alt="" /><figcaption>${escapeHtml(npc.name || "")}</figcaption></figure>`
+    `<figure class="location-portrait"><img src="${escapeAttr(npc.image)}" alt="" /><figcaption>${rubyHtml(npc.name || "")}</figcaption></figure>`
   )).join("");
   els.locationPortraits.dataset.count = String(locationNpcs.length);
   els.locationPortraits.style.display = !dialogueActive && locationNpcs.length ? "" : "none";
@@ -1291,12 +1292,12 @@ function renderEnding(gameOver) {
   els.endingOverlay.classList.toggle("complete", complete);
   const endingLabel = document.querySelector("#endingLabel");
   if (endingLabel) endingLabel.textContent = complete ? "ADVENTURE COMPLETE" : "GAME OVER";
-  els.endingReason.textContent = gameOver.reason || "物語はここで終わりました。";
+  els.endingReason.innerHTML = rubyHtml(gameOver.reason || "物語はここで終わりました。");
   const epilogue = document.querySelector("#endingEpilogue");
   if (epilogue) {
     epilogue.replaceChildren(...(gameOver.epilogue || []).map((line, index) => {
       const item = document.createElement("li");
-      item.textContent = line;
+      item.innerHTML = rubyHtml(line);
       item.style.animationDelay = `${0.6 + index * 0.5}s`;
       return item;
     }));
@@ -1441,7 +1442,7 @@ function renderCombat(session) {
     renderCombatTutorial();
     const labels = { victory: "勝利", defeat: "敗北", fled: "撤退成功", purified: "浄化" };
     els.combatResultTitle.textContent = labels[combat.status] || "戦闘終了";
-    els.combatResultText.textContent = combat.result?.summary || "戦闘結果が確定しました。";
+    els.combatResultText.innerHTML = rubyHtml(combat.result?.summary || "戦闘結果が確定しました。");
     els.combatResolveButton.disabled = state.combatBusy || !combat.pending_resolution;
   } else {
     state.combatActions = Array.isArray(combat.actions) ? combat.actions : [];
@@ -1456,7 +1457,7 @@ function renderCombatLogToggle() {
 }
 
 function combatLogMarkup(entry) {
-  return `<div class="combat-log-entry ${escapeAttr(entry.kind || "")}" data-event-sequence="${entry.sequence || 0}"><strong>R${entry.round || 1}</strong><span>${escapeHtml(entry.text || "")}</span></div>`;
+  return `<div class="combat-log-entry ${escapeAttr(entry.kind || "")}" data-event-sequence="${entry.sequence || 0}"><strong>R${entry.round || 1}</strong><span>${rubyHtml(entry.text || "")}</span></div>`;
 }
 
 function combatEnemyMarkup(enemy, resources) {
@@ -1472,9 +1473,9 @@ function combatEnemyMarkup(enemy, resources) {
       data-combat-target="${escapeAttr(enemy.id || "")}" ${defeated ? "disabled" : ""}>
       ${enemyImage}
       <span class="combatant-side">ENEMY</span>
-      <h3>${escapeHtml(enemy.name || enemy.id || "敵")}</h3>
+      <h3>${rubyHtml(enemy.name || enemy.id || "敵")}</h3>
       <div class="combat-resource hp"><span>HP</span><i><b style="width:${percent}%"></b></i><strong>${hp}/${maxHp}</strong></div>
-      ${enemy.description ? `<p>${escapeHtml(enemy.description)}</p>` : ""}
+      ${enemy.description ? `<p>${rubyHtml(enemy.description)}</p>` : ""}
       ${renderAbilityTags(enemy.skills || [], true)}
     </button>`;
 }
@@ -1557,7 +1558,7 @@ function renderCombatIntro(combat) {
   const introText = String(combat?.intro_text || "").trim();
   const visible = Boolean(combatId && introText && combat?.status === "active" && state.combatIntroSeenId !== combatId);
   els.combatIntro.dataset.combatId = combatId;
-  els.combatIntroText.textContent = introText;
+  els.combatIntroText.innerHTML = rubyHtml(introText);
   els.combatIntro.style.display = visible ? "" : "none";
   els.combatScreen.classList.toggle("intro-active", visible);
 }
@@ -1569,13 +1570,13 @@ function abilityTagTexts(abilities, compact = false) {
     if (ability.damage) tags.push(`威力 ${ability.damage}`);
     if (ability.healing) tags.push(`回復 ${ability.healing}`);
     if (ability.accuracy !== undefined) tags.push(`命中 ${ability.accuracy}%`);
-    if (ability.element) tags.push(String(ability.element).toUpperCase());
+    if (ability.element) tags.push(elementLabel(ability.element));
     if (ability.all_targets) tags.push("全体");
     if (ability.hits_per_element) tags.push(`${ability.hits_per_element}回×${(ability.multi_elements || []).length || 1}属性`);
     if (ability.check?.dc) tags.push(`判定 DC${ability.check.dc}`);
     for (const followup of ability.followups || []) {
       if (followup?.damage) tags.push(`追撃 ${followup.damage}`);
-      if (followup?.element) tags.push(`追撃 ${String(followup.element).toUpperCase()}`);
+      if (followup?.element) tags.push(`追撃 ${elementLabel(followup.element)}`);
     }
     if (compact && ability.name) tags.unshift(ability.name);
   }
@@ -1668,11 +1669,11 @@ function addMessage(role, speaker, text) {
 
   const speakerNode = document.createElement("span");
   speakerNode.className = "speaker";
-  speakerNode.textContent = speaker || (role === "user" ? "プレイヤー" : "GM");
+  speakerNode.innerHTML = rubyHtml(speaker || (role === "user" ? "プレイヤー" : "GM"));
 
   const textNode = document.createElement("div");
   textNode.className = "text";
-  textNode.textContent = text || "";
+  textNode.innerHTML = rubyHtml(text || "");
 
   node.append(speakerNode, textNode);
   if (els.messages) {
@@ -1681,8 +1682,8 @@ function addMessage(role, speaker, text) {
   }
 
   // Update galgame dialog box
-  if (els.speakerName) els.speakerName.textContent = speaker || (role === "user" ? "プレイヤー" : "GM");
-  if (els.messageText) els.messageText.textContent = text || "";
+  if (els.speakerName) els.speakerName.innerHTML = rubyHtml(speaker || (role === "user" ? "プレイヤー" : "GM"));
+  if (els.messageText) els.messageText.innerHTML = rubyHtml(text || "");
 
   return textNode;
 }
@@ -1691,12 +1692,13 @@ function addMessage(role, speaker, text) {
    GENERIC LIST RENDERER
    ═══════════════════════════════════════════════════ */
 
-function renderList(target, items, emptyText) {
+function renderList(target, items, emptyText, rich = false) {
   target.innerHTML = "";
   const values = items.length ? items : [emptyText];
   for (const item of values) {
     const li = document.createElement("li");
-    li.textContent = item;
+    if (rich) li.innerHTML = rubyHtml(item);
+    else li.textContent = item;
     target.append(li);
   }
 }
@@ -1726,6 +1728,53 @@ function escapeHtml(text) {
   const div = document.createElement("div");
   div.textContent = text;
   return div.innerHTML;
+}
+
+// Proper names show their English spelling with the katakana as ruby; element labels keep the kanji with the id as ruby.
+// Only the first mention in each block carries the ruby; later names stay in English.
+let rubyCache = { source: undefined, pattern: null, lookup: new Map() };
+
+function rubyMatcher() {
+  const ruby = state.session?.ruby;
+  if (rubyCache.source === ruby) return rubyCache;
+  const lookup = new Map();
+  for (const [kana, english] of Object.entries(ruby?.names || {})) {
+    const entry = { key: english, first: `<ruby>${escapeHtml(english)}<rt>${escapeHtml(kana)}</rt></ruby>`, rest: escapeHtml(english) };
+    lookup.set(kana, entry);
+    lookup.set(english, entry);
+  }
+  const elements = new Map(Object.entries(ruby?.elements || {}).map(([id, label]) =>
+    [`${label}属性`, { key: id, first: `<ruby>${escapeHtml(label)}<rt>${escapeHtml(id)}</rt></ruby>属性`, rest: `${escapeHtml(label)}属性` }]));
+  const alternation = (keys) => [...keys].sort((a, b) => b.length - a.length).map(escapeRegExp).join("|");
+  const parts = [];
+  if (lookup.size) parts.push(`(?<![ァ-ヶーA-Za-z])(?:${alternation(lookup.keys())})(?![ァ-ヶーA-Za-z])`);
+  if (elements.size) parts.push(alternation(elements.keys()));
+  elements.forEach((entry, key) => lookup.set(key, entry));
+  rubyCache = { source: ruby, lookup, pattern: parts.length ? new RegExp(parts.join("|"), "g") : null };
+  return rubyCache;
+}
+
+function rubyHtml(text) {
+  const html = escapeHtml(String(text ?? ""));
+  const { pattern, lookup } = rubyMatcher();
+  if (!pattern) return html;
+  const seen = new Set();
+  return html.replace(pattern, (term) => {
+    const entry = lookup.get(term);
+    if (!entry) return term;
+    if (seen.has(entry.key)) return entry.rest;
+    seen.add(entry.key);
+    return entry.first;
+  });
+}
+
+function elementLabel(element) {
+  const id = String(element || "");
+  return state.session?.ruby?.elements?.[id] || id.toUpperCase();
+}
+
+function escapeRegExp(text) {
+  return String(text).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function escapeAttr(value) {

@@ -1,6 +1,6 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "89185e2186b00878947abecf6606e51d24d27b3dff86999e72977134bf67947a",
+  "scenario_sha256": "76c23f0b6d1a80b1f30e2c49cf19b57facd606cc222b184c019c0a2d2cd91a52",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
@@ -60,7 +60,7 @@
             {
               "name": "鉄の剣",
               "description": "一見質素な一振りの剣……",
-              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性",
+              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
               "quantity": 1,
               "id": "iron_sword",
               "icon": "/static/images/icon_iron_sword.png",
@@ -116,7 +116,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -517,7 +517,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -593,7 +593,7 @@
             {
               "name": "氷の護符",
               "description": "冷気の力を宿した護符。",
-              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
               "quantity": 1,
               "id": "ice_charm",
               "icon": "/static/images/icon_ice_charm.png",
@@ -1030,7 +1030,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -1373,7 +1373,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -1435,7 +1435,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -1511,7 +1511,7 @@
             {
               "name": "氷の護符",
               "description": "冷気の力を宿した護符。",
-              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
               "quantity": 1,
               "id": "ice_charm",
               "icon": "/static/images/icon_ice_charm.png",
@@ -1892,7 +1892,7 @@
             {
               "name": "鉄の剣",
               "description": "一見質素な一振りの剣……",
-              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性",
+              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
               "quantity": 1,
               "id": "iron_sword",
               "icon": "/static/images/icon_iron_sword.png",
@@ -1948,7 +1948,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -2412,7 +2412,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -2488,7 +2488,7 @@
             {
               "name": "氷の護符",
               "description": "冷気の力を宿した護符。",
-              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
               "quantity": 1,
               "id": "ice_charm",
               "icon": "/static/images/icon_ice_charm.png",
@@ -2988,7 +2988,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -3394,7 +3394,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -3456,7 +3456,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -3532,7 +3532,7 @@
             {
               "name": "氷の護符",
               "description": "冷気の力を宿した護符。",
-              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
               "quantity": 1,
               "id": "ice_charm",
               "icon": "/static/images/icon_ice_charm.png",
@@ -3976,7 +3976,7 @@
             {
               "name": "鉄の剣",
               "description": "一見質素な一振りの剣……",
-              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性",
+              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
               "quantity": 1,
               "id": "iron_sword",
               "icon": "/static/images/icon_iron_sword.png",
@@ -4032,7 +4032,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -4127,7 +4127,7 @@
             {
               "name": "火球術の巻物",
               "description": "知力10として火球を一度だけ放つ。",
-              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "effect": "1d6+5ダメージ / 命中率90% / 炎属性 / 消耗品",
               "quantity": 2,
               "id": "fireball_scroll",
               "icon": "/static/images/icon_fireball_scroll.png",
@@ -4602,7 +4602,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -4678,7 +4678,7 @@
             {
               "name": "氷の護符",
               "description": "冷気の力を宿した護符。",
-              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
               "quantity": 1,
               "id": "ice_charm",
               "icon": "/static/images/icon_ice_charm.png",
@@ -4713,7 +4713,7 @@
             {
               "name": "火球術の巻物",
               "description": "知力10として火球を一度だけ放つ。",
-              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "effect": "1d6+5ダメージ / 命中率90% / 炎属性 / 消耗品",
               "quantity": 2,
               "id": "fireball_scroll",
               "icon": "/static/images/icon_fireball_scroll.png",
@@ -5283,7 +5283,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -5378,7 +5378,7 @@
             {
               "name": "火球術の巻物",
               "description": "知力10として火球を一度だけ放つ。",
-              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "effect": "1d6+5ダメージ / 命中率90% / 炎属性 / 消耗品",
               "quantity": 2,
               "id": "fireball_scroll",
               "icon": "/static/images/icon_fireball_scroll.png",
@@ -5794,7 +5794,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -5856,7 +5856,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -5932,7 +5932,7 @@
             {
               "name": "氷の護符",
               "description": "冷気の力を宿した護符。",
-              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
               "quantity": 1,
               "id": "ice_charm",
               "icon": "/static/images/icon_ice_charm.png",
@@ -5967,7 +5967,7 @@
             {
               "name": "火球術の巻物",
               "description": "知力10として火球を一度だけ放つ。",
-              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "effect": "1d6+5ダメージ / 命中率90% / 炎属性 / 消耗品",
               "quantity": 2,
               "id": "fireball_scroll",
               "icon": "/static/images/icon_fireball_scroll.png",
@@ -6482,7 +6482,7 @@
             {
               "name": "鉄の剣",
               "description": "一見質素な一振りの剣……",
-              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性",
+              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
               "quantity": 1,
               "id": "iron_sword",
               "icon": "/static/images/icon_iron_sword.png",
@@ -6538,7 +6538,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -6633,7 +6633,7 @@
             {
               "name": "火球術の巻物",
               "description": "知力10として火球を一度だけ放つ。",
-              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "effect": "1d6+5ダメージ / 命中率90% / 炎属性 / 消耗品",
               "quantity": 2,
               "id": "fireball_scroll",
               "icon": "/static/images/icon_fireball_scroll.png",
@@ -7155,7 +7155,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -7231,7 +7231,7 @@
             {
               "name": "氷の護符",
               "description": "冷気の力を宿した護符。",
-              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
               "quantity": 1,
               "id": "ice_charm",
               "icon": "/static/images/icon_ice_charm.png",
@@ -7266,7 +7266,7 @@
             {
               "name": "火球術の巻物",
               "description": "知力10として火球を一度だけ放つ。",
-              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "effect": "1d6+5ダメージ / 命中率90% / 炎属性 / 消耗品",
               "quantity": 2,
               "id": "fireball_scroll",
               "icon": "/static/images/icon_fireball_scroll.png",
@@ -7883,7 +7883,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -7978,7 +7978,7 @@
             {
               "name": "火球術の巻物",
               "description": "知力10として火球を一度だけ放つ。",
-              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "effect": "1d6+5ダメージ / 命中率90% / 炎属性 / 消耗品",
               "quantity": 2,
               "id": "fireball_scroll",
               "icon": "/static/images/icon_fireball_scroll.png",
@@ -8441,7 +8441,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -8503,7 +8503,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -8579,7 +8579,7 @@
             {
               "name": "氷の護符",
               "description": "冷気の力を宿した護符。",
-              "effect": "1d8+int/2ダメージ / 命中率100% / ice属性",
+              "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
               "quantity": 1,
               "id": "ice_charm",
               "icon": "/static/images/icon_ice_charm.png",
@@ -8614,7 +8614,7 @@
             {
               "name": "火球術の巻物",
               "description": "知力10として火球を一度だけ放つ。",
-              "effect": "1d6+5ダメージ / 命中率90% / fire属性 / 消耗品",
+              "effect": "1d6+5ダメージ / 命中率90% / 炎属性 / 消耗品",
               "quantity": 2,
               "id": "fireball_scroll",
               "icon": "/static/images/icon_fireball_scroll.png",
@@ -9213,7 +9213,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -9229,7 +9229,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -9484,7 +9484,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -9691,7 +9691,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -9839,7 +9839,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -9901,7 +9901,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -10093,7 +10093,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -10109,7 +10109,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -10417,7 +10417,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -10677,7 +10677,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -10878,7 +10878,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -10940,7 +10940,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -11185,7 +11185,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -11201,7 +11201,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -11565,7 +11565,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -11881,7 +11881,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -12138,7 +12138,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -12200,7 +12200,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -12501,7 +12501,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -12517,7 +12517,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -12883,7 +12883,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -13201,7 +13201,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -13460,7 +13460,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -13522,7 +13522,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -13825,7 +13825,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -13841,7 +13841,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -14234,7 +14234,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -14579,7 +14579,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -14865,7 +14865,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -14927,7 +14927,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -15257,7 +15257,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -15273,7 +15273,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -15693,7 +15693,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -16065,7 +16065,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -16378,7 +16378,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -16440,7 +16440,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -16797,7 +16797,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -16813,7 +16813,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -17139,7 +17139,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -17417,7 +17417,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -17636,7 +17636,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -17698,7 +17698,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -17961,7 +17961,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -17977,7 +17977,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -18335,7 +18335,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -18645,7 +18645,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -18896,7 +18896,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -18958,7 +18958,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -19253,7 +19253,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -19269,7 +19269,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -19689,7 +19689,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -20061,7 +20061,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -20374,7 +20374,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -20436,7 +20436,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -20793,7 +20793,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -20809,7 +20809,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -21230,7 +21230,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -21603,7 +21603,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -21917,7 +21917,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -21979,7 +21979,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -22337,7 +22337,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -22353,7 +22353,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -22804,7 +22804,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -23207,7 +23207,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -23551,7 +23551,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -23613,7 +23613,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -24001,7 +24001,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -24017,7 +24017,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -24490,7 +24490,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -24915,7 +24915,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -25281,7 +25281,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -25343,7 +25343,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -25756,7 +25756,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -25772,7 +25772,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -26339,7 +26339,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -26847,7 +26847,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -27296,7 +27296,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -27358,7 +27358,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -27851,7 +27851,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -27867,7 +27867,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -28307,7 +28307,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -28688,7 +28688,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -29010,7 +29010,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -29072,7 +29072,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -29437,7 +29437,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -29453,7 +29453,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -29893,7 +29893,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -30274,7 +30274,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -30596,7 +30596,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -30658,7 +30658,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -31023,7 +31023,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -31039,7 +31039,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -31539,7 +31539,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -31980,7 +31980,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -32362,7 +32362,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -32424,7 +32424,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -32849,7 +32849,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -32865,7 +32865,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -33388,7 +33388,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -33852,7 +33852,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -34257,7 +34257,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -34319,7 +34319,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -34769,7 +34769,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -34785,7 +34785,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -35274,7 +35274,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -35704,7 +35704,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -36075,7 +36075,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -36137,7 +36137,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -36551,7 +36551,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -36567,7 +36567,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -37121,7 +37121,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -37616,7 +37616,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -38052,7 +38052,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -38114,7 +38114,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -38593,7 +38593,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -38609,7 +38609,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 2,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -39237,7 +39237,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -39384,7 +39384,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -39824,7 +39824,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -39971,7 +39971,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -40352,7 +40352,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -40414,7 +40414,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -40561,7 +40561,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -40984,7 +40984,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -41000,7 +41000,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 2,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -41676,7 +41676,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -41823,7 +41823,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -42311,7 +42311,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -42458,7 +42458,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -42887,7 +42887,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -42949,7 +42949,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -43096,7 +43096,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -43580,7 +43580,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 1,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -43596,7 +43596,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 2,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -43682,7 +43682,7 @@
             },
             {
               "name": "火種",
-              "description": "Xanxusが作った火種。受ける炎属性ダメージを半減する一方、氷・水属性ダメージが倍になる。随時爆発しそうな様子をしている。",
+              "description": "ザンザスが作った火種。受ける炎属性ダメージを半減する一方、氷・水属性ダメージが倍になる。随時爆発しそうな様子をしている。",
               "effect": "",
               "quantity": 1,
               "id": "fire_seed",
@@ -44364,7 +44364,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 1,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -44449,7 +44449,7 @@
             },
             {
               "name": "火種",
-              "description": "Xanxusが作った火種。受ける炎属性ダメージを半減する一方、氷・水属性ダメージが倍になる。随時爆発しそうな様子をしている。",
+              "description": "ザンザスが作った火種。受ける炎属性ダメージを半減する一方、氷・水属性ダメージが倍になる。随時爆発しそうな様子をしている。",
               "effect": "",
               "quantity": 1,
               "id": "fire_seed",
@@ -44531,7 +44531,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -45081,7 +45081,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 1,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -45166,7 +45166,7 @@
             },
             {
               "name": "火種",
-              "description": "Xanxusが作った火種。受ける炎属性ダメージを半減する一方、氷・水属性ダメージが倍になる。随時爆発しそうな様子をしている。",
+              "description": "ザンザスが作った火種。受ける炎属性ダメージを半減する一方、氷・水属性ダメージが倍になる。随時爆発しそうな様子をしている。",
               "effect": "",
               "quantity": 1,
               "id": "fire_seed",
@@ -45248,7 +45248,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -45739,7 +45739,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -45801,7 +45801,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 1,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -45886,7 +45886,7 @@
             },
             {
               "name": "火種",
-              "description": "Xanxusが作った火種。受ける炎属性ダメージを半減する一方、氷・水属性ダメージが倍になる。随時爆発しそうな様子をしている。",
+              "description": "ザンザスが作った火種。受ける炎属性ダメージを半減する一方、氷・水属性ダメージが倍になる。随時爆発しそうな様子をしている。",
               "effect": "",
               "quantity": 1,
               "id": "fire_seed",
@@ -45968,7 +45968,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -46512,7 +46512,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -46528,7 +46528,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 2,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -47230,7 +47230,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -47377,7 +47377,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -47881,7 +47881,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -48028,7 +48028,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -48473,7 +48473,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -48535,7 +48535,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -48682,7 +48682,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -49182,7 +49182,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -49198,7 +49198,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 2,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -49356,7 +49356,7 @@
             {
               "name": "紅竜の炎核",
               "description": "イグニスの命の炎が宿った結晶。",
-              "effect": "1d100+100ダメージ / 命中率100% / fire属性 / 消耗品",
+              "effect": "1d100+100ダメージ / 命中率100% / 炎属性 / 消耗品",
               "quantity": 1,
               "id": "red_dragon_core",
               "icon": "/static/images/icon_red_dragon_core.png",
@@ -49987,7 +49987,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -50134,7 +50134,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -50161,7 +50161,7 @@
             {
               "name": "紅竜の炎核",
               "description": "イグニスの命の炎が宿った結晶。",
-              "effect": "1d100+100ダメージ / 命中率100% / fire属性 / 消耗品",
+              "effect": "1d100+100ダメージ / 命中率100% / 炎属性 / 消耗品",
               "quantity": 1,
               "id": "red_dragon_core",
               "icon": "/static/images/icon_red_dragon_core.png",
@@ -50725,7 +50725,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -50872,7 +50872,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -50899,7 +50899,7 @@
             {
               "name": "紅竜の炎核",
               "description": "イグニスの命の炎が宿った結晶。",
-              "effect": "1d100+100ダメージ / 命中率100% / fire属性 / 消耗品",
+              "effect": "1d100+100ダメージ / 命中率100% / 炎属性 / 消耗品",
               "quantity": 1,
               "id": "red_dragon_core",
               "icon": "/static/images/icon_red_dragon_core.png",
@@ -51404,7 +51404,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -51466,7 +51466,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -51613,7 +51613,7 @@
             {
               "name": "氷鉄の大剣",
               "description": "氷の護符と上質な剣を融合させた大剣。",
-              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
               "quantity": 1,
               "id": "ice_iron_greatsword",
               "icon": "/static/images/icon_ice_iron_greatsword.png",
@@ -51640,7 +51640,7 @@
             {
               "name": "紅竜の炎核",
               "description": "イグニスの命の炎が宿った結晶。",
-              "effect": "1d100+100ダメージ / 命中率100% / fire属性 / 消耗品",
+              "effect": "1d100+100ダメージ / 命中率100% / 炎属性 / 消耗品",
               "quantity": 1,
               "id": "red_dragon_core",
               "icon": "/static/images/icon_red_dragon_core.png",
@@ -52142,7 +52142,7 @@
             {
               "name": "鉄の剣",
               "description": "一見質素な一振りの剣……",
-              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / physical属性",
+              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
               "quantity": 1,
               "id": "iron_sword",
               "icon": "/static/images/icon_iron_sword.png",
@@ -52198,7 +52198,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -52214,7 +52214,7 @@
             {
               "name": "呪われた聖剣",
               "description": "攻撃を倍化するが、攻撃のたびに自身も1ダメージを受ける。",
-              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / cursed属性",
+              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 呪い属性",
               "quantity": 1,
               "id": "cursed_holy_sword",
               "icon": "/static/images/icon_cursed_holy_sword.png",
@@ -52494,7 +52494,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -52510,7 +52510,7 @@
             {
               "name": "呪われた聖杖",
               "description": "一ラウンドに二回行動でき、治癒量が二倍になりさらに10増えるが、人間への治癒はダメージになる。",
-              "effect": "通常攻撃 1d4+str/4ダメージ / 命中率90% / holy属性 / 回復技能回復量+10",
+              "effect": "通常攻撃 1d4+str/4ダメージ / 命中率90% / 聖属性 / 回復技能回復量+10",
               "quantity": 1,
               "id": "cursed_holy_staff",
               "icon": "/static/images/icon_cursed_holy_staff.png",
@@ -52794,7 +52794,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -53053,7 +53053,7 @@
             {
               "name": "ダガー",
               "description": "軽量で扱いやすい短剣。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
               "quantity": 1,
               "icon": "/static/images/icon_dagger.png",
               "combat": {
@@ -53115,7 +53115,7 @@
             {
               "name": "聖水",
               "description": "教会で清められた水。不死の存在を焼く。",
-              "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+              "effect": "36ダメージ / 命中率100% / 聖属性 / 消耗品",
               "quantity": 2,
               "id": "holy_water",
               "icon": "/static/images/icon_holy_water.png",
@@ -53131,7 +53131,7 @@
             {
               "name": "呪われた短剣",
               "description": "攻撃が命中するたび、毎ラウンド3ダメージの毒を重ねる。",
-              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / cursed属性",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 呪い属性",
               "quantity": 1,
               "id": "cursed_dagger",
               "icon": "/static/images/icon_cursed_dagger.png",

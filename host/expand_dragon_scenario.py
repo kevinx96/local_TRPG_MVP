@@ -440,7 +440,7 @@ def add_village_catalog(pack: dict[str, Any]) -> None:
     npcs = pack.setdefault("npcs", [])
     upsert(npcs, {
         "id": "xanxus",
-        "name": "赤いローブの魔法使い・Xanxus",
+        "name": "赤いローブの魔法使い・ザンザス",
         "description": "赤い法衣をまとい、全身を炎に包まれた骸骨の魔法使い。",
         "keywords": ["Xanxus", "ザンザス", "赤いローブの魔法使い"],
     })
@@ -461,7 +461,7 @@ def add_village_catalog(pack: dict[str, Any]) -> None:
     upsert(items, {
         "id": "fire_seed",
         "name": "火種",
-        "description": "Xanxusが作った火種。受ける炎属性ダメージを半減する一方、氷・水属性ダメージが倍になる。随時爆発しそうな様子をしている。",
+        "description": "ザンザスが作った火種。受ける炎属性ダメージを半減する一方、氷・水属性ダメージが倍になる。随時爆発しそうな様子をしている。",
         "non_removable": True,
         "combat": {
             "kind": "passive",
@@ -501,7 +501,7 @@ def add_village_catalog(pack: dict[str, Any]) -> None:
             "resistances": {"ice": 0.0, "fire": 1.25}, "rewards": {"gold": 40, "items": [], "flags": ["defeated_frost_dire_wolf"]}, "skills": [],
         },
         {
-            "id": "xanxus", "name": "赤炎骸骨Xanxus", "description": "赤い法衣と業火に包まれた骸骨の大魔法使い。",
+            "id": "xanxus", "name": "赤炎骸骨ザンザス", "description": "赤い法衣と業火に包まれた骸骨の大魔法使い。",
             "element": "fire", "hp": 999, "max_hp": 999, "mp": 999, "max_mp": 999,
             "attributes": {"str": 10, "dex": 20, "int": 50, "end": 35},
             "combat": {"basic_attack": {"name": "炎弾", "damage": "2d10+int/2", "accuracy": 95, "element": "fire"}, "defense": 4, "evade": 10},
@@ -560,7 +560,7 @@ def magic_shop(pack: dict[str, Any]) -> dict[str, Any]:
         prepared("blue_mage_buy_fireball_scroll", "buy_fireball_scroll", "青いローブの魔法使いは10Gを受け取り、知力10相当の火球術を封じた巻物を手渡した。"),
         prepared("blue_mage_rumor_success", rumor["id"], "青いローブの魔法使いは声を潜めた。「邪竜の復活は自然なものではない。誰かが意図して呼び戻した、と私は見ています」", "success"),
         prepared("blue_mage_rumor_failure", rumor["id"], "魔法使いは視線を逸らした。「あなたはこの件に巻き込まれるべきではない。邪竜討伐は諦めた方がいい」", "failure"),
-        prepared("blue_mage_rumor_critical", rumor["id"], "Xanxus", "critical_success"),
+        prepared("blue_mage_rumor_critical", rumor["id"], "ザンザス", "critical_success"),
         prepared("blue_mage_rumor_fumble", rumor["id"], "", "critical_failure", ["一言も発させず、gm_textも空にしてください。"]),
         prepared("blue_mage_join", invite["id"], "魔法使いは背の杖を確かめ、静かに頷いた。「しばらく同行しましょう。傷の手当ては任せてください」"),
     ]
@@ -799,7 +799,7 @@ def village_locations(pack: dict[str, Any]) -> list[dict[str, Any]]:
         effects=[{"current_location": "village_fire_elemental"}, {"start_combat": True}],
     )
     escape = action(
-        "escape_from_burning_village", "直ちに逃げる", "Xanxusの名を思い出し、村から離れます", visible_after="heard_name_xanxus",
+        "escape_from_burning_village", "直ちに逃げる", "ザンザスの名を思い出し、村から離れます", visible_after="heard_name_xanxus",
         effects=[{"current_location": "xanxus_confrontation"}],
     )
     locations.append(location(
@@ -812,7 +812,7 @@ def village_locations(pack: dict[str, Any]) -> list[dict[str, Any]]:
             prepared("village_approach_critical", cautious["id"], "炎と怪物の動きを完全に見切り、一度も気づかれず村の中心へ到達した。", "critical_success"),
             prepared("village_approach_fumble", cautious["id"], "崩れた屋根から炎が降り注ぎ、10点の炎ダメージを受けた。さらに火の精霊が退路を塞ぐ。", "critical_failure"),
             prepared("village_direct", direct["id"], "炎の中へ踏み込むと、火の精霊が燃える腕を広げて立ちはだかった。"),
-            prepared("village_escape", escape["id"], "Xanxusの名が脳裏をよぎり、村から離れようとする。だがまだ遠くへ行かないうちに、赤い法衣と炎に包まれた骸骨が道を塞いだ。"),
+            prepared("village_escape", escape["id"], "ザンザスの名が脳裏をよぎり、村から離れようとする。だがまだ遠くへ行かないうちに、赤い法衣と炎に包まれた骸骨が道を塞いだ。"),
         ],
     ))
 
@@ -832,7 +832,7 @@ def village_locations(pack: dict[str, Any]) -> list[dict[str, Any]]:
     impossible_actions = []
     for action_id, text, preview in (
         ("bluff_xanxus", "ごまかして切り抜ける", "何も察知していないふりをします"),
-        ("ambush_xanxus", "先手を打って攻撃する", "Xanxusが動く前に仕掛けます"),
+        ("ambush_xanxus", "先手を打って攻撃する", "ザンザスが動く前に仕掛けます"),
         ("flee_from_xanxus", "もう一度逃走を試みる", "全力でその場を離れます"),
     ):
         impossible_actions.append(action(
@@ -841,24 +841,24 @@ def village_locations(pack: dict[str, Any]) -> list[dict[str, Any]]:
             failure_effects=[{"set_flag": "xanxus_encountered"}, {"current_location": "xanxus_battle"}, {"start_combat": True}],
         ))
     locations.append(location(
-        "xanxus_confrontation", "燃える街道・Xanxusの尋問",
-        "赤い法衣をまとい、全身を炎に包まれた骸骨の魔法使いXanxusが退路を塞いでいる。",
+        "xanxus_confrontation", "燃える街道・ザンザスの尋問",
+        "赤い法衣をまとい、全身を炎に包まれた骸骨の魔法使いザンザスが退路を塞いでいる。",
         impossible_actions, npc_ids=["xanxus"],
         turns=[
-            prepared("xanxus_bluff_failed", "bluff_xanxus", "Xanxusは乾いた笑い声を上げた。『その目は何かを知った者の目だ。浅い嘘で私を欺けると思ったか』杖の一振りで炎の壁が街道を閉ざし、燃える骸骨は明確な殺意を向けて戦闘態勢に入る。", "failure"),
-            prepared("xanxus_ambush_failed", "ambush_xanxus", "攻撃を放つより早く、Xanxusの炎が武器ごと身体を弾き返した。『先手を取ったつもりか？』着地点を炎の輪が囲み、Xanxusは陨石を呼ぶように片手を天へ掲げる。", "failure"),
-            prepared("xanxus_escape_failed", "flee_from_xanxus", "一歩踏み出した瞬間、炎の壁が行く手を封じた。背後にも火柱が立ち、逃げ場は完全に消える。Xanxusは指先をこちらへ向け、『ならば力ずくで進ませよう』と戦いを強いる。", "failure"),
+            prepared("xanxus_bluff_failed", "bluff_xanxus", "ザンザスは乾いた笑い声を上げた。『その目は何かを知った者の目だ。浅い嘘で私を欺けると思ったか』杖の一振りで炎の壁が街道を閉ざし、燃える骸骨は明確な殺意を向けて戦闘態勢に入る。", "failure"),
+            prepared("xanxus_ambush_failed", "ambush_xanxus", "攻撃を放つより早く、ザンザスの炎が武器ごと身体を弾き返した。『先手を取ったつもりか？』着地点を炎の輪が囲み、ザンザスは陨石を呼ぶように片手を天へ掲げる。", "failure"),
+            prepared("xanxus_escape_failed", "flee_from_xanxus", "一歩踏み出した瞬間、炎の壁が行く手を封じた。背後にも火柱が立ち、逃げ場は完全に消える。ザンザスは指先をこちらへ向け、『ならば力ずくで進ませよう』と戦いを強いる。", "failure"),
         ],
     ))
     locations.append(location(
-        "xanxus_battle", "Xanxus戦", "Xanxusの炎が周囲を閉ざし、逃げ道を焼き払った。", [],
+        "xanxus_battle", "ザンザス戦", "ザンザスの炎が周囲を閉ざし、逃げ道を焼き払った。", [],
         enemy_ids=["xanxus"], combat={
             "auto_start": False, "boss": True, "flee_allowed": False, "enemy_ids": ["xanxus"],
             "victory_effects": {"flags_set": ["defeated_xanxus", "xanxus_encountered"], "current_location": "village_frozen_clue"},
             "defeat_effects": {"hp": 1, "flags_set": ["lost_to_xanxus", "xanxus_encountered"], "current_location": "xanxus_ultimatum"},
             "result_texts": {
-                "victory": "Xanxusを包んでいた炎が次第に消えていく。骸骨は崩れ落ちながら、『まさか、お前は奇術師が化けていたのか……』と呟き、そのまま動かなくなった。",
-                "defeat": "Xanxusは倒れたあなたを見下ろした。『大人しく先を探索しろ。そして私の火種を飲め。任務を放棄すれば、その場で爆ぜさせる』",
+                "victory": "ザンザスを包んでいた炎が次第に消えていく。骸骨は崩れ落ちながら、『まさか、お前は奇術師が化けていたのか……』と呟き、そのまま動かなくなった。",
+                "defeat": "ザンザスは倒れたあなたを見下ろした。『大人しく先を探索しろ。そして私の火種を飲め。任務を放棄すれば、その場で爆ぜさせる』",
             },
         },
     ))
@@ -868,33 +868,33 @@ def village_locations(pack: dict[str, Any]) -> list[dict[str, Any]]:
         effects=[{"add_item": {"name": "火種", "quantity": 1}}, {"set_flag": "accepted_fire_seed"}, {"current_location": "village_frozen_clue"}],
     )
     resist_saved = action(
-        "refuse_xanxus_with_rescue", "死んでも従わない", "Xanxusの要求を拒絶します", visible_after="warlock_rescue_available",
+        "refuse_xanxus_with_rescue", "死んでも従わない", "ザンザスの要求を拒絶します", visible_after="warlock_rescue_available",
         effects=[{"set_flag": "warlock_rescue_triggered"}, {"current_location": "warlock_rescue_battle"}, {"start_combat": True}],
     )
     resist_doom = action(
-        "refuse_xanxus_without_rescue", "死んでも従わない", "Xanxusの要求を拒絶します", hidden_after="warlock_rescue_available",
-        effects=[{"game_over": {"reason": "Xanxusの要求を拒み、その炎に焼き尽くされました。", "ending": "defied_xanxus"}}],
+        "refuse_xanxus_without_rescue", "死んでも従わない", "ザンザスの要求を拒絶します", hidden_after="warlock_rescue_available",
+        effects=[{"game_over": {"reason": "ザンザスの要求を拒み、その炎に焼き尽くされました。", "ending": "defied_xanxus"}}],
     )
     locations.append(location(
-        "xanxus_ultimatum", "Xanxusの最後通告", "Xanxusは燃える火種を差し出し、服従を迫っている。",
+        "xanxus_ultimatum", "ザンザスの最後通告", "ザンザスは燃える火種を差し出し、服従を迫っている。",
         [submit, resist_saved, resist_doom], npc_ids=["xanxus"],
         turns=[
             prepared("accept_fire_seed", submit["id"], "火種を飲み込むと胸の奥へ焼ける感覚が沈んだ。炎への耐性を得た一方、氷と水に身体が強く反応する。火種は随時爆発しそうな様子をしている。"),
-            prepared("warlock_rescue", resist_saved["id"], "Xanxusがとどめの炎を放とうとした瞬間、青い光が火線を切り裂いた。姿を消していたワーロックがあなたを背後へ庇う。『Xanxus、それは少しやり過ぎだ』青いローブの周囲に八属性の水晶球が展開し、二人の魔法使いの戦闘が始まる。"),
-            prepared("xanxus_execution", resist_doom["id"], "Xanxusは一切の躊躇なく炎を解き放った。逃げ場はなく、視界は赤一色に染まった。"),
+            prepared("warlock_rescue", resist_saved["id"], "ザンザスがとどめの炎を放とうとした瞬間、青い光が火線を切り裂いた。姿を消していたワーロックがあなたを背後へ庇う。『ザンザス、それは少しやり過ぎだ』青いローブの周囲に八属性の水晶球が展開し、二人の魔法使いの戦闘が始まる。"),
+            prepared("xanxus_execution", resist_doom["id"], "ザンザスは一切の躊躇なく炎を解き放った。逃げ場はなく、視界は赤一色に染まった。"),
         ],
     ))
 
     locations.append(location(
-        "warlock_rescue_battle", "ワーロック対Xanxus", "ワーロックがあなたを背後へ庇い、元素の水晶球を展開する。", [],
+        "warlock_rescue_battle", "ワーロック対ザンザス", "ワーロックがあなたを背後へ庇い、元素の水晶球を展開する。", [],
         npc_ids=["warlock", "xanxus"], enemy_ids=["xanxus"], combat={
             "auto_start": False, "boss": True, "flee_allowed": False, "disable_companion": True,
             "player_character_id": "warlock", "enemy_ids": ["xanxus"],
             "victory_effects": {"flags_set": ["warlock_defeated_xanxus", "xanxus_encountered"], "current_location": "village_frozen_clue"},
-            "defeat_effects": {"game_over": {"reason": "Xanxusは『こんなに長くかかったが、ようやく一度お前に勝てた』と笑い、続けてプレイヤーを炎で貫きました。", "ending": "warlock_lost"}},
+            "defeat_effects": {"game_over": {"reason": "ザンザスは『こんなに長くかかったが、ようやく一度お前に勝てた』と笑い、続けてプレイヤーを炎で貫きました。", "ending": "warlock_lost"}},
             "result_texts": {
-                "victory": "Xanxusは頭を抱えて炎の彼方へ逃げ去った。ワーロックは、かつて元素・人類・竜が互いを害さない条約を結び、竜と人類は友好関係にあったと説明する。邪竜の暴走には誰かの思惑があり、多くの者が別々の狙いを抱えている。『くれぐれも用心してください。私は背後から見守っています』そう告げると、ワーロックは姿を消した。",
-                "defeat": "Xanxusは天を仰いで笑った。『こんなに長くかかったが、ようやく一度お前に勝てた！』ワーロックを退けた炎は、そのまま背後のあなたを貫いた。",
+                "victory": "ザンザスは頭を抱えて炎の彼方へ逃げ去った。ワーロックは、かつて元素・人類・竜が互いを害さない条約を結び、竜と人類は友好関係にあったと説明する。邪竜の暴走には誰かの思惑があり、多くの者が別々の狙いを抱えている。『くれぐれも用心してください。私は背後から見守っています』そう告げると、ワーロックは姿を消した。",
+                "defeat": "ザンザスは天を仰いで笑った。『こんなに長くかかったが、ようやく一度お前に勝てた！』ワーロックを退けた炎は、そのまま背後のあなたを貫いた。",
             },
         },
     ))
@@ -1156,8 +1156,8 @@ def upgrade(pack: dict[str, Any]) -> dict[str, Any]:
     village_scene = next((scene for scene in pack.get("scenes", []) if scene.get("id") == "village"), None)
     if village_scene:
         village_scene["title"] = "第3章：炎上する麓の村"
-        village_scene["description"] = "火海となった村でXanxusの陰謀と氷の太刀の痕跡を追う分岐章。"
-        village_scene["goals"] = ["炎の怪物を突破する", "Xanxusとの遭遇を生き延びる", "氷霜の巨狼と砕けた氷の太刀の真相を追う"]
+        village_scene["description"] = "火海となった村でザンザスの陰謀と氷の太刀の痕跡を追う分岐章。"
+        village_scene["goals"] = ["炎の怪物を突破する", "ザンザスとの遭遇を生き延びる", "氷霜の巨狼と砕けた氷の太刀の真相を追う"]
         village_scene["location_ids"] = [entry_id for entry_id in replacements if entry_id.startswith(("village", "xanxus", "warlock", "ice_", "frost_", "ian_"))]
         village_scene["actions"] = []
         village_scene.pop("hybrid", None)

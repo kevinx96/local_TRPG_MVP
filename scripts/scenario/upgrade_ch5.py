@@ -70,7 +70,7 @@ def upgrade(pack: dict[str, Any]) -> None:
     # Cleared optional guards remain passable on subsequent visits.
     corridor['actions'].append(move('pass_cleared_sentinels', '先へ進む', 'mansion_study', visible_after='combat_defeated:mansion_corridor:ice_sentinel'))
     study = location('mansion_study', '将軍の屋敷・書斎', '書斎には古い書物が積み上げられ、机の上に一冊の日誌が開かれたまま置かれていた。部屋の奥には、白い鱗で飾られた小箱がある。', 'bg_mansion_study')
-    study['actions'] = [action('take_draco_journal', '日誌を手に取る', [{'add_item': {'id': 'draco_journal', 'name': '白竜の日誌'}}], once='draco_journal', result_text='日誌には、十年前に紅竜の傷へ霜を打ち込んだこと、Xanxusと交わした密約、そして王国を手に入れる計画が、几帳面な文字で記されていた。'),
+    study['actions'] = [action('take_draco_journal', '日誌を手に取る', [{'add_item': {'id': 'draco_journal', 'name': '白竜の日誌'}}], once='draco_journal', result_text='日誌には、十年前に紅竜の傷へ霜を打ち込んだこと、ザンザスと交わした密約、そして王国を手に入れる計画が、几帳面な文字で記されていた。'),
         action('open_scale_box', '小箱を開ける', [{'add_item': {'id': 'frost_seal_charm', 'name': '霜封じの護符'}}], once='opened_scale_box', result_text='小箱の中には、白い鱗を編み込んだ護符が収められていた。添えられた札には「我が冷気を鎮めるもの」とある。'),
         move('leave_mansion_study', '屋敷を出る', 'festival_town')]
     king = location('king_private_room', '王の私室', '豪奢な寝室の窓辺で、国王エドワードが一人、月を見上げていた。あなたに気づくと、王は静かに人払いをした。', 'bg_king_room')
@@ -103,7 +103,7 @@ def upgrade(pack: dict[str, Any]) -> None:
     rest['result_variants'] = [dict(requirements=trigger, text='')]
 
     for identifier, name, desc, effect in [
-        ('draco_journal', '白竜の日誌', '将軍ドラコの日誌。紅竜への呪いとXanxusとの密約が記されている。', '証拠品'),
+        ('draco_journal', '白竜の日誌', '将軍ドラコの日誌。紅竜への呪いとザンザスとの密約が記されている。', '証拠品'),
         ('frost_seal_charm', '霜封じの護符', '白い鱗を編み込んだ護符。白竜の冷気を鎮めるという。', '凍てつく吐息のダメージを軽減'),
         ('assassin_crest', '刺客の徽章', '白い竜を象った徽章。将軍家の紋章だ。', '証拠品'),
         ('fire_dragon_oil', '火竜の油', '竜の谷の火山で採れる油。白い竜に効くという。', '火属性の大ダメージ（消耗品）')]:

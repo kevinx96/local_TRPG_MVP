@@ -39,9 +39,9 @@ EPILOGUES = [
     {"id": "goblin_betrayed", "endings": GOOD, "requirements": {"flag": "betrayed_lost_goblin"},
      "text": "闇の森では今も、人間を恨むゴブリンたちが旅人を待ち伏せている。"},
     {"id": "fire_seed_removed", "endings": GOOD, "requirements": {"flag": "fire_seed_removed"},
-     "text": "胸の火種は消え去った。骸骨の魔法使いXanxusの行方を知る者はいない。"},
+     "text": "胸の火種は消え去った。骸骨の魔法使いザンザスの行方を知る者はいない。"},
     {"id": "xanxus_core", "endings": GOOD, "requirements": {"flag": "xanxus_took_core"},
-     "text": "紅竜の心臓を手にしたXanxusは、どこかで新たな企みを巡らせているという。"},
+     "text": "紅竜の心臓を手にしたザンザスは、どこかで新たな企みを巡らせているという。"},
     {"id": "king_trust_only", "endings": ["ignis_defeated", "ignis_purified"], "requirements": {"flag": "king_trust"},
      "text": "国王は祝宴の席で、時おり将軍の横顔を静かに見つめていた。"},
 ]
