@@ -16,11 +16,11 @@ LOOT = {
                        ("goblin", "goblin_archer", "hobgoblin", "goblin_king")),
     "wolf_pelt": ("獣の毛皮", 8, "厚く柔らかな獣の毛皮。", ("forest_wolf", "war_hound")),
     "ember_shard": ("残り火の欠片", 10, "いつまでも冷めない火を宿した、小さな欠片。",
-                    ("fire_slime", "fire_elemental", "fire_wisp", "heat_lizard")),
+                    ("fire_slime", "fire_elemental", "fire_wisp", "heat_lizard", "xanxus_phantom")),
     "frost_shard": ("霜の欠片", 10, "握ると指先がしびれる、溶けない霜の欠片。",
-                    ("ice_elemental", "ice_sentinel", "ice_assassin")),
+                    ("ice_elemental", "ice_sentinel", "ice_assassin", "frost_dire_wolf")),
     "crystal_fragment": ("色水晶の欠片", 12, "光にかざすと色を変える水晶の欠片。",
-                         ("ruby_golem", "sapphire_moth", "emerald_spider")),
+                         ("ruby_golem", "sapphire_moth", "emerald_spider", "prism_tree")),
     "rusted_badge": ("錆びた兵士の徽章", 6, "十年前の兵士がつけていた錆びた徽章。裏に名前が刻まれている。",
                      ("skeleton_soldier", "ghoul", "wraith", "grave_knight")),
     "ash_essence": ("煤の精", 10, "亡霊が崩れた後に残る、黒い煤の塊。", ("ash_wraith",)),
@@ -28,9 +28,9 @@ LOOT = {
     "beetle_shell": ("甲虫の殻", 8, "砂利を固めたような硬い殻。", ("gravel_beetle", "stone_lizard")),
     "giant_mossstone": ("巨人の苔石", 12, "岩の巨人の体から剥がれた、苔むした石。", ("rock_giant", "earth_worm")),
 }
-BOSSES = {"slime_king", "goblin_king", "grave_knight", "earth_worm"}
-# TODO(design): 038未列出氷霜の巨狼、虹晶樹；Xanxusの分身是否排除也待确认。
-UNSPECIFIED = {"frost_dire_wolf", "prism_tree", "xanxus_phantom"}
+# Design decision (2026-10-18): the three optional bosses drop the shard of their element, two each.
+BOSSES = {"slime_king", "goblin_king", "grave_knight", "earth_worm", "frost_dire_wolf", "prism_tree", "xanxus_phantom"}
+UNSPECIFIED: set[str] = set()
 WARNING = "（強敵の気配がする。心もとないなら、一度王都か城塞へ戻って補給するのも手だ）"
 FORT_PREVIEW = "砦の奥には強敵がいるらしい。薬草は足りているか？"
 GATE_TEXT = "鉄門の奥から、地を揺らすような唸り声が響いてくる。"
@@ -70,8 +70,12 @@ def apply(pack: dict[str, Any]) -> None:
     added_actions: dict[str, list[str]] = {}
     workshop = next(shop for shop in pack["shops"] if shop["id"] == "oaksdawn_workshop_shop")
     workshop.update(buys=True, buy_categories=["loot", "equipment"])
-    # TODO(design): 038未提供工房收购对白；留空，交易仍由金币和数量更新反馈。
-    workshop.setdefault("sell_line", "")
+    workshop["sell_line"] = "いい素材だね。工房で使わせてもらうよ"
+    # Herbs were scarce from chapter 3 on (サラ stocks three); the village shop and the chapel now sell them too.
+    for shop_id in ("village_shop", "oaksdawn_chapel_shop"):
+        shop = next(entry for entry in pack["shops"] if entry["id"] == shop_id)
+        if not any(offer["item_id"] == "herb" for offer in shop["items"]):
+            shop["items"].append(dict(item_id="herb", price=10, stock=None))
 
     for request in REQUESTS:
         identifier = request["id"]

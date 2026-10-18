@@ -18584,7 +18584,12 @@
         ]
       },
       "skills": [],
-      "image": "/static/images/enemy_frost_dire_wolf.png"
+      "image": "/static/images/enemy_frost_dire_wolf.png",
+      "loot": {
+        "id": "frost_shard",
+        "name": "霜の欠片",
+        "quantity": 2
+      }
     },
     {
       "id": "xanxus",
@@ -19099,6 +19104,11 @@
             }
           }
         ]
+      },
+      "loot": {
+        "id": "crystal_fragment",
+        "name": "色水晶の欠片",
+        "quantity": 2
       }
     },
     {
@@ -19286,7 +19296,12 @@
       "image": "/static/images/enemy_xanxus_phantom.png",
       "tags": [
         "undead"
-      ]
+      ],
+      "loot": {
+        "id": "ember_shard",
+        "name": "残り火の欠片",
+        "quantity": 2
+      }
     },
     {
       "id": "ice_sentinel",
@@ -21203,6 +21218,11 @@
           "item_id": "ice_charm",
           "price": 50,
           "stock": 1
+        },
+        {
+          "item_id": "herb",
+          "price": 10,
+          "stock": null
         }
       ],
       "buys": true
@@ -21280,6 +21300,11 @@
           "item_id": "holy_water",
           "price": 12,
           "stock": null
+        },
+        {
+          "item_id": "herb",
+          "price": 10,
+          "stock": null
         }
       ]
     },
@@ -21308,7 +21333,7 @@
         "loot",
         "equipment"
       ],
-      "sell_line": ""
+      "sell_line": "いい素材だね。工房で使わせてもらうよ"
     }
   ],
   "maps": [

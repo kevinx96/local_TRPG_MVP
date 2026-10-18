@@ -3865,7 +3865,7 @@
       "group": "戦利品",
       "file": "client/images/icon_slime_core.png",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "retained_from": null,
       "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: スライムの核。ぷるぷると震える半透明の核。薬の材料になる。  Front view with a slight view from above."
@@ -3877,7 +3877,7 @@
       "group": "戦利品",
       "file": "client/images/icon_goblin_trinket.png",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "retained_from": null,
       "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: ゴブリンの飾り物。ゴブリンが身につけていた、安物の金属の飾り。  Front view with a slight view from above."
@@ -3889,7 +3889,7 @@
       "group": "戦利品",
       "file": "client/images/icon_wolf_pelt.png",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "retained_from": null,
       "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: 獣の毛皮。厚く柔らかな獣の毛皮。  Front view with a slight view from above."
@@ -3901,7 +3901,7 @@
       "group": "戦利品",
       "file": "client/images/icon_ember_shard.png",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "retained_from": null,
       "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: 残り火の欠片。いつまでも冷めない火を宿した、小さな欠片。  Front view with a slight view from above."
@@ -3913,7 +3913,7 @@
       "group": "戦利品",
       "file": "client/images/icon_frost_shard.png",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "retained_from": null,
       "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: 霜の欠片。握ると指先がしびれる、溶けない霜の欠片。  Front view with a slight view from above."
@@ -3925,7 +3925,7 @@
       "group": "戦利品",
       "file": "client/images/icon_crystal_fragment.png",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "retained_from": null,
       "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: 色水晶の欠片。光にかざすと色を変える水晶の欠片。  Front view with a slight view from above."
@@ -3937,7 +3937,7 @@
       "group": "戦利品",
       "file": "client/images/icon_rusted_badge.png",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "retained_from": null,
       "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: 錆びた兵士の徽章。十年前の兵士がつけていた錆びた徽章。裏に名前が刻まれている。  Front view with a slight view from above."
@@ -3949,7 +3949,7 @@
       "group": "戦利品",
       "file": "client/images/icon_ash_essence.png",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "retained_from": null,
       "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: 煤の精。亡霊が崩れた後に残る、黒い煤の塊。  Front view with a slight view from above."
@@ -3961,7 +3961,7 @@
       "group": "戦利品",
       "file": "client/images/icon_drake_scale.png",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "retained_from": null,
       "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: 溶岩竜の鱗。熱を帯びた赤黒い鱗。鍛冶屋が高く買う。  Front view with a slight view from above."
@@ -3973,7 +3973,7 @@
       "group": "戦利品",
       "file": "client/images/icon_beetle_shell.png",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "retained_from": null,
       "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: 甲虫の殻。砂利を固めたような硬い殻。  Front view with a slight view from above."
@@ -3985,7 +3985,7 @@
       "group": "戦利品",
       "file": "client/images/icon_giant_mossstone.png",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "retained_from": null,
       "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: 巨人の苔石。岩の巨人の体から剥がれた、苔むした石。  Front view with a slight view from above."
