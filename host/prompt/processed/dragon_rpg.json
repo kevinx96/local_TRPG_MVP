@@ -15623,7 +15623,7 @@
     {
       "id": "elixir_int",
       "name": "叡智の霊薬",
-      "description": "頭の芯まで澄みわたる、青い霊薬。",
+      "description": "頭の芯まで澄みわたる、菫色の霊薬。",
       "category": "consumable",
       "combat": {
         "kind": "permanent",

@@ -12,7 +12,7 @@ from .upgrade_forest import action, move, upsert
 BOOSTS = [
     ("elixir_str", "剛力の霊薬", "str", "飲めば腕に力がみなぎる、古い霊薬。"),
     ("elixir_dex", "迅速の霊薬", "dex", "身のこなしが風のように軽くなる。"),
-    ("elixir_int", "叡智の霊薬", "int", "頭の芯まで澄みわたる、青い霊薬。"),
+    ("elixir_int", "叡智の霊薬", "int", "頭の芯まで澄みわたる、菫色の霊薬。"),
     ("elixir_wis", "祈りの霊薬", "wis", "心が静まり、見えないものの気配に敏くなる。"),
     ("elixir_end", "鉄壁の霊薬", "end", "体が岩のように頑丈になる。"),
     ("fruit_life", "生命の果実", "hp", "赤く熟した不思議な果実。"),
