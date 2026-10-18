@@ -248,8 +248,11 @@ class ServiceTests(unittest.TestCase):
             for location in pack["locations"]:
                 ids = {action["id"] for action in state._iter_actions(location.get("actions", []))}
                 self.assertFalse(ids & {"sarah_shop", "blue_mage_shop", "buy_equipment", "buy_ice_amulet"})
-            self.assertEqual(len(pack["quests"]), 12)
-            self.assertEqual(len(pack["shops"]), 6)
+            self.assertEqual(len(pack["quests"]), 17)
+            self.assertTrue({"side_battlefield_bell", "side_workshop_hearth", "side_sarah_scarf",
+                             "side_nameless_soldiers", "side_refuge_hearth"}
+                            <= {quest["id"] for quest in pack["quests"]})
+            self.assertEqual(len(pack["shops"]), 8)
 
 
 if __name__ == "__main__":

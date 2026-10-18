@@ -21,7 +21,8 @@ def public_maps(session: dict[str, Any]) -> dict[str, Any]:
     result = []
     for source in maps:
         edges = [e for e in source["edges"] if not e.get("visible_after") or flags.get(e["visible_after"])]
-        seen = {n["id"] for n in source["nodes"] if visited.intersection(n["location_ids"])}
+        seen = {n["id"] for n in source["nodes"] if visited.intersection(n["location_ids"])
+                or (n.get("known_after") and flags.get(n["known_after"]))}
         neighbors = {e[end] for e in edges for end, other in (("from", "to"), ("to", "from")) if e[other] in seen}
         nodes = []
         for node in source["nodes"]:
@@ -32,6 +33,12 @@ def public_maps(session: dict[str, Any]) -> dict[str, Any]:
                       "current": location in node["location_ids"]}
             if visibility in {"visited", "locked"}:
                 public.update({k: deepcopy(node[k]) for k in ("label", "kind", "description", "recommended", "submap") if k in node})
+                location_record = next((loc for loc in session.get("scenario_pack", {}).get("locations", [])
+                                        if loc.get("id") == next(iter(node["location_ids"]), None)), {})
+                for variant in location_record.get("description_variants", []):
+                    if _session_requirement_passes(variant.get("requirements"), session):
+                        public["description"] = variant["text"]
+                        break
                 if node.get("locked_until") and flags.get(node["locked_until"]):
                     public["kind"] = "branch"
             nodes.append(public)
@@ -61,9 +68,15 @@ def movement_action(session: dict[str, Any], node_id: str) -> dict[str, Any]:
                      and (not e.get("visible_after") or session.get("flags", {}).get(e["visible_after"]))), None)
         if not edge:
             raise ValueError("隣接する場所を選んでください。")
-        if not edge.get("action_id"):
+        action_id = edge.get("action_by_location", {}).get(location, edge.get("action_id"))
+        if edge.get("action_ids"):
+            for candidate in edge["action_ids"]:
+                action = resolve_action(session, action_id=candidate)
+                if action is not None and action_requirement_status(action, session)[0]:
+                    return action
+        if not action_id:
             raise ValueError("この場所へは行動を選んで進んでください。")
-        action = resolve_action(session, action_id=edge["action_id"])
+        action = resolve_action(session, action_id=action_id)
         if action is None:
             raise ValueError("この行動はまだ選択できません。")
         enabled, reason = action_requirement_status(action, session)

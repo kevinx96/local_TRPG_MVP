@@ -24,8 +24,9 @@ from .combat import (
     perform_combat_action,
 )
 from .gm_contract import STATE_MARKER, build_gm_contract_prompt, build_opening_prompt, split_visible_and_json
-from .llm_client import LLMClientError, chat_completion, debug_log
+from .llm_client import LLMBlockedError, LLMClientError, chat_completion, debug_log
 from . import llm_trace
+from .area_retry import capture_entries, retry_area
 from .maps import movement_action
 from .shops import ShopError, public_shop, trade, use_item
 from .free_actions import InvalidPlan, adjudicate, build_plan_messages, parse_plan, planner_config
@@ -439,6 +440,21 @@ def api_turn(session_id: str, request: TurnRequest) -> dict[str, Any]:
     return _run_turn(session, request)
 
 
+@app.post("/api/sessions/{session_id}/retry")
+def api_retry_area(session_id: str) -> dict[str, Any]:
+    try:
+        session = load_session(session_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    try:
+        retry_area(session)
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    ensure_combat_started(session)
+    save_session(session)
+    return public_session(session)
+
+
 @app.post("/api/sessions/{session_id}/map/move")
 def api_map_move(session_id: str, request: MapMoveRequest) -> dict[str, Any]:
     try:
@@ -555,6 +571,7 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
         )
     apply_gm_payload(session, visible_text, payload, warning)
     session["needs_opening"] = False
+    capture_entries(session, None, set())
     ensure_combat_started(session, intro_text=visible_text)
     save_session(session)
     return public_session(session)
@@ -777,7 +794,11 @@ def _run_free_turn(session: dict[str, Any], request: TurnRequest) -> dict[str, A
         llm_trace.annotate(parse_status="invalid_plan" if isinstance(exc, InvalidPlan) else "request_error", fallback=True, outcome="rejected")
         # Do not replay the command, retry another model, or expose unvalidated prose.
         add_player_message(session, request.text.strip(), request.speaker)
-        add_assistant_message(session, "行動を読み取れませんでした。状況は変わっていません。言い換えるか、現在の選択肢から選んでください。")
+        if isinstance(exc, LLMClientError) and not isinstance(exc, LLMBlockedError):
+            # A transport failure (rate limit, quota, outage) is not the player's wording.
+            add_assistant_message(session, "GMとの通信に失敗しました。状況は変わっていません。少し待ってからもう一度試すか、現在の選択肢から選んでください。")
+        else:
+            add_assistant_message(session, "行動を読み取れませんでした。状況は変わっていません。言い換えるか、現在の選択肢から選んでください。")
         session["choices"] = fallback_choices_for_session(session)
         debug_log(f"Free action rejected session={session['id']} error_type={type(exc).__name__}")
     session["last_turn_metrics"] = {"model_calls": 1, "elapsed_ms": round((time.monotonic() - started) * 1000)}
@@ -840,6 +861,10 @@ def _should_skip_turn_narration(
 @llm_trace.game_trace
 def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
     result = combat_result_for_llm(session)
+    state_delta = consume_combat_state_delta(session)
+    if state_delta:
+        apply_state_delta(session, state_delta, allow_world_transition=True)
+        result = combat_result_for_llm(session)
     if result.get("outcome") == "victory":
         _record_obstacle_victory(session)
     player = result.get("player") if isinstance(result.get("player"), dict) else {}
@@ -1144,12 +1169,7 @@ def _demo_opening(session: dict[str, Any], error: str) -> str:
 
 
 def _demo_response(session: dict[str, Any], player_text: str, roll: dict[str, Any], error: str) -> str:
-    gm_text = (
-        "接続中のローカルLLMから応答を取得できませんでした。"
-        "ただし、デモ進行として物語を続けます。\n\n"
-        f"あなたの行動「{player_text}」に対して、運命の出目は{roll['total']}。"
-        "状況は変化し、次の一手を選べる状態になりました。"
-    )
+    gm_text = "（GMとの通信が途切れたため、描写を省略した。結果は記録に反映されている。）"
     payload = {
         "gm_text": gm_text,
         "system_log": f"デモ応答を使用しました。直近の判定: {roll['expression']} = {roll['total']}",

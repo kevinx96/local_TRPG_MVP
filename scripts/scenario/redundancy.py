@@ -76,7 +76,7 @@ def finish_witness(pack: dict[str, Any], steps: list[str], character: str) -> li
     session, _ = replay(pack, steps, character)
     suffix = []
     navigation = {
-        "inn": "return_forest_exit", "forge": "return_castle_from_forge",
+        "inn": "return_castle_from_inn", "forge": "return_castle_from_forge", "castle_town": "return_forest_exit",
         "item_shop": "return_castle_from_item_shop", "magic_shop": "return_castle_from_magic_shop",
         "alley_night": "leave_night_alley", "forest_exit": "leave_forest_for_village",
         "village_approach": "approach_burning_village_carefully:success",
@@ -98,7 +98,9 @@ def finish_witness(pack: dict[str, Any], steps: list[str], character: str) -> li
         if location == "castle_report":
             return steps + suffix
         if location == "castle":
-            step = "return_village" if session["flags"].get("returned_from_village") else "go_inn"
+            step = "go_castle_town"
+        elif location == "castle_town" and session["flags"].get("returned_from_village"):
+            step = "return_village"
         elif location == "forest_wolves" and session["flags"].get("passed_forest_wolves"):
             step = "pass_cleared_wolves"
         elif location in navigation:

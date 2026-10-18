@@ -21,7 +21,7 @@ def early_checkpoints(pack: dict[str, Any]) -> dict[str, Any]:
         result["encounters"][encounter] = {"characters": {}}
         for char in CHARACTERS:
             session = checkpoints.fresh_session(pack, char)
-            for step in ("check_supplies", "go_magic_shop", "invite_blue_mage", "return_castle_from_magic_shop"):
+            for step in ("@opening", "check_supplies", "go_castle_town", "go_magic_shop", "invite_blue_mage", "return_castle_from_magic_shop"):
                 checkpoints.replay_step(session, step)
             actor = session["character"]
             result["encounters"][encounter]["characters"][char] = {
@@ -53,9 +53,9 @@ def reward_route(pack: dict[str, Any], cp: dict[str, Any], char: str) -> dict[st
     index = steps.index("leave_forest_for_village")
     steps[index:index] = ["exit_back", "wolves_back", "inspect_spring_wall", "decode_seal:success", "@victory",
         "cave_right", "talk_mina", "escort_mina", "hot_spring_forward", "@victory", "@victory", "leave_prism_tree",
-        "continue_from_elf_spring", "pass_cleared_wolves", "return_inn_after_forest", "return_castle_from_inn", "go_item_shop",
+        "continue_from_elf_spring", "pass_cleared_wolves", "return_inn_after_forest", "go_item_shop",
         "give_moss_to_sarah", "return_castle_from_item_shop", "go_forge", "return_robert_hammer", "return_castle_from_forge",
-        "go_magic_shop", "report_mina_safe", "forge_prism_weapon", "return_castle_from_magic_shop", "go_inn", "return_forest_exit"]
+        "go_magic_shop", "report_mina_safe", "forge_prism_weapon", "return_castle_from_magic_shop", "return_forest_exit"]
     session = checkpoints.fresh_session(pack, char)
     new_sources = [checkpoints.replay_step(session, step) for step in steps]
     modified["encounters"]["dragon_valley_loc"]["characters"][char]["sources"] = new_sources

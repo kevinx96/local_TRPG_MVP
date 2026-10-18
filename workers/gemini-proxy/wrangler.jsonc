@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "trpg-gemini-proxy",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-05-11",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  // A latency hint toward Google's US region; it is not a guarantee of where subrequests originate.
+  "placement": { "region": "gcp:us-central1" },
+  "vars": {
+    "UPSTREAM_BASE": "https://generativelanguage.googleapis.com",
+    "DAILY_REQUEST_LIMIT": "2000"
+  },
+  "ratelimits": [
+    { "name": "PER_IP_LIMITER", "namespace_id": "7101", "simple": { "limit": 30, "period": 60 } }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "BUDGET", "class_name": "DailyBudget" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["DailyBudget"] }]
+}

@@ -1,0 +1,3913 @@
+{
+  "suite": "controls",
+  "n": 2000,
+  "seed": 20261012,
+  "rows": [
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 1.5185
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 2000
+      },
+      "rounds_mean": 1.5185,
+      "success_rounds_mean": 1.5185,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.912925,
+      "healing_items_mean": {
+        "治療の巻物": 0.001
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.001
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 3.609,
+      "defeat_rounds": {},
+      "defeat_causes": {},
+      "suite": "controls",
+      "condition": "old_robin",
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "inventory": [
+        {
+          "name": "革の鎧",
+          "description": "なめした革で作られた軽量の鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment",
+          "slot": "weapon"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 1.421
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 2000
+      },
+      "rounds_mean": 1.421,
+      "success_rounds_mean": 1.421,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 1.0,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.92835,
+      "healing_items_mean": {
+        "治療の巻物": 0.0005
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.0005
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 3.4605,
+      "defeat_rounds": {},
+      "defeat_causes": {},
+      "suite": "controls",
+      "condition": "damage_only",
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "inventory": [
+        {
+          "name": "革の鎧",
+          "description": "なめした革で作られた軽量の鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment",
+          "slot": "weapon"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 1.422
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1998,
+        "defeat": 2
+      },
+      "rounds_mean": 1.422,
+      "success_rounds_mean": 1.4214214214214214,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 0.999,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9249749749749749,
+      "healing_items_mean": {
+        "治療の巻物": 0.001
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.001
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 3.465,
+      "defeat_rounds": {
+        "2": 2
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 2": 2
+      },
+      "suite": "controls",
+      "condition": "highest_hp",
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "inventory": [
+        {
+          "name": "革の鎧",
+          "description": "なめした革で作られた軽量の鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment",
+          "slot": "weapon"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 1.954
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1996,
+        "defeat": 4
+      },
+      "rounds_mean": 1.954,
+      "success_rounds_mean": 1.9539078156312626,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 0.998,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8057782231128925,
+      "healing_items_mean": {
+        "治療の巻物": 0.024
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.024
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 4
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 2": 4
+      },
+      "suite": "controls",
+      "condition": "old_robin",
+      "equipment": [
+        "聖なる杖",
+        "ローブ"
+      ],
+      "inventory": [
+        {
+          "name": "聖なる杖",
+          "description": "神聖魔法を増幅する杖。",
+          "effect": "回復技能回復量+2",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_healing_bonus": 2,
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "ローブ",
+          "description": "僧侶の簡素な衣。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            },
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 5,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 1.822
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1998,
+        "defeat": 2
+      },
+      "rounds_mean": 1.822,
+      "success_rounds_mean": 1.8218218218218218,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 0.999,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.830469358247136,
+      "healing_items_mean": {
+        "治療の巻物": 0.015
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.015
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 2
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 2": 2
+      },
+      "suite": "controls",
+      "condition": "damage_only",
+      "equipment": [
+        "聖なる杖",
+        "ローブ"
+      ],
+      "inventory": [
+        {
+          "name": "聖なる杖",
+          "description": "神聖魔法を増幅する杖。",
+          "effect": "回復技能回復量+2",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_healing_bonus": 2,
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "ローブ",
+          "description": "僧侶の簡素な衣。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            },
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 5,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 1.8155
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1996,
+        "defeat": 4
+      },
+      "rounds_mean": 1.8155,
+      "success_rounds_mean": 1.815130260521042,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 0.998,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8286573146292585,
+      "healing_items_mean": {
+        "治療の巻物": 0.012
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.012
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 4
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 2": 4
+      },
+      "suite": "controls",
+      "condition": "highest_hp",
+      "equipment": [
+        "聖なる杖",
+        "ローブ"
+      ],
+      "inventory": [
+        {
+          "name": "聖なる杖",
+          "description": "神聖魔法を増幅する杖。",
+          "effect": "回復技能回復量+2",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_healing_bonus": 2,
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "ローブ",
+          "description": "僧侶の簡素な衣。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            },
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 5,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 1.1175
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1983,
+        "defeat": 17
+      },
+      "rounds_mean": 1.1175,
+      "success_rounds_mean": 1.1154815935451337,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 0.9915,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9791561606992771,
+      "healing_items_mean": {
+        "治療の巻物": 0.0045,
+        "薬草": 0.0065
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.0045,
+        "薬草": 0.0065
+      },
+      "mp_spent_mean": 2.135,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 12,
+        "2": 4,
+        "3": 1
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 1": 12,
+        "forest_wolf:1:牙 @ round 2": 4,
+        "forest_wolf:1:牙 @ round 3": 1
+      },
+      "suite": "controls",
+      "condition": "old_robin",
+      "equipment": [
+        "魔導書",
+        "魔法のローブ"
+      ],
+      "inventory": [
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃技能ダメージ+3",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_damage_bonus": 3,
+            "applies_to": [
+              "attack"
+            ]
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            }
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 1.094
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1988,
+        "defeat": 12
+      },
+      "rounds_mean": 1.094,
+      "success_rounds_mean": 1.0925553319919517,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 0.994,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9853705566733736,
+      "healing_items_mean": {
+        "治療の巻物": 0.004,
+        "薬草": 0.006
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.004,
+        "薬草": 0.006
+      },
+      "mp_spent_mean": 2.119,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 8,
+        "2": 4
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 1": 8,
+        "forest_wolf:1:牙 @ round 2": 4
+      },
+      "suite": "controls",
+      "condition": "damage_only",
+      "equipment": [
+        "魔導書",
+        "魔法のローブ"
+      ],
+      "inventory": [
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃技能ダメージ+3",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_damage_bonus": 3,
+            "applies_to": [
+              "attack"
+            ]
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            }
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 1.104
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1992,
+        "defeat": 8
+      },
+      "rounds_mean": 1.104,
+      "success_rounds_mean": 1.1019076305220883,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 0.996,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.9849815930388219,
+      "healing_items_mean": {
+        "治療の巻物": 0.004,
+        "薬草": 0.0085
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.004,
+        "薬草": 0.0085
+      },
+      "mp_spent_mean": 2.129,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "1": 5,
+        "2": 1,
+        "3": 2
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 1": 5,
+        "forest_wolf:1:牙 @ round 3": 2,
+        "forest_wolf:1:牙 @ round 2": 1
+      },
+      "suite": "controls",
+      "condition": "highest_hp",
+      "equipment": [
+        "魔導書",
+        "魔法のローブ"
+      ],
+      "inventory": [
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃技能ダメージ+3",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_damage_bonus": 3,
+            "applies_to": [
+              "attack"
+            ]
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            }
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 1.653
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1990,
+        "defeat": 10
+      },
+      "rounds_mean": 1.653,
+      "success_rounds_mean": 1.6512562814070353,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 0.995,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8844580043072505,
+      "healing_items_mean": {
+        "治療の巻物": 0.0125,
+        "薬草": 0.011
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.0125,
+        "薬草": 0.011
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 4.992,
+      "defeat_rounds": {
+        "2": 10
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 2": 10
+      },
+      "suite": "controls",
+      "condition": "old_robin",
+      "equipment": [
+        "ダガー",
+        "革の鎧"
+      ],
+      "inventory": [
+        {
+          "name": "ダガー",
+          "description": "軽量で扱いやすい短剣。",
+          "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+          "quantity": 1,
+          "combat": {
+            "kind": "weapon",
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "革の鎧",
+          "description": "動きやすさを重視した軽装鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "盗賊道具",
+          "description": "鍵開けや罠解除に使う道具一式。",
+          "effect": "探索・解除判定+2",
+          "quantity": 1
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 3,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 1.5475
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1993,
+        "defeat": 7
+      },
+      "rounds_mean": 1.5475,
+      "success_rounds_mean": 1.5459106874059207,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 0.9965,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8994337323489355,
+      "healing_items_mean": {
+        "治療の巻物": 0.007,
+        "薬草": 0.0065
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.007,
+        "薬草": 0.0065
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 4.72,
+      "defeat_rounds": {
+        "2": 7
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 2": 7
+      },
+      "suite": "controls",
+      "condition": "damage_only",
+      "equipment": [
+        "ダガー",
+        "革の鎧"
+      ],
+      "inventory": [
+        {
+          "name": "ダガー",
+          "description": "軽量で扱いやすい短剣。",
+          "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+          "quantity": 1,
+          "combat": {
+            "kind": "weapon",
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "革の鎧",
+          "description": "動きやすさを重視した軽装鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "盗賊道具",
+          "description": "鍵開けや罠解除に使う道具一式。",
+          "effect": "探索・解除判定+2",
+          "quantity": 1
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 3,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 1.5345
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1999,
+        "defeat": 1
+      },
+      "rounds_mean": 1.5345,
+      "success_rounds_mean": 1.5342671335667835,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 0.9995,
+      "rounds_median": 1.0,
+      "hp_left_mean": 0.8997713142285428,
+      "healing_items_mean": {
+        "治療の巻物": 0.0075,
+        "薬草": 0.004
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.0075,
+        "薬草": 0.004
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 4.744,
+      "defeat_rounds": {
+        "2": 1
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 2": 1
+      },
+      "suite": "controls",
+      "condition": "highest_hp",
+      "equipment": [
+        "ダガー",
+        "革の鎧"
+      ],
+      "inventory": [
+        {
+          "name": "ダガー",
+          "description": "軽量で扱いやすい短剣。",
+          "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+          "quantity": 1,
+          "combat": {
+            "kind": "weapon",
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "革の鎧",
+          "description": "動きやすさを重視した軽装鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "盗賊道具",
+          "description": "鍵開けや罠解除に使う道具一式。",
+          "effect": "探索・解除判定+2",
+          "quantity": 1
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 3,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "goblin_king": 4.235
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1722,
+        "defeat": 278
+      },
+      "rounds_mean": 4.235,
+      "success_rounds_mean": 4.41869918699187,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "goblin_king": 2000
+      },
+      "win_rate": 0.861,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.7529326364692218,
+      "healing_items_mean": {
+        "治療の巻物": 0.145
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.145,
+        "聖水": 1.841
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.1275,
+      "defeat_rounds": {
+        "3": 254,
+        "4": 21,
+        "5": 3
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 216,
+        "goblin_archer:2:粗末な矢 @ round 3": 38,
+        "goblin_king:1:王の戦斧 @ round 4": 16,
+        "goblin_archer:2:粗末な矢 @ round 4": 5,
+        "goblin_king:1:王の戦斧 @ round 5": 3
+      },
+      "suite": "controls",
+      "condition": "old_robin",
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "inventory": [
+        {
+          "name": "革の鎧",
+          "description": "なめした革で作られた軽量の鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 6,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment",
+          "slot": "weapon"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 5,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "生命の果実",
+          "description": "赤く熟した不思議な果実。",
+          "effect": "最大HPが永続的に3上がる / 消耗品",
+          "quantity": 1,
+          "id": "fruit_life",
+          "combat": {
+            "kind": "permanent",
+            "consumable": true,
+            "amount": 3,
+            "resource": "hp",
+            "label": "最大HP"
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "goblin_king": 4.1285
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1768,
+        "defeat": 232
+      },
+      "rounds_mean": 4.1285,
+      "success_rounds_mean": 4.265837104072398,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "goblin_king": 2000
+      },
+      "win_rate": 0.884,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.7722002262443439,
+      "healing_items_mean": {
+        "治療の巻物": 0.127
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.127,
+        "聖水": 1.7855
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.0045,
+      "defeat_rounds": {
+        "3": 214,
+        "4": 17,
+        "5": 1
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 184,
+        "goblin_archer:2:粗末な矢 @ round 3": 30,
+        "goblin_king:1:王の戦斧 @ round 4": 14,
+        "goblin_archer:2:粗末な矢 @ round 4": 3,
+        "goblin_king:1:王の戦斧 @ round 5": 1
+      },
+      "suite": "controls",
+      "condition": "damage_only",
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "inventory": [
+        {
+          "name": "革の鎧",
+          "description": "なめした革で作られた軽量の鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 6,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment",
+          "slot": "weapon"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 5,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "生命の果実",
+          "description": "赤く熟した不思議な果実。",
+          "effect": "最大HPが永続的に3上がる / 消耗品",
+          "quantity": 1,
+          "id": "fruit_life",
+          "combat": {
+            "kind": "permanent",
+            "consumable": true,
+            "amount": 3,
+            "resource": "hp",
+            "label": "最大HP"
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "goblin_king": 4.369
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1728,
+        "defeat": 272
+      },
+      "rounds_mean": 4.369,
+      "success_rounds_mean": 4.576388888888889,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "goblin_king": 2000
+      },
+      "win_rate": 0.864,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.684056712962963,
+      "healing_items_mean": {
+        "治療の巻物": 0.088
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.088,
+        "聖水": 1.7785
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 0.069,
+      "defeat_rounds": {
+        "3": 258,
+        "4": 14
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 184,
+        "goblin_archer:2:粗末な矢 @ round 3": 74,
+        "goblin_king:1:王の戦斧 @ round 4": 12,
+        "goblin_archer:2:粗末な矢 @ round 4": 2
+      },
+      "suite": "controls",
+      "condition": "highest_hp",
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "inventory": [
+        {
+          "name": "革の鎧",
+          "description": "なめした革で作られた軽量の鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 6,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment",
+          "slot": "weapon"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 5,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "生命の果実",
+          "description": "赤く熟した不思議な果実。",
+          "effect": "最大HPが永続的に3上がる / 消耗品",
+          "quantity": 1,
+          "id": "fruit_life",
+          "combat": {
+            "kind": "permanent",
+            "consumable": true,
+            "amount": 3,
+            "resource": "hp",
+            "label": "最大HP"
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "goblin_king": 4.108
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1515,
+        "defeat": 485
+      },
+      "rounds_mean": 4.108,
+      "success_rounds_mean": 4.433663366336634,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "goblin_king": 2000
+      },
+      "win_rate": 0.7575,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.7027869453612028,
+      "healing_items_mean": {
+        "治療の巻物": 0.1385
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.1385,
+        "聖水": 1.741
+      },
+      "mp_spent_mean": 12.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 444,
+        "4": 38,
+        "5": 3
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 381,
+        "goblin_archer:2:粗末な矢 @ round 3": 63,
+        "goblin_king:1:王の戦斧 @ round 4": 33,
+        "goblin_archer:2:粗末な矢 @ round 4": 5,
+        "goblin_king:1:王の戦斧 @ round 5": 3
+      },
+      "suite": "controls",
+      "condition": "old_robin",
+      "equipment": [
+        "聖なる杖",
+        "ローブ"
+      ],
+      "inventory": [
+        {
+          "name": "聖なる杖",
+          "description": "神聖魔法を増幅する杖。",
+          "effect": "回復技能回復量+2",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_healing_bonus": 2,
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "ローブ",
+          "description": "僧侶の簡素な衣。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            },
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 7,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 5,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "生命の果実",
+          "description": "赤く熟した不思議な果実。",
+          "effect": "最大HPが永続的に3上がる / 消耗品",
+          "quantity": 1,
+          "id": "fruit_life",
+          "combat": {
+            "kind": "permanent",
+            "consumable": true,
+            "amount": 3,
+            "resource": "hp",
+            "label": "最大HP"
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "goblin_king": 4.004
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1557,
+        "defeat": 443
+      },
+      "rounds_mean": 4.004,
+      "success_rounds_mean": 4.262684649967887,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "goblin_king": 2000
+      },
+      "win_rate": 0.7785,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.7291086847926925,
+      "healing_items_mean": {
+        "治療の巻物": 0.1205
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.1205,
+        "聖水": 1.6965
+      },
+      "mp_spent_mean": 12.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 405,
+        "4": 34,
+        "5": 4
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 363,
+        "goblin_archer:2:粗末な矢 @ round 3": 42,
+        "goblin_king:1:王の戦斧 @ round 4": 31,
+        "goblin_king:1:王の戦斧 @ round 5": 4,
+        "goblin_archer:2:粗末な矢 @ round 4": 3
+      },
+      "suite": "controls",
+      "condition": "damage_only",
+      "equipment": [
+        "聖なる杖",
+        "ローブ"
+      ],
+      "inventory": [
+        {
+          "name": "聖なる杖",
+          "description": "神聖魔法を増幅する杖。",
+          "effect": "回復技能回復量+2",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_healing_bonus": 2,
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "ローブ",
+          "description": "僧侶の簡素な衣。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            },
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 7,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 5,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "生命の果実",
+          "description": "赤く熟した不思議な果実。",
+          "effect": "最大HPが永続的に3上がる / 消耗品",
+          "quantity": 1,
+          "id": "fruit_life",
+          "combat": {
+            "kind": "permanent",
+            "consumable": true,
+            "amount": 3,
+            "resource": "hp",
+            "label": "最大HP"
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "cleric",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "goblin_king": 4.2375
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1576,
+        "defeat": 424
+      },
+      "rounds_mean": 4.2375,
+      "success_rounds_mean": 4.5444162436548226,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "goblin_king": 2000
+      },
+      "win_rate": 0.788,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.5874929498025945,
+      "healing_items_mean": {
+        "治療の巻物": 0.1005
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.1005,
+        "聖水": 1.706
+      },
+      "mp_spent_mean": 12.0,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "3": 386,
+        "4": 35,
+        "5": 3
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 299,
+        "goblin_archer:2:粗末な矢 @ round 3": 87,
+        "goblin_king:1:王の戦斧 @ round 4": 28,
+        "goblin_archer:2:粗末な矢 @ round 4": 7,
+        "goblin_king:1:王の戦斧 @ round 5": 3
+      },
+      "suite": "controls",
+      "condition": "highest_hp",
+      "equipment": [
+        "聖なる杖",
+        "ローブ"
+      ],
+      "inventory": [
+        {
+          "name": "聖なる杖",
+          "description": "神聖魔法を増幅する杖。",
+          "effect": "回復技能回復量+2",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_healing_bonus": 2,
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "ローブ",
+          "description": "僧侶の簡素な衣。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            },
+            "applies_to": [
+              "heal"
+            ]
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 7,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 5,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "生命の果実",
+          "description": "赤く熟した不思議な果実。",
+          "effect": "最大HPが永続的に3上がる / 消耗品",
+          "quantity": 1,
+          "id": "fruit_life",
+          "combat": {
+            "kind": "permanent",
+            "consumable": true,
+            "amount": 3,
+            "resource": "hp",
+            "label": "最大HP"
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "goblin_king": 2.8265
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1970,
+        "defeat": 30
+      },
+      "rounds_mean": 2.8265,
+      "success_rounds_mean": 2.8375634517766497,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "goblin_king": 2000
+      },
+      "win_rate": 0.985,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.6087140439932318,
+      "healing_items_mean": {
+        "治療の巻物": 0.012,
+        "薬草": 0.074
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.012,
+        "聖水": 2.0,
+        "薬草": 0.074
+      },
+      "mp_spent_mean": 0.456,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 27,
+        "3": 3
+      },
+      "defeat_causes": {
+        "goblin_archer:2:粗末な矢 @ round 2": 27,
+        "goblin_archer:2:粗末な矢 @ round 3": 3
+      },
+      "suite": "controls",
+      "condition": "old_robin",
+      "equipment": [
+        "魔導書",
+        "魔法のローブ"
+      ],
+      "inventory": [
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃技能ダメージ+3",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_damage_bonus": 3,
+            "applies_to": [
+              "attack"
+            ]
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            }
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 6,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 5,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "生命の果実",
+          "description": "赤く熟した不思議な果実。",
+          "effect": "最大HPが永続的に3上がる / 消耗品",
+          "quantity": 1,
+          "id": "fruit_life",
+          "combat": {
+            "kind": "permanent",
+            "consumable": true,
+            "amount": 3,
+            "resource": "hp",
+            "label": "最大HP"
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "goblin_king": 2.703
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1975,
+        "defeat": 25
+      },
+      "rounds_mean": 2.703,
+      "success_rounds_mean": 2.711392405063291,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "goblin_king": 2000
+      },
+      "win_rate": 0.9875,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.6390717299578059,
+      "healing_items_mean": {
+        "治療の巻物": 0.0085,
+        "薬草": 0.0535
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.0085,
+        "聖水": 2.0,
+        "薬草": 0.0535
+      },
+      "mp_spent_mean": 0.302,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 24,
+        "3": 1
+      },
+      "defeat_causes": {
+        "goblin_archer:2:粗末な矢 @ round 2": 24,
+        "goblin_archer:2:粗末な矢 @ round 3": 1
+      },
+      "suite": "controls",
+      "condition": "damage_only",
+      "equipment": [
+        "魔導書",
+        "魔法のローブ"
+      ],
+      "inventory": [
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃技能ダメージ+3",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_damage_bonus": 3,
+            "applies_to": [
+              "attack"
+            ]
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            }
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 6,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 5,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "生命の果実",
+          "description": "赤く熟した不思議な果実。",
+          "effect": "最大HPが永続的に3上がる / 消耗品",
+          "quantity": 1,
+          "id": "fruit_life",
+          "combat": {
+            "kind": "permanent",
+            "consumable": true,
+            "amount": 3,
+            "resource": "hp",
+            "label": "最大HP"
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "mage",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "goblin_king": 3.27
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1952,
+        "defeat": 48
+      },
+      "rounds_mean": 3.27,
+      "success_rounds_mean": 3.2976434426229506,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "goblin_king": 2000
+      },
+      "win_rate": 0.976,
+      "rounds_median": 3.0,
+      "hp_left_mean": 0.6153944672131147,
+      "healing_items_mean": {
+        "治療の巻物": 0.0335,
+        "薬草": 0.2155
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.0335,
+        "聖水": 2.0,
+        "薬草": 0.2155
+      },
+      "mp_spent_mean": 1.142,
+      "sp_spent_mean": 0.0,
+      "defeat_rounds": {
+        "2": 41,
+        "3": 7
+      },
+      "defeat_causes": {
+        "goblin_archer:2:粗末な矢 @ round 2": 41,
+        "goblin_archer:2:粗末な矢 @ round 3": 7
+      },
+      "suite": "controls",
+      "condition": "highest_hp",
+      "equipment": [
+        "魔導書",
+        "魔法のローブ"
+      ],
+      "inventory": [
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃技能ダメージ+3",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_damage_bonus": 3,
+            "applies_to": [
+              "attack"
+            ]
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            }
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 6,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 5,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "生命の果実",
+          "description": "赤く熟した不思議な果実。",
+          "effect": "最大HPが永続的に3上がる / 消耗品",
+          "quantity": 1,
+          "id": "fruit_life",
+          "combat": {
+            "kind": "permanent",
+            "consumable": true,
+            "amount": 3,
+            "resource": "hp",
+            "label": "最大HP"
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "goblin_king": 4.083
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1555,
+        "defeat": 445
+      },
+      "rounds_mean": 4.083,
+      "success_rounds_mean": 4.376848874598071,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "goblin_king": 2000
+      },
+      "win_rate": 0.7775,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.7777216352779054,
+      "healing_items_mean": {
+        "治療の巻物": 0.051,
+        "薬草": 0.02
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.051,
+        "聖水": 1.7695,
+        "薬草": 0.02
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 4.144,
+      "defeat_rounds": {
+        "3": 421,
+        "4": 23,
+        "5": 1
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 378,
+        "goblin_archer:2:粗末な矢 @ round 3": 43,
+        "goblin_king:1:王の戦斧 @ round 4": 22,
+        "goblin_archer:2:粗末な矢 @ round 4": 1,
+        "goblin_king:1:王の戦斧 @ round 5": 1
+      },
+      "suite": "controls",
+      "condition": "old_robin",
+      "equipment": [
+        "ダガー",
+        "革の鎧"
+      ],
+      "inventory": [
+        {
+          "name": "ダガー",
+          "description": "軽量で扱いやすい短剣。",
+          "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+          "quantity": 1,
+          "combat": {
+            "kind": "weapon",
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "革の鎧",
+          "description": "動きやすさを重視した軽装鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "盗賊道具",
+          "description": "鍵開けや罠解除に使う道具一式。",
+          "effect": "探索・解除判定+2",
+          "quantity": 1
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 5,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 5,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "生命の果実",
+          "description": "赤く熟した不思議な果実。",
+          "effect": "最大HPが永続的に3上がる / 消耗品",
+          "quantity": 1,
+          "id": "fruit_life",
+          "combat": {
+            "kind": "permanent",
+            "consumable": true,
+            "amount": 3,
+            "resource": "hp",
+            "label": "最大HP"
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "goblin_king": 3.954
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1593,
+        "defeat": 407
+      },
+      "rounds_mean": 3.954,
+      "success_rounds_mean": 4.183929692404269,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "goblin_king": 2000
+      },
+      "win_rate": 0.7965,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.8141870684243565,
+      "healing_items_mean": {
+        "治療の巻物": 0.042,
+        "薬草": 0.014
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.042,
+        "聖水": 1.7315,
+        "薬草": 0.014
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 4.02,
+      "defeat_rounds": {
+        "3": 385,
+        "4": 22
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 354,
+        "goblin_archer:2:粗末な矢 @ round 3": 31,
+        "goblin_king:1:王の戦斧 @ round 4": 22
+      },
+      "suite": "controls",
+      "condition": "damage_only",
+      "equipment": [
+        "ダガー",
+        "革の鎧"
+      ],
+      "inventory": [
+        {
+          "name": "ダガー",
+          "description": "軽量で扱いやすい短剣。",
+          "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+          "quantity": 1,
+          "combat": {
+            "kind": "weapon",
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "革の鎧",
+          "description": "動きやすさを重視した軽装鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "盗賊道具",
+          "description": "鍵開けや罠解除に使う道具一式。",
+          "effect": "探索・解除判定+2",
+          "quantity": 1
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 5,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 5,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "生命の果実",
+          "description": "赤く熟した不思議な果実。",
+          "effect": "最大HPが永続的に3上がる / 消耗品",
+          "quantity": 1,
+          "id": "fruit_life",
+          "combat": {
+            "kind": "permanent",
+            "consumable": true,
+            "amount": 3,
+            "resource": "hp",
+            "label": "最大HP"
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "character": "thief",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 2,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "goblin_king": 4.308
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1664,
+        "defeat": 336
+      },
+      "rounds_mean": 4.308,
+      "success_rounds_mean": 4.5594951923076925,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "goblin_king": 2000
+      },
+      "win_rate": 0.832,
+      "rounds_median": 4.0,
+      "hp_left_mean": 0.6942393543956044,
+      "healing_items_mean": {
+        "治療の巻物": 0.037,
+        "薬草": 0.0145
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.037,
+        "聖水": 1.7655,
+        "薬草": 0.0145
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 4.05,
+      "defeat_rounds": {
+        "3": 315,
+        "4": 21
+      },
+      "defeat_causes": {
+        "goblin_king:1:王の戦斧 @ round 3": 252,
+        "goblin_archer:2:粗末な矢 @ round 3": 63,
+        "goblin_king:1:王の戦斧 @ round 4": 14,
+        "goblin_archer:2:粗末な矢 @ round 4": 7
+      },
+      "suite": "controls",
+      "condition": "highest_hp",
+      "equipment": [
+        "ダガー",
+        "革の鎧"
+      ],
+      "inventory": [
+        {
+          "name": "ダガー",
+          "description": "軽量で扱いやすい短剣。",
+          "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / physical属性",
+          "quantity": 1,
+          "combat": {
+            "kind": "weapon",
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          },
+          "slot": "weapon",
+          "category": "equipment"
+        },
+        {
+          "name": "革の鎧",
+          "description": "動きやすさを重視した軽装鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "盗賊道具",
+          "description": "鍵開けや罠解除に使う道具一式。",
+          "effect": "探索・解除判定+2",
+          "quantity": 1
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 5,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 5,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "生命の果実",
+          "description": "赤く熟した不思議な果実。",
+          "effect": "最大HPが永続的に3上がる / 消耗品",
+          "quantity": 1,
+          "id": "fruit_life",
+          "combat": {
+            "kind": "permanent",
+            "consumable": true,
+            "amount": 3,
+            "resource": "hp",
+            "label": "最大HP"
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 2.3105
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 1994,
+        "defeat": 6
+      },
+      "rounds_mean": 2.3105,
+      "success_rounds_mean": 2.307422266800401,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 0.997,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.8793630892678034,
+      "healing_items_mean": {
+        "治療の巻物": 0.019
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.019
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 6.8415,
+      "defeat_rounds": {
+        "3": 5,
+        "5": 1
+      },
+      "defeat_causes": {
+        "forest_wolf:1:牙 @ round 3": 5,
+        "forest_wolf:1:牙 @ round 5": 1
+      },
+      "suite": "controls",
+      "condition": "initial_armor",
+      "equipment": [
+        "革の鎧",
+        "氷鉄の大剣"
+      ],
+      "inventory": [
+        {
+          "name": "革の鎧",
+          "description": "なめした革で作られた軽量の鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment",
+          "slot": "weapon"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        }
+      ]
+    },
+    {
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "character": "hero",
+      "policy": "heuristic",
+      "defense_mode": "flat",
+      "companion": true,
+      "n": 2000,
+      "seed": 20261012,
+      "stat_scaling": {},
+      "skill_variant": "none",
+      "level": 1,
+      "enemy_count": 1,
+      "preparation": "default",
+      "phase_rounds_mean": {
+        "forest_wolf": 2.302
+      },
+      "purify": false,
+      "outcomes": {
+        "victory": 2000
+      },
+      "rounds_mean": 2.302,
+      "success_rounds_mean": 2.302,
+      "threshold_reached": 0,
+      "threshold_rounds_mean": null,
+      "phase_reached": {
+        "forest_wolf": 2000
+      },
+      "win_rate": 1.0,
+      "rounds_median": 2.0,
+      "hp_left_mean": 0.91765,
+      "healing_items_mean": {
+        "治療の巻物": 0.004
+      },
+      "consumables_mean": {
+        "治療の巻物": 0.004
+      },
+      "mp_spent_mean": 0.0,
+      "sp_spent_mean": 6.8535,
+      "defeat_rounds": {},
+      "defeat_causes": {},
+      "suite": "controls",
+      "condition": "bought_armor",
+      "equipment": [
+        "氷鉄の大剣",
+        "アダマンタイトの鎧"
+      ],
+      "inventory": [
+        {
+          "name": "革の鎧",
+          "description": "なめした革で作られた軽量の鎧。",
+          "effect": "被ダメージを1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "armor",
+            "defense": 1
+          },
+          "slot": "armor",
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment",
+          "slot": "weapon"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 2,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "アダマンタイトの鎧",
+          "description": "非常に硬い金属で作られた鎧。",
+          "effect": "被ダメージを3軽減",
+          "quantity": 1,
+          "id": "adamantite_armor",
+          "combat": {
+            "kind": "armor",
+            "defense": 3
+          },
+          "category": "equipment",
+          "slot": "armor"
+        }
+      ]
+    }
+  ],
+  "fingerprints": {
+    "host/prompt/processed/dragon_rpg.json": "59acc82eb7fa7a5ef35dd3c3cdbe08c6d9c8df8aa0b73c3576998b968e2f7ad0",
+    "host/state.py": "75299a024d41b9a08ddf8c93c5be71e3e14a6e1866a5888d521b4c546ca6c98b",
+    "host/combat.py": "673bb8fd6fe99d1684caeeb48357f91e8e228a1dfd36b1a57968e3329e68b1ca",
+    "host/item_mechanics.py": "1100ce5da0922588eeeb1fa4aaea2b62c2388758cd3d05278516c23e94ab42ee",
+    "scripts/balance/slots.py": "98552506aad5339eba782cd035d133efb916d91b79b1a6071ac69372a53a5a7d",
+    "scripts/balance/sim.py": "dc0596c91bdcfb1f2a60b9d40b6a251df451e6d77213fba5d0bdbcae3edc1b8e",
+    "scripts/balance/class_aware.py": "4bafaff29b547251c4847cd733c666911d7f69ece0dad31d9c895c8de5dde0b4"
+  },
+  "prices": [
+    {
+      "price": 20,
+      "order": [
+        "adamantite_armor",
+        "ice_charm"
+      ],
+      "bought": [
+        "adamantite_armor",
+        "ice_charm"
+      ],
+      "gold": 30
+    },
+    {
+      "price": 20,
+      "order": [
+        "ice_charm",
+        "adamantite_armor"
+      ],
+      "bought": [
+        "ice_charm",
+        "adamantite_armor"
+      ],
+      "gold": 30
+    },
+    {
+      "price": 60,
+      "order": [
+        "adamantite_armor",
+        "ice_charm"
+      ],
+      "bought": [
+        "adamantite_armor"
+      ],
+      "gold": 40
+    },
+    {
+      "price": 60,
+      "order": [
+        "ice_charm",
+        "adamantite_armor"
+      ],
+      "bought": [
+        "ice_charm"
+      ],
+      "gold": 50
+    }
+  ]
+}

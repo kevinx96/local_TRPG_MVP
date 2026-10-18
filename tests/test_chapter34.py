@@ -148,7 +148,7 @@ class Chapter34Tests(unittest.TestCase):
             pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO.with_name(filename))
             for invited in (True, False):
                 s = checkpoints.fresh_session(pack, "hero")
-                steps = ["check_supplies"]
+                steps = ["@opening", "check_supplies", "go_castle_town"]
                 if invited:
                     steps += ["go_magic_shop", "invite_blue_mage", "return_castle_from_magic_shop"]
                 steps += checkpoints.proposed_routes()["xanxus_phantom_battle"][:-1]

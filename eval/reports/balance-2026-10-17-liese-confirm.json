@@ -1,0 +1,582 @@
+{
+  "n": 500,
+  "seed": 20261017,
+  "rows": [
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "bone_field",
+      "character": "hero",
+      "win_rate": 1,
+      "hp_loss": 4.278
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "ghoul_marsh",
+      "character": "hero",
+      "win_rate": 1,
+      "hp_loss": 3.472
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "grave_chapel",
+      "character": "hero",
+      "win_rate": 1,
+      "hp_loss": 8.588
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "goblin_fort_fourth",
+      "character": "hero",
+      "win_rate": 0.758,
+      "hp_loss": 10.948
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "valley_ledge",
+      "character": "hero",
+      "win_rate": 0.916,
+      "hp_loss": 4.3
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "xanxus_phantom_battle",
+      "character": "hero",
+      "win_rate": 0.946,
+      "hp_loss": 18.16
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "bone_field",
+      "character": "cleric",
+      "win_rate": 1,
+      "hp_loss": 4.938
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "ghoul_marsh",
+      "character": "cleric",
+      "win_rate": 1,
+      "hp_loss": 4.364
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "grave_chapel",
+      "character": "cleric",
+      "win_rate": 1,
+      "hp_loss": 8.486
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "goblin_fort_fourth",
+      "character": "cleric",
+      "win_rate": 0.63,
+      "hp_loss": 11.348
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "valley_ledge",
+      "character": "cleric",
+      "win_rate": 0.886,
+      "hp_loss": 5.18
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "xanxus_phantom_battle",
+      "character": "cleric",
+      "win_rate": 0.888,
+      "hp_loss": 17.844
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "bone_field",
+      "character": "mage",
+      "win_rate": 1,
+      "hp_loss": 0.458
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "ghoul_marsh",
+      "character": "mage",
+      "win_rate": 1,
+      "hp_loss": 3.88
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "grave_chapel",
+      "character": "mage",
+      "win_rate": 0.97,
+      "hp_loss": 1.44
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "goblin_fort_fourth",
+      "character": "mage",
+      "win_rate": 0.626,
+      "hp_loss": 7.458
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "valley_ledge",
+      "character": "mage",
+      "win_rate": 0.85,
+      "hp_loss": 3.62
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "xanxus_phantom_battle",
+      "character": "mage",
+      "win_rate": 0.798,
+      "hp_loss": 12.236
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "bone_field",
+      "character": "thief",
+      "win_rate": 0.998,
+      "hp_loss": 3.814
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "ghoul_marsh",
+      "character": "thief",
+      "win_rate": 1,
+      "hp_loss": 3.142
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "grave_chapel",
+      "character": "thief",
+      "win_rate": 1,
+      "hp_loss": 4.006
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "goblin_fort_fourth",
+      "character": "thief",
+      "win_rate": 0.732,
+      "hp_loss": 7.738
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "valley_ledge",
+      "character": "thief",
+      "win_rate": 0.906,
+      "hp_loss": 2.976
+    },
+    {
+      "damage": "2d4",
+      "heal_ratio": 0.2,
+      "location": "xanxus_phantom_battle",
+      "character": "thief",
+      "win_rate": 0.86,
+      "hp_loss": 14.466
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "bone_field",
+      "character": "hero",
+      "win_rate": 1,
+      "hp_loss": 4.4
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "ghoul_marsh",
+      "character": "hero",
+      "win_rate": 1,
+      "hp_loss": 3.534
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "grave_chapel",
+      "character": "hero",
+      "win_rate": 1,
+      "hp_loss": 8.296
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "goblin_fort_fourth",
+      "character": "hero",
+      "win_rate": 0.764,
+      "hp_loss": 10.58
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "valley_ledge",
+      "character": "hero",
+      "win_rate": 0.87,
+      "hp_loss": 6.23
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "xanxus_phantom_battle",
+      "character": "hero",
+      "win_rate": 0.946,
+      "hp_loss": 18.372
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "bone_field",
+      "character": "cleric",
+      "win_rate": 1,
+      "hp_loss": 5.19
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "ghoul_marsh",
+      "character": "cleric",
+      "win_rate": 1,
+      "hp_loss": 4.272
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "grave_chapel",
+      "character": "cleric",
+      "win_rate": 1,
+      "hp_loss": 7.692
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "goblin_fort_fourth",
+      "character": "cleric",
+      "win_rate": 0.654,
+      "hp_loss": 11.032
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "valley_ledge",
+      "character": "cleric",
+      "win_rate": 0.85,
+      "hp_loss": 7.098
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "xanxus_phantom_battle",
+      "character": "cleric",
+      "win_rate": 0.876,
+      "hp_loss": 18.42
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "bone_field",
+      "character": "mage",
+      "win_rate": 1,
+      "hp_loss": 0.506
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "ghoul_marsh",
+      "character": "mage",
+      "win_rate": 1,
+      "hp_loss": 4.12
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "grave_chapel",
+      "character": "mage",
+      "win_rate": 0.94,
+      "hp_loss": 2.502
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "goblin_fort_fourth",
+      "character": "mage",
+      "win_rate": 0.634,
+      "hp_loss": 7.262
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "valley_ledge",
+      "character": "mage",
+      "win_rate": 0.798,
+      "hp_loss": 4.776
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "xanxus_phantom_battle",
+      "character": "mage",
+      "win_rate": 0.786,
+      "hp_loss": 12.342
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "bone_field",
+      "character": "thief",
+      "win_rate": 0.996,
+      "hp_loss": 4.458
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "ghoul_marsh",
+      "character": "thief",
+      "win_rate": 1,
+      "hp_loss": 3.334
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "grave_chapel",
+      "character": "thief",
+      "win_rate": 1,
+      "hp_loss": 3.814
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "goblin_fort_fourth",
+      "character": "thief",
+      "win_rate": 0.78,
+      "hp_loss": 7.22
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "valley_ledge",
+      "character": "thief",
+      "win_rate": 0.876,
+      "hp_loss": 3.912
+    },
+    {
+      "damage": "2d3",
+      "heal_ratio": 0.25,
+      "location": "xanxus_phantom_battle",
+      "character": "thief",
+      "win_rate": 0.866,
+      "hp_loss": 14.384
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "bone_field",
+      "character": "hero",
+      "win_rate": 1,
+      "hp_loss": 4.524
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "ghoul_marsh",
+      "character": "hero",
+      "win_rate": 1,
+      "hp_loss": 3.606
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "grave_chapel",
+      "character": "hero",
+      "win_rate": 1,
+      "hp_loss": 8.42
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "goblin_fort_fourth",
+      "character": "hero",
+      "win_rate": 0.736,
+      "hp_loss": 11.254
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "valley_ledge",
+      "character": "hero",
+      "win_rate": 0.872,
+      "hp_loss": 6.322
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "xanxus_phantom_battle",
+      "character": "hero",
+      "win_rate": 0.944,
+      "hp_loss": 18.074
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "bone_field",
+      "character": "cleric",
+      "win_rate": 1,
+      "hp_loss": 4.706
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "ghoul_marsh",
+      "character": "cleric",
+      "win_rate": 1,
+      "hp_loss": 4.35
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "grave_chapel",
+      "character": "cleric",
+      "win_rate": 1,
+      "hp_loss": 8.448
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "goblin_fort_fourth",
+      "character": "cleric",
+      "win_rate": 0.61,
+      "hp_loss": 11.686
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "valley_ledge",
+      "character": "cleric",
+      "win_rate": 0.86,
+      "hp_loss": 6.308
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "xanxus_phantom_battle",
+      "character": "cleric",
+      "win_rate": 0.872,
+      "hp_loss": 18.628
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "bone_field",
+      "character": "mage",
+      "win_rate": 1,
+      "hp_loss": 0.566
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "ghoul_marsh",
+      "character": "mage",
+      "win_rate": 1,
+      "hp_loss": 4.028
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "grave_chapel",
+      "character": "mage",
+      "win_rate": 0.992,
+      "hp_loss": 0.666
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "goblin_fort_fourth",
+      "character": "mage",
+      "win_rate": 0.684,
+      "hp_loss": 6.922
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "valley_ledge",
+      "character": "mage",
+      "win_rate": 0.806,
+      "hp_loss": 4.838
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "xanxus_phantom_battle",
+      "character": "mage",
+      "win_rate": 0.79,
+      "hp_loss": 12.13
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "bone_field",
+      "character": "thief",
+      "win_rate": 0.998,
+      "hp_loss": 4.3
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "ghoul_marsh",
+      "character": "thief",
+      "win_rate": 1,
+      "hp_loss": 3.386
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "grave_chapel",
+      "character": "thief",
+      "win_rate": 1,
+      "hp_loss": 3.958
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "goblin_fort_fourth",
+      "character": "thief",
+      "win_rate": 0.706,
+      "hp_loss": 8.076
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "valley_ledge",
+      "character": "thief",
+      "win_rate": 0.91,
+      "hp_loss": 3.056
+    },
+    {
+      "damage": "3d2",
+      "heal_ratio": 0.2,
+      "location": "xanxus_phantom_battle",
+      "character": "thief",
+      "win_rate": 0.84,
+      "hp_loss": 14.574
+    }
+  ]
+}

@@ -1,0 +1,2717 @@
+{
+  "n": 2000,
+  "seed": 20261012,
+  "baseline_commit": "b653265",
+  "rows": [
+    {
+      "character": "mage",
+      "mode": "main",
+      "previous": 0.563,
+      "before": {
+        "encounter": "draco_battle",
+        "encounter_class": "boss",
+        "character": "mage",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 2000,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 1,
+        "preparation": "standard",
+        "phase_rounds_mean": {
+          "draco_human": 1,
+          "draco_dragon": 3.5655
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 1126,
+          "defeat": 874
+        },
+        "rounds_mean": 3.5655,
+        "success_rounds_mean": 2.8454706927175843,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "draco_human": 2000,
+          "draco_dragon": 2000
+        },
+        "win_rate": 0.563,
+        "rounds_median": 3.0,
+        "hp_left_mean": 0.7115156897572528,
+        "healing_items_mean": {
+          "治療の巻物": 0.977,
+          "薬草": 0.059
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.977,
+          "紅竜の炎核": 0.9905,
+          "聖水": 1.2865,
+          "薬草": 0.059
+        },
+        "mp_spent_mean": 1.01,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "2": 206,
+          "3": 178,
+          "4": 141,
+          "5": 93,
+          "6": 83,
+          "7": 62,
+          "8": 38,
+          "9": 33,
+          "10": 29,
+          "11": 7,
+          "12": 2,
+          "13": 1,
+          "15": 1
+        },
+        "defeat_causes": {
+          "draco_dragon:1:凍てつく吐息 @ round 2": 127,
+          "draco_dragon:1:凍てつく吐息 @ round 3": 101,
+          "draco_dragon:1:凍てつく吐息 @ round 4": 100,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 2": 79,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 3": 77,
+          "draco_dragon:1:凍てつく吐息 @ round 5": 52,
+          "draco_dragon:1:凍てつく吐息 @ round 6": 51,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 4": 41,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 5": 41,
+          "draco_dragon:1:凍てつく吐息 @ round 7": 39,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 6": 32,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 7": 23,
+          "draco_dragon:1:凍てつく吐息 @ round 8": 22,
+          "draco_dragon:1:凍てつく吐息 @ round 9": 21,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 8": 16,
+          "draco_dragon:1:凍てつく吐息 @ round 10": 16,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 10": 13,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 9": 12,
+          "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 11": 3,
+          "draco_dragon:1:凍てつく吐息 @ round 12": 2,
+          "draco_dragon:1:凍てつく吐息 @ round 13": 1,
+          "draco_dragon:1:凍てつく吐息 @ round 15": 1
+        }
+      },
+      "after": {
+        "encounter": "draco_battle",
+        "encounter_class": "boss",
+        "character": "mage",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 2000,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 1,
+        "preparation": "standard",
+        "phase_rounds_mean": {
+          "draco_human": 1,
+          "draco_dragon": 3.5655
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 1126,
+          "defeat": 874
+        },
+        "rounds_mean": 3.5655,
+        "success_rounds_mean": 2.8454706927175843,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "draco_human": 2000,
+          "draco_dragon": 2000
+        },
+        "win_rate": 0.563,
+        "rounds_median": 3.0,
+        "hp_left_mean": 0.7115156897572528,
+        "healing_items_mean": {
+          "治療の巻物": 0.977,
+          "薬草": 0.059
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.977,
+          "紅竜の炎核": 0.9905,
+          "聖水": 1.2865,
+          "薬草": 0.059
+        },
+        "mp_spent_mean": 1.01,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "2": 206,
+          "3": 178,
+          "4": 141,
+          "5": 93,
+          "6": 83,
+          "7": 62,
+          "8": 38,
+          "9": 33,
+          "10": 29,
+          "11": 7,
+          "12": 2,
+          "13": 1,
+          "15": 1
+        },
+        "defeat_causes": {
+          "draco_dragon:1:凍てつく吐息 @ round 2": 127,
+          "draco_dragon:1:凍てつく吐息 @ round 3": 101,
+          "draco_dragon:1:凍てつく吐息 @ round 4": 100,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 2": 79,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 3": 77,
+          "draco_dragon:1:凍てつく吐息 @ round 5": 52,
+          "draco_dragon:1:凍てつく吐息 @ round 6": 51,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 4": 41,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 5": 41,
+          "draco_dragon:1:凍てつく吐息 @ round 7": 39,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 6": 32,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 7": 23,
+          "draco_dragon:1:凍てつく吐息 @ round 8": 22,
+          "draco_dragon:1:凍てつく吐息 @ round 9": 21,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 8": 16,
+          "draco_dragon:1:凍てつく吐息 @ round 10": 16,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 10": 13,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 9": 12,
+          "draco_dragon:1:凍てつく吐息 @ round 11": 4,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 11": 3,
+          "draco_dragon:1:凍てつく吐息 @ round 12": 2,
+          "draco_dragon:1:凍てつく吐息 @ round 13": 1,
+          "draco_dragon:1:凍てつく吐息 @ round 15": 1
+        }
+      },
+      "uplift_pp": 0.0,
+      "previous_diff_pp": 0.0,
+      "limit_pp": 5
+    },
+    {
+      "character": "mage",
+      "mode": "explore",
+      "previous": 0.736,
+      "before": {
+        "encounter": "draco_battle",
+        "encounter_class": "boss",
+        "character": "mage",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 2000,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 1,
+        "preparation": "standard",
+        "phase_rounds_mean": {
+          "draco_human": 1,
+          "draco_dragon": 3.7395
+        },
+        "purify": false,
+        "outcomes": {
+          "defeat": 526,
+          "victory": 1474
+        },
+        "rounds_mean": 3.7395,
+        "success_rounds_mean": 3.069877883310719,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "draco_human": 2000,
+          "draco_dragon": 2000
+        },
+        "win_rate": 0.737,
+        "rounds_median": 2.0,
+        "hp_left_mean": 0.6989767073722297,
+        "healing_items_mean": {
+          "治療の巻物": 0.685,
+          "薬草": 0.0655
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.685,
+          "火竜の油": 0.5745,
+          "紅竜の炎核": 1.0,
+          "聖水": 1.1595,
+          "薬草": 0.0655
+        },
+        "mp_spent_mean": 0.0,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "2": 115,
+          "3": 81,
+          "4": 71,
+          "5": 58,
+          "6": 46,
+          "7": 23,
+          "8": 24,
+          "9": 26,
+          "10": 14,
+          "11": 13,
+          "12": 17,
+          "13": 13,
+          "14": 6,
+          "15": 9,
+          "16": 4,
+          "17": 3,
+          "18": 3
+        },
+        "defeat_causes": {
+          "draco_dragon:1:白翼の薙ぎ払い @ round 2": 97,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 4": 63,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 3": 62,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 5": 46,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 6": 37,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 9": 20,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 7": 19,
+          "draco_dragon:1:凍てつく吐息 @ round 3": 19,
+          "draco_dragon:1:凍てつく吐息 @ round 2": 18,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 12": 14,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 8": 13,
+          "draco_dragon:1:凍てつく吐息 @ round 5": 12,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 13": 12,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 10": 12,
+          "draco_dragon:1:凍てつく吐息 @ round 8": 11,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 11": 10,
+          "draco_dragon:1:凍てつく吐息 @ round 6": 9,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 15": 9,
+          "draco_dragon:1:凍てつく吐息 @ round 4": 8,
+          "draco_dragon:1:凍てつく吐息 @ round 9": 6,
+          "draco_dragon:1:凍てつく吐息 @ round 7": 4,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 14": 4,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 16": 3,
+          "draco_dragon:1:凍てつく吐息 @ round 12": 3,
+          "draco_dragon:1:凍てつく吐息 @ round 11": 3,
+          "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+          "draco_dragon:1:凍てつく吐息 @ round 18": 2,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 17": 2,
+          "draco_dragon:1:凍てつく吐息 @ round 14": 2,
+          "draco_dragon:1:凍てつく吐息 @ round 13": 1,
+          "draco_dragon:1:凍てつく吐息 @ round 17": 1,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 18": 1,
+          "draco_dragon:1:凍てつく吐息 @ round 16": 1
+        }
+      },
+      "after": {
+        "encounter": "draco_battle",
+        "encounter_class": "boss",
+        "character": "mage",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 2000,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 1,
+        "preparation": "standard",
+        "phase_rounds_mean": {
+          "draco_human": 1,
+          "draco_dragon": 4.729
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 1997,
+          "defeat": 3
+        },
+        "rounds_mean": 4.729,
+        "success_rounds_mean": 4.71156735102654,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "draco_human": 2000,
+          "draco_dragon": 2000
+        },
+        "win_rate": 0.9985,
+        "rounds_median": 2.0,
+        "hp_left_mean": 0.7503417288094304,
+        "healing_items_mean": {
+          "治療の巻物": 0.476,
+          "薬草": 0.0415
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.476,
+          "火竜の油": 0.758,
+          "紅竜の炎核": 1.0,
+          "聖水": 1.3035,
+          "薬草": 0.0415
+        },
+        "mp_spent_mean": 0.0,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "15": 2,
+          "19": 1
+        },
+        "defeat_causes": {
+          "draco_dragon:1:凍てつく吐息 @ round 15": 1,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 19": 1,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1
+        }
+      },
+      "uplift_pp": 26.15,
+      "previous_diff_pp": 26.25,
+      "limit_pp": 15
+    }
+  ],
+  "snapshots": {
+    "mage/main/before": {
+      "level": 5,
+      "completed_milestones": [
+        "lv2",
+        "lv4",
+        "lv5"
+      ],
+      "skills": [
+        {
+          "id": "mage_lv3_b",
+          "name": "火球・改",
+          "kind": "attack",
+          "damage": "1d8+int/2",
+          "accuracy": 92,
+          "element": "fire",
+          "cost": 6,
+          "cost_type": "mp",
+          "all_targets": true,
+          "description": "火球で敵全体を攻撃する。",
+          "unlock_level": 2,
+          "effect": "敵全体に1d8+int/2ダメージを与える。",
+          "replaces": "火球"
+        },
+        {
+          "id": "mage_lv5_a",
+          "name": "氷の矢・改",
+          "kind": "attack",
+          "damage": "2d8+int/2",
+          "accuracy": 92,
+          "element": "ice",
+          "cost": 5,
+          "cost_type": "mp",
+          "description": "氷の矢で敵を貫く。",
+          "unlock_level": 5,
+          "effect": "敵に2d8+int/2ダメージを与える。",
+          "replaces": "氷の矢"
+        }
+      ],
+      "attributes": {
+        "str": 4,
+        "dex": 8,
+        "int": 24,
+        "wis": 14,
+        "end": 6
+      },
+      "max_hp": 24,
+      "max_mp": 32,
+      "max_sp": 10,
+      "inventory": [
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃技能ダメージ+3",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_damage_bonus": 3,
+            "applies_to": [
+              "attack"
+            ]
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            }
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 4,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷の結晶",
+          "description": "溶けることのない氷のかけら。",
+          "effect": "鍛冶屋で氷の護符に加工できる",
+          "quantity": 1,
+          "id": "ice_crystal",
+          "category": "material"
+        },
+        {
+          "name": "白い竜鱗",
+          "description": "雪のように白い竜の鱗。触れると指先が凍える。",
+          "effect": "証拠品（戦闘では使えない）",
+          "quantity": 2,
+          "id": "white_dragon_scale",
+          "category": "key",
+          "key_item": true
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "紅竜の炎核",
+          "description": "イグニスの命の炎が宿った結晶。",
+          "effect": "1d100+100ダメージ / 命中率100% / fire属性 / 消耗品",
+          "quantity": 1,
+          "id": "red_dragon_core",
+          "combat": {
+            "kind": "damage",
+            "damage": "1d100+100",
+            "accuracy": 100,
+            "element": "fire",
+            "consumable": true
+          },
+          "category": "key",
+          "key_item": true
+        }
+      ],
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "氷鉄の大剣"
+      ],
+      "gold": 271,
+      "companion": null,
+      "sources": [
+        {
+          "location": "castle",
+          "step": "@opening",
+          "delta": {
+            "gold_change": 100,
+            "inventory_add": [
+              {
+                "name": "薬草",
+                "quantity": 1
+              }
+            ]
+          }
+        },
+        {
+          "location": "castle",
+          "step": "check_supplies",
+          "delta": {
+            "inventory_add": [
+              {
+                "id": "holy_water",
+                "name": "聖水",
+                "quantity": 2
+              }
+            ],
+            "flags_set": [
+              "checked_supplies"
+            ]
+          }
+        },
+        {
+          "location": "castle",
+          "step": "go_castle_town",
+          "delta": {
+            "current_location": "castle_town"
+          }
+        },
+        {
+          "location": "castle_town",
+          "step": "go_magic_shop",
+          "delta": {
+            "current_location": "magic_shop"
+          }
+        },
+        {
+          "location": "magic_shop",
+          "step": "invite_blue_mage",
+          "delta": {
+            "set_companion": "blue_robed_mage",
+            "flags_set": [
+              "warlock_rescue_available",
+              "invited_blue_mage"
+            ]
+          }
+        },
+        {
+          "location": "magic_shop",
+          "step": "return_castle_from_magic_shop",
+          "delta": {
+            "current_location": "castle_town"
+          }
+        },
+        {
+          "location": "castle_town",
+          "step": "go_dark_forest",
+          "delta": {
+            "current_location": "dark_forest_loc"
+          }
+        },
+        {
+          "location": "dark_forest_loc",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 5,
+            "inventory_add": [
+              {
+                "name": "薬草",
+                "quantity": 2
+              },
+              {
+                "name": "治療の巻物",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "defeated_slime",
+              "combat_defeated:dark_forest_loc:slime",
+              "defeated_slime",
+              "forest_entrance_resolved"
+            ],
+            "current_location": "lost_goblin_crossroads"
+          }
+        },
+        {
+          "location": "lost_goblin_crossroads",
+          "step": "ignore_lost_goblin:success",
+          "delta": {
+            "start_combat": true,
+            "flags_set": [
+              "caught_goblin_stealing",
+              "ignored_lost_goblin"
+            ]
+          }
+        },
+        {
+          "location": "lost_goblin_crossroads",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 5,
+            "inventory_add": [
+              {
+                "name": "治療の巻物",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "combat_defeated:lost_goblin_crossroads:goblin"
+            ]
+          }
+        },
+        {
+          "location": "lost_goblin_crossroads",
+          "step": "crossroads_forward",
+          "delta": {
+            "current_location": "elf_spring"
+          }
+        },
+        {
+          "location": "elf_spring",
+          "step": "continue_from_elf_spring",
+          "delta": {
+            "current_location": "forest_wolves"
+          }
+        },
+        {
+          "location": "forest_wolves",
+          "step": "@victory",
+          "delta": {
+            "flags_set": [
+              "combat_defeated:forest_wolves:forest_wolf",
+              "passed_forest_wolves",
+              "saved_gald"
+            ],
+            "current_location": "forest_exit"
+          }
+        },
+        {
+          "location": "forest_exit",
+          "step": "leave_forest_for_village",
+          "delta": {
+            "clear_companion": true,
+            "background_image": "/static/images/bg_burning_village.png",
+            "current_location": "village_approach",
+            "flags_set": [
+              "warlock_disappeared_at_village",
+              "reached_village"
+            ]
+          }
+        },
+        {
+          "location": "village_approach",
+          "step": "approach_burning_village_carefully:success",
+          "delta": {
+            "current_location": "village_fire_slime",
+            "start_combat": true
+          }
+        },
+        {
+          "location": "village_fire_slime",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 6,
+            "inventory_add": [
+              {
+                "name": "治療の巻物",
+                "quantity": 2
+              }
+            ],
+            "flags_set": [
+              "combat_defeated:village_fire_slime:fire_slime"
+            ],
+            "current_location": "burning_house"
+          }
+        },
+        {
+          "location": "burning_house",
+          "step": "leave_burning_house",
+          "delta": {
+            "current_location": "village_frozen_clue",
+            "flags_set": [
+              "riku_abandoned"
+            ]
+          }
+        },
+        {
+          "location": "village_frozen_clue",
+          "step": "investigate_frozen_village",
+          "delta": {
+            "current_location": "ice_elemental_encounter"
+          }
+        },
+        {
+          "location": "ice_elemental_encounter",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 15,
+            "inventory_add": [
+              {
+                "id": "ice_crystal",
+                "name": "氷の結晶",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "combat_defeated:ice_elemental_encounter:ice_elemental"
+            ],
+            "current_location": "frost_wolf_battle"
+          }
+        },
+        {
+          "location": "frost_wolf_battle",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 40,
+            "inventory_add": [
+              {
+                "id": "white_dragon_scale",
+                "name": "白い竜鱗",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "defeated_frost_dire_wolf",
+              "combat_defeated:frost_wolf_battle:frost_dire_wolf",
+              "defeated_frost_dire_wolf"
+            ],
+            "current_location": "ian_ice_katana_aftermath"
+          }
+        },
+        {
+          "location": "ian_ice_katana_aftermath",
+          "step": "accept_ian_request",
+          "delta": {
+            "current_location": "valley_entrance",
+            "inventory_add": [
+              {
+                "name": "氷鉄の大剣",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "accepted_ian_request"
+            ]
+          }
+        },
+        {
+          "location": "valley_entrance",
+          "step": "@victory",
+          "delta": {
+            "flags_set": [
+              "combat_defeated:valley_entrance:ash_wraith",
+              "combat_defeated:valley_entrance:ash_wraith"
+            ],
+            "current_location": "valley_lava_bridge"
+          }
+        },
+        {
+          "location": "valley_lava_bridge",
+          "step": "cross_lava_bridge:success",
+          "delta": {
+            "current_location": "valley_nest_gate"
+          }
+        },
+        {
+          "location": "warlock_at_nest",
+          "step": "continue_after_warlock",
+          "delta": {
+            "current_location": "valley_nest_gate"
+          }
+        },
+        {
+          "location": "valley_nest_gate",
+          "step": "enter_dragon_nest",
+          "delta": {
+            "current_location": "dragon_valley_loc"
+          }
+        },
+        {
+          "location": "dragon_valley_loc",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 100,
+            "inventory_add": [
+              {
+                "id": "red_dragon_core",
+                "name": "紅竜の炎核",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "defeated_ignis",
+              "combat_defeated:dragon_valley_loc:ignis",
+              "defeated_ignis"
+            ],
+            "current_location": "ignis_last_breath"
+          }
+        },
+        {
+          "location": "ignis_last_breath",
+          "step": "examine_ignis_wound",
+          "delta": {
+            "inventory_add": [
+              {
+                "id": "white_dragon_scale",
+                "name": "白い竜鱗",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "examined_ignis_wound",
+              "examined_ignis_wound"
+            ]
+          }
+        },
+        {
+          "location": "ignis_last_breath",
+          "step": "return_to_castle_report",
+          "delta": {
+            "current_location": "royal_gate"
+          }
+        },
+        {
+          "location": "royal_gate",
+          "step": "enter_festival_town",
+          "delta": {
+            "current_location": "festival_town"
+          }
+        },
+        {
+          "location": "festival_town",
+          "step": "go_report_hall",
+          "delta": {
+            "current_location": "castle_report"
+          }
+        },
+        {
+          "location": "castle_report",
+          "step": "report_with_evidence",
+          "delta": {
+            "current_location": "draco_battle",
+            "start_combat": true,
+            "flags_set": [
+              "draco_revealed",
+              "reported_to_king"
+            ]
+          }
+        }
+      ]
+    },
+    "mage/main/after": {
+      "level": 5,
+      "completed_milestones": [
+        "lv2",
+        "lv4",
+        "lv5"
+      ],
+      "skills": [
+        {
+          "id": "mage_lv3_b",
+          "name": "火球・改",
+          "kind": "attack",
+          "damage": "1d8+int/2",
+          "accuracy": 92,
+          "element": "fire",
+          "cost": 6,
+          "cost_type": "mp",
+          "all_targets": true,
+          "description": "火球で敵全体を攻撃する。",
+          "unlock_level": 2,
+          "effect": "敵全体に1d8+int/2ダメージを与える。",
+          "replaces": "火球"
+        },
+        {
+          "id": "mage_lv5_a",
+          "name": "氷の矢・改",
+          "kind": "attack",
+          "damage": "2d8+int/2",
+          "accuracy": 92,
+          "element": "ice",
+          "cost": 5,
+          "cost_type": "mp",
+          "description": "氷の矢で敵を貫く。",
+          "unlock_level": 5,
+          "effect": "敵に2d8+int/2ダメージを与える。",
+          "replaces": "氷の矢"
+        }
+      ],
+      "attributes": {
+        "str": 4,
+        "dex": 8,
+        "int": 24,
+        "wis": 14,
+        "end": 6
+      },
+      "max_hp": 24,
+      "max_mp": 37,
+      "max_sp": 10,
+      "inventory": [
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃技能ダメージ+3",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_damage_bonus": 3,
+            "applies_to": [
+              "attack"
+            ]
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            }
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 4,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷の結晶",
+          "description": "溶けることのない氷のかけら。",
+          "effect": "鍛冶屋で氷の護符に加工できる",
+          "quantity": 1,
+          "id": "ice_crystal",
+          "category": "material"
+        },
+        {
+          "name": "白い竜鱗",
+          "description": "雪のように白い竜の鱗。触れると指先が凍える。",
+          "effect": "証拠品（戦闘では使えない）",
+          "quantity": 2,
+          "id": "white_dragon_scale",
+          "category": "key",
+          "key_item": true
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "紅竜の炎核",
+          "description": "イグニスの命の炎が宿った結晶。",
+          "effect": "1d100+100ダメージ / 命中率100% / fire属性 / 消耗品",
+          "quantity": 1,
+          "id": "red_dragon_core",
+          "combat": {
+            "kind": "damage",
+            "damage": "1d100+100",
+            "accuracy": 100,
+            "element": "fire",
+            "consumable": true
+          },
+          "category": "key",
+          "key_item": true
+        }
+      ],
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "氷鉄の大剣"
+      ],
+      "gold": 271,
+      "companion": null,
+      "sources": [
+        {
+          "location": "castle",
+          "step": "@opening",
+          "delta": {
+            "gold_change": 100,
+            "inventory_add": [
+              {
+                "name": "薬草",
+                "quantity": 1
+              }
+            ]
+          }
+        },
+        {
+          "location": "castle",
+          "step": "check_supplies",
+          "delta": {
+            "inventory_add": [
+              {
+                "id": "holy_water",
+                "name": "聖水",
+                "quantity": 2
+              }
+            ],
+            "flags_set": [
+              "checked_supplies"
+            ]
+          }
+        },
+        {
+          "location": "castle",
+          "step": "go_castle_town",
+          "delta": {
+            "current_location": "castle_town"
+          }
+        },
+        {
+          "location": "castle_town",
+          "step": "go_magic_shop",
+          "delta": {
+            "current_location": "magic_shop"
+          }
+        },
+        {
+          "location": "magic_shop",
+          "step": "invite_blue_mage",
+          "delta": {
+            "set_companion": "blue_robed_mage",
+            "flags_set": [
+              "warlock_rescue_available",
+              "invited_blue_mage"
+            ]
+          }
+        },
+        {
+          "location": "magic_shop",
+          "step": "return_castle_from_magic_shop",
+          "delta": {
+            "current_location": "castle_town"
+          }
+        },
+        {
+          "location": "castle_town",
+          "step": "go_dark_forest",
+          "delta": {
+            "current_location": "dark_forest_loc"
+          }
+        },
+        {
+          "location": "dark_forest_loc",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 5,
+            "inventory_add": [
+              {
+                "name": "薬草",
+                "quantity": 2
+              },
+              {
+                "name": "治療の巻物",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "defeated_slime",
+              "combat_defeated:dark_forest_loc:slime",
+              "defeated_slime",
+              "forest_entrance_resolved"
+            ],
+            "current_location": "lost_goblin_crossroads"
+          }
+        },
+        {
+          "location": "lost_goblin_crossroads",
+          "step": "ignore_lost_goblin:success",
+          "delta": {
+            "start_combat": true,
+            "flags_set": [
+              "caught_goblin_stealing",
+              "ignored_lost_goblin"
+            ]
+          }
+        },
+        {
+          "location": "lost_goblin_crossroads",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 5,
+            "inventory_add": [
+              {
+                "name": "治療の巻物",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "combat_defeated:lost_goblin_crossroads:goblin"
+            ]
+          }
+        },
+        {
+          "location": "lost_goblin_crossroads",
+          "step": "crossroads_forward",
+          "delta": {
+            "current_location": "elf_spring"
+          }
+        },
+        {
+          "location": "elf_spring",
+          "step": "continue_from_elf_spring",
+          "delta": {
+            "current_location": "forest_wolves"
+          }
+        },
+        {
+          "location": "forest_wolves",
+          "step": "@victory",
+          "delta": {
+            "flags_set": [
+              "combat_defeated:forest_wolves:forest_wolf",
+              "passed_forest_wolves",
+              "saved_gald"
+            ],
+            "current_location": "forest_exit"
+          }
+        },
+        {
+          "location": "forest_exit",
+          "step": "leave_forest_for_village",
+          "delta": {
+            "clear_companion": true,
+            "background_image": "/static/images/bg_burning_village.png",
+            "current_location": "village_approach",
+            "flags_set": [
+              "warlock_disappeared_at_village",
+              "reached_village"
+            ]
+          }
+        },
+        {
+          "location": "village_approach",
+          "step": "approach_burning_village_carefully:success",
+          "delta": {
+            "current_location": "village_fire_slime",
+            "start_combat": true
+          }
+        },
+        {
+          "location": "village_fire_slime",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 6,
+            "inventory_add": [
+              {
+                "name": "治療の巻物",
+                "quantity": 2
+              }
+            ],
+            "flags_set": [
+              "combat_defeated:village_fire_slime:fire_slime"
+            ],
+            "current_location": "burning_house"
+          }
+        },
+        {
+          "location": "burning_house",
+          "step": "leave_burning_house",
+          "delta": {
+            "current_location": "village_frozen_clue",
+            "flags_set": [
+              "riku_abandoned"
+            ]
+          }
+        },
+        {
+          "location": "village_frozen_clue",
+          "step": "investigate_frozen_village",
+          "delta": {
+            "current_location": "ice_elemental_encounter"
+          }
+        },
+        {
+          "location": "ice_elemental_encounter",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 15,
+            "inventory_add": [
+              {
+                "id": "ice_crystal",
+                "name": "氷の結晶",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "combat_defeated:ice_elemental_encounter:ice_elemental"
+            ],
+            "current_location": "frost_wolf_battle"
+          }
+        },
+        {
+          "location": "frost_wolf_battle",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 40,
+            "inventory_add": [
+              {
+                "id": "white_dragon_scale",
+                "name": "白い竜鱗",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "defeated_frost_dire_wolf",
+              "combat_defeated:frost_wolf_battle:frost_dire_wolf",
+              "defeated_frost_dire_wolf"
+            ],
+            "current_location": "ian_ice_katana_aftermath"
+          }
+        },
+        {
+          "location": "ian_ice_katana_aftermath",
+          "step": "accept_ian_request",
+          "delta": {
+            "current_location": "valley_entrance",
+            "inventory_add": [
+              {
+                "name": "氷鉄の大剣",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "accepted_ian_request"
+            ]
+          }
+        },
+        {
+          "location": "valley_entrance",
+          "step": "@victory",
+          "delta": {
+            "flags_set": [
+              "combat_defeated:valley_entrance:ash_wraith",
+              "combat_defeated:valley_entrance:ash_wraith"
+            ],
+            "current_location": "valley_lava_bridge"
+          }
+        },
+        {
+          "location": "valley_lava_bridge",
+          "step": "cross_lava_bridge:success",
+          "delta": {
+            "current_location": "valley_nest_gate"
+          }
+        },
+        {
+          "location": "warlock_at_nest",
+          "step": "continue_after_warlock",
+          "delta": {
+            "current_location": "valley_nest_gate"
+          }
+        },
+        {
+          "location": "valley_nest_gate",
+          "step": "enter_dragon_nest",
+          "delta": {
+            "current_location": "dragon_valley_loc"
+          }
+        },
+        {
+          "location": "dragon_valley_loc",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 100,
+            "inventory_add": [
+              {
+                "id": "red_dragon_core",
+                "name": "紅竜の炎核",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "defeated_ignis",
+              "combat_defeated:dragon_valley_loc:ignis",
+              "defeated_ignis"
+            ],
+            "current_location": "ignis_last_breath"
+          }
+        },
+        {
+          "location": "ignis_last_breath",
+          "step": "examine_ignis_wound",
+          "delta": {
+            "inventory_add": [
+              {
+                "id": "white_dragon_scale",
+                "name": "白い竜鱗",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "examined_ignis_wound",
+              "examined_ignis_wound"
+            ]
+          }
+        },
+        {
+          "location": "ignis_last_breath",
+          "step": "return_to_castle_report",
+          "delta": {
+            "current_location": "royal_gate"
+          }
+        },
+        {
+          "location": "royal_gate",
+          "step": "enter_festival_town",
+          "delta": {
+            "current_location": "festival_town"
+          }
+        },
+        {
+          "location": "festival_town",
+          "step": "go_report_hall",
+          "delta": {
+            "current_location": "castle_report"
+          }
+        },
+        {
+          "location": "castle_report",
+          "step": "report_with_evidence",
+          "delta": {
+            "current_location": "draco_battle",
+            "start_combat": true,
+            "flags_set": [
+              "draco_revealed",
+              "reported_to_king"
+            ]
+          }
+        }
+      ],
+      "permanent_reward_quantities": {
+        "fruit_mana": 1
+      }
+    },
+    "mage/explore/before": {
+      "level": 5,
+      "completed_milestones": [
+        "lv2",
+        "lv4",
+        "lv5"
+      ],
+      "skills": [
+        {
+          "id": "mage_lv3_b",
+          "name": "火球・改",
+          "kind": "attack",
+          "damage": "1d8+int/2",
+          "accuracy": 92,
+          "element": "fire",
+          "cost": 6,
+          "cost_type": "mp",
+          "all_targets": true,
+          "description": "火球で敵全体を攻撃する。",
+          "unlock_level": 2,
+          "effect": "敵全体に1d8+int/2ダメージを与える。",
+          "replaces": "火球"
+        },
+        {
+          "id": "mage_lv5_a",
+          "name": "氷の矢・改",
+          "kind": "attack",
+          "damage": "2d8+int/2",
+          "accuracy": 92,
+          "element": "ice",
+          "cost": 5,
+          "cost_type": "mp",
+          "description": "氷の矢で敵を貫く。",
+          "unlock_level": 5,
+          "effect": "敵に2d8+int/2ダメージを与える。",
+          "replaces": "氷の矢"
+        }
+      ],
+      "attributes": {
+        "str": 4,
+        "dex": 8,
+        "int": 24,
+        "wis": 14,
+        "end": 6
+      },
+      "max_hp": 24,
+      "max_mp": 32,
+      "max_sp": 10,
+      "inventory": [
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃技能ダメージ+3",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_damage_bonus": 3,
+            "applies_to": [
+              "attack"
+            ]
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            }
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 4,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷の結晶",
+          "description": "溶けることのない氷のかけら。",
+          "effect": "鍛冶屋で氷の護符に加工できる",
+          "quantity": 1,
+          "id": "ice_crystal",
+          "category": "material"
+        },
+        {
+          "name": "白い竜鱗",
+          "description": "雪のように白い竜の鱗。触れると指先が凍える。",
+          "effect": "証拠品（戦闘では使えない）",
+          "quantity": 2,
+          "id": "white_dragon_scale",
+          "category": "key",
+          "key_item": true
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "紅竜の炎核",
+          "description": "イグニスの命の炎が宿った結晶。",
+          "effect": "1d100+100ダメージ / 命中率100% / fire属性 / 消耗品",
+          "quantity": 1,
+          "id": "red_dragon_core",
+          "combat": {
+            "kind": "damage",
+            "damage": "1d100+100",
+            "accuracy": 100,
+            "element": "fire",
+            "consumable": true
+          },
+          "category": "key",
+          "key_item": true
+        }
+      ],
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "氷鉄の大剣"
+      ],
+      "gold": 271,
+      "companion": null,
+      "sources": [
+        {
+          "location": "castle",
+          "step": "@opening",
+          "delta": {
+            "gold_change": 100,
+            "inventory_add": [
+              {
+                "name": "薬草",
+                "quantity": 1
+              }
+            ]
+          }
+        },
+        {
+          "location": "castle",
+          "step": "check_supplies",
+          "delta": {
+            "inventory_add": [
+              {
+                "id": "holy_water",
+                "name": "聖水",
+                "quantity": 2
+              }
+            ],
+            "flags_set": [
+              "checked_supplies"
+            ]
+          }
+        },
+        {
+          "location": "castle",
+          "step": "go_castle_town",
+          "delta": {
+            "current_location": "castle_town"
+          }
+        },
+        {
+          "location": "castle_town",
+          "step": "go_magic_shop",
+          "delta": {
+            "current_location": "magic_shop"
+          }
+        },
+        {
+          "location": "magic_shop",
+          "step": "invite_blue_mage",
+          "delta": {
+            "set_companion": "blue_robed_mage",
+            "flags_set": [
+              "warlock_rescue_available",
+              "invited_blue_mage"
+            ]
+          }
+        },
+        {
+          "location": "magic_shop",
+          "step": "return_castle_from_magic_shop",
+          "delta": {
+            "current_location": "castle_town"
+          }
+        },
+        {
+          "location": "castle_town",
+          "step": "go_dark_forest",
+          "delta": {
+            "current_location": "dark_forest_loc"
+          }
+        },
+        {
+          "location": "dark_forest_loc",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 5,
+            "inventory_add": [
+              {
+                "name": "薬草",
+                "quantity": 2
+              },
+              {
+                "name": "治療の巻物",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "defeated_slime",
+              "combat_defeated:dark_forest_loc:slime",
+              "defeated_slime",
+              "forest_entrance_resolved"
+            ],
+            "current_location": "lost_goblin_crossroads"
+          }
+        },
+        {
+          "location": "lost_goblin_crossroads",
+          "step": "ignore_lost_goblin:success",
+          "delta": {
+            "start_combat": true,
+            "flags_set": [
+              "caught_goblin_stealing",
+              "ignored_lost_goblin"
+            ]
+          }
+        },
+        {
+          "location": "lost_goblin_crossroads",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 5,
+            "inventory_add": [
+              {
+                "name": "治療の巻物",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "combat_defeated:lost_goblin_crossroads:goblin"
+            ]
+          }
+        },
+        {
+          "location": "lost_goblin_crossroads",
+          "step": "crossroads_forward",
+          "delta": {
+            "current_location": "elf_spring"
+          }
+        },
+        {
+          "location": "elf_spring",
+          "step": "continue_from_elf_spring",
+          "delta": {
+            "current_location": "forest_wolves"
+          }
+        },
+        {
+          "location": "forest_wolves",
+          "step": "@victory",
+          "delta": {
+            "flags_set": [
+              "combat_defeated:forest_wolves:forest_wolf",
+              "passed_forest_wolves",
+              "saved_gald"
+            ],
+            "current_location": "forest_exit"
+          }
+        },
+        {
+          "location": "forest_exit",
+          "step": "leave_forest_for_village",
+          "delta": {
+            "clear_companion": true,
+            "background_image": "/static/images/bg_burning_village.png",
+            "current_location": "village_approach",
+            "flags_set": [
+              "warlock_disappeared_at_village",
+              "reached_village"
+            ]
+          }
+        },
+        {
+          "location": "village_approach",
+          "step": "approach_burning_village_carefully:success",
+          "delta": {
+            "current_location": "village_fire_slime",
+            "start_combat": true
+          }
+        },
+        {
+          "location": "village_fire_slime",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 6,
+            "inventory_add": [
+              {
+                "name": "治療の巻物",
+                "quantity": 2
+              }
+            ],
+            "flags_set": [
+              "combat_defeated:village_fire_slime:fire_slime"
+            ],
+            "current_location": "burning_house"
+          }
+        },
+        {
+          "location": "burning_house",
+          "step": "leave_burning_house",
+          "delta": {
+            "current_location": "village_frozen_clue",
+            "flags_set": [
+              "riku_abandoned"
+            ]
+          }
+        },
+        {
+          "location": "village_frozen_clue",
+          "step": "investigate_frozen_village",
+          "delta": {
+            "current_location": "ice_elemental_encounter"
+          }
+        },
+        {
+          "location": "ice_elemental_encounter",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 15,
+            "inventory_add": [
+              {
+                "id": "ice_crystal",
+                "name": "氷の結晶",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "combat_defeated:ice_elemental_encounter:ice_elemental"
+            ],
+            "current_location": "frost_wolf_battle"
+          }
+        },
+        {
+          "location": "frost_wolf_battle",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 40,
+            "inventory_add": [
+              {
+                "id": "white_dragon_scale",
+                "name": "白い竜鱗",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "defeated_frost_dire_wolf",
+              "combat_defeated:frost_wolf_battle:frost_dire_wolf",
+              "defeated_frost_dire_wolf"
+            ],
+            "current_location": "ian_ice_katana_aftermath"
+          }
+        },
+        {
+          "location": "ian_ice_katana_aftermath",
+          "step": "accept_ian_request",
+          "delta": {
+            "current_location": "valley_entrance",
+            "inventory_add": [
+              {
+                "name": "氷鉄の大剣",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "accepted_ian_request"
+            ]
+          }
+        },
+        {
+          "location": "valley_entrance",
+          "step": "@victory",
+          "delta": {
+            "flags_set": [
+              "combat_defeated:valley_entrance:ash_wraith",
+              "combat_defeated:valley_entrance:ash_wraith"
+            ],
+            "current_location": "valley_lava_bridge"
+          }
+        },
+        {
+          "location": "valley_lava_bridge",
+          "step": "cross_lava_bridge:success",
+          "delta": {
+            "current_location": "valley_nest_gate"
+          }
+        },
+        {
+          "location": "warlock_at_nest",
+          "step": "continue_after_warlock",
+          "delta": {
+            "current_location": "valley_nest_gate"
+          }
+        },
+        {
+          "location": "valley_nest_gate",
+          "step": "enter_dragon_nest",
+          "delta": {
+            "current_location": "dragon_valley_loc"
+          }
+        },
+        {
+          "location": "dragon_valley_loc",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 100,
+            "inventory_add": [
+              {
+                "id": "red_dragon_core",
+                "name": "紅竜の炎核",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "defeated_ignis",
+              "combat_defeated:dragon_valley_loc:ignis",
+              "defeated_ignis"
+            ],
+            "current_location": "ignis_last_breath"
+          }
+        },
+        {
+          "location": "ignis_last_breath",
+          "step": "examine_ignis_wound",
+          "delta": {
+            "inventory_add": [
+              {
+                "id": "white_dragon_scale",
+                "name": "白い竜鱗",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "examined_ignis_wound",
+              "examined_ignis_wound"
+            ]
+          }
+        },
+        {
+          "location": "ignis_last_breath",
+          "step": "return_to_castle_report",
+          "delta": {
+            "current_location": "royal_gate"
+          }
+        },
+        {
+          "location": "royal_gate",
+          "step": "enter_festival_town",
+          "delta": {
+            "current_location": "festival_town"
+          }
+        },
+        {
+          "location": "festival_town",
+          "step": "go_report_hall",
+          "delta": {
+            "current_location": "castle_report"
+          }
+        },
+        {
+          "location": "castle_report",
+          "step": "report_with_evidence",
+          "delta": {
+            "current_location": "draco_battle",
+            "start_combat": true,
+            "flags_set": [
+              "draco_revealed",
+              "reported_to_king"
+            ]
+          }
+        }
+      ]
+    },
+    "mage/explore/after": {
+      "level": 5,
+      "completed_milestones": [
+        "lv2",
+        "lv4",
+        "lv5"
+      ],
+      "skills": [
+        {
+          "id": "mage_lv3_b",
+          "name": "火球・改",
+          "kind": "attack",
+          "damage": "1d8+int/2",
+          "accuracy": 92,
+          "element": "fire",
+          "cost": 6,
+          "cost_type": "mp",
+          "all_targets": true,
+          "description": "火球で敵全体を攻撃する。",
+          "unlock_level": 2,
+          "effect": "敵全体に1d8+int/2ダメージを与える。",
+          "replaces": "火球"
+        },
+        {
+          "id": "mage_lv5_a",
+          "name": "氷の矢・改",
+          "kind": "attack",
+          "damage": "2d8+int/2",
+          "accuracy": 92,
+          "element": "ice",
+          "cost": 5,
+          "cost_type": "mp",
+          "description": "氷の矢で敵を貫く。",
+          "unlock_level": 5,
+          "effect": "敵に2d8+int/2ダメージを与える。",
+          "replaces": "氷の矢"
+        }
+      ],
+      "attributes": {
+        "str": 6,
+        "dex": 10,
+        "int": 26,
+        "wis": 16,
+        "end": 8
+      },
+      "max_hp": 74,
+      "max_mp": 77,
+      "max_sp": 10,
+      "inventory": [
+        {
+          "name": "魔導書",
+          "description": "古代の魔法が記された書物。",
+          "effect": "攻撃技能ダメージ+3",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "skill_damage_bonus": 3,
+            "applies_to": [
+              "attack"
+            ]
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "魔法のローブ",
+          "description": "魔力を帯びた上質なローブ。",
+          "effect": "MP消費を1軽減",
+          "quantity": 1,
+          "combat": {
+            "kind": "equipment",
+            "cost_reduction": {
+              "mp": 1
+            }
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "薬草",
+          "description": "傷を癒す薬草。",
+          "effect": "HPを10回復 / 消耗品",
+          "quantity": 4,
+          "id": "herb",
+          "combat": {
+            "kind": "heal",
+            "healing": "10",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "携帯食",
+          "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+          "effect": "",
+          "quantity": 2,
+          "id": "trail_ration",
+          "traits": [
+            "food"
+          ],
+          "category": "consumable"
+        },
+        {
+          "name": "聖水",
+          "description": "教会で清められた水。不死の存在を焼く。",
+          "effect": "36ダメージ / 命中率100% / holy属性 / 消耗品",
+          "quantity": 2,
+          "id": "holy_water",
+          "combat": {
+            "kind": "damage",
+            "damage": "36",
+            "accuracy": 100,
+            "element": "holy",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "治療の巻物",
+          "description": "使用すると直ちにHPを30回復する。",
+          "effect": "HPを30回復 / 消耗品",
+          "quantity": 4,
+          "id": "healing_scroll",
+          "combat": {
+            "kind": "heal",
+            "healing": "30",
+            "consumable": true
+          },
+          "category": "consumable"
+        },
+        {
+          "name": "氷の結晶",
+          "description": "溶けることのない氷のかけら。",
+          "effect": "鍛冶屋で氷の護符に加工できる",
+          "quantity": 1,
+          "id": "ice_crystal",
+          "category": "material"
+        },
+        {
+          "name": "白い竜鱗",
+          "description": "雪のように白い竜の鱗。触れると指先が凍える。",
+          "effect": "証拠品（戦闘では使えない）",
+          "quantity": 2,
+          "id": "white_dragon_scale",
+          "category": "key",
+          "key_item": true
+        },
+        {
+          "name": "氷鉄の大剣",
+          "description": "氷の護符と上質な剣を融合させた大剣。",
+          "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / ice属性",
+          "quantity": 1,
+          "id": "ice_iron_greatsword",
+          "combat": {
+            "kind": "weapon",
+            "name": "氷鉄の大剣",
+            "damage": "1d10+str/3+int/4",
+            "accuracy": 88,
+            "element": "ice"
+          },
+          "category": "equipment"
+        },
+        {
+          "name": "紅竜の炎核",
+          "description": "イグニスの命の炎が宿った結晶。",
+          "effect": "1d100+100ダメージ / 命中率100% / fire属性 / 消耗品",
+          "quantity": 1,
+          "id": "red_dragon_core",
+          "combat": {
+            "kind": "damage",
+            "damage": "1d100+100",
+            "accuracy": 100,
+            "element": "fire",
+            "consumable": true
+          },
+          "category": "key",
+          "key_item": true
+        }
+      ],
+      "equipment": [
+        "魔導書",
+        "魔法のローブ",
+        "氷鉄の大剣"
+      ],
+      "gold": 271,
+      "companion": null,
+      "sources": [
+        {
+          "location": "castle",
+          "step": "@opening",
+          "delta": {
+            "gold_change": 100,
+            "inventory_add": [
+              {
+                "name": "薬草",
+                "quantity": 1
+              }
+            ]
+          }
+        },
+        {
+          "location": "castle",
+          "step": "check_supplies",
+          "delta": {
+            "inventory_add": [
+              {
+                "id": "holy_water",
+                "name": "聖水",
+                "quantity": 2
+              }
+            ],
+            "flags_set": [
+              "checked_supplies"
+            ]
+          }
+        },
+        {
+          "location": "castle",
+          "step": "go_castle_town",
+          "delta": {
+            "current_location": "castle_town"
+          }
+        },
+        {
+          "location": "castle_town",
+          "step": "go_magic_shop",
+          "delta": {
+            "current_location": "magic_shop"
+          }
+        },
+        {
+          "location": "magic_shop",
+          "step": "invite_blue_mage",
+          "delta": {
+            "set_companion": "blue_robed_mage",
+            "flags_set": [
+              "warlock_rescue_available",
+              "invited_blue_mage"
+            ]
+          }
+        },
+        {
+          "location": "magic_shop",
+          "step": "return_castle_from_magic_shop",
+          "delta": {
+            "current_location": "castle_town"
+          }
+        },
+        {
+          "location": "castle_town",
+          "step": "go_dark_forest",
+          "delta": {
+            "current_location": "dark_forest_loc"
+          }
+        },
+        {
+          "location": "dark_forest_loc",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 5,
+            "inventory_add": [
+              {
+                "name": "薬草",
+                "quantity": 2
+              },
+              {
+                "name": "治療の巻物",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "defeated_slime",
+              "combat_defeated:dark_forest_loc:slime",
+              "defeated_slime",
+              "forest_entrance_resolved"
+            ],
+            "current_location": "lost_goblin_crossroads"
+          }
+        },
+        {
+          "location": "lost_goblin_crossroads",
+          "step": "ignore_lost_goblin:success",
+          "delta": {
+            "start_combat": true,
+            "flags_set": [
+              "caught_goblin_stealing",
+              "ignored_lost_goblin"
+            ]
+          }
+        },
+        {
+          "location": "lost_goblin_crossroads",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 5,
+            "inventory_add": [
+              {
+                "name": "治療の巻物",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "combat_defeated:lost_goblin_crossroads:goblin"
+            ]
+          }
+        },
+        {
+          "location": "lost_goblin_crossroads",
+          "step": "crossroads_forward",
+          "delta": {
+            "current_location": "elf_spring"
+          }
+        },
+        {
+          "location": "elf_spring",
+          "step": "continue_from_elf_spring",
+          "delta": {
+            "current_location": "forest_wolves"
+          }
+        },
+        {
+          "location": "forest_wolves",
+          "step": "@victory",
+          "delta": {
+            "flags_set": [
+              "combat_defeated:forest_wolves:forest_wolf",
+              "passed_forest_wolves",
+              "saved_gald"
+            ],
+            "current_location": "forest_exit"
+          }
+        },
+        {
+          "location": "forest_exit",
+          "step": "leave_forest_for_village",
+          "delta": {
+            "clear_companion": true,
+            "background_image": "/static/images/bg_burning_village.png",
+            "current_location": "village_approach",
+            "flags_set": [
+              "warlock_disappeared_at_village",
+              "reached_village"
+            ]
+          }
+        },
+        {
+          "location": "village_approach",
+          "step": "approach_burning_village_carefully:success",
+          "delta": {
+            "current_location": "village_fire_slime",
+            "start_combat": true
+          }
+        },
+        {
+          "location": "village_fire_slime",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 6,
+            "inventory_add": [
+              {
+                "name": "治療の巻物",
+                "quantity": 2
+              }
+            ],
+            "flags_set": [
+              "combat_defeated:village_fire_slime:fire_slime"
+            ],
+            "current_location": "burning_house"
+          }
+        },
+        {
+          "location": "burning_house",
+          "step": "leave_burning_house",
+          "delta": {
+            "current_location": "village_frozen_clue",
+            "flags_set": [
+              "riku_abandoned"
+            ]
+          }
+        },
+        {
+          "location": "village_frozen_clue",
+          "step": "investigate_frozen_village",
+          "delta": {
+            "current_location": "ice_elemental_encounter"
+          }
+        },
+        {
+          "location": "ice_elemental_encounter",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 15,
+            "inventory_add": [
+              {
+                "id": "ice_crystal",
+                "name": "氷の結晶",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "combat_defeated:ice_elemental_encounter:ice_elemental"
+            ],
+            "current_location": "frost_wolf_battle"
+          }
+        },
+        {
+          "location": "frost_wolf_battle",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 40,
+            "inventory_add": [
+              {
+                "id": "white_dragon_scale",
+                "name": "白い竜鱗",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "defeated_frost_dire_wolf",
+              "combat_defeated:frost_wolf_battle:frost_dire_wolf",
+              "defeated_frost_dire_wolf"
+            ],
+            "current_location": "ian_ice_katana_aftermath"
+          }
+        },
+        {
+          "location": "ian_ice_katana_aftermath",
+          "step": "accept_ian_request",
+          "delta": {
+            "current_location": "valley_entrance",
+            "inventory_add": [
+              {
+                "name": "氷鉄の大剣",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "accepted_ian_request"
+            ]
+          }
+        },
+        {
+          "location": "valley_entrance",
+          "step": "@victory",
+          "delta": {
+            "flags_set": [
+              "combat_defeated:valley_entrance:ash_wraith",
+              "combat_defeated:valley_entrance:ash_wraith"
+            ],
+            "current_location": "valley_lava_bridge"
+          }
+        },
+        {
+          "location": "valley_lava_bridge",
+          "step": "cross_lava_bridge:success",
+          "delta": {
+            "current_location": "valley_nest_gate"
+          }
+        },
+        {
+          "location": "warlock_at_nest",
+          "step": "continue_after_warlock",
+          "delta": {
+            "current_location": "valley_nest_gate"
+          }
+        },
+        {
+          "location": "valley_nest_gate",
+          "step": "enter_dragon_nest",
+          "delta": {
+            "current_location": "dragon_valley_loc"
+          }
+        },
+        {
+          "location": "dragon_valley_loc",
+          "step": "@victory",
+          "delta": {
+            "gold_change": 100,
+            "inventory_add": [
+              {
+                "id": "red_dragon_core",
+                "name": "紅竜の炎核",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "defeated_ignis",
+              "combat_defeated:dragon_valley_loc:ignis",
+              "defeated_ignis"
+            ],
+            "current_location": "ignis_last_breath"
+          }
+        },
+        {
+          "location": "ignis_last_breath",
+          "step": "examine_ignis_wound",
+          "delta": {
+            "inventory_add": [
+              {
+                "id": "white_dragon_scale",
+                "name": "白い竜鱗",
+                "quantity": 1
+              }
+            ],
+            "flags_set": [
+              "examined_ignis_wound",
+              "examined_ignis_wound"
+            ]
+          }
+        },
+        {
+          "location": "ignis_last_breath",
+          "step": "return_to_castle_report",
+          "delta": {
+            "current_location": "royal_gate"
+          }
+        },
+        {
+          "location": "royal_gate",
+          "step": "enter_festival_town",
+          "delta": {
+            "current_location": "festival_town"
+          }
+        },
+        {
+          "location": "festival_town",
+          "step": "go_report_hall",
+          "delta": {
+            "current_location": "castle_report"
+          }
+        },
+        {
+          "location": "castle_report",
+          "step": "report_with_evidence",
+          "delta": {
+            "current_location": "draco_battle",
+            "start_combat": true,
+            "flags_set": [
+              "draco_revealed",
+              "reported_to_king"
+            ]
+          }
+        }
+      ],
+      "permanent_reward_quantities": {
+        "elixir_end": 1,
+        "elixir_str": 1,
+        "elixir_dex": 1,
+        "elixir_int": 1,
+        "elixir_wis": 1,
+        "fruit_mana": 9,
+        "fruit_life": 10
+      }
+    }
+  },
+  "violations": [
+    {
+      "character": "mage",
+      "mode": "explore",
+      "previous": 0.736,
+      "before": {
+        "encounter": "draco_battle",
+        "encounter_class": "boss",
+        "character": "mage",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 2000,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 1,
+        "preparation": "standard",
+        "phase_rounds_mean": {
+          "draco_human": 1,
+          "draco_dragon": 3.7395
+        },
+        "purify": false,
+        "outcomes": {
+          "defeat": 526,
+          "victory": 1474
+        },
+        "rounds_mean": 3.7395,
+        "success_rounds_mean": 3.069877883310719,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "draco_human": 2000,
+          "draco_dragon": 2000
+        },
+        "win_rate": 0.737,
+        "rounds_median": 2.0,
+        "hp_left_mean": 0.6989767073722297,
+        "healing_items_mean": {
+          "治療の巻物": 0.685,
+          "薬草": 0.0655
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.685,
+          "火竜の油": 0.5745,
+          "紅竜の炎核": 1.0,
+          "聖水": 1.1595,
+          "薬草": 0.0655
+        },
+        "mp_spent_mean": 0.0,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "2": 115,
+          "3": 81,
+          "4": 71,
+          "5": 58,
+          "6": 46,
+          "7": 23,
+          "8": 24,
+          "9": 26,
+          "10": 14,
+          "11": 13,
+          "12": 17,
+          "13": 13,
+          "14": 6,
+          "15": 9,
+          "16": 4,
+          "17": 3,
+          "18": 3
+        },
+        "defeat_causes": {
+          "draco_dragon:1:白翼の薙ぎ払い @ round 2": 97,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 4": 63,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 3": 62,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 5": 46,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 6": 37,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 9": 20,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 7": 19,
+          "draco_dragon:1:凍てつく吐息 @ round 3": 19,
+          "draco_dragon:1:凍てつく吐息 @ round 2": 18,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 12": 14,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 8": 13,
+          "draco_dragon:1:凍てつく吐息 @ round 5": 12,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 13": 12,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 10": 12,
+          "draco_dragon:1:凍てつく吐息 @ round 8": 11,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 11": 10,
+          "draco_dragon:1:凍てつく吐息 @ round 6": 9,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 15": 9,
+          "draco_dragon:1:凍てつく吐息 @ round 4": 8,
+          "draco_dragon:1:凍てつく吐息 @ round 9": 6,
+          "draco_dragon:1:凍てつく吐息 @ round 7": 4,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 14": 4,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 16": 3,
+          "draco_dragon:1:凍てつく吐息 @ round 12": 3,
+          "draco_dragon:1:凍てつく吐息 @ round 11": 3,
+          "draco_dragon:1:凍てつく吐息 @ round 10": 2,
+          "draco_dragon:1:凍てつく吐息 @ round 18": 2,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 17": 2,
+          "draco_dragon:1:凍てつく吐息 @ round 14": 2,
+          "draco_dragon:1:凍てつく吐息 @ round 13": 1,
+          "draco_dragon:1:凍てつく吐息 @ round 17": 1,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 18": 1,
+          "draco_dragon:1:凍てつく吐息 @ round 16": 1
+        }
+      },
+      "after": {
+        "encounter": "draco_battle",
+        "encounter_class": "boss",
+        "character": "mage",
+        "policy": "heuristic",
+        "defense_mode": "flat",
+        "companion": true,
+        "n": 2000,
+        "seed": 20261012,
+        "stat_scaling": {},
+        "skill_variant": "none",
+        "level": 5,
+        "enemy_count": 1,
+        "preparation": "standard",
+        "phase_rounds_mean": {
+          "draco_human": 1,
+          "draco_dragon": 4.729
+        },
+        "purify": false,
+        "outcomes": {
+          "victory": 1997,
+          "defeat": 3
+        },
+        "rounds_mean": 4.729,
+        "success_rounds_mean": 4.71156735102654,
+        "threshold_reached": 0,
+        "threshold_rounds_mean": null,
+        "phase_reached": {
+          "draco_human": 2000,
+          "draco_dragon": 2000
+        },
+        "win_rate": 0.9985,
+        "rounds_median": 2.0,
+        "hp_left_mean": 0.7503417288094304,
+        "healing_items_mean": {
+          "治療の巻物": 0.476,
+          "薬草": 0.0415
+        },
+        "consumables_mean": {
+          "治療の巻物": 0.476,
+          "火竜の油": 0.758,
+          "紅竜の炎核": 1.0,
+          "聖水": 1.3035,
+          "薬草": 0.0415
+        },
+        "mp_spent_mean": 0.0,
+        "sp_spent_mean": 0.0,
+        "defeat_rounds": {
+          "15": 2,
+          "19": 1
+        },
+        "defeat_causes": {
+          "draco_dragon:1:凍てつく吐息 @ round 15": 1,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 19": 1,
+          "draco_dragon:1:白翼の薙ぎ払い @ round 15": 1
+        }
+      },
+      "uplift_pp": 26.15,
+      "previous_diff_pp": 26.25,
+      "limit_pp": 15
+    }
+  ],
+  "fingerprints": {
+    "host/prompt/processed/dragon_rpg.json": "ff935d0b4beb29270f9a5861fa0a1f41ba2bfb5e71e2aaf889e8e32fc6e68c0c",
+    "scripts/balance/rewards_gate.py": "fd504c2a7e930363179b41163a9548f42f410ee2cf4394e9a30927cbb90eeadf",
+    "scripts/balance/sim.py": "6a7f06e722c0b16b194b95586d9aeeda88724f263162ffdd02f0a592a8e4512d",
+    "host/combat.py": "7db7c28aed7f4e21e8685fa25d4fa115fa47c16a14d14c1c1a8c0561fc8919b0"
+  }
+}

@@ -6,13 +6,13 @@ const state = {
   sessionId: null,
   pendingChoices: [],
   choiceStack: [],
+  choicePortrait: null,
   choicesRevealed: false,
   selectedCharacterId: "hero",
   selectedCharacterImage: "/static/images/char_male_hero_v2.png",
   selectedCharacter: null,
   characters: [],
-  expandedCharacterId: "",
-  scenarioPath: "host/prompt/processed/dragon_rpg.json",
+  scenarioPath: "host/prompt/processed/dragon_rpg_hybrid.json",
   lastDiceLogLength: 0,
   lastDiceSignature: "",
   diceAnimationTimer: null,
@@ -22,8 +22,12 @@ const state = {
   combatTargetId: "",
   combatActionTab: "attack",
   combatBusy: false,
+  combatPlayback: null,
   combatActions: [],
+  combatTutorial: null,
   combatIntroSeenId: "",
+  combatLogId: "",
+  combatLogExpanded: false,
   session: null,
   serviceBusy: false,
   turnBusy: false,
@@ -39,6 +43,8 @@ const state = {
 const els = {
   /* Start screen */
   startScreen:     document.querySelector("#startScreen"),
+  startTitle:      document.querySelector("#startTitle"),
+  startError:      document.querySelector("#startError"),
   gameScreen:      document.querySelector("#gameScreen"),
   backendSelect:   document.querySelector("#backendSelect"),
   modelSelect:     document.querySelector("#modelSelect"),
@@ -97,6 +103,7 @@ const els = {
   goldText: document.querySelector("#goldText"),
   choicesArea: document.querySelector("#choicesArea"),
   choicesList: document.querySelector("#choicesList"),
+  choiceDescription: document.querySelector("#choiceDescription"),
   combatScreen: document.querySelector("#combatScreen"),
   combatIntro: document.querySelector("#combatIntro"),
   combatIntroText: document.querySelector("#combatIntroText"),
@@ -113,7 +120,9 @@ const els = {
   combatPlayerSpBar: document.querySelector("#combatPlayerSpBar"),
   combatEnemies: document.querySelector("#combatEnemies"),
   combatLog: document.querySelector("#combatLog"),
+  combatLogToggle: document.querySelector("#combatLogToggle"),
   combatActionTabs: document.querySelector("#combatActionTabs"),
+  combatTutorial: document.querySelector("#combatTutorial"),
   combatActions: document.querySelector("#combatActions"),
   combatResult: document.querySelector("#combatResult"),
   combatResultTitle: document.querySelector("#combatResultTitle"),
@@ -123,6 +132,7 @@ const els = {
   endingTitle: document.querySelector("#endingTitle"),
   endingReason: document.querySelector("#endingReason"),
   endingRestartButton: document.querySelector("#endingRestartButton"),
+  endingRetryButton: document.querySelector("#endingRetryButton"),
 };
 
 let cachedConfig = null;
@@ -301,7 +311,7 @@ async function loadScenarios() {
     }
     els.scenarioSelect.addEventListener("change", onScenarioChange);
   } catch (err) {
-    els.backendStatus.textContent = `シナリオの読み込みに失敗しました: ${err.message}`;
+    showStartError(`シナリオの読み込みに失敗しました: ${err.message}`);
   }
 }
 
@@ -321,7 +331,8 @@ async function onScenarioChange() {
     const data = await fetchJson(`/api/scenarios/${encodeURIComponent(filename)}`);
     const characters = (data.scenario?.characters || []).filter((char) => char.selectable !== false);
     state.scenarioPath = `host/prompt/processed/${filename}`;
-    state.expandedCharacterId = "";
+    els.startTitle.textContent = data.scenario?.meta?.title || els.scenarioSelect.selectedOptions[0].textContent;
+    document.title = `${els.startTitle.textContent} — AI GM TRPG`;
     renderCharacterCards(characters);
   } catch (err) {
     els.characterCards.innerHTML = `<p class="start-backend">キャラクターの読み込みに失敗しました</p>`;
@@ -335,48 +346,22 @@ function renderCharacterCards(characters) {
     state.selectedCharacterImage = "";
     state.selectedCharacter = null;
     state.characters = [];
-    state.expandedCharacterId = "";
     els.heroNameInput.value = "";
-    els.genderSelect.style.display = "none";
     els.characterCards.innerHTML = `<p class="start-backend">このシナリオにキャラクター定義がありません</p>`;
     return;
   }
   const selectedId = characters.some((char) => char.id === state.selectedCharacterId)
     ? state.selectedCharacterId
     : characters[0].id;
-  const expandedId = characters.some((char) => char.id === state.expandedCharacterId)
-    ? state.expandedCharacterId
-    : "";
   els.characterCards.innerHTML = characters.map((char) => {
-    const attrs = char.attributes || {};
-    const attrText = Object.entries(attrs)
-      .map(([k, v]) => `<span class="char-attr">${escapeHtml(k)} ${v}</span>`)
-      .join("");
-    const inventoryText = (char.inventory || [])
-      .map((item) => `${item.name || ""}${item.quantity ? ` x${item.quantity}` : ""}`)
-      .filter(Boolean)
-      .map((text) => `<span class="char-chip">${escapeHtml(text)}</span>`)
-      .join("");
-    const equipmentText = (char.equipment || [])
-      .map((text) => `<span class="char-chip">${escapeHtml(text)}</span>`)
-      .join("");
     const isSelected = char.id === selectedId;
-    const isExpanded = char.id === expandedId;
-    const img = char.image || "";
-    return `<button class="char-card ${isSelected ? "selected" : ""} ${isExpanded ? "expanded" : ""}" data-char-id="${escapeAttr(char.id)}" type="button" aria-expanded="${isExpanded ? "true" : "false"}">
-      <div class="char-card-summary">
+    const description = (char.description || "").match(/[^。]+。?/)?.[0] || "";
+    return `<button class="char-card ${isSelected ? "selected" : ""}" data-char-id="${escapeAttr(char.id)}" type="button" aria-pressed="${isSelected}">
+      <div class="char-card-portrait"><img class="char-card-img" src="${escapeAttr(characterPortrait(char))}" alt="" /></div>
+      <div class="char-card-info">
         <strong>${escapeHtml(char.name || char.id)}</strong>
-        <span class="char-card-chevron">⌄</span>
-      </div>
-      <div class="char-card-details" ${isExpanded ? "" : "hidden"}>
-        <div class="char-card-img" style="background-image:url('${escapeAttr(img)}')"></div>
-        <div class="char-card-info">
-          <span class="char-card-stats">HP ${char.hp}/${char.max_hp} MP ${char.mp}/${char.max_mp} SP ${char.sp}/${char.max_sp}</span>
-          ${char.description ? `<p class="char-card-desc">${escapeHtml(char.description)}</p>` : ""}
-          <div class="char-card-attrs">${attrText}</div>
-          ${equipmentText ? `<div class="char-card-line"><span>装備</span><div>${equipmentText}</div></div>` : ""}
-          ${inventoryText ? `<div class="char-card-line"><span>所持</span><div>${inventoryText}</div></div>` : ""}
-        </div>
+        <p class="char-card-desc" title="${escapeAttr(char.description || "")}">${escapeHtml(description)}</p>
+        <span class="char-card-stats">HP ${char.hp} / MP ${char.mp}</span>
       </div>
     </button>`;
   }).join("");
@@ -385,44 +370,37 @@ function renderCharacterCards(characters) {
     card.addEventListener("click", () => {
       const charId = card.dataset.charId;
       const char = characters.find((c) => c.id === charId);
-      if (char) selectCharacter(char, { expanded: state.expandedCharacterId !== charId });
+      if (char) selectCharacter(char);
     });
   });
   const selected = characters.find((char) => char.id === selectedId) || characters[0];
-  selectCharacter(selected, { render: false });
+  selectCharacter(selected);
 }
 
-function selectCharacter(char, options = {}) {
+function selectCharacter(char) {
   state.selectedCharacterId = char.id;
   state.selectedCharacter = char;
   els.heroNameInput.value = char.default_name || char.name || "";
-  if (char.id === "hero") {
-    els.genderSection.style.display = "";
-    updateHeroImage(char);
-  } else {
-    els.genderSection.style.display = "none";
-    state.selectedCharacterImage = char.image || "";
-  }
-  if (Object.prototype.hasOwnProperty.call(options, "expanded")) {
-    state.expandedCharacterId = options.expanded ? char.id : "";
-  }
-  if (options.render === false) return;
+  state.selectedCharacterImage = characterPortrait(char);
+  // Only classes with a female portrait (the hero) offer the gender choice.
+  if (els.genderSection) els.genderSection.hidden = !char.image_female;
   document.querySelectorAll(".char-card").forEach((card) => {
     const selected = card.dataset.charId === char.id;
-    const expanded = card.dataset.charId === state.expandedCharacterId;
     card.classList.toggle("selected", selected);
-    card.classList.toggle("expanded", expanded);
-    card.setAttribute("aria-expanded", expanded ? "true" : "false");
-    const details = card.querySelector(".char-card-details");
-    if (details) details.hidden = !expanded;
+    card.setAttribute("aria-pressed", String(selected));
   });
 }
 
-function updateHeroImage(char) {
+function characterPortrait(char) {
   const gender = document.querySelector('input[name="heroGender"]:checked')?.value || "男勇者";
-  state.selectedCharacterImage = gender === "女勇者" && char.image_female
+  return gender === "女勇者" && char.image_female
     ? char.image_female
     : char.image || "";
+}
+
+function showStartError(message) {
+  els.startError.textContent = message;
+  els.startError.hidden = !message;
 }
 
 async function startGame() {
@@ -435,6 +413,7 @@ async function startGame() {
   const characterId = selectedCharacter?.id || state.selectedCharacterId;
   const characterImage = characterImageForStart(selectedCharacter);
   localStorage.setItem("trpg.gmMode", gmMode);
+  showStartError("");
   setStartBusy(true);
   try {
     // Update config first
@@ -466,7 +445,7 @@ async function startGame() {
     els.gameScreen.style.display = "";
     renderSession(session);
   } catch (err) {
-    els.backendStatus.textContent = `エラー: ${err.message}`;
+    showStartError(`エラー: ${err.message}`);
   } finally {
     setStartBusy(false);
   }
@@ -486,11 +465,7 @@ function currentSelectedCharacter() {
 
 function characterImageForStart(char) {
   if (!char) return state.selectedCharacterImage || "";
-  if (char.id === "hero") {
-    updateHeroImage(char);
-    return state.selectedCharacterImage || char.image || "";
-  }
-  state.selectedCharacterImage = char.image || "";
+  state.selectedCharacterImage = characterPortrait(char);
   return state.selectedCharacterImage;
 }
 
@@ -652,7 +627,7 @@ function renderSession(session) {
     const companion = session.companion;
     els.companionInfo.hidden = !companion;
     els.companionInfo.innerHTML = companion
-      ? `${companion.image ? `<img src="${escapeAttr(companion.image)}" alt="" />` : ""}<span>同行者　${escapeHtml(companion.name || companion.id || "不明")}</span>`
+      ? `${companion.image ? `<img src="${escapeAttr(companion.image)}" alt="" />` : ""}<span>同行者　${escapeHtml(companion.name || companion.id || "不明")}${companion.description ? `<small class="companion-role">${escapeHtml(companion.description)}</small>` : ""}</span>`
       : "";
   }
 
@@ -729,7 +704,22 @@ function renderMeter(stat, character) {
    INVENTORY (with descriptions)
    ═══════════════════════════════════════════════════ */
 
+function prependItemIcon(nameNode, item) {
+  if (typeof item.icon !== "string" || !item.icon.trim()) return;
+  const icon = document.createElement("img");
+  icon.className = "item-icon";
+  icon.alt = "";
+  icon.width = 32;
+  icon.height = 32;
+  icon.addEventListener("error", () => icon.remove(), { once: true });
+  icon.src = item.icon;
+  nameNode.prepend(icon);
+}
+
 function renderInventory(items) {
+  const slotLabels = { weapon: "武器", armor: "防具", accessory: "補助" };
+  const isEquipped = item => Boolean(slotLabels[item.slot]) && (state.character?.equipment || []).some(entry =>
+    (typeof entry === "string" ? entry : entry.name || entry.id) === item.name || entry === item.id);
   const expanded = new Set([...els.inventory.querySelectorAll(".expanded")].map(row => row.dataset.itemId));
   els.inventory.innerHTML = "";
   if (!items.length) {
@@ -740,7 +730,7 @@ function renderInventory(items) {
     return;
   }
   // TODO(design): Items without category stay ungrouped until their category is specified.
-  const groups = { consumable: "消耗品", equipment: "装備", material: "素材", key: "重要", "": "" };
+  const groups = { consumable: "消耗品", equipment: "装備", material: "素材", loot: "戦利品", key: "重要", "": "" };
   for (const [category, label] of Object.entries(groups)) {
     const grouped = items.filter(item => (item.category || "") === category);
     if (!grouped.length) continue;
@@ -760,15 +750,19 @@ function renderInventory(items) {
     li.className = "inventory-item";
     li.dataset.itemId = item.id || name;
     li.classList.toggle("expanded", expanded.has(li.dataset.itemId));
-    const equipped = (state.character?.equipment || []).some(entry =>
-      (typeof entry === "string" ? entry : entry.name || entry.id) === name || entry === item.id);
-    const usable = ["heal", "restore"].includes(item.combat?.kind) && !state.session?.in_combat && !state.session?.game_over;
+    const slotLabel = slotLabels[item.slot] || "";
+    const equipped = isEquipped(item);
+    const idle = !state.session?.in_combat && !state.session?.game_over;
+    const equippable = Boolean(slotLabel) && !equipped && idle;
+    const replacement = equippable ? items.find(other => other.slot === item.slot && isEquipped(other)) : null;
+    const equipLabel = replacement ? `装備する（${replacement.name}と入れ替え）` : "装備する";
+    const usable = (["heal", "restore", "permanent"].includes(item.combat?.kind) && idle) || equippable;
 
     const hasDetails = desc || effect || usable;
 
     li.innerHTML = `
       <div class="item-header" role="button" tabindex="0" aria-expanded="${li.classList.contains("expanded")}">
-        <span class="item-name">${escapeHtml(name)}</span>
+        <span class="item-name">${escapeHtml(name)}${slotLabel ? ` <span class="item-qty">${slotLabel}</span>` : ''}</span>
         <span style="display:flex;align-items:center;gap:6px">
           ${equipped ? '<span class="item-qty equipped-tag">装備中</span>' : ''}
           ${item.key_item ? '<span class="item-qty key-tag">重要</span>' : ''}
@@ -780,10 +774,12 @@ function renderInventory(items) {
         <div class="item-details">
           ${desc ? `<div class="item-desc">${escapeHtml(desc)}</div>` : ''}
           ${effect ? `<div class="item-effect">${escapeHtml(effect)}</div>` : ''}
-          ${usable ? '<button type="button" class="start-btn item-use">使う</button>' : ''}
+          ${usable ? `<button type="button" class="start-btn item-use">${equippable ? escapeHtml(equipLabel) : "使う"}</button>` : ''}
         </div>
       ` : ''}
     `;
+
+    prependItemIcon(li.querySelector(".item-name"), item);
 
     if (hasDetails) {
       const header = li.querySelector(".item-header");
@@ -915,6 +911,7 @@ function renderShop() {
       <div class="shop-row-bottom"><span class="shop-price ${!selling && item.price > shop.gold ? "unaffordable" : ""}">${item.price} G</span>
       <span class="item-qty">${item.stock === null ? "∞" : `${selling ? "所持：" : "在庫 "}${item.stock}`}</span>
       ${item.stock === 0 ? '<span class="item-desc">売り切れ</span>' : ""}</div>`;
+    prependItemIcon(row.querySelector(".item-name"), item);
     row.addEventListener("click", () => {
       state.shopItemId = item.item_id;
       state.shopQuantity = 1;
@@ -1104,6 +1101,8 @@ function renderChoices(choices) {
     backCard.className = "choice-card choice-back";
     backCard.dataset.choiceIndex = "-1";
     backCard.dataset.choiceText = "__back__";
+    backCard.dataset.description = "";
+    backCard.setAttribute("aria-describedby", "choiceDescription");
     const numberDiv = document.createElement("div");
     numberDiv.className = "choice-number";
     numberDiv.innerHTML = "&#9664;";
@@ -1125,11 +1124,14 @@ function renderChoices(choices) {
     const risk = typeof choice === "object" ? (choice.risk || "") : "";
     const enabled = typeof choice === "object" && choice.enabled === false ? false : true;
     const disabledReason = typeof choice === "object" ? (choice.disabled_reason || "") : "";
+    const unknown = choice.visibility === "unknown";
     const hasChildren = typeof choice === "object" && Array.isArray(choice.children) && choice.children.length > 0;
 
     const card = document.createElement("button");
     card.type = "button";
-    card.disabled = !enabled;
+    card.setAttribute("aria-disabled", String(!enabled));
+    card.setAttribute("aria-describedby", "choiceDescription");
+    card.dataset.description = enabled ? preview : disabledReason;
     card.dataset.choiceIndex = String(i);
     card.dataset.choiceText = text;
     card.dataset.actionId = typeof choice === "object" ? (choice.action_id || choice.id || "") : "";
@@ -1139,6 +1141,7 @@ function renderChoices(choices) {
     } else {
       card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""} ${enabled ? "" : "disabled-choice"}`;
     }
+    card.classList.toggle("unknown-choice", unknown);
 
     const riskClass = classifyRisk(risk);
 
@@ -1154,18 +1157,19 @@ function renderChoices(choices) {
     bodyDiv.className = "choice-body";
     bodyDiv.appendChild(textDiv);
 
-    if (hasChildren) {
+    if (hasChildren && !unknown) {
       const hintSpan = document.createElement("span");
       hintSpan.className = "choice-group-hint";
       hintSpan.textContent = Array.isArray(choice.children) ? `${choice.children.length}件` : "";
       bodyDiv.appendChild(hintSpan);
-    } else if (preview) {
+    }
+    if (preview && !unknown) {
       const previewDiv = document.createElement("div");
       previewDiv.className = "choice-preview";
       previewDiv.textContent = preview;
       bodyDiv.appendChild(previewDiv);
     }
-    if (risk && !hasChildren) {
+    if (risk && !hasChildren && !unknown) {
       const riskSpan = document.createElement("span");
       riskSpan.className = `choice-risk ${riskClass}`;
       riskSpan.textContent = risk;
@@ -1185,9 +1189,18 @@ function renderChoices(choices) {
   }
 
   els.choicesArea.style.display = "";
+  highlightChoice(els.choicesList.querySelector(".choice-card"));
   els.dialogueBox.classList.remove("choices-ready");
   if (els.clickIndicator) els.clickIndicator.style.display = "none";
   choiceDebug("render-choices-visible", choiceLayoutDebug());
+}
+
+function highlightChoice(card) {
+  if (!card || !els.choicesList.contains(card)) return;
+  for (const row of els.choicesList.querySelectorAll(".choice-card")) {
+    row.classList.toggle("highlighted", row === card);
+  }
+  els.choiceDescription.textContent = card.dataset.description || "";
 }
 
 function isCombatChoice(text, preview, risk) {
@@ -1203,6 +1216,7 @@ function hideChoices() {
 function setPendingChoices(choices, revealImmediately = false) {
   state.pendingChoices = Array.isArray(choices) ? choices : [];
   state.choiceStack = [];
+  restoreChoicePortrait(null);
   state.choicesRevealed = false;
   hideChoices();
   if (revealImmediately && state.pendingChoices.length) {
@@ -1216,11 +1230,11 @@ function setPendingChoices(choices, revealImmediately = false) {
 function renderScenePortraits(session, character) {
   if (!els.spriteLayer) return;
   const playerImage = session.player_portrait_image || character.character_image || "";
-  const npcImage = session.dialogue_portrait_image || "";
+  const npcImage = state.choicePortrait || session.dialogue_portrait_image || "";
   const locationNpcs = Array.isArray(session.location_npc_portraits)
     ? session.location_npc_portraits.filter((npc) => npc && npc.image)
     : [];
-  const dialogueActive = Boolean(session.dialogue_active && playerImage && npcImage);
+  const dialogueActive = Boolean((state.choicePortrait || session.dialogue_active) && playerImage && npcImage);
   els.spriteLayer.classList.toggle("dialogue-mode", dialogueActive);
   els.spriteLayer.classList.toggle("ensemble-mode", !dialogueActive && locationNpcs.length > 0);
   els.spriteLayer.classList.toggle("solo-mode", !dialogueActive && locationNpcs.length === 0 && Boolean(playerImage));
@@ -1237,6 +1251,22 @@ function renderScenePortraits(session, character) {
   els.npcPortrait.style.display = dialogueActive ? "" : "none";
 }
 
+function restoreChoicePortrait(portrait) {
+  state.choicePortrait = portrait;
+  if (state.session) renderScenePortraits(state.session, state.session.character || {});
+}
+
+function parentChoicePortrait(choice) {
+  if (choice.portrait_image) return choice.portrait_image;
+  const images = new Set();
+  const visit = children => children.forEach(child => {
+    if (child.portrait_image) images.add(child.portrait_image);
+    if (child.children) visit(child.children);
+  });
+  visit(choice.children || []);
+  return images.size === 1 ? [...images][0] : null;
+}
+
 function renderCharacterAttributes(attributes) {
   if (!els.characterAttributes) return;
   const labels = {
@@ -1251,6 +1281,7 @@ function renderCharacterAttributes(attributes) {
 
 function renderEnding(gameOver) {
   if (!els.endingOverlay) return;
+  if (els.endingRetryButton) els.endingRetryButton.hidden = !gameOver || !state.session?.can_retry_area;
   if (!gameOver) {
     els.endingOverlay.style.display = "none";
     return;
@@ -1273,9 +1304,26 @@ function renderEnding(gameOver) {
   els.endingOverlay.style.display = "";
 }
 
+async function retryArea() {
+  if (!state.session?.can_retry_area || state.turnBusy || state.combatBusy || state.serviceBusy) return;
+  state.turnBusy = true;
+  els.endingRetryButton.disabled = true;
+  try {
+    const session = await serviceRequest("retry", {});
+    clearPendingChoices();
+    renderSession(session);
+  } catch (error) {
+    els.endingReason.textContent = error.message;
+  } finally {
+    state.turnBusy = false;
+    els.endingRetryButton.disabled = false;
+  }
+}
+
 function clearPendingChoices() {
   state.pendingChoices = [];
   state.choiceStack = [];
+  restoreChoicePortrait(null);
   state.choicesRevealed = false;
   updateDialogueAdvanceState();
 }
@@ -1295,19 +1343,20 @@ function handleChoiceListClick(event) {
     targetTag: event.target?.tagName || "",
     targetClass: String(event.target?.className || ""),
     hasCard: Boolean(card),
-    cardDisabled: Boolean(card?.disabled),
+    cardDisabled: card?.getAttribute("aria-disabled") === "true",
     cardIndex: card?.dataset.choiceIndex || "",
     cardText: card?.dataset.choiceText || "",
     cardParent: card?.dataset.choiceParent || "",
     actionId: card?.dataset.actionId || "",
     layout: choiceLayoutDebug(),
   });
-  if (!card || !els.choicesList.contains(card) || card.disabled) return;
+  if (!card || !els.choicesList.contains(card) || card.getAttribute("aria-disabled") === "true") return;
 
   if (card.dataset.choiceText === "__back__") {
     if (state.choiceStack.length > 0) {
       const previous = state.choiceStack.pop();
-      state.pendingChoices = previous;
+      state.pendingChoices = previous.choices;
+      restoreChoicePortrait(previous.portrait);
       state.choicesRevealed = true;
       renderChoices(state.pendingChoices);
     }
@@ -1320,7 +1369,8 @@ function handleChoiceListClick(event) {
 
   const hasChildren = Array.isArray(choice.children) && choice.children.length > 0;
   if (hasChildren) {
-    state.choiceStack.push(state.pendingChoices);
+    state.choiceStack.push({ choices: state.pendingChoices, portrait: state.choicePortrait });
+    restoreChoicePortrait(parentChoicePortrait(choice) || state.choicePortrait);
     state.pendingChoices = choice.children;
     state.choicesRevealed = true;
     renderChoices(state.pendingChoices);
@@ -1339,14 +1389,22 @@ function renderCombat(session) {
     els.combatScreen.style.display = "none";
     if (els.combatIntro) els.combatIntro.style.display = "none";
     state.combatTargetId = "";
+    state.combatLogId = "";
+    state.combatLogExpanded = false;
     return;
   }
 
   els.combatScreen.style.display = "";
+  if (state.combatLogId !== combat.id) {
+    state.combatLogId = combat.id;
+    state.combatLogExpanded = false;
+  }
+  renderCombatLogToggle();
   renderCombatIntro(combat);
   els.combatScreen.classList.toggle("busy", state.combatBusy);
   const enemies = Array.isArray(combat.enemies) ? combat.enemies : [];
-  const alive = enemies.filter((enemy) => Number(enemy.hp || 0) > 0);
+  const alive = enemies.filter((enemy) => combat.presentation_state?.[enemy.id]
+    ? !combat.presentation_state[enemy.id].defeated : Number(enemy.hp || 0) > 0);
   if (!alive.some((enemy) => enemy.id === state.combatTargetId)) {
     state.combatTargetId = alive[0]?.id || "";
   }
@@ -1363,30 +1421,13 @@ function renderCombat(session) {
   setCombatResource("PlayerSp", session.character, "sp");
 
   els.combatEnemies.classList.toggle("many-enemies", enemies.length >= 3);
-  els.combatEnemies.innerHTML = enemies.map((enemy) => {
-    const hp = Number(enemy.hp || 0);
-    const maxHp = Math.max(1, Number(enemy.max_hp || hp || 1));
-    const percent = Math.max(0, Math.min(100, (hp / maxHp) * 100));
-    const selected = enemy.id === state.combatTargetId;
-    const enemyImage = enemy.image
-      ? `<img class="combat-enemy-image" src="${escapeAttr(enemy.image)}" alt="" />`
-      : "";
-    return `<button type="button" class="combat-enemy ${selected ? "selected" : ""} ${hp <= 0 ? "defeated" : ""}"
-      data-combat-target="${escapeAttr(enemy.id || "")}" ${hp <= 0 ? "disabled" : ""}>
-      ${enemyImage}
-      <span class="combatant-side">ENEMY</span>
-      <h3>${escapeHtml(enemy.name || enemy.id || "敵")}</h3>
-      <div class="combat-resource hp"><span>HP</span><i><b style="width:${percent}%"></b></i><strong>${hp}/${maxHp}</strong></div>
-      ${enemy.description ? `<p>${escapeHtml(enemy.description)}</p>` : ""}
-      ${renderAbilityTags(enemy.skills || [], true)}
-    </button>`;
-  }).join("");
+  els.combatEnemies.innerHTML = enemies.map(enemy => combatEnemyMarkup(enemy, combat.presentation_state?.[enemy.id])).join("");
 
   const logs = Array.isArray(combat.log) ? combat.log : [];
   els.combatLog.innerHTML = logs.length
-    ? logs.map((entry) => `<div class="combat-log-entry ${escapeAttr(entry.kind || "")}"><strong>R${entry.round || 1}</strong><span>${escapeHtml(entry.text || "")}</span></div>`).join("")
+    ? logs.map(combatLogMarkup).join("")
     : '<div class="combat-log-entry"><strong>R1</strong><span>行動を選択してください。</span></div>';
-  els.combatLog.scrollTop = els.combatLog.scrollHeight;
+  if (!state.combatLogExpanded) els.combatLog.scrollTop = els.combatLog.scrollHeight;
 
   const terminal = combat.status !== "active";
   els.combatScreen.classList.toggle("combat-terminal", terminal);
@@ -1395,7 +1436,9 @@ function renderCombat(session) {
   els.combatResult.style.display = terminal ? "" : "none";
   els.combatActionTabs.style.display = terminal ? "none" : "";
   els.combatActions.style.display = terminal ? "none" : "grid";
+  state.combatTutorial = terminal ? null : combat.tutorial || null;
   if (terminal) {
+    renderCombatTutorial();
     const labels = { victory: "勝利", defeat: "敗北", fled: "撤退成功", purified: "浄化" };
     els.combatResultTitle.textContent = labels[combat.status] || "戦闘終了";
     els.combatResultText.textContent = combat.result?.summary || "戦闘結果が確定しました。";
@@ -1404,6 +1447,36 @@ function renderCombat(session) {
     state.combatActions = Array.isArray(combat.actions) ? combat.actions : [];
     renderCombatActions(state.combatActions);
   }
+}
+
+function renderCombatLogToggle() {
+  els.combatScreen.classList.toggle("log-expanded", state.combatLogExpanded);
+  els.combatLogToggle.setAttribute("aria-expanded", String(state.combatLogExpanded));
+  els.combatLogToggle.textContent = state.combatLogExpanded ? "ログ ▴" : "ログ ▾";
+}
+
+function combatLogMarkup(entry) {
+  return `<div class="combat-log-entry ${escapeAttr(entry.kind || "")}" data-event-sequence="${entry.sequence || 0}"><strong>R${entry.round || 1}</strong><span>${escapeHtml(entry.text || "")}</span></div>`;
+}
+
+function combatEnemyMarkup(enemy, resources) {
+    const hp = Number(enemy.hp || 0);
+    const maxHp = Math.max(1, Number(enemy.max_hp || hp || 1));
+    const percent = Math.max(0, Math.min(100, (hp / maxHp) * 100));
+    const selected = enemy.id === state.combatTargetId;
+    const defeated = resources ? resources.defeated : hp <= 0;
+    const enemyImage = enemy.image
+      ? `<img class="combat-enemy-image" src="${escapeAttr(enemy.image)}" alt="" />`
+      : "";
+    return `<button type="button" class="combat-enemy ${selected ? "selected" : ""} ${defeated ? "defeated" : ""}"
+      data-combat-target="${escapeAttr(enemy.id || "")}" ${defeated ? "disabled" : ""}>
+      ${enemyImage}
+      <span class="combatant-side">ENEMY</span>
+      <h3>${escapeHtml(enemy.name || enemy.id || "敵")}</h3>
+      <div class="combat-resource hp"><span>HP</span><i><b style="width:${percent}%"></b></i><strong>${hp}/${maxHp}</strong></div>
+      ${enemy.description ? `<p>${escapeHtml(enemy.description)}</p>` : ""}
+      ${renderAbilityTags(enemy.skills || [], true)}
+    </button>`;
 }
 
 function setCombatResource(suffix, actor, stat) {
@@ -1429,13 +1502,53 @@ function renderCombatActions(actions) {
   els.combatActions.innerHTML = visible.map((action) => {
     const cost = action.cost ? `${String(action.cost_item_name || action.cost_type || "").toUpperCase()} ${action.cost}` : "";
     const description = action.enabled === false ? (action.disabled_reason || "使用できません") : (action.description || "");
-    return `<button type="button" class="combat-action" data-combat-action-type="${escapeAttr(action.type || "")}" data-combat-action-id="${escapeAttr(action.id || "")}" ${action.enabled === false ? "disabled" : ""}>
+    const label = [action.name || action.id || "行動", ...abilityTagTexts([action]), cost, description].filter(Boolean).join(" ");
+    return `<button type="button" class="combat-action" aria-label="${escapeAttr(label)}" data-combat-action-type="${escapeAttr(action.type || "")}" data-combat-action-id="${escapeAttr(action.id || "")}" ${action.enabled === false ? "disabled" : ""}>
       <strong>${escapeHtml(action.name || action.id || "行動")}</strong>
       ${cost ? `<em>${escapeHtml(cost)}</em>` : ""}
       ${renderAbilityTags([action])}
       <span>${escapeHtml(description)}</span>
     </button>`;
   }).join("");
+  visible.forEach((action, index) => {
+    if (action.type === "item") prependItemIcon(els.combatActions.children[index].querySelector("strong"), action);
+  });
+  renderCombatTutorial();
+}
+
+// The first fight teaches attack -> heal after the slime's acid -> skill. Hints never block other actions.
+function combatTutorialStep(tutorial, actions) {
+  if (!tutorial) return null;
+  const done = Array.isArray(tutorial.player_actions) ? tutorial.player_actions : [];
+  const usable = (type, pick = () => true) => actions.find((action) => action.type === type && action.enabled !== false && pick(action));
+  if (!done.length) {
+    const attack = usable("attack");
+    return attack ? { tab: "attack", action: attack, text: "まずは『攻撃』で武器を振ってみよう。敵を選んでから行動を押すと、その敵を狙える。" } : null;
+  }
+  if (done.length === 1 && tutorial.enemy_skill_used) {
+    const potion = usable("item", (action) => action.id === "travel_potion") || usable("item", (action) => action.kind === "heal");
+    if (potion) return { tab: "item", action: potion, text: `スライムの溶解液は防御を無視してくる！『道具』の${potion.name}でHPを回復しよう。` };
+  }
+  if (!done.includes("skill")) {
+    const skill = usable("skill");
+    return skill ? { tab: "skill", action: skill, text: "次は『技能』を使ってみよう。MPやSPを消費して、通常攻撃より強い効果を出せる。" } : null;
+  }
+  if (done.indexOf("skill") === done.length - 1) return { text: "チュートリアル完了！ここからは自由に戦おう。" };
+  return null;
+}
+
+function renderCombatTutorial() {
+  if (!els.combatTutorial) return;
+  const step = state.combatBusy ? null : combatTutorialStep(state.combatTutorial, state.combatActions || []);
+  els.combatTutorial.style.display = step ? "" : "none";
+  if (!step) return;
+  els.combatTutorial.innerHTML = `<b>TUTORIAL</b><span>${escapeHtml(step.text)}</span>`;
+  if (!step.tab) return;
+  const target = state.combatActionTab === step.tab
+    ? [...els.combatActions.querySelectorAll("[data-combat-action-type]")].find((button) =>
+      button.dataset.combatActionType === step.action.type && button.dataset.combatActionId === String(step.action.id || ""))
+    : els.combatActionTabs.querySelector(`[data-combat-tab="${step.tab}"]`);
+  if (target) target.classList.add("tutorial-target");
 }
 
 function renderCombatIntro(combat) {
@@ -1449,7 +1562,7 @@ function renderCombatIntro(combat) {
   els.combatScreen.classList.toggle("intro-active", visible);
 }
 
-function renderAbilityTags(abilities, compact = false) {
+function abilityTagTexts(abilities, compact = false) {
   const tags = [];
   for (const ability of abilities || []) {
     if (!ability || typeof ability !== "object") continue;
@@ -1466,6 +1579,11 @@ function renderAbilityTags(abilities, compact = false) {
     }
     if (compact && ability.name) tags.unshift(ability.name);
   }
+  return tags;
+}
+
+function renderAbilityTags(abilities, compact = false) {
+  const tags = abilityTagTexts(abilities, compact);
   if (!tags.length) return "";
   return `<div class="combat-effect-tags">${tags.slice(0, compact ? 4 : 6).map((tag) => `<i>${escapeHtml(tag)}</i>`).join("")}</div>`;
 }
@@ -1474,12 +1592,14 @@ async function submitCombatAction(actionType, actionId) {
   if (!state.sessionId || state.combatBusy) return;
   state.combatBusy = true;
   els.combatScreen.classList.add("busy");
+  renderCombatTutorial();
   try {
     const session = await fetchJson(`/api/sessions/${state.sessionId}/combat/actions`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action_type: actionType, action_id: actionId, target_id: state.combatTargetId }),
     });
+    await playCombatEvents(state.session, session);
     state.combatBusy = false;
     renderSession(session);
   } catch (error) {
@@ -1620,6 +1740,7 @@ els.form.addEventListener("submit", submitTurn);
 els.startButton.addEventListener("click", startGame);
 els.newSessionButton.addEventListener("click", newSession);
 if (els.endingRestartButton) els.endingRestartButton.addEventListener("click", newSession);
+if (els.endingRetryButton) els.endingRetryButton.addEventListener("click", retryArea);
 if (els.backendSelect) {
   els.backendSelect.addEventListener("change", () => {
     if (cachedConfig) populateModelSelect(cachedConfig);
@@ -1632,13 +1753,11 @@ for (const input of els.gmModeInputs || []) {
 }
 for (const input of document.querySelectorAll('input[name="heroGender"]')) {
   input.addEventListener("change", () => {
-    if (state.selectedCharacterId === "hero" && state.selectedCharacter) {
-      const char = state.selectedCharacter;
-      const image = input.value === "女勇者" && char.image_female
-        ? char.image_female
-        : char.image || "";
-      state.selectedCharacterImage = image;
+    for (const card of els.characterCards.querySelectorAll(".char-card")) {
+      const char = state.characters.find((item) => item.id === card.dataset.charId);
+      if (char) card.querySelector("img").src = characterPortrait(char);
     }
+    if (state.selectedCharacter) state.selectedCharacterImage = characterPortrait(state.selectedCharacter);
   });
 }
 
@@ -1649,10 +1768,12 @@ if (configToggle && configPanel) {
   configToggle.addEventListener("click", (e) => {
     e.stopPropagation();
     configPanel.classList.toggle("open");
+    configToggle.setAttribute("aria-expanded", String(configPanel.classList.contains("open")));
   });
   document.addEventListener("click", (e) => {
     if (!configPanel.contains(e.target)) {
       configPanel.classList.remove("open");
+      configToggle.setAttribute("aria-expanded", "false");
     }
   });
 }
@@ -1665,7 +1786,21 @@ if (els.logCloseBtn) els.logCloseBtn.addEventListener("click", () => els.logOver
 if (els.inputToggleBtn) els.inputToggleBtn.addEventListener("click", () => {
   els.form.style.display = els.form.style.display === "none" ? "" : "none";
 });
-if (els.choicesList) els.choicesList.addEventListener("click", handleChoiceListClick);
+if (els.choicesList) {
+  els.choicesList.addEventListener("click", handleChoiceListClick);
+  for (const event of ["pointerover", "focusin"]) {
+    els.choicesList.addEventListener(event, (e) => highlightChoice(e.target.closest(".choice-card")));
+  }
+  els.choicesList.addEventListener("keydown", (event) => {
+    if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
+    const cards = [...els.choicesList.querySelectorAll(".choice-card")];
+    const index = cards.indexOf(document.activeElement);
+    const next = event.key === "Home" ? 0 : event.key === "End" ? cards.length - 1
+      : (index + (event.key === "ArrowDown" ? 1 : -1) + cards.length) % cards.length;
+    event.preventDefault();
+    cards[next]?.focus();
+  });
+}
 if (els.combatScreen) {
   els.combatScreen.addEventListener("click", (event) => {
     const target = event.target.closest("[data-combat-target]");
@@ -1689,6 +1824,15 @@ if (els.combatScreen) {
   });
 }
 if (els.combatResolveButton) els.combatResolveButton.addEventListener("click", resolveCombatResult);
+if (els.combatLogToggle) {
+  els.combatLogToggle.parentElement.addEventListener("click", () => {
+    if (!window.matchMedia("(width < 768px)").matches) return;
+    state.combatLogExpanded = !state.combatLogExpanded;
+    renderCombatLogToggle();
+    els.combatLog.scrollTop = state.combatLogExpanded ? 0 : els.combatLog.scrollHeight;
+    if (state.combatLogExpanded) els.combatLogToggle.scrollIntoView({ block: "start" });
+  });
+}
 if (els.combatIntroContinue) {
   els.combatIntroContinue.addEventListener("click", () => {
     state.combatIntroSeenId = els.combatIntro?.dataset.combatId || "";

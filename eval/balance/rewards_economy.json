@@ -1,0 +1,40 @@
+{
+  "gold_bonus": {
+    "merchant_battle": 85,
+    "lost_goblin_crossroads": 0,
+    "forest_wolves": 15,
+    "slime_ambush_one": 0,
+    "slime_ambush_two": 0,
+    "slime_king_battle": 75,
+    "goblin_fort": 0,
+    "goblin_fort_first_second": 0,
+    "goblin_fort_second_right": 0,
+    "goblin_fort_second_left": 20,
+    "goblin_fort_third_guards": 0,
+    "goblin_fort_fourth": 0,
+    "goblin_fort_chest_fight": 0,
+    "village_fire_slime": 0,
+    "village_fire_elemental": 10,
+    "ice_elemental_encounter": 0,
+    "frost_wolf_battle": 10,
+    "cave_heat_corridor": 20,
+    "cave_lava_room": 20,
+    "cave_crystal_corridor": 25,
+    "cave_prism_tree": 190,
+    "valley_entrance": 35,
+    "valley_ledge": 10,
+    "xanxus_phantom_battle": 75,
+    "mansion_corridor": 25,
+    "inn_night_ambush": 40,
+    "bone_field": 15,
+    "ghoul_marsh": 30,
+    "grave_chapel": 60
+  },
+  "n": 500,
+  "seed": 20261013,
+  "adjustments": {
+    "seed": 20261014,
+    "cave_prism_tree": "175→190：+3最终输入的复核中僧侶与盗賊未到1.3倍，补足并留抽样余量。",
+    "grave_chapel": "35→60：采用HP60、2d8+5后，四职业N500重新测算。"
+  }
+}

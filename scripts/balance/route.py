@@ -102,7 +102,7 @@ def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, c
                     and any(actor[r] < actor[f"max_{r}"] for r in ("hp", "mp", "sp"))):
                 checkpoints.replay_step(session, "rest_at_inn")
                 paid_rests += 1
-            if source["step"].startswith("@") and source["step"] != "@recover_hp":
+            if source["step"].startswith("@") and source["step"] not in {"@recover_hp", "@opening"}:
                 if source["step"] == "@final" and combat._encounter_for_session(
                         session, pack).get("encounter_class") == "boss":
                     arrival = resources(session)

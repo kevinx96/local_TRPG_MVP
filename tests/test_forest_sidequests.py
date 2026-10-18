@@ -125,7 +125,7 @@ class SidequestTests(unittest.TestCase):
                 trade(self.s, "gald_shop", "herb", 1)
                 self.assertEqual(self.quest("side_gald")["status"], "completed")
                 self.assertEqual(self.observe("gald_cart")["outcome"], "rejected")
-                self.at("castle")
+                self.at("castle_town")
                 self.act("ask_gald_rumor")
                 self.assertTrue(self.s["flags"]["heard_gald_rumor"])
 

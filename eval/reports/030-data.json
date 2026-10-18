@@ -1,0 +1,3522 @@
+{
+  "dragon_rpg.json": {
+    "portraits": [
+      {
+        "location": "inn",
+        "action": "ask_ian_dragon_tale",
+        "image": "/static/images/npc_ian.png"
+      },
+      {
+        "location": "inn",
+        "action": "ask_robin_stolen_scale",
+        "image": "/static/images/npc_robin.png"
+      },
+      {
+        "location": "village",
+        "action": "ask_elder_treaty",
+        "image": "/static/images/npc_elder.png"
+      }
+    ],
+    "encounters": [
+      {
+        "location": "forest_wolves",
+        "before": [
+          "forest_wolf",
+          "forest_wolf"
+        ],
+        "after": [
+          "forest_wolf"
+        ]
+      },
+      {
+        "location": "slime_ambush_one",
+        "before": [
+          "slime",
+          "slime",
+          "slime"
+        ],
+        "after": [
+          "slime"
+        ]
+      },
+      {
+        "location": "slime_ambush_two",
+        "before": [
+          "slime",
+          "slime",
+          "slime"
+        ],
+        "after": [
+          "slime"
+        ]
+      },
+      {
+        "location": "goblin_fort_first_second",
+        "before": [
+          "goblin",
+          "goblin_archer",
+          "goblin_archer"
+        ],
+        "after": [
+          "goblin",
+          "goblin_archer"
+        ]
+      },
+      {
+        "location": "goblin_fort_second_left",
+        "before": [
+          "war_hound",
+          "war_hound",
+          "war_hound",
+          "war_hound",
+          "war_hound"
+        ],
+        "after": [
+          "war_hound"
+        ]
+      },
+      {
+        "location": "goblin_fort_third_guards",
+        "before": [
+          "hobgoblin",
+          "hobgoblin",
+          "hobgoblin"
+        ],
+        "after": [
+          "hobgoblin"
+        ]
+      },
+      {
+        "location": "goblin_fort_fourth",
+        "before": [
+          "goblin_king",
+          "goblin_archer",
+          "goblin_archer"
+        ],
+        "after": [
+          "goblin_king",
+          "goblin_archer"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "location": "castle",
+        "action": "ask_king_info",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle",
+        "action": "ask_general_advice",
+        "source": "action",
+        "destinations": [],
+        "risk": "筋力または耐久が10以上で1d20判定（DC15）"
+      },
+      {
+        "location": "castle",
+        "action": "check_supplies",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town",
+        "source": "destination",
+        "destinations": [
+          "castle_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge",
+        "source": "destination",
+        "destinations": [
+          "forge"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_inn",
+        "source": "destination",
+        "destinations": [
+          "inn"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop",
+        "source": "destination",
+        "destinations": [
+          "magic_shop"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_item_shop",
+        "source": "destination",
+        "destinations": [
+          "item_shop"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_alley",
+        "source": "destination",
+        "destinations": [
+          "alley"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "ask_gald_rumor",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "return_castle_from_town",
+        "source": "destination",
+        "destinations": [
+          "castle"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest",
+        "source": "destination",
+        "destinations": [
+          "dark_forest_loc"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "return_village",
+        "source": "destination",
+        "destinations": [
+          "village"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "return_forest_exit",
+        "source": "destination",
+        "destinations": [
+          "forest_exit"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "open_forge_shop",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "ask_blacksmith_weakness",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "activate_ice_charm",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "forge_ice_charm",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "ask_robert_hammer",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "return_robert_hammer",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "rest_at_inn",
+        "source": "action",
+        "destinations": [
+          "inn_night_ambush"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "ask_ian_legend",
+        "source": "action",
+        "destinations": [],
+        "risk": "1d20判定（DC3）"
+      },
+      {
+        "location": "inn",
+        "action": "ask_ian_advice",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "ask_ian_dragon_tale",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "invite_robin",
+        "source": "action",
+        "destinations": [],
+        "risk": "1d20+wis判定（DC12）"
+      },
+      {
+        "location": "inn",
+        "action": "ask_robin_rumor",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "ask_robin_stolen_scale",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "accept_robin_goblin_quest",
+        "source": "destination",
+        "destinations": [
+          "goblin_fort"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "return_castle_from_inn",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "ask_elder_weakness",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "ask_elder_treaty",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "open_village_shop",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "go_dragon_valley",
+        "source": "destination",
+        "destinations": [
+          "valley_entrance"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "village",
+        "action": "return_castle_from_village",
+        "source": "destination",
+        "destinations": [
+          "castle_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "return_frozen_clue",
+        "source": "destination",
+        "destinations": [
+          "village_frozen_clue"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "open_gald_shop",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "rest_at_refuge",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "return_riku",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "open_magic_shop",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "ask_blue_mage_rumor",
+        "source": "action",
+        "destinations": [],
+        "risk": "1d20+wis判定（DC14）"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "ask_seal_lore",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "forge_prism_weapon",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "ask_mina_missing",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "report_mina_safe",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "item_shop",
+        "action": "open_sarah_shop",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "item_shop",
+        "action": "borrow_fire_bat_dragon",
+        "source": "action",
+        "destinations": [],
+        "risk": "1d20+wis判定（DC13）"
+      },
+      {
+        "location": "item_shop",
+        "action": "return_castle_from_item_shop",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "item_shop",
+        "action": "ask_sarah_request",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "item_shop",
+        "action": "give_moss_to_sarah",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley",
+        "action": "wait_for_night_in_alley",
+        "source": "destination",
+        "destinations": [
+          "alley_night"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley",
+        "action": "return_castle_from_alley",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "hear_curse_offer_hero",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "accept_curse_offer_hero",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "hear_curse_offer_cleric",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "accept_curse_offer_cleric",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "hear_curse_offer_mage",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "accept_curse_offer_mage",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "hear_curse_offer_thief",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "accept_curse_offer_thief",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "pay_curse_price_hero",
+        "source": "destination",
+        "destinations": [
+          "alley_after"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "pay_curse_price_cleric",
+        "source": "destination",
+        "destinations": [
+          "alley_after"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "pay_curse_price_mage",
+        "source": "destination",
+        "destinations": [
+          "alley_after"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "pay_curse_price_thief",
+        "source": "destination",
+        "destinations": [
+          "alley_after"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "betray_cursed_merchant",
+        "source": "action",
+        "destinations": [
+          "merchant_battle"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "alley_night",
+        "action": "leave_night_alley",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "buy_white_scale",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_after",
+        "action": "return_castle_after_curse",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "pass_cleared_forest",
+        "source": "destination",
+        "destinations": [
+          "lost_goblin_crossroads"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "help_lost_goblin",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "ignore_lost_goblin",
+        "source": "action",
+        "destinations": [],
+        "risk": "未知の感知判定"
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward",
+        "source": "destination",
+        "destinations": [
+          "elf_spring"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "enter_goblin_fort",
+        "source": "destination",
+        "destinations": [
+          "goblin_fort"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_back",
+        "source": "destination",
+        "destinations": [
+          "dark_forest_loc"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "fort_shortcut",
+        "source": "destination",
+        "destinations": [
+          "forest_exit"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "elf_spring",
+        "action": "rest_at_elf_spring",
+        "source": "action",
+        "destinations": [
+          "slime_ambush_one"
+        ],
+        "risk": "休息中に襲われる恐れあり"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring",
+        "source": "destination",
+        "destinations": [
+          "forest_wolves"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "elf_spring",
+        "action": "inspect_spring_wall",
+        "source": "destination",
+        "destinations": [
+          "cave_seal"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "elf_spring",
+        "action": "spring_back",
+        "source": "destination",
+        "destinations": [
+          "lost_goblin_crossroads"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "distract_forest_wolves",
+        "source": "action",
+        "destinations": [],
+        "risk": "携帯食を1つ消費"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "sneak_forest_wolves",
+        "source": "action",
+        "destinations": [],
+        "risk": "1d20+dex判定（DC14）・SP1消費"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "pass_cleared_wolves",
+        "source": "destination",
+        "destinations": [
+          "forest_exit"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "wolves_back",
+        "source": "destination",
+        "destinations": [
+          "elf_spring"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "abandon_gald",
+        "source": "destination",
+        "destinations": [
+          "forest_exit"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village",
+        "source": "destination",
+        "destinations": [
+          "village_approach"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forest_exit",
+        "action": "return_inn_after_forest",
+        "source": "destination",
+        "destinations": [
+          "castle_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forest_exit",
+        "action": "exit_back",
+        "source": "destination",
+        "destinations": [
+          "forest_wolves"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort",
+        "action": "fight_fort_first_guard",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort",
+        "action": "fort_first_bypass",
+        "source": "action",
+        "destinations": [
+          "goblin_fort_first_second"
+        ],
+        "risk": "1d20+dex判定（DC13）"
+      },
+      {
+        "location": "goblin_fort",
+        "action": "leave_goblin_fort",
+        "source": "destination",
+        "destinations": [
+          "lost_goblin_crossroads"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_first_second",
+        "action": "fight_fort_second_guards",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_first_second",
+        "action": "fort_second_bypass",
+        "source": "action",
+        "destinations": [
+          "goblin_fort_second_choice"
+        ],
+        "risk": "1d20+dex判定（DC16）"
+      },
+      {
+        "location": "goblin_fort_second_choice",
+        "action": "explore_fort_right",
+        "source": "destination",
+        "destinations": [
+          "goblin_fort_second_right"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_second_choice",
+        "action": "explore_fort_left",
+        "source": "destination",
+        "destinations": [
+          "goblin_fort_second_left"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_second_right",
+        "action": "fight_hobgoblin",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_second_right",
+        "action": "bypass_hobgoblin",
+        "source": "action",
+        "destinations": [
+          "goblin_fort_third_gate"
+        ],
+        "risk": "1d20+dex判定（DC17）"
+      },
+      {
+        "location": "goblin_fort_healing_circle",
+        "action": "use_fort_healing_circle",
+        "source": "destination",
+        "destinations": [
+          "goblin_fort_third_gate"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "goblin_fort_third_gate",
+        "action": "give_correct_password",
+        "source": "destination",
+        "destinations": [
+          "goblin_fort_fourth"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_third_gate",
+        "action": "invent_goblin_password",
+        "source": "action",
+        "destinations": [
+          "goblin_fort_fourth",
+          "goblin_fort_third_guards"
+        ],
+        "risk": "1d20+int判定（DC18）"
+      },
+      {
+        "location": "goblin_fort_third_gate",
+        "action": "admit_no_password",
+        "source": "action",
+        "destinations": [
+          "goblin_fort_third_guards"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_chest_choice",
+        "action": "return_lost_goblin_box",
+        "source": "destination",
+        "destinations": [
+          "lost_goblin_crossroads"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_chest_choice",
+        "action": "steal_lost_goblin_box",
+        "source": "action",
+        "destinations": [
+          "goblin_fort_chest_fight"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_chest_choice",
+        "action": "take_abandoned_goblin_box",
+        "source": "destination",
+        "destinations": [
+          "lost_goblin_crossroads"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully",
+        "source": "action",
+        "destinations": [
+          "village_fire_elemental",
+          "village_fire_slime"
+        ],
+        "risk": "1d20+int判定（DC15）"
+      },
+      {
+        "location": "village_approach",
+        "action": "enter_burning_village_directly",
+        "source": "destination",
+        "destinations": [
+          "village_fire_elemental"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "village_approach",
+        "action": "escape_from_burning_village",
+        "source": "destination",
+        "destinations": [
+          "xanxus_confrontation"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "xanxus_confrontation",
+        "action": "bluff_xanxus",
+        "source": "action",
+        "destinations": [
+          "xanxus_battle"
+        ],
+        "risk": "危険"
+      },
+      {
+        "location": "xanxus_confrontation",
+        "action": "ambush_xanxus",
+        "source": "action",
+        "destinations": [
+          "xanxus_battle"
+        ],
+        "risk": "危険"
+      },
+      {
+        "location": "xanxus_confrontation",
+        "action": "flee_from_xanxus",
+        "source": "action",
+        "destinations": [
+          "xanxus_battle"
+        ],
+        "risk": "危険"
+      },
+      {
+        "location": "xanxus_ultimatum",
+        "action": "accept_xanxus_fire_seed",
+        "source": "destination",
+        "destinations": [
+          "village_frozen_clue"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "xanxus_ultimatum",
+        "action": "refuse_xanxus_with_rescue",
+        "source": "action",
+        "destinations": [
+          "warlock_rescue_battle"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "xanxus_ultimatum",
+        "action": "refuse_xanxus_without_rescue",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village",
+        "source": "destination",
+        "destinations": [
+          "ice_elemental_encounter"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "skip_frozen_clue_after_xanxus",
+        "source": "destination",
+        "destinations": [
+          "valley_entrance"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "skip_frozen_clue_before_xanxus",
+        "source": "destination",
+        "destinations": [
+          "xanxus_confrontation"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "inspect_frost_core",
+        "source": "action",
+        "destinations": [],
+        "risk": "1d20+wis判定（DC12）"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "visit_village",
+        "source": "destination",
+        "destinations": [
+          "village"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "bypass_ice_elemental",
+        "source": "action",
+        "destinations": [
+          "frost_wolf_battle"
+        ],
+        "risk": "1d20+int判定（DC14）"
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request",
+        "source": "destination",
+        "destinations": [
+          "valley_entrance"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "refuse_ian_after_xanxus",
+        "source": "destination",
+        "destinations": [
+          "valley_entrance"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "refuse_ian_before_xanxus",
+        "source": "destination",
+        "destinations": [
+          "xanxus_confrontation"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "visit_village",
+        "source": "destination",
+        "destinations": [
+          "village"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_last_breath",
+        "action": "examine_ignis_wound",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_last_breath",
+        "action": "hear_ignis_last_words",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_last_breath",
+        "action": "return_to_castle_report",
+        "source": "destination",
+        "destinations": [
+          "royal_gate"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_report",
+        "action": "report_with_evidence",
+        "source": "action",
+        "destinations": [
+          "draco_battle"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "castle_report",
+        "action": "report_normally",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_purified",
+        "action": "hear_ignis_testimony",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_purified",
+        "action": "receive_ignis_scale",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_purified",
+        "action": "ask_ignis_aid",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_purified",
+        "action": "return_to_castle_report",
+        "source": "destination",
+        "destinations": [
+          "royal_gate"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_seal",
+        "action": "decode_seal",
+        "source": "action",
+        "destinations": [
+          "cave_heat_corridor"
+        ],
+        "risk": "1d20+int判定（DC15）"
+      },
+      {
+        "location": "cave_seal",
+        "action": "pray_at_seal",
+        "source": "action",
+        "destinations": [
+          "cave_heat_corridor"
+        ],
+        "risk": "1d20+wis判定（DC14）"
+      },
+      {
+        "location": "cave_seal",
+        "action": "force_seal",
+        "source": "action",
+        "destinations": [
+          "cave_heat_corridor"
+        ],
+        "risk": "1d20+str判定（DC17）"
+      },
+      {
+        "location": "cave_seal",
+        "action": "pour_holy_water_on_seal",
+        "source": "destination",
+        "destinations": [
+          "cave_heat_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_seal",
+        "action": "enter_open_cave",
+        "source": "destination",
+        "destinations": [
+          "cave_heat_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_seal",
+        "action": "leave_seal",
+        "source": "destination",
+        "destinations": [
+          "elf_spring"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_heat_corridor",
+        "action": "fight_heat",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_heat_corridor",
+        "action": "sneak_heat",
+        "source": "action",
+        "destinations": [
+          "cave_fork"
+        ],
+        "risk": "1d20+dex判定（DC13）"
+      },
+      {
+        "location": "cave_heat_corridor",
+        "action": "pass_heat_corridor",
+        "source": "destination",
+        "destinations": [
+          "cave_fork"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_heat_corridor",
+        "action": "heat_back",
+        "source": "destination",
+        "destinations": [
+          "cave_seal"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_fork",
+        "action": "cave_left",
+        "source": "destination",
+        "destinations": [
+          "cave_lava_room"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_fork",
+        "action": "cave_right",
+        "source": "destination",
+        "destinations": [
+          "cave_hot_spring"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_fork",
+        "action": "fork_back",
+        "source": "destination",
+        "destinations": [
+          "cave_heat_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_lava_room",
+        "action": "open_lava_chest",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_lava_room",
+        "action": "lava_back",
+        "source": "destination",
+        "destinations": [
+          "cave_fork"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_lava_room",
+        "action": "lava_forward",
+        "source": "destination",
+        "destinations": [
+          "cave_crystal_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_hot_spring",
+        "action": "rest_hot_spring",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_hot_spring",
+        "action": "hot_spring_back",
+        "source": "destination",
+        "destinations": [
+          "cave_fork"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_hot_spring",
+        "action": "hot_spring_forward",
+        "source": "destination",
+        "destinations": [
+          "cave_crystal_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_hot_spring",
+        "action": "talk_mina",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_hot_spring",
+        "action": "escort_mina",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_hot_spring",
+        "action": "leave_mina_wait",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_crystal_corridor",
+        "action": "fight_crystal",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_crystal_corridor",
+        "action": "sneak_crystal",
+        "source": "action",
+        "destinations": [
+          "cave_prism_tree"
+        ],
+        "risk": "1d20+wis判定（DC15）"
+      },
+      {
+        "location": "cave_crystal_corridor",
+        "action": "pass_crystal_corridor",
+        "source": "destination",
+        "destinations": [
+          "cave_prism_tree"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_crystal_corridor",
+        "action": "crystal_back",
+        "source": "destination",
+        "destinations": [
+          "cave_fork"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_prism_tree",
+        "action": "leave_prism_tree",
+        "source": "destination",
+        "destinations": [
+          "elf_spring"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_prism_tree",
+        "action": "prism_back",
+        "source": "destination",
+        "destinations": [
+          "cave_crystal_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "burning_house",
+        "action": "break_burning_beam",
+        "source": "action",
+        "destinations": [
+          "village_frozen_clue"
+        ],
+        "risk": "1d20+str判定（DC13）"
+      },
+      {
+        "location": "burning_house",
+        "action": "climb_to_window",
+        "source": "action",
+        "destinations": [
+          "village_frozen_clue"
+        ],
+        "risk": "1d20+dex判定（DC13）"
+      },
+      {
+        "location": "burning_house",
+        "action": "douse_with_ice",
+        "source": "destination",
+        "destinations": [
+          "village_frozen_clue"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house",
+        "source": "destination",
+        "destinations": [
+          "village_frozen_clue"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "sneak_through_ash",
+        "source": "action",
+        "destinations": [
+          "valley_lava_bridge"
+        ],
+        "risk": "1d20+dex判定（DC14）"
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "cross_lava_bridge",
+        "source": "action",
+        "destinations": [
+          "valley_nest_gate"
+        ],
+        "risk": "1d20+dex判定（DC12）"
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "take_ledge_path",
+        "source": "destination",
+        "destinations": [
+          "valley_ledge"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "valley_nest_gate",
+        "action": "enter_dragon_nest",
+        "source": "destination",
+        "destinations": [
+          "dragon_valley_loc"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "xanxus_at_nest",
+        "action": "obey_xanxus_core",
+        "source": "destination",
+        "destinations": [
+          "valley_nest_gate"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "xanxus_at_nest",
+        "action": "cleanse_fire_seed",
+        "source": "action",
+        "destinations": [
+          "xanxus_phantom_battle"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "xanxus_at_nest",
+        "action": "call_warlock",
+        "source": "destination",
+        "destinations": [
+          "valley_nest_gate"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "warlock_at_nest",
+        "action": "continue_after_warlock",
+        "source": "destination",
+        "destinations": [
+          "valley_nest_gate"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "royal_gate",
+        "action": "enter_festival_town",
+        "source": "destination",
+        "destinations": [
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_inn",
+        "source": "destination",
+        "destinations": [
+          "inn"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_item_shop",
+        "source": "destination",
+        "destinations": [
+          "item_shop"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_magic_shop",
+        "source": "destination",
+        "destinations": [
+          "magic_shop"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_forge",
+        "source": "destination",
+        "destinations": [
+          "forge"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_general_mansion",
+        "source": "destination",
+        "destinations": [
+          "mansion_garden"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "request_king_audience",
+        "source": "destination",
+        "destinations": [
+          "king_private_room"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_report_hall",
+        "source": "destination",
+        "destinations": [
+          "castle_report"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "open_gald_capital_shop",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "mansion_garden",
+        "action": "sneak_into_mansion",
+        "source": "action",
+        "destinations": [
+          "mansion_corridor"
+        ],
+        "risk": "1d20+dex判定（DC13）"
+      },
+      {
+        "location": "mansion_garden",
+        "action": "robin_picks_lock",
+        "source": "destination",
+        "destinations": [
+          "mansion_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "mansion_garden",
+        "action": "leave_mansion",
+        "source": "destination",
+        "destinations": [
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "mansion_corridor",
+        "action": "fight_ice_sentinels",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "mansion_corridor",
+        "action": "evade_ice_sentinels",
+        "source": "action",
+        "destinations": [
+          "mansion_study"
+        ],
+        "risk": "1d20+wis判定（DC15）"
+      },
+      {
+        "location": "mansion_corridor",
+        "action": "pass_cleared_sentinels",
+        "source": "destination",
+        "destinations": [
+          "mansion_study"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "mansion_study",
+        "action": "take_draco_journal",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "mansion_study",
+        "action": "open_scale_box",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "mansion_study",
+        "action": "leave_mansion_study",
+        "source": "destination",
+        "destinations": [
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "king_private_room",
+        "action": "confide_in_king",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "king_private_room",
+        "action": "ask_king_rest",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "king_private_room",
+        "action": "leave_king_room",
+        "source": "destination",
+        "destinations": [
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      }
+    ]
+  },
+  "dragon_rpg_hybrid.json": {
+    "portraits": [
+      {
+        "location": "inn",
+        "action": "ask_ian_dragon_tale",
+        "image": "/static/images/npc_ian.png"
+      },
+      {
+        "location": "inn",
+        "action": "ask_robin_stolen_scale",
+        "image": "/static/images/npc_robin.png"
+      },
+      {
+        "location": "village",
+        "action": "ask_elder_treaty",
+        "image": "/static/images/npc_elder.png"
+      }
+    ],
+    "encounters": [
+      {
+        "location": "forest_wolves",
+        "before": [
+          "forest_wolf",
+          "forest_wolf"
+        ],
+        "after": [
+          "forest_wolf"
+        ]
+      },
+      {
+        "location": "slime_ambush_one",
+        "before": [
+          "slime",
+          "slime",
+          "slime"
+        ],
+        "after": [
+          "slime"
+        ]
+      },
+      {
+        "location": "slime_ambush_two",
+        "before": [
+          "slime",
+          "slime",
+          "slime"
+        ],
+        "after": [
+          "slime"
+        ]
+      },
+      {
+        "location": "goblin_fort_first_second",
+        "before": [
+          "goblin",
+          "goblin_archer",
+          "goblin_archer"
+        ],
+        "after": [
+          "goblin",
+          "goblin_archer"
+        ]
+      },
+      {
+        "location": "goblin_fort_second_left",
+        "before": [
+          "war_hound",
+          "war_hound",
+          "war_hound",
+          "war_hound",
+          "war_hound"
+        ],
+        "after": [
+          "war_hound"
+        ]
+      },
+      {
+        "location": "goblin_fort_third_guards",
+        "before": [
+          "hobgoblin",
+          "hobgoblin",
+          "hobgoblin"
+        ],
+        "after": [
+          "hobgoblin"
+        ]
+      },
+      {
+        "location": "goblin_fort_fourth",
+        "before": [
+          "goblin_king",
+          "goblin_archer",
+          "goblin_archer"
+        ],
+        "after": [
+          "goblin_king",
+          "goblin_archer"
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "location": "castle",
+        "action": "ask_king_info",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle",
+        "action": "ask_general_advice",
+        "source": "action",
+        "destinations": [],
+        "risk": "筋力または耐久が10以上で1d20判定（DC15）"
+      },
+      {
+        "location": "castle",
+        "action": "check_supplies",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle",
+        "action": "go_castle_town",
+        "source": "destination",
+        "destinations": [
+          "castle_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_forge",
+        "source": "destination",
+        "destinations": [
+          "forge"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_inn",
+        "source": "destination",
+        "destinations": [
+          "inn"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_magic_shop",
+        "source": "destination",
+        "destinations": [
+          "magic_shop"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_item_shop",
+        "source": "destination",
+        "destinations": [
+          "item_shop"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_alley",
+        "source": "destination",
+        "destinations": [
+          "alley"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "ask_gald_rumor",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "return_castle_from_town",
+        "source": "destination",
+        "destinations": [
+          "castle"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "go_dark_forest",
+        "source": "destination",
+        "destinations": [
+          "dark_forest_loc"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "return_village",
+        "source": "destination",
+        "destinations": [
+          "village"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_town",
+        "action": "return_forest_exit",
+        "source": "destination",
+        "destinations": [
+          "forest_exit"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "open_forge_shop",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "ask_blacksmith_weakness",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "show_sword_to_blacksmith",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "accept_sword_fusion",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "activate_ice_charm",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "return_castle_from_forge",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "forge_ice_charm",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "ask_robert_hammer",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forge",
+        "action": "return_robert_hammer",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "rest_at_inn",
+        "source": "action",
+        "destinations": [
+          "inn_night_ambush"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "ask_ian_legend",
+        "source": "action",
+        "destinations": [],
+        "risk": "1d20判定（DC3）"
+      },
+      {
+        "location": "inn",
+        "action": "ask_ian_advice",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "ask_ian_dragon_tale",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "invite_robin",
+        "source": "action",
+        "destinations": [],
+        "risk": "1d20+wis判定（DC12）"
+      },
+      {
+        "location": "inn",
+        "action": "ask_robin_rumor",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "ask_robin_stolen_scale",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "accept_robin_goblin_quest",
+        "source": "destination",
+        "destinations": [
+          "goblin_fort"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "inn",
+        "action": "return_castle_from_inn",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "ask_elder_weakness",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "ask_elder_treaty",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "open_village_shop",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "go_dragon_valley",
+        "source": "destination",
+        "destinations": [
+          "valley_entrance"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "village",
+        "action": "return_castle_from_village",
+        "source": "destination",
+        "destinations": [
+          "castle_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "return_frozen_clue",
+        "source": "destination",
+        "destinations": [
+          "village_frozen_clue"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "open_gald_shop",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "rest_at_refuge",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village",
+        "action": "return_riku",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "open_magic_shop",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "ask_blue_mage_rumor",
+        "source": "action",
+        "destinations": [],
+        "risk": "1d20+wis判定（DC14）"
+      },
+      {
+        "location": "magic_shop",
+        "action": "invite_blue_mage",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "return_castle_from_magic_shop",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "ask_seal_lore",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "forge_prism_weapon",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "ask_mina_missing",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "magic_shop",
+        "action": "report_mina_safe",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "item_shop",
+        "action": "open_sarah_shop",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "item_shop",
+        "action": "borrow_fire_bat_dragon",
+        "source": "action",
+        "destinations": [],
+        "risk": "1d20+wis判定（DC13）"
+      },
+      {
+        "location": "item_shop",
+        "action": "return_castle_from_item_shop",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "item_shop",
+        "action": "ask_sarah_request",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "item_shop",
+        "action": "give_moss_to_sarah",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley",
+        "action": "wait_for_night_in_alley",
+        "source": "destination",
+        "destinations": [
+          "alley_night"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley",
+        "action": "return_castle_from_alley",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "hear_curse_offer_hero",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "accept_curse_offer_hero",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "hear_curse_offer_cleric",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "accept_curse_offer_cleric",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "hear_curse_offer_mage",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "accept_curse_offer_mage",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "hear_curse_offer_thief",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "accept_curse_offer_thief",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "pay_curse_price_hero",
+        "source": "destination",
+        "destinations": [
+          "alley_after"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "pay_curse_price_cleric",
+        "source": "destination",
+        "destinations": [
+          "alley_after"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "pay_curse_price_mage",
+        "source": "destination",
+        "destinations": [
+          "alley_after"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "pay_curse_price_thief",
+        "source": "destination",
+        "destinations": [
+          "alley_after"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "betray_cursed_merchant",
+        "source": "action",
+        "destinations": [
+          "merchant_battle"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "alley_night",
+        "action": "leave_night_alley",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_night",
+        "action": "buy_white_scale",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "alley_after",
+        "action": "return_castle_after_curse",
+        "source": "destination",
+        "destinations": [
+          "castle_town",
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "attack_slime",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "dark_forest_loc",
+        "action": "pass_cleared_forest",
+        "source": "destination",
+        "destinations": [
+          "lost_goblin_crossroads"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "help_lost_goblin",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "ignore_lost_goblin",
+        "source": "action",
+        "destinations": [],
+        "risk": "未知の感知判定"
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_forward",
+        "source": "destination",
+        "destinations": [
+          "elf_spring"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "enter_goblin_fort",
+        "source": "destination",
+        "destinations": [
+          "goblin_fort"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "crossroads_back",
+        "source": "destination",
+        "destinations": [
+          "dark_forest_loc"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "lost_goblin_crossroads",
+        "action": "fort_shortcut",
+        "source": "destination",
+        "destinations": [
+          "forest_exit"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "elf_spring",
+        "action": "rest_at_elf_spring",
+        "source": "action",
+        "destinations": [
+          "slime_ambush_one"
+        ],
+        "risk": "休息中に襲われる恐れあり"
+      },
+      {
+        "location": "elf_spring",
+        "action": "continue_from_elf_spring",
+        "source": "destination",
+        "destinations": [
+          "forest_wolves"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "elf_spring",
+        "action": "inspect_spring_wall",
+        "source": "destination",
+        "destinations": [
+          "cave_seal"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "elf_spring",
+        "action": "spring_back",
+        "source": "destination",
+        "destinations": [
+          "lost_goblin_crossroads"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "fight_forest_wolves",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "distract_forest_wolves",
+        "source": "action",
+        "destinations": [],
+        "risk": "携帯食を1つ消費"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "sneak_forest_wolves",
+        "source": "action",
+        "destinations": [],
+        "risk": "1d20+dex判定（DC14）・SP1消費"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "pass_cleared_wolves",
+        "source": "destination",
+        "destinations": [
+          "forest_exit"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "wolves_back",
+        "source": "destination",
+        "destinations": [
+          "elf_spring"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forest_wolves",
+        "action": "abandon_gald",
+        "source": "destination",
+        "destinations": [
+          "forest_exit"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forest_exit",
+        "action": "leave_forest_for_village",
+        "source": "destination",
+        "destinations": [
+          "village_approach"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forest_exit",
+        "action": "return_inn_after_forest",
+        "source": "destination",
+        "destinations": [
+          "castle_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "forest_exit",
+        "action": "exit_back",
+        "source": "destination",
+        "destinations": [
+          "forest_wolves"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort",
+        "action": "fight_fort_first_guard",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort",
+        "action": "fort_first_bypass",
+        "source": "action",
+        "destinations": [
+          "goblin_fort_first_second"
+        ],
+        "risk": "1d20+dex判定（DC13）"
+      },
+      {
+        "location": "goblin_fort",
+        "action": "leave_goblin_fort",
+        "source": "destination",
+        "destinations": [
+          "lost_goblin_crossroads"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_first_second",
+        "action": "fight_fort_second_guards",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_first_second",
+        "action": "fort_second_bypass",
+        "source": "action",
+        "destinations": [
+          "goblin_fort_second_choice"
+        ],
+        "risk": "1d20+dex判定（DC16）"
+      },
+      {
+        "location": "goblin_fort_second_choice",
+        "action": "explore_fort_right",
+        "source": "destination",
+        "destinations": [
+          "goblin_fort_second_right"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_second_choice",
+        "action": "explore_fort_left",
+        "source": "destination",
+        "destinations": [
+          "goblin_fort_second_left"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_second_right",
+        "action": "fight_hobgoblin",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_second_right",
+        "action": "bypass_hobgoblin",
+        "source": "action",
+        "destinations": [
+          "goblin_fort_third_gate"
+        ],
+        "risk": "1d20+dex判定（DC17）"
+      },
+      {
+        "location": "goblin_fort_healing_circle",
+        "action": "use_fort_healing_circle",
+        "source": "destination",
+        "destinations": [
+          "goblin_fort_third_gate"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "goblin_fort_third_gate",
+        "action": "give_correct_password",
+        "source": "destination",
+        "destinations": [
+          "goblin_fort_fourth"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_third_gate",
+        "action": "invent_goblin_password",
+        "source": "action",
+        "destinations": [
+          "goblin_fort_fourth",
+          "goblin_fort_third_guards"
+        ],
+        "risk": "1d20+int判定（DC18）"
+      },
+      {
+        "location": "goblin_fort_third_gate",
+        "action": "admit_no_password",
+        "source": "action",
+        "destinations": [
+          "goblin_fort_third_guards"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_chest_choice",
+        "action": "return_lost_goblin_box",
+        "source": "destination",
+        "destinations": [
+          "lost_goblin_crossroads"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_chest_choice",
+        "action": "steal_lost_goblin_box",
+        "source": "action",
+        "destinations": [
+          "goblin_fort_chest_fight"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "goblin_fort_chest_choice",
+        "action": "take_abandoned_goblin_box",
+        "source": "destination",
+        "destinations": [
+          "lost_goblin_crossroads"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "village_approach",
+        "action": "approach_burning_village_carefully",
+        "source": "action",
+        "destinations": [
+          "village_fire_elemental",
+          "village_fire_slime"
+        ],
+        "risk": "1d20+int判定（DC15）"
+      },
+      {
+        "location": "village_approach",
+        "action": "enter_burning_village_directly",
+        "source": "destination",
+        "destinations": [
+          "village_fire_elemental"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "village_approach",
+        "action": "escape_from_burning_village",
+        "source": "destination",
+        "destinations": [
+          "xanxus_confrontation"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "xanxus_confrontation",
+        "action": "bluff_xanxus",
+        "source": "action",
+        "destinations": [
+          "xanxus_battle"
+        ],
+        "risk": "危険"
+      },
+      {
+        "location": "xanxus_confrontation",
+        "action": "ambush_xanxus",
+        "source": "action",
+        "destinations": [
+          "xanxus_battle"
+        ],
+        "risk": "危険"
+      },
+      {
+        "location": "xanxus_confrontation",
+        "action": "flee_from_xanxus",
+        "source": "action",
+        "destinations": [
+          "xanxus_battle"
+        ],
+        "risk": "危険"
+      },
+      {
+        "location": "xanxus_ultimatum",
+        "action": "accept_xanxus_fire_seed",
+        "source": "destination",
+        "destinations": [
+          "village_frozen_clue"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "xanxus_ultimatum",
+        "action": "refuse_xanxus_with_rescue",
+        "source": "action",
+        "destinations": [
+          "warlock_rescue_battle"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "xanxus_ultimatum",
+        "action": "refuse_xanxus_without_rescue",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "investigate_frozen_village",
+        "source": "destination",
+        "destinations": [
+          "ice_elemental_encounter"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "skip_frozen_clue_after_xanxus",
+        "source": "destination",
+        "destinations": [
+          "valley_entrance"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "skip_frozen_clue_before_xanxus",
+        "source": "destination",
+        "destinations": [
+          "xanxus_confrontation"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "inspect_frost_core",
+        "source": "action",
+        "destinations": [],
+        "risk": "1d20+wis判定（DC12）"
+      },
+      {
+        "location": "village_frozen_clue",
+        "action": "visit_village",
+        "source": "destination",
+        "destinations": [
+          "village"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "fight_ice_elemental",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "ice_elemental_encounter",
+        "action": "bypass_ice_elemental",
+        "source": "action",
+        "destinations": [
+          "frost_wolf_battle"
+        ],
+        "risk": "1d20+int判定（DC14）"
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "accept_ian_request",
+        "source": "destination",
+        "destinations": [
+          "valley_entrance"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "refuse_ian_after_xanxus",
+        "source": "destination",
+        "destinations": [
+          "valley_entrance"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "refuse_ian_before_xanxus",
+        "source": "destination",
+        "destinations": [
+          "xanxus_confrontation"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ian_ice_katana_aftermath",
+        "action": "visit_village",
+        "source": "destination",
+        "destinations": [
+          "village"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_last_breath",
+        "action": "examine_ignis_wound",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_last_breath",
+        "action": "hear_ignis_last_words",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_last_breath",
+        "action": "return_to_castle_report",
+        "source": "destination",
+        "destinations": [
+          "royal_gate"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "castle_report",
+        "action": "report_with_evidence",
+        "source": "action",
+        "destinations": [
+          "draco_battle"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "castle_report",
+        "action": "report_normally",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_purified",
+        "action": "hear_ignis_testimony",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_purified",
+        "action": "receive_ignis_scale",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_purified",
+        "action": "ask_ignis_aid",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "ignis_purified",
+        "action": "return_to_castle_report",
+        "source": "destination",
+        "destinations": [
+          "royal_gate"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_seal",
+        "action": "decode_seal",
+        "source": "action",
+        "destinations": [
+          "cave_heat_corridor"
+        ],
+        "risk": "1d20+int判定（DC15）"
+      },
+      {
+        "location": "cave_seal",
+        "action": "pray_at_seal",
+        "source": "action",
+        "destinations": [
+          "cave_heat_corridor"
+        ],
+        "risk": "1d20+wis判定（DC14）"
+      },
+      {
+        "location": "cave_seal",
+        "action": "force_seal",
+        "source": "action",
+        "destinations": [
+          "cave_heat_corridor"
+        ],
+        "risk": "1d20+str判定（DC17）"
+      },
+      {
+        "location": "cave_seal",
+        "action": "pour_holy_water_on_seal",
+        "source": "destination",
+        "destinations": [
+          "cave_heat_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_seal",
+        "action": "enter_open_cave",
+        "source": "destination",
+        "destinations": [
+          "cave_heat_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_seal",
+        "action": "leave_seal",
+        "source": "destination",
+        "destinations": [
+          "elf_spring"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_heat_corridor",
+        "action": "fight_heat",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_heat_corridor",
+        "action": "sneak_heat",
+        "source": "action",
+        "destinations": [
+          "cave_fork"
+        ],
+        "risk": "1d20+dex判定（DC13）"
+      },
+      {
+        "location": "cave_heat_corridor",
+        "action": "pass_heat_corridor",
+        "source": "destination",
+        "destinations": [
+          "cave_fork"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_heat_corridor",
+        "action": "heat_back",
+        "source": "destination",
+        "destinations": [
+          "cave_seal"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_fork",
+        "action": "cave_left",
+        "source": "destination",
+        "destinations": [
+          "cave_lava_room"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_fork",
+        "action": "cave_right",
+        "source": "destination",
+        "destinations": [
+          "cave_hot_spring"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_fork",
+        "action": "fork_back",
+        "source": "destination",
+        "destinations": [
+          "cave_heat_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_lava_room",
+        "action": "open_lava_chest",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_lava_room",
+        "action": "lava_back",
+        "source": "destination",
+        "destinations": [
+          "cave_fork"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_lava_room",
+        "action": "lava_forward",
+        "source": "destination",
+        "destinations": [
+          "cave_crystal_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_hot_spring",
+        "action": "rest_hot_spring",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_hot_spring",
+        "action": "hot_spring_back",
+        "source": "destination",
+        "destinations": [
+          "cave_fork"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_hot_spring",
+        "action": "hot_spring_forward",
+        "source": "destination",
+        "destinations": [
+          "cave_crystal_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_hot_spring",
+        "action": "talk_mina",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_hot_spring",
+        "action": "escort_mina",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_hot_spring",
+        "action": "leave_mina_wait",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_crystal_corridor",
+        "action": "fight_crystal",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_crystal_corridor",
+        "action": "sneak_crystal",
+        "source": "action",
+        "destinations": [
+          "cave_prism_tree"
+        ],
+        "risk": "1d20+wis判定（DC15）"
+      },
+      {
+        "location": "cave_crystal_corridor",
+        "action": "pass_crystal_corridor",
+        "source": "destination",
+        "destinations": [
+          "cave_prism_tree"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "cave_crystal_corridor",
+        "action": "crystal_back",
+        "source": "destination",
+        "destinations": [
+          "cave_fork"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_prism_tree",
+        "action": "leave_prism_tree",
+        "source": "destination",
+        "destinations": [
+          "elf_spring"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "cave_prism_tree",
+        "action": "prism_back",
+        "source": "destination",
+        "destinations": [
+          "cave_crystal_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "burning_house",
+        "action": "break_burning_beam",
+        "source": "action",
+        "destinations": [
+          "village_frozen_clue"
+        ],
+        "risk": "1d20+str判定（DC13）"
+      },
+      {
+        "location": "burning_house",
+        "action": "climb_to_window",
+        "source": "action",
+        "destinations": [
+          "village_frozen_clue"
+        ],
+        "risk": "1d20+dex判定（DC13）"
+      },
+      {
+        "location": "burning_house",
+        "action": "douse_with_ice",
+        "source": "destination",
+        "destinations": [
+          "village_frozen_clue"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "burning_house",
+        "action": "leave_burning_house",
+        "source": "destination",
+        "destinations": [
+          "village_frozen_clue"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "fight_ash_wraiths",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "valley_entrance",
+        "action": "sneak_through_ash",
+        "source": "action",
+        "destinations": [
+          "valley_lava_bridge"
+        ],
+        "risk": "1d20+dex判定（DC14）"
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "cross_lava_bridge",
+        "source": "action",
+        "destinations": [
+          "valley_nest_gate"
+        ],
+        "risk": "1d20+dex判定（DC12）"
+      },
+      {
+        "location": "valley_lava_bridge",
+        "action": "take_ledge_path",
+        "source": "destination",
+        "destinations": [
+          "valley_ledge"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "valley_nest_gate",
+        "action": "enter_dragon_nest",
+        "source": "destination",
+        "destinations": [
+          "dragon_valley_loc"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "xanxus_at_nest",
+        "action": "obey_xanxus_core",
+        "source": "destination",
+        "destinations": [
+          "valley_nest_gate"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "xanxus_at_nest",
+        "action": "cleanse_fire_seed",
+        "source": "action",
+        "destinations": [
+          "xanxus_phantom_battle"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "xanxus_at_nest",
+        "action": "call_warlock",
+        "source": "destination",
+        "destinations": [
+          "valley_nest_gate"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "warlock_at_nest",
+        "action": "continue_after_warlock",
+        "source": "destination",
+        "destinations": [
+          "valley_nest_gate"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "royal_gate",
+        "action": "enter_festival_town",
+        "source": "destination",
+        "destinations": [
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_inn",
+        "source": "destination",
+        "destinations": [
+          "inn"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_item_shop",
+        "source": "destination",
+        "destinations": [
+          "item_shop"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_magic_shop",
+        "source": "destination",
+        "destinations": [
+          "magic_shop"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_forge",
+        "source": "destination",
+        "destinations": [
+          "forge"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_general_mansion",
+        "source": "destination",
+        "destinations": [
+          "mansion_garden"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "request_king_audience",
+        "source": "destination",
+        "destinations": [
+          "king_private_room"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "go_report_hall",
+        "source": "destination",
+        "destinations": [
+          "castle_report"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "festival_town",
+        "action": "open_gald_capital_shop",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "mansion_garden",
+        "action": "sneak_into_mansion",
+        "source": "action",
+        "destinations": [
+          "mansion_corridor"
+        ],
+        "risk": "1d20+dex判定（DC13）"
+      },
+      {
+        "location": "mansion_garden",
+        "action": "robin_picks_lock",
+        "source": "destination",
+        "destinations": [
+          "mansion_corridor"
+        ],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "mansion_garden",
+        "action": "leave_mansion",
+        "source": "destination",
+        "destinations": [
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "mansion_corridor",
+        "action": "fight_ice_sentinels",
+        "source": "action",
+        "destinations": [],
+        "risk": "危険（戦闘）"
+      },
+      {
+        "location": "mansion_corridor",
+        "action": "evade_ice_sentinels",
+        "source": "action",
+        "destinations": [
+          "mansion_study"
+        ],
+        "risk": "1d20+wis判定（DC15）"
+      },
+      {
+        "location": "mansion_corridor",
+        "action": "pass_cleared_sentinels",
+        "source": "destination",
+        "destinations": [
+          "mansion_study"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "mansion_study",
+        "action": "take_draco_journal",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "mansion_study",
+        "action": "open_scale_box",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "mansion_study",
+        "action": "leave_mansion_study",
+        "source": "destination",
+        "destinations": [
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      },
+      {
+        "location": "king_private_room",
+        "action": "confide_in_king",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "king_private_room",
+        "action": "ask_king_rest",
+        "source": "action",
+        "destinations": [],
+        "risk": "判定不要"
+      },
+      {
+        "location": "king_private_room",
+        "action": "leave_king_room",
+        "source": "destination",
+        "destinations": [
+          "festival_town"
+        ],
+        "risk": "判定不要"
+      }
+    ]
+  }
+}

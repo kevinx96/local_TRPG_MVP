@@ -1,0 +1,1452 @@
+{
+  "n": 300,
+  "seed": 20261018,
+  "workers": 4,
+  "rows": [
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "hero",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 286,
+      "success_rate": 0.9533333333333334,
+      "boss_arrivals": 287,
+      "boss_win_rate": 0.9965156794425087,
+      "mean_arrival_hp": 52,
+      "failures": {
+        "valley_entrance": 13,
+        "dragon_valley_loc": 1
+      },
+      "terminals": {
+        "victory": 286,
+        "defeat": 14
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9833333333333334,
+        "治療の巻物": 0.4266666666666667
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "hero",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 278,
+      "success_rate": 0.9266666666666666,
+      "boss_arrivals": 282,
+      "boss_win_rate": 0.9858156028368794,
+      "mean_arrival_hp": 46,
+      "failures": {
+        "valley_entrance": 18,
+        "dragon_valley_loc": 4
+      },
+      "terminals": {
+        "victory": 278,
+        "defeat": 22
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9166666666666667,
+        "治療の巻物": 0.49
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "hero",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 286,
+      "success_rate": 0.9533333333333334,
+      "boss_arrivals": 286,
+      "boss_win_rate": 1.0,
+      "mean_arrival_hp": 52,
+      "failures": {
+        "valley_entrance": 14
+      },
+      "terminals": {
+        "victory": 286,
+        "defeat": 14
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9766666666666666,
+        "治療の巻物": 0.6866666666666666
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "hero",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 281,
+      "success_rate": 0.9366666666666666,
+      "boss_arrivals": 284,
+      "boss_win_rate": 0.9894366197183099,
+      "mean_arrival_hp": 46,
+      "failures": {
+        "valley_entrance": 16,
+        "dragon_valley_loc": 3
+      },
+      "terminals": {
+        "victory": 281,
+        "defeat": 19
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9233333333333333,
+        "治療の巻物": 0.6066666666666667
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "hero",
+      "path": "gorge",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 289,
+      "success_rate": 0.9633333333333334,
+      "boss_arrivals": 290,
+      "boss_win_rate": 0.996551724137931,
+      "mean_arrival_hp": 49,
+      "failures": {
+        "dragon_valley_loc": 1,
+        "valley_entrance": 10
+      },
+      "terminals": {
+        "victory": 289,
+        "defeat": 11
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9333333333333333,
+        "治療の巻物": 0.4266666666666667
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "hero",
+      "path": "gorge",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 290,
+      "success_rate": 0.9666666666666667,
+      "boss_arrivals": 291,
+      "boss_win_rate": 0.9965635738831615,
+      "mean_arrival_hp": 49,
+      "failures": {
+        "valley_entrance": 9,
+        "dragon_valley_loc": 1
+      },
+      "terminals": {
+        "victory": 290,
+        "defeat": 10
+      },
+      "consumables_per_trial": {
+        "聖水": 1.94,
+        "治療の巻物": 0.5266666666666666
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "cleric",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 281,
+      "success_rate": 0.9366666666666666,
+      "boss_arrivals": 290,
+      "boss_win_rate": 0.9689655172413794,
+      "mean_arrival_hp": 50,
+      "failures": {
+        "valley_entrance": 10,
+        "dragon_valley_loc": 9
+      },
+      "terminals": {
+        "victory": 281,
+        "defeat": 19
+      },
+      "consumables_per_trial": {
+        "聖水": 1.97,
+        "治療の巻物": 1.0366666666666666
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "cleric",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 274,
+      "success_rate": 0.9133333333333333,
+      "boss_arrivals": 296,
+      "boss_win_rate": 0.9256756756756757,
+      "mean_arrival_hp": 44,
+      "failures": {
+        "dragon_valley_loc": 22,
+        "valley_entrance": 4
+      },
+      "terminals": {
+        "victory": 274,
+        "defeat": 26
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9866666666666666,
+        "治療の巻物": 0.8133333333333334
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "cleric",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 289,
+      "success_rate": 0.9633333333333334,
+      "boss_arrivals": 290,
+      "boss_win_rate": 0.996551724137931,
+      "mean_arrival_hp": 50,
+      "failures": {
+        "valley_entrance": 10,
+        "dragon_valley_loc": 1
+      },
+      "terminals": {
+        "victory": 289,
+        "defeat": 11
+      },
+      "consumables_per_trial": {
+        "聖水": 1.97,
+        "治療の巻物": 0.7566666666666667
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "cleric",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 291,
+      "success_rate": 0.97,
+      "boss_arrivals": 297,
+      "boss_win_rate": 0.9797979797979798,
+      "mean_arrival_hp": 44,
+      "failures": {
+        "dragon_valley_loc": 6,
+        "valley_entrance": 3
+      },
+      "terminals": {
+        "victory": 291,
+        "defeat": 9
+      },
+      "consumables_per_trial": {
+        "聖水": 1.99,
+        "治療の巻物": 0.68
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "cleric",
+      "path": "gorge",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 279,
+      "success_rate": 0.93,
+      "boss_arrivals": 290,
+      "boss_win_rate": 0.9620689655172414,
+      "mean_arrival_hp": 47,
+      "failures": {
+        "valley_entrance": 10,
+        "dragon_valley_loc": 11
+      },
+      "terminals": {
+        "victory": 279,
+        "defeat": 21
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9333333333333333,
+        "治療の巻物": 0.7733333333333333
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "cleric",
+      "path": "gorge",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 288,
+      "success_rate": 0.96,
+      "boss_arrivals": 290,
+      "boss_win_rate": 0.993103448275862,
+      "mean_arrival_hp": 47,
+      "failures": {
+        "valley_entrance": 10,
+        "dragon_valley_loc": 2
+      },
+      "terminals": {
+        "victory": 288,
+        "defeat": 12
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9333333333333333,
+        "治療の巻物": 0.5933333333333334
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "mage",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 279,
+      "success_rate": 0.93,
+      "boss_arrivals": 287,
+      "boss_win_rate": 0.9721254355400697,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 8,
+        "valley_entrance": 13
+      },
+      "terminals": {
+        "victory": 279,
+        "defeat": 21
+      },
+      "consumables_per_trial": {
+        "聖水": 1.31,
+        "治療の巻物": 0.3
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "mage",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 271,
+      "success_rate": 0.9033333333333333,
+      "boss_arrivals": 291,
+      "boss_win_rate": 0.9312714776632303,
+      "mean_arrival_hp": 30,
+      "failures": {
+        "dragon_valley_loc": 20,
+        "valley_entrance": 9
+      },
+      "terminals": {
+        "victory": 271,
+        "defeat": 29
+      },
+      "consumables_per_trial": {
+        "治療の巻物": 0.37333333333333335,
+        "聖水": 0.43333333333333335
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "mage",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 281,
+      "success_rate": 0.9366666666666666,
+      "boss_arrivals": 287,
+      "boss_win_rate": 0.9790940766550522,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 6,
+        "valley_entrance": 13
+      },
+      "terminals": {
+        "victory": 281,
+        "defeat": 19
+      },
+      "consumables_per_trial": {
+        "聖水": 1.31,
+        "治療の巻物": 0.19666666666666666
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "mage",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 275,
+      "success_rate": 0.9166666666666666,
+      "boss_arrivals": 291,
+      "boss_win_rate": 0.9450171821305842,
+      "mean_arrival_hp": 30,
+      "failures": {
+        "dragon_valley_loc": 16,
+        "valley_entrance": 9
+      },
+      "terminals": {
+        "victory": 275,
+        "defeat": 25
+      },
+      "consumables_per_trial": {
+        "聖水": 0.43666666666666665,
+        "治療の巻物": 0.2633333333333333
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "mage",
+      "path": "gorge",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 271,
+      "success_rate": 0.9033333333333333,
+      "boss_arrivals": 287,
+      "boss_win_rate": 0.9442508710801394,
+      "mean_arrival_hp": 33,
+      "failures": {
+        "valley_entrance": 13,
+        "dragon_valley_loc": 16
+      },
+      "terminals": {
+        "victory": 271,
+        "defeat": 29
+      },
+      "consumables_per_trial": {
+        "聖水": 0.17666666666666667,
+        "治療の巻物": 0.32666666666666666
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "mage",
+      "path": "gorge",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 277,
+      "success_rate": 0.9233333333333333,
+      "boss_arrivals": 287,
+      "boss_win_rate": 0.9651567944250871,
+      "mean_arrival_hp": 33,
+      "failures": {
+        "valley_entrance": 13,
+        "dragon_valley_loc": 10
+      },
+      "terminals": {
+        "victory": 277,
+        "defeat": 23
+      },
+      "consumables_per_trial": {
+        "聖水": 0.18,
+        "治療の巻物": 0.23
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 294,
+      "success_rate": 0.98,
+      "boss_arrivals": 298,
+      "boss_win_rate": 0.9865771812080537,
+      "mean_arrival_hp": 42,
+      "failures": {
+        "dragon_valley_loc": 4,
+        "valley_entrance": 2
+      },
+      "terminals": {
+        "victory": 294,
+        "defeat": 6
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9933333333333334,
+        "治療の巻物": 0.26
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 287,
+      "success_rate": 0.9566666666666667,
+      "boss_arrivals": 299,
+      "boss_win_rate": 0.959866220735786,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 12,
+        "valley_entrance": 1
+      },
+      "terminals": {
+        "victory": 287,
+        "defeat": 13
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9966666666666666,
+        "治療の巻物": 0.3333333333333333
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 294,
+      "success_rate": 0.98,
+      "boss_arrivals": 299,
+      "boss_win_rate": 0.9832775919732442,
+      "mean_arrival_hp": 42,
+      "failures": {
+        "dragon_valley_loc": 5,
+        "valley_entrance": 1
+      },
+      "terminals": {
+        "victory": 294,
+        "defeat": 6
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9966666666666666,
+        "治療の巻物": 0.18666666666666668
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 291,
+      "success_rate": 0.97,
+      "boss_arrivals": 299,
+      "boss_win_rate": 0.9732441471571907,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 8,
+        "valley_entrance": 1
+      },
+      "terminals": {
+        "victory": 291,
+        "defeat": 9
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9966666666666666,
+        "治療の巻物": 0.25666666666666665
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "thief",
+      "path": "gorge",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 293,
+      "success_rate": 0.9766666666666667,
+      "boss_arrivals": 298,
+      "boss_win_rate": 0.9832214765100671,
+      "mean_arrival_hp": 39,
+      "failures": {
+        "dragon_valley_loc": 5,
+        "valley_entrance": 2
+      },
+      "terminals": {
+        "victory": 293,
+        "defeat": 7
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9866666666666666,
+        "治療の巻物": 0.27666666666666667
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 3
+      },
+      "character": "thief",
+      "path": "gorge",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 294,
+      "success_rate": 0.98,
+      "boss_arrivals": 298,
+      "boss_win_rate": 0.9865771812080537,
+      "mean_arrival_hp": 39,
+      "failures": {
+        "dragon_valley_loc": 4,
+        "valley_entrance": 2
+      },
+      "terminals": {
+        "victory": 294,
+        "defeat": 6
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9866666666666666,
+        "治療の巻物": 0.22
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "hero",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 286,
+      "success_rate": 0.9533333333333334,
+      "boss_arrivals": 287,
+      "boss_win_rate": 0.9965156794425087,
+      "mean_arrival_hp": 52,
+      "failures": {
+        "valley_entrance": 13,
+        "dragon_valley_loc": 1
+      },
+      "terminals": {
+        "victory": 286,
+        "defeat": 14
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9833333333333334,
+        "治療の巻物": 0.48333333333333334
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "hero",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 276,
+      "success_rate": 0.92,
+      "boss_arrivals": 282,
+      "boss_win_rate": 0.9787234042553191,
+      "mean_arrival_hp": 46,
+      "failures": {
+        "valley_entrance": 18,
+        "dragon_valley_loc": 6
+      },
+      "terminals": {
+        "victory": 276,
+        "defeat": 24
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9166666666666667,
+        "治療の巻物": 0.5
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "hero",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 286,
+      "success_rate": 0.9533333333333334,
+      "boss_arrivals": 286,
+      "boss_win_rate": 1.0,
+      "mean_arrival_hp": 52,
+      "failures": {
+        "valley_entrance": 14
+      },
+      "terminals": {
+        "victory": 286,
+        "defeat": 14
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9766666666666666,
+        "治療の巻物": 0.7566666666666667
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "hero",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 282,
+      "success_rate": 0.94,
+      "boss_arrivals": 284,
+      "boss_win_rate": 0.9929577464788732,
+      "mean_arrival_hp": 46,
+      "failures": {
+        "valley_entrance": 16,
+        "dragon_valley_loc": 2
+      },
+      "terminals": {
+        "victory": 282,
+        "defeat": 18
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9233333333333333,
+        "治療の巻物": 0.6566666666666666
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "hero",
+      "path": "gorge",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 288,
+      "success_rate": 0.96,
+      "boss_arrivals": 290,
+      "boss_win_rate": 0.993103448275862,
+      "mean_arrival_hp": 49,
+      "failures": {
+        "valley_entrance": 10,
+        "dragon_valley_loc": 2
+      },
+      "terminals": {
+        "victory": 288,
+        "defeat": 12
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9333333333333333,
+        "治療の巻物": 0.43666666666666665
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "hero",
+      "path": "gorge",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 288,
+      "success_rate": 0.96,
+      "boss_arrivals": 291,
+      "boss_win_rate": 0.9896907216494846,
+      "mean_arrival_hp": 49,
+      "failures": {
+        "valley_entrance": 9,
+        "dragon_valley_loc": 3
+      },
+      "terminals": {
+        "victory": 288,
+        "defeat": 12
+      },
+      "consumables_per_trial": {
+        "聖水": 1.94,
+        "治療の巻物": 0.6633333333333333
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "cleric",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 279,
+      "success_rate": 0.93,
+      "boss_arrivals": 290,
+      "boss_win_rate": 0.9620689655172414,
+      "mean_arrival_hp": 50,
+      "failures": {
+        "dragon_valley_loc": 11,
+        "valley_entrance": 10
+      },
+      "terminals": {
+        "victory": 279,
+        "defeat": 21
+      },
+      "consumables_per_trial": {
+        "聖水": 1.97,
+        "治療の巻物": 1.1133333333333333
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "cleric",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 282,
+      "success_rate": 0.94,
+      "boss_arrivals": 296,
+      "boss_win_rate": 0.9527027027027027,
+      "mean_arrival_hp": 44,
+      "failures": {
+        "dragon_valley_loc": 14,
+        "valley_entrance": 4
+      },
+      "terminals": {
+        "victory": 282,
+        "defeat": 18
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9866666666666666,
+        "治療の巻物": 0.9333333333333333
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "cleric",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 288,
+      "success_rate": 0.96,
+      "boss_arrivals": 290,
+      "boss_win_rate": 0.993103448275862,
+      "mean_arrival_hp": 50,
+      "failures": {
+        "valley_entrance": 10,
+        "dragon_valley_loc": 2
+      },
+      "terminals": {
+        "victory": 288,
+        "defeat": 12
+      },
+      "consumables_per_trial": {
+        "聖水": 1.97,
+        "治療の巻物": 0.7666666666666667
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "cleric",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 290,
+      "success_rate": 0.9666666666666667,
+      "boss_arrivals": 297,
+      "boss_win_rate": 0.9764309764309764,
+      "mean_arrival_hp": 44,
+      "failures": {
+        "dragon_valley_loc": 7,
+        "valley_entrance": 3
+      },
+      "terminals": {
+        "victory": 290,
+        "defeat": 10
+      },
+      "consumables_per_trial": {
+        "聖水": 1.99,
+        "治療の巻物": 0.7
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "cleric",
+      "path": "gorge",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 279,
+      "success_rate": 0.93,
+      "boss_arrivals": 290,
+      "boss_win_rate": 0.9620689655172414,
+      "mean_arrival_hp": 47,
+      "failures": {
+        "valley_entrance": 10,
+        "dragon_valley_loc": 11
+      },
+      "terminals": {
+        "victory": 279,
+        "defeat": 21
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9333333333333333,
+        "治療の巻物": 0.8733333333333333
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "cleric",
+      "path": "gorge",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 287,
+      "success_rate": 0.9566666666666667,
+      "boss_arrivals": 290,
+      "boss_win_rate": 0.9896551724137931,
+      "mean_arrival_hp": 47,
+      "failures": {
+        "valley_entrance": 10,
+        "dragon_valley_loc": 3
+      },
+      "terminals": {
+        "victory": 287,
+        "defeat": 13
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9333333333333333,
+        "治療の巻物": 0.6366666666666667
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "mage",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 274,
+      "success_rate": 0.9133333333333333,
+      "boss_arrivals": 287,
+      "boss_win_rate": 0.9547038327526133,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 13,
+        "valley_entrance": 13
+      },
+      "terminals": {
+        "victory": 274,
+        "defeat": 26
+      },
+      "consumables_per_trial": {
+        "聖水": 1.31,
+        "治療の巻物": 0.34
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "mage",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 259,
+      "success_rate": 0.8633333333333333,
+      "boss_arrivals": 291,
+      "boss_win_rate": 0.8900343642611683,
+      "mean_arrival_hp": 30,
+      "failures": {
+        "dragon_valley_loc": 32,
+        "valley_entrance": 9
+      },
+      "terminals": {
+        "victory": 259,
+        "defeat": 41
+      },
+      "consumables_per_trial": {
+        "治療の巻物": 0.39666666666666667,
+        "聖水": 0.43333333333333335
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "mage",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 282,
+      "success_rate": 0.94,
+      "boss_arrivals": 287,
+      "boss_win_rate": 0.9825783972125436,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "valley_entrance": 13,
+        "dragon_valley_loc": 5
+      },
+      "terminals": {
+        "victory": 282,
+        "defeat": 18
+      },
+      "consumables_per_trial": {
+        "聖水": 1.3133333333333332,
+        "治療の巻物": 0.26
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "mage",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 276,
+      "success_rate": 0.92,
+      "boss_arrivals": 291,
+      "boss_win_rate": 0.9484536082474226,
+      "mean_arrival_hp": 30,
+      "failures": {
+        "dragon_valley_loc": 15,
+        "valley_entrance": 9
+      },
+      "terminals": {
+        "victory": 276,
+        "defeat": 24
+      },
+      "consumables_per_trial": {
+        "聖水": 0.43333333333333335,
+        "治療の巻物": 0.29
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "mage",
+      "path": "gorge",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 263,
+      "success_rate": 0.8766666666666667,
+      "boss_arrivals": 287,
+      "boss_win_rate": 0.9163763066202091,
+      "mean_arrival_hp": 33,
+      "failures": {
+        "valley_entrance": 13,
+        "dragon_valley_loc": 24
+      },
+      "terminals": {
+        "victory": 263,
+        "defeat": 37
+      },
+      "consumables_per_trial": {
+        "聖水": 0.17666666666666667,
+        "治療の巻物": 0.3466666666666667
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "mage",
+      "path": "gorge",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 273,
+      "success_rate": 0.91,
+      "boss_arrivals": 287,
+      "boss_win_rate": 0.9512195121951219,
+      "mean_arrival_hp": 33,
+      "failures": {
+        "valley_entrance": 13,
+        "dragon_valley_loc": 14
+      },
+      "terminals": {
+        "victory": 273,
+        "defeat": 27
+      },
+      "consumables_per_trial": {
+        "聖水": 0.18,
+        "治療の巻物": 0.2733333333333333
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 294,
+      "success_rate": 0.98,
+      "boss_arrivals": 298,
+      "boss_win_rate": 0.9865771812080537,
+      "mean_arrival_hp": 42,
+      "failures": {
+        "dragon_valley_loc": 4,
+        "valley_entrance": 2
+      },
+      "terminals": {
+        "victory": 294,
+        "defeat": 6
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9933333333333334,
+        "治療の巻物": 0.25333333333333335
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 284,
+      "success_rate": 0.9466666666666667,
+      "boss_arrivals": 299,
+      "boss_win_rate": 0.9498327759197325,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 15,
+        "valley_entrance": 1
+      },
+      "terminals": {
+        "defeat": 16,
+        "victory": 284
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9966666666666666,
+        "治療の巻物": 0.35
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 298,
+      "success_rate": 0.9933333333333333,
+      "boss_arrivals": 299,
+      "boss_win_rate": 0.9966555183946488,
+      "mean_arrival_hp": 42,
+      "failures": {
+        "dragon_valley_loc": 1,
+        "valley_entrance": 1
+      },
+      "terminals": {
+        "victory": 298,
+        "defeat": 2
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9966666666666666,
+        "治療の巻物": 0.21666666666666667
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": true,
+      "cursed": true,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 295,
+      "success_rate": 0.9833333333333333,
+      "boss_arrivals": 299,
+      "boss_win_rate": 0.9866220735785953,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 4,
+        "valley_entrance": 1
+      },
+      "terminals": {
+        "victory": 295,
+        "defeat": 5
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9966666666666666,
+        "治療の巻物": 0.31666666666666665
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "thief",
+      "path": "gorge",
+      "prepared": false,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 295,
+      "success_rate": 0.9833333333333333,
+      "boss_arrivals": 298,
+      "boss_win_rate": 0.9899328859060402,
+      "mean_arrival_hp": 39,
+      "failures": {
+        "dragon_valley_loc": 3,
+        "valley_entrance": 2
+      },
+      "terminals": {
+        "victory": 295,
+        "defeat": 5
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9866666666666666,
+        "治療の巻物": 0.30333333333333334
+      }
+    },
+    {
+      "variant": {
+        "companion": "hydromancer_elio",
+        "damage": "2d6",
+        "period": 4
+      },
+      "character": "thief",
+      "path": "gorge",
+      "prepared": true,
+      "cursed": false,
+      "companion": "hydromancer_elio",
+      "n": 300,
+      "wins": 296,
+      "success_rate": 0.9866666666666667,
+      "boss_arrivals": 298,
+      "boss_win_rate": 0.9932885906040269,
+      "mean_arrival_hp": 39,
+      "failures": {
+        "dragon_valley_loc": 2,
+        "valley_entrance": 2
+      },
+      "terminals": {
+        "victory": 296,
+        "defeat": 4
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9866666666666666,
+        "治療の巻物": 0.23
+      }
+    }
+  ],
+  "fingerprints": {
+    "scripts\\balance\\ch3_tuning.py": "cd247c0af7be24a56ade9b3e0769978062331cafc70865955d0a7773e9a68d56",
+    "scripts\\balance\\ch3_routes.py": "5f147b20b48c11fa2b09e0d3a171d732008db446f62e2363ad1b7250d90dcdc8",
+    "host\\prompt\\processed\\dragon_rpg.json": "37997464c144ed78a300cb6c97c113fd33161ba71b6f7d2c1805bd04f44e75a0",
+    "host\\state.py": "d17e6f9b26e2ca0f8889d55c0698b39dd22dcb755c9abf1bad4f4329d7b091f0"
+  },
+  "pairs": []
+}

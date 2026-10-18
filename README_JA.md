@@ -1,325 +1,193 @@
-# Local LLM TRPG
-
-APIをGMに使う日本語TRPGクライアントです。FastAPIのHostがゲーム状態、セーブ、ダイスを管理し、ブラウザはビジュアルノベル風UIを提供します。ローカルLLMは、より良い機材とモデルを評価できるまで休止します。
-
-> **Python**: 3.9以上必須。FastAPI/Pydanticで動作確認済み。arm64環境では、ネイティブarm64のPython/Conda環境を推奨します。
+# 紅き邪竜イグニス — AI GM TRPG
 
 📖 **言語**: [English](README.md) · [日本語](#) · [中文](README_ZH.md)
+
+ビジュアルノベル風のブラウザ画面で遊ぶ、一人用の日本語TRPGです。LLM（Gemini）がGMを務めますが、結果を決めることはありません。プレイヤーの自由入力を決められた形式の「行動案」に解釈するだけで、HP・アイテム・フラグ・位置・ダイス・戦闘・報酬といった数値はすべて決定的なゲームエンジンが管理します。
+
+研究用の実験環境も兼ねています。裁定をエンジンに任せたとき、少ないプロンプトでLLMをどこまで正確かつ安全にGMとして働かせられるか、がテーマです。[論文草稿](docs/research/paper-draft.md)（中国語）を参照してください。
+
+> **Python** 3.9以上。ゲーム内のテキストはすべて日本語です。
 
 ---
 
 ## 目次
 
-- [セットアップ](#セットアップ)
-- [LLM設定](#llm設定)
-- [リモートOllama](#リモートollama)
-- [シナリオ形式](#シナリオ形式)
-- [シナリオエディタ](#シナリオエディタ)
-- [ゲーム機能](#ゲーム機能)
-  - [キャラクター](#キャラクター)
-  - [属性と判定](#属性と判定)
-  - [スキル](#スキル)
-  - [敵と戦闘](#敵と戦闘)
-- [シナリオ変換](#シナリオ変換)
+- [特徴](#特徴)
+- [はじめかた](#はじめかた)
+- [設定](#設定)
+- [ゲームの内容](#ゲームの内容)
+- [構成](#構成)
+- [研究と評価](#研究と評価)
+- [開発](#開発)
 - [API概要](#api概要)
-- [テスト](#テスト)
 - [ライセンス](#ライセンス)
 
 ---
 
-## セットアップ
+## 特徴
+
+- **エンジン裁定型のGM**：モデルが埋める行動案のフィールドには、エンジンが列挙したIDしか入りません。エンジンはセッションの複製の上で裁定し、正当な結果だけを反映します。どの実験でも不正な状態変化（S4）は0件です。
+- **思い込みではなく測定で**：審査済みの日本語意図ベンチマーク486件、凍結シナリオとキャッシュ再生による評価。凍結testでは、Gemini 3.1 Flash-Liteの許容プラン率97.3%、有害な誤発動率0.68%。
+- **モデルなしでも遊べる**：裁定が決定的なので、ゲーム全体をオフラインで通しプレイできます。自動探索による32局の通しプレイを、ソフトロック・状態の矛盾・テキスト漏れの回帰テストとして使っています。
+- **一本の冒険として完結**：4職業、5章構成、城塞都市、属性と対策の仲間がそれぞれ異なる3本の第3章ルート、6人の仲間、エピローグ付きの複数エンディング。
+
+## はじめかた
+
+### ソースから
 
 ```powershell
 python -m pip install -r requirements.txt
 python -m host.run_server
 ```
 
-ブラウザが自動で `http://127.0.0.1:8000/` を開きます。自動起動を止めるには：
+ブラウザで `http://127.0.0.1:8000/` が開きます。開かない場合は `--no-browser`、別ポートは `--port 8010`、開発中は `--reload`。シナリオエディタは `/editor` です。
+
+### Windows用exe
+
+ローカルでビルドします。APIキーは同梱されず、同梱モジュールをすべて展開して確認する監査が走ります。
 
 ```powershell
-python -m host.run_server --no-browser
+python -m scripts.build_exe                     # dist/LocalTRPG/LocalTRPG.exe と zip
+python -m scripts.build_exe --with-local-config # 自分の host/local_config.json も同梱（個人利用のみ）
 ```
 
-開発時のホットリロード：
+### 配布用デモ版
+
+キーなしで他人に渡すには、[`workers/gemini-proxy`](workers/gemini-proxy/README.md) のCloudflare Workerを先にデプロイします（キーを預かり、このゲームのリクエストだけを通し、IPごと・1日ごとの上限で費用を抑えます）。
 
 ```powershell
-python -m host.run_server --reload
+$env:DEMO_TOKEN = "<Workerのデモトークン>"
+python -m scripts.build_exe --demo-endpoint https://<your-worker>.workers.dev
 ```
 
-セッション作成時、GMが自動でオープニングシーンを生成します。プレイヤーはGMのナレーションに続けて最初の行動を入力します。GM応答は生成完了後に全文表示されます。
+## 設定
 
-## LLM設定
-
-デフォルトは Gemini 3.1 Flash-Lite です。APIキーは環境変数 `GEMINI_API_KEY` または既存のローカル鍵ファイルに保存し、個人設定は Git 管理外の `host/local_config.json` に記述します。Ollama / Koboldcpp の設定は保持しますが、ゲーム設定では非表示です。通常は最大2モデル（主モデル失敗時に1つ目のフォールバック）を試行し、接続・読み取りタイムアウトは各15秒です。自由入力の意図解釈は常に1回のみです。
-
-自由入力はAPIで一度解釈し、結果はエンジンが確定します。森の入口では餌による誘導、潜行、準備が可能です。更新済みシナリオを遊ぶには新規ゲームを開始してください。[実装と検証の説明（中国語）](docs/api-free-actions.md)。
+既定のモデルはGemini 3.1 Flash-Liteです。個人設定は `host/local_config.json` に書きます（gitの管理外。配布版では `LocalTRPG.exe` と同じフォルダ）。キーは絶対にコミットしないでください。
 
 ```json
 {
   "active_backend": "gemini",
   "backends": {
     "gemini": {
-      "type": "gemini",
-      "base_url": "https://generativelanguage.googleapis.com/v1beta",
       "model": "gemini-3.1-flash-lite",
       "fallback_models": ["gemini-3.5-flash-lite", "gemini-3.6-flash"],
-      "api_key": ""
-    }
-  },
-  "request_timeout_seconds": 15,
-  "max_model_attempts": 2,
-  "response_format": "json_object"
-}
-```
-
-### プロンプトパラメータ
-
-| パラメータ | デフォルト | 説明 |
-|-----------|---------|------|
-| `history_messages` | 4 | LLMに送信する直近メッセージ数 |
-| `memory_max_chars` | 1200 | 会話要約の最大文字数 |
-| `action_history_max` | 40 | プレイヤー行動履歴の最大エントリ数 |
-| `action_history_item_chars` | 80 | 行動履歴1エントリの最大文字数 |
-
-## リモートOllama
-
-以下は保存用のローカル推論の資料です。現在は既定で無効です。再開する場合は個人設定で `archived_backends: []` と使用するローカルバックエンドを指定してください。
-
-低スペックのノートPCでは、ゲームのホスト/クライアントは手元で動かし、LLM呼び出しのみメインPCに向けます。マシン固有の設定は `host/config.json` を直接編集せず、`host/local_config.json` を作成してください。これはgit管理外で、端末固有のURL、トークン、モデル名を書く場所です。
-
-```json
-{
-  "backends": {
-    "ollama": {
-      "base_url": "https://ollama.your-domain.com/v1",
-      "model": "qwen3-swallow-8b-rl-local",
-      "fallback_models": [
-        "qwen2.5-7b-instruct-local",
-        "elyza-jp-8b-local"
-      ],
-      "api_key": "ollama"
+      "api_key": "YOUR_KEY"
     }
   }
 }
 ```
 
-ファイルを編集せず、環境変数で上書きすることもできます：
+環境変数での上書き：`GEMINI_API_KEY`、`TRPG_LLM_BASE_URL`、`TRPG_LLM_MODEL`、`TRPG_LLM_API_KEY`、`TRPG_ACTIVE_BACKEND`、`TRPG_LOCAL_CONFIG`。
 
-```powershell
-$env:TRPG_OLLAMA_BASE_URL = "https://ollama.your-domain.com"
-$env:TRPG_OLLAMA_MODEL = "qwen3-swallow-8b-rl-local"
-python -m host.run_server
-```
+- 通常のプレイは主モデルと予備モデル1つを、それぞれ15秒のタイムアウトで試します。自由行動の解釈は1回だけです。
+- モデルに接続できなくてもゲームは続きます。選択肢と戦闘はエンジンが裁定し、用意された描写はそのまま表示され、それ以外は一行の正直な通知になります。
+- Ollamaによるローカルモデルは研究の比較用にだけ残しており、ゲームの設定画面には出ません。
 
-### リモート設定手順
-
-1. メインPCで、Cloudflare Tunnelのローカル転送先として使う場合は `OLLAMA_HOST=127.0.0.1:11434`、TailscaleなどのプライベートVPNで使う場合は `OLLAMA_HOST=0.0.0.0:11434` を設定します。
-2. CloudflareドメインからメインPCの `http://127.0.0.1:11434` へ向けるCloudflare Tunnelを作成します。
-3. Cloudflare Accessまたはサービストークンで保護します。アクセス制御なしでOllamaを公開しないでください。
-4. 低スペック側のPCでは `host/local_config.json` または `TRPG_OLLAMA_BASE_URL` をCloudflare TunnelのURLに設定します。
-
-空の `403` レスポンスが返る場合、Ollamaが公開ドメインの `Host` ヘッダーを拒否しています。Cloudflareの `HTTP Host Header` を `localhost:11434` に設定するか、同梱のプロキシを起動：
-
-```powershell
-python -m host.ollama_tunnel_proxy
-```
-
-その後、Cloudflare TunnelのサービスURLを以下に変更してください：
-
-```text
-http://localhost:11435
-```
-
-公開側のゲームクライアントは引き続き `https://ollama.your-domain.com/v1` を使用します。変更するのはCloudflareのorigin service URLだけです。
-
-### GGUFモデルの登録
-
-```powershell
-python -m host.setup_ollama_models
-ollama list
-```
-
-`model not found` が表示された場合は、まずGGUFモデルを登録するか、`ollama list` の出力に合わせて設定内の `model` / `fallback_models` を更新してください。
-
-### デバッグログ
-
-デフォルトで有効（`"debug_llm": true`）。`[TRPG-DEBUG]` プレフィックス付きで表示されます。APIキーはログに出力されません。
-
----
-
-## シナリオ形式
-
-シナリオは [`scenario_pack.schema.json`](host/prompt/processed/scenario_pack.schema.json) で定義された **Scenario Pack** JSON形式を使用します。
-
-```
-meta              → title, summary, language, initial_scene
-rules[]           → GM行動ルール
-scenes[]          → id, title, description, goals, keywords, location_ids, next_scene_ids, fallback_choices
-locations[]       → id, title, description, keywords, npc_ids, item_ids, clue_ids, enemy_ids
-npcs[]            → id, name, description, keywords
-items[]           → id, name, description, effect, keywords
-clues[]           → id, title, description, keywords
-enemies[]         → id, name, description, image, hp/max_hp, mp/max_mp, sp/max_sp, attributes, skills[]
-attribute_defs[]  → id, name, initial_value
-characters[]      → id, name, default_name, description, image, image_female, hp/max_hp, mp/max_mp, sp/max_sp, gold, attributes{}, inventory[], equipment[], skills[]
-combat_choices[]  → 戦闘時の行動選択肢
-fallback_choices[]→ グローバルなデフォルト選択肢
-```
-
-エンティティ（NPC、アイテム、手がかり、敵）は **地点（Locations）** に紐付けられます。各地点は `npc_ids`、`item_ids`、`clue_ids`、`enemy_ids` で存在するエンティティを宣言します。シーンは `location_ids` で地点を参照し、`next_scene_ids` で遷移可能なシーンを示します。
-
-完全な例は [`dragon_rpg.json`](host/prompt/processed/dragon_rpg.json) を参照してください。
-
----
-
-## シナリオエディタ
-
-`http://127.0.0.1:8000/editor` でビジュアルエディタにアクセスできます。全フィールドをUIから編集可能：
-
-| セクション | 内容 |
-|---------|------|
-| 基本情報 | タイトル、言語、概要、初期シーン |
-| ルール | GM行動ルール |
-| シーン | シーン定義、目標、地点紐付け、遷移先 |
-| Hybrid | Semiモード用の事前準備GMターン（下書き、ダイス、選択肢、修正指示） |
-| 地点 | NPC・アイテム・手がかり・敵が紐付いた地点 |
-| NPC | ノンプレイヤーキャラクター定義 |
-| 道具 | 効果付きアイテム |
-| 手がかり | 物語の手がかり |
-| 敵 | 敵のステータス、属性、スキル |
-| 属性定義 | カスタム属性定義（筋力、敏捷など） |
-| キャラクター | プレイアブルキャラクター（HP/MP/SP、属性、所持品、装備、スキル） |
-| グローバル選択肢 | デフォルト選択肢 |
-| 戦闘選択肢 | 戦闘時の行動選択肢 |
-| JSON | 生JSON編集（上級者向け） |
-
----
-
-## ゲーム機能
+## ゲームの内容
 
 ### キャラクター
 
-プレイヤーはゲーム開始前にシナリオのキャラクター一覧から選択します。各キャラクターは以下を定義：
+| 職業 | HP / MP | 特徴 |
+|---|---|---|
+| 勇者 | 20 / 8 | バランス型。鍛冶屋で氷鉄の大剣を打ってもらえる |
+| 僧侶 | 18 / 14 | 回復と聖なる魔法 |
+| 魔法使い | 12 / 20 | 攻撃魔法 |
+| 盗賊 | 14 / 6 | 潜行判定と素早さ |
 
-- **基本ステータス**: HP、MP、SP（最大値付き）
-- **初期ゴールド**と**所持品**（名前、説明、効果、数量）
-- **装備**（装備中のアイテム名）
-- **属性**（後述）
-- **スキル**（後述）
+### 物語の構成
 
-`dragon_rpg.json` のキャラクター例：勇者（バランス型）、僧侶（回復役）、魔法使い（攻撃魔法）、盗賊（敏捷型）。
-
-### 属性と判定
-
-属性はシナリオごとにカスタム定義されます。`dragon_rpg` の例：
-
-| ID | 名前 | 説明 |
-|----|------|------|
-| `str` | 筋力 | 物理的な力 |
-| `dex` | 敏捷 | 素早さと器用さ |
-| `int` | 知力 | 魔法と知識 |
-| `wis` | 感知 | 知覚と洞察 |
-| `con` | 耐久 | 持久力とタフさ |
-
-**属性判定**: GMは `dice_type` に属性修飾子を付加できます（例: `"1d20+str"`）。キャラクターの属性値が自動でd20ロールに加算されます。筋力8でDC10の場合、2+8=10で成功となります。
-
-**属性変化**: GMは `state_delta.attribute_changes` でゲーム中に属性値を変更できます：
-```json
-{ "attribute_changes": { "str": -2, "dex": +1 } }
+```
+王都 ─ 闇の森 ─┬─ 炎上する麓の村 ─────────────────────┐
+               ├─ 霧の古戦場 ─(村の裏手)──────────────┤
+               └─ 洞窟の水路 ─ 城塞都市オークスドーン ─┬─ 霧の古戦場
+                                                      └─ 地鳴りの峡谷 ─(避難所の裏手)─┘
+                                                                    └→ 竜の谷 → 王都に凱旋
 ```
 
-### スキル
+| 第3章のルート | 属性 | 対策の仲間 |
+|---|---|---|
+| 麓の村 | 火＋氷 | 火コウモリ竜／ミーナ |
+| 霧の古戦場 | 不死（光に弱い） | 聖騎士リーゼ |
+| 地鳴りの峡谷 | 土（物理に強く、水に弱い） | 水術士エリオ |
 
-キャラクターと敵は以下の要素を持つスキルを持てます：
-- **名前**、**説明**、**効果**（ナラティブ説明）
-- **dice_type**（オプション、例: `"1d20+int"` で魔法系スキル）
-- **コスト**と**コストタイプ**（`"mp"` または `"sp"`）
+寄り道のルートは最終的に麓の村へ合流するので、主要な出来事を見逃すことはありません。十分な証拠を集めて将軍ドラコの正体を暴けば、真のエンディングへ。ルート・手がかり・最終決戦の助力をまとめた[攻略メモ](docs/design/walkthrough-2026-10-18.md)（中国語、ネタバレあり）もあります。
 
-例：僧侶の「治癒の祈り」 — `dice_type: "1d6+int"`, `cost: 4 MP`、HPを回復。
+### システム
 
-### 敵と戦闘
+- **選択肢と自由入力**：選択肢を選ぶか、好きな行動を書き込みます。選択肢には危険度が表示されます。まだ見たこともない何かが必要な選択肢は「？？？」と表示され、その文面はブラウザにも送られません。
+- **ターン制戦闘**：エンジンがすべて裁定します。アニメーションとダメージ表示付きで、1行動の演出は1.4秒以内、スキップ可能です。
+- **装備部位**：武器・防具・補助を1つずつ。あとで手に入れた装備は、空いている部位に自動で装着されます。
+- **仲間**（同時に1人）：ロビン（HPが最も高い敵へ援護射撃）、ワーロック（2ラウンドごとに回復）、火コウモリ竜（火の攻撃と回復）、ミーナ（氷の魔法）、リーゼ（HPが半分を切ると回復、それ以外は不死を優先して光の一撃）、エリオ（水の刃と、被ダメージを半減する水の帳）。
+- **経済**：魔物は売れる戦利品を落とします。精鋭や任意のボスは能力を永続的に上げる霊薬・果実を落とし、潜行で横をすり抜けながら盗むこともできます。拠点ごとに収集の依頼があります。
+- **エリアのやり直し**：敗北したら、倒れたエリアの入口からやり直せます。
+- **地図、クエスト、商店、休息**、選択を反映した**エピローグ**。
 
-敵はシナリオ内で完全なステータス、属性、スキル付きで定義されます。`enemy_ids` で地点に紐付けられます。
+## 構成
 
-シーンの現在地点に敵が存在する場合、GMは自動で通常の探索選択肢ではなく**戦闘選択肢**（攻撃、スキル使用、防御、アイテム使用、逃走）に切り替えます。
+| パス | 内容 |
+|---|---|
+| `host/` | FastAPIサーバー、エンジン（`state.py`、`combat.py`、`free_actions.py`、`shops.py`、`maps.py`）、LLMクライアントとGM契約 |
+| `client/` | 素のJSによるビジュアルノベル風UI、戦闘演出、アイテムアイコン |
+| `host/prompt/processed/` | シナリオパック `dragon_rpg.json` と `dragon_rpg_hybrid.json`（常に両方を同時に編集）、スキーマ |
+| `scripts/scenario/` | 内容を作る冪等なシナリオ移行スクリプト |
+| `scripts/balance/`、`scripts/playtest/` | バランスシミュレーションとオフライン探索 |
+| `eval/` | ベンチマーク、候補、レポート |
+| `workers/gemini-proxy/` | デモ版用のCloudflare Workerキープロキシ |
 
-敵の例（`dragon_rpg.json`）:
-- **スライム**（HP 5, 筋力 4）— 闇の森のチュートリアル敵
-- **邪竜イグニス**（HP 30, 筋力 18, スキル: 炎の息、尻尾攻撃）
+**自由行動の流れ**：エンジンが簡潔な文脈（行動・障害物・対象・所持品・直近の変化）を組み立てる → 厳格なJSONスキーマで1回だけモデルを呼ぶ → 厳格に解析 → セッションの複製の上で裁定 → エンジンの結果から描写。モデルの出力が状態を直接書き換えることはありません。
 
----
+**GMモード**：*Semi*（既定）はhybridパックの用意されたターンを軽く書き直し、*Full*は場面の文脈からより自由に描写します。どちらでも結果はエンジンが決めます。
 
-## GMモード
+## 研究と評価
 
-| モード | 説明 |
-|------|------|
-| **Semi**（デフォルト） | LLMがGeminiで生成された事前準備ターンを受け取り、現在の状態に合わせて最小限の修正のみ行う。利用可能な場合は `*_hybrid.json` シナリオパックを使用し、現在ターンに下書きがない場合は通常のシーンコンテキストへ戻る。 |
-| **Full** | LLMがシーンコンテキスト（地点、NPC、アイテム、敵、手がかり）を受け取り、より自由にGM応答を生成。 |
-
-スタート画面の設定パネルからモードを選択できます。
-
----
-
-## ダイスシステム
-
-標準TRPGダイス記法（`1d20`、`2d6`、`1d100`）。ダイス結果は以下を含みます：
-
-- `rolls[]` — 個別の出目
-- `total` — 出目の合計 + 属性修飾子（あれば）
-- `base_total` / `attr_mod` / `attr_key` — 属性判定時に付加
-
-空またはnullの `dice_type` はデフォルトで `1d20` となります。
-
----
-
-## シナリオ変換
+- 論文草稿：[`docs/research/paper-draft.md`](docs/research/paper-draft.md)。プロンプトの変更とその測定結果：[`docs/design/prompt-log.md`](docs/design/prompt-log.md)。
+- ベンチマークv2：審査済み486件（dev 194／test 292、文型ファミリーで分割）、重大度S0–S4、凍結シナリオ `f41af9d` とキャッシュ再生。[`eval/benchmark/README.md`](eval/benchmark/README.md) を参照。
 
 ```powershell
-python -m host.scenario_converter "host\prompt\raw\your_scenario.docx"
+# キャッシュを再生するだけでAPI費用はかかりません。キャッシュにない分も呼ぶ場合は --live を付けます。
+python -m scripts.eval.run --suite intent --cases eval/benchmark/intent_v2.jsonl --backend gemini --model gemini-3.1-flash-lite --variant default --split test
 ```
 
-`.txt`、`.docx`、`.pdf`、`.doc`（`.doc`はWindows COMが必要）に対応。
+有料のAPI呼び出しは `--live` を明示したときだけ行われます。
 
-Gemini APIキーは環境変数 `GEMINI_API_KEY`、または `host/gemini_api_key.txt` / `host/gemini_api_key.py` / `host/auto_tagger.py` から読み取られます。これらのsecretファイルは `.gitignore` で除外されています。
+## 開発
 
----
+役割と共通ルールは [`AGENTS.md`](AGENTS.md) にあります。設計責任者（方針、プロンプト、物語の文面、美術の選定、受け入れ）と工程責任者（コード、テスト、評価、データ入力）の二役で、作業は `docs/specs/` の仕様書として書きます。
+
+コミット前に必ず：
+
+```powershell
+python -m unittest discover -s tests -q
+node --check client/app.js
+```
+
+便利なツール：
+
+```powershell
+python -m scripts.playtest.explore      # オフライン通しプレイの回帰テスト（LLMなし）
+python -m scripts.balance.checkpoints   # シナリオ編集後にバランスのチェックポイントを再生成
+python -m scripts.worker_fingerprints   # プロキシのプロンプト指紋が最新か確認
+```
+
+美術の候補と採用状況は `assets/manifest.json` で管理しています。
 
 ## API概要
 
 | エンドポイント | メソッド | 説明 |
-|----------|--------|------|
-| `/api/sessions` | POST | 新規ゲームセッション作成 |
-| `/api/sessions/{id}` | GET | セッション状態取得 |
-| `/api/sessions/{id}/turn` | POST | プレイヤー行動送信 |
-| `/api/scenarios` | GET/POST | シナリオ一覧/作成 |
-| `/api/scenarios/{filename}` | GET/PUT | シナリオ読込/保存 |
-| `/api/config` | GET/PUT | バックエンド設定読込/更新 |
-| `/api/ollama/shutdown` | POST | リモートシャットダウン（プロキシ経由） |
-
-### セッション作成
-
-```json
-{
-  "scenario_path": "host/prompt/processed/dragon_rpg.json",
-  "gm_mode": "semi",
-  "character_id": "hero",
-  "character": {
-    "name": "アルス",
-    "character_image": "/static/images/char_male_hero.png"
-  }
-}
-```
-
----
-
-## テスト
-
-```powershell
-python -m unittest discover -s tests
-```
-
----
+|---|---|---|
+| `/api/sessions` | POST | セッション作成（オープニングを生成） |
+| `/api/sessions/{id}` | GET | セッションの状態 |
+| `/api/sessions/{id}/turn` | POST | 選択肢または自由入力の行動 |
+| `/api/sessions/{id}/combat/actions` | POST | エンジンが裁定する戦闘行動1回 |
+| `/api/sessions/{id}/combat/resolve` | POST | 終わった戦闘を1回だけ描写 |
+| `/api/sessions/{id}/retry` | POST | 敗北後、エリアの入口からやり直す |
+| `/api/sessions/{id}/map/move` | POST | 地図のノードをクリックして移動 |
+| `/api/sessions/{id}/items/use` | POST | 背嚢のアイテムを使う・装備する |
+| `/api/sessions/{id}/shops/{shop}` | GET | 商店の品揃えと価格 |
+| `/api/sessions/{id}/shops/{shop}/buy` · `/sell` | POST | 売買 |
+| `/api/scenarios`、`/api/scenarios/{file}` | GET/POST/PUT | シナリオパックの一覧・作成・取得・更新 |
+| `/api/config` | GET/PUT | バックエンド設定 |
 
 ## ライセンス
 
-[LICENSE](LICENSE) を参照。
+[LICENSE](LICENSE) を参照してください。

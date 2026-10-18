@@ -79,7 +79,7 @@ class BalancePassTests(unittest.TestCase):
 
     def test_forest_branch_victory_and_round_trip(self):
         session = self.session()
-        for step in checkpoints.proposed_routes()["forest_wolves"] + ["@victory"]:
+        for step in ["go_castle_town"] + checkpoints.proposed_routes()["forest_wolves"] + ["@victory"]:
             checkpoints.replay_step(session, step)
         self.assertEqual(session["character"]["level"], 2)
         restored = json.loads(json.dumps(session))

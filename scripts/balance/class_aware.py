@@ -436,8 +436,7 @@ class Run:
     def act(self, action_id: str, *, settle: bool = True) -> None:
         from . import route
 
-        # The departure check only sets a flag on failure and may be retried freely.
-        forced = action_id == "go_dark_forest" or (self.dice == "forced" and action_id != "cross_lava_bridge")
+        forced = self.dice == "forced" and action_id != "cross_lava_bridge"
         act(self.session, action_id, self.rng, forced=forced)
         if settle:
             resolve(self.session, self.rng, self.policy, route.fight, self.battles)
@@ -576,6 +575,7 @@ class Run:
         if not errands:
             return
         self.act("return_inn_after_forest")
+        self.act("go_inn")
         self.rest_point()
         self.act("return_castle_from_inn")
         for steps in errands:
@@ -583,6 +583,7 @@ class Run:
                 self.act(step)
         self.act("go_inn")
         self.rest_point()
+        self.act("return_castle_from_inn")
         self.act("return_forest_exit")
 
     def result(self, failed_at: Optional[str]) -> dict[str, Any]:
@@ -594,7 +595,7 @@ class Run:
 
 def prelude_steps(cp: dict[str, Any], character: str, encounter: str = "dragon_valley_loc") -> list[str]:
     steps = [s["step"] for s in cp["encounters"][encounter]["characters"][character]["sources"]]
-    return steps[:steps.index("go_dark_forest:success")]
+    return steps[:next(i for i, step in enumerate(steps) if step.split(":")[0] == "go_dark_forest")]
 
 
 def trial(pack: dict[str, Any], cp: dict[str, Any], character: str, seed: int, **kwargs: Any) -> dict[str, Any]:

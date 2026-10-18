@@ -1,0 +1,108 @@
+[
+  {
+    "view": "inventory",
+    "width": 1440,
+    "height": 1080,
+    "ok": true,
+    "checks": [
+      "clicking icon expands inventory details",
+      "every row has an icon",
+      "128px PNGs display at 32px with decorative alt",
+      "item list has no horizontal overflow",
+      "no horizontal page overflow",
+      "notifications remain text only",
+      "missing optional icon keeps text row",
+      "failed image keeps item name",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "shop",
+    "width": 1440,
+    "height": 1080,
+    "ok": true,
+    "checks": [
+      "shop selection works with icon",
+      "sell rows include inline equipment icons",
+      "every row has an icon",
+      "128px PNGs display at 32px with decorative alt",
+      "item list has no horizontal overflow",
+      "no horizontal page overflow",
+      "notifications remain text only",
+      "missing optional icon keeps text row",
+      "failed image keeps item name",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "combat",
+    "width": 1440,
+    "height": 1080,
+    "ok": true,
+    "checks": [
+      "combat item tab opens",
+      "skills retain original appearance",
+      "every row has an icon",
+      "128px PNGs display at 32px with decorative alt",
+      "item list has no horizontal overflow",
+      "no horizontal page overflow",
+      "notifications remain text only",
+      "missing optional icon keeps text row",
+      "failed image keeps item name",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "inventory-mobile",
+    "width": 390,
+    "height": 844,
+    "ok": true,
+    "checks": [
+      "clicking icon expands inventory details",
+      "every row has an icon",
+      "128px PNGs display at 32px with decorative alt",
+      "item list has no horizontal overflow",
+      "no horizontal page overflow",
+      "notifications remain text only",
+      "missing optional icon keeps text row",
+      "failed image keeps item name",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "shop-mobile",
+    "width": 390,
+    "height": 844,
+    "ok": true,
+    "checks": [
+      "shop selection works with icon",
+      "sell rows include inline equipment icons",
+      "every row has an icon",
+      "128px PNGs display at 32px with decorative alt",
+      "item list has no horizontal overflow",
+      "no horizontal page overflow",
+      "notifications remain text only",
+      "missing optional icon keeps text row",
+      "failed image keeps item name",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "combat-mobile",
+    "width": 390,
+    "height": 844,
+    "ok": true,
+    "checks": [
+      "combat item tab opens",
+      "skills retain original appearance",
+      "every row has an icon",
+      "128px PNGs display at 32px with decorative alt",
+      "item list has no horizontal overflow",
+      "no horizontal page overflow",
+      "notifications remain text only",
+      "missing optional icon keeps text row",
+      "failed image keeps item name",
+      "no browser exceptions"
+    ]
+  }
+]

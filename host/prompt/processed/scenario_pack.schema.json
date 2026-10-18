@@ -248,6 +248,19 @@
                 }
               }
             }
+          },
+          "buy_categories": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "consumable",
+                "equipment",
+                "material",
+                "loot",
+                "key"
+              ]
+            }
           }
         }
       }
@@ -536,11 +549,19 @@
                   "consumable",
                   "equipment",
                   "material",
+                  "loot",
                   "key"
                 ]
               },
               "key_item": {
                 "type": "boolean"
+              },
+              "icon": {
+                "type": "string"
+              },
+              "sell_price": {
+                "type": "integer",
+                "minimum": 0
               }
             }
           }
@@ -630,6 +651,26 @@
           },
           "phase_transition_text": {
             "type": "string"
+          },
+          "loot": {
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "quantity"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
           }
         }
       }
@@ -1516,6 +1557,10 @@
                   "minimum": 0
                 }
               }
+            },
+            "item_quantity_gte": {
+              "type": "integer",
+              "minimum": 1
             }
           }
         }

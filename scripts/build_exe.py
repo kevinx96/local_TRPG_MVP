@@ -4,6 +4,8 @@ Usage:
     python -m scripts.build_exe                     # folder build: dist/LocalTRPG/LocalTRPG.exe + zip
     python -m scripts.build_exe --onefile           # single dist/LocalTRPG.exe
     python -m scripts.build_exe --with-local-config # also copy host/local_config.json next to the exe (personal use only)
+    python -m scripts.build_exe --demo-endpoint https://<worker>.workers.dev   # shareable demo via the key proxy
+                                                    # (token from --demo-token or DEMO_TOKEN; see workers/gemini-proxy)
 
 After building, the bundle is audited: every compressed module is unpacked and searched for the
 configured API key, and credential-holding modules must be absent. Any hit deletes the output.
@@ -106,17 +108,38 @@ def _try_inflate(data: bytes) -> bytes:
         return b""
 
 
+def write_demo_config(folder: Path, endpoint: str, token: str) -> None:
+    """Point the bundle at the key proxy; the demo token is shareable, the Gemini key never is."""
+    if not token:
+        raise SystemExit("--demo-endpoint needs --demo-token or the DEMO_TOKEN environment variable")
+    if token.encode() in _secrets():
+        raise SystemExit("the demo token matches a configured API key; use the proxy's own token")
+    base_url = endpoint.rstrip("/")
+    if not base_url.endswith("/v1beta"):
+        base_url += "/v1beta"
+    config = {"active_backend": "gemini", "backends": {"gemini": {"base_url": base_url, "api_key": token}}}
+    (folder / "local_config.json").write_text(json.dumps(config, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    shutil.copy2(ROOT / "packaging" / "README_DEMO.txt", folder / "README_RUN.txt")
+    print(f"[build] demo config points at {base_url}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--onefile", action="store_true")
     parser.add_argument("--with-local-config", action="store_true")
+    parser.add_argument("--demo-endpoint", help="key proxy URL; writes a shareable local_config.json next to the exe")
+    parser.add_argument("--demo-token", default=os.environ.get("DEMO_TOKEN", ""))
     args = parser.parse_args()
+    if args.demo_endpoint and args.with_local_config:
+        parser.error("--demo-endpoint and --with-local-config are mutually exclusive")
     output = build(args.onefile)
     folder = output if output.is_dir() else output.parent
     audit(output)
     for name in ("README_RUN.txt", "local_config.example.json"):
         shutil.copy2(ROOT / "packaging" / name, folder / name)
-    # The shareable zip is made before any personal config is copied, so it never contains a key.
+    if args.demo_endpoint:
+        write_demo_config(folder, args.demo_endpoint, args.demo_token)
+    # The shareable zip is made before any personal config is copied; a demo config holds only the proxy token.
     if output.is_dir():
         archive = shutil.make_archive(str(ROOT / "dist" / NAME), "zip", root_dir=output.parent, base_dir=output.name)
         print(f"[build] {output / (NAME + '.exe')}\n[build] {archive}")

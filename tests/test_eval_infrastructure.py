@@ -125,7 +125,7 @@ class InfrastructureTests(unittest.TestCase):
         attack = engine_result(self.session, valid_plan(kind="existing", action_id="attack_slime"), "スライムと戦う")
         self.assertTrue(attack["attack_or_combat"])
         castle = build_snapshot(recipes()[4])
-        movement = engine_result(castle, valid_plan(kind="existing", action_id="go_inn"), "宿屋へ向かう")
+        movement = engine_result(castle, valid_plan(kind="existing", action_id="go_castle_town"), "城下町へ出る")
         self.assertTrue(movement["changes"]["position"])
         self.assertEqual(castle["world_state"]["location_id"], "castle")
 
@@ -309,6 +309,15 @@ class InfrastructureTests(unittest.TestCase):
         self.assertEqual(record["outcome"], "rejected")
         self.assertEqual(record["call_type"], "plan")
         self.assertNotIn("api_key", json.dumps(record))
+
+    def test_transport_failure_tells_player_it_was_not_their_wording(self):
+        before = deepcopy(self.session["character"])
+        with isolated_engine(), patch.object(app, "load_config", return_value=self.config), \
+             patch.object(app, "chat_completion", side_effect=llm_client.LLMClientError("429 Too Many Requests")), \
+             patch.object(llm_trace, "append_trace"):
+            result = app._run_free_turn(self.session, app.TurnRequest(text="攻撃しない。"))
+        self.assertEqual(self.session["character"], before)
+        self.assertIn("GMとの通信に失敗しました", result["messages"][-1]["text"])
 
     def test_trace_plan_and_outcome_and_request_only_latency(self):
         plan = valid_plan(kind="interact", operation="observe", target_id="forest_slime")

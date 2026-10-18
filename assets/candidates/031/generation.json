@@ -1,0 +1,228 @@
+[
+  {
+    "task": "031",
+    "id": "bg_old_battlefield",
+    "file": "assets/candidates/031/bg_old_battlefield/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: visual novel RPG background, candidate 02, bg_old_battlefield. Primary request: 白い霧の古戦場、錆びた剣と兜、折れた軍旗。A deserted ancient battlefield road sunk in white fog, rusted swords and helmets in the grass and a broken military flag. Style: match the viewed project's bg_dark_forest.png painterly detailed medieval fantasy environment, subdued colors, atmospheric soft lighting, visible natural textures. Wide 16:9 composition, clear foreground for game dialogue overlays. No people, no text, no UI, no watermark. This is a distinct alternative composition to candidate 01.",
+    "reference_images": [
+      "client/images/bg_dark_forest.png",
+      "client/images/bg_sealed_cave.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "bg_ruined_watchtower",
+    "file": "assets/candidates/031/bg_ruined_watchtower/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_ruined_watchtower, candidate 01. Primary request: 崩れた石塔の内部、消えた焚き火。Inside a half collapsed stone watchtower, an extinguished campfire, worn stairs and masonry. Style/medium: match the viewed project reference images client/images/bg_dark_forest.png and client/images/bg_sealed_cave.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Wide 1672x941 landscape composition, clear middle foreground for UI character overlay, opaque painted environment. No people or visible monsters except specified marsh arms. Candidate 1: balanced frontal composition. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/bg_dark_forest.png",
+      "client/images/bg_sealed_cave.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "bg_ruined_watchtower",
+    "file": "assets/candidates/031/bg_ruined_watchtower/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_ruined_watchtower, candidate 02. Primary request: 崩れた石塔の内部、消えた焚き火。Inside a half collapsed stone watchtower, an extinguished campfire, worn stairs and masonry. Style/medium: match the viewed project reference images client/images/bg_dark_forest.png and client/images/bg_sealed_cave.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Wide 1672x941 landscape composition, clear middle foreground for UI character overlay, opaque painted environment. No people or visible monsters except specified marsh arms. Candidate 2: distinct alternate viewpoint or guarded pose, same subject design. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/bg_dark_forest.png",
+      "client/images/bg_sealed_cave.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "bg_ghoul_marsh",
+    "file": "assets/candidates/031/bg_ghoul_marsh/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_ghoul_marsh, candidate 01. Primary request: 黒い沼、泥から突き出た腐った腕。A black stagnant marsh in white fog, several decayed arms protruding from the mud, restrained fantasy horror. Style/medium: match the viewed project reference images client/images/bg_dark_forest.png and client/images/bg_sealed_cave.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Wide 1672x941 landscape composition, clear middle foreground for UI character overlay, opaque painted environment. No people or visible monsters except specified marsh arms. Candidate 1: balanced frontal composition. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/bg_dark_forest.png",
+      "client/images/bg_sealed_cave.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "bg_ghoul_marsh",
+    "file": "assets/candidates/031/bg_ghoul_marsh/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_ghoul_marsh, candidate 02. Primary request: 黒い沼、泥から突き出た腐った腕。A black stagnant marsh in white fog, several decayed arms protruding from the mud, restrained fantasy horror. Style/medium: match the viewed project reference images client/images/bg_dark_forest.png and client/images/bg_sealed_cave.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Wide 1672x941 landscape composition, clear middle foreground for UI character overlay, opaque painted environment. No people or visible monsters except specified marsh arms. Candidate 2: distinct alternate viewpoint or guarded pose, same subject design. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/bg_dark_forest.png",
+      "client/images/bg_sealed_cave.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "bg_grave_chapel",
+    "file": "assets/candidates/031/bg_grave_chapel/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_grave_chapel, candidate 01. Primary request: 屋根の落ちた小さな礼拝堂、祭壇。A small roofless ruined stone chapel on the edge of a misty old battlefield, weathered altar, open roof letting diffuse white light enter. Style/medium: match the viewed project reference images client/images/bg_dark_forest.png and client/images/bg_sealed_cave.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Wide 1672x941 landscape composition, clear middle foreground for UI character overlay, opaque painted environment. No people or visible monsters except specified marsh arms. Candidate 1: balanced frontal composition. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/bg_dark_forest.png",
+      "client/images/bg_sealed_cave.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "bg_grave_chapel",
+    "file": "assets/candidates/031/bg_grave_chapel/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel background, bg_grave_chapel, candidate 02. Primary request: 屋根の落ちた小さな礼拝堂、祭壇。A small roofless ruined stone chapel on the edge of a misty old battlefield, weathered altar, open roof letting diffuse white light enter. Style/medium: match the viewed project reference images client/images/bg_dark_forest.png and client/images/bg_sealed_cave.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Wide 1672x941 landscape composition, clear middle foreground for UI character overlay, opaque painted environment. No people or visible monsters except specified marsh arms. Candidate 2: distinct alternate viewpoint or guarded pose, same subject design. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/bg_dark_forest.png",
+      "client/images/bg_sealed_cave.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "enemy_skeleton_soldier",
+    "file": "assets/candidates/031/enemy_skeleton_soldier/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel character sprite, enemy_skeleton_soldier, candidate 01. Primary request: 骸骨兵。A single skeleton soldier wearing rusted armor from ten years ago, a rusted sword and helmet, standing battle-ready. Style/medium: match the viewed project reference images client/images/enemy_ash_wraith.png and client/images/enemy_goblin_king.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Square 1254x1254 composition, entire subject and any weapons visible, safe transparent margin around silhouette. Actual transparent background and clean alpha, ghost translucency where appropriate; no ground plane, no framed scene, no background color, no white matte. Candidate 1: balanced frontal composition. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/enemy_ash_wraith.png",
+      "client/images/enemy_goblin_king.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "enemy_skeleton_soldier",
+    "file": "assets/candidates/031/enemy_skeleton_soldier/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel character sprite, enemy_skeleton_soldier, candidate 02. Primary request: 骸骨兵。A single skeleton soldier wearing rusted armor from ten years ago, a rusted sword and helmet, standing battle-ready. Style/medium: match the viewed project reference images client/images/enemy_ash_wraith.png and client/images/enemy_goblin_king.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Square 1254x1254 composition, entire subject and any weapons visible, safe transparent margin around silhouette. Actual transparent background and clean alpha, ghost translucency where appropriate; no ground plane, no framed scene, no background color, no white matte. Candidate 2: distinct alternate viewpoint or guarded pose, same subject design. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/enemy_ash_wraith.png",
+      "client/images/enemy_goblin_king.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "enemy_ghoul",
+    "file": "assets/candidates/031/enemy_ghoul/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel character sprite, enemy_ghoul, candidate 01. Primary request: 屍鬼。A single hunched decayed undead climbing out of marsh mud, corrupted skin, reaching arms; restrained fantasy horror, no excessive gore. Style/medium: match the viewed project reference images client/images/enemy_ash_wraith.png and client/images/enemy_goblin_king.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Square 1254x1254 composition, entire subject and any weapons visible, safe transparent margin around silhouette. Actual transparent background and clean alpha, ghost translucency where appropriate; no ground plane, no framed scene, no background color, no white matte. Candidate 1: balanced frontal composition. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/enemy_ash_wraith.png",
+      "client/images/enemy_goblin_king.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "enemy_ghoul",
+    "file": "assets/candidates/031/enemy_ghoul/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel character sprite, enemy_ghoul, candidate 02. Primary request: 屍鬼。A single hunched decayed undead climbing out of marsh mud, corrupted skin, reaching arms; restrained fantasy horror, no excessive gore. Style/medium: match the viewed project reference images client/images/enemy_ash_wraith.png and client/images/enemy_goblin_king.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Square 1254x1254 composition, entire subject and any weapons visible, safe transparent margin around silhouette. Actual transparent background and clean alpha, ghost translucency where appropriate; no ground plane, no framed scene, no background color, no white matte. Candidate 2: distinct alternate viewpoint or guarded pose, same subject design. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/enemy_ash_wraith.png",
+      "client/images/enemy_goblin_king.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "enemy_wraith",
+    "file": "assets/candidates/031/enemy_wraith/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel character sprite, enemy_wraith, candidate 01. Primary request: 怨霊。A single pale blue spirit of the dead floating in fog, translucent ghostly silhouette, a sorrowful menacing presence. Style/medium: match the viewed project reference images client/images/enemy_ash_wraith.png and client/images/enemy_goblin_king.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Square 1254x1254 composition, entire subject and any weapons visible, safe transparent margin around silhouette. Actual transparent background and clean alpha, ghost translucency where appropriate; no ground plane, no framed scene, no background color, no white matte. Candidate 1: balanced frontal composition. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/enemy_ash_wraith.png",
+      "client/images/enemy_goblin_king.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "enemy_wraith",
+    "file": "assets/candidates/031/enemy_wraith/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel character sprite, enemy_wraith, candidate 02. Primary request: 怨霊。A single pale blue spirit of the dead floating in fog, translucent ghostly silhouette, a sorrowful menacing presence. Style/medium: match the viewed project reference images client/images/enemy_ash_wraith.png and client/images/enemy_goblin_king.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Square 1254x1254 composition, entire subject and any weapons visible, safe transparent margin around silhouette. Actual transparent background and clean alpha, ghost translucency where appropriate; no ground plane, no framed scene, no background color, no white matte. Candidate 2: distinct alternate viewpoint or guarded pose, same subject design. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/enemy_ash_wraith.png",
+      "client/images/enemy_goblin_king.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "enemy_grave_knight",
+    "file": "assets/candidates/031/enemy_grave_knight/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel character sprite, enemy_grave_knight, candidate 01. Primary request: 墓守の骸骨騎士。An imposing skeleton knight who guards a ruined chapel, carrying a complete large two-handed sword, battered old knight armor and helmet. Style/medium: match the viewed project reference images client/images/enemy_ash_wraith.png and client/images/enemy_goblin_king.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Square 1254x1254 composition, entire subject and any weapons visible, safe transparent margin around silhouette. Actual transparent background and clean alpha, ghost translucency where appropriate; no ground plane, no framed scene, no background color, no white matte. Candidate 1: balanced frontal composition. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/enemy_ash_wraith.png",
+      "client/images/enemy_goblin_king.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "enemy_grave_knight",
+    "file": "assets/candidates/031/enemy_grave_knight/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel character sprite, enemy_grave_knight, candidate 02. Primary request: 墓守の骸骨騎士。An imposing skeleton knight who guards a ruined chapel, carrying a complete large two-handed sword, battered old knight armor and helmet. Style/medium: match the viewed project reference images client/images/enemy_ash_wraith.png and client/images/enemy_goblin_king.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Square 1254x1254 composition, entire subject and any weapons visible, safe transparent margin around silhouette. Actual transparent background and clean alpha, ghost translucency where appropriate; no ground plane, no framed scene, no background color, no white matte. Candidate 2: distinct alternate viewpoint or guarded pose, same subject design. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/enemy_ash_wraith.png",
+      "client/images/enemy_goblin_king.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "npc_old_soldier_ghost",
+    "file": "assets/candidates/031/npc_old_soldier_ghost/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel character sprite, npc_old_soldier_ghost, candidate 01. Primary request: 亡霊の兵士。A young semi-transparent soldier ghost from ten years ago, wearing worn medieval soldier armor, quiet sorrowful expression, NPC standing portrait. Style/medium: match the viewed project reference images client/images/enemy_ash_wraith.png and client/images/enemy_goblin_king.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Square 1254x1254 composition, entire subject and any weapons visible, safe transparent margin around silhouette. Actual transparent background and clean alpha, ghost translucency where appropriate; no ground plane, no framed scene, no background color, no white matte. Candidate 1: balanced frontal composition. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/enemy_ash_wraith.png",
+      "client/images/enemy_goblin_king.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "npc_old_soldier_ghost",
+    "file": "assets/candidates/031/npc_old_soldier_ghost/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel character sprite, npc_old_soldier_ghost, candidate 02. Primary request: 亡霊の兵士。A young semi-transparent soldier ghost from ten years ago, wearing worn medieval soldier armor, quiet sorrowful expression, NPC standing portrait. Style/medium: match the viewed project reference images client/images/enemy_ash_wraith.png and client/images/enemy_goblin_king.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Square 1254x1254 composition, entire subject and any weapons visible, safe transparent margin around silhouette. Actual transparent background and clean alpha, ghost translucency where appropriate; no ground plane, no framed scene, no background color, no white matte. Candidate 2: distinct alternate viewpoint or guarded pose, same subject design. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/enemy_ash_wraith.png",
+      "client/images/enemy_goblin_king.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "npc_zebok_merchant",
+    "file": "assets/candidates/031/npc_zebok_merchant/candidate_01.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel character sprite, npc_zebok_merchant, candidate 01. Primary request: ゼボクの商人形態。The merchant disguise of the viewed enemy_zebok.png: a small short hairy merchant in a black robe, hairy hands, sly knowing expression; his formidable undead identity concealed under a living merchant disguise. Preserve dark purple-black robe family and subtle cyan eyes from his true form. No large horns, no battle staff, no magical flames, normal two arms. Style/medium: match the viewed project reference images client/images/enemy_zebok.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Square 1254x1254 composition, entire subject and any weapons visible, safe transparent margin around silhouette. Actual transparent background and clean alpha, ghost translucency where appropriate; no ground plane, no framed scene, no background color, no white matte. Candidate 1: balanced frontal composition. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/enemy_zebok.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  },
+  {
+    "task": "031",
+    "id": "npc_zebok_merchant",
+    "file": "assets/candidates/031/npc_zebok_merchant/candidate_02.png",
+    "prompt": "Use case: illustration-story. Asset type: Japanese fantasy visual novel character sprite, npc_zebok_merchant, candidate 02. Primary request: ゼボクの商人形態。The merchant disguise of the viewed enemy_zebok.png: a small short hairy merchant in a black robe, hairy hands, sly knowing expression; his formidable undead identity concealed under a living merchant disguise. Preserve dark purple-black robe family and subtle cyan eyes from his true form. No large horns, no battle staff, no magical flames, normal two arms. Style/medium: match the viewed project reference images client/images/enemy_zebok.png: detailed hand-painted semi-realistic anime fantasy illustration, fine textured brushwork, controlled saturation and atmospheric dimensional lighting, not photographic or 3D render. Square 1254x1254 composition, entire subject and any weapons visible, safe transparent margin around silhouette. Actual transparent background and clean alpha, ghost translucency where appropriate; no ground plane, no framed scene, no background color, no white matte. Candidate 2: distinct alternate viewpoint or guarded pose, same subject design. No text, letters, UI, logo or watermark.",
+    "reference_images": [
+      "client/images/enemy_zebok.png"
+    ],
+    "generation_date": "2026-10-13",
+    "approved": false
+  }
+]

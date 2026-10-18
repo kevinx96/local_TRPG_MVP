@@ -1,0 +1,71 @@
+[
+  {
+    "view": "square",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat starts only on fight action",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices visible without horizontal scrolling",
+      "no horizontal page overflow",
+      "Oaksdawn map active",
+      "all six city exits visible",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "chapel",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat starts only on fight action",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices visible without horizontal scrolling",
+      "no horizontal page overflow",
+      "Liese portrait visible",
+      "authored chapel narration",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "wall",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat starts only on fight action",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices visible without horizontal scrolling",
+      "no horizontal page overflow",
+      "eastern pass known and disabled with exact reason",
+      "eastern pass label is not redacted",
+      "blocked reason visibly rendered",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "battle",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat starts only on fight action",
+      "visible portraits decode",
+      "authored narration visible",
+      "no horizontal page overflow",
+      "Liese accompanies battlefield fight",
+      "Liese holy attack shown in combat log",
+      "undead runtime tags and resistance",
+      "no browser exceptions"
+    ]
+  }
+]

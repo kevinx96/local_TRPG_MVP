@@ -16,9 +16,9 @@ class MapTests(unittest.TestCase):
         self.session = fresh_session(state.load_scenario_pack(DEFAULT_SCENARIO), "hero")
         self.session["scenario_pack"]["maps"] = [dict(id="town", title="王城", nodes=[
             dict(id="a", label="王城", kind="start", x=10, y=20, location_ids=["castle"]),
-            dict(id="b", label="宿屋", kind="rest", x=40, y=20, location_ids=["inn"]),
+            dict(id="b", label="城下町", kind="event", x=40, y=20, location_ids=["castle_town"]),
             dict(id="c", label="鍛冶屋", kind="event", x=70, y=20, location_ids=["forge"], locked_until="unlocked"),
-        ], edges=[dict(**{"from": "a", "to": "b"}, action_id="go_inn"), {"from": "b", "to": "c"}]),
+        ], edges=[dict(**{"from": "a", "to": "b"}, action_id="go_castle_town"), {"from": "b", "to": "c"}]),
             dict(id="sub", title="路地裏", parent="town", nodes=[
                 dict(id="s", label="路地裏", kind="event", x=50, y=50, location_ids=["alley"])], edges=[])]
 
@@ -35,11 +35,11 @@ class MapTests(unittest.TestCase):
     def test_move_uses_turn_pipeline(self):
         with patch.object(app, "load_session", return_value=self.session), patch.object(app, "_run_turn", return_value={}) as turn:
             app.api_map_move("balance", app.MapMoveRequest(node_id="b"))
-        self.assertEqual(turn.call_args.args[1].action_id, "go_inn")
+        self.assertEqual(turn.call_args.args[1].action_id, "go_castle_town")
         action = movement_action(self.session, "b")
         state.apply_action_result(self.session, action, {})
-        self.assertEqual(state.current_location_id(self.session), "inn")
-        self.assertIn("inn", self.session["visited_locations"])
+        self.assertEqual(state.current_location_id(self.session), "castle_town")
+        self.assertIn("castle_town", self.session["visited_locations"])
 
     def test_failures_do_not_move(self):
         for update, node in (({}, "c"), ({"combat": {"status": "active"}}, "b"), ({"game_over": {"reason": "終了"}}, "b")):
@@ -56,7 +56,7 @@ class MapTests(unittest.TestCase):
         edge["action_id"] = "missing"
         with self.assertRaises(ValueError):
             movement_action(self.session, "b")
-        edge["action_id"] = "go_inn"
+        edge["action_id"] = "go_castle_town"
         with patch.object(app, "load_session", return_value=self.session), patch.object(state, "action_requirement_status", return_value=(False, "条件を満たしていません")):
             with self.assertRaises(HTTPException) as error:
                 app.api_map_move("balance", app.MapMoveRequest(node_id="b"))

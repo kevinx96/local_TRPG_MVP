@@ -1,0 +1,130 @@
+[
+  {
+    "view": "old_battlefield",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "arrival does not auto-start combat",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices visible without horizontal scrolling",
+      "no horizontal page overflow",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "ruined_watchtower",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "arrival does not auto-start combat",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices visible without horizontal scrolling",
+      "no horizontal page overflow",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "ghoul_marsh",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "arrival does not auto-start combat",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices visible without horizontal scrolling",
+      "no horizontal page overflow",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "grave_chapel",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "arrival does not auto-start combat",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices visible without horizontal scrolling",
+      "no horizontal page overflow",
+      "repeat arrival does not repeat Zebok",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "zebok_entry",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "arrival does not auto-start combat",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices visible without horizontal scrolling",
+      "no horizontal page overflow",
+      "Zebok arrival portrait visible",
+      "correct entry branch",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "cursed_bones",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "arrival does not auto-start combat",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices visible without horizontal scrolling",
+      "no horizontal page overflow",
+      "curse choice matches inventory",
+      "authored curse label",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "plain_bones",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "arrival does not auto-start combat",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices visible without horizontal scrolling",
+      "no horizontal page overflow",
+      "curse choice matches inventory",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "zebok_plain",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "arrival does not auto-start combat",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices visible without horizontal scrolling",
+      "no horizontal page overflow",
+      "Zebok arrival portrait visible",
+      "correct entry branch",
+      "no browser exceptions"
+    ]
+  }
+]

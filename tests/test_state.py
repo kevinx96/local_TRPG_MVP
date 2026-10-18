@@ -1596,7 +1596,7 @@ class StateTests(unittest.TestCase):
         self.assertFalse(choice["enabled"])
         self.assertIn("\u307e\u305f\u306f", choice["disabled_reason"])
 
-    def test_choice_preview_character_requirement_disables_wrong_character(self):
+    def test_choice_preview_character_requirement_hides_wrong_character(self):
         public = state.create_session(str(self.write_pack()), character_id="thief")
         session = state.load_session(public["id"])
         session["choices"] = [
@@ -1607,10 +1607,7 @@ class StateTests(unittest.TestCase):
             }
         ]
 
-        choice = state.public_session(session)["choices"][0]
-
-        self.assertFalse(choice["enabled"])
-        self.assertIn("\u52c7\u8005\u306e\u307f", choice["disabled_reason"])
+        self.assertEqual(state.public_session(session)["choices"], [])
 
     def test_choice_inventory_and_gold_requirements_disable_purchase(self):
         public = state.create_session(str(self.write_pack()))
@@ -1715,6 +1712,7 @@ class StateTests(unittest.TestCase):
             {
                 "id": "ice_iron_greatsword",
                 "name": "氷鉄の大剣",
+                "slot": "weapon",
                 "description": "冷気を帯びた大剣。",
                 "combat": {
                     "kind": "weapon",
@@ -1753,6 +1751,7 @@ class StateTests(unittest.TestCase):
             {
                 "name": "氷鉄の大剣",
                 "quantity": 1,
+                "slot": "weapon",
                 "combat": {
                     "kind": "weapon",
                     "name": "氷鉄の大剣",
@@ -1947,19 +1946,21 @@ class StateTests(unittest.TestCase):
         self.assertEqual(session["character"]["gold"], 0)
         self.assertNotEqual(session["choices"][0]["text"], "bad")
 
-    def test_dragon_rpg_city_actions_stay_nested_under_city_group(self):
+    def test_dragon_rpg_city_actions_move_to_town_location(self):
         base_path = state.HOST_ROOT / "prompt" / "processed" / "dragon_rpg.json"
         public = state.create_session(str(base_path), gm_mode="full")
         session = state.load_session(public["id"])
         choices = current_action_choices(session)
         choice_texts = [choice["text"] for choice in choices]
 
-        self.assertIn("城下町を探索する", choice_texts)
+        self.assertIn("城下町へ出る", choice_texts)
         self.assertNotIn("鍛冶屋へ向かう", choice_texts)
-        city_choice = next(choice for choice in choices if choice.get("action_id") == "explore_castle_town")
+        self.assertIsNone(state.resolve_action(session, action_id="go_forge"))
+        state.apply_action_result(session, state.resolve_action(session, action_id="go_castle_town"), {})
+        choices = current_action_choices(session)
         self.assertEqual(
-            [child.get("action_id") for child in city_choice.get("children", [])],
-            ["go_forge", "go_inn", "go_magic_shop", "go_item_shop", "go_alley"],
+            [child.get("action_id") for child in choices],
+            ["go_forge", "go_inn", "go_magic_shop", "go_item_shop", "go_alley", "return_castle_from_town", "go_dark_forest"],
         )
 
         action = state.resolve_action(session, action_id="go_forge")
@@ -2049,7 +2050,7 @@ class StateTests(unittest.TestCase):
 
                 shop = next(shop for shop in pack["shops"] if shop["id"] == "forge_shop")
                 armor = next(item for item in shop["items"] if item["item_id"] == "adamantite_armor")
-                self.assertEqual((armor["price"], armor["stock"]), (20, 1))
+                self.assertEqual((armor["price"], armor["stock"]), (60, 1))
                 self.assertEqual(all_actions["open_forge_shop"]["open_shop"], "forge_shop")
 
     def test_dragon_rpg_robin_quest_has_an_executable_route_to_goblin_fort(self):
@@ -2204,7 +2205,7 @@ class StateTests(unittest.TestCase):
         session = state.load_session(public["id"])
         accepted, reason = state.commit_world_position(session, location_id="forge")
         self.assertTrue(accepted, reason)
-        session["character"]["gold"] = 50
+        session["character"]["gold"] = 100
         session["character"]["attributes"]["end"] = 10
         session["choices"] = current_action_choices(session)
 
@@ -2264,7 +2265,7 @@ class StateTests(unittest.TestCase):
 
         from host.shops import trade
         trade(session, "forge_shop", "adamantite_armor", 1)
-        self.assertEqual(session["character"]["gold"], 30)
+        self.assertEqual(session["character"]["gold"], 40)
         self.assertTrue(
             any(item.get("name") == "アダマンタイトの鎧" for item in session["character"]["inventory"])
         )
@@ -2278,7 +2279,7 @@ class StateTests(unittest.TestCase):
             choice.get("action_id"): choice
             for choice in state.public_session(mage)["choices"]
         }
-        self.assertFalse(mage_choices["show_sword_to_blacksmith"]["enabled"])
+        self.assertNotIn("show_sword_to_blacksmith", mage_choices)
 
     def test_dragon_rpg_base_and_hybrid_actions_stay_aligned(self):
         processed = state.HOST_ROOT / "prompt" / "processed"

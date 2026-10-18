@@ -7,7 +7,27 @@ from typing import Any
 USABLE_ITEM_KINDS = {"heal", "restore", "damage", "flee", "status", "shrink"}
 EQUIPMENT_ITEM_KINDS = {"weapon", "armor", "equipment"}
 PASSIVE_ITEM_KINDS = {"passive"}
-SUPPORTED_ITEM_KINDS = USABLE_ITEM_KINDS | EQUIPMENT_ITEM_KINDS | PASSIVE_ITEM_KINDS
+SUPPORTED_ITEM_KINDS = USABLE_ITEM_KINDS | EQUIPMENT_ITEM_KINDS | PASSIVE_ITEM_KINDS | {"permanent"}
+EQUIPMENT_SLOTS = {"weapon", "armor", "accessory"}
+
+
+def item_slot(item: Any) -> str:
+    slot = item.get("slot") if isinstance(item, dict) else None
+    return slot if isinstance(slot, str) and slot in EQUIPMENT_SLOTS else ""
+
+
+def equipped_items(actor: dict[str, Any]) -> list[dict[str, Any]]:
+    inventory = [item for item in actor.get("inventory", []) if isinstance(item, dict)]
+    selected: list[dict[str, Any]] = []
+    slots: set[str] = set()
+    for value in reversed(actor.get("equipment") or []):
+        item = next((item for item in inventory if value in {item.get("id"), item.get("name")}), None)
+        slot = item_slot(item)
+        if not slot or slot in slots or _as_int(item.get("quantity"), 1) <= 0:
+            continue
+        selected.append(item)
+        slots.add(slot)
+    return list(reversed(selected))
 
 
 def item_combat_spec(item: Any) -> dict[str, Any]:
@@ -35,10 +55,14 @@ def structured_item_effect(item: Any) -> str:
             parts.append(f"命中率{_as_int(spec.get('accuracy'), 100)}%")
         if spec.get("element"):
             parts.append(f"{spec['element']}属性")
-    elif kind == "armor":
+    elif kind in {"armor", "equipment"}:
         defense = max(0, _as_int(spec.get("defense"), 0))
         if defense:
             parts.append(f"被ダメージを{defense}軽減")
+        if spec.get("conditional_defense"):
+            parts.append(str(spec["conditional_defense"].get("description") or ""))
+    elif kind == "permanent":
+        parts.append(f"{spec['label']}が永続的に{_as_int(spec.get('amount'), 0)}上がる")
     elif kind == "heal":
         healing = str(spec.get("healing") or spec.get("amount") or "").strip()
         if "max_hp_ratio" in spec:
@@ -67,9 +91,27 @@ def structured_item_effect(item: Any) -> str:
 
     modifiers = _modifier_parts(spec)
     parts.extend(modifiers)
-    if kind in USABLE_ITEM_KINDS and bool(spec.get("consumable", True)):
+    if kind in USABLE_ITEM_KINDS | {"permanent"} and bool(spec.get("consumable", True)):
         parts.append("消耗品")
     return " / ".join(parts)
+
+
+def one_time_reward(session: dict[str, Any], reward: dict[str, Any]) -> dict[str, Any]:
+    flag = str(reward.get("flag") or "")
+    flags = session.get("flags", {})
+    blocked = [flag, *reward.get("blocking_flags", [])]
+    if not flag or any(flags.get(key) for key in blocked):
+        return {}
+    return {"inventory_add": deepcopy(reward.get("items", [])),
+            "flags_set": [flag, *reward.get("shared_flags", [])]}
+
+
+def steal_reward(session: dict[str, Any], location_id: str) -> tuple[dict[str, Any], str]:
+    location = next((loc for loc in session.get("scenario_pack", {}).get("locations", [])
+                     if loc["id"] == location_id), {})
+    reward = location.get("combat", {}).get("one_time_reward", {})
+    delta = one_time_reward(session, reward)
+    return delta, str(reward.get("steal_text") or "") if delta else ""
 
 
 def item_mechanic_warning(item: Any) -> str:
@@ -119,12 +161,8 @@ def effective_ability_cost(actor: dict[str, Any], ability: dict[str, Any]) -> in
 
 
 def equipped_item_specs(actor: dict[str, Any]) -> list[dict[str, Any]]:
-    equipped = set(str(value) for value in actor.get("equipment", []) if str(value))
     specs: list[dict[str, Any]] = []
-    for raw in actor.get("inventory", []) if isinstance(actor.get("inventory"), list) else []:
-        item = raw if isinstance(raw, dict) else {"name": str(raw)}
-        if str(item.get("name") or "") not in equipped and str(item.get("id") or "") not in equipped:
-            continue
+    for item in equipped_items(actor):
         spec = item_combat_spec(item)
         if spec:
             specs.append(spec)

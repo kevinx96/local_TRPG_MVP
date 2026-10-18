@@ -1,0 +1,2559 @@
+{
+  "description": "035????????????balance-2026-10-18-gorge.json?????????????DC???????",
+  "routes": [
+    {
+      "stage": "initial",
+      "giant_dc": 15,
+      "n": 200,
+      "seed": 20261018,
+      "source_sha256": "1173e57e4f26c120aaa93d89cf8855b952fc5a3426d1a0b1f64b198c79fc0fce",
+      "fingerprints": {
+        "scripts\\balance\\gorge.py": "b6bcfb2db38d4ae43265780eb287e01b77207fe3515f29b6ced4ca63126896f3",
+        "host\\prompt\\processed\\dragon_rpg.json": "a76657e0299235df3d591d0df139d6498c52b8ded88ec69a9890abb8bc970c03",
+        "host\\combat.py": "8d97d8cfa0a76d49e0fe2d8a01f622ed80fce374e87fceb6ec7ba33cfd34e5f1",
+        "scripts\\scenario\\rumbling_gorge.py": "fe961972c681d33051a840c782187e384c8152679af35fb47e0b13e69b9a06ea"
+      },
+      "enemies": [
+        {
+          "id": "gravel_beetle",
+          "name": "砂礫の甲虫",
+          "description": "砂利を固めたような殻を持つ甲虫。",
+          "hp": 14,
+          "max_hp": 14,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d6+2",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_gravel_beetle.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        },
+        {
+          "id": "stone_lizard",
+          "name": "石肌のトカゲ",
+          "description": "石のような鱗に覆われたトカゲ。",
+          "hp": 16,
+          "max_hp": 16,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d6+2",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_stone_lizard.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        },
+        {
+          "id": "rock_giant",
+          "name": "岩の巨人",
+          "description": "苔むした岩山が意思を持った、峡谷の巨人。",
+          "hp": 36,
+          "max_hp": 36,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d10+3",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_rock_giant.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        },
+        {
+          "id": "earth_worm",
+          "name": "土喰らいの大ワーム",
+          "description": "峡谷の地下を食い荒らす、巨大なワーム。",
+          "hp": 60,
+          "max_hp": 60,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "2d6+3",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_earth_worm.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        }
+      ],
+      "routes": [
+        {
+          "character": "hero",
+          "path": "village",
+          "n": 200,
+          "success_rate": 0.96,
+          "failures": {
+            "village_fire_elemental": 8
+          }
+        },
+        {
+          "character": "hero",
+          "path": "gorge",
+          "n": 200,
+          "success_rate": 0.83,
+          "failures": {
+            "gorge_giant_path": 26,
+            "gorge_worm_lair": 8
+          }
+        },
+        {
+          "character": "hero",
+          "path": "gorge_elio",
+          "n": 200,
+          "success_rate": 0.925,
+          "failures": {
+            "gorge_giant_path": 15
+          }
+        },
+        {
+          "character": "cleric",
+          "path": "village",
+          "n": 200,
+          "success_rate": 0.99,
+          "failures": {
+            "village_fire_elemental": 2
+          }
+        },
+        {
+          "character": "cleric",
+          "path": "gorge",
+          "n": 200,
+          "success_rate": 0.685,
+          "failures": {
+            "gorge_giant_path": 59,
+            "gorge_worm_lair": 4
+          }
+        },
+        {
+          "character": "cleric",
+          "path": "gorge_elio",
+          "n": 200,
+          "success_rate": 0.885,
+          "failures": {
+            "gorge_giant_path": 23
+          }
+        },
+        {
+          "character": "mage",
+          "path": "village",
+          "n": 200,
+          "success_rate": 0.955,
+          "failures": {
+            "village_fire_elemental": 9
+          }
+        },
+        {
+          "character": "mage",
+          "path": "gorge",
+          "n": 200,
+          "success_rate": 0.755,
+          "failures": {
+            "gorge_giant_path": 31,
+            "gorge_worm_lair": 18
+          }
+        },
+        {
+          "character": "mage",
+          "path": "gorge_elio",
+          "n": 200,
+          "success_rate": 0.88,
+          "failures": {
+            "gorge_giant_path": 24
+          }
+        },
+        {
+          "character": "thief",
+          "path": "village",
+          "n": 200,
+          "success_rate": 0.96,
+          "failures": {
+            "village_fire_elemental": 8
+          }
+        },
+        {
+          "character": "thief",
+          "path": "gorge",
+          "n": 200,
+          "success_rate": 0.95,
+          "failures": {
+            "gorge_giant_path": 10
+          }
+        },
+        {
+          "character": "thief",
+          "path": "gorge_elio",
+          "n": 200,
+          "success_rate": 0.995,
+          "failures": {
+            "gorge_giant_path": 1
+          }
+        }
+      ]
+    },
+    {
+      "stage": "first_tuning",
+      "giant_dc": 15,
+      "n": 300,
+      "seed": 20261018,
+      "source_sha256": "751088af9f8086e5d91d6299bf9a02eb4293b069c8e415dc85f45c732a6a5a4a",
+      "fingerprints": {
+        "scripts\\balance\\gorge.py": "b6bcfb2db38d4ae43265780eb287e01b77207fe3515f29b6ced4ca63126896f3",
+        "host\\prompt\\processed\\dragon_rpg.json": "4ca2d6ac901ffe4cde2e248e371a3124224b1b9c9a6358784f4ecc4d9bed286a",
+        "host\\combat.py": "8d97d8cfa0a76d49e0fe2d8a01f622ed80fce374e87fceb6ec7ba33cfd34e5f1",
+        "scripts\\scenario\\rumbling_gorge.py": "428fa41f941751c370c1d04fe61d7807d599bc5533c6a06ad342f7e984c100a8"
+      },
+      "enemies": [
+        {
+          "id": "gravel_beetle",
+          "name": "砂礫の甲虫",
+          "description": "砂利を固めたような殻を持つ甲虫。",
+          "hp": 14,
+          "max_hp": 14,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d6+2",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_gravel_beetle.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        },
+        {
+          "id": "stone_lizard",
+          "name": "石肌のトカゲ",
+          "description": "石のような鱗に覆われたトカゲ。",
+          "hp": 10,
+          "max_hp": 10,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d4+1",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_stone_lizard.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        },
+        {
+          "id": "rock_giant",
+          "name": "岩の巨人",
+          "description": "苔むした岩山が意思を持った、峡谷の巨人。",
+          "hp": 24,
+          "max_hp": 24,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d8+2",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_rock_giant.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        },
+        {
+          "id": "earth_worm",
+          "name": "土喰らいの大ワーム",
+          "description": "峡谷の地下を食い荒らす、巨大なワーム。",
+          "hp": 60,
+          "max_hp": 60,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "2d6+3",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_earth_worm.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        }
+      ],
+      "routes": [
+        {
+          "character": "hero",
+          "path": "village",
+          "n": 300,
+          "success_rate": 0.9666666666666667,
+          "failures": {
+            "village_fire_elemental": 10
+          }
+        },
+        {
+          "character": "hero",
+          "path": "gorge",
+          "n": 300,
+          "success_rate": 0.98,
+          "failures": {
+            "gorge_worm_lair": 6
+          }
+        },
+        {
+          "character": "hero",
+          "path": "gorge_elio",
+          "n": 300,
+          "success_rate": 1,
+          "failures": {}
+        },
+        {
+          "character": "cleric",
+          "path": "village",
+          "n": 300,
+          "success_rate": 0.9833333333333333,
+          "failures": {
+            "village_fire_elemental": 5
+          }
+        },
+        {
+          "character": "cleric",
+          "path": "gorge",
+          "n": 300,
+          "success_rate": 0.9066666666666666,
+          "failures": {
+            "gorge_worm_lair": 13,
+            "gorge_giant_path": 15
+          }
+        },
+        {
+          "character": "cleric",
+          "path": "gorge_elio",
+          "n": 300,
+          "success_rate": 1,
+          "failures": {}
+        },
+        {
+          "character": "mage",
+          "path": "village",
+          "n": 300,
+          "success_rate": 0.9533333333333334,
+          "failures": {
+            "village_fire_elemental": 14
+          }
+        },
+        {
+          "character": "mage",
+          "path": "gorge",
+          "n": 300,
+          "success_rate": 0.86,
+          "failures": {
+            "gorge_worm_lair": 32,
+            "gorge_giant_path": 10
+          }
+        },
+        {
+          "character": "mage",
+          "path": "gorge_elio",
+          "n": 300,
+          "success_rate": 0.99,
+          "failures": {
+            "gorge_giant_path": 3
+          }
+        },
+        {
+          "character": "thief",
+          "path": "village",
+          "n": 300,
+          "success_rate": 0.9233333333333333,
+          "failures": {
+            "village_fire_elemental": 23
+          }
+        },
+        {
+          "character": "thief",
+          "path": "gorge",
+          "n": 300,
+          "success_rate": 0.98,
+          "failures": {
+            "gorge_giant_path": 6
+          }
+        },
+        {
+          "character": "thief",
+          "path": "gorge_elio",
+          "n": 300,
+          "success_rate": 0.9933333333333333,
+          "failures": {
+            "gorge_giant_path": 2
+          }
+        }
+      ]
+    },
+    {
+      "stage": "route_n2000",
+      "giant_dc": 15,
+      "n": 2000,
+      "seed": 20261018,
+      "source_sha256": "a76e3eee97ef92aec6f30e74c19b3d6660366ac74475dce654a8454ad7ee16f4",
+      "fingerprints": {
+        "scripts\\balance\\gorge.py": "6b9f9bab5be03142fa20c44b5e8e56af8d269d34e72796bfc38cc4f0e49455bc",
+        "host\\prompt\\processed\\dragon_rpg.json": "0deab32cfe5ad2f5c50c9921e1f8be23252a2c70848214d82a8911851d30dbda",
+        "host\\combat.py": "8d97d8cfa0a76d49e0fe2d8a01f622ed80fce374e87fceb6ec7ba33cfd34e5f1",
+        "scripts\\scenario\\rumbling_gorge.py": "41d7f44fe2f14b3499cffa42a18de9cb789a89d208dfdcf5ecaed63a79dc9f5d"
+      },
+      "enemies": [
+        {
+          "id": "gravel_beetle",
+          "name": "砂礫の甲虫",
+          "description": "砂利を固めたような殻を持つ甲虫。",
+          "hp": 14,
+          "max_hp": 14,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d6+2",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_gravel_beetle.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        },
+        {
+          "id": "stone_lizard",
+          "name": "石肌のトカゲ",
+          "description": "石のような鱗に覆われたトカゲ。",
+          "hp": 10,
+          "max_hp": 10,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d4+1",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_stone_lizard.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        },
+        {
+          "id": "rock_giant",
+          "name": "岩の巨人",
+          "description": "苔むした岩山が意思を持った、峡谷の巨人。",
+          "hp": 24,
+          "max_hp": 24,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d6+2",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_rock_giant.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        },
+        {
+          "id": "earth_worm",
+          "name": "土喰らいの大ワーム",
+          "description": "峡谷の地下を食い荒らす、巨大なワーム。",
+          "hp": 45,
+          "max_hp": 45,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d10+2",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_earth_worm.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        }
+      ],
+      "routes": [
+        {
+          "character": "hero",
+          "path": "village",
+          "n": 2000,
+          "success_rate": 0.958,
+          "failures": {
+            "village_fire_elemental": 84
+          }
+        },
+        {
+          "character": "hero",
+          "path": "gorge",
+          "n": 2000,
+          "success_rate": 0.994,
+          "failures": {
+            "gorge_giant_path": 6,
+            "gorge_worm_lair": 4,
+            "gorge_rockfall_path": 2
+          }
+        },
+        {
+          "character": "hero",
+          "path": "gorge_elio",
+          "n": 2000,
+          "success_rate": 1,
+          "failures": {}
+        },
+        {
+          "character": "cleric",
+          "path": "village",
+          "n": 2000,
+          "success_rate": 0.968,
+          "failures": {
+            "village_fire_elemental": 64
+          }
+        },
+        {
+          "character": "cleric",
+          "path": "gorge",
+          "n": 2000,
+          "success_rate": 0.966,
+          "failures": {
+            "gorge_worm_lair": 12,
+            "gorge_giant_path": 43,
+            "gorge_rockfall_path": 13
+          }
+        },
+        {
+          "character": "cleric",
+          "path": "gorge_elio",
+          "n": 2000,
+          "success_rate": 0.9965,
+          "failures": {
+            "gorge_giant_path": 7
+          }
+        },
+        {
+          "character": "mage",
+          "path": "village",
+          "n": 2000,
+          "success_rate": 0.9625,
+          "failures": {
+            "village_fire_elemental": 75
+          }
+        },
+        {
+          "character": "mage",
+          "path": "gorge",
+          "n": 2000,
+          "success_rate": 0.968,
+          "failures": {
+            "gorge_worm_lair": 42,
+            "gorge_giant_path": 22
+          }
+        },
+        {
+          "character": "mage",
+          "path": "gorge_elio",
+          "n": 2000,
+          "success_rate": 0.995,
+          "failures": {
+            "gorge_giant_path": 10
+          }
+        },
+        {
+          "character": "thief",
+          "path": "village",
+          "n": 2000,
+          "success_rate": 0.9125,
+          "failures": {
+            "village_fire_elemental": 175
+          }
+        },
+        {
+          "character": "thief",
+          "path": "gorge",
+          "n": 2000,
+          "success_rate": 0.9955,
+          "failures": {
+            "gorge_giant_path": 4,
+            "gorge_worm_lair": 1,
+            "gorge_rockfall_path": 4
+          }
+        },
+        {
+          "character": "thief",
+          "path": "gorge_elio",
+          "n": 2000,
+          "success_rate": 1,
+          "failures": {}
+        }
+      ]
+    },
+    {
+      "stage": "giant_dc27",
+      "giant_dc": 27,
+      "n": 2000,
+      "seed": 20261018,
+      "source_sha256": "e05156afbdbc47fcf31166e59d15b1d2154d9293856aaf8a0b8c1d1353b0b0f6",
+      "fingerprints": {
+        "scripts\\balance\\gorge.py": "133bc43f993cefa8007acdc7db68e5fe788b2c10ee14c34ddb4e7b0236e34ccf",
+        "host\\prompt\\processed\\dragon_rpg.json": "b562c7397bf59112fcd15b3e17736651b1be121a64e38414538f02c0bd2ddf67",
+        "host\\combat.py": "8d97d8cfa0a76d49e0fe2d8a01f622ed80fce374e87fceb6ec7ba33cfd34e5f1",
+        "scripts\\scenario\\rumbling_gorge.py": "8c81e913d2fa4b780ea9b60e84a5544373b7dfa4febe7162e1f187ccfa811bb5"
+      },
+      "enemies": [
+        {
+          "id": "gravel_beetle",
+          "name": "砂礫の甲虫",
+          "description": "砂利を固めたような殻を持つ甲虫。",
+          "hp": 14,
+          "max_hp": 14,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d6+2",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_gravel_beetle.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        },
+        {
+          "id": "stone_lizard",
+          "name": "石肌のトカゲ",
+          "description": "石のような鱗に覆われたトカゲ。",
+          "hp": 10,
+          "max_hp": 10,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d4+1",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_stone_lizard.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        },
+        {
+          "id": "rock_giant",
+          "name": "岩の巨人",
+          "description": "苔むした岩山が意思を持った、峡谷の巨人。",
+          "hp": 24,
+          "max_hp": 24,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d6+2",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_rock_giant.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        },
+        {
+          "id": "earth_worm",
+          "name": "土喰らいの大ワーム",
+          "description": "峡谷の地下を食い荒らす、巨大なワーム。",
+          "hp": 45,
+          "max_hp": 45,
+          "attributes": {},
+          "element": "earth",
+          "tags": [
+            "earth"
+          ],
+          "resistances": {
+            "physical": 0.6,
+            "water": 1.5
+          },
+          "skills": [],
+          "combat": {
+            "defense": 0,
+            "evade": 0,
+            "basic_attack": {
+              "name": "攻撃",
+              "damage": "1d10+2",
+              "accuracy": 70,
+              "element": "physical"
+            }
+          },
+          "rewards": {
+            "gold": 0,
+            "items": [],
+            "flags": []
+          },
+          "image": "/static/images/enemy_earth_worm.png",
+          "mp": 0,
+          "max_mp": 0,
+          "sp": 0,
+          "max_sp": 0
+        }
+      ],
+      "routes": [
+        {
+          "character": "hero",
+          "path": "village",
+          "n": 2000,
+          "success_rate": 0.958,
+          "failures": {
+            "village_fire_elemental": 84
+          }
+        },
+        {
+          "character": "hero",
+          "path": "gorge",
+          "n": 2000,
+          "success_rate": 0.993,
+          "failures": {
+            "gorge_giant_path": 7,
+            "gorge_worm_lair": 5,
+            "gorge_rockfall_path": 2
+          }
+        },
+        {
+          "character": "hero",
+          "path": "gorge_elio",
+          "n": 2000,
+          "success_rate": 1,
+          "failures": {}
+        },
+        {
+          "character": "cleric",
+          "path": "village",
+          "n": 2000,
+          "success_rate": 0.968,
+          "failures": {
+            "village_fire_elemental": 64
+          }
+        },
+        {
+          "character": "cleric",
+          "path": "gorge",
+          "n": 2000,
+          "success_rate": 0.922,
+          "failures": {
+            "gorge_worm_lair": 25,
+            "gorge_giant_path": 118,
+            "gorge_rockfall_path": 13
+          }
+        },
+        {
+          "character": "cleric",
+          "path": "gorge_elio",
+          "n": 2000,
+          "success_rate": 0.9895,
+          "failures": {
+            "gorge_giant_path": 21
+          }
+        },
+        {
+          "character": "mage",
+          "path": "village",
+          "n": 2000,
+          "success_rate": 0.9625,
+          "failures": {
+            "village_fire_elemental": 75
+          }
+        },
+        {
+          "character": "mage",
+          "path": "gorge",
+          "n": 2000,
+          "success_rate": 0.9315,
+          "failures": {
+            "gorge_worm_lair": 74,
+            "gorge_giant_path": 63
+          }
+        },
+        {
+          "character": "mage",
+          "path": "gorge_elio",
+          "n": 2000,
+          "success_rate": 0.987,
+          "failures": {
+            "gorge_giant_path": 26
+          }
+        },
+        {
+          "character": "thief",
+          "path": "village",
+          "n": 2000,
+          "success_rate": 0.9125,
+          "failures": {
+            "village_fire_elemental": 175
+          }
+        },
+        {
+          "character": "thief",
+          "path": "gorge",
+          "n": 2000,
+          "success_rate": 0.9715,
+          "failures": {
+            "gorge_giant_path": 51,
+            "gorge_worm_lair": 2,
+            "gorge_rockfall_path": 4
+          }
+        },
+        {
+          "character": "thief",
+          "path": "gorge_elio",
+          "n": 2000,
+          "success_rate": 0.9975,
+          "failures": {
+            "gorge_giant_path": 5
+          }
+        }
+      ]
+    },
+    {
+      "stage": "giant_dc31",
+      "giant_dc": 31,
+      "n": 5000,
+      "seed": 20261018,
+      "source_sha256": "51cbd232167cc690a191e1a84f9326dd19882a8ba70e436f4b7f69a98af17e6e",
+      "fingerprints": {
+        "scripts\\balance\\gorge.py": "234b23d0d1f8cfb52319c574122f0a70e66f62b19dc80ab3e522f57f940bb037",
+        "host\\prompt\\processed\\dragon_rpg.json": "fc5f95f347dfa126f15ed116b4ea1b17d3ad11115b718d02c19010611d95bf20",
+        "host\\combat.py": "8d97d8cfa0a76d49e0fe2d8a01f622ed80fce374e87fceb6ec7ba33cfd34e5f1",
+        "scripts\\scenario\\rumbling_gorge.py": "76c754c48509a890ad1a0b6e5ed89ca68b25b3be9cd2af5c1580ffa90a75ebfa"
+      },
+      "enemies": [],
+      "routes": [
+        {
+          "character": "hero",
+          "path": "village",
+          "n": 5000,
+          "success_rate": 0.958,
+          "failures": {
+            "village_fire_elemental": 210
+          }
+        },
+        {
+          "character": "hero",
+          "path": "gorge",
+          "n": 5000,
+          "success_rate": 0.9942,
+          "failures": {
+            "gorge_giant_path": 17,
+            "gorge_worm_lair": 9,
+            "gorge_rockfall_path": 3
+          }
+        },
+        {
+          "character": "hero",
+          "path": "gorge_elio",
+          "n": 5000,
+          "success_rate": 1,
+          "failures": {}
+        },
+        {
+          "character": "cleric",
+          "path": "village",
+          "n": 5000,
+          "success_rate": 0.9664,
+          "failures": {
+            "village_fire_elemental": 168
+          }
+        },
+        {
+          "character": "cleric",
+          "path": "gorge",
+          "n": 5000,
+          "success_rate": 0.9152,
+          "failures": {
+            "gorge_worm_lair": 55,
+            "gorge_giant_path": 332,
+            "gorge_rockfall_path": 37
+          }
+        },
+        {
+          "character": "cleric",
+          "path": "gorge_elio",
+          "n": 5000,
+          "success_rate": 0.992,
+          "failures": {
+            "gorge_giant_path": 39,
+            "gorge_rockfall_path": 1
+          }
+        },
+        {
+          "character": "mage",
+          "path": "village",
+          "n": 5000,
+          "success_rate": 0.9624,
+          "failures": {
+            "village_fire_elemental": 188
+          }
+        },
+        {
+          "character": "mage",
+          "path": "gorge",
+          "n": 5000,
+          "success_rate": 0.9242,
+          "failures": {
+            "gorge_worm_lair": 211,
+            "gorge_giant_path": 168
+          }
+        },
+        {
+          "character": "mage",
+          "path": "gorge_elio",
+          "n": 5000,
+          "success_rate": 0.984,
+          "failures": {
+            "gorge_giant_path": 80
+          }
+        },
+        {
+          "character": "thief",
+          "path": "village",
+          "n": 5000,
+          "success_rate": 0.8982,
+          "failures": {
+            "village_fire_elemental": 509
+          }
+        },
+        {
+          "character": "thief",
+          "path": "gorge",
+          "n": 5000,
+          "success_rate": 0.9504,
+          "failures": {
+            "gorge_giant_path": 226,
+            "gorge_worm_lair": 6,
+            "gorge_rockfall_path": 16
+          }
+        },
+        {
+          "character": "thief",
+          "path": "gorge_elio",
+          "n": 5000,
+          "success_rate": 0.9952,
+          "failures": {
+            "gorge_giant_path": 23,
+            "gorge_rockfall_path": 1
+          }
+        }
+      ]
+    },
+    {
+      "stage": "giant_hp23_dc33",
+      "n": 5000,
+      "seed": 20261018,
+      "giant_hp": 23,
+      "giant_dc": 33,
+      "source_sha256": "bb13fbef3d69f63725f2111b3a8a5d744facd51054bda23198c0ff2ec386a267",
+      "routes": [
+        {
+          "character": "hero",
+          "path": "gorge",
+          "n": 5000,
+          "success_rate": 0.9942,
+          "failures": {
+            "gorge_giant_path": 17,
+            "gorge_worm_lair": 9,
+            "gorge_rockfall_path": 3
+          }
+        },
+        {
+          "character": "cleric",
+          "path": "gorge",
+          "n": 5000,
+          "success_rate": 0.9224,
+          "failures": {
+            "gorge_giant_path": 306,
+            "gorge_worm_lair": 45,
+            "gorge_rockfall_path": 37
+          }
+        },
+        {
+          "character": "mage",
+          "path": "gorge",
+          "n": 5000,
+          "success_rate": 0.9242,
+          "failures": {
+            "gorge_worm_lair": 211,
+            "gorge_giant_path": 168
+          }
+        },
+        {
+          "character": "thief",
+          "path": "gorge",
+          "n": 5000,
+          "success_rate": 0.9458,
+          "failures": {
+            "gorge_giant_path": 249,
+            "gorge_worm_lair": 6,
+            "gorge_rockfall_path": 16
+          }
+        }
+      ]
+    }
+  ],
+  "giant_grid": {
+    "n": 400,
+    "seed": 20261018,
+    "fingerprints": {
+      "scripts\\balance\\gorge.py": "133bc43f993cefa8007acdc7db68e5fe788b2c10ee14c34ddb4e7b0236e34ccf",
+      "host\\prompt\\processed\\dragon_rpg.json": "0deab32cfe5ad2f5c50c9921e1f8be23252a2c70848214d82a8911851d30dbda",
+      "host\\combat.py": "8d97d8cfa0a76d49e0fe2d8a01f622ed80fce374e87fceb6ec7ba33cfd34e5f1",
+      "scripts\\scenario\\rumbling_gorge.py": "41d7f44fe2f14b3499cffa42a18de9cb789a89d208dfdcf5ecaed63a79dc9f5d"
+    },
+    "rows": [
+      {
+        "giant_hp": 24,
+        "giant_dc": 21,
+        "character": "hero",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.9975,
+        "failures": {
+          "gorge_giant_path": 1
+        }
+      },
+      {
+        "giant_hp": 24,
+        "giant_dc": 21,
+        "character": "cleric",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.95,
+        "failures": {
+          "gorge_worm_lair": 8,
+          "gorge_giant_path": 12
+        }
+      },
+      {
+        "giant_hp": 24,
+        "giant_dc": 21,
+        "character": "mage",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.94,
+        "failures": {
+          "gorge_giant_path": 10,
+          "gorge_worm_lair": 14
+        }
+      },
+      {
+        "giant_hp": 24,
+        "giant_dc": 21,
+        "character": "thief",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.985,
+        "failures": {
+          "gorge_giant_path": 5,
+          "gorge_worm_lair": 1
+        }
+      },
+      {
+        "giant_hp": 24,
+        "giant_dc": 24,
+        "character": "hero",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.9975,
+        "failures": {
+          "gorge_giant_path": 1
+        }
+      },
+      {
+        "giant_hp": 24,
+        "giant_dc": 24,
+        "character": "cleric",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.935,
+        "failures": {
+          "gorge_worm_lair": 8,
+          "gorge_giant_path": 18
+        }
+      },
+      {
+        "giant_hp": 24,
+        "giant_dc": 24,
+        "character": "mage",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.9375,
+        "failures": {
+          "gorge_worm_lair": 15,
+          "gorge_giant_path": 10
+        }
+      },
+      {
+        "giant_hp": 24,
+        "giant_dc": 24,
+        "character": "thief",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.9725,
+        "failures": {
+          "gorge_giant_path": 10,
+          "gorge_worm_lair": 1
+        }
+      },
+      {
+        "giant_hp": 24,
+        "giant_dc": 27,
+        "character": "hero",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.9975,
+        "failures": {
+          "gorge_giant_path": 1
+        }
+      },
+      {
+        "giant_hp": 24,
+        "giant_dc": 27,
+        "character": "cleric",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.915,
+        "failures": {
+          "gorge_worm_lair": 8,
+          "gorge_giant_path": 26
+        }
+      },
+      {
+        "giant_hp": 24,
+        "giant_dc": 27,
+        "character": "mage",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.9375,
+        "failures": {
+          "gorge_worm_lair": 14,
+          "gorge_giant_path": 11
+        }
+      },
+      {
+        "giant_hp": 24,
+        "giant_dc": 27,
+        "character": "thief",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.9575,
+        "failures": {
+          "gorge_giant_path": 16,
+          "gorge_worm_lair": 1
+        }
+      },
+      {
+        "giant_hp": 30,
+        "giant_dc": 21,
+        "character": "hero",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.995,
+        "failures": {
+          "gorge_giant_path": 2
+        }
+      },
+      {
+        "giant_hp": 30,
+        "giant_dc": 21,
+        "character": "cleric",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.9225,
+        "failures": {
+          "gorge_giant_path": 24,
+          "gorge_worm_lair": 7
+        }
+      },
+      {
+        "giant_hp": 30,
+        "giant_dc": 21,
+        "character": "mage",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.9425,
+        "failures": {
+          "gorge_giant_path": 11,
+          "gorge_worm_lair": 12
+        }
+      },
+      {
+        "giant_hp": 30,
+        "giant_dc": 21,
+        "character": "thief",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.98,
+        "failures": {
+          "gorge_giant_path": 7,
+          "gorge_worm_lair": 1
+        }
+      },
+      {
+        "giant_hp": 30,
+        "giant_dc": 24,
+        "character": "hero",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.9925,
+        "failures": {
+          "gorge_giant_path": 3
+        }
+      },
+      {
+        "giant_hp": 30,
+        "giant_dc": 24,
+        "character": "cleric",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.9025,
+        "failures": {
+          "gorge_giant_path": 32,
+          "gorge_worm_lair": 7
+        }
+      },
+      {
+        "giant_hp": 30,
+        "giant_dc": 24,
+        "character": "mage",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.94,
+        "failures": {
+          "gorge_giant_path": 11,
+          "gorge_worm_lair": 13
+        }
+      },
+      {
+        "giant_hp": 30,
+        "giant_dc": 24,
+        "character": "thief",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.965,
+        "failures": {
+          "gorge_giant_path": 13,
+          "gorge_worm_lair": 1
+        }
+      },
+      {
+        "giant_hp": 30,
+        "giant_dc": 27,
+        "character": "hero",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.9925,
+        "failures": {
+          "gorge_giant_path": 3
+        }
+      },
+      {
+        "giant_hp": 30,
+        "giant_dc": 27,
+        "character": "cleric",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.875,
+        "failures": {
+          "gorge_giant_path": 42,
+          "gorge_worm_lair": 8
+        }
+      },
+      {
+        "giant_hp": 30,
+        "giant_dc": 27,
+        "character": "mage",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.94,
+        "failures": {
+          "gorge_giant_path": 12,
+          "gorge_worm_lair": 12
+        }
+      },
+      {
+        "giant_hp": 30,
+        "giant_dc": 27,
+        "character": "thief",
+        "path": "gorge",
+        "n": 400,
+        "success_rate": 0.945,
+        "failures": {
+          "gorge_giant_path": 20,
+          "gorge_worm_lair": 2
+        }
+      }
+    ]
+  },
+  "elio_candidates": {
+    "n": 500,
+    "seed": 20261018,
+    "description": "?????????+3pp?7???/?????????????????????32??????",
+    "rows": [
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "gorge_rockfall_path",
+        "character": "hero",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 5.818,
+        "rounds": 2.574,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "gorge_rockfall_path",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 8.134,
+        "rounds": 3.048,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "gorge_rockfall_path",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 1.182,
+        "rounds": 1.284,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "gorge_rockfall_path",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.99,
+        "hp_loss": 6.566,
+        "rounds": 3.276,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "gorge_giant_path",
+        "character": "hero",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 7.742,
+        "rounds": 3.236,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "gorge_giant_path",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 8.896,
+        "rounds": 3.61,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "gorge_giant_path",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 2.826,
+        "rounds": 1.728,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "gorge_giant_path",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 7.094,
+        "rounds": 3.898,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "gorge_worm_lair",
+        "character": "hero",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 4.9,
+        "rounds": 3,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "gorge_worm_lair",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 5.26,
+        "rounds": 3,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "gorge_worm_lair",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 4.186,
+        "rounds": 1.884,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "gorge_worm_lair",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 2.056,
+        "rounds": 3,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "goblin_fort_fourth",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.864,
+        "hp_loss": 6.432,
+        "rounds": 5.112,
+        "nonterminal": 0,
+        "best_existing": 0.818,
+        "excess_pp": 4.600000000000004
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "cave_crystal_corridor",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.962,
+        "hp_loss": 8.504,
+        "rounds": 7.698,
+        "nonterminal": 0,
+        "best_existing": 0.942,
+        "excess_pp": 2.0000000000000018
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "village_fire_elemental",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.95,
+        "hp_loss": 9.468,
+        "rounds": 3.108,
+        "nonterminal": 0,
+        "best_existing": 0.938,
+        "excess_pp": 1.200000000000001
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "valley_ledge",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.802,
+        "hp_loss": 4.752,
+        "rounds": 1.934,
+        "nonterminal": 0,
+        "best_existing": 0.834,
+        "excess_pp": -3.1999999999999917
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "valley_ledge",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.878,
+        "hp_loss": 3.884,
+        "rounds": 2.074,
+        "nonterminal": 0,
+        "best_existing": 0.884,
+        "excess_pp": -0.6000000000000005
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "dragon_valley_loc",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.812,
+        "hp_loss": 9.614,
+        "rounds": 5.29,
+        "nonterminal": 0,
+        "best_existing": 0.776,
+        "excess_pp": 3.600000000000003
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 3,
+        "location": "draco_battle",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.814,
+        "hp_loss": 10.4,
+        "rounds": 3.478,
+        "nonterminal": 0,
+        "best_existing": 0.766,
+        "excess_pp": 4.799999999999994
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "gorge_rockfall_path",
+        "character": "hero",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 5.494,
+        "rounds": 2.394,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "gorge_rockfall_path",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.996,
+        "hp_loss": 7.764,
+        "rounds": 2.754,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "gorge_rockfall_path",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 1.15,
+        "rounds": 1.282,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "gorge_rockfall_path",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.994,
+        "hp_loss": 6.342,
+        "rounds": 2.978,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "gorge_giant_path",
+        "character": "hero",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 7.188,
+        "rounds": 2.976,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "gorge_giant_path",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 9.008,
+        "rounds": 3.256,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "gorge_giant_path",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 1.952,
+        "rounds": 1.564,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "gorge_giant_path",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 6.906,
+        "rounds": 3.556,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "gorge_worm_lair",
+        "character": "hero",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 4.514,
+        "rounds": 3,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "gorge_worm_lair",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 5.196,
+        "rounds": 3,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "gorge_worm_lair",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 3.006,
+        "rounds": 1.636,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "gorge_worm_lair",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 1.962,
+        "rounds": 3,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "goblin_fort_fourth",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.758,
+        "hp_loss": 7.106,
+        "rounds": 4.582,
+        "nonterminal": 0,
+        "best_existing": 0.818,
+        "excess_pp": -5.999999999999995
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "cave_crystal_corridor",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.966,
+        "hp_loss": 8.646,
+        "rounds": 7.182,
+        "nonterminal": 0,
+        "best_existing": 0.942,
+        "excess_pp": 2.400000000000002
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "village_fire_elemental",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.958,
+        "hp_loss": 9.21,
+        "rounds": 2.856,
+        "nonterminal": 0,
+        "best_existing": 0.938,
+        "excess_pp": 2.0000000000000018
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "valley_ledge",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.872,
+        "hp_loss": 3,
+        "rounds": 1.656,
+        "nonterminal": 0,
+        "best_existing": 0.834,
+        "excess_pp": 3.8000000000000034
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "valley_ledge",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.914,
+        "hp_loss": 2.946,
+        "rounds": 1.876,
+        "nonterminal": 0,
+        "best_existing": 0.884,
+        "excess_pp": 3.0000000000000027
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "dragon_valley_loc",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.844,
+        "hp_loss": 9.514,
+        "rounds": 5.234,
+        "nonterminal": 0,
+        "best_existing": 0.776,
+        "excess_pp": 6.799999999999995
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 4,
+        "location": "draco_battle",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.8,
+        "hp_loss": 10.654,
+        "rounds": 3.29,
+        "nonterminal": 0,
+        "best_existing": 0.766,
+        "excess_pp": 3.400000000000003
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "gorge_rockfall_path",
+        "character": "hero",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 5.836,
+        "rounds": 2.576,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "gorge_rockfall_path",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 8.534,
+        "rounds": 3.05,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "gorge_rockfall_path",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 1.19,
+        "rounds": 1.284,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "gorge_rockfall_path",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.99,
+        "hp_loss": 6.878,
+        "rounds": 3.278,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "gorge_giant_path",
+        "character": "hero",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 7.85,
+        "rounds": 3.242,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "gorge_giant_path",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.994,
+        "hp_loss": 9.294,
+        "rounds": 3.61,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "gorge_giant_path",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 2.848,
+        "rounds": 1.728,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "gorge_giant_path",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.998,
+        "hp_loss": 7.424,
+        "rounds": 3.912,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "gorge_worm_lair",
+        "character": "hero",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 4.9,
+        "rounds": 3,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "gorge_worm_lair",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 5.26,
+        "rounds": 3,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "gorge_worm_lair",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 4.186,
+        "rounds": 1.884,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "gorge_worm_lair",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 2.056,
+        "rounds": 3,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "goblin_fort_fourth",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.712,
+        "hp_loss": 7.76,
+        "rounds": 4.67,
+        "nonterminal": 0,
+        "best_existing": 0.818,
+        "excess_pp": -10.599999999999998
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "cave_crystal_corridor",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.94,
+        "hp_loss": 8.958,
+        "rounds": 7.746,
+        "nonterminal": 0,
+        "best_existing": 0.942,
+        "excess_pp": -0.20000000000000018
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "village_fire_elemental",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.93,
+        "hp_loss": 10.044,
+        "rounds": 3.086,
+        "nonterminal": 0,
+        "best_existing": 0.938,
+        "excess_pp": -0.7999999999999896
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "valley_ledge",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.8,
+        "hp_loss": 4.758,
+        "rounds": 1.932,
+        "nonterminal": 0,
+        "best_existing": 0.834,
+        "excess_pp": -3.399999999999992
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "valley_ledge",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.878,
+        "hp_loss": 3.892,
+        "rounds": 2.074,
+        "nonterminal": 0,
+        "best_existing": 0.884,
+        "excess_pp": -0.6000000000000005
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "dragon_valley_loc",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.802,
+        "hp_loss": 9.702,
+        "rounds": 5.258,
+        "nonterminal": 0,
+        "best_existing": 0.776,
+        "excess_pp": 2.6000000000000023
+      },
+      {
+        "damage": "2d3",
+        "every_n_rounds": 4,
+        "location": "draco_battle",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.764,
+        "hp_loss": 11.202,
+        "rounds": 3.454,
+        "nonterminal": 0,
+        "best_existing": 0.766,
+        "excess_pp": -0.20000000000000018
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "gorge_rockfall_path",
+        "character": "hero",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 5.494,
+        "rounds": 2.394,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "gorge_rockfall_path",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.996,
+        "hp_loss": 7.78,
+        "rounds": 2.754,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "gorge_rockfall_path",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 1.15,
+        "rounds": 1.282,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "gorge_rockfall_path",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.994,
+        "hp_loss": 6.354,
+        "rounds": 2.978,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "gorge_giant_path",
+        "character": "hero",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 7.198,
+        "rounds": 2.976,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "gorge_giant_path",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 9.06,
+        "rounds": 3.256,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "gorge_giant_path",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 1.952,
+        "rounds": 1.564,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "gorge_giant_path",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 6.994,
+        "rounds": 3.556,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "gorge_worm_lair",
+        "character": "hero",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 4.514,
+        "rounds": 3,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "gorge_worm_lair",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 5.196,
+        "rounds": 3,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "gorge_worm_lair",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 3.006,
+        "rounds": 1.636,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "gorge_worm_lair",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 1,
+        "hp_loss": 1.962,
+        "rounds": 3,
+        "nonterminal": 0
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "goblin_fort_fourth",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.732,
+        "hp_loss": 7.876,
+        "rounds": 4.546,
+        "nonterminal": 0,
+        "best_existing": 0.818,
+        "excess_pp": -8.599999999999996
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "cave_crystal_corridor",
+        "character": "cleric",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.962,
+        "hp_loss": 8.782,
+        "rounds": 7.18,
+        "nonterminal": 0,
+        "best_existing": 0.942,
+        "excess_pp": 2.0000000000000018
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "village_fire_elemental",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.954,
+        "hp_loss": 9.334,
+        "rounds": 2.85,
+        "nonterminal": 0,
+        "best_existing": 0.938,
+        "excess_pp": 1.6000000000000014
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "valley_ledge",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.872,
+        "hp_loss": 3,
+        "rounds": 1.656,
+        "nonterminal": 0,
+        "best_existing": 0.834,
+        "excess_pp": 3.8000000000000034
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "valley_ledge",
+        "character": "thief",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.914,
+        "hp_loss": 2.946,
+        "rounds": 1.876,
+        "nonterminal": 0,
+        "best_existing": 0.884,
+        "excess_pp": 3.0000000000000027
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "dragon_valley_loc",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.802,
+        "hp_loss": 9.692,
+        "rounds": 5.23,
+        "nonterminal": 0,
+        "best_existing": 0.776,
+        "excess_pp": 2.6000000000000023
+      },
+      {
+        "damage": "2d4",
+        "every_n_rounds": 5,
+        "location": "draco_battle",
+        "character": "mage",
+        "companion": "hydromancer_elio",
+        "n": 500,
+        "win_rate": 0.776,
+        "hp_loss": 11.05,
+        "rounds": 3.288,
+        "nonterminal": 0,
+        "best_existing": 0.766,
+        "excess_pp": 1.0000000000000009
+      }
+    ]
+  }
+}

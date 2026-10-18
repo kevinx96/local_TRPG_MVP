@@ -16,6 +16,8 @@ def tune(pack: dict[str, Any]) -> None:
         enemy = enemies[identifier]
         enemy.update(hp=hp, max_hp=hp)
         enemy["resistances"].update(resistances)
+        if identifier == "ash_wraith" and pack["meta"].get("oaksdawn_v033"):
+            enemy["resistances"]["holy"] = 1.5
         enemy["combat"]["basic_attack"].update(damage=damage, accuracy=accuracy)
         for skill in enemy["skills"]:
             if skill["kind"] == "attack":

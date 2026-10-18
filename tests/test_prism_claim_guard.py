@@ -31,10 +31,10 @@ class PrismWeaknessTests(unittest.TestCase):
 
     def test_item_multipliers_equipment_and_immunity(self):
         actor = {"resistances": {"ice": 2, "water": 1.5}, "inventory": [
-            {"name": "氷の護符", "combat": {"kind": "passive", "requires_equipped": True,
+            {"name": "氷の護符(活性化済)", "slot": "accessory", "combat": {"kind": "passive", "requires_equipped": True,
              "damage_taken_multipliers": {"ice": .25, "arcane": 3}}}], "equipment": []}
         self.assertEqual(combat.weakness_attack_element(actor), "ice")
-        actor["equipment"] = ["氷の護符"]
+        actor["equipment"] = ["氷の護符(活性化済)"]
         self.assertEqual(combat.weakness_attack_element(actor), "arcane")
         actor["combat_immunities"] = ["arcane"]
         self.assertEqual(combat.weakness_attack_element(actor), "water")

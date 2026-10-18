@@ -4,8 +4,24 @@
     {
       "name": "trpg-host",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "host.run_server", "--no-browser"],
+      "runtimeArgs": [
+        "-m",
+        "host.run_server",
+        "--no-browser"
+      ],
       "port": 8000
+    },
+    {
+      "name": "trpg-host-alt",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "host.run_server",
+        "--no-browser",
+        "--port",
+        "8010"
+      ],
+      "port": 8010
     }
   ]
 }
