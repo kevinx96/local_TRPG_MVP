@@ -889,9 +889,9 @@
 ## step 78 / oaksdawn_chapel 「暁の礼拝堂」 HP 23/23 G 200
 
 - 祈りを捧げてもらう | 5G | 判定不要
-- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要
-- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要 [不可: 聖水所持が必要]
-- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 1d20+wis判定（DC13）
+- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要
+- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要 [不可: 聖水所持が必要]
+- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 1d20+wis判定（DC13）
 - 聖水を分けてもらう |  | 判定不要
 - 大通りへ戻る |  | 判定不要
 - 鐘のことを詳しく聞く |  | 判定不要
@@ -1038,19 +1038,11 @@
 戦闘: attack / basic_attack → skeleton_soldier:1
 - 聖なる杖が骸骨兵に10光属性ダメージ。
 - 攻撃がテストに4ダメージ。
-- 聖光の一撃が骸骨兵に8光属性ダメージ。
-
-## step 91 / bone_field 「骨の野」 HP 19/23 G 200
-
-- 骸骨兵と戦う |  | 危険（戦闘）
-- 霧に紛れて抜ける |  | 1d20+dex判定（DC14）
-
-戦闘: attack / basic_attack → skeleton_soldier:2
-- 聖なる杖が骸骨兵に10光属性ダメージ。
+- 聖光の一撃が骸骨兵に12光属性ダメージ。
 - すべての敵を倒した。
 - 15ゴールドを獲得しました。
 
-## step 92 / bone_field 「骨の野」 HP 19/23 G 215
+## step 91 / bone_field 「骨の野」 HP 19/23 G 215
 
 - 崩れた見張り塔へ向かう |  | 不明
 - 屍鬼の沼へ進む |  | 不明
@@ -1058,7 +1050,7 @@
 > [GM] 骸骨兵は崩れ落ち、ただの骨の山に戻った。
 - 戦闘に勝利しました。 HP 19/23、MP 16/16、SP 9/9。
 
-## step 93 / bone_field 「骨の野」 HP 19/23 G 215
+## step 92 / bone_field 「骨の野」 HP 19/23 G 215
 
 - 崩れた見張り塔へ向かう |  | 不明
 - 屍鬼の沼へ進む |  | 不明
@@ -1069,7 +1061,7 @@
 > [GM] 半ば崩れた石の塔。中では、半透明の兵士が一人、消えた焚き火の前にうずくまっている。
 - 現在地が崩れた見張り塔になりました。
 
-## step 94 / ruined_watchtower 「崩れた見張り塔」 HP 19/23 G 215
+## step 93 / ruined_watchtower 「崩れた見張り塔」 HP 19/23 G 215
 
 - 亡霊の兵士に話しかける |  | 判定不要
 - 塔の上を調べる |  | 判定不要
@@ -1080,7 +1072,7 @@
 > [プレイヤー] 亡霊の兵士に話しかける
 > [GM] 亡霊は顔を上げた。「……十年前、将軍ドラコの進言で、我らは竜の谷へ送られた。谷に着いた夜、白い霜が陣を覆い、気づけば皆ここで骨になっていた。紅竜の炎ではない。あれは、ひどく冷たかった」
 
-## step 95 / ruined_watchtower 「崩れた見張り塔」 HP 19/23 G 215
+## step 94 / ruined_watchtower 「崩れた見張り塔」 HP 19/23 G 215
 
 - 亡霊の兵士に話しかける |  | 判定不要
 - 塔の上を調べる |  | 判定不要
@@ -1092,7 +1084,7 @@
 > [GM] 崩れた階段の上に、古い衛兵の外套が残っていた。裏地には、死者を鎮める祈りの文句が縫い込まれている。
 - 墓守の外套 x1を入手しました。
 
-## step 96 / ruined_watchtower 「崩れた見張り塔」 HP 19/23 G 215
+## step 95 / ruined_watchtower 「崩れた見張り塔」 HP 19/23 G 215
 
 - 亡霊の兵士に話しかける |  | 判定不要
 - 塔の上を調べる |  | 判定不要 [不可: 完了済みです。]
@@ -1104,7 +1096,7 @@
 > [GM] 消えた焚き火に火を入れ、少しだけ休んだ。亡霊は黙って、その火を見つめていた。
 - HP・MP・SPが全回復しました。
 
-## step 97 / ruined_watchtower 「崩れた見張り塔」 HP 23/23 G 215
+## step 96 / ruined_watchtower 「崩れた見張り塔」 HP 23/23 G 215
 
 - 亡霊の兵士に話しかける |  | 判定不要
 - 塔の上を調べる |  | 判定不要 [不可: 完了済みです。]
@@ -1116,7 +1108,7 @@
 > [GM] 霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。
 - 現在地が骨の野になりました。
 
-## step 98 / bone_field 「骨の野」 HP 23/23 G 215
+## step 97 / bone_field 「骨の野」 HP 23/23 G 215
 
 - 崩れた見張り塔へ向かう |  | 判定不要
 - 屍鬼の沼へ進む |  | 不明
@@ -1127,7 +1119,7 @@
 > [GM] 黒い水が淀む沼地。泥の中から、腐った腕が何本も突き出している。
 - 現在地が屍鬼の沼になりました。
 
-## step 99 / ghoul_marsh 「屍鬼の沼」 HP 23/23 G 215
+## step 98 / ghoul_marsh 「屍鬼の沼」 HP 23/23 G 215
 
 - 屍鬼と戦う |  | 危険（戦闘）
 - 沼の縁を伝って抜ける |  | 1d20+dex判定（DC15）
@@ -1138,7 +1130,7 @@
 > [GM] 腐った腕の間を縫うように、沼の縁の倒木を渡りきった。屍鬼たちは泥の中で呻くばかりで、こちらに気づかない。
 - 魔力の果実 x1を入手しました。
 
-## step 100 / ghoul_marsh 「屍鬼の沼」 HP 23/23 G 215
+## step 99 / ghoul_marsh 「屍鬼の沼」 HP 23/23 G 215
 
 - 骨の野へ戻る |  | 判定不要
 - 墓守の礼拝堂へ向かう |  | 不明
@@ -1153,7 +1145,7 @@
 - 「古戦場の外れの礼拝堂に、昔の鐘が残っているのです。誰かがあの鐘を正しく鳴らせば、死者は眠りにつけるはず……」
 - クエスト更新：古戦場の鐘
 
-## step 101 / grave_chapel 「墓守の礼拝堂」 HP 23/23 G 215
+## step 100 / grave_chapel 「墓守の礼拝堂」 HP 23/23 G 215
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
@@ -1162,17 +1154,17 @@
 > [プレイヤー] 骸骨の騎士と戦う
 > [GM] 骸骨の騎士がゆっくりと立ち上がり、大剣を両手で構えた。兜の奥で、青白い光が揺れている。
 
-## step 102 / grave_chapel 「墓守の礼拝堂」 HP 23/23 G 215
+## step 101 / grave_chapel 「墓守の礼拝堂」 HP 23/23 G 215
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
 
 戦闘: skill / holy_guard → grave_knight:1
 - 聖なる守護を使用し、守りを固めた。
-- 攻撃がテストに10ダメージ。
-- 聖光の一撃が墓守の骸骨騎士に4光属性ダメージ。
+- 攻撃がテストに6ダメージ。
+- 聖光の一撃が墓守の骸骨騎士に14光属性ダメージ。
 
-## step 103 / grave_chapel 「墓守の礼拝堂」 HP 13/23 G 215
+## step 102 / grave_chapel 「墓守の礼拝堂」 HP 17/23 G 215
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
@@ -1180,32 +1172,32 @@
 戦闘: skill / holy_guard → grave_knight:1
 - 聖なる守護を使用し、守りを固めた。
 - 攻撃はテストに当たらなかった。
-- 聖光の一撃が墓守の骸骨騎士に6光属性ダメージ。
+- 聖光の一撃が墓守の骸骨騎士に14光属性ダメージ。
 
-## step 104 / grave_chapel 「墓守の礼拝堂」 HP 13/23 G 215
+## step 103 / grave_chapel 「墓守の礼拝堂」 HP 17/23 G 215
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
 
 戦闘: attack / basic_attack → grave_knight:1
-- 聖なる杖が墓守の骸骨騎士に14光属性ダメージ。
-- 攻撃がテストに15ダメージ。
+- 聖なる杖が墓守の骸骨騎士に15光属性ダメージ。
+- 攻撃がテストに18ダメージ。
 - プレイヤーは戦闘不能になった。
 - 墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。
 
-## step 105 / grave_chapel 「墓守の礼拝堂」 HP 0/23 G 215
+## step 104 / grave_chapel 「墓守の礼拝堂」 HP 0/23 G 215
 
 > [GM] 墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。
 - 戦闘に敗北しました。 HP 0/23、MP 4/16、SP 9/9。
 
-## step 106 / grave_chapel 「墓守の礼拝堂」 HP 0/23 G 215
+## step 105 / grave_chapel 「墓守の礼拝堂」 HP 0/23 G 215
 
 
-終了: {"ending": "combat_defeat", "reason": "墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。", "combat_defeat": true, "created_at": "2026-10-18T06:43:47.540354+00:00", "epilogue": []}
+終了: {"ending": "combat_defeat", "reason": "墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。", "combat_defeat": true, "created_at": "2026-10-18T07:35:22.392580+00:00", "epilogue": []}
 > [GM] 運命の糸がほどけ、あなたは再び霧の古戦場の入口に立っていた。
 - 霧の古戦場の入口からやり直しました。
 
-## step 107 / old_battlefield 「霧の古戦場」 HP 23/23 G 200
+## step 106 / old_battlefield 「霧の古戦場」 HP 23/23 G 200
 
 - 骨の野へ進む |  | 不明
 - 森の出口へ戻る |  | 判定不要
@@ -1216,7 +1208,7 @@
 > [GM] 霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。
 - 現在地が骨の野になりました。
 
-## step 108 / bone_field 「骨の野」 HP 23/23 G 200
+## step 107 / bone_field 「骨の野」 HP 23/23 G 200
 
 - 骸骨兵と戦う |  | 危険（戦闘）
 - 霧に紛れて抜ける |  | 1d20+dex判定（DC14）
@@ -1225,7 +1217,7 @@
 > [プレイヤー] 霧に紛れて抜ける
 > [GM] 骸骨兵が霧の向こうを見つめている隙に、野を抜けた。
 
-## step 109 / bone_field 「骨の野」 HP 23/23 G 200
+## step 108 / bone_field 「骨の野」 HP 23/23 G 200
 
 - 崩れた見張り塔へ向かう |  | 不明
 - 屍鬼の沼へ進む |  | 不明
@@ -1236,7 +1228,7 @@
 > [GM] 半ば崩れた石の塔。中では、半透明の兵士が一人、消えた焚き火の前にうずくまっている。
 - 現在地が崩れた見張り塔になりました。
 
-## step 110 / ruined_watchtower 「崩れた見張り塔」 HP 23/23 G 200
+## step 109 / ruined_watchtower 「崩れた見張り塔」 HP 23/23 G 200
 
 - 亡霊の兵士に話しかける |  | 判定不要
 - 塔の上を調べる |  | 判定不要
@@ -1247,7 +1239,7 @@
 > [プレイヤー] 亡霊の兵士に話しかける
 > [GM] 亡霊は顔を上げた。「……十年前、将軍ドラコの進言で、我らは竜の谷へ送られた。谷に着いた夜、白い霜が陣を覆い、気づけば皆ここで骨になっていた。紅竜の炎ではない。あれは、ひどく冷たかった」
 
-## step 111 / ruined_watchtower 「崩れた見張り塔」 HP 23/23 G 200
+## step 110 / ruined_watchtower 「崩れた見張り塔」 HP 23/23 G 200
 
 - 亡霊の兵士に話しかける |  | 判定不要
 - 塔の上を調べる |  | 判定不要
@@ -1259,7 +1251,7 @@
 > [GM] 崩れた階段の上に、古い衛兵の外套が残っていた。裏地には、死者を鎮める祈りの文句が縫い込まれている。
 - 墓守の外套 x1を入手しました。
 
-## step 112 / ruined_watchtower 「崩れた見張り塔」 HP 23/23 G 200
+## step 111 / ruined_watchtower 「崩れた見張り塔」 HP 23/23 G 200
 
 - 亡霊の兵士に話しかける |  | 判定不要
 - 塔の上を調べる |  | 判定不要 [不可: 完了済みです。]
@@ -1271,7 +1263,7 @@
 > [GM] 消えた焚き火に火を入れ、少しだけ休んだ。亡霊は黙って、その火を見つめていた。
 - HP・MP・SPが全回復しました。
 
-## step 113 / ruined_watchtower 「崩れた見張り塔」 HP 23/23 G 200
+## step 112 / ruined_watchtower 「崩れた見張り塔」 HP 23/23 G 200
 
 - 亡霊の兵士に話しかける |  | 判定不要
 - 塔の上を調べる |  | 判定不要 [不可: 完了済みです。]
@@ -1283,7 +1275,7 @@
 > [GM] 霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。
 - 現在地が骨の野になりました。
 
-## step 114 / bone_field 「骨の野」 HP 23/23 G 200
+## step 113 / bone_field 「骨の野」 HP 23/23 G 200
 
 - 崩れた見張り塔へ向かう |  | 判定不要
 - 屍鬼の沼へ進む |  | 不明
@@ -1294,7 +1286,7 @@
 > [GM] 黒い水が淀む沼地。泥の中から、腐った腕が何本も突き出している。
 - 現在地が屍鬼の沼になりました。
 
-## step 115 / ghoul_marsh 「屍鬼の沼」 HP 23/23 G 200
+## step 114 / ghoul_marsh 「屍鬼の沼」 HP 23/23 G 200
 
 - 屍鬼と戦う |  | 危険（戦闘）
 - 沼の縁を伝って抜ける |  | 1d20+dex判定（DC15）
@@ -1305,7 +1297,7 @@
 > [GM] 腐った腕の間を縫うように、沼の縁の倒木を渡りきった。屍鬼たちは泥の中で呻くばかりで、こちらに気づかない。
 - 魔力の果実 x1を入手しました。
 
-## step 116 / ghoul_marsh 「屍鬼の沼」 HP 23/23 G 200
+## step 115 / ghoul_marsh 「屍鬼の沼」 HP 23/23 G 200
 
 - 骨の野へ戻る |  | 危険（戦闘）
 - 墓守の礼拝堂へ向かう |  | 不明
@@ -1320,7 +1312,7 @@
 - 「古戦場の外れの礼拝堂に、昔の鐘が残っているのです。誰かがあの鐘を正しく鳴らせば、死者は眠りにつけるはず……」
 - クエスト更新：古戦場の鐘
 
-## step 117 / grave_chapel 「墓守の礼拝堂」 HP 23/23 G 200
+## step 116 / grave_chapel 「墓守の礼拝堂」 HP 23/23 G 200
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
@@ -1328,6 +1320,16 @@
 選択: 骸骨の騎士と戦う
 > [プレイヤー] 骸骨の騎士と戦う
 > [GM] 骸骨の騎士がゆっくりと立ち上がり、大剣を両手で構えた。兜の奥で、青白い光が揺れている。
+
+## step 117 / grave_chapel 「墓守の礼拝堂」 HP 23/23 G 200
+
+- 骸骨の騎士と戦う |  | 危険（戦闘）
+- 屍鬼の沼へ進む |  | 危険（戦闘）
+
+戦闘: skill / holy_guard → grave_knight:1
+- 聖なる守護を使用し、守りを固めた。
+- 攻撃はテストに当たらなかった。
+- 聖光の一撃が墓守の骸骨騎士に6光属性ダメージ。
 
 ## step 118 / grave_chapel 「墓守の礼拝堂」 HP 23/23 G 200
 
@@ -1337,59 +1339,29 @@
 戦闘: skill / holy_guard → grave_knight:1
 - 聖なる守護を使用し、守りを固めた。
 - 攻撃はテストに当たらなかった。
-- 聖光の一撃が墓守の骸骨騎士に9光属性ダメージ。
+- 聖光の一撃が墓守の骸骨騎士に14光属性ダメージ。
 
 ## step 119 / grave_chapel 「墓守の礼拝堂」 HP 23/23 G 200
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
 
-戦闘: skill / holy_guard → grave_knight:1
-- 聖なる守護を使用し、守りを固めた。
-- 攻撃がテストに8ダメージ。
-- 聖光の一撃が墓守の骸骨騎士に9光属性ダメージ。
-
-## step 120 / grave_chapel 「墓守の礼拝堂」 HP 15/23 G 200
-
-- 骸骨の騎士と戦う |  | 危険（戦闘）
-- 屍鬼の沼へ進む |  | 危険（戦闘）
-
 戦闘: attack / basic_attack → grave_knight:1
-- 聖なる杖が墓守の骸骨騎士に6光属性ダメージ。
-- 攻撃がテストに14ダメージ。
-- 癒しの祈りがHPを6回復した。
-
-## step 121 / grave_chapel 「墓守の礼拝堂」 HP 7/23 G 200
-
-- 骸骨の騎士と戦う |  | 危険（戦闘）
-- 屍鬼の沼へ進む |  | 危険（戦闘）
-
-戦闘: item / healing_scroll → grave_knight:1
-- 治療の巻物を使い、HPを16回復した。
-- 攻撃がテストに15ダメージ。
-- 癒しの祈りがHPを6回復した。
-
-## step 122 / grave_chapel 「墓守の礼拝堂」 HP 14/23 G 200
-
-- 骸骨の騎士と戦う |  | 危険（戦闘）
-- 屍鬼の沼へ進む |  | 危険（戦闘）
-
-戦闘: attack / basic_attack → grave_knight:1
-- 聖なる杖が墓守の骸骨騎士に10光属性ダメージ。
-- 攻撃がテストに8ダメージ。
-- 癒しの祈りがHPを6回復した。
-
-## step 123 / grave_chapel 「墓守の礼拝堂」 HP 12/23 G 200
-
-- 骸骨の騎士と戦う |  | 危険（戦闘）
-- 屍鬼の沼へ進む |  | 危険（戦闘）
-
-戦闘: attack / basic_attack → grave_knight:1
-- 聖なる杖が墓守の骸骨騎士に12光属性ダメージ。
+- 聖なる杖が墓守の骸骨騎士に8光属性ダメージ。
 - 攻撃はテストに当たらなかった。
-- 聖光の一撃が墓守の骸骨騎士に4光属性ダメージ。
+- 聖光の一撃が墓守の骸骨騎士に16光属性ダメージ。
 
-## step 124 / grave_chapel 「墓守の礼拝堂」 HP 12/23 G 200
+## step 120 / grave_chapel 「墓守の礼拝堂」 HP 23/23 G 200
+
+- 骸骨の騎士と戦う |  | 危険（戦闘）
+- 屍鬼の沼へ進む |  | 危険（戦闘）
+
+戦闘: attack / basic_attack → grave_knight:1
+- 聖なる杖は墓守の骸骨騎士に当たらなかった。
+- 攻撃がテストに17ダメージ。
+- 癒しの祈りがHPを5回復した。
+
+## step 121 / grave_chapel 「墓守の礼拝堂」 HP 11/23 G 200
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
@@ -1401,15 +1373,15 @@
 - 生命の果実 x2を入手しました。
 - 聖銀 x1を入手しました。
 
-## step 125 / grave_chapel 「墓守の礼拝堂」 HP 12/23 G 260
+## step 122 / grave_chapel 「墓守の礼拝堂」 HP 11/23 G 260
 
 - 礼拝堂の裏門から村へ抜ける |  | 不明
 - 屍鬼の沼へ進む |  | 危険（戦闘）
 - 弔いの鐘を鳴らす |  | 判定不要
 > [GM] 骸骨の騎士は、大剣を祭壇に立てかけるように崩れ落ちた。兜の奥から、赤い果実が二つ転がり出た。
-- 戦闘に勝利しました。 HP 12/23、MP 4/16、SP 9/9。
+- 戦闘に勝利しました。 HP 11/23、MP 4/16、SP 9/9。
 
-## step 126 / grave_chapel 「墓守の礼拝堂」 HP 12/23 G 260
+## step 123 / grave_chapel 「墓守の礼拝堂」 HP 11/23 G 260
 
 - 礼拝堂の裏門から村へ抜ける |  | 不明
 - 屍鬼の沼へ進む |  | 危険（戦闘）
@@ -1422,7 +1394,7 @@
 - 現在地が炎の中の結氷になりました。
 - クエスト更新：紅き邪竜の討伐
 
-## step 127 / village_frozen_clue 「炎の中の結氷」 HP 33/33 G 260
+## step 124 / village_frozen_clue 「炎の中の結氷」 HP 33/33 G 260
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 村を出ようとします | 不明
@@ -1434,7 +1406,7 @@
 > [GM] 村を離れようとした街道で、赤い法衣と炎に包まれた骸骨の魔法使いが待ち受けていた。
 - 現在地が燃える街道・Xanxusの尋問になりました。
 
-## step 128 / xanxus_confrontation 「燃える街道・Xanxusの尋問」 HP 33/33 G 260
+## step 125 / xanxus_confrontation 「燃える街道・Xanxusの尋問」 HP 33/33 G 260
 
 - ごまかして切り抜ける | 何も察知していないふりをします | 危険
 - 先手を打って攻撃する | Xanxusが動く前に仕掛けます | 危険
@@ -1445,7 +1417,7 @@
 > [GM] 攻撃を放つより早く、Xanxusの炎が武器ごと身体を弾き返した。『先手を取ったつもりか？』着地点を炎の輪が囲み、Xanxusは陨石を呼ぶように片手を天へ掲げる。
 - 現在地がXanxus戦になりました。
 
-## step 129 / xanxus_battle 「Xanxus戦」 HP 33/33 G 260
+## step 126 / xanxus_battle 「Xanxus戦」 HP 33/33 G 260
 
 
 戦闘: skill / holy_guard → xanxus:1
@@ -1454,31 +1426,31 @@
 - 火炎旋渦が12ダメージを与えた。
 - 聖光の一撃が赤炎骸骨Xanxusに1光属性ダメージ。
 
-## step 130 / xanxus_battle 「Xanxus戦」 HP 21/33 G 260
+## step 127 / xanxus_battle 「Xanxus戦」 HP 21/33 G 260
 
 
 戦闘: skill / holy_guard → xanxus:1
 - 聖なる守護を使用し、守りを固めた。
 - 隕石召喚がテストに20ダメージ。
 - 火炎旋渦が12ダメージを与えた。
-- 癒しの祈りがHPを8回復した。
+- 癒しの祈りがHPを7回復した。
 
-## step 131 / xanxus_battle 「Xanxus戦」 HP 8/33 G 260
+## step 128 / xanxus_battle 「Xanxus戦」 HP 7/33 G 260
 
 
 戦闘: item / healing_scroll → xanxus:1
-- 治療の巻物を使い、HPを25回復した。
+- 治療の巻物を使い、HPを26回復した。
 - 隕石召喚がテストに50ダメージ。
 - プレイヤーは戦闘不能になった。
 - HPが1回復しました。
 - 現在地がXanxusの最後通告になりました。
 
-## step 132 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/33 G 260
+## step 129 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/33 G 260
 
 > [GM] Xanxusは倒れたあなたを見下ろした。『大人しく先を探索しろ。そして私の火種を飲め。任務を放棄すれば、その場で爆ぜさせる』
 - 戦闘に敗北しました。 HP 1/33、MP 8/20、SP 11/11。
 
-## step 133 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/33 G 260
+## step 130 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/33 G 260
 
 - 大人しく従う | 火種を受け取り、探索を続けます | 判定不要
 - 死んでも従わない | Xanxusの要求を拒絶します | 危険（戦闘）
@@ -1488,101 +1460,104 @@
 > [GM] Xanxusがとどめの炎を放とうとした瞬間、青い光が火線を切り裂いた。姿を消していたワーロックがあなたを背後へ庇う。『Xanxus、それは少しやり過ぎだ』青いローブの周囲に八属性の水晶球が展開し、二人の魔法使いの戦闘が始まる。
 - 現在地がワーロック対Xanxusになりました。
 
-## step 134 / warlock_rescue_battle 「ワーロック対Xanxus」 HP 100/100 G 0
+## step 131 / warlock_rescue_battle 「ワーロック対Xanxus」 HP 100/100 G 0
 
 
 戦闘: skill / element_switch → xanxus:1
 - 元素切替でfire属性を無効化した。
 - 隕石召喚が青いローブの魔法使い・ワーロックに0ダメージ。
+
+## step 132 / warlock_rescue_battle 「ワーロック対Xanxus」 HP 100/100 G 0
+
+
+戦闘: skill / element_switch → xanxus:1
+- 元素切替でfire属性を無効化した。
+- 隕石召喚が青いローブの魔法使い・ワーロックに0ダメージ。
+
+## step 133 / warlock_rescue_battle 「ワーロック対Xanxus」 HP 100/100 G 0
+
+
+戦闘: skill / element_prayer → xanxus:1
+- 元素祈喚・windが赤炎骸骨Xanxusに23ダメージ。
+- 元素祈喚・windが赤炎骸骨Xanxusに38ダメージ。
+- 元素祈喚・windが赤炎骸骨Xanxusに17ダメージ。
+- 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
+- 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
+- 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
+- 元素祈喚・waterが赤炎骸骨Xanxusに57ダメージ。
+- 元素祈喚・waterが赤炎骸骨Xanxusに34ダメージ。
+- 元素祈喚・waterは赤炎骸骨Xanxusに当たらなかった。
+- 元素祈喚・lightningが赤炎骸骨Xanxusに25ダメージ。
+- 元素祈喚・lightningが赤炎骸骨Xanxusに40ダメージ。
+- 元素祈喚・lightningが赤炎骸骨Xanxusに47ダメージ。
+- 元素祈喚・iceは赤炎骸骨Xanxusに当たらなかった。
+- 元素祈喚・iceが赤炎骸骨Xanxusに26ダメージ。
+- 元素祈喚・iceが赤炎骸骨Xanxusに39ダメージ。
+- 元素祈喚・earthは赤炎骸骨Xanxusに当たらなかった。
+- 元素祈喚・earthが赤炎骸骨Xanxusに39ダメージ。
+- 元素祈喚・earthが赤炎骸骨Xanxusに22ダメージ。
+- 元素祈喚・lightが赤炎骸骨Xanxusに25ダメージ。
+- 元素祈喚・lightが赤炎骸骨Xanxusに43ダメージ。
+- 元素祈喚・lightが赤炎骸骨Xanxusに31ダメージ。
+- 元素祈喚・darkは赤炎骸骨Xanxusに当たらなかった。
+- 元素祈喚・darkは赤炎骸骨Xanxusに当たらなかった。
+- 元素祈喚・darkが赤炎骸骨Xanxusに0ダメージ。
+- 赤炎骸骨Xanxusは浴火重生でHPを100回復した。
+
+## step 134 / warlock_rescue_battle 「ワーロック対Xanxus」 HP 100/100 G 0
+
+
+戦闘: skill / element_prayer → xanxus:1
+- 元素祈喚・windが赤炎骸骨Xanxusに14ダメージ。
+- 元素祈喚・windが赤炎骸骨Xanxusに22ダメージ。
+- 元素祈喚・windが赤炎骸骨Xanxusに41ダメージ。
+- 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
+- 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
+- 元素祈喚・fireは赤炎骸骨Xanxusに当たらなかった。
+- 元素祈喚・waterが赤炎骸骨Xanxusに53ダメージ。
+- 元素祈喚・waterが赤炎骸骨Xanxusに48ダメージ。
+- 元素祈喚・waterが赤炎骸骨Xanxusに30ダメージ。
+- 元素祈喚・lightningが赤炎骸骨Xanxusに14ダメージ。
+- 元素祈喚・lightningが赤炎骸骨Xanxusに27ダメージ。
+- 元素祈喚・lightningが赤炎骸骨Xanxusに30ダメージ。
+- 元素祈喚・iceが赤炎骸骨Xanxusに40ダメージ。
+- 元素祈喚・iceが赤炎骸骨Xanxusに24ダメージ。
+- 元素祈喚・iceが赤炎骸骨Xanxusに21ダメージ。
+- 元素祈喚・earthが赤炎骸骨Xanxusに29ダメージ。
+- 元素祈喚・earthが赤炎骸骨Xanxusに45ダメージ。
+- 赤炎骸骨Xanxusは浴火重生でHPを100回復した。
+- 元素祈喚・earthは赤炎骸骨Xanxusに当たらなかった。
+- 元素祈喚・lightが赤炎骸骨Xanxusに37ダメージ。
+- 元素祈喚・lightが赤炎骸骨Xanxusに21ダメージ。
+- 元素祈喚・lightが赤炎骸骨Xanxusに33ダメージ。
+- 元素祈喚・darkが赤炎骸骨Xanxusに0ダメージ。
+- 元素祈喚・darkが赤炎骸骨Xanxusに0ダメージ。
+- 元素祈喚・darkは赤炎骸骨Xanxusに当たらなかった。
+- 赤炎骸骨Xanxusは火炎旋渦を展開した。
+- 火炎旋渦が0ダメージを与えた。
 
 ## step 135 / warlock_rescue_battle 「ワーロック対Xanxus」 HP 100/100 G 0
 
 
-戦闘: skill / element_switch → xanxus:1
-- 元素切替でfire属性を無効化した。
-- 隕石召喚が青いローブの魔法使い・ワーロックに0ダメージ。
-
-## step 136 / warlock_rescue_battle 「ワーロック対Xanxus」 HP 100/100 G 0
-
-
 戦闘: skill / element_prayer → xanxus:1
-- 元素祈喚・windが赤炎骸骨Xanxusに46ダメージ。
-- 元素祈喚・windが赤炎骸骨Xanxusに41ダメージ。
-- 元素祈喚・windが赤炎骸骨Xanxusに25ダメージ。
-- 元素祈喚・fireは赤炎骸骨Xanxusに当たらなかった。
+- 元素祈喚・windが赤炎骸骨Xanxusに30ダメージ。
+- 元素祈喚・windが赤炎骸骨Xanxusに17ダメージ。
+- 元素祈喚・windが赤炎骸骨Xanxusに20ダメージ。
 - 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
 - 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
-- 元素祈喚・waterが赤炎骸骨Xanxusに21ダメージ。
+- 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
+- 元素祈喚・waterが赤炎骸骨Xanxusに22ダメージ。
 - 元素祈喚・waterが赤炎骸骨Xanxusに41ダメージ。
-- 元素祈喚・waterが赤炎骸骨Xanxusに37ダメージ。
-- 元素祈喚・lightningが赤炎骸骨Xanxusに31ダメージ。
-- 元素祈喚・lightningが赤炎骸骨Xanxusに28ダメージ。
-- 元素祈喚・lightningが赤炎骸骨Xanxusに34ダメージ。
-- 元素祈喚・iceが赤炎骸骨Xanxusに31ダメージ。
-- 元素祈喚・iceが赤炎骸骨Xanxusに36ダメージ。
-- 元素祈喚・iceは赤炎骸骨Xanxusに当たらなかった。
-- 元素祈喚・earthが赤炎骸骨Xanxusに25ダメージ。
-- 元素祈喚・earthが赤炎骸骨Xanxusに16ダメージ。
-- 元素祈喚・earthが赤炎骸骨Xanxusに47ダメージ。
-- 元素祈喚・lightが赤炎骸骨Xanxusに27ダメージ。
-- 元素祈喚・lightが赤炎骸骨Xanxusに22ダメージ。
-- 元素祈喚・lightが赤炎骸骨Xanxusに41ダメージ。
-- 元素祈喚・darkが赤炎骸骨Xanxusに0ダメージ。
-- 元素祈喚・darkが赤炎骸骨Xanxusに0ダメージ。
-- 元素祈喚・darkが赤炎骸骨Xanxusに0ダメージ。
-- 赤炎骸骨Xanxusは浴火重生でHPを100回復した。
-
-## step 137 / warlock_rescue_battle 「ワーロック対Xanxus」 HP 100/100 G 0
-
-
-戦闘: skill / element_prayer → xanxus:1
-- 元素祈喚・windが赤炎骸骨Xanxusに26ダメージ。
-- 元素祈喚・windが赤炎骸骨Xanxusに49ダメージ。
-- 元素祈喚・windが赤炎骸骨Xanxusに18ダメージ。
-- 元素祈喚・fireは赤炎骸骨Xanxusに当たらなかった。
-- 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
-- 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
-- 元素祈喚・waterが赤炎骸骨Xanxusに29ダメージ。
-- 元素祈喚・waterが赤炎骸骨Xanxusに45ダメージ。
-- 元素祈喚・waterは赤炎骸骨Xanxusに当たらなかった。
-- 元素祈喚・lightningが赤炎骸骨Xanxusに37ダメージ。
-- 元素祈喚・lightningが赤炎骸骨Xanxusに21ダメージ。
-- 元素祈喚・lightningが赤炎骸骨Xanxusに33ダメージ。
-- 元素祈喚・iceが赤炎骸骨Xanxusに37ダメージ。
-- 元素祈喚・iceが赤炎骸骨Xanxusに27ダメージ。
-- 元素祈喚・iceは赤炎骸骨Xanxusに当たらなかった。
-- 元素祈喚・earthが赤炎骸骨Xanxusに28ダメージ。
-- 元素祈喚・earthが赤炎骸骨Xanxusに1ダメージ。
-- 赤炎骸骨Xanxusは浴火重生でHPを100回復した。
-- 元素祈喚・earthが赤炎骸骨Xanxusに33ダメージ。
-- 元素祈喚・lightが赤炎骸骨Xanxusに40ダメージ。
-- 元素祈喚・lightが赤炎骸骨Xanxusに39ダメージ。
-- 元素祈喚・lightが赤炎骸骨Xanxusに50ダメージ。
-- 元素祈喚・darkが赤炎骸骨Xanxusに0ダメージ。
-- 元素祈喚・darkが赤炎骸骨Xanxusに0ダメージ。
-- 元素祈喚・darkは赤炎骸骨Xanxusに当たらなかった。
-- 隕石召喚が青いローブの魔法使い・ワーロックに0ダメージ。
-
-## step 138 / warlock_rescue_battle 「ワーロック対Xanxus」 HP 100/100 G 0
-
-
-戦闘: skill / element_prayer → xanxus:1
-- 元素祈喚・windが赤炎骸骨Xanxusに31ダメージ。
-- 元素祈喚・windが赤炎骸骨Xanxusに28ダメージ。
-- 元素祈喚・windが赤炎骸骨Xanxusに37ダメージ。
-- 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
-- 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
-- 元素祈喚・fireが赤炎骸骨Xanxusに0ダメージ。
-- 元素祈喚・waterが赤炎骸骨Xanxusに45ダメージ。
+- 元素祈喚・waterが赤炎骸骨Xanxusに41ダメージ。
 - すべての敵を倒した。
 - 現在地が炎の中の結氷になりました。
 
-## step 139 / village_frozen_clue 「炎の中の結氷」 HP 100/100 G 0
+## step 136 / village_frozen_clue 「炎の中の結氷」 HP 100/100 G 0
 
 > [GM] Xanxusは頭を抱えて炎の彼方へ逃げ去った。ワーロックは、かつて元素・人類・竜が互いを害さない条約を結び、竜と人類は友好関係にあったと説明する。邪竜の暴走には誰かの思惑があり、多くの者が別々の狙いを抱えている。『くれぐれも用心してください。私は背後から見守っています』そう告げると、ワーロックは姿を消した。
 - 戦闘に勝利しました。 HP 100/100、MP 999/999、SP 20/20。
 
-## step 140 / village_frozen_clue 「炎の中の結氷」 HP 1/33 G 260
+## step 137 / village_frozen_clue 「炎の中の結氷」 HP 1/33 G 260
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 第4章へ向かいます | 不明
@@ -1594,7 +1569,7 @@
 > [GM] 白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」
 - 現在地が麓の村・避難所になりました。
 
-## step 141 / village 「麓の村・避難所」 HP 1/33 G 260
+## step 138 / village 「麓の村・避難所」 HP 1/33 G 260
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1610,7 +1585,7 @@
 > [プレイヤー] 長老に邪竜の弱点を聞く
 > [GM] 白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」
 
-## step 142 / village 「麓の村・避難所」 HP 1/33 G 260
+## step 139 / village 「麓の村・避難所」 HP 1/33 G 260
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1626,7 +1601,7 @@
 > [プレイヤー] 古い盟約について聞く
 > [GM] 「昔、元素と人と竜は互いを害さぬと誓い合った。北の雪嶺には、盟約を見張る白き竜がいると聞く」
 
-## step 143 / village 「麓の村・避難所」 HP 1/33 G 260
+## step 140 / village 「麓の村・避難所」 HP 1/33 G 260
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1643,7 +1618,7 @@
 > [GM] 邪竜イグニスが潜む谷の麓、小さな村にたどり着いた。冷たい風が吹き抜ける中、村人たちは怯えた様子で暮らしている。邪竜に立ち向かう術を得るには、まず情報を集め、旅の支度を整える必要がありそうだ。
 - 現在地が炎の中の結氷になりました。
 
-## step 144 / village_frozen_clue 「炎の中の結氷」 HP 1/33 G 260
+## step 141 / village_frozen_clue 「炎の中の結氷」 HP 1/33 G 260
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 第4章へ向かいます | 不明
@@ -1655,7 +1630,7 @@
 > [GM] 凍結した道を辿ると、冷気が人の形を取り、氷の精霊となって行く手を塞いだ。
 - 現在地が凍結した村・氷の精霊になりました。
 
-## step 145 / ice_elemental_encounter 「凍結した村・氷の精霊」 HP 1/33 G 260
+## step 142 / ice_elemental_encounter 「凍結した村・氷の精霊」 HP 1/33 G 260
 
 - 氷の精霊と戦う | 戦闘を開始します | 危険（戦闘）
 - 氷の精霊を迂回する | 冷気の薄い経路を探します | 1d20+int判定（DC14）
@@ -1668,71 +1643,55 @@
 - 魔力の果実 x1を入手しました。
 - 現在地が炎上する村・氷霜の巨狼になりました。
 
-## step 146 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 9/33 G 260
+## step 143 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 8/33 G 260
 
 
 戦闘: item / healing_scroll → frost_dire_wolf:1
-- 治療の巻物を使い、HPを24回復した。
-- 凍爪がテストに4ダメージ。
-- 聖光の一撃が氷霜の巨狼に5光属性ダメージ。
+- 治療の巻物を使い、HPを25回復した。
+- 凍爪がテストに11ダメージ。
+- 聖光の一撃が氷霜の巨狼に7光属性ダメージ。
 
-## step 147 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 29/33 G 260
+## step 144 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 22/33 G 260
 
 
 戦闘: skill / holy_guard → frost_dire_wolf:1
 - 聖なる守護を使用し、守りを固めた。
-- 凍爪がテストに2ダメージ。
-- 聖光の一撃が氷霜の巨狼に4光属性ダメージ。
-
-## step 148 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 27/33 G 260
-
-
-戦闘: attack / basic_attack → frost_dire_wolf:1
-- 聖なる杖が氷霜の巨狼に7光属性ダメージ。
-- 凍爪がテストに8ダメージ。
-- 聖光の一撃が氷霜の巨狼に4光属性ダメージ。
-
-## step 149 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 19/33 G 260
-
-
-戦闘: attack / basic_attack → frost_dire_wolf:1
-- 聖なる杖が氷霜の巨狼に12光属性ダメージ。
 - 凍爪はテストに当たらなかった。
-- 聖光の一撃が氷霜の巨狼に2光属性ダメージ。
+- 聖光の一撃が氷霜の巨狼に9光属性ダメージ。
 
-## step 150 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 19/33 G 260
+## step 145 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 22/33 G 260
+
+
+戦闘: attack / basic_attack → frost_dire_wolf:1
+- 聖なる杖が氷霜の巨狼に11光属性ダメージ。
+- 凍爪はテストに当たらなかった。
+- 聖光の一撃が氷霜の巨狼に5光属性ダメージ。
+
+## step 146 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 22/33 G 260
 
 
 戦闘: attack / basic_attack → frost_dire_wolf:1
 - 聖なる杖が氷霜の巨狼に5光属性ダメージ。
 - 凍爪はテストに当たらなかった。
-- 聖光の一撃が氷霜の巨狼に4光属性ダメージ。
+- 聖光の一撃が氷霜の巨狼に10光属性ダメージ。
 
-## step 151 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 19/33 G 260
-
-
-戦闘: attack / basic_attack → frost_dire_wolf:1
-- 聖なる杖は氷霜の巨狼に当たらなかった。
-- 凍爪はテストに当たらなかった。
-- 聖光の一撃が氷霜の巨狼に4光属性ダメージ。
-
-## step 152 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 19/33 G 260
+## step 147 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 22/33 G 260
 
 
 戦闘: attack / basic_attack → frost_dire_wolf:1
-- 聖なる杖が氷霜の巨狼に6光属性ダメージ。
+- 聖なる杖が氷霜の巨狼に11光属性ダメージ。
 - すべての敵を倒した。
 - 50ゴールドを獲得しました。
 - 白い竜鱗 x1を入手しました。
 - 迅速の霊薬 x1を入手しました。
 - 現在地が砕けた氷の太刀になりました。
 
-## step 153 / ian_ice_katana_aftermath 「砕けた氷の太刀」 HP 19/33 G 310
+## step 148 / ian_ice_katana_aftermath 「砕けた氷の太刀」 HP 22/33 G 310
 
 > [GM] 氷霜の巨狼は霧のように消散し、その核だった氷の太刀が地面へ残った。拾おうとした瞬間、空から隕石が落ちて刀を砕く。遠くに全身を炎に包んだ影が一瞬だけ見えた。巨狼の核が砕け、中から白い鱗が一枚転がり出た。
-- 戦闘に勝利しました。 HP 19/33、MP 2/20、SP 11/11。
+- 戦闘に勝利しました。 HP 22/33、MP 2/20、SP 11/11。
 
-## step 154 / ian_ice_katana_aftermath 「砕けた氷の太刀」 HP 19/33 G 310
+## step 149 / ian_ice_katana_aftermath 「砕けた氷の太刀」 HP 22/33 G 310
 
 - イアンの頼みを受ける | 元凶を追う約束をし、武器を受け取ります | 不明
 - イアンの頼みを断る | 村を出て第4章へ進みます | 不明
@@ -1746,7 +1705,7 @@
 - クエスト更新：紅き邪竜の討伐
 - クエスト更新：砕けた氷の太刀
 
-## step 155 / valley_entrance 「竜の谷・入口」 HP 19/33 G 310
+## step 150 / valley_entrance 「竜の谷・入口」 HP 22/33 G 310
 
 - 煤の亡霊と戦う |  | 危険（戦闘）
 - 霧に紛れてやり過ごす |  | 1d20+dex判定（DC14）
@@ -1755,24 +1714,22 @@
 > [プレイヤー] 煤の亡霊と戦う
 > [GM] 霧を割って進むと、煤をまとった二つの人影がこちらへ向き直り、焦げた腕を伸ばしてきた。
 
-## step 156 / valley_entrance 「竜の谷・入口」 HP 19/33 G 310
+## step 151 / valley_entrance 「竜の谷・入口」 HP 22/33 G 310
 
 
-戦闘: attack / basic_attack → ash_wraith:1
-- 氷鉄の大剣が煤の亡霊に12ダメージ。
-- 煤の抱擁はテストに当たらなかった。
-- 聖光の一撃が煤の亡霊に6光属性ダメージ。
+戦闘: attack / basic_attack → ash_wraith:2
+- 氷鉄の大剣が煤の亡霊に8ダメージ。
 - すべての敵を倒した。
 - 35ゴールドを獲得しました。
 - 魔力の果実 x1を入手しました。
 - 現在地が溶岩の吊り橋になりました。
 
-## step 157 / valley_lava_bridge 「溶岩の吊り橋」 HP 19/33 G 345
+## step 152 / valley_lava_bridge 「溶岩の吊り橋」 HP 22/33 G 345
 
 > [GM] 煮え立つ溶岩の川に、古い吊り橋が一本だけ架かっている。板は焦げ、縄は今にも切れそうだ。
-- 戦闘に勝利しました。 HP 19/33、MP 2/20、SP 11/11。
+- 戦闘に勝利しました。 HP 22/33、MP 2/20、SP 11/11。
 
-## step 158 / valley_lava_bridge 「溶岩の吊り橋」 HP 19/33 G 345
+## step 153 / valley_lava_bridge 「溶岩の吊り橋」 HP 22/33 G 345
 
 - 吊り橋を渡る |  | 1d20+dex判定（DC12）
 - 岩棚の迂回路を進む |  | 不明
@@ -1782,21 +1739,11 @@
 > [GM] 吊り橋を避け、崖に張り出した岩棚へ足をかけた。足元から熱風が吹き上げてくる。
 - 現在地が岩棚の迂回路になりました。
 
-## step 159 / valley_ledge 「岩棚の迂回路」 HP 19/33 G 345
-
-
-戦闘: attack / basic_attack → lava_drake:1
-- 氷鉄の大剣が溶岩ドレイクに15ダメージ。
-- 溶岩の吐息はテストに当たらなかった。
-- 聖光の一撃が溶岩ドレイクに4光属性ダメージ。
-
-## step 160 / valley_ledge 「岩棚の迂回路」 HP 19/33 G 345
+## step 154 / valley_ledge 「岩棚の迂回路」 HP 22/33 G 345
 
 
 戦闘: attack / basic_attack → lava_drake:2
-- 氷鉄の大剣は溶岩ドレイクに当たらなかった。
-- 溶岩の吐息はテストに当たらなかった。
-- 聖光の一撃が溶岩ドレイクに4光属性ダメージ。
+- 氷鉄の大剣が溶岩ドレイクに20ダメージ。
 - すべての敵を倒した。
 - 10ゴールドを獲得しました。
 - 焼けた溶岩石 x1を入手しました。
@@ -1805,13 +1752,13 @@
 - 現在地が竜の巣の前になりました。
 - 青い光とともにワーロックが現れた。「先へ進む前に伝えておく。Xanxusは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。
 
-## step 161 / warlock_at_nest 「竜の巣の前」 HP 38/38 G 355
+## step 155 / warlock_at_nest 「竜の巣の前」 HP 38/38 G 355
 
 > [GM] 巨大な洞穴の入口から、灼熱の風が吹きつけてくる。奥で、何か巨大なものが重く息をしている。
 > 青い光とともにワーロックが現れた。「先へ進む前に伝えておく。Xanxusは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。
 - 戦闘に勝利しました。 HP 38/38、MP 22/22、SP 12/12。
 
-## step 162 / warlock_at_nest 「竜の巣の前」 HP 38/38 G 355
+## step 156 / warlock_at_nest 「竜の巣の前」 HP 38/38 G 355
 
 - 先へ進む |  | 判定不要
 
@@ -1819,7 +1766,7 @@
 > [プレイヤー] 先へ進む
 - 現在地が竜の巣の前になりました。
 
-## step 163 / valley_nest_gate 「竜の巣の前」 HP 38/38 G 355
+## step 157 / valley_nest_gate 「竜の巣の前」 HP 38/38 G 355
 
 - 竜の巣へ踏み込む |  | 不明
 
@@ -1828,56 +1775,56 @@
 > [GM] 灼熱の風に逆らって洞穴へ踏み込む。闇の奥で、巨大な何かがゆっくりと目を開けた。
 - 現在地が竜の谷になりました。
 
-## step 164 / dragon_valley_loc 「竜の谷」 HP 38/38 G 355
+## step 158 / dragon_valley_loc 「竜の谷」 HP 38/38 G 355
+
+
+戦闘: attack / basic_attack → ignis:1
+- 氷鉄の大剣が邪竜イグニスに12ダメージ。
+- 尻尾攻撃はテストに当たらなかった。
+- 聖光の一撃が邪竜イグニスに7光属性ダメージ。
+
+## step 159 / dragon_valley_loc 「竜の谷」 HP 38/38 G 355
 
 
 戦闘: attack / basic_attack → ignis:1
 - 氷鉄の大剣が邪竜イグニスに17ダメージ。
-- 尻尾攻撃がテストに12ダメージ。
-- 聖光の一撃が邪竜イグニスに3光属性ダメージ。
+- 炎の息がテストに20ダメージ。
+- 癒しの祈りがHPを8回復した。
 
-## step 165 / dragon_valley_loc 「竜の谷」 HP 26/38 G 355
-
-
-戦闘: attack / basic_attack → ignis:1
-- 氷鉄の大剣が邪竜イグニスに24ダメージ。
-- 炎の息はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに1光属性ダメージ。
-
-## step 166 / dragon_valley_loc 「竜の谷」 HP 26/38 G 355
+## step 160 / dragon_valley_loc 「竜の谷」 HP 26/38 G 355
 
 
 戦闘: attack / basic_attack → ignis:1
-- 氷鉄の大剣は邪竜イグニスに当たらなかった。
-- 炎の息はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに2光属性ダメージ。
+- 氷鉄の大剣が邪竜イグニスに10ダメージ。
+- 尻尾攻撃がテストに20ダメージ。
+- 癒しの祈りがHPを8回復した。
 
-## step 167 / dragon_valley_loc 「竜の谷」 HP 26/38 G 355
-
-
-戦闘: attack / basic_attack → ignis:1
-- 氷鉄の大剣が邪竜イグニスに26ダメージ。
-- 尻尾攻撃がテストに21ダメージ。
-- 癒しの祈りがHPを10回復した。
-
-## step 168 / dragon_valley_loc 「竜の谷」 HP 15/38 G 355
+## step 161 / dragon_valley_loc 「竜の谷」 HP 14/38 G 355
 
 
 戦闘: attack / basic_attack → ignis:1
-- 氷鉄の大剣は邪竜イグニスに当たらなかった。
-- 尻尾攻撃がテストに21ダメージ。
+- 氷鉄の大剣が邪竜イグニスに22ダメージ。
+- 炎の息がテストに2ダメージ。
+- 癒しの祈りがHPを8回復した。
+
+## step 162 / dragon_valley_loc 「竜の谷」 HP 20/38 G 355
+
+
+戦闘: attack / basic_attack → ignis:1
+- 氷鉄の大剣が邪竜イグニスに16ダメージ。
+- 炎の息がテストに21ダメージ。
 - プレイヤーは戦闘不能になった。
 - 邪竜イグニスに敗れ、竜の谷で力尽きた。
 
-## step 169 / dragon_valley_loc 「竜の谷」 HP 0/38 G 355
+## step 163 / dragon_valley_loc 「竜の谷」 HP 0/38 G 355
 
 > [GM] 邪竜イグニスに敗れ、竜の谷で力尽きた。
 - 戦闘に敗北しました。 HP 0/38、MP 22/22、SP 12/12。
 
-## step 170 / dragon_valley_loc 「竜の谷」 HP 0/38 G 355
+## step 164 / dragon_valley_loc 「竜の谷」 HP 0/38 G 355
 
 
-終了: {"reason": "邪竜イグニスに敗れ、竜の谷で力尽きた。", "ending": "dragon_valley_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:44:34.924039+00:00", "epilogue": []}
+終了: {"reason": "邪竜イグニスに敗れ、竜の谷で力尽きた。", "ending": "dragon_valley_defeat", "combat_defeat": true, "created_at": "2026-10-18T07:35:46.328817+00:00", "epilogue": []}
 
 ## 検証結果
 
@@ -1885,12 +1832,12 @@
 {
   "character": "cleric",
   "seed": 106,
-  "steps": 170,
+  "steps": 164,
   "retry_count": 1,
   "ending": "dragon_valley_defeat",
   "final_location": "dragon_valley_loc",
   "first_death": {
-    "step": 106,
+    "step": 105,
     "location": "grave_chapel",
     "ending": "combat_defeat",
     "combat_defeat": true,
@@ -1901,7 +1848,7 @@
   },
   "deaths": [
     {
-      "step": 106,
+      "step": 105,
       "location": "grave_chapel",
       "ending": "combat_defeat",
       "combat_defeat": true,
@@ -1911,14 +1858,14 @@
       "entry_hp": 23
     },
     {
-      "step": 170,
+      "step": 164,
       "location": "dragon_valley_loc",
       "ending": "dragon_valley_defeat",
       "combat_defeat": true,
       "completed": false,
       "attempt": 1,
       "area": "dragon_valley",
-      "entry_hp": 19
+      "entry_hp": 22
     }
   ],
   "farthest_location": "dragon_valley_loc",
@@ -2003,7 +1950,7 @@
     },
     {
       "route": "battlefield",
-      "step": 108,
+      "step": 107,
       "attempt": 1,
       "companion": "paladin_liese"
     }
@@ -2034,7 +1981,7 @@
       "companion": "paladin_liese"
     },
     {
-      "step": 107,
+      "step": 106,
       "attempt": 1,
       "location": "old_battlefield",
       "companion": "paladin_liese"
@@ -2579,7 +2526,7 @@
       "pure_movement": false
     },
     {
-      "step": 93,
+      "step": 92,
       "attempt": 0,
       "location": "bone_field",
       "action_id": "bones_to_tower",
@@ -2587,7 +2534,7 @@
       "pure_movement": true
     },
     {
-      "step": 94,
+      "step": 93,
       "attempt": 0,
       "location": "ruined_watchtower",
       "action_id": "talk_old_soldier",
@@ -2595,7 +2542,7 @@
       "pure_movement": false
     },
     {
-      "step": 95,
+      "step": 94,
       "attempt": 0,
       "location": "ruined_watchtower",
       "action_id": "search_watchtower",
@@ -2603,7 +2550,7 @@
       "pure_movement": false
     },
     {
-      "step": 96,
+      "step": 95,
       "attempt": 0,
       "location": "ruined_watchtower",
       "action_id": "rest_watchtower",
@@ -2611,7 +2558,7 @@
       "pure_movement": false
     },
     {
-      "step": 97,
+      "step": 96,
       "attempt": 0,
       "location": "ruined_watchtower",
       "action_id": "tower_to_bones",
@@ -2619,7 +2566,7 @@
       "pure_movement": true
     },
     {
-      "step": 98,
+      "step": 97,
       "attempt": 0,
       "location": "bone_field",
       "action_id": "bones_to_marsh",
@@ -2627,7 +2574,7 @@
       "pure_movement": true
     },
     {
-      "step": 99,
+      "step": 98,
       "attempt": 0,
       "location": "ghoul_marsh",
       "action_id": "sneak_ghoul_marsh",
@@ -2635,7 +2582,7 @@
       "pure_movement": false
     },
     {
-      "step": 100,
+      "step": 99,
       "attempt": 0,
       "location": "ghoul_marsh",
       "action_id": "marsh_to_chapel",
@@ -2643,7 +2590,7 @@
       "pure_movement": true
     },
     {
-      "step": 101,
+      "step": 100,
       "attempt": 0,
       "location": "grave_chapel",
       "action_id": "fight_grave_knight",
@@ -2651,7 +2598,7 @@
       "pure_movement": false
     },
     {
-      "step": 107,
+      "step": 106,
       "attempt": 1,
       "location": "old_battlefield",
       "action_id": "battlefield_to_bones",
@@ -2659,7 +2606,7 @@
       "pure_movement": true
     },
     {
-      "step": 108,
+      "step": 107,
       "attempt": 1,
       "location": "bone_field",
       "action_id": "sneak_bone_field",
@@ -2667,7 +2614,7 @@
       "pure_movement": false
     },
     {
-      "step": 109,
+      "step": 108,
       "attempt": 1,
       "location": "bone_field",
       "action_id": "bones_to_tower",
@@ -2675,7 +2622,7 @@
       "pure_movement": true
     },
     {
-      "step": 110,
+      "step": 109,
       "attempt": 1,
       "location": "ruined_watchtower",
       "action_id": "talk_old_soldier",
@@ -2683,7 +2630,7 @@
       "pure_movement": false
     },
     {
-      "step": 111,
+      "step": 110,
       "attempt": 1,
       "location": "ruined_watchtower",
       "action_id": "search_watchtower",
@@ -2691,7 +2638,7 @@
       "pure_movement": false
     },
     {
-      "step": 112,
+      "step": 111,
       "attempt": 1,
       "location": "ruined_watchtower",
       "action_id": "rest_watchtower",
@@ -2699,7 +2646,7 @@
       "pure_movement": false
     },
     {
-      "step": 113,
+      "step": 112,
       "attempt": 1,
       "location": "ruined_watchtower",
       "action_id": "tower_to_bones",
@@ -2707,7 +2654,7 @@
       "pure_movement": true
     },
     {
-      "step": 114,
+      "step": 113,
       "attempt": 1,
       "location": "bone_field",
       "action_id": "bones_to_marsh",
@@ -2715,7 +2662,7 @@
       "pure_movement": true
     },
     {
-      "step": 115,
+      "step": 114,
       "attempt": 1,
       "location": "ghoul_marsh",
       "action_id": "sneak_ghoul_marsh",
@@ -2723,7 +2670,7 @@
       "pure_movement": false
     },
     {
-      "step": 116,
+      "step": 115,
       "attempt": 1,
       "location": "ghoul_marsh",
       "action_id": "marsh_to_chapel",
@@ -2731,7 +2678,7 @@
       "pure_movement": true
     },
     {
-      "step": 117,
+      "step": 116,
       "attempt": 1,
       "location": "grave_chapel",
       "action_id": "fight_grave_knight",
@@ -2739,7 +2686,7 @@
       "pure_movement": false
     },
     {
-      "step": 126,
+      "step": 123,
       "attempt": 1,
       "location": "grave_chapel",
       "action_id": "chapel_to_village",
@@ -2747,7 +2694,7 @@
       "pure_movement": false
     },
     {
-      "step": 127,
+      "step": 124,
       "attempt": 1,
       "location": "village_frozen_clue",
       "action_id": "skip_frozen_clue_before_xanxus",
@@ -2755,7 +2702,7 @@
       "pure_movement": true
     },
     {
-      "step": 128,
+      "step": 125,
       "attempt": 1,
       "location": "xanxus_confrontation",
       "action_id": "ambush_xanxus",
@@ -2763,7 +2710,7 @@
       "pure_movement": false
     },
     {
-      "step": 133,
+      "step": 130,
       "attempt": 1,
       "location": "xanxus_ultimatum",
       "action_id": "refuse_xanxus_with_rescue",
@@ -2771,7 +2718,7 @@
       "pure_movement": false
     },
     {
-      "step": 140,
+      "step": 137,
       "attempt": 1,
       "location": "village_frozen_clue",
       "action_id": "visit_village",
@@ -2779,7 +2726,7 @@
       "pure_movement": false
     },
     {
-      "step": 141,
+      "step": 138,
       "attempt": 1,
       "location": "village",
       "action_id": "ask_elder_weakness",
@@ -2787,7 +2734,7 @@
       "pure_movement": false
     },
     {
-      "step": 142,
+      "step": 139,
       "attempt": 1,
       "location": "village",
       "action_id": "ask_elder_treaty",
@@ -2795,7 +2742,7 @@
       "pure_movement": false
     },
     {
-      "step": 143,
+      "step": 140,
       "attempt": 1,
       "location": "village",
       "action_id": "return_frozen_clue",
@@ -2803,7 +2750,7 @@
       "pure_movement": true
     },
     {
-      "step": 144,
+      "step": 141,
       "attempt": 1,
       "location": "village_frozen_clue",
       "action_id": "investigate_frozen_village",
@@ -2811,7 +2758,7 @@
       "pure_movement": true
     },
     {
-      "step": 145,
+      "step": 142,
       "attempt": 1,
       "location": "ice_elemental_encounter",
       "action_id": "bypass_ice_elemental",
@@ -2819,7 +2766,7 @@
       "pure_movement": false
     },
     {
-      "step": 154,
+      "step": 149,
       "attempt": 1,
       "location": "ian_ice_katana_aftermath",
       "action_id": "accept_ian_request",
@@ -2827,7 +2774,7 @@
       "pure_movement": false
     },
     {
-      "step": 155,
+      "step": 150,
       "attempt": 1,
       "location": "valley_entrance",
       "action_id": "fight_ash_wraiths",
@@ -2835,7 +2782,7 @@
       "pure_movement": false
     },
     {
-      "step": 158,
+      "step": 153,
       "attempt": 1,
       "location": "valley_lava_bridge",
       "action_id": "take_ledge_path",
@@ -2843,7 +2790,7 @@
       "pure_movement": true
     },
     {
-      "step": 162,
+      "step": 156,
       "attempt": 1,
       "location": "warlock_at_nest",
       "action_id": "continue_after_warlock",
@@ -2851,7 +2798,7 @@
       "pure_movement": true
     },
     {
-      "step": 163,
+      "step": 157,
       "attempt": 1,
       "location": "valley_nest_gate",
       "action_id": "enter_dragon_nest",

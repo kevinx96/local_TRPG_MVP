@@ -69,8 +69,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 6.928,
-      "rounds": 2.972,
+      "hp_loss": 5.285,
+      "rounds": 2.508,
       "nonterminal": 0
     },
     {
@@ -79,8 +79,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 5.86,
-      "rounds": 2.6,
+      "hp_loss": 4.014,
+      "rounds": 2.13,
       "nonterminal": 0
     },
     {
@@ -148,9 +148,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.998,
-      "hp_loss": 8.929,
-      "rounds": 3.718,
+      "win_rate": 0.999,
+      "hp_loss": 7.624,
+      "rounds": 2.964,
       "nonterminal": 0
     },
     {
@@ -158,9 +158,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.998,
-      "hp_loss": 8.499,
-      "rounds": 3.041,
+      "win_rate": 1,
+      "hp_loss": 5.785,
+      "rounds": 2.316,
       "nonterminal": 0
     },
     {
@@ -229,8 +229,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 1.131,
-      "rounds": 1.298,
+      "hp_loss": 1.129,
+      "rounds": 1.293,
       "nonterminal": 0
     },
     {
@@ -239,8 +239,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 1.152,
-      "rounds": 1.294,
+      "hp_loss": 1.009,
+      "rounds": 1.256,
       "nonterminal": 0
     },
     {
@@ -308,9 +308,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.984,
-      "hp_loss": 7.473,
-      "rounds": 4.238,
+      "win_rate": 0.991,
+      "hp_loss": 6.119,
+      "rounds": 3.296,
       "nonterminal": 0
     },
     {
@@ -318,9 +318,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.988,
-      "hp_loss": 6.963,
-      "rounds": 3.285,
+      "win_rate": 0.997,
+      "hp_loss": 4.552,
+      "rounds": 2.436,
       "nonterminal": 0
     },
     {
@@ -389,8 +389,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 7.945,
-      "rounds": 3.483,
+      "hp_loss": 6.742,
+      "rounds": 2.984,
       "nonterminal": 0
     },
     {
@@ -399,8 +399,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 7.583,
-      "rounds": 3.173,
+      "hp_loss": 4.903,
+      "rounds": 2.405,
       "nonterminal": 0
     },
     {
@@ -469,8 +469,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 0.999,
-      "hp_loss": 9.443,
-      "rounds": 4.167,
+      "hp_loss": 8.872,
+      "rounds": 3.372,
       "nonterminal": 0
     },
     {
@@ -478,9 +478,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.996,
-      "hp_loss": 9.458,
-      "rounds": 3.493,
+      "win_rate": 1,
+      "hp_loss": 7.334,
+      "rounds": 2.649,
       "nonterminal": 0
     },
     {
@@ -549,8 +549,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 3.079,
-      "rounds": 1.826,
+      "hp_loss": 1.913,
+      "rounds": 1.509,
       "nonterminal": 0
     },
     {
@@ -559,8 +559,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.331,
-      "rounds": 1.606,
+      "hp_loss": 1.024,
+      "rounds": 1.297,
       "nonterminal": 0
     },
     {
@@ -629,8 +629,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 0.998,
-      "hp_loss": 7.381,
-      "rounds": 4.857,
+      "hp_loss": 6.707,
+      "rounds": 3.756,
       "nonterminal": 0
     },
     {
@@ -638,9 +638,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.994,
-      "hp_loss": 7.178,
-      "rounds": 3.829,
+      "win_rate": 0.999,
+      "hp_loss": 5.964,
+      "rounds": 2.92,
       "nonterminal": 0
     },
     {
@@ -709,8 +709,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.795,
-      "rounds": 3.034,
+      "hp_loss": 4.707,
+      "rounds": 3,
       "nonterminal": 0
     },
     {
@@ -789,8 +789,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 5.357,
-      "rounds": 3.033,
+      "hp_loss": 5.251,
+      "rounds": 3.001,
       "nonterminal": 0
     },
     {
@@ -869,8 +869,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 3.998,
-      "rounds": 2,
+      "hp_loss": 2.905,
+      "rounds": 1.713,
       "nonterminal": 0
     },
     {
@@ -879,8 +879,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.435,
-      "rounds": 1.892,
+      "hp_loss": 1.41,
+      "rounds": 1.272,
       "nonterminal": 0
     },
     {
@@ -949,8 +949,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.122,
-      "rounds": 3.031,
+      "hp_loss": 2.009,
+      "rounds": 3.001,
       "nonterminal": 0
     },
     {
@@ -1028,9 +1028,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.953,
-      "hp_loss": 16.647,
-      "rounds": 8.083,
+      "win_rate": 0.947,
+      "hp_loss": 16.393,
+      "rounds": 7.297,
       "nonterminal": 0
     },
     {
@@ -1038,9 +1038,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.926,
-      "hp_loss": 15.932,
-      "rounds": 8.339,
+      "win_rate": 0.946,
+      "hp_loss": 15.577,
+      "rounds": 7.244,
       "nonterminal": 0
     },
     {
@@ -1108,9 +1108,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.864,
-      "hp_loss": 17.414,
-      "rounds": 8.361,
+      "win_rate": 0.906,
+      "hp_loss": 16.037,
+      "rounds": 7.691,
       "nonterminal": 0
     },
     {
@@ -1118,9 +1118,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.871,
-      "hp_loss": 16.211,
-      "rounds": 8.806,
+      "win_rate": 0.904,
+      "hp_loss": 15.352,
+      "rounds": 7.55,
       "nonterminal": 0
     },
     {
@@ -1188,9 +1188,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.658,
-      "hp_loss": 13.42,
-      "rounds": 4.453,
+      "win_rate": 0.694,
+      "hp_loss": 12.591,
+      "rounds": 4.36,
       "nonterminal": 0
     },
     {
@@ -1198,9 +1198,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.799,
-      "hp_loss": 10.025,
-      "rounds": 5.265,
+      "win_rate": 0.823,
+      "hp_loss": 9.592,
+      "rounds": 4.944,
       "nonterminal": 0
     },
     {
@@ -1268,9 +1268,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.862,
-      "hp_loss": 12.596,
-      "rounds": 6.087,
+      "win_rate": 0.866,
+      "hp_loss": 12.252,
+      "rounds": 5.553,
       "nonterminal": 0
     },
     {
@@ -1278,9 +1278,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.871,
-      "hp_loss": 11.558,
-      "rounds": 6.33,
+      "win_rate": 0.904,
+      "hp_loss": 10.86,
+      "rounds": 5.737,
       "nonterminal": 0
     },
     {
@@ -1348,9 +1348,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.681,
-      "hp_loss": 8.829,
-      "rounds": 9.423,
+      "win_rate": 0.705,
+      "hp_loss": 8.897,
+      "rounds": 8.746,
       "nonterminal": 0
     },
     {
@@ -1358,9 +1358,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.564,
-      "hp_loss": 11.755,
-      "rounds": 8.035,
+      "win_rate": 0.039,
+      "hp_loss": 19.07,
+      "rounds": 12.843,
       "nonterminal": 0
     },
     {
@@ -1428,9 +1428,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.887,
-      "hp_loss": 4.718,
-      "rounds": 4.418,
+      "win_rate": 0.933,
+      "hp_loss": 4.128,
+      "rounds": 3.619,
       "nonterminal": 0
     },
     {
@@ -1438,9 +1438,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.703,
-      "hp_loss": 6.688,
-      "rounds": 5.81,
+      "win_rate": 0.538,
+      "hp_loss": 9.886,
+      "rounds": 7.846,
       "nonterminal": 0
     },
     {
@@ -1508,9 +1508,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.71,
-      "hp_loss": 5.478,
-      "rounds": 2.958,
+      "win_rate": 0.718,
+      "hp_loss": 5.352,
+      "rounds": 3.107,
       "nonterminal": 0
     },
     {
@@ -1518,9 +1518,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.689,
-      "hp_loss": 5.316,
-      "rounds": 3.81,
+      "win_rate": 0.281,
+      "hp_loss": 9.246,
+      "rounds": 5.807,
       "nonterminal": 0
     },
     {
@@ -1588,9 +1588,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.718,
-      "hp_loss": 6.133,
-      "rounds": 6.367,
+      "win_rate": 0.739,
+      "hp_loss": 6.094,
+      "rounds": 5.969,
       "nonterminal": 0
     },
     {
@@ -1598,9 +1598,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.611,
-      "hp_loss": 7.451,
-      "rounds": 6.834,
+      "win_rate": 0.047,
+      "hp_loss": 13.349,
+      "rounds": 10.941,
       "nonterminal": 0
     },
     {
@@ -1669,8 +1669,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.749,
-      "rounds": 2.299,
+      "hp_loss": 1.941,
+      "rounds": 1.903,
       "nonterminal": 0
     },
     {
@@ -1679,8 +1679,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.756,
-      "rounds": 2.302,
+      "hp_loss": 1.959,
+      "rounds": 1.906,
       "nonterminal": 0
     },
     {
@@ -1749,8 +1749,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.257,
-      "rounds": 2.68,
+      "hp_loss": 3.304,
+      "rounds": 2.229,
       "nonterminal": 0
     },
     {
@@ -1759,8 +1759,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.536,
-      "rounds": 2.668,
+      "hp_loss": 3.404,
+      "rounds": 2.218,
       "nonterminal": 0
     },
     {
@@ -1828,9 +1828,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.997,
-      "hp_loss": 1.139,
-      "rounds": 1.448,
+      "win_rate": 0.998,
+      "hp_loss": 0.842,
+      "rounds": 1.338,
       "nonterminal": 0
     },
     {
@@ -1838,9 +1838,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.997,
-      "hp_loss": 1.141,
-      "rounds": 1.458,
+      "win_rate": 0.998,
+      "hp_loss": 0.87,
+      "rounds": 1.339,
       "nonterminal": 0
     },
     {
@@ -1909,8 +1909,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.562,
-      "rounds": 2.413,
+      "hp_loss": 1.907,
+      "rounds": 2.023,
       "nonterminal": 0
     },
     {
@@ -1919,8 +1919,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.671,
-      "rounds": 2.417,
+      "hp_loss": 1.97,
+      "rounds": 2.018,
       "nonterminal": 0
     },
     {
@@ -1989,8 +1989,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.098,
-      "rounds": 1.051,
+      "hp_loss": 0.027,
+      "rounds": 1.012,
       "nonterminal": 0
     },
     {
@@ -1999,8 +1999,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.098,
-      "rounds": 1.051,
+      "hp_loss": 0.027,
+      "rounds": 1.012,
       "nonterminal": 0
     },
     {
@@ -2069,8 +2069,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.118,
-      "rounds": 1.035,
+      "hp_loss": 0.04,
+      "rounds": 1.011,
       "nonterminal": 0
     },
     {
@@ -2079,8 +2079,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.118,
-      "rounds": 1.035,
+      "hp_loss": 0.04,
+      "rounds": 1.011,
       "nonterminal": 0
     },
     {
@@ -2149,8 +2149,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.05,
-      "rounds": 1.023,
+      "hp_loss": 0.007,
+      "rounds": 1.005,
       "nonterminal": 0
     },
     {
@@ -2159,8 +2159,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.05,
-      "rounds": 1.023,
+      "hp_loss": 0.007,
+      "rounds": 1.005,
       "nonterminal": 0
     },
     {
@@ -2229,8 +2229,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.107,
-      "rounds": 1.055,
+      "hp_loss": 0.025,
+      "rounds": 1.013,
       "nonterminal": 0
     },
     {
@@ -2239,8 +2239,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.107,
-      "rounds": 1.055,
+      "hp_loss": 0.025,
+      "rounds": 1.013,
       "nonterminal": 0
     },
     {
@@ -2308,9 +2308,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.998,
-      "hp_loss": 2.02,
-      "rounds": 1.651,
+      "win_rate": 1,
+      "hp_loss": 1.102,
+      "rounds": 1.358,
       "nonterminal": 0
     },
     {
@@ -2318,9 +2318,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.996,
-      "hp_loss": 2.217,
-      "rounds": 1.638,
+      "win_rate": 0.999,
+      "hp_loss": 1.193,
+      "rounds": 1.348,
       "nonterminal": 0
     },
     {
@@ -2388,9 +2388,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.993,
-      "hp_loss": 3.46,
-      "rounds": 2.14,
+      "win_rate": 0.998,
+      "hp_loss": 2.374,
+      "rounds": 1.71,
       "nonterminal": 0
     },
     {
@@ -2398,9 +2398,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.992,
-      "hp_loss": 4.034,
-      "rounds": 2.105,
+      "win_rate": 1,
+      "hp_loss": 2.759,
+      "rounds": 1.69,
       "nonterminal": 0
     },
     {
@@ -2468,9 +2468,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.986,
-      "hp_loss": 0.468,
-      "rounds": 1.168,
+      "win_rate": 0.988,
+      "hp_loss": 0.355,
+      "rounds": 1.122,
       "nonterminal": 0
     },
     {
@@ -2478,9 +2478,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.986,
-      "hp_loss": 0.524,
-      "rounds": 1.178,
+      "win_rate": 0.99,
+      "hp_loss": 0.409,
+      "rounds": 1.125,
       "nonterminal": 0
     },
     {
@@ -2548,9 +2548,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.995,
-      "hp_loss": 1.803,
-      "rounds": 1.823,
+      "win_rate": 0.996,
+      "hp_loss": 1.19,
+      "rounds": 1.506,
       "nonterminal": 0
     },
     {
@@ -2558,9 +2558,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.992,
-      "hp_loss": 2.105,
-      "rounds": 1.825,
+      "win_rate": 0.996,
+      "hp_loss": 1.425,
+      "rounds": 1.487,
       "nonterminal": 0
     },
     {
@@ -2629,8 +2629,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.621,
-      "rounds": 2.281,
+      "hp_loss": 1.763,
+      "rounds": 1.852,
       "nonterminal": 0
     },
     {
@@ -2639,8 +2639,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.631,
-      "rounds": 2.281,
+      "hp_loss": 1.768,
+      "rounds": 1.853,
       "nonterminal": 0
     },
     {
@@ -2709,8 +2709,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.125,
-      "rounds": 2.675,
+      "hp_loss": 3.323,
+      "rounds": 2.249,
       "nonterminal": 0
     },
     {
@@ -2719,8 +2719,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.409,
-      "rounds": 2.66,
+      "hp_loss": 3.416,
+      "rounds": 2.239,
       "nonterminal": 0
     },
     {
@@ -2788,9 +2788,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.996,
-      "hp_loss": 1.113,
-      "rounds": 1.433,
+      "win_rate": 0.997,
+      "hp_loss": 0.804,
+      "rounds": 1.324,
       "nonterminal": 0
     },
     {
@@ -2799,8 +2799,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 0.998,
-      "hp_loss": 1.101,
-      "rounds": 1.445,
+      "hp_loss": 0.816,
+      "rounds": 1.326,
       "nonterminal": 0
     },
     {
@@ -2869,8 +2869,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.619,
-      "rounds": 2.452,
+      "hp_loss": 1.915,
+      "rounds": 2.041,
       "nonterminal": 0
     },
     {
@@ -2879,8 +2879,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 0.999,
-      "hp_loss": 2.792,
-      "rounds": 2.433,
+      "hp_loss": 1.991,
+      "rounds": 2.023,
       "nonterminal": 0
     },
     {
@@ -2949,8 +2949,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.679,
-      "rounds": 2.269,
+      "hp_loss": 1.909,
+      "rounds": 1.909,
       "nonterminal": 0
     },
     {
@@ -2959,8 +2959,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.693,
-      "rounds": 2.266,
+      "hp_loss": 1.925,
+      "rounds": 1.909,
       "nonterminal": 0
     },
     {
@@ -3029,8 +3029,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.224,
-      "rounds": 2.68,
+      "hp_loss": 3.402,
+      "rounds": 2.239,
       "nonterminal": 0
     },
     {
@@ -3039,8 +3039,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.452,
-      "rounds": 2.676,
+      "hp_loss": 3.507,
+      "rounds": 2.231,
       "nonterminal": 0
     },
     {
@@ -3109,8 +3109,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 0.999,
-      "hp_loss": 1.121,
-      "rounds": 1.446,
+      "hp_loss": 0.857,
+      "rounds": 1.353,
       "nonterminal": 0
     },
     {
@@ -3119,8 +3119,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 0.999,
-      "hp_loss": 1.112,
-      "rounds": 1.455,
+      "hp_loss": 0.867,
+      "rounds": 1.354,
       "nonterminal": 0
     },
     {
@@ -3189,8 +3189,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.53,
-      "rounds": 2.438,
+      "hp_loss": 1.812,
+      "rounds": 2.013,
       "nonterminal": 0
     },
     {
@@ -3199,8 +3199,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.68,
-      "rounds": 2.428,
+      "hp_loss": 1.861,
+      "rounds": 2.004,
       "nonterminal": 0
     },
     {
@@ -3268,9 +3268,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.99,
-      "hp_loss": 7.772,
-      "rounds": 4.565,
+      "win_rate": 0.994,
+      "hp_loss": 7.637,
+      "rounds": 4.181,
       "nonterminal": 0
     },
     {
@@ -3278,9 +3278,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.996,
-      "hp_loss": 7.972,
-      "rounds": 4.467,
+      "win_rate": 0.997,
+      "hp_loss": 7.773,
+      "rounds": 4.216,
       "nonterminal": 0
     },
     {
@@ -3348,9 +3348,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.897,
-      "hp_loss": 8.451,
-      "rounds": 4.713,
+      "win_rate": 0.948,
+      "hp_loss": 8.071,
+      "rounds": 4.238,
       "nonterminal": 0
     },
     {
@@ -3358,9 +3358,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.96,
-      "hp_loss": 6.663,
-      "rounds": 4.748,
+      "win_rate": 0.966,
+      "hp_loss": 6.325,
+      "rounds": 4.52,
       "nonterminal": 0
     },
     {
@@ -3428,9 +3428,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.603,
-      "hp_loss": 7.848,
-      "rounds": 2.86,
+      "win_rate": 0.75,
+      "hp_loss": 6.091,
+      "rounds": 2.631,
       "nonterminal": 0
     },
     {
@@ -3438,9 +3438,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.706,
-      "hp_loss": 7.411,
-      "rounds": 3.328,
+      "win_rate": 0.905,
+      "hp_loss": 5.293,
+      "rounds": 2.682,
       "nonterminal": 0
     },
     {
@@ -3508,9 +3508,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.904,
-      "hp_loss": 5.859,
-      "rounds": 4.496,
+      "win_rate": 0.969,
+      "hp_loss": 5.333,
+      "rounds": 4.146,
       "nonterminal": 0
     },
     {
@@ -3518,9 +3518,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.972,
-      "hp_loss": 5.06,
-      "rounds": 4.571,
+      "win_rate": 0.986,
+      "hp_loss": 4.666,
+      "rounds": 4.316,
       "nonterminal": 0
     },
     {
@@ -3589,8 +3589,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.074,
-      "rounds": 1.044,
+      "hp_loss": 0.019,
+      "rounds": 1.015,
       "nonterminal": 0
     },
     {
@@ -3599,8 +3599,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.074,
-      "rounds": 1.044,
+      "hp_loss": 0.019,
+      "rounds": 1.015,
       "nonterminal": 0
     },
     {
@@ -3669,8 +3669,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.131,
-      "rounds": 1.049,
+      "hp_loss": 0.044,
+      "rounds": 1.012,
       "nonterminal": 0
     },
     {
@@ -3679,8 +3679,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.131,
-      "rounds": 1.049,
+      "hp_loss": 0.044,
+      "rounds": 1.012,
       "nonterminal": 0
     },
     {
@@ -3749,8 +3749,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.058,
-      "rounds": 1.019,
+      "hp_loss": 0.009,
+      "rounds": 1.002,
       "nonterminal": 0
     },
     {
@@ -3759,8 +3759,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.058,
-      "rounds": 1.019,
+      "hp_loss": 0.009,
+      "rounds": 1.002,
       "nonterminal": 0
     },
     {
@@ -3829,8 +3829,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.079,
-      "rounds": 1.054,
+      "hp_loss": 0.005,
+      "rounds": 1.01,
       "nonterminal": 0
     },
     {
@@ -3839,8 +3839,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.079,
-      "rounds": 1.054,
+      "hp_loss": 0.005,
+      "rounds": 1.01,
       "nonterminal": 0
     },
     {
@@ -3909,8 +3909,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.988,
-      "rounds": 2.136,
+      "hp_loss": 1.729,
+      "rounds": 1.667,
       "nonterminal": 0
     },
     {
@@ -3919,8 +3919,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 3.017,
-      "rounds": 2.128,
+      "hp_loss": 1.737,
+      "rounds": 1.667,
       "nonterminal": 0
     },
     {
@@ -3988,9 +3988,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.999,
-      "hp_loss": 3.609,
-      "rounds": 2.114,
+      "win_rate": 1,
+      "hp_loss": 2.117,
+      "rounds": 1.643,
       "nonterminal": 0
     },
     {
@@ -3998,9 +3998,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.999,
-      "hp_loss": 3.819,
-      "rounds": 2.101,
+      "win_rate": 1,
+      "hp_loss": 2.188,
+      "rounds": 1.63,
       "nonterminal": 0
     },
     {
@@ -4068,9 +4068,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.991,
-      "hp_loss": 3.274,
-      "rounds": 2.081,
+      "win_rate": 0.995,
+      "hp_loss": 1.935,
+      "rounds": 1.63,
       "nonterminal": 0
     },
     {
@@ -4078,9 +4078,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.991,
-      "hp_loss": 3.363,
-      "rounds": 2.073,
+      "win_rate": 0.996,
+      "hp_loss": 1.952,
+      "rounds": 1.616,
       "nonterminal": 0
     },
     {
@@ -4149,8 +4149,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.643,
-      "rounds": 2.177,
+      "hp_loss": 1.626,
+      "rounds": 1.72,
       "nonterminal": 0
     },
     {
@@ -4158,9 +4158,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.999,
-      "hp_loss": 2.774,
-      "rounds": 2.163,
+      "win_rate": 1,
+      "hp_loss": 1.672,
+      "rounds": 1.703,
       "nonterminal": 0
     },
     {
@@ -4229,8 +4229,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.41,
-      "rounds": 1.261,
+      "hp_loss": 0.297,
+      "rounds": 1.17,
       "nonterminal": 0
     },
     {
@@ -4239,8 +4239,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.41,
-      "rounds": 1.261,
+      "hp_loss": 0.297,
+      "rounds": 1.17,
       "nonterminal": 0
     },
     {
@@ -4309,8 +4309,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 1.262,
-      "rounds": 1.575,
+      "hp_loss": 0.665,
+      "rounds": 1.306,
       "nonterminal": 0
     },
     {
@@ -4319,8 +4319,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 1.272,
-      "rounds": 1.575,
+      "hp_loss": 0.665,
+      "rounds": 1.306,
       "nonterminal": 0
     },
     {
@@ -4389,8 +4389,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 0.999,
-      "hp_loss": 0.174,
-      "rounds": 1.082,
+      "hp_loss": 0.162,
+      "rounds": 1.07,
       "nonterminal": 0
     },
     {
@@ -4399,8 +4399,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 0.999,
-      "hp_loss": 0.184,
-      "rounds": 1.081,
+      "hp_loss": 0.162,
+      "rounds": 1.07,
       "nonterminal": 0
     },
     {
@@ -4469,8 +4469,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.436,
-      "rounds": 1.334,
+      "hp_loss": 0.283,
+      "rounds": 1.213,
       "nonterminal": 0
     },
     {
@@ -4479,8 +4479,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.448,
-      "rounds": 1.335,
+      "hp_loss": 0.283,
+      "rounds": 1.213,
       "nonterminal": 0
     },
     {
@@ -4548,9 +4548,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.996,
-      "hp_loss": 6.401,
-      "rounds": 3.651,
+      "win_rate": 0.995,
+      "hp_loss": 5.291,
+      "rounds": 2.945,
       "nonterminal": 0
     },
     {
@@ -4558,9 +4558,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.99,
-      "hp_loss": 6.158,
-      "rounds": 3.659,
+      "win_rate": 0.997,
+      "hp_loss": 5.599,
+      "rounds": 2.889,
       "nonterminal": 0
     },
     {
@@ -4628,9 +4628,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.868,
-      "hp_loss": 8.403,
-      "rounds": 5.146,
+      "win_rate": 0.92,
+      "hp_loss": 7.004,
+      "rounds": 4.038,
       "nonterminal": 0
     },
     {
@@ -4638,9 +4638,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.898,
-      "hp_loss": 7.687,
-      "rounds": 5.128,
+      "win_rate": 0.944,
+      "hp_loss": 7.229,
+      "rounds": 3.701,
       "nonterminal": 0
     },
     {
@@ -4708,9 +4708,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.85,
-      "hp_loss": 4.711,
-      "rounds": 2.606,
+      "win_rate": 0.908,
+      "hp_loss": 3.858,
+      "rounds": 2.424,
       "nonterminal": 0
     },
     {
@@ -4718,9 +4718,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.929,
-      "hp_loss": 3.878,
-      "rounds": 2.891,
+      "win_rate": 0.957,
+      "hp_loss": 3.575,
+      "rounds": 2.516,
       "nonterminal": 0
     },
     {
@@ -4788,9 +4788,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.859,
-      "hp_loss": 6.037,
-      "rounds": 3.904,
+      "win_rate": 0.911,
+      "hp_loss": 4.936,
+      "rounds": 3.211,
       "nonterminal": 0
     },
     {
@@ -4798,9 +4798,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.869,
-      "hp_loss": 5.887,
-      "rounds": 3.98,
+      "win_rate": 0.924,
+      "hp_loss": 5.381,
+      "rounds": 3.103,
       "nonterminal": 0
     },
     {
@@ -4869,8 +4869,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.377,
-      "rounds": 1.261,
+      "hp_loss": 0.256,
+      "rounds": 1.171,
       "nonterminal": 0
     },
     {
@@ -4879,8 +4879,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.377,
-      "rounds": 1.261,
+      "hp_loss": 0.256,
+      "rounds": 1.171,
       "nonterminal": 0
     },
     {
@@ -4949,8 +4949,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 1.204,
-      "rounds": 1.607,
+      "hp_loss": 0.594,
+      "rounds": 1.281,
       "nonterminal": 0
     },
     {
@@ -4959,8 +4959,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 1.221,
-      "rounds": 1.605,
+      "hp_loss": 0.598,
+      "rounds": 1.281,
       "nonterminal": 0
     },
     {
@@ -5029,8 +5029,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.166,
-      "rounds": 1.082,
+      "hp_loss": 0.15,
+      "rounds": 1.074,
       "nonterminal": 0
     },
     {
@@ -5039,8 +5039,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.163,
-      "rounds": 1.083,
+      "hp_loss": 0.15,
+      "rounds": 1.074,
       "nonterminal": 0
     },
     {
@@ -5109,8 +5109,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.528,
-      "rounds": 1.397,
+      "hp_loss": 0.329,
+      "rounds": 1.25,
       "nonterminal": 0
     },
     {
@@ -5119,8 +5119,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.536,
-      "rounds": 1.396,
+      "hp_loss": 0.331,
+      "rounds": 1.248,
       "nonterminal": 0
     },
     {
@@ -5188,9 +5188,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.721,
-      "hp_loss": 11.208,
-      "rounds": 4.605,
+      "win_rate": 0.836,
+      "hp_loss": 9.502,
+      "rounds": 4.259,
       "nonterminal": 0
     },
     {
@@ -5198,9 +5198,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.722,
-      "hp_loss": 11.016,
-      "rounds": 4.808,
+      "win_rate": 0.872,
+      "hp_loss": 8.773,
+      "rounds": 4.202,
       "nonterminal": 0
     },
     {
@@ -5268,9 +5268,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.611,
-      "hp_loss": 11.318,
-      "rounds": 4.512,
+      "win_rate": 0.738,
+      "hp_loss": 9.887,
+      "rounds": 4.22,
       "nonterminal": 0
     },
     {
@@ -5278,9 +5278,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.6,
-      "hp_loss": 11.511,
-      "rounds": 4.622,
+      "win_rate": 0.793,
+      "hp_loss": 8.904,
+      "rounds": 4.133,
       "nonterminal": 0
     },
     {
@@ -5348,9 +5348,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.649,
-      "hp_loss": 7.184,
-      "rounds": 2.415,
+      "win_rate": 0.646,
+      "hp_loss": 7.178,
+      "rounds": 2.393,
       "nonterminal": 0
     },
     {
@@ -5358,9 +5358,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.63,
-      "hp_loss": 7.097,
-      "rounds": 2.601,
+      "win_rate": 0.637,
+      "hp_loss": 7.434,
+      "rounds": 2.422,
       "nonterminal": 0
     },
     {
@@ -5428,9 +5428,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.714,
-      "hp_loss": 7.771,
-      "rounds": 4.611,
+      "win_rate": 0.877,
+      "hp_loss": 5.872,
+      "rounds": 4.137,
       "nonterminal": 0
     },
     {
@@ -5438,9 +5438,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.698,
-      "hp_loss": 7.903,
-      "rounds": 4.652,
+      "win_rate": 0.882,
+      "hp_loss": 5.776,
+      "rounds": 4.113,
       "nonterminal": 0
     },
     {
@@ -5509,8 +5509,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.025,
-      "rounds": 1.018,
+      "hp_loss": 0.008,
+      "rounds": 1.005,
       "nonterminal": 0
     },
     {
@@ -5519,8 +5519,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.025,
-      "rounds": 1.018,
+      "hp_loss": 0.008,
+      "rounds": 1.005,
       "nonterminal": 0
     },
     {
@@ -5589,8 +5589,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.067,
-      "rounds": 1.03,
+      "hp_loss": 0.018,
+      "rounds": 1.009,
       "nonterminal": 0
     },
     {
@@ -5599,8 +5599,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.067,
-      "rounds": 1.03,
+      "hp_loss": 0.018,
+      "rounds": 1.009,
       "nonterminal": 0
     },
     {
@@ -5669,8 +5669,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.079,
-      "rounds": 1.027,
+      "hp_loss": 0.025,
+      "rounds": 1.008,
       "nonterminal": 0
     },
     {
@@ -5679,8 +5679,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.079,
-      "rounds": 1.027,
+      "hp_loss": 0.025,
+      "rounds": 1.008,
       "nonterminal": 0
     },
     {
@@ -5749,8 +5749,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.102,
-      "rounds": 1.052,
+      "hp_loss": 0.016,
+      "rounds": 1.011,
       "nonterminal": 0
     },
     {
@@ -5759,8 +5759,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.102,
-      "rounds": 1.052,
+      "hp_loss": 0.016,
+      "rounds": 1.011,
       "nonterminal": 0
     },
     {
@@ -5829,8 +5829,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 1.655,
-      "rounds": 2.143,
+      "hp_loss": 1.246,
+      "rounds": 1.886,
       "nonterminal": 0
     },
     {
@@ -5839,8 +5839,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 1.354,
-      "rounds": 1.967,
+      "hp_loss": 0.806,
+      "rounds": 1.58,
       "nonterminal": 0
     },
     {
@@ -5909,8 +5909,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.663,
-      "rounds": 2.335,
+      "hp_loss": 2.303,
+      "rounds": 2.15,
       "nonterminal": 0
     },
     {
@@ -5919,8 +5919,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.385,
-      "rounds": 2.193,
+      "hp_loss": 1.956,
+      "rounds": 1.954,
       "nonterminal": 0
     },
     {
@@ -5989,8 +5989,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.893,
-      "rounds": 1.469,
+      "hp_loss": 0.443,
+      "rounds": 1.238,
       "nonterminal": 0
     },
     {
@@ -5999,8 +5999,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.501,
-      "rounds": 1.271,
+      "hp_loss": 0.236,
+      "rounds": 1.136,
       "nonterminal": 0
     },
     {
@@ -6069,8 +6069,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.555,
-      "rounds": 3.135,
+      "hp_loss": 1.826,
+      "rounds": 2.54,
       "nonterminal": 0
     },
     {
@@ -6079,8 +6079,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.002,
-      "rounds": 2.689,
+      "hp_loss": 1.4,
+      "rounds": 2.187,
       "nonterminal": 0
     },
     {
@@ -6149,8 +6149,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 0.997,
-      "hp_loss": 8.831,
-      "rounds": 2.475,
+      "hp_loss": 7.608,
+      "rounds": 2.22,
       "nonterminal": 0
     },
     {
@@ -6159,8 +6159,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 0.999,
-      "hp_loss": 8.442,
-      "rounds": 2.269,
+      "hp_loss": 6.42,
+      "rounds": 1.907,
       "nonterminal": 0
     },
     {
@@ -6228,9 +6228,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.976,
-      "hp_loss": 10.469,
-      "rounds": 2.792,
+      "win_rate": 0.989,
+      "hp_loss": 9.48,
+      "rounds": 2.551,
       "nonterminal": 0
     },
     {
@@ -6238,9 +6238,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.984,
-      "hp_loss": 10.802,
-      "rounds": 2.568,
+      "win_rate": 0.994,
+      "hp_loss": 9.594,
+      "rounds": 2.229,
       "nonterminal": 0
     },
     {
@@ -6308,9 +6308,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.963,
-      "hp_loss": 4.929,
-      "rounds": 1.936,
+      "win_rate": 0.974,
+      "hp_loss": 3.459,
+      "rounds": 1.609,
       "nonterminal": 0
     },
     {
@@ -6318,9 +6318,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.984,
-      "hp_loss": 4.32,
-      "rounds": 1.689,
+      "win_rate": 0.991,
+      "hp_loss": 2.689,
+      "rounds": 1.442,
       "nonterminal": 0
     },
     {
@@ -6388,9 +6388,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.881,
-      "hp_loss": 10.525,
-      "rounds": 3.575,
+      "win_rate": 0.924,
+      "hp_loss": 9.006,
+      "rounds": 3.114,
       "nonterminal": 0
     },
     {
@@ -6398,9 +6398,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.931,
-      "hp_loss": 10.092,
-      "rounds": 3.079,
+      "win_rate": 0.968,
+      "hp_loss": 8.762,
+      "rounds": 2.46,
       "nonterminal": 0
     },
     {
@@ -6469,8 +6469,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 6.6,
-      "rounds": 2.185,
+      "hp_loss": 6.054,
+      "rounds": 2.055,
       "nonterminal": 0
     },
     {
@@ -6479,8 +6479,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 6.799,
-      "rounds": 2.191,
+      "hp_loss": 6.149,
+      "rounds": 2.057,
       "nonterminal": 0
     },
     {
@@ -6549,8 +6549,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 6.847,
-      "rounds": 2.175,
+      "hp_loss": 6.623,
+      "rounds": 2.079,
       "nonterminal": 0
     },
     {
@@ -6559,8 +6559,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 6.896,
-      "rounds": 2.187,
+      "hp_loss": 6.799,
+      "rounds": 2.08,
       "nonterminal": 0
     },
     {
@@ -6628,9 +6628,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.996,
-      "hp_loss": 1.81,
-      "rounds": 1.347,
+      "win_rate": 0.997,
+      "hp_loss": 0.973,
+      "rounds": 1.174,
       "nonterminal": 0
     },
     {
@@ -6639,8 +6639,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.006,
-      "rounds": 1.365,
+      "hp_loss": 1.012,
+      "rounds": 1.191,
       "nonterminal": 0
     },
     {
@@ -6708,9 +6708,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.981,
-      "hp_loss": 6.751,
-      "rounds": 2.781,
+      "win_rate": 0.991,
+      "hp_loss": 5.704,
+      "rounds": 2.4,
       "nonterminal": 0
     },
     {
@@ -6718,9 +6718,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.982,
-      "hp_loss": 7.428,
-      "rounds": 2.731,
+      "win_rate": 0.99,
+      "hp_loss": 6.413,
+      "rounds": 2.316,
       "nonterminal": 0
     },
     {
@@ -6789,8 +6789,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.45,
-      "rounds": 3.374,
+      "hp_loss": 3.264,
+      "rounds": 3.007,
       "nonterminal": 0
     },
     {
@@ -6799,8 +6799,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.495,
-      "rounds": 3.374,
+      "hp_loss": 3.264,
+      "rounds": 3.007,
       "nonterminal": 0
     },
     {
@@ -6869,8 +6869,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 5.377,
-      "rounds": 3.432,
+      "hp_loss": 3.861,
+      "rounds": 3.008,
       "nonterminal": 0
     },
     {
@@ -6879,8 +6879,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 5.609,
-      "rounds": 3.432,
+      "hp_loss": 3.861,
+      "rounds": 3.008,
       "nonterminal": 0
     },
     {
@@ -6949,8 +6949,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 3.303,
-      "rounds": 2,
+      "hp_loss": 3.342,
+      "rounds": 1.978,
       "nonterminal": 0
     },
     {
@@ -6959,8 +6959,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 3.838,
-      "rounds": 2,
+      "hp_loss": 3.754,
+      "rounds": 1.978,
       "nonterminal": 0
     },
     {
@@ -7029,8 +7029,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.523,
-      "rounds": 3.401,
+      "hp_loss": 1.436,
+      "rounds": 3.007,
       "nonterminal": 0
     },
     {
@@ -7039,8 +7039,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 2.544,
-      "rounds": 3.401,
+      "hp_loss": 1.436,
+      "rounds": 3.007,
       "nonterminal": 0
     },
     {
@@ -7108,9 +7108,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.672,
-      "hp_loss": 22.344,
-      "rounds": 7.216,
+      "win_rate": 0.682,
+      "hp_loss": 22.634,
+      "rounds": 7.316,
       "nonterminal": 0
     },
     {
@@ -7118,9 +7118,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.797,
-      "hp_loss": 20.922,
-      "rounds": 6.82,
+      "win_rate": 0.9,
+      "hp_loss": 18.696,
+      "rounds": 5.79,
       "nonterminal": 0
     },
     {
@@ -7188,9 +7188,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.643,
-      "hp_loss": 22.317,
-      "rounds": 6.287,
+      "win_rate": 0.648,
+      "hp_loss": 22.839,
+      "rounds": 6.537,
       "nonterminal": 0
     },
     {
@@ -7198,9 +7198,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.754,
-      "hp_loss": 19.484,
-      "rounds": 6.661,
+      "win_rate": 0.866,
+      "hp_loss": 17.177,
+      "rounds": 5.791,
       "nonterminal": 0
     },
     {
@@ -7268,9 +7268,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.696,
-      "hp_loss": 12.955,
-      "rounds": 2.493,
+      "win_rate": 0.685,
+      "hp_loss": 13.197,
+      "rounds": 2.576,
       "nonterminal": 0
     },
     {
@@ -7278,9 +7278,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.762,
-      "hp_loss": 11.195,
-      "rounds": 3.354,
+      "win_rate": 0.793,
+      "hp_loss": 10.864,
+      "rounds": 3.221,
       "nonterminal": 0
     },
     {
@@ -7349,8 +7349,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 0.694,
-      "hp_loss": 16.083,
-      "rounds": 5.248,
+      "hp_loss": 16.51,
+      "rounds": 5.287,
       "nonterminal": 0
     },
     {
@@ -7358,9 +7358,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.81,
-      "hp_loss": 13.369,
-      "rounds": 5.936,
+      "win_rate": 0.861,
+      "hp_loss": 12.414,
+      "rounds": 5.545,
       "nonterminal": 0
     },
     {
@@ -7428,9 +7428,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.918,
-      "hp_loss": 11.712,
-      "rounds": 4.429,
+      "win_rate": 0.947,
+      "hp_loss": 10.682,
+      "rounds": 3.864,
       "nonterminal": 0
     },
     {
@@ -7438,9 +7438,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.863,
-      "hp_loss": 11.777,
-      "rounds": 4.288,
+      "win_rate": 0.909,
+      "hp_loss": 11.074,
+      "rounds": 3.447,
       "nonterminal": 0
     },
     {
@@ -7508,9 +7508,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.972,
-      "hp_loss": 8.86,
-      "rounds": 2.991,
+      "win_rate": 0.981,
+      "hp_loss": 7.967,
+      "rounds": 2.569,
       "nonterminal": 0
     },
     {
@@ -7518,9 +7518,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.96,
-      "hp_loss": 8.991,
-      "rounds": 3.273,
+      "win_rate": 0.98,
+      "hp_loss": 8.305,
+      "rounds": 2.617,
       "nonterminal": 0
     },
     {
@@ -7588,9 +7588,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.9,
-      "hp_loss": 6.035,
-      "rounds": 2.203,
+      "win_rate": 0.888,
+      "hp_loss": 6.514,
+      "rounds": 2.237,
       "nonterminal": 0
     },
     {
@@ -7598,9 +7598,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.848,
-      "hp_loss": 7.274,
-      "rounds": 2.426,
+      "win_rate": 0.851,
+      "hp_loss": 7.349,
+      "rounds": 2.396,
       "nonterminal": 0
     },
     {
@@ -7668,9 +7668,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.893,
-      "hp_loss": 8.215,
-      "rounds": 3.4,
+      "win_rate": 0.931,
+      "hp_loss": 7.177,
+      "rounds": 3.088,
       "nonterminal": 0
     },
     {
@@ -7678,9 +7678,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.85,
-      "hp_loss": 8.27,
-      "rounds": 3.654,
+      "win_rate": 0.906,
+      "hp_loss": 8.012,
+      "rounds": 3.016,
       "nonterminal": 0
     },
     {
@@ -7748,9 +7748,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.92,
-      "hp_loss": 10.845,
-      "rounds": 6.008,
+      "win_rate": 0.912,
+      "hp_loss": 11.382,
+      "rounds": 5.819,
       "nonterminal": 0
     },
     {
@@ -7758,9 +7758,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.934,
-      "hp_loss": 10.824,
-      "rounds": 5.392,
+      "win_rate": 0.967,
+      "hp_loss": 9.707,
+      "rounds": 4.142,
       "nonterminal": 0
     },
     {
@@ -7828,9 +7828,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.913,
-      "hp_loss": 10.136,
-      "rounds": 4.025,
+      "win_rate": 0.904,
+      "hp_loss": 10.694,
+      "rounds": 4.014,
       "nonterminal": 0
     },
     {
@@ -7838,9 +7838,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.898,
-      "hp_loss": 10.289,
-      "rounds": 4.304,
+      "win_rate": 0.945,
+      "hp_loss": 9.263,
+      "rounds": 3.305,
       "nonterminal": 0
     },
     {
@@ -7908,9 +7908,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.883,
-      "hp_loss": 5.737,
-      "rounds": 2.519,
+      "win_rate": 0.879,
+      "hp_loss": 5.84,
+      "rounds": 2.545,
       "nonterminal": 0
     },
     {
@@ -7918,9 +7918,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.883,
-      "hp_loss": 6.011,
-      "rounds": 2.648,
+      "win_rate": 0.918,
+      "hp_loss": 5.543,
+      "rounds": 2.413,
       "nonterminal": 0
     },
     {
@@ -7988,9 +7988,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.875,
-      "hp_loss": 8.401,
-      "rounds": 4.297,
+      "win_rate": 0.879,
+      "hp_loss": 8.597,
+      "rounds": 4.337,
       "nonterminal": 0
     },
     {
@@ -7998,9 +7998,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.895,
-      "hp_loss": 7.848,
-      "rounds": 4.449,
+      "win_rate": 0.944,
+      "hp_loss": 7.097,
+      "rounds": 3.512,
       "nonterminal": 0
     },
     {
@@ -8068,9 +8068,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.889,
-      "hp_loss": 11.715,
-      "rounds": 13.041,
+      "win_rate": 0.875,
+      "hp_loss": 11.87,
+      "rounds": 10.236,
       "nonterminal": 0
     },
     {
@@ -8078,9 +8078,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.9,
-      "hp_loss": 10.941,
-      "rounds": 8.671,
+      "win_rate": 0.958,
+      "hp_loss": 8.887,
+      "rounds": 6.453,
       "nonterminal": 0
     },
     {
@@ -8148,9 +8148,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.904,
-      "hp_loss": 9.895,
-      "rounds": 7.73,
+      "win_rate": 0.94,
+      "hp_loss": 10.006,
+      "rounds": 7.42,
       "nonterminal": 0
     },
     {
@@ -8158,9 +8158,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.931,
-      "hp_loss": 9.062,
-      "rounds": 7.642,
+      "win_rate": 0.978,
+      "hp_loss": 8.431,
+      "rounds": 6.175,
       "nonterminal": 0
     },
     {
@@ -8228,9 +8228,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.748,
-      "hp_loss": 7.75,
-      "rounds": 4.099,
+      "win_rate": 0.767,
+      "hp_loss": 7.54,
+      "rounds": 3.854,
       "nonterminal": 0
     },
     {
@@ -8238,9 +8238,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.791,
-      "hp_loss": 7.078,
-      "rounds": 4.056,
+      "win_rate": 0.868,
+      "hp_loss": 6.243,
+      "rounds": 3.365,
       "nonterminal": 0
     },
     {
@@ -8308,9 +8308,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.861,
-      "hp_loss": 8.646,
-      "rounds": 8.072,
+      "win_rate": 0.915,
+      "hp_loss": 8.538,
+      "rounds": 7.686,
       "nonterminal": 0
     },
     {
@@ -8318,9 +8318,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.903,
-      "hp_loss": 7.161,
-      "rounds": 7.563,
+      "win_rate": 0.965,
+      "hp_loss": 6.644,
+      "rounds": 6.265,
       "nonterminal": 0
     },
     {
@@ -8388,9 +8388,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.821,
-      "hp_loss": 12.442,
-      "rounds": 22.28,
+      "win_rate": 0.879,
+      "hp_loss": 11.202,
+      "rounds": 16.084,
       "nonterminal": 0
     },
     {
@@ -8398,9 +8398,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.859,
-      "hp_loss": 11.138,
-      "rounds": 14.848,
+      "win_rate": 0.955,
+      "hp_loss": 9.782,
+      "rounds": 9.288,
       "nonterminal": 0
     },
     {
@@ -8468,9 +8468,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.711,
-      "hp_loss": 12.424,
-      "rounds": 12.462,
+      "win_rate": 0.753,
+      "hp_loss": 11.391,
+      "rounds": 11.017,
       "nonterminal": 0
     },
     {
@@ -8478,9 +8478,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.788,
-      "hp_loss": 10.83,
-      "rounds": 11.179,
+      "win_rate": 0.903,
+      "hp_loss": 9.274,
+      "rounds": 7.918,
       "nonterminal": 0
     },
     {
@@ -8548,9 +8548,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.423,
-      "hp_loss": 10.893,
-      "rounds": 5.879,
+      "win_rate": 0.475,
+      "hp_loss": 10.297,
+      "rounds": 5.665,
       "nonterminal": 0
     },
     {
@@ -8558,9 +8558,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.641,
-      "hp_loss": 8.152,
-      "rounds": 6.444,
+      "win_rate": 0.74,
+      "hp_loss": 7.308,
+      "rounds": 5.582,
       "nonterminal": 0
     },
     {
@@ -8628,9 +8628,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.514,
-      "hp_loss": 12.281,
-      "rounds": 12.243,
+      "win_rate": 0.619,
+      "hp_loss": 10.778,
+      "rounds": 10.668,
       "nonterminal": 0
     },
     {
@@ -8638,9 +8638,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.721,
-      "hp_loss": 8.875,
-      "rounds": 11.611,
+      "win_rate": 0.892,
+      "hp_loss": 7.18,
+      "rounds": 8.118,
       "nonterminal": 0
     },
     {
@@ -8708,9 +8708,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.986,
-      "hp_loss": 0.726,
-      "rounds": 1.111,
+      "win_rate": 0.997,
+      "hp_loss": 0.186,
+      "rounds": 1.025,
       "nonterminal": 0
     },
     {
@@ -8718,9 +8718,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.958,
-      "hp_loss": 2.286,
-      "rounds": 1.327,
+      "win_rate": 0.992,
+      "hp_loss": 0.584,
+      "rounds": 1.075,
       "nonterminal": 0
     },
     {
@@ -8788,9 +8788,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.983,
-      "hp_loss": 0.683,
-      "rounds": 1.097,
+      "win_rate": 0.996,
+      "hp_loss": 0.173,
+      "rounds": 1.032,
       "nonterminal": 0
     },
     {
@@ -8798,9 +8798,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.959,
-      "hp_loss": 1.751,
-      "rounds": 1.276,
+      "win_rate": 0.985,
+      "hp_loss": 0.661,
+      "rounds": 1.076,
       "nonterminal": 0
     },
     {
@@ -8868,9 +8868,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.977,
-      "hp_loss": 0.539,
-      "rounds": 1.094,
+      "win_rate": 0.996,
+      "hp_loss": 0.102,
+      "rounds": 1.023,
       "nonterminal": 0
     },
     {
@@ -8878,9 +8878,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.939,
-      "hp_loss": 1.473,
-      "rounds": 1.305,
+      "win_rate": 0.983,
+      "hp_loss": 0.438,
+      "rounds": 1.064,
       "nonterminal": 0
     },
     {
@@ -8948,9 +8948,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.987,
-      "hp_loss": 0.429,
-      "rounds": 1.097,
+      "win_rate": 0.994,
+      "hp_loss": 0.205,
+      "rounds": 1.028,
       "nonterminal": 0
     },
     {
@@ -8958,9 +8958,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.958,
-      "hp_loss": 1.417,
-      "rounds": 1.299,
+      "win_rate": 0.99,
+      "hp_loss": 0.378,
+      "rounds": 1.073,
       "nonterminal": 0
     },
     {
@@ -9028,9 +9028,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.866,
-      "hp_loss": 6.422,
-      "rounds": 2.086,
+      "win_rate": 0.935,
+      "hp_loss": 3.068,
+      "rounds": 1.509,
       "nonterminal": 0
     },
     {
@@ -9038,9 +9038,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.869,
-      "hp_loss": 6.337,
-      "rounds": 2.095,
+      "win_rate": 0.939,
+      "hp_loss": 3.178,
+      "rounds": 1.5,
       "nonterminal": 0
     },
     {
@@ -9108,9 +9108,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.864,
-      "hp_loss": 6.126,
-      "rounds": 2.091,
+      "win_rate": 0.948,
+      "hp_loss": 2.277,
+      "rounds": 1.476,
       "nonterminal": 0
     },
     {
@@ -9118,9 +9118,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.863,
-      "hp_loss": 6.209,
-      "rounds": 2.098,
+      "win_rate": 0.951,
+      "hp_loss": 2.483,
+      "rounds": 1.467,
       "nonterminal": 0
     },
     {
@@ -9188,9 +9188,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.794,
-      "hp_loss": 4.911,
-      "rounds": 1.914,
+      "win_rate": 0.917,
+      "hp_loss": 1.955,
+      "rounds": 1.367,
       "nonterminal": 0
     },
     {
@@ -9198,9 +9198,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.797,
-      "hp_loss": 4.743,
-      "rounds": 1.928,
+      "win_rate": 0.919,
+      "hp_loss": 1.894,
+      "rounds": 1.368,
       "nonterminal": 0
     },
     {
@@ -9268,9 +9268,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.868,
-      "hp_loss": 4.073,
-      "rounds": 2.045,
+      "win_rate": 0.931,
+      "hp_loss": 2.079,
+      "rounds": 1.607,
       "nonterminal": 0
     },
     {
@@ -9278,9 +9278,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.872,
-      "hp_loss": 3.947,
-      "rounds": 2.046,
+      "win_rate": 0.933,
+      "hp_loss": 2.229,
+      "rounds": 1.602,
       "nonterminal": 0
     },
     {
@@ -9348,9 +9348,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.926,
-      "hp_loss": 18.362,
-      "rounds": 5.636,
+      "win_rate": 0.943,
+      "hp_loss": 17.946,
+      "rounds": 5.068,
       "nonterminal": 0
     },
     {
@@ -9358,9 +9358,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.904,
-      "hp_loss": 19.589,
-      "rounds": 6.373,
+      "win_rate": 0.943,
+      "hp_loss": 18.278,
+      "rounds": 5.543,
       "nonterminal": 0
     },
     {
@@ -9428,9 +9428,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.865,
-      "hp_loss": 18.473,
-      "rounds": 5.851,
+      "win_rate": 0.898,
+      "hp_loss": 17.62,
+      "rounds": 5.297,
       "nonterminal": 0
     },
     {
@@ -9438,9 +9438,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.846,
-      "hp_loss": 19.235,
-      "rounds": 6.65,
+      "win_rate": 0.899,
+      "hp_loss": 18.315,
+      "rounds": 5.768,
       "nonterminal": 0
     },
     {
@@ -9508,9 +9508,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.765,
-      "hp_loss": 12.508,
-      "rounds": 3.331,
+      "win_rate": 0.788,
+      "hp_loss": 12.301,
+      "rounds": 3.254,
       "nonterminal": 0
     },
     {
@@ -9518,9 +9518,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.777,
-      "hp_loss": 12.323,
-      "rounds": 3.9,
+      "win_rate": 0.805,
+      "hp_loss": 11.719,
+      "rounds": 3.763,
       "nonterminal": 0
     },
     {
@@ -9588,9 +9588,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.837,
-      "hp_loss": 14.725,
-      "rounds": 4.469,
+      "win_rate": 0.856,
+      "hp_loss": 14.179,
+      "rounds": 4.215,
       "nonterminal": 0
     },
     {
@@ -9598,9 +9598,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.815,
-      "hp_loss": 14.216,
-      "rounds": 4.92,
+      "win_rate": 0.836,
+      "hp_loss": 14.434,
+      "rounds": 4.645,
       "nonterminal": 0
     },
     {
@@ -9668,9 +9668,9 @@
       "character": "hero",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.846,
-      "hp_loss": 13.014,
-      "rounds": 6.399,
+      "win_rate": 0.885,
+      "hp_loss": 10.86,
+      "rounds": 5.435,
       "nonterminal": 0
     },
     {
@@ -9678,9 +9678,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.874,
-      "hp_loss": 11.907,
-      "rounds": 6.537,
+      "win_rate": 0.92,
+      "hp_loss": 9.737,
+      "rounds": 5.437,
       "nonterminal": 0
     },
     {
@@ -9748,9 +9748,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.845,
-      "hp_loss": 12.004,
-      "rounds": 5.432,
+      "win_rate": 0.89,
+      "hp_loss": 9.646,
+      "rounds": 4.72,
       "nonterminal": 0
     },
     {
@@ -9758,9 +9758,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.87,
-      "hp_loss": 10.639,
-      "rounds": 5.549,
+      "win_rate": 0.897,
+      "hp_loss": 8.903,
+      "rounds": 4.69,
       "nonterminal": 0
     },
     {
@@ -9828,9 +9828,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.873,
-      "hp_loss": 3.91,
-      "rounds": 2.018,
+      "win_rate": 0.894,
+      "hp_loss": 3.312,
+      "rounds": 1.937,
       "nonterminal": 0
     },
     {
@@ -9838,9 +9838,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.871,
-      "hp_loss": 3.716,
-      "rounds": 2.046,
+      "win_rate": 0.894,
+      "hp_loss": 3.303,
+      "rounds": 1.945,
       "nonterminal": 0
     },
     {
@@ -9908,9 +9908,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.92,
-      "hp_loss": 3.815,
-      "rounds": 3.352,
+      "win_rate": 0.939,
+      "hp_loss": 2.905,
+      "rounds": 2.912,
       "nonterminal": 0
     },
     {
@@ -9918,9 +9918,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.924,
-      "hp_loss": 3.433,
-      "rounds": 3.39,
+      "win_rate": 0.943,
+      "hp_loss": 2.786,
+      "rounds": 2.915,
       "nonterminal": 0
     },
     {
@@ -9989,8 +9989,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 0.946,
-      "hp_loss": 16.729,
-      "rounds": 6.921,
+      "hp_loss": 17.023,
+      "rounds": 6.032,
       "nonterminal": 0
     },
     {
@@ -9998,9 +9998,9 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.924,
-      "hp_loss": 16.287,
-      "rounds": 6.914,
+      "win_rate": 0.936,
+      "hp_loss": 16.518,
+      "rounds": 5.639,
       "nonterminal": 0
     },
     {
@@ -10068,9 +10068,9 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.899,
-      "hp_loss": 16.871,
-      "rounds": 5.874,
+      "win_rate": 0.898,
+      "hp_loss": 17.129,
+      "rounds": 5.303,
       "nonterminal": 0
     },
     {
@@ -10078,9 +10078,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.871,
-      "hp_loss": 15.512,
-      "rounds": 6.03,
+      "win_rate": 0.888,
+      "hp_loss": 15.801,
+      "rounds": 5,
       "nonterminal": 0
     },
     {
@@ -10148,9 +10148,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.856,
-      "hp_loss": 9.971,
-      "rounds": 2.314,
+      "win_rate": 0.881,
+      "hp_loss": 9.476,
+      "rounds": 2.226,
       "nonterminal": 0
     },
     {
@@ -10158,9 +10158,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.841,
-      "hp_loss": 10.356,
-      "rounds": 2.352,
+      "win_rate": 0.875,
+      "hp_loss": 10.121,
+      "rounds": 2.183,
       "nonterminal": 0
     },
     {
@@ -10228,9 +10228,9 @@
       "character": "thief",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.952,
-      "hp_loss": 10.95,
-      "rounds": 4.032,
+      "win_rate": 0.965,
+      "hp_loss": 10.177,
+      "rounds": 3.595,
       "nonterminal": 0
     },
     {
@@ -10238,9 +10238,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.95,
-      "hp_loss": 10.638,
-      "rounds": 4.022,
+      "win_rate": 0.961,
+      "hp_loss": 9.973,
+      "rounds": 3.491,
       "nonterminal": 0
     },
     {
@@ -10309,8 +10309,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.438,
-      "rounds": 2.35,
+      "hp_loss": 2.963,
+      "rounds": 1.896,
       "nonterminal": 0
     },
     {
@@ -10319,8 +10319,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.88,
-      "rounds": 2.468,
+      "hp_loss": 4.481,
+      "rounds": 2.306,
       "nonterminal": 0
     },
     {
@@ -10389,8 +10389,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 5.274,
-      "rounds": 2.371,
+      "hp_loss": 3.768,
+      "rounds": 1.941,
       "nonterminal": 0
     },
     {
@@ -10398,9 +10398,9 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.997,
-      "hp_loss": 6.178,
-      "rounds": 2.595,
+      "win_rate": 0.998,
+      "hp_loss": 5.422,
+      "rounds": 2.302,
       "nonterminal": 0
     },
     {
@@ -10469,8 +10469,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 0.605,
-      "rounds": 1.161,
+      "hp_loss": 0.411,
+      "rounds": 1.109,
       "nonterminal": 0
     },
     {
@@ -10479,8 +10479,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 0.999,
-      "hp_loss": 0.629,
-      "rounds": 1.167,
+      "hp_loss": 0.619,
+      "rounds": 1.16,
       "nonterminal": 0
     },
     {
@@ -10549,8 +10549,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.412,
-      "rounds": 2.533,
+      "hp_loss": 3.195,
+      "rounds": 2.038,
       "nonterminal": 0
     },
     {
@@ -10558,9 +10558,9 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.995,
-      "hp_loss": 5.087,
-      "rounds": 2.753,
+      "win_rate": 0.998,
+      "hp_loss": 4.595,
+      "rounds": 2.41,
       "nonterminal": 0
     },
     {
@@ -10629,8 +10629,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 3.737,
-      "rounds": 2.187,
+      "hp_loss": 3.453,
+      "rounds": 2.103,
       "nonterminal": 0
     },
     {
@@ -10639,8 +10639,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 3.909,
-      "rounds": 2.232,
+      "hp_loss": 3.713,
+      "rounds": 2.178,
       "nonterminal": 0
     },
     {
@@ -10709,8 +10709,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.488,
-      "rounds": 2.172,
+      "hp_loss": 4.175,
+      "rounds": 2.077,
       "nonterminal": 0
     },
     {
@@ -10719,8 +10719,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 4.976,
-      "rounds": 2.267,
+      "hp_loss": 4.591,
+      "rounds": 2.162,
       "nonterminal": 0
     },
     {
@@ -10789,8 +10789,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 3.93,
-      "rounds": 2.081,
+      "hp_loss": 3.874,
+      "rounds": 2.05,
       "nonterminal": 0
     },
     {
@@ -10799,8 +10799,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 3.897,
-      "rounds": 2.097,
+      "hp_loss": 3.99,
+      "rounds": 2.08,
       "nonterminal": 0
     },
     {
@@ -10869,8 +10869,8 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 3.48,
-      "rounds": 2.281,
+      "hp_loss": 3.224,
+      "rounds": 2.128,
       "nonterminal": 0
     },
     {
@@ -10879,8 +10879,8 @@
       "companion": "hydromancer_elio",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 3.904,
-      "rounds": 2.37,
+      "hp_loss": 3.635,
+      "rounds": 2.238,
       "nonterminal": 0
     },
     {
@@ -10949,7 +10949,7 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 8.154,
+      "hp_loss": 8.267,
       "rounds": 3,
       "nonterminal": 0
     },
@@ -11029,7 +11029,7 @@
       "companion": "paladin_liese",
       "n": 1000,
       "win_rate": 1,
-      "hp_loss": 7.923,
+      "hp_loss": 8.511,
       "rounds": 3,
       "nonterminal": 0
     },
@@ -11108,9 +11108,9 @@
       "character": "mage",
       "companion": "paladin_liese",
       "n": 1000,
-      "win_rate": 0.969,
-      "hp_loss": 2.158,
-      "rounds": 1.321,
+      "win_rate": 0.993,
+      "hp_loss": 0.568,
+      "rounds": 1.094,
       "nonterminal": 0
     },
     {
@@ -11118,9 +11118,9 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "n": 1000,
-      "win_rate": 0.91,
-      "hp_loss": 8.179,
-      "rounds": 1.82,
+      "win_rate": 0.979,
+      "hp_loss": 2.636,
+      "rounds": 1.266,
       "nonterminal": 0
     },
     {
@@ -11209,12 +11209,12 @@
       "id": "paladin_liese",
       "name": "聖騎士リーゼ",
       "image": "/static/images/npc_liese.png",
-      "description": "暁の守護団の若き聖騎士。毎ラウンド開始時、プレイヤーのHPが半分未満なら「癒しの祈り」で最大HPの25%を回復し、そうでなければ「聖光の一撃」で敵へ2d3の光属性ダメージを与える（不死の敵を優先して狙う）。",
+      "description": "暁の守護団の若き聖騎士。毎ラウンド開始時、プレイヤーのHPが半分未満なら「癒しの祈り」で最大HPの20%を回復し、そうでなければ「聖光の一撃」で敵へ2d6の光属性ダメージを与える（不死の敵を優先して狙う）。",
       "round_start_effects": [
         {
           "kind": "heal_player",
           "name": "癒しの祈り",
-          "max_hp_ratio": 0.25,
+          "max_hp_ratio": 0.2,
           "requirements": {
             "player_hp_ratio_lt": 0.5
           }
@@ -11222,7 +11222,7 @@
         {
           "kind": "damage_enemy",
           "name": "聖光の一撃",
-          "damage": "2d3",
+          "damage": "2d6",
           "element": "holy",
           "target": "undead_first",
           "requirements": {
@@ -11237,12 +11237,12 @@
       "id": "hydromancer_elio",
       "name": "水術士エリオ",
       "image": "/static/images/npc_elio.png",
-      "description": "流れの水術士。毎ラウンド開始時に「水刃」で敵へ2d3の水属性ダメージを与える（水に弱い敵を優先して狙う）。4ラウンドごとに「水の帳」を張り、そのラウンドにプレイヤーが受けるダメージを半分にする。",
+      "description": "流れの水術士。毎ラウンド開始時に「水刃」で敵へ2d6の水属性ダメージを与える（水に弱い敵を優先して狙う）。4ラウンドごとに「水の帳」を張り、そのラウンドにプレイヤーが受けるダメージを半分にする。",
       "round_start_effects": [
         {
           "kind": "damage_enemy",
           "name": "水刃",
-          "damage": "2d3",
+          "damage": "2d6",
           "element": "water",
           "target": "weak_to:water"
         },
@@ -11258,12 +11258,12 @@
     }
   ],
   "fingerprints": {
-    "scripts/balance/ch3_outside.py": "2833b9d30832617ae65ecf3d4134dd7f4f630a32dc846da7b5b8abb655c1d532",
+    "scripts/balance/ch3_outside.py": "e76a91c11f233411b313e1142c0dec84c9c401859453277c0f7ad3daa2c196ba",
     "scripts/balance/gorge.py": "d5f6e103a568d09d0157720d6d6c469b183c854aaa505c455446b4d90e4a9739",
     "scripts/balance/liese.py": "a82f8680a353f07384ca41257d1880d9bae20798d129cc92d9ec1e7e0505fffb",
     "scripts/balance/sim.py": "dc0596c91bdcfb1f2a60b9d40b6a251df451e6d77213fba5d0bdbcae3edc1b8e",
     "scripts/balance/checkpoints.py": "69f80add42f9ff019014566e77abc1f25f422d23fbf03076a36652e9f80543f5",
-    "host/prompt/processed/dragon_rpg.json": "37997464c144ed78a300cb6c97c113fd33161ba71b6f7d2c1805bd04f44e75a0",
+    "host/prompt/processed/dragon_rpg.json": "052d242599d056a4aa13bf459d7d9cf82f6040af4952e58cc2de39bc2aa757af",
     "host/__init__.py": "67c5540ed5ffd4ab154da8a8be8a105bb03e0423045822043b7b03f6fb90956f",
     "host/app.py": "e039cad04abb4ec006447f2d321db43fe17c51668d33e387bb07d105e8f0d387",
     "host/area_retry.py": "35b6522b214560ffcb95dac9c81f869931655148ad801949ffc0f3f4c9bef30e",
@@ -11305,10 +11305,10 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "baseline": 0.968,
-      "win_rate": 0.998,
+      "win_rate": 0.999,
       "best": "fire_bat_empowered",
       "best_rate": 0.999,
-      "excess_pp": -0.10000000000000009,
+      "excess_pp": 0.0,
       "passed": true
     },
     {
@@ -11327,10 +11327,10 @@
       "character": "thief",
       "companion": "paladin_liese",
       "baseline": 0.944,
-      "win_rate": 0.984,
+      "win_rate": 0.991,
       "best": "fire_bat_dragon",
       "best_rate": 0.999,
-      "excess_pp": -1.5000000000000013,
+      "excess_pp": -0.8000000000000007,
       "passed": true
     },
     {
@@ -11426,10 +11426,10 @@
       "character": "hero",
       "companion": "paladin_liese",
       "baseline": 0.882,
-      "win_rate": 0.953,
+      "win_rate": 0.947,
       "best": "fire_bat_empowered",
       "best_rate": 0.972,
-      "excess_pp": -1.9000000000000017,
+      "excess_pp": -2.500000000000002,
       "passed": true
     },
     {
@@ -11437,10 +11437,10 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "baseline": 0.882,
-      "win_rate": 0.926,
+      "win_rate": 0.946,
       "best": "fire_bat_empowered",
       "best_rate": 0.972,
-      "excess_pp": -4.5999999999999925,
+      "excess_pp": -2.6000000000000023,
       "passed": true
     },
     {
@@ -11448,10 +11448,10 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "baseline": 0.778,
-      "win_rate": 0.864,
+      "win_rate": 0.906,
       "best": "fire_bat_empowered",
       "best_rate": 0.955,
-      "excess_pp": -9.099999999999998,
+      "excess_pp": -4.899999999999993,
       "passed": true
     },
     {
@@ -11459,10 +11459,10 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "baseline": 0.778,
-      "win_rate": 0.871,
+      "win_rate": 0.904,
       "best": "fire_bat_empowered",
       "best_rate": 0.955,
-      "excess_pp": -8.399999999999997,
+      "excess_pp": -5.099999999999993,
       "passed": true
     },
     {
@@ -11470,10 +11470,10 @@
       "character": "mage",
       "companion": "paladin_liese",
       "baseline": 0.72,
-      "win_rate": 0.658,
+      "win_rate": 0.694,
       "best": "fire_bat_empowered",
       "best_rate": 0.79,
-      "excess_pp": -13.200000000000001,
+      "excess_pp": -9.600000000000009,
       "passed": true
     },
     {
@@ -11481,21 +11481,21 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "baseline": 0.72,
-      "win_rate": 0.799,
+      "win_rate": 0.823,
       "best": "fire_bat_empowered",
       "best_rate": 0.79,
-      "excess_pp": 0.9000000000000008,
-      "passed": true
+      "excess_pp": 3.299999999999992,
+      "passed": false
     },
     {
       "location": "dragon_valley_loc",
       "character": "thief",
       "companion": "paladin_liese",
       "baseline": 0.79,
-      "win_rate": 0.862,
+      "win_rate": 0.866,
       "best": "fire_bat_empowered",
       "best_rate": 0.918,
-      "excess_pp": -5.600000000000005,
+      "excess_pp": -5.200000000000005,
       "passed": true
     },
     {
@@ -11503,10 +11503,10 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "baseline": 0.79,
-      "win_rate": 0.871,
+      "win_rate": 0.904,
       "best": "fire_bat_empowered",
       "best_rate": 0.918,
-      "excess_pp": -4.700000000000005,
+      "excess_pp": -1.4000000000000012,
       "passed": true
     },
     {
@@ -11514,10 +11514,10 @@
       "character": "hero",
       "companion": "paladin_liese",
       "baseline": 0.692,
-      "win_rate": 0.681,
+      "win_rate": 0.705,
       "best": "blue_robed_mage",
       "best_rate": 0.692,
-      "excess_pp": -1.0999999999999899,
+      "excess_pp": 1.3000000000000012,
       "passed": true
     },
     {
@@ -11525,10 +11525,10 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "baseline": 0.692,
-      "win_rate": 0.564,
-      "best": "blue_robed_mage",
-      "best_rate": 0.692,
-      "excess_pp": -12.8,
+      "win_rate": 0.039,
+      "best": "paladin_liese",
+      "best_rate": 0.705,
+      "excess_pp": -66.6,
       "passed": true
     },
     {
@@ -11536,10 +11536,10 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "baseline": 0.761,
-      "win_rate": 0.887,
+      "win_rate": 0.933,
       "best": "fire_bat_empowered",
       "best_rate": 0.918,
-      "excess_pp": -3.1000000000000028,
+      "excess_pp": 1.5000000000000013,
       "passed": true
     },
     {
@@ -11547,10 +11547,10 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "baseline": 0.761,
-      "win_rate": 0.703,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.918,
-      "excess_pp": -21.500000000000007,
+      "win_rate": 0.538,
+      "best": "paladin_liese",
+      "best_rate": 0.933,
+      "excess_pp": -39.5,
       "passed": true
     },
     {
@@ -11558,10 +11558,10 @@
       "character": "mage",
       "companion": "paladin_liese",
       "baseline": 0.719,
-      "win_rate": 0.71,
+      "win_rate": 0.718,
       "best": "mina",
       "best_rate": 0.719,
-      "excess_pp": -0.9000000000000008,
+      "excess_pp": -0.10000000000000009,
       "passed": true
     },
     {
@@ -11569,10 +11569,10 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "baseline": 0.719,
-      "win_rate": 0.689,
+      "win_rate": 0.281,
       "best": "mina",
       "best_rate": 0.719,
-      "excess_pp": -3.0000000000000027,
+      "excess_pp": -43.8,
       "passed": true
     },
     {
@@ -11580,10 +11580,10 @@
       "character": "thief",
       "companion": "paladin_liese",
       "baseline": 0.669,
-      "win_rate": 0.718,
+      "win_rate": 0.739,
       "best": "mina",
       "best_rate": 0.669,
-      "excess_pp": 4.899999999999993,
+      "excess_pp": 6.999999999999995,
       "passed": false
     },
     {
@@ -11591,10 +11591,10 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "baseline": 0.669,
-      "win_rate": 0.611,
+      "win_rate": 0.047,
       "best": "paladin_liese",
-      "best_rate": 0.718,
-      "excess_pp": -10.7,
+      "best_rate": 0.739,
+      "excess_pp": -69.19999999999999,
       "passed": true
     },
     {
@@ -11646,10 +11646,10 @@
       "character": "mage",
       "companion": "paladin_liese",
       "baseline": 0.989,
-      "win_rate": 0.997,
+      "win_rate": 0.998,
       "best": "fire_bat_dragon",
       "best_rate": 1,
-      "excess_pp": -0.30000000000000027,
+      "excess_pp": -0.20000000000000018,
       "passed": true
     },
     {
@@ -11657,10 +11657,10 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "baseline": 0.989,
-      "win_rate": 0.997,
+      "win_rate": 0.998,
       "best": "fire_bat_dragon",
       "best_rate": 1,
-      "excess_pp": -0.30000000000000027,
+      "excess_pp": -0.20000000000000018,
       "passed": true
     },
     {
@@ -11778,65 +11778,65 @@
       "character": "hero",
       "companion": "paladin_liese",
       "baseline": 0.995,
-      "win_rate": 0.998,
+      "win_rate": 1,
       "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "forest_wolves",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 0.995,
+      "win_rate": 0.999,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": -0.10000000000000009,
+      "passed": true
+    },
+    {
+      "location": "forest_wolves",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 0.955,
+      "win_rate": 0.998,
+      "best": "fire_bat_dragon",
       "best_rate": 1,
       "excess_pp": -0.20000000000000018,
       "passed": true
     },
     {
       "location": "forest_wolves",
-      "character": "hero",
+      "character": "cleric",
       "companion": "hydromancer_elio",
-      "baseline": 0.995,
-      "win_rate": 0.996,
-      "best": "robin",
+      "baseline": 0.955,
+      "win_rate": 1,
+      "best": "fire_bat_dragon",
       "best_rate": 1,
-      "excess_pp": -0.40000000000000036,
+      "excess_pp": 0,
       "passed": true
     },
     {
       "location": "forest_wolves",
-      "character": "cleric",
+      "character": "mage",
       "companion": "paladin_liese",
-      "baseline": 0.955,
-      "win_rate": 0.993,
-      "best": "fire_bat_dragon",
-      "best_rate": 1,
-      "excess_pp": -0.7000000000000006,
-      "passed": true
-    },
-    {
-      "location": "forest_wolves",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 0.955,
-      "win_rate": 0.992,
-      "best": "fire_bat_dragon",
-      "best_rate": 1,
+      "baseline": 0.947,
+      "win_rate": 0.988,
+      "best": "robin",
+      "best_rate": 0.996,
       "excess_pp": -0.8000000000000007,
       "passed": true
     },
     {
       "location": "forest_wolves",
       "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.947,
-      "win_rate": 0.986,
-      "best": "robin",
-      "best_rate": 0.996,
-      "excess_pp": -1.0000000000000009,
-      "passed": true
-    },
-    {
-      "location": "forest_wolves",
-      "character": "mage",
       "companion": "hydromancer_elio",
       "baseline": 0.947,
-      "win_rate": 0.986,
+      "win_rate": 0.99,
       "best": "robin",
       "best_rate": 0.996,
-      "excess_pp": -1.0000000000000009,
+      "excess_pp": -0.6000000000000005,
       "passed": true
     },
     {
@@ -11844,571 +11844,571 @@
       "character": "thief",
       "companion": "paladin_liese",
       "baseline": 0.964,
-      "win_rate": 0.995,
+      "win_rate": 0.996,
       "best": "fire_bat_empowered",
       "best_rate": 0.997,
+      "excess_pp": -0.10000000000000009,
+      "passed": true
+    },
+    {
+      "location": "forest_wolves",
+      "character": "thief",
+      "companion": "hydromancer_elio",
+      "baseline": 0.964,
+      "win_rate": 0.996,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.997,
+      "excess_pp": -0.10000000000000009,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_one",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_one",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_one",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_one",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_one",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 0.99,
+      "win_rate": 0.997,
+      "best": "fire_bat_dragon",
+      "best_rate": 1,
+      "excess_pp": -0.30000000000000027,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_one",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 0.99,
+      "win_rate": 0.998,
+      "best": "fire_bat_dragon",
+      "best_rate": 1,
       "excess_pp": -0.20000000000000018,
       "passed": true
     },
     {
-      "location": "forest_wolves",
+      "location": "slime_ambush_one",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 0.995,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_one",
       "character": "thief",
       "companion": "hydromancer_elio",
-      "baseline": 0.964,
-      "win_rate": 0.992,
+      "baseline": 0.995,
+      "win_rate": 0.999,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": -0.10000000000000009,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_two",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_two",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_two",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_two",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_two",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 0.983,
+      "win_rate": 0.999,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": -0.10000000000000009,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_two",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 0.983,
+      "win_rate": 0.999,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": -0.10000000000000009,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_two",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 0.996,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "slime_ambush_two",
+      "character": "thief",
+      "companion": "hydromancer_elio",
+      "baseline": 0.996,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "slime_king_battle",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 0.916,
+      "win_rate": 0.994,
       "best": "fire_bat_empowered",
-      "best_rate": 0.997,
+      "best_rate": 1,
+      "excess_pp": -0.6000000000000005,
+      "passed": true
+    },
+    {
+      "location": "slime_king_battle",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 0.916,
+      "win_rate": 0.997,
+      "best": "fire_bat_empowered",
+      "best_rate": 1,
+      "excess_pp": -0.30000000000000027,
+      "passed": true
+    },
+    {
+      "location": "slime_king_battle",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 0.701,
+      "win_rate": 0.948,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.999,
+      "excess_pp": -5.100000000000005,
+      "passed": true
+    },
+    {
+      "location": "slime_king_battle",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 0.701,
+      "win_rate": 0.966,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.999,
+      "excess_pp": -3.300000000000003,
+      "passed": true
+    },
+    {
+      "location": "slime_king_battle",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 0.655,
+      "win_rate": 0.75,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.944,
+      "excess_pp": -19.399999999999995,
+      "passed": true
+    },
+    {
+      "location": "slime_king_battle",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 0.655,
+      "win_rate": 0.905,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.944,
+      "excess_pp": -3.8999999999999924,
+      "passed": true
+    },
+    {
+      "location": "slime_king_battle",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 0.687,
+      "win_rate": 0.969,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.999,
+      "excess_pp": -3.0000000000000027,
+      "passed": true
+    },
+    {
+      "location": "slime_king_battle",
+      "character": "thief",
+      "companion": "hydromancer_elio",
+      "baseline": 0.687,
+      "win_rate": 0.986,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.999,
+      "excess_pp": -1.3000000000000012,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort",
+      "character": "thief",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_first_second",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_first_second",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_first_second",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 0.999,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_first_second",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 0.999,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_first_second",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 0.99,
+      "win_rate": 0.995,
+      "best": "fire_bat_dragon",
+      "best_rate": 0.998,
+      "excess_pp": -0.30000000000000027,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_first_second",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 0.99,
+      "win_rate": 0.996,
+      "best": "fire_bat_dragon",
+      "best_rate": 0.998,
+      "excess_pp": -0.20000000000000018,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_first_second",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 0.996,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_first_second",
+      "character": "thief",
+      "companion": "hydromancer_elio",
+      "baseline": 0.996,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_second_right",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_second_right",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_second_right",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_second_right",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_second_right",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 0.999,
+      "best": "blue_robed_mage",
+      "best_rate": 1,
+      "excess_pp": -0.10000000000000009,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_second_right",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 0.999,
+      "best": "blue_robed_mage",
+      "best_rate": 1,
+      "excess_pp": -0.10000000000000009,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_second_right",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_second_right",
+      "character": "thief",
+      "companion": "hydromancer_elio",
+      "baseline": 1,
+      "win_rate": 1,
+      "best": "robin",
+      "best_rate": 1,
+      "excess_pp": 0,
+      "passed": true
+    },
+    {
+      "location": "goblin_fort_second_left",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 0.961,
+      "win_rate": 0.995,
+      "best": "fire_bat_empowered",
+      "best_rate": 1,
       "excess_pp": -0.5000000000000004,
       "passed": true
     },
     {
-      "location": "slime_ambush_one",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_one",
-      "character": "hero",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_one",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_one",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_one",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.99,
-      "win_rate": 0.996,
-      "best": "fire_bat_dragon",
-      "best_rate": 1,
-      "excess_pp": -0.40000000000000036,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_one",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 0.99,
-      "win_rate": 0.998,
-      "best": "fire_bat_dragon",
-      "best_rate": 1,
-      "excess_pp": -0.20000000000000018,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_one",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 0.995,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_one",
-      "character": "thief",
-      "companion": "hydromancer_elio",
-      "baseline": 0.995,
-      "win_rate": 0.999,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": -0.10000000000000009,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_two",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_two",
-      "character": "hero",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_two",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_two",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_two",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.983,
-      "win_rate": 0.999,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": -0.10000000000000009,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_two",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 0.983,
-      "win_rate": 0.999,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": -0.10000000000000009,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_two",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 0.996,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "slime_ambush_two",
-      "character": "thief",
-      "companion": "hydromancer_elio",
-      "baseline": 0.996,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "slime_king_battle",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 0.916,
-      "win_rate": 0.99,
-      "best": "fire_bat_empowered",
-      "best_rate": 1,
-      "excess_pp": -1.0000000000000009,
-      "passed": true
-    },
-    {
-      "location": "slime_king_battle",
-      "character": "hero",
-      "companion": "hydromancer_elio",
-      "baseline": 0.916,
-      "win_rate": 0.996,
-      "best": "fire_bat_empowered",
-      "best_rate": 1,
-      "excess_pp": -0.40000000000000036,
-      "passed": true
-    },
-    {
-      "location": "slime_king_battle",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 0.701,
-      "win_rate": 0.897,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.999,
-      "excess_pp": -10.199999999999998,
-      "passed": true
-    },
-    {
-      "location": "slime_king_battle",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 0.701,
-      "win_rate": 0.96,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.999,
-      "excess_pp": -3.9000000000000035,
-      "passed": true
-    },
-    {
-      "location": "slime_king_battle",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.655,
-      "win_rate": 0.603,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.944,
-      "excess_pp": -34.099999999999994,
-      "passed": true
-    },
-    {
-      "location": "slime_king_battle",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 0.655,
-      "win_rate": 0.706,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.944,
-      "excess_pp": -23.799999999999997,
-      "passed": true
-    },
-    {
-      "location": "slime_king_battle",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 0.687,
-      "win_rate": 0.904,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.999,
-      "excess_pp": -9.499999999999996,
-      "passed": true
-    },
-    {
-      "location": "slime_king_battle",
-      "character": "thief",
-      "companion": "hydromancer_elio",
-      "baseline": 0.687,
-      "win_rate": 0.972,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.999,
-      "excess_pp": -2.7000000000000024,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort",
-      "character": "hero",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort",
-      "character": "thief",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_first_second",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_first_second",
-      "character": "hero",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_first_second",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 0.999,
-      "win_rate": 0.999,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": -0.10000000000000009,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_first_second",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 0.999,
-      "win_rate": 0.999,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": -0.10000000000000009,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_first_second",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.99,
-      "win_rate": 0.991,
-      "best": "fire_bat_dragon",
-      "best_rate": 0.998,
-      "excess_pp": -0.7000000000000006,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_first_second",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 0.99,
-      "win_rate": 0.991,
-      "best": "fire_bat_dragon",
-      "best_rate": 0.998,
-      "excess_pp": -0.7000000000000006,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_first_second",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 0.996,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_first_second",
-      "character": "thief",
-      "companion": "hydromancer_elio",
-      "baseline": 0.996,
-      "win_rate": 0.999,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": -0.10000000000000009,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_second_right",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_second_right",
-      "character": "hero",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_second_right",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_second_right",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_second_right",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 0.999,
-      "best": "blue_robed_mage",
-      "best_rate": 1,
-      "excess_pp": -0.10000000000000009,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_second_right",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 0.999,
-      "best": "blue_robed_mage",
-      "best_rate": 1,
-      "excess_pp": -0.10000000000000009,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_second_right",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_second_right",
-      "character": "thief",
-      "companion": "hydromancer_elio",
-      "baseline": 1,
-      "win_rate": 1,
-      "best": "robin",
-      "best_rate": 1,
-      "excess_pp": 0,
-      "passed": true
-    },
-    {
-      "location": "goblin_fort_second_left",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 0.961,
-      "win_rate": 0.996,
-      "best": "fire_bat_empowered",
-      "best_rate": 1,
-      "excess_pp": -0.40000000000000036,
-      "passed": true
-    },
-    {
       "location": "goblin_fort_second_left",
       "character": "hero",
       "companion": "hydromancer_elio",
       "baseline": 0.961,
-      "win_rate": 0.99,
+      "win_rate": 0.997,
       "best": "fire_bat_empowered",
       "best_rate": 1,
-      "excess_pp": -1.0000000000000009,
+      "excess_pp": -0.30000000000000027,
       "passed": true
     },
     {
@@ -12416,10 +12416,10 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "baseline": 0.733,
-      "win_rate": 0.868,
+      "win_rate": 0.92,
       "best": "fire_bat_empowered",
       "best_rate": 0.994,
-      "excess_pp": -12.6,
+      "excess_pp": -7.399999999999995,
       "passed": true
     },
     {
@@ -12427,10 +12427,10 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "baseline": 0.733,
-      "win_rate": 0.898,
+      "win_rate": 0.944,
       "best": "fire_bat_empowered",
       "best_rate": 0.994,
-      "excess_pp": -9.599999999999998,
+      "excess_pp": -5.000000000000004,
       "passed": true
     },
     {
@@ -12438,10 +12438,10 @@
       "character": "mage",
       "companion": "paladin_liese",
       "baseline": 0.815,
-      "win_rate": 0.85,
+      "win_rate": 0.908,
       "best": "fire_bat_empowered",
       "best_rate": 0.982,
-      "excess_pp": -13.200000000000001,
+      "excess_pp": -7.399999999999995,
       "passed": true
     },
     {
@@ -12449,10 +12449,10 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "baseline": 0.815,
-      "win_rate": 0.929,
+      "win_rate": 0.957,
       "best": "fire_bat_empowered",
       "best_rate": 0.982,
-      "excess_pp": -5.299999999999994,
+      "excess_pp": -2.500000000000002,
       "passed": true
     },
     {
@@ -12460,10 +12460,10 @@
       "character": "thief",
       "companion": "paladin_liese",
       "baseline": 0.752,
-      "win_rate": 0.859,
+      "win_rate": 0.911,
       "best": "fire_bat_empowered",
       "best_rate": 1,
-      "excess_pp": -14.100000000000001,
+      "excess_pp": -8.899999999999997,
       "passed": true
     },
     {
@@ -12471,10 +12471,10 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "baseline": 0.752,
-      "win_rate": 0.869,
+      "win_rate": 0.924,
       "best": "fire_bat_empowered",
       "best_rate": 1,
-      "excess_pp": -13.100000000000001,
+      "excess_pp": -7.599999999999996,
       "passed": true
     },
     {
@@ -12570,10 +12570,10 @@
       "character": "hero",
       "companion": "paladin_liese",
       "baseline": 0.703,
-      "win_rate": 0.721,
+      "win_rate": 0.836,
       "best": "robin",
       "best_rate": 0.851,
-      "excess_pp": -13.0,
+      "excess_pp": -1.5000000000000013,
       "passed": true
     },
     {
@@ -12581,10 +12581,10 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "baseline": 0.703,
-      "win_rate": 0.722,
+      "win_rate": 0.872,
       "best": "robin",
       "best_rate": 0.851,
-      "excess_pp": -12.9,
+      "excess_pp": 2.100000000000002,
       "passed": true
     },
     {
@@ -12592,10 +12592,10 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "baseline": 0.559,
-      "win_rate": 0.611,
+      "win_rate": 0.738,
       "best": "robin",
       "best_rate": 0.788,
-      "excess_pp": -17.700000000000003,
+      "excess_pp": -5.000000000000004,
       "passed": true
     },
     {
@@ -12603,10 +12603,10 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "baseline": 0.559,
-      "win_rate": 0.6,
+      "win_rate": 0.793,
       "best": "robin",
       "best_rate": 0.788,
-      "excess_pp": -18.800000000000004,
+      "excess_pp": 0.5000000000000004,
       "passed": true
     },
     {
@@ -12614,10 +12614,10 @@
       "character": "mage",
       "companion": "paladin_liese",
       "baseline": 0.619,
-      "win_rate": 0.649,
+      "win_rate": 0.646,
       "best": "robin",
       "best_rate": 0.969,
-      "excess_pp": -31.999999999999996,
+      "excess_pp": -32.3,
       "passed": true
     },
     {
@@ -12625,10 +12625,10 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "baseline": 0.619,
-      "win_rate": 0.63,
+      "win_rate": 0.637,
       "best": "robin",
       "best_rate": 0.969,
-      "excess_pp": -33.9,
+      "excess_pp": -33.199999999999996,
       "passed": true
     },
     {
@@ -12636,21 +12636,21 @@
       "character": "thief",
       "companion": "paladin_liese",
       "baseline": 0.687,
-      "win_rate": 0.714,
+      "win_rate": 0.877,
       "best": "robin",
       "best_rate": 0.826,
-      "excess_pp": -11.2,
-      "passed": true
+      "excess_pp": 5.100000000000005,
+      "passed": false
     },
     {
       "location": "goblin_fort_fourth",
       "character": "thief",
       "companion": "hydromancer_elio",
       "baseline": 0.687,
-      "win_rate": 0.698,
-      "best": "robin",
-      "best_rate": 0.826,
-      "excess_pp": -12.8,
+      "win_rate": 0.882,
+      "best": "paladin_liese",
+      "best_rate": 0.877,
+      "excess_pp": 0.5000000000000004,
       "passed": true
     },
     {
@@ -12856,10 +12856,10 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "baseline": 0.946,
-      "win_rate": 0.976,
+      "win_rate": 0.989,
       "best": "fire_bat_empowered",
       "best_rate": 0.984,
-      "excess_pp": -0.8000000000000007,
+      "excess_pp": 0.5000000000000004,
       "passed": true
     },
     {
@@ -12867,10 +12867,10 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "baseline": 0.946,
-      "win_rate": 0.984,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.984,
-      "excess_pp": 0.0,
+      "win_rate": 0.994,
+      "best": "paladin_liese",
+      "best_rate": 0.989,
+      "excess_pp": 0.5000000000000004,
       "passed": true
     },
     {
@@ -12878,10 +12878,10 @@
       "character": "mage",
       "companion": "paladin_liese",
       "baseline": 0.9,
-      "win_rate": 0.963,
+      "win_rate": 0.974,
       "best": "robin",
       "best_rate": 0.986,
-      "excess_pp": -2.300000000000002,
+      "excess_pp": -1.200000000000001,
       "passed": true
     },
     {
@@ -12889,10 +12889,10 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "baseline": 0.9,
-      "win_rate": 0.984,
+      "win_rate": 0.991,
       "best": "robin",
       "best_rate": 0.986,
-      "excess_pp": -0.20000000000000018,
+      "excess_pp": 0.5000000000000004,
       "passed": true
     },
     {
@@ -12900,10 +12900,10 @@
       "character": "thief",
       "companion": "paladin_liese",
       "baseline": 0.775,
-      "win_rate": 0.881,
+      "win_rate": 0.924,
       "best": "fire_bat_empowered",
       "best_rate": 0.935,
-      "excess_pp": -5.400000000000005,
+      "excess_pp": -1.100000000000001,
       "passed": true
     },
     {
@@ -12911,11 +12911,11 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "baseline": 0.775,
-      "win_rate": 0.931,
+      "win_rate": 0.968,
       "best": "fire_bat_empowered",
       "best_rate": 0.935,
-      "excess_pp": -0.40000000000000036,
-      "passed": true
+      "excess_pp": 3.299999999999992,
+      "passed": false
     },
     {
       "location": "ice_elemental_encounter",
@@ -12966,10 +12966,10 @@
       "character": "mage",
       "companion": "paladin_liese",
       "baseline": 0.987,
-      "win_rate": 0.996,
+      "win_rate": 0.997,
       "best": "fire_bat_dragon",
       "best_rate": 1,
-      "excess_pp": -0.40000000000000036,
+      "excess_pp": -0.30000000000000027,
       "passed": true
     },
     {
@@ -12988,10 +12988,10 @@
       "character": "thief",
       "companion": "paladin_liese",
       "baseline": 0.927,
-      "win_rate": 0.981,
+      "win_rate": 0.991,
       "best": "fire_bat_empowered",
       "best_rate": 1,
-      "excess_pp": -1.9000000000000017,
+      "excess_pp": -0.9000000000000008,
       "passed": true
     },
     {
@@ -12999,10 +12999,10 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "baseline": 0.927,
-      "win_rate": 0.982,
+      "win_rate": 0.99,
       "best": "fire_bat_empowered",
       "best_rate": 1,
-      "excess_pp": -1.8000000000000016,
+      "excess_pp": -1.0000000000000009,
       "passed": true
     },
     {
@@ -13098,10 +13098,10 @@
       "character": "hero",
       "companion": "paladin_liese",
       "baseline": 0.585,
-      "win_rate": 0.672,
+      "win_rate": 0.682,
       "best": "fire_bat_empowered",
       "best_rate": 0.908,
-      "excess_pp": -23.599999999999998,
+      "excess_pp": -22.599999999999998,
       "passed": true
     },
     {
@@ -13109,10 +13109,10 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "baseline": 0.585,
-      "win_rate": 0.797,
+      "win_rate": 0.9,
       "best": "fire_bat_empowered",
       "best_rate": 0.908,
-      "excess_pp": -11.099999999999998,
+      "excess_pp": -0.8000000000000007,
       "passed": true
     },
     {
@@ -13120,10 +13120,10 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "baseline": 0.584,
-      "win_rate": 0.643,
+      "win_rate": 0.648,
       "best": "fire_bat_empowered",
       "best_rate": 0.831,
-      "excess_pp": -18.799999999999994,
+      "excess_pp": -18.299999999999994,
       "passed": true
     },
     {
@@ -13131,33 +13131,33 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "baseline": 0.584,
-      "win_rate": 0.754,
+      "win_rate": 0.866,
       "best": "fire_bat_empowered",
       "best_rate": 0.831,
+      "excess_pp": 3.500000000000003,
+      "passed": false
+    },
+    {
+      "location": "draco_battle",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 0.678,
+      "win_rate": 0.685,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.762,
       "excess_pp": -7.699999999999996,
       "passed": true
     },
     {
       "location": "draco_battle",
       "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.678,
-      "win_rate": 0.696,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.762,
-      "excess_pp": -6.600000000000006,
-      "passed": true
-    },
-    {
-      "location": "draco_battle",
-      "character": "mage",
       "companion": "hydromancer_elio",
       "baseline": 0.678,
-      "win_rate": 0.762,
+      "win_rate": 0.793,
       "best": "fire_bat_empowered",
       "best_rate": 0.762,
-      "excess_pp": 0.0,
-      "passed": true
+      "excess_pp": 3.1000000000000028,
+      "passed": false
     },
     {
       "location": "draco_battle",
@@ -13175,615 +13175,615 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "baseline": 0.662,
-      "win_rate": 0.81,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.819,
-      "excess_pp": -0.8999999999999897,
-      "passed": true
-    },
-    {
-      "location": "cave_heat_corridor",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 0.719,
-      "win_rate": 0.918,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.958,
-      "excess_pp": -3.9999999999999925,
-      "passed": true
-    },
-    {
-      "location": "cave_heat_corridor",
-      "character": "hero",
-      "companion": "hydromancer_elio",
-      "baseline": 0.719,
-      "win_rate": 0.863,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.958,
-      "excess_pp": -9.499999999999996,
-      "passed": true
-    },
-    {
-      "location": "cave_heat_corridor",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 0.858,
-      "win_rate": 0.972,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.982,
-      "excess_pp": -1.0000000000000009,
-      "passed": true
-    },
-    {
-      "location": "cave_heat_corridor",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 0.858,
-      "win_rate": 0.96,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.982,
-      "excess_pp": -2.200000000000002,
-      "passed": true
-    },
-    {
-      "location": "cave_heat_corridor",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.849,
-      "win_rate": 0.9,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.942,
-      "excess_pp": -4.199999999999992,
-      "passed": true
-    },
-    {
-      "location": "cave_heat_corridor",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 0.849,
-      "win_rate": 0.848,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.942,
-      "excess_pp": -9.399999999999997,
-      "passed": true
-    },
-    {
-      "location": "cave_heat_corridor",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 0.657,
-      "win_rate": 0.893,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.943,
-      "excess_pp": -4.999999999999993,
-      "passed": true
-    },
-    {
-      "location": "cave_heat_corridor",
-      "character": "thief",
-      "companion": "hydromancer_elio",
-      "baseline": 0.657,
-      "win_rate": 0.85,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.943,
-      "excess_pp": -9.299999999999997,
-      "passed": true
-    },
-    {
-      "location": "cave_lava_room",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 0.758,
-      "win_rate": 0.92,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.977,
-      "excess_pp": -5.699999999999994,
-      "passed": true
-    },
-    {
-      "location": "cave_lava_room",
-      "character": "hero",
-      "companion": "hydromancer_elio",
-      "baseline": 0.758,
-      "win_rate": 0.934,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.977,
-      "excess_pp": -4.299999999999993,
-      "passed": true
-    },
-    {
-      "location": "cave_lava_room",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 0.872,
-      "win_rate": 0.913,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.952,
-      "excess_pp": -3.8999999999999924,
-      "passed": true
-    },
-    {
-      "location": "cave_lava_room",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 0.872,
-      "win_rate": 0.898,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.952,
-      "excess_pp": -5.399999999999993,
-      "passed": true
-    },
-    {
-      "location": "cave_lava_room",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.816,
-      "win_rate": 0.883,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.933,
-      "excess_pp": -5.000000000000004,
-      "passed": true
-    },
-    {
-      "location": "cave_lava_room",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 0.816,
-      "win_rate": 0.883,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.933,
-      "excess_pp": -5.000000000000004,
-      "passed": true
-    },
-    {
-      "location": "cave_lava_room",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 0.82,
-      "win_rate": 0.875,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.965,
-      "excess_pp": -8.999999999999996,
-      "passed": true
-    },
-    {
-      "location": "cave_lava_room",
-      "character": "thief",
-      "companion": "hydromancer_elio",
-      "baseline": 0.82,
-      "win_rate": 0.895,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.965,
-      "excess_pp": -6.999999999999995,
-      "passed": true
-    },
-    {
-      "location": "cave_crystal_corridor",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 0.552,
-      "win_rate": 0.889,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.98,
-      "excess_pp": -9.099999999999998,
-      "passed": true
-    },
-    {
-      "location": "cave_crystal_corridor",
-      "character": "hero",
-      "companion": "hydromancer_elio",
-      "baseline": 0.552,
-      "win_rate": 0.9,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.98,
-      "excess_pp": -7.9999999999999964,
-      "passed": true
-    },
-    {
-      "location": "cave_crystal_corridor",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 0.754,
-      "win_rate": 0.904,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.935,
-      "excess_pp": -3.1000000000000028,
-      "passed": true
-    },
-    {
-      "location": "cave_crystal_corridor",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 0.754,
-      "win_rate": 0.931,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.935,
-      "excess_pp": -0.40000000000000036,
-      "passed": true
-    },
-    {
-      "location": "cave_crystal_corridor",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.672,
-      "win_rate": 0.748,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.876,
-      "excess_pp": -12.8,
-      "passed": true
-    },
-    {
-      "location": "cave_crystal_corridor",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 0.672,
-      "win_rate": 0.791,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.876,
-      "excess_pp": -8.499999999999996,
-      "passed": true
-    },
-    {
-      "location": "cave_crystal_corridor",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 0.676,
       "win_rate": 0.861,
       "best": "fire_bat_empowered",
-      "best_rate": 0.956,
-      "excess_pp": -9.499999999999996,
-      "passed": true
+      "best_rate": 0.819,
+      "excess_pp": 4.200000000000004,
+      "passed": false
     },
     {
-      "location": "cave_crystal_corridor",
-      "character": "thief",
-      "companion": "hydromancer_elio",
-      "baseline": 0.676,
-      "win_rate": 0.903,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.956,
-      "excess_pp": -5.299999999999994,
-      "passed": true
-    },
-    {
-      "location": "cave_prism_tree",
+      "location": "cave_heat_corridor",
       "character": "hero",
       "companion": "paladin_liese",
-      "baseline": 0.184,
-      "win_rate": 0.821,
+      "baseline": 0.719,
+      "win_rate": 0.947,
       "best": "fire_bat_empowered",
-      "best_rate": 1,
-      "excess_pp": -17.900000000000006,
-      "passed": true
-    },
-    {
-      "location": "cave_prism_tree",
-      "character": "hero",
-      "companion": "hydromancer_elio",
-      "baseline": 0.184,
-      "win_rate": 0.859,
-      "best": "fire_bat_empowered",
-      "best_rate": 1,
-      "excess_pp": -14.100000000000001,
-      "passed": true
-    },
-    {
-      "location": "cave_prism_tree",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 0.607,
-      "win_rate": 0.711,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.997,
-      "excess_pp": -28.6,
-      "passed": true
-    },
-    {
-      "location": "cave_prism_tree",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 0.607,
-      "win_rate": 0.788,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.997,
-      "excess_pp": -20.899999999999995,
-      "passed": true
-    },
-    {
-      "location": "cave_prism_tree",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.399,
-      "win_rate": 0.423,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.862,
-      "excess_pp": -43.9,
-      "passed": true
-    },
-    {
-      "location": "cave_prism_tree",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 0.399,
-      "win_rate": 0.641,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.862,
-      "excess_pp": -22.099999999999998,
-      "passed": true
-    },
-    {
-      "location": "cave_prism_tree",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 0.455,
-      "win_rate": 0.514,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.97,
-      "excess_pp": -45.599999999999994,
-      "passed": true
-    },
-    {
-      "location": "cave_prism_tree",
-      "character": "thief",
-      "companion": "hydromancer_elio",
-      "baseline": 0.455,
-      "win_rate": 0.721,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.97,
-      "excess_pp": -24.9,
-      "passed": true
-    },
-    {
-      "location": "valley_entrance",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 0.851,
-      "win_rate": 0.986,
-      "best": "robin",
-      "best_rate": 0.98,
-      "excess_pp": 0.6000000000000005,
-      "passed": true
-    },
-    {
-      "location": "valley_entrance",
-      "character": "hero",
-      "companion": "hydromancer_elio",
-      "baseline": 0.851,
-      "win_rate": 0.958,
-      "best": "paladin_liese",
-      "best_rate": 0.986,
-      "excess_pp": -2.8000000000000025,
-      "passed": true
-    },
-    {
-      "location": "valley_entrance",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 0.848,
-      "win_rate": 0.983,
-      "best": "robin",
-      "best_rate": 0.976,
-      "excess_pp": 0.7000000000000006,
-      "passed": true
-    },
-    {
-      "location": "valley_entrance",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 0.848,
-      "win_rate": 0.959,
-      "best": "paladin_liese",
-      "best_rate": 0.983,
-      "excess_pp": -2.400000000000002,
-      "passed": true
-    },
-    {
-      "location": "valley_entrance",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.808,
-      "win_rate": 0.977,
-      "best": "robin",
-      "best_rate": 0.962,
-      "excess_pp": 1.5000000000000013,
-      "passed": true
-    },
-    {
-      "location": "valley_entrance",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 0.808,
-      "win_rate": 0.939,
-      "best": "paladin_liese",
-      "best_rate": 0.977,
-      "excess_pp": -3.8000000000000034,
-      "passed": true
-    },
-    {
-      "location": "valley_entrance",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 0.858,
-      "win_rate": 0.987,
-      "best": "robin",
-      "best_rate": 0.976,
-      "excess_pp": 1.100000000000001,
-      "passed": true
-    },
-    {
-      "location": "valley_entrance",
-      "character": "thief",
-      "companion": "hydromancer_elio",
-      "baseline": 0.858,
-      "win_rate": 0.958,
-      "best": "paladin_liese",
-      "best_rate": 0.987,
-      "excess_pp": -2.9000000000000026,
-      "passed": true
-    },
-    {
-      "location": "valley_ledge",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 0.846,
-      "win_rate": 0.866,
-      "best": "robin",
-      "best_rate": 0.879,
-      "excess_pp": -1.3000000000000012,
-      "passed": true
-    },
-    {
-      "location": "valley_ledge",
-      "character": "hero",
-      "companion": "hydromancer_elio",
-      "baseline": 0.846,
-      "win_rate": 0.869,
-      "best": "robin",
-      "best_rate": 0.879,
-      "excess_pp": -1.0000000000000009,
-      "passed": true
-    },
-    {
-      "location": "valley_ledge",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 0.806,
-      "win_rate": 0.864,
-      "best": "robin",
-      "best_rate": 0.864,
-      "excess_pp": 0.0,
-      "passed": true
-    },
-    {
-      "location": "valley_ledge",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 0.806,
-      "win_rate": 0.863,
-      "best": "robin",
-      "best_rate": 0.864,
-      "excess_pp": -0.10000000000000009,
-      "passed": true
-    },
-    {
-      "location": "valley_ledge",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.774,
-      "win_rate": 0.794,
-      "best": "robin",
-      "best_rate": 0.822,
-      "excess_pp": -2.7999999999999914,
-      "passed": true
-    },
-    {
-      "location": "valley_ledge",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 0.774,
-      "win_rate": 0.797,
-      "best": "robin",
-      "best_rate": 0.822,
-      "excess_pp": -2.499999999999991,
-      "passed": true
-    },
-    {
-      "location": "valley_ledge",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 0.781,
-      "win_rate": 0.868,
-      "best": "robin",
-      "best_rate": 0.88,
-      "excess_pp": -1.200000000000001,
-      "passed": true
-    },
-    {
-      "location": "valley_ledge",
-      "character": "thief",
-      "companion": "hydromancer_elio",
-      "baseline": 0.781,
-      "win_rate": 0.872,
-      "best": "robin",
-      "best_rate": 0.88,
-      "excess_pp": -0.8000000000000007,
-      "passed": true
-    },
-    {
-      "location": "xanxus_phantom_battle",
-      "character": "hero",
-      "companion": "paladin_liese",
-      "baseline": 0.77,
-      "win_rate": 0.926,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.937,
+      "best_rate": 0.958,
       "excess_pp": -1.100000000000001,
       "passed": true
     },
     {
-      "location": "xanxus_phantom_battle",
+      "location": "cave_heat_corridor",
       "character": "hero",
       "companion": "hydromancer_elio",
-      "baseline": 0.77,
-      "win_rate": 0.904,
+      "baseline": 0.719,
+      "win_rate": 0.909,
       "best": "fire_bat_empowered",
-      "best_rate": 0.937,
-      "excess_pp": -3.300000000000003,
+      "best_rate": 0.958,
+      "excess_pp": -4.899999999999993,
       "passed": true
     },
     {
-      "location": "xanxus_phantom_battle",
+      "location": "cave_heat_corridor",
       "character": "cleric",
       "companion": "paladin_liese",
-      "baseline": 0.587,
-      "win_rate": 0.865,
+      "baseline": 0.858,
+      "win_rate": 0.981,
       "best": "fire_bat_empowered",
-      "best_rate": 0.878,
-      "excess_pp": -1.3000000000000012,
+      "best_rate": 0.982,
+      "excess_pp": -0.10000000000000009,
       "passed": true
     },
     {
-      "location": "xanxus_phantom_battle",
+      "location": "cave_heat_corridor",
       "character": "cleric",
       "companion": "hydromancer_elio",
-      "baseline": 0.587,
-      "win_rate": 0.846,
+      "baseline": 0.858,
+      "win_rate": 0.98,
       "best": "fire_bat_empowered",
-      "best_rate": 0.878,
-      "excess_pp": -3.200000000000003,
+      "best_rate": 0.982,
+      "excess_pp": -0.20000000000000018,
       "passed": true
     },
     {
-      "location": "xanxus_phantom_battle",
+      "location": "cave_heat_corridor",
       "character": "mage",
       "companion": "paladin_liese",
-      "baseline": 0.565,
-      "win_rate": 0.765,
+      "baseline": 0.849,
+      "win_rate": 0.888,
       "best": "fire_bat_empowered",
-      "best_rate": 0.842,
-      "excess_pp": -7.699999999999996,
+      "best_rate": 0.942,
+      "excess_pp": -5.399999999999993,
       "passed": true
     },
     {
-      "location": "xanxus_phantom_battle",
+      "location": "cave_heat_corridor",
       "character": "mage",
       "companion": "hydromancer_elio",
-      "baseline": 0.565,
-      "win_rate": 0.777,
+      "baseline": 0.849,
+      "win_rate": 0.851,
       "best": "fire_bat_empowered",
-      "best_rate": 0.842,
+      "best_rate": 0.942,
+      "excess_pp": -9.099999999999998,
+      "passed": true
+    },
+    {
+      "location": "cave_heat_corridor",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 0.657,
+      "win_rate": 0.931,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.943,
+      "excess_pp": -1.19999999999999,
+      "passed": true
+    },
+    {
+      "location": "cave_heat_corridor",
+      "character": "thief",
+      "companion": "hydromancer_elio",
+      "baseline": 0.657,
+      "win_rate": 0.906,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.943,
+      "excess_pp": -3.699999999999992,
+      "passed": true
+    },
+    {
+      "location": "cave_lava_room",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 0.758,
+      "win_rate": 0.912,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.977,
       "excess_pp": -6.499999999999995,
       "passed": true
     },
     {
+      "location": "cave_lava_room",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 0.758,
+      "win_rate": 0.967,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.977,
+      "excess_pp": -1.0000000000000009,
+      "passed": true
+    },
+    {
+      "location": "cave_lava_room",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 0.872,
+      "win_rate": 0.904,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.952,
+      "excess_pp": -4.799999999999994,
+      "passed": true
+    },
+    {
+      "location": "cave_lava_room",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 0.872,
+      "win_rate": 0.945,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.952,
+      "excess_pp": -0.7000000000000006,
+      "passed": true
+    },
+    {
+      "location": "cave_lava_room",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 0.816,
+      "win_rate": 0.879,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.933,
+      "excess_pp": -5.400000000000005,
+      "passed": true
+    },
+    {
+      "location": "cave_lava_room",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 0.816,
+      "win_rate": 0.918,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.933,
+      "excess_pp": -1.5000000000000013,
+      "passed": true
+    },
+    {
+      "location": "cave_lava_room",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 0.82,
+      "win_rate": 0.879,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.965,
+      "excess_pp": -8.599999999999996,
+      "passed": true
+    },
+    {
+      "location": "cave_lava_room",
+      "character": "thief",
+      "companion": "hydromancer_elio",
+      "baseline": 0.82,
+      "win_rate": 0.944,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.965,
+      "excess_pp": -2.100000000000002,
+      "passed": true
+    },
+    {
+      "location": "cave_crystal_corridor",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 0.552,
+      "win_rate": 0.875,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.98,
+      "excess_pp": -10.499999999999998,
+      "passed": true
+    },
+    {
+      "location": "cave_crystal_corridor",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 0.552,
+      "win_rate": 0.958,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.98,
+      "excess_pp": -2.200000000000002,
+      "passed": true
+    },
+    {
+      "location": "cave_crystal_corridor",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 0.754,
+      "win_rate": 0.94,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.935,
+      "excess_pp": 0.49999999999998934,
+      "passed": true
+    },
+    {
+      "location": "cave_crystal_corridor",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 0.754,
+      "win_rate": 0.978,
+      "best": "paladin_liese",
+      "best_rate": 0.94,
+      "excess_pp": 3.8000000000000034,
+      "passed": false
+    },
+    {
+      "location": "cave_crystal_corridor",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 0.672,
+      "win_rate": 0.767,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.876,
+      "excess_pp": -10.899999999999999,
+      "passed": true
+    },
+    {
+      "location": "cave_crystal_corridor",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 0.672,
+      "win_rate": 0.868,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.876,
+      "excess_pp": -0.8000000000000007,
+      "passed": true
+    },
+    {
+      "location": "cave_crystal_corridor",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 0.676,
+      "win_rate": 0.915,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.956,
+      "excess_pp": -4.0999999999999925,
+      "passed": true
+    },
+    {
+      "location": "cave_crystal_corridor",
+      "character": "thief",
+      "companion": "hydromancer_elio",
+      "baseline": 0.676,
+      "win_rate": 0.965,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.956,
+      "excess_pp": 0.9000000000000008,
+      "passed": true
+    },
+    {
+      "location": "cave_prism_tree",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 0.184,
+      "win_rate": 0.879,
+      "best": "fire_bat_empowered",
+      "best_rate": 1,
+      "excess_pp": -12.1,
+      "passed": true
+    },
+    {
+      "location": "cave_prism_tree",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 0.184,
+      "win_rate": 0.955,
+      "best": "fire_bat_empowered",
+      "best_rate": 1,
+      "excess_pp": -4.5000000000000036,
+      "passed": true
+    },
+    {
+      "location": "cave_prism_tree",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 0.607,
+      "win_rate": 0.753,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.997,
+      "excess_pp": -24.4,
+      "passed": true
+    },
+    {
+      "location": "cave_prism_tree",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 0.607,
+      "win_rate": 0.903,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.997,
+      "excess_pp": -9.399999999999997,
+      "passed": true
+    },
+    {
+      "location": "cave_prism_tree",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 0.399,
+      "win_rate": 0.475,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.862,
+      "excess_pp": -38.7,
+      "passed": true
+    },
+    {
+      "location": "cave_prism_tree",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 0.399,
+      "win_rate": 0.74,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.862,
+      "excess_pp": -12.2,
+      "passed": true
+    },
+    {
+      "location": "cave_prism_tree",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 0.455,
+      "win_rate": 0.619,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.97,
+      "excess_pp": -35.099999999999994,
+      "passed": true
+    },
+    {
+      "location": "cave_prism_tree",
+      "character": "thief",
+      "companion": "hydromancer_elio",
+      "baseline": 0.455,
+      "win_rate": 0.892,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.97,
+      "excess_pp": -7.799999999999995,
+      "passed": true
+    },
+    {
+      "location": "valley_entrance",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 0.851,
+      "win_rate": 0.997,
+      "best": "robin",
+      "best_rate": 0.98,
+      "excess_pp": 1.7000000000000015,
+      "passed": true
+    },
+    {
+      "location": "valley_entrance",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 0.851,
+      "win_rate": 0.992,
+      "best": "paladin_liese",
+      "best_rate": 0.997,
+      "excess_pp": -0.5000000000000004,
+      "passed": true
+    },
+    {
+      "location": "valley_entrance",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 0.848,
+      "win_rate": 0.996,
+      "best": "robin",
+      "best_rate": 0.976,
+      "excess_pp": 2.0000000000000018,
+      "passed": true
+    },
+    {
+      "location": "valley_entrance",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 0.848,
+      "win_rate": 0.985,
+      "best": "paladin_liese",
+      "best_rate": 0.996,
+      "excess_pp": -1.100000000000001,
+      "passed": true
+    },
+    {
+      "location": "valley_entrance",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 0.808,
+      "win_rate": 0.996,
+      "best": "robin",
+      "best_rate": 0.962,
+      "excess_pp": 3.400000000000003,
+      "passed": false
+    },
+    {
+      "location": "valley_entrance",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 0.808,
+      "win_rate": 0.983,
+      "best": "paladin_liese",
+      "best_rate": 0.996,
+      "excess_pp": -1.3000000000000012,
+      "passed": true
+    },
+    {
+      "location": "valley_entrance",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 0.858,
+      "win_rate": 0.994,
+      "best": "robin",
+      "best_rate": 0.976,
+      "excess_pp": 1.8000000000000016,
+      "passed": true
+    },
+    {
+      "location": "valley_entrance",
+      "character": "thief",
+      "companion": "hydromancer_elio",
+      "baseline": 0.858,
+      "win_rate": 0.99,
+      "best": "paladin_liese",
+      "best_rate": 0.994,
+      "excess_pp": -0.40000000000000036,
+      "passed": true
+    },
+    {
+      "location": "valley_ledge",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 0.846,
+      "win_rate": 0.935,
+      "best": "robin",
+      "best_rate": 0.879,
+      "excess_pp": 5.600000000000005,
+      "passed": false
+    },
+    {
+      "location": "valley_ledge",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 0.846,
+      "win_rate": 0.939,
+      "best": "paladin_liese",
+      "best_rate": 0.935,
+      "excess_pp": 0.39999999999998925,
+      "passed": true
+    },
+    {
+      "location": "valley_ledge",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 0.806,
+      "win_rate": 0.948,
+      "best": "robin",
+      "best_rate": 0.864,
+      "excess_pp": 8.399999999999997,
+      "passed": false
+    },
+    {
+      "location": "valley_ledge",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 0.806,
+      "win_rate": 0.951,
+      "best": "paladin_liese",
+      "best_rate": 0.948,
+      "excess_pp": 0.30000000000000027,
+      "passed": true
+    },
+    {
+      "location": "valley_ledge",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 0.774,
+      "win_rate": 0.917,
+      "best": "robin",
+      "best_rate": 0.822,
+      "excess_pp": 9.500000000000009,
+      "passed": false
+    },
+    {
+      "location": "valley_ledge",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 0.774,
+      "win_rate": 0.919,
+      "best": "paladin_liese",
+      "best_rate": 0.917,
+      "excess_pp": 0.20000000000000018,
+      "passed": true
+    },
+    {
+      "location": "valley_ledge",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 0.781,
+      "win_rate": 0.931,
+      "best": "robin",
+      "best_rate": 0.88,
+      "excess_pp": 5.100000000000005,
+      "passed": false
+    },
+    {
+      "location": "valley_ledge",
+      "character": "thief",
+      "companion": "hydromancer_elio",
+      "baseline": 0.781,
+      "win_rate": 0.933,
+      "best": "paladin_liese",
+      "best_rate": 0.931,
+      "excess_pp": 0.20000000000000018,
+      "passed": true
+    },
+    {
+      "location": "xanxus_phantom_battle",
+      "character": "hero",
+      "companion": "paladin_liese",
+      "baseline": 0.77,
+      "win_rate": 0.943,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.937,
+      "excess_pp": 0.5999999999999894,
+      "passed": true
+    },
+    {
+      "location": "xanxus_phantom_battle",
+      "character": "hero",
+      "companion": "hydromancer_elio",
+      "baseline": 0.77,
+      "win_rate": 0.943,
+      "best": "paladin_liese",
+      "best_rate": 0.943,
+      "excess_pp": 0.0,
+      "passed": true
+    },
+    {
+      "location": "xanxus_phantom_battle",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 0.587,
+      "win_rate": 0.898,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.878,
+      "excess_pp": 2.0000000000000018,
+      "passed": true
+    },
+    {
+      "location": "xanxus_phantom_battle",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 0.587,
+      "win_rate": 0.899,
+      "best": "paladin_liese",
+      "best_rate": 0.898,
+      "excess_pp": 0.10000000000000009,
+      "passed": true
+    },
+    {
+      "location": "xanxus_phantom_battle",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 0.565,
+      "win_rate": 0.788,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.842,
+      "excess_pp": -5.399999999999993,
+      "passed": true
+    },
+    {
+      "location": "xanxus_phantom_battle",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 0.565,
+      "win_rate": 0.805,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.842,
+      "excess_pp": -3.699999999999992,
+      "passed": true
+    },
+    {
       "location": "xanxus_phantom_battle",
       "character": "thief",
       "companion": "paladin_liese",
       "baseline": 0.652,
-      "win_rate": 0.837,
+      "win_rate": 0.856,
       "best": "fire_bat_empowered",
       "best_rate": 0.895,
-      "excess_pp": -5.800000000000005,
+      "excess_pp": -3.9000000000000035,
       "passed": true
     },
     {
@@ -13791,10 +13791,10 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "baseline": 0.652,
-      "win_rate": 0.815,
+      "win_rate": 0.836,
       "best": "fire_bat_empowered",
       "best_rate": 0.895,
-      "excess_pp": -8.000000000000007,
+      "excess_pp": -5.900000000000006,
       "passed": true
     },
     {
@@ -13802,10 +13802,10 @@
       "character": "hero",
       "companion": "paladin_liese",
       "baseline": 0.793,
-      "win_rate": 0.846,
+      "win_rate": 0.885,
       "best": "fire_bat_empowered",
       "best_rate": 0.941,
-      "excess_pp": -9.499999999999996,
+      "excess_pp": -5.599999999999994,
       "passed": true
     },
     {
@@ -13813,65 +13813,65 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "baseline": 0.793,
-      "win_rate": 0.874,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.941,
-      "excess_pp": -6.699999999999995,
-      "passed": true
-    },
-    {
-      "location": "mansion_corridor",
-      "character": "cleric",
-      "companion": "paladin_liese",
-      "baseline": 0.776,
-      "win_rate": 0.845,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.897,
-      "excess_pp": -5.200000000000005,
-      "passed": true
-    },
-    {
-      "location": "mansion_corridor",
-      "character": "cleric",
-      "companion": "hydromancer_elio",
-      "baseline": 0.776,
-      "win_rate": 0.87,
-      "best": "fire_bat_empowered",
-      "best_rate": 0.897,
-      "excess_pp": -2.7000000000000024,
-      "passed": true
-    },
-    {
-      "location": "mansion_corridor",
-      "character": "mage",
-      "companion": "paladin_liese",
-      "baseline": 0.873,
-      "win_rate": 0.873,
-      "best": "mina",
-      "best_rate": 0.887,
-      "excess_pp": -1.4000000000000012,
-      "passed": true
-    },
-    {
-      "location": "mansion_corridor",
-      "character": "mage",
-      "companion": "hydromancer_elio",
-      "baseline": 0.873,
-      "win_rate": 0.871,
-      "best": "mina",
-      "best_rate": 0.887,
-      "excess_pp": -1.6000000000000014,
-      "passed": true
-    },
-    {
-      "location": "mansion_corridor",
-      "character": "thief",
-      "companion": "paladin_liese",
-      "baseline": 0.893,
       "win_rate": 0.92,
       "best": "fire_bat_empowered",
+      "best_rate": 0.941,
+      "excess_pp": -2.0999999999999908,
+      "passed": true
+    },
+    {
+      "location": "mansion_corridor",
+      "character": "cleric",
+      "companion": "paladin_liese",
+      "baseline": 0.776,
+      "win_rate": 0.89,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.897,
+      "excess_pp": -0.7000000000000006,
+      "passed": true
+    },
+    {
+      "location": "mansion_corridor",
+      "character": "cleric",
+      "companion": "hydromancer_elio",
+      "baseline": 0.776,
+      "win_rate": 0.897,
+      "best": "fire_bat_empowered",
+      "best_rate": 0.897,
+      "excess_pp": 0.0,
+      "passed": true
+    },
+    {
+      "location": "mansion_corridor",
+      "character": "mage",
+      "companion": "paladin_liese",
+      "baseline": 0.873,
+      "win_rate": 0.894,
+      "best": "mina",
+      "best_rate": 0.887,
+      "excess_pp": 0.7000000000000006,
+      "passed": true
+    },
+    {
+      "location": "mansion_corridor",
+      "character": "mage",
+      "companion": "hydromancer_elio",
+      "baseline": 0.873,
+      "win_rate": 0.894,
+      "best": "paladin_liese",
+      "best_rate": 0.894,
+      "excess_pp": 0.0,
+      "passed": true
+    },
+    {
+      "location": "mansion_corridor",
+      "character": "thief",
+      "companion": "paladin_liese",
+      "baseline": 0.893,
+      "win_rate": 0.939,
+      "best": "fire_bat_empowered",
       "best_rate": 0.947,
-      "excess_pp": -2.6999999999999913,
+      "excess_pp": -0.8000000000000007,
       "passed": true
     },
     {
@@ -13879,10 +13879,10 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "baseline": 0.893,
-      "win_rate": 0.924,
+      "win_rate": 0.943,
       "best": "fire_bat_empowered",
       "best_rate": 0.947,
-      "excess_pp": -2.299999999999991,
+      "excess_pp": -0.40000000000000036,
       "passed": true
     },
     {
@@ -13901,10 +13901,10 @@
       "character": "hero",
       "companion": "hydromancer_elio",
       "baseline": 0.87,
-      "win_rate": 0.924,
+      "win_rate": 0.936,
       "best": "fire_bat_empowered",
       "best_rate": 0.97,
-      "excess_pp": -4.5999999999999925,
+      "excess_pp": -3.399999999999992,
       "passed": true
     },
     {
@@ -13912,10 +13912,10 @@
       "character": "cleric",
       "companion": "paladin_liese",
       "baseline": 0.84,
-      "win_rate": 0.899,
+      "win_rate": 0.898,
       "best": "fire_bat_empowered",
       "best_rate": 0.94,
-      "excess_pp": -4.0999999999999925,
+      "excess_pp": -4.199999999999992,
       "passed": true
     },
     {
@@ -13923,10 +13923,10 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "baseline": 0.84,
-      "win_rate": 0.871,
+      "win_rate": 0.888,
       "best": "fire_bat_empowered",
       "best_rate": 0.94,
-      "excess_pp": -6.899999999999995,
+      "excess_pp": -5.199999999999994,
       "passed": true
     },
     {
@@ -13934,10 +13934,10 @@
       "character": "mage",
       "companion": "paladin_liese",
       "baseline": 0.784,
-      "win_rate": 0.856,
+      "win_rate": 0.881,
       "best": "fire_bat_empowered",
       "best_rate": 0.886,
-      "excess_pp": -3.0000000000000027,
+      "excess_pp": -0.5000000000000004,
       "passed": true
     },
     {
@@ -13945,10 +13945,10 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "baseline": 0.784,
-      "win_rate": 0.841,
+      "win_rate": 0.875,
       "best": "fire_bat_empowered",
       "best_rate": 0.886,
-      "excess_pp": -4.5000000000000036,
+      "excess_pp": -1.100000000000001,
       "passed": true
     },
     {
@@ -13956,10 +13956,10 @@
       "character": "thief",
       "companion": "paladin_liese",
       "baseline": 0.916,
-      "win_rate": 0.952,
+      "win_rate": 0.965,
       "best": "fire_bat_empowered",
       "best_rate": 0.977,
-      "excess_pp": -2.500000000000002,
+      "excess_pp": -1.200000000000001,
       "passed": true
     },
     {
@@ -13967,10 +13967,10 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "baseline": 0.916,
-      "win_rate": 0.95,
+      "win_rate": 0.961,
       "best": "fire_bat_empowered",
       "best_rate": 0.977,
-      "excess_pp": -2.7000000000000024,
+      "excess_pp": -1.6000000000000014,
       "passed": true
     },
     {
@@ -13989,10 +13989,10 @@
       "character": "cleric",
       "companion": "hydromancer_elio",
       "baseline": 0.987,
-      "win_rate": 0.997,
+      "win_rate": 0.998,
       "best": "fire_bat_empowered",
       "best_rate": 1,
-      "excess_pp": -0.30000000000000027,
+      "excess_pp": -0.20000000000000018,
       "passed": true
     },
     {
@@ -14011,10 +14011,10 @@
       "character": "thief",
       "companion": "hydromancer_elio",
       "baseline": 0.988,
-      "win_rate": 0.995,
+      "win_rate": 0.998,
       "best": "fire_bat_dragon",
       "best_rate": 1,
-      "excess_pp": -0.5000000000000004,
+      "excess_pp": -0.20000000000000018,
       "passed": true
     },
     {
@@ -14088,10 +14088,10 @@
       "character": "mage",
       "companion": "hydromancer_elio",
       "baseline": 0.817,
-      "win_rate": 0.91,
-      "best": "robin",
-      "best_rate": 0.97,
-      "excess_pp": -5.999999999999995,
+      "win_rate": 0.979,
+      "best": "paladin_liese",
+      "best_rate": 0.993,
+      "excess_pp": -1.4000000000000012,
       "passed": true
     },
     {

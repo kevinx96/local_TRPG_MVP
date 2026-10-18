@@ -477,7 +477,7 @@
 ## step 43 / goblin_fort_second_left 「ゴブリン砦・二階左」 HP 0/14 G 90
 
 
-終了: {"reason": "ゴブリン砦・二階左で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_second_left_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:48:16.234366+00:00", "epilogue": []}
+終了: {"reason": "ゴブリン砦・二階左で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_second_left_defeat", "combat_defeat": true, "created_at": "2026-10-18T07:39:17.202359+00:00", "epilogue": []}
 > [GM] 運命の糸がほどけ、あなたは再びゴブリン砦の入口に立っていた。
 - ゴブリン砦の入口からやり直しました。
 
@@ -811,9 +811,9 @@
 ## step 76 / oaksdawn_chapel 「暁の礼拝堂」 HP 22/22 G 190
 
 - 祈りを捧げてもらう | 5G | 判定不要
-- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要
-- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要 [不可: 聖水所持が必要]
-- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 1d20+wis判定（DC13）
+- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要
+- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要 [不可: 聖水所持が必要]
+- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 1d20+wis判定（DC13）
 - 聖水を分けてもらう |  | 判定不要
 - 大通りへ戻る |  | 判定不要
 - 鐘のことを詳しく聞く |  | 判定不要
@@ -901,9 +901,9 @@
 - 宿で休む | 10G | 判定不要
 - 噂話を聞く |  | 判定不要
 - 大通りへ戻る |  | 判定不要
-- 傭兵として雇う（50G） | 同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減） | 判定不要
+- 傭兵として雇う（50G） | 同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減） | 判定不要
 - ？？？ |  |  [不可: まだ知らない何かが必要なようだ。]
-- 地鳴りの謎を一緒に調べようと誘う | 同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減） | 1d20+int判定（DC13）
+- 地鳴りの謎を一緒に調べようと誘う | 同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減） | 1d20+int判定（DC13）
 
 選択: 傭兵として雇う（50G）
 > [プレイヤー] 傭兵として雇う（50G）
@@ -1263,27 +1263,19 @@
 ## step 112 / valley_entrance 「竜の谷・入口」 HP 26/26 G 135
 
 
-戦闘: skill / vital_strike → ash_wraith:1
-- 急所突きが煤の亡霊に5ダメージ。
-- 煤の抱擁はテストに当たらなかった。
-- 水刃が煤の亡霊に2ダメージ。
-
-## step 113 / valley_entrance 「竜の谷・入口」 HP 26/26 G 135
-
-
 戦闘: skill / vital_strike → ash_wraith:2
-- 急所突きが煤の亡霊に3ダメージ。
+- 急所突きが煤の亡霊に7ダメージ。
 - すべての敵を倒した。
 - 35ゴールドを獲得しました。
 - 魔力の果実 x1を入手しました。
 - 現在地が溶岩の吊り橋になりました。
 
-## step 114 / valley_lava_bridge 「溶岩の吊り橋」 HP 26/26 G 170
+## step 113 / valley_lava_bridge 「溶岩の吊り橋」 HP 26/26 G 170
 
 > [GM] 煮え立つ溶岩の川に、古い吊り橋が一本だけ架かっている。板は焦げ、縄は今にも切れそうだ。
-- 戦闘に勝利しました。 HP 26/26、MP 9/9、SP 13/20。
+- 戦闘に勝利しました。 HP 26/26、MP 9/9、SP 16/20。
 
-## step 115 / valley_lava_bridge 「溶岩の吊り橋」 HP 26/26 G 170
+## step 114 / valley_lava_bridge 「溶岩の吊り橋」 HP 26/26 G 170
 
 - 吊り橋を渡る |  | 1d20+dex判定（DC12）
 - 岩棚の迂回路を進む |  | 不明
@@ -1297,7 +1289,7 @@
 - 現在地が竜の巣の前になりました。
 - 青い光とともにワーロックが現れた。「先へ進む前に伝えておく。Xanxusは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。
 
-## step 116 / warlock_at_nest 「竜の巣の前」 HP 30/30 G 170
+## step 115 / warlock_at_nest 「竜の巣の前」 HP 30/30 G 170
 
 - 先へ進む |  | 判定不要
 
@@ -1305,7 +1297,7 @@
 > [プレイヤー] 先へ進む
 - 現在地が竜の巣の前になりました。
 
-## step 117 / valley_nest_gate 「竜の巣の前」 HP 30/30 G 170
+## step 116 / valley_nest_gate 「竜の巣の前」 HP 30/30 G 170
 
 - 竜の巣へ踏み込む |  | 不明
 
@@ -1314,89 +1306,64 @@
 > [GM] 灼熱の風に逆らって洞穴へ踏み込む。闇の奥で、巨大な何かがゆっくりと目を開けた。
 - 現在地が竜の谷になりました。
 
-## step 118 / dragon_valley_loc 「竜の谷」 HP 30/30 G 170
+## step 117 / dragon_valley_loc 「竜の谷」 HP 30/30 G 170
+
+
+戦闘: skill / thief_lv5_a → ignis:1
+- 急所突き・改が邪竜イグニスに21ダメージ。
+- 尻尾攻撃がテストに3ダメージ。
+- 水刃が邪竜イグニスに7ダメージ。
+
+## step 118 / dragon_valley_loc 「竜の谷」 HP 27/30 G 170
 
 
 戦闘: skill / thief_lv5_a → ignis:1
 - 急所突き・改が邪竜イグニスに32ダメージ。
 - 尻尾攻撃はテストに当たらなかった。
-- 水刃が邪竜イグニスに4ダメージ。
+- 水刃が邪竜イグニスに5ダメージ。
 
-## step 119 / dragon_valley_loc 「竜の谷」 HP 30/30 G 170
-
-
-戦闘: skill / thief_lv5_a → ignis:1
-- 急所突き・改が邪竜イグニスに25ダメージ。
-- 炎の息はテストに当たらなかった。
-- 水刃が邪竜イグニスに2ダメージ。
-
-## step 120 / dragon_valley_loc 「竜の谷」 HP 30/30 G 170
+## step 119 / dragon_valley_loc 「竜の谷」 HP 27/30 G 170
 
 
 戦闘: skill / thief_lv5_a → ignis:1
-- 急所突き・改が邪竜イグニスに23ダメージ。
-- 炎の息はテストに当たらなかった。
+- 急所突き・改が邪竜イグニスに26ダメージ。
+- 炎の息がテストに18ダメージ。
 - 水の帳
-- 水刃が邪竜イグニスに1ダメージ。
+- 水刃が邪竜イグニスに9ダメージ。
+
+## step 120 / dragon_valley_loc 「竜の谷」 HP 9/30 G 170
+
+
+戦闘: item / healing_scroll → ignis:1
+- 治療の巻物を使い、HPを21回復した。
+- 炎の息はテストに当たらなかった。
+- 水刃が邪竜イグニスに5ダメージ。
 
 ## step 121 / dragon_valley_loc 「竜の谷」 HP 30/30 G 170
 
 
 戦闘: skill / thief_lv5_a → ignis:1
-- 急所突き・改が邪竜イグニスに25ダメージ。
-- 尻尾攻撃がテストに8ダメージ。
-- 水刃が邪竜イグニスに3ダメージ。
+- 急所突き・改が邪竜イグニスに29ダメージ。
+- 炎の息がテストに7ダメージ。
+- 水刃が邪竜イグニスに9ダメージ。
 
-## step 122 / dragon_valley_loc 「竜の谷」 HP 22/30 G 170
-
-
-戦闘: skill / thief_lv5_a → ignis:1
-- 急所突き・改が邪竜イグニスに26ダメージ。
-- 炎の息はテストに当たらなかった。
-- 水刃が邪竜イグニスに3ダメージ。
-
-## step 123 / dragon_valley_loc 「竜の谷」 HP 22/30 G 170
-
-
-戦闘: attack / basic_attack → ignis:1
-- ダガーは邪竜イグニスに当たらなかった。
-- 尻尾攻撃はテストに当たらなかった。
-- 水刃が邪竜イグニスに2ダメージ。
-
-## step 124 / dragon_valley_loc 「竜の谷」 HP 22/30 G 170
-
-
-戦闘: attack / basic_attack → ignis:1
-- ダガーが邪竜イグニスに5ダメージ。
-- 炎の息はテストに当たらなかった。
-- 水の帳
-- 水刃が邪竜イグニスに1ダメージ。
-
-## step 125 / dragon_valley_loc 「竜の谷」 HP 22/30 G 170
-
-
-戦闘: attack / basic_attack → ignis:1
-- ダガーが邪竜イグニスに3ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 水刃が邪竜イグニスに2ダメージ。
-
-## step 126 / dragon_valley_loc 「竜の谷」 HP 22/30 G 170
+## step 122 / dragon_valley_loc 「竜の谷」 HP 23/30 G 170
 
 
 戦闘: skill / thief_lv5_a → ignis:1
-- 急所突き・改が邪竜イグニスに27ダメージ。
+- 急所突き・改が邪竜イグニスに32ダメージ。
 - すべての敵を倒した。
 - 100ゴールドを獲得しました。
 - 紅竜の炎核 x1を入手しました。
 - 現在地が竜の谷・紅竜の最期になりました。
 - クエスト更新：紅き邪竜の討伐
 
-## step 127 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 22/30 G 270
+## step 123 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 23/30 G 270
 
 > [GM] 倒れたイグニスの胸がかすかに上下している。焼け焦げた鱗の隙間、古い傷口だけが、炎の竜には似つかわしくない白い霜に覆われている。
-- 戦闘に勝利しました。 HP 22/30、MP 10/10、SP 0/22。
+- 戦闘に勝利しました。 HP 23/30、MP 10/10、SP 2/22。
 
-## step 128 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 22/30 G 270
+## step 124 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 23/30 G 270
 
 - イグニスの傷を調べる | 霜に覆われた古傷を確かめる | 判定不要
 - イグニスの最期の言葉を聞く | 消えゆく竜の声に耳を傾ける | 判定不要
@@ -1406,7 +1373,7 @@
 > [プレイヤー] イグニスの最期の言葉を聞く
 > [GM] 「……白き者に、気をつけよ。盟約を……破ったのは、我ではない……」紅竜の瞳から光が消えた。
 
-## step 129 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 22/30 G 270
+## step 125 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 23/30 G 270
 
 - イグニスの傷を調べる | 霜に覆われた古傷を確かめる | 判定不要
 - イグニスの最期の言葉を聞く | 消えゆく竜の声に耳を傾ける | 判定不要 [不可: 完了済みです。]
@@ -1418,7 +1385,7 @@
 - 現在地が凱旋の城門になりました。
 - 城門をくぐると、花びらと歓声があなたを迎えた。邪竜の脅威が去ったことは、すでに城下町じゅうに知れ渡っている。人混みの向こうで、将軍ドラコが穏やかに手を振っていた。
 
-## step 130 / royal_gate 「凱旋の城門」 HP 22/30 G 270
+## step 126 / royal_gate 「凱旋の城門」 HP 23/30 G 270
 
 - 城下町へ進む |  | 不明
 
@@ -1430,7 +1397,7 @@
 - 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
 - クエスト更新：将軍の屋敷
 
-## step 131 / festival_town 「凱旋の城下町」 HP 22/30 G 270
+## step 127 / festival_town 「凱旋の城下町」 HP 23/30 G 270
 
 - 宿屋へ向かう |  | 判定不要
 - 道具屋へ向かう |  | 判定不要
@@ -1445,7 +1412,7 @@
 > [プレイヤー] 凱旋の間へ向かう
 - 現在地が王城・凱旋の間になりました。
 
-## step 132 / castle_report 「王城・凱旋の間」 HP 22/30 G 270
+## step 128 / castle_report 「王城・凱旋の間」 HP 23/30 G 270
 
 - 将軍ドラコの正体を問いただす | 集めた証拠を国王の前に示す | 危険（戦闘）
 - 討伐を報告する | イグニス討伐の報告を終える | 判定不要
@@ -1460,40 +1427,99 @@
 - クエスト達成：砕けた氷の太刀
 - クエスト達成：凍てつく謎
 
-## step 133 / draco_battle 「王の間・剣聖ドラコ」 HP 22/30 G 270
+## step 129 / draco_battle 「王の間・剣聖ドラコ」 HP 23/30 G 270
 
 
-戦闘: attack / basic_attack → draco_human:1
-- ダガーが剣聖ドラコに7ダメージ。
-- 剣聖の一閃がテストに10ダメージ。
-- 水刃が剣聖ドラコに2ダメージ。
+戦闘: skill / thief_lv3_b → draco_human:1
+- 影隠れ・改を使用し、守りを固めた。
+- 氷刃がテストに2ダメージ。
+- 水刃が剣聖ドラコに1ダメージ。
 
-## step 134 / draco_battle 「王の間・剣聖ドラコ」 HP 12/30 G 270
+## step 130 / draco_battle 「王の間・剣聖ドラコ」 HP 21/30 G 270
 
 
 戦闘: attack / basic_attack → draco_human:1
 - ダガーが剣聖ドラコに5ダメージ。
-- 剣聖の一閃はテストに当たらなかった。
-- 水刃が剣聖ドラコに1ダメージ。
+- 剣聖の一閃がテストに11ダメージ。
+- 水刃が剣聖ドラコに7ダメージ。
 
-## step 135 / draco_battle 「王の間・剣聖ドラコ」 HP 12/30 G 270
+## step 131 / draco_battle 「王の間・剣聖ドラコ」 HP 10/30 G 270
+
+
+戦闘: item / healing_scroll → draco_human:1
+- 治療の巻物を使い、HPを20回復した。
+- 剣聖の一閃がテストに7ダメージ。
+- 水の帳
+- 水刃が剣聖ドラコに2ダメージ。
+
+## step 132 / draco_battle 「王の間・剣聖ドラコ」 HP 23/30 G 270
 
 
 戦闘: attack / basic_attack → draco_human:1
 - ダガーは剣聖ドラコに当たらなかった。
-- 剣聖の一閃がテストに12ダメージ。
+- 氷刃がテストに6ダメージ。
+- 水刃が剣聖ドラコに5ダメージ。
+
+## step 133 / draco_battle 「王の間・剣聖ドラコ」 HP 17/30 G 270
+
+
+戦闘: attack / basic_attack → draco_human:1
+- ダガーが剣聖ドラコに8ダメージ。
+- ドラコの体が裂け、白い光が王の間を満たす。天井を突き破って現れたのは、雪原のような翼を持つ巨竜だった。「我が名はヴァイス。盟約の番人にして、その終わりを告げる者」
+- 白竜ヴァイスは雪嵐の咆哮を使用した。
+- 水刃が白竜ヴァイスに6ダメージ。
+
+## step 134 / draco_battle 「王の間・剣聖ドラコ」 HP 17/30 G 270
+
+
+戦闘: item / red_dragon_core → draco_dragon:1
+- 紅竜の炎核が白竜ヴァイスに156ダメージ。
+- 白翼の薙ぎ払いがテストに12ダメージ。
+- 水刃が白竜ヴァイスに2ダメージ。
+
+## step 135 / draco_battle 「王の間・剣聖ドラコ」 HP 5/30 G 270
+
+
+戦闘: item / healing_scroll → draco_dragon:1
+- 治療の巻物を使い、HPを25回復した。
+- 白翼の薙ぎ払いがテストに20ダメージ。
+- 水の帳
+- 水刃が白竜ヴァイスに1ダメージ。
+
+## step 136 / draco_battle 「王の間・剣聖ドラコ」 HP 10/30 G 270
+
+
+戦闘: item / herb → draco_dragon:1
+- 薬草を使い、HPを10回復した。
+- 凍てつく吐息がテストに6ダメージ。
+- 水刃が白竜ヴァイスに3ダメージ。
+
+## step 137 / draco_battle 「王の間・剣聖ドラコ」 HP 14/30 G 270
+
+
+戦闘: skill / thief_lv5_a → draco_dragon:1
+- 急所突き・改が白竜ヴァイスに11ダメージ。
+- 白竜ヴァイスは雪嵐の咆哮を使用した。
+- 水刃が白竜ヴァイスに9ダメージ。
+
+## step 138 / draco_battle 「王の間・剣聖ドラコ」 HP 14/30 G 270
+
+
+戦闘: attack / basic_attack → draco_dragon:1
+- ダガーが白竜ヴァイスに1ダメージ。
+- 白翼の薙ぎ払いがテストに19ダメージ。
 - プレイヤーは戦闘不能になった。
 - 王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。
 
-## step 136 / draco_battle 「王の間・剣聖ドラコ」 HP 0/30 G 270
+## step 139 / draco_battle 「王の間・剣聖ドラコ」 HP 0/30 G 270
 
 > [GM] 王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。
-- 戦闘に敗北しました。 HP 0/30、MP 10/10、SP 2/22。
+- 戦闘に敗北しました。 HP 0/30、MP 10/10、SP 4/22。
 
-## step 137 / draco_battle 「王の間・剣聖ドラコ」 HP 0/30 G 270
+## step 140 / draco_battle 「王の間・剣聖ドラコ」 HP 0/30 G 270
 
 
-終了: {"ending": "draco_victory", "reason": "王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。", "combat_defeat": true, "created_at": "2026-10-18T06:49:35.523148+00:00", "epilogue": []}
+終了: {"ending": "draco_victory", "reason": "王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。", "combat_defeat": true, "created_at": "2026-10-18T07:39:51.644206+00:00", "epilogue": []}
 
 ## 検証結果
 
@@ -1501,7 +1527,7 @@
 {
   "character": "thief",
   "seed": 104,
-  "steps": 137,
+  "steps": 140,
   "retry_count": 1,
   "ending": "draco_victory",
   "final_location": "draco_battle",
@@ -1527,14 +1553,14 @@
       "entry_hp": 13
     },
     {
-      "step": 137,
+      "step": 140,
       "location": "draco_battle",
       "ending": "draco_victory",
       "combat_defeat": true,
       "completed": false,
       "attempt": 1,
       "area": "royal_return",
-      "entry_hp": 22
+      "entry_hp": 23
     }
   ],
   "farthest_location": "draco_battle",
@@ -2382,7 +2408,7 @@
       "pure_movement": false
     },
     {
-      "step": 115,
+      "step": 114,
       "attempt": 1,
       "location": "valley_lava_bridge",
       "action_id": "cross_lava_bridge",
@@ -2390,7 +2416,7 @@
       "pure_movement": false
     },
     {
-      "step": 116,
+      "step": 115,
       "attempt": 1,
       "location": "warlock_at_nest",
       "action_id": "continue_after_warlock",
@@ -2398,7 +2424,7 @@
       "pure_movement": true
     },
     {
-      "step": 117,
+      "step": 116,
       "attempt": 1,
       "location": "valley_nest_gate",
       "action_id": "enter_dragon_nest",
@@ -2406,7 +2432,7 @@
       "pure_movement": true
     },
     {
-      "step": 128,
+      "step": 124,
       "attempt": 1,
       "location": "ignis_last_breath",
       "action_id": "hear_ignis_last_words",
@@ -2414,7 +2440,7 @@
       "pure_movement": false
     },
     {
-      "step": 129,
+      "step": 125,
       "attempt": 1,
       "location": "ignis_last_breath",
       "action_id": "return_to_castle_report",
@@ -2422,7 +2448,7 @@
       "pure_movement": true
     },
     {
-      "step": 130,
+      "step": 126,
       "attempt": 1,
       "location": "royal_gate",
       "action_id": "enter_festival_town",
@@ -2430,7 +2456,7 @@
       "pure_movement": true
     },
     {
-      "step": 131,
+      "step": 127,
       "attempt": 1,
       "location": "festival_town",
       "action_id": "go_report_hall",
@@ -2438,7 +2464,7 @@
       "pure_movement": true
     },
     {
-      "step": 132,
+      "step": 128,
       "attempt": 1,
       "location": "castle_report",
       "action_id": "report_with_evidence",

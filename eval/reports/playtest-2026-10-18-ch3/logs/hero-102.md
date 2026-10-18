@@ -705,9 +705,9 @@
 ## step 57 / oaksdawn_chapel 「暁の礼拝堂」 HP 25/25 G 100
 
 - 祈りを捧げてもらう | 5G | 判定不要
-- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要
-- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要
-- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 1d20+wis判定（DC13）
+- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要
+- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要
+- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 1d20+wis判定（DC13）
 - 聖水を分けてもらう |  | 判定不要
 - 大通りへ戻る |  | 判定不要
 - 鐘のことを詳しく聞く |  | 判定不要
@@ -795,9 +795,9 @@
 - 宿で休む | 10G | 判定不要
 - 噂話を聞く |  | 判定不要
 - 大通りへ戻る |  | 判定不要
-- 傭兵として雇う（50G） | 同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減） | 判定不要
-- 精霊の泉の水を渡す | 同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減） | 判定不要
-- 地鳴りの謎を一緒に調べようと誘う | 同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減） | 1d20+int判定（DC13）
+- 傭兵として雇う（50G） | 同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減） | 判定不要
+- 精霊の泉の水を渡す | 同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減） | 判定不要
+- 地鳴りの謎を一緒に調べようと誘う | 同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減） | 1d20+int判定（DC13）
 
 選択: 精霊の泉の水を渡す
 > [プレイヤー] 精霊の泉の水を渡す
@@ -873,34 +873,19 @@
 ## step 71 / gorge_rockfall_path 「落石の道」 HP 25/25 G 100
 
 
-戦闘: skill / power_slash → gravel_beetle:1
+戦闘: skill / power_slash → gravel_beetle:2
 - 渾身斬りが砂礫の甲虫に5ダメージ。
 - 攻撃はテストに当たらなかった。
-- 攻撃がテストに6ダメージ。
-- 水刃が砂礫の甲虫に9ダメージ。
-
-## step 72 / gorge_rockfall_path 「落石の道」 HP 19/25 G 100
-
-
-戦闘: skill / power_slash → gravel_beetle:1
-- 渾身斬りが砂礫の甲虫に8ダメージ。
-- 攻撃がテストに3ダメージ。
-- 水刃が砂礫の甲虫に3ダメージ。
-
-## step 73 / gorge_rockfall_path 「落石の道」 HP 16/25 G 100
-
-
-戦闘: skill / power_slash → gravel_beetle:2
-- 渾身斬りが砂礫の甲虫に6ダメージ。
+- 水刃が砂礫の甲虫に15ダメージ。
 - すべての敵を倒した。
 - 25ゴールドを獲得しました。
 
-## step 74 / gorge_rockfall_path 「落石の道」 HP 16/25 G 125
+## step 72 / gorge_rockfall_path 「落石の道」 HP 25/25 G 125
 
 > [GM] 甲虫は殻ごと崩れて、ただの砂利の山に戻った。
-- 戦闘に勝利しました。 HP 16/25、MP 9/9、SP 5/12。
+- 戦闘に勝利しました。 HP 25/25、MP 9/9、SP 10/12。
 
-## step 75 / gorge_rockfall_path 「落石の道」 HP 16/25 G 125
+## step 73 / gorge_rockfall_path 「落石の道」 HP 25/25 G 125
 
 - 鉱夫の野営跡へ向かう |  | 不明
 - 白い爪痕の崖へ向かう |  | 不明
@@ -911,7 +896,7 @@
 > [GM] 崩れかけた天幕と、冷えた竈が残る野営跡。逃げ出した鉱夫たちの道具が、そのまま散らばっている。
 - 現在地が鉱夫の野営跡になりました。
 
-## step 76 / gorge_miner_camp 「鉱夫の野営跡」 HP 16/25 G 125
+## step 74 / gorge_miner_camp 「鉱夫の野営跡」 HP 25/25 G 125
 
 - 竈に火を入れて休む |  | 判定不要
 - 鉱夫の荷物を調べる |  | 判定不要
@@ -922,7 +907,7 @@
 > [GM] 散らばった荷物の中から、携帯食と一冊の日記が出てきた。最後の頁には、震える字でこう書かれている。「……昨夜、峠の上を白いものが飛んでいった。その直後に山が崩れた。あれは竜だ。白い竜だ」
 - 携帯食 x2を入手しました。
 
-## step 77 / gorge_miner_camp 「鉱夫の野営跡」 HP 16/25 G 125
+## step 75 / gorge_miner_camp 「鉱夫の野営跡」 HP 25/25 G 125
 
 - 竈に火を入れて休む |  | 判定不要
 - 落石の道へ戻る |  | 判定不要
@@ -932,7 +917,7 @@
 > [GM] 竈に火を入れて、天幕の陰で短く眠った。地鳴りが、遠くで低く続いている。
 - HP・MP・SPが全回復しました。
 
-## step 78 / gorge_miner_camp 「鉱夫の野営跡」 HP 25/25 G 125
+## step 76 / gorge_miner_camp 「鉱夫の野営跡」 HP 25/25 G 125
 
 - 落石の道へ戻る |  | 判定不要
 
@@ -941,7 +926,7 @@
 > [GM] 崩れた岩が転がる細い道。岩陰から、砂利を固めたような甲虫が二匹、顎を鳴らして這い出してきた。
 - 現在地が落石の道になりました。
 
-## step 79 / gorge_rockfall_path 「落石の道」 HP 25/25 G 125
+## step 77 / gorge_rockfall_path 「落石の道」 HP 25/25 G 125
 
 - 鉱夫の野営跡へ向かう |  | 判定不要
 - 白い爪痕の崖へ向かう |  | 不明
@@ -952,7 +937,7 @@
 > [GM] 峠をふさいでいた崩落の跡。巨大な岩の断面に、何かが引き裂いたような爪痕が三本、深く刻まれている。
 - 現在地が白い爪痕の崖になりました。
 
-## step 80 / gorge_claw_cliff 「白い爪痕の崖」 HP 25/25 G 125
+## step 78 / gorge_claw_cliff 「白い爪痕の崖」 HP 25/25 G 125
 
 - 爪痕を調べる |  | 判定不要
 - 岩の巨人の通り道へ進む |  | 不明
@@ -962,7 +947,7 @@
 > [プレイヤー] 爪痕を調べる
 > [GM] 爪痕の奥には、真夏でも溶けない白い霜がこびりついていた。この岩は、山崩れで落ちたのではない。何か巨大なものが、爪で引き裂いたのだ。
 
-## step 81 / gorge_claw_cliff 「白い爪痕の崖」 HP 25/25 G 125
+## step 79 / gorge_claw_cliff 「白い爪痕の崖」 HP 25/25 G 125
 
 - 岩の巨人の通り道へ進む |  | 不明
 - 落石の道へ戻る |  | 判定不要
@@ -972,7 +957,7 @@
 > [GM] 峡谷が狭まる先で、苔むした岩山がゆっくりと立ち上がった。岩の巨人だ。足元では、石肌のトカゲが舌を鳴らしている。
 - 現在地が岩の巨人の通り道になりました。
 
-## step 82 / gorge_giant_path 「岩の巨人の通り道」 HP 25/25 G 125
+## step 80 / gorge_giant_path 「岩の巨人の通り道」 HP 25/25 G 125
 
 - 岩の巨人と戦う |  | 危険（戦闘）
 - 巨人の足元をくぐり抜ける |  | 1d20+dex判定（DC17）
@@ -982,7 +967,7 @@
 > [GM] 巨人が腕を振り上げた隙に、足の間を転がるようにくぐり抜けた。
 - 生命の果実 x1を入手しました。
 
-## step 83 / gorge_giant_path 「岩の巨人の通り道」 HP 25/25 G 125
+## step 81 / gorge_giant_path 「岩の巨人の通り道」 HP 25/25 G 125
 
 - 峡谷の底へ下りる |  | 不明
 - 白い爪痕の崖へ戻る |  | 判定不要
@@ -992,7 +977,7 @@
 > [GM] 峡谷の底は、無数の穴で蜂の巣のようになっていた。地鳴りがひときわ大きくなり、地面を突き破って巨大なワームが姿を現す。
 - 現在地が峡谷の底になりました。
 
-## step 84 / gorge_worm_lair 「峡谷の底」 HP 25/25 G 125
+## step 82 / gorge_worm_lair 「峡谷の底」 HP 25/25 G 125
 
 - 大ワームと戦う |  | 危険（戦闘）
 - 地鳴りの合間を縫って駆け抜ける |  | 1d20+dex判定（DC17）
@@ -1002,7 +987,7 @@
 > [プレイヤー] エリオの水で巣穴を満たす
 > [GM] エリオが杖を掲げると、峡谷の湧き水が渦を巻いて巣穴へ流れ込んだ。地中で何かが苦しげにのたうち、地鳴りが遠ざかっていく。「今のうちだ、行こう！」
 
-## step 85 / gorge_worm_lair 「峡谷の底」 HP 25/25 G 125
+## step 83 / gorge_worm_lair 「峡谷の底」 HP 25/25 G 125
 
 - 峡谷を抜けて村へ下る |  | 不明
 - 岩の巨人の通り道へ進む |  | 危険（戦闘）
@@ -1014,7 +999,7 @@
 - 現在地が麓の村・避難所になりました。
 - クエスト更新：紅き邪竜の討伐
 
-## step 86 / village 「麓の村・避難所」 HP 35/35 G 125
+## step 84 / village 「麓の村・避難所」 HP 35/35 G 125
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1030,7 +1015,7 @@
 > [GM] 邪竜イグニスが潜む谷の麓、小さな村にたどり着いた。冷たい風が吹き抜ける中、村人たちは怯えた様子で暮らしている。邪竜に立ち向かう術を得るには、まず情報を集め、旅の支度を整える必要がありそうだ。
 - 現在地が炎の中の結氷になりました。
 
-## step 87 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 125
+## step 85 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 125
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 村を出ようとします | 不明
@@ -1042,7 +1027,7 @@
 > [GM] 白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」
 - 現在地が麓の村・避難所になりました。
 
-## step 88 / village 「麓の村・避難所」 HP 35/35 G 125
+## step 86 / village 「麓の村・避難所」 HP 35/35 G 125
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1058,7 +1043,7 @@
 > [GM] 村を発ち、来た道を引き返す。森を抜けて城門をくぐると、見慣れた城下町の大通りが広がっていた。
 - 現在地がアルテリア城下町になりました。
 
-## step 89 / castle_town 「アルテリア城下町」 HP 35/35 G 125
+## step 87 / castle_town 「アルテリア城下町」 HP 35/35 G 125
 
 - 鍛冶屋へ向かう | 武器の強化や購入 | 判定不要
 - 宿屋へ向かう | 休息や情報収集 | 判定不要
@@ -1075,7 +1060,7 @@
 > [GM] 城門を出て街道を下り、闇の森を抜けると、焼け跡の残る麓の村が見えてきた。
 - 現在地が麓の村・避難所になりました。
 
-## step 90 / village 「麓の村・避難所」 HP 35/35 G 125
+## step 88 / village 「麓の村・避難所」 HP 35/35 G 125
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1090,7 +1075,7 @@
 > [プレイヤー] 古い盟約について聞く
 > [GM] 「昔、元素と人と竜は互いを害さぬと誓い合った。北の雪嶺には、盟約を見張る白き竜がいると聞く」
 
-## step 91 / village 「麓の村・避難所」 HP 35/35 G 125
+## step 89 / village 「麓の村・避難所」 HP 35/35 G 125
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1107,7 +1092,7 @@
 - HP・MP・SPが全回復しました。
 - 5ゴールドを消費しました。
 
-## step 92 / village 「麓の村・避難所」 HP 35/35 G 120
+## step 90 / village 「麓の村・避難所」 HP 35/35 G 120
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1122,7 +1107,7 @@
 > [プレイヤー] 長老に邪竜の弱点を聞く
 > [GM] 白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」
 
-## step 93 / village 「麓の村・避難所」 HP 35/35 G 120
+## step 91 / village 「麓の村・避難所」 HP 35/35 G 120
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1139,7 +1124,7 @@
 - 現在地が竜の谷・入口になりました。
 - クエスト更新：紅き邪竜の討伐
 
-## step 94 / valley_entrance 「竜の谷・入口」 HP 35/35 G 120
+## step 92 / valley_entrance 「竜の谷・入口」 HP 35/35 G 120
 
 - 煤の亡霊と戦う |  | 危険（戦闘）
 - 霧に紛れてやり過ごす |  | 1d20+dex判定（DC14）
@@ -1150,7 +1135,7 @@
 - 魔力の果実 x1を入手しました。
 - 現在地が溶岩の吊り橋になりました。
 
-## step 95 / valley_lava_bridge 「溶岩の吊り橋」 HP 35/35 G 120
+## step 93 / valley_lava_bridge 「溶岩の吊り橋」 HP 35/35 G 120
 
 - 吊り橋を渡る |  | 1d20+dex判定（DC12）
 - 岩棚の迂回路を進む |  | 不明
@@ -1161,7 +1146,7 @@
 - 現在地が竜の巣の前になりました。
 - レベルが5に上がりました。
 
-## step 96 / valley_nest_gate 「竜の巣の前」 HP 40/40 G 120
+## step 94 / valley_nest_gate 「竜の巣の前」 HP 40/40 G 120
 
 - 竜の巣へ踏み込む |  | 不明
 
@@ -1170,268 +1155,65 @@
 > [GM] 灼熱の風に逆らって洞穴へ踏み込む。闇の奥で、巨大な何かがゆっくりと目を開けた。
 - 現在地が竜の谷になりました。
 
-## step 97 / dragon_valley_loc 「竜の谷」 HP 40/40 G 120
+## step 95 / dragon_valley_loc 「竜の谷」 HP 40/40 G 120
 
 
 戦闘: item / holy_water → ignis:1
 - 聖水が邪竜イグニスに34光属性ダメージ。
 - 尻尾攻撃はテストに当たらなかった。
-- 水刃が邪竜イグニスに2ダメージ。
+- 水刃が邪竜イグニスに5ダメージ。
 
-## step 98 / dragon_valley_loc 「竜の谷」 HP 40/40 G 120
+## step 96 / dragon_valley_loc 「竜の谷」 HP 40/40 G 120
 
 
 戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに9ダメージ。
+- 渾身斬り・改が邪竜イグニスに5ダメージ。
 - 尻尾攻撃はテストに当たらなかった。
-- 水刃が邪竜イグニスに2ダメージ。
+- 水刃が邪竜イグニスに7ダメージ。
 
-## step 99 / dragon_valley_loc 「竜の谷」 HP 40/40 G 120
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに8ダメージ。
-- 炎の息がテストに16ダメージ。
-- 水の帳
-- 水刃が邪竜イグニスに4ダメージ。
-
-## step 100 / dragon_valley_loc 「竜の谷」 HP 24/40 G 120
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに9ダメージ。
-- 炎の息がテストに6ダメージ。
-- 水刃が邪竜イグニスに2ダメージ。
-
-## step 101 / dragon_valley_loc 「竜の谷」 HP 18/40 G 120
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに8ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 水刃が邪竜イグニスに3ダメージ。
-
-## step 102 / dragon_valley_loc 「竜の谷」 HP 18/40 G 120
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改は邪竜イグニスに当たらなかった。
-- 尻尾攻撃がテストに20ダメージ。
-- プレイヤーは戦闘不能になった。
-- 邪竜イグニスに敗れ、竜の谷で力尽きた。
-
-## step 103 / dragon_valley_loc 「竜の谷」 HP 0/40 G 120
-
-> [GM] 邪竜イグニスに敗れ、竜の谷で力尽きた。
-- 戦闘に敗北しました。 HP 0/40、MP 12/12、SP 7/18。
-
-## step 104 / dragon_valley_loc 「竜の谷」 HP 0/40 G 120
-
-
-終了: {"reason": "邪竜イグニスに敗れ、竜の谷で力尽きた。", "ending": "dragon_valley_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:38:50.240501+00:00", "epilogue": []}
-> [GM] 運命の糸がほどけ、あなたは再び竜の谷の入口に立っていた。
-- 竜の谷の入口からやり直しました。
-
-## step 105 / valley_entrance 「竜の谷・入口」 HP 35/35 G 120
-
-- 煤の亡霊と戦う |  | 危険（戦闘）
-- 霧に紛れてやり過ごす |  | 1d20+dex判定（DC14）
-
-選択: 煤の亡霊と戦う
-> [プレイヤー] 煤の亡霊と戦う
-> [GM] 霧を割って進むと、煤をまとった二つの人影がこちらへ向き直り、焦げた腕を伸ばしてきた。
-
-## step 106 / valley_entrance 「竜の谷・入口」 HP 35/35 G 120
-
-
-戦闘: item / holy_water → ash_wraith:2
-- 聖水が煤の亡霊に54光属性ダメージ。
-- すべての敵を倒した。
-- 35ゴールドを獲得しました。
-- 魔力の果実 x1を入手しました。
-- 現在地が溶岩の吊り橋になりました。
-
-## step 107 / valley_lava_bridge 「溶岩の吊り橋」 HP 35/35 G 155
-
-> [GM] 煮え立つ溶岩の川に、古い吊り橋が一本だけ架かっている。板は焦げ、縄は今にも切れそうだ。
-- 戦闘に勝利しました。 HP 35/35、MP 11/11、SP 16/16。
-
-## step 108 / valley_lava_bridge 「溶岩の吊り橋」 HP 35/35 G 155
-
-- 吊り橋を渡る |  | 1d20+dex判定（DC12）
-- 岩棚の迂回路を進む |  | 不明
-
-選択: 岩棚の迂回路を進む
-> [プレイヤー] 岩棚の迂回路を進む
-> [GM] 吊り橋を避け、崖に張り出した岩棚へ足をかけた。足元から熱風が吹き上げてくる。
-- 現在地が岩棚の迂回路になりました。
-
-## step 109 / valley_ledge 「岩棚の迂回路」 HP 35/35 G 155
-
-
-戦闘: skill / hero_lv3_a → lava_drake:2
-- 渾身斬り・改は溶岩ドレイクに当たらなかった。
-- 溶岩の吐息はテストに当たらなかった。
-- 水刃は溶岩ドレイクに当たらなかった。
-
-## step 110 / valley_ledge 「岩棚の迂回路」 HP 35/35 G 155
-
-
-戦闘: skill / hero_lv3_a → lava_drake:2
-- 渾身斬り・改が溶岩ドレイクに8ダメージ。
-- すべての敵を倒した。
-- 10ゴールドを獲得しました。
-- 焼けた溶岩石 x1を入手しました。
-- 現在地が竜の巣の前になりました。
-- レベルが5に上がりました。
-
-## step 111 / valley_nest_gate 「竜の巣の前」 HP 40/40 G 165
-
-> [GM] 巨大な洞穴の入口から、灼熱の風が吹きつけてくる。奥で、何か巨大なものが重く息をしている。
-- 戦闘に勝利しました。 HP 40/40、MP 12/12、SP 18/18。
-
-## step 112 / valley_nest_gate 「竜の巣の前」 HP 40/40 G 165
-
-- 竜の巣へ踏み込む |  | 不明
-
-選択: 竜の巣へ踏み込む
-> [プレイヤー] 竜の巣へ踏み込む
-> [GM] 灼熱の風に逆らって洞穴へ踏み込む。闇の奥で、巨大な何かがゆっくりと目を開けた。
-- 現在地が竜の谷になりました。
-
-## step 113 / dragon_valley_loc 「竜の谷」 HP 40/40 G 165
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに9ダメージ。
-- 炎の息はテストに当たらなかった。
-- 水刃が邪竜イグニスに1ダメージ。
-
-## step 114 / dragon_valley_loc 「竜の谷」 HP 40/40 G 165
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改は邪竜イグニスに当たらなかった。
-- 尻尾攻撃がテストに8ダメージ。
-- 水刃が邪竜イグニスに2ダメージ。
-
-## step 115 / dragon_valley_loc 「竜の谷」 HP 32/40 G 165
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに8ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 水の帳
-- 水刃が邪竜イグニスに2ダメージ。
-
-## step 116 / dragon_valley_loc 「竜の谷」 HP 32/40 G 165
+## step 97 / dragon_valley_loc 「竜の谷」 HP 40/40 G 120
 
 
 戦闘: skill / hero_lv3_a → ignis:1
 - 渾身斬り・改が邪竜イグニスに6ダメージ。
-- 炎の息はテストに当たらなかった。
-- 水刃が邪竜イグニスに1ダメージ。
+- 尻尾攻撃がテストに20ダメージ。
+- 水の帳
+- 水刃が邪竜イグニスに5ダメージ。
 
-## step 117 / dragon_valley_loc 「竜の谷」 HP 32/40 G 165
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに7ダメージ。
-- 炎の息がテストに3ダメージ。
-- 水刃が邪竜イグニスに1ダメージ。
-
-## step 118 / dragon_valley_loc 「竜の谷」 HP 29/40 G 165
+## step 98 / dragon_valley_loc 「竜の谷」 HP 20/40 G 120
 
 
 戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに8ダメージ。
-- 炎の息はテストに当たらなかった。
-- 水刃が邪竜イグニスに3ダメージ。
+- 渾身斬り・改が邪竜イグニスに6ダメージ。
+- 尻尾攻撃がテストに3ダメージ。
+- 水刃が邪竜イグニスに8ダメージ。
 
-## step 119 / dragon_valley_loc 「竜の谷」 HP 29/40 G 165
+## step 99 / dragon_valley_loc 「竜の谷」 HP 17/40 G 120
 
 
 戦闘: skill / hero_lv3_a → ignis:1
 - 渾身斬り・改が邪竜イグニスに9ダメージ。
-- 炎の息がテストに6ダメージ。
-- 水の帳
+- 尻尾攻撃がテストに5ダメージ。
 - 水刃が邪竜イグニスに1ダメージ。
 
-## step 120 / dragon_valley_loc 「竜の谷」 HP 23/40 G 165
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに7ダメージ。
-- 尻尾攻撃がテストに4ダメージ。
-- 水刃が邪竜イグニスに2ダメージ。
-
-## step 121 / dragon_valley_loc 「竜の谷」 HP 19/40 G 165
-
-
-戦闘: attack / basic_attack → ignis:1
-- 鉄の剣が邪竜イグニスに7ダメージ。
-- 炎の息がテストに8ダメージ。
-- 水刃が邪竜イグニスに1ダメージ。
-
-## step 122 / dragon_valley_loc 「竜の谷」 HP 11/40 G 165
+## step 100 / dragon_valley_loc 「竜の谷」 HP 12/40 G 120
 
 
 戦闘: item / healing_scroll → ignis:1
-- 治療の巻物を使い、HPを29回復した。
+- 治療の巻物を使い、HPを28回復した。
 - 尻尾攻撃はテストに当たらなかった。
-- 水刃が邪竜イグニスに2ダメージ。
+- 水刃が邪竜イグニスに4ダメージ。
 
-## step 123 / dragon_valley_loc 「竜の谷」 HP 40/40 G 165
+## step 101 / dragon_valley_loc 「竜の谷」 HP 40/40 G 120
 
 
 戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに6ダメージ。
-- 尻尾攻撃がテストに8ダメージ。
+- 渾身斬り・改が邪竜イグニスに10ダメージ。
+- 尻尾攻撃はテストに当たらなかった。
 - 水の帳
-- 水刃が邪竜イグニスに2ダメージ。
+- 水刃が邪竜イグニスに7ダメージ。
 
-## step 124 / dragon_valley_loc 「竜の谷」 HP 32/40 G 165
-
-
-戦闘: attack / basic_attack → ignis:1
-- 鉄の剣が邪竜イグニスに3ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 水刃が邪竜イグニスに1ダメージ。
-
-## step 125 / dragon_valley_loc 「竜の谷」 HP 32/40 G 165
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改は邪竜イグニスに当たらなかった。
-- 尻尾攻撃はテストに当たらなかった。
-- 水刃が邪竜イグニスに1ダメージ。
-
-## step 126 / dragon_valley_loc 「竜の谷」 HP 32/40 G 165
-
-
-戦闘: attack / basic_attack → ignis:1
-- 鉄の剣が邪竜イグニスに4ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 水刃が邪竜イグニスに1ダメージ。
-
-## step 127 / dragon_valley_loc 「竜の谷」 HP 32/40 G 165
-
-
-戦闘: attack / basic_attack → ignis:1
-- 鉄の剣は邪竜イグニスに当たらなかった。
-- 炎の息はテストに当たらなかった。
-- 水の帳
-- 水刃が邪竜イグニスに2ダメージ。
-
-## step 128 / dragon_valley_loc 「竜の谷」 HP 32/40 G 165
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに7ダメージ。
-- 炎の息はテストに当たらなかった。
-- 水刃が邪竜イグニスに1ダメージ。
-
-## step 129 / dragon_valley_loc 「竜の谷」 HP 32/40 G 165
+## step 102 / dragon_valley_loc 「竜の谷」 HP 40/40 G 120
 
 
 戦闘: special / purify_ignis_holy_water → ignis:1
@@ -1439,50 +1221,29 @@
 - 現在地が竜の谷・目覚めた紅竜になりました。
 - クエスト更新：紅き邪竜の討伐
 
-## step 130 / ignis_purified 「竜の谷・目覚めた紅竜」 HP 32/40 G 165
+## step 103 / ignis_purified 「竜の谷・目覚めた紅竜」 HP 40/40 G 120
 
 - イグニスの話を聞く |  | 判定不要
 - イグニスが差し出す鱗を受け取る |  | 判定不要
 - 王城へ戻り、国王に報告する |  | 不明
 > [GM] あなたが古傷に聖なる力を注ぐと、白い霜が音を立てて溶け落ちた。イグニスの咆哮が、苦痛から安堵へと変わっていく。
-- 戦闘に浄化しました。 HP 32/40、MP 12/12、SP 1/18。
+- 戦闘に浄化しました。 HP 40/40、MP 12/12、SP 9/18。
 
-## step 131 / ignis_purified 「竜の谷・目覚めた紅竜」 HP 32/40 G 165
+## step 104 / ignis_purified 「竜の谷・目覚めた紅竜」 HP 40/40 G 120
 
 - イグニスの話を聞く |  | 判定不要
 - イグニスが差し出す鱗を受け取る |  | 判定不要
-- 王城へ戻り、国王に報告する |  | 不明
-
-選択: イグニスが差し出す鱗を受け取る
-> [プレイヤー] イグニスが差し出す鱗を受け取る
-> [GM] イグニスは自らの古傷から白い鱗を爪で引き抜き、あなたの前に置いた。「これを王に見せよ。あの者も、己の鱗だけは偽れぬ」
-- 白い竜鱗 x1を入手しました。
-
-## step 132 / ignis_purified 「竜の谷・目覚めた紅竜」 HP 32/40 G 165
-
-- イグニスの話を聞く |  | 判定不要
-- イグニスが差し出す鱗を受け取る |  | 判定不要 [不可: 完了済みです。]
 - 王城へ戻り、国王に報告する |  | 不明
 
 選択: イグニスの話を聞く
 > [プレイヤー] イグニスの話を聞く
 > [GM] 「人の子よ……礼を言う。十年前、白き竜ヴァイスが我が眠りを破り、この傷に呪いの霜を打ち込んだ。奴は今、人の姿で汝らの王の傍らにいる」
 
-## step 133 / ignis_purified 「竜の谷・目覚めた紅竜」 HP 32/40 G 165
+## step 105 / ignis_purified 「竜の谷・目覚めた紅竜」 HP 40/40 G 120
 
 - イグニスの話を聞く |  | 判定不要 [不可: 完了済みです。]
-- イグニスが差し出す鱗を受け取る |  | 判定不要 [不可: 完了済みです。]
+- イグニスが差し出す鱗を受け取る |  | 判定不要
 - 共に戦ってほしいと頼む |  | 判定不要
-- 王城へ戻り、国王に報告する |  | 不明
-
-選択: 共に戦ってほしいと頼む
-> [プレイヤー] 共に戦ってほしいと頼む
-> [GM] 「……よかろう。盟約を穢した者には、我が炎で報いる。汝が奴の正体を暴いた時、必ず駆けつけよう」
-
-## step 134 / ignis_purified 「竜の谷・目覚めた紅竜」 HP 32/40 G 165
-
-- イグニスの話を聞く |  | 判定不要 [不可: 完了済みです。]
-- イグニスが差し出す鱗を受け取る |  | 判定不要 [不可: 完了済みです。]
 - 王城へ戻り、国王に報告する |  | 不明
 
 選択: 王城へ戻り、国王に報告する
@@ -1491,7 +1252,7 @@
 - 現在地が凱旋の城門になりました。
 - 城門をくぐると、花びらと歓声があなたを迎えた。邪竜の脅威が去ったことは、すでに城下町じゅうに知れ渡っている。人混みの向こうで、将軍ドラコが穏やかに手を振っていた。
 
-## step 135 / royal_gate 「凱旋の城門」 HP 32/40 G 165
+## step 106 / royal_gate 「凱旋の城門」 HP 40/40 G 120
 
 - 城下町へ進む |  | 不明
 
@@ -1500,92 +1261,13 @@
 > [GM] 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
 - 現在地が凱旋の城下町になりました。
 - 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
-- クエスト更新：将軍の屋敷
 
-## step 136 / festival_town 「凱旋の城下町」 HP 32/40 G 165
-
-- 宿屋へ向かう |  | 判定不要
-- 道具屋へ向かう |  | 判定不要
-- 魔法店へ向かう |  | 判定不要
-- 鍛冶屋へ向かう |  | 判定不要
-- 将軍の屋敷へ向かう |  | 不明
-- 国王に内密の謁見を願い出る |  | 不明
-- 凱旋の間へ向かう |  | 不明
-
-選択: 将軍の屋敷へ向かう
-> [プレイヤー] 将軍の屋敷へ向かう
-> [GM] 夜更けの将軍の屋敷は、祝祭の喧騒が嘘のように静まり返っている。庭の噴水だけが、なぜか凍りついていた。
-- 現在地が将軍の屋敷・夜の庭になりました。
-- 夜更けの将軍の屋敷は、祝祭の喧騒が嘘のように静まり返っている。庭の噴水だけが、なぜか凍りついていた。
-
-## step 137 / mansion_garden 「将軍の屋敷・夜の庭」 HP 32/40 G 165
-
-- 裏口から忍び込む |  | 1d20+dex判定（DC13）
-- ロビンに錠を開けてもらう |  | 不明
-- 城下町へ戻る |  | 判定不要
-
-選択: ロビンに錠を開けてもらう
-> [プレイヤー] ロビンに錠を開けてもらう
-> [GM] ロビンが細い針金を差し込むと、錠はあっさりと外れた。「将軍様の屋敷ってのは、案外ちょろいもんだね」
-> 廊下の壁も床も、薄い氷に覆われている。突き当たりの扉の前に、氷でできた鎧の番兵が二体、無言で立っていた。
-- 現在地が将軍の屋敷・凍てつく回廊になりました。
-- 廊下の壁も床も、薄い氷に覆われている。突き当たりの扉の前に、氷でできた鎧の番兵が二体、無言で立っていた。
-
-## step 138 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 32/40 G 165
-
-- 氷の番兵と戦う |  | 危険（戦闘）
-- 番兵の巡回の隙を突く |  | 1d20+wis判定（DC15）
-
-選択: 番兵の巡回の隙を突く
-> [プレイヤー] 番兵の巡回の隙を突く
-> [GM] 二体の番兵が向きを変える一瞬を見計らい、凍った床を滑るように扉の内側へ抜けた。
-> 書斎には古い書物が積み上げられ、机の上に一冊の日誌が開かれたまま置かれていた。部屋の奥には、白い鱗で飾られた小箱がある。
-- 魔力の果実 x1を入手しました。
-- 現在地が将軍の屋敷・書斎になりました。
-- 書斎には古い書物が積み上げられ、机の上に一冊の日誌が開かれたまま置かれていた。部屋の奥には、白い鱗で飾られた小箱がある。
-
-## step 139 / mansion_study 「将軍の屋敷・書斎」 HP 32/40 G 165
-
-- 日誌を手に取る |  | 判定不要
-- 小箱を開ける |  | 判定不要
-- 屋敷を出る |  | 判定不要
-
-選択: 日誌を手に取る
-> [プレイヤー] 日誌を手に取る
-> [GM] 日誌には、十年前に紅竜の傷へ霜を打ち込んだこと、Xanxusと交わした密約、そして王国を手に入れる計画が、几帳面な文字で記されていた。
-- 白竜の日誌 x1を入手しました。
-- クエスト達成：将軍の屋敷
-
-## step 140 / mansion_study 「将軍の屋敷・書斎」 HP 32/40 G 165
-
-- 日誌を手に取る |  | 判定不要 [不可: 完了済みです。]
-- 小箱を開ける |  | 判定不要
-- 屋敷を出る |  | 判定不要
-
-選択: 小箱を開ける
-> [プレイヤー] 小箱を開ける
-> [GM] 小箱の中には、白い鱗を編み込んだ護符が収められていた。添えられた札には「我が冷気を鎮めるもの」とある。
-- 霜封じの護符 x1を入手しました。
-
-## step 141 / mansion_study 「将軍の屋敷・書斎」 HP 32/40 G 165
-
-- 日誌を手に取る |  | 判定不要 [不可: 完了済みです。]
-- 小箱を開ける |  | 判定不要 [不可: 完了済みです。]
-- 屋敷を出る |  | 判定不要
-
-選択: 屋敷を出る
-> [プレイヤー] 屋敷を出る
-> [GM] 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
-- 現在地が凱旋の城下町になりました。
-- 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
-
-## step 142 / festival_town 「凱旋の城下町」 HP 32/40 G 165
+## step 107 / festival_town 「凱旋の城下町」 HP 40/40 G 120
 
 - 宿屋へ向かう |  | 判定不要
 - 道具屋へ向かう |  | 判定不要
 - 魔法店へ向かう |  | 判定不要
 - 鍛冶屋へ向かう |  | 判定不要
-- 将軍の屋敷へ向かう |  | 判定不要
 - 国王に内密の謁見を願い出る |  | 不明
 - 凱旋の間へ向かう |  | 不明
 
@@ -1593,7 +1275,7 @@
 > [プレイヤー] 凱旋の間へ向かう
 - 現在地が王城・凱旋の間になりました。
 
-## step 143 / castle_report 「王城・凱旋の間」 HP 32/40 G 165
+## step 108 / castle_report 「王城・凱旋の間」 HP 40/40 G 120
 
 - 将軍ドラコの正体を問いただす | 集めた証拠を国王の前に示す | 危険（戦闘）
 - 討伐を報告する | イグニス討伐の報告を終える | 判定不要
@@ -1604,10 +1286,10 @@
 - 邪竜の脅威は去り、王国に平和が戻った。竜の谷では、正気を取り戻した紅竜が静かに眠りについている。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。
 - クエスト達成：紅き邪竜の討伐
 
-## step 144 / castle_report 「王城・凱旋の間」 HP 32/40 G 165
+## step 109 / castle_report 「王城・凱旋の間」 HP 40/40 G 120
 
 
-終了: {"title": "冒険完了", "ending": "ignis_purified", "reason": "邪竜の脅威は去り、王国に平和が戻った。竜の谷では、正気を取り戻した紅竜が静かに眠りについている。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。", "created_at": "2026-10-18T06:39:08.183656+00:00", "epilogue": ["正気を取り戻したイグニスは竜の谷へ帰り、二度と人里を焼くことはなかった。", "ロビンは礼の一言もなく姿を消した。ただ、王都の貧しい家々の戸口に、ときおり金貨が置かれるようになった。", "闇の森の街道で、壊れた荷車だけが見つかった。持ち主の行方は分からない。"]}
+終了: {"title": "冒険完了", "ending": "ignis_purified", "reason": "邪竜の脅威は去り、王国に平和が戻った。竜の谷では、正気を取り戻した紅竜が静かに眠りについている。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。", "created_at": "2026-10-18T07:30:43.740298+00:00", "epilogue": ["正気を取り戻したイグニスは竜の谷へ帰り、二度と人里を焼くことはなかった。", "ロビンは礼の一言もなく姿を消した。ただ、王都の貧しい家々の戸口に、ときおり金貨が置かれるようになった。", "闇の森の街道で、壊れた荷車だけが見つかった。持ち主の行方は分からない。"]}
 
 ## 検証結果
 
@@ -1615,38 +1297,19 @@
 {
   "character": "hero",
   "seed": 102,
-  "steps": 144,
-  "retry_count": 1,
+  "steps": 109,
+  "retry_count": 0,
   "ending": "ignis_purified",
   "final_location": "castle_report",
-  "first_death": {
-    "step": 104,
-    "location": "dragon_valley_loc",
-    "ending": "dragon_valley_defeat",
-    "combat_defeat": true,
-    "completed": false,
-    "attempt": 0,
-    "area": "dragon_valley",
-    "entry_hp": 35
-  },
+  "first_death": null,
   "deaths": [
     {
-      "step": 104,
-      "location": "dragon_valley_loc",
-      "ending": "dragon_valley_defeat",
-      "combat_defeat": true,
-      "completed": false,
-      "attempt": 0,
-      "area": "dragon_valley",
-      "entry_hp": 35
-    },
-    {
-      "step": 144,
+      "step": 109,
       "location": "castle_report",
       "ending": "ignis_purified",
       "combat_defeat": false,
       "completed": true,
-      "attempt": 1,
+      "attempt": 0,
       "area": null,
       "entry_hp": null
     }
@@ -1686,29 +1349,12 @@
     "valley_lava_bridge",
     "valley_nest_gate",
     "dragon_valley_loc",
-    "valley_ledge",
     "ignis_purified",
     "royal_gate",
     "festival_town",
-    "mansion_garden",
-    "mansion_corridor",
-    "mansion_study",
     "castle_report"
   ],
-  "retry_visited_locations": [
-    "valley_entrance",
-    "valley_lava_bridge",
-    "valley_ledge",
-    "valley_nest_gate",
-    "dragon_valley_loc",
-    "ignis_purified",
-    "royal_gate",
-    "festival_town",
-    "mansion_garden",
-    "mansion_corridor",
-    "mansion_study",
-    "castle_report"
-  ],
+  "retry_visited_locations": [],
   "failures": [],
   "completed": true,
   "preferred_chapter3_route": "gorge",
@@ -1752,12 +1398,6 @@
       "step": 65,
       "attempt": 0,
       "location": "oaksdawn_inn",
-      "companion": "hydromancer_elio"
-    },
-    {
-      "step": 105,
-      "attempt": 1,
-      "location": "valley_entrance",
       "companion": "hydromancer_elio"
     }
   ],
@@ -2316,7 +1956,7 @@
       "pure_movement": false
     },
     {
-      "step": 75,
+      "step": 73,
       "attempt": 0,
       "location": "gorge_rockfall_path",
       "action_id": "rockfall_to_camp",
@@ -2324,7 +1964,7 @@
       "pure_movement": true
     },
     {
-      "step": 76,
+      "step": 74,
       "attempt": 0,
       "location": "gorge_miner_camp",
       "action_id": "search_miner_camp",
@@ -2332,7 +1972,7 @@
       "pure_movement": false
     },
     {
-      "step": 77,
+      "step": 75,
       "attempt": 0,
       "location": "gorge_miner_camp",
       "action_id": "rest_miner_camp",
@@ -2340,7 +1980,7 @@
       "pure_movement": false
     },
     {
-      "step": 78,
+      "step": 76,
       "attempt": 0,
       "location": "gorge_miner_camp",
       "action_id": "camp_to_rockfall",
@@ -2348,7 +1988,7 @@
       "pure_movement": true
     },
     {
-      "step": 79,
+      "step": 77,
       "attempt": 0,
       "location": "gorge_rockfall_path",
       "action_id": "rockfall_to_cliff",
@@ -2356,7 +1996,7 @@
       "pure_movement": true
     },
     {
-      "step": 80,
+      "step": 78,
       "attempt": 0,
       "location": "gorge_claw_cliff",
       "action_id": "inspect_white_claw",
@@ -2364,7 +2004,7 @@
       "pure_movement": false
     },
     {
-      "step": 81,
+      "step": 79,
       "attempt": 0,
       "location": "gorge_claw_cliff",
       "action_id": "cliff_to_giant",
@@ -2372,7 +2012,7 @@
       "pure_movement": true
     },
     {
-      "step": 82,
+      "step": 80,
       "attempt": 0,
       "location": "gorge_giant_path",
       "action_id": "sneak_gorge_giant_path",
@@ -2380,7 +2020,7 @@
       "pure_movement": false
     },
     {
-      "step": 83,
+      "step": 81,
       "attempt": 0,
       "location": "gorge_giant_path",
       "action_id": "giant_to_worm",
@@ -2388,7 +2028,7 @@
       "pure_movement": true
     },
     {
-      "step": 84,
+      "step": 82,
       "attempt": 0,
       "location": "gorge_worm_lair",
       "action_id": "elio_flood_worm",
@@ -2396,7 +2036,7 @@
       "pure_movement": false
     },
     {
-      "step": 85,
+      "step": 83,
       "attempt": 0,
       "location": "gorge_worm_lair",
       "action_id": "gorge_to_village",
@@ -2404,7 +2044,7 @@
       "pure_movement": false
     },
     {
-      "step": 86,
+      "step": 84,
       "attempt": 0,
       "location": "village",
       "action_id": "return_frozen_clue",
@@ -2412,7 +2052,7 @@
       "pure_movement": true
     },
     {
-      "step": 87,
+      "step": 85,
       "attempt": 0,
       "location": "village_frozen_clue",
       "action_id": "visit_village",
@@ -2420,7 +2060,7 @@
       "pure_movement": false
     },
     {
-      "step": 88,
+      "step": 86,
       "attempt": 0,
       "location": "village",
       "action_id": "return_castle_from_village",
@@ -2428,7 +2068,7 @@
       "pure_movement": false
     },
     {
-      "step": 89,
+      "step": 87,
       "attempt": 0,
       "location": "castle_town",
       "action_id": "return_village",
@@ -2436,7 +2076,7 @@
       "pure_movement": false
     },
     {
-      "step": 90,
+      "step": 88,
       "attempt": 0,
       "location": "village",
       "action_id": "ask_elder_treaty",
@@ -2444,7 +2084,7 @@
       "pure_movement": false
     },
     {
-      "step": 91,
+      "step": 89,
       "attempt": 0,
       "location": "village",
       "action_id": "rest_at_refuge",
@@ -2452,7 +2092,7 @@
       "pure_movement": false
     },
     {
-      "step": 92,
+      "step": 90,
       "attempt": 0,
       "location": "village",
       "action_id": "ask_elder_weakness",
@@ -2460,7 +2100,7 @@
       "pure_movement": false
     },
     {
-      "step": 93,
+      "step": 91,
       "attempt": 0,
       "location": "village",
       "action_id": "go_dragon_valley",
@@ -2468,7 +2108,7 @@
       "pure_movement": true
     },
     {
-      "step": 94,
+      "step": 92,
       "attempt": 0,
       "location": "valley_entrance",
       "action_id": "sneak_through_ash",
@@ -2476,7 +2116,7 @@
       "pure_movement": false
     },
     {
-      "step": 95,
+      "step": 93,
       "attempt": 0,
       "location": "valley_lava_bridge",
       "action_id": "cross_lava_bridge",
@@ -2484,7 +2124,7 @@
       "pure_movement": false
     },
     {
-      "step": 96,
+      "step": 94,
       "attempt": 0,
       "location": "valley_nest_gate",
       "action_id": "enter_dragon_nest",
@@ -2492,128 +2132,40 @@
       "pure_movement": true
     },
     {
-      "step": 105,
-      "attempt": 1,
-      "location": "valley_entrance",
-      "action_id": "fight_ash_wraiths",
-      "text": "煤の亡霊と戦う",
-      "pure_movement": false
-    },
-    {
-      "step": 108,
-      "attempt": 1,
-      "location": "valley_lava_bridge",
-      "action_id": "take_ledge_path",
-      "text": "岩棚の迂回路を進む",
-      "pure_movement": true
-    },
-    {
-      "step": 112,
-      "attempt": 1,
-      "location": "valley_nest_gate",
-      "action_id": "enter_dragon_nest",
-      "text": "竜の巣へ踏み込む",
-      "pure_movement": true
-    },
-    {
-      "step": 131,
-      "attempt": 1,
-      "location": "ignis_purified",
-      "action_id": "receive_ignis_scale",
-      "text": "イグニスが差し出す鱗を受け取る",
-      "pure_movement": false
-    },
-    {
-      "step": 132,
-      "attempt": 1,
+      "step": 104,
+      "attempt": 0,
       "location": "ignis_purified",
       "action_id": "hear_ignis_testimony",
       "text": "イグニスの話を聞く",
       "pure_movement": false
     },
     {
-      "step": 133,
-      "attempt": 1,
-      "location": "ignis_purified",
-      "action_id": "ask_ignis_aid",
-      "text": "共に戦ってほしいと頼む",
-      "pure_movement": false
-    },
-    {
-      "step": 134,
-      "attempt": 1,
+      "step": 105,
+      "attempt": 0,
       "location": "ignis_purified",
       "action_id": "return_to_castle_report",
       "text": "王城へ戻り、国王に報告する",
       "pure_movement": true
     },
     {
-      "step": 135,
-      "attempt": 1,
+      "step": 106,
+      "attempt": 0,
       "location": "royal_gate",
       "action_id": "enter_festival_town",
       "text": "城下町へ進む",
       "pure_movement": true
     },
     {
-      "step": 136,
-      "attempt": 1,
-      "location": "festival_town",
-      "action_id": "go_general_mansion",
-      "text": "将軍の屋敷へ向かう",
-      "pure_movement": true
-    },
-    {
-      "step": 137,
-      "attempt": 1,
-      "location": "mansion_garden",
-      "action_id": "robin_picks_lock",
-      "text": "ロビンに錠を開けてもらう",
-      "pure_movement": false
-    },
-    {
-      "step": 138,
-      "attempt": 1,
-      "location": "mansion_corridor",
-      "action_id": "evade_ice_sentinels",
-      "text": "番兵の巡回の隙を突く",
-      "pure_movement": false
-    },
-    {
-      "step": 139,
-      "attempt": 1,
-      "location": "mansion_study",
-      "action_id": "take_draco_journal",
-      "text": "日誌を手に取る",
-      "pure_movement": false
-    },
-    {
-      "step": 140,
-      "attempt": 1,
-      "location": "mansion_study",
-      "action_id": "open_scale_box",
-      "text": "小箱を開ける",
-      "pure_movement": false
-    },
-    {
-      "step": 141,
-      "attempt": 1,
-      "location": "mansion_study",
-      "action_id": "leave_mansion_study",
-      "text": "屋敷を出る",
-      "pure_movement": true
-    },
-    {
-      "step": 142,
-      "attempt": 1,
+      "step": 107,
+      "attempt": 0,
       "location": "festival_town",
       "action_id": "go_report_hall",
       "text": "凱旋の間へ向かう",
       "pure_movement": true
     },
     {
-      "step": 143,
-      "attempt": 1,
+      "step": 108,
+      "attempt": 0,
       "location": "castle_report",
       "action_id": "report_normally",
       "text": "討伐を報告する",

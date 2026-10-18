@@ -871,7 +871,7 @@
 ## step 85 / goblin_fort_fourth 「ゴブリン砦・四階財宝庫」 HP 0/20 G 240
 
 
-終了: {"reason": "ゴブリン砦・四階財宝庫で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_fourth_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:39:52.703331+00:00", "epilogue": []}
+終了: {"reason": "ゴブリン砦・四階財宝庫で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_fourth_defeat", "combat_defeat": true, "created_at": "2026-10-18T07:31:13.490983+00:00", "epilogue": []}
 > [GM] 運命の糸がほどけ、あなたは再びゴブリン砦の入口に立っていた。
 - ゴブリン砦の入口からやり直しました。
 
@@ -1070,9 +1070,9 @@
 ## step 103 / oaksdawn_chapel 「暁の礼拝堂」 HP 25/25 G 210
 
 - 祈りを捧げてもらう | 5G | 判定不要
-- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要
-- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要 [不可: 聖水所持が必要]
-- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 1d20+wis判定（DC13）
+- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要
+- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要 [不可: 聖水所持が必要]
+- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 1d20+wis判定（DC13）
 - 聖水を分けてもらう |  | 判定不要
 - 大通りへ戻る |  | 判定不要
 - 鐘のことを詳しく聞く |  | 判定不要
@@ -1160,9 +1160,9 @@
 - 宿で休む | 10G | 判定不要
 - 噂話を聞く |  | 判定不要
 - 大通りへ戻る |  | 判定不要
-- 傭兵として雇う（50G） | 同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減） | 判定不要
+- 傭兵として雇う（50G） | 同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減） | 判定不要
 - ？？？ |  |  [不可: まだ知らない何かが必要なようだ。]
-- 地鳴りの謎を一緒に調べようと誘う | 同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減） | 1d20+int判定（DC13）
+- 地鳴りの謎を一緒に調べようと誘う | 同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減） | 1d20+int判定（DC13）
 
 選択: 傭兵として雇う（50G）
 > [プレイヤー] 傭兵として雇う（50G）
@@ -1238,25 +1238,17 @@
 ## step 117 / gorge_rockfall_path 「落石の道」 HP 25/25 G 160
 
 
-戦闘: attack / basic_attack → gravel_beetle:1
-- 氷鉄の大剣が砂礫の甲虫に14ダメージ。
-- 攻撃はテストに当たらなかった。
-- 水刃が砂礫の甲虫に6ダメージ。
-
-## step 118 / gorge_rockfall_path 「落石の道」 HP 25/25 G 160
-
-
 戦闘: attack / basic_attack → gravel_beetle:2
-- 氷鉄の大剣が砂礫の甲虫に10ダメージ。
+- 氷鉄の大剣が砂礫の甲虫に14ダメージ。
 - すべての敵を倒した。
 - 25ゴールドを獲得しました。
 
-## step 119 / gorge_rockfall_path 「落石の道」 HP 25/25 G 185
+## step 118 / gorge_rockfall_path 「落石の道」 HP 25/25 G 185
 
 > [GM] 甲虫は殻ごと崩れて、ただの砂利の山に戻った。
 - 戦闘に勝利しました。 HP 25/25、MP 9/9、SP 12/12。
 
-## step 120 / gorge_rockfall_path 「落石の道」 HP 25/25 G 185
+## step 119 / gorge_rockfall_path 「落石の道」 HP 25/25 G 185
 
 - 鉱夫の野営跡へ向かう |  | 不明
 - 白い爪痕の崖へ向かう |  | 不明
@@ -1267,7 +1259,7 @@
 > [GM] 崩れかけた天幕と、冷えた竈が残る野営跡。逃げ出した鉱夫たちの道具が、そのまま散らばっている。
 - 現在地が鉱夫の野営跡になりました。
 
-## step 121 / gorge_miner_camp 「鉱夫の野営跡」 HP 25/25 G 185
+## step 120 / gorge_miner_camp 「鉱夫の野営跡」 HP 25/25 G 185
 
 - 竈に火を入れて休む |  | 判定不要
 - 鉱夫の荷物を調べる |  | 判定不要
@@ -1278,7 +1270,7 @@
 > [GM] 散らばった荷物の中から、携帯食と一冊の日記が出てきた。最後の頁には、震える字でこう書かれている。「……昨夜、峠の上を白いものが飛んでいった。その直後に山が崩れた。あれは竜だ。白い竜だ」
 - 携帯食 x2を入手しました。
 
-## step 122 / gorge_miner_camp 「鉱夫の野営跡」 HP 25/25 G 185
+## step 121 / gorge_miner_camp 「鉱夫の野営跡」 HP 25/25 G 185
 
 - 竈に火を入れて休む |  | 判定不要
 - 落石の道へ戻る |  | 判定不要
@@ -1288,7 +1280,7 @@
 > [GM] 竈に火を入れて、天幕の陰で短く眠った。地鳴りが、遠くで低く続いている。
 - HP・MP・SPが全回復しました。
 
-## step 123 / gorge_miner_camp 「鉱夫の野営跡」 HP 25/25 G 185
+## step 122 / gorge_miner_camp 「鉱夫の野営跡」 HP 25/25 G 185
 
 - 落石の道へ戻る |  | 判定不要
 
@@ -1297,7 +1289,7 @@
 > [GM] 崩れた岩が転がる細い道。岩陰から、砂利を固めたような甲虫が二匹、顎を鳴らして這い出してきた。
 - 現在地が落石の道になりました。
 
-## step 124 / gorge_rockfall_path 「落石の道」 HP 25/25 G 185
+## step 123 / gorge_rockfall_path 「落石の道」 HP 25/25 G 185
 
 - 鉱夫の野営跡へ向かう |  | 判定不要
 - 白い爪痕の崖へ向かう |  | 不明
@@ -1308,7 +1300,7 @@
 > [GM] 峠をふさいでいた崩落の跡。巨大な岩の断面に、何かが引き裂いたような爪痕が三本、深く刻まれている。
 - 現在地が白い爪痕の崖になりました。
 
-## step 125 / gorge_claw_cliff 「白い爪痕の崖」 HP 25/25 G 185
+## step 124 / gorge_claw_cliff 「白い爪痕の崖」 HP 25/25 G 185
 
 - 爪痕を調べる |  | 判定不要
 - 岩の巨人の通り道へ進む |  | 不明
@@ -1318,7 +1310,7 @@
 > [プレイヤー] 爪痕を調べる
 > [GM] 爪痕の奥には、真夏でも溶けない白い霜がこびりついていた。この岩は、山崩れで落ちたのではない。何か巨大なものが、爪で引き裂いたのだ。
 
-## step 126 / gorge_claw_cliff 「白い爪痕の崖」 HP 25/25 G 185
+## step 125 / gorge_claw_cliff 「白い爪痕の崖」 HP 25/25 G 185
 
 - 岩の巨人の通り道へ進む |  | 不明
 - 落石の道へ戻る |  | 判定不要
@@ -1328,7 +1320,7 @@
 > [GM] 峡谷が狭まる先で、苔むした岩山がゆっくりと立ち上がった。岩の巨人だ。足元では、石肌のトカゲが舌を鳴らしている。
 - 現在地が岩の巨人の通り道になりました。
 
-## step 127 / gorge_giant_path 「岩の巨人の通り道」 HP 25/25 G 185
+## step 126 / gorge_giant_path 「岩の巨人の通り道」 HP 25/25 G 185
 
 - 岩の巨人と戦う |  | 危険（戦闘）
 - 巨人の足元をくぐり抜ける |  | 1d20+dex判定（DC17）
@@ -1337,38 +1329,32 @@
 > [プレイヤー] 巨人の足元をくぐり抜ける
 > [GM] 巨人の踵が地面を打ち、揺れに足を取られた。
 
-## step 128 / gorge_giant_path 「岩の巨人の通り道」 HP 21/25 G 185
+## step 127 / gorge_giant_path 「岩の巨人の通り道」 HP 22/25 G 185
 
 
 戦闘: attack / basic_attack → rock_giant:1
 - 氷鉄の大剣が岩の巨人に9ダメージ。
 - 攻撃はテストに当たらなかった。
-- 攻撃がテストに3ダメージ。
-- 水刃が岩の巨人に6ダメージ。
+- 攻撃がテストに4ダメージ。
+- 水刃が石肌のトカゲに4ダメージ。
 
-## step 129 / gorge_giant_path 「岩の巨人の通り道」 HP 18/25 G 185
+## step 128 / gorge_giant_path 「岩の巨人の通り道」 HP 18/25 G 185
 
 
 戦闘: attack / basic_attack → rock_giant:1
-- 氷鉄の大剣が岩の巨人に7ダメージ。
+- 氷鉄の大剣が岩の巨人に9ダメージ。
 - 攻撃はテストに当たらなかった。
-- 水刃が石肌のトカゲに8ダメージ。
-
-## step 130 / gorge_giant_path 「岩の巨人の通り道」 HP 18/25 G 185
-
-
-戦闘: attack / basic_attack → stone_lizard:2
-- 氷鉄の大剣が石肌のトカゲに8ダメージ。
+- 水刃が石肌のトカゲに16ダメージ。
 - すべての敵を倒した。
 - 25ゴールドを獲得しました。
 - 生命の果実 x1を入手しました。
 
-## step 131 / gorge_giant_path 「岩の巨人の通り道」 HP 18/25 G 210
+## step 129 / gorge_giant_path 「岩の巨人の通り道」 HP 18/25 G 210
 
 > [GM] 岩の巨人は崩れて、ただの岩山に戻った。崩れた胸の奥に、赤い果実が一つ埋まっている。
 - 戦闘に勝利しました。 HP 18/25、MP 9/9、SP 12/12。
 
-## step 132 / gorge_giant_path 「岩の巨人の通り道」 HP 18/25 G 210
+## step 130 / gorge_giant_path 「岩の巨人の通り道」 HP 18/25 G 210
 
 - 峡谷の底へ下りる |  | 不明
 - 白い爪痕の崖へ戻る |  | 判定不要
@@ -1378,7 +1364,7 @@
 > [GM] 峡谷の底は、無数の穴で蜂の巣のようになっていた。地鳴りがひときわ大きくなり、地面を突き破って巨大なワームが姿を現す。
 - 現在地が峡谷の底になりました。
 
-## step 133 / gorge_worm_lair 「峡谷の底」 HP 18/25 G 210
+## step 131 / gorge_worm_lair 「峡谷の底」 HP 18/25 G 210
 
 - 大ワームと戦う |  | 危険（戦闘）
 - 地鳴りの合間を縫って駆け抜ける |  | 1d20+dex判定（DC17）
@@ -1388,7 +1374,7 @@
 > [プレイヤー] エリオの水で巣穴を満たす
 > [GM] エリオが杖を掲げると、峡谷の湧き水が渦を巻いて巣穴へ流れ込んだ。地中で何かが苦しげにのたうち、地鳴りが遠ざかっていく。「今のうちだ、行こう！」
 
-## step 134 / gorge_worm_lair 「峡谷の底」 HP 18/25 G 210
+## step 132 / gorge_worm_lair 「峡谷の底」 HP 18/25 G 210
 
 - 峡谷を抜けて村へ下る |  | 不明
 - 岩の巨人の通り道へ進む |  | 判定不要
@@ -1400,7 +1386,7 @@
 - 現在地が麓の村・避難所になりました。
 - クエスト更新：紅き邪竜の討伐
 
-## step 135 / village 「麓の村・避難所」 HP 35/35 G 210
+## step 133 / village 「麓の村・避難所」 HP 35/35 G 210
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1416,7 +1402,7 @@
 > [GM] 邪竜イグニスが潜む谷の麓、小さな村にたどり着いた。冷たい風が吹き抜ける中、村人たちは怯えた様子で暮らしている。邪竜に立ち向かう術を得るには、まず情報を集め、旅の支度を整える必要がありそうだ。
 - 現在地が炎の中の結氷になりました。
 
-## step 136 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 210
+## step 134 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 210
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 村を出ようとします | 不明
@@ -1428,7 +1414,7 @@
 > [GM] 冷気の源は分からない。ただ、この氷は自然のものではないと確信した。
 - クエスト更新：凍てつく謎
 
-## step 137 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 210
+## step 135 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 210
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 村を出ようとします | 不明
@@ -1440,7 +1426,7 @@
 > [GM] 白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」
 - 現在地が麓の村・避難所になりました。
 
-## step 138 / village 「麓の村・避難所」 HP 35/35 G 210
+## step 136 / village 「麓の村・避難所」 HP 35/35 G 210
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1457,7 +1443,7 @@
 - HP・MP・SPが全回復しました。
 - 5ゴールドを消費しました。
 
-## step 139 / village 「麓の村・避難所」 HP 35/35 G 205
+## step 137 / village 「麓の村・避難所」 HP 35/35 G 205
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1473,7 +1459,7 @@
 > [GM] 村を発ち、来た道を引き返す。森を抜けて城門をくぐると、見慣れた城下町の大通りが広がっていた。
 - 現在地がアルテリア城下町になりました。
 
-## step 140 / castle_town 「アルテリア城下町」 HP 35/35 G 205
+## step 138 / castle_town 「アルテリア城下町」 HP 35/35 G 205
 
 - 鍛冶屋へ向かう | 武器の強化や購入 | 判定不要
 - 宿屋へ向かう | 休息や情報収集 | 判定不要
@@ -1490,7 +1476,7 @@
 > [GM] 城門を出て街道を下り、闇の森を抜けると、焼け跡の残る麓の村が見えてきた。
 - 現在地が麓の村・避難所になりました。
 
-## step 141 / village 「麓の村・避難所」 HP 35/35 G 205
+## step 139 / village 「麓の村・避難所」 HP 35/35 G 205
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1505,7 +1491,7 @@
 > [プレイヤー] 古い盟約について聞く
 > [GM] 「昔、元素と人と竜は互いを害さぬと誓い合った。北の雪嶺には、盟約を見張る白き竜がいると聞く」
 
-## step 142 / village 「麓の村・避難所」 HP 35/35 G 205
+## step 140 / village 「麓の村・避難所」 HP 35/35 G 205
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1520,7 +1506,7 @@
 > [プレイヤー] 長老に邪竜の弱点を聞く
 > [GM] 白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」
 
-## step 143 / village 「麓の村・避難所」 HP 35/35 G 205
+## step 141 / village 「麓の村・避難所」 HP 35/35 G 205
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1537,7 +1523,7 @@
 - 現在地が竜の谷・入口になりました。
 - クエスト更新：紅き邪竜の討伐
 
-## step 144 / valley_entrance 「竜の谷・入口」 HP 35/35 G 205
+## step 142 / valley_entrance 「竜の谷・入口」 HP 35/35 G 205
 
 - 煤の亡霊と戦う |  | 危険（戦闘）
 - 霧に紛れてやり過ごす |  | 1d20+dex判定（DC14）
@@ -1546,25 +1532,22 @@
 > [プレイヤー] 霧に紛れてやり過ごす
 > [GM] 霧が晴れた一瞬、煤の亡霊と目が合った。先に動いたのは向こうだった。
 
-## step 145 / valley_entrance 「竜の谷・入口」 HP 12/35 G 205
+## step 143 / valley_entrance 「竜の谷・入口」 HP 26/35 G 205
 
 
-戦闘: item / healing_scroll → ash_wraith:2
-- 治療の巻物を使い、HPを23回復した。
-- 煤の抱擁はテストに当たらなかった。
-- テストは窒息で1ダメージを受けた。
-- 水刃が煤の亡霊に6ダメージ。
+戦闘: attack / basic_attack → ash_wraith:2
+- 氷鉄の大剣が煤の亡霊に8ダメージ。
 - すべての敵を倒した。
 - 35ゴールドを獲得しました。
 - 魔力の果実 x1を入手しました。
 - 現在地が溶岩の吊り橋になりました。
 
-## step 146 / valley_lava_bridge 「溶岩の吊り橋」 HP 34/35 G 240
+## step 144 / valley_lava_bridge 「溶岩の吊り橋」 HP 26/35 G 240
 
 > [GM] 煮え立つ溶岩の川に、古い吊り橋が一本だけ架かっている。板は焦げ、縄は今にも切れそうだ。
-- 戦闘に勝利しました。 HP 34/35、MP 11/11、SP 16/16。
+- 戦闘に勝利しました。 HP 26/35、MP 11/11、SP 16/16。
 
-## step 147 / valley_lava_bridge 「溶岩の吊り橋」 HP 34/35 G 240
+## step 145 / valley_lava_bridge 「溶岩の吊り橋」 HP 26/35 G 240
 
 - 吊り橋を渡る |  | 1d20+dex判定（DC12）
 - 岩棚の迂回路を進む |  | 不明
@@ -1579,7 +1562,7 @@
 - 現在地が竜の巣の前になりました。
 - 青い光とともにワーロックが現れた。「先へ進む前に伝えておく。Xanxusは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。
 
-## step 148 / warlock_at_nest 「竜の巣の前」 HP 40/40 G 240
+## step 146 / warlock_at_nest 「竜の巣の前」 HP 40/40 G 240
 
 - 先へ進む |  | 判定不要
 
@@ -1587,7 +1570,7 @@
 > [プレイヤー] 先へ進む
 - 現在地が竜の巣の前になりました。
 
-## step 149 / valley_nest_gate 「竜の巣の前」 HP 40/40 G 240
+## step 147 / valley_nest_gate 「竜の巣の前」 HP 40/40 G 240
 
 - 竜の巣へ踏み込む |  | 不明
 
@@ -1596,97 +1579,75 @@
 > [GM] 灼熱の風に逆らって洞穴へ踏み込む。闇の奥で、巨大な何かがゆっくりと目を開けた。
 - 現在地が竜の谷になりました。
 
-## step 150 / dragon_valley_loc 「竜の谷」 HP 40/40 G 240
+## step 148 / dragon_valley_loc 「竜の谷」 HP 40/40 G 240
+
+
+戦闘: attack / basic_attack → ignis:1
+- 氷鉄の大剣が邪竜イグニスに22ダメージ。
+- 炎の息がテストに7ダメージ。
+- 水刃が邪竜イグニスに2ダメージ。
+
+## step 149 / dragon_valley_loc 「竜の谷」 HP 33/40 G 240
+
+
+戦闘: attack / basic_attack → ignis:1
+- 氷鉄の大剣が邪竜イグニスに17ダメージ。
+- 尻尾攻撃はテストに当たらなかった。
+- 水刃が邪竜イグニスに6ダメージ。
+
+## step 150 / dragon_valley_loc 「竜の谷」 HP 33/40 G 240
 
 
 戦闘: attack / basic_attack → ignis:1
 - 氷鉄の大剣が邪竜イグニスに12ダメージ。
 - 炎の息はテストに当たらなかった。
-- 水刃が邪竜イグニスに4ダメージ。
+- 水の帳
+- 水刃が邪竜イグニスに8ダメージ。
 
-## step 151 / dragon_valley_loc 「竜の谷」 HP 40/40 G 240
+## step 151 / dragon_valley_loc 「竜の谷」 HP 33/40 G 240
 
 
 戦闘: attack / basic_attack → ignis:1
 - 氷鉄の大剣が邪竜イグニスに24ダメージ。
 - 炎の息はテストに当たらなかった。
-- 水刃が邪竜イグニスに1ダメージ。
+- 水刃が邪竜イグニスに2ダメージ。
 
-## step 152 / dragon_valley_loc 「竜の谷」 HP 40/40 G 240
+## step 152 / dragon_valley_loc 「竜の谷」 HP 33/40 G 240
 
 
 戦闘: attack / basic_attack → ignis:1
 - 氷鉄の大剣が邪竜イグニスに14ダメージ。
 - 炎の息はテストに当たらなかった。
-- 水の帳
-- 水刃が邪竜イグニスに1ダメージ。
+- 水刃が邪竜イグニスに3ダメージ。
 
-## step 153 / dragon_valley_loc 「竜の谷」 HP 40/40 G 240
+## step 153 / dragon_valley_loc 「竜の谷」 HP 33/40 G 240
 
 
 戦闘: attack / basic_attack → ignis:1
 - 氷鉄の大剣が邪竜イグニスに22ダメージ。
-- 尻尾攻撃がテストに10ダメージ。
+- 尻尾攻撃がテストに19ダメージ。
 - 水刃は邪竜イグニスに当たらなかった。
 
-## step 154 / dragon_valley_loc 「竜の谷」 HP 30/40 G 240
+## step 154 / dragon_valley_loc 「竜の谷」 HP 14/40 G 240
 
 
 戦闘: attack / basic_attack → ignis:1
 - 氷鉄の大剣が邪竜イグニスに24ダメージ。
 - 炎の息はテストに当たらなかった。
-- 水刃が邪竜イグニスに3ダメージ。
-
-## step 155 / dragon_valley_loc 「竜の谷」 HP 30/40 G 240
-
-
-戦闘: attack / basic_attack → ignis:1
-- 氷鉄の大剣が邪竜イグニスに28ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 水刃が邪竜イグニスに2ダメージ。
-
-## step 156 / dragon_valley_loc 「竜の谷」 HP 30/40 G 240
-
-
-戦闘: attack / basic_attack → ignis:1
-- 氷鉄の大剣が邪竜イグニスに22ダメージ。
-- 尻尾攻撃がテストに11ダメージ。
 - 水の帳
-- 水刃が邪竜イグニスに1ダメージ。
-
-## step 157 / dragon_valley_loc 「竜の谷」 HP 19/40 G 240
-
-
-戦闘: attack / basic_attack → ignis:1
-- 氷鉄の大剣は邪竜イグニスに当たらなかった。
-- 炎の息がテストに8ダメージ。
-- 水刃が邪竜イグニスに3ダメージ。
-
-## step 158 / dragon_valley_loc 「竜の谷」 HP 11/40 G 240
-
-
-戦闘: item / healing_scroll → ignis:1
-- 治療の巻物を使い、HPを29回復した。
-- 尻尾攻撃はテストに当たらなかった。
-- 水刃が邪竜イグニスに1ダメージ。
-
-## step 159 / dragon_valley_loc 「竜の谷」 HP 40/40 G 240
-
-
-戦闘: attack / basic_attack → ignis:1
-- 氷鉄の大剣が邪竜イグニスに21ダメージ。
+- 水刃が邪竜イグニスに6ダメージ。
 - すべての敵を倒した。
 - 100ゴールドを獲得しました。
 - 紅竜の炎核 x1を入手しました。
 - 現在地が竜の谷・紅竜の最期になりました。
 - クエスト更新：紅き邪竜の討伐
 
-## step 160 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 40/40 G 340
+## step 155 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 14/40 G 340
 
 > [GM] 倒れたイグニスの胸がかすかに上下している。焼け焦げた鱗の隙間、古い傷口だけが、炎の竜には似つかわしくない白い霜に覆われている。
-- 戦闘に勝利しました。 HP 40/40、MP 12/12、SP 18/18。
+- 戦闘に勝利しました。 HP 14/40、MP 12/12、SP 18/18。
 
-## step 161 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 40/40 G 340
+## step 156 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 14/40 G 340
 
 - イグニスの傷を調べる | 霜に覆われた古傷を確かめる | 判定不要
 - イグニスの最期の言葉を聞く | 消えゆく竜の声に耳を傾ける | 判定不要
@@ -1697,7 +1658,7 @@
 > [GM] 傷口の奥で、雪のように白い鱗が一枚、肉に食い込んだまま凍りついていた。紅竜のものではない。
 - 白い竜鱗 x1を入手しました。
 
-## step 162 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 40/40 G 340
+## step 157 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 14/40 G 340
 
 - イグニスの傷を調べる | 霜に覆われた古傷を確かめる | 判定不要 [不可: 完了済みです。]
 - イグニスの最期の言葉を聞く | 消えゆく竜の声に耳を傾ける | 判定不要
@@ -1709,7 +1670,7 @@
 - 現在地が凱旋の城門になりました。
 - 城門をくぐると、花びらと歓声があなたを迎えた。邪竜の脅威が去ったことは、すでに城下町じゅうに知れ渡っている。人混みの向こうで、将軍ドラコが穏やかに手を振っていた。
 
-## step 163 / royal_gate 「凱旋の城門」 HP 40/40 G 340
+## step 158 / royal_gate 「凱旋の城門」 HP 14/40 G 340
 
 - 城下町へ進む |  | 不明
 
@@ -1720,7 +1681,7 @@
 - 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
 - クエスト更新：将軍の屋敷
 
-## step 164 / festival_town 「凱旋の城下町」 HP 40/40 G 340
+## step 159 / festival_town 「凱旋の城下町」 HP 14/40 G 340
 
 - 宿屋へ向かう |  | 判定不要
 - 道具屋へ向かう |  | 判定不要
@@ -1736,7 +1697,7 @@
 - 現在地が将軍の屋敷・夜の庭になりました。
 - 夜更けの将軍の屋敷は、祝祭の喧騒が嘘のように静まり返っている。庭の噴水だけが、なぜか凍りついていた。
 
-## step 165 / mansion_garden 「将軍の屋敷・夜の庭」 HP 40/40 G 340
+## step 160 / mansion_garden 「将軍の屋敷・夜の庭」 HP 14/40 G 340
 
 - 裏口から忍び込む |  | 1d20+dex判定（DC13）
 - ？？？ |  |  [不可: まだ知らない何かが必要なようだ。]
@@ -1748,7 +1709,7 @@
 - 現在地が凱旋の城下町になりました。
 - 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
 
-## step 166 / festival_town 「凱旋の城下町」 HP 40/40 G 340
+## step 161 / festival_town 「凱旋の城下町」 HP 14/40 G 340
 
 - 宿屋へ向かう |  | 判定不要
 - 道具屋へ向かう |  | 判定不要
@@ -1764,7 +1725,7 @@
 - 現在地が王の私室になりました。
 - 豪奢な寝室の窓辺で、国王エドワードが一人、月を見上げていた。あなたに気づくと、王は静かに人払いをした。
 
-## step 167 / king_private_room 「王の私室」 HP 40/40 G 340
+## step 162 / king_private_room 「王の私室」 HP 14/40 G 340
 
 - 将軍への疑いを打ち明ける |  | 判定不要
 - ？？？ |  |  [不可: まだ知らない何かが必要なようだ。]
@@ -1776,7 +1737,7 @@
 - 現在地が凱旋の城下町になりました。
 - 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
 
-## step 168 / festival_town 「凱旋の城下町」 HP 40/40 G 340
+## step 163 / festival_town 「凱旋の城下町」 HP 14/40 G 340
 
 - 宿屋へ向かう |  | 判定不要
 - 道具屋へ向かう |  | 判定不要
@@ -1790,7 +1751,7 @@
 > [プレイヤー] 凱旋の間へ向かう
 - 現在地が王城・凱旋の間になりました。
 
-## step 169 / castle_report 「王城・凱旋の間」 HP 40/40 G 340
+## step 164 / castle_report 「王城・凱旋の間」 HP 14/40 G 340
 
 - 将軍ドラコの正体を問いただす | 集めた証拠を国王の前に示す | 危険（戦闘）
 - 討伐を報告する | イグニス討伐の報告を終える | 判定不要
@@ -1801,10 +1762,10 @@
 - 邪竜イグニスは討たれ、王国に平和が戻った。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。
 - クエスト達成：紅き邪竜の討伐
 
-## step 170 / castle_report 「王城・凱旋の間」 HP 40/40 G 340
+## step 165 / castle_report 「王城・凱旋の間」 HP 14/40 G 340
 
 
-終了: {"title": "冒険完了", "ending": "ignis_defeated", "reason": "邪竜イグニスは討たれ、王国に平和が戻った。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。", "created_at": "2026-10-18T06:40:38.094534+00:00", "epilogue": ["青いローブの魔法使いは今日も魔法店で気だるげに店番をしている。窓辺には、溶けない氷の花が一輪飾られている。", "闇の森の街道で、壊れた荷車だけが見つかった。持ち主の行方は分からない。"]}
+終了: {"title": "冒険完了", "ending": "ignis_defeated", "reason": "邪竜イグニスは討たれ、王国に平和が戻った。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。", "created_at": "2026-10-18T07:31:40.692908+00:00", "epilogue": ["青いローブの魔法使いは今日も魔法店で気だるげに店番をしている。窓辺には、溶けない氷の花が一輪飾られている。", "闇の森の街道で、壊れた荷車だけが見つかった。持ち主の行方は分からない。"]}
 
 ## 検証結果
 
@@ -1812,7 +1773,7 @@
 {
   "character": "hero",
   "seed": 104,
-  "steps": 170,
+  "steps": 165,
   "retry_count": 1,
   "ending": "ignis_defeated",
   "final_location": "castle_report",
@@ -1838,7 +1799,7 @@
       "entry_hp": 20
     },
     {
-      "step": 170,
+      "step": 165,
       "location": "castle_report",
       "ending": "ignis_defeated",
       "combat_defeat": false,
@@ -2598,7 +2559,7 @@
       "pure_movement": false
     },
     {
-      "step": 120,
+      "step": 119,
       "attempt": 1,
       "location": "gorge_rockfall_path",
       "action_id": "rockfall_to_camp",
@@ -2606,7 +2567,7 @@
       "pure_movement": true
     },
     {
-      "step": 121,
+      "step": 120,
       "attempt": 1,
       "location": "gorge_miner_camp",
       "action_id": "search_miner_camp",
@@ -2614,7 +2575,7 @@
       "pure_movement": false
     },
     {
-      "step": 122,
+      "step": 121,
       "attempt": 1,
       "location": "gorge_miner_camp",
       "action_id": "rest_miner_camp",
@@ -2622,7 +2583,7 @@
       "pure_movement": false
     },
     {
-      "step": 123,
+      "step": 122,
       "attempt": 1,
       "location": "gorge_miner_camp",
       "action_id": "camp_to_rockfall",
@@ -2630,7 +2591,7 @@
       "pure_movement": true
     },
     {
-      "step": 124,
+      "step": 123,
       "attempt": 1,
       "location": "gorge_rockfall_path",
       "action_id": "rockfall_to_cliff",
@@ -2638,7 +2599,7 @@
       "pure_movement": true
     },
     {
-      "step": 125,
+      "step": 124,
       "attempt": 1,
       "location": "gorge_claw_cliff",
       "action_id": "inspect_white_claw",
@@ -2646,7 +2607,7 @@
       "pure_movement": false
     },
     {
-      "step": 126,
+      "step": 125,
       "attempt": 1,
       "location": "gorge_claw_cliff",
       "action_id": "cliff_to_giant",
@@ -2654,7 +2615,7 @@
       "pure_movement": true
     },
     {
-      "step": 127,
+      "step": 126,
       "attempt": 1,
       "location": "gorge_giant_path",
       "action_id": "sneak_gorge_giant_path",
@@ -2662,7 +2623,7 @@
       "pure_movement": false
     },
     {
-      "step": 132,
+      "step": 130,
       "attempt": 1,
       "location": "gorge_giant_path",
       "action_id": "giant_to_worm",
@@ -2670,7 +2631,7 @@
       "pure_movement": true
     },
     {
-      "step": 133,
+      "step": 131,
       "attempt": 1,
       "location": "gorge_worm_lair",
       "action_id": "elio_flood_worm",
@@ -2678,7 +2639,7 @@
       "pure_movement": false
     },
     {
-      "step": 134,
+      "step": 132,
       "attempt": 1,
       "location": "gorge_worm_lair",
       "action_id": "gorge_to_village",
@@ -2686,7 +2647,7 @@
       "pure_movement": false
     },
     {
-      "step": 135,
+      "step": 133,
       "attempt": 1,
       "location": "village",
       "action_id": "return_frozen_clue",
@@ -2694,7 +2655,7 @@
       "pure_movement": true
     },
     {
-      "step": 136,
+      "step": 134,
       "attempt": 1,
       "location": "village_frozen_clue",
       "action_id": "inspect_frost_core",
@@ -2702,7 +2663,7 @@
       "pure_movement": false
     },
     {
-      "step": 137,
+      "step": 135,
       "attempt": 1,
       "location": "village_frozen_clue",
       "action_id": "visit_village",
@@ -2710,7 +2671,7 @@
       "pure_movement": false
     },
     {
-      "step": 138,
+      "step": 136,
       "attempt": 1,
       "location": "village",
       "action_id": "rest_at_refuge",
@@ -2718,7 +2679,7 @@
       "pure_movement": false
     },
     {
-      "step": 139,
+      "step": 137,
       "attempt": 1,
       "location": "village",
       "action_id": "return_castle_from_village",
@@ -2726,7 +2687,7 @@
       "pure_movement": false
     },
     {
-      "step": 140,
+      "step": 138,
       "attempt": 1,
       "location": "castle_town",
       "action_id": "return_village",
@@ -2734,7 +2695,7 @@
       "pure_movement": false
     },
     {
-      "step": 141,
+      "step": 139,
       "attempt": 1,
       "location": "village",
       "action_id": "ask_elder_treaty",
@@ -2742,7 +2703,7 @@
       "pure_movement": false
     },
     {
-      "step": 142,
+      "step": 140,
       "attempt": 1,
       "location": "village",
       "action_id": "ask_elder_weakness",
@@ -2750,7 +2711,7 @@
       "pure_movement": false
     },
     {
-      "step": 143,
+      "step": 141,
       "attempt": 1,
       "location": "village",
       "action_id": "go_dragon_valley",
@@ -2758,7 +2719,7 @@
       "pure_movement": true
     },
     {
-      "step": 144,
+      "step": 142,
       "attempt": 1,
       "location": "valley_entrance",
       "action_id": "sneak_through_ash",
@@ -2766,7 +2727,7 @@
       "pure_movement": false
     },
     {
-      "step": 147,
+      "step": 145,
       "attempt": 1,
       "location": "valley_lava_bridge",
       "action_id": "cross_lava_bridge",
@@ -2774,7 +2735,7 @@
       "pure_movement": false
     },
     {
-      "step": 148,
+      "step": 146,
       "attempt": 1,
       "location": "warlock_at_nest",
       "action_id": "continue_after_warlock",
@@ -2782,7 +2743,7 @@
       "pure_movement": true
     },
     {
-      "step": 149,
+      "step": 147,
       "attempt": 1,
       "location": "valley_nest_gate",
       "action_id": "enter_dragon_nest",
@@ -2790,7 +2751,7 @@
       "pure_movement": true
     },
     {
-      "step": 161,
+      "step": 156,
       "attempt": 1,
       "location": "ignis_last_breath",
       "action_id": "examine_ignis_wound",
@@ -2798,7 +2759,7 @@
       "pure_movement": false
     },
     {
-      "step": 162,
+      "step": 157,
       "attempt": 1,
       "location": "ignis_last_breath",
       "action_id": "return_to_castle_report",
@@ -2806,7 +2767,7 @@
       "pure_movement": true
     },
     {
-      "step": 163,
+      "step": 158,
       "attempt": 1,
       "location": "royal_gate",
       "action_id": "enter_festival_town",
@@ -2814,7 +2775,7 @@
       "pure_movement": true
     },
     {
-      "step": 164,
+      "step": 159,
       "attempt": 1,
       "location": "festival_town",
       "action_id": "go_general_mansion",
@@ -2822,7 +2783,7 @@
       "pure_movement": true
     },
     {
-      "step": 165,
+      "step": 160,
       "attempt": 1,
       "location": "mansion_garden",
       "action_id": "leave_mansion",
@@ -2830,7 +2791,7 @@
       "pure_movement": true
     },
     {
-      "step": 166,
+      "step": 161,
       "attempt": 1,
       "location": "festival_town",
       "action_id": "request_king_audience",
@@ -2838,7 +2799,7 @@
       "pure_movement": true
     },
     {
-      "step": 167,
+      "step": 162,
       "attempt": 1,
       "location": "king_private_room",
       "action_id": "leave_king_room",
@@ -2846,7 +2807,7 @@
       "pure_movement": true
     },
     {
-      "step": 168,
+      "step": 163,
       "attempt": 1,
       "location": "festival_town",
       "action_id": "go_report_hall",
@@ -2854,7 +2815,7 @@
       "pure_movement": true
     },
     {
-      "step": 169,
+      "step": 164,
       "attempt": 1,
       "location": "castle_report",
       "action_id": "report_normally",

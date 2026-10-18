@@ -25,7 +25,8 @@ ENEMIES = (
     ("earth_worm", "土喰らいの大ワーム", "峡谷の地下を食い荒らす、巨大なワーム。", 45, "1d10+2"),
 )
 BATTLES = ("gorge_rockfall_path", "gorge_giant_path", "gorge_worm_lair")
-ELIO_DESCRIPTION = "流れの水術士。毎ラウンド開始時に「水刃」で敵へ2d3の水属性ダメージを与える（水に弱い敵を優先して狙う）。4ラウンドごとに「水の帳」を張り、そのラウンドにプレイヤーが受けるダメージを半分にする。"
+ELIO_DESCRIPTION = "流れの水術士。毎ラウンド開始時に「水刃」で敵へ2d6の水属性ダメージを与える（水に弱い敵を優先して狙う）。4ラウンドごとに「水の帳」を張り、そのラウンドにプレイヤーが受けるダメージを半分にする。"
+ELIO_RECRUIT_PREVIEW = "同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減）"
 INN_WITH_ELIO = "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが峠の噂話をする隅で、青い外套の青年が水差しの水面をじっと見つめている。"
 OPEN_WALL = "城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の大岩はどけられ、細い道が東へ続いている。"
 
@@ -209,7 +210,7 @@ def add_elio(pack: dict[str, Any], locations: dict[str, Any]) -> None:
                 "failure": "「悪いけど、僕はひとりで調べる方が性に合っていてね」"})]
     for entry in entries:
         if entry["id"].startswith("recruit_elio_"):
-            entry["preview"] = "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）"
+            entry["preview"] = ELIO_RECRUIT_PREVIEW
         upsert(inn["actions"], entry)
     upsert(pack["items"], dict(id="spirit_spring_water", name="精霊の泉の水", category="key", key_item=True,
         description="精霊の泉で汲んだ澄んだ水。ほのかに光を帯びている。"))
@@ -218,7 +219,7 @@ def add_elio(pack: dict[str, Any], locations: dict[str, Any]) -> None:
         once="drew_spirit_spring_water", hidden_after="drew_spirit_spring_water",
         result_text="澄んだ泉の水を、空の水筒に汲んだ。水面が、ほのかに光っている。"))
     upsert(pack["companions"], dict(id="hydromancer_elio", name="水術士エリオ", image=portrait, description=ELIO_DESCRIPTION,
-        round_start_effects=[dict(kind="damage_enemy", name="水刃", damage="2d3", element="water", target="weak_to:water"),
+        round_start_effects=[dict(kind="damage_enemy", name="水刃", damage="2d6", element="water", target="weak_to:water"),
             dict(kind="received_damage_multiplier", name="水の帳", multiplier=.5, every_n_rounds=4)]))
 
 

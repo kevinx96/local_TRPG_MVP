@@ -33,7 +33,7 @@ def comparisons(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def markdown(result: dict[str, Any]) -> str:
-    lines = ["# 037 第二轮：路线外同行者复核", "",
+    lines = ["# 037 第三轮：路线外同行者复核", "",
         f"逐战N={result['n']}，seed={result['seed']}，四职业，完全离线。", "",
         "复用033／035的可达逐战检查点、heuristic与有限背包；每场独立满资源，不等于连续路线通关率。自动枚举35场非剧情必败、允许同行者的遭遇，全部八种同行条件；リーゼ排除古戦場三场，エリオ排除峡谷三场。",
         "リーゼ的旧同行者对照沿用033（不把后来加入的エリオ算作抬高上限的依据）；エリオ沿用035（包含本轮リーゼ）。所有对照同N、同起始种子重新计算，耗骰不保证逐骰一致。",
@@ -42,7 +42,7 @@ def markdown(result: dict[str, Any]) -> str:
         lines.append(f"|{r['companion']}|{r['character']}|{r['location']}|{r['baseline']:.2%}|{r['win_rate']:.2%}|{r['best']}|{r['best_rate']:.2%}|{r['excess_pp']:+.2f}|{r['passed']}|")
     failures = [r for r in result["comparisons"] if not r["passed"]]
     lines += ["", f"越界：{len(failures)}/{len(result['comparisons'])}项。",
-        "", "本轮按设计要求优先满足本路线严格最强；若上述上限未达标，逐项如实列出，不修改旧同行者或敌人。", "",
+        "", "本轮固定采用リーゼ20%／2d6、エリオ2d6／4回合。本路线严格最强仅以未准备、无诅咒的核心8项为门槛；上述路线外上限若未达标，逐项如实列出，不继续调参。第二轮结果保留在[报告](037-companion-outside-round2.md)和[JSON](037-companion-outside-round2.json)。", "",
         "```powershell", f"python -X utf8 -m scripts.balance.ch3_outside --n {result['n']} --seed {result['seed']} --workers {result['workers']}", "```", ""]
     return "\n".join(lines)
 

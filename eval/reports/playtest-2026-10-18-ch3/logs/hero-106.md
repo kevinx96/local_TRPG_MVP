@@ -758,9 +758,9 @@
 ## step 61 / oaksdawn_chapel 「暁の礼拝堂」 HP 25/25 G 80
 
 - 祈りを捧げてもらう | 5G | 判定不要
-- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要
-- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要
-- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 1d20+wis判定（DC13）
+- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要
+- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要
+- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 1d20+wis判定（DC13）
 - 聖水を分けてもらう |  | 判定不要
 - 大通りへ戻る |  | 判定不要
 - 鐘のことを詳しく聞く |  | 判定不要
@@ -984,23 +984,17 @@
 戦闘: item / holy_water → ghoul:1
 - 聖水が屍鬼に54光属性ダメージ。
 - 攻撃がテストに7ダメージ。
-- 聖光の一撃が怨霊に6光属性ダメージ。
-
-## step 81 / ghoul_marsh 「屍鬼の沼」 HP 18/25 G 80
-
-
-戦闘: item / holy_water → wraith:2
-- 聖水が怨霊に54光属性ダメージ。
+- 聖光の一撃が怨霊に12光属性ダメージ。
 - すべての敵を倒した。
 - 30ゴールドを獲得しました。
 - 魔力の果実 x1を入手しました。
 
-## step 82 / ghoul_marsh 「屍鬼の沼」 HP 18/25 G 110
+## step 81 / ghoul_marsh 「屍鬼の沼」 HP 18/25 G 110
 
 > [GM] 最後の屍鬼が泥の中へ沈んだ。黒い水面に、青く光る果実が一つ浮かんでいる。
 - 戦闘に勝利しました。 HP 18/25、MP 9/9、SP 12/12。
 
-## step 83 / ghoul_marsh 「屍鬼の沼」 HP 18/25 G 110
+## step 82 / ghoul_marsh 「屍鬼の沼」 HP 18/25 G 110
 
 - 骨の野へ戻る |  | 危険（戦闘）
 - 墓守の礼拝堂へ向かう |  | 不明
@@ -1015,7 +1009,7 @@
 - 「古戦場の外れの礼拝堂に、昔の鐘が残っているのです。誰かがあの鐘を正しく鳴らせば、死者は眠りにつけるはず……」
 - クエスト更新：古戦場の鐘
 
-## step 84 / grave_chapel 「墓守の礼拝堂」 HP 18/25 G 110
+## step 83 / grave_chapel 「墓守の礼拝堂」 HP 18/25 G 110
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 判定不要
@@ -1024,7 +1018,7 @@
 > [プレイヤー] 骸骨の騎士と戦う
 > [GM] 骸骨の騎士がゆっくりと立ち上がり、大剣を両手で構えた。兜の奥で、青白い光が揺れている。
 
-## step 85 / grave_chapel 「墓守の礼拝堂」 HP 18/25 G 110
+## step 84 / grave_chapel 「墓守の礼拝堂」 HP 18/25 G 110
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 判定不要
@@ -1032,19 +1026,19 @@
 戦闘: skill / divine_guard → grave_knight:1
 - 神聖の庇護を使用し、守りを固めた。
 - 攻撃がテストに6ダメージ。
-- 癒しの祈りがHPを6回復した。
+- 癒しの祈りがHPを5回復した。
 
-## step 86 / grave_chapel 「墓守の礼拝堂」 HP 18/25 G 110
+## step 85 / grave_chapel 「墓守の礼拝堂」 HP 17/25 G 110
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 判定不要
 
 戦闘: skill / divine_guard → grave_knight:1
 - 神聖の庇護を使用し、守りを固めた。
-- 攻撃がテストに6ダメージ。
-- 癒しの祈りがHPを6回復した。
+- 攻撃がテストに8ダメージ。
+- 癒しの祈りがHPを5回復した。
 
-## step 87 / grave_chapel 「墓守の礼拝堂」 HP 18/25 G 110
+## step 86 / grave_chapel 「墓守の礼拝堂」 HP 14/25 G 110
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 判定不要
@@ -1056,15 +1050,15 @@
 - 生命の果実 x2を入手しました。
 - 聖銀 x1を入手しました。
 
-## step 88 / grave_chapel 「墓守の礼拝堂」 HP 18/25 G 170
+## step 87 / grave_chapel 「墓守の礼拝堂」 HP 14/25 G 170
 
 - 礼拝堂の裏門から村へ抜ける |  | 不明
 - 屍鬼の沼へ進む |  | 判定不要
 - 弔いの鐘を鳴らす |  | 判定不要
 > [GM] 骸骨の騎士は、大剣を祭壇に立てかけるように崩れ落ちた。兜の奥から、赤い果実が二つ転がり出た。
-- 戦闘に勝利しました。 HP 18/25、MP 9/9、SP 12/12。
+- 戦闘に勝利しました。 HP 14/25、MP 9/9、SP 12/12。
 
-## step 89 / grave_chapel 「墓守の礼拝堂」 HP 18/25 G 170
+## step 88 / grave_chapel 「墓守の礼拝堂」 HP 14/25 G 170
 
 - 礼拝堂の裏門から村へ抜ける |  | 不明
 - 屍鬼の沼へ進む |  | 判定不要
@@ -1077,7 +1071,7 @@
 - 現在地が炎の中の結氷になりました。
 - クエスト更新：紅き邪竜の討伐
 
-## step 90 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 170
+## step 89 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 170
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 村を出ようとします | 不明
@@ -1089,7 +1083,7 @@
 > [GM] 村を離れようとした街道で、赤い法衣と炎に包まれた骸骨の魔法使いが待ち受けていた。
 - 現在地が燃える街道・Xanxusの尋問になりました。
 
-## step 91 / xanxus_confrontation 「燃える街道・Xanxusの尋問」 HP 35/35 G 170
+## step 90 / xanxus_confrontation 「燃える街道・Xanxusの尋問」 HP 35/35 G 170
 
 - ごまかして切り抜ける | 何も察知していないふりをします | 危険
 - 先手を打って攻撃する | Xanxusが動く前に仕掛けます | 危険
@@ -1100,40 +1094,40 @@
 > [GM] 一歩踏み出した瞬間、炎の壁が行く手を封じた。背後にも火柱が立ち、逃げ場は完全に消える。Xanxusは指先をこちらへ向け、『ならば力ずくで進ませよう』と戦いを強いる。
 - 現在地がXanxus戦になりました。
 
-## step 92 / xanxus_battle 「Xanxus戦」 HP 35/35 G 170
+## step 91 / xanxus_battle 「Xanxus戦」 HP 35/35 G 170
 
 
 戦闘: skill / divine_guard → xanxus:1
 - 神聖の庇護を使用し、守りを固めた。
 - 赤炎骸骨Xanxusは火炎旋渦を展開した。
 - 火炎旋渦が12ダメージを与えた。
-- 聖光の一撃が赤炎骸骨Xanxusに1光属性ダメージ。
+- 聖光の一撃は赤炎骸骨Xanxusに当たらなかった。
 
-## step 93 / xanxus_battle 「Xanxus戦」 HP 23/35 G 170
+## step 92 / xanxus_battle 「Xanxus戦」 HP 23/35 G 170
 
 
 戦闘: skill / divine_guard → xanxus:1
 - 神聖の庇護を使用し、守りを固めた。
 - 隕石召喚がテストに22ダメージ。
 - 火炎旋渦が12ダメージを与えた。
-- 癒しの祈りがHPを9回復した。
+- 癒しの祈りがHPを7回復した。
 
-## step 94 / xanxus_battle 「Xanxus戦」 HP 9/35 G 170
+## step 93 / xanxus_battle 「Xanxus戦」 HP 7/35 G 170
 
 
 戦闘: item / healing_scroll → xanxus:1
-- 治療の巻物を使い、HPを26回復した。
+- 治療の巻物を使い、HPを28回復した。
 - 隕石召喚がテストに49ダメージ。
 - プレイヤーは戦闘不能になった。
 - HPが1回復しました。
 - 現在地がXanxusの最後通告になりました。
 
-## step 95 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/35 G 170
+## step 94 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/35 G 170
 
 > [GM] Xanxusは倒れたあなたを見下ろした。『大人しく先を探索しろ。そして私の火種を飲め。任務を放棄すれば、その場で爆ぜさせる』
 - 戦闘に敗北しました。 HP 1/35、MP 11/11、SP 16/16。
 
-## step 96 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/35 G 170
+## step 95 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/35 G 170
 
 - 大人しく従う | 火種を受け取り、探索を続けます | 判定不要
 - 死んでも従わない | Xanxusの要求を拒絶します | 危険（戦闘）
@@ -1145,7 +1139,7 @@
 - 現在地が炎の中の結氷になりました。
 - クエスト更新：火種の呪い
 
-## step 97 / village_frozen_clue 「炎の中の結氷」 HP 1/35 G 170
+## step 96 / village_frozen_clue 「炎の中の結氷」 HP 1/35 G 170
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 第4章へ向かいます | 不明
@@ -1157,7 +1151,7 @@
 > [GM] 凍った炎の中心に、白い鱗が一枚埋まっていた。冷気はそこから広がっている。
 - 白い竜鱗 x1を入手しました。
 
-## step 98 / village_frozen_clue 「炎の中の結氷」 HP 1/35 G 170
+## step 97 / village_frozen_clue 「炎の中の結氷」 HP 1/35 G 170
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 第4章へ向かいます | 不明
@@ -1169,7 +1163,7 @@
 > [GM] 白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」
 - 現在地が麓の村・避難所になりました。
 
-## step 99 / village 「麓の村・避難所」 HP 1/35 G 170
+## step 98 / village 「麓の村・避難所」 HP 1/35 G 170
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1185,7 +1179,7 @@
 > [プレイヤー] 長老に邪竜の弱点を聞く
 > [GM] 白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」
 
-## step 100 / village 「麓の村・避難所」 HP 1/35 G 170
+## step 99 / village 「麓の村・避難所」 HP 1/35 G 170
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1203,7 +1197,7 @@
 - HP・MP・SPが全回復しました。
 - 5ゴールドを消費しました。
 
-## step 101 / village 「麓の村・避難所」 HP 35/35 G 165
+## step 100 / village 「麓の村・避難所」 HP 35/35 G 165
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1220,7 +1214,7 @@
 > [GM] 邪竜イグニスが潜む谷の麓、小さな村にたどり着いた。冷たい風が吹き抜ける中、村人たちは怯えた様子で暮らしている。邪竜に立ち向かう術を得るには、まず情報を集め、旅の支度を整える必要がありそうだ。
 - 現在地が炎の中の結氷になりました。
 
-## step 102 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 165
+## step 101 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 165
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 第4章へ向かいます | 不明
@@ -1232,7 +1226,7 @@
 > [GM] 凍結した道を辿ると、冷気が人の形を取り、氷の精霊となって行く手を塞いだ。
 - 現在地が凍結した村・氷の精霊になりました。
 
-## step 103 / ice_elemental_encounter 「凍結した村・氷の精霊」 HP 35/35 G 165
+## step 102 / ice_elemental_encounter 「凍結した村・氷の精霊」 HP 35/35 G 165
 
 - 氷の精霊と戦う | 戦闘を開始します | 危険（戦闘）
 - 氷の精霊を迂回する | 冷気の薄い経路を探します | 1d20+int判定（DC14）
@@ -1245,55 +1239,39 @@
 - 魔力の果実 x1を入手しました。
 - 現在地が炎上する村・氷霜の巨狼になりました。
 
+## step 103 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 35/35 G 165
+
+
+戦闘: skill / divine_guard → frost_dire_wolf:1
+- 神聖の庇護を使用し、守りを固めた。
+- 凍爪はテストに当たらなかった。
+- 聖光の一撃が氷霜の巨狼に8光属性ダメージ。
+
 ## step 104 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 35/35 G 165
 
 
 戦闘: skill / divine_guard → frost_dire_wolf:1
 - 神聖の庇護を使用し、守りを固めた。
-- 凍爪がテストに8ダメージ。
-- 聖光の一撃が氷霜の巨狼に3光属性ダメージ。
+- 凍爪はテストに当たらなかった。
+- 聖光の一撃が氷霜の巨狼に6光属性ダメージ。
 
-## step 105 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 27/35 G 165
-
-
-戦闘: skill / divine_guard → frost_dire_wolf:1
-- 神聖の庇護を使用し、守りを固めた。
-- 凍爪がテストに2ダメージ。
-- 聖光の一撃が氷霜の巨狼に2光属性ダメージ。
-
-## step 106 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 25/35 G 165
+## step 105 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 35/35 G 165
 
 
-戦闘: skill / hero_lv3_a → frost_dire_wolf:1
-- 渾身斬り・改が氷霜の巨狼に13ダメージ。
-- 凍爪がテストに19ダメージ。
-- 癒しの祈りがHPを9回復した。
-
-## step 107 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 15/35 G 165
-
-
-戦闘: skill / hero_lv3_a → frost_dire_wolf:1
-- 渾身斬り・改が氷霜の巨狼に13ダメージ。
-- 凍爪がテストに11ダメージ。
-- 癒しの祈りがHPを9回復した。
-
-## step 108 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 13/35 G 165
-
-
-戦闘: skill / hero_lv3_a → frost_dire_wolf:1
-- 渾身斬り・改が氷霜の巨狼に12ダメージ。
+戦闘: item / holy_water → frost_dire_wolf:1
+- 聖水が氷霜の巨狼に36光属性ダメージ。
 - すべての敵を倒した。
 - 50ゴールドを獲得しました。
 - 白い竜鱗 x1を入手しました。
 - 迅速の霊薬 x1を入手しました。
 - 現在地が砕けた氷の太刀になりました。
 
-## step 109 / ian_ice_katana_aftermath 「砕けた氷の太刀」 HP 13/35 G 215
+## step 106 / ian_ice_katana_aftermath 「砕けた氷の太刀」 HP 35/35 G 215
 
 > [GM] 氷霜の巨狼は霧のように消散し、その核だった氷の太刀が地面へ残った。拾おうとした瞬間、空から隕石が落ちて刀を砕く。遠くに全身を炎に包んだ影が一瞬だけ見えた。巨狼の核が砕け、中から白い鱗が一枚転がり出た。
-- 戦闘に勝利しました。 HP 13/35、MP 11/11、SP 9/16。
+- 戦闘に勝利しました。 HP 35/35、MP 11/11、SP 16/16。
 
-## step 110 / ian_ice_katana_aftermath 「砕けた氷の太刀」 HP 13/35 G 215
+## step 107 / ian_ice_katana_aftermath 「砕けた氷の太刀」 HP 35/35 G 215
 
 - イアンの頼みを受ける | 元凶を追う約束をし、武器を受け取ります | 不明
 - イアンの頼みを断る | 村を出て第4章へ進みます | 不明
@@ -1307,7 +1285,7 @@
 - クエスト更新：紅き邪竜の討伐
 - クエスト更新：砕けた氷の太刀
 
-## step 111 / valley_entrance 「竜の谷・入口」 HP 13/35 G 215
+## step 108 / valley_entrance 「竜の谷・入口」 HP 35/35 G 215
 
 - 煤の亡霊と戦う |  | 危険（戦闘）
 - 霧に紛れてやり過ごす |  | 1d20+dex判定（DC14）
@@ -1318,7 +1296,7 @@
 - 魔力の果実 x1を入手しました。
 - 現在地が溶岩の吊り橋になりました。
 
-## step 112 / valley_lava_bridge 「溶岩の吊り橋」 HP 13/35 G 215
+## step 109 / valley_lava_bridge 「溶岩の吊り橋」 HP 35/35 G 215
 
 - 吊り橋を渡る |  | 1d20+dex判定（DC12）
 - 岩棚の迂回路を進む |  | 不明
@@ -1332,7 +1310,7 @@
 - 現在地が竜の巣の前・Xanxusになりました。
 - 炎の中からXanxusが現れた。あなたの胸の火種が、呼応するように熱を帯びる。「よく来た。紅竜を倒したら、その心臓を我に捧げよ。火種を持つ限り、お前は我に逆らえぬ」
 
-## step 113 / xanxus_at_nest 「竜の巣の前・Xanxus」 HP 40/40 G 215
+## step 110 / xanxus_at_nest 「竜の巣の前・Xanxus」 HP 40/40 G 215
 
 - 従う |  | 判定不要
 - ワーロックの名を呼ぶ |  | 判定不要
@@ -1344,7 +1322,7 @@
 - 現在地が竜の巣の前になりました。
 - クエスト達成：火種の呪い
 
-## step 114 / valley_nest_gate 「竜の巣の前」 HP 40/40 G 215
+## step 111 / valley_nest_gate 「竜の巣の前」 HP 40/40 G 215
 
 - 竜の巣へ踏み込む |  | 不明
 
@@ -1353,199 +1331,153 @@
 > [GM] 灼熱の風に逆らって洞穴へ踏み込む。闇の奥で、巨大な何かがゆっくりと目を開けた。
 - 現在地が竜の谷になりました。
 
-## step 115 / dragon_valley_loc 「竜の谷」 HP 40/40 G 215
+## step 112 / dragon_valley_loc 「竜の谷」 HP 40/40 G 215
 
 
 戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに10ダメージ。
-- 尻尾攻撃がテストに20ダメージ。
+- 渾身斬り・改が邪竜イグニスに7ダメージ。
+- 炎の息はテストに当たらなかった。
 - 聖光の一撃が邪竜イグニスに2光属性ダメージ。
 
-## step 116 / dragon_valley_loc 「竜の谷」 HP 20/40 G 215
+## step 113 / dragon_valley_loc 「竜の谷」 HP 40/40 G 215
 
 
 戦闘: skill / hero_lv3_a → ignis:1
 - 渾身斬り・改が邪竜イグニスに8ダメージ。
+- 尻尾攻撃はテストに当たらなかった。
+- 聖光の一撃は邪竜イグニスに当たらなかった。
+
+## step 114 / dragon_valley_loc 「竜の谷」 HP 40/40 G 215
+
+
+戦闘: skill / hero_lv3_a → ignis:1
+- 渾身斬り・改が邪竜イグニスに8ダメージ。
+- 尻尾攻撃はテストに当たらなかった。
+- 聖光の一撃が邪竜イグニスに4光属性ダメージ。
+
+## step 115 / dragon_valley_loc 「竜の谷」 HP 40/40 G 215
+
+
+戦闘: skill / hero_lv3_a → ignis:1
+- 渾身斬り・改が邪竜イグニスに9ダメージ。
 - 炎の息はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに4光属性ダメージ。
+- 聖光の一撃が邪竜イグニスに8光属性ダメージ。
 
-## step 117 / dragon_valley_loc 「竜の谷」 HP 20/40 G 215
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに6ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに4光属性ダメージ。
-
-## step 118 / dragon_valley_loc 「竜の谷」 HP 20/40 G 215
+## step 116 / dragon_valley_loc 「竜の谷」 HP 40/40 G 215
 
 
 戦闘: skill / hero_lv3_a → ignis:1
 - 渾身斬り・改が邪竜イグニスに6ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに2光属性ダメージ。
+- 炎の息がテストに11ダメージ。
+- 聖光の一撃が邪竜イグニスに4光属性ダメージ。
 
-## step 119 / dragon_valley_loc 「竜の谷」 HP 20/40 G 215
+## step 117 / dragon_valley_loc 「竜の谷」 HP 29/40 G 215
+
+
+戦闘: skill / hero_lv3_a → ignis:1
+- 渾身斬り・改は邪竜イグニスに当たらなかった。
+- 炎の息はテストに当たらなかった。
+- 聖光の一撃が邪竜イグニスに8光属性ダメージ。
+
+## step 118 / dragon_valley_loc 「竜の谷」 HP 29/40 G 215
 
 
 戦闘: skill / hero_lv3_a → ignis:1
 - 渾身斬り・改が邪竜イグニスに7ダメージ。
 - 尻尾攻撃がテストに6ダメージ。
-- 癒しの祈りがHPを10回復した。
+- 聖光の一撃が邪竜イグニスに8光属性ダメージ。
 
-## step 120 / dragon_valley_loc 「竜の谷」 HP 24/40 G 215
+## step 119 / dragon_valley_loc 「竜の谷」 HP 23/40 G 215
 
 
 戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに9ダメージ。
-- 炎の息がテストに9ダメージ。
-- 癒しの祈りがHPを10回復した。
+- 渾身斬り・改が邪竜イグニスに8ダメージ。
+- 炎の息がテストに6ダメージ。
+- 癒しの祈りがHPを8回復した。
+
+## step 120 / dragon_valley_loc 「竜の谷」 HP 25/40 G 215
+
+
+戦闘: attack / basic_attack → ignis:1
+- 鉄の剣が邪竜イグニスに3ダメージ。
+- 炎の息はテストに当たらなかった。
+- 聖光の一撃が邪竜イグニスに7光属性ダメージ。
 
 ## step 121 / dragon_valley_loc 「竜の谷」 HP 25/40 G 215
 
 
 戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに6ダメージ。
-- 尻尾攻撃がテストに17ダメージ。
-- 癒しの祈りがHPを10回復した。
-
-## step 122 / dragon_valley_loc 「竜の谷」 HP 18/40 G 215
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改は邪竜イグニスに当たらなかった。
-- 尻尾攻撃はテストに当たらなかった。
-- 癒しの祈りがHPを10回復した。
-
-## step 123 / dragon_valley_loc 「竜の谷」 HP 28/40 G 215
-
-
-戦闘: attack / basic_attack → ignis:1
-- 鉄の剣が邪竜イグニスに3ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに3光属性ダメージ。
-
-## step 124 / dragon_valley_loc 「竜の谷」 HP 28/40 G 215
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに7ダメージ。
-- 炎の息がテストに1ダメージ。
-- 聖光の一撃が邪竜イグニスに1光属性ダメージ。
-
-## step 125 / dragon_valley_loc 「竜の谷」 HP 27/40 G 215
-
-
-戦闘: attack / basic_attack → ignis:1
-- 鉄の剣が邪竜イグニスに5ダメージ。
-- 尻尾攻撃がテストに19ダメージ。
-- 癒しの祈りがHPを10回復した。
-
-## step 126 / dragon_valley_loc 「竜の谷」 HP 18/40 G 215
-
-
-戦闘: attack / basic_attack → ignis:1
-- 鉄の剣が邪竜イグニスに3ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 癒しの祈りがHPを10回復した。
-
-## step 127 / dragon_valley_loc 「竜の谷」 HP 28/40 G 215
-
-
-戦闘: skill / hero_lv3_a → ignis:1
 - 渾身斬り・改が邪竜イグニスに8ダメージ。
-- 尻尾攻撃がテストに3ダメージ。
+- 尻尾攻撃がテストに13ダメージ。
+- 癒しの祈りがHPを8回復した。
+
+## step 122 / dragon_valley_loc 「竜の谷」 HP 20/40 G 215
+
+
+戦闘: attack / basic_attack → ignis:1
+- 鉄の剣が邪竜イグニスに4ダメージ。
+- 炎の息がテストに1ダメージ。
+- 癒しの祈りがHPを8回復した。
+
+## step 123 / dragon_valley_loc 「竜の谷」 HP 27/40 G 215
+
+
+戦闘: attack / basic_attack → ignis:1
+- 鉄の剣が邪竜イグニスに3ダメージ。
+- 尻尾攻撃がテストに5ダメージ。
+- 聖光の一撃が邪竜イグニスに6光属性ダメージ。
+
+## step 124 / dragon_valley_loc 「竜の谷」 HP 22/40 G 215
+
+
+戦闘: skill / hero_lv3_a → ignis:1
+- 渾身斬り・改が邪竜イグニスに6ダメージ。
+- 尻尾攻撃はテストに当たらなかった。
+- 聖光の一撃が邪竜イグニスに7光属性ダメージ。
+
+## step 125 / dragon_valley_loc 「竜の谷」 HP 22/40 G 215
+
+
+戦闘: attack / basic_attack → ignis:1
+- 鉄の剣が邪竜イグニスに3ダメージ。
+- 尻尾攻撃はテストに当たらなかった。
 - 聖光の一撃は邪竜イグニスに当たらなかった。
 
-## step 128 / dragon_valley_loc 「竜の谷」 HP 25/40 G 215
-
-
-戦闘: attack / basic_attack → ignis:1
-- 鉄の剣が邪竜イグニスに5ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに1光属性ダメージ。
-
-## step 129 / dragon_valley_loc 「竜の谷」 HP 25/40 G 215
-
-
-戦闘: attack / basic_attack → ignis:1
-- 鉄の剣が邪竜イグニスに6ダメージ。
-- 尻尾攻撃がテストに1ダメージ。
-- 聖光の一撃が邪竜イグニスに1光属性ダメージ。
-
-## step 130 / dragon_valley_loc 「竜の谷」 HP 24/40 G 215
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに10ダメージ。
-- 炎の息はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに3光属性ダメージ。
-
-## step 131 / dragon_valley_loc 「竜の谷」 HP 24/40 G 215
+## step 126 / dragon_valley_loc 「竜の谷」 HP 22/40 G 215
 
 
 戦闘: attack / basic_attack → ignis:1
 - 鉄の剣が邪竜イグニスに3ダメージ。
-- 尻尾攻撃がテストに12ダメージ。
-- 癒しの祈りがHPを10回復した。
-
-## step 132 / dragon_valley_loc 「竜の谷」 HP 22/40 G 215
-
-
-戦闘: attack / basic_attack → ignis:1
-- 鉄の剣が邪竜イグニスに5ダメージ。
 - 炎の息はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに2光属性ダメージ。
+- 聖光の一撃が邪竜イグニスに6光属性ダメージ。
 
-## step 133 / dragon_valley_loc 「竜の谷」 HP 22/40 G 215
+## step 127 / dragon_valley_loc 「竜の谷」 HP 22/40 G 215
 
 
 戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに6ダメージ。
-- 尻尾攻撃がテストに6ダメージ。
-- 癒しの祈りがHPを10回復した。
+- 渾身斬り・改が邪竜イグニスに9ダメージ。
+- 尻尾攻撃がテストに10ダメージ。
+- 癒しの祈りがHPを8回復した。
 
-## step 134 / dragon_valley_loc 「竜の谷」 HP 26/40 G 215
-
-
-戦闘: attack / basic_attack → ignis:1
-- 鉄の剣が邪竜イグニスに5ダメージ。
-- 尻尾攻撃がテストに5ダメージ。
-- 聖光の一撃が邪竜イグニスに1光属性ダメージ。
-
-## step 135 / dragon_valley_loc 「竜の谷」 HP 21/40 G 215
+## step 128 / dragon_valley_loc 「竜の谷」 HP 20/40 G 215
 
 
 戦闘: attack / basic_attack → ignis:1
 - 鉄の剣が邪竜イグニスに7ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに1光属性ダメージ。
-
-## step 136 / dragon_valley_loc 「竜の谷」 HP 21/40 G 215
-
-
-戦闘: skill / hero_lv3_a → ignis:1
-- 渾身斬り・改が邪竜イグニスに5ダメージ。
-- 尻尾攻撃はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに4光属性ダメージ。
-
-## step 137 / dragon_valley_loc 「竜の谷」 HP 21/40 G 215
-
-
-戦闘: attack / basic_attack → ignis:1
-- 鉄の剣が邪竜イグニスに7ダメージ。
+- 炎の息はテストに当たらなかった。
+- 聖光の一撃が邪竜イグニスに6光属性ダメージ。
 - すべての敵を倒した。
 - 100ゴールドを獲得しました。
 - 紅竜の炎核 x1を入手しました。
 - 現在地が竜の谷・紅竜の最期になりました。
 - クエスト更新：紅き邪竜の討伐
 
-## step 138 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 21/40 G 315
+## step 129 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 20/40 G 315
 
 > [GM] 倒れたイグニスの胸がかすかに上下している。焼け焦げた鱗の隙間、古い傷口だけが、炎の竜には似つかわしくない白い霜に覆われている。
-- 戦闘に勝利しました。 HP 21/40、MP 12/12、SP 1/18。
+- 戦闘に勝利しました。 HP 20/40、MP 12/12、SP 2/18。
 
-## step 139 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 21/40 G 315
+## step 130 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 20/40 G 315
 
 - イグニスの傷を調べる | 霜に覆われた古傷を確かめる | 判定不要
 - イグニスの最期の言葉を聞く | 消えゆく竜の声に耳を傾ける | 判定不要
@@ -1555,7 +1487,7 @@
 > [プレイヤー] イグニスの最期の言葉を聞く
 > [GM] 「……白き者に、気をつけよ。盟約を……破ったのは、我ではない……」紅竜の瞳から光が消えた。
 
-## step 140 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 21/40 G 315
+## step 131 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 20/40 G 315
 
 - イグニスの傷を調べる | 霜に覆われた古傷を確かめる | 判定不要
 - イグニスの最期の言葉を聞く | 消えゆく竜の声に耳を傾ける | 判定不要 [不可: 完了済みです。]
@@ -1566,7 +1498,7 @@
 > [GM] 傷口の奥で、雪のように白い鱗が一枚、肉に食い込んだまま凍りついていた。紅竜のものではない。
 - 白い竜鱗 x1を入手しました。
 
-## step 141 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 21/40 G 315
+## step 132 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 20/40 G 315
 
 - イグニスの傷を調べる | 霜に覆われた古傷を確かめる | 判定不要 [不可: 完了済みです。]
 - イグニスの最期の言葉を聞く | 消えゆく竜の声に耳を傾ける | 判定不要 [不可: 完了済みです。]
@@ -1578,7 +1510,7 @@
 - 現在地が凱旋の城門になりました。
 - 城門をくぐると、花びらと歓声があなたを迎えた。邪竜の脅威が去ったことは、すでに城下町じゅうに知れ渡っている。人混みの向こうで、将軍ドラコが穏やかに手を振っていた。
 
-## step 142 / royal_gate 「凱旋の城門」 HP 21/40 G 315
+## step 133 / royal_gate 「凱旋の城門」 HP 20/40 G 315
 
 - 城下町へ進む |  | 不明
 
@@ -1590,7 +1522,7 @@
 - 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
 - クエスト更新：将軍の屋敷
 
-## step 143 / festival_town 「凱旋の城下町」 HP 21/40 G 315
+## step 134 / festival_town 「凱旋の城下町」 HP 20/40 G 315
 
 - 宿屋へ向かう |  | 判定不要
 - 道具屋へ向かう |  | 判定不要
@@ -1607,7 +1539,7 @@
 - 現在地が将軍の屋敷・夜の庭になりました。
 - 夜更けの将軍の屋敷は、祝祭の喧騒が嘘のように静まり返っている。庭の噴水だけが、なぜか凍りついていた。
 
-## step 144 / mansion_garden 「将軍の屋敷・夜の庭」 HP 21/40 G 315
+## step 135 / mansion_garden 「将軍の屋敷・夜の庭」 HP 20/40 G 315
 
 - 裏口から忍び込む |  | 1d20+dex判定（DC13）
 - ？？？ |  |  [不可: まだ知らない何かが必要なようだ。]
@@ -1620,7 +1552,7 @@
 - 現在地が将軍の屋敷・凍てつく回廊になりました。
 - 廊下の壁も床も、薄い氷に覆われている。突き当たりの扉の前に、氷でできた鎧の番兵が二体、無言で立っていた。
 
-## step 145 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 21/40 G 315
+## step 136 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 20/40 G 315
 
 - 氷の番兵と戦う |  | 危険（戦闘）
 - 番兵の巡回の隙を突く |  | 1d20+wis判定（DC15）
@@ -1629,110 +1561,60 @@
 > [プレイヤー] 氷の番兵と戦う
 > [GM] 一歩近づくと、氷の番兵が軋む音を立てて槍を構え、扉の前を塞いだ。
 
-## step 146 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 21/40 G 315
+## step 137 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 20/40 G 315
 
 
 戦闘: attack / basic_attack → ice_sentinel:1
 - 鉄の剣が氷の番兵に6ダメージ。
 - 氷槌はテストに当たらなかった。
-- 氷の番兵は凍結の構えで守りを固めた。
-- 聖光の一撃が氷の番兵に2光属性ダメージ。
-
-## step 147 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 21/40 G 315
-
-
-戦闘: attack / basic_attack → ice_sentinel:1
-- 鉄の剣が氷の番兵に7ダメージ。
 - 氷槌はテストに当たらなかった。
-- 氷槌はテストに当たらなかった。
-- 聖光の一撃が氷の番兵に2光属性ダメージ。
+- 聖光の一撃が氷の番兵に6光属性ダメージ。
 
-## step 148 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 21/40 G 315
+## step 138 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 20/40 G 315
 
 
 戦闘: skill / hero_lv3_a → ice_sentinel:1
 - 渾身斬り・改が氷の番兵に6ダメージ。
 - 氷の番兵は凍結の構えで守りを固めた。
-- 氷槌はテストに当たらなかった。
-- 聖光の一撃が氷の番兵に2光属性ダメージ。
+- 氷の番兵は凍結の構えで守りを固めた。
+- 聖光の一撃が氷の番兵に4光属性ダメージ。
 
-## step 149 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 21/40 G 315
+## step 139 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 20/40 G 315
 
 
 戦闘: attack / basic_attack → ice_sentinel:1
 - 鉄の剣が氷の番兵に4ダメージ。
-- 氷の番兵は凍結の構えで守りを固めた。
 - 氷槌はテストに当たらなかった。
-- 聖光の一撃が氷の番兵に5光属性ダメージ。
+- 氷槌がテストに5ダメージ。
+- 癒しの祈りがHPを8回復した。
 
-## step 150 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 21/40 G 315
+## step 140 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 23/40 G 315
 
 
 戦闘: attack / basic_attack → ice_sentinel:1
-- 鉄の剣が氷の番兵に2ダメージ。
-- 氷槌はテストに当たらなかった。
-- 氷槌はテストに当たらなかった。
-- 聖光の一撃が氷の番兵に5光属性ダメージ。
-
-## step 151 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 21/40 G 315
-
-
-戦闘: skill / hero_lv3_a → ice_sentinel:1
-- 渾身斬り・改が氷の番兵に4ダメージ。
-- 氷槌はテストに当たらなかった。
-- 聖光の一撃が氷の番兵に3光属性ダメージ。
-
-## step 152 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 21/40 G 315
-
-
-戦闘: attack / basic_attack → ice_sentinel:2
-- 鉄の剣が氷の番兵に7ダメージ。
-- 氷の番兵は凍結の構えで守りを固めた。
-- 聖光の一撃が氷の番兵に1光属性ダメージ。
-
-## step 153 / mansion_corridor 「将軍の屋敷・凍てつく回廊」 HP 21/40 G 315
-
-
-戦闘: attack / basic_attack → ice_sentinel:2
 - 鉄の剣が氷の番兵に4ダメージ。
 - 氷槌はテストに当たらなかった。
-- 聖光の一撃が氷の番兵に2光属性ダメージ。
-- すべての敵を倒した。
-- 25ゴールドを獲得しました。
-- 魔力の果実 x1を入手しました。
-- 現在地が将軍の屋敷・書斎になりました。
-- 書斎には古い書物が積み上げられ、机の上に一冊の日誌が開かれたまま置かれていた。部屋の奥には、白い鱗で飾られた小箱がある。
-
-## step 154 / mansion_study 「将軍の屋敷・書斎」 HP 21/40 G 340
-
-> [GM] 書斎には古い書物が積み上げられ、机の上に一冊の日誌が開かれたまま置かれていた。部屋の奥には、白い鱗で飾られた小箱がある。
-- 戦闘に勝利しました。 HP 21/40、MP 12/12、SP 3/18。
-
-## step 155 / mansion_study 「将軍の屋敷・書斎」 HP 21/40 G 340
-
-- 日誌を手に取る |  | 判定不要
-- 小箱を開ける |  | 判定不要
-- 屋敷を出る |  | 判定不要
-
-選択: 日誌を手に取る
-> [プレイヤー] 日誌を手に取る
-> [GM] 日誌には、十年前に紅竜の傷へ霜を打ち込んだこと、Xanxusと交わした密約、そして王国を手に入れる計画が、几帳面な文字で記されていた。
-- 白竜の日誌 x1を入手しました。
-- クエスト達成：将軍の屋敷
-
-## step 156 / mansion_study 「将軍の屋敷・書斎」 HP 21/40 G 340
-
-- 日誌を手に取る |  | 判定不要 [不可: 完了済みです。]
-- 小箱を開ける |  | 判定不要
-- 屋敷を出る |  | 判定不要
-
-選択: 屋敷を出る
-> [プレイヤー] 屋敷を出る
-> [GM] 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
+- 氷槌がテストに28ダメージ。
+- プレイヤーは戦闘不能になった。
+- HPが1回復しました。
 - 現在地が凱旋の城下町になりました。
 - 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
 
-## step 157 / festival_town 「凱旋の城下町」 HP 21/40 G 340
+## step 141 / festival_town 「凱旋の城下町」 HP 1/40 G 315
+
+- 宿屋へ向かう |  | 判定不要
+- 道具屋へ向かう |  | 判定不要
+- 魔法店へ向かう |  | 判定不要
+- 鍛冶屋へ向かう |  | 判定不要
+- 将軍の屋敷へ向かう |  | 判定不要
+- 国王に内密の謁見を願い出る |  | 不明
+- 凱旋の間へ向かう |  | 不明
+- 行商人ガルド |  | 判定不要
+> [GM] 氷の拳に打ち据えられ、気がつくと城下町の路地裏に倒れていた。
+> 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
+- 戦闘に敗北しました。 HP 1/40、MP 12/12、SP 2/18。
+
+## step 142 / festival_town 「凱旋の城下町」 HP 1/40 G 315
 
 - 宿屋へ向かう |  | 判定不要
 - 道具屋へ向かう |  | 判定不要
@@ -1747,230 +1629,79 @@
 > [プレイヤー] 凱旋の間へ向かう
 - 現在地が王城・凱旋の間になりました。
 
-## step 158 / castle_report 「王城・凱旋の間」 HP 21/40 G 340
+## step 143 / castle_report 「王城・凱旋の間」 HP 1/40 G 315
 
 - 将軍ドラコの正体を問いただす | 集めた証拠を国王の前に示す | 危険（戦闘）
 - 討伐を報告する | イグニス討伐の報告を終える | 判定不要
 
 選択: 将軍ドラコの正体を問いただす
 > [プレイヤー] 将軍ドラコの正体を問いただす
-> [GM] あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」あなたが日誌を掲げると、ドラコの表情から初めて笑みが消えた。
+> [GM] あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」
+>
+> 敵が退路を塞ぎ、戦闘が始まる。
 - 現在地が王の間・剣聖ドラコになりました。
 - クエスト達成：紅き邪竜の討伐
 - クエスト達成：砕けた氷の太刀
 - クエスト達成：凍てつく謎
 
-## step 159 / draco_battle 「王の間・剣聖ドラコ」 HP 21/40 G 340
+## step 144 / draco_battle 「王の間・剣聖ドラコ」 HP 9/40 G 315
+
+
+戦闘: item / herb → draco_human:1
+- 薬草を使い、HPを10回復した。
+- 剣聖の一閃がテストに6ダメージ。
+- 癒しの祈りがHPを8回復した。
+
+## step 145 / draco_battle 「王の間・剣聖ドラコ」 HP 21/40 G 315
 
 
 戦闘: skill / divine_guard → draco_human:1
 - 神聖の庇護を使用し、守りを固めた。
+- 氷刃がテストに6ダメージ。
+- 癒しの祈りがHPを8回復した。
+
+## step 146 / draco_battle 「王の間・剣聖ドラコ」 HP 23/40 G 315
+
+
+戦闘: skill / hero_lv3_a → draco_human:1
+- 渾身斬り・改が剣聖ドラコに10ダメージ。
+- 剣聖の一閃がテストに11ダメージ。
+- 癒しの祈りがHPを8回復した。
+
+## step 147 / draco_battle 「王の間・剣聖ドラコ」 HP 20/40 G 315
+
+
+戦闘: attack / basic_attack → draco_human:1
+- 鉄の剣が剣聖ドラコに8ダメージ。
 - 剣聖ドラコは護衛の構えで守りを固めた。
-- 聖光の一撃が剣聖ドラコに2光属性ダメージ。
+- 聖光の一撃が剣聖ドラコに3光属性ダメージ。
 
-## step 160 / draco_battle 「王の間・剣聖ドラコ」 HP 21/40 G 340
-
-
-戦闘: skill / divine_guard → draco_human:1
-- 神聖の庇護を使用し、守りを固めた。
-- 剣聖の一閃がテストに4ダメージ。
-- 癒しの祈りがHPを10回復した。
-
-## step 161 / draco_battle 「王の間・剣聖ドラコ」 HP 27/40 G 340
+## step 148 / draco_battle 「王の間・剣聖ドラコ」 HP 20/40 G 315
 
 
 戦闘: skill / hero_lv3_a → draco_human:1
-- 渾身斬り・改が剣聖ドラコに7ダメージ。
-- 剣聖の一閃がテストに12ダメージ。
-- 癒しの祈りがHPを10回復した。
-
-## step 162 / draco_battle 「王の間・剣聖ドラコ」 HP 25/40 G 340
-
-
-戦闘: skill / hero_lv3_a → draco_human:1
-- 渾身斬り・改が剣聖ドラコに14ダメージ。
+- 渾身斬り・改が剣聖ドラコに9ダメージ。
 - ドラコの体が裂け、白い光が王の間を満たす。天井を突き破って現れたのは、雪原のような翼を持つ巨竜だった。「我が名はヴァイス。盟約の番人にして、その終わりを告げる者」
-- 白翼の薙ぎ払いがテストに10ダメージ。
-- 癒しの祈りがHPを10回復した。
+- 凍てつく吐息がテストに14ダメージ。
+- 癒しの祈りがHPを8回復した。
 
-## step 163 / draco_battle 「王の間・剣聖ドラコ」 HP 25/40 G 340
+## step 149 / draco_battle 「王の間・剣聖ドラコ」 HP 14/40 G 315
 
 
 戦闘: item / red_dragon_core → draco_dragon:1
-- 紅竜の炎核が白竜ヴァイスに172ダメージ。
-- 白竜ヴァイスは雪嵐の咆哮を使用した。
-- 聖光の一撃が白竜ヴァイスに1光属性ダメージ。
+- 紅竜の炎核が白竜ヴァイスに244ダメージ。
+- すべての敵を倒した。
+- 白竜ヴァイスは崩れ落ち、王の間に降り積もった霜が静かに溶けていった。国王エドワードは長い沈黙の後、竜の谷へ使者を送ると告げた。盟約を結び直すために。あなたの名は、竜と人をもう一度つないだ者として語り継がれる。
 
-## step 164 / draco_battle 「王の間・剣聖ドラコ」 HP 25/40 G 340
+## step 150 / draco_battle 「王の間・剣聖ドラコ」 HP 14/40 G 315
 
+> [GM] 白竜ヴァイスは崩れ落ち、王の間に降り積もった霜が静かに溶けていった。国王エドワードは長い沈黙の後、竜の谷へ使者を送ると告げた。盟約を結び直すために。あなたの名は、竜と人をもう一度つないだ者として語り継がれる。
+- 戦闘に勝利しました。 HP 14/40、MP 12/12、SP 1/18。
 
-戦闘: attack / basic_attack → draco_dragon:1
-- 鉄の剣が白竜ヴァイスに2ダメージ。
-- 凍てつく吐息はテストに当たらなかった。
-- 聖光の一撃が白竜ヴァイスに1光属性ダメージ。
-
-## step 165 / draco_battle 「王の間・剣聖ドラコ」 HP 25/40 G 340
+## step 151 / draco_battle 「王の間・剣聖ドラコ」 HP 14/40 G 315
 
 
-戦闘: skill / hero_lv3_a → draco_dragon:1
-- 渾身斬り・改が白竜ヴァイスに1ダメージ。
-- 白竜ヴァイスは雪嵐の咆哮を使用した。
-- 聖光の一撃が白竜ヴァイスに1光属性ダメージ。
-
-## step 166 / draco_battle 「王の間・剣聖ドラコ」 HP 25/40 G 340
-
-
-戦闘: attack / basic_attack → draco_dragon:1
-- 鉄の剣が白竜ヴァイスに1ダメージ。
-- 凍てつく吐息がテストに13ダメージ。
-- 癒しの祈りがHPを10回復した。
-
-## step 167 / draco_battle 「王の間・剣聖ドラコ」 HP 22/40 G 340
-
-
-戦闘: attack / basic_attack → draco_dragon:1
-- 鉄の剣が白竜ヴァイスに1ダメージ。
-- 白翼の薙ぎ払いがテストに16ダメージ。
-- 癒しの祈りがHPを10回復した。
-
-## step 168 / draco_battle 「王の間・剣聖ドラコ」 HP 16/40 G 340
-
-
-戦闘: skill / hero_lv3_a → draco_dragon:1
-- 渾身斬り・改が白竜ヴァイスに2ダメージ。
-- 白竜ヴァイスは雪嵐の咆哮を使用した。
-- 癒しの祈りがHPを10回復した。
-
-## step 169 / draco_battle 「王の間・剣聖ドラコ」 HP 26/40 G 340
-
-
-戦闘: attack / basic_attack → draco_dragon:1
-- 鉄の剣が白竜ヴァイスに2ダメージ。
-- 凍てつく吐息がテストに13ダメージ。
-- 癒しの祈りがHPを10回復した。
-
-## step 170 / draco_battle 「王の間・剣聖ドラコ」 HP 23/40 G 340
-
-
-戦闘: attack / basic_attack → draco_dragon:1
-- 鉄の剣が白竜ヴァイスに2ダメージ。
-- 白翼の薙ぎ払いがテストに13ダメージ。
-- 癒しの祈りがHPを10回復した。
-
-## step 171 / draco_battle 「王の間・剣聖ドラコ」 HP 20/40 G 340
-
-
-戦闘: skill / hero_lv3_a → draco_dragon:1
-- 渾身斬り・改が白竜ヴァイスに1ダメージ。
-- 白翼の薙ぎ払いがテストに20ダメージ。
-- プレイヤーは戦闘不能になった。
-- 王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。
-
-## step 172 / draco_battle 「王の間・剣聖ドラコ」 HP 0/40 G 340
-
-> [GM] 王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。
-- 戦闘に敗北しました。 HP 0/40、MP 12/12、SP 0/18。
-
-## step 173 / draco_battle 「王の間・剣聖ドラコ」 HP 0/40 G 340
-
-
-終了: {"ending": "draco_victory", "reason": "王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。", "combat_defeat": true, "created_at": "2026-10-18T06:41:40.868206+00:00", "epilogue": []}
-> [GM] 運命の糸がほどけ、あなたは再び王城への帰還の入口に立っていた。
-- 王城への帰還の入口からやり直しました。
-
-## step 174 / festival_town 「凱旋の城下町」 HP 21/40 G 340
-
-- 宿屋へ向かう |  | 判定不要
-- 道具屋へ向かう |  | 判定不要
-- 魔法店へ向かう |  | 判定不要
-- 鍛冶屋へ向かう |  | 判定不要
-- 将軍の屋敷へ向かう |  | 判定不要
-- 国王に内密の謁見を願い出る |  | 不明
-- 凱旋の間へ向かう |  | 不明
-- 行商人ガルド |  | 判定不要
-
-選択: 国王に内密の謁見を願い出る
-> [プレイヤー] 国王に内密の謁見を願い出る
-> [GM] 豪奢な寝室の窓辺で、国王エドワードが一人、月を見上げていた。あなたに気づくと、王は静かに人払いをした。
-- 現在地が王の私室になりました。
-- 豪奢な寝室の窓辺で、国王エドワードが一人、月を見上げていた。あなたに気づくと、王は静かに人払いをした。
-
-## step 175 / king_private_room 「王の私室」 HP 21/40 G 340
-
-- 将軍への疑いを打ち明ける |  | 判定不要
-- ？？？ |  |  [不可: まだ知らない何かが必要なようだ。]
-- 城下町へ戻る |  | 判定不要
-
-選択: 城下町へ戻る
-> [プレイヤー] 城下町へ戻る
-> [GM] 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
-- 現在地が凱旋の城下町になりました。
-- 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
-
-## step 176 / festival_town 「凱旋の城下町」 HP 21/40 G 340
-
-- 宿屋へ向かう |  | 判定不要
-- 道具屋へ向かう |  | 判定不要
-- 魔法店へ向かう |  | 判定不要
-- 鍛冶屋へ向かう |  | 判定不要
-- 将軍の屋敷へ向かう |  | 判定不要
-- 国王に内密の謁見を願い出る |  | 判定不要
-- 凱旋の間へ向かう |  | 不明
-- 行商人ガルド |  | 判定不要
-
-選択: 宿屋へ向かう
-> [プレイヤー] 宿屋へ向かう
-> [GM] 宿屋の扉を開けると、温かい食事の匂いと和やかな喧噪が包み込んできた。カウンターの奥では店主のイアンがグラスを磨いており、隅の席では闇の森を拠点とする女レンジャーのロビンがくつろいでいる。「いらっしゃい、休んでいくかい？」とイアンが声をかけてきた。
-- 現在地が城下町の宿屋になりました。
-
-## step 177 / inn 「城下町の宿屋」 HP 21/40 G 340
-
-- 宿で休む（10G） | 温かい食事と寝台で疲れを癒す | 判定不要
-- イアンと会話する | 宿屋の店主と話す | 判定不要
-  - 強力な氷属性武器の伝説について聞く | 伝説の武器の情報を得る | 1d20判定（DC3） [不可: 完了済みです。]
-  - 邪竜を倒すアドバイスを求める | イアンの意見を聞く | 判定不要 [不可: 完了済みです。]
-  - 竜と人の昔話を聞く |  | 判定不要
-- ロビンと会話する | 女レンジャーと話す | 判定不要
-  - パーティに勧誘する | ロビンを仲間に誘う（毎ラウンド弓で援護） | 1d20+wis判定（DC12） [不可: 完了済みです。]
-  - 噂話を聞く | ロビンから情報を得る | 判定不要 [不可: 完了済みです。]
-- 城下町に戻る | 大通りへ戻る | 判定不要
-
-選択: 城下町に戻る
-> [プレイヤー] 城下町に戻る
-> [GM] 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
-- 現在地が凱旋の城下町になりました。
-- 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
-
-## step 178 / festival_town 「凱旋の城下町」 HP 21/40 G 340
-
-- 宿屋へ向かう |  | 判定不要
-- 道具屋へ向かう |  | 判定不要
-- 魔法店へ向かう |  | 判定不要
-- 鍛冶屋へ向かう |  | 判定不要
-- 将軍の屋敷へ向かう |  | 判定不要
-- 国王に内密の謁見を願い出る |  | 判定不要
-- 凱旋の間へ向かう |  | 不明
-- 行商人ガルド |  | 判定不要
-
-選択: 凱旋の間へ向かう
-> [プレイヤー] 凱旋の間へ向かう
-- 現在地が王城・凱旋の間になりました。
-
-## step 179 / castle_report 「王城・凱旋の間」 HP 21/40 G 340
-
-- 将軍ドラコの正体を問いただす | 集めた証拠を国王の前に示す | 危険（戦闘）
-- 討伐を報告する | イグニス討伐の報告を終える | 判定不要
-
-選択: 討伐を報告する
-> [プレイヤー] 討伐を報告する
-> [GM] 邪竜イグニスは討たれ、王国に平和が戻った。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。
-- 邪竜イグニスは討たれ、王国に平和が戻った。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。
-- クエスト達成：紅き邪竜の討伐
-
-## step 180 / castle_report 「王城・凱旋の間」 HP 21/40 G 340
-
-
-終了: {"title": "冒険完了", "ending": "ignis_defeated", "reason": "邪竜イグニスは討たれ、王国に平和が戻った。祝宴の夜、杯を掲げる将軍ドラコの瞳が、一瞬だけ雪のように白く光ったことに、気づいた者はいなかった。", "created_at": "2026-10-18T06:41:45.967860+00:00", "epilogue": ["青いローブの魔法使いは今日も魔法店で気だるげに店番をしている。窓辺には、溶けない氷の花が一輪飾られている。", "行商人ガルドは王都と麓の村を結ぶ交易路を開き、『英雄の荷車』を名乗って今日も旅を続けている。", "胸の火種は消え去った。骸骨の魔法使いXanxusの行方を知る者はいない。"]}
+終了: {"title": "冒険完了", "ending": "draco_defeated", "reason": "白竜ヴァイスは崩れ落ち、王の間に降り積もった霜が静かに溶けていった。国王エドワードは長い沈黙の後、竜の谷へ使者を送ると告げた。盟約を結び直すために。あなたの名は、竜と人をもう一度つないだ者として語り継がれる。", "created_at": "2026-10-18T07:32:32.240621+00:00", "epilogue": ["国王エドワードは十年前の過ちを民の前で打ち明け、竜の谷へ和解の使者を送った。", "青いローブの魔法使いは今日も魔法店で気だるげに店番をしている。窓辺には、溶けない氷の花が一輪飾られている。", "行商人ガルドは王都と麓の村を結ぶ交易路を開き、『英雄の荷車』を名乗って今日も旅を続けている。", "胸の火種は消え去った。骸骨の魔法使いXanxusの行方を知る者はいない。"]}
 
 ## 検証結果
 
@@ -1978,38 +1709,19 @@
 {
   "character": "hero",
   "seed": 106,
-  "steps": 180,
-  "retry_count": 1,
-  "ending": "ignis_defeated",
-  "final_location": "castle_report",
-  "first_death": {
-    "step": 173,
-    "location": "draco_battle",
-    "ending": "draco_victory",
-    "combat_defeat": true,
-    "completed": false,
-    "attempt": 0,
-    "area": "royal_return",
-    "entry_hp": 21
-  },
+  "steps": 151,
+  "retry_count": 0,
+  "ending": "draco_defeated",
+  "final_location": "draco_battle",
+  "first_death": null,
   "deaths": [
     {
-      "step": 173,
+      "step": 151,
       "location": "draco_battle",
-      "ending": "draco_victory",
-      "combat_defeat": true,
-      "completed": false,
-      "attempt": 0,
-      "area": "royal_return",
-      "entry_hp": 21
-    },
-    {
-      "step": 180,
-      "location": "castle_report",
-      "ending": "ignis_defeated",
+      "ending": "draco_defeated",
       "combat_defeat": false,
       "completed": true,
-      "attempt": 1,
+      "attempt": 0,
       "area": null,
       "entry_hp": null
     }
@@ -2058,17 +1770,10 @@
     "festival_town",
     "mansion_garden",
     "mansion_corridor",
-    "mansion_study",
     "castle_report",
-    "draco_battle",
-    "king_private_room"
+    "draco_battle"
   ],
-  "retry_visited_locations": [
-    "festival_town",
-    "king_private_room",
-    "inn",
-    "castle_report"
-  ],
+  "retry_visited_locations": [],
   "failures": [],
   "completed": true,
   "preferred_chapter3_route": "battlefield",
@@ -2106,12 +1811,6 @@
       "step": 62,
       "attempt": 0,
       "location": "oaksdawn_chapel",
-      "companion": "paladin_liese"
-    },
-    {
-      "step": 174,
-      "attempt": 1,
-      "location": "festival_town",
       "companion": "paladin_liese"
     }
   ],
@@ -2714,7 +2413,7 @@
       "pure_movement": false
     },
     {
-      "step": 83,
+      "step": 82,
       "attempt": 0,
       "location": "ghoul_marsh",
       "action_id": "marsh_to_chapel",
@@ -2722,7 +2421,7 @@
       "pure_movement": true
     },
     {
-      "step": 84,
+      "step": 83,
       "attempt": 0,
       "location": "grave_chapel",
       "action_id": "fight_grave_knight",
@@ -2730,7 +2429,7 @@
       "pure_movement": false
     },
     {
-      "step": 89,
+      "step": 88,
       "attempt": 0,
       "location": "grave_chapel",
       "action_id": "chapel_to_village",
@@ -2738,7 +2437,7 @@
       "pure_movement": false
     },
     {
-      "step": 90,
+      "step": 89,
       "attempt": 0,
       "location": "village_frozen_clue",
       "action_id": "skip_frozen_clue_before_xanxus",
@@ -2746,7 +2445,7 @@
       "pure_movement": true
     },
     {
-      "step": 91,
+      "step": 90,
       "attempt": 0,
       "location": "xanxus_confrontation",
       "action_id": "flee_from_xanxus",
@@ -2754,7 +2453,7 @@
       "pure_movement": false
     },
     {
-      "step": 96,
+      "step": 95,
       "attempt": 0,
       "location": "xanxus_ultimatum",
       "action_id": "accept_xanxus_fire_seed",
@@ -2762,7 +2461,7 @@
       "pure_movement": false
     },
     {
-      "step": 97,
+      "step": 96,
       "attempt": 0,
       "location": "village_frozen_clue",
       "action_id": "inspect_frost_core",
@@ -2770,7 +2469,7 @@
       "pure_movement": false
     },
     {
-      "step": 98,
+      "step": 97,
       "attempt": 0,
       "location": "village_frozen_clue",
       "action_id": "visit_village",
@@ -2778,7 +2477,7 @@
       "pure_movement": false
     },
     {
-      "step": 99,
+      "step": 98,
       "attempt": 0,
       "location": "village",
       "action_id": "ask_elder_weakness",
@@ -2786,7 +2485,7 @@
       "pure_movement": false
     },
     {
-      "step": 100,
+      "step": 99,
       "attempt": 0,
       "location": "village",
       "action_id": "rest_at_refuge",
@@ -2794,7 +2493,7 @@
       "pure_movement": false
     },
     {
-      "step": 101,
+      "step": 100,
       "attempt": 0,
       "location": "village",
       "action_id": "return_frozen_clue",
@@ -2802,7 +2501,7 @@
       "pure_movement": true
     },
     {
-      "step": 102,
+      "step": 101,
       "attempt": 0,
       "location": "village_frozen_clue",
       "action_id": "investigate_frozen_village",
@@ -2810,7 +2509,7 @@
       "pure_movement": true
     },
     {
-      "step": 103,
+      "step": 102,
       "attempt": 0,
       "location": "ice_elemental_encounter",
       "action_id": "bypass_ice_elemental",
@@ -2818,7 +2517,7 @@
       "pure_movement": false
     },
     {
-      "step": 110,
+      "step": 107,
       "attempt": 0,
       "location": "ian_ice_katana_aftermath",
       "action_id": "accept_ian_request",
@@ -2826,7 +2525,7 @@
       "pure_movement": false
     },
     {
-      "step": 111,
+      "step": 108,
       "attempt": 0,
       "location": "valley_entrance",
       "action_id": "sneak_through_ash",
@@ -2834,7 +2533,7 @@
       "pure_movement": false
     },
     {
-      "step": 112,
+      "step": 109,
       "attempt": 0,
       "location": "valley_lava_bridge",
       "action_id": "cross_lava_bridge",
@@ -2842,7 +2541,7 @@
       "pure_movement": false
     },
     {
-      "step": 113,
+      "step": 110,
       "attempt": 0,
       "location": "xanxus_at_nest",
       "action_id": "call_warlock",
@@ -2850,7 +2549,7 @@
       "pure_movement": false
     },
     {
-      "step": 114,
+      "step": 111,
       "attempt": 0,
       "location": "valley_nest_gate",
       "action_id": "enter_dragon_nest",
@@ -2858,7 +2557,7 @@
       "pure_movement": true
     },
     {
-      "step": 139,
+      "step": 130,
       "attempt": 0,
       "location": "ignis_last_breath",
       "action_id": "hear_ignis_last_words",
@@ -2866,7 +2565,7 @@
       "pure_movement": false
     },
     {
-      "step": 140,
+      "step": 131,
       "attempt": 0,
       "location": "ignis_last_breath",
       "action_id": "examine_ignis_wound",
@@ -2874,7 +2573,7 @@
       "pure_movement": false
     },
     {
-      "step": 141,
+      "step": 132,
       "attempt": 0,
       "location": "ignis_last_breath",
       "action_id": "return_to_castle_report",
@@ -2882,7 +2581,7 @@
       "pure_movement": true
     },
     {
-      "step": 142,
+      "step": 133,
       "attempt": 0,
       "location": "royal_gate",
       "action_id": "enter_festival_town",
@@ -2890,7 +2589,7 @@
       "pure_movement": true
     },
     {
-      "step": 143,
+      "step": 134,
       "attempt": 0,
       "location": "festival_town",
       "action_id": "go_general_mansion",
@@ -2898,7 +2597,7 @@
       "pure_movement": true
     },
     {
-      "step": 144,
+      "step": 135,
       "attempt": 0,
       "location": "mansion_garden",
       "action_id": "sneak_into_mansion",
@@ -2906,7 +2605,7 @@
       "pure_movement": false
     },
     {
-      "step": 145,
+      "step": 136,
       "attempt": 0,
       "location": "mansion_corridor",
       "action_id": "fight_ice_sentinels",
@@ -2914,23 +2613,7 @@
       "pure_movement": false
     },
     {
-      "step": 155,
-      "attempt": 0,
-      "location": "mansion_study",
-      "action_id": "take_draco_journal",
-      "text": "日誌を手に取る",
-      "pure_movement": false
-    },
-    {
-      "step": 156,
-      "attempt": 0,
-      "location": "mansion_study",
-      "action_id": "leave_mansion_study",
-      "text": "屋敷を出る",
-      "pure_movement": true
-    },
-    {
-      "step": 157,
+      "step": 142,
       "attempt": 0,
       "location": "festival_town",
       "action_id": "go_report_hall",
@@ -2938,59 +2621,11 @@
       "pure_movement": true
     },
     {
-      "step": 158,
+      "step": 143,
       "attempt": 0,
       "location": "castle_report",
       "action_id": "report_with_evidence",
       "text": "将軍ドラコの正体を問いただす",
-      "pure_movement": false
-    },
-    {
-      "step": 174,
-      "attempt": 1,
-      "location": "festival_town",
-      "action_id": "request_king_audience",
-      "text": "国王に内密の謁見を願い出る",
-      "pure_movement": true
-    },
-    {
-      "step": 175,
-      "attempt": 1,
-      "location": "king_private_room",
-      "action_id": "leave_king_room",
-      "text": "城下町へ戻る",
-      "pure_movement": true
-    },
-    {
-      "step": 176,
-      "attempt": 1,
-      "location": "festival_town",
-      "action_id": "go_inn",
-      "text": "宿屋へ向かう",
-      "pure_movement": true
-    },
-    {
-      "step": 177,
-      "attempt": 1,
-      "location": "inn",
-      "action_id": "return_castle_from_inn",
-      "text": "城下町に戻る",
-      "pure_movement": false
-    },
-    {
-      "step": 178,
-      "attempt": 1,
-      "location": "festival_town",
-      "action_id": "go_report_hall",
-      "text": "凱旋の間へ向かう",
-      "pure_movement": true
-    },
-    {
-      "step": 179,
-      "attempt": 1,
-      "location": "castle_report",
-      "action_id": "report_normally",
-      "text": "討伐を報告する",
       "pure_movement": false
     }
   ],

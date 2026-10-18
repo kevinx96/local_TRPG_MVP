@@ -524,7 +524,7 @@
 ## step 44 / goblin_fort_second_left 「ゴブリン砦・二階左」 HP 0/12 G 115
 
 
-終了: {"reason": "ゴブリン砦・二階左で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_second_left_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:44:36.451038+00:00", "epilogue": []}
+終了: {"reason": "ゴブリン砦・二階左で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_second_left_defeat", "combat_defeat": true, "created_at": "2026-10-18T07:36:00.269635+00:00", "epilogue": []}
 > [GM] 運命の糸がほどけ、あなたは再びゴブリン砦の入口に立っていた。
 - ゴブリン砦の入口からやり直しました。
 
@@ -736,7 +736,7 @@
 ## step 68 / goblin_fort_fourth 「ゴブリン砦・四階財宝庫」 HP 0/12 G 130
 
 
-終了: {"reason": "ゴブリン砦・四階財宝庫で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_fourth_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:44:52.483894+00:00", "epilogue": []}
+終了: {"reason": "ゴブリン砦・四階財宝庫で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_fourth_defeat", "combat_defeat": true, "created_at": "2026-10-18T07:36:07.604616+00:00", "epilogue": []}
 
 ## 検証結果
 

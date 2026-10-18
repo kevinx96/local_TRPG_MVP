@@ -10,11 +10,11 @@ from .upgrade_forest import upsert
 
 UNDEAD = ("skeleton_soldier", "ghoul", "wraith", "grave_knight", "ash_wraith", "xanxus_phantom", "zebok")
 CLUES = ("heard_guardian_refusal", "heard_pass_rumor")
-RECRUIT_PREVIEW = "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）"
+RECRUIT_PREVIEW = "同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ）"
 # Shown when arriving from the cave for the first time, and to the model while Liese still prays in the chapel.
 GATE_CHALLENGE = "水路の出口は、鉄格子の水門で塞がれていた。格子の向こうから、鎧の擦れる音と誰何の声が響く。「止まれ！ 何者だ！」"
 CHAPEL_WITH_LIESE = "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。"
-LIESE_DESCRIPTION = "暁の守護団の若き聖騎士。毎ラウンド開始時、プレイヤーのHPが半分未満なら「癒しの祈り」で最大HPの25%を回復し、そうでなければ「聖光の一撃」で敵へ2d3の光属性ダメージを与える（不死の敵を優先して狙う）。"
+LIESE_DESCRIPTION = "暁の守護団の若き聖騎士。毎ラウンド開始時、プレイヤーのHPが半分未満なら「癒しの祈り」で最大HPの20%を回復し、そうでなければ「聖光の一撃」で敵へ2d6の光属性ダメージを与える（不死の敵を優先して狙う）。"
 DESCRIPTIONS = {
     "cave_waterway": ("地底の水路", "温泉の湯は細い水路となって、岩の奥へ流れていく。水音を頼りに進むと、壁に古い騎士団の紋章――樫の葉と昇る太陽――が刻まれていた。"),
     "oaksdawn_water_gate": ("オークスドーンの水門", "城塞の水門。鉄格子の向こうでは、洞窟から続く地下水路が暗く口を開けている。"),
@@ -139,8 +139,8 @@ def apply(pack: dict[str, Any]) -> None:
                                   buy_line=buy_line, poor_line=poor_line, items=[dict(item_id=item, price=price, stock=None)]))
     upsert(pack["companions"], dict(id="paladin_liese", name="聖騎士リーゼ", image="/static/images/npc_liese.png",
         description=LIESE_DESCRIPTION, round_start_effects=[
-            dict(kind="heal_player", name="癒しの祈り", max_hp_ratio=.25, requirements={"player_hp_ratio_lt": .5}),
-            dict(kind="damage_enemy", name="聖光の一撃", damage="2d3", element="holy", target="undead_first", requirements={"player_hp_ratio_gte": .5})]))
+            dict(kind="heal_player", name="癒しの祈り", max_hp_ratio=.20, requirements={"player_hp_ratio_lt": .5}),
+            dict(kind="damage_enemy", name="聖光の一撃", damage="2d6", element="holy", target="undead_first", requirements={"player_hp_ratio_gte": .5})]))
     for enemy in pack["enemies"]:
         if enemy["id"] in UNDEAD:
             enemy["tags"] = list(dict.fromkeys([*enemy.get("tags", []), "undead"]))

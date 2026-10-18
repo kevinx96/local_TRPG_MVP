@@ -281,7 +281,7 @@
 ## step 25 / slime_king_battle 「精霊の泉・スライム王」 HP 0/12 G 120
 
 
-終了: {"reason": "精霊の泉・スライム王で力尽きた。冒険はここで終わりを迎える。", "ending": "slime_king_battle_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:44:51.050564+00:00", "epilogue": []}
+終了: {"reason": "精霊の泉・スライム王で力尽きた。冒険はここで終わりを迎える。", "ending": "slime_king_battle_defeat", "combat_defeat": true, "created_at": "2026-10-18T07:36:15.896388+00:00", "epilogue": []}
 > [GM] 運命の糸がほどけ、あなたは再び闇の森の入口に立っていた。
 - 闇の森の入口からやり直しました。
 
@@ -591,9 +591,9 @@
 ## step 55 / oaksdawn_chapel 「暁の礼拝堂」 HP 18/18 G 230
 
 - 祈りを捧げてもらう | 5G | 判定不要
-- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要
-- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要 [不可: 聖水所持が必要]
-- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 1d20+wis判定（DC13）
+- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要
+- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要 [不可: 聖水所持が必要]
+- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 1d20+wis判定（DC13）
 - 聖水を分けてもらう |  | 判定不要
 - 大通りへ戻る |  | 判定不要
 - 鐘のことを詳しく聞く |  | 判定不要
@@ -737,9 +737,8 @@
 - 骸骨兵と戦う |  | 危険（戦闘）
 - 霧に紛れて抜ける |  | 1d20+dex判定（DC14）
 
-戦闘: skill / mage_lv3_b → skeleton_soldier:1
+戦闘: skill / mage_lv3_b → skeleton_soldier:2
 - 火球・改が骸骨兵に20ダメージ。
-- 火球・改が骸骨兵に21ダメージ。
 - すべての敵を倒した。
 - 15ゴールドを獲得しました。
 
@@ -861,105 +860,30 @@
 - 屍鬼の沼へ進む |  | 危険（戦闘）
 
 戦闘: skill / mage_lv3_b → grave_knight:1
-- 火球・改が墓守の骸骨騎士に21ダメージ。
-- 攻撃はテストに当たらなかった。
-- 聖光の一撃が墓守の骸骨騎士に8光属性ダメージ。
+- 火球・改が墓守の骸骨騎士に15ダメージ。
+- 攻撃がテストに14ダメージ。
+- 癒しの祈りがHPを4回復した。
 
-## step 79 / grave_chapel 「墓守の礼拝堂」 HP 18/18 G 245
-
-- 骸骨の騎士と戦う |  | 危険（戦闘）
-- 屍鬼の沼へ進む |  | 危険（戦闘）
-
-戦闘: skill / mage_lv3_b → grave_knight:1
-- 火球・改が墓守の骸骨騎士に14ダメージ。
-- 攻撃はテストに当たらなかった。
-- 聖光の一撃が墓守の骸骨騎士に6光属性ダメージ。
-
-## step 80 / grave_chapel 「墓守の礼拝堂」 HP 18/18 G 245
+## step 79 / grave_chapel 「墓守の礼拝堂」 HP 8/18 G 245
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
 
 戦闘: skill / mage_lv3_b → grave_knight:1
-- 火球・改が墓守の骸骨騎士に17ダメージ。
-- すべての敵を倒した。
-- 60ゴールドを獲得しました。
-- 生命の果実 x2を入手しました。
-- 聖銀 x1を入手しました。
-
-## step 81 / grave_chapel 「墓守の礼拝堂」 HP 18/18 G 305
-
-- 礼拝堂の裏門から村へ抜ける |  | 不明
-- 屍鬼の沼へ進む |  | 危険（戦闘）
-- 弔いの鐘を鳴らす |  | 判定不要
-> [GM] 骸骨の騎士は、大剣を祭壇に立てかけるように崩れ落ちた。兜の奥から、赤い果実が二つ転がり出た。
-- 戦闘に勝利しました。 HP 18/18、MP 11/26、SP 8/8。
-
-## step 82 / grave_chapel 「墓守の礼拝堂」 HP 18/18 G 305
-
-- 礼拝堂の裏門から村へ抜ける |  | 不明
-- 屍鬼の沼へ進む |  | 危険（戦闘）
-- 弔いの鐘を鳴らす |  | 判定不要
-
-選択: 礼拝堂の裏門から村へ抜ける
-> [プレイヤー] 礼拝堂の裏門から村へ抜ける
-> [GM] 礼拝堂の裏門を抜けると、坂の下に炎上する麓の村が見えた。村の外れの一角だけが、なぜか白く凍りついている。
-- レベルが4に上がりました。
-- 現在地が炎の中の結氷になりました。
-- クエスト更新：紅き邪竜の討伐
-
-## step 83 / village_frozen_clue 「炎の中の結氷」 HP 21/21 G 305
-
-- 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
-- 探索せず先へ進む | 村を出ようとします | 不明
-- 結氷の中心を調べる |  | 1d20+wis判定（DC12）
-- 長老に邪竜の弱点を聞く |  | 不明
-
-選択: 探索せず先へ進む
-> [プレイヤー] 探索せず先へ進む
-> [GM] 村を離れようとした街道で、赤い法衣と炎に包まれた骸骨の魔法使いが待ち受けていた。
-- 現在地が燃える街道・Xanxusの尋問になりました。
-
-## step 84 / xanxus_confrontation 「燃える街道・Xanxusの尋問」 HP 21/21 G 305
-
-- ごまかして切り抜ける | 何も察知していないふりをします | 危険
-- 先手を打って攻撃する | Xanxusが動く前に仕掛けます | 危険
-- もう一度逃走を試みる | 全力でその場を離れます | 危険
-
-選択: ごまかして切り抜ける
-> [プレイヤー] ごまかして切り抜ける
-> [GM] Xanxusは乾いた笑い声を上げた。『その目は何かを知った者の目だ。浅い嘘で私を欺けると思ったか』杖の一振りで炎の壁が街道を閉ざし、燃える骸骨は明確な殺意を向けて戦闘態勢に入る。
-- 現在地がXanxus戦になりました。
-
-## step 85 / xanxus_battle 「Xanxus戦」 HP 21/21 G 305
-
-
-戦闘: skill / ice_arrow → xanxus:1
-- 氷の矢が赤炎骸骨Xanxusに11ダメージ。
-- 隕石召喚がテストに50ダメージ。
+- 火球・改が墓守の骸骨騎士に18ダメージ。
+- 攻撃がテストに13ダメージ。
 - プレイヤーは戦闘不能になった。
-- HPが1回復しました。
-- 現在地がXanxusの最後通告になりました。
+- 墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。
 
-## step 86 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/21 G 305
+## step 80 / grave_chapel 「墓守の礼拝堂」 HP 0/18 G 245
 
-> [GM] Xanxusは倒れたあなたを見下ろした。『大人しく先を探索しろ。そして私の火種を飲め。任務を放棄すれば、その場で爆ぜさせる』
-- 戦闘に敗北しました。 HP 1/21、MP 27/29、SP 9/9。
+> [GM] 墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。
+- 戦闘に敗北しました。 HP 0/18、MP 16/26、SP 8/8。
 
-## step 87 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/21 G 305
-
-- 大人しく従う | 火種を受け取り、探索を続けます | 判定不要
-- 死んでも従わない | Xanxusの要求を拒絶します | 判定不要
-
-選択: 死んでも従わない
-> [プレイヤー] 死んでも従わない
-> [GM] Xanxusの要求を拒み、その炎に焼き尽くされました。
-- Xanxusの要求を拒み、その炎に焼き尽くされました。
-
-## step 88 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/21 G 305
+## step 81 / grave_chapel 「墓守の礼拝堂」 HP 0/18 G 245
 
 
-終了: {"reason": "Xanxusの要求を拒み、その炎に焼き尽くされました。", "ending": "defied_xanxus", "created_at": "2026-10-18T06:45:43.694353+00:00", "epilogue": []}
+終了: {"ending": "combat_defeat", "reason": "墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。", "combat_defeat": true, "created_at": "2026-10-18T07:36:33.199610+00:00", "epilogue": []}
 
 ## 検証結果
 
@@ -967,10 +891,10 @@
 {
   "character": "mage",
   "seed": 103,
-  "steps": 88,
+  "steps": 81,
   "retry_count": 1,
-  "ending": "defied_xanxus",
-  "final_location": "xanxus_ultimatum",
+  "ending": "combat_defeat",
+  "final_location": "grave_chapel",
   "first_death": {
     "step": 25,
     "location": "slime_king_battle",
@@ -993,17 +917,17 @@
       "entry_hp": 12
     },
     {
-      "step": 88,
-      "location": "xanxus_ultimatum",
-      "ending": "defied_xanxus",
-      "combat_defeat": false,
+      "step": 81,
+      "location": "grave_chapel",
+      "ending": "combat_defeat",
+      "combat_defeat": true,
       "completed": false,
       "attempt": 1,
-      "area": null,
-      "entry_hp": null
+      "area": "old_battlefield",
+      "entry_hp": 18
     }
   ],
-  "farthest_location": "xanxus_ultimatum",
+  "farthest_location": "oaksdawn_wall",
   "visited_locations": [
     "castle",
     "castle_town",
@@ -1035,11 +959,7 @@
     "bone_field",
     "ruined_watchtower",
     "ghoul_marsh",
-    "grave_chapel",
-    "village_frozen_clue",
-    "xanxus_confrontation",
-    "xanxus_battle",
-    "xanxus_ultimatum"
+    "grave_chapel"
   ],
   "retry_visited_locations": [
     "goblin_fort",
@@ -1064,11 +984,7 @@
     "bone_field",
     "ruined_watchtower",
     "ghoul_marsh",
-    "grave_chapel",
-    "village_frozen_clue",
-    "xanxus_confrontation",
-    "xanxus_battle",
-    "xanxus_ultimatum"
+    "grave_chapel"
   ],
   "failures": [],
   "completed": false,
@@ -1545,38 +1461,6 @@
       "action_id": "fight_grave_knight",
       "text": "骸骨の騎士と戦う",
       "pure_movement": false
-    },
-    {
-      "step": 82,
-      "attempt": 1,
-      "location": "grave_chapel",
-      "action_id": "chapel_to_village",
-      "text": "礼拝堂の裏門から村へ抜ける",
-      "pure_movement": false
-    },
-    {
-      "step": 83,
-      "attempt": 1,
-      "location": "village_frozen_clue",
-      "action_id": "skip_frozen_clue_before_xanxus",
-      "text": "探索せず先へ進む",
-      "pure_movement": true
-    },
-    {
-      "step": 84,
-      "attempt": 1,
-      "location": "xanxus_confrontation",
-      "action_id": "bluff_xanxus",
-      "text": "ごまかして切り抜ける",
-      "pure_movement": false
-    },
-    {
-      "step": 87,
-      "attempt": 1,
-      "location": "xanxus_ultimatum",
-      "action_id": "refuse_xanxus_without_rescue",
-      "text": "死んでも従わない",
-      "pure_movement": false
     }
   ],
   "invariants": {
@@ -1584,7 +1468,7 @@
     "noncombat_dead_ends": 0,
     "fallback_narrations": 0
   },
-  "battlefield_completed": true,
+  "battlefield_completed": false,
   "gorge_completed": false,
   "repeat_death_candidate": false
 }

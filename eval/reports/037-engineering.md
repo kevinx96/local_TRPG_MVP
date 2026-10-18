@@ -1,94 +1,102 @@
-# 037 工程汇报（第二轮）
+# 037 工程汇报（第三轮）
 
 ## 1. 完成了什么
 
-**已完成第二轮实现、参数搜索、全量评测和试玩；平衡目标仍未全部达到，按spec停止数值修改并如实报告。**
+已落实设计指定参数，并完成全部204组×N=2000离线重跑。核心严格领先通过5/8项，门槛通过=False；准备／诅咒组仅报告，严格领先10/16项。未继续调参。
 
-- 墓守の外套拾取时仅填补空防具位，已有ローブ／鎖帷子等保持装备，玩家可手动换装。基础减伤1、古戦場亡者额外减伤2；物品说明逐字采用设计给定文本。旧存档及重来快照同步原版物品数值，保留装备选择与自定义改造。
-- 两名同行者只在内存副本搜索授权参数。N=300的24候选组成144对，最好通过16/24项；关键盗賊条件扩大到N=2000，覆盖回复范围内全部11种实际治疗档位和四种伤害骰。リーゼ最好95.20%仍低于强化火コウモリ竜96.55%，因此正式参数保留リーゼ25%／2d3、エリオ2d3／4回合。详见[调参报告](037-companion-tuning.md)。
-- 正式矩阵重跑204组×2000，共408,000条连续路线，363,092胜、44,908败，全部正常结算。路线≤8pp通过4/8项；对策同行者严格领先通过13/24项。详见[平衡报告](balance-2026-10-18-ch3-routes.md)及[JSON](balance-2026-10-18-ch3-routes.json)。
-- 路线外复核：35场×4职业×8条件×1000，共1,120,000场离线战斗；+3pp比较有1/256项越界。详见[路线外报告](037-companion-outside.md)。
-- 试玩32局，15局通关，25局重来一次；村／古戦場／峡谷实际到访为11／10／7局。四职业峡谷覆盖为勇者2、僧侶2、魔法使い1、盗賊2；最多225步；异常、非战斗死路、兜底叙述均0。详见[汇总](playtest-2026-10-18-ch3/summary.md)和[逐局统计](playtest-2026-10-18-ch3/summary.json)。
-- 通关局105对：选择Jaccard均值0.3609、最小0.1549、最大1.0000；地点均值0.5440、最小0.2969、最大1.0000。14种线索全部至少取得一次；未到地点仍为merchant_battle、alley_after、xanxus_phantom_battle。
-- 手机布局沿用第一轮实现，重新执行41项浏览器验收并查看375×812的[普通战斗](screens/037/normal.png)、[ドラコ战](screens/037/draco.png)、[展开日志](screens/037/log-expanded.png)。
-- 第一轮完整[平衡数据](balance-2026-10-18-ch3-routes-round1.json)、[报告](balance-2026-10-18-ch3-routes-round1.md)、[工程汇报](037-engineering-round1.md)及[试玩数字](playtest-2026-10-18-ch3/round1-summary.json)均保留。当前报告逐组给出第一轮通关率与变化。
+- 两份剧本同步リーゼ回复20%、聖光の一撃2d6；エリオ水刃2d6、水の帳每4回合。说明、6种招募action和对应6种fallback choice的preview同步；内容版本升为2026-10-18-v037-r3。
+- 联合矩阵共408,000条连续路线：364,289胜、43,711败，全部正常结算。第一、二轮完整报告与JSON保留，并在[第三轮联合报告](balance-2026-10-18-ch3-routes.md)逐组对照。
+- 未准备、无同行者、无诅咒的魔法使い三路线差距仍为9.95pp（村70.45%、古戦場80.40%、峡谷77.00%）。按设计决定明确记录：来自村路线本身，属于旧内容，本轮不改。
+- 路线外复核35场×4职业×8同行条件×N=1000，共1,120,000场；两人各128项上限比较，合计13/256项超出现有最强+3pp，逐项见下表及[完整报告](037-companion-outside.md)。
+- 当前剧本重跑32局试玩，16局通关，21局重来一次，最多206步；路线到访={'village': 12, 'battlefield': 10, 'gorge': 7}。异常、非战斗死路、兜底叙述均0。路线、同行者、线索flag、首次死亡、重来、结局与Jaccard见[汇总](playtest-2026-10-18-ch3/summary.md)、[JSON](playtest-2026-10-18-ch3/summary.json)及32份日志。
+- 通关局120对：选择Jaccard均值／最小／最大为0.3592／0.1549／0.6000；地点为0.5474／0.2969／0.9737。
+- 线索覆盖13/14种；未取得flag：has_assassin_crest。未到地点：merchant_battle, alley_after, xanxus_phantom_battle, inn_night_ambush。
+- 手机布局沿用既有实现，重新通过41项浏览器验收并查看375×812的[普通战斗](screens/037/normal.png)、[ドラコ战](screens/037/draco.png)、[展开日志](screens/037/log-expanded.png)。
 
-|职业|准备|第一轮最大差pp|第二轮最大差pp|第二轮≤8pp|
-|---|---|---:|---:|---|
-|hero|False|4.10|1.40|True|
-|cleric|False|15.15|1.25|True|
-|mage|False|18.55|9.95|False|
-|thief|False|7.00|6.70|True|
-|hero|True|4.65|3.75|True|
-|cleric|True|16.10|15.05|False|
-|mage|True|16.20|16.00|False|
-|thief|True|9.15|9.15|False|
+|职业|路线|对策提升pp|其他最强|其提升pp|领先pp|核心严格领先|
+|---|---|---:|---|---:|---:|---|
+|hero|battlefield|+10.65|hydromancer_elio|+9.35|+1.30|True|
+|cleric|battlefield|+21.75|hydromancer_elio|+20.10|+1.65|True|
+|mage|battlefield|+11.45|fire_bat_empowered|+10.75|+0.70|True|
+|thief|battlefield|+8.75|hydromancer_elio|+9.05|-0.30|False|
+|hero|gorge|+10.20|paladin_liese|+10.20|+0.00|False|
+|cleric|gorge|+18.50|paladin_liese|+18.35|+0.15|True|
+|mage|gorge|+10.90|fire_bat_empowered|+9.20|+1.70|True|
+|thief|gorge|+5.40|fire_bat_empowered|+5.60|-0.20|False|
 
-准备=False：四职业共同最优路线为无。
-准备=True：四职业共同最优路线为无。
+|同行者|职业|路线外遭遇|本轮胜率|现有最强|对照胜率|超出pp|
+|---|---|---|---:|---|---:|---:|
+|hydromancer_elio|mage|dragon_valley_loc|82.30%|fire_bat_empowered|79.00%|+3.30|
+|paladin_liese|thief|merchant_battle|73.90%|mina|66.90%|+7.00|
+|paladin_liese|thief|goblin_fort_fourth|87.70%|robin|82.60%|+5.10|
+|hydromancer_elio|thief|village_fire_elemental|96.80%|fire_bat_empowered|93.50%|+3.30|
+|hydromancer_elio|cleric|draco_battle|86.60%|fire_bat_empowered|83.10%|+3.50|
+|hydromancer_elio|mage|draco_battle|79.30%|fire_bat_empowered|76.20%|+3.10|
+|hydromancer_elio|thief|draco_battle|86.10%|fire_bat_empowered|81.90%|+4.20|
+|hydromancer_elio|cleric|cave_crystal_corridor|97.80%|paladin_liese|94.00%|+3.80|
+|paladin_liese|mage|valley_entrance|99.60%|robin|96.20%|+3.40|
+|paladin_liese|hero|valley_ledge|93.50%|robin|87.90%|+5.60|
+|paladin_liese|cleric|valley_ledge|94.80%|robin|86.40%|+8.40|
+|paladin_liese|mage|valley_ledge|91.70%|robin|82.20%|+9.50|
+|paladin_liese|thief|valley_ledge|93.10%|robin|88.00%|+5.10|
+
+paladin_liese：越界7/128项，最大超出+9.50pp（mage/valley_ledge）。
+
+hydromancer_elio：越界6/128项，最大超出+4.20pp（thief/draco_battle）。
 
 ## 2. 改动的文件
 
-|文件|用途|
-|---|---|
-|`host/state.py`|通用空部位装备效果；剧本版本更新时同步未自定义的物品属性，含重来快照|
-|`host/prompt/processed/dragon_rpg.json`、`dragon_rpg_hybrid.json`|外套效果、说明、拾取行为、内容版本；两名同行者数值未改|
-|`scripts/scenario/rewards_battlefield.py`、`scripts/scenario/ch3_routes_balance.py`|新建与已有剧本都能复现外套决定|
-|`scripts/balance/ch3_routes.py`、`ch3_tuning.py`、`ch3_outside.py`|严格领先判据、第一轮对照、候选搜索、治疗档位复核、路线外约束|
-|`scripts/playtest/explore.py`、`metrics.py`|仅交换101／102路线优先度；增加按职业的实际路线覆盖|
-|`tests/test_rewards_battlefield.py`、`test_equipment_slots.py`、`test_ch3_routes.py`|外套拾取／手动装备／区域减伤／旧档同步、严格并列失败、+3pp边界、参数边界与治疗档位覆盖|
-|`eval/balance/checkpoints.json`|重新生成，仅剧本SHA-256一行变化|
-|`eval/reports/037-*.{md,json}`、`balance-2026-10-18-ch3-routes*.{md,json}`|本轮结果、候选、第一轮存档与工程汇报|
-|`eval/reports/playtest-2026-10-18-ch3/`、`screens/037/`|32份逐局日志、两轮汇总、三截图与浏览器验收记录|
+- `host/prompt/processed/dragon_rpg.json`、`dragon_rpg_hybrid.json`：指定参数、说明、招募预览与内容版本。
+- `scripts/scenario/oaksdawn.py`、`rumbling_gorge.py`、`ch3_routes_balance.py`：生成及迁移脚本与两份剧本一致。
+- `scripts/balance/ch3_routes.py`、`ch3_outside.py`：核心门槛、准备／诅咒仅报告、三轮对照和路线外结果说明。
+- `tests/test_ch3_routes.py`、`test_oaksdawn.py`：核心8项覆盖／失败／缺项检查，治疗数值断言同步。
+- `eval/balance/checkpoints.json`：仅剧本SHA-256变化。
+- `eval/reports/balance-2026-10-18-ch3-routes*.{md,json}`、`037-companion-outside*.{md,json}`、`037-engineering*.md`、`037-round3-checks.json`：第三轮结果、第二轮归档及审计。
+- `eval/reports/playtest-2026-10-18-ch3/`：当前32局日志与汇总，第二轮汇总归档；`eval/reports/screens/037/draco.png`：重新截图。其他两张截图和41项检查记录内容未变。
 
-没有新增依赖；没有修改client代码、默认提示词、benchmark标准答案或其他剧本数值。保留用户原有四份未跟踪的006本地对照报告。
+没有新增依赖。保留用户原有四份未跟踪006本地对照报告。
 
-## 3. 验证结果
+## 3. 验证结果（命令和输出摘要）
 
 |命令／检查|结果|
 |---|---|
-|`python -m unittest discover -s tests -q`|614项，446.051秒，`OK (skipped=1)`；跳过既有BALANCE_ENFORCE可选检查|
+|`python -m unittest discover -s tests -q`|615项，693.441秒，`OK (skipped=1)`；跳过既有BALANCE_ENFORCE可选检查|
 |`node --check client/app.js`|退出码0|
-|`python -X utf8 -m scripts.balance.ch3_routes --n 2000 --seed 20261018 --workers 16`|204组、408,000条路线，全部胜／败终态|
-|`python -X utf8 -m scripts.balance.ch3_tuning --n 300 --workers 24`|补齐后780组、144个联合组合；无全通过候选|
-|`python -X utf8 -m scripts.balance.ch3_tuning --critical-thief --n 2000 --workers 8 --output eval/reports/037-companion-critical.json`|含补充档位64组、128,000条路线，44个不同治疗／伤害行为均未超过关键对照|
-|`python -X utf8 -m scripts.balance.ch3_outside --n 1000 --workers 8`|1120组，全部正常终态；目标越界另列|
-|`python -X utf8 -m scripts.playtest.explore --workers 4`|32局，不变量全0，四职业均到峡谷|
+|`python -m unittest tests.test_ch3_routes tests.test_oaksdawn tests.test_rumbling_gorge -q`|43项，2.582秒，OK|
+|`python -X utf8 -m scripts.balance.ch3_routes --n 2000 --seed 20261018 --workers 16`|首次保存136组后写文件失败；同种子补跑68组并合并，最终204组、408,000条路线，无异常终态|
+|`python -X utf8 -m scripts.balance.ch3_outside --n 1000 --seed 20261018 --workers 8`|1120组、1,120,000场；非终态0|
+|`python -X utf8 -m scripts.playtest.explore --workers 2`|32局，最多250步，不变量全0|
 |`python -X utf8 -m scripts.screenshot_mobile_battle`|`41 browser checks passed`；三图已查看|
-|`git diff --check`、产物审计|通过；[审计记录](037-round2-checks.json)核对条件、计数、指纹、链接、UTF-8无BOM及截图尺寸|
+|`git diff --check`、产物审计|通过；[审计记录](037-round3-checks.json)核对完整矩阵、统计、指纹、三轮对照、UTF-8无BOM和截图尺寸|
 
-首次完整测试613项仅检查点夹具哈希断言失败；重新生成后只有一行哈希变化，再完整重跑得到上述结果。参数初筛和主矩阵均曾遇Windows报告写入错误：初筛补跑最后两候选，完整780行已核对；主矩阵保留122组，在核对指纹和检查点后同种子补齐82组，完整204组最终一次性保存。恢复时曾将含异常栈的日志总行数误计为150，程序按JSON唯一条件数拦截并更正，最终以原始JSON审计为准。离线多进程与存档测试使用允许本地管道／临时目录的执行权限；无付费API调用。
+离线多进程首次受Windows沙箱本地管道权限限制，Chromium首次未能暴露本地调试端口；在允许本地管道／临时目录／无头浏览器的执行权限下重跑。主矩阵随后遇到与第二轮相同的Windows OSError errno22报告写入错误；实际完整保存136组，控制台打印了137组，按JSON条件数恢复。验证所有源文件指纹、起点检查点一致后，使用原ch3_routes._job、相同N和seed、24 workers补跑缺失68组，逐组追加保存并最终合并204组。恢复元数据保留在联合JSON的run_recovery；没有付费API调用。
 
 ## 4. TODO(design) 清单
 
-1. 本路线严格最强：盗賊／古戦場／未准备／有诅咒，リーゼ在授权范围的最高样本通关率95.20%，低于强化火コウモリ竜96.55%。决定如何处理参数范围、判据或诅咒条件机制；本轮没有替设计选择折中参数。
-2. 路线≤8pp：魔法使い未准备时，村70.45%、古戦場80.40%，差9.95pp。该固定比较不使用033–035可调内容，无法靠调这些内容消除；其余越界见表。古戦場031永久奖励、村与共同后程旧内容保持原样。
-3. 村路线ワーロック仍按旧剧情在入口离队，其组与无同行者相同。如需全程同行口径，由设计另行明确。
-4. 路线外扩展覆盖有1项越界：盗賊／merchant_battle，リーゼ比其他最强高4.90pp。033原26场全部通过（最大+1.50pp），エリオ全部峡谷外场景通过（最大+0.90pp）。旧035的N=500数据已显示商人战相差3.40pp，这是既有未覆盖问题。
+- 核心thief/battlefield未严格领先hydromancer_elio，领先幅度-0.30pp。按指示如实报告，不继续调参。
+- 核心hero/gorge未严格领先paladin_liese，领先幅度+0.00pp。按指示如实报告，不继续调参。
+- 核心thief/gorge未严格领先fire_bat_empowered，领先幅度-0.20pp。按指示如实报告，不继续调参。
+- 路线外上限有13项越界，具体同行者／职业／遭遇见上表；保留指定参数，交设计后续决定。
+- 村路线导致的未准备法师9.95pp差距按第三轮决定归为旧内容，本轮不改；其余三路线≤8pp越界保留在联合报告，未额外调整。准备／诅咒同行者比较不再列为本轮门槛。
 
 ## 5. 推断清单
 
-1. 沿用第一轮Lv3、240G森出口可达检查点、相同种子及51条件／职业。前置战斗按检查点回放假定获胜；正式路线真实结算至イグニス胜／败、包含提前死亡。整套准备实际花195G。其余第一轮起点、休息、消耗和分母口径见归档工程汇报。
-2. 玩家自主换防具解释为拾取不覆盖已有防具；模拟不额外添加手动优化配装策略。四职业防具位已有装备，准备组保留鎖帷子。空防具位才自动装备外套，并允许玩家通过既有物品操作换装。
-3. 更正第一轮说明：给予诅咒短剑仍遵循引擎空武器位自动装备；僧侶／魔法使い未准备组实际装备它，勇者／盗賊仅携带，准备组由锻造替换。两轮实现和原始JSON均如此，仅修正文案，不改变可比性。
-4. “本路线最强”按第一轮逐职业、逐准备、逐诅咒条件解释，改为严格大于所有其他同行者；并列不通过。点估计判据不额外加入统计容差。
-5. 伤害骰范围解释为2d3、2d4、2d5、2d6；回复比例为连续15%–25%。初筛使用15／20／25%，关键条件则覆盖全部四舍五入后不同治疗档位，未新增机制或伤害加值。
-6. 关键条件盗賊最大HP只有28／32／36，来自既有里程碑和该路线奖励。治疗比例的行为等价覆盖限于这个条件；单一固定对照失败即可阻止全部条件严格领先，不需要改变エリオ来重测这一反例。
-7. 因本路线优先目标已无法全部达成，按spec停止数值修改，保留正式同行者原参数。候选没有写回发布剧本，不自行按通过项数选择新的折中。
-8. 路线外复核沿用033／035逐战满资源检查点，N=1000、seed=20261018；与连续路线分开。リーゼ比较033原同行者集合，不借后来エリオ抬高上限；エリオ按035包含リーゼ。
-9. 试玩只交换固定轮换中101与102的路线优先度，保证mage/102走峡谷；所有职业使用同一映射，子集运行稳定。其余策略、八种子、250步限制、首次战斗死亡重来一次都不变。路线覆盖按实际进入记录，非仅按偏好统计。
-10. 第一轮逐局数字完整归档；当时的32份日志可从b7090fc取回，当前同名日志为第二轮结果。Jaccard、线索、首次死亡等定义继续沿用第一轮。
-11. 旧存档物品只在字段仍等于旧目录值时同步新combat／description；当前角色、重来快照及临时替身原角色都处理。当前装备选择、数量和自定义改造保留。
-12. 手机布局使用第一轮同一离线浏览器验收脚本；本轮没有新增UI样式变量或审美决策。
+1. 沿用前两轮Lv3、240G森出口可达检查点，seed=20261018、51条件／职业、相同休息／行动／消耗策略。前置战斗按检查点回放假定获胜；正式连续路线真实结算至イグニス胜／败，分母包含提前死亡。准备实际花费195G。
+2. 核心8项严格领先使用样本点估计，比较所有同行条件（含另一条路线的对策同行者与强化火コウモリ竜）；并列失败，不加统计容差。准备组／诅咒组仍计算相同指标，仅移出门槛。
+3. 路线外“重跑”沿用第二轮N=1000、seed=20261018及033／035的逐战满资源检查点和既有对照集合。リーゼ不借后加入的エリオ抬高上限；エリオ对照包含本轮リーゼ。N=2000明确用于204组连续路线。
+4. 招募preview沿用现有句式补入设计给定的20%、2d6与4回合信息，同时同步actions与fallback choices；不改招募条件和叙事。
+5. 指定参数会影响试玩，因此重跑32局；手机布局无实现变更，仅复跑现有截图与浏览器验收。第二轮逐局日志可从ca7fa8c取回，当前同名日志为第三轮；第一、二轮汇总分别归档。
+6. 第一、二轮历史报告原文保留，第三轮联合报告逐组列出两轮通关率及较第二轮变化。报告中的路线外摘要直接取本轮独立逐战JSON，并保存其SHA-256。
 
 ## 6. 偏离 spec 的地方及原因
 
-- 同行者严格最强及三路≤8pp没有全部达成。严格最强在许可参数范围内存在上述固定样本反例；路线差距还包含不受许可数值影响的旧内容比较。按spec的停止并报告条款处理，未擅自扩大修改范围。
-- 为验证原有+3pp限制、连续回复范围及第一轮数字，补充候选／关键条件／路线外报告与归档；均为本轮验收所需。
-- 第一轮“不装备诅咒短剑”的报告说明修正为真实引擎行为，模拟代码未为此改变。运行后只改Markdown函数的说明，JSON保留原运行指纹并记录最终报告代码指纹，非Markdown函数AST一致。
+- 按用户第三轮设计决定，将原24项“本路线最强”改为核心8项严格领先；准备组和诅咒组只报告。严格不等式沿用第二轮决定。
+- 原始三路线≤8pp目标仍有未达项，村路线旧内容差距按设计明确不改；核心失败和路线外越界均如实保留，不扩大调参范围。
+- 没有其他范围偏离；默认提示词、benchmark标准答案、旧敌人、旧路线奖励和其他同行者参数均未改。
 
 ## 7. 已知问题
 
-- 固定种子点估计和限定策略不证明总体概率、所有自由行动或从新游戏开始的整体通关率。关键治疗档位覆盖证明的是这一个条件在本次固定样本上的失败，不泛化到其他策略。
-- 路线固定轮换是为保证覆盖而选，不能把32局当成无偏玩家分布。旧重复进入已清理village_fire_elemental的边界问题仍沿用第一轮记录，本轮32局未触发，未扩大任务范围修复。
-- 已有存档保留当前装备选择；旧战斗中已被截掉的日志仍无法恢复。本轮新取得的外套按空部位规则处理。
+- N=300筛选与N=2000验收共享种子序列，样本扩大可能改变领先关系。所有结论都是固定策略和检查点下的点估计，不等于总体胜率或从新游戏开始的通关率。
+- 路线外结果来自每场独立满资源检查，不等于连续路线胜率；不能用其数值替代核心门槛。
+- 保留旧行为：村路线ワーロック在森林出口按剧情离队，故该组与无同行者相同；模拟拾取外套时保留已穿防具；诅咒短剑在空武器位自动装备。
+- 试玩路线轮换用于覆盖，不能视作无偏玩家分布；原有重复进入已清理village_fire_elemental的边界问题不属于本轮修改范围。

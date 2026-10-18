@@ -97,10 +97,28 @@ class ChapterThreeRouteTests(unittest.TestCase):
         self.assertNotEqual(public["log"][0]["text"], session["combat"]["log"][0]["text"])
 
 
-    def test_counter_ties_fail_strict_second_round_target(self):
+    def test_counter_ties_fail_strict_target(self):
         rows = [dict(character=character, **condition, success_rate=.8)
                 for character in ch3_routes.CHARACTERS for condition in ch3_routes.conditions()]
         self.assertTrue(all(not r["passed"] and r["margin_pp"] == 0 for r in ch3_routes.comparisons(rows)["counters"]))
+
+    def test_third_round_gate_requires_all_eight_core_cells_only(self):
+        rows = []
+        for character in ch3_routes.CHARACTERS:
+            for condition in ch3_routes.conditions():
+                core_counter = (not condition["prepared"] and not condition["cursed"]
+                    and condition["companion"] == ch3_routes.COUNTERS.get(condition["path"]))
+                rows.append(dict(character=character, **condition, success_rate=.81 if core_counter else .8))
+        counters = ch3_routes.comparisons(rows)["counters"]
+        self.assertEqual(sum(r["required"] for r in counters), 8)
+        self.assertEqual(sum(not r["passed"] for r in counters), 16)
+        self.assertEqual(ch3_routes.counter_gate(counters), dict(required=8, evaluated=8, passed_count=8, passed=True))
+        first_core = next(r for r in counters if r["required"])
+        first_core["passed"] = False
+        self.assertFalse(ch3_routes.counter_gate(counters)["passed"])
+        counters.remove(first_core)
+        self.assertFalse(ch3_routes.counter_gate(counters)["passed"])
+        self.assertFalse(ch3_routes.counter_gate([])["passed"])
 
     def test_outside_three_point_boundary_and_original_control_cohorts(self):
         from scripts.balance.ch3_outside import comparisons

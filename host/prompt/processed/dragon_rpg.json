@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-18-v037-r2",
+    "content_revision": "2026-10-18-v037-r3",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -12927,7 +12927,7 @@
         {
           "id": "recruit_liese_letter",
           "text": "守護団の推薦状を見せる",
-          "preview": "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）",
+          "preview": "同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ）",
           "risk": "判定不要",
           "intent_keywords": [
             "守護団の推薦状を見せる"
@@ -12959,7 +12959,7 @@
         {
           "id": "recruit_liese_water",
           "text": "聖水を祭壇に捧げる",
-          "preview": "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）",
+          "preview": "同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ）",
           "risk": "判定不要",
           "intent_keywords": [
             "聖水を祭壇に捧げる"
@@ -12997,7 +12997,7 @@
         {
           "id": "recruit_liese_persuade",
           "text": "共に死者を弔いたいと説く",
-          "preview": "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）",
+          "preview": "同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ）",
           "risk": "1d20+wis判定（DC13）",
           "intent_keywords": [
             "共に死者を弔いたいと説く"
@@ -13131,7 +13131,7 @@
         },
         {
           "text": "守護団の推薦状を見せる",
-          "preview": "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）",
+          "preview": "同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ）",
           "risk": "判定不要",
           "visible_after": "met_liese",
           "hidden_after": "recruited_liese",
@@ -13148,7 +13148,7 @@
         },
         {
           "text": "聖水を祭壇に捧げる",
-          "preview": "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）",
+          "preview": "同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ）",
           "risk": "判定不要",
           "visible_after": "met_liese",
           "hidden_after": "recruited_liese",
@@ -13165,7 +13165,7 @@
         },
         {
           "text": "共に死者を弔いたいと説く",
-          "preview": "同行者にする（HPが半分を切ると回復、それ以外は光の一撃）",
+          "preview": "同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ）",
           "risk": "1d20+wis判定（DC13）",
           "visible_after": "met_liese",
           "hidden_after": "recruited_liese",
@@ -13535,7 +13535,7 @@
         {
           "id": "recruit_elio_gold",
           "text": "傭兵として雇う（50G）",
-          "preview": "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）",
+          "preview": "同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減）",
           "risk": "判定不要",
           "intent_keywords": [
             "傭兵として雇う（50G）"
@@ -13570,7 +13570,7 @@
         {
           "id": "recruit_elio_water",
           "text": "精霊の泉の水を渡す",
-          "preview": "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）",
+          "preview": "同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減）",
           "risk": "判定不要",
           "intent_keywords": [
             "精霊の泉の水を渡す"
@@ -13608,7 +13608,7 @@
         {
           "id": "recruit_elio_persuade",
           "text": "地鳴りの謎を一緒に調べようと誘う",
-          "preview": "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）",
+          "preview": "同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減）",
           "risk": "1d20+int判定（DC13）",
           "intent_keywords": [
             "地鳴りの謎を一緒に調べようと誘う"
@@ -13671,7 +13671,7 @@
         },
         {
           "text": "傭兵として雇う（50G）",
-          "preview": "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）",
+          "preview": "同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減）",
           "risk": "判定不要",
           "visible_after": "met_elio",
           "hidden_after": "recruited_elio",
@@ -13688,7 +13688,7 @@
         },
         {
           "text": "精霊の泉の水を渡す",
-          "preview": "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）",
+          "preview": "同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減）",
           "risk": "判定不要",
           "visible_after": "met_elio",
           "hidden_after": "recruited_elio",
@@ -13705,7 +13705,7 @@
         },
         {
           "text": "地鳴りの謎を一緒に調べようと誘う",
-          "preview": "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）",
+          "preview": "同行者にする（毎ラウンド敵へ2d6の水属性ダメージ、4ラウンドごとに「水の帳」で被ダメージ半減）",
           "risk": "1d20+int判定（DC13）",
           "visible_after": "met_elio",
           "hidden_after": "recruited_elio",
@@ -18224,12 +18224,12 @@
       "id": "paladin_liese",
       "name": "聖騎士リーゼ",
       "image": "/static/images/npc_liese.png",
-      "description": "暁の守護団の若き聖騎士。毎ラウンド開始時、プレイヤーのHPが半分未満なら「癒しの祈り」で最大HPの25%を回復し、そうでなければ「聖光の一撃」で敵へ2d3の光属性ダメージを与える（不死の敵を優先して狙う）。",
+      "description": "暁の守護団の若き聖騎士。毎ラウンド開始時、プレイヤーのHPが半分未満なら「癒しの祈り」で最大HPの20%を回復し、そうでなければ「聖光の一撃」で敵へ2d6の光属性ダメージを与える（不死の敵を優先して狙う）。",
       "round_start_effects": [
         {
           "kind": "heal_player",
           "name": "癒しの祈り",
-          "max_hp_ratio": 0.25,
+          "max_hp_ratio": 0.2,
           "requirements": {
             "player_hp_ratio_lt": 0.5
           }
@@ -18237,7 +18237,7 @@
         {
           "kind": "damage_enemy",
           "name": "聖光の一撃",
-          "damage": "2d3",
+          "damage": "2d6",
           "element": "holy",
           "target": "undead_first",
           "requirements": {
@@ -18250,12 +18250,12 @@
       "id": "hydromancer_elio",
       "name": "水術士エリオ",
       "image": "/static/images/npc_elio.png",
-      "description": "流れの水術士。毎ラウンド開始時に「水刃」で敵へ2d3の水属性ダメージを与える（水に弱い敵を優先して狙う）。4ラウンドごとに「水の帳」を張り、そのラウンドにプレイヤーが受けるダメージを半分にする。",
+      "description": "流れの水術士。毎ラウンド開始時に「水刃」で敵へ2d6の水属性ダメージを与える（水に弱い敵を優先して狙う）。4ラウンドごとに「水の帳」を張り、そのラウンドにプレイヤーが受けるダメージを半分にする。",
       "round_start_effects": [
         {
           "kind": "damage_enemy",
           "name": "水刃",
-          "damage": "2d3",
+          "damage": "2d6",
           "element": "water",
           "target": "weak_to:water"
         },

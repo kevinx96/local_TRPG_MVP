@@ -162,7 +162,7 @@ class OaksdawnTests(unittest.TestCase):
                 entries = [e for e in session["combat"]["log"] if e["actor"] == "companion"]
                 self.assertEqual(len(entries), 1)
                 self.assertEqual(entries[0]["kind"], "heal" if hp < 50 else "damage")
-                self.assertEqual(session["character"]["hp"], hp + 25 if hp < 50 else hp)
+                self.assertEqual(session["character"]["hp"], hp + 20 if hp < 50 else hp)
                 self.assertIn("癒しの祈り" if hp < 50 else "聖光の一撃", entries[0]["text"])
                 if hp >= 50:
                     self.assertIn("光属性", entries[0]["text"])

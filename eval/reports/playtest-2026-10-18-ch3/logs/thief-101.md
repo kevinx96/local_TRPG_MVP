@@ -531,7 +531,7 @@
 ## step 45 / goblin_fort_second_left 「ゴブリン砦・二階左」 HP 0/14 G 115
 
 
-終了: {"reason": "ゴブリン砦・二階左で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_second_left_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:46:40.707444+00:00", "epilogue": []}
+終了: {"reason": "ゴブリン砦・二階左で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_second_left_defeat", "combat_defeat": true, "created_at": "2026-10-18T07:37:59.448119+00:00", "epilogue": []}
 > [GM] 運命の糸がほどけ、あなたは再びゴブリン砦の入口に立っていた。
 - ゴブリン砦の入口からやり直しました。
 
@@ -1405,9 +1405,9 @@
 ## step 143 / oaksdawn_chapel 「暁の礼拝堂」 HP 12/22 G 400
 
 - 祈りを捧げてもらう | 5G | 判定不要
-- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要
-- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要 [不可: 聖水所持が必要]
-- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 1d20+wis判定（DC13）
+- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要
+- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 判定不要 [不可: 聖水所持が必要]
+- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると最大HPの20%を回復、それ以外は敵へ2d6の光属性ダメージ） | 1d20+wis判定（DC13）
 - 聖水を分けてもらう |  | 判定不要
 - 大通りへ戻る |  | 判定不要
 - 鐘のことを詳しく聞く |  | 判定不要
@@ -1566,7 +1566,7 @@
 戦闘: skill / vital_strike → fire_elemental:1
 - 急所突きは火の精霊に当たらなかった。
 - 火炎の腕がテストに5ダメージ。
-- 聖光の一撃が火の精霊に6光属性ダメージ。
+- 聖光の一撃が火の精霊に11光属性ダメージ。
 
 ## step 157 / village_fire_elemental 「炎上する麓の村・火の精霊戦」 HP 21/26 G 400
 
@@ -1574,23 +1574,7 @@
 戦闘: skill / vital_strike → fire_elemental:1
 - 急所突きが火の精霊に10ダメージ。
 - 火炎の腕がテストに5ダメージ。
-- 聖光の一撃が火の精霊に5光属性ダメージ。
-
-## step 158 / village_fire_elemental 「炎上する麓の村・火の精霊戦」 HP 16/26 G 400
-
-
-戦闘: skill / vital_strike → fire_elemental:1
-- 急所突きは火の精霊に当たらなかった。
-- 火炎の腕はテストに当たらなかった。
-- 聖光の一撃が火の精霊に5光属性ダメージ。
-
-## step 159 / village_fire_elemental 「炎上する麓の村・火の精霊戦」 HP 16/26 G 400
-
-
-戦闘: skill / vital_strike → fire_elemental:1
-- 急所突きは火の精霊に当たらなかった。
-- 火炎の腕がテストに3ダメージ。
-- 聖光の一撃が火の精霊に4光属性ダメージ。
+- 聖光の一撃が火の精霊に9光属性ダメージ。
 - すべての敵を倒した。
 - 22ゴールドを獲得しました。
 - 魔力の果実 x1を入手しました。
@@ -1598,13 +1582,13 @@
 - 崩れかけた民家の奥から、子どもの泣き声が聞こえる。入口は燃える梁で塞がれている。
 - クエスト更新：燃える家の子ども
 
-## step 160 / burning_house 「燃える民家の前」 HP 13/26 G 422
+## step 158 / burning_house 「燃える民家の前」 HP 16/26 G 422
 
 > [GM] 炎の怪物を打ち倒すと、燃え盛る村の一角に不自然な氷が残っていることに気づいた。炎の中でも溶けず、冷気を放ち続けている。
 > 崩れかけた民家の奥から、子どもの泣き声が聞こえる。入口は燃える梁で塞がれている。
-- 戦闘に勝利しました。 HP 13/26、MP 9/9、SP 8/20。
+- 戦闘に勝利しました。 HP 16/26、MP 9/9、SP 14/20。
 
-## step 161 / burning_house 「燃える民家の前」 HP 13/26 G 422
+## step 159 / burning_house 「燃える民家の前」 HP 16/26 G 422
 
 - 燃える梁を叩き壊す |  | 1d20+str判定（DC13）
 - 裏手の窓からよじ登る |  | 1d20+dex判定（DC13）
@@ -1616,7 +1600,7 @@
 - 現在地が炎の中の結氷になりました。
 - クエスト更新：燃える家の子ども
 
-## step 162 / village_frozen_clue 「炎の中の結氷」 HP 13/26 G 422
+## step 160 / village_frozen_clue 「炎の中の結氷」 HP 16/26 G 422
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 村を出ようとします | 不明
@@ -1628,7 +1612,7 @@
 > [GM] 村を離れようとした街道で、赤い法衣と炎に包まれた骸骨の魔法使いが待ち受けていた。
 - 現在地が燃える街道・Xanxusの尋問になりました。
 
-## step 163 / xanxus_confrontation 「燃える街道・Xanxusの尋問」 HP 13/26 G 422
+## step 161 / xanxus_confrontation 「燃える街道・Xanxusの尋問」 HP 16/26 G 422
 
 - ごまかして切り抜ける | 何も察知していないふりをします | 危険
 - 先手を打って攻撃する | Xanxusが動く前に仕掛けます | 危険
@@ -1639,47 +1623,38 @@
 > [GM] Xanxusは乾いた笑い声を上げた。『その目は何かを知った者の目だ。浅い嘘で私を欺けると思ったか』杖の一振りで炎の壁が街道を閉ざし、燃える骸骨は明確な殺意を向けて戦闘態勢に入る。
 - 現在地がXanxus戦になりました。
 
-## step 164 / xanxus_battle 「Xanxus戦」 HP 13/26 G 422
+## step 162 / xanxus_battle 「Xanxus戦」 HP 16/26 G 422
 
 
 戦闘: skill / thief_lv3_b → xanxus:1
 - 影隠れ・改を使用し、守りを固めた。
 - 隕石召喚がテストに8ダメージ。
-- 癒しの祈りがHPを7回復した。
+- 癒しの祈りがHPを5回復した。
 
-## step 165 / xanxus_battle 「Xanxus戦」 HP 12/26 G 422
+## step 163 / xanxus_battle 「Xanxus戦」 HP 13/26 G 422
 
 
 戦闘: skill / thief_lv3_b → xanxus:1
 - 影隠れ・改を使用し、守りを固めた。
 - 隕石召喚がテストに8ダメージ。
-- 癒しの祈りがHPを7回復した。
+- 癒しの祈りがHPを5回復した。
 
-## step 166 / xanxus_battle 「Xanxus戦」 HP 11/26 G 422
+## step 164 / xanxus_battle 「Xanxus戦」 HP 10/26 G 422
 
 
 戦闘: skill / vital_strike → xanxus:1
-- 急所突きが赤炎骸骨Xanxusに10ダメージ。
-- 赤炎骸骨Xanxusは火炎旋渦を展開した。
-- 火炎旋渦が8ダメージを与えた。
-- 癒しの祈りがHPを7回復した。
-
-## step 167 / xanxus_battle 「Xanxus戦」 HP 10/26 G 422
-
-
-戦闘: attack / basic_attack → xanxus:1
-- ダガーが赤炎骸骨Xanxusに3ダメージ。
+- 急所突きが赤炎骸骨Xanxusに6ダメージ。
 - 隕石召喚がテストに34ダメージ。
 - プレイヤーは戦闘不能になった。
 - HPが1回復しました。
 - 現在地がXanxusの最後通告になりました。
 
-## step 168 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/26 G 422
+## step 165 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/26 G 422
 
 > [GM] Xanxusは倒れたあなたを見下ろした。『大人しく先を探索しろ。そして私の火種を飲め。任務を放棄すれば、その場で爆ぜさせる』
-- 戦闘に敗北しました。 HP 1/26、MP 9/9、SP 3/20。
+- 戦闘に敗北しました。 HP 1/26、MP 9/9、SP 8/20。
 
-## step 169 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/26 G 422
+## step 166 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/26 G 422
 
 - 大人しく従う | 火種を受け取り、探索を続けます | 判定不要
 - 死んでも従わない | Xanxusの要求を拒絶します | 判定不要
@@ -1691,7 +1666,7 @@
 - 現在地が炎の中の結氷になりました。
 - クエスト更新：火種の呪い
 
-## step 170 / village_frozen_clue 「炎の中の結氷」 HP 1/26 G 422
+## step 167 / village_frozen_clue 「炎の中の結氷」 HP 1/26 G 422
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 第4章へ向かいます | 不明
@@ -1703,7 +1678,7 @@
 > [GM] 凍った炎の中心に、白い鱗が一枚埋まっていた。冷気はそこから広がっている。
 - 白い竜鱗 x1を入手しました。
 
-## step 171 / village_frozen_clue 「炎の中の結氷」 HP 1/26 G 422
+## step 168 / village_frozen_clue 「炎の中の結氷」 HP 1/26 G 422
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 第4章へ向かいます | 不明
@@ -1716,7 +1691,7 @@
 - 現在地が麓の村・避難所になりました。
 - 長老は焼け跡を見つめ、黙り込んでいる
 
-## step 172 / village 「麓の村・避難所」 HP 1/26 G 422
+## step 169 / village 「麓の村・避難所」 HP 1/26 G 422
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1733,7 +1708,7 @@
 - HP・MP・SPが全回復しました。
 - 5ゴールドを消費しました。
 
-## step 173 / village 「麓の村・避難所」 HP 26/26 G 417
+## step 170 / village 「麓の村・避難所」 HP 26/26 G 417
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1749,7 +1724,7 @@
 > [GM] 村を発ち、来た道を引き返す。森を抜けて城門をくぐると、見慣れた城下町の大通りが広がっていた。
 - 現在地がアルテリア城下町になりました。
 
-## step 174 / castle_town 「アルテリア城下町」 HP 26/26 G 417
+## step 171 / castle_town 「アルテリア城下町」 HP 26/26 G 417
 
 - 鍛冶屋へ向かう | 武器の強化や購入 | 判定不要
 - 宿屋へ向かう | 休息や情報収集 | 判定不要
@@ -1768,7 +1743,7 @@
 - 現在地が麓の村・避難所になりました。
 - 長老は焼け跡を見つめ、黙り込んでいる
 
-## step 175 / village 「麓の村・避難所」 HP 26/26 G 417
+## step 172 / village 「麓の村・避難所」 HP 26/26 G 417
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -1784,7 +1759,7 @@
 > [GM] 邪竜イグニスが潜む谷の麓、小さな村にたどり着いた。冷たい風が吹き抜ける中、村人たちは怯えた様子で暮らしている。邪竜に立ち向かう術を得るには、まず情報を集め、旅の支度を整える必要がありそうだ。
 - 現在地が炎の中の結氷になりました。
 
-## step 176 / village_frozen_clue 「炎の中の結氷」 HP 26/26 G 417
+## step 173 / village_frozen_clue 「炎の中の結氷」 HP 26/26 G 417
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 第4章へ向かいます | 不明
@@ -1796,7 +1771,7 @@
 > [GM] 凍結した道を辿ると、冷気が人の形を取り、氷の精霊となって行く手を塞いだ。
 - 現在地が凍結した村・氷の精霊になりました。
 
-## step 177 / ice_elemental_encounter 「凍結した村・氷の精霊」 HP 26/26 G 417
+## step 174 / ice_elemental_encounter 「凍結した村・氷の精霊」 HP 26/26 G 417
 
 - 氷の精霊と戦う | 戦闘を開始します | 危険（戦闘）
 - 氷の精霊を迂回する | 冷気の薄い経路を探します | 1d20+int判定（DC14）
@@ -1808,55 +1783,47 @@
 > 敵が退路を塞ぎ、戦闘が始まる。
 - 現在地が炎上する村・氷霜の巨狼になりました。
 
-## step 178 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 26/26 G 417
+## step 175 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 26/26 G 417
 
 
 戦闘: skill / thief_lv3_b → frost_dire_wolf:1
 - 影隠れ・改を使用し、守りを固めた。
 - 凍爪はテストに当たらなかった。
-- 聖光の一撃が氷霜の巨狼に4光属性ダメージ。
+- 聖光の一撃が氷霜の巨狼に11光属性ダメージ。
 
-## step 179 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 26/26 G 417
+## step 176 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 26/26 G 417
 
 
 戦闘: skill / thief_lv3_b → frost_dire_wolf:1
 - 影隠れ・改を使用し、守りを固めた。
-- 凍爪がテストに6ダメージ。
-- 聖光の一撃が氷霜の巨狼に6光属性ダメージ。
-
-## step 180 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 20/26 G 417
-
-
-戦闘: item / fireball_scroll → frost_dire_wolf:1
-- 火球術の巻物が氷霜の巨狼に11ダメージ。
 - 凍爪がテストに1ダメージ。
-- 聖光の一撃が氷霜の巨狼に6光属性ダメージ。
+- 聖光の一撃が氷霜の巨狼に10光属性ダメージ。
 
-## step 181 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 19/26 G 417
+## step 177 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 25/26 G 417
 
 
 戦闘: item / fireball_scroll → frost_dire_wolf:1
-- 火球術の巻物が氷霜の巨狼に12ダメージ。
-- 凍爪がテストに3ダメージ。
-- 聖光の一撃が氷霜の巨狼に4光属性ダメージ。
+- 火球術の巻物が氷霜の巨狼に10ダメージ。
+- 凍爪がテストに7ダメージ。
+- 聖光の一撃が氷霜の巨狼に8光属性ダメージ。
 
-## step 182 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 16/26 G 417
+## step 178 / frost_wolf_battle 「炎上する村・氷霜の巨狼」 HP 18/26 G 417
 
 
-戦闘: skill / vital_strike → frost_dire_wolf:1
-- 急所突きが氷霜の巨狼に12ダメージ。
+戦闘: item / fireball_scroll → frost_dire_wolf:1
+- 火球術の巻物が氷霜の巨狼に8ダメージ。
 - すべての敵を倒した。
 - 50ゴールドを獲得しました。
 - 白い竜鱗 x1を入手しました。
 - 迅速の霊薬 x1を入手しました。
 - 現在地が砕けた氷の太刀になりました。
 
-## step 183 / ian_ice_katana_aftermath 「砕けた氷の太刀」 HP 16/26 G 467
+## step 179 / ian_ice_katana_aftermath 「砕けた氷の太刀」 HP 18/26 G 467
 
 > [GM] 氷霜の巨狼は霧のように消散し、その核だった氷の太刀が地面へ残った。拾おうとした瞬間、空から隕石が落ちて刀を砕く。遠くに全身を炎に包んだ影が一瞬だけ見えた。巨狼の核が砕け、中から白い鱗が一枚転がり出た。
-- 戦闘に勝利しました。 HP 16/26、MP 9/9、SP 16/20。
+- 戦闘に勝利しました。 HP 18/26、MP 9/9、SP 19/20。
 
-## step 184 / ian_ice_katana_aftermath 「砕けた氷の太刀」 HP 16/26 G 467
+## step 180 / ian_ice_katana_aftermath 「砕けた氷の太刀」 HP 18/26 G 467
 
 - イアンの頼みを受ける | 元凶を追う約束をし、武器を受け取ります | 不明
 - イアンの頼みを断る | 村を出て第4章へ進みます | 不明
@@ -1870,7 +1837,7 @@
 - クエスト更新：紅き邪竜の討伐
 - クエスト更新：砕けた氷の太刀
 
-## step 185 / valley_entrance 「竜の谷・入口」 HP 16/26 G 467
+## step 181 / valley_entrance 「竜の谷・入口」 HP 18/26 G 467
 
 - 煤の亡霊と戦う |  | 危険（戦闘）
 - 霧に紛れてやり過ごす |  | 1d20+dex判定（DC14）
@@ -1881,7 +1848,7 @@
 - 魔力の果実 x1を入手しました。
 - 現在地が溶岩の吊り橋になりました。
 
-## step 186 / valley_lava_bridge 「溶岩の吊り橋」 HP 16/26 G 467
+## step 182 / valley_lava_bridge 「溶岩の吊り橋」 HP 18/26 G 467
 
 - 吊り橋を渡る |  | 1d20+dex判定（DC12）
 - 岩棚の迂回路を進む |  | 不明
@@ -1891,13 +1858,13 @@
 > [GM] 吊り橋を避け、崖に張り出した岩棚へ足をかけた。足元から熱風が吹き上げてくる。
 - 現在地が岩棚の迂回路になりました。
 
-## step 187 / valley_ledge 「岩棚の迂回路」 HP 16/26 G 467
+## step 183 / valley_ledge 「岩棚の迂回路」 HP 18/26 G 467
 
 
-戦闘: attack / basic_attack → lava_drake:1
-- ダガーが溶岩ドレイクに4ダメージ。
-- 鉤爪はテストに当たらなかった。
-- 聖光の一撃が溶岩ドレイクに6光属性ダメージ。
+戦闘: attack / basic_attack → lava_drake:2
+- ダガーが溶岩ドレイクに5ダメージ。
+- 溶岩の吐息はテストに当たらなかった。
+- 聖光の一撃が溶岩ドレイクに8光属性ダメージ。
 - すべての敵を倒した。
 - 10ゴールドを獲得しました。
 - 焼けた溶岩石 x1を入手しました。
@@ -1906,13 +1873,13 @@
 - 現在地が竜の巣の前・Xanxusになりました。
 - 炎の中からXanxusが現れた。あなたの胸の火種が、呼応するように熱を帯びる。「よく来た。紅竜を倒したら、その心臓を我に捧げよ。火種を持つ限り、お前は我に逆らえぬ」
 
-## step 188 / xanxus_at_nest 「竜の巣の前・Xanxus」 HP 30/30 G 477
+## step 184 / xanxus_at_nest 「竜の巣の前・Xanxus」 HP 30/30 G 477
 
 > [GM] 巨大な洞穴の入口から、灼熱の風が吹きつけてくる。奥で、何か巨大なものが重く息をしている。
 > 炎の中からXanxusが現れた。あなたの胸の火種が、呼応するように熱を帯びる。「よく来た。紅竜を倒したら、その心臓を我に捧げよ。火種を持つ限り、お前は我に逆らえぬ」
 - 戦闘に勝利しました。 HP 30/30、MP 10/10、SP 22/22。
 
-## step 189 / xanxus_at_nest 「竜の巣の前・Xanxus」 HP 30/30 G 477
+## step 185 / xanxus_at_nest 「竜の巣の前・Xanxus」 HP 30/30 G 477
 
 - 従う |  | 判定不要
 - ？？？ |  |  [不可: まだ知らない何かが必要なようだ。]
@@ -1922,7 +1889,7 @@
 > [GM] Xanxusは満足げに笑い、炎とともに消えた。
 - 現在地が竜の巣の前になりました。
 
-## step 190 / valley_nest_gate 「竜の巣の前」 HP 30/30 G 477
+## step 186 / valley_nest_gate 「竜の巣の前」 HP 30/30 G 477
 
 - 竜の巣へ踏み込む |  | 不明
 
@@ -1931,75 +1898,67 @@
 > [GM] 灼熱の風に逆らって洞穴へ踏み込む。闇の奥で、巨大な何かがゆっくりと目を開けた。
 - 現在地が竜の谷になりました。
 
-## step 191 / dragon_valley_loc 「竜の谷」 HP 30/30 G 477
-
-
-戦闘: skill / thief_lv5_a → ignis:1
-- 急所突き・改が邪竜イグニスに23ダメージ。
-- 炎の息がテストに4ダメージ。
-- 聖光の一撃が邪竜イグニスに3光属性ダメージ。
-
-## step 192 / dragon_valley_loc 「竜の谷」 HP 26/30 G 477
-
-
-戦闘: skill / thief_lv5_a → ignis:1
-- 急所突き・改が邪竜イグニスに31ダメージ。
-- 炎の息がテストに6ダメージ。
-- 聖光の一撃が邪竜イグニスに2光属性ダメージ。
-
-## step 193 / dragon_valley_loc 「竜の谷」 HP 20/30 G 477
+## step 187 / dragon_valley_loc 「竜の谷」 HP 30/30 G 477
 
 
 戦闘: skill / thief_lv5_a → ignis:1
 - 急所突き・改が邪竜イグニスに25ダメージ。
-- 尻尾攻撃がテストに12ダメージ。
-- 癒しの祈りがHPを8回復した。
+- 炎の息がテストに4ダメージ。
+- 聖光の一撃が邪竜イグニスに9光属性ダメージ。
 
-## step 194 / dragon_valley_loc 「竜の谷」 HP 16/30 G 477
-
-
-戦闘: skill / thief_lv5_a → ignis:1
-- 急所突き・改が邪竜イグニスに32ダメージ。
-- 炎の息がテストに3ダメージ。
-- 癒しの祈りがHPを8回復した。
-
-## step 195 / dragon_valley_loc 「竜の谷」 HP 21/30 G 477
+## step 188 / dragon_valley_loc 「竜の谷」 HP 26/30 G 477
 
 
 戦闘: skill / thief_lv5_a → ignis:1
-- 急所突き・改が邪竜イグニスに24ダメージ。
-- 炎の息はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに2光属性ダメージ。
+- 急所突き・改が邪竜イグニスに23ダメージ。
+- 尻尾攻撃がテストに9ダメージ。
+- 聖光の一撃が邪竜イグニスに6光属性ダメージ。
 
-## step 196 / dragon_valley_loc 「竜の谷」 HP 21/30 G 477
+## step 189 / dragon_valley_loc 「竜の谷」 HP 17/30 G 477
 
 
-戦闘: attack / basic_attack → ignis:1
-- ダガーが邪竜イグニスに6ダメージ。
+戦闘: skill / thief_lv5_a → ignis:1
+- 急所突き・改が邪竜イグニスに30ダメージ。
+- 尻尾攻撃がテストに13ダメージ。
+- 癒しの祈りがHPを6回復した。
+
+## step 190 / dragon_valley_loc 「竜の谷」 HP 10/30 G 477
+
+
+戦闘: item / herb → ignis:1
+- 薬草を使い、HPを10回復した。
+- 炎の息がテストに5ダメージ。
+- 聖光の一撃が邪竜イグニスに4光属性ダメージ。
+
+## step 191 / dragon_valley_loc 「竜の谷」 HP 15/30 G 477
+
+
+戦闘: skill / thief_lv5_a → ignis:1
+- 急所突き・改が邪竜イグニスに23ダメージ。
 - 尻尾攻撃はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに2光属性ダメージ。
+- 聖光の一撃が邪竜イグニスに6光属性ダメージ。
 
-## step 197 / dragon_valley_loc 「竜の谷」 HP 21/30 G 477
-
-
-戦闘: attack / basic_attack → ignis:1
-- ダガーが邪竜イグニスに6ダメージ。
-- 炎の息はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに1光属性ダメージ。
-
-## step 198 / dragon_valley_loc 「竜の谷」 HP 21/30 G 477
-
-
-戦闘: attack / basic_attack → ignis:1
-- ダガーは邪竜イグニスに当たらなかった。
-- 炎の息はテストに当たらなかった。
-- 聖光の一撃が邪竜イグニスに1光属性ダメージ。
-
-## step 199 / dragon_valley_loc 「竜の谷」 HP 21/30 G 477
+## step 192 / dragon_valley_loc 「竜の谷」 HP 15/30 G 477
 
 
 戦闘: skill / thief_lv5_a → ignis:1
-- 急所突き・改が邪竜イグニスに27ダメージ。
+- 急所突き・改が邪竜イグニスに30ダメージ。
+- 尻尾攻撃はテストに当たらなかった。
+- 聖光の一撃が邪竜イグニスに3光属性ダメージ。
+
+## step 193 / dragon_valley_loc 「竜の谷」 HP 15/30 G 477
+
+
+戦闘: attack / basic_attack → ignis:1
+- ダガーが邪竜イグニスに4ダメージ。
+- 炎の息がテストに4ダメージ。
+- 癒しの祈りがHPを6回復した。
+
+## step 194 / dragon_valley_loc 「竜の谷」 HP 17/30 G 477
+
+
+戦闘: attack / basic_attack → ignis:1
+- ダガーが邪竜イグニスに4ダメージ。
 - すべての敵を倒した。
 - 100ゴールドを獲得しました。
 - 現在地が竜の谷・紅竜の最期になりました。
@@ -2007,13 +1966,13 @@
 - クエスト更新：紅き邪竜の討伐
 - クエスト更新：火種の呪い
 
-## step 200 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 21/30 G 577
+## step 195 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 17/30 G 577
 
 > [GM] 倒れたイグニスの胸がかすかに上下している。焼け焦げた鱗の隙間、古い傷口だけが、炎の竜には似つかわしくない白い霜に覆われている。
 > 「約束の品はもらっていくぞ」Xanxusの声とともに、紅竜の心臓の炎が宙へ吸い上げられていった。
-- 戦闘に勝利しました。 HP 21/30、MP 10/10、SP 0/22。
+- 戦闘に勝利しました。 HP 17/30、MP 10/10、SP 4/22。
 
-## step 201 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 21/30 G 577
+## step 196 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 17/30 G 577
 
 - イグニスの傷を調べる | 霜に覆われた古傷を確かめる | 判定不要
 - イグニスの最期の言葉を聞く | 消えゆく竜の声に耳を傾ける | 判定不要
@@ -2024,7 +1983,7 @@
 > [GM] 傷口の奥で、雪のように白い鱗が一枚、肉に食い込んだまま凍りついていた。紅竜のものではない。
 - 白い竜鱗 x1を入手しました。
 
-## step 202 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 21/30 G 577
+## step 197 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 17/30 G 577
 
 - イグニスの傷を調べる | 霜に覆われた古傷を確かめる | 判定不要 [不可: 完了済みです。]
 - イグニスの最期の言葉を聞く | 消えゆく竜の声に耳を傾ける | 判定不要
@@ -2034,7 +1993,7 @@
 > [プレイヤー] イグニスの最期の言葉を聞く
 > [GM] 「……白き者に、気をつけよ。盟約を……破ったのは、我ではない……」紅竜の瞳から光が消えた。
 
-## step 203 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 21/30 G 577
+## step 198 / ignis_last_breath 「竜の谷・紅竜の最期」 HP 17/30 G 577
 
 - イグニスの傷を調べる | 霜に覆われた古傷を確かめる | 判定不要 [不可: 完了済みです。]
 - イグニスの最期の言葉を聞く | 消えゆく竜の声に耳を傾ける | 判定不要 [不可: 完了済みです。]
@@ -2046,7 +2005,7 @@
 - 現在地が凱旋の城門になりました。
 - 城門をくぐると、花びらと歓声があなたを迎えた。邪竜の脅威が去ったことは、すでに城下町じゅうに知れ渡っている。人混みの向こうで、将軍ドラコが穏やかに手を振っていた。
 
-## step 204 / royal_gate 「凱旋の城門」 HP 21/30 G 577
+## step 199 / royal_gate 「凱旋の城門」 HP 17/30 G 577
 
 - 城下町へ進む |  | 不明
 
@@ -2057,7 +2016,7 @@
 - 城下町は祝祭の飾りで埋め尽くされている。祝杯をあげる人々の間を、王国の近衛兵たちが慌ただしく行き来していた。
 - クエスト更新：将軍の屋敷
 
-## step 205 / festival_town 「凱旋の城下町」 HP 21/30 G 577
+## step 200 / festival_town 「凱旋の城下町」 HP 17/30 G 577
 
 - 宿屋へ向かう |  | 判定不要
 - 道具屋へ向かう |  | 判定不要
@@ -2071,7 +2030,7 @@
 > [プレイヤー] 凱旋の間へ向かう
 - 現在地が王城・凱旋の間になりました。
 
-## step 206 / castle_report 「王城・凱旋の間」 HP 21/30 G 577
+## step 201 / castle_report 「王城・凱旋の間」 HP 17/30 G 577
 
 - 将軍ドラコの正体を問いただす | 集めた証拠を国王の前に示す | 危険（戦闘）
 - 討伐を報告する | イグニス討伐の報告を終える | 判定不要
@@ -2086,57 +2045,41 @@
 - クエスト達成：砕けた氷の太刀
 - クエスト達成：凍てつく謎
 
-## step 207 / draco_battle 「王の間・剣聖ドラコ」 HP 21/30 G 577
+## step 202 / draco_battle 「王の間・剣聖ドラコ」 HP 17/30 G 577
 
 
-戦闘: attack / basic_attack → draco_human:1
-- ダガーが剣聖ドラコに8ダメージ。
-- 剣聖の一閃がテストに12ダメージ。
-- 癒しの祈りがHPを8回復した。
-
-## step 208 / draco_battle 「王の間・剣聖ドラコ」 HP 17/30 G 577
-
-
-戦闘: attack / basic_attack → draco_human:1
-- ダガーは剣聖ドラコに当たらなかった。
-- 剣聖の一閃がテストに12ダメージ。
-- 癒しの祈りがHPを8回復した。
-
-## step 209 / draco_battle 「王の間・剣聖ドラコ」 HP 13/30 G 577
-
-
-戦闘: attack / basic_attack → draco_human:1
-- ダガーが剣聖ドラコに9ダメージ。
+戦闘: skill / thief_lv3_b → draco_human:1
+- 影隠れ・改を使用し、守りを固めた。
 - 剣聖の一閃はテストに当たらなかった。
-- 癒しの祈りがHPを8回復した。
+- 聖光の一撃が剣聖ドラコに10光属性ダメージ。
 
-## step 210 / draco_battle 「王の間・剣聖ドラコ」 HP 21/30 G 577
+## step 203 / draco_battle 「王の間・剣聖ドラコ」 HP 17/30 G 577
+
+
+戦闘: skill / thief_lv3_b → draco_human:1
+- 影隠れ・改を使用し、守りを固めた。
+- 剣聖の一閃がテストに2ダメージ。
+- 聖光の一撃が剣聖ドラコに6光属性ダメージ。
+
+## step 204 / draco_battle 「王の間・剣聖ドラコ」 HP 15/30 G 577
 
 
 戦闘: attack / basic_attack → draco_human:1
-- ダガーが剣聖ドラコに7ダメージ。
+- ダガーが剣聖ドラコに6ダメージ。
 - ドラコの体が裂け、白い光が王の間を満たす。天井を突き破って現れたのは、雪原のような翼を持つ巨竜だった。「我が名はヴァイス。盟約の番人にして、その終わりを告げる者」
-- 白翼の薙ぎ払いがテストに12ダメージ。
-- 癒しの祈りがHPを8回復した。
-
-## step 211 / draco_battle 「王の間・剣聖ドラコ」 HP 17/30 G 577
-
-
-戦闘: attack / basic_attack → draco_dragon:1
-- ダガーは白竜ヴァイスに当たらなかった。
-- 凍てつく吐息がテストに43ダメージ。
+- 白翼の薙ぎ払いがテストに20ダメージ。
 - プレイヤーは戦闘不能になった。
 - 王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。
 
-## step 212 / draco_battle 「王の間・剣聖ドラコ」 HP 0/30 G 577
+## step 205 / draco_battle 「王の間・剣聖ドラコ」 HP 0/30 G 577
 
 > [GM] 王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。
-- 戦闘に敗北しました。 HP 0/30、MP 10/10、SP 4/22。
+- 戦闘に敗北しました。 HP 0/30、MP 10/10、SP 2/22。
 
-## step 213 / draco_battle 「王の間・剣聖ドラコ」 HP 0/30 G 577
+## step 206 / draco_battle 「王の間・剣聖ドラコ」 HP 0/30 G 577
 
 
-終了: {"ending": "draco_victory", "reason": "王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。", "combat_defeat": true, "created_at": "2026-10-18T06:49:08.661428+00:00", "epilogue": []}
+終了: {"ending": "draco_victory", "reason": "王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。", "combat_defeat": true, "created_at": "2026-10-18T07:39:02.553606+00:00", "epilogue": []}
 
 ## 検証結果
 
@@ -2144,7 +2087,7 @@
 {
   "character": "thief",
   "seed": 101,
-  "steps": 213,
+  "steps": 206,
   "retry_count": 1,
   "ending": "draco_victory",
   "final_location": "draco_battle",
@@ -2170,14 +2113,14 @@
       "entry_hp": 7
     },
     {
-      "step": 213,
+      "step": 206,
       "location": "draco_battle",
       "ending": "draco_victory",
       "combat_defeat": true,
       "completed": false,
       "attempt": 1,
       "area": "royal_return",
-      "entry_hp": 21
+      "entry_hp": 17
     }
   ],
   "farthest_location": "draco_battle",
@@ -3023,7 +2966,7 @@
       "pure_movement": false
     },
     {
-      "step": 161,
+      "step": 159,
       "attempt": 1,
       "location": "burning_house",
       "action_id": "leave_burning_house",
@@ -3031,7 +2974,7 @@
       "pure_movement": false
     },
     {
-      "step": 162,
+      "step": 160,
       "attempt": 1,
       "location": "village_frozen_clue",
       "action_id": "skip_frozen_clue_before_xanxus",
@@ -3039,7 +2982,7 @@
       "pure_movement": true
     },
     {
-      "step": 163,
+      "step": 161,
       "attempt": 1,
       "location": "xanxus_confrontation",
       "action_id": "bluff_xanxus",
@@ -3047,7 +2990,7 @@
       "pure_movement": false
     },
     {
-      "step": 169,
+      "step": 166,
       "attempt": 1,
       "location": "xanxus_ultimatum",
       "action_id": "accept_xanxus_fire_seed",
@@ -3055,7 +2998,7 @@
       "pure_movement": false
     },
     {
-      "step": 170,
+      "step": 167,
       "attempt": 1,
       "location": "village_frozen_clue",
       "action_id": "inspect_frost_core",
@@ -3063,7 +3006,7 @@
       "pure_movement": false
     },
     {
-      "step": 171,
+      "step": 168,
       "attempt": 1,
       "location": "village_frozen_clue",
       "action_id": "visit_village",
@@ -3071,7 +3014,7 @@
       "pure_movement": false
     },
     {
-      "step": 172,
+      "step": 169,
       "attempt": 1,
       "location": "village",
       "action_id": "rest_at_refuge",
@@ -3079,7 +3022,7 @@
       "pure_movement": false
     },
     {
-      "step": 173,
+      "step": 170,
       "attempt": 1,
       "location": "village",
       "action_id": "return_castle_from_village",
@@ -3087,7 +3030,7 @@
       "pure_movement": false
     },
     {
-      "step": 174,
+      "step": 171,
       "attempt": 1,
       "location": "castle_town",
       "action_id": "return_village",
@@ -3095,7 +3038,7 @@
       "pure_movement": false
     },
     {
-      "step": 175,
+      "step": 172,
       "attempt": 1,
       "location": "village",
       "action_id": "return_frozen_clue",
@@ -3103,7 +3046,7 @@
       "pure_movement": true
     },
     {
-      "step": 176,
+      "step": 173,
       "attempt": 1,
       "location": "village_frozen_clue",
       "action_id": "investigate_frozen_village",
@@ -3111,7 +3054,7 @@
       "pure_movement": true
     },
     {
-      "step": 177,
+      "step": 174,
       "attempt": 1,
       "location": "ice_elemental_encounter",
       "action_id": "bypass_ice_elemental",
@@ -3119,7 +3062,7 @@
       "pure_movement": false
     },
     {
-      "step": 184,
+      "step": 180,
       "attempt": 1,
       "location": "ian_ice_katana_aftermath",
       "action_id": "accept_ian_request",
@@ -3127,7 +3070,7 @@
       "pure_movement": false
     },
     {
-      "step": 185,
+      "step": 181,
       "attempt": 1,
       "location": "valley_entrance",
       "action_id": "sneak_through_ash",
@@ -3135,7 +3078,7 @@
       "pure_movement": false
     },
     {
-      "step": 186,
+      "step": 182,
       "attempt": 1,
       "location": "valley_lava_bridge",
       "action_id": "take_ledge_path",
@@ -3143,7 +3086,7 @@
       "pure_movement": true
     },
     {
-      "step": 189,
+      "step": 185,
       "attempt": 1,
       "location": "xanxus_at_nest",
       "action_id": "obey_xanxus_core",
@@ -3151,7 +3094,7 @@
       "pure_movement": false
     },
     {
-      "step": 190,
+      "step": 186,
       "attempt": 1,
       "location": "valley_nest_gate",
       "action_id": "enter_dragon_nest",
@@ -3159,7 +3102,7 @@
       "pure_movement": true
     },
     {
-      "step": 201,
+      "step": 196,
       "attempt": 1,
       "location": "ignis_last_breath",
       "action_id": "examine_ignis_wound",
@@ -3167,7 +3110,7 @@
       "pure_movement": false
     },
     {
-      "step": 202,
+      "step": 197,
       "attempt": 1,
       "location": "ignis_last_breath",
       "action_id": "hear_ignis_last_words",
@@ -3175,7 +3118,7 @@
       "pure_movement": false
     },
     {
-      "step": 203,
+      "step": 198,
       "attempt": 1,
       "location": "ignis_last_breath",
       "action_id": "return_to_castle_report",
@@ -3183,7 +3126,7 @@
       "pure_movement": true
     },
     {
-      "step": 204,
+      "step": 199,
       "attempt": 1,
       "location": "royal_gate",
       "action_id": "enter_festival_town",
@@ -3191,7 +3134,7 @@
       "pure_movement": true
     },
     {
-      "step": 205,
+      "step": 200,
       "attempt": 1,
       "location": "festival_town",
       "action_id": "go_report_hall",
@@ -3199,7 +3142,7 @@
       "pure_movement": true
     },
     {
-      "step": 206,
+      "step": 201,
       "attempt": 1,
       "location": "castle_report",
       "action_id": "report_with_evidence",
