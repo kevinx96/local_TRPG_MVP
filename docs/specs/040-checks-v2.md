@@ -28,10 +28,19 @@
 - 判定卡显示「有利：ロビンの助言」或「不利：傷が痛む」；动画掷两颗骰子，被采用的那颗高亮，另一颗变暗。
 - 骰子日志里记录两颗的点数和采用的那颗。
 
-## 4. 观察判定（为设计负责人后续的剧本改写准备）
-- 场所的 `objects` 和 `obstacles` 可以带可选的 `observe_check`：`{"skill": "知覚", "band": "中", "success_text": "...", "success_effects": [...]}`。
-- 带 `observe_check` 的对象被自由行动「観察」时掷骰：成功显示 `success_text` 并执行 `success_effects`，失败只显示原来的描述。每个对象只判定一次（记 flag），之后再观察直接给已得到的结果。
-- 本任务**不往剧本里加任何 `observe_check`**，只做机制和测试，数据由设计负责人后续填。
+## 4. 观察判定与通用的优势条件（为设计负责人后续的剧本改写准备）
+- 场所 `objects` 已有的 `observe_reveals.roll`（6 个带属性的）同样改用 v2：
+  | 对象 | 技能 | 档 |
+  |---|---|---|
+  | castle / general_breath | 知覚 | 難 |
+  | elf_spring / small_footprints | 知覚 | 易 |
+  | goblin_fort_third_gate / iron_gate_window | 知覚 | 中 |
+  | ice_elemental_encounter / frost_crystal | 知覚 | 中 |
+  | cave_seal / seal_glyphs | 魔法学 | 中 |
+  | valley_lava_bridge / bridge_ropes | 知覚 | 易 |
+  `dice_type: "none"` 的保持不掷骰。039 的判定卡不用于观察（自由输入事先不知道判定），走短版动画。
+- `roll`（选项和 `observe_reveals` 都适用）支持通用的 `advantage` / `disadvantage` 条件列表：`[{"requirements": {...}, "reason": "封印の知識"}]`，满足 `requirements` 就加上对应的优势或劣势和理由。第 3 节的线索优势就用这个字段写进剧本数据；同伴、准备、HP 这些通用来源仍由引擎判断。
+- 本任务**不新增任何判定**，只做机制、转换和测试；新的判定由设计负责人后续编写。
 
 ## 5. 不做什么
 - 不改战斗、不改 prompt、不改剧情文本，不新增判定（新增判定由设计负责人另行编写）。
