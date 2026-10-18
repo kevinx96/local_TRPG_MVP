@@ -4170,7 +4170,7 @@
       "reference_images": [],
       "generation_date": "2026-10-19",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "file": "assets/candidates/042/originals/dice_ruby_01.png",
       "bytes": 1719975,
       "width": 1254,
@@ -4179,7 +4179,8 @@
         0,
         255
       ],
-      "sha256": "fd68777c770fb7a9ba95df98e1c8fd56c06822fed09174d85879b2034898f3dc"
+      "sha256": "fd68777c770fb7a9ba95df98e1c8fd56c06822fed09174d85879b2034898f3dc",
+      "selection_reason": "设计负责人定稿"
     },
     {
       "id": "dice_ruby_01",
@@ -4189,7 +4190,7 @@
       "reference_images": [],
       "generation_date": "2026-10-19",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "file": "assets/candidates/042/dice_ruby_01.png",
       "bytes": 318898,
       "width": 512,
@@ -4198,7 +4199,8 @@
         0,
         255
       ],
-      "sha256": "8e0456d2b3ffe29d771c85e40ac16ac559a867351e9c5694f503596d1a90a8bb"
+      "sha256": "8e0456d2b3ffe29d771c85e40ac16ac559a867351e9c5694f503596d1a90a8bb",
+      "selection_reason": "设计负责人定稿"
     },
     {
       "id": "dice_ruby_01",
@@ -4208,7 +4210,7 @@
       "reference_images": [],
       "generation_date": "2026-10-19",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "file": "client/images/dice_ruby.webp",
       "bytes": 58768,
       "width": 512,
@@ -4217,7 +4219,8 @@
         0,
         255
       ],
-      "sha256": "70f2d83cd399105889fa6ce5983cd623d70454d7f828321fae56404669a12a5e"
+      "sha256": "70f2d83cd399105889fa6ce5983cd623d70454d7f828321fae56404669a12a5e",
+      "selection_reason": "设计负责人定稿"
     },
     {
       "id": "dice_ruby_02",
@@ -4267,7 +4270,7 @@
       ],
       "generation_date": "2026-10-19",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "file": "assets/candidates/042/originals/dice_ruby_cracked.png",
       "bytes": 1803196,
       "width": 1254,
@@ -4276,7 +4279,8 @@
         0,
         255
       ],
-      "sha256": "d99496bfd4a5d9991dee1c585de69729a3ae3da797e2660cbee212f043dd2688"
+      "sha256": "d99496bfd4a5d9991dee1c585de69729a3ae3da797e2660cbee212f043dd2688",
+      "selection_reason": "设计负责人定稿"
     },
     {
       "id": "dice_ruby_cracked",
@@ -4288,7 +4292,7 @@
       ],
       "generation_date": "2026-10-19",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "file": "assets/candidates/042/dice_ruby_cracked.png",
       "bytes": 343385,
       "width": 512,
@@ -4297,7 +4301,8 @@
         0,
         255
       ],
-      "sha256": "5280bb316d4d7cd5ecacd67036c709b5ae3d7f46172cfc0e4710a7577282eec1"
+      "sha256": "5280bb316d4d7cd5ecacd67036c709b5ae3d7f46172cfc0e4710a7577282eec1",
+      "selection_reason": "设计负责人定稿"
     },
     {
       "id": "dice_ruby_cracked",
@@ -4309,7 +4314,7 @@
       ],
       "generation_date": "2026-10-19",
       "generator": "image_gen",
-      "approved": false,
+      "approved": true,
       "file": "client/images/dice_ruby_cracked.webp",
       "bytes": 62342,
       "width": 512,
@@ -4318,7 +4323,8 @@
         0,
         255
       ],
-      "sha256": "b335969974252f62affc044a9d88c1dbb11b3735746074065f12f1eea31f7efb"
+      "sha256": "b335969974252f62affc044a9d88c1dbb11b3735746074065f12f1eea31f7efb",
+      "selection_reason": "设计负责人定稿"
     },
     {
       "id": "dice_iron_01",
@@ -6476,7 +6482,7 @@
       "approved": false,
       "runtime_bytes": 400094,
       "runtime_budget": 1500000,
-      "default": "client/images/dice_bone.webp",
+      "default": "client/images/dice_ruby.webp",
       "runtime": [
         {
           "file": "client/images/dice_bone.webp",

@@ -702,11 +702,8 @@ button, select, textarea, input { font: inherit; }
 .dice-active .gal-bottom-area > :not(.dice-check-card) { pointer-events: none; }
 .dice-active .gal-dice-banner { display: none; }
 .dice-check-card {
-  --dice-image: url('/static/images/dice_bone.webp');
-  --dice-cracked-image: url('/static/images/dice_bone_cracked.webp');
-  --dice-ink: color-mix(in srgb, var(--red) 45%, var(--bg));
-  --dice-number-highlight: color-mix(in srgb, var(--text) 65%, transparent);
-  --dice-number-inset: var(--bg);
+  --dice-number-two-digit-scale: .85;
+  --dice-number-spacing: -.06em;
   --dice-size: 112px;
   --dice-drop-height: -64px;
   --dice-bounce-height: -23px;
@@ -735,19 +732,49 @@ button, select, textarea, input { font: inherit; }
   box-shadow: 0 8px 32px var(--bg), 0 0 20px var(--gold-glow);
   text-align: center;
 }
-.dice-check-card[data-dice-material="ruby"] {
+.dice-check-card, .dice-check-card[data-dice-material="ruby"] {
   --dice-image: url('/static/images/dice_ruby.webp');
   --dice-cracked-image: url('/static/images/dice_ruby_cracked.webp');
   --dice-ink: var(--gold);
+  --dice-number-x: 49.4%;
+  --dice-number-y: 47.6%;
+  --dice-number-size: .1908;
+  --dice-number-opacity: .9;
+  --dice-number-inset: color-mix(in srgb, var(--bg) 75%, transparent);
+  --dice-number-highlight: color-mix(in srgb, var(--gold) 22%, transparent);
+  --dice-number-shadow-depth: .65px;
+  --dice-number-highlight-depth: .4px;
+}
+.dice-check-card[data-dice-material="bone"] {
+  --dice-image: url('/static/images/dice_bone.webp');
+  --dice-cracked-image: url('/static/images/dice_bone_cracked.webp');
+  --dice-ink: color-mix(in srgb, var(--red) 45%, var(--bg));
+  --dice-number-x: 50.1%;
+  --dice-number-y: 50.7%;
+  --dice-number-size: .20925;
+  --dice-number-opacity: .9;
+  --dice-number-inset: color-mix(in srgb, var(--bg) 65%, transparent);
+  --dice-number-highlight: color-mix(in srgb, var(--text) 18%, transparent);
+  --dice-number-shadow-depth: .55px;
+  --dice-number-highlight-depth: .35px;
 }
 .dice-check-card[data-dice-material="iron"] {
   --dice-image: url('/static/images/dice_iron.webp');
   --dice-cracked-image: url('/static/images/dice_iron_cracked.webp');
   --dice-ink: var(--text);
+  --dice-number-x: 49.7%;
+  --dice-number-y: 50.2%;
+  --dice-number-size: .1971;
+  --dice-number-opacity: .9;
+  --dice-number-inset: color-mix(in srgb, var(--bg) 85%, transparent);
+  --dice-number-highlight: color-mix(in srgb, var(--text) 20%, transparent);
+  --dice-number-shadow-depth: .65px;
+  --dice-number-highlight-depth: .4px;
 }
 .dice-check-card [hidden] { display: none !important; }
 .dice-check-card h3 { font-size: 16px; margin-bottom: 8px; overflow-wrap: anywhere; }
 .dice-check-formula { color: var(--gold); font-variant-numeric: tabular-nums; }
+.dice-check-crucial { margin-top: 4px; font-size: 12px; color: var(--text-dim); }
 .dice-check-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
 .dice-check-actions button { padding: 10px 18px; border: 1px solid var(--gold); border-radius: var(--radius-sm); background: var(--panel-2); color: var(--text); cursor: pointer; }
 .dice-check-actions .dice-check-primary { background: var(--gold); color: var(--bg); font-weight: 900; }
@@ -762,7 +789,8 @@ button, select, textarea, input { font: inherit; }
 .dice-body::before, .dice-body::after { content: ""; position: absolute; inset: 0; background: center / contain no-repeat; }
 .dice-body::before { background-image: var(--dice-image); }
 .dice-body::after { background-image: var(--dice-cracked-image); opacity: 0; }
-.dice-number { position: absolute; z-index: 1; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--dice-ink); font-family: Georgia, 'Times New Roman', serif; font-size: 29px; line-height: 1; font-weight: 900; font-variant-numeric: lining-nums tabular-nums; text-shadow: 0 -1px 1px var(--dice-number-inset), 0 1px 0 var(--dice-number-highlight); }
+.dice-number { position: absolute; z-index: 1; top: var(--dice-number-y); left: var(--dice-number-x); transform: translate(-50%, -50%); color: var(--dice-ink); opacity: var(--dice-number-opacity); font-family: Georgia, 'Times New Roman', serif; font-size: calc(var(--dice-size) * var(--dice-number-size)); line-height: 1; font-weight: 900; font-variant-numeric: lining-nums tabular-nums; letter-spacing: var(--dice-number-spacing); text-shadow: 0 calc(-1 * var(--dice-number-shadow-depth)) 0 var(--dice-number-inset), 0 var(--dice-number-highlight-depth) 0 var(--dice-number-highlight); }
+.dice-number.two-digits { font-size: calc(var(--dice-size) * var(--dice-number-size) * var(--dice-number-two-digit-scale)); }
 .faces-visible .dice-number { animation: diceNumberIn var(--dice-number-duration) ease-out both; }
 #diceOutcome.success { color: #78e08f; }
 #diceOutcome.failure { color: #ff8b8b; }
@@ -778,11 +806,11 @@ button, select, textarea, input { font: inherit; }
 .critical-success .dice-d20:not(.discarded)::after { content: ""; position: absolute; inset: -18%; pointer-events: none; background: radial-gradient(circle, transparent 22%, var(--gold-glow) 40%, transparent 67%); animation: d20Halo .65s ease-out both; }
 .critical-success .dice-d20:not(.discarded) .dice-number { color: var(--gold); text-shadow: 0 0 4px var(--gold), 0 0 12px var(--gold), 0 1px 0 var(--dice-number-inset); }
 .critical-failure #diceCritical { color: var(--red); }
-.critical-failure .dice-d20:not(.discarded) .dice-body::before { opacity: 0; }
-.critical-failure .dice-d20:not(.discarded) .dice-body::after { opacity: 1; }
-.critical-failure .dice-d20:not(.discarded) .dice-body { animation: d20Crack .3s ease-out; }
+.critical-failure .dice-d20:not(.discarded) .dice-body::before, .crucial-failure .dice-d20:not(.discarded) .dice-body::before { opacity: 0; }
+.critical-failure .dice-d20:not(.discarded) .dice-body::after, .crucial-failure .dice-d20:not(.discarded) .dice-body::after { opacity: 1; }
+.critical-failure .dice-d20:not(.discarded) .dice-body, .crucial-failure .dice-d20:not(.discarded) .dice-body { animation: d20Crack .3s ease-out; }
 @keyframes diceTrayIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes diceNumberIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes diceNumberIn { from { opacity: 0; } to { opacity: var(--dice-number-opacity); } }
 @keyframes d20Drop {
   0%, 17% { opacity: 0; transform: translateY(var(--dice-drop-height)); }
   18% { opacity: 1; }

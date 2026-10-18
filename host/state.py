@@ -702,6 +702,7 @@ def player_choices_for_session(choices: list[dict[str, Any]], session: dict[str,
             if 0 < dc < 100:
                 try:
                     choice["check"] = dice_check_info(session, expression, dc, roll=source["roll"])
+                    choice["check"].update(action_failure_risk(source, session))
                 except ValueError:
                     pass  # Invalid checks still use the turn endpoint's existing error handling.
         if source.get("risk_source") == "destination":
@@ -739,6 +740,42 @@ def _risk_destinations_for_session(effects: list[Any], session: dict[str, Any]) 
             side = "then" if _session_requirement_passes(branch.get("requirements"), session) else "else"
             destinations.update(_risk_destinations_for_session(branch.get(side, []), session))
     return destinations
+
+
+def action_failure_risk(action: dict[str, Any], session: dict[str, Any]) -> dict[str, Any]:
+    """Describe ordinary failure consequences without applying them to the session."""
+    effects = [*_as_list(action.get("effects")), *_as_list(action.get("failure_effects"))]
+    delta = _effects_to_state_delta(effects, session)
+    if "game_over" in delta:
+        return {"crucial": True, "crucial_reason": "game_over"}
+    if delta.get("start_combat") is True:
+        return {"crucial": True, "crucial_reason": "combat"}
+    if not any(delta.get(key) for key in ("current_location", "current_scene")):
+        return {}
+
+    from .combat import _encounter_for_session
+
+    preview = {**session, "visited_locations": list(session.get("visited_locations", [])),
+               "flags": dict(session.get("flags", {}))}
+    for flag in delta.get("flags_set", []):
+        preview["flags"][flag] = True
+    for flag in delta.get("flags_unset", []):
+        preview["flags"].pop(flag, None)
+    accepted, _ = commit_world_position(preview, scene_id=delta.get("current_scene"),
+                                       location_id=delta.get("current_location"))
+    if not accepted:
+        return {}
+    location_id = current_location_id(preview)
+    if preview.get("combat_blocked_location") == location_id:
+        return {}
+    pack = preview.get("scenario_pack", {})
+    encounter = _encounter_for_session(preview, pack)
+    enemy_ids = {enemy["id"] for enemy in pack.get("enemies", [])}
+    if encounter.get("auto_start", True) is not False and any(
+            enemy in enemy_ids and not preview["flags"].get(f"combat_defeated:{location_id}:{enemy}")
+            for enemy in encounter["enemy_ids"]):
+        return {"crucial": True, "crucial_reason": "combat"}
+    return {}
 
 
 def _current_scene_enemies(session: dict[str, Any]) -> list[dict[str, Any]]:
@@ -1352,6 +1389,7 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
     if latest_roll.get("rolls"):
         latest_roll["outcome"] = outcome
         latest_roll["critical_enabled"] = action.get("critical_enabled") is not False
+        latest_roll.update(action_failure_risk(action, session))
     base_effects = _as_list(action.get("effects"))
     branch_outcome = {
         "critical_success": "success",

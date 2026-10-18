@@ -54,7 +54,7 @@ class DiceVisualAssetTests(unittest.TestCase):
         referenced = set(re.findall(r"/static/images/(dice_[a-z_]+\.webp)", css))
         self.assertEqual(referenced, {path.name for path in runtime})
 
-    def test_manifest_registers_sources_candidates_and_runtime_without_approval(self):
+    def test_manifest_registers_artifacts_with_only_selected_ruby_images_approved(self):
         manifest = json.loads((ROOT / "assets/manifest.json").read_text(encoding="utf-8"))
         records = {entry["file"]: entry for entry in manifest["images"] if entry.get("task") == "042"}
         self.assertEqual(len(records), 27)
@@ -66,12 +66,15 @@ class DiceVisualAssetTests(unittest.TestCase):
                 with self.subTest(file=artifact["file"]):
                     record = records[artifact["file"]]
                     data = (ROOT / artifact["file"]).read_bytes()
-                    self.assertFalse(record["approved"])
+                    selected = entry["id"] in {"dice_ruby_01", "dice_ruby_cracked"}
+                    self.assertEqual(record["approved"], selected)
+                    if selected:
+                        self.assertEqual(record["selection_reason"], "设计负责人定稿")
                     self.assertEqual(record["bytes"], len(data))
                     self.assertEqual(record["sha256"], hashlib.sha256(data).hexdigest())
                     self.assertEqual(record["alpha_extrema"], [0, 255])
                     self.assertEqual(record["prompt"], entry["prompt"])
-        self.assertEqual(manifest["batches"]["042"]["default"], "client/images/dice_bone.webp")
+        self.assertEqual(manifest["batches"]["042"]["default"], "client/images/dice_ruby.webp")
 
 
 if __name__ == "__main__":

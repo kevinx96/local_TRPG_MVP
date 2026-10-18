@@ -28,6 +28,9 @@ def main() -> None:
     from PIL import Image
 
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
+    manifest_path = ROOT / "assets/manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    previous = {entry["file"]: entry for entry in manifest["images"] if entry.get("task") == "042"}
     registrations = []
     runtime = []
     for entry in catalog["images"]:
@@ -52,20 +55,21 @@ def main() -> None:
                 "prompt": entry["prompt"], "reference_images": entry["reference_images"],
                 "generation_date": catalog["generation_date"], "generator": "image_gen",
                 "approved": False, **artifact,
+                **{key: value for key, value in previous.get(artifact["file"], {}).items()
+                   if key in {"approved", "selection_reason"}},
             })
     total = sum(item["bytes"] for item in runtime)
     if total >= 1_500_000:
         raise ValueError(f"Runtime sprite budget exceeded: {total}")
     catalog["runtime_bytes"] = total
     CATALOG.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    manifest_path = ROOT / "assets/manifest.json"
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     manifest["images"] = [e for e in manifest["images"] if e.get("task") != "042"] + registrations
     if "042" not in manifest["tasks"]:
         manifest["tasks"].append("042")
-    manifest.setdefault("batches", {})["042"] = {
-        "approved": False, "runtime_bytes": total, "runtime_budget": 1_500_000,
-        "default": "client/images/dice_bone.webp", "runtime": runtime,
+    batch = manifest.setdefault("batches", {}).get("042", {})
+    manifest["batches"]["042"] = {
+        **batch, "approved": batch.get("approved", False), "runtime_bytes": total, "runtime_budget": 1_500_000,
+        "default": batch.get("default", "client/images/dice_ruby.webp"), "runtime": runtime,
         "prompts": CATALOG.relative_to(ROOT).as_posix(),
         "sheet": "eval/reports/screens/042/dice-sheet.png",
     }

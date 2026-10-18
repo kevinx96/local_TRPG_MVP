@@ -301,6 +301,7 @@ def _adjudicate(session: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]
             branch = "success" if success else "failure"
             if roll["rolls"]:
                 roll["outcome"] = branch
+                roll.update(state.action_failure_risk(reveal, session))
                 changes[target["id"]]["observe_check"] = deepcopy(roll)
             delta = state._effects_to_state_delta(reveal.get(f"{branch}_effects", []), session)
             if once:

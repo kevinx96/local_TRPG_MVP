@@ -121,6 +121,94 @@ class PlayerDiceRollTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     state.roll_dice(self.session, expression, 10)
 
+    def test_public_crucial_check_is_engine_derived_and_redacts_failure_details(self):
+        for effects, reason in (([{"start_combat": True}], "combat"),
+                                ([{"game_over": {"ending": "defied_xanxus"}}, {"start_combat": True}], "game_over")):
+            with self.subTest(reason=reason):
+                source = dict(text="周囲を見る", roll=dict(dice="1d20", dc=10), failure_effects=effects)
+                self.session["choices"] = [source]
+                state.ensure_world_state(self.session)
+                original = deepcopy(self.session)
+                with patch.object(state.random, "randint", side_effect=AssertionError("Preview must not roll")):
+                    public = state.public_session(self.session)["choices"][0]
+                self.assertTrue(public["check"]["crucial"])
+                self.assertEqual(public["check"]["crucial_reason"], reason)
+                self.assertNotIn("failure_effects", public)
+                self.assertNotIn("defied_xanxus", str(public))
+                self.assertEqual(self.session, original)
+
+    def test_crucial_risk_uses_only_the_active_failure_branch(self):
+        source = dict(text="周囲を見る", roll=dict(dice="1d20", dc=10), failure_effects=[
+            {"branch": {"requirements": {"gold_lte": 30}, "then": [{"start_combat": True}],
+                        "else": [{"set_flag": "seal_pattern_known"}]}}])
+        for gold, expected in ((30, True), (31, False)):
+            with self.subTest(gold=gold):
+                self.session["character"]["gold"] = gold
+                check = self.choices(source)[0]["check"]
+                self.assertEqual(check.get("crucial", False), expected)
+        for key in ("success_effects", "critical_failure_effects"):
+            source = dict(text="周囲を見る", roll=dict(dice="1d20", dc=10), **{key: [{"start_combat": True}]})
+            self.assertNotIn("crucial", self.choices(source)[0]["check"])
+
+    def test_failure_destination_reuses_encounter_rules_without_mutating_session(self):
+        session = {"world_state": {"scene_id": "forest", "location_id": "trail"},
+                   "visited_locations": ["trail"], "flags": {}, "character": {},
+                   "scenario_pack": {"scenes": [{"id": "forest", "location_ids": ["trail", "ambush", "safe"]}],
+                                     "locations": [{"id": "trail", "scene_id": "forest"},
+                                                   {"id": "ambush", "scene_id": "forest", "enemy_ids": ["goblin"]},
+                                                   {"id": "safe", "scene_id": "forest"}],
+                                     "enemies": [{"id": "goblin"}]}}
+        for key in ("current_location", "next_location"):
+            for destination, expected in (("ambush", True), ("safe", False), ("missing", False)):
+                with self.subTest(key=key, destination=destination):
+                    original = deepcopy(session)
+                    risk = state.action_failure_risk({"failure_effects": [{key: destination}]}, session)
+                    self.assertEqual(risk.get("crucial", False), expected)
+                    self.assertEqual(session, original)
+        action = {"failure_effects": [{"next_location": "ambush"}]}
+        session["flags"]["combat_defeated:ambush:goblin"] = True
+        self.assertEqual(state.action_failure_risk(action, session), {})
+        session["flags"].clear()
+        encounter = session["scenario_pack"]["locations"][1].setdefault("combat", {})
+        encounter["auto_start"] = False
+        self.assertEqual(state.action_failure_risk(action, session), {})
+        encounter.update(auto_start=True, enemy_variants=[{"requirements": {"flag": "seal_pattern_known"}, "enemy_ids": []}])
+        action["effects"] = [{"set_flag": "seal_pattern_known"}]
+        self.assertEqual(state.action_failure_risk(action, session), {})
+        self.assertEqual(session["flags"], {})
+
+    def test_crucial_preview_survives_real_failure_into_combat(self):
+        for natural, outcome in ((7, "failure"), (1, "critical_failure"), (20, "critical_success")):
+            with self.subTest(natural=natural):
+                session = deepcopy(self.session)
+                accepted, reason = state.commit_world_position(session, location_id="goblin_fort")
+                self.assertTrue(accepted, reason)
+                session["choices"] = state.fallback_choices_for_session(session)
+                choice = next(c for c in state.public_session(session)["choices"] if c.get("id") == "fort_first_bypass")
+                self.assertTrue(choice["check"]["crucial"])
+                with patch.object(state.random, "randint", return_value=natural), patch.object(app, "save_session"):
+                    result = app._run_turn(session, app.TurnRequest(text=choice["text"], action_id=choice["id"]),
+                                           allow_narration=False)
+                roll = result["dice_log"][-1]
+                self.assertTrue(roll["crucial"])
+                self.assertEqual(roll["crucial_reason"], "combat")
+                self.assertEqual(roll["outcome"], outcome)
+                self.assertEqual(result["in_combat"], natural != 20)
+
+    def test_crucial_ending_metadata_is_recorded_before_state_changes(self):
+        action = dict(id="observe", text="周囲を見る", critical_enabled=False,
+                      roll={"dice": "1d20", "dc": 10}, failure_effects=[
+                          {"branch": {"requirements": {"not_flag": "seal_pattern_known"},
+                                      "then": [{"game_over": {"reason": "物語はここで終わりました。"}},
+                                               {"set_flag": "seal_pattern_known"}]}}])
+        roll = state.roll_dice(self.session, "1d20", 10, client_rolls=[7], critical_enabled=False)
+        result = state.apply_action_result(self.session, action, roll)
+        self.assertTrue(roll["crucial"])
+        self.assertEqual(roll["crucial_reason"], "game_over")
+        self.assertEqual(result["outcome"], "failure")
+        self.assertTrue(state.public_session(self.session)["dice_log"][-1]["crucial"])
+        self.assertTrue(self.session["game_over"])
+
 
 class PlayerDiceClientTests(unittest.TestCase):
     @unittest.skipUnless(shutil.which("node"), "Node.js is required for client behavior tests")

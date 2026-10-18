@@ -8,9 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/static/styles.css?v=20261019-dice-visual" />
-    <link rel="preload" as="image" href="/static/images/dice_bone.webp" />
-    <link rel="preload" as="image" href="/static/images/dice_bone_cracked.webp" />
+    <link rel="stylesheet" href="/static/styles.css?v=20261019-dice-visual-b" />
+    <link rel="preload" as="image" href="/static/images/dice_ruby.webp" />
+    <link rel="preload" as="image" href="/static/images/dice_ruby_cracked.webp" />
     <link rel="preload" as="image" href="/static/images/dice_tray.webp" />
   </head>
   <body>
@@ -167,11 +167,12 @@
       <!-- Bottom UI Area -->
       <div id="diceCheckBackdrop" class="dice-check-backdrop" hidden></div>
       <div class="gal-bottom-area">
-        <section id="diceCheckCard" class="dice-check-card" style="display:none" role="dialog" aria-modal="true" aria-labelledby="diceCheckTitle" aria-describedby="diceCheckSummary diceCheckFormula diceCheckAdvantage" tabindex="-1">
+        <section id="diceCheckCard" class="dice-check-card" style="display:none" role="dialog" aria-modal="true" aria-labelledby="diceCheckTitle" aria-describedby="diceCheckSummary diceCheckFormula diceCheckAdvantage diceCheckCrucial" tabindex="-1">
           <h3 id="diceCheckTitle"></h3>
           <p id="diceCheckSummary"></p>
           <p id="diceCheckFormula" class="dice-check-formula"></p>
           <p id="diceCheckAdvantage" hidden></p>
+          <p id="diceCheckCrucial" class="dice-check-crucial" hidden></p>
           <div id="diceCheckAnimation" class="dice-check-animation" hidden>
             <div class="dice-check-dice" aria-hidden="true">
               <div id="diceFirst" class="dice-d20">
@@ -304,6 +305,6 @@
     </main>
 
     <script src="/static/battle-fx.js?v=20261014-companions"></script>
-    <script src="/static/app.js?v=20261019-dice-visual"></script>
+    <script src="/static/app.js?v=20261019-dice-visual-b"></script>
   </body>
 </html>

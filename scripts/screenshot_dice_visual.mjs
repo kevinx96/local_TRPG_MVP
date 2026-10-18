@@ -6,6 +6,7 @@ const pages = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();
 const ws = new WebSocket(pages.find(page => page.type === "page").webSocketDebuggerUrl);
 await new Promise(resolve => ws.addEventListener("open", resolve, { once: true }));
 let sequence = 0;
+let screenshotCount = 0, numberGeometry = [];
 const pending = new Map(), errors = [], checks = [];
 ws.addEventListener("message", event => {
   const data = JSON.parse(event.data);
@@ -42,6 +43,7 @@ async function waitFor(expression) {
 async function capture(name) {
   const screenshot = await cdp("Page.captureScreenshot", { format: "png", captureBeyondViewport: false });
   await writeFile(join(output, `${name}.png`), Buffer.from(screenshot.data, "base64"));
+  screenshotCount++;
 }
 async function freeze(time) {
   await evaluate(`els.diceCheckCard.getAnimations({subtree:true}).forEach(a=>{a.pause();a.currentTime=${time};})`);
@@ -51,17 +53,20 @@ const preview = { dice: "1d20", attribute_label: "敏捷", skill: "隠密", modi
 function roll(faces, index, enabled = true) {
   return { expression: "1d20+dex", rolls: faces, selected_index: index, selected_roll: faces[index],
     advantage: faces.length === 2 ? (faces[index] === Math.min(...faces) ? "disadvantage" : "advantage") : null,
+    advantage_reasons: faces.length === 2 ? [faces[index] === Math.min(...faces) ? "傷が痛む" : "ロビンの助言"] : [],
     attr_mod: 5, total: faces[index] + 5, dc: 10,
     critical_enabled: enabled, success: faces[index] + 5 >= 10,
-    outcome: enabled && faces[index] === 1 ? "critical_failure" : "success" };
+    outcome: enabled && faces[index] === 1 ? "critical_failure"
+      : enabled && faces[index] === 20 ? "critical_success" : faces[index] + 5 >= 10 ? "success" : "failure" };
 }
 async function start(checkData = preview) {
   await evaluate(`closeDiceCheck(); startDicePresentation(${JSON.stringify(checkData)}, "裏口から忍び込む")`);
 }
-async function result(value) {
+async function result(value, animationTime = 400) {
   await evaluate(`stopDiceRollAnimation(); showDiceFaces(${JSON.stringify(value)});
-    showDiceCalculation(${JSON.stringify(value)}); showDiceOutcome(${JSON.stringify(value)})`);
-  await freeze(400);
+    showDiceCalculation(${JSON.stringify(value)}); showDiceOutcome(${JSON.stringify(value)});
+    showDiceCrucial(${JSON.stringify(value)}); showDiceAdvantage(${JSON.stringify(value)})`);
+  await freeze(animationTime);
 }
 try {
   await cdp("Page.enable");
@@ -75,6 +80,42 @@ try {
       const image = new Image(); image.src='/static/images/dice_'+name+'.webp'; await image.decode();
     }));
   })()`);
+  await start({...preview, advantage: null});
+  await check("getComputedStyle(els.diceFirst.querySelector('.dice-body'),'::before').backgroundImage.includes('dice_ruby.webp')", "default material is selected B01 ruby");
+  numberGeometry = await evaluate(`(() => {
+    stopDiceRollAnimation(); els.diceCheckCard.classList.add('instant-result');
+    const triangles = {bone:[[259,101],[123,338],[387,339]], ruby:[[254,99],[126,316],[379,316]], iron:[[255,108],[123,332],[385,331]]};
+    const records = [];
+    for (const [material, triangle] of Object.entries(triangles)) {
+      els.diceCheckCard.dataset.diceMaterial = material;
+      for (const size of [112,160]) {
+        els.diceFirst.style.setProperty('--dice-size',size+'px');
+        const record = {material,size,faces:20};
+        for (let face=1; face<=20; face++) {
+          showDiceFaces({rolls:[face]});
+          const body=els.diceFirst.getBoundingClientRect(), number=els.diceNatural.getBoundingClientRect();
+          const style=getComputedStyle(els.diceNatural);
+          const points=[[number.left,number.top],[number.right,number.top],[number.left,number.bottom],[number.right,number.bottom]];
+          for(const [x,y] of points) {
+            const px=(x-body.left)*512/size, py=(y-body.top)*512/size;
+            const cross=triangle.map(([ax,ay],i)=>{const [bx,by]=triangle[(i+1)%3];return (px-ax)*(by-ay)-(py-ay)*(bx-ax);});
+            if (!cross.every(n=>n>=0) && !cross.every(n=>n<=0)) throw Error(material+' '+face+' exceeds front face at '+size);
+          }
+          const centroid=triangle.reduce((sum,[x,y])=>[sum[0]+x/3,sum[1]+y/3],[0,0]);
+          if (Math.abs((number.left+number.width/2-body.left)-centroid[0]*size/512)>.3 || Math.abs((number.top+number.height/2-body.top)-centroid[1]*size/512)>.3) throw Error('Number is not at face centroid');
+          if (Number(style.opacity)!==.9 || parseFloat(style.letterSpacing)>=0) throw Error('Number opacity/spacing mismatch');
+          if (face===1) record.singleFont=parseFloat(style.fontSize);
+          if (face===17) record.doubleFont=parseFloat(style.fontSize);
+        }
+        const height=(Math.max(triangle[1][1],triangle[2][1])-triangle[0][1])*size/512;
+        if(Math.abs(record.singleFont/height-.45)>.002 || Math.abs(record.doubleFont/record.singleFont-.85)>.001) throw Error('Number size ratio mismatch');
+        records.push(record);
+      }
+    }
+    els.diceFirst.style.removeProperty('--dice-size'); delete els.diceCheckCard.dataset.diceMaterial;
+    return records;
+  })()`);
+  checks.push("all 1–20 number boxes fit each material's front triangle at 112px and 160px, centered on its centroid, 45% height and 15% smaller for two digits");
   for (const mobile of [false, true]) {
     const suffix = mobile ? "-mobile" : "";
     await cdp("Emulation.setDeviceMetricsOverride", { width: mobile ? 390 : 1280, height: mobile ? 844 : 800, deviceScaleFactor: 1, mobile });
@@ -102,11 +143,14 @@ try {
     await check("document.querySelector('.dice-body').getAnimations().some(a=>a.animationName==='d20Tumble' && a.effect.getTiming().iterations===Infinity)", `${suffix}: waiting loop is unbounded`);
     await evaluate("window.motionBeforeSettle=getComputedStyle(els.diceFirst.querySelector('.dice-body')).transform; settleDice()");
     await check("els.diceFirst.style.getPropertyValue('--dice-settle-transform') === window.motionBeforeSettle", `${suffix}: settle starts at the current rotation`);
+    await result(roll([17], 0));
+    await capture(`result${suffix}`);
+    await start();
     await result(roll([3, 17], 1));
     await check("getComputedStyle(els.diceFirst).opacity === '0.3' && getComputedStyle(els.diceFirst).transform !== 'none' && getComputedStyle(els.diceSecond).opacity === '1'", `${suffix}: discarded die dims and shrinks`);
     await check("els.diceFirst.getBoundingClientRect().right < els.diceSecond.getBoundingClientRect().left", `${suffix}: two distinct landing positions`);
     await check("document.documentElement.scrollWidth <= innerWidth && els.diceCheckCard.scrollWidth <= els.diceCheckCard.clientWidth", `${suffix}: no horizontal overflow`);
-    await capture(`result${suffix}`);
+    await capture(`advantage${suffix}`);
     await start();
     await result(roll([1, 20], 1));
     await check("getComputedStyle(els.diceSecond,'::after').animationName === 'd20Halo' && getComputedStyle(els.diceFirst,'::after').content === 'none'", `${suffix}: only selected natural 20 glows`);
@@ -118,10 +162,37 @@ try {
     await start();
     await result(roll([1, 20], 1, false));
     await check("!els.diceCheckCard.classList.contains('critical-success') && !els.diceCheckCard.classList.contains('critical-failure') && els.diceCritical.hidden", `${suffix}: disabled extremes have no effects`);
+    await evaluate(`closeDiceCheck(); openDiceCheck({text:'見張りを迂回する',check:${JSON.stringify({...preview, crucial: true, crucial_reason: "combat"})}}, null)`);
+    await check("els.diceCheckCrucial.textContent==='失敗すると戦闘' && !els.diceCheckCrucial.hidden && els.diceCheckAnimation.hidden", `${suffix}: crucial combat warning appears before rolling`);
+    await capture(`crucial-check${suffix}`);
+    await start({...preview, advantage: "disadvantage", crucial: true, crucial_reason: "combat"});
+    await result({...roll([12, 3], 1), crucial: true, crucial_reason: "combat"}, 120);
+    await check("els.diceOutcome.textContent==='DC 10　失敗' && els.diceCritical.hidden && els.diceCheckCard.classList.contains('crucial-failure') && !els.diceCheckCard.classList.contains('critical-failure')", `${suffix}: ordinary crucial failure has cracks without a critical label`);
+    await check("getComputedStyle(els.diceSecond.querySelector('.dice-body'),'::after').opacity==='1' && getComputedStyle(els.diceFirst.querySelector('.dice-body'),'::after').opacity==='0' && els.diceSecond.querySelector('.dice-body').getAnimations().some(a=>a.animationName==='d20Crack')", `${suffix}: only the selected crucial failure cracks and shakes`);
+    await freeze(400);
+    await capture(`crucial-failure${suffix}`);
+    await start({...preview, advantage: null, crucial: true, crucial_reason: "game_over"});
+    await result({...roll([2], 0, false), crucial: true, crucial_reason: "game_over"});
+    await check("els.diceCheckCrucial.textContent==='失敗すると危険' && els.diceCritical.hidden && getComputedStyle(els.diceFirst.querySelector('.dice-body'),'::after').opacity==='1'", `${suffix}: game-over risk uses danger warning and still cracks when natural extremes are disabled`);
+    await capture(`crucial-danger${suffix}`);
+    await start();
+    await result({...roll([17], 0), crucial: true, crucial_reason: "combat"});
+    await check("!els.diceCheckCard.classList.contains('crucial-failure') && getComputedStyle(els.diceFirst.querySelector('.dice-body'),'::after').opacity==='0'", `${suffix}: successful crucial check does not crack`);
   }
+  await evaluate(`(async()=>{
+    closeDiceCheck(); const fixture=await fetchJson('/042-crucial-fixture');
+    renderSession(fixture.initial); startDicePresentation(fixture.choice.check,fixture.choice.text);
+    window.crucialTransition=renderTurnResponse(fixture.result,fixture.choice.text);
+  })()`);
+  await waitFor("els.diceCheckCard.classList.contains('crucial-failure')");
+  await check("!state.session.in_combat && els.combatScreen.style.display==='none' && els.diceCritical.hidden && els.diceCheckCrucial.textContent==='失敗すると戦闘'", "real engine combat-start response retains the dice result before switching screens");
+  await capture("crucial-combat-transition-mobile");
+  await evaluate("window.crucialTransition");
+  await check("state.session.in_combat && els.diceCheckCard.style.display==='none' && els.combatScreen.style.display!=='none'", "real engine response enters the existing combat screen after result hold");
+  await evaluate("fetchJson('/fixture?location=castle_town').then(renderSession)");
   await cdp("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
   await start({...preview, advantage: "disadvantage", advantage_reasons: ["傷が痛む"]});
-  await result(roll([12, 1], 1));
+  await result({...roll([12, 1], 1), crucial: true, crucial_reason: "combat"});
   await check("els.diceCheckCard.getAnimations({subtree:true}).length===0", "reduced motion disables tray, dice, numbers and critical animations");
   await capture("reduced-motion-mobile");
   await cdp("Emulation.setEmulatedMedia", { features: [] });
@@ -148,7 +219,7 @@ try {
       });
       const sample=document.createElement('div'); sample.className='dice-d20 faces-visible';
       sample.style.cssText='--dice-size:160px;margin:18px auto 8px';
-      sample.innerHTML='<div class="dice-body"><span class="dice-number" style="font-size:41px">17</span></div>';
+      sample.innerHTML='<div class="dice-body"><span class="dice-number two-digits">17</span></div>';
       section.append(sample);
       const caption=document.createElement('p'); caption.textContent='候補 01 ＋ 17'; section.append(caption);
       sheet.append(section);
@@ -161,13 +232,13 @@ try {
   await check("[...document.querySelectorAll('#diceSheet .dice-number')].every(e=>e.textContent==='17' && getComputedStyle(e).fontFamily.includes('Georgia'))", "sheet overlays real serif numbers on all three materials");
   await capture("dice-sheet");
   if (errors.length) throw new Error(JSON.stringify(errors));
-  console.log(`${checks.length} browser checks passed; 9 screenshots and dice-sheet.png`);
+  console.log(`${checks.length} browser checks passed; ${screenshotCount} screenshots`);
 } catch (error) {
   await capture("failure");
   console.error(error);
   process.exitCode = 1;
 } finally {
-  await writeFile(join(output, "checks.json"), JSON.stringify({ ok: !process.exitCode, checks, browserErrors: errors }, null, 2) + "\n");
+  await writeFile(join(output, "checks.json"), JSON.stringify({ ok: !process.exitCode, checks, numberGeometry, browserErrors: errors }, null, 2) + "\n");
   ws.send(JSON.stringify({ id: ++sequence, method: "Browser.close" }));
   ws.close();
 }

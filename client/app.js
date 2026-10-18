@@ -80,6 +80,7 @@ const els = {
   diceCheckSummary: document.querySelector("#diceCheckSummary"),
   diceCheckFormula: document.querySelector("#diceCheckFormula"),
   diceCheckAdvantage: document.querySelector("#diceCheckAdvantage"),
+  diceCheckCrucial: document.querySelector("#diceCheckCrucial"),
   diceCheckActions: document.querySelector("#diceCheckActions"),
   diceCheckRoll:   document.querySelector("#diceCheckRoll"),
   diceCheckCancel: document.querySelector("#diceCheckCancel"),
@@ -1059,12 +1060,13 @@ function showDiceCheckCard(check, title) {
     ? `${check.dice} ${check.modifier < 0 ? "−" : "＋"} ${Math.abs(check.modifier)}${check.attribute_label ? `（${check.attribute_label}${check.proficiency_bonus ? "＋熟練" : ""}）` : ""}`
     : "";
   showDiceAdvantage(check);
+  showDiceCrucial(check);
   els.diceSecond.hidden = !check?.advantage;
   for (const die of [els.diceFirst, els.diceSecond]) die.classList.remove("selected", "discarded");
   els.diceOutcome.classList.remove("success", "failure");
   els.diceCheckSummary.hidden = !check;
   els.diceCheckFormula.hidden = !check;
-  els.diceCheckCard.classList.remove("rolling", "settling", "faces-visible", "critical-success", "critical-failure", "instant-result");
+  els.diceCheckCard.classList.remove("rolling", "settling", "faces-visible", "critical-success", "critical-failure", "crucial-failure", "instant-result");
   els.diceCheckCard.style.display = "";
   els.diceCheckBackdrop.hidden = false;
   els.gameScreen.classList.add("dice-active");
@@ -1074,6 +1076,12 @@ function showDiceAdvantage(check) {
   els.diceCheckAdvantage.textContent = check?.advantage
     ? `${check.advantage === "advantage" ? "有利" : "不利"}：${(check.advantage_reasons || []).join("、")}` : "";
   els.diceCheckAdvantage.hidden = !check?.advantage;
+}
+
+function showDiceCrucial(check) {
+  els.diceCheckCrucial.textContent = check?.crucial
+    ? (check.crucial_reason === "game_over" ? "失敗すると危険" : "失敗すると戦闘") : "";
+  els.diceCheckCrucial.hidden = !check?.crucial;
 }
 
 function selectedDiceFace(roll) {
@@ -1091,6 +1099,9 @@ function showDiceFaces(roll) {
   els.diceSecond.hidden = !(roll.advantage && roll.rolls.length === 2);
   els.diceNaturalSecond.textContent = String(roll.rolls[1] ?? "?");
   els.diceNaturalSecond.hidden = els.diceSecond.hidden;
+  for (const number of [els.diceNatural, els.diceNaturalSecond]) {
+    number.classList.toggle("two-digits", number.textContent.length === 2);
+  }
   els.diceCheckCard.classList.add("faces-visible");
   [els.diceFirst, els.diceSecond].forEach((die, index) => {
     die.classList.toggle("selected", !els.diceSecond.hidden && index === roll.selected_index);
@@ -1187,6 +1198,7 @@ function showDiceOutcome(roll) {
   els.diceCritical.hidden = !els.diceCritical.textContent;
   els.diceCheckCard.classList.toggle("critical-success", natural === 20);
   els.diceCheckCard.classList.toggle("critical-failure", natural === 1);
+  els.diceCheckCard.classList.toggle("crucial-failure", roll.crucial === true && !success);
 }
 
 function skipDicePresentation() {
@@ -1211,13 +1223,14 @@ async function renderTurnResponse(session, title = "判定") {
   const previousLog = state.session?.dice_log || [];
   const roll = log[log.length - 1];
   const isNew = log.length !== previousLog.length || diceSignature(roll) !== diceSignature(previousLog[previousLog.length - 1]);
-  if (!state.session?.in_combat && !session.in_combat && isNew && isCheckRoll(roll)
+  if (!state.session?.in_combat && (!session.in_combat || roll?.crucial === true) && isNew && isCheckRoll(roll)
       && Number(roll.dc) < 100 && roll.rolls?.length) {
     document.querySelector("#mapOverlay").style.display = "none";
     const presentation = state.dicePresentation || startDicePresentation(null, title);
     presentation.roll = roll;
     els.diceSecond.hidden = !(roll.advantage && roll.rolls.length === 2);
     showDiceAdvantage(roll);
+    showDiceCrucial(roll);
     const immediate = () => presentation.skipped || presentation.reducedMotion;
     await waitForDice(presentation, immediate() ? 0 : presentation.minimum - (performance.now() - presentation.startedAt));
     if (state.dicePresentation !== presentation) return;

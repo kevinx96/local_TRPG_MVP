@@ -473,6 +473,113 @@ test("disabled extremes show only their points and the engine outcome", async ()
   }
 });
 
+test("crucial previews show the server risk and clear it for the next ordinary check", () => {
+  const c = client();
+  for (const [reason, label] of [["combat", "失敗すると戦闘"], ["game_over", "失敗すると危険"]]) {
+    Object.assign(c.choice.check, { crucial: true, crucial_reason: reason });
+    c.openDiceCheck(c.choice, c.card);
+    assert.equal(c.els.diceCheckCrucial.textContent, label);
+    assert.equal(c.els.diceCheckCrucial.hidden, false);
+    c.cancelDiceCheck();
+  }
+  delete c.choice.check.crucial;
+  c.openDiceCheck(c.choice, c.card);
+  assert.equal(c.els.diceCheckCrucial.hidden, true);
+  assert.equal(c.els.diceCheckCrucial.textContent, "");
+});
+
+test("ordinary crucial failures finish the original presentation before combat or an ending", async () => {
+  for (const reason of ["combat", "game_over"]) {
+    const c = client();
+    Object.assign(c.choice.check, { crucial: true, crucial_reason: reason });
+    c.openDiceCheck(c.choice, c.card);
+    const done = c.confirmDiceCheck();
+    const session = c.response(7, { in_combat: reason === "combat",
+      game_over: reason === "game_over" ? { reason: "物語はここで終わりました。" } : null });
+    Object.assign(session.dice_log[0], { crucial: true, crucial_reason: reason, outcome: "failure" });
+    c.answer(session);
+    await c.tick(1299);
+    assert.equal(c.rendered.length, 0);
+    assert.equal(c.els.diceCheckCard.classList.contains("crucial-failure"), false);
+    await c.tick(1);
+    assert.equal(c.els.diceOutcome.textContent, "DC 14　失敗");
+    assert.equal(c.els.diceCheckCard.classList.contains("crucial-failure"), true);
+    assert.equal(c.els.diceCheckCard.classList.contains("critical-failure"), false);
+    assert.equal(c.els.diceCritical.hidden, true);
+    await c.tick(1199);
+    assert.equal(c.rendered.length, 0);
+    await c.tick(1);
+    await done;
+    assert.equal(c.rendered[0], session);
+    assert.equal(c.timers.size, 0);
+    assert.doesNotMatch(c.els.diceBannerText.textContent, /大失敗/);
+  }
+});
+
+test("short crucial results, disabled extremes and skipping retain selected-die semantics", async () => {
+  for (const reducedMotion of [false, true]) {
+    const c = client({ reducedMotion });
+    const session = c.response(2, { in_combat: true });
+    Object.assign(session.dice_log[0], { crucial: true, crucial_reason: "combat", outcome: "failure",
+      critical_enabled: false, rolls: [20, 2], advantage: "disadvantage", selected_roll: 2, selected_index: 1 });
+    const done = c.renderTurnResponse(session);
+    await c.flush();
+    if (!reducedMotion) {
+      assert.equal(c.state.dicePresentation.minimum, 600);
+      c.skipDicePresentation();
+      await c.flush();
+    }
+    assert.equal(c.els.diceCheckCrucial.textContent, "失敗すると戦闘");
+    assert.equal(c.els.diceFirst.classList.contains("discarded"), true);
+    assert.equal(c.els.diceSecond.classList.contains("selected"), true);
+    assert.equal(c.els.diceNatural.classList.contains("two-digits"), true);
+    assert.equal(c.els.diceNaturalSecond.classList.contains("two-digits"), false);
+    assert.equal(c.els.diceCheckCard.classList.contains("crucial-failure"), true);
+    assert.equal(c.els.diceCheckCard.classList.contains("critical-success"), false);
+    assert.equal(c.els.diceCheckCard.classList.contains("critical-failure"), false);
+    assert.equal(c.els.diceCritical.hidden, true);
+    await c.tick(1200);
+    await done;
+  }
+});
+
+test("only failed server-authorized crucial checks crack and stale effects are reset", async () => {
+  for (const [crucial, outcome] of [[true, "success"], [false, "failure"]]) {
+    const c = client({ reducedMotion: true });
+    Object.assign(c.choice.check, { crucial: true, crucial_reason: "game_over" });
+    c.els.diceCheckCard.classList.add("crucial-failure");
+    c.openDiceCheck(c.choice, c.card);
+    assert.equal(c.els.diceCheckCard.classList.contains("crucial-failure"), false);
+    const done = c.confirmDiceCheck();
+    const session = c.response(7);
+    Object.assign(session.dice_log[0], { crucial, outcome, crucial_reason: "combat" });
+    c.answer(session);
+    await c.flush();
+    assert.equal(c.els.diceCheckCard.classList.contains("crucial-failure"), false);
+    assert.equal(c.els.diceCheckCrucial.hidden, !crucial);
+    if (crucial) assert.equal(c.els.diceCheckCrucial.textContent, "失敗すると戦闘");
+    await c.tick(1200);
+    await done;
+  }
+});
+
+test("crucial natural 1 keeps its exclusive critical label and combat-internal results bypass dice", async () => {
+  const c = client({ reducedMotion: true });
+  const session = c.response(1, { in_combat: true });
+  Object.assign(session.dice_log[0], { crucial: true, crucial_reason: "combat", outcome: "critical_failure" });
+  const done = c.renderTurnResponse(session);
+  await c.flush();
+  assert.equal(c.els.diceCritical.textContent, "大失敗");
+  assert.equal(c.els.diceCheckCard.classList.contains("critical-failure"), true);
+  await c.tick(1200);
+  await done;
+  const next = c.response(7, { in_combat: true });
+  next.dice_log[0].crucial = true;
+  await c.renderTurnResponse(next);
+  assert.equal(c.els.diceCheckCard.style.display, "none");
+  assert.equal(c.timers.size, 0);
+});
+
 test("both dice keep rolling without visible numbers until a slow server returns", async () => {
   const c = client();
   c.choice.check.advantage = "advantage";

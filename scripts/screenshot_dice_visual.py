@@ -8,14 +8,29 @@ import time
 from http.server import ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
+from unittest.mock import patch
 
+from host import app, state
+from scripts.balance.checkpoints import DEFAULT_SCENARIO, fresh_session
 from scripts.screenshot_choices import Handler as StaticHandler, ROOT
 
 
 class Handler(StaticHandler):
     def do_GET(self) -> None:
         path = urlparse(self.path).path
-        if path.startswith("/042-candidates/"):
+        if path == "/042-crucial-fixture":
+            session = fresh_session(state.load_scenario_pack(DEFAULT_SCENARIO), "hero")
+            accepted, reason = state.commit_world_position(session, location_id="goblin_fort")
+            if not accepted:
+                raise ValueError(reason)
+            session["choices"] = state.fallback_choices_for_session(session)
+            initial = state.public_session(session)
+            choice = next(c for c in initial["choices"] if c.get("id") == "fort_first_bypass")
+            with patch.object(state.random, "randint", return_value=3), patch.object(app, "save_session"):
+                result = app._run_turn(session, app.TurnRequest(text=choice["text"], action_id=choice["id"]),
+                                       allow_narration=False)
+            self.send_json({"initial": initial, "choice": choice, "result": result})
+        elif path.startswith("/042-candidates/"):
             base = ROOT / "assets/candidates/042"
             target = (base / path.removeprefix("/042-candidates/")).resolve()
             if not target.is_relative_to(base) or not target.is_file():

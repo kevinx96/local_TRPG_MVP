@@ -196,6 +196,18 @@ class ChecksV2Tests(unittest.TestCase):
         with patch.object(state, "roll_dice", side_effect=AssertionError("No roll for dice_type none")):
             self.assertEqual(free_actions.adjudicate(session, self.plan(target="glowing_moss_patch"))["outcome"], "success")
 
+    def test_observation_failure_carries_crucial_metadata_to_the_short_presentation(self):
+        (location, target), _ = next(iter(checks_v2.OBSERVATIONS.items()))
+        session = self.session("hero", location)
+        obj = next(o for o in state._current_location_record(session)["objects"] if o["id"] == target)
+        obj["observe_reveals"]["failure_effects"] = [{"game_over": {"reason": "物語はここで終わりました。"}}]
+        with patch.object(state.random, "randint", return_value=2):
+            result = free_actions.adjudicate(session, self.plan(target=target))
+        self.assertEqual(result["outcome"], "failure")
+        self.assertTrue(result["roll"]["crucial"])
+        self.assertEqual(result["roll"]["crucial_reason"], "game_over")
+        self.assertTrue(state.public_session(session)["dice_log"][-1]["crucial"])
+
     def test_simulation_uses_exact_advantage_probabilities_and_seeded_rng(self):
         session = self.session("hero")
         for mode, expected in (("advantage", .7975), ("disadvantage", .3025)):

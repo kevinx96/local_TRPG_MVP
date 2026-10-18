@@ -1,6 +1,8 @@
 {
   "ok": true,
   "checks": [
+    "default material is selected B01 ruby",
+    "all 1–20 number boxes fit each material's front triangle at 112px and 160px, centered on its centroid, 45% height and 15% smaller for two digits",
     ": tray appears before the falling dice",
     ": two diminishing bounces with a lighter airborne shadow",
     ": painted tray loaded",
@@ -15,6 +17,11 @@
     ": only selected natural 20 glows",
     ": only selected natural 1 cracks",
     ": disabled extremes have no effects",
+    ": crucial combat warning appears before rolling",
+    ": ordinary crucial failure has cracks without a critical label",
+    ": only the selected crucial failure cracks and shakes",
+    ": game-over risk uses danger warning and still cracks when natural extremes are disabled",
+    ": successful crucial check does not crack",
     "-mobile: tray appears before the falling dice",
     "-mobile: two diminishing bounces with a lighter airborne shadow",
     "-mobile: painted tray loaded",
@@ -29,8 +36,59 @@
     "-mobile: only selected natural 20 glows",
     "-mobile: only selected natural 1 cracks",
     "-mobile: disabled extremes have no effects",
+    "-mobile: crucial combat warning appears before rolling",
+    "-mobile: ordinary crucial failure has cracks without a critical label",
+    "-mobile: only the selected crucial failure cracks and shakes",
+    "-mobile: game-over risk uses danger warning and still cracks when natural extremes are disabled",
+    "-mobile: successful crucial check does not crack",
+    "real engine combat-start response retains the dice result before switching screens",
+    "real engine response enters the existing combat screen after result hold",
     "reduced motion disables tray, dice, numbers and critical animations",
     "sheet overlays real serif numbers on all three materials"
+  ],
+  "numberGeometry": [
+    {
+      "material": "bone",
+      "size": 112,
+      "faces": 20,
+      "singleFont": 23.436,
+      "doubleFont": 19.9206
+    },
+    {
+      "material": "bone",
+      "size": 160,
+      "faces": 20,
+      "singleFont": 33.48,
+      "doubleFont": 28.458
+    },
+    {
+      "material": "ruby",
+      "size": 112,
+      "faces": 20,
+      "singleFont": 21.3696,
+      "doubleFont": 18.1642
+    },
+    {
+      "material": "ruby",
+      "size": 160,
+      "faces": 20,
+      "singleFont": 30.528,
+      "doubleFont": 25.9488
+    },
+    {
+      "material": "iron",
+      "size": 112,
+      "faces": 20,
+      "singleFont": 22.0752,
+      "doubleFont": 18.7639
+    },
+    {
+      "material": "iron",
+      "size": 160,
+      "faces": 20,
+      "singleFont": 31.536,
+      "doubleFont": 26.8056
+    }
   ],
   "browserErrors": []
 }
