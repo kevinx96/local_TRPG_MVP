@@ -39,13 +39,13 @@ def chapter(location: str) -> int:
         return 5
     if location.startswith(("valley_", "xanxus_phantom")):
         return 4
-    if location in BATTLEFIELD or location.startswith(("village_", "ice_elemental", "frost_wolf")):
+    if location in BATTLEFIELD or location.startswith(("village_", "ice_elemental", "frost_wolf", "gorge_")):
         return 3
     return 2
 
 
 def encounter_checkpoint(pack: dict[str, Any], cp: dict[str, Any], location: str, character: str) -> dict[str, Any]:
-    if location in BATTLEFIELD:
+    if location in BATTLEFIELD or location.startswith("gorge_"):
         session = battlefield.forest_exit(pack, cp, character)
         state._set_companion(session, None)
         if location in {"ghoul_marsh", "grave_chapel"}:

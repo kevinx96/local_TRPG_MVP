@@ -1,0 +1,278 @@
+[
+  {
+    "file": "assets/candidates/035/bg_gorge_claw_cliff/candidate_01.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB"
+  },
+  {
+    "file": "assets/candidates/035/bg_gorge_claw_cliff/candidate_02.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB"
+  },
+  {
+    "file": "assets/candidates/035/bg_gorge_entrance/candidate_01.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB"
+  },
+  {
+    "file": "assets/candidates/035/bg_gorge_entrance/candidate_02.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB"
+  },
+  {
+    "file": "assets/candidates/035/bg_gorge_giant_path/candidate_01.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB"
+  },
+  {
+    "file": "assets/candidates/035/bg_gorge_giant_path/candidate_02.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB"
+  },
+  {
+    "file": "assets/candidates/035/bg_gorge_miner_camp/candidate_01.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB"
+  },
+  {
+    "file": "assets/candidates/035/bg_gorge_miner_camp/candidate_02.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB"
+  },
+  {
+    "file": "assets/candidates/035/bg_gorge_rockfall_path/candidate_01.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB"
+  },
+  {
+    "file": "assets/candidates/035/bg_gorge_rockfall_path/candidate_02.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB"
+  },
+  {
+    "file": "assets/candidates/035/bg_gorge_worm_lair/candidate_01.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB"
+  },
+  {
+    "file": "assets/candidates/035/bg_gorge_worm_lair/candidate_02.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB"
+  },
+  {
+    "file": "assets/candidates/035/enemy_earth_worm/candidate_01.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      18,
+      31,
+      1236,
+      1239
+    ]
+  },
+  {
+    "file": "assets/candidates/035/enemy_earth_worm/candidate_02.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      12,
+      8,
+      1244,
+      1245
+    ]
+  },
+  {
+    "file": "assets/candidates/035/enemy_gravel_beetle/candidate_01.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      20,
+      155,
+      1242,
+      1153
+    ]
+  },
+  {
+    "file": "assets/candidates/035/enemy_gravel_beetle/candidate_02.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      9,
+      110,
+      1246,
+      1186
+    ]
+  },
+  {
+    "file": "assets/candidates/035/enemy_rock_giant/candidate_01.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      24,
+      9,
+      1245,
+      1234
+    ]
+  },
+  {
+    "file": "assets/candidates/035/enemy_rock_giant/candidate_02.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      47,
+      7,
+      1234,
+      1250
+    ]
+  },
+  {
+    "file": "assets/candidates/035/enemy_stone_lizard/candidate_01.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      31,
+      41,
+      1237,
+      1219
+    ]
+  },
+  {
+    "file": "assets/candidates/035/enemy_stone_lizard/candidate_02.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "alpha_bbox": [
+      11,
+      51,
+      1244,
+      1206
+    ]
+  },
+  {
+    "file": "assets/candidates/035/npc_elio/candidate_01.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      254
+    ],
+    "alpha_bbox": [
+      30,
+      9,
+      984,
+      1524
+    ]
+  },
+  {
+    "file": "assets/candidates/035/npc_elio/candidate_02.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "alpha_extrema": [
+      0,
+      254
+    ],
+    "alpha_bbox": [
+      17,
+      7,
+      1021,
+      1526
+    ]
+  }
+]

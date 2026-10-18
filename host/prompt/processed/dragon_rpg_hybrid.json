@@ -7,14 +7,15 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-17-v034",
+    "content_revision": "2026-10-18-v035",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
     "chapter5_v5": true,
     "rewards_battlefield_v031": true,
     "oaksdawn_v033": true,
-    "oaksdawn_v034": true
+    "oaksdawn_v034": true,
+    "rumbling_gorge_v035": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -242,12 +243,33 @@
       "npc_ids": [
         "walter",
         "liese",
-        "brigitte"
+        "brigitte",
+        "elio"
       ],
       "enemy_ids": [],
       "next_scene_ids": [
         "dark_forest",
-        "old_battlefield"
+        "old_battlefield",
+        "rumbling_gorge"
+      ]
+    },
+    {
+      "id": "rumbling_gorge",
+      "title": "地鳴りの峡谷",
+      "description": "守護団員がどけた岩の向こうに、深い峡谷が口を開けていた。足元が低く唸るように揺れ、岩壁から小石がぱらぱらと落ちてくる。",
+      "location_ids": [
+        "gorge_entrance",
+        "gorge_rockfall_path",
+        "gorge_miner_camp",
+        "gorge_claw_cliff",
+        "gorge_giant_path",
+        "gorge_worm_lair"
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "next_scene_ids": [
+        "oaksdawn",
+        "village"
       ]
     }
   ],
@@ -6281,6 +6303,13 @@
           "text": "十字路へ戻る",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "泉の水を汲む",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "drew_spirit_spring_water",
+          "hidden_after": "drew_spirit_spring_water"
         }
       ],
       "hybrid": {
@@ -6389,6 +6418,28 @@
             }
           ],
           "risk_source": "destination"
+        },
+        {
+          "id": "draw_spirit_spring_water",
+          "text": "泉の水を汲む",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "泉の水を汲む"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "id": "spirit_spring_water",
+                "name": "精霊の泉の水",
+                "quantity": 1
+              }
+            }
+          ],
+          "once": "drew_spirit_spring_water",
+          "hidden_after": "drew_spirit_spring_water",
+          "result_text": "澄んだ泉の水を、空の水筒に汲んだ。水面が、ほのかに光っている。",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_elf_spring.png",
@@ -9875,7 +9926,9 @@
                     "has_assassin_crest",
                     "heard_old_soldier_ghost",
                     "heard_guardian_refusal",
-                    "heard_pass_rumor"
+                    "heard_pass_rumor",
+                    "read_miner_diary",
+                    "saw_white_claw"
                   ],
                   "count": 2
                 }
@@ -14352,6 +14405,25 @@
           "requirements": {},
           "result_text": "ヴァルターは長いこと黙っていた。「十年、あの鐘の音を待っておった。礼を言う」",
           "risk_source": "action"
+        },
+        {
+          "id": "open_gorge_path",
+          "text": "東の峠を通りたいと頼む",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "東の峠を通りたいと頼む"
+          ],
+          "effects": [
+            {
+              "set_flag": "gorge_path_open"
+            }
+          ],
+          "visible_after": "greeted_walter",
+          "once": "gorge_path_open",
+          "hidden_after": "gorge_path_open",
+          "result_text": "「峠を越えるだと？ ……いいだろう、守護団員に岩をどけさせよう。だが峡谷には近ごろ、岩でできた獣が出るそうだ。気をつけて行け」",
+          "risk_source": "action"
         }
       ],
       "choices": [
@@ -14382,6 +14454,14 @@
           "text": "大通りへ戻る",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "東の峠を通りたいと頼む",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "greeted_walter",
+          "once": "gorge_path_open",
+          "hidden_after": "gorge_path_open"
         }
       ],
       "connected_location_ids": [
@@ -14976,7 +15056,9 @@
       "title": "樫の葉亭",
       "description": "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが、干し肉をかじりながら峠の噂話をしている。",
       "background_image": "/static/images/bg_oaksdawn_inn.png",
-      "npc_ids": [],
+      "npc_ids": [
+        "elio"
+      ],
       "enemy_ids": [],
       "actions": [
         {
@@ -15030,6 +15112,129 @@
           ],
           "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
           "risk_source": "destination"
+        },
+        {
+          "id": "talk_elio",
+          "text": "青い外套の青年に話しかける",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "青い外套の青年に話しかける"
+          ],
+          "effects": [],
+          "once": "met_elio",
+          "hidden_after": "met_elio",
+          "portrait_image": "/static/images/npc_elio.png",
+          "result_text": "「やあ。僕はエリオ、流れの水術士さ。東の峡谷の地鳴りを調べに来たんだけど、道が塞がれていてね。……君も峠を越えるつもりかい？」",
+          "risk_source": "action"
+        },
+        {
+          "id": "recruit_elio_gold",
+          "text": "傭兵として雇う（50G）",
+          "preview": "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "傭兵として雇う（50G）"
+          ],
+          "effects": [
+            {
+              "gold_change": -50
+            },
+            {
+              "set_companion": "hydromancer_elio"
+            },
+            {
+              "set_flag": "recruited_elio"
+            }
+          ],
+          "visible_after": "met_elio",
+          "hidden_after": "recruited_elio",
+          "portrait_image": "/static/images/npc_elio.png",
+          "requirements": {
+            "all": [
+              {
+                "gold_gte": 50
+              },
+              {
+                "not_flag": "recruited_elio"
+              }
+            ]
+          },
+          "result_text": "「契約成立だね。水の届くところなら、どこでも役に立ってみせるよ」",
+          "risk_source": "action"
+        },
+        {
+          "id": "recruit_elio_water",
+          "text": "精霊の泉の水を渡す",
+          "preview": "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "精霊の泉の水を渡す"
+          ],
+          "effects": [
+            {
+              "remove_item": {
+                "name": "精霊の泉の水",
+                "quantity": 1
+              }
+            },
+            {
+              "set_companion": "hydromancer_elio"
+            },
+            {
+              "set_flag": "recruited_elio"
+            }
+          ],
+          "visible_after": "met_elio",
+          "hidden_after": "recruited_elio",
+          "portrait_image": "/static/images/npc_elio.png",
+          "requirements": {
+            "all": [
+              {
+                "has_item": "精霊の泉の水"
+              },
+              {
+                "not_flag": "recruited_elio"
+              }
+            ]
+          },
+          "result_text": "エリオは水差しの水を光にかざし、目を輝かせた。「精霊の泉の水だ……！ こんなものをもらったら、断れないよ。一緒に行こう」",
+          "risk_source": "action"
+        },
+        {
+          "id": "recruit_elio_persuade",
+          "text": "地鳴りの謎を一緒に調べようと誘う",
+          "preview": "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）",
+          "risk": "1d20+int判定（DC13）",
+          "intent_keywords": [
+            "地鳴りの謎を一緒に調べようと誘う"
+          ],
+          "effects": [],
+          "visible_after": "met_elio",
+          "hidden_after": "recruited_elio",
+          "portrait_image": "/static/images/npc_elio.png",
+          "once": "persuaded_elio",
+          "requirements": {
+            "not_flag": "recruited_elio"
+          },
+          "roll": {
+            "dice_type": "1d20+int",
+            "dc": 13
+          },
+          "success_effects": [
+            {
+              "set_companion": "hydromancer_elio"
+            },
+            {
+              "set_flag": "recruited_elio"
+            }
+          ],
+          "failure_effects": [],
+          "result_texts": {
+            "success": "「……面白い。君となら、あの地鳴りの正体に辿り着けそうだ」",
+            "failure": "「悪いけど、僕はひとりで調べる方が性に合っていてね」"
+          },
+          "risk_source": "action"
         }
       ],
       "choices": [
@@ -15052,6 +15257,58 @@
           "text": "大通りへ戻る",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "青い外套の青年に話しかける",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "met_elio",
+          "hidden_after": "met_elio"
+        },
+        {
+          "text": "傭兵として雇う（50G）",
+          "preview": "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）",
+          "risk": "判定不要",
+          "visible_after": "met_elio",
+          "hidden_after": "recruited_elio",
+          "requirements": {
+            "all": [
+              {
+                "gold_gte": 50
+              },
+              {
+                "not_flag": "recruited_elio"
+              }
+            ]
+          }
+        },
+        {
+          "text": "精霊の泉の水を渡す",
+          "preview": "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）",
+          "risk": "判定不要",
+          "visible_after": "met_elio",
+          "hidden_after": "recruited_elio",
+          "requirements": {
+            "all": [
+              {
+                "has_item": "精霊の泉の水"
+              },
+              {
+                "not_flag": "recruited_elio"
+              }
+            ]
+          }
+        },
+        {
+          "text": "地鳴りの謎を一緒に調べようと誘う",
+          "preview": "同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減）",
+          "risk": "1d20+int判定（DC13）",
+          "visible_after": "met_elio",
+          "hidden_after": "recruited_elio",
+          "once": "persuaded_elio",
+          "requirements": {
+            "not_flag": "recruited_elio"
+          }
         }
       ],
       "connected_location_ids": [
@@ -15060,7 +15317,20 @@
       "combat": {
         "enemy_ids": [],
         "auto_start": false
-      }
+      },
+      "npc_requirements": {
+        "elio": {
+          "not_flag": "recruited_elio"
+        }
+      },
+      "description_variants": [
+        {
+          "requirements": {
+            "not_flag": "recruited_elio"
+          },
+          "text": "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが峠の噂話をする隅で、青い外套の青年が水差しの水面をじっと見つめている。"
+        }
+      ]
     },
     {
       "id": "oaksdawn_wall",
@@ -15105,8 +15375,9 @@
           ],
           "effects": [],
           "enabled": false,
-          "disabled_reason": "峠は崩れた大岩で塞がれていて、今は通れない。",
           "requirements": {},
+          "hidden_after": "gorge_path_open",
+          "disabled_reason": "峠は崩れた大岩で塞がれていて、今は通れない。",
           "risk_source": "action"
         },
         {
@@ -15124,6 +15395,23 @@
           ],
           "result_text": "石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。",
           "risk_source": "destination"
+        },
+        {
+          "id": "oaksdawn_east_pass_open",
+          "text": "東の峠へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "東の峠へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "gorge_entrance"
+            }
+          ],
+          "visible_after": "gorge_path_open",
+          "result_text": "守護団員たちがどけた岩の間を抜け、東の峠へ踏み込んだ。",
+          "risk_source": "destination"
         }
       ],
       "choices": [
@@ -15137,22 +15425,834 @@
           "preview": "",
           "risk": "判定不要",
           "enabled": false,
-          "disabled_reason": "峠は崩れた大岩で塞がれていて、今は通れない。",
-          "requirements": {}
+          "requirements": {},
+          "hidden_after": "gorge_path_open",
+          "disabled_reason": "峠は崩れた大岩で塞がれていて、今は通れない。"
         },
         {
           "text": "大通りへ戻る",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "東の峠へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "gorge_path_open"
         }
       ],
       "connected_location_ids": [
         "old_battlefield",
-        "oaksdawn_square"
+        "oaksdawn_square",
+        "gorge_entrance"
       ],
       "combat": {
         "enemy_ids": [],
         "auto_start": false
+      },
+      "description_variants": [
+        {
+          "requirements": {
+            "flag": "gorge_path_open"
+          },
+          "text": "城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の大岩はどけられ、細い道が東へ続いている。"
+        }
+      ]
+    },
+    {
+      "id": "gorge_entrance",
+      "title": "峡谷の入口",
+      "description": "守護団員がどけた岩の向こうに、深い峡谷が口を開けていた。足元が低く唸るように揺れ、岩壁から小石がぱらぱらと落ちてくる。",
+      "scene_id": "rumbling_gorge",
+      "background_image": "/static/images/bg_gorge_entrance.png",
+      "actions": [
+        {
+          "id": "gorge_to_rockfall",
+          "text": "落石の道を進む",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "落石の道を進む"
+          ],
+          "effects": [
+            {
+              "current_location": "gorge_rockfall_path"
+            }
+          ],
+          "result_text": "崩れた岩が転がる細い道。岩陰から、砂利を固めたような甲虫が二匹、顎を鳴らして這い出してきた。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "gorge_to_wall",
+          "text": "城塞へ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "城塞へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "oaksdawn_wall"
+            }
+          ],
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "gorge_path_open"
+              },
+              "text": "城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の大岩はどけられ、細い道が東へ続いている。"
+            }
+          ],
+          "result_text": "城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の道は、崩れ落ちた大岩でふさがれている。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "落石の道を進む",
+          "preview": "",
+          "risk": "危険（戦闘）"
+        },
+        {
+          "text": "城塞へ戻る",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [
+        "gorge_rockfall_path",
+        "oaksdawn_wall"
+      ],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      }
+    },
+    {
+      "id": "gorge_rockfall_path",
+      "title": "落石の道",
+      "description": "崩れた岩が転がる細い道。岩陰から、砂利を固めたような甲虫が二匹、顎を鳴らして這い出してきた。",
+      "scene_id": "rumbling_gorge",
+      "background_image": "/static/images/bg_gorge_rockfall_path.png",
+      "actions": [
+        {
+          "id": "fight_gorge_rockfall_path",
+          "text": "甲虫と戦う",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "甲虫と戦う"
+          ],
+          "effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "hidden_after": "passed_gorge_rockfall_path",
+          "result_text": "剣を構えると、甲虫たちは殻を擦り合わせて威嚇しながら、じりじりと間合いを詰めてきた。",
+          "risk_source": "action"
+        },
+        {
+          "id": "sneak_gorge_rockfall_path",
+          "text": "岩陰を縫って抜ける",
+          "preview": "",
+          "risk": "1d20+dex判定（DC13）",
+          "intent_keywords": [
+            "岩陰を縫って抜ける"
+          ],
+          "effects": [],
+          "hidden_after": "passed_gorge_rockfall_path",
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 13
+          },
+          "success_effects": [
+            {
+              "set_flag": "passed_gorge_rockfall_path"
+            }
+          ],
+          "failure_effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "result_texts": {
+            "success": "甲虫が砂利を噛んでいる隙に、岩陰を縫って道を抜けた。",
+            "failure": "足元の小石が崩れ、甲虫が一斉にこちらを向いた。"
+          },
+          "risk_source": "action"
+        },
+        {
+          "id": "rockfall_to_camp",
+          "text": "鉱夫の野営跡へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鉱夫の野営跡へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "gorge_miner_camp"
+            }
+          ],
+          "visible_after": "passed_gorge_rockfall_path",
+          "result_text": "崩れかけた天幕と、冷えた竈が残る野営跡。逃げ出した鉱夫たちの道具が、そのまま散らばっている。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "rockfall_to_cliff",
+          "text": "白い爪痕の崖へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "白い爪痕の崖へ向かう"
+          ],
+          "effects": [
+            {
+              "current_location": "gorge_claw_cliff"
+            }
+          ],
+          "visible_after": "passed_gorge_rockfall_path",
+          "result_text": "峠をふさいでいた崩落の跡。巨大な岩の断面に、何かが引き裂いたような爪痕が三本、深く刻まれている。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "rockfall_to_entrance",
+          "text": "峡谷の入口へ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "峡谷の入口へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "gorge_entrance"
+            }
+          ],
+          "visible_after": "passed_gorge_rockfall_path",
+          "result_text": "守護団員がどけた岩の向こうに、深い峡谷が口を開けていた。足元が低く唸るように揺れ、岩壁から小石がぱらぱらと落ちてくる。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "甲虫と戦う",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "hidden_after": "passed_gorge_rockfall_path"
+        },
+        {
+          "text": "岩陰を縫って抜ける",
+          "preview": "",
+          "risk": "1d20+dex判定（DC13）",
+          "hidden_after": "passed_gorge_rockfall_path"
+        },
+        {
+          "text": "鉱夫の野営跡へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "passed_gorge_rockfall_path"
+        },
+        {
+          "text": "白い爪痕の崖へ向かう",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "passed_gorge_rockfall_path"
+        },
+        {
+          "text": "峡谷の入口へ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "passed_gorge_rockfall_path"
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [
+        "gravel_beetle",
+        "gravel_beetle"
+      ],
+      "connected_location_ids": [
+        "gorge_miner_camp",
+        "gorge_claw_cliff",
+        "gorge_entrance"
+      ],
+      "combat": {
+        "enemy_ids": [
+          "gravel_beetle",
+          "gravel_beetle"
+        ],
+        "auto_start": false,
+        "encounter_class": "trash",
+        "boss": false,
+        "flee_allowed": false,
+        "intro_text": "剣を構えると、甲虫たちは殻を擦り合わせて威嚇しながら、じりじりと間合いを詰めてきた。",
+        "victory_effects": {
+          "flags_set": [
+            "passed_gorge_rockfall_path"
+          ]
+        },
+        "defeat_effects": {
+          "game_over": {
+            "ending": "combat_defeat",
+            "reason": "落石の道で力尽きた。冒険はここで終わりを迎える。"
+          }
+        },
+        "result_texts": {
+          "victory": "甲虫は殻ごと崩れて、ただの砂利の山に戻った。",
+          "defeat": "落石の道で力尽きた。冒険はここで終わりを迎える。"
+        },
+        "victory_gold_bonus": 25
+      }
+    },
+    {
+      "id": "gorge_miner_camp",
+      "title": "鉱夫の野営跡",
+      "description": "崩れかけた天幕と、冷えた竈が残る野営跡。逃げ出した鉱夫たちの道具が、そのまま散らばっている。",
+      "scene_id": "rumbling_gorge",
+      "background_image": "/static/images/bg_gorge_miner_camp.png",
+      "actions": [
+        {
+          "id": "rest_miner_camp",
+          "text": "竈に火を入れて休む",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "竈に火を入れて休む"
+          ],
+          "effects": [
+            {
+              "restore_full": true
+            }
+          ],
+          "once": "rested_miner_camp",
+          "hidden_after": "rested_miner_camp",
+          "result_text": "竈に火を入れて、天幕の陰で短く眠った。地鳴りが、遠くで低く続いている。",
+          "risk_source": "action"
+        },
+        {
+          "id": "search_miner_camp",
+          "text": "鉱夫の荷物を調べる",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "鉱夫の荷物を調べる"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "id": "trail_ration",
+                "name": "携帯食",
+                "quantity": 2
+              }
+            }
+          ],
+          "once": "read_miner_diary",
+          "hidden_after": "read_miner_diary",
+          "result_text": "散らばった荷物の中から、携帯食と一冊の日記が出てきた。最後の頁には、震える字でこう書かれている。「……昨夜、峠の上を白いものが飛んでいった。その直後に山が崩れた。あれは竜だ。白い竜だ」",
+          "risk_source": "action"
+        },
+        {
+          "id": "camp_to_rockfall",
+          "text": "落石の道へ戻る",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "落石の道へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "gorge_rockfall_path"
+            }
+          ],
+          "result_text": "崩れた岩が転がる細い道。岩陰から、砂利を固めたような甲虫が二匹、顎を鳴らして這い出してきた。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "竈に火を入れて休む",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "rested_miner_camp",
+          "hidden_after": "rested_miner_camp"
+        },
+        {
+          "text": "鉱夫の荷物を調べる",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "read_miner_diary",
+          "hidden_after": "read_miner_diary"
+        },
+        {
+          "text": "落石の道へ戻る",
+          "preview": "",
+          "risk": "危険（戦闘）"
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [
+        "gorge_rockfall_path"
+      ],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      }
+    },
+    {
+      "id": "gorge_claw_cliff",
+      "title": "白い爪痕の崖",
+      "description": "峠をふさいでいた崩落の跡。巨大な岩の断面に、何かが引き裂いたような爪痕が三本、深く刻まれている。",
+      "scene_id": "rumbling_gorge",
+      "background_image": "/static/images/bg_gorge_claw_cliff.png",
+      "actions": [
+        {
+          "id": "inspect_white_claw",
+          "text": "爪痕を調べる",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "爪痕を調べる"
+          ],
+          "effects": [],
+          "once": "saw_white_claw",
+          "hidden_after": "saw_white_claw",
+          "result_text": "爪痕の奥には、真夏でも溶けない白い霜がこびりついていた。この岩は、山崩れで落ちたのではない。何か巨大なものが、爪で引き裂いたのだ。",
+          "risk_source": "action"
+        },
+        {
+          "id": "cliff_to_giant",
+          "text": "岩の巨人の通り道へ進む",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "岩の巨人の通り道へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "gorge_giant_path"
+            }
+          ],
+          "result_text": "峡谷が狭まる先で、苔むした岩山がゆっくりと立ち上がった。岩の巨人だ。足元では、石肌のトカゲが舌を鳴らしている。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "cliff_to_rockfall",
+          "text": "落石の道へ戻る",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "落石の道へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "gorge_rockfall_path"
+            }
+          ],
+          "result_text": "崩れた岩が転がる細い道。岩陰から、砂利を固めたような甲虫が二匹、顎を鳴らして這い出してきた。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "爪痕を調べる",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "saw_white_claw",
+          "hidden_after": "saw_white_claw"
+        },
+        {
+          "text": "岩の巨人の通り道へ進む",
+          "preview": "",
+          "risk": "危険（戦闘）"
+        },
+        {
+          "text": "落石の道へ戻る",
+          "preview": "",
+          "risk": "危険（戦闘）"
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [],
+      "connected_location_ids": [
+        "gorge_giant_path",
+        "gorge_rockfall_path"
+      ],
+      "combat": {
+        "enemy_ids": [],
+        "auto_start": false
+      }
+    },
+    {
+      "id": "gorge_giant_path",
+      "title": "岩の巨人の通り道",
+      "description": "峡谷が狭まる先で、苔むした岩山がゆっくりと立ち上がった。岩の巨人だ。足元では、石肌のトカゲが舌を鳴らしている。",
+      "scene_id": "rumbling_gorge",
+      "background_image": "/static/images/bg_gorge_giant_path.png",
+      "actions": [
+        {
+          "id": "fight_gorge_giant_path",
+          "text": "岩の巨人と戦う",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "岩の巨人と戦う"
+          ],
+          "effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "hidden_after": "passed_gorge_giant_path",
+          "result_text": "岩の巨人が腕を振り上げると、峡谷全体が低く鳴った。トカゲが岩陰から跳び出してくる。",
+          "risk_source": "action"
+        },
+        {
+          "id": "sneak_gorge_giant_path",
+          "text": "巨人の足元をくぐり抜ける",
+          "preview": "",
+          "risk": "1d20+dex判定（DC33）",
+          "intent_keywords": [
+            "巨人の足元をくぐり抜ける"
+          ],
+          "effects": [],
+          "hidden_after": "passed_gorge_giant_path",
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 33
+          },
+          "success_effects": [
+            {
+              "set_flag": "passed_gorge_giant_path"
+            }
+          ],
+          "failure_effects": [
+            {
+              "start_combat": true
+            },
+            {
+              "enemy_first": true
+            }
+          ],
+          "result_texts": {
+            "success": "巨人が腕を振り上げた隙に、足の間を転がるようにくぐり抜けた。",
+            "failure": "巨人の踵が地面を打ち、揺れに足を取られた。"
+          },
+          "steal_encounter": "gorge_giant_path",
+          "risk_source": "action"
+        },
+        {
+          "id": "giant_to_worm",
+          "text": "峡谷の底へ下りる",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "峡谷の底へ下りる"
+          ],
+          "effects": [
+            {
+              "current_location": "gorge_worm_lair"
+            }
+          ],
+          "visible_after": "passed_gorge_giant_path",
+          "result_text": "峡谷の底は、無数の穴で蜂の巣のようになっていた。地鳴りがひときわ大きくなり、地面を突き破って巨大なワームが姿を現す。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "giant_to_cliff",
+          "text": "白い爪痕の崖へ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "白い爪痕の崖へ戻る"
+          ],
+          "effects": [
+            {
+              "current_location": "gorge_claw_cliff"
+            }
+          ],
+          "visible_after": "passed_gorge_giant_path",
+          "result_text": "峠をふさいでいた崩落の跡。巨大な岩の断面に、何かが引き裂いたような爪痕が三本、深く刻まれている。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "岩の巨人と戦う",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "hidden_after": "passed_gorge_giant_path"
+        },
+        {
+          "text": "巨人の足元をくぐり抜ける",
+          "preview": "",
+          "risk": "1d20+dex判定（DC33）",
+          "hidden_after": "passed_gorge_giant_path"
+        },
+        {
+          "text": "峡谷の底へ下りる",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "visible_after": "passed_gorge_giant_path"
+        },
+        {
+          "text": "白い爪痕の崖へ戻る",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "passed_gorge_giant_path"
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [
+        "rock_giant",
+        "stone_lizard"
+      ],
+      "connected_location_ids": [
+        "gorge_worm_lair",
+        "gorge_claw_cliff"
+      ],
+      "combat": {
+        "enemy_ids": [
+          "rock_giant",
+          "stone_lizard"
+        ],
+        "auto_start": false,
+        "encounter_class": "elite",
+        "boss": false,
+        "flee_allowed": false,
+        "intro_text": "岩の巨人が腕を振り上げると、峡谷全体が低く鳴った。トカゲが岩陰から跳び出してくる。",
+        "victory_effects": {
+          "flags_set": [
+            "passed_gorge_giant_path"
+          ]
+        },
+        "defeat_effects": {
+          "game_over": {
+            "ending": "combat_defeat",
+            "reason": "岩の巨人の通り道で力尽きた。冒険はここで終わりを迎える。"
+          }
+        },
+        "result_texts": {
+          "victory": "岩の巨人は崩れて、ただの岩山に戻った。崩れた胸の奥に、赤い果実が一つ埋まっている。",
+          "defeat": "岩の巨人の通り道で力尽きた。冒険はここで終わりを迎える。"
+        },
+        "one_time_reward": {
+          "flag": "reward_claimed:gorge_giant_path",
+          "shared_flags": [
+            "elite_fruit_claimed:rumbling_gorge"
+          ],
+          "blocking_flags": [
+            "elite_fruit_claimed:rumbling_gorge"
+          ],
+          "items": [
+            {
+              "id": "fruit_life",
+              "name": "生命の果実",
+              "quantity": 1
+            }
+          ],
+          "steal_text": "すれ違いざまに生命の果実をくすねた。"
+        },
+        "victory_gold_bonus": 25
+      }
+    },
+    {
+      "id": "gorge_worm_lair",
+      "title": "峡谷の底",
+      "description": "峡谷の底は、無数の穴で蜂の巣のようになっていた。地鳴りがひときわ大きくなり、地面を突き破って巨大なワームが姿を現す。",
+      "scene_id": "rumbling_gorge",
+      "background_image": "/static/images/bg_gorge_worm_lair.png",
+      "actions": [
+        {
+          "id": "fight_gorge_worm_lair",
+          "text": "大ワームと戦う",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "大ワームと戦う"
+          ],
+          "effects": [
+            {
+              "start_combat": true
+            }
+          ],
+          "hidden_after": "passed_gorge_worm_lair",
+          "result_text": "大ワームが鎌首をもたげ、土砂を噴き上げながら襲いかかってきた。",
+          "risk_source": "action"
+        },
+        {
+          "id": "sneak_gorge_worm_lair",
+          "text": "地鳴りの合間を縫って駆け抜ける",
+          "preview": "",
+          "risk": "1d20+dex判定（DC17）",
+          "intent_keywords": [
+            "地鳴りの合間を縫って駆け抜ける"
+          ],
+          "effects": [],
+          "hidden_after": "passed_gorge_worm_lair",
+          "roll": {
+            "dice_type": "1d20+dex",
+            "dc": 17
+          },
+          "success_effects": [
+            {
+              "set_flag": "passed_gorge_worm_lair"
+            }
+          ],
+          "failure_effects": [
+            {
+              "start_combat": true
+            },
+            {
+              "enemy_first": true
+            }
+          ],
+          "result_texts": {
+            "success": "揺れが途切れた一瞬に、巣穴の間を一気に駆け抜けた。",
+            "failure": "足元の地面が崩れ、ワームの巣穴へ滑り落ちた。"
+          },
+          "risk_source": "action"
+        },
+        {
+          "id": "elio_flood_worm",
+          "text": "エリオの水で巣穴を満たす",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "エリオの水で巣穴を満たす"
+          ],
+          "effects": [
+            {
+              "set_flag": "passed_gorge_worm_lair"
+            }
+          ],
+          "requirements": {
+            "companion_id": "hydromancer_elio"
+          },
+          "secret": true,
+          "hidden_after": "passed_gorge_worm_lair",
+          "result_text": "エリオが杖を掲げると、峡谷の湧き水が渦を巻いて巣穴へ流れ込んだ。地中で何かが苦しげにのたうち、地鳴りが遠ざかっていく。「今のうちだ、行こう！」",
+          "risk_source": "action"
+        },
+        {
+          "id": "gorge_to_village",
+          "text": "峡谷を抜けて村へ下る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "峡谷を抜けて村へ下る"
+          ],
+          "effects": [
+            {
+              "current_location": "village",
+              "flags_set": [
+                "reached_village"
+              ]
+            }
+          ],
+          "visible_after": "passed_gorge_worm_lair",
+          "result_text": "峡谷を抜けると、眼下に麓の村が見えた。焼け跡の残る家々の外れ、避難所の裏手へと細い坂道が続いている。",
+          "risk_source": "destination"
+        },
+        {
+          "id": "worm_to_giant",
+          "text": "岩の巨人の通り道へ進む",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "intent_keywords": [
+            "岩の巨人の通り道へ進む"
+          ],
+          "effects": [
+            {
+              "current_location": "gorge_giant_path"
+            }
+          ],
+          "visible_after": "passed_gorge_worm_lair",
+          "result_text": "峡谷が狭まる先で、苔むした岩山がゆっくりと立ち上がった。岩の巨人だ。足元では、石肌のトカゲが舌を鳴らしている。",
+          "risk_source": "destination"
+        }
+      ],
+      "choices": [
+        {
+          "text": "大ワームと戦う",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "hidden_after": "passed_gorge_worm_lair"
+        },
+        {
+          "text": "地鳴りの合間を縫って駆け抜ける",
+          "preview": "",
+          "risk": "1d20+dex判定（DC17）",
+          "hidden_after": "passed_gorge_worm_lair"
+        },
+        {
+          "text": "エリオの水で巣穴を満たす",
+          "preview": "",
+          "risk": "判定不要",
+          "requirements": {
+            "companion_id": "hydromancer_elio"
+          },
+          "secret": true,
+          "hidden_after": "passed_gorge_worm_lair"
+        },
+        {
+          "text": "峡谷を抜けて村へ下る",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "passed_gorge_worm_lair"
+        },
+        {
+          "text": "岩の巨人の通り道へ進む",
+          "preview": "",
+          "risk": "危険（戦闘）",
+          "visible_after": "passed_gorge_worm_lair"
+        }
+      ],
+      "npc_ids": [],
+      "enemy_ids": [
+        "earth_worm"
+      ],
+      "connected_location_ids": [
+        "village",
+        "gorge_giant_path"
+      ],
+      "combat": {
+        "enemy_ids": [
+          "earth_worm"
+        ],
+        "auto_start": false,
+        "encounter_class": "boss",
+        "boss": true,
+        "flee_allowed": false,
+        "intro_text": "大ワームが鎌首をもたげ、土砂を噴き上げながら襲いかかってきた。",
+        "victory_effects": {
+          "flags_set": [
+            "passed_gorge_worm_lair"
+          ]
+        },
+        "defeat_effects": {
+          "game_over": {
+            "ending": "combat_defeat",
+            "reason": "峡谷の底で力尽きた。冒険はここで終わりを迎える。"
+          }
+        },
+        "result_texts": {
+          "victory": "大ワームは身をよじり、地響きとともに崩れ落ちた。あれほど続いていた地鳴りが、ふっと止んだ。",
+          "defeat": "峡谷の底で力尽きた。冒険はここで終わりを迎える。"
+        },
+        "one_time_reward": {
+          "flag": "reward_claimed:gorge_worm_lair",
+          "items": [
+            {
+              "id": "elixir_end",
+              "name": "鉄壁の霊薬",
+              "quantity": 1
+            }
+          ]
+        },
+        "victory_gold_bonus": 55
       }
     }
   ],
@@ -15377,6 +16477,12 @@
       "id": "oaksdawn_priest",
       "name": "礼拝堂の老司祭",
       "description": "暁の礼拝堂を守る老司祭。"
+    },
+    {
+      "id": "elio",
+      "name": "水術士エリオ",
+      "description": "流れの水術士。",
+      "image": "/static/images/npc_elio.png"
     }
   ],
   "items": [
@@ -16219,6 +17325,13 @@
         "defense": 1
       },
       "icon": "/static/images/icon_guardian_small_shield.png"
+    },
+    {
+      "id": "spirit_spring_water",
+      "name": "精霊の泉の水",
+      "category": "key",
+      "key_item": true,
+      "description": "精霊の泉で汲んだ澄んだ水。ほのかに光を帯びている。"
     }
   ],
   "clues": [
@@ -17745,6 +18858,138 @@
       "tags": [
         "undead"
       ]
+    },
+    {
+      "id": "gravel_beetle",
+      "name": "砂礫の甲虫",
+      "description": "砂利を固めたような殻を持つ甲虫。",
+      "hp": 14,
+      "max_hp": 14,
+      "attributes": {},
+      "element": "earth",
+      "tags": [
+        "earth"
+      ],
+      "resistances": {
+        "physical": 0.6,
+        "water": 1.5
+      },
+      "skills": [],
+      "combat": {
+        "defense": 0,
+        "evade": 0,
+        "basic_attack": {
+          "name": "攻撃",
+          "damage": "1d6+2",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_gravel_beetle.png"
+    },
+    {
+      "id": "stone_lizard",
+      "name": "石肌のトカゲ",
+      "description": "石のような鱗に覆われたトカゲ。",
+      "hp": 10,
+      "max_hp": 10,
+      "attributes": {},
+      "element": "earth",
+      "tags": [
+        "earth"
+      ],
+      "resistances": {
+        "physical": 0.6,
+        "water": 1.5
+      },
+      "skills": [],
+      "combat": {
+        "defense": 0,
+        "evade": 0,
+        "basic_attack": {
+          "name": "攻撃",
+          "damage": "1d4+1",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_stone_lizard.png"
+    },
+    {
+      "id": "rock_giant",
+      "name": "岩の巨人",
+      "description": "苔むした岩山が意思を持った、峡谷の巨人。",
+      "hp": 23,
+      "max_hp": 23,
+      "attributes": {},
+      "element": "earth",
+      "tags": [
+        "earth"
+      ],
+      "resistances": {
+        "physical": 0.6,
+        "water": 1.5
+      },
+      "skills": [],
+      "combat": {
+        "defense": 0,
+        "evade": 0,
+        "basic_attack": {
+          "name": "攻撃",
+          "damage": "1d6+2",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_rock_giant.png"
+    },
+    {
+      "id": "earth_worm",
+      "name": "土喰らいの大ワーム",
+      "description": "峡谷の地下を食い荒らす、巨大なワーム。",
+      "hp": 45,
+      "max_hp": 45,
+      "attributes": {},
+      "element": "earth",
+      "tags": [
+        "earth"
+      ],
+      "resistances": {
+        "physical": 0.6,
+        "water": 1.5
+      },
+      "skills": [],
+      "combat": {
+        "defense": 0,
+        "evade": 0,
+        "basic_attack": {
+          "name": "攻撃",
+          "damage": "1d10+2",
+          "accuracy": 70,
+          "element": "physical"
+        }
+      },
+      "rewards": {
+        "gold": 0,
+        "items": [],
+        "flags": []
+      },
+      "image": "/static/images/enemy_earth_worm.png"
     }
   ],
   "combat_choices": [
@@ -18516,6 +19761,27 @@
           "requirements": {
             "player_hp_ratio_gte": 0.5
           }
+        }
+      ]
+    },
+    {
+      "id": "hydromancer_elio",
+      "name": "水術士エリオ",
+      "image": "/static/images/npc_elio.png",
+      "description": "流れの水術士。毎ラウンド開始時に「水刃」で敵へ2d3の水属性ダメージを与える（水に弱い敵を優先して狙う）。4ラウンドごとに「水の帳」を張り、そのラウンドにプレイヤーが受けるダメージを半分にする。",
+      "round_start_effects": [
+        {
+          "kind": "damage_enemy",
+          "name": "水刃",
+          "damage": "2d3",
+          "element": "water",
+          "target": "weak_to:water"
+        },
+        {
+          "kind": "received_damage_multiplier",
+          "name": "水の帳",
+          "multiplier": 0.5,
+          "every_n_rounds": 4
         }
       ]
     }
@@ -20612,6 +21878,17 @@
             "oaksdawn_wall"
           ],
           "description": "城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の道は、崩れ落ちた大岩でふさがれている。"
+        },
+        {
+          "id": "gorge",
+          "label": "地鳴りの峡谷",
+          "kind": "exit",
+          "x": 97,
+          "y": 98,
+          "location_ids": [],
+          "description": "地鳴りの峡谷",
+          "submap": "rumbling_gorge",
+          "known_after": "gorge_path_open"
         }
       ],
       "edges": [
@@ -20677,6 +21954,152 @@
           "from": "G6",
           "to": "G1",
           "action_id": "wall_to_square"
+        },
+        {
+          "from": "G6",
+          "to": "gorge",
+          "action_ids": [
+            "oaksdawn_east_pass",
+            "oaksdawn_east_pass_open"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rumbling_gorge",
+      "title": "地鳴りの峡谷",
+      "nodes": [
+        {
+          "id": "K1",
+          "label": "峡谷の入口",
+          "kind": "start",
+          "x": 8,
+          "y": 50,
+          "location_ids": [
+            "gorge_entrance"
+          ],
+          "description": "守護団員がどけた岩の向こうに、深い峡谷が口を開けていた。足元が低く唸るように揺れ、岩壁から小石がぱらぱらと落ちてくる。"
+        },
+        {
+          "id": "K2",
+          "label": "落石の道",
+          "kind": "battle",
+          "x": 28,
+          "y": 50,
+          "location_ids": [
+            "gorge_rockfall_path"
+          ],
+          "description": "崩れた岩が転がる細い道。岩陰から、砂利を固めたような甲虫が二匹、顎を鳴らして這い出してきた。"
+        },
+        {
+          "id": "K3",
+          "label": "鉱夫の野営跡",
+          "kind": "rest",
+          "x": 40,
+          "y": 18,
+          "location_ids": [
+            "gorge_miner_camp"
+          ],
+          "description": "崩れかけた天幕と、冷えた竈が残る野営跡。逃げ出した鉱夫たちの道具が、そのまま散らばっている。"
+        },
+        {
+          "id": "K4",
+          "label": "白い爪痕の崖",
+          "kind": "event",
+          "x": 55,
+          "y": 50,
+          "location_ids": [
+            "gorge_claw_cliff"
+          ],
+          "description": "峠をふさいでいた崩落の跡。巨大な岩の断面に、何かが引き裂いたような爪痕が三本、深く刻まれている。"
+        },
+        {
+          "id": "K5",
+          "label": "岩の巨人の通り道",
+          "kind": "battle",
+          "x": 72,
+          "y": 72,
+          "location_ids": [
+            "gorge_giant_path"
+          ],
+          "description": "峡谷が狭まる先で、苔むした岩山がゆっくりと立ち上がった。岩の巨人だ。足元では、石肌のトカゲが舌を鳴らしている。"
+        },
+        {
+          "id": "K6",
+          "label": "峡谷の底",
+          "kind": "boss",
+          "x": 88,
+          "y": 45,
+          "location_ids": [
+            "gorge_worm_lair"
+          ],
+          "description": "峡谷の底は、無数の穴で蜂の巣のようになっていた。地鳴りがひときわ大きくなり、地面を突き破って巨大なワームが姿を現す。"
+        },
+        {
+          "id": "K7",
+          "label": "村への坂道",
+          "kind": "exit",
+          "x": 96,
+          "y": 80,
+          "location_ids": [],
+          "description": "村への坂道"
+        }
+      ],
+      "edges": [
+        {
+          "from": "K1",
+          "to": "K2",
+          "action_id": "gorge_to_rockfall"
+        },
+        {
+          "from": "K2",
+          "to": "K1",
+          "action_id": "rockfall_to_entrance"
+        },
+        {
+          "from": "K2",
+          "to": "K3",
+          "action_id": "rockfall_to_camp"
+        },
+        {
+          "from": "K3",
+          "to": "K2",
+          "action_id": "camp_to_rockfall"
+        },
+        {
+          "from": "K2",
+          "to": "K4",
+          "action_id": "rockfall_to_cliff"
+        },
+        {
+          "from": "K4",
+          "to": "K2",
+          "action_id": "cliff_to_rockfall"
+        },
+        {
+          "from": "K4",
+          "to": "K5",
+          "action_id": "cliff_to_giant"
+        },
+        {
+          "from": "K5",
+          "to": "K4",
+          "action_id": "giant_to_cliff"
+        },
+        {
+          "from": "K5",
+          "to": "K6",
+          "action_id": "giant_to_worm"
+        },
+        {
+          "from": "K6",
+          "to": "K5",
+          "action_id": "worm_to_giant"
+        },
+        {
+          "from": "K6",
+          "to": "K7",
+          "action_id": "gorge_to_village"
         }
       ]
     }

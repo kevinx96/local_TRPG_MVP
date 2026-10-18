@@ -1,0 +1,9 @@
+{
+  "gold_bonus": {
+    "gorge_rockfall_path": 25,
+    "gorge_giant_path": 25,
+    "gorge_worm_lair": 55
+  },
+  "n": 500,
+  "seed": 20261018
+}

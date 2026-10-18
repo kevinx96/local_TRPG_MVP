@@ -501,6 +501,7 @@ def _player_skill(session: dict[str, Any], skill_id: str, target_id: str, rng: A
         amount, detail = _roll_formula(str(resolved_skill.get("healing") or resolved_skill.get("dice_type") or "1d6+int/4"), character, rng)
         amount = max(0, int(round(amount * float(resolved_skill.get("healing_multiplier", 1) or 1))))
         if _equipped_effect(character, "healing_harms_humans") and not character.get("undead_parts"):
+            amount = _round_received_damage(session, amount)
             character["hp"] = max(0, _safe_int(character.get("hp"), 0) - amount)
             _log(session, "player", "self_damage", f"呪われた治癒でHPを{amount}失った。", {"amount": amount, "formula": detail})
         else:
@@ -830,6 +831,7 @@ def _resolve_attack(
         )
     self_damage = max(0, _safe_int(ability.get("self_damage"), 0))
     if self_damage and attacker is session.get("character"):
+        self_damage = _round_received_damage(session, self_damage)
         attacker["hp"] = max(0, _safe_int(attacker.get("hp"), 0) - self_damage)
         _log(session, actor_id, "self_damage", f"反動でHPを{self_damage}失った。", {"damage": self_damage})
     if defender is not session.get("character") and damage > 0:
@@ -1016,6 +1018,14 @@ def _apply_round_start_effects(session: dict[str, Any], rng: Any) -> None:
     combat = session.get("combat")
     if not isinstance(combat, dict) or combat.get("status") != "active":
         return
+    combat["round_received_multiplier"] = 1.0
+    companion = session.get("companion") if isinstance(session.get("companion"), dict) else {}
+    if (combat.get("encounter") or {}).get("disable_companion"):
+        companion = {}
+    # Round protection must cover fields and statuses before offensive ally effects run.
+    _apply_ally_round_start_effects(session, companion, rng, protection_only=True)
+    for ally in combat.get("phase_allies", []):
+        _apply_ally_round_start_effects(session, ally, rng, str(ally["id"]), protection_only=True)
     for enemy in _alive_enemies(combat):
         cycle = enemy.get("resistance_cycle", {})
         phases = cycle.get("phases", [])
@@ -1031,9 +1041,6 @@ def _apply_round_start_effects(session: dict[str, Any], rng: Any) -> None:
     _tick_enemy_statuses(session, rng)
     if combat.get("status") != "active":
         return
-    companion = session.get("companion") if isinstance(session.get("companion"), dict) else {}
-    if (combat.get("encounter") or {}).get("disable_companion"):
-        companion = {}
     _apply_ally_round_start_effects(session, companion, rng)
     for ally in combat.get("phase_allies", []):
         _apply_ally_round_start_effects(session, ally, rng, str(ally["id"]))
@@ -1129,11 +1136,17 @@ def _modified_received_damage(session: dict[str, Any], damage: int, element: str
                 and (not conditional.get('location_ids') or current_location_id(session) in conditional['location_ids'])
                 and (not conditional.get('enemy_ids') or enemy.get('template_id') in conditional['enemy_ids'])):
             reduction += int(conditional.get('amount', 0))
-    return max(0, int(round(damage * multiplier)) - reduction)
+    damage = max(0, int(round(damage * multiplier)) - reduction)
+    return _round_received_damage(session, damage)
+
+
+def _round_received_damage(session: dict[str, Any], damage: int) -> int:
+    multiplier = float((session.get("combat") or {}).get("round_received_multiplier", 1.0))
+    return max(0, int(round(damage * multiplier)))
 
 
 def _apply_ally_round_start_effects(session: dict[str, Any], companion: dict[str, Any], rng: Any,
-                                  actor_id: str = "companion") -> None:
+                                  actor_id: str = "companion", *, protection_only: bool = False) -> None:
     from .state import _session_requirement_passes
 
     combat = session["combat"]
@@ -1145,6 +1158,13 @@ def _apply_ally_round_start_effects(session: dict[str, Any], companion: dict[str
         if int(combat.get("round", 1)) % every:
             continue
         kind = str(effect.get("kind") or "")
+        if (kind == "received_damage_multiplier") != protection_only:
+            continue
+        if kind == "received_damage_multiplier":
+            multiplier = max(0.0, float(effect.get("multiplier", 1.0)))
+            combat["round_received_multiplier"] = combat.get("round_received_multiplier", 1.0) * multiplier
+            _log(session, actor_id, "support", str(effect.get("name") or companion.get("name") or "同行者"),
+                 {"received_damage_multiplier": multiplier, "round": combat["round"]}, target=session["character"])
         if kind == "heal_player":
             if companion.get("id") in combat["encounter"].get("disable_companion_healing", []):
                 continue
@@ -1163,9 +1183,13 @@ def _apply_ally_round_start_effects(session: dict[str, Any], companion: dict[str
             if not effect.get("all_targets") and targets:
                 if effect.get("random_target"):
                     targets = [rng.choice(targets)]
-                elif effect.get("target") in {"highest_hp", "undead_first"}:
+                elif (effect.get("target") in {"highest_hp", "undead_first"}
+                      or str(effect.get("target", "")).startswith("weak_to:")):
                     if effect["target"] == "undead_first":
                         targets = [enemy for enemy in targets if "undead" in enemy.get("tags", [])] or targets
+                    elif effect["target"].startswith("weak_to:"):
+                        element = effect["target"].split(":", 1)[1]
+                        targets = [enemy for enemy in targets if _resistance_multiplier(enemy, element) > 1] or targets
                     targets = [max(targets, key=lambda enemy: _safe_int(enemy.get("hp"), 0))]
                 else:
                     targets = targets[:1]
@@ -1188,6 +1212,8 @@ def _tick_enemy_statuses(session: dict[str, Any], rng: Any) -> None:
             stacks = max(1, _safe_int(status.get("stacks"), 1))
             damage, detail = _roll_formula(str(status.get("damage") or "0"), session["character"], rng)
             damage = max(0, damage * stacks)
+            if enemy is session.get("character"):
+                damage = _round_received_damage(session, damage)
             if damage:
                 next_hp = _safe_int(enemy.get("hp"), 0) - damage
                 enemy["hp"] = next_hp if _negative_undead(enemy) else max(0, next_hp)

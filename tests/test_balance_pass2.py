@@ -99,7 +99,8 @@ class BalancePass2Tests(unittest.TestCase):
         for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
             pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO.with_name(filename))
             entries = [(location, effect) for location in pack["locations"] for effect in transitions(location)]
-            self.assertEqual(len(entries), 8)
+            self.assertEqual(len(entries), 9)
+            self.assertEqual(sum(location["id"] == "gorge_worm_lair" for location, _ in entries), 1)
             for location, effect in entries:
                 session = checkpoints.fresh_session(deepcopy(pack), "hero")
                 session["world_state"] = {"scene_id": location["scene_id"], "location_id": location["id"]}

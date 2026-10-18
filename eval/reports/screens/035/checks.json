@@ -1,0 +1,185 @@
+[
+  {
+    "view": "inn_elio",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat only after explicit fight",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices have no horizontal overflow",
+      "no horizontal page overflow",
+      "all three recruitment methods displayed",
+      "Elio portrait visible",
+      "hire cost visible",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "wall_open",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat only after explicit fight",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices have no horizontal overflow",
+      "no horizontal page overflow",
+      "opened eastern pass selectable",
+      "watchtower map has gorge link",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "entrance",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat only after explicit fight",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices have no horizontal overflow",
+      "no horizontal page overflow",
+      "gorge map active",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "rockfall",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat only after explicit fight",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices have no horizontal overflow",
+      "no horizontal page overflow",
+      "gorge map active",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "battle_elio",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat only after explicit fight",
+      "visible portraits decode",
+      "authored narration visible",
+      "no horizontal page overflow",
+      "Elio present in gorge battle",
+      "water blade shown in combat log",
+      "runtime earth resistances correct",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "camp",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat only after explicit fight",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices have no horizontal overflow",
+      "no horizontal page overflow",
+      "gorge map active",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "cliff",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat only after explicit fight",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices have no horizontal overflow",
+      "no horizontal page overflow",
+      "gorge map active",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "giant",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat only after explicit fight",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices have no horizontal overflow",
+      "no horizontal page overflow",
+      "gorge map active",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "worm",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat only after explicit fight",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices have no horizontal overflow",
+      "no horizontal page overflow",
+      "gorge map active",
+      "bypass depends on active Elio",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "worm_bypass",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat only after explicit fight",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices have no horizontal overflow",
+      "no horizontal page overflow",
+      "gorge map active",
+      "bypass depends on active Elio",
+      "bypass option visibly rendered",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "village",
+    "width": 1280,
+    "height": 800,
+    "ok": true,
+    "checks": [
+      "background decodes",
+      "combat only after explicit fight",
+      "visible portraits decode",
+      "authored narration visible",
+      "choices have no horizontal overflow",
+      "no horizontal page overflow",
+      "bypass reaches refuge without boss drop",
+      "no browser exceptions"
+    ]
+  }
+]

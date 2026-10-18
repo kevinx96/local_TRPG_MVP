@@ -130,6 +130,10 @@ def apply(pack: dict[str, Any]) -> None:
     locations["oaksdawn_water_gate"]["background_image"] = "/static/images/bg_oaksdawn_water_gate.png"
     pack["meta"]["oaksdawn_v034"] = True
     pack["meta"]["content_revision"] = max(pack["meta"].get("content_revision", ""), "2026-10-17-v034")
+    if pack["meta"].get("rumbling_gorge_v035"):
+        from .rumbling_gorge import apply as apply_gorge
+
+        apply_gorge(pack)
 
 
 def main() -> None:

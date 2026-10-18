@@ -26,7 +26,7 @@ SEEDS = (20261013, 20261014)
 FALLBACK_TEXTS = ("接続中のローカルLLMから応答を取得できませんでした", "運命の出目は",
                   "（GMとの通信が途切れたため、描写を省略した。結果は記録に反映されている。）")
 AREA_ORDER = {"capital": 0, "forest": 1, "goblin_fort": 1, "sealed_cave": 1, "burning_village": 2,
-              "old_battlefield": 2, "oaksdawn": 2, "dragon_valley": 3, "royal_return": 4, "general_mansion": 4}
+              "old_battlefield": 2, "oaksdawn": 2, "rumbling_gorge": 2, "dragon_valley": 3, "royal_return": 4, "general_mansion": 4}
 
 
 class OfflineRequests:
@@ -63,7 +63,7 @@ def flatten(choices: list[dict[str, Any]], depth: int = 0):
         yield from flatten(choice.get("children", []), depth + 1)
 
 
-def oaksdawn_action(session: dict[str, Any]) -> Optional[str]:
+def oaksdawn_action(session: dict[str, Any], *, prefer_gorge: bool = False) -> Optional[str]:
     location = state.current_location_id(session)
     visited = session.get("visited_locations", [])
     flags = session["flags"]
@@ -77,15 +77,23 @@ def oaksdawn_action(session: dict[str, Any]) -> Optional[str]:
         return "square_to_wall"
     if location == "oaksdawn_hq":
         return ("greet_walter" if not flags.get("greeted_walter") else "ask_guardian_refusal" if not flags.get("heard_guardian_refusal")
-                else "request_guardian_letter" if not flags.get("received_guardian_letter") else "hq_to_square")
+                else "request_guardian_letter" if not flags.get("received_guardian_letter")
+                else "open_gorge_path" if prefer_gorge and not flags.get("gorge_path_open") else "hq_to_square")
     if location == "oaksdawn_chapel":
         return "talk_liese" if not flags.get("met_liese") else "recruit_liese_letter" if not flags.get("recruited_liese") else "chapel_to_square"
     if location == "oaksdawn_workshop":
         return "talk_brigitte" if not flags.get("met_brigitte") else "workshop_to_square"
     if location == "oaksdawn_inn":
+        if prefer_gorge and not flags.get("recruited_elio"):
+            if not flags.get("met_elio"):
+                return "talk_elio"
+            for identifier in ("recruit_elio_water", "recruit_elio_gold", "recruit_elio_persuade"):
+                entry = state.resolve_action(session, action_id=identifier)
+                if entry and state.action_requirement_status(entry, session)[0]:
+                    return identifier
         return "ask_oaksdawn_rumor" if not flags.get("heard_pass_rumor") else "inn_to_square"
     if location == "oaksdawn_wall":
-        return "oaksdawn_to_battlefield"
+        return "oaksdawn_east_pass_open" if prefer_gorge and flags.get("gorge_path_open") else "oaksdawn_to_battlefield"
     return None
 
 
@@ -189,7 +197,11 @@ def explore(character: str, seed: int, max_steps: int = 150, *, output: Optional
                                                        "章" in (c.get("preview", "") + c["text"]), rng.random()))
                     if location == "forest_exit" and seed % 2 and "old_battlefield" not in locations:
                         pick = next(c for c in options if c["action_id"] == "enter_old_battlefield")
-                    preferred = oaksdawn_action(session) or battlefield_action(session)
+                    preferred = oaksdawn_action(session, prefer_gorge=bool(seed % 2)) or battlefield_action(session)
+                    if location.startswith("gorge_"):
+                        from scripts.balance.gorge import route_action
+
+                        preferred = route_action(session)
                     if preferred:
                         if preferred == "sneak_bone_field":
                             preferred = next((c["action_id"] for c in options if c["action_id"] == "show_curse_to_skeletons"), preferred)
@@ -211,6 +223,7 @@ def explore(character: str, seed: int, max_steps: int = 150, *, output: Optional
                   "deaths": deaths, "farthest_location": farthest[1], "visited_locations": locations,
                   "retry_visited_locations": after_retry_locations, "failures": failures}
         result["battlefield_completed"] = bool(session["flags"].get("passed_grave_chapel") and "village_frozen_clue" in locations)
+        result["gorge_completed"] = bool(session["flags"].get("passed_gorge_worm_lair") and "village" in locations)
         repeated = [death for death in deaths if death["combat_defeat"]]
         result["repeat_death_candidate"] = len(repeated) > 1 and repeated[0]["location"] == repeated[-1]["location"]
         lines.extend(["\n## 検証結果\n", "```json", json.dumps(result, ensure_ascii=False, indent=2), "```", ""])
@@ -227,6 +240,7 @@ def write_report(results: list[dict[str, Any]], path: Path, transcript_dir: Path
              "首次战斗死亡后重来一次，选择次数及随机流继续累计。选项、判定和战斗的随机数均固定。",
              "031：奇数种子首次到森林出口时优先古戦場；进入后依次潜行骨野、访问塔、取外套休息、潜行沼地、通过礼拝堂。诅咒持有者使用专属放行，至少2局通过新地图。",
              "033：首次到温泉或古戦場入口时优先城塞支路；按本営取得推薦状、礼拝堂招募、工房、宿屋、见张台的顺序访问，再南下古戦場。仅调整行动优先度，不注入状态或强制判定成功。",
+             "035：奇数种子在本営请求开峠、宿屋尝试三种エリオ招募，再走峡谷；依次潜行、营地补给与休息、查爪痕、通过巨人与ワーム，汇入避難所。偶数种子保留古戦場优先度。",
              "LLM 配置指向 127.0.0.1:1，并在请求适配器直接模拟连接失败；禁止真实网络。", "",
              "| 职业 | 种子 | 首次死亡 | 重来后结果 / 最终结果 | 最远地点 | 步数 |",
              "|---|---:|---|---|---|---:|"]
@@ -243,6 +257,7 @@ def write_report(results: list[dict[str, Any]], path: Path, transcript_dir: Path
     lines += [f"- 异常、非战斗死路及兜底叙述：{len(failures)} 项。", *[f"- {issue}" for issue in failures],
               f"- 古戦場到访：{battlefield_visits}/{len(results)}局。",
               f"- 城塞到访：{sum('oaksdawn_square' in r['visited_locations'] for r in results)}/{len(results)}局。",
+              f"- 峡谷到访：{sum('gorge_entrance' in r['visited_locations'] for r in results)}/{len(results)}局；完成峡谷：{sum(r.get('gorge_completed', False) for r in results)}局。",
               f"- 经礼拝堂到村后门：{sum(r['battlefield_completed'] for r in results)}/{len(results)}局。",
               "- 同一地点重来后再次死亡（仅作为循环候选，不能据此证明必死）：" +
               ", ".join(f"{r['character']}/{r['seed']} @ {r['final_location']}" for r in results if r["repeat_death_candidate"]),
