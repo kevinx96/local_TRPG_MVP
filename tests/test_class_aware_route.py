@@ -59,6 +59,9 @@ class ClassAwareRouteTests(unittest.TestCase):
         self.assertAlmostEqual(values["sneak"], .65 * score + .35 * .25)
         self.assertIn(True, seen)
 
+    # E's scouting macros (call_*) change the follow-up values; pin the original options here.
+    @patch.dict(class_aware.NODES, {"burning_house": [option for option in class_aware.NODES["burning_house"]
+                                                      if not option[0].startswith("call_")]})
     def test_retry_check_value_and_lethal_attempts(self):
         session = self.session("burning_house", str=8, dex=16)
         evaluator = class_aware.Evaluator(["riku"], depth=0)

@@ -77,7 +77,7 @@ class FreeActionTests(unittest.TestCase):
         self.assertEqual(change["actor_id"], "hero")
         state.commit_world_position(saved, location_id="dark_forest_loc")
         choices = fallback_choices_for_session(saved)
-        self.assertEqual([x["action_id"] for x in choices], ["pass_cleared_forest"])
+        self.assertEqual([x["action_id"] for x in choices], ["pass_cleared_forest", "read_forest_tracks"])
         context = json.loads(free_actions.build_plan_messages(saved, "戻ってきた")[1]["content"])
         self.assertEqual(context["changes_here"]["forest_slime"]["resolution"], "distracted")
 

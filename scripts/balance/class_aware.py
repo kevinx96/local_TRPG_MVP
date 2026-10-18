@@ -24,19 +24,24 @@ EVAL_DEPTH = 2
 MAX_NODE_DECISIONS = 10
 QUEST_LOSS_LIMIT = .02
 
+# Scouting macros (E, 2026-10-19) take a one-shot check first for advantage on the follow-up.
 NODES: dict[str, list[tuple[str, tuple[str, ...]]]] = {
     "lost_goblin_crossroads": [("ignore", ("ignore_lost_goblin", "crossroads_forward")),
                                ("forward", ("crossroads_forward",))],
     "forest_wolves": [("fight", ("fight_forest_wolves",)), ("distract", ("distract_forest_wolves",)),
                       ("sneak", ("sneak_forest_wolves",)), ("abandon", ("abandon_gald",))],
     "village_approach": [("careful", ("approach_burning_village_carefully",)),
+                         ("scout_careful", ("read_fire_spread", "approach_burning_village_carefully")),
                          ("direct", ("enter_burning_village_directly",))],
     "burning_house": [("leave", ("leave_burning_house",)), ("beam", ("break_burning_beam",)),
-                      ("climb", ("climb_to_window",)), ("douse", ("douse_with_ice",))],
+                      ("climb", ("climb_to_window",)), ("douse", ("douse_with_ice",)),
+                      ("call_climb", ("call_to_child", "climb_to_window")), ("call_beam", ("call_to_child", "break_burning_beam"))],
     "ice_elemental_encounter": [("fight", ("fight_ice_elemental",)), ("bypass", ("bypass_ice_elemental",))],
-    "valley_entrance": [("fight", ("fight_ash_wraiths",)), ("sneak", ("sneak_through_ash",))],
+    "valley_entrance": [("fight", ("fight_ash_wraiths",)), ("sneak", ("sneak_through_ash",)),
+                        ("scout_sneak", ("read_ash_wind", "sneak_through_ash")), ("turn", ("turn_ash_wraiths",))],
     "valley_lava_bridge": [("bridge", ("cross_lava_bridge",)), ("ledge", ("take_ledge_path",))],
-    "goblin_fort": [("fight", ("fight_fort_first_guard",)), ("bypass", ("fort_first_bypass",))],
+    "goblin_fort": [("fight", ("fight_fort_first_guard",)), ("bypass", ("fort_first_bypass",)),
+                    ("scout_bypass", ("scout_fort_walls", "fort_first_bypass"))],
     "goblin_fort_first_second": [("fight", ("fight_fort_second_guards",)), ("bypass", ("fort_second_bypass",))],
     "goblin_fort_second_choice": [("right", ("explore_fort_right",)),
                                   ("left", ("explore_fort_left", "use_fort_healing_circle"))],
@@ -44,8 +49,10 @@ NODES: dict[str, list[tuple[str, tuple[str, ...]]]] = {
     "goblin_fort_chest_choice": [("return", ("return_lost_goblin_box",)), ("steal", ("steal_lost_goblin_box",))],
     "cave_seal": [("decode", ("decode_seal",)), ("pray", ("pray_at_seal",)), ("force", ("force_seal",)),
                   ("holy_water", ("pour_holy_water_on_seal",))],
-    "cave_heat_corridor": [("fight", ("fight_heat",)), ("sneak", ("sneak_heat",))],
-    "cave_crystal_corridor": [("fight", ("fight_crystal",)), ("sneak", ("sneak_crystal",))],
+    "cave_heat_corridor": [("fight", ("fight_heat",)), ("sneak", ("sneak_heat",)),
+                           ("scout_sneak", ("read_heat_flow", "sneak_heat"))],
+    "cave_crystal_corridor": [("fight", ("fight_crystal",)), ("sneak", ("sneak_crystal",)),
+                              ("scout_sneak", ("tune_crystals", "sneak_crystal"))],
 }
 # Fixed 021/022 route choice at each mainline node (hp70 reference).
 BACKBONE = {"lost_goblin_crossroads": "ignore", "forest_wolves": "fight", "village_approach": "careful",

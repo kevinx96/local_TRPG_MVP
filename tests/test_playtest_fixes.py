@@ -60,7 +60,7 @@ class PlaytestFixTests(unittest.TestCase):
         for session in self.sessions("goblin_fort_chest_choice"):
             session["flags"]["combat_defeated:lost_goblin_crossroads:goblin"] = True
             choices = self.choices(session)
-            self.assertEqual([c["text"] for c in choices.values()], ["箱を持ち帰る"])
+            self.assertEqual([c["text"] for c in choices.values()], ["箱を持ち帰る", "箱の作りを確かめる"])
             action = state.resolve_action(session, action_id=next(iter(choices)))
             result = state.apply_action_result(session, action, {})
             self.assertTrue(result["result_text"].startswith("主を失った箱は"))
@@ -152,7 +152,8 @@ class PlaytestFixTests(unittest.TestCase):
         for character in CHARACTERS:
             for seed in (20261013, 20261014):
                 with self.subTest(character=character, seed=seed):
-                    result = explore(character, seed, 150)
+                    # E (2026-10-19) adds one-shot checks the explorer also tries, so allow more steps.
+                    result = explore(character, seed, 200)
                     results.append(result)
                     self.assertEqual(result["failures"], [])
                     self.assertLessEqual(result["retry_count"], 1)

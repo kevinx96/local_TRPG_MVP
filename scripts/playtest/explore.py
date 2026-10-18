@@ -147,7 +147,7 @@ def ending_record(public: dict[str, Any], session: dict[str, Any], step: int) ->
         entry_hp=snapshot["state"]["character"]["hp"] if snapshot else None)
 
 
-def explore(character: str, seed: int, max_steps: int = 250, *, output: Optional[Path] = None) -> dict[str, Any]:
+def explore(character: str, seed: int, max_steps: int = 330, *, output: Optional[Path] = None) -> dict[str, Any]:
     rng = random.Random(seed)
     taken: Counter = Counter()
     lines = [f"# {character} / seed {seed}", ""]
@@ -359,7 +359,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--characters", nargs="+", choices=CHARACTERS, default=CHARACTERS)
     parser.add_argument("--seeds", nargs="+", type=int, default=SEEDS)
-    parser.add_argument("--steps", type=int, default=250)
+    parser.add_argument("--steps", type=int, default=330)
     parser.add_argument("--workers", type=int, default=1, help="Isolated offline processes; results retain input order")
     parser.add_argument("--output", type=Path, default=ROOT / "eval/reports/playtest-2026-10-18-ch3/summary.md")
     args = parser.parse_args()

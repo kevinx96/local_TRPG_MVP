@@ -189,6 +189,9 @@ def apply(pack: dict[str, Any]) -> None:
     if pack["meta"].get("checks_v2_v040"):
         from .checks_v2 import upgrade as apply_checks
         apply_checks(pack)
+    if pack["meta"].get("checks_e"):
+        from .checks_e import apply as apply_checks_e
+        apply_checks_e(pack)
 
 
 def add_elio(pack: dict[str, Any], locations: dict[str, Any]) -> None:
