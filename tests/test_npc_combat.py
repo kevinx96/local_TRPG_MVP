@@ -171,7 +171,7 @@ class NpcCombatTests(unittest.TestCase):
         self.assertNotIn("ian", [n["id"] for n in select_scenario_context(session)["matched"]["npcs"]])
         state.commit_world_position(session, location_id="ian_ice_katana_aftermath")
         self.assertIsNotNone(state.resolve_action(session, action_id="leave_without_ian"))
-        self.assertIn("もうここにはいない", select_scenario_context(session)["current_location"]["description"])
+        self.assertAbsentProse(select_scenario_context(session)["current_location"]["description"])
 
     def test_dragon_dialogue_rotation_and_forced_fight(self):
         session = self.session("oaksdawn_wall")
@@ -258,6 +258,11 @@ class NpcCombatTests(unittest.TestCase):
             self.assertFalse(any(a.get("npc_id") == "gald" for a in current_actions_for_session(session)))
         self.assertIn(migration.EPILOGUE, state._epilogue_lines(session, {"ending": "ignis_defeated"}))
 
+    def assertAbsentProse(self, description):
+        # The design lead's final prose replaced every passage that showed the person (FINAL_ABSENCE).
+        self.assertTrue(description)
+        self.assertFalse([text for text in migration.FINAL_ABSENCE if text in description])
+
     def test_absent_narratives_portraits_and_exits(self):
         for location, identifiers, exit_id in (
                 ("ian_ice_katana_aftermath", ["ian"], "leave_without_ian"),
@@ -270,7 +275,7 @@ class NpcCombatTests(unittest.TestCase):
                 session = self.session(location)
                 session["flags"].update({f"npc_gone_{identifier}": True for identifier in identifiers})
                 context = select_scenario_context(session)
-                self.assertIn("もうここにはいない", context["current_location"]["description"])
+                self.assertAbsentProse(context["current_location"]["description"])
                 self.assertIsNotNone(state.resolve_action(session, action_id=exit_id))
                 for identifier in identifiers:
                     self.assertNotIn(identifier, [npc["id"] for npc in context["matched"]["npcs"]])
@@ -304,7 +309,7 @@ class NpcCombatTests(unittest.TestCase):
         session["visited_locations"] = ["oaksdawn_chapel"]
         mapped = json.dumps(public_maps(session), ensure_ascii=False)
         self.assertNotIn("若い女騎士が祈りを捧げている", mapped)
-        self.assertIn("リーゼはもうここにはいない", mapped)
+        self.assertIn(migration.FINAL_ABSENCE["高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。"][1], mapped)
 
     def test_confirmation_survives_save_reload(self):
         session = self.session()

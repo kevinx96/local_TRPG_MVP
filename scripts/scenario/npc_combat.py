@@ -255,19 +255,69 @@ def apply(pack: dict[str, Any]) -> None:
     pack["meta"]["content_revision"] = "2026-10-19-ruby-041-npc-combat"
 
 
+# Final prose for visible passages about someone who is gone (design lead, 2026-10-19).
+# Key: the authored passage; value: (npc ids, replacement shown when any of them is gone).
+FINAL_ABSENCE = {
+    "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。長老が人々を励まし、行商人の荷車の周りには小さな人だかりができている。":
+        (["elder"], "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。人々を励ます声は、もう聞こえない。"),
+    "地図と剣が並ぶ質素な広間。白髪の老騎士――守護団長ヴァルターが、卓上の地図から顔を上げた。":
+        (["walter"], "地図と剣が並ぶ質素な広間。団長の席は空いたままで、守護団員たちが黙って卓上の地図を見下ろしている。"),
+    "崩れかけた民家の奥から、子どもの泣き声が聞こえる。入口は燃える梁で塞がれている。":
+        (["riku"], "崩れかけた民家は静まり返っている。中に人の気配はない。"),
+    "森狼の群れが、荷車を背にした行商人を追い詰めている。男はこちらに気づき、必死に手を振った。":
+        (["gald"], "森狼の群れが、道端の壊れた荷車を漁っている。持ち主の姿はない。"),
+    "「助かった！命の恩人だ。俺はガルド、村でも商売してる。見かけたら寄ってくれ」":
+        (["gald"], "森狼の群れは散り散りに逃げていった。荷車の残骸だけが、道端に転がっている。"),
+    "戦いが終わると迷子のゴブリンが現れ、自分の箱を見つけて抱き寄せようとする。":
+        (["lost_goblin"], "戦いが終わった。主を失った箱が、金貨の山の陰に転がっている。"),
+    "城下町の小さな鍛冶屋。鍛冶師ローベルトが武具の点検と修理をしてくれる。":
+        (["blacksmith"], "城下町の小さな鍛冶屋。炉の火は消え、扉は閉ざされたままだ。"),
+    "迷子のゴブリンが、別の一族に盗まれた箱を取り戻してほしいと頼んでいる。":
+        (["lost_goblin"], "森の十字路。助けを求めていたゴブリンの姿は、もうない。"),
+    "店主イアンが現れ、凍死するほどの力が残る破片に触れないよう制止した。":
+        (["ian"], "凍死するほどの冷気を残す、砕けた氷の太刀の破片が散らばっている。"),
+    "十歳ほどの金髪の少女サラと、小さな火コウモリ竜がいる。":
+        (["sarah", "fire_bat_dragon"], "城下町の小さな道具屋。扉には鍵がかかり、店の中は暗い。"),
+    "長老は焼け跡を見つめ、黙り込んでいる":
+        (["elder"], "長老がいつも座っていた場所には、もう誰もいない。"),
+    "ロビンが暗号を教えてくれた。":
+        (["robin"], "鉄門の小窓の奥から、合言葉を求める声が響く。"),
+    "湯気の立ち込める小さな温泉がある。岩の隙間に、ローブ姿の少女が膝を抱えて座り込んでいる。":
+        (["mina"], "湯気の立ち込める小さな温泉がある。岩の隙間には、誰かが座り込んでいた跡だけが残っている。"),
+    "炉の熱と槌の音が響く工房。分厚い前掛けの女鍛冶師が、白銀の剣に光の紋を刻んでいる。":
+        (["brigitte"], "炉の火が落ちた工房。槌の音は止み、打ちかけの白銀の剣が金床の上で冷えている。"),
+    "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが峠の噂話をする隅で、青い外套の青年が水差しの水面をじっと見つめている。":
+        (["elio"], "樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが、干し肉をかじりながら峠の噂話をしている。"),
+    "高い窓から朝の光が差し込む礼拝堂。祭壇の前で、銀の鎧をまとった若い女騎士が祈りを捧げている。":
+        (["liese"], "高い窓から朝の光が差し込む礼拝堂。祭壇の前には、死者を弔う白い花が供えられている。"),
+    "街灯の届かない場所に、黒いローブの小柄で毛むくじゃらな商人が立っている。":
+        (["suspicious_merchant"], "街灯の届かない路地裏。黒いローブの商人が立っていた場所には、誰もいない。"),
+    "扉の鈴が鳴ると、棚の陰から金髪の少女サラが顔を出した。肩の上では小さな火コウモリ竜が、ぱちぱちと火の粉を散らしている。「いらっしゃいませ！今日は何をお探しですか？」":
+        (["sarah", "fire_bat_dragon"], "扉の鈴が、誰もいない店の中に虚しく響いた。棚の品はそのまま、埃をかぶり始めている。"),
+    "白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」":
+        (["elder"], "避難所はひっそりとしていた。邪竜の弱点を語ってくれる者は、もういない。"),
+}
+
+
+# Passages that already read correctly after the person is gone.
+KEEP_WHEN_ABSENT = {"怪しい商人の姿は消え、夜風だけが路地を抜けていく。", "箱を奪われまいと、迷子のゴブリンが短剣を抜く。"}
+
+
 def _absence_inventory(pack: dict[str, Any]) -> None:
-    """TODO(design): replace the inventoried minimal absence passages with final prose."""
+    """Inventory passages that mention someone who can be gone; FINAL_ABSENCE holds the final prose for visible ones."""
     names = {"ian": ["イアン"], "robin": ["ロビン"], "sarah": ["サラ"], "fire_bat_dragon": ["火コウモリ竜"],
              "blacksmith": ["ローベルト"], "suspicious_merchant": ["怪しい商人"], "gald": ["ガルド"],
              "elder": ["長老"], "riku": ["リク"], "shopkeeper": ["道具屋の店主"], "lost_goblin": ["迷子のゴブリン"],
              "walter": ["ヴァルター"], "liese": ["リーゼ"], "oaksdawn_priest": ["老司祭", "司祭"],
              "brigitte": ["ブリギッテ"], "elio": ["エリオ"], "mina": ["ミーナ"]}
-    entries: dict[str, dict[str, Any]] = {entry["text"]: entry for entry in pack.get("npc_absence_texts", []) if entry["text"].strip()}
+    entries: dict[str, dict[str, Any]] = {}
 
     def walk(value: Any, path: str, key: str = "") -> None:
         if isinstance(value, dict):
             for k, child in value.items():
-                if k not in {"npc_absence_texts", "npc_combat", "epilogues", "npcs", "enemies", "quests"}:
+                # Item lore, companion rules and chapter summaries stay true after someone is gone.
+                if k not in {"npc_absence_texts", "npc_combat", "epilogues", "npcs", "enemies", "quests",
+                             "items", "companions", "scenes"}:
                     walk(child, path + "/" + k, k)
         elif isinstance(value, list):
             for index, child in enumerate(value):
@@ -279,9 +329,13 @@ def _absence_inventory(pack: dict[str, Any]) -> None:
             parts = path.split("/")
             if len(parts) > 2 and parts[1:3] == ["locations", "burning_house"] and any(word in value for word in ("子ども", "男の子", "泣き声")):
                 identifiers = list(dict.fromkeys([*identifiers, "riku"]))
-            if len(parts) > 2 and parts[1] == "locations" and (key in {"description", "summary"} or "/description_variants/" in path):
-                location = next((loc for loc in pack["locations"] if loc["id"] == parts[2]), {})
-                identifiers = list(dict.fromkeys([*identifiers, *(i for i in location.get("npc_ids", []) if i in names)]))
+            if value in KEEP_WHEN_ABSENT:
+                return
+            if value in FINAL_ABSENCE:
+                ids, final = FINAL_ABSENCE[value]
+                entries[value] = dict(text=value, npc_ids=ids, path=path, replacement=final,
+                                      replacements={ids[0]: final}, status="final")
+                return
             if value.strip() and identifiers and "もうここにはいない" not in value:
                 entries[value] = dict(text=value, npc_ids=identifiers, path=path,
                     replacement=" ".join(f"{names[identifier][0]}はもうここにはいない。" for identifier in identifiers),
