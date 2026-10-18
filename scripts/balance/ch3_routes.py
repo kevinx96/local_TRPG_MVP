@@ -215,22 +215,23 @@ def comparisons(rows: list[dict[str, Any]]) -> dict[str, Any]:
                     best = max((cid for cid in rates if cid not in {"none", counter}), key=lambda cid: rates[cid])
                     counter_rows.append(dict(character=character, path=path, prepared=prepared, cursed=cursed,
                         counter=counter, uplift_pp=100*(rates[counter]-rates["none"]), best_other=best,
-                        other_uplift_pp=100*(rates[best]-rates["none"]), passed=rates[counter] >= rates[best]))
+                        other_uplift_pp=100*(rates[best]-rates["none"]), margin_pp=100*(rates[counter]-rates[best]),
+                        passed=rates[counter] > rates[best]))
     return dict(route_gaps=gaps, rankings=rankings, counters=counter_rows)
 
 
 def markdown(result: dict[str, Any]) -> str:
-    lines = ["# 037 第三章三条路线连续平衡", "",
+    lines = ["# 037 第三章三条路线连续平衡（第二轮）", "",
         f"N={result['n']}／职业／条件；seed={result['seed']}；{len(result['rows'])}组，共{sum(r['n'] for r in result['rows']):,}条连续路线。完全离线。", "",
         "## 口径与推断", "",
         "- 起点为第2章结束的森の出口。复用可达检查点回放，先完成ゴブリン砦并归还箱子，再通过森林、回城支付10G休息后返回出口；Lv3、240G，四职业具体背包和全部前置动作见JSON。前置战斗假定获胜、不估算消耗，结论条件于这个检查点，不是从新游戏开始的通关率。",
-        "- 原主线Lv2起点只有125G，不能支付195G整套准备；为避免凭空补钱，所有组统一采用上述砦后检查点。准备组实际购买聖銀120G、锻造30G、鎖帷子40G、礼拝堂休息5G；未准备组不购买。墓守外套仍按原剧情替换防具。",
-        "- 同行者和诅咒采用031/033/035既有的机制对照：起点指定同行者，诅咒组只携带呪われた短剣、不装备；不计招募费用、获取诅咒代价，不能当成这些条件的完整招募路线。火コウモリ竜普通／虹晶强化分别列出；其他同行者控制包括ロビン、ミーナ、ワーロック及另一条路线的同行者。",
+        "- 原主线Lv2起点只有125G，不能支付195G整套准备；为避免凭空补钱，所有组统一采用上述砦后检查点。准备组实际购买聖銀120G、锻造30G、鎖帷子40G、礼拝堂休息5G；未准备组不购买。第二轮墓守外套仅在防具部位为空时自动装备；本轮不额外加入手动换装策略，保留原有ローブ／革の鎧或准备组鎖帷子。",
+        "- 同行者和诅咒采用031/033/035既有的机制对照：起点指定同行者，诅咒组给予呪われた短剣；武器位为空的僧侶／魔法使い会自动装备，勇者／盗賊保留原武器；准备组再由锻造替换武器。第一轮‘只携带、不装备’的文字描述不准确，但两轮实际代码均为上述行为，原始JSON可核对。不计招募费用、获取诅咒代价，不能当成完整招募路线。火コウモリ竜普通／虹晶强化分别列出；其他控制包括ロビン、ミーナ、ワーロック及另一条路线的同行者。",
         "- 保留剧情中的同行者离队；村路线的ワーロック在森林出口离队，所以该组不会强行留住他。",
         "- 村路线慎重接近、离开民家；古戦場骨野潜行（诅咒放行）、塔取外套并休息、沼地潜行、骑士战（诅咒放行）；峡谷潜行、搜营地并休息、查爪痕、巨人潜行、ワーム潜行（エリオ绕过）。",
         "- 三路都汇入避難所。共同后程采用现行hp70付费休息策略、竜の谷亡霊潜行、过桥、イグニス战；不额外走冰元素／Xanxus支线，不净化。所有判定投真实d20、失败实战，HP/MP/SP、金币、背包跨战继承，永久品立即使用，无重来。",
         "- 分母始终是全部起点样本，包含提前死亡；同时列出到Boss的样本数与条件胜率。每组共享初始随机种子，同行者耗骰不同，不代表逐骰配对。判据采用样本点估计，不把抽样误差当成设计容差。",
-        "- ‘三路相差≤8pp’对未准备／已准备分别比较（村路线均为未准备），主比较无诅咒；诅咒单列。同率并列最优也计入四职业共同最优。", "",
+        "- ‘三路相差≤8pp’对未准备／已准备分别比较（村路线均为未准备），主比较无诅咒；诅咒单列。同率并列最优也计入四职业共同最优。第二轮对策同行者要求严格领先所有其他同行者，相同基线下比较提升等价于比较通关率；并列判为未通过。", "",
         "## 无同行者、无诅咒", "", "|职业|城塞准备|村|古戦場|峡谷|最大差pp|≤8pp|", "|---|---|---:|---:|---:|---:|---|"]
     for r in result["comparisons"]["route_gaps"]:
         rates = r["rates"]
@@ -238,10 +239,20 @@ def markdown(result: dict[str, Any]) -> str:
     lines += ["", "## 本路线对策同行者", "", "|职业|路线|准备|诅咒|对策提升pp|其他最强|其提升pp|达标|", "|---|---|---|---|---:|---|---:|---|"]
     for r in result["comparisons"]["counters"]:
         lines.append(f"|{r['character']}|{r['path']}|{r['prepared']}|{r['cursed']}|{r['uplift_pp']:+.2f}|{r['best_other']}|{r['other_uplift_pp']:+.2f}|{r['passed']}|")
-    lines += ["", "## 各组原始统计", "", "|职业|路线|准备|诅咒|同行者|胜/N|通关率|到达Boss|Boss条件胜率|首次败北地点|", "|---|---|---|---|---|---:|---:|---:|---:|---|"]
+    baseline = result.get("baseline", {})
+    if baseline:
+        lines += ["", "## 第一轮对照", "", "完整第一轮数据：[报告](balance-2026-10-18-ch3-routes-round1.md)、[JSON](balance-2026-10-18-ch3-routes-round1.json)。204组起点、策略、种子和N不变；仅本轮授权内容变化。", "",
+                  "|职业|准备|第一轮最大差pp|第二轮最大差pp|", "|---|---|---:|---:|"]
+        for before, after in zip(baseline["comparisons"]["route_gaps"], result["comparisons"]["route_gaps"]):
+            lines.append(f"|{after['character']}|{after['prepared']}|{before['spread_pp']:.2f}|{after['spread_pp']:.2f}|")
+    lines += ["", "## 各组原始统计", "", "|职业|路线|准备|诅咒|同行者|胜/N|通关率|第一轮|变化pp|到达Boss|Boss条件胜率|首次败北地点|", "|---|---|---|---|---|---:|---:|---:|---:|---:|---:|---|"]
+    previous = {(r['character'], r['path'], r['prepared'], r['cursed'], r['companion']): r for r in baseline.get("rows", [])}
     for r in result["rows"]:
         conditional = f"{r['boss_win_rate']:.2%}" if r["boss_win_rate"] is not None else "—"
-        lines.append(f"|{r['character']}|{r['path']}|{r['prepared']}|{r['cursed']}|{r['companion']}|{r['wins']}/{r['n']}|{r['success_rate']:.2%}|{r['boss_arrivals']}|{conditional}|{json.dumps(r['failures'], ensure_ascii=False)}|")
+        old = previous.get((r['character'], r['path'], r['prepared'], r['cursed'], r['companion']))
+        before = f"{old['success_rate']:.2%}" if old else "—"
+        change = f"{100*(r['success_rate']-old['success_rate']):+.2f}" if old else "—"
+        lines.append(f"|{r['character']}|{r['path']}|{r['prepared']}|{r['cursed']}|{r['companion']}|{r['wins']}/{r['n']}|{r['success_rate']:.2%}|{before}|{change}|{r['boss_arrivals']}|{conditional}|{json.dumps(r['failures'], ensure_ascii=False)}|")
     lines += ["", "## 结论与设计待办", ""]
     for r in result["comparisons"]["rankings"]:
         lines.append(f"- 准备={r['prepared']}，四职业共同最优路线：{', '.join(r['universal_best']) or '无'}；达标={r['passed']}。")
@@ -249,7 +260,16 @@ def markdown(result: dict[str, Any]) -> str:
     lines.append(f"- 未通过的比较：{len(failures)}项。")
     if failures:
         lines.append("- TODO(design): 联合目标未全部达到，停止数值修改并交由设计负责人决定；具体越界见上表与JSON。031古戦場敌人、既有村庄与竜の谷敌人均不在033–035允许调参范围。")
-    lines += ["- 本轮未改任何剧本数值、叙事或提示词。", "", "## 复现", "", "```powershell",
+    lines += ["- 墓守外套按第二轮决定调整；两人的正式参数保留原值，候选搜索与停止调参依据见[调参报告](037-companion-tuning.md)。未改旧路线敌人、DC、奖励或提示词。", "",
+        "## 路线差距定位", "", "|职业|路线|准备|通关率|路线段死亡|煤の亡霊死亡|イグニス死亡|", "|---|---|---|---:|---:|---:|---:|"]
+    for r in result["rows"]:
+        if r["companion"] != "none" or r["cursed"]:
+            continue
+        failures = r["failures"]
+        early = sum(v for k, v in failures.items() if k not in {"valley_entrance", "dragon_valley_loc"})
+        lines.append(f"|{r['character']}|{r['path']}|{r['prepared']}|{r['success_rate']:.2%}|{early}|{failures.get('valley_entrance', 0)}|{failures.get('dragon_valley_loc', 0)}|")
+    lines += ["", "上述死亡地点是差异定位，不是单因素因果实验。不同路线的永久增益、装备与消耗品进入共同后程时不同；保留的逐战样本提供资源证据。村路线及共同后程属于旧内容，不通过修改这些数值来达成8pp。",
+        "", "## 复现", "", "```powershell",
         f"python -m scripts.balance.ch3_routes --n {result['n']} --seed {result['seed']} --workers {result['workers']}", "```", "",
         "原始JSON包含前置回放、每种条件的准备交易与起点、各失败地点和胜利的首个完整样本、资源继承、消耗、源文件SHA-256。", ""]
     return "\n".join(lines)
@@ -261,6 +281,7 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=20261018)
     parser.add_argument("--workers", type=int, default=1)
     parser.add_argument("--output", type=Path, default=OUTPUT)
+    parser.add_argument("--baseline", type=Path, default=OUTPUT.with_name(OUTPUT.name + "-round1").with_suffix(".json"))
     args = parser.parse_args()
     if min(args.n, args.workers) < 1:
         parser.error("n and workers must be positive")
@@ -273,6 +294,12 @@ def main() -> None:
     result = dict(n=args.n, seed=args.seed, workers=args.workers, rows=[],
         checkpoints={c: dict(snapshot=rewards.snapshot(t), resources=route.resources(t), sources=t["checkpoint_sources"]) for c, t in templates.items()},
         fingerprints={p.relative_to(checkpoints.ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in files})
+    if args.baseline.exists():
+        baseline = json.loads(args.baseline.read_text(encoding="utf-8"))
+        result["baseline"] = dict(file=args.baseline.as_posix(), sha256=hashlib.sha256(args.baseline.read_bytes()).hexdigest(),
+            comparisons=baseline["comparisons"], rows=[{k: r[k] for k in
+                ("character", "path", "prepared", "cursed", "companion", "n", "wins", "success_rate")} for r in baseline["rows"]])
+    result["companions"] = [c for c in pack["companions"] if c["id"] in COUNTERS.values()]
     jobs = [(c, template, condition, args.n, args.seed) for c, template in templates.items() for condition in conditions()]
     args.output.parent.mkdir(parents=True, exist_ok=True)
     for row in gorge._map_jobs(_job, jobs, args.workers):

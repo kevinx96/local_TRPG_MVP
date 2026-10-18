@@ -248,6 +248,7 @@ class RewardsBattlefieldTests(unittest.TestCase):
     def test_warlock_disabled_holy_weakness_cloak_and_watchtower_once(self):
         session = self.session("ruined_watchtower")
         self.resolve(session, "search_watchtower")
+        shops.use_item(session, "gravekeeper_cloak")
         self.resolve(session, "talk_old_soldier")
         session["character"]["hp"] = 1
         self.resolve(session, "rest_watchtower")
@@ -266,14 +267,50 @@ class RewardsBattlefieldTests(unittest.TestCase):
         self.assertIn("墓守の外套", session["character"]["equipment"])
         defense = combat._actor_defense(session["character"])
         session["character"]["equipment"].remove("墓守の外套")
-        self.assertEqual(defense - combat._actor_defense(session["character"]), 2)
+        self.assertEqual(defense - combat._actor_defense(session["character"]), 1)
         session["character"]["equipment"].append("墓守の外套")
-        self.assertEqual(combat._modified_received_damage(session, 5, "physical", enemy, "攻撃"), 4)
+        self.assertEqual(combat._modified_received_damage(session, 5, "physical", enemy, "攻撃"), 3)
         for identifier in ("skeleton_soldier", "ghoul", "wraith", "grave_knight"):
             template = next(e for e in self.pack["enemies"] if e["id"] == identifier)
             self.assertEqual(combat._resistance_multiplier(template, "holy"), 1.5)
             self.assertEqual(combat._resistance_multiplier(template, "physical"), 1)
             self.assertEqual(combat._resistance_multiplier(template, "ice"), 1)
+
+    def test_cloak_pickup_preserves_armor_and_only_fills_empty_slot(self):
+        from scripts.scenario.ch3_routes_balance import CLOAK_DESCRIPTION, apply
+
+        for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
+            pack = state.load_scenario_pack(DEFAULT_SCENARIO.with_name(filename))
+            before = deepcopy(pack)
+            apply(pack)
+            self.assertEqual(pack, before)
+            for character in ("hero", "cleric", "mage", "thief"):
+                for empty in (False, True):
+                    with self.subTest(filename=filename, character=character, empty=empty):
+                        session = fresh_session(pack, character)
+                        session["world_state"] = {"location_id": "ruined_watchtower"}
+                        actor = session["character"]
+                        if empty:
+                            actor["equipment"] = [i["name"] for i in state.equipped_items(actor) if state.item_slot(i) != "armor"]
+                        equipment = list(actor["equipment"])
+                        self.resolve(session, "search_watchtower")
+                        cloak = next(i for i in actor["inventory"] if i.get("id") == "gravekeeper_cloak")
+                        self.assertEqual(cloak["description"], CLOAK_DESCRIPTION)
+                        self.assertEqual(actor["equipment"], equipment + [cloak["name"]] if empty else equipment)
+                        if not empty:
+                            shops.use_item(session, "gravekeeper_cloak")
+                        self.assertIn(cloak["name"], actor["equipment"])
+                        self.assertEqual(sum(state.item_slot(i) == "armor" for i in state.equipped_items(actor)), 1)
+                        self.assertEqual(combat._actor_defense(actor), 1)
+                        state.commit_world_position(session, location_id="bone_field")
+                        session["combat_start_requested"] = True
+                        self.assertTrue(combat.ensure_combat_started(session))
+                        undead = session["combat"]["enemies"][0]
+                        self.assertEqual(combat._modified_received_damage(session, 9, "physical", undead, "攻撃"), 7)
+                        other = {"template_id": "rock_giant"}
+                        self.assertEqual(combat._modified_received_damage(session, 9, "physical", other, "攻撃"), 9)
+                        session["world_state"] = {"location_id": "valley_entrance"}
+                        self.assertEqual(combat._modified_received_damage(session, 9, "physical", undead, "攻撃"), 9)
 
     def test_both_packs_map_edges_and_migration_idempotence(self):
         for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):

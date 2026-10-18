@@ -345,6 +345,21 @@ def _refresh_session_scenario_pack(session: dict[str, Any]) -> bool:
     latest_title = str((latest_pack.get("meta") or {}).get("title") or "")
     if current_title and latest_title and current_title != latest_title:
         return False
+    old_items = {item.get("id"): item for item in current_pack.get("items", []) if item.get("id")}
+    changed_items = {item["id"]: item for item in latest_pack.get("items", [])
+                     if item.get("id") in old_items and item != old_items[item["id"]]}
+    actors = [session.get("character", {}), (session.get("combat") or {}).get("original_character")]
+    actors += [snapshot.get("state", {}).get("character") for snapshot in session.get("area_snapshots", {}).values()]
+    for actor in actors:
+        if not isinstance(actor, dict):
+            continue
+        for item in actor.get("inventory", []):
+            if not isinstance(item, dict) or item.get("id") not in changed_items:
+                continue
+            previous, latest = old_items[item["id"]], changed_items[item["id"]]
+            for key in ("combat", "description"):
+                if key in latest and item.get(key) == previous.get(key):
+                    item[key] = deepcopy(latest[key])
     session["scenario_pack"] = latest_pack
     session["scenario_title"] = latest_title or session.get("scenario_title")
     if "forest_exit" in session.get("visited_locations", []):
@@ -1600,6 +1615,8 @@ def _effects_to_state_delta(effects: list[Any], session: Optional[dict[str, Any]
             delta["clear_skills"] = True
         if isinstance(effect.get("equip_item"), str):
             delta["equip_item"] = effect["equip_item"]
+        if isinstance(effect.get("equip_item_if_empty"), str):
+            delta["equip_item_if_empty"] = effect["equip_item_if_empty"]
         if isinstance(effect.get("reforge_armor"), dict):
             delta["reforge_armor"] = deepcopy(effect["reforge_armor"])
         if isinstance(effect.get("game_over"), (str, dict)):
@@ -2161,6 +2178,8 @@ def _apply_state_delta(
     equip_item = str(delta.get("equip_item") or "").strip()
     if equip_item:
         _equip_inventory_item(session, equip_item)
+    elif isinstance(delta.get("equip_item_if_empty"), str):
+        _equip_inventory_item(session, delta["equip_item_if_empty"], only_if_empty=True)
     else:
         _synchronize_equipment(character)
 
@@ -2401,7 +2420,7 @@ def _set_companion(session: dict[str, Any], raw_companion: Any) -> None:
         )
 
 
-def _equip_inventory_item(session: dict[str, Any], item_name_or_id: str) -> str:
+def _equip_inventory_item(session: dict[str, Any], item_name_or_id: str, *, only_if_empty: bool = False) -> str:
     character = session["character"]
     inventory = character.get("inventory") if isinstance(character.get("inventory"), list) else []
     target = next(
@@ -2418,6 +2437,9 @@ def _equip_inventory_item(session: dict[str, Any], item_name_or_id: str) -> str:
     target_name = str(target.get("name") or target.get("id") or "").strip()
     current = equipped_items(character)
     previous = next((item for item in current if item_slot(item) == item_slot(target)), None)
+    if only_if_empty and previous:
+        _synchronize_equipment(character)
+        return ""
     character["equipment"] = [str(item.get("name") or item["id"]) for item in current
                               if item_slot(item) != item_slot(target)] + [target_name]
     _synchronize_equipment(character)

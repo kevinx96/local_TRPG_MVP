@@ -97,6 +97,45 @@ class ChapterThreeRouteTests(unittest.TestCase):
         self.assertNotEqual(public["log"][0]["text"], session["combat"]["log"][0]["text"])
 
 
+    def test_counter_ties_fail_strict_second_round_target(self):
+        rows = [dict(character=character, **condition, success_rate=.8)
+                for character in ch3_routes.CHARACTERS for condition in ch3_routes.conditions()]
+        self.assertTrue(all(not r["passed"] and r["margin_pp"] == 0 for r in ch3_routes.comparisons(rows)["counters"]))
+
+    def test_outside_three_point_boundary_and_original_control_cohorts(self):
+        from scripts.balance.ch3_outside import comparisons
+
+        rows = [dict(location="dragon_valley_loc", character="hero", companion=cid,
+                     win_rate=.93 if cid == "paladin_liese" else .9601 if cid == "hydromancer_elio" else .9)
+                for cid in ch3_routes.COMPANIONS]
+        liese, elio = comparisons(rows)
+        self.assertTrue(liese["passed"])
+        self.assertFalse(elio["passed"])
+        self.assertEqual(elio["best"], "paladin_liese")
+
+    def test_tuning_only_accepts_authorized_ranges(self):
+        import argparse
+        from scripts.balance.ch3_tuning import parse_variant
+
+        self.assertEqual(parse_variant("liese:2d4:0.18")["heal_ratio"], .18)
+        self.assertEqual(parse_variant("elio:2d6:2")["period"], 2)
+        for value in ("liese:2d4:0.14", "liese:2d7:0.25", "elio:2d6:1", "robin:2d4:2"):
+            with self.assertRaises(argparse.ArgumentTypeError):
+                parse_variant(value)
+
+    def test_critical_grid_covers_sub_percent_healing_changes(self):
+        import math
+        from scripts.balance.ch3_tuning import critical_ratios
+
+        ratios = critical_ratios()
+        self.assertTrue(all(.15 <= ratio <= .25 for ratio in ratios))
+        profiles = {tuple(math.floor(hp * ratio + .5) for hp in (28, 32, 36)) for ratio in ratios}
+        self.assertTrue({(6, 7, 7), (7, 7, 8), (7, 8, 8)} <= profiles)
+        for index in range(10001):
+            ratio = .15 + index/100000
+            self.assertIn(tuple(math.floor(hp * ratio + .5) for hp in (28, 32, 36)), profiles)
+
+
 class PlaytestMetricTests(unittest.TestCase):
     def test_scripted_death_is_distinct_from_completed_ending(self):
         public = dict(game_over=dict(ending="defied_xanxus", reason="Xanxus"),
@@ -109,7 +148,7 @@ class PlaytestMetricTests(unittest.TestCase):
 
     def test_seed_rotation_is_stable_for_subsets(self):
         self.assertEqual([explore.preferred_route(s) for s in explore.SEEDS],
-                         ["village", "battlefield", "gorge", "village", "battlefield", "gorge", "village", "battlefield"])
+                         ["village", "battlefield", "village", "gorge", "battlefield", "gorge", "village", "battlefield"])
 
     def test_pure_movement_retains_checks_rewards_and_choices_with_flags(self):
         self.assertTrue(metrics.pure_movement(dict(effects=[{"current_location": "village"}, {"background_image": "x"}])))
@@ -148,6 +187,7 @@ class PlaytestMetricTests(unittest.TestCase):
         self.assertEqual(summary["overlap"]["choices"]["mean"], .5)
         self.assertAlmostEqual(summary["overlap"]["locations"]["mean"], 1/3)
         self.assertEqual(summary["clue_counts"]["heard_guardian_refusal"], 3)
+        self.assertEqual(summary["route_counts_by_character"]["hero"], dict(village=3, battlefield=0, gorge=0))
         self.assertEqual(summary["final_clue_counts"]["heard_guardian_refusal"], 0)
         self.assertIn("read_miner_diary", metrics.clue_flags(pack))
         self.assertIn("saw_white_claw", metrics.clue_flags(pack))

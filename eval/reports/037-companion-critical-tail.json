@@ -1,0 +1,374 @@
+{
+  "n": 2000,
+  "seed": 20261018,
+  "workers": 4,
+  "rows": [
+    {
+      "variant": {
+        "companion": "paladin_liese",
+        "damage": "2d3",
+        "heal_ratio": 0.20572916666666669
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "paladin_liese",
+      "n": 2000,
+      "wins": 1885,
+      "success_rate": 0.9425,
+      "boss_arrivals": 1990,
+      "boss_win_rate": 0.9472361809045227,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 105,
+        "valley_entrance": 10
+      },
+      "terminals": {
+        "victory": 1885,
+        "defeat": 115
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9915,
+        "治療の巻物": 0.1935
+      }
+    },
+    {
+      "variant": {
+        "companion": "paladin_liese",
+        "damage": "2d3",
+        "heal_ratio": 0.23325892857142858
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "paladin_liese",
+      "n": 2000,
+      "wins": 1874,
+      "success_rate": 0.937,
+      "boss_arrivals": 1990,
+      "boss_win_rate": 0.9417085427135679,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 116,
+        "valley_entrance": 10
+      },
+      "terminals": {
+        "victory": 1874,
+        "defeat": 126
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9915,
+        "治療の巻物": 0.1225
+      }
+    },
+    {
+      "variant": {
+        "companion": "paladin_liese",
+        "damage": "2d3",
+        "heal_ratio": 0.23524305555555555
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "paladin_liese",
+      "n": 2000,
+      "wins": 1874,
+      "success_rate": 0.937,
+      "boss_arrivals": 1990,
+      "boss_win_rate": 0.9417085427135679,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 116,
+        "valley_entrance": 10
+      },
+      "terminals": {
+        "victory": 1874,
+        "defeat": 126
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9915,
+        "治療の巻物": 0.1225
+      }
+    },
+    {
+      "variant": {
+        "companion": "paladin_liese",
+        "damage": "2d4",
+        "heal_ratio": 0.20572916666666669
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "paladin_liese",
+      "n": 2000,
+      "wins": 1892,
+      "success_rate": 0.946,
+      "boss_arrivals": 1992,
+      "boss_win_rate": 0.9497991967871486,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 100,
+        "valley_entrance": 8
+      },
+      "terminals": {
+        "victory": 1892,
+        "defeat": 108
+      },
+      "consumables_per_trial": {
+        "聖水": 1.992,
+        "治療の巻物": 0.1795
+      }
+    },
+    {
+      "variant": {
+        "companion": "paladin_liese",
+        "damage": "2d4",
+        "heal_ratio": 0.23325892857142858
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "paladin_liese",
+      "n": 2000,
+      "wins": 1885,
+      "success_rate": 0.9425,
+      "boss_arrivals": 1992,
+      "boss_win_rate": 0.946285140562249,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 107,
+        "valley_entrance": 8
+      },
+      "terminals": {
+        "victory": 1885,
+        "defeat": 115
+      },
+      "consumables_per_trial": {
+        "聖水": 1.992,
+        "治療の巻物": 0.1215
+      }
+    },
+    {
+      "variant": {
+        "companion": "paladin_liese",
+        "damage": "2d4",
+        "heal_ratio": 0.23524305555555555
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "paladin_liese",
+      "n": 2000,
+      "wins": 1885,
+      "success_rate": 0.9425,
+      "boss_arrivals": 1992,
+      "boss_win_rate": 0.946285140562249,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 107,
+        "valley_entrance": 8
+      },
+      "terminals": {
+        "victory": 1885,
+        "defeat": 115
+      },
+      "consumables_per_trial": {
+        "聖水": 1.992,
+        "治療の巻物": 0.1215
+      }
+    },
+    {
+      "variant": {
+        "companion": "paladin_liese",
+        "damage": "2d5",
+        "heal_ratio": 0.20572916666666669
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "paladin_liese",
+      "n": 2000,
+      "wins": 1888,
+      "success_rate": 0.944,
+      "boss_arrivals": 1991,
+      "boss_win_rate": 0.9482672024108488,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 103,
+        "valley_entrance": 9
+      },
+      "terminals": {
+        "victory": 1888,
+        "defeat": 112
+      },
+      "consumables_per_trial": {
+        "聖水": 1.992,
+        "治療の巻物": 0.1685
+      }
+    },
+    {
+      "variant": {
+        "companion": "paladin_liese",
+        "damage": "2d5",
+        "heal_ratio": 0.23325892857142858
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "paladin_liese",
+      "n": 2000,
+      "wins": 1879,
+      "success_rate": 0.9395,
+      "boss_arrivals": 1991,
+      "boss_win_rate": 0.9437468608739327,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 112,
+        "valley_entrance": 9
+      },
+      "terminals": {
+        "victory": 1879,
+        "defeat": 121
+      },
+      "consumables_per_trial": {
+        "聖水": 1.992,
+        "治療の巻物": 0.1145
+      }
+    },
+    {
+      "variant": {
+        "companion": "paladin_liese",
+        "damage": "2d5",
+        "heal_ratio": 0.23524305555555555
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "paladin_liese",
+      "n": 2000,
+      "wins": 1879,
+      "success_rate": 0.9395,
+      "boss_arrivals": 1991,
+      "boss_win_rate": 0.9437468608739327,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 112,
+        "valley_entrance": 9
+      },
+      "terminals": {
+        "victory": 1879,
+        "defeat": 121
+      },
+      "consumables_per_trial": {
+        "聖水": 1.992,
+        "治療の巻物": 0.1145
+      }
+    },
+    {
+      "variant": {
+        "companion": "paladin_liese",
+        "damage": "2d6",
+        "heal_ratio": 0.20572916666666669
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "paladin_liese",
+      "n": 2000,
+      "wins": 1904,
+      "success_rate": 0.952,
+      "boss_arrivals": 1991,
+      "boss_win_rate": 0.9563033651431442,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 87,
+        "valley_entrance": 9
+      },
+      "terminals": {
+        "victory": 1904,
+        "defeat": 96
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9925,
+        "治療の巻物": 0.1565
+      }
+    },
+    {
+      "variant": {
+        "companion": "paladin_liese",
+        "damage": "2d6",
+        "heal_ratio": 0.23325892857142858
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "paladin_liese",
+      "n": 2000,
+      "wins": 1896,
+      "success_rate": 0.948,
+      "boss_arrivals": 1991,
+      "boss_win_rate": 0.9522852837769965,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 95,
+        "valley_entrance": 9
+      },
+      "terminals": {
+        "victory": 1896,
+        "defeat": 104
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9925,
+        "治療の巻物": 0.099
+      }
+    },
+    {
+      "variant": {
+        "companion": "paladin_liese",
+        "damage": "2d6",
+        "heal_ratio": 0.23524305555555555
+      },
+      "character": "thief",
+      "path": "battlefield",
+      "prepared": false,
+      "cursed": true,
+      "companion": "paladin_liese",
+      "n": 2000,
+      "wins": 1896,
+      "success_rate": 0.948,
+      "boss_arrivals": 1991,
+      "boss_win_rate": 0.9522852837769965,
+      "mean_arrival_hp": 36,
+      "failures": {
+        "dragon_valley_loc": 95,
+        "valley_entrance": 9
+      },
+      "terminals": {
+        "victory": 1896,
+        "defeat": 104
+      },
+      "consumables_per_trial": {
+        "聖水": 1.9925,
+        "治療の巻物": 0.099
+      }
+    }
+  ],
+  "fingerprints": {
+    "scripts\\balance\\ch3_tuning.py": "9c9cbd9ee524e0012418f4ade0d89ee2ec81b104d4bf7cb8a5dcc22a9e688aaf",
+    "scripts\\balance\\ch3_routes.py": "5f147b20b48c11fa2b09e0d3a171d732008db446f62e2363ad1b7250d90dcdc8",
+    "host\\prompt\\processed\\dragon_rpg.json": "37997464c144ed78a300cb6c97c113fd33161ba71b6f7d2c1805bd04f44e75a0",
+    "host\\state.py": "d17e6f9b26e2ca0f8889d55c0698b39dd22dcb755c9abf1bad4f4329d7b091f0"
+  },
+  "pairs": []
+}

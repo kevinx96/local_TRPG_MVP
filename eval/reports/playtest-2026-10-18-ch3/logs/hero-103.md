@@ -1085,7 +1085,6 @@
 > [プレイヤー] 塔の上を調べる
 > [GM] 崩れた階段の上に、古い衛兵の外套が残っていた。裏地には、死者を鎮める祈りの文句が縫い込まれている。
 - 墓守の外套 x1を入手しました。
-- 革の鎧を外し、墓守の外套を装備した。
 
 ## step 97 / ruined_watchtower 「崩れた見張り塔」 HP 19/25 G 155
 
@@ -1164,10 +1163,10 @@
 
 戦闘: skill / divine_guard → grave_knight:1
 - 神聖の庇護を使用し、守りを固めた。
-- 攻撃がテストに4ダメージ。
+- 攻撃がテストに6ダメージ。
 - 聖光の一撃が墓守の骸骨騎士に4光属性ダメージ。
 
-## step 104 / grave_chapel 「墓守の礼拝堂」 HP 21/25 G 155
+## step 104 / grave_chapel 「墓守の礼拝堂」 HP 19/25 G 155
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
@@ -1177,7 +1176,7 @@
 - 攻撃はテストに当たらなかった。
 - 聖光の一撃が墓守の骸骨騎士に4光属性ダメージ。
 
-## step 105 / grave_chapel 「墓守の礼拝堂」 HP 21/25 G 155
+## step 105 / grave_chapel 「墓守の礼拝堂」 HP 19/25 G 155
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
@@ -1187,27 +1186,194 @@
 - 攻撃はテストに当たらなかった。
 - 聖光の一撃が墓守の骸骨騎士に6光属性ダメージ。
 
-## step 106 / grave_chapel 「墓守の礼拝堂」 HP 21/25 G 155
+## step 106 / grave_chapel 「墓守の礼拝堂」 HP 19/25 G 155
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
 
 戦闘: skill / power_slash → grave_knight:1
 - 渾身斬りが墓守の骸骨騎士に12ダメージ。
-- 攻撃がテストに17ダメージ。
-- 癒しの祈りがHPを6回復した。
+- 攻撃がテストに19ダメージ。
+- プレイヤーは戦闘不能になった。
+- 墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。
 
-## step 107 / grave_chapel 「墓守の礼拝堂」 HP 10/25 G 155
+## step 107 / grave_chapel 「墓守の礼拝堂」 HP 0/25 G 155
+
+> [GM] 墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。
+- 戦闘に敗北しました。 HP 0/25、MP 9/9、SP 7/12。
+
+## step 108 / grave_chapel 「墓守の礼拝堂」 HP 0/25 G 155
+
+
+終了: {"ending": "combat_defeat", "reason": "墓守の礼拝堂で力尽きた。冒険はここで終わりを迎える。", "combat_defeat": true, "created_at": "2026-10-18T06:39:53.696670+00:00", "epilogue": []}
+> [GM] 運命の糸がほどけ、あなたは再び霧の古戦場の入口に立っていた。
+- 霧の古戦場の入口からやり直しました。
+
+## step 109 / old_battlefield 「霧の古戦場」 HP 25/25 G 140
+
+- 骨の野へ進む |  | 不明
+- 森の出口へ戻る |  | 判定不要
+- 城塞の街道を北へ向かう |  | 判定不要
+
+選択: 骨の野へ進む
+> [プレイヤー] 骨の野へ進む
+> [GM] 霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。
+- 現在地が骨の野になりました。
+
+## step 110 / bone_field 「骨の野」 HP 25/25 G 140
+
+- 骸骨兵と戦う |  | 危険（戦闘）
+- 霧に紛れて抜ける |  | 1d20+dex判定（DC14）
+
+選択: 霧に紛れて抜ける
+> [プレイヤー] 霧に紛れて抜ける
+> [GM] 骸骨兵が霧の向こうを見つめている隙に、野を抜けた。
+
+## step 111 / bone_field 「骨の野」 HP 25/25 G 140
+
+- 崩れた見張り塔へ向かう |  | 不明
+- 屍鬼の沼へ進む |  | 不明
+- 霧の古戦場へ戻る |  | 判定不要
+
+選択: 崩れた見張り塔へ向かう
+> [プレイヤー] 崩れた見張り塔へ向かう
+> [GM] 半ば崩れた石の塔。中では、半透明の兵士が一人、消えた焚き火の前にうずくまっている。
+- 現在地が崩れた見張り塔になりました。
+
+## step 112 / ruined_watchtower 「崩れた見張り塔」 HP 25/25 G 140
+
+- 亡霊の兵士に話しかける |  | 判定不要
+- 塔の上を調べる |  | 判定不要
+- 焚き火に火を入れて休む |  | 判定不要
+- 骨の野へ戻る |  | 危険（戦闘）
+
+選択: 亡霊の兵士に話しかける
+> [プレイヤー] 亡霊の兵士に話しかける
+> [GM] 亡霊は顔を上げた。「……十年前、将軍ドラコの進言で、我らは竜の谷へ送られた。谷に着いた夜、白い霜が陣を覆い、気づけば皆ここで骨になっていた。紅竜の炎ではない。あれは、ひどく冷たかった」
+
+## step 113 / ruined_watchtower 「崩れた見張り塔」 HP 25/25 G 140
+
+- 亡霊の兵士に話しかける |  | 判定不要
+- 塔の上を調べる |  | 判定不要
+- 焚き火に火を入れて休む |  | 判定不要
+- 骨の野へ戻る |  | 危険（戦闘）
+
+選択: 塔の上を調べる
+> [プレイヤー] 塔の上を調べる
+> [GM] 崩れた階段の上に、古い衛兵の外套が残っていた。裏地には、死者を鎮める祈りの文句が縫い込まれている。
+- 墓守の外套 x1を入手しました。
+
+## step 114 / ruined_watchtower 「崩れた見張り塔」 HP 25/25 G 140
+
+- 亡霊の兵士に話しかける |  | 判定不要
+- 塔の上を調べる |  | 判定不要 [不可: 完了済みです。]
+- 焚き火に火を入れて休む |  | 判定不要
+- 骨の野へ戻る |  | 危険（戦闘）
+
+選択: 焚き火に火を入れて休む
+> [プレイヤー] 焚き火に火を入れて休む
+> [GM] 消えた焚き火に火を入れ、少しだけ休んだ。亡霊は黙って、その火を見つめていた。
+- HP・MP・SPが全回復しました。
+
+## step 115 / ruined_watchtower 「崩れた見張り塔」 HP 25/25 G 140
+
+- 亡霊の兵士に話しかける |  | 判定不要
+- 塔の上を調べる |  | 判定不要 [不可: 完了済みです。]
+- 焚き火に火を入れて休む |  | 判定不要 [不可: 完了済みです。]
+- 骨の野へ戻る |  | 危険（戦闘）
+
+選択: 骨の野へ戻る
+> [プレイヤー] 骨の野へ戻る
+> [GM] 霧の中から、錆びた鎧をまとった骸骨の兵士が二体、ぎこちなく立ち上がった。
+- 現在地が骨の野になりました。
+
+## step 116 / bone_field 「骨の野」 HP 25/25 G 140
+
+- 崩れた見張り塔へ向かう |  | 判定不要
+- 屍鬼の沼へ進む |  | 不明
+- 霧の古戦場へ戻る |  | 判定不要
+
+選択: 屍鬼の沼へ進む
+> [プレイヤー] 屍鬼の沼へ進む
+> [GM] 黒い水が淀む沼地。泥の中から、腐った腕が何本も突き出している。
+- 現在地が屍鬼の沼になりました。
+
+## step 117 / ghoul_marsh 「屍鬼の沼」 HP 25/25 G 140
+
+- 屍鬼と戦う |  | 危険（戦闘）
+- 沼の縁を伝って抜ける |  | 1d20+dex判定（DC15）
+- 骨の野へ戻る |  | 危険（戦闘）
+
+選択: 沼の縁を伝って抜ける
+> [プレイヤー] 沼の縁を伝って抜ける
+> [GM] 腐った腕の間を縫うように、沼の縁の倒木を渡りきった。屍鬼たちは泥の中で呻くばかりで、こちらに気づかない。
+- 魔力の果実 x1を入手しました。
+
+## step 118 / ghoul_marsh 「屍鬼の沼」 HP 25/25 G 140
+
+- 骨の野へ戻る |  | 危険（戦闘）
+- 墓守の礼拝堂へ向かう |  | 不明
+
+選択: 墓守の礼拝堂へ向かう
+> [プレイヤー] 墓守の礼拝堂へ向かう
+> [GM] 古戦場の外れに、屋根の落ちた小さな礼拝堂がある。祭壇の前で、大剣を携えた骸骨の騎士が膝をついている。
+> 祭壇の陰に、毛むくじゃらの小柄な影が見えた。「人の子か。ここは死者の道……生者が通る道ではないぞ」影は喉の奥で笑い、霧の中へ消えた。
+> 「古戦場の外れの礼拝堂に、昔の鐘が残っているのです。誰かがあの鐘を正しく鳴らせば、死者は眠りにつけるはず……」
+- 現在地が墓守の礼拝堂になりました。
+- 祭壇の陰に、毛むくじゃらの小柄な影が見えた。「人の子か。ここは死者の道……生者が通る道ではないぞ」影は喉の奥で笑い、霧の中へ消えた。
+- 「古戦場の外れの礼拝堂に、昔の鐘が残っているのです。誰かがあの鐘を正しく鳴らせば、死者は眠りにつけるはず……」
+- クエスト更新：古戦場の鐘
+
+## step 119 / grave_chapel 「墓守の礼拝堂」 HP 25/25 G 140
+
+- 骸骨の騎士と戦う |  | 危険（戦闘）
+- 屍鬼の沼へ進む |  | 危険（戦闘）
+
+選択: 骸骨の騎士と戦う
+> [プレイヤー] 骸骨の騎士と戦う
+> [GM] 骸骨の騎士がゆっくりと立ち上がり、大剣を両手で構えた。兜の奥で、青白い光が揺れている。
+
+## step 120 / grave_chapel 「墓守の礼拝堂」 HP 25/25 G 140
+
+- 骸骨の騎士と戦う |  | 危険（戦闘）
+- 屍鬼の沼へ進む |  | 危険（戦闘）
+
+戦闘: skill / divine_guard → grave_knight:1
+- 神聖の庇護を使用し、守りを固めた。
+- 攻撃がテストに4ダメージ。
+- 聖光の一撃が墓守の骸骨騎士に4光属性ダメージ。
+
+## step 121 / grave_chapel 「墓守の礼拝堂」 HP 21/25 G 140
+
+- 骸骨の騎士と戦う |  | 危険（戦闘）
+- 屍鬼の沼へ進む |  | 危険（戦闘）
+
+戦闘: skill / divine_guard → grave_knight:1
+- 神聖の庇護を使用し、守りを固めた。
+- 攻撃はテストに当たらなかった。
+- 聖光の一撃が墓守の骸骨騎士に6光属性ダメージ。
+
+## step 122 / grave_chapel 「墓守の礼拝堂」 HP 21/25 G 140
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
 
 戦闘: skill / power_slash → grave_knight:1
-- 渾身斬りが墓守の骸骨騎士に15ダメージ。
-- 攻撃がテストに7ダメージ。
+- 渾身斬りが墓守の骸骨騎士に17ダメージ。
+- 攻撃がテストに12ダメージ。
 - 癒しの祈りがHPを6回復した。
 
-## step 108 / grave_chapel 「墓守の礼拝堂」 HP 9/25 G 155
+## step 123 / grave_chapel 「墓守の礼拝堂」 HP 15/25 G 140
+
+- 骸骨の騎士と戦う |  | 危険（戦闘）
+- 屍鬼の沼へ進む |  | 危険（戦闘）
+
+戦闘: skill / power_slash → grave_knight:1
+- 渾身斬りが墓守の骸骨騎士に10ダメージ。
+- 攻撃はテストに当たらなかった。
+- 聖光の一撃が墓守の骸骨騎士に9光属性ダメージ。
+
+## step 124 / grave_chapel 「墓守の礼拝堂」 HP 15/25 G 140
 
 - 骸骨の騎士と戦う |  | 危険（戦闘）
 - 屍鬼の沼へ進む |  | 危険（戦闘）
@@ -1219,15 +1385,15 @@
 - 生命の果実 x2を入手しました。
 - 聖銀 x1を入手しました。
 
-## step 109 / grave_chapel 「墓守の礼拝堂」 HP 9/25 G 215
+## step 125 / grave_chapel 「墓守の礼拝堂」 HP 15/25 G 200
 
 - 礼拝堂の裏門から村へ抜ける |  | 不明
 - 屍鬼の沼へ進む |  | 危険（戦闘）
 - 弔いの鐘を鳴らす |  | 判定不要
 > [GM] 骸骨の騎士は、大剣を祭壇に立てかけるように崩れ落ちた。兜の奥から、赤い果実が二つ転がり出た。
-- 戦闘に勝利しました。 HP 9/25、MP 9/9、SP 3/12。
+- 戦闘に勝利しました。 HP 15/25、MP 9/9、SP 5/12。
 
-## step 110 / grave_chapel 「墓守の礼拝堂」 HP 9/25 G 215
+## step 126 / grave_chapel 「墓守の礼拝堂」 HP 15/25 G 200
 
 - 礼拝堂の裏門から村へ抜ける |  | 不明
 - 屍鬼の沼へ進む |  | 危険（戦闘）
@@ -1240,60 +1406,19 @@
 - 現在地が炎の中の結氷になりました。
 - クエスト更新：紅き邪竜の討伐
 
-## step 111 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 215
+## step 127 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 200
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 村を出ようとします | 不明
 - 結氷の中心を調べる |  | 1d20+wis判定（DC12）
 - 長老に邪竜の弱点を聞く |  | 不明
 
-選択: 長老に邪竜の弱点を聞く
-> [プレイヤー] 長老に邪竜の弱点を聞く
-> [GM] 白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」
-- 現在地が麓の村・避難所になりました。
-
-## step 112 / village 「麓の村・避難所」 HP 35/35 G 215
-
-- 長老と話す | 村の長老から古い話を聞く | 判定不要
-  - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
-  - 古い盟約について聞く |  | 判定不要
-- 店に入る | 麓の村の道具屋 | 判定不要
-- 竜の谷へ向かう | 第4章へ進みます | 不明
-- 城下町に戻る |  | 判定不要
-- 結氷した場所を探索する |  | 判定不要
-- 行商人ガルドの店に入る |  | 判定不要
-- 避難所で休ませてもらう（5G） |  | 判定不要
-
-選択: 結氷した場所を探索する
-> [プレイヤー] 結氷した場所を探索する
-> [GM] 邪竜イグニスが潜む谷の麓、小さな村にたどり着いた。冷たい風が吹き抜ける中、村人たちは怯えた様子で暮らしている。邪竜に立ち向かう術を得るには、まず情報を集め、旅の支度を整える必要がありそうだ。
-- 現在地が炎の中の結氷になりました。
-
-## step 113 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 215
-
-- 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
-- 探索せず先へ進む | 村を出ようとします | 不明
-- 結氷の中心を調べる |  | 1d20+wis判定（DC12）
-- 長老に邪竜の弱点を聞く |  | 判定不要
-
-選択: 結氷の中心を調べる
-> [プレイヤー] 結氷の中心を調べる
-> [GM] 凍った炎の中心に、白い鱗が一枚埋まっていた。冷気はそこから広がっている。
-- 白い竜鱗 x1を入手しました。
-
-## step 114 / village_frozen_clue 「炎の中の結氷」 HP 35/35 G 215
-
-- 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
-- 探索せず先へ進む | 村を出ようとします | 不明
-- 結氷の中心を調べる |  | 1d20+wis判定（DC12） [不可: 完了済みです。]
-- 長老に邪竜の弱点を聞く |  | 判定不要
-
 選択: 探索せず先へ進む
 > [プレイヤー] 探索せず先へ進む
 > [GM] 村を離れようとした街道で、赤い法衣と炎に包まれた骸骨の魔法使いが待ち受けていた。
 - 現在地が燃える街道・Xanxusの尋問になりました。
 
-## step 115 / xanxus_confrontation 「燃える街道・Xanxusの尋問」 HP 35/35 G 215
+## step 128 / xanxus_confrontation 「燃える街道・Xanxusの尋問」 HP 35/35 G 200
 
 - ごまかして切り抜ける | 何も察知していないふりをします | 危険
 - 先手を打って攻撃する | Xanxusが動く前に仕掛けます | 危険
@@ -1304,39 +1429,40 @@
 > [GM] 一歩踏み出した瞬間、炎の壁が行く手を封じた。背後にも火柱が立ち、逃げ場は完全に消える。Xanxusは指先をこちらへ向け、『ならば力ずくで進ませよう』と戦いを強いる。
 - 現在地がXanxus戦になりました。
 
-## step 116 / xanxus_battle 「Xanxus戦」 HP 35/35 G 215
-
-
-戦闘: skill / divine_guard → xanxus:1
-- 神聖の庇護を使用し、守りを固めた。
-- 隕石召喚がテストに24ダメージ。
-- 癒しの祈りがHPを9回復した。
-
-## step 117 / xanxus_battle 「Xanxus戦」 HP 20/35 G 215
+## step 129 / xanxus_battle 「Xanxus戦」 HP 35/35 G 200
 
 
 戦闘: skill / divine_guard → xanxus:1
 - 神聖の庇護を使用し、守りを固めた。
 - 赤炎骸骨Xanxusは火炎旋渦を展開した。
 - 火炎旋渦が12ダメージを与えた。
+- 聖光の一撃が赤炎骸骨Xanxusに1光属性ダメージ。
+
+## step 130 / xanxus_battle 「Xanxus戦」 HP 23/35 G 200
+
+
+戦闘: skill / divine_guard → xanxus:1
+- 神聖の庇護を使用し、守りを固めた。
+- 隕石召喚がテストに22ダメージ。
+- 火炎旋渦が12ダメージを与えた。
 - 癒しの祈りがHPを9回復した。
 
-## step 118 / xanxus_battle 「Xanxus戦」 HP 17/35 G 215
+## step 131 / xanxus_battle 「Xanxus戦」 HP 9/35 G 200
 
 
-戦闘: skill / hero_lv3_a → xanxus:1
-- 渾身斬り・改が赤炎骸骨Xanxusに9ダメージ。
-- 隕石召喚がテストに48ダメージ。
+戦闘: item / healing_scroll → xanxus:1
+- 治療の巻物を使い、HPを26回復した。
+- 隕石召喚がテストに49ダメージ。
 - プレイヤーは戦闘不能になった。
 - HPが1回復しました。
 - 現在地がXanxusの最後通告になりました。
 
-## step 119 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/35 G 215
+## step 132 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/35 G 200
 
 > [GM] Xanxusは倒れたあなたを見下ろした。『大人しく先を探索しろ。そして私の火種を飲め。任務を放棄すれば、その場で爆ぜさせる』
-- 戦闘に敗北しました。 HP 1/35、MP 11/11、SP 13/16。
+- 戦闘に敗北しました。 HP 1/35、MP 11/11、SP 16/16。
 
-## step 120 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/35 G 215
+## step 133 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/35 G 200
 
 - 大人しく従う | 火種を受け取り、探索を続けます | 判定不要
 - 死んでも従わない | Xanxusの要求を拒絶します | 判定不要
@@ -1346,10 +1472,10 @@
 > [GM] Xanxusの要求を拒み、その炎に焼き尽くされました。
 - Xanxusの要求を拒み、その炎に焼き尽くされました。
 
-## step 121 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/35 G 215
+## step 134 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/35 G 200
 
 
-終了: {"reason": "Xanxusの要求を拒み、その炎に焼き尽くされました。", "ending": "defied_xanxus", "created_at": "2026-10-18T06:10:39.955435+00:00", "epilogue": []}
+終了: {"reason": "Xanxusの要求を拒み、その炎に焼き尽くされました。", "ending": "defied_xanxus", "created_at": "2026-10-18T06:40:08.069830+00:00", "epilogue": []}
 
 ## 検証結果
 
@@ -1357,33 +1483,43 @@
 {
   "character": "hero",
   "seed": 103,
-  "steps": 121,
-  "retry_count": 0,
+  "steps": 134,
+  "retry_count": 1,
   "ending": "defied_xanxus",
   "final_location": "xanxus_ultimatum",
   "first_death": {
-    "step": 121,
-    "location": "xanxus_ultimatum",
-    "ending": "defied_xanxus",
-    "combat_defeat": false,
+    "step": 108,
+    "location": "grave_chapel",
+    "ending": "combat_defeat",
+    "combat_defeat": true,
     "completed": false,
     "attempt": 0,
-    "area": null,
-    "entry_hp": null
+    "area": "old_battlefield",
+    "entry_hp": 25
   },
   "deaths": [
     {
-      "step": 121,
+      "step": 108,
+      "location": "grave_chapel",
+      "ending": "combat_defeat",
+      "combat_defeat": true,
+      "completed": false,
+      "attempt": 0,
+      "area": "old_battlefield",
+      "entry_hp": 25
+    },
+    {
+      "step": 134,
       "location": "xanxus_ultimatum",
       "ending": "defied_xanxus",
       "combat_defeat": false,
       "completed": false,
-      "attempt": 0,
+      "attempt": 1,
       "area": null,
       "entry_hp": null
     }
   ],
-  "farthest_location": "village",
+  "farthest_location": "xanxus_ultimatum",
   "visited_locations": [
     "castle",
     "castle_town",
@@ -1414,12 +1550,21 @@
     "ghoul_marsh",
     "grave_chapel",
     "village_frozen_clue",
-    "village",
     "xanxus_confrontation",
     "xanxus_battle",
     "xanxus_ultimatum"
   ],
-  "retry_visited_locations": [],
+  "retry_visited_locations": [
+    "old_battlefield",
+    "bone_field",
+    "ruined_watchtower",
+    "ghoul_marsh",
+    "grave_chapel",
+    "village_frozen_clue",
+    "xanxus_confrontation",
+    "xanxus_battle",
+    "xanxus_ultimatum"
+  ],
   "failures": [],
   "completed": false,
   "preferred_chapter3_route": "battlefield",
@@ -1431,6 +1576,12 @@
       "route": "battlefield",
       "step": 90,
       "attempt": 0,
+      "companion": "paladin_liese"
+    },
+    {
+      "route": "battlefield",
+      "step": 110,
+      "attempt": 1,
       "companion": "paladin_liese"
     }
   ],
@@ -1446,18 +1597,22 @@
       "attempt": 0,
       "location": "oaksdawn_chapel",
       "companion": "paladin_liese"
+    },
+    {
+      "step": 109,
+      "attempt": 1,
+      "location": "old_battlefield",
+      "companion": "paladin_liese"
     }
   ],
   "final_companion": "paladin_liese",
   "clue_flags": [
-    "frost_trace_seen",
     "heard_guardian_refusal",
     "heard_old_soldier_ghost",
     "heard_pass_rumor",
     "heard_treaty_lore"
   ],
   "final_clue_flags": [
-    "frost_trace_seen",
     "heard_guardian_refusal",
     "heard_old_soldier_ghost",
     "heard_pass_rumor",
@@ -2057,56 +2212,120 @@
       "pure_movement": false
     },
     {
+      "step": 109,
+      "attempt": 1,
+      "location": "old_battlefield",
+      "action_id": "battlefield_to_bones",
+      "text": "骨の野へ進む",
+      "pure_movement": true
+    },
+    {
       "step": 110,
-      "attempt": 0,
+      "attempt": 1,
+      "location": "bone_field",
+      "action_id": "sneak_bone_field",
+      "text": "霧に紛れて抜ける",
+      "pure_movement": false
+    },
+    {
+      "step": 111,
+      "attempt": 1,
+      "location": "bone_field",
+      "action_id": "bones_to_tower",
+      "text": "崩れた見張り塔へ向かう",
+      "pure_movement": true
+    },
+    {
+      "step": 112,
+      "attempt": 1,
+      "location": "ruined_watchtower",
+      "action_id": "talk_old_soldier",
+      "text": "亡霊の兵士に話しかける",
+      "pure_movement": false
+    },
+    {
+      "step": 113,
+      "attempt": 1,
+      "location": "ruined_watchtower",
+      "action_id": "search_watchtower",
+      "text": "塔の上を調べる",
+      "pure_movement": false
+    },
+    {
+      "step": 114,
+      "attempt": 1,
+      "location": "ruined_watchtower",
+      "action_id": "rest_watchtower",
+      "text": "焚き火に火を入れて休む",
+      "pure_movement": false
+    },
+    {
+      "step": 115,
+      "attempt": 1,
+      "location": "ruined_watchtower",
+      "action_id": "tower_to_bones",
+      "text": "骨の野へ戻る",
+      "pure_movement": true
+    },
+    {
+      "step": 116,
+      "attempt": 1,
+      "location": "bone_field",
+      "action_id": "bones_to_marsh",
+      "text": "屍鬼の沼へ進む",
+      "pure_movement": true
+    },
+    {
+      "step": 117,
+      "attempt": 1,
+      "location": "ghoul_marsh",
+      "action_id": "sneak_ghoul_marsh",
+      "text": "沼の縁を伝って抜ける",
+      "pure_movement": false
+    },
+    {
+      "step": 118,
+      "attempt": 1,
+      "location": "ghoul_marsh",
+      "action_id": "marsh_to_chapel",
+      "text": "墓守の礼拝堂へ向かう",
+      "pure_movement": true
+    },
+    {
+      "step": 119,
+      "attempt": 1,
+      "location": "grave_chapel",
+      "action_id": "fight_grave_knight",
+      "text": "骸骨の騎士と戦う",
+      "pure_movement": false
+    },
+    {
+      "step": 126,
+      "attempt": 1,
       "location": "grave_chapel",
       "action_id": "chapel_to_village",
       "text": "礼拝堂の裏門から村へ抜ける",
       "pure_movement": false
     },
     {
-      "step": 111,
-      "attempt": 0,
-      "location": "village_frozen_clue",
-      "action_id": "visit_village",
-      "text": "長老に邪竜の弱点を聞く",
-      "pure_movement": false
-    },
-    {
-      "step": 112,
-      "attempt": 0,
-      "location": "village",
-      "action_id": "return_frozen_clue",
-      "text": "結氷した場所を探索する",
-      "pure_movement": true
-    },
-    {
-      "step": 113,
-      "attempt": 0,
-      "location": "village_frozen_clue",
-      "action_id": "inspect_frost_core",
-      "text": "結氷の中心を調べる",
-      "pure_movement": false
-    },
-    {
-      "step": 114,
-      "attempt": 0,
+      "step": 127,
+      "attempt": 1,
       "location": "village_frozen_clue",
       "action_id": "skip_frozen_clue_before_xanxus",
       "text": "探索せず先へ進む",
       "pure_movement": true
     },
     {
-      "step": 115,
-      "attempt": 0,
+      "step": 128,
+      "attempt": 1,
       "location": "xanxus_confrontation",
       "action_id": "flee_from_xanxus",
       "text": "もう一度逃走を試みる",
       "pure_movement": false
     },
     {
-      "step": 120,
-      "attempt": 0,
+      "step": 133,
+      "attempt": 1,
       "location": "xanxus_ultimatum",
       "action_id": "refuse_xanxus_without_rescue",
       "text": "死んでも従わない",

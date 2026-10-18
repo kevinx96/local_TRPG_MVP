@@ -527,7 +527,7 @@
 ## step 49 / goblin_fort_fourth 「ゴブリン砦・四階財宝庫」 HP 0/12 G 110
 
 
-終了: {"reason": "ゴブリン砦・四階財宝庫で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_fourth_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:12:16.347554+00:00", "epilogue": []}
+終了: {"reason": "ゴブリン砦・四階財宝庫で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_fourth_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:45:29.045184+00:00", "epilogue": []}
 > [GM] 運命の糸がほどけ、あなたは再びゴブリン砦の入口に立っていた。
 - ゴブリン砦の入口からやり直しました。
 
@@ -754,7 +754,7 @@
 ## step 74 / slime_king_battle 「精霊の泉・スライム王」 HP 0/18 G 225
 
 
-終了: {"reason": "精霊の泉・スライム王で力尽きた。冒険はここで終わりを迎える。", "ending": "slime_king_battle_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:12:19.913477+00:00", "epilogue": []}
+終了: {"reason": "精霊の泉・スライム王で力尽きた。冒険はここで終わりを迎える。", "ending": "slime_king_battle_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:45:51.028387+00:00", "epilogue": []}
 
 ## 検証結果
 

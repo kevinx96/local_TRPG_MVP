@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-18-v035",
+    "content_revision": "2026-10-18-v037-r2",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -11750,7 +11750,7 @@
               }
             },
             {
-              "equip_item": "墓守の外套"
+              "equip_item_if_empty": "墓守の外套"
             }
           ],
           "once": "found_gravekeeper_cloak",
@@ -15567,10 +15567,10 @@
       "id": "gravekeeper_cloak",
       "name": "墓守の外套",
       "category": "equipment",
-      "description": "崩れた階段の上に、古い衛兵の外套が残っていた。裏地には、死者を鎮める祈りの文句が縫い込まれている。",
+      "description": "死者を鎮める祈りの文句が縫い込まれた古い外套。被ダメージを1軽減し、古戦場の亡者からの被ダメージはさらに2軽減する。",
       "combat": {
         "kind": "armor",
-        "defense": 2,
+        "defense": 1,
         "conditional_defense": {
           "enemy_ids": [
             "skeleton_soldier",
@@ -15585,8 +15585,8 @@
             "ghoul_marsh",
             "grave_chapel"
           ],
-          "amount": 1,
-          "description": "霧の古戦場：被ダメージをさらに1軽減"
+          "amount": 2,
+          "description": "霧の古戦場：被ダメージをさらに2軽減"
         }
       },
       "slot": "armor",

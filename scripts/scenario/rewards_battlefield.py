@@ -179,9 +179,10 @@ def add_battlefield(pack: dict[str, Any]) -> None:
     ]
     cloak_text = "崩れた階段の上に、古い衛兵の外套が残っていた。裏地には、死者を鎮める祈りの文句が縫い込まれている。"
     upsert(pack["items"], dict(id="gravekeeper_cloak", name="墓守の外套", category="equipment",
-        description=cloak_text, combat={"kind": "armor", "defense": 2, "conditional_defense": {
-            "enemy_ids": list(UNDEAD), "location_ids": list(BATTLEFIELD), "amount": 1,
-            "description": "霧の古戦場：被ダメージをさらに1軽減"}}))
+        description="死者を鎮める祈りの文句が縫い込まれた古い外套。被ダメージを1軽減し、古戦場の亡者からの被ダメージはさらに2軽減する。",
+        combat={"kind": "armor", "defense": 1, "conditional_defense": {
+            "enemy_ids": list(UNDEAD), "location_ids": list(BATTLEFIELD), "amount": 2,
+            "description": "霧の古戦場：被ダメージをさらに2軽減"}}))
     tower["npc_ids"] = ["old_soldier_ghost"]
     upsert(pack["npcs"], dict(id="old_soldier_ghost", name="亡霊の兵士", description="半透明の若い兵士",
                              image="/static/images/npc_old_soldier_ghost.png"))
@@ -190,7 +191,7 @@ def add_battlefield(pack: dict[str, Any]) -> None:
                portrait_image="/static/images/npc_old_soldier_ghost.png",
                result_text="亡霊は顔を上げた。「……十年前、将軍ドラコの進言で、我らは竜の谷へ送られた。谷に着いた夜、白い霜が陣を覆い、気づけば皆ここで骨になっていた。紅竜の炎ではない。あれは、ひどく冷たかった」"),
         action("search_watchtower", "塔の上を調べる", [{"add_item": {"id": "gravekeeper_cloak", "name": "墓守の外套", "quantity": 1}},
-               {"equip_item": "墓守の外套"}], once="found_gravekeeper_cloak", result_text=cloak_text),
+               {"equip_item_if_empty": "墓守の外套"}], once="found_gravekeeper_cloak", result_text=cloak_text),
         action("rest_watchtower", "焚き火に火を入れて休む", [{"restore_full": True}], once="rested_watchtower",
                result_text="消えた焚き火に火を入れ、少しだけ休んだ。亡霊は黙って、その火を見つめていた。"),
         travel("tower_to_bones", "骨の野へ戻る", "bone_field"),

@@ -25,6 +25,7 @@ from . import metrics
 ROOT = Path(__file__).resolve().parents[2]
 CHARACTERS = ("hero", "cleric", "mage", "thief")
 SEEDS = (20261013, 20261014, 101, 102, 103, 104, 105, 106)
+ROUTE_SEEDS = (20261013, 20261014, 102, 101, 103, 104, 105, 106)
 FALLBACK_TEXTS = ("接続中のローカルLLMから応答を取得できませんでした", "運命の出目は",
                   "（GMとの通信が途切れたため、描写を省略した。結果は記録に反映されている。）")
 AREA_ORDER = {"capital": 0, "forest": 1, "goblin_fort": 1, "sealed_cave": 1, "burning_village": 2,
@@ -120,7 +121,7 @@ def battlefield_action(session: dict[str, Any]) -> Optional[str]:
 
 
 def preferred_route(seed: int) -> str:
-    return metrics.ROUTES[(SEEDS.index(seed) if seed in SEEDS else seed) % len(metrics.ROUTES)]
+    return metrics.ROUTES[(ROUTE_SEEDS.index(seed) if seed in ROUTE_SEEDS else seed) % len(metrics.ROUTES)]
 
 
 def chapter3_action(session: dict[str, Any], path: str) -> Optional[str]:
@@ -296,7 +297,7 @@ def write_report(results: list[dict[str, Any]], path: Path, transcript_dir: Path
              f"{len(results)}局，职业：{', '.join(dict.fromkeys(r['character'] for r in results))}；种子：{', '.join(str(s) for s in dict.fromkeys(r['seed'] for r in results))}；每局最多{max_steps}步。战斗每个指令和结算各占一步。",
              "首次战斗死亡后重来一次，选择次数及随机流继续累计。选项、判定和战斗的随机数均固定。",
              "首次死亡包含剧情导致的死亡结局；剧情必败但仍能继续的战斗不计死亡，冒険完了也不计死亡。",
-             "037：按种子列表顺序轮换村／古戦場／峡谷优先度；村优先种子如从洞窟先到城塞，则从古戦場入口返回森林出口走村。古戦場和峡谷保留现行城塞访问、招募与路线内策略，其余仍按选项使用次数、章节推进偏好及固定随机数选择。",
+             "037第二轮：路线轮换使用20261013、20261014、102、101、103、104、105、106的顺序，循环村／古戦場／峡谷；仅交换101与102的优先路线，让第一轮能到达第三章的魔法使い/102走峡谷。运行仍按原种子列表，子集映射固定。村优先种子如从洞窟先到城塞，则从古戦場入口返回森林出口走村。古戦場和峡谷保留现行城塞访问、招募与路线内策略，其余仍按选项使用次数、章节推进偏好及固定随机数选择。",
              "实际路线以village_approach／bone_field／gorge_entrance首次进入为准，old_battlefield仅作为城塞通道时不算走古戦場。重来分别记attempt，同行者记录路线入口和全程变化，不以最终同行者代替。",
              "线索flag从凱旋の間告发条件与既有mystery任务读取；曾取得与最终保留分别统计。选择重合率只取实际剧本选项的（地点ID、选项ID）集合，排除无判定、无一次性标记且效果只有移动/背景的纯移动；不含战斗指令。",
              "通关以剧本的冒険完了结局为准。Jaccard取所有通关局的无序两两组合，包含同一局重来前的经历；没有足够通关局时返回null。空集合对定义为1。",
@@ -322,6 +323,7 @@ def write_report(results: list[dict[str, Any]], path: Path, transcript_dir: Path
               "- 同一地点重来后再次死亡（仅作为循环候选，不能据此证明必死）：" +
               ", ".join(f"{r['character']}/{r['seed']} @ {r['final_location']}" for r in results if r["repeat_death_candidate"]),
               "", "不变量分类：" + json.dumps(summary["invariants"], ensure_ascii=False),
+              "", "各职业实际路线覆盖：" + json.dumps(summary["route_counts_by_character"], ensure_ascii=False),
               "", "## 通关局重合率", "", f"通关局{summary['completed']}局。", "",
               "|集合|配对数|均值|最小|最大|", "|---|---:|---:|---:|---:|"]
     for label, stats in summary["overlap"].items():

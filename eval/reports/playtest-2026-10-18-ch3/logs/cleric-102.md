@@ -635,86 +635,392 @@
 - 狼の縄張りへ戻る |  | 危険（戦闘）
 - 霧の古戦場を抜けて村の裏手へ向かう | 街道を外れ、古戦場を通る | 不明
 
-選択: 森を出て麓の村へ向かう
-> [プレイヤー] 森を出て麓の村へ向かう
-> [GM] 森を抜けて村へ近づくにつれ、空が赤く染まり、焦げた匂いが濃くなる。村はすでに一面の火海となっていた。
+選択: 霧の古戦場を抜けて村の裏手へ向かう
+> [プレイヤー] 霧の古戦場を抜けて村の裏手へ向かう
+> [GM] 森を抜けた先で、街道は白い霧に沈んでいた。草むらには錆びた剣と兜が転がり、折れた軍旗が風に鳴っている。どこか遠くで、弔いの鐘が一度だけ鳴った。
+- 現在地が霧の古戦場になりました。
+
+## step 56 / old_battlefield 「霧の古戦場」 HP 23/23 G 210
+
+- 骨の野へ進む |  | 不明
+- 森の出口へ戻る |  | 判定不要
+- 城塞の街道を北へ向かう |  | 不明
+
+選択: 城塞の街道を北へ向かう
+> [プレイヤー] 城塞の街道を北へ向かう
+> [GM] 石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。
+- 現在地が城塞の大通りになりました。
+
+## step 57 / oaksdawn_square 「城塞の大通り」 HP 23/23 G 210
+
+- 守護団本営へ向かう |  | 不明
+- 暁の礼拝堂へ向かう |  | 不明
+- 城塞工房へ向かう |  | 不明
+- 樫の葉亭へ向かう |  | 不明
+- 城壁の見張り台へ上る |  | 不明
+- 水門へ向かう |  | 不明
+
+選択: 守護団本営へ向かう
+> [プレイヤー] 守護団本営へ向かう
+> [GM] 地図と剣が並ぶ質素な広間。白髪の老騎士――守護団長ヴァルターが、卓上の地図から顔を上げた。
+- 現在地が守護団本営になりました。
+
+## step 58 / oaksdawn_hq 「守護団本営」 HP 23/23 G 210
+
+- 団長に挨拶する |  | 判定不要
+- 大通りへ戻る |  | 判定不要
+
+選択: 団長に挨拶する
+> [プレイヤー] 団長に挨拶する
+> [GM] 「この砦まで辿り着くとは、物好きな冒険者だ。わしはヴァルター、暁の守護団の団長をしておる。……邪竜を討ちに行くのか。ならば一つ忠告しておこう。竜の谷の炎が本当にあの紅竜だけのものか、よく確かめることだ」
+
+## step 59 / oaksdawn_hq 「守護団本営」 HP 23/23 G 210
+
+- 十年前の遠征について聞く |  | 判定不要
+- 大通りへ戻る |  | 判定不要
+- 東の峠を通りたいと頼む |  | 判定不要
+
+選択: 十年前の遠征について聞く
+> [プレイヤー] 十年前の遠征について聞く
+> [GM] 「十年前、将軍ドラコは竜の谷への出兵を命じた。我ら守護団は盟約を理由にそれを拒み、それ以来、王都からは見捨てられた砦よ。あの時に谷へ向かった兵は、一人も帰ってこなかった」
+
+## step 60 / oaksdawn_hq 「守護団本営」 HP 23/23 G 210
+
+- 推薦状を願い出る |  | 判定不要
+- 大通りへ戻る |  | 判定不要
+- 東の峠を通りたいと頼む |  | 判定不要
+
+選択: 推薦状を願い出る
+> [プレイヤー] 推薦状を願い出る
+> [GM] ヴァルターは羽根ペンを走らせ、封蝋を押した。「礼拝堂のリーゼに見せるといい。あの子は古戦場の鐘のことで、ずっと胸を痛めておる」
+- 守護団の推薦状 x1を入手しました。
+
+## step 61 / oaksdawn_hq 「守護団本営」 HP 23/23 G 210
+
+- 大通りへ戻る |  | 判定不要
+- 東の峠を通りたいと頼む |  | 判定不要
+
+選択: 東の峠を通りたいと頼む
+> [プレイヤー] 東の峠を通りたいと頼む
+> [GM] 「峠を越えるだと？ ……いいだろう、守護団員に岩をどけさせよう。だが峡谷には近ごろ、岩でできた獣が出るそうだ。気をつけて行け」
+
+## step 62 / oaksdawn_hq 「守護団本営」 HP 23/23 G 210
+
+- 大通りへ戻る |  | 判定不要
+
+選択: 大通りへ戻る
+> [プレイヤー] 大通りへ戻る
+> [GM] 石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。
+- 現在地が城塞の大通りになりました。
+
+## step 63 / oaksdawn_square 「城塞の大通り」 HP 23/23 G 210
+
+- 守護団本営へ向かう |  | 判定不要
+- 暁の礼拝堂へ向かう |  | 不明
+- 城塞工房へ向かう |  | 不明
+- 樫の葉亭へ向かう |  | 不明
+- 城壁の見張り台へ上る |  | 不明
+- 水門へ向かう |  | 不明
+
+選択: 暁の礼拝堂へ向かう
+> [プレイヤー] 暁の礼拝堂へ向かう
+> [GM] 高い窓から朝の光が差し込む礼拝堂。祭壇の前には、死者を弔う白い花が供えられている。
+- 現在地が暁の礼拝堂になりました。
+
+## step 64 / oaksdawn_chapel 「暁の礼拝堂」 HP 23/23 G 210
+
+- 祈りを捧げてもらう | 5G | 判定不要
+- 祈りを捧げる女騎士に話しかける |  | 判定不要
+- 聖水を分けてもらう |  | 判定不要
+- 大通りへ戻る |  | 判定不要
+
+選択: 祈りを捧げる女騎士に話しかける
+> [プレイヤー] 祈りを捧げる女騎士に話しかける
+> [GM] 「私はリーゼ。暁の守護団の聖騎士です。……南の古戦場から、夜ごと弔いの鐘が聞こえるのです。死者がまだ眠れずにいる。いつか、確かめに行かなければ」
+
+## step 65 / oaksdawn_chapel 「暁の礼拝堂」 HP 23/23 G 210
+
+- 祈りを捧げてもらう | 5G | 判定不要
+- 守護団の推薦状を見せる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要
+- 聖水を祭壇に捧げる | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 判定不要 [不可: 聖水所持が必要]
+- 共に死者を弔いたいと説く | 同行者にする（HPが半分を切ると回復、それ以外は光の一撃） | 1d20+wis判定（DC13）
+- 聖水を分けてもらう |  | 判定不要
+- 大通りへ戻る |  | 判定不要
+- 鐘のことを詳しく聞く |  | 判定不要
+
+選択: 守護団の推薦状を見せる
+> [プレイヤー] 守護団の推薦状を見せる
+> [GM] リーゼは推薦状の封蝋を確かめ、静かに頷いた。「団長がお認めになったのなら、私もこの剣を預けましょう」
+- 火コウモリ竜がパーティーから離脱しました。
+- 聖騎士リーゼがパーティーに加入しました。
+
+## step 66 / oaksdawn_chapel 「暁の礼拝堂」 HP 23/23 G 210
+
+- 祈りを捧げてもらう | 5G | 判定不要
+- 聖水を分けてもらう |  | 判定不要
+- 大通りへ戻る |  | 判定不要
+- 鐘のことを詳しく聞く |  | 判定不要
+
+選択: 大通りへ戻る
+> [プレイヤー] 大通りへ戻る
+> [GM] 石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。
+- 現在地が城塞の大通りになりました。
+
+## step 67 / oaksdawn_square 「城塞の大通り」 HP 23/23 G 210
+
+- 守護団本営へ向かう |  | 判定不要
+- 暁の礼拝堂へ向かう |  | 判定不要
+- 城塞工房へ向かう |  | 不明
+- 樫の葉亭へ向かう |  | 不明
+- 城壁の見張り台へ上る |  | 不明
+- 水門へ向かう |  | 不明
+
+選択: 城塞工房へ向かう
+> [プレイヤー] 城塞工房へ向かう
+> [GM] 炉の熱と槌の音が響く工房。分厚い前掛けの女鍛冶師が、白銀の剣に光の紋を刻んでいる。
+- 現在地が城塞工房になりました。
+
+## step 68 / oaksdawn_workshop 「城塞工房」 HP 23/23 G 210
+
+- 鍛冶師に話しかける |  | 判定不要
+- 店に入る |  | 判定不要
+- 大通りへ戻る |  | 判定不要
+
+選択: 鍛冶師に話しかける
+> [プレイヤー] 鍛冶師に話しかける
+> [GM] 「守護団の鎧なら、いくらでも打ってやるよ。光の紋を刻んだ武器は……材料が揃ったら、また来な」
+
+## step 69 / oaksdawn_workshop 「城塞工房」 HP 23/23 G 210
+
+- 店に入る |  | 判定不要
+- 大通りへ戻る |  | 判定不要
+- 何か困っていることは？ |  | 判定不要
+
+選択: 大通りへ戻る
+> [プレイヤー] 大通りへ戻る
+> [GM] 石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。
+- 現在地が城塞の大通りになりました。
+
+## step 70 / oaksdawn_square 「城塞の大通り」 HP 23/23 G 210
+
+- 守護団本営へ向かう |  | 判定不要
+- 暁の礼拝堂へ向かう |  | 判定不要
+- 城塞工房へ向かう |  | 判定不要
+- 樫の葉亭へ向かう |  | 不明
+- 城壁の見張り台へ上る |  | 不明
+- 水門へ向かう |  | 不明
+
+選択: 樫の葉亭へ向かう
+> [プレイヤー] 樫の葉亭へ向かう
+> [GM] 樫の梁がむき出しの酒場兼宿屋。非番の守護団員たちが、干し肉をかじりながら峠の噂話をしている。
+- 現在地が樫の葉亭になりました。
+
+## step 71 / oaksdawn_inn 「樫の葉亭」 HP 23/23 G 210
+
+- 宿で休む | 10G | 判定不要
+- 噂話を聞く |  | 判定不要
+- 大通りへ戻る |  | 判定不要
+- 青い外套の青年に話しかける |  | 判定不要
+
+選択: 青い外套の青年に話しかける
+> [プレイヤー] 青い外套の青年に話しかける
+> [GM] 「やあ。僕はエリオ、流れの水術士さ。東の峡谷の地鳴りを調べに来たんだけど、道が塞がれていてね。……君も峠を越えるつもりかい？」
+
+## step 72 / oaksdawn_inn 「樫の葉亭」 HP 23/23 G 210
+
+- 宿で休む | 10G | 判定不要
+- 噂話を聞く |  | 判定不要
+- 大通りへ戻る |  | 判定不要
+- 傭兵として雇う（50G） | 同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減） | 判定不要
+- 精霊の泉の水を渡す | 同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減） | 判定不要
+- 地鳴りの謎を一緒に調べようと誘う | 同行者にする（毎ラウンド水の刃、4ラウンドごとに被ダメージ半減） | 1d20+int判定（DC13）
+
+選択: 精霊の泉の水を渡す
+> [プレイヤー] 精霊の泉の水を渡す
+> [GM] エリオは水差しの水を光にかざし、目を輝かせた。「精霊の泉の水だ……！ こんなものをもらったら、断れないよ。一緒に行こう」
+- 聖騎士リーゼがパーティーから離脱しました。
+- 水術士エリオがパーティーに加入しました。
+- 精霊の泉の水 x1を失いました。
+
+## step 73 / oaksdawn_inn 「樫の葉亭」 HP 23/23 G 210
+
+- 宿で休む | 10G | 判定不要
+- 噂話を聞く |  | 判定不要
+- 大通りへ戻る |  | 判定不要
+
+選択: 噂話を聞く
+> [プレイヤー] 噂話を聞く
+> [GM] 「東の峠が、ひと晩で崩れた岩に塞がれちまった。その夜、白くてでかい影が谷の方へ飛んでいくのを見たって奴もいる」
+
+## step 74 / oaksdawn_inn 「樫の葉亭」 HP 23/23 G 210
+
+- 宿で休む | 10G | 判定不要
+- 大通りへ戻る |  | 判定不要
+
+選択: 大通りへ戻る
+> [プレイヤー] 大通りへ戻る
+> [GM] 石畳の大通りの両側に、樫の木を組んだ兵舎と工房が並ぶ。城壁の上では、白い外套の守護団員たちが東の峠を見張っていた。大通りの突き当たりには、昇る太陽を掲げた本営の旗がはためいている。
+- 現在地が城塞の大通りになりました。
+
+## step 75 / oaksdawn_square 「城塞の大通り」 HP 23/23 G 210
+
+- 守護団本営へ向かう |  | 判定不要
+- 暁の礼拝堂へ向かう |  | 判定不要
+- 城塞工房へ向かう |  | 判定不要
+- 樫の葉亭へ向かう |  | 判定不要
+- 城壁の見張り台へ上る |  | 不明
+- 水門へ向かう |  | 不明
+
+選択: 城壁の見張り台へ上る
+> [プレイヤー] 城壁の見張り台へ上る
+> [GM] 城壁の上からは、南に霧の古戦場、東に岩肌のむき出しになった峠が見渡せる。峠の道は、崩れ落ちた大岩でふさがれている。
+- 現在地が城壁の見張り台になりました。
+
+## step 76 / oaksdawn_wall 「城壁の見張り台」 HP 23/23 G 210
+
+- 城塞の街道を南へ下る |  | 判定不要
+- 大通りへ戻る |  | 判定不要
+- 東の峠へ向かう |  | 不明
+
+選択: 東の峠へ向かう
+> [プレイヤー] 東の峠へ向かう
+> [GM] 守護団員たちがどけた岩の間を抜け、東の峠へ踏み込んだ。
+- 現在地が峡谷の入口になりました。
+
+## step 77 / gorge_entrance 「峡谷の入口」 HP 23/23 G 210
+
+- 落石の道を進む |  | 不明
+- 城塞へ戻る |  | 判定不要
+
+選択: 落石の道を進む
+> [プレイヤー] 落石の道を進む
+> [GM] 崩れた岩が転がる細い道。岩陰から、砂利を固めたような甲虫が二匹、顎を鳴らして這い出してきた。
+- 現在地が落石の道になりました。
+
+## step 78 / gorge_rockfall_path 「落石の道」 HP 23/23 G 210
+
+- 甲虫と戦う |  | 危険（戦闘）
+- 岩陰を縫って抜ける |  | 1d20+dex判定（DC13）
+
+選択: 岩陰を縫って抜ける
+> [プレイヤー] 岩陰を縫って抜ける
+> [GM] 甲虫が砂利を噛んでいる隙に、岩陰を縫って道を抜けた。
+
+## step 79 / gorge_rockfall_path 「落石の道」 HP 23/23 G 210
+
+- 鉱夫の野営跡へ向かう |  | 不明
+- 白い爪痕の崖へ向かう |  | 不明
+- 峡谷の入口へ戻る |  | 判定不要
+
+選択: 鉱夫の野営跡へ向かう
+> [プレイヤー] 鉱夫の野営跡へ向かう
+> [GM] 崩れかけた天幕と、冷えた竈が残る野営跡。逃げ出した鉱夫たちの道具が、そのまま散らばっている。
+- 現在地が鉱夫の野営跡になりました。
+
+## step 80 / gorge_miner_camp 「鉱夫の野営跡」 HP 23/23 G 210
+
+- 竈に火を入れて休む |  | 判定不要
+- 鉱夫の荷物を調べる |  | 判定不要
+- 落石の道へ戻る |  | 危険（戦闘）
+
+選択: 鉱夫の荷物を調べる
+> [プレイヤー] 鉱夫の荷物を調べる
+> [GM] 散らばった荷物の中から、携帯食と一冊の日記が出てきた。最後の頁には、震える字でこう書かれている。「……昨夜、峠の上を白いものが飛んでいった。その直後に山が崩れた。あれは竜だ。白い竜だ」
+- 携帯食 x2を入手しました。
+
+## step 81 / gorge_miner_camp 「鉱夫の野営跡」 HP 23/23 G 210
+
+- 竈に火を入れて休む |  | 判定不要
+- 落石の道へ戻る |  | 危険（戦闘）
+
+選択: 竈に火を入れて休む
+> [プレイヤー] 竈に火を入れて休む
+> [GM] 竈に火を入れて、天幕の陰で短く眠った。地鳴りが、遠くで低く続いている。
+- HP・MP・SPが全回復しました。
+
+## step 82 / gorge_miner_camp 「鉱夫の野営跡」 HP 23/23 G 210
+
+- 落石の道へ戻る |  | 危険（戦闘）
+
+選択: 落石の道へ戻る
+> [プレイヤー] 落石の道へ戻る
+> [GM] 崩れた岩が転がる細い道。岩陰から、砂利を固めたような甲虫が二匹、顎を鳴らして這い出してきた。
+- 現在地が落石の道になりました。
+
+## step 83 / gorge_rockfall_path 「落石の道」 HP 23/23 G 210
+
+- 鉱夫の野営跡へ向かう |  | 判定不要
+- 白い爪痕の崖へ向かう |  | 不明
+- 峡谷の入口へ戻る |  | 判定不要
+
+選択: 白い爪痕の崖へ向かう
+> [プレイヤー] 白い爪痕の崖へ向かう
+> [GM] 峠をふさいでいた崩落の跡。巨大な岩の断面に、何かが引き裂いたような爪痕が三本、深く刻まれている。
+- 現在地が白い爪痕の崖になりました。
+
+## step 84 / gorge_claw_cliff 「白い爪痕の崖」 HP 23/23 G 210
+
+- 爪痕を調べる |  | 判定不要
+- 岩の巨人の通り道へ進む |  | 不明
+- 落石の道へ戻る |  | 危険（戦闘）
+
+選択: 爪痕を調べる
+> [プレイヤー] 爪痕を調べる
+> [GM] 爪痕の奥には、真夏でも溶けない白い霜がこびりついていた。この岩は、山崩れで落ちたのではない。何か巨大なものが、爪で引き裂いたのだ。
+
+## step 85 / gorge_claw_cliff 「白い爪痕の崖」 HP 23/23 G 210
+
+- 岩の巨人の通り道へ進む |  | 不明
+- 落石の道へ戻る |  | 危険（戦闘）
+
+選択: 岩の巨人の通り道へ進む
+> [プレイヤー] 岩の巨人の通り道へ進む
+> [GM] 峡谷が狭まる先で、苔むした岩山がゆっくりと立ち上がった。岩の巨人だ。足元では、石肌のトカゲが舌を鳴らしている。
+- 現在地が岩の巨人の通り道になりました。
+
+## step 86 / gorge_giant_path 「岩の巨人の通り道」 HP 23/23 G 210
+
+- 岩の巨人と戦う |  | 危険（戦闘）
+- 巨人の足元をくぐり抜ける |  | 1d20+dex判定（DC17）
+
+選択: 巨人の足元をくぐり抜ける
+> [プレイヤー] 巨人の足元をくぐり抜ける
+> [GM] 巨人が腕を振り上げた隙に、足の間を転がるようにくぐり抜けた。
+- 生命の果実 x1を入手しました。
+
+## step 87 / gorge_giant_path 「岩の巨人の通り道」 HP 23/23 G 210
+
+- 峡谷の底へ下りる |  | 不明
+- 白い爪痕の崖へ戻る |  | 判定不要
+
+選択: 峡谷の底へ下りる
+> [プレイヤー] 峡谷の底へ下りる
+> [GM] 峡谷の底は、無数の穴で蜂の巣のようになっていた。地鳴りがひときわ大きくなり、地面を突き破って巨大なワームが姿を現す。
+- 現在地が峡谷の底になりました。
+
+## step 88 / gorge_worm_lair 「峡谷の底」 HP 23/23 G 210
+
+- 大ワームと戦う |  | 危険（戦闘）
+- 地鳴りの合間を縫って駆け抜ける |  | 1d20+dex判定（DC17）
+- エリオの水で巣穴を満たす |  | 判定不要
+
+選択: エリオの水で巣穴を満たす
+> [プレイヤー] エリオの水で巣穴を満たす
+> [GM] エリオが杖を掲げると、峡谷の湧き水が渦を巻いて巣穴へ流れ込んだ。地中で何かが苦しげにのたうち、地鳴りが遠ざかっていく。「今のうちだ、行こう！」
+
+## step 89 / gorge_worm_lair 「峡谷の底」 HP 23/23 G 210
+
+- 峡谷を抜けて村へ下る |  | 不明
+- 岩の巨人の通り道へ進む |  | 危険（戦闘）
+
+選択: 峡谷を抜けて村へ下る
+> [プレイヤー] 峡谷を抜けて村へ下る
+> [GM] 峡谷を抜けると、眼下に麓の村が見えた。焼け跡の残る家々の外れ、避難所の裏手へと細い坂道が続いている。
 - レベルが4に上がりました。
-- 現在地が炎上する麓の村・入口になりました。
+- 現在地が麓の村・避難所になりました。
 - クエスト更新：紅き邪竜の討伐
 
-## step 56 / village_approach 「炎上する麓の村・入口」 HP 33/33 G 210
-
-- 慎重に村へ近づく | 炎と怪物の動きを見極めます | 1d20+int判定（DC15）
-- 炎の中へ踏み込む | 怪物を退けて村へ入ります | 不明
-
-選択: 慎重に村へ近づく
-> [プレイヤー] 慎重に村へ近づく
-> [GM] 炎の流れと怪物の配置を読み、比較的手薄な道を選んだ。しかし行く手には一匹のファイアスライムが待ち構えている。
->
-> 敵が退路を塞ぎ、戦闘が始まる。
-- 現在地が炎上する麓の村・ファイアスライム戦になりました。
-
-## step 57 / village_fire_slime 「炎上する麓の村・ファイアスライム戦」 HP 33/33 G 210
-
-
-戦闘: skill / cleric_lv3_a → fire_slime:1
-- 聖なる裁きはファイアスライムに当たらなかった。
-- 火の体当たりがテストに3ダメージ。
-- 火炎の羽ばたきがファイアスライムに0ダメージ。
-- 火コウモリ竜がHPを3回復した。
-
-## step 58 / village_fire_slime 「炎上する麓の村・ファイアスライム戦」 HP 33/33 G 210
-
-
-戦闘: skill / cleric_lv3_a → fire_slime:1
-- 聖なる裁きがファイアスライムに16光属性ダメージ。
-- 火の体当たりはテストに当たらなかった。
-- 火炎の羽ばたきがファイアスライムに0ダメージ。
-
-## step 59 / village_fire_slime 「炎上する麓の村・ファイアスライム戦」 HP 33/33 G 210
-
-
-戦闘: skill / cleric_lv3_a → fire_slime:1
-- 聖なる裁きがファイアスライムに12光属性ダメージ。
-- すべての敵を倒した。
-- 6ゴールドを獲得しました。
-- 治療の巻物 x2を入手しました。
-- 現在地が燃える民家の前になりました。
-- 崩れかけた民家の奥から、子どもの泣き声が聞こえる。入口は燃える梁で塞がれている。
-- クエスト更新：燃える家の子ども
-
-## step 60 / burning_house 「燃える民家の前」 HP 33/33 G 216
-
-> [GM] 炎の怪物を打ち倒すと、燃え盛る村の一角に不自然な氷が残っていることに気づいた。炎の中でも溶けず、冷気を放ち続けている。
-> 崩れかけた民家の奥から、子どもの泣き声が聞こえる。入口は燃える梁で塞がれている。
-- 戦闘に勝利しました。 HP 33/33、MP 11/20、SP 11/11。
-
-## step 61 / burning_house 「燃える民家の前」 HP 33/33 G 216
-
-- 燃える梁を叩き壊す |  | 1d20+str判定（DC13）
-- 裏手の窓からよじ登る |  | 1d20+dex判定（DC13）
-- 先を急ぐ |  | 不明
-
-選択: 先を急ぐ
-> [プレイヤー] 先を急ぐ
-> [GM] 泣き声を背に、燃える通りを駆け抜けた。
-- 現在地が炎の中の結氷になりました。
-- クエスト更新：燃える家の子ども
-
-## step 62 / village_frozen_clue 「炎の中の結氷」 HP 33/33 G 216
-
-- 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
-- 探索せず先へ進む | 村を出ようとします | 不明
-- 結氷の中心を調べる |  | 1d20+wis判定（DC12）
-- 長老に邪竜の弱点を聞く |  | 不明
-
-選択: 長老に邪竜の弱点を聞く
-> [プレイヤー] 長老に邪竜の弱点を聞く
-> [GM] 長老は焼け跡を見つめ、黙り込んでいる
-- 現在地が麓の村・避難所になりました。
-- 長老は焼け跡を見つめ、黙り込んでいる
-
-## step 63 / village 「麓の村・避難所」 HP 33/33 G 216
+## step 90 / village 「麓の村・避難所」 HP 33/33 G 210
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -722,7 +1028,7 @@
 - 店に入る | 麓の村の道具屋 | 判定不要
 - 竜の谷へ向かう | 第4章へ進みます | 不明
 - 城下町に戻る |  | 判定不要
-- 結氷した場所を探索する |  | 判定不要
+- 結氷した場所を探索する |  | 不明
 - 行商人ガルドの店に入る |  | 判定不要
 - 避難所で休ませてもらう（5G） |  | 判定不要
 
@@ -730,7 +1036,7 @@
 > [プレイヤー] 長老に邪竜の弱点を聞く
 > [GM] 白髭を蓄えた長老は、あなたの決意を聞くと静かに頷いた。「イグニスは炎を操るが、その身は冷気に弱い。谷の冷気を宿した『氷の護符』があれば、奴の守りを崩せるはずじゃ。道具屋の店主が持っておるよ」
 
-## step 64 / village 「麓の村・避難所」 HP 33/33 G 216
+## step 91 / village 「麓の村・避難所」 HP 33/33 G 210
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -738,7 +1044,23 @@
 - 店に入る | 麓の村の道具屋 | 判定不要
 - 竜の谷へ向かう | 第4章へ進みます | 不明
 - 城下町に戻る |  | 判定不要
-- 結氷した場所を探索する |  | 判定不要
+- 結氷した場所を探索する |  | 不明
+- 行商人ガルドの店に入る |  | 判定不要
+- 避難所で休ませてもらう（5G） |  | 判定不要
+
+選択: 古い盟約について聞く
+> [プレイヤー] 古い盟約について聞く
+> [GM] 「昔、元素と人と竜は互いを害さぬと誓い合った。北の雪嶺には、盟約を見張る白き竜がいると聞く」
+
+## step 92 / village 「麓の村・避難所」 HP 33/33 G 210
+
+- 長老と話す | 村の長老から古い話を聞く | 判定不要
+  - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
+  - 古い盟約について聞く |  | 判定不要
+- 店に入る | 麓の村の道具屋 | 判定不要
+- 竜の谷へ向かう | 第4章へ進みます | 不明
+- 城下町に戻る |  | 判定不要
+- 結氷した場所を探索する |  | 不明
 - 行商人ガルドの店に入る |  | 判定不要
 - 避難所で休ませてもらう（5G） |  | 判定不要
 
@@ -748,7 +1070,7 @@
 - HP・MP・SPが全回復しました。
 - 5ゴールドを消費しました。
 
-## step 65 / village 「麓の村・避難所」 HP 33/33 G 211
+## step 93 / village 「麓の村・避難所」 HP 33/33 G 205
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -756,23 +1078,7 @@
 - 店に入る | 麓の村の道具屋 | 判定不要
 - 竜の谷へ向かう | 第4章へ進みます | 不明
 - 城下町に戻る |  | 判定不要
-- 結氷した場所を探索する |  | 判定不要
-- 行商人ガルドの店に入る |  | 判定不要
-- 避難所で休ませてもらう（5G） |  | 判定不要
-
-選択: 古い盟約について聞く
-> [プレイヤー] 古い盟約について聞く
-> [GM] 「昔、元素と人と竜は互いを害さぬと誓い合った。北の雪嶺には、盟約を見張る白き竜がいると聞く」
-
-## step 66 / village 「麓の村・避難所」 HP 33/33 G 211
-
-- 長老と話す | 村の長老から古い話を聞く | 判定不要
-  - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
-  - 古い盟約について聞く |  | 判定不要
-- 店に入る | 麓の村の道具屋 | 判定不要
-- 竜の谷へ向かう | 第4章へ進みます | 不明
-- 城下町に戻る |  | 判定不要
-- 結氷した場所を探索する |  | 判定不要
+- 結氷した場所を探索する |  | 不明
 - 行商人ガルドの店に入る |  | 判定不要
 - 避難所で休ませてもらう（5G） |  | 判定不要
 
@@ -781,7 +1087,7 @@
 > [GM] 村を発ち、来た道を引き返す。森を抜けて城門をくぐると、見慣れた城下町の大通りが広がっていた。
 - 現在地がアルテリア城下町になりました。
 
-## step 67 / castle_town 「アルテリア城下町」 HP 33/33 G 211
+## step 94 / castle_town 「アルテリア城下町」 HP 33/33 G 205
 
 - 鍛冶屋へ向かう | 武器の強化や購入 | 判定不要
 - 宿屋へ向かう | 休息や情報収集 | 判定不要
@@ -794,14 +1100,86 @@
 - 麓の村へ向かう |  | 判定不要
 - 闇の森の出口へ向かう |  | 判定不要
 
-選択: 麓の村へ向かう
-> [プレイヤー] 麓の村へ向かう
-> [GM] 城門を出て街道を下り、闇の森を抜けると、焼け跡の残る麓の村が見えてきた。
-> 長老は焼け跡を見つめ、黙り込んでいる
+選択: 闇の森の出口へ向かう
+> [プレイヤー] 闇の森の出口へ向かう
+- 現在地が闇の森・出口になりました。
+
+## step 95 / forest_exit 「闇の森・出口」 HP 33/33 G 205
+
+- 森を出て麓の村へ向かう |  | 不明
+- 城下町へ戻る |  | 判定不要
+- 狼の縄張りへ戻る |  | 危険（戦闘）
+- 霧の古戦場を抜けて村の裏手へ向かう | 街道を外れ、古戦場を通る | 判定不要
+
+選択: 森を出て麓の村へ向かう
+> [プレイヤー] 森を出て麓の村へ向かう
+> [GM] 森を抜けて村へ近づくにつれ、空が赤く染まり、焦げた匂いが濃くなる。村はすでに一面の火海となっていた。
+- 現在地が炎上する麓の村・入口になりました。
+
+## step 96 / village_approach 「炎上する麓の村・入口」 HP 33/33 G 205
+
+- 慎重に村へ近づく | 炎と怪物の動きを見極めます | 1d20+int判定（DC15）
+- 炎の中へ踏み込む | 怪物を退けて村へ入ります | 不明
+
+選択: 炎の中へ踏み込む
+> [プレイヤー] 炎の中へ踏み込む
+> [GM] 炎の中へ踏み込むと、火の精霊が燃える腕を広げて立ちはだかった。
+- 現在地が炎上する麓の村・火の精霊戦になりました。
+
+## step 97 / village_fire_elemental 「炎上する麓の村・火の精霊戦」 HP 33/33 G 205
+
+
+戦闘: skill / cleric_lv3_a → fire_elemental:1
+- 聖なる裁きは火の精霊に当たらなかった。
+- 火炎の腕がテストに14ダメージ。
+- 水刃が火の精霊に8ダメージ。
+
+## step 98 / village_fire_elemental 「炎上する麓の村・火の精霊戦」 HP 19/33 G 205
+
+
+戦闘: skill / cleric_lv3_a → fire_elemental:1
+- 聖なる裁きが火の精霊に13光属性ダメージ。
+- 火炎の腕がテストに8ダメージ。
+- 水刃が火の精霊に9ダメージ。
+- すべての敵を倒した。
+- 22ゴールドを獲得しました。
+- 魔力の果実 x1を入手しました。
+- 現在地が燃える民家の前になりました。
+- 崩れかけた民家の奥から、子どもの泣き声が聞こえる。入口は燃える梁で塞がれている。
+- クエスト更新：燃える家の子ども
+
+## step 99 / burning_house 「燃える民家の前」 HP 11/33 G 227
+
+> [GM] 炎の怪物を打ち倒すと、燃え盛る村の一角に不自然な氷が残っていることに気づいた。炎の中でも溶けず、冷気を放ち続けている。
+> 崩れかけた民家の奥から、子どもの泣き声が聞こえる。入口は燃える梁で塞がれている。
+- 戦闘に勝利しました。 HP 11/33、MP 14/20、SP 11/11。
+
+## step 100 / burning_house 「燃える民家の前」 HP 11/33 G 227
+
+- 燃える梁を叩き壊す |  | 1d20+str判定（DC13）
+- 裏手の窓からよじ登る |  | 1d20+dex判定（DC13）
+- 先を急ぐ |  | 不明
+
+選択: 先を急ぐ
+> [プレイヤー] 先を急ぐ
+> [GM] 泣き声を背に、燃える通りを駆け抜けた。
+- 現在地が炎の中の結氷になりました。
+- クエスト更新：燃える家の子ども
+
+## step 101 / village_frozen_clue 「炎の中の結氷」 HP 11/33 G 227
+
+- 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
+- 探索せず先へ進む | 村を出ようとします | 不明
+- 結氷の中心を調べる |  | 1d20+wis判定（DC12）
+- 長老に邪竜の弱点を聞く |  | 判定不要
+
+選択: 長老に邪竜の弱点を聞く
+> [プレイヤー] 長老に邪竜の弱点を聞く
+> [GM] 長老は焼け跡を見つめ、黙り込んでいる
 - 現在地が麓の村・避難所になりました。
 - 長老は焼け跡を見つめ、黙り込んでいる
 
-## step 68 / village 「麓の村・避難所」 HP 33/33 G 211
+## step 102 / village 「麓の村・避難所」 HP 11/33 G 227
 
 - 長老と話す | 村の長老から古い話を聞く | 判定不要
   - 長老に邪竜の弱点を聞く | 冷気の弱点について情報を得ます | 判定不要
@@ -818,23 +1196,11 @@
 > [GM] 邪竜イグニスが潜む谷の麓、小さな村にたどり着いた。冷たい風が吹き抜ける中、村人たちは怯えた様子で暮らしている。邪竜に立ち向かう術を得るには、まず情報を集め、旅の支度を整える必要がありそうだ。
 - 現在地が炎の中の結氷になりました。
 
-## step 69 / village_frozen_clue 「炎の中の結氷」 HP 33/33 G 211
+## step 103 / village_frozen_clue 「炎の中の結氷」 HP 11/33 G 227
 
 - 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
 - 探索せず先へ進む | 村を出ようとします | 不明
 - 結氷の中心を調べる |  | 1d20+wis判定（DC12）
-- 長老に邪竜の弱点を聞く |  | 判定不要
-
-選択: 結氷の中心を調べる
-> [プレイヤー] 結氷の中心を調べる
-> [GM] 凍った炎の中心に、白い鱗が一枚埋まっていた。冷気はそこから広がっている。
-- 白い竜鱗 x1を入手しました。
-
-## step 70 / village_frozen_clue 「炎の中の結氷」 HP 33/33 G 211
-
-- 結氷した場所を探索する | 炎の中に残る冷気を追います | 不明
-- 探索せず先へ進む | 村を出ようとします | 不明
-- 結氷の中心を調べる |  | 1d20+wis判定（DC12） [不可: 完了済みです。]
 - 長老に邪竜の弱点を聞く |  | 判定不要
 
 選択: 探索せず先へ進む
@@ -842,53 +1208,33 @@
 > [GM] 村を離れようとした街道で、赤い法衣と炎に包まれた骸骨の魔法使いが待ち受けていた。
 - 現在地が燃える街道・Xanxusの尋問になりました。
 
-## step 71 / xanxus_confrontation 「燃える街道・Xanxusの尋問」 HP 33/33 G 211
+## step 104 / xanxus_confrontation 「燃える街道・Xanxusの尋問」 HP 11/33 G 227
 
 - ごまかして切り抜ける | 何も察知していないふりをします | 危険
 - 先手を打って攻撃する | Xanxusが動く前に仕掛けます | 危険
 - もう一度逃走を試みる | 全力でその場を離れます | 危険
 
-選択: 先手を打って攻撃する
-> [プレイヤー] 先手を打って攻撃する
-> [GM] 攻撃を放つより早く、Xanxusの炎が武器ごと身体を弾き返した。『先手を取ったつもりか？』着地点を炎の輪が囲み、Xanxusは陨石を呼ぶように片手を天へ掲げる。
+選択: もう一度逃走を試みる
+> [プレイヤー] もう一度逃走を試みる
+> [GM] 一歩踏み出した瞬間、炎の壁が行く手を封じた。背後にも火柱が立ち、逃げ場は完全に消える。Xanxusは指先をこちらへ向け、『ならば力ずくで進ませよう』と戦いを強いる。
 - 現在地がXanxus戦になりました。
 
-## step 72 / xanxus_battle 「Xanxus戦」 HP 33/33 G 211
-
-
-戦闘: skill / holy_guard → xanxus:1
-- 聖なる守護を使用し、守りを固めた。
-- 赤炎骸骨Xanxusは火炎旋渦を展開した。
-- 火炎旋渦が12ダメージを与えた。
-- 火炎の羽ばたきが赤炎骸骨Xanxusに0ダメージ。
-- 火コウモリ竜がHPを3回復した。
-
-## step 73 / xanxus_battle 「Xanxus戦」 HP 24/33 G 211
-
-
-戦闘: skill / holy_guard → xanxus:1
-- 聖なる守護を使用し、守りを固めた。
-- 隕石召喚がテストに23ダメージ。
-- 火炎旋渦が12ダメージを与えた。
-- 火炎の羽ばたきが赤炎骸骨Xanxusに0ダメージ。
-- 火コウモリ竜がHPを3回復した。
-
-## step 74 / xanxus_battle 「Xanxus戦」 HP 3/33 G 211
+## step 105 / xanxus_battle 「Xanxus戦」 HP 11/33 G 227
 
 
 戦闘: item / healing_scroll → xanxus:1
-- 治療の巻物を使い、HPを30回復した。
+- 治療の巻物を使い、HPを22回復した。
 - 隕石召喚がテストに50ダメージ。
 - プレイヤーは戦闘不能になった。
 - HPが1回復しました。
 - 現在地がXanxusの最後通告になりました。
 
-## step 75 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/33 G 211
+## step 106 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/33 G 227
 
 > [GM] Xanxusは倒れたあなたを見下ろした。『大人しく先を探索しろ。そして私の火種を飲め。任務を放棄すれば、その場で爆ぜさせる』
-- 戦闘に敗北しました。 HP 1/33、MP 8/20、SP 11/11。
+- 戦闘に敗北しました。 HP 1/33、MP 14/20、SP 11/11。
 
-## step 76 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/33 G 211
+## step 107 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/33 G 227
 
 - 大人しく従う | 火種を受け取り、探索を続けます | 判定不要
 - 死んでも従わない | Xanxusの要求を拒絶します | 判定不要
@@ -898,10 +1244,10 @@
 > [GM] Xanxusの要求を拒み、その炎に焼き尽くされました。
 - Xanxusの要求を拒み、その炎に焼き尽くされました。
 
-## step 77 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/33 G 211
+## step 108 / xanxus_ultimatum 「Xanxusの最後通告」 HP 1/33 G 227
 
 
-終了: {"reason": "Xanxusの要求を拒み、その炎に焼き尽くされました。", "ending": "defied_xanxus", "created_at": "2026-10-18T06:11:28.023696+00:00", "epilogue": []}
+終了: {"reason": "Xanxusの要求を拒み、その炎に焼き尽くされました。", "ending": "defied_xanxus", "created_at": "2026-10-18T06:42:29.398066+00:00", "epilogue": []}
 
 ## 検証結果
 
@@ -909,12 +1255,12 @@
 {
   "character": "cleric",
   "seed": 102,
-  "steps": 77,
+  "steps": 108,
   "retry_count": 0,
   "ending": "defied_xanxus",
   "final_location": "xanxus_ultimatum",
   "first_death": {
-    "step": 77,
+    "step": 108,
     "location": "xanxus_ultimatum",
     "ending": "defied_xanxus",
     "combat_defeat": false,
@@ -925,7 +1271,7 @@
   },
   "deaths": [
     {
-      "step": 77,
+      "step": 108,
       "location": "xanxus_ultimatum",
       "ending": "defied_xanxus",
       "combat_defeat": false,
@@ -954,11 +1300,24 @@
     "cave_heat_corridor",
     "forest_wolves",
     "forest_exit",
+    "old_battlefield",
+    "oaksdawn_square",
+    "oaksdawn_hq",
+    "oaksdawn_chapel",
+    "oaksdawn_workshop",
+    "oaksdawn_inn",
+    "oaksdawn_wall",
+    "gorge_entrance",
+    "gorge_rockfall_path",
+    "gorge_miner_camp",
+    "gorge_claw_cliff",
+    "gorge_giant_path",
+    "gorge_worm_lair",
+    "village",
     "village_approach",
-    "village_fire_slime",
+    "village_fire_elemental",
     "burning_house",
     "village_frozen_clue",
-    "village",
     "xanxus_confrontation",
     "xanxus_battle",
     "xanxus_ultimatum"
@@ -966,16 +1325,23 @@
   "retry_visited_locations": [],
   "failures": [],
   "completed": false,
-  "preferred_chapter3_route": "village",
+  "preferred_chapter3_route": "gorge",
   "chapter3_routes": [
+    "gorge",
     "village"
   ],
   "route_entries": [
     {
-      "route": "village",
-      "step": 56,
+      "route": "gorge",
+      "step": 77,
       "attempt": 0,
-      "companion": "fire_bat_dragon"
+      "companion": "hydromancer_elio"
+    },
+    {
+      "route": "village",
+      "step": 96,
+      "attempt": 0,
+      "companion": "hydromancer_elio"
     }
   ],
   "companion_history": [
@@ -990,16 +1356,34 @@
       "attempt": 0,
       "location": "item_shop",
       "companion": "fire_bat_dragon"
+    },
+    {
+      "step": 66,
+      "attempt": 0,
+      "location": "oaksdawn_chapel",
+      "companion": "paladin_liese"
+    },
+    {
+      "step": 73,
+      "attempt": 0,
+      "location": "oaksdawn_inn",
+      "companion": "hydromancer_elio"
     }
   ],
-  "final_companion": "fire_bat_dragon",
+  "final_companion": "hydromancer_elio",
   "clue_flags": [
-    "frost_trace_seen",
-    "heard_treaty_lore"
+    "heard_guardian_refusal",
+    "heard_pass_rumor",
+    "heard_treaty_lore",
+    "read_miner_diary",
+    "saw_white_claw"
   ],
   "final_clue_flags": [
-    "frost_trace_seen",
-    "heard_treaty_lore"
+    "heard_guardian_refusal",
+    "heard_pass_rumor",
+    "heard_treaty_lore",
+    "read_miner_diary",
+    "saw_white_claw"
   ],
   "scenario_choices": [
     {
@@ -1302,36 +1686,284 @@
       "step": 55,
       "attempt": 0,
       "location": "forest_exit",
-      "action_id": "leave_forest_for_village",
-      "text": "森を出て麓の村へ向かう",
-      "pure_movement": false
+      "action_id": "enter_old_battlefield",
+      "text": "霧の古戦場を抜けて村の裏手へ向かう",
+      "pure_movement": true
     },
     {
       "step": 56,
       "attempt": 0,
-      "location": "village_approach",
-      "action_id": "approach_burning_village_carefully",
-      "text": "慎重に村へ近づく",
+      "location": "old_battlefield",
+      "action_id": "battlefield_to_oaksdawn",
+      "text": "城塞の街道を北へ向かう",
+      "pure_movement": true
+    },
+    {
+      "step": 57,
+      "attempt": 0,
+      "location": "oaksdawn_square",
+      "action_id": "square_to_hq",
+      "text": "守護団本営へ向かう",
+      "pure_movement": true
+    },
+    {
+      "step": 58,
+      "attempt": 0,
+      "location": "oaksdawn_hq",
+      "action_id": "greet_walter",
+      "text": "団長に挨拶する",
+      "pure_movement": false
+    },
+    {
+      "step": 59,
+      "attempt": 0,
+      "location": "oaksdawn_hq",
+      "action_id": "ask_guardian_refusal",
+      "text": "十年前の遠征について聞く",
+      "pure_movement": false
+    },
+    {
+      "step": 60,
+      "attempt": 0,
+      "location": "oaksdawn_hq",
+      "action_id": "request_guardian_letter",
+      "text": "推薦状を願い出る",
       "pure_movement": false
     },
     {
       "step": 61,
       "attempt": 0,
-      "location": "burning_house",
-      "action_id": "leave_burning_house",
-      "text": "先を急ぐ",
+      "location": "oaksdawn_hq",
+      "action_id": "open_gorge_path",
+      "text": "東の峠を通りたいと頼む",
       "pure_movement": false
     },
     {
       "step": 62,
       "attempt": 0,
-      "location": "village_frozen_clue",
-      "action_id": "visit_village",
-      "text": "長老に邪竜の弱点を聞く",
-      "pure_movement": false
+      "location": "oaksdawn_hq",
+      "action_id": "hq_to_square",
+      "text": "大通りへ戻る",
+      "pure_movement": true
     },
     {
       "step": 63,
+      "attempt": 0,
+      "location": "oaksdawn_square",
+      "action_id": "square_to_chapel",
+      "text": "暁の礼拝堂へ向かう",
+      "pure_movement": true
+    },
+    {
+      "step": 64,
+      "attempt": 0,
+      "location": "oaksdawn_chapel",
+      "action_id": "talk_liese",
+      "text": "祈りを捧げる女騎士に話しかける",
+      "pure_movement": false
+    },
+    {
+      "step": 65,
+      "attempt": 0,
+      "location": "oaksdawn_chapel",
+      "action_id": "recruit_liese_letter",
+      "text": "守護団の推薦状を見せる",
+      "pure_movement": false
+    },
+    {
+      "step": 66,
+      "attempt": 0,
+      "location": "oaksdawn_chapel",
+      "action_id": "chapel_to_square",
+      "text": "大通りへ戻る",
+      "pure_movement": true
+    },
+    {
+      "step": 67,
+      "attempt": 0,
+      "location": "oaksdawn_square",
+      "action_id": "square_to_workshop",
+      "text": "城塞工房へ向かう",
+      "pure_movement": true
+    },
+    {
+      "step": 68,
+      "attempt": 0,
+      "location": "oaksdawn_workshop",
+      "action_id": "talk_brigitte",
+      "text": "鍛冶師に話しかける",
+      "pure_movement": false
+    },
+    {
+      "step": 69,
+      "attempt": 0,
+      "location": "oaksdawn_workshop",
+      "action_id": "workshop_to_square",
+      "text": "大通りへ戻る",
+      "pure_movement": true
+    },
+    {
+      "step": 70,
+      "attempt": 0,
+      "location": "oaksdawn_square",
+      "action_id": "square_to_inn",
+      "text": "樫の葉亭へ向かう",
+      "pure_movement": true
+    },
+    {
+      "step": 71,
+      "attempt": 0,
+      "location": "oaksdawn_inn",
+      "action_id": "talk_elio",
+      "text": "青い外套の青年に話しかける",
+      "pure_movement": false
+    },
+    {
+      "step": 72,
+      "attempt": 0,
+      "location": "oaksdawn_inn",
+      "action_id": "recruit_elio_water",
+      "text": "精霊の泉の水を渡す",
+      "pure_movement": false
+    },
+    {
+      "step": 73,
+      "attempt": 0,
+      "location": "oaksdawn_inn",
+      "action_id": "ask_oaksdawn_rumor",
+      "text": "噂話を聞く",
+      "pure_movement": false
+    },
+    {
+      "step": 74,
+      "attempt": 0,
+      "location": "oaksdawn_inn",
+      "action_id": "inn_to_square",
+      "text": "大通りへ戻る",
+      "pure_movement": true
+    },
+    {
+      "step": 75,
+      "attempt": 0,
+      "location": "oaksdawn_square",
+      "action_id": "square_to_wall",
+      "text": "城壁の見張り台へ上る",
+      "pure_movement": true
+    },
+    {
+      "step": 76,
+      "attempt": 0,
+      "location": "oaksdawn_wall",
+      "action_id": "oaksdawn_east_pass_open",
+      "text": "東の峠へ向かう",
+      "pure_movement": true
+    },
+    {
+      "step": 77,
+      "attempt": 0,
+      "location": "gorge_entrance",
+      "action_id": "gorge_to_rockfall",
+      "text": "落石の道を進む",
+      "pure_movement": true
+    },
+    {
+      "step": 78,
+      "attempt": 0,
+      "location": "gorge_rockfall_path",
+      "action_id": "sneak_gorge_rockfall_path",
+      "text": "岩陰を縫って抜ける",
+      "pure_movement": false
+    },
+    {
+      "step": 79,
+      "attempt": 0,
+      "location": "gorge_rockfall_path",
+      "action_id": "rockfall_to_camp",
+      "text": "鉱夫の野営跡へ向かう",
+      "pure_movement": true
+    },
+    {
+      "step": 80,
+      "attempt": 0,
+      "location": "gorge_miner_camp",
+      "action_id": "search_miner_camp",
+      "text": "鉱夫の荷物を調べる",
+      "pure_movement": false
+    },
+    {
+      "step": 81,
+      "attempt": 0,
+      "location": "gorge_miner_camp",
+      "action_id": "rest_miner_camp",
+      "text": "竈に火を入れて休む",
+      "pure_movement": false
+    },
+    {
+      "step": 82,
+      "attempt": 0,
+      "location": "gorge_miner_camp",
+      "action_id": "camp_to_rockfall",
+      "text": "落石の道へ戻る",
+      "pure_movement": true
+    },
+    {
+      "step": 83,
+      "attempt": 0,
+      "location": "gorge_rockfall_path",
+      "action_id": "rockfall_to_cliff",
+      "text": "白い爪痕の崖へ向かう",
+      "pure_movement": true
+    },
+    {
+      "step": 84,
+      "attempt": 0,
+      "location": "gorge_claw_cliff",
+      "action_id": "inspect_white_claw",
+      "text": "爪痕を調べる",
+      "pure_movement": false
+    },
+    {
+      "step": 85,
+      "attempt": 0,
+      "location": "gorge_claw_cliff",
+      "action_id": "cliff_to_giant",
+      "text": "岩の巨人の通り道へ進む",
+      "pure_movement": true
+    },
+    {
+      "step": 86,
+      "attempt": 0,
+      "location": "gorge_giant_path",
+      "action_id": "sneak_gorge_giant_path",
+      "text": "巨人の足元をくぐり抜ける",
+      "pure_movement": false
+    },
+    {
+      "step": 87,
+      "attempt": 0,
+      "location": "gorge_giant_path",
+      "action_id": "giant_to_worm",
+      "text": "峡谷の底へ下りる",
+      "pure_movement": true
+    },
+    {
+      "step": 88,
+      "attempt": 0,
+      "location": "gorge_worm_lair",
+      "action_id": "elio_flood_worm",
+      "text": "エリオの水で巣穴を満たす",
+      "pure_movement": false
+    },
+    {
+      "step": 89,
+      "attempt": 0,
+      "location": "gorge_worm_lair",
+      "action_id": "gorge_to_village",
+      "text": "峡谷を抜けて村へ下る",
+      "pure_movement": false
+    },
+    {
+      "step": 90,
       "attempt": 0,
       "location": "village",
       "action_id": "ask_elder_weakness",
@@ -1339,15 +1971,7 @@
       "pure_movement": false
     },
     {
-      "step": 64,
-      "attempt": 0,
-      "location": "village",
-      "action_id": "rest_at_refuge",
-      "text": "避難所で休ませてもらう（5G）",
-      "pure_movement": false
-    },
-    {
-      "step": 65,
+      "step": 91,
       "attempt": 0,
       "location": "village",
       "action_id": "ask_elder_treaty",
@@ -1355,7 +1979,15 @@
       "pure_movement": false
     },
     {
-      "step": 66,
+      "step": 92,
+      "attempt": 0,
+      "location": "village",
+      "action_id": "rest_at_refuge",
+      "text": "避難所で休ませてもらう（5G）",
+      "pure_movement": false
+    },
+    {
+      "step": 93,
       "attempt": 0,
       "location": "village",
       "action_id": "return_castle_from_village",
@@ -1363,15 +1995,47 @@
       "pure_movement": false
     },
     {
-      "step": 67,
+      "step": 94,
       "attempt": 0,
       "location": "castle_town",
-      "action_id": "return_village",
-      "text": "麓の村へ向かう",
+      "action_id": "return_forest_exit",
+      "text": "闇の森の出口へ向かう",
+      "pure_movement": true
+    },
+    {
+      "step": 95,
+      "attempt": 0,
+      "location": "forest_exit",
+      "action_id": "leave_forest_for_village",
+      "text": "森を出て麓の村へ向かう",
       "pure_movement": false
     },
     {
-      "step": 68,
+      "step": 96,
+      "attempt": 0,
+      "location": "village_approach",
+      "action_id": "enter_burning_village_directly",
+      "text": "炎の中へ踏み込む",
+      "pure_movement": false
+    },
+    {
+      "step": 100,
+      "attempt": 0,
+      "location": "burning_house",
+      "action_id": "leave_burning_house",
+      "text": "先を急ぐ",
+      "pure_movement": false
+    },
+    {
+      "step": 101,
+      "attempt": 0,
+      "location": "village_frozen_clue",
+      "action_id": "visit_village",
+      "text": "長老に邪竜の弱点を聞く",
+      "pure_movement": false
+    },
+    {
+      "step": 102,
       "attempt": 0,
       "location": "village",
       "action_id": "return_frozen_clue",
@@ -1379,15 +2043,7 @@
       "pure_movement": true
     },
     {
-      "step": 69,
-      "attempt": 0,
-      "location": "village_frozen_clue",
-      "action_id": "inspect_frost_core",
-      "text": "結氷の中心を調べる",
-      "pure_movement": false
-    },
-    {
-      "step": 70,
+      "step": 103,
       "attempt": 0,
       "location": "village_frozen_clue",
       "action_id": "skip_frozen_clue_before_xanxus",
@@ -1395,15 +2051,15 @@
       "pure_movement": true
     },
     {
-      "step": 71,
+      "step": 104,
       "attempt": 0,
       "location": "xanxus_confrontation",
-      "action_id": "ambush_xanxus",
-      "text": "先手を打って攻撃する",
+      "action_id": "flee_from_xanxus",
+      "text": "もう一度逃走を試みる",
       "pure_movement": false
     },
     {
-      "step": 76,
+      "step": 107,
       "attempt": 0,
       "location": "xanxus_ultimatum",
       "action_id": "refuse_xanxus_without_rescue",
@@ -1417,7 +2073,7 @@
     "fallback_narrations": 0
   },
   "battlefield_completed": false,
-  "gorge_completed": false,
+  "gorge_completed": true,
   "repeat_death_candidate": false
 }
 ```

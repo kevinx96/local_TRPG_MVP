@@ -67,6 +67,9 @@ def summarize(results: list[dict[str, Any]], pack: dict[str, Any]) -> dict[str, 
         first_deaths=dict(Counter(r["first_death"]["location"] for r in results if r["first_death"])),
         retries=dict(Counter(str(r["retry_count"]) for r in results)),
         route_counts={path: sum(path in r["chapter3_routes"] for r in results) for path in ROUTES},
+        route_counts_by_character={character: {
+            path: sum(path in r["chapter3_routes"] for r in results if r["character"] == character) for path in ROUTES}
+            for character in dict.fromkeys(r["character"] for r in results)},
         clue_counts={flag: sum(flag in r["clue_flags"] for r in results) for flag in clue_flags(pack)},
         final_clue_counts={flag: sum(flag in r["final_clue_flags"] for r in results) for flag in clue_flags(pack)},
         never_visited=[dict(id=loc["id"], title=loc["title"]) for loc in pack["locations"] if loc["id"] not in visited],

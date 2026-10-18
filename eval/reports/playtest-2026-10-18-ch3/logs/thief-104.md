@@ -477,7 +477,7 @@
 ## step 43 / goblin_fort_second_left 「ゴブリン砦・二階左」 HP 0/14 G 90
 
 
-終了: {"reason": "ゴブリン砦・二階左で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_second_left_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:12:40.924685+00:00", "epilogue": []}
+終了: {"reason": "ゴブリン砦・二階左で力尽きた。冒険はここで終わりを迎える。", "ending": "goblin_fort_second_left_defeat", "combat_defeat": true, "created_at": "2026-10-18T06:48:16.234366+00:00", "epilogue": []}
 > [GM] 運命の糸がほどけ、あなたは再びゴブリン砦の入口に立っていた。
 - ゴブリン砦の入口からやり直しました。
 
@@ -1493,7 +1493,7 @@
 ## step 137 / draco_battle 「王の間・剣聖ドラコ」 HP 0/30 G 270
 
 
-終了: {"ending": "draco_victory", "reason": "王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。", "combat_defeat": true, "created_at": "2026-10-18T06:12:53.465571+00:00", "epilogue": []}
+終了: {"ending": "draco_victory", "reason": "王の間は永遠の冬に閉ざされた。白竜ヴァイスは王冠を手に取り、新しい時代の始まりを告げた。", "combat_defeat": true, "created_at": "2026-10-18T06:49:35.523148+00:00", "epilogue": []}
 
 ## 検証結果
 

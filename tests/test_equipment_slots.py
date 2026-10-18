@@ -142,6 +142,9 @@ class EquipmentSlotsTests(unittest.TestCase):
         session["scenario_path"] = str(DEFAULT_SCENARIO)
         session["scenario_title"] = self.pack["meta"]["title"]
         session["scenario_pack"]["meta"]["content_revision"] = "2026-10-13-v031"
+        old_cloak = next(i for i in session["scenario_pack"]["items"] if i["id"] == "gravekeeper_cloak")
+        old_cloak["combat"]["defense"] = 2
+        old_cloak["combat"]["conditional_defense"]["amount"] = 1
         session["companion"] = {"id": "robin", "description": "ロビン", "round_start_effects": []}
         for identifier in ("earth_staff", "adamantite_armor", "gravekeeper_cloak", "activated_ice_charm", "ruby_charm", "ice_charm"):
             self.give(session, identifier)
@@ -158,7 +161,9 @@ class EquipmentSlotsTests(unittest.TestCase):
             self.assertEqual(loaded["companion"]["description"], robin["description"])
             self.assertEqual(loaded["companion"]["round_start_effects"], robin["round_start_effects"])
             self.assertEqual(loaded["character"]["equipment"], ["大地の杖", "墓守の外套", "魔導書"])
-            self.assertEqual(combat._actor_defense(loaded["character"]), 2)
+            self.assertEqual(combat._actor_defense(loaded["character"]), 1)
+            cloak = next(i for i in loaded["character"]["inventory"] if i.get("id") == "gravekeeper_cloak")
+            self.assertEqual(cloak["combat"]["conditional_defense"]["amount"], 2)
             self.assertEqual(loaded["area_snapshots"]["forest"]["state"]["character"]["equipment"],
                              loaded["character"]["equipment"])
             persisted = json.loads((Path(directory) / f"{session['id']}.json").read_text(encoding="utf-8"))
