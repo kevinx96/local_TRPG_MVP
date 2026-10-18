@@ -13,6 +13,7 @@ ACTION_RISK_IDS = {
     "rest_at_elf_spring", "rest_at_inn", "admit_no_password", "steal_lost_goblin_box",
     "betray_cursed_merchant", "refuse_xanxus_with_rescue", "report_with_evidence",
     "cleanse_fire_seed",
+    "regroup_from_fort_third_gate",
 }
 
 

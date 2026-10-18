@@ -976,6 +976,8 @@ def _victory_delta(session: dict[str, Any], enemies: list[dict[str, Any]], encou
     delta["gold_change"] += _safe_int(extra.get("gold_change"), 0)
     delta["inventory_add"].extend(deepcopy(extra.get("inventory_add") or []))
     delta["flags_set"].extend(str(flag) for flag in (extra.get("flags_set") or []) if flag)
+    if encounter.get("encounter_class") not in {"scripted_loss", "guest"}:
+        delta["inventory_add"].extend(deepcopy(enemy["loot"]) for enemy in enemies if enemy.get("loot"))
     for key in (
         "current_scene", "current_location", "hp_change", "mp_change", "sp_change",
         "inventory_remove", "flags_unset", "attribute_changes", "attribute_set",

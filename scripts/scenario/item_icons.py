@@ -120,17 +120,17 @@ def catalog() -> list[dict[str, Any]]:
                 continue
             slot = item.get("slot")
             group = {"weapon": "武器", "armor": "防具", "accessory": "補助"}.get(slot)
-            group = group or {"consumable": "消耗品", "material": "素材", "key": "重要",
+            group = group or {"consumable": "消耗品", "material": "素材", "loot": "戦利品", "key": "重要",
                               "equipment": "装備", "": "その他"}[item_category(item)]
             orientation = ("Weapon laid diagonally from lower left to upper right." if group == "武器" or identifier in {"holy_staff", "poison_dart"}
                            else "Armor shown straight from the front." if group == "防具"
                            else "Front view with a slight view from above.")
             file = f"client/images/icon_{identifier}.png"
-            unique[identifier] = dict(task="036", id=f"icon_{identifier}", name=item["name"], group=group,
+            unique[identifier] = dict(task="038" if group == "戦利品" else "036", id=f"icon_{identifier}", name=item["name"], group=group,
                 file=file, generator="image_gen", approved=approved.get(file, False) if identifier in PILOTS else False,
                 transparent_background=True, retained_from="034" if identifier in PILOTS else None,
                 prompt=STYLE + f"Subject: {item['name']}。{item.get('description', '')} "
-                       + DETAILS.get(identifier, "Retain the original 034 pilot unchanged.") + " " + orientation)
+                       + DETAILS.get(identifier, "" if group == "戦利品" else "Retain the original 034 pilot unchanged.") + " " + orientation)
     return list(unique.values())
 
 
@@ -216,7 +216,7 @@ def main() -> None:
     importer.add_argument("source", type=Path)
     args = parser.parse_args()
     if args.command == "prepare":
-        write_json(CATALOG, catalog())
+        write_json(CATALOG, [entry for entry in catalog() if entry["task"] == "036"])
     elif args.command == "install":
         install(args.id, args.source)
     elif args.command == "finish":

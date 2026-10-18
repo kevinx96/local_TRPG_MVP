@@ -63,7 +63,7 @@ class OaksdawnQuestsTests(unittest.TestCase):
                 state.apply_state_delta(session, delta)
                 self.assertEqual(self.quantity(session, "holy_silver"), 0)
             delta = self.victory(session)
-            self.assertEqual(delta["inventory_add"][-1]["name"], "聖銀")
+            self.assertEqual([item["name"] for item in delta["inventory_add"][-2:]], ["聖銀", "錆びた兵士の徽章"])
             self.assertEqual(self.quantity(session, "holy_silver"), 1)
             self.victory(session)
             self.assertEqual(self.quantity(session, "holy_silver"), 1)

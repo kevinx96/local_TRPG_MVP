@@ -21,7 +21,7 @@ def require_exploration(session: dict[str, Any]) -> None:
 def item_category(item: dict[str, Any]) -> str:
     if item.get("key_item"):
         return "key"
-    if item.get("category") in {"consumable", "equipment", "material", "key"}:
+    if item.get("category") in {"consumable", "equipment", "material", "loot", "key"}:
         return item["category"]
     spec = item_combat_spec(item)
     if spec.get("kind") in {"weapon", "armor", "equipment", "passive"} or spec.get("consumable") is False:
@@ -66,10 +66,18 @@ def _price(session: dict[str, Any], shop: dict[str, Any], offer: dict[str, Any])
 
 
 def _sell_price(session: dict[str, Any], shop: dict[str, Any], item: dict[str, Any]) -> int:
+    if "sell_price" in item:
+        return int(item["sell_price"])
     # Half of the cheapest price in any shop, so buying low in one shop and selling in another never profits.
     prices = [_price(session, s, offer) for s in session["scenario_pack"].get("shops", []) for offer in s["items"]
               if offer["item_id"] == item.get("id")]
     return min(prices) // 2 if prices else 5
+
+
+def _can_sell(shop: dict[str, Any], item: dict[str, Any]) -> bool:
+    return bool(shop.get("buys") and not item.get("key_item") and not item.get("non_removable")
+                and not item_combat_spec(item).get("non_removable")
+                and (not shop.get("buy_categories") or item_category(item) in shop["buy_categories"]))
 
 
 def public_shop(session: dict[str, Any], shop_id: str) -> dict[str, Any]:
@@ -93,7 +101,7 @@ def public_shop(session: dict[str, Any], shop_id: str) -> dict[str, Any]:
     if shop.get("buys"):
         for raw in session["character"].get("inventory", []):
             item = _enrich_item(raw if isinstance(raw, dict) else {"name": raw}, session["scenario_pack"])
-            if not item.get("key_item") and not item.get("non_removable") and not item_combat_spec(item).get("non_removable"):
+            if _can_sell(shop, item):
                 public["sell_items"].append({**item, "item_id": item.get("id") or item["name"],
                                              "price": _sell_price(session, shop, item), "stock": item["quantity"]})
     return public
@@ -108,7 +116,7 @@ def trade(session: dict[str, Any], shop_id: str, item_id: str, quantity: int, *,
     stock = _stock(session, shop)
     if selling:
         item = _owned(session, item_id)
-        if not shop.get("buys") or item.get("key_item") or item.get("non_removable") or item_combat_spec(item).get("non_removable"):
+        if not _can_sell(shop, item):
             raise ShopError("この行動は現在選択できません。")
         if quantity > item["quantity"]:
             raise ShopError("道具が見つかりません。")

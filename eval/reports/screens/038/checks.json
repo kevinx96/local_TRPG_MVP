@@ -1,0 +1,48 @@
+[
+  {
+    "view": "inventory",
+    "width": 1440,
+    "height": 1080,
+    "ok": true,
+    "checks": [
+      "separate 戦利品 heading",
+      "all eleven loot kinds in inventory",
+      "eleven visible loot rows",
+      "item icons loaded at native 128px",
+      "no horizontal page overflow",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "shop-sell",
+    "width": 1440,
+    "height": 1080,
+    "ok": true,
+    "checks": [
+      "workshop sell tab enabled",
+      "workshop shows only loot and equipment",
+      "workshop accepts all loot",
+      "explicit price gives 6G for two slime cores",
+      "real sale removes two cores and adds 6G",
+      "sell stock refreshed after transaction",
+      "item icons loaded at native 128px",
+      "no horizontal page overflow",
+      "no browser exceptions"
+    ]
+  },
+  {
+    "view": "fort-third-gate",
+    "width": 1440,
+    "height": 1080,
+    "ok": true,
+    "checks": [
+      "arrived at third-floor gate through authored route",
+      "regroup choice rendered",
+      "exact authored regroup label",
+      "gate description includes the warning sound",
+      "item icons loaded at native 128px",
+      "no horizontal page overflow",
+      "no browser exceptions"
+    ]
+  }
+]

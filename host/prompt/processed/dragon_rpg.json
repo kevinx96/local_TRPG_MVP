@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-18-v037-r3",
+    "content_revision": "2026-10-18-v038",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -13,7 +13,8 @@
     "oaksdawn_v033": true,
     "oaksdawn_v034": true,
     "rumbling_gorge_v035": true,
-    "item_icons_v036": true
+    "item_icons_v036": true,
+    "loot_economy_v038": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -1253,7 +1254,8 @@
         "forge",
         "magic_shop",
         "item_shop",
-        "alley"
+        "alley",
+        "goblin_fort_third_gate"
       ],
       "choices": [
         {
@@ -1321,7 +1323,7 @@
         },
         {
           "text": "ロビンの依頼を引き受ける",
-          "preview": "ロビンとゴブリンの砦へ向かう",
+          "preview": "砦の奥には強敵がいるらしい。薬草は足りているか？",
           "risk": "判定不要",
           "visible_after": "recruited_robin",
           "requirements": {
@@ -1334,6 +1336,26 @@
           },
           "secret": true,
           "hidden_after": "defeated_goblin_king"
+        },
+        {
+          "text": "砦の三階へ急ぐ",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "fort_third_gate_reached",
+          "hidden_after": "defeated_goblin_king",
+          "requirements": {
+            "all": [
+              {
+                "flag": "fort_third_gate_reached"
+              },
+              {
+                "not_flag": "defeated_goblin_king"
+              },
+              {
+                "not_flag": "cleared_goblin_fort"
+              }
+            ]
+          }
         },
         {
           "text": "城下町に戻る",
@@ -1600,7 +1622,7 @@
         {
           "id": "accept_robin_goblin_quest",
           "text": "ロビンの依頼を引き受ける",
-          "preview": "ロビンとゴブリンの砦へ向かう",
+          "preview": "砦の奥には強敵がいるらしい。薬草は足りているか？",
           "risk": "判定不要",
           "intent_keywords": [
             "ロビンの依頼を引き受ける",
@@ -1626,6 +1648,39 @@
           "secret": true,
           "result_text": "「決まりね」ロビンは弓を背負い直して立ち上がった。「近道を知ってるの。ついてきて」彼女の案内で森の獣道を抜けると、木々の間にゴブリンの砦が黒くそびえていた。",
           "hidden_after": "defeated_goblin_king",
+          "risk_source": "destination",
+          "preparation_warning": "（強敵の気配がする。心もとないなら、一度王都か城塞へ戻って補給するのも手だ）"
+        },
+        {
+          "id": "rush_fort_third_gate_inn",
+          "text": "砦の三階へ急ぐ",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "砦の三階へ急ぐ"
+          ],
+          "effects": [
+            {
+              "current_location": "goblin_fort_third_gate"
+            }
+          ],
+          "visible_after": "fort_third_gate_reached",
+          "hidden_after": "defeated_goblin_king",
+          "requirements": {
+            "all": [
+              {
+                "flag": "fort_third_gate_reached"
+              },
+              {
+                "not_flag": "defeated_goblin_king"
+              },
+              {
+                "not_flag": "cleared_goblin_fort"
+              }
+            ]
+          },
+          "result_text": "一度通った道だ。片付けた見張りの跡を抜けて、まっすぐ三階の鉄門へ向かった。",
+          "preparation_warning": "（強敵の気配がする。心もとないなら、一度王都か城塞へ戻って補給するのも手だ）",
           "risk_source": "destination"
         },
         {
@@ -1804,7 +1859,7 @@
         },
         {
           "text": "竜の谷へ向かう",
-          "preview": "第4章へ進みます",
+          "preview": "この先は邪竜の巣。薬草と回復薬を確かめておけ。",
           "risk": "危険"
         },
         {
@@ -1836,6 +1891,36 @@
           "preview": "",
           "risk": "判定不要",
           "visible_after": "riku_rescued"
+        },
+        {
+          "text": "村人の様子を見る",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "accepted_refuge_hearth",
+          "hidden_after": "accepted_refuge_hearth"
+        },
+        {
+          "text": "残り火の欠片を竈にくべる",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "completed_refuge_hearth",
+          "hidden_after": "completed_refuge_hearth",
+          "visible_after": "accepted_refuge_hearth",
+          "visible_requirements": {
+            "has_item": "残り火の欠片",
+            "item_quantity_gte": 2
+          },
+          "requirements": {
+            "all": [
+              {
+                "flag": "accepted_refuge_hearth"
+              },
+              {
+                "has_item": "残り火の欠片",
+                "item_quantity_gte": 2
+              }
+            ]
+          }
         }
       ],
       "actions": [
@@ -1903,7 +1988,7 @@
         {
           "id": "go_dragon_valley",
           "text": "竜の谷へ向かう",
-          "preview": "第4章へ進みます",
+          "preview": "この先は邪竜の巣。薬草と回復薬を確かめておけ。",
           "risk": "危険（戦闘）",
           "intent_keywords": [
             "竜の谷へ向かう"
@@ -1915,7 +2000,8 @@
             }
           ],
           "result_text": "長老たちに見送られて村を出る。山道を登るにつれて空気は熱を帯び、やがて硫黄の霧が谷の入口を覆っていた。",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "preparation_warning": "（強敵の気配がする。心もとないなら、一度王都か城塞へ戻って補給するのも手だ）"
         },
         {
           "id": "return_castle_from_village",
@@ -2008,6 +2094,67 @@
           "visible_after": "riku_rescued",
           "once": "riku_returned",
           "result_text": "「リク！……よく無事で」長老は孫を抱きしめ、深く頭を下げた。「礼をさせてくれ。これは村に伝わる竜の秘薬じゃ。それと……この話も伝えておこう。昔、白き竜がこの村に霜を降らせたことがある、と」",
+          "risk_source": "action"
+        },
+        {
+          "id": "accept_refuge_hearth",
+          "text": "村人の様子を見る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "村人の様子を見る"
+          ],
+          "effects": [],
+          "once": "accepted_refuge_hearth",
+          "hidden_after": "accepted_refuge_hearth",
+          "result_text": "村の女が、消えかけた竈の前でため息をついていた。「火の精霊のせいで、薪がすっかり燃え尽きちまってね。……皮肉なもんだけど、冷めない火でもあればねえ」",
+          "risk_source": "action"
+        },
+        {
+          "id": "deliver_refuge_hearth",
+          "text": "残り火の欠片を竈にくべる",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "残り火の欠片を竈にくべる"
+          ],
+          "effects": [
+            {
+              "remove_item": {
+                "name": "残り火の欠片",
+                "quantity": 2
+              }
+            },
+            {
+              "add_item": {
+                "id": "herb",
+                "name": "薬草",
+                "quantity": 2
+              }
+            },
+            {
+              "gold_change": 40
+            }
+          ],
+          "once": "completed_refuge_hearth",
+          "hidden_after": "completed_refuge_hearth",
+          "visible_after": "accepted_refuge_hearth",
+          "visible_requirements": {
+            "has_item": "残り火の欠片",
+            "item_quantity_gte": 2
+          },
+          "requirements": {
+            "all": [
+              {
+                "flag": "accepted_refuge_hearth"
+              },
+              {
+                "has_item": "残り火の欠片",
+                "item_quantity_gte": 2
+              }
+            ]
+          },
+          "result_text": "欠片を竈に落とすと、赤い火がふわりと立ち上がった。避難所に、粥の匂いが広がっていく。「助かったよ。少ないけど、持っていっておくれ」",
           "risk_source": "action"
         }
       ],
@@ -2962,6 +3109,56 @@
           "requirements": {
             "has_item": "光苔"
           }
+        },
+        {
+          "text": "他に頼みごとはある？",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "accepted_sarah_scarf",
+          "hidden_after": "accepted_sarah_scarf",
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "asked_sarah_request"
+              },
+              {
+                "flag": "sarah_moss_done"
+              }
+            ]
+          },
+          "requirements": {
+            "any": [
+              {
+                "flag": "asked_sarah_request"
+              },
+              {
+                "flag": "sarah_moss_done"
+              }
+            ]
+          }
+        },
+        {
+          "text": "獣の毛皮を渡す",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "completed_sarah_scarf",
+          "hidden_after": "completed_sarah_scarf",
+          "visible_after": "accepted_sarah_scarf",
+          "visible_requirements": {
+            "has_item": "獣の毛皮",
+            "item_quantity_gte": 2
+          },
+          "requirements": {
+            "all": [
+              {
+                "flag": "accepted_sarah_scarf"
+              },
+              {
+                "has_item": "獣の毛皮",
+                "item_quantity_gte": 2
+              }
+            ]
+          }
         }
       ],
       "hybrid": {
@@ -3163,6 +3360,89 @@
           },
           "once": "sarah_moss_done",
           "result_text": "「わあ、ありがとう！これでお母さんの薬が作れる！お礼に、これからはずっと安くしてあげるね」",
+          "risk_source": "action"
+        },
+        {
+          "id": "accept_sarah_scarf",
+          "text": "他に頼みごとはある？",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "他に頼みごとはある？"
+          ],
+          "effects": [],
+          "once": "accepted_sarah_scarf",
+          "hidden_after": "accepted_sarah_scarf",
+          "result_text": "「冬の前に、母さんにあったかい襟巻きを作ってあげたいの。獣の毛皮が二枚あれば足りるかな」",
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "asked_sarah_request"
+              },
+              {
+                "flag": "sarah_moss_done"
+              }
+            ]
+          },
+          "requirements": {
+            "any": [
+              {
+                "flag": "asked_sarah_request"
+              },
+              {
+                "flag": "sarah_moss_done"
+              }
+            ]
+          },
+          "portrait_image": "/static/images/npc_sarah.png",
+          "risk_source": "action"
+        },
+        {
+          "id": "deliver_sarah_scarf",
+          "text": "獣の毛皮を渡す",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "獣の毛皮を渡す"
+          ],
+          "effects": [
+            {
+              "remove_item": {
+                "name": "獣の毛皮",
+                "quantity": 2
+              }
+            },
+            {
+              "add_item": {
+                "id": "healing_scroll",
+                "name": "治療の巻物",
+                "quantity": 2
+              }
+            },
+            {
+              "gold_change": 30
+            }
+          ],
+          "once": "completed_sarah_scarf",
+          "hidden_after": "completed_sarah_scarf",
+          "visible_after": "accepted_sarah_scarf",
+          "visible_requirements": {
+            "has_item": "獣の毛皮",
+            "item_quantity_gte": 2
+          },
+          "requirements": {
+            "all": [
+              {
+                "flag": "accepted_sarah_scarf"
+              },
+              {
+                "has_item": "獣の毛皮",
+                "item_quantity_gte": 2
+              }
+            ]
+          },
+          "result_text": "サラは毛皮を抱きしめて、ぱっと笑った。「ありがとう！ 母さん、きっと喜ぶよ。これ、お礼！」",
+          "portrait_image": "/static/images/npc_sarah.png",
           "risk_source": "action"
         }
       ],
@@ -4353,7 +4633,9 @@
       "enemy_ids": [
         "goblin"
       ],
-      "connected_location_ids": [],
+      "connected_location_ids": [
+        "goblin_fort_third_gate"
+      ],
       "choices": [
         {
           "text": "箱を取り戻す手伝いを引き受ける",
@@ -4394,10 +4676,30 @@
         },
         {
           "text": "ゴブリン砦へ向かう",
-          "preview": "",
+          "preview": "砦の奥には強敵がいるらしい。薬草は足りているか？",
           "risk": "判定不要",
           "visible_after": "lost_goblin_quest",
           "hidden_after": "defeated_goblin_king"
+        },
+        {
+          "text": "砦の三階へ急ぐ",
+          "preview": "",
+          "risk": "判定不要",
+          "visible_after": "fort_third_gate_reached",
+          "hidden_after": "defeated_goblin_king",
+          "requirements": {
+            "all": [
+              {
+                "flag": "fort_third_gate_reached"
+              },
+              {
+                "not_flag": "defeated_goblin_king"
+              },
+              {
+                "not_flag": "cleared_goblin_fort"
+              }
+            ]
+          }
         },
         {
           "text": "森の入口へ戻る",
@@ -4590,7 +4892,7 @@
         {
           "id": "enter_goblin_fort",
           "text": "ゴブリン砦へ向かう",
-          "preview": "",
+          "preview": "砦の奥には強敵がいるらしい。薬草は足りているか？",
           "risk": "危険（戦闘）",
           "intent_keywords": [
             "ゴブリン砦へ向かう"
@@ -4602,6 +4904,39 @@
           ],
           "visible_after": "lost_goblin_quest",
           "hidden_after": "defeated_goblin_king",
+          "risk_source": "destination",
+          "preparation_warning": "（強敵の気配がする。心もとないなら、一度王都か城塞へ戻って補給するのも手だ）"
+        },
+        {
+          "id": "rush_fort_third_gate_lost_goblin_crossroads",
+          "text": "砦の三階へ急ぐ",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "砦の三階へ急ぐ"
+          ],
+          "effects": [
+            {
+              "current_location": "goblin_fort_third_gate"
+            }
+          ],
+          "visible_after": "fort_third_gate_reached",
+          "hidden_after": "defeated_goblin_king",
+          "requirements": {
+            "all": [
+              {
+                "flag": "fort_third_gate_reached"
+              },
+              {
+                "not_flag": "defeated_goblin_king"
+              },
+              {
+                "not_flag": "cleared_goblin_fort"
+              }
+            ]
+          },
+          "result_text": "一度通った道だ。片付けた見張りの跡を抜けて、まっすぐ三階の鉄門へ向かった。",
+          "preparation_warning": "（強敵の気配がする。心もとないなら、一度王都か城塞へ戻って補給するのも手だ）",
           "risk_source": "destination"
         },
         {
@@ -6168,7 +6503,7 @@
       "id": "goblin_fort_third_gate",
       "scene_id": "dark_forest",
       "title": "ゴブリン砦・三階鉄門",
-      "description": "四階へ続く鉄門には小窓があり、中から暗号を求める声がする。",
+      "description": "四階へ続く鉄門には小窓があり、中から暗号を求める声がする。鉄門の奥から、地を揺らすような唸り声が響いてくる。",
       "keywords": [
         "ゴブリン砦・三階鉄門"
       ],
@@ -6176,11 +6511,19 @@
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [],
-      "connected_location_ids": [],
-      "choices": [],
+      "connected_location_ids": [
+        "lost_goblin_crossroads"
+      ],
+      "choices": [
+        {
+          "text": "態勢を立て直すため砦を出る",
+          "preview": "",
+          "risk": "判定不要"
+        }
+      ],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "四階へ続く鉄門には小窓があり、中から暗号を求める声がする。",
+        "summary": "四階へ続く鉄門には小窓があり、中から暗号を求める声がする。鉄門の奥から、地を揺らすような唸り声が響いてくる。",
         "prepared_turns": [
           {
             "id": "password_correct_king_ambush",
@@ -6329,6 +6672,25 @@
               "start_combat": true
             }
           ],
+          "risk_source": "action"
+        },
+        {
+          "id": "regroup_from_fort_third_gate",
+          "text": "態勢を立て直すため砦を出る",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "態勢を立て直すため砦を出る"
+          ],
+          "effects": [
+            {
+              "current_location": "lost_goblin_crossroads"
+            },
+            {
+              "set_flag": "fort_third_gate_reached"
+            }
+          ],
+          "result_text": "見張りの目を盗んで来た道を引き返し、森の十字路まで戻った。",
           "risk_source": "action"
         }
       ],
@@ -10836,7 +11198,7 @@
         {
           "id": "go_report_hall",
           "text": "凱旋の間へ向かう",
-          "preview": "",
+          "preview": "決着の時が近い。準備は整っているか？",
           "risk": "判定不要",
           "intent_keywords": [
             "凱旋の間へ向かう"
@@ -10846,7 +11208,8 @@
               "current_location": "castle_report"
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "preparation_warning": "（強敵の気配がする。心もとないなら、一度王都か城塞へ戻って補給するのも手だ）"
         },
         {
           "id": "open_gald_capital_shop",
@@ -13111,6 +13474,67 @@
           },
           "result_text": "リーゼは胸に手を当てて、深く頭を下げた。「団長にも伝えておきます。……これは、守護団からのお礼です」",
           "risk_source": "action"
+        },
+        {
+          "id": "accept_nameless_soldiers",
+          "text": "司祭に話を聞く",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "司祭に話を聞く"
+          ],
+          "effects": [],
+          "once": "accepted_nameless_soldiers",
+          "hidden_after": "accepted_nameless_soldiers",
+          "result_text": "「古戦場で倒れた兵たちは、名前すら故郷に届いておりません。もし徽章を見つけたら、ここへ持ってきてはくださらんか」",
+          "risk_source": "action"
+        },
+        {
+          "id": "deliver_nameless_soldiers",
+          "text": "徽章を司祭に渡す",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [
+            "徽章を司祭に渡す"
+          ],
+          "effects": [
+            {
+              "remove_item": {
+                "name": "錆びた兵士の徽章",
+                "quantity": 3
+              }
+            },
+            {
+              "add_item": {
+                "id": "holy_water",
+                "name": "聖水",
+                "quantity": 2
+              }
+            },
+            {
+              "gold_change": 50
+            }
+          ],
+          "once": "completed_nameless_soldiers",
+          "hidden_after": "completed_nameless_soldiers",
+          "visible_after": "accepted_nameless_soldiers",
+          "visible_requirements": {
+            "has_item": "錆びた兵士の徽章",
+            "item_quantity_gte": 3
+          },
+          "requirements": {
+            "all": [
+              {
+                "flag": "accepted_nameless_soldiers"
+              },
+              {
+                "has_item": "錆びた兵士の徽章",
+                "item_quantity_gte": 3
+              }
+            ]
+          },
+          "result_text": "司祭は徽章の錆を指でぬぐい、刻まれた名前を一つずつ読み上げた。「……これで、皆の家族に知らせを出せます。光のご加護を」",
+          "risk_source": "action"
         }
       ],
       "choices": [
@@ -13184,6 +13608,36 @@
           "text": "大通りへ戻る",
           "preview": "",
           "risk": "判定不要"
+        },
+        {
+          "text": "司祭に話を聞く",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "accepted_nameless_soldiers",
+          "hidden_after": "accepted_nameless_soldiers"
+        },
+        {
+          "text": "徽章を司祭に渡す",
+          "preview": "",
+          "risk": "判定不要",
+          "once": "completed_nameless_soldiers",
+          "hidden_after": "completed_nameless_soldiers",
+          "visible_after": "accepted_nameless_soldiers",
+          "visible_requirements": {
+            "has_item": "錆びた兵士の徽章",
+            "item_quantity_gte": 3
+          },
+          "requirements": {
+            "all": [
+              {
+                "flag": "accepted_nameless_soldiers"
+              },
+              {
+                "has_item": "錆びた兵士の徽章",
+                "item_quantity_gte": 3
+              }
+            ]
+          }
         }
       ],
       "connected_location_ids": [
@@ -15804,6 +16258,94 @@
       "key_item": true,
       "description": "精霊の泉で汲んだ澄んだ水。ほのかに光を帯びている。",
       "icon": "/static/images/icon_spirit_spring_water.png"
+    },
+    {
+      "id": "slime_core",
+      "name": "スライムの核",
+      "sell_price": 3,
+      "description": "ぷるぷると震える半透明の核。薬の材料になる。",
+      "category": "loot",
+      "icon": "/static/images/icon_slime_core.png"
+    },
+    {
+      "id": "goblin_trinket",
+      "name": "ゴブリンの飾り物",
+      "sell_price": 5,
+      "description": "ゴブリンが身につけていた、安物の金属の飾り。",
+      "category": "loot",
+      "icon": "/static/images/icon_goblin_trinket.png"
+    },
+    {
+      "id": "wolf_pelt",
+      "name": "獣の毛皮",
+      "sell_price": 8,
+      "description": "厚く柔らかな獣の毛皮。",
+      "category": "loot",
+      "icon": "/static/images/icon_wolf_pelt.png"
+    },
+    {
+      "id": "ember_shard",
+      "name": "残り火の欠片",
+      "sell_price": 10,
+      "description": "いつまでも冷めない火を宿した、小さな欠片。",
+      "category": "loot",
+      "icon": "/static/images/icon_ember_shard.png"
+    },
+    {
+      "id": "frost_shard",
+      "name": "霜の欠片",
+      "sell_price": 10,
+      "description": "握ると指先がしびれる、溶けない霜の欠片。",
+      "category": "loot",
+      "icon": "/static/images/icon_frost_shard.png"
+    },
+    {
+      "id": "crystal_fragment",
+      "name": "色水晶の欠片",
+      "sell_price": 12,
+      "description": "光にかざすと色を変える水晶の欠片。",
+      "category": "loot",
+      "icon": "/static/images/icon_crystal_fragment.png"
+    },
+    {
+      "id": "rusted_badge",
+      "name": "錆びた兵士の徽章",
+      "sell_price": 6,
+      "description": "十年前の兵士がつけていた錆びた徽章。裏に名前が刻まれている。",
+      "category": "loot",
+      "icon": "/static/images/icon_rusted_badge.png"
+    },
+    {
+      "id": "ash_essence",
+      "name": "煤の精",
+      "sell_price": 10,
+      "description": "亡霊が崩れた後に残る、黒い煤の塊。",
+      "category": "loot",
+      "icon": "/static/images/icon_ash_essence.png"
+    },
+    {
+      "id": "drake_scale",
+      "name": "溶岩竜の鱗",
+      "sell_price": 15,
+      "description": "熱を帯びた赤黒い鱗。鍛冶屋が高く買う。",
+      "category": "loot",
+      "icon": "/static/images/icon_drake_scale.png"
+    },
+    {
+      "id": "beetle_shell",
+      "name": "甲虫の殻",
+      "sell_price": 8,
+      "description": "砂利を固めたような硬い殻。",
+      "category": "loot",
+      "icon": "/static/images/icon_beetle_shell.png"
+    },
+    {
+      "id": "giant_mossstone",
+      "name": "巨人の苔石",
+      "sell_price": 12,
+      "description": "岩の巨人の体から剥がれた、苔むした石。",
+      "category": "loot",
+      "icon": "/static/images/icon_giant_mossstone.png"
     }
   ],
   "clues": [
@@ -15880,7 +16422,12 @@
         ]
       },
       "skills": [],
-      "image": "/static/images/enemy_slime.png"
+      "image": "/static/images/enemy_slime.png",
+      "loot": {
+        "id": "slime_core",
+        "name": "スライムの核",
+        "quantity": 1
+      }
     },
     {
       "id": "ignis",
@@ -15986,7 +16533,12 @@
         "flags": []
       },
       "skills": [],
-      "image": "/static/images/enemy_goblin.png"
+      "image": "/static/images/enemy_goblin.png",
+      "loot": {
+        "id": "goblin_trinket",
+        "name": "ゴブリンの飾り物",
+        "quantity": 1
+      }
     },
     {
       "id": "goblin_archer",
@@ -16022,7 +16574,12 @@
         "flags": []
       },
       "skills": [],
-      "image": "/static/images/enemy_goblin_archer.png"
+      "image": "/static/images/enemy_goblin_archer.png",
+      "loot": {
+        "id": "goblin_trinket",
+        "name": "ゴブリンの飾り物",
+        "quantity": 1
+      }
     },
     {
       "id": "hobgoblin",
@@ -16058,7 +16615,12 @@
         "flags": []
       },
       "skills": [],
-      "image": "/static/images/enemy_hobgoblin.png"
+      "image": "/static/images/enemy_hobgoblin.png",
+      "loot": {
+        "id": "goblin_trinket",
+        "name": "ゴブリンの飾り物",
+        "quantity": 1
+      }
     },
     {
       "id": "war_hound",
@@ -16088,7 +16650,12 @@
         "flags": []
       },
       "skills": [],
-      "image": "/static/images/enemy_war_hound.png"
+      "image": "/static/images/enemy_war_hound.png",
+      "loot": {
+        "id": "wolf_pelt",
+        "name": "獣の毛皮",
+        "quantity": 1
+      }
     },
     {
       "id": "forest_wolf",
@@ -16118,7 +16685,12 @@
         "flags": []
       },
       "skills": [],
-      "image": "/static/images/enemy_forest_wolf.png"
+      "image": "/static/images/enemy_forest_wolf.png",
+      "loot": {
+        "id": "wolf_pelt",
+        "name": "獣の毛皮",
+        "quantity": 1
+      }
     },
     {
       "id": "slime_king",
@@ -16158,7 +16730,12 @@
         ]
       },
       "skills": [],
-      "image": "/static/images/enemy_slime_king.png"
+      "image": "/static/images/enemy_slime_king.png",
+      "loot": {
+        "id": "slime_core",
+        "name": "スライムの核",
+        "quantity": 2
+      }
     },
     {
       "id": "goblin_king",
@@ -16191,7 +16768,12 @@
         ]
       },
       "skills": [],
-      "image": "/static/images/enemy_goblin_king.png"
+      "image": "/static/images/enemy_goblin_king.png",
+      "loot": {
+        "id": "goblin_trinket",
+        "name": "ゴブリンの飾り物",
+        "quantity": 2
+      }
     },
     {
       "id": "zebok",
@@ -16299,7 +16881,12 @@
         "flags": []
       },
       "skills": [],
-      "image": "/static/images/enemy_fire_slime.png"
+      "image": "/static/images/enemy_fire_slime.png",
+      "loot": {
+        "id": "ember_shard",
+        "name": "残り火の欠片",
+        "quantity": 1
+      }
     },
     {
       "id": "fire_elemental",
@@ -16335,7 +16922,12 @@
         "flags": []
       },
       "skills": [],
-      "image": "/static/images/enemy_fire_elemental.png"
+      "image": "/static/images/enemy_fire_elemental.png",
+      "loot": {
+        "id": "ember_shard",
+        "name": "残り火の欠片",
+        "quantity": 1
+      }
     },
     {
       "id": "ice_elemental",
@@ -16370,7 +16962,12 @@
         "flags": []
       },
       "skills": [],
-      "image": "/static/images/enemy_ice_elemental.png"
+      "image": "/static/images/enemy_ice_elemental.png",
+      "loot": {
+        "id": "frost_shard",
+        "name": "霜の欠片",
+        "quantity": 1
+      }
     },
     {
       "id": "frost_dire_wolf",
@@ -16625,7 +17222,12 @@
         "items": [],
         "flags": []
       },
-      "skills": []
+      "skills": [],
+      "loot": {
+        "id": "ember_shard",
+        "name": "残り火の欠片",
+        "quantity": 1
+      }
     },
     {
       "id": "fire_wisp",
@@ -16661,7 +17263,12 @@
         "items": [],
         "flags": []
       },
-      "skills": []
+      "skills": [],
+      "loot": {
+        "id": "ember_shard",
+        "name": "残り火の欠片",
+        "quantity": 1
+      }
     },
     {
       "id": "ruby_golem",
@@ -16715,7 +17322,12 @@
           "accuracy": 75,
           "element": "fire"
         }
-      ]
+      ],
+      "loot": {
+        "id": "crystal_fragment",
+        "name": "色水晶の欠片",
+        "quantity": 1
+      }
     },
     {
       "id": "sapphire_moth",
@@ -16755,7 +17367,12 @@
         "items": [],
         "flags": []
       },
-      "skills": []
+      "skills": [],
+      "loot": {
+        "id": "crystal_fragment",
+        "name": "色水晶の欠片",
+        "quantity": 1
+      }
     },
     {
       "id": "emerald_spider",
@@ -16795,7 +17412,12 @@
         "items": [],
         "flags": []
       },
-      "skills": []
+      "skills": [],
+      "loot": {
+        "id": "crystal_fragment",
+        "name": "色水晶の欠片",
+        "quantity": 1
+      }
     },
     {
       "id": "prism_tree",
@@ -16961,7 +17583,12 @@
       "image": "/static/images/enemy_ash_wraith.png",
       "tags": [
         "undead"
-      ]
+      ],
+      "loot": {
+        "id": "ash_essence",
+        "name": "煤の精",
+        "quantity": 1
+      }
     },
     {
       "id": "lava_drake",
@@ -17016,7 +17643,12 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_lava_drake.png"
+      "image": "/static/images/enemy_lava_drake.png",
+      "loot": {
+        "id": "drake_scale",
+        "name": "溶岩竜の鱗",
+        "quantity": 1
+      }
     },
     {
       "id": "xanxus_phantom",
@@ -17129,7 +17761,12 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_ice_sentinel.png"
+      "image": "/static/images/enemy_ice_sentinel.png",
+      "loot": {
+        "id": "frost_shard",
+        "name": "霜の欠片",
+        "quantity": 1
+      }
     },
     {
       "id": "ice_assassin",
@@ -17193,7 +17830,12 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_ice_assassin.png"
+      "image": "/static/images/enemy_ice_assassin.png",
+      "loot": {
+        "id": "frost_shard",
+        "name": "霜の欠片",
+        "quantity": 1
+      }
     },
     {
       "id": "skeleton_soldier",
@@ -17227,7 +17869,12 @@
       "image": "/static/images/enemy_skeleton_soldier.png",
       "tags": [
         "undead"
-      ]
+      ],
+      "loot": {
+        "id": "rusted_badge",
+        "name": "錆びた兵士の徽章",
+        "quantity": 1
+      }
     },
     {
       "id": "ghoul",
@@ -17261,7 +17908,12 @@
       "image": "/static/images/enemy_ghoul.png",
       "tags": [
         "undead"
-      ]
+      ],
+      "loot": {
+        "id": "rusted_badge",
+        "name": "錆びた兵士の徽章",
+        "quantity": 1
+      }
     },
     {
       "id": "wraith",
@@ -17295,7 +17947,12 @@
       "image": "/static/images/enemy_wraith.png",
       "tags": [
         "undead"
-      ]
+      ],
+      "loot": {
+        "id": "rusted_badge",
+        "name": "錆びた兵士の徽章",
+        "quantity": 1
+      }
     },
     {
       "id": "grave_knight",
@@ -17329,7 +17986,12 @@
       "image": "/static/images/enemy_grave_knight.png",
       "tags": [
         "undead"
-      ]
+      ],
+      "loot": {
+        "id": "rusted_badge",
+        "name": "錆びた兵士の徽章",
+        "quantity": 2
+      }
     },
     {
       "id": "gravel_beetle",
@@ -17362,7 +18024,12 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_gravel_beetle.png"
+      "image": "/static/images/enemy_gravel_beetle.png",
+      "loot": {
+        "id": "beetle_shell",
+        "name": "甲虫の殻",
+        "quantity": 1
+      }
     },
     {
       "id": "stone_lizard",
@@ -17395,7 +18062,12 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_stone_lizard.png"
+      "image": "/static/images/enemy_stone_lizard.png",
+      "loot": {
+        "id": "beetle_shell",
+        "name": "甲虫の殻",
+        "quantity": 1
+      }
     },
     {
       "id": "rock_giant",
@@ -17428,7 +18100,12 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_rock_giant.png"
+      "image": "/static/images/enemy_rock_giant.png",
+      "loot": {
+        "id": "giant_mossstone",
+        "name": "巨人の苔石",
+        "quantity": 1
+      }
     },
     {
       "id": "earth_worm",
@@ -17461,7 +18138,12 @@
         "items": [],
         "flags": []
       },
-      "image": "/static/images/enemy_earth_worm.png"
+      "image": "/static/images/enemy_earth_worm.png",
+      "loot": {
+        "id": "giant_mossstone",
+        "name": "巨人の苔石",
+        "quantity": 2
+      }
     }
   ],
   "combat_choices": [
@@ -18759,6 +19441,57 @@
           "done_flag": "rewarded_workshop_hearth"
         }
       ]
+    },
+    {
+      "id": "side_sarah_scarf",
+      "title": "サラの襟巻き",
+      "description": "道具屋のサラは、母親に襟巻きを編むための獣の毛皮を探している。",
+      "kind": "side",
+      "start_flag": "accepted_sarah_scarf",
+      "complete_flags": [
+        "completed_sarah_scarf"
+      ],
+      "fail_flags": [],
+      "stages": [
+        {
+          "text": "獣の毛皮を二枚、サラに渡す",
+          "done_flag": "completed_sarah_scarf"
+        }
+      ]
+    },
+    {
+      "id": "side_nameless_soldiers",
+      "title": "名もなき兵士たち",
+      "description": "暁の礼拝堂の老司祭は、古戦場で倒れた兵士たちの徽章を集め、家族に名前を届けたいと願っている。",
+      "kind": "side",
+      "start_flag": "accepted_nameless_soldiers",
+      "complete_flags": [
+        "completed_nameless_soldiers"
+      ],
+      "fail_flags": [],
+      "stages": [
+        {
+          "text": "錆びた兵士の徽章を三つ、司祭に渡す",
+          "done_flag": "completed_nameless_soldiers"
+        }
+      ]
+    },
+    {
+      "id": "side_refuge_hearth",
+      "title": "炊き出しの火",
+      "description": "麓の村の避難所では、炊き出しの竈の火が消えかけている。",
+      "kind": "side",
+      "start_flag": "accepted_refuge_hearth",
+      "complete_flags": [
+        "completed_refuge_hearth"
+      ],
+      "fail_flags": [],
+      "stages": [
+        {
+          "text": "残り火の欠片を二つ、竈にくべる",
+          "done_flag": "completed_refuge_hearth"
+        }
+      ]
     }
   ],
   "shops": [
@@ -18969,7 +19702,7 @@
       "location_id": "oaksdawn_workshop",
       "keeper_npc": "brigitte",
       "title": "城塞工房",
-      "buys": false,
+      "buys": true,
       "greeting": "守護団の鎧なら任せな。体に合わせて仕立ててやるよ",
       "buy_line": "毎度。きつかったら言いな、すぐ詰め直してやる",
       "poor_line": "金が足りないね。出直してきな",
@@ -18984,7 +19717,12 @@
           "price": 120,
           "stock": null
         }
-      ]
+      ],
+      "buy_categories": [
+        "loot",
+        "equipment"
+      ],
+      "sell_line": ""
     }
   ],
   "maps": [

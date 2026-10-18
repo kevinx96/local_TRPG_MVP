@@ -728,7 +728,7 @@ function renderInventory(items) {
     return;
   }
   // TODO(design): Items without category stay ungrouped until their category is specified.
-  const groups = { consumable: "消耗品", equipment: "装備", material: "素材", key: "重要", "": "" };
+  const groups = { consumable: "消耗品", equipment: "装備", material: "素材", loot: "戦利品", key: "重要", "": "" };
   for (const [category, label] of Object.entries(groups)) {
     const grouped = items.filter(item => (item.category || "") === category);
     if (!grouped.length) continue;

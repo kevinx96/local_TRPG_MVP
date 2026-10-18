@@ -1275,6 +1275,13 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
         session["choices"] = fallback_choices_for_session(session)
         return {"action_id": action["id"], "text": action["text"], "outcome": result["outcome"],
                 "result_text": result["text"], "state_delta": result.get("state_delta", {}), "source_location_id": source_location_id}
+    if action.get("preparation_warning"):
+        actor = session["character"]
+        supplies = sum(max(0, _safe_int(item.get("quantity", 1))) for item in actor.get("inventory", [])
+                       if isinstance(item, dict) and item.get("name") in {"薬草", "治療の巻物", "MP回復薬"})
+        if actor.get("hp", 0) * 5 < actor.get("max_hp", 0) * 3 or supplies < 2:
+            record_state_event(session, "preparation_warning", action["preparation_warning"],
+                               {"action_id": action["id"], "location_id": source_location_id})
     outcome = _action_outcome(latest_roll, action.get("critical_enabled") is not False)
     base_effects = _as_list(action.get("effects"))
     branch_outcome = {
@@ -1820,7 +1827,10 @@ def _requirement_passes(requirement: Any, attrs: dict[str, Any], character: dict
         return int(character.get("gold", 0)) <= int(max_gold)
     has_item = _requirement_item_name(requirement, ("has_item", "inventory_has", "requires_item"))
     if has_item:
-        return has_item in _inventory_item_names(character)
+        quantity = sum(max(0, _safe_int(item.get("quantity", 1))) if isinstance(item, dict) else 1
+                       for item in character.get("inventory", [])
+                       if (item.get("name") if isinstance(item, dict) else item) == has_item)
+        return quantity >= requirement.get("item_quantity_gte", 1)
     lacks_item = _requirement_item_name(requirement, ("lacks_item", "not_item", "missing_item"))
     if lacks_item:
         return lacks_item not in _inventory_item_names(character)
@@ -1875,6 +1885,8 @@ def _requirement_label(requirement: dict[str, Any]) -> str:
         return f"{int(max_gold)}ゴールド以下"
     has_item = _requirement_item_name(requirement, ("has_item", "inventory_has", "requires_item"))
     if has_item:
+        if requirement.get("item_quantity_gte", 1) > 1:
+            return f"{has_item} ×{requirement['item_quantity_gte']}所持"
         return f"{has_item}所持"
     lacks_item = _requirement_item_name(requirement, ("lacks_item", "not_item", "missing_item"))
     if lacks_item:
@@ -2499,7 +2511,7 @@ def _enrich_item(item: dict[str, Any], scenario_pack: Optional[dict[str, Any]] =
         "effect": structured_item_effect(merged) or str(merged.get("effect") or ""),
         "quantity": _safe_quantity(item.get("quantity"), 1),
     }
-    for key in ("id", "icon", "combat", "traits", "category", "key_item", "non_removable", "slot"):
+    for key in ("id", "icon", "combat", "traits", "category", "sell_price", "key_item", "non_removable", "slot"):
         if key in merged:
             enriched[key] = deepcopy(merged[key])
     category = item_category(enriched)
