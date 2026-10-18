@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/static/styles.css?v=20261019-ruby" />
+    <link rel="stylesheet" href="/static/styles.css?v=20261019-player-dice" />
   </head>
   <body>
 
@@ -162,7 +162,37 @@
       </div>
 
       <!-- Bottom UI Area -->
+      <div id="diceCheckBackdrop" class="dice-check-backdrop" hidden></div>
       <div class="gal-bottom-area">
+        <section id="diceCheckCard" class="dice-check-card" style="display:none" role="dialog" aria-modal="true" aria-labelledby="diceCheckTitle" aria-describedby="diceCheckSummary diceCheckFormula" tabindex="-1">
+          <h3 id="diceCheckTitle"></h3>
+          <p id="diceCheckSummary"></p>
+          <p id="diceCheckFormula" class="dice-check-formula"></p>
+          <div id="diceCheckAnimation" class="dice-check-animation" hidden>
+            <div class="dice-d20" aria-hidden="true">
+              <svg viewBox="0 0 120 132" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+                <path class="dice-shell" d="M60 4 114 35 114 97 60 128 6 97 6 35Z" />
+                <path d="M60 4 30 49 6 35M60 4 90 49 114 35M30 49 90 49 60 101ZM6 97 30 49M114 97 90 49M6 97 60 101 114 97M60 101 60 128" />
+                <g class="dice-fragments">
+                  <path d="M60 4 30 49 6 35Z" />
+                  <path d="M60 4 90 49 114 35Z" />
+                  <path d="M6 97 60 101 60 128Z" />
+                  <path d="M114 97 60 101 60 128Z" />
+                </g>
+              </svg>
+              <span id="diceNatural">?</span>
+            </div>
+            <div class="dice-check-result" role="status" aria-live="polite" aria-atomic="true">
+              <p id="diceCalculation" hidden></p>
+              <p id="diceOutcome">判定中…</p>
+              <strong id="diceCritical" hidden></strong>
+            </div>
+          </div>
+          <div id="diceCheckActions" class="dice-check-actions">
+            <button id="diceCheckRoll" class="dice-check-primary" type="button">ダイスを振る</button>
+            <button id="diceCheckCancel" type="button">やめる</button>
+          </div>
+        </section>
         <div id="diceBanner" class="gal-dice-banner" style="display:none" aria-live="polite">
           <span class="dice-roll-face">?</span>
           <span id="diceBannerText" class="dice-banner-text">判定中…</span>
@@ -269,6 +299,6 @@
     </main>
 
     <script src="/static/battle-fx.js?v=20261014-companions"></script>
-    <script src="/static/app.js?v=20261019-ruby"></script>
+    <script src="/static/app.js?v=20261019-player-dice"></script>
   </body>
 </html>

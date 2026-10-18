@@ -16,6 +16,8 @@ const state = {
   lastDiceLogLength: 0,
   lastDiceSignature: "",
   diceAnimationTimer: null,
+  pendingCheck: null,
+  dicePresentation: null,
   nextDiceDc: 0,
   nextDiceType: "1d20",
   character: null,
@@ -72,6 +74,19 @@ const els = {
   diceBanner:      document.querySelector("#diceBanner"),
   diceBannerText:  document.querySelector("#diceBannerText"),
   diceRollFace:    document.querySelector(".dice-roll-face"),
+  diceCheckCard:   document.querySelector("#diceCheckCard"),
+  diceCheckBackdrop: document.querySelector("#diceCheckBackdrop"),
+  diceCheckTitle:  document.querySelector("#diceCheckTitle"),
+  diceCheckSummary: document.querySelector("#diceCheckSummary"),
+  diceCheckFormula: document.querySelector("#diceCheckFormula"),
+  diceCheckActions: document.querySelector("#diceCheckActions"),
+  diceCheckRoll:   document.querySelector("#diceCheckRoll"),
+  diceCheckCancel: document.querySelector("#diceCheckCancel"),
+  diceCheckAnimation: document.querySelector("#diceCheckAnimation"),
+  diceNatural:     document.querySelector("#diceNatural"),
+  diceCalculation: document.querySelector("#diceCalculation"),
+  diceOutcome:     document.querySelector("#diceOutcome"),
+  diceCritical:    document.querySelector("#diceCritical"),
   logToggleBtn:    document.querySelector("#logToggleBtn"),
   inputToggleBtn:  document.querySelector("#inputToggleBtn"),
   logOverlay:      document.querySelector("#logOverlay"),
@@ -486,6 +501,7 @@ function setStartBusy(busy) {
 /* New session from game screen */
 async function newSession() {
   /* Show start screen again */
+  closeDiceCheck();
   state.pendingChoices = [];
   state.choiceStack = [];
   state.choicesRevealed = false;
@@ -512,43 +528,26 @@ async function newSession() {
 
 async function submitTurn(event) {
   event.preventDefault();
-  if (state.serviceBusy || state.turnBusy) return;
+  if (state.serviceBusy || state.turnBusy || state.pendingCheck) return;
   const text = els.input.value.trim();
   if (!text || !state.sessionId) return;
   els.input.value = "";
-  addMessage("user", "プレイヤー", text);
-  hideChoices();
-  clearPendingChoices();
-  hideDiceBanner();
-  setBusy(true);
-  try {
-    const body = { text };
-    const response = await fetch(`/api/sessions/${state.sessionId}/turn`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    if (!response.ok || !response.body) {
-      throw new Error(await response.text());
-    }
-    renderSession(await response.json());
-  } catch (error) {
-    stopDiceRollAnimation();
-    addMessage("assistant", "GM", `エラー: ${error.message}`);
-  } finally {
-    setBusy(false);
-  }
+  await submitChoice(text);
 }
 
-async function submitChoice(choiceText, actionId = "") {
-  if (state.serviceBusy || state.turnBusy) return;
+async function submitChoice(choiceText, actionId = "", check = null) {
+  if (state.serviceBusy || state.turnBusy || state.pendingCheck) return;
   choiceDebug("submit-choice-start", { choiceText, actionId });
   if (!choiceText || !state.sessionId) return;
+  const previousChoices = {
+    choices: state.pendingChoices, stack: state.choiceStack,
+    portrait: state.choicePortrait, revealed: state.choicesRevealed,
+  };
   addMessage("user", "プレイヤー", choiceText);
   hideChoices();
   clearPendingChoices();
-  hideDiceBanner();
   setBusy(true);
+  if (check && !state.session?.in_combat) startDicePresentation(check, choiceText);
   try {
     const body = { text: choiceText };
     if (actionId) body.action_id = actionId;
@@ -560,11 +559,21 @@ async function submitChoice(choiceText, actionId = "") {
     if (!response.ok) {
       throw new Error(await response.text());
     }
-    renderSession(await response.json());
+    await renderTurnResponse(await response.json(), choiceText);
   } catch (error) {
     choiceDebug("submit-choice-error", { choiceText, error: error.message });
-    stopDiceRollAnimation();
+    closeDiceCheck();
     addMessage("assistant", "GM", `エラー: ${error.message}`);
+    state.pendingChoices = previousChoices.choices;
+    state.choiceStack = previousChoices.stack;
+    state.choicesRevealed = previousChoices.revealed;
+    restoreChoicePortrait(previousChoices.portrait);
+    if (state.choicesRevealed) {
+      renderChoices(state.pendingChoices);
+      els.choicesList.querySelector(".choice-card")?.focus();
+    } else {
+      updateDialogueAdvanceState();
+    }
   } finally {
     setBusy(false);
   }
@@ -1011,6 +1020,166 @@ function stopDiceRollAnimation() {
     state.diceAnimationTimer = null;
   }
   if (els.diceBanner) els.diceBanner.classList.remove("rolling");
+  if (els.diceCheckCard) els.diceCheckCard.classList.remove("rolling");
+}
+
+function openDiceCheck(choice, focus) {
+  if (!choice.check || state.session?.in_combat || state.turnBusy || state.serviceBusy) return;
+  state.pendingCheck = { choice, focus };
+  showDiceCheckCard(choice.check, choice.text);
+  els.choicesArea.style.display = "none";
+  els.diceCheckActions.hidden = false;
+  els.diceCheckAnimation.hidden = true;
+  els.diceCheckRoll.focus();
+}
+
+function showDiceCheckCard(check, title) {
+  els.diceCheckTitle.innerHTML = rubyHtml(title || "判定");
+  els.diceCheckSummary.textContent = check ? `${check.attribute_label || ""}判定　DC ${check.dc}` : "";
+  els.diceCheckFormula.textContent = check
+    ? `${check.dice} ${check.modifier < 0 ? "−" : "＋"} ${Math.abs(check.modifier)}${check.attribute_label ? `（${check.attribute_label}）` : ""}`
+    : "";
+  els.diceCheckSummary.hidden = !check;
+  els.diceCheckFormula.hidden = !check;
+  els.diceCheckCard.classList.remove("rolling", "critical-success", "critical-failure", "instant-result");
+  els.diceCheckCard.style.display = "";
+  els.diceCheckBackdrop.hidden = false;
+  els.gameScreen.classList.add("dice-active");
+}
+
+function cancelDiceCheck() {
+  const pending = state.pendingCheck;
+  if (!pending) return;
+  closeDiceCheck();
+  els.choicesArea.style.display = "";
+  pending.focus?.focus();
+}
+
+function confirmDiceCheck() {
+  const pending = state.pendingCheck;
+  if (!pending || state.turnBusy || state.serviceBusy) return;
+  state.pendingCheck = null;
+  const choice = pending.choice;
+  return submitChoice(choice.text, choice.action_id || choice.id || "", choice.check);
+}
+
+function closeDiceCheck() {
+  const presentation = state.dicePresentation;
+  state.dicePresentation = null;
+  state.pendingCheck = null;
+  stopDiceRollAnimation();
+  presentation?.wake?.();
+  els.diceCheckCard.style.display = "none";
+  els.diceCheckBackdrop.hidden = true;
+  els.gameScreen.classList.remove("dice-active");
+}
+
+function startDicePresentation(check, title) {
+  showDiceCheckCard(check, title);
+  const presentation = {
+    startedAt: performance.now(), minimum: check ? 900 : 600,
+    reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    skipped: false, roll: null, wake: null,
+  };
+  state.dicePresentation = presentation;
+  els.diceCheckActions.hidden = true;
+  els.diceCheckAnimation.hidden = false;
+  els.diceNatural.textContent = "?";
+  els.diceCalculation.hidden = true;
+  els.diceCritical.hidden = true;
+  els.diceOutcome.textContent = "判定中…";
+  els.diceCheckCard.focus();
+  if (!presentation.reducedMotion) {
+    els.diceCheckCard.classList.add("rolling");
+    let face = 1;
+    state.diceAnimationTimer = window.setInterval(() => {
+      face = (face + 7) % 20;
+      els.diceNatural.textContent = String(face + 1);
+    }, 60);
+  }
+  return presentation;
+}
+
+function waitForDice(presentation, milliseconds) {
+  if (state.dicePresentation !== presentation || milliseconds <= 0) return Promise.resolve();
+  return new Promise(resolve => {
+    const timer = window.setTimeout(() => presentation.wake?.(), milliseconds);
+    presentation.wake = () => {
+      window.clearTimeout(timer);
+      presentation.wake = null;
+      resolve();
+    };
+  });
+}
+
+function showDiceCalculation(roll) {
+  const modifier = Number(roll.attr_mod || 0);
+  els.diceCalculation.textContent = `${modifier < 0 ? "−" : "＋"}${Math.abs(modifier)} ＝ ${roll.total}`;
+  els.diceCalculation.setAttribute("aria-label", `${roll.rolls[0]} ${els.diceCalculation.textContent}`);
+  els.diceCalculation.hidden = false;
+}
+
+function diceCheckSucceeded(roll) {
+  if (roll.outcome) return ["success", "critical_success"].includes(roll.outcome);
+  return !roll.critical_failure && (roll.success === true || Number(roll.total) >= Number(roll.dc));
+}
+
+function showDiceOutcome(roll) {
+  const natural = Number(roll.rolls[0]);
+  const success = diceCheckSucceeded(roll);
+  els.diceOutcome.textContent = `DC ${roll.dc}　${success ? "成功" : "失敗"}`;
+  // TODO(design): 039 requires natural 1/20 labels even when an action disables critical outcomes.
+  els.diceCritical.textContent = natural === 20 ? "大成功" : natural === 1 ? "大失敗" : "";
+  els.diceCritical.hidden = !els.diceCritical.textContent;
+  els.diceCheckCard.classList.toggle("critical-success", natural === 20);
+  els.diceCheckCard.classList.toggle("critical-failure", natural === 1);
+}
+
+function skipDicePresentation() {
+  const presentation = state.dicePresentation;
+  if (!presentation) return;
+  presentation.skipped = true;
+  stopDiceRollAnimation();
+  els.diceCheckCard.classList.add("instant-result");
+  // Until the response arrives, no final number is known on the client.
+  els.diceNatural.textContent = presentation.roll ? String(presentation.roll.rolls[0]) : "?";
+  if (presentation.roll) {
+    showDiceCalculation(presentation.roll);
+    showDiceOutcome(presentation.roll);
+  }
+  presentation.wake?.();
+}
+
+async function renderTurnResponse(session, title = "判定") {
+  const log = session.dice_log || [];
+  const previousLog = state.session?.dice_log || [];
+  const roll = log[log.length - 1];
+  const isNew = log.length !== previousLog.length || diceSignature(roll) !== diceSignature(previousLog[previousLog.length - 1]);
+  if (!state.session?.in_combat && !session.in_combat && isNew && isCheckRoll(roll)
+      && Number(roll.dc) < 100 && roll.rolls?.length) {
+    document.querySelector("#mapOverlay").style.display = "none";
+    const presentation = state.dicePresentation || startDicePresentation(null, title);
+    presentation.roll = roll;
+    const immediate = () => presentation.skipped || presentation.reducedMotion;
+    await waitForDice(presentation, immediate() ? 0 : presentation.minimum - (performance.now() - presentation.startedAt));
+    if (state.dicePresentation !== presentation) return;
+    stopDiceRollAnimation();
+    els.diceNatural.textContent = String(roll.rolls[0]);
+    els.diceOutcome.textContent = "";
+    await waitForDice(presentation, immediate() ? 0 : 200);
+    if (state.dicePresentation !== presentation) return;
+    showDiceCalculation(roll);
+    await waitForDice(presentation, immediate() ? 0 : 200);
+    if (state.dicePresentation !== presentation) return;
+    showDiceOutcome(roll);
+    await waitForDice(presentation, 1200);
+    if (state.dicePresentation !== presentation) return;
+  }
+  closeDiceCheck();
+  renderSession(session);
+  if (!session.in_combat && !session.game_over) {
+    (state.choicesRevealed ? els.choicesList.querySelector(".choice-card") : els.dialogueBox)?.focus();
+  }
 }
 
 function hideDiceBanner() {
@@ -1037,7 +1206,7 @@ function renderLatestDiceResult(diceLog) {
 function diceSignature(roll) {
   if (!roll || typeof roll !== "object") return "";
   const rolls = Array.isArray(roll.rolls) ? roll.rolls.join(",") : "";
-  return [roll.expression || "", rolls, roll.total ?? "", roll.dc ?? "", roll.success ?? ""].join("|");
+  return [roll.created_at || "", roll.expression || "", rolls, roll.total ?? "", roll.dc ?? "", roll.success ?? ""].join("|");
 }
 
 function isCheckRoll(roll) {
@@ -1051,7 +1220,7 @@ function showDiceResult(roll) {
   const total = Number(roll.total ?? 0);
   const dc = Number(roll.dc ?? 0);
   const hasCheck = dc > 0;
-  const success = !roll.critical_failure && (roll.success === true || (hasCheck && total >= dc));
+  const success = diceCheckSucceeded(roll);
   els.diceBanner.style.display = "";
   els.diceBanner.classList.toggle("success", hasCheck && success);
   els.diceBanner.classList.toggle("failure", hasCheck && !success);
@@ -1333,12 +1502,13 @@ function revealPendingChoices() {
   choiceDebug("reveal-choices", {
     blocked: state.choicesRevealed || !state.pendingChoices.length,
   });
-  if (state.choicesRevealed || !state.pendingChoices.length) return;
+  if (state.turnBusy || state.pendingCheck || state.choicesRevealed || !state.pendingChoices.length) return;
   state.choicesRevealed = true;
   renderChoices(state.pendingChoices);
 }
 
 function handleChoiceListClick(event) {
+  if (state.turnBusy || state.serviceBusy || state.pendingCheck) return;
   const card = event.target.closest(".choice-card");
   choiceDebug("choice-click", {
     targetTag: event.target?.tagName || "",
@@ -1379,7 +1549,8 @@ function handleChoiceListClick(event) {
   }
 
   const text = card.dataset.choiceText || (typeof choice === "string" ? choice : (choice && typeof choice === "object" ? choice.text : ""));
-  if (text) submitChoice(text, card.dataset.actionId || "");
+  if (choice.check && !state.session?.in_combat) openDiceCheck(choice, card);
+  else if (text) submitChoice(text, card.dataset.actionId || "");
 }
 
 function renderCombat(session) {
@@ -1786,6 +1957,31 @@ function escapeAttr(value) {
    ═══════════════════════════════════════════════════ */
 
 els.form.addEventListener("submit", submitTurn);
+els.diceCheckRoll.addEventListener("click", confirmDiceCheck);
+els.diceCheckCancel.addEventListener("click", cancelDiceCheck);
+document.addEventListener("click", event => {
+  if (state.dicePresentation || (state.pendingCheck && !els.diceCheckCard.contains(event.target))) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    skipDicePresentation();
+  }
+}, true);
+document.addEventListener("keydown", event => {
+  if (!state.pendingCheck && !state.dicePresentation) return;
+  if (!["Enter", " ", "Escape", "Tab"].includes(event.key)) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  if (event.repeat) return;
+  if (state.dicePresentation) {
+    if (event.key !== "Tab") skipDicePresentation();
+  } else if (event.key === "Escape") {
+    cancelDiceCheck();
+  } else if (event.key === "Tab") {
+    (document.activeElement === els.diceCheckRoll ? els.diceCheckCancel : els.diceCheckRoll).focus();
+  } else {
+    confirmDiceCheck();
+  }
+}, true);
 els.startButton.addEventListener("click", startGame);
 els.newSessionButton.addEventListener("click", newSession);
 if (els.endingRestartButton) els.endingRestartButton.addEventListener("click", newSession);
@@ -1975,7 +2171,7 @@ function renderMaps(selectedId) {
         return;
       }
       state.turnBusy = true;
-      try { renderSession(await serviceRequest('map/move', {node_id: node.id})); }
+      try { await renderTurnResponse(await serviceRequest('map/move', {node_id: node.id})); }
       catch (error) { document.querySelector('#mapDetail').textContent = error.message; }
       finally { state.turnBusy = false; }
     });

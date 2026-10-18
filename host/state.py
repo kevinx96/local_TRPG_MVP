@@ -697,6 +697,13 @@ def player_choices_for_session(choices: list[dict[str, Any]], session: dict[str,
             continue
         choice = {key: deepcopy(value) for key, value in source.items()
                   if key in {"id", "action_id", "text", "preview", "risk", "enabled", "disabled_reason", "children", "open_shop", "portrait_image"}}
+        if isinstance(source.get("roll"), dict) and choice.get("text") != "？？？":
+            expression, dc = action_dice_settings(source, session=session)
+            if 0 < dc < 100:
+                try:
+                    choice["check"] = dice_check_info(session, expression, dc)
+                except ValueError:
+                    pass  # Invalid checks still use the turn endpoint's existing error handling.
         if source.get("risk_source") == "destination":
             from .maps import public_maps
             destinations = _risk_destinations_for_session(source.get("effects", []), session)
@@ -821,10 +828,9 @@ def _valid_client_roll(val: Any, sides: int) -> bool:
         return False
 
 
-def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None, client_rolls: Optional[list[int]] = None) -> dict[str, Any]:
+def dice_check_info(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None) -> dict[str, Any]:
+    """Resolve the dice and modifier once for both previews and server rolls."""
     expr = str(expression or "").strip() or "1d20"
-    dice_part = expr
-    attr_key = ""
     dice_match = _DICE_ATTR_RE.match(expr)
     if not dice_match:
         raise ValueError(f"Unsupported dice expression: {expr}")
@@ -836,15 +842,22 @@ def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[in
     attrs = _normalize_attribute_map(session.get("character", {}).get("attributes", {}))
     if attr_key and attr_key not in attrs:
         raise ValueError(f"Unknown dice attribute: {attr_key}")
-    count, sides = _parse_dice_expression(dice_part)
+    attr_mod = sign * _attr_value(attrs, attr_key) if attr_key else fixed_modifier
+    labels = {"str": "筋力", "dex": "敏捷", "int": "知力", "wis": "知恵", "end": "耐久", "cha": "魅力"}
+    return {"dice": dice_part, "attribute": attr_key, "attribute_label": labels.get(attr_key, attr_key),
+            "modifier": attr_mod, "dc": dc}
+
+
+def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[int] = None, client_rolls: Optional[list[int]] = None) -> dict[str, Any]:
+    expr = str(expression or "").strip() or "1d20"
+    check = dice_check_info(session, expr, dc)
+    count, sides = _parse_dice_expression(check["dice"])
     if client_rolls and isinstance(client_rolls, list) and len(client_rolls) == count and all(_valid_client_roll(r, sides) for r in client_rolls):
         rolls = [int(r) for r in client_rolls]
     else:
         rolls = [random.randint(1, sides) for _ in range(count)]
     base_total = sum(rolls)
-    attr_mod = fixed_modifier
-    if attr_key:
-        attr_mod = sign * _attr_value(attrs, attr_key)
+    attr_mod = check["modifier"]
     total = base_total + attr_mod
     entry: dict[str, Any] = {"expression": expr, "rolls": rolls, "total": total, "created_at": utc_now()}
     entry["critical_success"] = bool(rolls and all(value == sides for value in rolls))
@@ -853,10 +866,10 @@ def roll_dice(session: dict[str, Any], expression: str = "1d20", dc: Optional[in
         entry["dc"] = dc
         if dc > 0:
             entry["success"] = total >= dc
-    if modifier:
+    if expr != check["dice"]:
         entry["base_total"] = base_total
         entry["attr_mod"] = attr_mod
-        entry["attr_key"] = attr_key
+        entry["attr_key"] = check["attribute"]
     session["dice_log"].append(entry)
     return entry
 
@@ -1286,6 +1299,8 @@ def apply_action_result(session: dict[str, Any], action: dict[str, Any], latest_
             record_state_event(session, "preparation_warning", action["preparation_warning"],
                                {"action_id": action["id"], "location_id": source_location_id})
     outcome = _action_outcome(latest_roll, action.get("critical_enabled") is not False)
+    if latest_roll.get("rolls"):
+        latest_roll["outcome"] = outcome
     base_effects = _as_list(action.get("effects"))
     branch_outcome = {
         "critical_success": "success",
