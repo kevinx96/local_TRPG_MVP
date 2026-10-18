@@ -699,6 +699,18 @@ function renderMeter(stat, character) {
    INVENTORY (with descriptions)
    ═══════════════════════════════════════════════════ */
 
+function prependItemIcon(nameNode, item) {
+  if (typeof item.icon !== "string" || !item.icon.trim()) return;
+  const icon = document.createElement("img");
+  icon.className = "item-icon";
+  icon.alt = "";
+  icon.width = 32;
+  icon.height = 32;
+  icon.addEventListener("error", () => icon.remove(), { once: true });
+  icon.src = item.icon;
+  nameNode.prepend(icon);
+}
+
 function renderInventory(items) {
   const slotLabels = { weapon: "武器", armor: "防具", accessory: "補助" };
   const isEquipped = item => Boolean(slotLabels[item.slot]) && (state.character?.equipment || []).some(entry =>
@@ -762,16 +774,7 @@ function renderInventory(items) {
       ` : ''}
     `;
 
-    if (typeof item.icon === "string" && item.icon.trim()) {
-      const icon = document.createElement("img");
-      icon.className = "item-icon";
-      icon.alt = "";
-      icon.width = 32;
-      icon.height = 32;
-      icon.addEventListener("error", () => icon.remove(), { once: true });
-      icon.src = item.icon;
-      li.querySelector(".item-name").prepend(icon);
-    }
+    prependItemIcon(li.querySelector(".item-name"), item);
 
     if (hasDetails) {
       const header = li.querySelector(".item-header");
@@ -903,6 +906,7 @@ function renderShop() {
       <div class="shop-row-bottom"><span class="shop-price ${!selling && item.price > shop.gold ? "unaffordable" : ""}">${item.price} G</span>
       <span class="item-qty">${item.stock === null ? "∞" : `${selling ? "所持：" : "在庫 "}${item.stock}`}</span>
       ${item.stock === 0 ? '<span class="item-desc">売り切れ</span>' : ""}</div>`;
+    prependItemIcon(row.querySelector(".item-name"), item);
     row.addEventListener("click", () => {
       state.shopItemId = item.item_id;
       state.shopQuantity = 1;
@@ -1486,6 +1490,9 @@ function renderCombatActions(actions) {
       <span>${escapeHtml(description)}</span>
     </button>`;
   }).join("");
+  visible.forEach((action, index) => {
+    if (action.type === "item") prependItemIcon(els.combatActions.children[index].querySelector("strong"), action);
+  });
 }
 
 function renderCombatIntro(combat) {

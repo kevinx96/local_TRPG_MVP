@@ -389,6 +389,7 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
             "name": str(normalized.get("name") or item_id),
             "description": structured_item_effect(normalized),
             "quantity": _safe_int(normalized.get("quantity"), 1),
+            **({"icon": normalized["icon"]} if normalized.get("icon") else {}),
             "kind": spec.get("kind"),
             "enabled": True,
             **_combat_action_details(spec),

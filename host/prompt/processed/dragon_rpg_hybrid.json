@@ -15,7 +15,8 @@
     "rewards_battlefield_v031": true,
     "oaksdawn_v033": true,
     "oaksdawn_v034": true,
-    "rumbling_gorge_v035": true
+    "rumbling_gorge_v035": true,
+    "item_icons_v036": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -16504,7 +16505,8 @@
         "武器"
       ],
       "category": "equipment",
-      "slot": "weapon"
+      "slot": "weapon",
+      "icon": "/static/images/icon_iron_sword.png"
     },
     {
       "id": "herb",
@@ -16520,7 +16522,8 @@
         "薬草",
         "回復"
       ],
-      "category": "consumable"
+      "category": "consumable",
+      "icon": "/static/images/icon_herb.png"
     },
     {
       "id": "magic_scroll",
@@ -16540,7 +16543,8 @@
         "攻撃魔法"
       ],
       "rare": true,
-      "category": "consumable"
+      "category": "consumable",
+      "icon": "/static/images/icon_magic_scroll.png"
     },
     {
       "id": "mp_potion",
@@ -16558,7 +16562,8 @@
         "魔力",
         "回復薬"
       ],
-      "category": "consumable"
+      "category": "consumable",
+      "icon": "/static/images/icon_mp_potion.png"
     },
     {
       "id": "ice_charm",
@@ -16577,7 +16582,8 @@
         "護符",
         "冷気"
       ],
-      "category": "equipment"
+      "category": "equipment",
+      "icon": "/static/images/icon_ice_charm.png"
     },
     {
       "id": "adamantite_armor",
@@ -16594,7 +16600,8 @@
         "防具"
       ],
       "category": "equipment",
-      "slot": "armor"
+      "slot": "armor",
+      "icon": "/static/images/icon_adamantite_armor.png"
     },
     {
       "id": "ice_iron_greatsword",
@@ -16615,7 +16622,8 @@
         "武器"
       ],
       "category": "equipment",
-      "slot": "weapon"
+      "slot": "weapon",
+      "icon": "/static/images/icon_ice_iron_greatsword.png"
     },
     {
       "id": "activated_ice_charm",
@@ -16637,7 +16645,8 @@
         }
       },
       "category": "equipment",
-      "slot": "accessory"
+      "slot": "accessory",
+      "icon": "/static/images/icon_activated_ice_charm.png"
     },
     {
       "id": "ice_katana",
@@ -16658,7 +16667,8 @@
         "自動攻撃"
       ],
       "category": "equipment",
-      "slot": "weapon"
+      "slot": "weapon",
+      "icon": "/static/images/icon_ice_katana.png"
     },
     {
       "id": "earth_staff",
@@ -16686,7 +16696,8 @@
         ]
       },
       "category": "equipment",
-      "slot": "weapon"
+      "slot": "weapon",
+      "icon": "/static/images/icon_earth_staff.png"
     },
     {
       "id": "healing_scroll",
@@ -16698,7 +16709,8 @@
         "consumable": true
       },
       "rare": true,
-      "category": "consumable"
+      "category": "consumable",
+      "icon": "/static/images/icon_healing_scroll.png"
     },
     {
       "id": "fireball_scroll",
@@ -16712,7 +16724,8 @@
         "consumable": true
       },
       "rare": true,
-      "category": "consumable"
+      "category": "consumable",
+      "icon": "/static/images/icon_fireball_scroll.png"
     },
     {
       "id": "smoke_bomb",
@@ -16722,7 +16735,8 @@
         "kind": "flee",
         "consumable": true
       },
-      "category": "consumable"
+      "category": "consumable",
+      "icon": "/static/images/icon_smoke_bomb.png"
     },
     {
       "id": "poison_dart",
@@ -16741,7 +16755,8 @@
           "stackable": false
         }
       },
-      "category": "consumable"
+      "category": "consumable",
+      "icon": "/static/images/icon_poison_dart.png"
     },
     {
       "id": "cursed_holy_sword",
@@ -16757,7 +16772,8 @@
         "self_damage": 1
       },
       "category": "equipment",
-      "slot": "weapon"
+      "slot": "weapon",
+      "icon": "/static/images/icon_cursed_holy_sword.png"
     },
     {
       "id": "cursed_holy_staff",
@@ -16775,7 +16791,8 @@
         "healing_harms_humans": true
       },
       "category": "equipment",
-      "slot": "weapon"
+      "slot": "weapon",
+      "icon": "/static/images/icon_cursed_holy_staff.png"
     },
     {
       "id": "cursed_crystal_ball",
@@ -16812,7 +16829,8 @@
         ]
       },
       "category": "equipment",
-      "slot": "accessory"
+      "slot": "accessory",
+      "icon": "/static/images/icon_cursed_crystal_ball.png"
     },
     {
       "id": "dark_crystal_ball",
@@ -16849,7 +16867,8 @@
         ]
       },
       "category": "equipment",
-      "slot": "accessory"
+      "slot": "accessory",
+      "icon": "/static/images/icon_dark_crystal_ball.png"
     },
     {
       "id": "cursed_dagger",
@@ -16869,13 +16888,15 @@
         }
       },
       "category": "equipment",
-      "slot": "weapon"
+      "slot": "weapon",
+      "icon": "/static/images/icon_cursed_dagger.png"
     },
     {
       "id": "rusted_crown",
       "name": "錆びた王冠",
       "description": "スライム王が身につけていた錆びた王冠。今のところ効果はない。",
-      "category": "material"
+      "category": "material",
+      "icon": "/static/images/icon_rusted_crown.png"
     },
     {
       "id": "shrinking_gun",
@@ -16886,7 +16907,8 @@
         "chance": 2,
         "consumable": false
       },
-      "category": "equipment"
+      "category": "equipment",
+      "icon": "/static/images/icon_shrinking_gun.png"
     },
     {
       "id": "fire_seed",
@@ -16903,7 +16925,8 @@
         }
       },
       "category": "key",
-      "key_item": true
+      "key_item": true,
+      "icon": "/static/images/icon_fire_seed.png"
     },
     {
       "id": "trail_ration",
@@ -16912,7 +16935,8 @@
       "traits": [
         "food"
       ],
-      "category": "consumable"
+      "category": "consumable",
+      "icon": "/static/images/icon_trail_ration.png"
     },
     {
       "id": "holy_water",
@@ -16926,7 +16950,8 @@
         "consumable": true
       },
       "rare": true,
-      "category": "consumable"
+      "category": "consumable",
+      "icon": "/static/images/icon_holy_water.png"
     },
     {
       "id": "white_dragon_scale",
@@ -16934,14 +16959,16 @@
       "description": "雪のように白い竜の鱗。触れると指先が凍える。",
       "effect": "証拠品（戦闘では使えない）",
       "category": "key",
-      "key_item": true
+      "key_item": true,
+      "icon": "/static/images/icon_white_dragon_scale.png"
     },
     {
       "id": "ice_crystal",
       "name": "氷の結晶",
       "description": "溶けることのない氷のかけら。",
       "effect": "鍛冶屋で氷の護符に加工できる",
-      "category": "material"
+      "category": "material",
+      "icon": "/static/images/icon_ice_crystal.png"
     },
     {
       "id": "red_dragon_core",
@@ -16957,7 +16984,8 @@
       },
       "rare": true,
       "category": "key",
-      "key_item": true
+      "key_item": true,
+      "icon": "/static/images/icon_red_dragon_core.png"
     },
     {
       "id": "prism_shard",
@@ -16965,7 +16993,8 @@
       "description": "色が絶えず移ろう水晶の欠片。強い魔力を秘めている。",
       "effect": "魔法店で武器に加工できる",
       "category": "key",
-      "key_item": true
+      "key_item": true,
+      "icon": "/static/images/icon_prism_shard.png"
     },
     {
       "id": "ruby_charm",
@@ -16979,20 +17008,23 @@
           "fire": 0.7
         }
       },
-      "slot": "accessory"
+      "slot": "accessory",
+      "icon": "/static/images/icon_ruby_charm.png"
     },
     {
       "id": "glowing_moss",
       "name": "光苔",
       "description": "暗い場所で淡く光る苔。薬の材料になる。",
-      "category": "material"
+      "category": "material",
+      "icon": "/static/images/icon_glowing_moss.png"
     },
     {
       "id": "robert_hammer",
       "name": "刻印のハンマー",
       "description": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
       "category": "key",
-      "key_item": true
+      "key_item": true,
+      "icon": "/static/images/icon_robert_hammer.png"
     },
     {
       "id": "prism_weapon_hero",
@@ -17006,7 +17038,8 @@
         "accuracy": 92,
         "element": "weakness"
       },
-      "slot": "weapon"
+      "slot": "weapon",
+      "icon": "/static/images/icon_prism_weapon_hero.png"
     },
     {
       "id": "prism_weapon_cleric",
@@ -17021,7 +17054,8 @@
         "element": "weakness",
         "skill_healing_bonus": 2
       },
-      "slot": "weapon"
+      "slot": "weapon",
+      "icon": "/static/images/icon_prism_weapon_cleric.png"
     },
     {
       "id": "prism_weapon_mage",
@@ -17035,7 +17069,8 @@
         "accuracy": 92,
         "element": "weakness"
       },
-      "slot": "weapon"
+      "slot": "weapon",
+      "icon": "/static/images/icon_prism_weapon_mage.png"
     },
     {
       "id": "prism_weapon_thief",
@@ -17049,7 +17084,8 @@
         "accuracy": 92,
         "element": "weakness"
       },
-      "slot": "weapon"
+      "slot": "weapon",
+      "icon": "/static/images/icon_prism_weapon_thief.png"
     },
     {
       "id": "dragon_elixir",
@@ -17061,7 +17097,8 @@
         "kind": "heal",
         "max_hp_ratio": 0.5,
         "consumable": true
-      }
+      },
+      "icon": "/static/images/icon_dragon_elixir.png"
     },
     {
       "id": "draco_journal",
@@ -17069,7 +17106,8 @@
       "description": "将軍ドラコの日誌。紅竜への呪いとXanxusとの密約が記されている。",
       "effect": "証拠品",
       "category": "key",
-      "key_item": true
+      "key_item": true,
+      "icon": "/static/images/icon_draco_journal.png"
     },
     {
       "id": "frost_seal_charm",
@@ -17077,7 +17115,8 @@
       "description": "白い鱗を編み込んだ護符。白竜の冷気を鎮めるという。",
       "effect": "凍てつく吐息のダメージを軽減",
       "category": "key",
-      "key_item": true
+      "key_item": true,
+      "icon": "/static/images/icon_frost_seal_charm.png"
     },
     {
       "id": "assassin_crest",
@@ -17085,7 +17124,8 @@
       "description": "白い竜を象った徽章。将軍家の紋章だ。",
       "effect": "証拠品",
       "category": "key",
-      "key_item": true
+      "key_item": true,
+      "icon": "/static/images/icon_assassin_crest.png"
     },
     {
       "id": "fire_dragon_oil",
@@ -17100,7 +17140,8 @@
         "accuracy": 95,
         "element": "fire",
         "consumable": true
-      }
+      },
+      "icon": "/static/images/icon_fire_dragon_oil.png"
     },
     {
       "id": "gravekeeper_cloak",
@@ -17128,7 +17169,8 @@
           "description": "霧の古戦場：被ダメージをさらに1軽減"
         }
       },
-      "slot": "armor"
+      "slot": "armor",
+      "icon": "/static/images/icon_gravekeeper_cloak.png"
     },
     {
       "id": "elixir_str",
@@ -17141,7 +17183,8 @@
         "amount": 2,
         "attribute": "str",
         "label": "筋力"
-      }
+      },
+      "icon": "/static/images/icon_elixir_str.png"
     },
     {
       "id": "elixir_dex",
@@ -17154,7 +17197,8 @@
         "amount": 2,
         "attribute": "dex",
         "label": "敏捷"
-      }
+      },
+      "icon": "/static/images/icon_elixir_dex.png"
     },
     {
       "id": "elixir_int",
@@ -17167,7 +17211,8 @@
         "amount": 2,
         "attribute": "int",
         "label": "知力"
-      }
+      },
+      "icon": "/static/images/icon_elixir_int.png"
     },
     {
       "id": "elixir_wis",
@@ -17180,7 +17225,8 @@
         "amount": 2,
         "attribute": "wis",
         "label": "感知"
-      }
+      },
+      "icon": "/static/images/icon_elixir_wis.png"
     },
     {
       "id": "elixir_end",
@@ -17193,7 +17239,8 @@
         "amount": 2,
         "attribute": "end",
         "label": "耐久"
-      }
+      },
+      "icon": "/static/images/icon_elixir_end.png"
     },
     {
       "id": "fruit_life",
@@ -17206,7 +17253,8 @@
         "amount": 3,
         "resource": "hp",
         "label": "最大HP"
-      }
+      },
+      "icon": "/static/images/icon_fruit_life.png"
     },
     {
       "id": "fruit_mana",
@@ -17219,14 +17267,16 @@
         "amount": 3,
         "resource": "mp",
         "label": "最大MP"
-      }
+      },
+      "icon": "/static/images/icon_fruit_mana.png"
     },
     {
       "id": "guardian_letter",
       "name": "守護団の推薦状",
       "category": "key",
       "key_item": true,
-      "description": "暁の守護団長ヴァルターの署名入りの推薦状。"
+      "description": "暁の守護団長ヴァルターの署名入りの推薦状。",
+      "icon": "/static/images/icon_guardian_letter.png"
     },
     {
       "id": "guardian_chainmail",
@@ -17237,7 +17287,8 @@
       "combat": {
         "kind": "armor",
         "defense": 2
-      }
+      },
+      "icon": "/static/images/icon_guardian_chainmail.png"
     },
     {
       "id": "holy_silver",
@@ -17331,7 +17382,8 @@
       "name": "精霊の泉の水",
       "category": "key",
       "key_item": true,
-      "description": "精霊の泉で汲んだ澄んだ水。ほのかに光を帯びている。"
+      "description": "精霊の泉で汲んだ澄んだ水。ほのかに光を帯びている。",
+      "icon": "/static/images/icon_spirit_spring_water.png"
     }
   ],
   "clues": [
@@ -19088,7 +19140,8 @@
             "element": "physical"
           },
           "quantity": 1,
-          "slot": "weapon"
+          "slot": "weapon",
+          "icon": "/static/images/icon_iron_sword.png"
         },
         {
           "name": "革の鎧",
@@ -19099,13 +19152,15 @@
             "defense": 1
           },
           "quantity": 1,
-          "slot": "armor"
+          "slot": "armor",
+          "icon": "/static/images/icon_leather_armor.png"
         },
         {
           "name": "薬草",
           "description": "傷を癒す薬草。",
           "effect": "HPを10回復",
-          "quantity": 1
+          "quantity": 1,
+          "icon": "/static/images/icon_herb.png"
         },
         {
           "id": "trail_ration",
@@ -19114,7 +19169,8 @@
           "traits": [
             "food"
           ],
-          "quantity": 2
+          "quantity": 2,
+          "icon": "/static/images/icon_trail_ration.png"
         }
       ],
       "equipment": [
@@ -19219,7 +19275,8 @@
             ]
           },
           "quantity": 1,
-          "slot": "accessory"
+          "slot": "accessory",
+          "icon": "/static/images/icon_holy_staff.png"
         },
         {
           "name": "ローブ",
@@ -19235,13 +19292,15 @@
             ]
           },
           "quantity": 1,
-          "slot": "armor"
+          "slot": "armor",
+          "icon": "/static/images/icon_robe.png"
         },
         {
           "name": "薬草",
           "description": "傷を癒す薬草。",
           "effect": "HPを10回復",
-          "quantity": 2
+          "quantity": 2,
+          "icon": "/static/images/icon_herb.png"
         },
         {
           "id": "trail_ration",
@@ -19250,7 +19309,8 @@
           "traits": [
             "food"
           ],
-          "quantity": 2
+          "quantity": 2,
+          "icon": "/static/images/icon_trail_ration.png"
         }
       ],
       "equipment": [
@@ -19353,7 +19413,8 @@
             ]
           },
           "quantity": 1,
-          "slot": "accessory"
+          "slot": "accessory",
+          "icon": "/static/images/icon_grimoire.png"
         },
         {
           "name": "魔法のローブ",
@@ -19366,13 +19427,15 @@
             }
           },
           "quantity": 1,
-          "slot": "armor"
+          "slot": "armor",
+          "icon": "/static/images/icon_magic_robe.png"
         },
         {
           "name": "薬草",
           "description": "傷を癒す薬草。",
           "effect": "HPを10回復",
-          "quantity": 1
+          "quantity": 1,
+          "icon": "/static/images/icon_herb.png"
         },
         {
           "id": "trail_ration",
@@ -19381,7 +19444,8 @@
           "traits": [
             "food"
           ],
-          "quantity": 2
+          "quantity": 2,
+          "icon": "/static/images/icon_trail_ration.png"
         }
       ],
       "equipment": [
@@ -19494,7 +19558,8 @@
             "element": "physical"
           },
           "quantity": 1,
-          "slot": "weapon"
+          "slot": "weapon",
+          "icon": "/static/images/icon_dagger.png"
         },
         {
           "name": "革の鎧",
@@ -19505,13 +19570,15 @@
             "defense": 1
           },
           "quantity": 1,
-          "slot": "armor"
+          "slot": "armor",
+          "icon": "/static/images/icon_leather_armor.png"
         },
         {
           "name": "盗賊道具",
           "description": "鍵開けや罠解除に使う道具一式。",
           "effect": "探索・解除判定+2",
-          "quantity": 1
+          "quantity": 1,
+          "icon": "/static/images/icon_thieves_tools.png"
         },
         {
           "id": "trail_ration",
@@ -19520,7 +19587,8 @@
           "traits": [
             "food"
           ],
-          "quantity": 2
+          "quantity": 2,
+          "icon": "/static/images/icon_trail_ration.png"
         }
       ],
       "equipment": [

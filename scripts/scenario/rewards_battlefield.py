@@ -309,6 +309,9 @@ def upgrade(pack: dict[str, Any]) -> None:
     annotate_risks(pack)
     from scripts.scenario.equipment_slots import apply as apply_slots
     apply_slots(pack)
+    if pack["meta"].get("item_icons_v036"):
+        from .item_icons import apply as apply_icons
+        apply_icons(pack)
 
 
 def main() -> None:

@@ -265,14 +265,16 @@ class OaksdawnQuestsTests(unittest.TestCase):
             apply(pack)
             self.assertEqual(pack, original)
             reference = json.loads(DEFAULT_SCENARIO.read_text(encoding="utf-8"))
-            self.assertEqual([i for i in pack["items"] if i.get("icon")], [i for i in reference["items"] if i.get("icon")])
-            self.assertEqual(len([i for i in pack["items"] if i.get("icon")]), 7)
+            self.assertEqual({i["id"]: i["icon"] for i in pack["items"]},
+                             {i["id"]: i["icon"] for i in reference["items"]})
+            self.assertTrue(all(i.get("icon") for i in pack["items"]))
             session = fresh_session(pack, "hero")
             self.give(session, "holy_silver")
             public = state.public_session(session)
             silver = next(i for i in public["character"]["inventory"] if i.get("id") == "holy_silver")
             self.assertEqual(silver["icon"], "/static/images/icon_holy_silver.png")
-            self.assertNotIn("icon", public["character"]["inventory"][0])
+            self.assertEqual(public["character"]["inventory"][0]["icon"], "/static/images/icon_iron_sword.png")
+            self.assertNotIn("icon", state._enrich_item({"name": "鉄の剣"}))
 
 
 if __name__ == "__main__":

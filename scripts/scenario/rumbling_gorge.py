@@ -179,6 +179,9 @@ def apply(pack: dict[str, Any]) -> None:
     add_maps(pack, locations)
     pack["meta"]["rumbling_gorge_v035"] = True
     pack["meta"]["content_revision"] = max(pack["meta"].get("content_revision", ""), "2026-10-18-v035")
+    if pack["meta"].get("item_icons_v036"):
+        from .item_icons import apply as apply_icons
+        apply_icons(pack)
 
 
 def add_elio(pack: dict[str, Any], locations: dict[str, Any]) -> None:
