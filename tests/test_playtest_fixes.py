@@ -8,7 +8,7 @@ from host.scenario_context import fallback_choices_for_session, select_scenario_
 from host.maps import movement_action, public_maps
 from scripts.balance import checkpoints
 from scripts.playtest.audit import narration_gaps
-from scripts.playtest.explore import CHARACTERS, SEEDS, explore, offline_runtime
+from scripts.playtest.explore import CHARACTERS, explore, offline_runtime
 from scripts.scenario.playtest_fixes import ENTRIES, upgrade
 
 
@@ -150,7 +150,7 @@ class PlaytestFixTests(unittest.TestCase):
     def test_fixed_seed_app_playthroughs(self):
         results = []
         for character in CHARACTERS:
-            for seed in SEEDS:
+            for seed in (20261013, 20261014):
                 with self.subTest(character=character, seed=seed):
                     result = explore(character, seed, 150)
                     results.append(result)

@@ -25,6 +25,8 @@ const state = {
   combatPlayback: null,
   combatActions: [],
   combatIntroSeenId: "",
+  combatLogId: "",
+  combatLogExpanded: false,
   session: null,
   serviceBusy: false,
   turnBusy: false,
@@ -117,6 +119,7 @@ const els = {
   combatPlayerSpBar: document.querySelector("#combatPlayerSpBar"),
   combatEnemies: document.querySelector("#combatEnemies"),
   combatLog: document.querySelector("#combatLog"),
+  combatLogToggle: document.querySelector("#combatLogToggle"),
   combatActionTabs: document.querySelector("#combatActionTabs"),
   combatActions: document.querySelector("#combatActions"),
   combatResult: document.querySelector("#combatResult"),
@@ -1384,10 +1387,17 @@ function renderCombat(session) {
     els.combatScreen.style.display = "none";
     if (els.combatIntro) els.combatIntro.style.display = "none";
     state.combatTargetId = "";
+    state.combatLogId = "";
+    state.combatLogExpanded = false;
     return;
   }
 
   els.combatScreen.style.display = "";
+  if (state.combatLogId !== combat.id) {
+    state.combatLogId = combat.id;
+    state.combatLogExpanded = false;
+  }
+  renderCombatLogToggle();
   renderCombatIntro(combat);
   els.combatScreen.classList.toggle("busy", state.combatBusy);
   const enemies = Array.isArray(combat.enemies) ? combat.enemies : [];
@@ -1415,7 +1425,7 @@ function renderCombat(session) {
   els.combatLog.innerHTML = logs.length
     ? logs.map(combatLogMarkup).join("")
     : '<div class="combat-log-entry"><strong>R1</strong><span>行動を選択してください。</span></div>';
-  els.combatLog.scrollTop = els.combatLog.scrollHeight;
+  if (!state.combatLogExpanded) els.combatLog.scrollTop = els.combatLog.scrollHeight;
 
   const terminal = combat.status !== "active";
   els.combatScreen.classList.toggle("combat-terminal", terminal);
@@ -1433,6 +1443,12 @@ function renderCombat(session) {
     state.combatActions = Array.isArray(combat.actions) ? combat.actions : [];
     renderCombatActions(state.combatActions);
   }
+}
+
+function renderCombatLogToggle() {
+  els.combatScreen.classList.toggle("log-expanded", state.combatLogExpanded);
+  els.combatLogToggle.setAttribute("aria-expanded", String(state.combatLogExpanded));
+  els.combatLogToggle.textContent = state.combatLogExpanded ? "ログ ▴" : "ログ ▾";
 }
 
 function combatLogMarkup(entry) {
@@ -1767,6 +1783,15 @@ if (els.combatScreen) {
   });
 }
 if (els.combatResolveButton) els.combatResolveButton.addEventListener("click", resolveCombatResult);
+if (els.combatLogToggle) {
+  els.combatLogToggle.parentElement.addEventListener("click", () => {
+    if (!window.matchMedia("(width < 768px)").matches) return;
+    state.combatLogExpanded = !state.combatLogExpanded;
+    renderCombatLogToggle();
+    els.combatLog.scrollTop = state.combatLogExpanded ? 0 : els.combatLog.scrollHeight;
+    if (state.combatLogExpanded) els.combatLogToggle.scrollIntoView({ block: "start" });
+  });
+}
 if (els.combatIntroContinue) {
   els.combatIntroContinue.addEventListener("click", () => {
     state.combatIntroSeenId = els.combatIntro?.dataset.combatId || "";

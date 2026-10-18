@@ -323,7 +323,7 @@ def public_combat(session: dict[str, Any]) -> Optional[dict[str, Any]]:
         "round": combat.get("round"),
         "turn": combat.get("turn"),
         "enemies": deepcopy(combat.get("enemies") or []),
-        "log": deepcopy((combat.get("log") or [])[-40:]),
+        "log": deepcopy(combat.get("log") or []),
         "pending_resolution": bool(combat.get("pending_resolution")),
         "result": deepcopy(combat.get("result")),
         "intro_text": str(combat.get("intro_text") or ""),
@@ -1691,8 +1691,6 @@ def _log(session: dict[str, Any], actor: str, kind: str, text: str, data: Option
     combat.setdefault("log", []).append(entry)
     if "action_events" in combat:
         combat["action_events"].append(deepcopy(entry))
-    if len(combat["log"]) > 80:
-        combat["log"] = combat["log"][-80:]
 
 
 def _defeated_flag(enemy_id: str, location_id: str) -> str:
