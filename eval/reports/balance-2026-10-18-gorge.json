@@ -4,9 +4,9 @@
   "seed": 20261018,
   "fingerprints": {
     "scripts\\balance\\gorge.py": "d5f6e103a568d09d0157720d6d6c469b183c854aaa505c455446b4d90e4a9739",
-    "host\\prompt\\processed\\dragon_rpg.json": "d823c57193a71af13a9e8a2de5ae4b29f00fec403d3bbe3d1b792edf770c22f4",
+    "host\\prompt\\processed\\dragon_rpg.json": "ea656bb65bced78e38990f31cff40dba8cfac998cd2f51ea6be78c592c53e73d",
     "host\\combat.py": "1e634abed0661b50bea203d6b695e855f077f4df387d1308f0fe2a276428f10e",
-    "scripts\\scenario\\rumbling_gorge.py": "7f83a5463c5753de263193c7da63f8959c17d8c09ef2dddb70310711bd632691"
+    "scripts\\scenario\\rumbling_gorge.py": "7bbcee33a180a96fa33271d189bbd0da77a11e1568d554c31c3f0d473a24448d"
   },
   "snapshots": {
     "hero": {
@@ -668,7 +668,7 @@
                 17
               ],
               "total": 22,
-              "created_at": "2026-10-18T04:04:28.952281+00:00",
+              "created_at": "2026-10-18T04:25:05.399167+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 15,
@@ -690,10 +690,10 @@
       "character": "hero",
       "path": "gorge",
       "n": 5000,
-      "success_rate": 0.9942,
+      "success_rate": 0.9952,
       "failures": {
-        "gorge_giant_path": 17,
-        "gorge_worm_lair": 9,
+        "gorge_giant_path": 13,
+        "gorge_worm_lair": 8,
         "gorge_rockfall_path": 3
       },
       "sample": {
@@ -713,7 +713,7 @@
                 17
               ],
               "total": 22,
-              "created_at": "2026-10-18T04:04:28.964351+00:00",
+              "created_at": "2026-10-18T04:25:05.408198+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 13,
@@ -767,11 +767,11 @@
                 15
               ],
               "total": 20,
-              "created_at": "2026-10-18T04:04:28.972382+00:00",
+              "created_at": "2026-10-18T04:25:05.414253+00:00",
               "critical_success": false,
               "critical_failure": false,
-              "dc": 33,
-              "success": false,
+              "dc": 17,
+              "success": true,
               "base_total": 15,
               "attr_mod": 5,
               "attr_key": "dex"
@@ -788,15 +788,15 @@
             "roll": {
               "expression": "1d20+dex",
               "rolls": [
-                10
+                13
               ],
-              "total": 15,
-              "created_at": "2026-10-18T04:04:28.990638+00:00",
+              "total": 18,
+              "created_at": "2026-10-18T04:25:05.418492+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 17,
-              "success": false,
-              "base_total": 10,
+              "success": true,
+              "base_total": 13,
               "attr_mod": 5,
               "attr_key": "dex"
             }
@@ -807,107 +807,7 @@
             "roll": {}
           }
         ],
-        "battles": [
-          {
-            "encounter": "gorge_giant_path",
-            "status": "victory",
-            "continue": true,
-            "before": {
-              "hp": 28,
-              "mp": 9,
-              "sp": 12,
-              "level": 2,
-              "inventory": {
-                "革の鎧": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "氷鉄の大剣": 1,
-                "治療の巻物": 2
-              }
-            },
-            "after_combat": {
-              "hp": 21,
-              "mp": 9,
-              "sp": 12,
-              "level": 2,
-              "inventory": {
-                "革の鎧": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "氷鉄の大剣": 1,
-                "治療の巻物": 1
-              }
-            },
-            "after_resolution": {
-              "hp": 21,
-              "mp": 9,
-              "sp": 12,
-              "level": 2,
-              "inventory": {
-                "革の鎧": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "氷鉄の大剣": 1,
-                "治療の巻物": 1,
-                "生命の果実": 1
-              }
-            },
-            "consumables": {
-              "治療の巻物": 1
-            }
-          },
-          {
-            "encounter": "gorge_worm_lair",
-            "status": "victory",
-            "continue": true,
-            "before": {
-              "hp": 24,
-              "mp": 9,
-              "sp": 12,
-              "level": 2,
-              "inventory": {
-                "革の鎧": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "氷鉄の大剣": 1,
-                "治療の巻物": 1
-              }
-            },
-            "after_combat": {
-              "hp": 22,
-              "mp": 9,
-              "sp": 12,
-              "level": 2,
-              "inventory": {
-                "革の鎧": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "氷鉄の大剣": 1
-              }
-            },
-            "after_resolution": {
-              "hp": 22,
-              "mp": 9,
-              "sp": 12,
-              "level": 2,
-              "inventory": {
-                "革の鎧": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "氷鉄の大剣": 1,
-                "鉄壁の霊薬": 1
-              }
-            },
-            "consumables": {
-              "聖水": 2,
-              "治療の巻物": 1
-            }
-          }
-        ]
+        "battles": []
       }
     },
     {
@@ -935,7 +835,7 @@
                 17
               ],
               "total": 22,
-              "created_at": "2026-10-18T04:04:28.969148+00:00",
+              "created_at": "2026-10-18T04:25:05.425037+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 13,
@@ -989,11 +889,11 @@
                 15
               ],
               "total": 20,
-              "created_at": "2026-10-18T04:04:28.977857+00:00",
+              "created_at": "2026-10-18T04:25:05.431409+00:00",
               "critical_success": false,
               "critical_failure": false,
-              "dc": 33,
-              "success": false,
+              "dc": 17,
+              "success": true,
               "base_total": 15,
               "attr_mod": 5,
               "attr_key": "dex"
@@ -1015,57 +915,7 @@
             "roll": {}
           }
         ],
-        "battles": [
-          {
-            "encounter": "gorge_giant_path",
-            "status": "victory",
-            "continue": true,
-            "before": {
-              "hp": 28,
-              "mp": 9,
-              "sp": 12,
-              "level": 2,
-              "inventory": {
-                "革の鎧": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "氷鉄の大剣": 1,
-                "治療の巻物": 2
-              }
-            },
-            "after_combat": {
-              "hp": 15,
-              "mp": 9,
-              "sp": 12,
-              "level": 2,
-              "inventory": {
-                "革の鎧": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "氷鉄の大剣": 1,
-                "治療の巻物": 2
-              }
-            },
-            "after_resolution": {
-              "hp": 15,
-              "mp": 9,
-              "sp": 12,
-              "level": 2,
-              "inventory": {
-                "革の鎧": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "氷鉄の大剣": 1,
-                "治療の巻物": 2,
-                "生命の果実": 1
-              }
-            },
-            "consumables": {}
-          }
-        ]
+        "battles": []
       }
     },
     {
@@ -1138,7 +988,7 @@
                 6
               ],
               "total": 21,
-              "created_at": "2026-10-18T04:04:28.971656+00:00",
+              "created_at": "2026-10-18T04:25:05.443946+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 15,
@@ -1160,10 +1010,10 @@
       "character": "cleric",
       "path": "gorge",
       "n": 5000,
-      "success_rate": 0.9224,
+      "success_rate": 0.9622,
       "failures": {
-        "gorge_giant_path": 306,
-        "gorge_worm_lair": 45,
+        "gorge_worm_lair": 27,
+        "gorge_giant_path": 125,
         "gorge_rockfall_path": 37
       },
       "sample": {
@@ -1183,7 +1033,7 @@
                 6
               ],
               "total": 14,
-              "created_at": "2026-10-18T04:04:28.986784+00:00",
+              "created_at": "2026-10-18T04:25:05.460174+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 13,
@@ -1237,11 +1087,11 @@
                 10
               ],
               "total": 18,
-              "created_at": "2026-10-18T04:04:28.995620+00:00",
+              "created_at": "2026-10-18T04:25:05.466160+00:00",
               "critical_success": false,
               "critical_failure": false,
-              "dc": 33,
-              "success": false,
+              "dc": 17,
+              "success": true,
               "base_total": 10,
               "attr_mod": 8,
               "attr_key": "dex"
@@ -1258,15 +1108,15 @@
             "roll": {
               "expression": "1d20+dex",
               "rolls": [
-                1
+                17
               ],
-              "total": 9,
-              "created_at": "2026-10-18T04:04:29.014670+00:00",
+              "total": 25,
+              "created_at": "2026-10-18T04:25:05.470964+00:00",
               "critical_success": false,
-              "critical_failure": true,
+              "critical_failure": false,
               "dc": 17,
-              "success": false,
-              "base_total": 1,
+              "success": true,
+              "base_total": 17,
               "attr_mod": 8,
               "attr_key": "dex"
             }
@@ -1277,113 +1127,16 @@
             "roll": {}
           }
         ],
-        "battles": [
-          {
-            "encounter": "gorge_giant_path",
-            "status": "victory",
-            "continue": true,
-            "before": {
-              "hp": 26,
-              "mp": 16,
-              "sp": 9,
-              "level": 2,
-              "inventory": {
-                "聖なる杖": 1,
-                "ローブ": 1,
-                "薬草": 5,
-                "携帯食": 4,
-                "聖水": 2,
-                "治療の巻物": 2
-              }
-            },
-            "after_combat": {
-              "hp": 17,
-              "mp": 16,
-              "sp": 9,
-              "level": 2,
-              "inventory": {
-                "聖なる杖": 1,
-                "ローブ": 1,
-                "薬草": 5,
-                "携帯食": 4,
-                "聖水": 2
-              }
-            },
-            "after_resolution": {
-              "hp": 17,
-              "mp": 16,
-              "sp": 9,
-              "level": 2,
-              "inventory": {
-                "聖なる杖": 1,
-                "ローブ": 1,
-                "薬草": 5,
-                "携帯食": 4,
-                "聖水": 2,
-                "生命の果実": 1
-              }
-            },
-            "consumables": {
-              "治療の巻物": 2
-            }
-          },
-          {
-            "encounter": "gorge_worm_lair",
-            "status": "victory",
-            "continue": true,
-            "before": {
-              "hp": 20,
-              "mp": 16,
-              "sp": 9,
-              "level": 2,
-              "inventory": {
-                "聖なる杖": 1,
-                "ローブ": 1,
-                "薬草": 5,
-                "携帯食": 4,
-                "聖水": 2
-              }
-            },
-            "after_combat": {
-              "hp": 11,
-              "mp": 10,
-              "sp": 9,
-              "level": 2,
-              "inventory": {
-                "聖なる杖": 1,
-                "ローブ": 1,
-                "薬草": 4,
-                "携帯食": 4
-              }
-            },
-            "after_resolution": {
-              "hp": 11,
-              "mp": 10,
-              "sp": 9,
-              "level": 2,
-              "inventory": {
-                "聖なる杖": 1,
-                "ローブ": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "鉄壁の霊薬": 1
-              }
-            },
-            "consumables": {
-              "薬草": 1,
-              "聖水": 2
-            }
-          }
-        ]
+        "battles": []
       }
     },
     {
       "character": "cleric",
       "path": "gorge_elio",
       "n": 5000,
-      "success_rate": 0.9872,
+      "success_rate": 0.9944,
       "failures": {
-        "gorge_giant_path": 58,
+        "gorge_giant_path": 22,
         "gorge_rockfall_path": 6
       },
       "sample": {
@@ -1403,7 +1156,7 @@
                 6
               ],
               "total": 14,
-              "created_at": "2026-10-18T04:04:28.998510+00:00",
+              "created_at": "2026-10-18T04:25:05.462710+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 13,
@@ -1457,11 +1210,11 @@
                 10
               ],
               "total": 18,
-              "created_at": "2026-10-18T04:04:29.006909+00:00",
+              "created_at": "2026-10-18T04:25:05.471561+00:00",
               "critical_success": false,
               "critical_failure": false,
-              "dc": 33,
-              "success": false,
+              "dc": 17,
+              "success": true,
               "base_total": 10,
               "attr_mod": 8,
               "attr_key": "dex"
@@ -1483,59 +1236,7 @@
             "roll": {}
           }
         ],
-        "battles": [
-          {
-            "encounter": "gorge_giant_path",
-            "status": "victory",
-            "continue": true,
-            "before": {
-              "hp": 26,
-              "mp": 16,
-              "sp": 9,
-              "level": 2,
-              "inventory": {
-                "聖なる杖": 1,
-                "ローブ": 1,
-                "薬草": 5,
-                "携帯食": 4,
-                "聖水": 2,
-                "治療の巻物": 2
-              }
-            },
-            "after_combat": {
-              "hp": 21,
-              "mp": 16,
-              "sp": 9,
-              "level": 2,
-              "inventory": {
-                "聖なる杖": 1,
-                "ローブ": 1,
-                "薬草": 5,
-                "携帯食": 4,
-                "聖水": 2,
-                "治療の巻物": 1
-              }
-            },
-            "after_resolution": {
-              "hp": 21,
-              "mp": 16,
-              "sp": 9,
-              "level": 2,
-              "inventory": {
-                "聖なる杖": 1,
-                "ローブ": 1,
-                "薬草": 5,
-                "携帯食": 4,
-                "聖水": 2,
-                "治療の巻物": 1,
-                "生命の果実": 1
-              }
-            },
-            "consumables": {
-              "治療の巻物": 1
-            }
-          }
-        ]
+        "battles": []
       }
     },
     {
@@ -1608,7 +1309,7 @@
                 15
               ],
               "total": 33,
-              "created_at": "2026-10-18T04:04:29.000645+00:00",
+              "created_at": "2026-10-18T04:25:05.482122+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 15,
@@ -1630,10 +1331,10 @@
       "character": "mage",
       "path": "gorge",
       "n": 5000,
-      "success_rate": 0.9242,
+      "success_rate": 0.9596,
       "failures": {
-        "gorge_worm_lair": 211,
-        "gorge_giant_path": 168
+        "gorge_giant_path": 82,
+        "gorge_worm_lair": 120
       },
       "sample": {
         "completed": true,
@@ -1652,7 +1353,7 @@
                 15
               ],
               "total": 23,
-              "created_at": "2026-10-18T04:04:29.013779+00:00",
+              "created_at": "2026-10-18T04:25:05.503935+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 13,
@@ -1706,11 +1407,11 @@
                 16
               ],
               "total": 24,
-              "created_at": "2026-10-18T04:04:29.022431+00:00",
+              "created_at": "2026-10-18T04:25:05.510374+00:00",
               "critical_success": false,
               "critical_failure": false,
-              "dc": 33,
-              "success": false,
+              "dc": 17,
+              "success": true,
               "base_total": 16,
               "attr_mod": 8,
               "attr_key": "dex"
@@ -1727,15 +1428,15 @@
             "roll": {
               "expression": "1d20+dex",
               "rolls": [
-                3
+                10
               ],
-              "total": 11,
-              "created_at": "2026-10-18T04:04:29.034903+00:00",
+              "total": 18,
+              "created_at": "2026-10-18T04:25:05.512914+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 17,
-              "success": false,
-              "base_total": 3,
+              "success": true,
+              "base_total": 10,
               "attr_mod": 8,
               "attr_key": "dex"
             }
@@ -1746,116 +1447,16 @@
             "roll": {}
           }
         ],
-        "battles": [
-          {
-            "encounter": "gorge_giant_path",
-            "status": "victory",
-            "continue": true,
-            "before": {
-              "hp": 18,
-              "mp": 23,
-              "sp": 7,
-              "level": 2,
-              "inventory": {
-                "魔導書": 1,
-                "魔法のローブ": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "治療の巻物": 2
-              }
-            },
-            "after_combat": {
-              "hp": 13,
-              "mp": 13,
-              "sp": 7,
-              "level": 2,
-              "inventory": {
-                "魔導書": 1,
-                "魔法のローブ": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "治療の巻物": 1
-              }
-            },
-            "after_resolution": {
-              "hp": 13,
-              "mp": 13,
-              "sp": 7,
-              "level": 2,
-              "inventory": {
-                "魔導書": 1,
-                "魔法のローブ": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "治療の巻物": 1,
-                "生命の果実": 1
-              }
-            },
-            "consumables": {
-              "治療の巻物": 1
-            }
-          },
-          {
-            "encounter": "gorge_worm_lair",
-            "status": "victory",
-            "continue": true,
-            "before": {
-              "hp": 16,
-              "mp": 13,
-              "sp": 7,
-              "level": 2,
-              "inventory": {
-                "魔導書": 1,
-                "魔法のローブ": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "治療の巻物": 1
-              }
-            },
-            "after_combat": {
-              "hp": 21,
-              "mp": 13,
-              "sp": 7,
-              "level": 2,
-              "inventory": {
-                "魔導書": 1,
-                "魔法のローブ": 1,
-                "薬草": 4,
-                "携帯食": 4
-              }
-            },
-            "after_resolution": {
-              "hp": 21,
-              "mp": 13,
-              "sp": 7,
-              "level": 2,
-              "inventory": {
-                "魔導書": 1,
-                "魔法のローブ": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "鉄壁の霊薬": 1
-              }
-            },
-            "consumables": {
-              "聖水": 2,
-              "治療の巻物": 1
-            }
-          }
-        ]
+        "battles": []
       }
     },
     {
       "character": "mage",
       "path": "gorge_elio",
       "n": 5000,
-      "success_rate": 0.9848,
+      "success_rate": 0.9928,
       "failures": {
-        "gorge_giant_path": 76
+        "gorge_giant_path": 36
       },
       "sample": {
         "completed": true,
@@ -1874,7 +1475,7 @@
                 15
               ],
               "total": 23,
-              "created_at": "2026-10-18T04:05:08.125394+00:00",
+              "created_at": "2026-10-18T04:25:44.300988+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 13,
@@ -1928,11 +1529,11 @@
                 16
               ],
               "total": 24,
-              "created_at": "2026-10-18T04:05:08.134236+00:00",
+              "created_at": "2026-10-18T04:25:44.309161+00:00",
               "critical_success": false,
               "critical_failure": false,
-              "dc": 33,
-              "success": false,
+              "dc": 17,
+              "success": true,
               "base_total": 16,
               "attr_mod": 8,
               "attr_key": "dex"
@@ -1954,57 +1555,7 @@
             "roll": {}
           }
         ],
-        "battles": [
-          {
-            "encounter": "gorge_giant_path",
-            "status": "victory",
-            "continue": true,
-            "before": {
-              "hp": 18,
-              "mp": 23,
-              "sp": 7,
-              "level": 2,
-              "inventory": {
-                "魔導書": 1,
-                "魔法のローブ": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "治療の巻物": 2
-              }
-            },
-            "after_combat": {
-              "hp": 12,
-              "mp": 18,
-              "sp": 7,
-              "level": 2,
-              "inventory": {
-                "魔導書": 1,
-                "魔法のローブ": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "治療の巻物": 2
-              }
-            },
-            "after_resolution": {
-              "hp": 12,
-              "mp": 18,
-              "sp": 7,
-              "level": 2,
-              "inventory": {
-                "魔導書": 1,
-                "魔法のローブ": 1,
-                "薬草": 4,
-                "携帯食": 4,
-                "聖水": 2,
-                "治療の巻物": 2,
-                "生命の果実": 1
-              }
-            },
-            "consumables": {}
-          }
-        ]
+        "battles": []
       }
     },
     {
@@ -2080,7 +1631,7 @@
                 11
               ],
               "total": 21,
-              "created_at": "2026-10-18T04:05:18.222483+00:00",
+              "created_at": "2026-10-18T04:25:53.126815+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 15,
@@ -2102,10 +1653,10 @@
       "character": "thief",
       "path": "gorge",
       "n": 5000,
-      "success_rate": 0.9458,
+      "success_rate": 0.9928,
       "failures": {
-        "gorge_giant_path": 249,
-        "gorge_worm_lair": 6,
+        "gorge_giant_path": 19,
+        "gorge_worm_lair": 1,
         "gorge_rockfall_path": 16
       },
       "sample": {
@@ -2125,7 +1676,7 @@
                 11
               ],
               "total": 29,
-              "created_at": "2026-10-18T04:05:37.337561+00:00",
+              "created_at": "2026-10-18T04:26:08.711696+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 13,
@@ -2179,11 +1730,11 @@
                 2
               ],
               "total": 20,
-              "created_at": "2026-10-18T04:05:37.347851+00:00",
+              "created_at": "2026-10-18T04:26:08.719814+00:00",
               "critical_success": false,
               "critical_failure": false,
-              "dc": 33,
-              "success": false,
+              "dc": 17,
+              "success": true,
               "base_total": 2,
               "attr_mod": 18,
               "attr_key": "dex"
@@ -2200,15 +1751,15 @@
             "roll": {
               "expression": "1d20+dex",
               "rolls": [
-                16
+                14
               ],
-              "total": 34,
-              "created_at": "2026-10-18T04:05:37.377113+00:00",
+              "total": 32,
+              "created_at": "2026-10-18T04:26:08.723640+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 17,
               "success": true,
-              "base_total": 16,
+              "base_total": 14,
               "attr_mod": 18,
               "attr_key": "dex"
             }
@@ -2219,70 +1770,17 @@
             "roll": {}
           }
         ],
-        "battles": [
-          {
-            "encounter": "gorge_giant_path",
-            "status": "victory",
-            "continue": true,
-            "before": {
-              "hp": 21,
-              "mp": 7,
-              "sp": 16,
-              "level": 2,
-              "inventory": {
-                "ダガー": 1,
-                "革の鎧": 1,
-                "盗賊道具": 1,
-                "携帯食": 4,
-                "薬草": 3,
-                "聖水": 2,
-                "治療の巻物": 2
-              }
-            },
-            "after_combat": {
-              "hp": 14,
-              "mp": 7,
-              "sp": 2,
-              "level": 2,
-              "inventory": {
-                "ダガー": 1,
-                "革の鎧": 1,
-                "盗賊道具": 1,
-                "携帯食": 4,
-                "薬草": 3,
-                "聖水": 2
-              }
-            },
-            "after_resolution": {
-              "hp": 14,
-              "mp": 7,
-              "sp": 2,
-              "level": 2,
-              "inventory": {
-                "ダガー": 1,
-                "革の鎧": 1,
-                "盗賊道具": 1,
-                "携帯食": 4,
-                "薬草": 3,
-                "聖水": 2,
-                "生命の果実": 1
-              }
-            },
-            "consumables": {
-              "治療の巻物": 2
-            }
-          }
-        ]
+        "battles": []
       }
     },
     {
       "character": "thief",
       "path": "gorge_elio",
       "n": 5000,
-      "success_rate": 0.9854,
+      "success_rate": 0.9986,
       "failures": {
-        "gorge_giant_path": 67,
-        "gorge_rockfall_path": 6
+        "gorge_rockfall_path": 6,
+        "gorge_giant_path": 1
       },
       "sample": {
         "completed": true,
@@ -2301,7 +1799,7 @@
                 11
               ],
               "total": 29,
-              "created_at": "2026-10-18T04:06:18.006728+00:00",
+              "created_at": "2026-10-18T04:26:46.246978+00:00",
               "critical_success": false,
               "critical_failure": false,
               "dc": 13,
@@ -2355,11 +1853,11 @@
                 2
               ],
               "total": 20,
-              "created_at": "2026-10-18T04:06:18.016617+00:00",
+              "created_at": "2026-10-18T04:26:46.255068+00:00",
               "critical_success": false,
               "critical_failure": false,
-              "dc": 33,
-              "success": false,
+              "dc": 17,
+              "success": true,
               "base_total": 2,
               "attr_mod": 18,
               "attr_key": "dex"
@@ -2381,60 +1879,7 @@
             "roll": {}
           }
         ],
-        "battles": [
-          {
-            "encounter": "gorge_giant_path",
-            "status": "victory",
-            "continue": true,
-            "before": {
-              "hp": 21,
-              "mp": 7,
-              "sp": 16,
-              "level": 2,
-              "inventory": {
-                "ダガー": 1,
-                "革の鎧": 1,
-                "盗賊道具": 1,
-                "携帯食": 4,
-                "薬草": 3,
-                "聖水": 2,
-                "治療の巻物": 2
-              }
-            },
-            "after_combat": {
-              "hp": 10,
-              "mp": 7,
-              "sp": 7,
-              "level": 2,
-              "inventory": {
-                "ダガー": 1,
-                "革の鎧": 1,
-                "盗賊道具": 1,
-                "携帯食": 4,
-                "薬草": 3,
-                "聖水": 2,
-                "治療の巻物": 2
-              }
-            },
-            "after_resolution": {
-              "hp": 10,
-              "mp": 7,
-              "sp": 7,
-              "level": 2,
-              "inventory": {
-                "ダガー": 1,
-                "革の鎧": 1,
-                "盗賊道具": 1,
-                "携帯食": 4,
-                "薬草": 3,
-                "聖水": 2,
-                "治療の巻物": 2,
-                "生命の果実": 1
-              }
-            },
-            "consumables": {}
-          }
-        ]
+        "battles": []
       }
     }
   ],

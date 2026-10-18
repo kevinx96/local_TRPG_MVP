@@ -2693,7 +2693,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: bg_gorge_claw_cliff, candidate 02. Primary request: 岩の断面の三本の巨大な爪痕、白い霜。Exactly THREE enormous deep claw gashes in a huge broken rock face; white frost clings only inside the claw marks. The surrounding rocky gorge is warm-season terrain WITHOUT snow or ice. Style and framing: Landscape 16:9 visual novel background. Match the viewed bg_sealed_cave.png and bg_oaksdawn_wall.png painterly detailed Japanese fantasy environment art, warm natural rock with sparse moss and vegetation like the wall reference. No people or monsters; no buildings except explicitly requested tent/hearth. No snow scenery, no frost except explicitly requested claw marks.  No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": false
     },
     {
@@ -2703,7 +2703,7 @@
       "prompt": "Use case: stylized-concept. Asset type: visual novel fantasy game background, landscape 16:9. Generate candidate 01 for 峡谷の入口. Subject exactly: どけられた大岩の向こうの深い峡谷、落ちる小石。A recently cleared mountain pass, large displaced boulders framing the entrance to a deep gorge, a narrow walkable rocky track, small falling pebbles. Match the painterly detailed Japanese fantasy visual novel background rendering of the viewed bg_sealed_cave.png and bg_oaksdawn_wall.png, use the warm natural rock and sparse moss/vegetation setting of the wall reference. No snow, no frost, no ice, no people, no monsters, no buildings added, no magic seals, no writing, no UI. Keep the landscape readable behind dialogue overlays.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": false
     },
     {
@@ -2723,7 +2723,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: bg_gorge_giant_path, candidate 01. Primary request: 狭まる峡谷、苔むした岩山。A gorge narrowing ahead, a massive mossy rock mound. Environment only; the rock giant itself is a separate enemy sprite, so no creature in this background. Style and framing: Landscape 16:9 visual novel background. Match the viewed bg_sealed_cave.png and bg_oaksdawn_wall.png painterly detailed Japanese fantasy environment art, warm natural rock with sparse moss and vegetation like the wall reference. No people or monsters; no buildings except explicitly requested tent/hearth. No snow scenery, no frost except explicitly requested claw marks.  No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": false
     },
     {
@@ -2753,7 +2753,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: bg_gorge_miner_camp, candidate 02. Primary request: 崩れかけた天幕と冷えた竈。An abandoned miners' camp in a gorge, a collapsing tent, cold unlit cooking hearth, scattered miners' tools. Style and framing: Landscape 16:9 visual novel background. Match the viewed bg_sealed_cave.png and bg_oaksdawn_wall.png painterly detailed Japanese fantasy environment art, warm natural rock with sparse moss and vegetation like the wall reference. No people or monsters; no buildings except explicitly requested tent/hearth. No snow scenery, no frost except explicitly requested claw marks.  No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": false
     },
     {
@@ -2763,7 +2763,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: bg_gorge_rockfall_path, candidate 01. Primary request: 崩れた岩の転がる細い道。A narrow rocky path with fallen broken rocks between tall gorge walls. Style and framing: Landscape 16:9 visual novel background. Match the viewed bg_sealed_cave.png and bg_oaksdawn_wall.png painterly detailed Japanese fantasy environment art, warm natural rock with sparse moss and vegetation like the wall reference. No people or monsters; no buildings except explicitly requested tent/hearth. No snow scenery, no frost except explicitly requested claw marks.  No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": false
     },
     {
@@ -2783,7 +2783,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: bg_gorge_worm_lair, candidate 01. Primary request: 無数の穴の空いた峡谷の底。The rocky floor of a deep gorge riddled with countless burrow holes like a honeycomb. Environment only, the giant worm will be a separate sprite. Style and framing: Landscape 16:9 visual novel background. Match the viewed bg_sealed_cave.png and bg_oaksdawn_wall.png painterly detailed Japanese fantasy environment art, warm natural rock with sparse moss and vegetation like the wall reference. No people or monsters; no buildings except explicitly requested tent/hearth. No snow scenery, no frost except explicitly requested claw marks.  No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": false
     },
     {
@@ -2803,7 +2803,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: enemy_earth_worm, candidate 01. Primary request: 土喰らいの大ワーム。A single enormous earth-devouring burrowing fantasy worm, rearing its head, segmented earthy rocky hide. Entire creature silhouette visible; no gore, no people. Style and framing: Square fantasy battle enemy sprite, match enemy_heat_lizard.png and enemy_ruby_golem.png detailed thickly painted Japanese fantasy style and sharply readable material rendering; use natural earth/stone/moss colors appropriate to the described earth creature, no fire or molten veins. Genuine transparent alpha background. Isolate the entire subject, generous clear margin on every side, no ground plane, no cast shadow panel, no opaque background, no checkerboard. No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": true
     },
     {
@@ -2823,7 +2823,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: enemy_gravel_beetle, candidate 01. Primary request: 砂礫の甲虫。A single fantasy beetle with a shell made of compacted gravel, six legs and clicking mandibles. Entire creature visible, readable silhouette. Style and framing: Square fantasy battle enemy sprite, match enemy_heat_lizard.png and enemy_ruby_golem.png detailed thickly painted Japanese fantasy style and sharply readable material rendering; use natural earth/stone/moss colors appropriate to the described earth creature, no fire or molten veins. Genuine transparent alpha background. Isolate the entire subject, generous clear margin on every side, no ground plane, no cast shadow panel, no opaque background, no checkerboard. No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": true
     },
     {
@@ -2853,7 +2853,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: enemy_rock_giant, candidate 02. Primary request: 岩の巨人。A single huge sentient humanoid mass of moss-covered boulders, a gorge rock giant lifting its heavy arms. Entire body including both feet visible. Style and framing: Square fantasy battle enemy sprite, match enemy_heat_lizard.png and enemy_ruby_golem.png detailed thickly painted Japanese fantasy style and sharply readable material rendering; use natural earth/stone/moss colors appropriate to the described earth creature, no fire or molten veins. Genuine transparent alpha background. Isolate the entire subject, generous clear margin on every side, no ground plane, no cast shadow panel, no opaque background, no checkerboard. No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": true
     },
     {
@@ -2873,7 +2873,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: enemy_stone_lizard, candidate 02. Primary request: 石肌のトカゲ。A single fantasy lizard covered with stone-like scales, tongue visible. Entire creature including tail and four feet visible. Style and framing: Square fantasy battle enemy sprite, match enemy_heat_lizard.png and enemy_ruby_golem.png detailed thickly painted Japanese fantasy style and sharply readable material rendering; use natural earth/stone/moss colors appropriate to the described earth creature, no fire or molten veins. Genuine transparent alpha background. Isolate the entire subject, generous clear margin on every side, no ground plane, no cast shadow panel, no opaque background, no checkerboard. No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": true
     },
     {
@@ -2883,7 +2883,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: npc_elio, candidate 01. Primary request: 水術士エリオ。A young adult male wandering hydromancer wearing a BLUE cloak, one hand holding a water pitcher, the other holding a staff wrapped in a flowing ribbon of water, calm curious expression. Full standing figure including both feet and all props visible. Style and framing: Portrait 2:3, match npc_robin.png's detailed painted Japanese fantasy visual-novel character style, fine drawn features, softly shaded cloth and leather. This is a different character, a male hydromancer. Genuine transparent alpha background. Isolate the entire subject, generous clear margin on every side, no ground plane, no cast shadow panel, no opaque background, no checkerboard. No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": true
     },
     {
@@ -2903,9 +2903,9 @@
       "prompt": "Use case: stylized-concept. Asset ID: bg_gorge_claw_cliff, candidate 01. Primary request: 岩の断面の三本の巨大な爪痕、白い霜。Exactly THREE enormous deep claw gashes in a huge broken rock face; white frost clings only inside the claw marks. The surrounding rocky gorge is warm-season terrain WITHOUT snow or ice. Style and framing: Landscape 16:9 visual novel background. Match the viewed bg_sealed_cave.png and bg_oaksdawn_wall.png painterly detailed Japanese fantasy environment art, warm natural rock with sparse moss and vegetation like the wall reference. No people or monsters; no buildings except explicitly requested tent/hearth. No snow scenery, no frost except explicitly requested claw marks.  No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": false,
-      "source_candidate": "assets/candidates/035/bg_gorge_claw_cliff/candidate_01.png",
+      "source_candidate": "assets/candidates/035/bg_gorge_claw_cliff/candidate_02.png",
       "preview_only": true
     },
     {
@@ -2915,7 +2915,7 @@
       "prompt": "Use case: stylized-concept. Asset type: visual novel fantasy game background, landscape 16:9. Generate candidate 01 for 峡谷の入口. Subject exactly: どけられた大岩の向こうの深い峡谷、落ちる小石。A recently cleared mountain pass, large displaced boulders framing the entrance to a deep gorge, a narrow walkable rocky track, small falling pebbles. Match the painterly detailed Japanese fantasy visual novel background rendering of the viewed bg_sealed_cave.png and bg_oaksdawn_wall.png, use the warm natural rock and sparse moss/vegetation setting of the wall reference. No snow, no frost, no ice, no people, no monsters, no buildings added, no magic seals, no writing, no UI. Keep the landscape readable behind dialogue overlays.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": false,
       "source_candidate": "assets/candidates/035/bg_gorge_entrance/candidate_01.png",
       "preview_only": true
@@ -2927,7 +2927,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: bg_gorge_giant_path, candidate 01. Primary request: 狭まる峡谷、苔むした岩山。A gorge narrowing ahead, a massive mossy rock mound. Environment only; the rock giant itself is a separate enemy sprite, so no creature in this background. Style and framing: Landscape 16:9 visual novel background. Match the viewed bg_sealed_cave.png and bg_oaksdawn_wall.png painterly detailed Japanese fantasy environment art, warm natural rock with sparse moss and vegetation like the wall reference. No people or monsters; no buildings except explicitly requested tent/hearth. No snow scenery, no frost except explicitly requested claw marks.  No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": false,
       "source_candidate": "assets/candidates/035/bg_gorge_giant_path/candidate_01.png",
       "preview_only": true
@@ -2939,9 +2939,9 @@
       "prompt": "Use case: stylized-concept. Asset ID: bg_gorge_miner_camp, candidate 01. Primary request: 崩れかけた天幕と冷えた竈。An abandoned miners' camp in a gorge, a collapsing tent, cold unlit cooking hearth, scattered miners' tools. Style and framing: Landscape 16:9 visual novel background. Match the viewed bg_sealed_cave.png and bg_oaksdawn_wall.png painterly detailed Japanese fantasy environment art, warm natural rock with sparse moss and vegetation like the wall reference. No people or monsters; no buildings except explicitly requested tent/hearth. No snow scenery, no frost except explicitly requested claw marks.  No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": false,
-      "source_candidate": "assets/candidates/035/bg_gorge_miner_camp/candidate_01.png",
+      "source_candidate": "assets/candidates/035/bg_gorge_miner_camp/candidate_02.png",
       "preview_only": true
     },
     {
@@ -2951,7 +2951,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: bg_gorge_rockfall_path, candidate 01. Primary request: 崩れた岩の転がる細い道。A narrow rocky path with fallen broken rocks between tall gorge walls. Style and framing: Landscape 16:9 visual novel background. Match the viewed bg_sealed_cave.png and bg_oaksdawn_wall.png painterly detailed Japanese fantasy environment art, warm natural rock with sparse moss and vegetation like the wall reference. No people or monsters; no buildings except explicitly requested tent/hearth. No snow scenery, no frost except explicitly requested claw marks.  No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": false,
       "source_candidate": "assets/candidates/035/bg_gorge_rockfall_path/candidate_01.png",
       "preview_only": true
@@ -2963,7 +2963,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: bg_gorge_worm_lair, candidate 01. Primary request: 無数の穴の空いた峡谷の底。The rocky floor of a deep gorge riddled with countless burrow holes like a honeycomb. Environment only, the giant worm will be a separate sprite. Style and framing: Landscape 16:9 visual novel background. Match the viewed bg_sealed_cave.png and bg_oaksdawn_wall.png painterly detailed Japanese fantasy environment art, warm natural rock with sparse moss and vegetation like the wall reference. No people or monsters; no buildings except explicitly requested tent/hearth. No snow scenery, no frost except explicitly requested claw marks.  No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": false,
       "source_candidate": "assets/candidates/035/bg_gorge_worm_lair/candidate_01.png",
       "preview_only": true
@@ -2975,7 +2975,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: enemy_earth_worm, candidate 01. Primary request: 土喰らいの大ワーム。A single enormous earth-devouring burrowing fantasy worm, rearing its head, segmented earthy rocky hide. Entire creature silhouette visible; no gore, no people. Style and framing: Square fantasy battle enemy sprite, match enemy_heat_lizard.png and enemy_ruby_golem.png detailed thickly painted Japanese fantasy style and sharply readable material rendering; use natural earth/stone/moss colors appropriate to the described earth creature, no fire or molten veins. Genuine transparent alpha background. Isolate the entire subject, generous clear margin on every side, no ground plane, no cast shadow panel, no opaque background, no checkerboard. No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "source_candidate": "assets/candidates/035/enemy_earth_worm/candidate_01.png",
       "preview_only": true
@@ -2987,7 +2987,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: enemy_gravel_beetle, candidate 01. Primary request: 砂礫の甲虫。A single fantasy beetle with a shell made of compacted gravel, six legs and clicking mandibles. Entire creature visible, readable silhouette. Style and framing: Square fantasy battle enemy sprite, match enemy_heat_lizard.png and enemy_ruby_golem.png detailed thickly painted Japanese fantasy style and sharply readable material rendering; use natural earth/stone/moss colors appropriate to the described earth creature, no fire or molten veins. Genuine transparent alpha background. Isolate the entire subject, generous clear margin on every side, no ground plane, no cast shadow panel, no opaque background, no checkerboard. No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "source_candidate": "assets/candidates/035/enemy_gravel_beetle/candidate_01.png",
       "preview_only": true
@@ -2999,9 +2999,9 @@
       "prompt": "Use case: stylized-concept. Asset ID: enemy_rock_giant, candidate 01. Primary request: 岩の巨人。A single huge sentient humanoid mass of moss-covered boulders, a gorge rock giant lifting its heavy arms. Entire body including both feet visible. Style and framing: Square fantasy battle enemy sprite, match enemy_heat_lizard.png and enemy_ruby_golem.png detailed thickly painted Japanese fantasy style and sharply readable material rendering; use natural earth/stone/moss colors appropriate to the described earth creature, no fire or molten veins. Genuine transparent alpha background. Isolate the entire subject, generous clear margin on every side, no ground plane, no cast shadow panel, no opaque background, no checkerboard. No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
-      "source_candidate": "assets/candidates/035/enemy_rock_giant/candidate_01.png",
+      "source_candidate": "assets/candidates/035/enemy_rock_giant/candidate_02.png",
       "preview_only": true
     },
     {
@@ -3011,9 +3011,9 @@
       "prompt": "Use case: stylized-concept. Asset ID: enemy_stone_lizard, candidate 01. Primary request: 石肌のトカゲ。A single fantasy lizard covered with stone-like scales, tongue visible. Entire creature including tail and four feet visible. Style and framing: Square fantasy battle enemy sprite, match enemy_heat_lizard.png and enemy_ruby_golem.png detailed thickly painted Japanese fantasy style and sharply readable material rendering; use natural earth/stone/moss colors appropriate to the described earth creature, no fire or molten veins. Genuine transparent alpha background. Isolate the entire subject, generous clear margin on every side, no ground plane, no cast shadow panel, no opaque background, no checkerboard. No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
-      "source_candidate": "assets/candidates/035/enemy_stone_lizard/candidate_01.png",
+      "source_candidate": "assets/candidates/035/enemy_stone_lizard/candidate_02.png",
       "preview_only": true
     },
     {
@@ -3023,7 +3023,7 @@
       "prompt": "Use case: stylized-concept. Asset ID: npc_elio, candidate 01. Primary request: 水術士エリオ。A young adult male wandering hydromancer wearing a BLUE cloak, one hand holding a water pitcher, the other holding a staff wrapped in a flowing ribbon of water, calm curious expression. Full standing figure including both feet and all props visible. Style and framing: Portrait 2:3, match npc_robin.png's detailed painted Japanese fantasy visual-novel character style, fine drawn features, softly shaded cloth and leather. This is a different character, a male hydromancer. Genuine transparent alpha background. Isolate the entire subject, generous clear margin on every side, no ground plane, no cast shadow panel, no opaque background, no checkerboard. No text, no UI, no watermark. Produce a distinct composition for this candidate, preserving the exact requested subject.",
       "generator": "image_gen",
       "generation_date": "2026-10-18",
-      "approved": false,
+      "approved": true,
       "transparent_background": true,
       "source_candidate": "assets/candidates/035/npc_elio/candidate_01.png",
       "preview_only": true
@@ -3787,10 +3787,10 @@
         "assets/candidates/035/bg_gorge_claw_cliff/candidate_01.png",
         "assets/candidates/035/bg_gorge_claw_cliff/candidate_02.png"
       ],
-      "selected_candidate": "assets/candidates/035/bg_gorge_claw_cliff/candidate_01.png",
-      "approved": false,
+      "selected_candidate": "assets/candidates/035/bg_gorge_claw_cliff/candidate_02.png",
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "按编号01接入工程预览；TODO(design): 22张候选由设计负责人选定，未作最终选图。"
+      "selection_reason": "设计负责人定稿：爪痕里的白霜更明显"
     },
     {
       "task": "035",
@@ -3801,9 +3801,9 @@
         "assets/candidates/035/bg_gorge_entrance/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/035/bg_gorge_entrance/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "按编号01接入工程预览；TODO(design): 22张候选由设计负责人选定，未作最终选图。"
+      "selection_reason": "设计负责人定稿：清开的岩石间的小路最清楚"
     },
     {
       "task": "035",
@@ -3814,9 +3814,9 @@
         "assets/candidates/035/bg_gorge_giant_path/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/035/bg_gorge_giant_path/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "按编号01接入工程预览；TODO(design): 22张候选由设计负责人选定，未作最终选图。"
+      "selection_reason": "设计负责人定稿：峡谷收窄处的苔藓岩山"
     },
     {
       "task": "035",
@@ -3826,10 +3826,10 @@
         "assets/candidates/035/bg_gorge_miner_camp/candidate_01.png",
         "assets/candidates/035/bg_gorge_miner_camp/candidate_02.png"
       ],
-      "selected_candidate": "assets/candidates/035/bg_gorge_miner_camp/candidate_01.png",
-      "approved": false,
+      "selected_candidate": "assets/candidates/035/bg_gorge_miner_camp/candidate_02.png",
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "按编号01接入工程预览；TODO(design): 22张候选由设计负责人选定，未作最终选图。"
+      "selection_reason": "设计负责人定稿：天幕和冷灶都清楚"
     },
     {
       "task": "035",
@@ -3840,9 +3840,9 @@
         "assets/candidates/035/bg_gorge_rockfall_path/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/035/bg_gorge_rockfall_path/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "按编号01接入工程预览；TODO(design): 22张候选由设计负责人选定，未作最终选图。"
+      "selection_reason": "设计负责人定稿：构图更清楚"
     },
     {
       "task": "035",
@@ -3853,9 +3853,9 @@
         "assets/candidates/035/bg_gorge_worm_lair/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/035/bg_gorge_worm_lair/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "按编号01接入工程预览；TODO(design): 22张候选由设计负责人选定，未作最终选图。"
+      "selection_reason": "设计负责人定稿：巢穴最明显"
     },
     {
       "task": "035",
@@ -3866,9 +3866,9 @@
         "assets/candidates/035/enemy_earth_worm/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/035/enemy_earth_worm/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "按编号01接入工程预览；TODO(design): 22张候选由设计负责人选定，未作最终选图。"
+      "selection_reason": "设计负责人定稿：S 形全身"
     },
     {
       "task": "035",
@@ -3879,9 +3879,9 @@
         "assets/candidates/035/enemy_gravel_beetle/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/035/enemy_gravel_beetle/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "按编号01接入工程预览；TODO(design): 22张候选由设计负责人选定，未作最终选图。"
+      "selection_reason": "设计负责人定稿：举起的钳子更易读"
     },
     {
       "task": "035",
@@ -3891,10 +3891,10 @@
         "assets/candidates/035/enemy_rock_giant/candidate_01.png",
         "assets/candidates/035/enemy_rock_giant/candidate_02.png"
       ],
-      "selected_candidate": "assets/candidates/035/enemy_rock_giant/candidate_01.png",
-      "approved": false,
+      "selected_candidate": "assets/candidates/035/enemy_rock_giant/candidate_02.png",
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "按编号01接入工程预览；TODO(design): 22张候选由设计负责人选定，未作最终选图。"
+      "selection_reason": "设计负责人定稿：苔藓更多、更有压迫感"
     },
     {
       "task": "035",
@@ -3904,10 +3904,10 @@
         "assets/candidates/035/enemy_stone_lizard/candidate_01.png",
         "assets/candidates/035/enemy_stone_lizard/candidate_02.png"
       ],
-      "selected_candidate": "assets/candidates/035/enemy_stone_lizard/candidate_01.png",
-      "approved": false,
+      "selected_candidate": "assets/candidates/035/enemy_stone_lizard/candidate_02.png",
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "按编号01接入工程预览；TODO(design): 22张候选由设计负责人选定，未作最终选图。"
+      "selection_reason": "设计负责人定稿：头部和眼睛更易读"
     },
     {
       "task": "035",
@@ -3918,9 +3918,9 @@
         "assets/candidates/035/npc_elio/candidate_02.png"
       ],
       "selected_candidate": "assets/candidates/035/npc_elio/candidate_01.png",
-      "approved": false,
+      "approved": true,
       "preview_only": true,
-      "selection_reason": "按编号01接入工程预览；TODO(design): 22张候选由设计负责人选定，未作最终选图。"
+      "selection_reason": "设计负责人定稿：杖周围的水流符合水术士"
     }
   ],
   "todo_design": [

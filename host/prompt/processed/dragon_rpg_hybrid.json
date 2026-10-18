@@ -15913,7 +15913,7 @@
           "id": "sneak_gorge_giant_path",
           "text": "巨人の足元をくぐり抜ける",
           "preview": "",
-          "risk": "1d20+dex判定（DC33）",
+          "risk": "1d20+dex判定（DC17）",
           "intent_keywords": [
             "巨人の足元をくぐり抜ける"
           ],
@@ -15921,7 +15921,7 @@
           "hidden_after": "passed_gorge_giant_path",
           "roll": {
             "dice_type": "1d20+dex",
-            "dc": 33
+            "dc": 17
           },
           "success_effects": [
             {
@@ -15988,7 +15988,7 @@
         {
           "text": "巨人の足元をくぐり抜ける",
           "preview": "",
-          "risk": "1d20+dex判定（DC33）",
+          "risk": "1d20+dex判定（DC17）",
           "hidden_after": "passed_gorge_giant_path"
         },
         {
