@@ -77,7 +77,7 @@ class BalancePass4Tests(unittest.TestCase):
         pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
         original = deepcopy(pack)
         herb = next(i["name"] for i in pack["items"] if i["id"] == "herb")
-        candidate = pass4.apply(pack, {"inn_restore": True, "rewards": {"slime": {herb: 3}}})
+        candidate = pass4.apply(pack, {"inn_restore": True, "rewards": {"tutorial_slime": {herb: 3}}})
         self.assertEqual(pack, original)
         self.assertEqual(candidate, pass4.apply(candidate, {"inn_restore": True}))
         session = checkpoints.fresh_session(candidate, "hero")

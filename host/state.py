@@ -2134,6 +2134,10 @@ def _apply_state_delta(
         _set_companion(session, delta["set_companion"])
 
     for item in _as_item_list(delta.get("inventory_add")):
+        # A silent add (e.g. the tutorial potion) is recorded but not shown in the log.
+        silent = bool(item.get("silent")) if isinstance(item, dict) else False
+        if silent:
+            item = {key: value for key, value in item.items() if key != "silent"}
         item_name = str(item["name"]).strip()
         add_qty = _safe_quantity(item.get("quantity"), 1)
         existing = next(
@@ -2151,6 +2155,7 @@ def _apply_state_delta(
             "item_added",
             f"{item_name} x{add_qty}を入手しました。",
             {"item": item_name, "quantity": add_qty},
+            visible=not silent,
         )
 
     for item in _as_item_list(delta.get("inventory_remove")):

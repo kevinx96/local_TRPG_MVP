@@ -11,7 +11,7 @@ from .upgrade_forest import upsert
 
 
 LOOT = {
-    "slime_core": ("スライムの核", 3, "ぷるぷると震える半透明の核。薬の材料になる。", ("slime", "slime_king")),
+    "slime_core": ("スライムの核", 3, "ぷるぷると震える半透明の核。薬の材料になる。", ("slime", "tutorial_slime", "slime_king")),
     "goblin_trinket": ("ゴブリンの飾り物", 5, "ゴブリンが身につけていた、安物の金属の飾り。",
                        ("goblin", "goblin_archer", "hobgoblin", "goblin_king")),
     "wolf_pelt": ("獣の毛皮", 8, "厚く柔らかな獣の毛皮。", ("forest_wolf", "war_hound")),

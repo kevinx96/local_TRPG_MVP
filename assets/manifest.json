@@ -3087,6 +3087,20 @@
     },
     {
       "task": "036",
+      "id": "icon_travel_potion",
+      "name": "旅の治療薬",
+      "group": "消耗品",
+      "file": "client/images/icon_travel_potion.png",
+      "generator": "image_gen",
+      "approved": false,
+      "transparent_background": true,
+      "retained_from": null,
+      "prompt": "Use case: stylized-concept. Asset type: one square fantasy inventory item icon, readable at 32px, for final 128x128 PNG. Match the existing Dawn weapon icons: detailed semi-realistic Japanese fantasy thick-painted illustration, visible painterly material texture, restrained saturation, upper-left lighting. One centered item, entirely visible, 8 percent empty margins. Actual transparent background, clean alpha. No text, letters, labels, frame, watermark, person, hands, ground, scenery or additional props. Use only the described appearance; do not invent emblems or narrative details. Subject: 旅の治療薬。旅人が持ち歩く小瓶の治療薬。気づけば背嚢に入っていた。 One small corked bottle of red healing medicine. Front view with a slight view from above.",
+      "generation_date": "2026-10-18",
+      "selection_reason": "占位：由 icon_mp_potion 换色生成，待工程负责人按 prompt 重绘"
+    },
+    {
+      "task": "036",
       "id": "icon_ice_charm",
       "name": "氷の護符",
       "group": "装備",

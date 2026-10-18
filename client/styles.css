@@ -1255,6 +1255,62 @@ button, select, textarea, input { font: inherit; }
 .combat-action span { display: block; margin-top: 3px; color: var(--text-dim); font-size: 10px; line-height: 1.4; }
 .combat-action em { color: var(--blue); font-size: 10px; font-style: normal; }
 
+.combat-tutorial {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 8px 12px;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-sm);
+  background: var(--panel-2);
+  box-shadow: 0 0 14px var(--gold-glow);
+  font-size: 13px;
+  animation: tutorial-in .25s ease-out;
+}
+.combat-tutorial b { color: var(--gold); font-size: 10px; letter-spacing: .12em; }
+.combat-tutorial::after {
+  content: "";
+  position: absolute;
+  left: 28px;
+  bottom: -7px;
+  width: 12px;
+  height: 12px;
+  border-right: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  background: var(--panel-2);
+  transform: rotate(45deg);
+}
+.tutorial-target {
+  position: relative;
+  border-color: var(--gold) !important;
+  animation: tutorial-pulse 1.2s ease-in-out infinite;
+}
+.combat-tab.tutorial-target, .combat-action.tutorial-target { padding-right: 26px; }
+.tutorial-target::after {
+  content: "◀";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  color: var(--gold);
+  font-size: 12px;
+  transform: translateY(-50%);
+  animation: tutorial-nudge .8s ease-in-out infinite;
+}
+@keyframes tutorial-pulse {
+  0%, 100% { box-shadow: inset 0 0 0 1px var(--gold), 0 0 0 var(--gold-glow); }
+  50% { box-shadow: inset 0 0 0 2px var(--gold), 0 0 12px var(--gold-glow); }
+}
+@keyframes tutorial-nudge {
+  0%, 100% { transform: translate(0, -50%); }
+  50% { transform: translate(-5px, -50%); }
+}
+@keyframes tutorial-in { from { opacity: 0; transform: translateY(4px); } }
+@media (prefers-reduced-motion: reduce) {
+  .combat-tutorial, .tutorial-target, .tutorial-target::after { animation: none; }
+}
+
 .combat-result {
   min-height: 108px;
   display: grid;

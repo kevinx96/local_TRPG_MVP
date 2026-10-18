@@ -24,6 +24,7 @@ const state = {
   combatBusy: false,
   combatPlayback: null,
   combatActions: [],
+  combatTutorial: null,
   combatIntroSeenId: "",
   combatLogId: "",
   combatLogExpanded: false,
@@ -121,6 +122,7 @@ const els = {
   combatLog: document.querySelector("#combatLog"),
   combatLogToggle: document.querySelector("#combatLogToggle"),
   combatActionTabs: document.querySelector("#combatActionTabs"),
+  combatTutorial: document.querySelector("#combatTutorial"),
   combatActions: document.querySelector("#combatActions"),
   combatResult: document.querySelector("#combatResult"),
   combatResultTitle: document.querySelector("#combatResultTitle"),
@@ -1434,7 +1436,9 @@ function renderCombat(session) {
   els.combatResult.style.display = terminal ? "" : "none";
   els.combatActionTabs.style.display = terminal ? "none" : "";
   els.combatActions.style.display = terminal ? "none" : "grid";
+  state.combatTutorial = terminal ? null : combat.tutorial || null;
   if (terminal) {
+    renderCombatTutorial();
     const labels = { victory: "勝利", defeat: "敗北", fled: "撤退成功", purified: "浄化" };
     els.combatResultTitle.textContent = labels[combat.status] || "戦闘終了";
     els.combatResultText.textContent = combat.result?.summary || "戦闘結果が確定しました。";
@@ -1509,6 +1513,42 @@ function renderCombatActions(actions) {
   visible.forEach((action, index) => {
     if (action.type === "item") prependItemIcon(els.combatActions.children[index].querySelector("strong"), action);
   });
+  renderCombatTutorial();
+}
+
+// The first fight teaches attack -> heal after the slime's acid -> skill. Hints never block other actions.
+function combatTutorialStep(tutorial, actions) {
+  if (!tutorial) return null;
+  const done = Array.isArray(tutorial.player_actions) ? tutorial.player_actions : [];
+  const usable = (type, pick = () => true) => actions.find((action) => action.type === type && action.enabled !== false && pick(action));
+  if (!done.length) {
+    const attack = usable("attack");
+    return attack ? { tab: "attack", action: attack, text: "まずは『攻撃』で武器を振ってみよう。敵を選んでから行動を押すと、その敵を狙える。" } : null;
+  }
+  if (done.length === 1 && tutorial.enemy_skill_used) {
+    const potion = usable("item", (action) => action.id === "travel_potion") || usable("item", (action) => action.kind === "heal");
+    if (potion) return { tab: "item", action: potion, text: `スライムの溶解液は防御を無視してくる！『道具』の${potion.name}でHPを回復しよう。` };
+  }
+  if (!done.includes("skill")) {
+    const skill = usable("skill");
+    return skill ? { tab: "skill", action: skill, text: "次は『技能』を使ってみよう。MPやSPを消費して、通常攻撃より強い効果を出せる。" } : null;
+  }
+  if (done.indexOf("skill") === done.length - 1) return { text: "チュートリアル完了！ここからは自由に戦おう。" };
+  return null;
+}
+
+function renderCombatTutorial() {
+  if (!els.combatTutorial) return;
+  const step = state.combatBusy ? null : combatTutorialStep(state.combatTutorial, state.combatActions || []);
+  els.combatTutorial.style.display = step ? "" : "none";
+  if (!step) return;
+  els.combatTutorial.innerHTML = `<b>TUTORIAL</b><span>${escapeHtml(step.text)}</span>`;
+  if (!step.tab) return;
+  const target = state.combatActionTab === step.tab
+    ? [...els.combatActions.querySelectorAll("[data-combat-action-type]")].find((button) =>
+      button.dataset.combatActionType === step.action.type && button.dataset.combatActionId === String(step.action.id || ""))
+    : els.combatActionTabs.querySelector(`[data-combat-tab="${step.tab}"]`);
+  if (target) target.classList.add("tutorial-target");
 }
 
 function renderCombatIntro(combat) {
@@ -1552,6 +1592,7 @@ async function submitCombatAction(actionType, actionId) {
   if (!state.sessionId || state.combatBusy) return;
   state.combatBusy = true;
   els.combatScreen.classList.add("busy");
+  renderCombatTutorial();
   try {
     const session = await fetchJson(`/api/sessions/${state.sessionId}/combat/actions`, {
       method: "POST",

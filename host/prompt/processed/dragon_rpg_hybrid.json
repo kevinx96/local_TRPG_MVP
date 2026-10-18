@@ -6093,7 +6093,7 @@
       "item_ids": [],
       "clue_ids": [],
       "enemy_ids": [
-        "slime"
+        "tutorial_slime"
       ],
       "connected_location_ids": [],
       "choices": [],
@@ -6126,7 +6126,7 @@
         "flee_allowed": true,
         "flee_dc": 10,
         "enemy_ids": [
-          "slime"
+          "tutorial_slime"
         ],
         "victory_effects": {
           "flags_set": [
@@ -6146,7 +6146,18 @@
           "victory": "スライムを倒して森を進むと、十字路で一匹のゴブリンが助けを求めていた。別の一族に箱を盗まれ、取り戻してほしいという。",
           "defeat": "闇の森・入口で力尽きた。冒険はここで終わりを迎える。"
         },
-        "encounter_class": "trash"
+        "encounter_class": "trash",
+        "tutorial": true,
+        "start_grant": {
+          "flag": "tutorial_potion_given",
+          "items": [
+            {
+              "id": "travel_potion",
+              "name": "旅の治療薬",
+              "quantity": 1
+            }
+          ]
+        }
       },
       "actions": [
         {
@@ -6200,7 +6211,7 @@
         {
           "id": "forest_slime",
           "name": "スライム",
-          "enemy_id": "slime",
+          "enemy_id": "tutorial_slime",
           "description": "一匹のスライムが道を塞いでいる。食べ物の匂いに敏感で、視野は狭い。",
           "traits": [
             "food_motivated"
@@ -17926,6 +17937,19 @@
       "description": "岩の巨人の体から剥がれた、苔むした石。",
       "category": "loot",
       "icon": "/static/images/icon_giant_mossstone.png"
+    },
+    {
+      "id": "travel_potion",
+      "name": "旅の治療薬",
+      "category": "consumable",
+      "description": "旅人が持ち歩く小瓶の治療薬。気づけば背嚢に入っていた。",
+      "effect": "HPを8回復 / 消耗品",
+      "combat": {
+        "kind": "heal",
+        "healing": "8",
+        "consumable": true
+      },
+      "icon": "/static/images/icon_travel_potion.png"
     }
   ],
   "clues": [
@@ -19738,6 +19762,75 @@
         "id": "giant_mossstone",
         "name": "巨人の苔石",
         "quantity": 2
+      }
+    },
+    {
+      "id": "tutorial_slime",
+      "name": "スライム",
+      "description": "森の入口に棲みついたスライム。妙に酸っぱい匂いがする。",
+      "hp": 30,
+      "max_hp": 30,
+      "mp": 0,
+      "max_mp": 0,
+      "sp": 0,
+      "max_sp": 0,
+      "attributes": {
+        "str": 4,
+        "dex": 2,
+        "int": 1,
+        "wis": 1,
+        "end": 4
+      },
+      "combat": {
+        "basic_attack": {
+          "name": "体当たり",
+          "damage": "1",
+          "accuracy": 80,
+          "element": "physical"
+        },
+        "defense": 0,
+        "evade": 10
+      },
+      "resistances": {
+        "physical": 1,
+        "fire": 1.25,
+        "ice": 1
+      },
+      "rewards": {
+        "gold": 5,
+        "items": [
+          {
+            "name": "薬草",
+            "quantity": 2
+          },
+          {
+            "name": "治療の巻物",
+            "quantity": 1
+          }
+        ],
+        "flags": [
+          "defeated_slime"
+        ]
+      },
+      "skills": [
+        {
+          "id": "slime_acid",
+          "name": "溶解液",
+          "kind": "attack",
+          "description": "酸を吐きかける。防御を無視して8ダメージ。",
+          "damage": "8",
+          "accuracy": 100,
+          "element": "physical",
+          "true_damage": true,
+          "use_on_round": 1,
+          "max_uses_per_battle": 1
+        }
+      ],
+      "image": "/static/images/enemy_slime.png",
+      "loot": {
+        "id": "slime_core",
+        "name": "スライムの核",
+        "quantity": 1
       }
     }
   ],

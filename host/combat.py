@@ -133,6 +133,7 @@ def ensure_combat_started(session: dict[str, Any], intro_text: str = "") -> bool
     resolved_intro = sanitize_visible_text(
         str(intro_text or encounter.get("intro_text") or location.get("description") or "")
     ).strip()
+    _grant_start_items(session, encounter)
     session["combat"] = {
         "id": uuid.uuid4().hex,
         "status": "active",
@@ -175,6 +176,19 @@ def ensure_combat_started(session: dict[str, Any], intro_text: str = "") -> bool
     return True
 
 
+def _grant_start_items(session: dict[str, Any], encounter: dict[str, Any]) -> None:
+    # The tutorial slips its items into the bag once, before the first round; the log stays quiet.
+    grant = encounter.get("start_grant")
+    if not isinstance(grant, dict) or not grant.get("flag"):
+        return
+    flags = session.setdefault("flags", {})
+    if flags.get(grant["flag"]):
+        return
+    from .state import apply_state_delta
+    apply_state_delta(session, {"inventory_add": [dict(item, silent=True) for item in grant.get("items", [])]})
+    flags[grant["flag"]] = True
+
+
 def perform_combat_action(
     session: dict[str, Any],
     action_type: str,
@@ -215,6 +229,7 @@ def perform_combat_action(
             combat["action_events"] = previous_events
         raise
 
+    combat.setdefault("player_action_types", []).append(normalized_type)
     if combat.get("status") == "active":
         _check_victory_or_defeat(session)
     if combat.get("status") == "active":
@@ -331,6 +346,11 @@ def public_combat(session: dict[str, Any]) -> Optional[dict[str, Any]]:
         "events": deepcopy(combat.get("action_events") or []),
         "presentation_state": _presentation_state(session),
     }
+    if (combat.get("encounter") or {}).get("tutorial"):
+        public["tutorial"] = {
+            "player_actions": list(combat.get("player_action_types") or []),
+            "enemy_skill_used": any(sum((enemy.get("skill_uses") or {}).values()) for enemy in combat.get("enemies") or []),
+        }
     if combat.get("status") == "active":
         public["actions"] = combat_actions(session)
     return public
@@ -766,7 +786,8 @@ def _resolve_attack(
                         if m.get('enemy_skill') in (ability.get('id'), ability.get('name')))
     accuracy -= sum(_safe_int(s.get("accuracy_penalty"), 0) for s in attacker.get("statuses", []))
     evade = _safe_int((defender.get("combat") or {}).get("evade") if isinstance(defender.get("combat"), dict) else defender.get("evade"), 0)
-    chance = max(5, min(100, accuracy - evade))
+    true_damage = bool(ability.get("true_damage"))
+    chance = 100 if true_damage else max(5, min(100, accuracy - evade))
     hit_roll = rng.randint(1, 100)
     defender_name = str(defender.get("name") or "敵")
     if hit_roll > chance:
@@ -786,7 +807,10 @@ def _resolve_attack(
     if defender is not session.get('character'):
         defense = max(0, defense + sum(int(m.get('enemy_defense', 0)) for m in _encounter_modifiers(session, defender)))
     damage = damage_after_defense(raw_damage, multiplier, defense, _combat_rules(session))
-    if defender is session.get("character"):
+    if true_damage:
+        # True damage always hits and ignores defense, resistances, guarding and damage modifiers.
+        damage = raw_damage
+    elif defender is session.get("character"):
         damage = _modified_received_damage(session, damage, element, attacker, ability.get('name', ''), ability.get('id', ''))
         status = session["combat"].get("player_status") or {}
         guard = float(status.get("guard_multiplier", 1.0) or 1.0)
@@ -814,7 +838,7 @@ def _resolve_attack(
         session,
         actor_id,
         "damage",
-        f"{name}が{defender_name}に{damage}{'光属性' if element == 'holy' else ''}ダメージ。",
+        f"{name}が{defender_name}に{damage}{'光属性' if element == 'holy' else ''}ダメージ{'（防御無視）' if true_damage else ''}。",
         {"damage": damage, "raw_damage": raw_damage, "formula": detail, "element": element, "hit_roll": hit_roll, "hit_chance": chance,
          "weakness": multiplier > 1 or ability.get("element") == "weakness" or bool(ability.get("multi_elements"))},
         target=defender,
@@ -1331,6 +1355,16 @@ def _choose_enemy_ability(enemy: dict[str, Any], session: dict[str, Any], rng: A
             continue
         if skill.get('id') in disabled or skill.get('name') in disabled:
             continue
+        skill_key = str(skill.get("id") or skill.get("name") or "")
+        uses = enemy.setdefault("skill_uses", {})
+        limit = skill.get("max_uses_per_battle")
+        if limit is not None and _safe_int(uses.get(skill_key), 0) >= _safe_int(limit, 0):
+            continue
+        if skill.get("use_on_round") is not None:
+            if _safe_int(session["combat"]["round"], 1) != _safe_int(skill["use_on_round"], 1):
+                continue
+            uses[skill_key] = _safe_int(uses.get(skill_key), 0) + 1
+            return deepcopy(skill)
         if skill.get("every_n_rounds"):
             if session["combat"]["round"] % int(skill["every_n_rounds"]):
                 continue
@@ -1348,8 +1382,13 @@ def _choose_enemy_ability(enemy: dict[str, Any], session: dict[str, Any], rng: A
         weights.append(max(1, _safe_int(skill.get("ai_weight"), 1)))
     if affordable:
         if hasattr(rng, "choices"):
-            return deepcopy(rng.choices(affordable, weights=weights, k=1)[0])
-        return deepcopy(affordable[rng.randint(0, len(affordable) - 1)])
+            chosen = rng.choices(affordable, weights=weights, k=1)[0]
+        else:
+            chosen = affordable[rng.randint(0, len(affordable) - 1)]
+        if chosen.get("max_uses_per_battle") is not None:
+            key = str(chosen.get("id") or chosen.get("name") or "")
+            enemy["skill_uses"][key] = _safe_int(enemy["skill_uses"].get(key), 0) + 1
+        return deepcopy(chosen)
     enemy_combat = enemy.get("combat") if isinstance(enemy.get("combat"), dict) else {}
     return _merge_dict(_combat_rules(session).get("enemy_basic_attack"), enemy_combat.get("basic_attack"))
 

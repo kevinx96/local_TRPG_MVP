@@ -32,6 +32,7 @@ DETAILS = {
     "herb": "One sprig of medicinal herb, clearly readable leaves; no invented flowers.",
     "magic_scroll": "One rolled magic scroll. No visible writing or added element emblem.",
     "mp_potion": "One small bottle of blue medicine.",
+    "travel_potion": "One small corked bottle of red healing medicine.",
     "ice_charm": "One simple frost-cold charm, no writing. Keep this base form for the activated version.",
     "adamantite_armor": "One suit of armor made from extremely hard metal, no invented crest.",
     "ice_iron_greatsword": "One large high-quality iron greatsword fused with the ice charm, cold blade.",
