@@ -1,337 +1,192 @@
-# Local LLM TRPG
-
-A TRPG client with an API Game Master. The FastAPI Host owns game state, saves and dice; the browser provides a visual-novel-style interface. Local LLM backends are archived until better hardware and models can be evaluated.
-
-> **Python**: 3.9 or newer. Tested with FastAPI/Pydantic. arm64 users should prefer a native arm64 Python/Conda environment.
+# 紅き邪竜イグニス — an AI-GM TRPG
 
 📖 **Language**: [English](#) · [日本語](README_JA.md) · [中文](README_ZH.md)
 
+A single-player Japanese tabletop RPG with a visual-novel browser interface. An LLM (Gemini) acts as the Game Master, but it never decides outcomes: it only turns the player's free text into a constrained "plan", and a deterministic engine owns every number — HP, items, flags, position, dice, combat and rewards.
+
+The project is also a research testbed: how accurately and safely can a small prompt budget turn an LLM into a GM when the engine does the adjudicating? See the [paper draft](docs/research/paper-draft.md) (Chinese).
+
+> **Python** 3.9+. All in-game text is Japanese.
+
 ---
 
-## Table of Contents
+## Contents
 
-- [Setup](#setup)
-- [LLM Configuration](#llm-configuration)
-- [Remote Ollama](#remote-ollama)
-- [Scenario Format](#scenario-format)
-- [Scenario Editor](#scenario-editor)
-- [Game Features](#game-features)
-  - [Characters](#characters)
-  - [Attributes & Checks](#attributes--checks)
-  - [Skills](#skills)
-  - [Enemies & Combat](#enemies--combat)
-- [Scenario Conversion](#scenario-conversion)
-- [API Overview](#api-overview)
-- [Tests](#tests)
+- [Highlights](#highlights)
+- [Quick start](#quick-start)
+- [Configuration](#configuration)
+- [The game](#the-game)
+- [Architecture](#architecture)
+- [Research and evaluation](#research-and-evaluation)
+- [Development](#development)
+- [API overview](#api-overview)
 - [License](#license)
 
 ---
 
-## Setup
+## Highlights
+
+- **Engine-adjudicated GM.** The model fills a plan whose fields can only be engine-listed IDs; the engine resolves it on a copy of the session and commits only legal results. Illegal state changes (S4) are zero in every experiment.
+- **Measured, not assumed.** A reviewed 486-case Japanese intent benchmark with a frozen scenario and cached replay. On the frozen test split Gemini 3.1 Flash-Lite reaches 97.3% acceptable plans with a 0.68% harmful-misfire rate.
+- **Playable without the model.** Because adjudication is deterministic, the whole game can be played through offline; an automated explorer runs 32 playthroughs as a regression test for soft locks, contradictions and leaked text.
+- **A full adventure.** Four classes, five chapters, a fortress town, three chapter-3 routes with their own element and counter companion, six companions, multiple endings with epilogues.
+
+## Quick start
+
+### From source
 
 ```powershell
 python -m pip install -r requirements.txt
 python -m host.run_server
 ```
 
-The browser opens `http://127.0.0.1:8000/` automatically. To skip auto-open:
+The browser opens `http://127.0.0.1:8000/`. Use `--no-browser` to skip that, `--port 8010` for another port, or `--reload` while developing. The scenario editor is at `/editor`.
+
+### Windows executable
+
+Build locally — the API key is never bundled, and an audit unpacks every bundled module to make sure:
 
 ```powershell
-python -m host.run_server --no-browser
+python -m scripts.build_exe                     # dist/LocalTRPG/LocalTRPG.exe + zip
+python -m scripts.build_exe --with-local-config # also copy your host/local_config.json (personal use only)
 ```
 
-For hot-reload during development:
+### Shareable demo build
+
+To hand the game to others without a key, deploy the Cloudflare Worker proxy in [`workers/gemini-proxy`](workers/gemini-proxy/README.md) (it holds the key, accepts only this game's requests, and caps cost with per-IP and daily limits), then:
 
 ```powershell
-python -m host.run_server --reload
+$env:DEMO_TOKEN = "<the worker's demo token>"
+python -m scripts.build_exe --demo-endpoint https://<your-worker>.workers.dev
 ```
 
-When a new session is created, the GM generates an opening scene automatically. The player enters their first action following the GM's narration. GM responses are displayed in full once generation is complete.
+## Configuration
 
-## LLM Configuration
-
-Gemini 3.1 Flash-Lite is the default. Set `GEMINI_API_KEY` or use an existing local key file. Keep personal overrides in the ignored `host/local_config.json`; never commit credentials. Ollama and Koboldcpp profiles remain available in code but are hidden from game settings. Gameplay tries up to two models (primary, then the first fallback) with a 15-second connection/read timeout each; free-action interpretation always uses a single attempt.
-
-Free input uses one API interpretation followed by engine-owned outcomes. The forest entrance now supports food distraction, stealth and preparation. Start a new game to use the updated scenario. See [implementation and evaluation notes](docs/api-free-actions.md) (Chinese).
+Gemini 3.1 Flash-Lite is the default model. Put personal settings in `host/local_config.json` (git-ignored; next to `LocalTRPG.exe` in the packaged build). Never commit keys.
 
 ```json
 {
   "active_backend": "gemini",
   "backends": {
     "gemini": {
-      "type": "gemini",
-      "base_url": "https://generativelanguage.googleapis.com/v1beta",
       "model": "gemini-3.1-flash-lite",
       "fallback_models": ["gemini-3.5-flash-lite", "gemini-3.6-flash"],
-      "api_key": ""
-    }
-  },
-  "request_timeout_seconds": 15,
-  "max_model_attempts": 2,
-  "response_format": "json_object"
-}
-```
-
-### Prompting Parameters
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `history_messages` | 4 | Number of recent messages sent to LLM |
-| `memory_max_chars` | 1200 | Max characters for conversation memory summary |
-| `action_history_max` | 40 | Max player action history entries |
-| `action_history_item_chars` | 80 | Max characters per action history entry |
-
-## Remote Ollama
-
-Archived deployment notes: local inference is disabled by default. To explicitly restore it, set `archived_backends: []` in personal configuration and select the local backend.
-
-For a slow laptop, keep the game host/client local but point LLM calls to the main PC. Do not edit `host/config.json` for machine-specific settings; create `host/local_config.json` instead. It is ignored by git and is the right place for machine-specific URLs, tokens, and model names.
-
-```json
-{
-  "backends": {
-    "ollama": {
-      "base_url": "https://ollama.your-domain.com/v1",
-      "model": "qwen3-swallow-8b-rl-local",
-      "fallback_models": [
-        "qwen2.5-7b-instruct-local",
-        "elyza-jp-8b-local"
-      ],
-      "api_key": "ollama"
+      "api_key": "YOUR_KEY"
     }
   }
 }
 ```
 
-Environment variables can override this without editing files:
+Environment overrides: `GEMINI_API_KEY`, `TRPG_LLM_BASE_URL`, `TRPG_LLM_MODEL`, `TRPG_LLM_API_KEY`, `TRPG_ACTIVE_BACKEND`, `TRPG_LOCAL_CONFIG`.
 
-```powershell
-$env:TRPG_OLLAMA_BASE_URL = "https://ollama.your-domain.com"
-$env:TRPG_OLLAMA_MODEL = "qwen3-swallow-8b-rl-local"
-python -m host.run_server
-```
+- Gameplay tries the primary model and one fallback with a 15-second timeout; free-action interpretation makes a single attempt.
+- If the model is unreachable the game keeps going: choices and combat are engine-resolved, prepared narration still shows, and anything else gets an honest one-line notice.
+- Local models through Ollama are kept for research baselines only and are hidden from game settings.
 
-### Remote Setup Steps
-
-1. On the main PC, make Ollama listen beyond localhost by setting `OLLAMA_HOST=127.0.0.1:11434` for a local Cloudflare Tunnel target, or `OLLAMA_HOST=0.0.0.0:11434` if you are using a private VPN such as Tailscale.
-2. With your Cloudflare domain, create a Cloudflare Tunnel from `https://ollama.your-domain.com` to `http://127.0.0.1:11434` on the main PC.
-3. Protect the tunnel with Cloudflare Access or a service token. Do not expose Ollama publicly without access control.
-4. On the slow laptop, set `host/local_config.json` or `TRPG_OLLAMA_BASE_URL` to the Cloudflare Tunnel URL.
-
-If you get empty `403` responses from Ollama, the `Host` header is being rejected. Either set Cloudflare's `HTTP Host Header` to `localhost:11434`, or run the bundled proxy:
-
-```powershell
-python -m host.ollama_tunnel_proxy
-```
-
-Then change the Cloudflare Tunnel service URL to:
-
-```text
-http://localhost:11435
-```
-
-The public game client still uses `https://ollama.your-domain.com/v1`; only the Cloudflare origin service URL changes.
-
-### Registering GGUF Models
-
-```powershell
-python -m host.setup_ollama_models
-ollama list
-```
-
-If you see `model not found`, register the GGUF model first or update `model` / `fallback_models` in config to match `ollama list` output.
-
-### Debug Logging
-
-Enabled by default (`"debug_llm": true`). Logs appear prefixed with `[TRPG-DEBUG]`. API keys are never logged.
-
----
-
-## Scenario Format
-
-Scenarios use the **Scenario Pack** JSON format defined in [`scenario_pack.schema.json`](host/prompt/processed/scenario_pack.schema.json).
-
-```
-meta              → title, summary, language, initial_scene
-rules[]           → GM behavior rules
-combat_rules      → global attack, defense, resource, flee, and round defaults
-scenes[]          → id, title, description, goals, keywords, location_ids, next_scene_ids, fallback_choices
-locations[]       → id, title, description, linked entities, encounter combat settings
-npcs[]            → id, name, description, keywords
-items[]           → id, name, description, effect, keywords
-clues[]           → id, title, description, keywords
-enemies[]         → id, name, description, image, hp/max_hp, mp/max_mp, sp/max_sp, attributes, skills[]
-attribute_defs[]  → id, name, initial_value
-characters[]      → id, name, default_name, description, image, image_female, hp/max_hp, mp/max_mp, sp/max_sp, gold, attributes{}, inventory[], equipment[], skills[]
-combat_choices[]  → global combat action choices
-fallback_choices[]→ global default choices
-```
-
-Entities (NPCs, items, clues, enemies) are bound to **locations**, not scenes. Each location declares which entities are present via `npc_ids`, `item_ids`, `clue_ids`, `enemy_ids`. Scenes reference locations via `location_ids` and possible transitions via `next_scene_ids`.
-
-See [`dragon_rpg.json`](host/prompt/processed/dragon_rpg.json) for a complete example.
-
----
-
-## Scenario Editor
-
-Access the visual editor at `http://127.0.0.1:8000/editor`. All scenario JSON fields are editable through the UI:
-
-| Section | Content |
-|---------|---------|
-| 基本信息 (Meta) | Title, language, summary, initial scene |
-| 规则 (Rules) | GM behavioral rules |
-| 场景 (Scenes) | Scene definitions, goals, location bindings, next scenes |
-| Hybrid | Prepared GM turns for Semi mode (drafts with dice, choices, rewrite notes) |
-| 地点 (Locations) | Locations with linked NPCs, items, clues, enemies |
-| NPC | Character definitions |
-| 道具 (Items) | Items with effects |
-| 线索 (Clues) | Story clues |
-| 敌人 (Enemies) | Enemy stats, attacks, defenses, resistances, skills, rewards |
-| 属性定义 (Attributes) | Custom attribute definitions (e.g. STR, DEX, INT) |
-| 角色 (Characters) | Playable characters with HP/MP/SP, attributes, combat overrides, inventory, equipment, skills |
-| 战斗规则 (Combat Rules) | Global attack formulas, accuracy, guard, fleeing, SP regeneration, and round limit |
-| 全局选项 (Fallback) | Global default choices |
-| 战斗选项 (Combat) | Global combat action choices |
-| JSON | Raw JSON edit (advanced) |
-
----
-
-## Game Features
+## The game
 
 ### Characters
 
-Players select a character from the scenario's character list before starting. Each character defines:
+| Class | HP / MP | Strength |
+|---|---|---|
+| 勇者 Hero | 20 / 8 | balanced; can fuse an ice greatsword at the forge |
+| 僧侶 Cleric | 18 / 14 | healing and holy magic |
+| 魔法使い Mage | 12 / 20 | attack magic |
+| 盗賊 Thief | 14 / 6 | stealth checks and speed |
 
-- **Basic stats**: HP, MP, SP (with max values)
-- **Starting gold** and **inventory** (items with name, description, effect, quantity)
-- **Equipment** (equipped item names)
-- **Attributes** (see below)
-- **Skills** (see below)
+### Story structure
 
-Example characters in `dragon_rpg.json`: Hero (balanced), Cleric (healer), Mage (magic), Thief (agility).
-
-### Attributes & Checks
-
-Attributes are custom-defined per scenario. The `dragon_rpg` example defines:
-
-| ID | Name | Description |
-|----|------|-------------|
-| `str` | 筋力 (Strength) | Physical power |
-| `dex` | 敏捷 (Dexterity) | Agility and speed |
-| `int` | 知力 (Intelligence) | Magic and knowledge |
-| `wis` | 感知 (Wisdom) | Perception and insight |
-| `con` | 耐久 (Constitution) | Endurance and toughness |
-
-**Attribute Checks**: The GM can set `dice_type` with an attribute modifier, e.g. `"1d20+str"`. The character's attribute value is automatically added to the d20 roll. With STR=8 and DC=10, a roll of 2+8=10 succeeds.
-
-**Attribute Changes**: The GM can modify attributes mid-game via `state_delta.attribute_changes`:
-```json
-{ "attribute_changes": { "str": -2, "dex": +1 } }
+```
+Capital ─ Dark Forest ─┬─ Burning village ──────────────────┐
+                       ├─ Misty old battlefield ─(village)──┤
+                       └─ Cave waterway ─ Fortress Oaksdawn ─┬─ Misty old battlefield
+                                                             └─ Rumbling gorge ─(village)─┘
+                                                                          └→ Dragon Valley → Return to the capital
 ```
 
-### Skills
+| Chapter-3 route | Element | Counter companion |
+|---|---|---|
+| Burning village | fire + ice | fire-bat dragon / Mina |
+| Misty old battlefield | undead (weak to light) | paladin Liese |
+| Rumbling gorge | earth (resists physical, weak to water) | hydromancer Elio |
 
-Characters and enemies can have skills with:
-- **name**, **description**, **effect** (narrative description)
-- **dice_type** (optional, e.g. `"1d20+int"` for magic-based skills)
-- **cost** and **cost_type** (`"mp"` or `"sp"`)
+The optional routes merge back into the village, so no main event is missed. Expose General Draco with enough evidence for the true ending. A spoiler-heavy [walkthrough](docs/design/walkthrough-2026-10-18.md) (Chinese) covers routes, clues and the final fight's helpers.
 
-Example: Cleric's "治癒の祈り" (Healing Prayer) — `dice_type: "1d6+int"`, `cost: 4 MP`, heals HP.
+### Systems
 
-### Enemies & Combat
+- **Choices and free input.** Pick a choice or type anything. Choices show their risk; options that need something you have never seen appear as 「？？？」, and their text is not even sent to the browser.
+- **Turn-based combat** fully resolved by the engine, with animations, damage numbers and a skippable 1.4-second action budget.
+- **Equipment slots**: weapon / armor / aid, one each. Gear found later fills an empty slot automatically.
+- **Companions** (one at a time): Robin (covering fire at the highest-HP foe), Warlock (heals every 2 rounds), fire-bat dragon (fire damage and healing), Mina (ice magic), Liese (heals under half HP, otherwise light damage, undead first), Elio (water blades and a damage-halving veil).
+- **Economy**: monsters drop sellable loot; elites and optional bosses drop permanent stat boosts that can also be stolen by sneaking past; collection quests in each hub.
+- **Area retry**: after a defeat, restart from the entrance of the area you died in.
+- **Maps, quests, shops, rests, epilogues** that reflect your choices.
 
-Enemies are defined in the scenario with full stats, attributes, and skills. They are bound to locations via `enemy_ids`.
+## Architecture
 
-When the engine enters a location with undefeated enemies, it creates a dedicated turn-based combat state. During combat, attacks, skills, items, defense, fleeing, enemy AI, resource costs, damage, rewards, and defeat flags are resolved entirely by `host/combat.py`; `/turn` is blocked and no LLM request is made. After victory, defeat, or escape, the client explicitly submits the fixed combat result once so the GM can narrate the aftermath and resume non-combat play.
+| Path | Contents |
+|---|---|
+| `host/` | FastAPI server, engine (`state.py`, `combat.py`, `free_actions.py`, `shops.py`, `maps.py`), LLM client and GM contract |
+| `client/` | Vanilla-JS visual-novel UI, battle effects, item icons |
+| `host/prompt/processed/` | Scenario packs `dragon_rpg.json` and `dragon_rpg_hybrid.json` (always edited together), schema |
+| `scripts/scenario/` | Idempotent scenario migrations that author content |
+| `scripts/balance/`, `scripts/playtest/` | Balance simulations and the offline explorer |
+| `eval/` | Benchmark, candidates, reports |
+| `workers/gemini-proxy/` | Cloudflare Worker key proxy for demo builds |
 
-Combat balance belongs to scenario data rather than the GM prompt:
+**Free action flow**: the engine builds a compact context (actions, obstacles, objects, inventory, recent changes) → one model call with a strict JSON schema → strict parsing → adjudication on a session copy → narration from engine results. A model output can never write state directly.
 
-- `combat_rules`: scenario-wide defaults for basic attacks, accuracy, defense multiplier, fleeing, SP regeneration, and maximum rounds.
-- `characters[].combat` / `enemies[].combat`: actor-specific attack, defense, and evade overrides.
-- `skills[]`: structured kind, formula, element, accuracy, resource cost, and enemy AI weight.
-- `items[].combat`: weapon, armor, healing, or damage behavior.
-- `locations[].combat`: encounter enemy IDs, flee rules, and victory/defeat effects.
-- `enemies[].rewards`: deterministic gold, item, and flag rewards.
+**GM modes**: *Semi* (default) lightly rewrites prepared turns from the hybrid pack; *Full* lets the model narrate more freely from scene context. In both, outcomes come from the engine.
 
-Enemy example (`dragon_rpg.json`):
-- **Slime** (HP 5, STR 4) — tutorial enemy in the dark forest
-- **Ignis the Evil Dragon** (HP 30, STR 18, skills: Fire Breath, Tail Attack)
+## Research and evaluation
 
----
-
-## GM Modes
-
-| Mode | Description |
-|------|-------------|
-| **Semi** (default) | LLM receives pre-cooked prepared turns (generated via Gemini) and lightly rewrites them for consistency. Uses `*_hybrid.json` scenario packs when available; if the current turn has no prepared draft, it falls back to normal scene context. |
-| **Full** | LLM receives scene context (locations, NPCs, items, enemies, clues) and generates the GM response more freely. |
-
-Select mode from the start screen config panel.
-
----
-
-## Dice System
-
-Standard tabletop dice notation (`1d20`, `2d6`, `1d100`). Dice results include:
-
-- `rolls[]` — individual roll values
-- `total` — sum of rolls + attribute modifier (if any)
-- `base_total` / `attr_mod` / `attr_key` — present when an attribute check is used
-
-Empty or null `dice_type` defaults to `1d20`.
-
----
-
-## Scenario Conversion
+- Paper draft: [`docs/research/paper-draft.md`](docs/research/paper-draft.md); every prompt change and its measured effect: [`docs/design/prompt-log.md`](docs/design/prompt-log.md).
+- Benchmark v2: 486 reviewed cases (dev 194 / test 292, split by sentence family), severity S0–S4, frozen scenario `f41af9d` with cached replay. See [`eval/benchmark/README.md`](eval/benchmark/README.md).
 
 ```powershell
-python -m host.scenario_converter "host\prompt\raw\your_scenario.docx"
+# Replays the cache; adds no API cost. Add --live to call the API on cache misses.
+python -m scripts.eval.run --suite intent --cases eval/benchmark/intent_v2.jsonl --backend gemini --model gemini-3.1-flash-lite --variant default --split test
 ```
 
-Supports `.txt`, `.docx`, `.pdf`, `.doc` (Windows COM required for `.doc`).
+Paid API calls only happen with an explicit `--live`.
 
-Gemini API key is read from env var `GEMINI_API_KEY`, or from `host/gemini_api_key.txt` / `host/gemini_api_key.py` / `host/auto_tagger.py`. These secret files are excluded via `.gitignore`.
+## Development
 
----
+Roles and shared rules are in [`AGENTS.md`](AGENTS.md): a design lead (direction, prompts, story text, art selection, acceptance) and an engineering lead (code, tests, evaluation, data entry). Tasks are written as specs in `docs/specs/`.
 
-## API Overview
+Before every commit:
+
+```powershell
+python -m unittest discover -s tests -q
+node --check client/app.js
+```
+
+Useful tools:
+
+```powershell
+python -m scripts.playtest.explore      # offline playthrough regression (no LLM)
+python -m scripts.balance.checkpoints   # regenerate balance checkpoints after scenario edits
+python -m scripts.worker_fingerprints   # check the proxy's prompt fingerprints are current
+```
+
+Art candidates and approvals are tracked in `assets/manifest.json`.
+
+## API overview
 
 | Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/sessions` | POST | Create new game session |
-| `/api/sessions/{id}` | GET | Get session state |
-| `/api/sessions/{id}/turn` | POST | Submit player action |
-| `/api/sessions/{id}/combat/actions` | POST | Execute one engine-owned combat action without an LLM call |
-| `/api/sessions/{id}/combat/resolve` | POST | Send a completed combat result to the GM once |
-| `/api/scenarios` | GET/POST | List/create scenarios |
-| `/api/scenarios/{filename}` | GET/PUT | Read/update scenario |
-| `/api/config` | GET/PUT | Read/update backend config |
-| `/api/ollama/shutdown` | POST | Remote shutdown (via proxy) |
-
-### Session Creation
-
-```json
-{
-  "scenario_path": "host/prompt/processed/dragon_rpg.json",
-  "gm_mode": "semi",
-  "character_id": "hero",
-  "character": {
-    "name": "アルス",
-    "character_image": "/static/images/char_male_hero.png"
-  }
-}
-```
-
----
-
-## Tests
-
-```powershell
-python -m unittest discover -s tests
-```
-
----
+|---|---|---|
+| `/api/sessions` | POST | Create a session (generates the opening) |
+| `/api/sessions/{id}` | GET | Session state |
+| `/api/sessions/{id}/turn` | POST | Choice or free-text action |
+| `/api/sessions/{id}/combat/actions` | POST | One engine-resolved combat action |
+| `/api/sessions/{id}/combat/resolve` | POST | Narrate a finished battle once |
+| `/api/sessions/{id}/retry` | POST | Restart from the area entrance after a defeat |
+| `/api/sessions/{id}/map/move` | POST | Move by clicking a map node |
+| `/api/sessions/{id}/items/use` | POST | Use or equip an item from the bag |
+| `/api/sessions/{id}/shops/{shop}` | GET | Shop stock and prices |
+| `/api/sessions/{id}/shops/{shop}/buy` · `/sell` | POST | Trade |
+| `/api/scenarios`, `/api/scenarios/{file}` | GET/POST/PUT | List, create, read, update scenario packs |
+| `/api/config` | GET/PUT | Backend configuration |
 
 ## License
 
