@@ -114,7 +114,7 @@ export async function forwardRequest(request: Request, env: Env, model: string,
 	if (!budget.allowed) return proxyLimit("The demo's daily request budget is used up. Please try again tomorrow (UTC).");
 
 	const keys = apiKeys(env.GEMINI_API_KEYS, env.GEMINI_API_KEY);
-	const secrets = [...keys, env.GEMINI_API_KEY ?? "", env.DEMO_TOKEN];
+	const secrets = [...keys, env.GEMINI_API_KEY ?? "", env.DEMO_TOKEN ?? ""];
 	const { pattern } = secretPattern(secrets);
 	const body = JSON.stringify(payload);
 	let tries = 0;

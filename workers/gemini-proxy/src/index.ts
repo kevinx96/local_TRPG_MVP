@@ -1,4 +1,4 @@
-// Keeps the Gemini key off players' machines: the game sends its requests here with a demo token,
+// Keeps the Gemini keys off players' machines: the game sends its requests here (with a demo token if one is set),
 // and only this game's request shape and prompts are forwarded, within per-IP and per-day limits.
 import { DurableObject } from "cloudflare:workers";
 import { FINGERPRINTS } from "./fingerprints";
@@ -72,7 +72,9 @@ export default {
 		const model = match[1];
 		if (!ALLOWED_MODELS.has(model)) return error(403, "PERMISSION_DENIED", `Model ${model} is not available on this endpoint.`);
 
-		if (!(await tokenMatches(request.headers.get("x-goog-api-key") ?? "", env.DEMO_TOKEN))) {
+		// DEMO_TOKEN is optional: without it the proxy relies on the prompt fingerprints and the limits below.
+		const expected = env.DEMO_TOKEN ?? "";
+		if (expected && !(await tokenMatches(request.headers.get("x-goog-api-key") ?? "", expected))) {
 			return error(401, "UNAUTHENTICATED", "Invalid demo token.");
 		}
 

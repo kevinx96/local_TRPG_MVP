@@ -24,7 +24,7 @@ demo token 放在 exe 旁边，能被提取；指纹也能被抄。它们挡的�
 | 每天 | Durable Object 精确计数，`DAILY_REQUEST_LIMIT`（默认 2000，UTC 0 点重置） |
 | 兜底 | 在 Google Cloud 为这个 key 设预算提醒（Billing → Budgets & alerts） |
 
-泄露后的处理：`npx wrangler secret put DEMO_TOKEN` 换新 token，再重新打包，旧 exe 随即失效。
+`DEMO_TOKEN` 是可选的：不设置时 Worker 不检查 token，只靠上面的指纹检查和用量上限（地址被人拿去也只能玩这个游戏，费用由每日上限和 Google 侧的预算封顶）。设置后，请求必须带同一个 token；泄露时 `npx wrangler secret put DEMO_TOKEN` 换新 token 再重新打包，旧 exe 随即失效。
 
 ## 部署（只在本机执行，key 不进仓库）
 
@@ -33,7 +33,7 @@ cd workers/gemini-proxy
 npm install
 npx wrangler login
 npx wrangler secret put GEMINI_API_KEYS  # 粘贴真实 keys，以逗号或换行分隔
-npx wrangler secret put DEMO_TOKEN       # 粘贴一个新随机串，例如 python -c "import secrets;print(secrets.token_urlsafe(24))"
+npx wrangler secret put DEMO_TOKEN       # 可选：粘贴一个新随机串，例如 python -c "import secrets;print(secrets.token_urlsafe(24))"
 npx wrangler deploy
 ```
 
@@ -44,7 +44,7 @@ npx wrangler deploy
 ## 打包 demo 版
 
 ```
-set DEMO_TOKEN=<同上>
+set DEMO_TOKEN=<同上>   # 只有设置了 DEMO_TOKEN secret 时才需要
 python -m scripts.build_exe --demo-endpoint https://<worker>.workers.dev
 ```
 

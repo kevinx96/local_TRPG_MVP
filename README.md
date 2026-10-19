@@ -56,7 +56,7 @@ python -m scripts.build_exe --with-local-config # also copy your host/local_conf
 To hand the game to others without a key, deploy the Cloudflare Worker proxy in [`workers/gemini-proxy`](workers/gemini-proxy/README.md) (it holds the key, accepts only this game's requests, and caps cost with per-IP and daily limits), then:
 
 ```powershell
-$env:DEMO_TOKEN = "<the worker's demo token>"
+$env:DEMO_TOKEN = "<the worker's demo token>"   # only if the Worker has a DEMO_TOKEN secret
 python -m scripts.build_exe --demo-endpoint https://<your-worker>.workers.dev
 ```
 

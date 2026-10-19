@@ -56,7 +56,7 @@ python -m scripts.build_exe --with-local-config # 同时复制你的 host/local_
 想把游戏发给别人又不带 key，先部署 [`workers/gemini-proxy`](workers/gemini-proxy/README.md) 里的 Cloudflare Worker 代理。它持有 key，只放行本游戏的请求，并用每 IP 和每天的上限封顶费用。然后：
 
 ```powershell
-$env:DEMO_TOKEN = "<Worker 的 demo token>"
+$env:DEMO_TOKEN = "<Worker 的 demo token>"   # 只有 Worker 设置了 DEMO_TOKEN 时才需要
 python -m scripts.build_exe --demo-endpoint https://<your-worker>.workers.dev
 ```
 

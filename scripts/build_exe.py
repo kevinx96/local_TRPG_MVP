@@ -112,15 +112,14 @@ def _try_inflate(data: bytes) -> bytes:
 
 
 def write_demo_config(folder: Path, endpoint: str, token: str) -> None:
-    """Point the bundle at the key proxy; the demo token is shareable, the Gemini key never is."""
-    if not token:
-        raise SystemExit("--demo-endpoint needs --demo-token or the DEMO_TOKEN environment variable")
-    if token.encode() in _secrets():
+    """Point the bundle at the key proxy; the optional demo token is shareable, the Gemini keys never are."""
+    if token and token.encode() in _secrets():
         raise SystemExit("the demo token matches a configured API key; use the proxy's own token")
     base_url = endpoint.rstrip("/")
     if not base_url.endswith("/v1beta"):
         base_url += "/v1beta"
-    config = {"active_backend": "gemini", "backends": {"gemini": {"base_url": base_url, "api_key": token}}}
+    gemini = {"base_url": base_url, "api_key": token} if token else {"base_url": base_url}
+    config = {"active_backend": "gemini", "backends": {"gemini": gemini}}
     (folder / "local_config.json").write_text(json.dumps(config, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     shutil.copy2(ROOT / "packaging" / "README_DEMO.txt", folder / "README_RUN.txt")
     print(f"[build] demo config points at {base_url}")

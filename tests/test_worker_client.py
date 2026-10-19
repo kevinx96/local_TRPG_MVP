@@ -52,6 +52,25 @@ class WorkerKeyRotationTests(unittest.TestCase):
         self.post = enter(patch.object(llm_client.requests, "post", side_effect=AssertionError("unexpected HTTP")))
         enter(patch.object(llm_client.requests, "get", side_effect=AssertionError("unexpected HTTP")))
 
+    def test_tokenless_demo_config_sends_no_key_header(self):
+        del self.config["backends"]["gemini"]["api_key"]
+        self.post.side_effect = [response(slot="0", message="ようこそ。")]
+        self.assertEqual(llm_client.chat_completion(self.config, MESSAGES, session={}), "ようこそ。")
+        headers = self.post.call_args.kwargs["headers"]
+        self.assertNotIn("x-goog-api-key", headers)
+        self.assertEqual(headers["x-trpg-key-start"], "0")
+
+    def test_build_writes_tokenless_demo_config(self):
+        from scripts import build_exe
+
+        folder = Path.cwd() / ".tmp-test" / ("demo-build-" + uuid.uuid4().hex)
+        folder.mkdir(parents=True)
+        self.addCleanup(shutil.rmtree, folder, True)
+        with patch.object(build_exe.shutil, "copy2"):
+            build_exe.write_demo_config(folder, "https://demo.example.invalid", "")
+        config = json.loads((folder / "local_config.json").read_text(encoding="utf-8"))
+        self.assertEqual(config["backends"]["gemini"], {"base_url": "https://demo.example.invalid/v1beta"})
+
     def starts(self):
         return [call.kwargs["headers"].get("x-trpg-key-start") for call in self.post.call_args_list]
 

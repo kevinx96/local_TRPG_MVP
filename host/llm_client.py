@@ -511,15 +511,18 @@ def _gemini_chat_completion_once(
 ) -> str:
     debug_enabled = bool(config.get("debug_llm", True))
     api_key = _gemini_api_key(backend)
-    if not api_key:
+    worker = _is_worker_backend(backend_name, backend)
+    # The demo proxy holds the real keys; a token for it is optional.
+    if not api_key and not worker:
         raise LLMClientError("Gemini API key is empty. Set GEMINI_API_KEYS / GEMINI_API_KEY, or put api_keys in local_config.json (next to LocalTRPG.exe in the packaged build; host/local_config.json in development).")
 
     base_url = str(backend.get("base_url") or "https://generativelanguage.googleapis.com/v1beta").rstrip("/")
     timeout = min(int(config.get("request_timeout_seconds", 15)), int(config.get("gameplay_timeout_seconds", 15)))
     url = f"{base_url}/models/{quote(model, safe='')}:generateContent"
     payload = _gemini_payload(messages, config)
-    headers = {"Content-Type": "application/json", "x-goog-api-key": api_key}
-    worker = _is_worker_backend(backend_name, backend)
+    headers = {"Content-Type": "application/json"}
+    if api_key:
+        headers["x-goog-api-key"] = api_key
     if worker:
         session = backend.get("_worker_session", {})
         if session.get("llm_worker_keys_exhausted", {}).get(backend_name):

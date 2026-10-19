@@ -56,7 +56,7 @@ python -m scripts.build_exe --with-local-config # 自分の host/local_config.js
 キーなしで他人に渡すには、[`workers/gemini-proxy`](workers/gemini-proxy/README.md) のCloudflare Workerを先にデプロイします（キーを預かり、このゲームのリクエストだけを通し、IPごと・1日ごとの上限で費用を抑えます）。
 
 ```powershell
-$env:DEMO_TOKEN = "<Workerのデモトークン>"
+$env:DEMO_TOKEN = "<Workerのデモトークン>"   # WorkerにDEMO_TOKENを設定した場合のみ
 python -m scripts.build_exe --demo-endpoint https://<your-worker>.workers.dev
 ```
 
