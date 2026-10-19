@@ -258,6 +258,15 @@ class NpcCombatTests(unittest.TestCase):
             self.assertFalse(any(a.get("npc_id") == "gald" for a in current_actions_for_session(session)))
         self.assertIn(migration.EPILOGUE, state._epilogue_lines(session, {"ending": "ignis_defeated"}))
 
+    def test_attack_plan_drops_restated_weapon(self):
+        raw = json.dumps(dict(kind="interact", action_id="", operation="attack", target_id="general", item_id="iron_sword",
+                              advance=False, approach="剣で斬りかかる", reply=""), ensure_ascii=False)
+        plan = free_actions.parse_plan(raw, "hero")
+        self.assertEqual((plan["item_id"], plan["normalized"]), ("", ["item_id"]))
+        with patch.object(free_actions, "LEGACY_PLAN", True):
+            legacy = free_actions.planner_config({})["response_format"]["json_schema"]["schema"]["properties"]
+        self.assertNotIn("attack", legacy["item_id"]["description"])
+
     def assertAbsentProse(self, description):
         # The design lead's final prose replaced every passage that showed the person (FINAL_ABSENCE).
         self.assertTrue(description)
@@ -369,7 +378,7 @@ class NpcCombatTests(unittest.TestCase):
         self.assertNotIn("attack(", free_actions.LEGACY_PLAN_PROMPT)
         candidates = [json.loads(line) for line in (ROOT / "eval/candidates/041-npc-attacks.jsonl").read_text(encoding="utf-8").splitlines()]
         self.assertEqual(len(candidates), 24)
-        self.assertTrue(all(case["label_status"] == "proposed" and not case["gold"] for case in candidates))
+        self.assertTrue(all(case["label_status"] == "design_reviewed_041" and case["gold"] for case in candidates))
 
 
 if __name__ == "__main__":

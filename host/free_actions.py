@@ -20,6 +20,7 @@ KINDS = ("existing", "interact", "dialogue", "clarify", "unsupported")
 LEGACY_OPERATIONS = ("", "observe", "distract", "sneak", "prepare", "use_item")
 OPERATIONS = (*LEGACY_OPERATIONS, "attack")
 LEGACY_PLAN = False
+LEGACY_ITEM_ID_DESCRIPTION = "existing は必ず空文字。prepare は使う素材の objects ID、distract/use_item は inventory ID。その他は空文字。"
 PLAN_SCHEMA = {
     "type": "object",
     "properties": {
@@ -27,7 +28,7 @@ PLAN_SCHEMA = {
         "action_id": {"type": "string", "description": "existing の時だけ actions の ID。他の種類では空文字。"},
         "operation": {"type": "string", "enum": list(OPERATIONS)},
         "target_id": {"type": "string", "description": "existing は必ず空文字。prepare/distract/sneak は obstacles の ID、observe は観察対象の ID、use_item は self。dialogue は NPC の ID または空文字。"},
-        "item_id": {"type": "string", "description": "existing は必ず空文字。prepare は使う素材の objects ID、distract/use_item は inventory ID。その他は空文字。"},
+        "item_id": {"type": "string", "description": "existing は必ず空文字。prepare は使う素材の objects ID、distract/use_item は inventory ID。attack とその他は空文字。"},
         "advance": {"type": "boolean"},
         "approach": {"type": "string"},
         "reply": {"type": "string"},
@@ -79,6 +80,7 @@ def planner_config(config: dict[str, Any]) -> dict[str, Any]:
     schema = deepcopy(PLAN_SCHEMA)
     if LEGACY_PLAN:
         schema["properties"]["operation"]["enum"] = list(LEGACY_OPERATIONS)
+        schema["properties"]["item_id"]["description"] = LEGACY_ITEM_ID_DESCRIPTION
     result.update({
         "temperature": 0.2,
         "max_tokens": 700,
@@ -124,6 +126,13 @@ def parse_plan(raw: str, character_id: str = "") -> dict[str, Any]:
         if plan["operation"] == "use_item" and character_id and plan["target_id"] == character_id and character_id != "self":
             plan["target_id"] = "self"
             plan["normalized"] = ["target_id"]
+        # An attack always uses the equipped weapon; a named weapon or "advance" restates nothing the engine needs.
+        if plan["operation"] == "attack":
+            normalized = [key for key in ("item_id", "advance") if plan[key]]
+            for key in normalized:
+                plan[key] = False if key == "advance" else ""
+            if normalized:
+                plan["normalized"] = normalized
     elif plan["kind"] != "existing" and (plan["operation"] or plan["item_id"] or plan["advance"]):
         raise InvalidPlan("conversation cannot contain an action")
     return plan
