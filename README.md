@@ -71,13 +71,15 @@ Gemini 3.1 Flash-Lite is the default model. Put personal settings in `host/local
     "gemini": {
       "model": "gemini-3.1-flash-lite",
       "fallback_models": ["gemini-3.5-flash-lite", "gemini-3.6-flash"],
-      "api_key": "YOUR_KEY"
+      "api_keys": ["YOUR_FIRST_GEMINI_KEY", "YOUR_SECOND_GEMINI_KEY"]
     }
   }
 }
 ```
 
-Environment overrides: `GEMINI_API_KEY`, `TRPG_LLM_BASE_URL`, `TRPG_LLM_MODEL`, `TRPG_LLM_API_KEY`, `TRPG_ACTIVE_BACKEND`, `TRPG_LOCAL_CONFIG`.
+Keys are tried in order; a key rejected for quota or authentication is skipped for the rest of that session, and a new session starts from the first key. The legacy `api_key` still works; `api_keys` takes precedence. `GEMINI_API_KEYS` accepts comma-separated keys and takes precedence over a single key when no `api_keys` list is configured.
+
+Environment overrides: `GEMINI_API_KEYS`, `GEMINI_API_KEY`, `TRPG_LLM_BASE_URL`, `TRPG_LLM_MODEL`, `TRPG_LLM_API_KEY`, `TRPG_ACTIVE_BACKEND`, `TRPG_LOCAL_CONFIG`.
 
 - Gameplay tries the primary model and one fallback with a 15-second timeout; free-action interpretation makes a single attempt.
 - If the model is unreachable the game keeps going: choices and combat are engine-resolved, prepared narration still shows, and anything else gets an honest one-line notice.

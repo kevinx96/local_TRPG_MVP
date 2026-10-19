@@ -71,13 +71,15 @@ python -m scripts.build_exe --demo-endpoint https://<your-worker>.workers.dev
     "gemini": {
       "model": "gemini-3.1-flash-lite",
       "fallback_models": ["gemini-3.5-flash-lite", "gemini-3.6-flash"],
-      "api_key": "YOUR_KEY"
+      "api_keys": ["YOUR_FIRST_GEMINI_KEY", "YOUR_SECOND_GEMINI_KEY"]
     }
   }
 }
 ```
 
-環境変数での上書き：`GEMINI_API_KEY`、`TRPG_LLM_BASE_URL`、`TRPG_LLM_MODEL`、`TRPG_LLM_API_KEY`、`TRPG_ACTIVE_BACKEND`、`TRPG_LOCAL_CONFIG`。
+キーは順番に試し、上限到達や認証失敗となったキーは同じセッションではスキップします。新しいセッションでは最初のキーから再開します。従来の `api_key` も使えますが、`api_keys` が優先されます。`api_keys` リストを設定していない場合は、カンマ区切りの `GEMINI_API_KEYS` を指定でき、単一のキーより優先されます。
+
+環境変数での上書き：`GEMINI_API_KEYS`、`GEMINI_API_KEY`、`TRPG_LLM_BASE_URL`、`TRPG_LLM_MODEL`、`TRPG_LLM_API_KEY`、`TRPG_ACTIVE_BACKEND`、`TRPG_LOCAL_CONFIG`。
 
 - 通常のプレイは主モデルと予備モデル1つを、それぞれ15秒のタイムアウトで試します。自由行動の解釈は1回だけです。
 - モデルに接続できなくてもゲームは続きます。選択肢と戦闘はエンジンが裁定し、用意された描写はそのまま表示され、それ以外は一行の正直な通知になります。

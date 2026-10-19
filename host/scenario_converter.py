@@ -135,19 +135,26 @@ def convert_doc_to_docx(path: Path) -> Path:
 
 
 def convert_with_gemini(source: Path, text: str) -> dict[str, Any]:
-    api_key = load_gemini_api_key()
-    if not api_key:
-        raise RuntimeError("Gemini API keyが見つかりません。GEMINI_API_KEYまたはhost/gemini_api_key.*を設定してください。")
+    from .llm_client import KeyRotation, LLMClientError
+    from .state import load_config
+
+    rotation = KeyRotation("gemini", load_config().get("backends", {}).get("gemini", {}))
+    if not any(rotation.keys):
+        raise LLMClientError("Gemini API keyが見つかりません。api_keysまたはGEMINI_API_KEYSを設定してください。")
     try:
         import google.generativeai as genai  # type: ignore
     except ImportError as exc:
         raise RuntimeError("Gemini変換には google-generativeai が必要です。") from exc
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(GEMINI_MODEL)
     prompt = build_conversion_prompt(source.name, text)
-    response = model.generate_content(prompt)
-    raw = getattr(response, "text", "") or ""
+
+    def generate(backend: dict[str, Any]) -> str:
+        genai.configure(api_key=backend["_selected_api_key"])
+        model = genai.GenerativeModel(GEMINI_MODEL)
+        response = model.generate_content(prompt, request_options={"retry": None})
+        return getattr(response, "text", "") or ""
+
+    raw = rotation.sdk_call(generate)
     parsed = parse_json_response(raw)
     if not parsed:
         raise RuntimeError("Gemini応答からJSONを解析できませんでした。")

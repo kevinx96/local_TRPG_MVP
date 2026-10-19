@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from .gm_contract import split_visible_and_json
+from .llm_client import session_keys
 
 import sys
 
@@ -73,7 +74,8 @@ def completion(call: Callable, session: dict[str, Any], config: dict[str, Any],
         records.append(record)
     started = time.monotonic()
     try:
-        raw = call(config, messages, usage_out=usage)
+        with session_keys(session):
+            raw = call(config, messages, usage_out=usage)
         if call_type != "plan":
             _visible, payload, warning = split_visible_and_json(raw)
             record["parse_status"] = "ok" if payload is not None else "invalid_json"

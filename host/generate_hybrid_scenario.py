@@ -10,8 +10,9 @@ from pathlib import Path
 from typing import Any, Optional
 
 from .scenario_context import load_scenario_pack, normalize_scenario_pack
-from .scenario_converter import load_gemini_api_key, parse_json_response
-from .state import DEFAULT_CHARACTER, build_llm_messages
+from .scenario_converter import parse_json_response
+from .llm_client import KeyRotation, LLMClientError
+from .state import DEFAULT_CHARACTER, build_llm_messages, load_config
 
 
 def build_hybrid_contract_prompt() -> str:
@@ -337,26 +338,30 @@ def call_gemini_payload(
     model_names: str | list[str],
     raw_path_prefix: Optional[Path] = None,
 ) -> tuple[str, dict[str, Any]]:
-    api_key = load_gemini_api_key()
-    if not api_key:
-        raise RuntimeError("Gemini API key not found. Set GEMINI_API_KEY or host/gemini_api_key.*.")
+    rotation = KeyRotation("gemini", load_config().get("backends", {}).get("gemini", {}))
+    if not any(rotation.keys):
+        raise LLMClientError("Gemini API key not found. Set api_keys or GEMINI_API_KEYS.")
     try:
         import google.generativeai as genai  # type: ignore
     except ImportError as exc:
         raise RuntimeError("google-generativeai is required. Install it in the active Python env.") from exc
 
-    genai.configure(api_key=api_key)
     names = _split_model_names(model_names) if isinstance(model_names, str) else model_names
     last_error: Optional[BaseException] = None
     for index, model_name in enumerate(names):
         try:
             print(f"Gemini model attempt {index + 1}/{len(names)}: {model_name}")
-            model = genai.GenerativeModel(model_name)
-            try:
-                response = model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
-            except TypeError:
-                response = model.generate_content(prompt)
-            text = _response_text(response)
+            def generate(backend: dict[str, Any]) -> str:
+                genai.configure(api_key=backend["_selected_api_key"])
+                model = genai.GenerativeModel(model_name)
+                try:
+                    response = model.generate_content(prompt, generation_config={"response_mime_type": "application/json"},
+                                                      request_options={"retry": None})
+                except TypeError:
+                    response = model.generate_content(prompt, request_options={"retry": None})
+                return _response_text(response)
+
+            text = rotation.sdk_call(generate)
             if raw_path_prefix:
                 raw_path = raw_path_prefix.with_name(f"{raw_path_prefix.name}.{_safe_model_filename(model_name)}.raw.txt")
                 raw_path.write_text(text, encoding="utf-8")
@@ -367,6 +372,8 @@ def call_gemini_payload(
                 raise RuntimeError(f"{model_name} returned malformed or schema-invalid JSON.")
             raise RuntimeError(f"{model_name} returned an empty response.")
         except Exception as exc:
+            if isinstance(exc, LLMClientError) and not any(rotation.attempts()):
+                raise
             last_error = exc
             if index >= len(names) - 1:
                 break

@@ -71,13 +71,15 @@ python -m scripts.build_exe --demo-endpoint https://<your-worker>.workers.dev
     "gemini": {
       "model": "gemini-3.1-flash-lite",
       "fallback_models": ["gemini-3.5-flash-lite", "gemini-3.6-flash"],
-      "api_key": "YOUR_KEY"
+      "api_keys": ["YOUR_FIRST_GEMINI_KEY", "YOUR_SECOND_GEMINI_KEY"]
     }
   }
 }
 ```
 
-环境变量覆盖：`GEMINI_API_KEY`、`TRPG_LLM_BASE_URL`、`TRPG_LLM_MODEL`、`TRPG_LLM_API_KEY`、`TRPG_ACTIVE_BACKEND`、`TRPG_LOCAL_CONFIG`。
+key 按顺序尝试；因额度或认证失败的 key 在本会话内跳过，新会话从第一个重新尝试。旧的 `api_key` 仍受支持，`api_keys` 优先；未配置 `api_keys` 列表时，可用逗号分隔的 `GEMINI_API_KEYS`，优先于单个 key。
+
+环境变量覆盖：`GEMINI_API_KEYS`、`GEMINI_API_KEY`、`TRPG_LLM_BASE_URL`、`TRPG_LLM_MODEL`、`TRPG_LLM_API_KEY`、`TRPG_ACTIVE_BACKEND`、`TRPG_LOCAL_CONFIG`。
 
 - 正常游玩时依次尝试主模型和一个备用模型，各 15 秒超时；自由行动的解释只尝试一次。
 - 连不上模型时游戏照样能继续：选项和战斗由引擎结算，准备好的叙述照常显示，其余情况显示一行如实的提示。

@@ -11,7 +11,7 @@ from typing import Any, Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel, conint
+from pydantic import BaseModel, StrictStr, conint
 
 from .combat import (
     CombatError,
@@ -261,6 +261,7 @@ def config_info() -> dict[str, Any]:
 class UpdateConfigRequest(BaseModel):
     active_backend: str
     model: Optional[str] = None
+    api_keys: Optional[list[StrictStr]] = None
 
 
 @app.put("/api/config")
@@ -277,6 +278,8 @@ def api_update_config(request: UpdateConfigRequest) -> dict[str, Any]:
             raise HTTPException(status_code=400, detail="Invalid model selected.")
         backend["model"] = request.model
         backend["fallback_models"] = [model for model in candidates if model != request.model]
+    if request.api_keys is not None:
+        backend["api_keys"] = [key.strip() for key in request.api_keys if key.strip()]
     save_config(config)
     return config_info()
 
@@ -540,6 +543,7 @@ def _run_opening(session: dict[str, Any]) -> dict[str, Any]:
                 f"fallback={completion_source} error={_redact_secrets(str(exc))}"
             )
         if not full_response and not config.get("demo_fallback_on_error", True):
+            save_session(session)
             raise HTTPException(
                 status_code=502,
                 detail=f"LLM接続エラー: {_redact_secrets(str(exc))}",
@@ -747,6 +751,7 @@ def _run_turn(session: dict[str, Any], request: TurnRequest, *, allow_narration:
                 f"fallback={completion_source} error={_redact_secrets(str(exc))}"
             )
         if not full_response and not config.get("demo_fallback_on_error", True):
+            save_session(session)
             raise HTTPException(
                 status_code=502,
                 detail=f"LLM接続エラー: {_redact_secrets(str(exc))}",
@@ -961,6 +966,7 @@ def _run_combat_resolution(session: dict[str, Any]) -> dict[str, Any]:
     except LLMClientError as exc:
         completion_source = "demo_fallback"
         if not config.get("demo_fallback_on_error", True):
+            save_session(session)
             raise HTTPException(
                 status_code=502,
                 detail=f"LLM接続エラー: {_redact_secrets(str(exc))}",

@@ -9,10 +9,10 @@ from typing import Any, Callable, Optional
 from urllib.parse import urlsplit
 
 import requests
-from host.llm_client import LLMClientError
+from host.llm_client import LLMKeyError, redact_api_keys
 
 
-class QuotaExhausted(LLMClientError):
+class QuotaExhausted(LLMKeyError):
     def __init__(self, details: dict[str, Any]):
         self.details = details
         super().__init__(f"quota_exhausted: {details}")
@@ -92,8 +92,9 @@ class RequestPolicy:
     def __deepcopy__(self, memo: dict) -> RequestPolicy:
         return self
 
-    def post(self, *args: Any, **kwargs: Any) -> requests.Response:
-        if self.quota_exhausted is not None:
+    def post(self, *args: Any, key_rotation: bool = False,
+             redact_keys: tuple[str, ...] | list[str] = (), **kwargs: Any) -> requests.Response:
+        if self.quota_exhausted is not None and not key_rotation:
             raise QuotaExhausted(self.quota_exhausted)
         for retry in range(6):
             if self.last_request is not None:
@@ -103,12 +104,17 @@ class RequestPolicy:
             self.last_request = self.clock()
             response = requests.post(*args, **kwargs)
             if response.status_code >= 400:
-                self.http_errors.append({"status_code": response.status_code, "body": response.text})
+                self.http_errors.append({"status_code": response.status_code,
+                                         "body": redact_api_keys(response.text, redact_keys)})
             exhausted = quota_exhaustion(response)
             if exhausted is not None:
-                self.quota_exhausted = exhausted
+                exhausted["quota_ids"] = [redact_api_keys(value, redact_keys) for value in exhausted["quota_ids"]]
+                if not key_rotation:
+                    self.quota_exhausted = exhausted
                 response.close()
                 raise QuotaExhausted(exhausted)
+            if key_rotation and response.status_code == 429:
+                return response
             if response.status_code not in {429, 503} or retry == 5:
                 return response
             delay = retry_delay(response, 2 ** retry)
@@ -127,6 +133,7 @@ def evaluation_config(config: dict[str, Any], backend: str, model: str, *,
         if urlsplit(base_url).hostname != urlsplit(profile.get("base_url", "")).hostname:
             profile.pop("headers", None)
             profile.pop("api_key", None)
+            profile.pop("api_keys", None)
         profile["base_url"] = base_url.rstrip("/")
         if backend == "ollama" and not profile["base_url"].endswith("/v1"):
             profile["base_url"] += "/v1"

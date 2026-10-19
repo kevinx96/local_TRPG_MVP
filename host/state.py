@@ -454,6 +454,7 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     public.pop("shop_stock", None)
     public.pop("area_snapshots", None)
     public.pop("pending_npc_attack", None)
+    public.pop("llm_failed_keys", None)
     public["can_retry_area"] = retry_snapshot(session) is not None
     from .item_mechanics import ELEMENT_LABELS
     meta = (session.get("scenario_pack") or {}).get("meta") or {}

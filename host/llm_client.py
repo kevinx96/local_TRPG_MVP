@@ -1,9 +1,14 @@
 from __future__ import annotations
 
+import hashlib
 import json
+import os
+import re
 import sys
 import time
-from typing import Any, Iterable, Optional, Union
+from contextlib import contextmanager
+from contextvars import ContextVar
+from typing import Any, Callable, Iterable, Iterator, Optional, Union
 from urllib.parse import quote
 
 import requests
@@ -13,9 +18,128 @@ class LLMClientError(RuntimeError):
     pass
 
 
+class LLMKeyError(LLMClientError):
+    """A credential failure, including quota exhaustion; retry with the next key."""
+
+
+ALL_KEYS_EXHAUSTED = "すべての API キーが上限に達したか、無効です。"
+_session: ContextVar = ContextVar("llm_session", default=None)
+
+
+@contextmanager
+def session_keys(session: dict[str, Any]) -> Iterator[None]:
+    token = _session.set(session)
+    try:
+        yield
+    finally:
+        _session.reset(token)
+
+
+def backend_api_keys(backend_name: str, backend: dict[str, Any]) -> list[str]:
+    if "api_keys" in backend:
+        keys = backend["api_keys"]
+        if not isinstance(keys, list) or any(not isinstance(key, str) for key in keys):
+            raise LLMClientError("api_keys must be a list of strings.")
+        return [key.strip() for key in keys]
+    if _is_gemini_backend(backend_name, backend):
+        env_keys = os.environ.get("GEMINI_API_KEYS", "").strip()
+        if env_keys:
+            return [key.strip() for key in env_keys.split(",")]
+    api_key = str(backend.get("api_key") or "").strip()
+    if api_key:
+        return [api_key]
+    if _is_gemini_backend(backend_name, backend):
+        from .scenario_converter import load_gemini_api_key
+        return [load_gemini_api_key().strip()]
+    return [""]
+
+
+def redact_api_keys(text: str, keys: Iterable[str]) -> str:
+    for key in sorted({key for key in keys if key}, key=len, reverse=True):
+        text = text.replace(key, "[REDACTED]").replace(quote(key, safe=""), "[REDACTED]")
+    return text
+
+
+def is_key_failure(status: Optional[int], body: str) -> bool:
+    if status in {401, 403, 429}:
+        return True
+    if status != 400:
+        return False
+    return bool(re.search(r"API[_ ]?KEY[_ ](?:INVALID|EXPIRED)|(?:invalid|expired) API[ _]key|"
+                          r"API[ _]key (?:is )?(?:not valid|invalid|expired)", body, re.IGNORECASE))
+
+
+class KeyRotation:
+    def __init__(self, backend_name: str, backend: dict[str, Any],
+                 session: Optional[dict[str, Any]] = None):
+        self.backend = backend
+        self.keys = backend_api_keys(backend_name, backend)
+        self.failed = (session.setdefault("llm_failed_keys", {}).setdefault(backend_name, [])
+                       if session is not None else [])
+        self.last_error: Optional[LLMKeyError] = None
+
+    def attempts(self) -> Iterable[tuple[dict[str, Any], dict[str, Any]]]:
+        for index, key in enumerate(self.keys):
+            if not key and (len(self.keys) != 1 or "api_keys" in self.backend):
+                continue
+            marker = {"index": index, "sha256": hashlib.sha256(key.encode("utf-8")).hexdigest()[:8]}
+            if any(failed.get("sha256") == marker["sha256"] for failed in self.failed):
+                continue
+            yield {**self.backend, "_selected_api_key": key, "_redact_keys": self.keys}, marker
+
+    def reject(self, marker: dict[str, Any], error: LLMKeyError) -> None:
+        if marker not in self.failed:
+            self.failed.append(marker)
+        # Preserve structured quota metadata used by the evaluation runner.
+        if self.last_error is None or not hasattr(self.last_error, "details"):
+            self.last_error = error
+
+    def exhausted(self) -> LLMClientError:
+        error = self.last_error or LLMClientError(ALL_KEYS_EXHAUSTED)
+        error.args = (ALL_KEYS_EXHAUSTED,)
+        return error
+
+    def call(self, call: Callable[[dict[str, Any]], str]) -> str:
+        for backend, marker in self.attempts():
+            try:
+                return redact_api_keys(call(backend), self.keys)
+            except LLMKeyError as exc:
+                self.reject(marker, exc)
+            except LLMClientError as exc:
+                exc.args = (redact_api_keys(str(exc), self.keys),)
+                raise exc from None
+        raise self.exhausted() from None
+
+    def sdk_call(self, call: Callable[[dict[str, Any]], str]) -> str:
+        def attempt(backend: dict[str, Any]) -> str:
+            try:
+                return call(backend)
+            except LLMClientError:
+                raise
+            except Exception as exc:
+                status = getattr(exc, "code", None)
+                detail = f"{exc} {getattr(exc, 'reason', '')}"
+                if is_key_failure(status, detail):
+                    raise LLMKeyError(f"LLM credential rejected (HTTP {status}).") from None
+                raise LLMClientError(redact_api_keys(str(exc), self.keys)) from None
+        return self.call(attempt)
+
+
+def _backend_debug_log(backend: dict[str, Any], message: str) -> None:
+    debug_log(redact_api_keys(message, backend.get("_redact_keys", [])))
+
+
+def _check_key_failure(response: requests.Response) -> None:
+    if is_key_failure(response.status_code, response.text):
+        raise LLMKeyError(f"LLM credential rejected (HTTP {response.status_code}).")
+
+
 def _post(config: dict[str, Any], *args: Any, **kwargs: Any) -> requests.Response:
     policy = config.get("_request_policy")
-    return policy.post(*args, **kwargs) if policy is not None else requests.post(*args, **kwargs)
+    if policy is not None:
+        keys = backend_api_keys(config.get("active_backend", "gemini"), active_backend(config))
+        return policy.post(*args, key_rotation=True, redact_keys=keys, **kwargs)
+    return requests.post(*args, **kwargs)
 
 
 class LLMBlockedError(LLMClientError):
@@ -56,6 +180,7 @@ def model_candidates(backend: dict[str, Any]) -> list[str]:
 def stream_chat_completion(
     config: dict[str, Any],
     messages: list[dict[str, str]],
+    session: Optional[dict[str, Any]] = None,
 ) -> Iterable[str]:
     debug_enabled = bool(config.get("debug_llm", True))
     backend = active_backend(config)
@@ -64,12 +189,22 @@ def stream_chat_completion(
     if not candidates:
         raise LLMClientError("No LLM model configured.")
 
+    rotation = KeyRotation(backend_name, backend, session if session is not None else _session.get())
     last_error: Optional[LLMClientError] = None
     for index, model in enumerate(candidates, start=1):
         try:
-            yield from _stream_chat_completion_once(config, backend, backend_name, model, messages, index, len(candidates))
-            return
+            for selected, marker in rotation.attempts():
+                try:
+                    for content in _stream_chat_completion_once(config, selected, backend_name, model, messages, index, len(candidates)):
+                        yield redact_api_keys(content, rotation.keys)
+                    return
+                except LLMKeyError as exc:
+                    rotation.reject(marker, exc)
+            raise rotation.exhausted()
         except LLMClientError as exc:
+            if not any(rotation.attempts()):
+                raise
+            exc.args = (redact_api_keys(str(exc), rotation.keys),)
             last_error = exc
             if debug_enabled and index < len(candidates):
                 debug_log(f"LLM model fallback triggered failed_model={model} next_model={candidates[index]}")
@@ -82,6 +217,7 @@ def chat_completion(
     config: dict[str, Any],
     messages: list[dict[str, str]],
     usage_out: Optional[dict[str, Any]] = None,
+    session: Optional[dict[str, Any]] = None,
 ) -> str:
     debug_enabled = bool(config.get("debug_llm", True))
     backend = active_backend(config)
@@ -90,14 +226,23 @@ def chat_completion(
     if not candidates:
         raise LLMClientError("No LLM model configured.")
 
+    rotation = KeyRotation(backend_name, backend, session if session is not None else _session.get())
     last_error: Optional[LLMClientError] = None
     for index, model in enumerate(candidates, start=1):
         try:
-            return _chat_completion_once(config, backend, backend_name, model, messages, index, len(candidates), usage_out)
+            return rotation.call(lambda selected: _chat_completion_once(
+                config, selected, backend_name, model, messages, index, len(candidates), usage_out))
         except LLMClientError as exc:
+            if not any(rotation.attempts()):
+                raise
             last_error = exc
             if debug_enabled and index < len(candidates):
                 debug_log(f"LLM model fallback triggered failed_model={model} next_model={candidates[index]}")
+        finally:
+            if usage_out is not None:
+                sanitized = json.loads(redact_api_keys(json.dumps(usage_out), rotation.keys))
+                usage_out.clear()
+                usage_out.update(sanitized)
     if last_error:
         raise last_error
     raise LLMClientError("LLM request failed before any model was attempted.")
@@ -137,7 +282,7 @@ def _chat_completion_once(
     if debug_enabled:
         total_chars = sum(len(message.get("content", "")) for message in messages)
         role_summary = _message_role_summary(messages)
-        debug_log(
+        _backend_debug_log(backend,
             "LLM request "
             f"backend={backend_name} url={url} model={model} attempt={attempt}/{total_attempts} "
             f"messages={len(messages)} roles={role_summary} chars={total_chars} stream=False timeout={timeout}s"
@@ -148,46 +293,47 @@ def _chat_completion_once(
         response = _post(config, url, headers=headers, json=payload, timeout=timeout)
         ttfb_ms = (time.time() - start_time) * 1000
         if debug_enabled:
-            debug_log(
+            _backend_debug_log(backend,
                 "LLM response headers "
                 f"status={response.status_code} content_type={response.headers.get('content-type', '')} "
                 f"ttfb_ms={ttfb_ms:.0f}"
             )
         if response.status_code >= 400:
-            preview = response.text[:1000]
+            _check_key_failure(response)
+            preview = redact_api_keys(response.text, backend.get("_redact_keys", []))[:1000]
             if (backend_name == "ollama" and config.get("eval_ollama_schema_fallback")
                     and response.status_code in {400, 422}
                     and any(word in response.text.lower() for word in ("response_format", "json_schema"))):
                 return _ollama_native_completion(config, backend, model, messages, usage_out)
             if debug_enabled:
-                debug_log(f"LLM HTTP error body={preview!r}")
+                _backend_debug_log(backend, f"LLM HTTP error body={preview!r}")
                 hint = _backend_diagnostic_hint(base_url)
                 if hint:
-                    debug_log(hint)
+                    _backend_debug_log(backend, hint)
                 remote_hint = _remote_gateway_hint(response.text)
                 if remote_hint:
-                    debug_log(remote_hint)
+                    _backend_debug_log(backend, remote_hint)
                 forbidden_hint = _remote_forbidden_hint(response.status_code, response.text, base_url)
                 if forbidden_hint:
-                    debug_log(forbidden_hint)
+                    _backend_debug_log(backend, forbidden_hint)
             response.raise_for_status()
         unexpected_error = _unexpected_llm_body_error(response.text, response.headers.get("content-type", ""))
         if unexpected_error:
             if debug_enabled:
-                debug_log(unexpected_error)
-                debug_log(f"LLM unexpected body preview={response.text[:500]!r}")
+                _backend_debug_log(backend, unexpected_error)
+                _backend_debug_log(backend, f"LLM unexpected body preview={response.text[:500]!r}")
             raise LLMClientError(unexpected_error)
         content = _content_from_completion(response.text)
         if usage_out is not None:
             _collect_usage(json.loads(response.text), usage_out, model)
         if debug_enabled:
             total_ms = (time.time() - start_time) * 1000
-            debug_log(f"LLM completion received content_chars={len(content)} ttfb_ms={ttfb_ms:.0f} total_ms={total_ms:.0f}")
+            _backend_debug_log(backend, f"LLM completion received content_chars={len(content)} ttfb_ms={ttfb_ms:.0f} total_ms={total_ms:.0f}")
         return content
     except requests.RequestException as exc:
         if debug_enabled:
-            debug_log(f"LLM request exception={exc!r}")
-        raise LLMClientError(str(exc)) from exc
+            _backend_debug_log(backend, f"LLM request exception={exc!r}")
+        raise LLMClientError(redact_api_keys(str(exc), backend.get("_redact_keys", []))) from None
 
 
 def _stream_chat_completion_once(
@@ -226,7 +372,7 @@ def _stream_chat_completion_once(
     if debug_enabled:
         total_chars = sum(len(message.get("content", "")) for message in messages)
         role_summary = _message_role_summary(messages)
-        debug_log(
+        _backend_debug_log(backend,
             "LLM request "
             f"backend={backend_name} url={url} model={model} attempt={attempt}/{total_attempts} "
             f"messages={len(messages)} roles={role_summary} chars={total_chars} stream=True timeout={timeout}s"
@@ -243,24 +389,25 @@ def _stream_chat_completion_once(
         ) as response:
             ttfb_ms = (time.time() - start_time) * 1000
             if debug_enabled:
-                debug_log(
+                _backend_debug_log(backend,
                     "LLM response headers "
                     f"status={response.status_code} content_type={response.headers.get('content-type', '')} "
                     f"ttfb_ms={ttfb_ms:.0f}"
                 )
             if response.status_code >= 400:
-                preview = response.text[:1000]
+                _check_key_failure(response)
+                preview = redact_api_keys(response.text, backend.get("_redact_keys", []))[:1000]
                 if debug_enabled:
-                    debug_log(f"LLM HTTP error body={preview!r}")
+                    _backend_debug_log(backend, f"LLM HTTP error body={preview!r}")
                     hint = _backend_diagnostic_hint(base_url)
                     if hint:
-                        debug_log(hint)
+                        _backend_debug_log(backend, hint)
                     remote_hint = _remote_gateway_hint(response.text)
                     if remote_hint:
-                        debug_log(remote_hint)
+                        _backend_debug_log(backend, remote_hint)
                     forbidden_hint = _remote_forbidden_hint(response.status_code, response.text, base_url)
                     if forbidden_hint:
-                        debug_log(forbidden_hint)
+                        _backend_debug_log(backend, forbidden_hint)
                 response.raise_for_status()
             content_type = response.headers.get("content-type", "")
             if "text/html" in content_type.lower():
@@ -268,8 +415,8 @@ def _stream_chat_completion_once(
                 unexpected_error = _unexpected_llm_body_error(body, content_type)
                 if unexpected_error:
                     if debug_enabled:
-                        debug_log(unexpected_error)
-                        debug_log(f"LLM unexpected body preview={body[:500]!r}")
+                        _backend_debug_log(backend, unexpected_error)
+                        _backend_debug_log(backend, f"LLM unexpected body preview={body[:500]!r}")
                     raise LLMClientError(unexpected_error)
             chunk_count = 0
             content_chars = 0
@@ -281,24 +428,24 @@ def _stream_chat_completion_once(
                     line = line[6:]
                 if line.strip() == "[DONE]":
                     if debug_enabled:
-                        debug_log("LLM stream done marker received")
+                        _backend_debug_log(backend, "LLM stream done marker received")
                     break
                 content = _content_from_sse(line)
                 if content:
                     chunk_count += 1
                     content_chars += len(content)
                     if debug_enabled and chunk_count <= 3:
-                        debug_log(f"LLM chunk[{chunk_count}]={content[:160]!r}")
+                        _backend_debug_log(backend, f"LLM chunk[{chunk_count}]={content[:160]!r}")
                     yield content
                 elif debug_enabled:
-                    debug_log(f"LLM stream line without content={line[:300]!r}")
+                    _backend_debug_log(backend, f"LLM stream line without content={line[:300]!r}")
             if debug_enabled:
                 total_ms = (time.time() - start_time) * 1000
-                debug_log(f"LLM stream complete chunks={chunk_count} content_chars={content_chars} ttfb_ms={ttfb_ms:.0f} total_ms={total_ms:.0f}")
+                _backend_debug_log(backend, f"LLM stream complete chunks={chunk_count} content_chars={content_chars} ttfb_ms={ttfb_ms:.0f} total_ms={total_ms:.0f}")
     except requests.RequestException as exc:
         if debug_enabled:
-            debug_log(f"LLM request exception={exc!r}")
-        raise LLMClientError(str(exc)) from exc
+            _backend_debug_log(backend, f"LLM request exception={exc!r}")
+        raise LLMClientError(redact_api_keys(str(exc), backend.get("_redact_keys", []))) from None
 
 
 def _is_gemini_backend(backend_name: str, backend: dict[str, Any]) -> bool:
@@ -319,7 +466,7 @@ def _gemini_chat_completion_once(
     debug_enabled = bool(config.get("debug_llm", True))
     api_key = _gemini_api_key(backend)
     if not api_key:
-        raise LLMClientError("Gemini API key is empty. Set GEMINI_API_KEY, or put api_key in local_config.json (next to LocalTRPG.exe in the packaged build; host/local_config.json in development).")
+        raise LLMClientError("Gemini API key is empty. Set GEMINI_API_KEYS / GEMINI_API_KEY, or put api_keys in local_config.json (next to LocalTRPG.exe in the packaged build; host/local_config.json in development).")
 
     base_url = str(backend.get("base_url") or "https://generativelanguage.googleapis.com/v1beta").rstrip("/")
     timeout = min(int(config.get("request_timeout_seconds", 15)), int(config.get("gameplay_timeout_seconds", 15)))
@@ -329,7 +476,7 @@ def _gemini_chat_completion_once(
     if debug_enabled:
         total_chars = sum(len(message.get("content", "")) for message in messages)
         role_summary = _message_role_summary(messages)
-        debug_log(
+        _backend_debug_log(backend,
             "LLM request "
             f"backend={backend_name} url={base_url}/models/{model}:generateContent model={model} "
             f"attempt={attempt}/{total_attempts} messages={len(messages)} roles={role_summary} "
@@ -341,15 +488,16 @@ def _gemini_chat_completion_once(
         response = _post(config, url, headers={"Content-Type": "application/json", "x-goog-api-key": api_key}, json=payload, timeout=timeout)
         ttfb_ms = (time.time() - start_time) * 1000
         if debug_enabled:
-            debug_log(
+            _backend_debug_log(backend,
                 "LLM response headers "
                 f"status={response.status_code} content_type={response.headers.get('content-type', '')} "
                 f"ttfb_ms={ttfb_ms:.0f}"
             )
         if response.status_code >= 400:
-            preview = response.text[:1000]
+            _check_key_failure(response)
+            preview = redact_api_keys(response.text, backend.get("_redact_keys", []))[:1000]
             if debug_enabled:
-                debug_log(f"LLM HTTP error body={preview!r}")
+                _backend_debug_log(backend, f"LLM HTTP error body={preview!r}")
             response.raise_for_status()
         if usage_out is not None:
             try:
@@ -359,23 +507,18 @@ def _gemini_chat_completion_once(
         content = _content_from_gemini_response(response.text)
         if debug_enabled:
             total_ms = (time.time() - start_time) * 1000
-            debug_log(f"LLM completion received content_chars={len(content)} ttfb_ms={ttfb_ms:.0f} total_ms={total_ms:.0f}")
+            _backend_debug_log(backend, f"LLM completion received content_chars={len(content)} ttfb_ms={ttfb_ms:.0f} total_ms={total_ms:.0f}")
         return content
     except requests.RequestException as exc:
         if debug_enabled:
-            debug_log(f"LLM request exception={exc!r}")
-        raise LLMClientError(str(exc)) from exc
+            _backend_debug_log(backend, f"LLM request exception={exc!r}")
+        raise LLMClientError(redact_api_keys(str(exc), backend.get("_redact_keys", []))) from None
 
 
 def _gemini_api_key(backend: dict[str, Any]) -> str:
-    api_key = str(backend.get("api_key") or "").strip()
-    if api_key:
-        return api_key
-    try:
-        from .scenario_converter import load_gemini_api_key
-    except Exception:
-        return ""
-    return load_gemini_api_key().strip()
+    if "_selected_api_key" in backend:
+        return backend["_selected_api_key"]
+    return next((key for key in backend_api_keys("gemini", backend) if key), "")
 
 
 def _gemini_payload(messages: list[dict[str, str]], config: dict[str, Any]) -> dict[str, Any]:
@@ -481,6 +624,7 @@ def _ollama_native_completion(config: dict[str, Any], backend: dict[str, Any], m
     try:
         response = _post(config, f"{base_url}/api/chat", headers=_request_headers(backend), json=payload,
                                  timeout=min(config.get("request_timeout_seconds", 15), config.get("gameplay_timeout_seconds", 15)))
+        _check_key_failure(response)
         response.raise_for_status()
         data = response.json()
         if data.get("error"):
@@ -490,7 +634,7 @@ def _ollama_native_completion(config: dict[str, Any], backend: dict[str, Any], m
             usage_out["transport"] = "ollama_native_format"
         return str((data.get("message") or {}).get("content") or "")
     except (requests.RequestException, ValueError) as exc:
-        raise LLMClientError(str(exc)) from exc
+        raise LLMClientError(redact_api_keys(str(exc), backend.get("_redact_keys", []))) from None
 
 
 def _content_from_sse(line: str) -> str:
@@ -580,7 +724,7 @@ def _apply_response_format(payload: dict[str, Any], config: dict[str, Any]) -> N
 
 def _request_headers(backend: dict[str, Any]) -> dict[str, str]:
     headers = {"Content-Type": "application/json"}
-    api_key = backend.get("api_key") or "local"
+    api_key = backend.get("_selected_api_key", backend.get("api_key")) or "local"
     headers["Authorization"] = f"Bearer {api_key}"
     extra_headers = backend.get("headers")
     if isinstance(extra_headers, dict):

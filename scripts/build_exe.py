@@ -54,13 +54,16 @@ def build(onefile: bool) -> Path:
 
 def _secrets() -> list[bytes]:
     values = [os.environ.get("GEMINI_API_KEY", "")]
+    values += [key.strip() for key in os.environ.get("GEMINI_API_KEYS", "").split(",")]
     local = ROOT / "host" / "local_config.json"
     if local.exists():
         config = json.loads(local.read_text(encoding="utf-8-sig"))
         values += [str(backend.get("api_key") or "") for backend in (config.get("backends") or {}).values()]
+        values += [key for backend in (config.get("backends") or {}).values()
+                   for key in backend.get("api_keys", []) if isinstance(key, str)]
         values += [str(value) for backend in (config.get("backends") or {}).values()
-                   for value in (backend.get("headers") or {}).values()]
-    return [value.encode() for value in values if len(value) >= 16 and value not in ("ollama", "koboldcpp")]
+                   for value in (backend.get("headers") or {}).values() if len(str(value)) >= 16]
+    return [value.strip().encode() for value in values if value.strip() and value not in ("ollama", "koboldcpp")]
 
 
 def _archive_payloads(exe: Path):
