@@ -39,6 +39,8 @@ FALLEN = {
     "warlock": "青いローブが床に広がり、杖の先の光がふっと消えた。棚の小瓶が、一斉に色を失っていく。",
     "xanxus": "炎が掻き消え、骸骨は乾いた音を立てて崩れ落ちた。赤い法衣だけが、灰の上に残っている。法衣の中から、王家の紋が入った封書がこぼれ落ちた。",
 }
+# TODO(design): 045b draft, awaiting design lead approval.
+MINA_SHOP_FALLEN = "ミーナは杖を握ったまま、魔法店の床に倒れた。棚の小瓶だけが、窓からの光を受けて淡く瞬いている。"
 DIALOGUE = [
     "「ノクスは南風が好きでな。霧の古戦場から風が吹く日は、機嫌が悪い」",
     "「竜が人に懐くのは珍しいと言われる。だが、こいつは卵の時から俺の外套の中で育った」",
@@ -139,8 +141,7 @@ def apply(pack: dict[str, Any]) -> None:
             if identifier in {"fire_bat_dragon", "elder"}:
                 profile["flee_dependents"] = ["sarah" if identifier == "fire_bat_dragon" else "riku"]
             if identifier == "mina":
-                # TODO(design): the authored Mina death text only covers the hot spring.
-                profile["locations"] = {"magic_shop": dict(town=True, guardians=[{"npc_id": "warlock"}], fallen_text="")}
+                profile["locations"] = {"magic_shop": dict(town=True, guardians=[{"npc_id": "warlock"}], fallen_text=MINA_SHOP_FALLEN)}
         elif identifier == "dragon_knight":
             profile.update(category="special", aftermath="withdrawn")
         npc["npc_combat"] = profile
@@ -340,11 +341,18 @@ def _attackable_mages(pack: dict[str, Any], locations: dict[str, Any], npcs: dic
         requirements={"flag": "defeated_xanxus"}, text=XANXUS_EPILOGUE))
 
 
-# Final prose for visible passages about someone who is gone (design lead, 2026-10-19).
+# Authored absence prose (design lead, 2026-10-19), plus marked 045b drafts.
 # Key: the authored passage; value: (npc ids, replacement shown when any of them is gone).
 FINAL_ABSENCE = {
+    # TODO(design): these four Warlock passages are 045b drafts awaiting approval.
     "青いローブの銀髪の魔法使いが、杖を背に店番をしている。":
-        (["warlock"], FALLEN["warlock"]),
+        (["warlock"], "薬草と古い紙の匂いが漂う魔法店。床には青いローブが広がり、光を失った杖が横たわっている。"),
+    "薬草と古い紙の匂いが漂う店内で、青いローブの銀髪の魔法使いが顔を上げた。棚の小瓶が、窓からの光を受けて淡く瞬いている。「何かお探しかな」":
+        (["warlock"], "薬草と古い紙の匂いが漂う店内。棚の小瓶は色を失い、床に広がった青いローブを窓からの光が照らしている。"),
+    "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。ザンザスは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。":
+        (["warlock"], "竜の巣へ続く道に、冷たい風が吹き抜けている。岩の陰に積もった灰が、風に舞い上がった。"),
+    "ワーロックがあなたを背後へ庇い、元素の水晶球を展開する。":
+        (["warlock"], "燃える街道には、焼け焦げた地面と崩れた民家が続いている。灰を巻き上げる熱い風が、街道を吹き抜けていく。"),
     "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。長老が人々を励まし、行商人の荷車の周りには小さな人だかりができている。":
         (["elder"], "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。人々を励ます声は、もう聞こえない。"),
     "地図と剣が並ぶ質素な広間。白髪の老騎士――守護団長ヴァルターが、卓上の地図から顔を上げた。":
@@ -391,7 +399,7 @@ KEEP_WHEN_ABSENT = {"怪しい商人の姿は消え、夜風だけが路地を�
 
 
 def _absence_inventory(pack: dict[str, Any]) -> None:
-    """Inventory passages that mention someone who can be gone; FINAL_ABSENCE holds the final prose for visible ones."""
+    """Inventory passages mentioning absent NPCs, using authored prose or marked drafts for visible ones."""
     names = {"ian": ["イアン"], "robin": ["ロビン"], "sarah": ["サラ"], "fire_bat_dragon": ["火コウモリ竜"],
              "blacksmith": ["ローベルト"], "suspicious_merchant": ["怪しい商人"], "gald": ["ガルド"],
              "elder": ["長老"], "riku": ["リク"], "shopkeeper": ["道具屋の店主"], "lost_goblin": ["迷子のゴブリン"],
@@ -422,7 +430,7 @@ def _absence_inventory(pack: dict[str, Any]) -> None:
             if value in FINAL_ABSENCE:
                 ids, final = FINAL_ABSENCE[value]
                 entries[value] = dict(text=value, npc_ids=ids, path=path, replacement=final,
-                                      replacements={ids[0]: final}, status="final")
+                                      replacements={ids[0]: final}, status="draft" if ids == ["warlock"] else "final")
                 return
             if value.strip() and identifiers and "もうここにはいない" not in value:
                 entries[value] = dict(text=value, npc_ids=identifiers, path=path,

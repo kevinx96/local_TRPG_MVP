@@ -96,7 +96,8 @@ class AttackableMagesTests(unittest.TestCase):
                     self.assertIsNone(state.resolve_action(session, action_id=identifier), identifier)
                 state._set_companion(session, "blue_robed_mage")
                 self.assertIsNone(session["companion"])
-                self.assertEqual(select_scenario_context(session)["current_location"]["description"], migration.FALLEN["warlock"])
+                description = next(loc["description"] for loc in session["scenario_pack"]["locations"] if loc["id"] == "magic_shop")
+                self.assertEqual(select_scenario_context(session)["current_location"]["description"], migration.FINAL_ABSENCE[description][1])
                 self.assertIn("return_castle_from_magic_shop", self.visible(session))
 
     def test_mina_guardian_and_solo_attack_after_partial_victory(self):
@@ -115,6 +116,7 @@ class AttackableMagesTests(unittest.TestCase):
             delta, result = self.settle(session)
             self.assertEqual(delta["gold_change"], 0)
             self.assertNotIn(migration.FALLEN["mina"], result["npc_aftermath"])
+            self.assertIn(migration.MINA_SHOP_FALLEN, result["npc_aftermath"])
             self.assertTrue(npc_combat.gone(session, "mina"))
 
     def test_guardian_survives_mina_and_counter_does_not_duplicate_sold_stock(self):
@@ -311,6 +313,44 @@ class AttackableMagesTests(unittest.TestCase):
             self.assertEqual(row["label_status"], "design_reviewed_041")
             session = load_snapshot(row["snapshot"])
             self.attack(session, row["gold"][0]["target_id"])
+
+    def test_absence_drafts_reach_location_opening_and_map_without_rewriting_live_prose(self):
+        from host.maps import public_maps
+        from host.scenario_context import select_hybrid_prepared_turn
+
+        for session in self.sessions("magic_shop"):
+            location = next(loc for loc in session["scenario_pack"]["locations"] if loc["id"] == "magic_shop")
+            original = location["description"]
+            opening = select_hybrid_prepared_turn(session, opening=True)["draft"]["gm_text"]
+            self.assertEqual(select_scenario_context(session)["current_location"]["description"], original)
+            self.assertNotEqual(opening, migration.FINAL_ABSENCE[opening][1])
+            session["flags"]["npc_gone_blue_robed_mage"] = True
+            expected = migration.FINAL_ABSENCE[original][1]
+            self.assertEqual(select_scenario_context(session)["current_location"]["description"], expected)
+            self.assertEqual(select_hybrid_prepared_turn(session, opening=True)["draft"]["gm_text"],
+                             migration.FINAL_ABSENCE[opening][1])
+            session["visited_locations"] = ["magic_shop"]
+            self.assertIn(expected, json.dumps(public_maps(session), ensure_ascii=False))
+            for identifier in ("warlock_at_nest", "warlock_rescue_battle"):
+                trial = next(self.sessions(identifier))
+                trial["flags"]["npc_gone_blue_robed_mage"] = True
+                source = next(loc["description"] for loc in trial["scenario_pack"]["locations"] if loc["id"] == identifier)
+                description = select_scenario_context(trial)["current_location"]["description"]
+                self.assertEqual(description, migration.FINAL_ABSENCE[source][1])
+                self.assertNotIn("もうここにはいない", description)
+
+    def test_hidden_warlock_passages_keep_placeholders_and_drafts_are_marked(self):
+        for session in self.sessions("magic_shop"):
+            entries = [entry for entry in session["scenario_pack"]["npc_absence_texts"] if entry["npc_ids"] == ["warlock"]]
+            drafts = [entry for entry in entries if entry["status"] == "draft"]
+            self.assertEqual(len(drafts), 4)
+            self.assertTrue(all("もうここにはいない" not in entry["replacement"] for entry in drafts))
+            placeholders = [entry for entry in entries if entry["status"] == "TODO(design)"]
+            self.assertEqual(len(placeholders), 6)
+            self.assertTrue(all(entry["replacement"] == "ワーロックはもうここにはいない。" for entry in placeholders))
+            for identifier in ("read_magic_tomes", "ask_blue_mage_rumor"):
+                session["flags"]["npc_gone_warlock"] = True
+                self.assertIsNone(state.resolve_action(session, action_id=identifier))
 
 
 if __name__ == "__main__":

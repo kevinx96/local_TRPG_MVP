@@ -18150,7 +18150,7 @@
                 "npc_id": "warlock"
               }
             ],
-            "fallen_text": ""
+            "fallen_text": "ミーナは杖を握ったまま、魔法店の床に倒れた。棚の小瓶だけが、窓からの光を受けて淡く瞬いている。"
           }
         }
       }
@@ -25458,11 +25458,11 @@
         "warlock"
       ],
       "path": "/locations/warlock_at_nest/entry_text",
-      "replacement": "ワーロックはもうここにはいない。",
+      "replacement": "竜の巣へ続く道に、冷たい風が吹き抜けている。岩の陰に積もった灰が、風に舞い上がった。",
       "replacements": {
-        "warlock": "ワーロックはもうここにはいない。"
+        "warlock": "竜の巣へ続く道に、冷たい風が吹き抜けている。岩の陰に積もった灰が、風に舞い上がった。"
       },
-      "status": "TODO(design)"
+      "status": "draft"
     },
     {
       "text": "「この砦まで辿り着くとは、物好きな冒険者だ。わしはヴァルター、暁の守護団の団長をしておる。……邪竜を討ちに行くのか。ならば一つ忠告しておこう。竜の谷の炎が本当にあの紅竜だけのものか、よく確かめることだ」",
@@ -25629,11 +25629,11 @@
         "warlock"
       ],
       "path": "/locations/magic_shop/hybrid/prepared_turns/magic_shop_opening/draft/gm_text",
-      "replacement": "ワーロックはもうここにはいない。",
+      "replacement": "薬草と古い紙の匂いが漂う店内。棚の小瓶は色を失い、床に広がった青いローブを窓からの光が照らしている。",
       "replacements": {
-        "warlock": "ワーロックはもうここにはいない。"
+        "warlock": "薬草と古い紙の匂いが漂う店内。棚の小瓶は色を失い、床に広がった青いローブを窓からの光が照らしている。"
       },
-      "status": "TODO(design)"
+      "status": "draft"
     },
     {
       "text": "ロビンは笑って頷いた。「同行してもいいわよ。でもその前に、私の手伝いをしてくれない？王国商人の荷物が、闇の森のゴブリンに奪われたの」",
@@ -26261,11 +26261,11 @@
         "warlock"
       ],
       "path": "/locations/warlock_rescue_battle/hybrid/summary",
-      "replacement": "ワーロックはもうここにはいない。",
+      "replacement": "燃える街道には、焼け焦げた地面と崩れた民家が続いている。灰を巻き上げる熱い風が、街道を吹き抜けていく。",
       "replacements": {
-        "warlock": "ワーロックはもうここにはいない。"
+        "warlock": "燃える街道には、焼け焦げた地面と崩れた民家が続いている。灰を巻き上げる熱い風が、街道を吹き抜けていく。"
       },
-      "status": "TODO(design)"
+      "status": "draft"
     },
     {
       "text": "冷気を放つと炎が一瞬で退き、その隙に男の子を連れ出した。",
@@ -26310,11 +26310,11 @@
         "warlock"
       ],
       "path": "/maps/royal_return/nodes/magic_shop/description",
-      "replacement": "青いローブが床に広がり、杖の先の光がふっと消えた。棚の小瓶が、一斉に色を失っていく。",
+      "replacement": "薬草と古い紙の匂いが漂う魔法店。床には青いローブが広がり、光を失った杖が横たわっている。",
       "replacements": {
-        "warlock": "青いローブが床に広がり、杖の先の光がふっと消えた。棚の小瓶が、一斉に色を失っていく。"
+        "warlock": "薬草と古い紙の匂いが漂う魔法店。床には青いローブが広がり、光を失った杖が横たわっている。"
       },
-      "status": "final"
+      "status": "draft"
     },
     {
       "text": "イアンは砕けた刃を見つめたまま、何も言わなかった。",

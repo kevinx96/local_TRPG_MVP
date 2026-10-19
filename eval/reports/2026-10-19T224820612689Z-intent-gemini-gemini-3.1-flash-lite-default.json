@@ -1,0 +1,354 @@
+{
+  "run_id": "2026-10-19T224820612689Z-intent-gemini-gemini-3.1-flash-lite-default",
+  "backend": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "variant": "default",
+  "split": "all",
+  "live": true,
+  "labels": "proposed",
+  "cases": "eval\\candidates\\041-npc-attacks.jsonl",
+  "cases_sha256": "5523537d1ff15b99ce67ac4e6deba48728761750ea146f6315ef1cc4b849dd90",
+  "quota_exhausted": null,
+  "response_failures": {
+    "whitespace": 0,
+    "empty_object": 0,
+    "other": 0,
+    "no_response": 0
+  },
+  "metrics": {
+    "total": 30,
+    "evaluated": 30,
+    "statuses": {
+      "ok": 30
+    },
+    "normalizations": 0,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 30,
+      "S1": 0,
+      "S2": 0,
+      "S3": 0,
+      "S4": 0
+    },
+    "s0_s1_rate": 1.0,
+    "s3_rate": 0.0,
+    "engine_caught": 0,
+    "exact": 0.8666666666666667,
+    "kind": 1.0,
+    "kind_relaxed": 1.0,
+    "field_kind": 1.0,
+    "field_action_id": 1.0,
+    "field_operation": 1.0,
+    "field_target_id": 0.8666666666666667,
+    "field_item_id": 1.0,
+    "field_advance": 1.0,
+    "confusion_matrix": {
+      "clarify|dialogue": {
+        "dialogue": 1
+      },
+      "dialogue": {
+        "dialogue": 3
+      },
+      "interact": {
+        "interact": 26
+      }
+    },
+    "by_tag": {
+      "child": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "english_name": {
+        "count": 2,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "explicit": {
+        "count": 16,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "guardian": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "hypothetical": {
+        "count": 1,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "joke": {
+        "count": 1,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "negation": {
+        "count": 1,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "npc_attack": {
+        "count": 30,
+        "normalizations": 0,
+        "exact": 0.8666666666666667,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "protected": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "role_name": {
+        "count": 1,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "special": {
+        "count": 1,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "threat": {
+        "count": 1,
+        "normalizations": 0,
+        "exact": 0,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      }
+    },
+    "negation": {
+      "count": 1,
+      "preserved": 1.0,
+      "kind": 1.0
+    },
+    "injection": {
+      "count": 0,
+      "no_state_change": null,
+      "kind": null,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 0,
+      "no_state_change": null,
+      "kind": null,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 0
+    },
+    "clarify": {
+      "precision": null,
+      "recall": 0.0
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.0,
+    "latency_ms": {
+      "p50": 4055.542,
+      "p95": 4540.338349999999
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 1112.1,
+        "reported": 30
+      },
+      "output_tokens": {
+        "mean": 80.06666666666666,
+        "reported": 30
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.000398125,
+    "cost_currency": "USD",
+    "cost_reported": 30,
+    "top_errors": [
+      {
+        "tag": "npc_attack",
+        "errors": 4,
+        "examples": [
+          {
+            "id": "041-npc-021",
+            "input": "「イアンを斬っちゃおうかな」なんて、冗談だよ。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"ian\",\"item_id\":\"\",\"advance\":false,\"approach\":\"\",\"reply\":\"その言葉の意味が分かる者は、この場にはいないようだ。\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "ian",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "その言葉の意味が分かる者は、この場にはいないようだ。"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "041-npc-022",
+            "input": "イアンに「金を返さないと殴るぞ」と脅す。まだ手は出さない。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"ian\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"店主イアンに対し、金を返せと脅しをかける。\",\n  \"reply\": \"「……冗談にしては悪趣味だな。客として来ているなら、もう少し礼儀をわきまえてもらいたいものだ」\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "ian",
+              "item_id": "",
+              "advance": false,
+              "approach": "店主イアンに対し、金を返せと脅しをかける。",
+              "reply": "「……冗談にしては悪趣味だな。客として来ているなら、もう少し礼儀をわきまえてもらいたいものだ」"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "hypothetical",
+        "errors": 1,
+        "examples": [
+          {
+            "id": "041-npc-023",
+            "input": "もしイアンを攻撃したら、ロビンも戦うのかな。",
+            "raw_response": "{\"kind\": \"dialogue\", \"action_id\": \"\", \"operation\": \"\", \"target_id\": \"ian\", \"item_id\": \"\", \"advance\": false, \"approach\": \"イアンを攻撃した場合のロビンの反応について尋ねる。\", \"reply\": \"その言葉の意味が分かる者は、この場にはいないようだ。\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "ian",
+              "item_id": "",
+              "advance": false,
+              "approach": "イアンを攻撃した場合のロビンの反応について尋ねる。",
+              "reply": "その言葉の意味が分かる者は、この場にはいないようだ。"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "joke",
+        "errors": 1,
+        "examples": [
+          {
+            "id": "041-npc-021",
+            "input": "「イアンを斬っちゃおうかな」なんて、冗談だよ。",
+            "raw_response": "{\"kind\":\"dialogue\",\"action_id\":\"\",\"operation\":\"\",\"target_id\":\"ian\",\"item_id\":\"\",\"advance\":false,\"approach\":\"\",\"reply\":\"その言葉の意味が分かる者は、この場にはいないようだ。\"}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "ian",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "その言葉の意味が分かる者は、この場にはいないようだ。"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}
