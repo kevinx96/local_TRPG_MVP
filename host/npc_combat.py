@@ -9,7 +9,10 @@ from .world_state import current_location_id
 
 def gone(session: dict[str, Any], npc_id: str) -> bool:
     flags = session.get("flags", {})
-    return bool(flags.get(f"npc_gone_{npc_id}") or
+    profile = _npc(session, npc_id).get("npc_combat", {})
+    identifiers = profile.get("shared_npc_ids", [npc_id])
+    return bool(any(flags.get(f"npc_gone_{identifier}") for identifier in identifiers) or
+                flags.get(profile.get("gone_flag", "")) or
                 (npc_id == "dragon_knight" and flags.get("dragon_knight_defeated")))
 
 
@@ -80,7 +83,7 @@ def absence_context(session: dict[str, Any], value: Any) -> Any:
 
 
 def _npc(session: dict[str, Any], npc_id: str) -> dict[str, Any]:
-    return next((npc for npc in session["scenario_pack"].get("npcs", []) if npc["id"] == npc_id), {})
+    return next((npc for npc in session.get("scenario_pack", {}).get("npcs", []) if npc["id"] == npc_id), {})
 
 
 def _profile(session: dict[str, Any], npc_id: str) -> dict[str, Any]:
@@ -144,10 +147,14 @@ def start_battle(session: dict[str, Any], npc_id: str, *, interception: bool = F
             if gone(session, identifier) or not state._session_requirement_passes(guardian.get("requirements"), session):
                 continue
             participants.extend([identifier] * guardian.get("count", 1))
+        participants = [_profile(session, identifier).get("shared_npc_ids", [identifier])[0]
+                        for identifier in participants]
         enemies = [_profile(session, identifier)["enemy_id"] for identifier in participants]
         encounter = dict(enemy_ids=enemies, auto_start=True, flee_allowed=True, encounter_class="elite",
                          npc_participants=list(dict.fromkeys(participants)), npc_target=npc_id,
+                         npc_enemy_map=dict(zip(enemies, participants)),
                          npc_town=bool((state._current_location_record(session) or {}).get("town_npc_combat")))
+        encounter.update(deepcopy(profile.get("encounter", {})))
         intro = "戦闘開始: " + "、".join(_npc(session, identifier)["name"] for identifier in participants)
         companion = session.get("companion") or {}
         if any(_profile(session, identifier).get("companion_id") == companion.get("id")
@@ -174,7 +181,7 @@ def dragon_action(session: dict[str, Any], *, interception: bool = False) -> str
 
 def aftermath(session: dict[str, Any], battle: dict[str, Any]) -> tuple[dict[str, Any], list[str]]:
     """Commit casualties even if the player subsequently flees or loses."""
-    from . import combat
+    from . import combat, state
 
     encounter = battle.get("encounter", {})
     casualties = [identifier for identifier in encounter.get("npc_participants", [])
@@ -189,7 +196,8 @@ def aftermath(session: dict[str, Any], battle: dict[str, Any]) -> tuple[dict[str
                        for enemy in battle["enemies"])
     if not casualties and not guard_fallen:
         return {}, []
-    flags = [f"npc_gone_{identifier}" for identifier in casualties]
+    flags = [f"npc_gone_{alias}" for identifier in casualties
+             for alias in _profile(session, identifier).get("shared_npc_ids", [identifier])]
     if encounter.get("npc_town"):
         flags.append("town_blood")
     texts = [_profile(session, identifier).get("fallen_text", "") for identifier in casualties]
@@ -198,7 +206,9 @@ def aftermath(session: dict[str, Any], battle: dict[str, Any]) -> tuple[dict[str
     shops = session["scenario_pack"].get("shops", [])
     counters = []
     for identifier in casualties:
-        owned = [shop for shop in shops if shop["keeper_npc"] == identifier]
+        profile = _profile(session, identifier)
+        delta = combat._merge_combat_deltas(delta, state._effects_to_state_delta(profile.get("fallen_effects", []), session))
+        owned = [shop for shop in shops if shop["keeper_npc"] in profile.get("shared_npc_ids", [identifier])]
         if owned:
             counters.append(next((shop for shop in owned if shop["location_id"] == battle["location_id"]), owned[0]))
     for shop in counters:

@@ -18,7 +18,8 @@ CLEANSE = "聖なる光が胸の火種を包み込み、その炎が弱まって
 def fix_ch34(pack: dict[str, Any]) -> None:
     loc = {l["id"]: l for l in pack["locations"]}
     cameo = loc["valley_nest_gate"]["entry_effects"][0]["branch"]["then"][1]["branch"]["else"][0]
-    cameo["branch"]["requirements"] = {"flag": "warlock_rescue_available"}
+    if not pack["meta"].get("npc_combat_v045"):
+        cameo["branch"]["requirements"] = {"flag": "warlock_rescue_available"}
     actions = {a["id"]: a for a in loc["xanxus_at_nest"]["actions"]}
     actions["call_warlock"]["requirements"] = {"flag": "warlock_rescue_available"}
     actions["cleanse_fire_seed"]["result_text"] = CLEANSE

@@ -693,6 +693,19 @@ def _execute_enemy_ability(session: dict[str, Any], enemy: dict[str, Any], abili
     elif kind == "status" and ability.get("status_effect") == "break_guard":
         session["combat"].setdefault("player_status", {})["guard_disabled_round"] = session["combat"]["round"] + 1
         _log(session, actor_id, "status", f"{enemy.get('name')}は{ability['name']}を使用した。", target=session["character"])
+    elif kind == "stance":
+        if ability.get("immunity_from_target_element"):
+            element = _primary_element(session["character"])
+            enemy["combat_immunities"] = [element]
+            _log(session, actor_id, "stance", f"{ability.get('name', '構え')}で{element}属性を無効化した。", {"element": element})
+    elif isinstance(ability.get("multi_elements"), list) and ability["multi_elements"]:
+        for element in ability["multi_elements"]:
+            for _ in range(max(1, _safe_int(ability.get("hits_per_element"), 1))):
+                if session["character"]["hp"] <= 0:
+                    return
+                strike = {**ability, "element": str(element)}
+                _resolve_attack(session, enemy, session["character"], strike, actor_id, rng,
+                                f"{ability.get('name')}・{element}")
     else:
         for _ in range(max(1, int(ability.get('hits', 1)))):
             if session['character']['hp'] <= 0:

@@ -7,7 +7,7 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-19-ruby-041-npc-combat",
+    "content_revision": "2026-10-19-ruby-045-npc-combat",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -42,7 +42,8 @@
     },
     "checks_v2_v040": true,
     "checks_e": true,
-    "npc_combat_v041": true
+    "npc_combat_v041": true,
+    "npc_combat_v045": true
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -4192,6 +4193,9 @@
                   },
                   {
                     "not_flag": "fire_seed_removed"
+                  },
+                  {
+                    "not_flag": "defeated_xanxus"
                   }
                 ]
               },
@@ -4639,7 +4643,8 @@
             "critical_failure"
           ],
           "portrait_image": "/static/images/npc_warlock.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "warlock"
         },
         {
           "id": "invite_blue_mage",
@@ -4659,7 +4664,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_warlock.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "warlock"
         },
         {
           "id": "return_castle_from_magic_shop",
@@ -4715,7 +4721,8 @@
               }
             ]
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "warlock"
         },
         {
           "id": "forge_prism_weapon",
@@ -4975,7 +4982,31 @@
               "text": "「師匠の代わりに私がやります！助けてもらったお礼です」"
             }
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "visible_requirements": {
+            "any": [
+              {
+                "all": [
+                  {
+                    "not_flag": "npc_gone_warlock"
+                  },
+                  {
+                    "not_flag": "npc_gone_blue_robed_mage"
+                  }
+                ]
+              },
+              {
+                "all": [
+                  {
+                    "flag": "mina_quest_done"
+                  },
+                  {
+                    "not_flag": "npc_gone_mina"
+                  }
+                ]
+              }
+            ]
+          }
         },
         {
           "id": "ask_mina_missing",
@@ -4996,7 +5027,10 @@
           "once": "asked_mina_missing",
           "result_text": "「弟子のミーナが戻らない。泉の封印の話をした翌日からだ……」",
           "risk_source": "action",
-          "npc_id": "mina"
+          "npc_id": "mina",
+          "npc_ids_required": [
+            "warlock"
+          ]
         },
         {
           "id": "report_mina_safe",
@@ -5033,7 +5067,10 @@
           "once": "mina_quest_done",
           "result_text": "「……世話をかけたな。礼を言う」",
           "risk_source": "action",
-          "npc_id": "mina"
+          "npc_id": "mina",
+          "npc_ids_required": [
+            "warlock"
+          ]
         },
         {
           "id": "read_magic_tomes",
@@ -9946,7 +9983,21 @@
           "visible_after": "heard_name_xanxus",
           "effects": [
             {
-              "current_location": "xanxus_confrontation"
+              "branch": {
+                "requirements": {
+                  "flag": "defeated_xanxus"
+                },
+                "then": [
+                  {
+                    "current_location": "village_frozen_clue"
+                  }
+                ],
+                "else": [
+                  {
+                    "current_location": "xanxus_confrontation"
+                  }
+                ]
+              }
             }
           ],
           "risk_source": "destination"
@@ -10314,7 +10365,14 @@
           "victory": "ザンザスを包んでいた炎が次第に消えていく。骸骨は崩れ落ちながら、『まさか、お前は奇術師が化けていたのか……』と呟き、そのまま動かなくなった。",
           "defeat": "ザンザスは倒れたあなたを見下ろした。『大人しく先を探索しろ。そして私の火種を飲め。任務を放棄すれば、その場で爆ぜさせる』"
         },
-        "encounter_class": "scripted_loss"
+        "encounter_class": "scripted_loss",
+        "npc_participants": [
+          "xanxus"
+        ],
+        "npc_enemy_map": {
+          "xanxus": "xanxus"
+        },
+        "npc_town": false
       },
       "actions": [],
       "background_image": "/static/images/bg_burning_village.png",
@@ -10449,7 +10507,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_xanxus.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "npc_id": "warlock"
         },
         {
           "id": "refuse_xanxus_without_rescue",
@@ -10459,7 +10518,6 @@
           "intent_keywords": [
             "死んでも従わない"
           ],
-          "hidden_after": "warlock_rescue_available",
           "effects": [
             {
               "game_over": {
@@ -10469,7 +10527,20 @@
             }
           ],
           "portrait_image": "/static/images/npc_xanxus.png",
-          "risk_source": "action"
+          "risk_source": "action",
+          "visible_requirements": {
+            "any": [
+              {
+                "not_flag": "warlock_rescue_available"
+              },
+              {
+                "flag": "npc_gone_warlock"
+              },
+              {
+                "flag": "npc_gone_blue_robed_mage"
+              }
+            ]
+          }
         }
       ],
       "background_image": "/static/images/bg_burning_village.png",
@@ -10660,14 +10731,23 @@
           "intent_keywords": [
             "探索せず先へ進む"
           ],
-          "visible_after": "xanxus_encountered",
           "effects": [
             {
               "current_location": "valley_entrance",
               "flags_set": []
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "xanxus_encountered"
+              },
+              {
+                "flag": "defeated_xanxus"
+              }
+            ]
+          }
         },
         {
           "id": "skip_frozen_clue_before_xanxus",
@@ -10683,7 +10763,10 @@
               "current_location": "xanxus_confrontation"
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "visible_requirements": {
+            "not_flag": "defeated_xanxus"
+          }
         },
         {
           "id": "inspect_frost_core",
@@ -11137,7 +11220,6 @@
           "intent_keywords": [
             "イアンの頼みを断る"
           ],
-          "visible_after": "xanxus_encountered",
           "effects": [
             {
               "current_location": "valley_entrance",
@@ -11146,7 +11228,17 @@
           ],
           "portrait_image": "/static/images/npc_ian_serious.png",
           "risk_source": "destination",
-          "npc_id": "ian"
+          "npc_id": "ian",
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "xanxus_encountered"
+              },
+              {
+                "flag": "defeated_xanxus"
+              }
+            ]
+          }
         },
         {
           "id": "refuse_ian_before_xanxus",
@@ -11164,7 +11256,10 @@
           ],
           "portrait_image": "/static/images/npc_ian_serious.png",
           "risk_source": "destination",
-          "npc_id": "ian"
+          "npc_id": "ian",
+          "visible_requirements": {
+            "not_flag": "defeated_xanxus"
+          }
         },
         {
           "id": "visit_village",
@@ -11372,7 +11467,14 @@
         {
           "branch": {
             "requirements": {
-              "flag": "xanxus_took_core"
+              "all": [
+                {
+                  "flag": "xanxus_took_core"
+                },
+                {
+                  "not_flag": "defeated_xanxus"
+                }
+              ]
             },
             "then": [
               {
@@ -11897,6 +11999,9 @@
                 },
                 {
                   "not_flag": "fire_seed_removed"
+                },
+                {
+                  "not_flag": "defeated_xanxus"
                 }
               ]
             },
@@ -13918,6 +14023,9 @@
                       },
                       {
                         "not_flag": "fire_seed_removed"
+                      },
+                      {
+                        "not_flag": "defeated_xanxus"
                       }
                     ]
                   },
@@ -13930,7 +14038,21 @@
                     {
                       "branch": {
                         "requirements": {
-                          "flag": "warlock_rescue_available"
+                          "all": [
+                            {
+                              "flag": "warlock_rescue_available"
+                            },
+                            {
+                              "all": [
+                                {
+                                  "not_flag": "npc_gone_warlock"
+                                },
+                                {
+                                  "not_flag": "npc_gone_blue_robed_mage"
+                                }
+                              ]
+                            }
+                          ]
                         },
                         "then": [
                           {
@@ -14075,7 +14197,8 @@
             "flag": "warlock_rescue_available"
           },
           "result_text": "青い光が走り、ワーロックがあなたの前に立った。彼の杖が火種を凍らせて砕く。「ザンザス、もう白竜の手先は終わりだ」ザンザスは舌打ちし、炎の中へ消えた。ワーロックは振り返る。「あの骸骨は、白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ」",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "npc_id": "warlock"
         }
       ],
       "npc_ids": [
@@ -19357,11 +19480,25 @@
       ],
       "image": "/static/images/npc_warlock.png",
       "npc_combat": {
-        "category": "protected",
-        "blocked_text": "杖を振るより早く、見えない壁があなたの腕を押し戻した。ワーロックは本から目を上げもしない。「店の中では静かに頼むよ」",
-        "town": false,
+        "category": "killable",
+        "town": true,
         "guardians": [],
-        "aftermath": "none"
+        "aftermath": "dead",
+        "shared_npc_ids": [
+          "warlock",
+          "blue_robed_mage"
+        ],
+        "enemy_id": "npc_warlock",
+        "companion_id": "blue_robed_mage",
+        "fallen_text": "青いローブが床に広がり、杖の先の光がふっと消えた。棚の小瓶が、一斉に色を失っていく。",
+        "fallen_effects": [
+          {
+            "unset_flag": "warlock_rescue_available"
+          }
+        ],
+        "encounter": {
+          "npc_town": true
+        }
       }
     },
     {
@@ -19439,11 +19576,81 @@
       ],
       "image": "/static/images/npc_xanxus.png",
       "npc_combat": {
-        "category": "protected",
-        "blocked_text": "今は、その相手に刃を向けるべき時ではない。",
+        "category": "killable",
         "town": false,
         "guardians": [],
-        "aftermath": "none"
+        "aftermath": "dead",
+        "enemy_id": "xanxus",
+        "gone_flag": "defeated_xanxus",
+        "fallen_text": "炎が掻き消え、骸骨は乾いた音を立てて崩れ落ちた。赤い法衣だけが、灰の上に残っている。法衣の中から、王家の紋が入った封書がこぼれ落ちた。",
+        "fallen_effects": [
+          {
+            "set_flag": "defeated_xanxus"
+          },
+          {
+            "set_flag": "heard_xanxus_betrayal"
+          },
+          {
+            "set_flag": "xanxus_encountered"
+          },
+          {
+            "branch": {
+              "requirements": {
+                "has_item": "火種"
+              },
+              "then": [
+                {
+                  "remove_item": {
+                    "name": "火種",
+                    "quantity": 1,
+                    "force": true
+                  }
+                },
+                {
+                  "set_flag": "fire_seed_removed"
+                }
+              ]
+            }
+          }
+        ],
+        "encounter": {
+          "npc_town": false
+        },
+        "locations": {
+          "xanxus_confrontation": {
+            "encounter": {
+              "npc_town": false,
+              "victory_effects": [
+                {
+                  "current_location": "village_frozen_clue"
+                }
+              ]
+            }
+          },
+          "xanxus_ultimatum": {
+            "encounter": {
+              "npc_town": false,
+              "victory_effects": [
+                {
+                  "current_location": "village_frozen_clue"
+                }
+              ]
+            }
+          },
+          "xanxus_at_nest": {
+            "encounter": {
+              "npc_town": false,
+              "victory_effects": [
+                {
+                  "current_location": "valley_nest_gate"
+                },
+                {
+                  "set_flag": "nest_event_seen"
+                }
+              ]
+            }
+          }
+        }
       }
     },
     {
@@ -19456,11 +19663,25 @@
       ],
       "image": "/static/images/npc_warlock.png",
       "npc_combat": {
-        "category": "protected",
-        "blocked_text": "杖を振るより早く、見えない壁があなたの腕を押し戻した。ワーロックは本から目を上げもしない。「店の中では静かに頼むよ」",
-        "town": false,
+        "category": "killable",
+        "town": true,
         "guardians": [],
-        "aftermath": "none"
+        "aftermath": "dead",
+        "shared_npc_ids": [
+          "warlock",
+          "blue_robed_mage"
+        ],
+        "enemy_id": "npc_warlock",
+        "companion_id": "blue_robed_mage",
+        "fallen_text": "青いローブが床に広がり、杖の先の光がふっと消えた。棚の小瓶が、一斉に色を失っていく。",
+        "fallen_effects": [
+          {
+            "unset_flag": "warlock_rescue_available"
+          }
+        ],
+        "encounter": {
+          "npc_town": true
+        }
       }
     },
     {
@@ -19503,9 +19724,13 @@
         "companion_id": "mina",
         "locations": {
           "magic_shop": {
-            "category": "protected",
-            "blocked_text": "見えない壁があなたの腕を押し戻した。ワーロックが静かに本を閉じる。「弟子に手を出すのはやめてもらおうか」",
-            "town": true
+            "town": true,
+            "guardians": [
+              {
+                "npc_id": "warlock"
+              }
+            ],
+            "fallen_text": ""
           }
         }
       }
@@ -22956,6 +23181,83 @@
       }
     },
     {
+      "name": "青いローブの魔法使い・ワーロック",
+      "description": "元素魔法を極めた青いローブの魔法使い。",
+      "hp": 100,
+      "max_hp": 100,
+      "mp": 999,
+      "max_mp": 999,
+      "sp": 20,
+      "max_sp": 20,
+      "attributes": {
+        "str": 10,
+        "dex": 30,
+        "int": 100,
+        "wis": 60,
+        "end": 40
+      },
+      "resistances": {
+        "fire": 0.1,
+        "water": 0.1,
+        "lightning": 0.1,
+        "ice": 0.1,
+        "earth": 0.1,
+        "wind": 0.1,
+        "light": 0.1,
+        "dark": 0.1
+      },
+      "combat": {
+        "basic_attack": {
+          "name": "元素弾",
+          "damage": "2d10+int/2",
+          "accuracy": 100,
+          "element": "water"
+        },
+        "defense": 4,
+        "evade": 15
+      },
+      "skills": [
+        {
+          "id": "element_counter",
+          "name": "元素克制",
+          "kind": "attack",
+          "description": "敵の属性を打ち消す元素で攻撃する。",
+          "damage": "int+10d20",
+          "accuracy": 100,
+          "element": "counter"
+        },
+        {
+          "id": "element_switch",
+          "name": "元素切替",
+          "kind": "stance",
+          "description": "水晶球を敵に有利な属性へ切り替え、敵の属性攻撃を無効化する。",
+          "immunity_from_target_element": true
+        },
+        {
+          "id": "element_prayer",
+          "name": "元素祈喚",
+          "kind": "attack",
+          "description": "風火水電氷地光闇を各三度、合計24回放つ。",
+          "damage": "3d24",
+          "accuracy": 100,
+          "multi_elements": [
+            "wind",
+            "fire",
+            "water",
+            "lightning",
+            "ice",
+            "earth",
+            "light",
+            "dark"
+          ],
+          "hits_per_element": 3
+        }
+      ],
+      "image": "/static/images/npc_warlock.png",
+      "id": "npc_warlock",
+      "npc_id": "warlock"
+    },
+    {
       "id": "tutorial_slime",
       "name": "スライム",
       "description": "森の入口に棲みついたスライム。妙に酸っぱい匂いがする。",
@@ -23777,7 +24079,8 @@
           "調査"
         ],
         "reason": "ワーロックの助言"
-      }
+      },
+      "npc_id": "warlock"
     },
     {
       "id": "fire_bat_dragon",
@@ -24533,7 +24836,7 @@
         }
       ],
       "buys": true,
-      "counter_gold": 0
+      "counter_gold": 50
     },
     {
       "id": "forge_shop",
@@ -26367,6 +26670,7 @@
       },
       "text": "ミーナは師匠のもとで修行を続け、のちに『虹晶の魔法使い』と呼ばれるようになった。",
       "npc_ids_required": [
+        "warlock",
         "mina"
       ]
     },
@@ -26388,7 +26692,11 @@
           }
         ]
       },
-      "text": "洞窟で出会った見習い魔法使いは、自力で王都へ帰り着いたらしい。師匠にこっぴどく叱られたそうだ。"
+      "text": "洞窟で出会った見習い魔法使いは、自力で王都へ帰り着いたらしい。師匠にこっぴどく叱られたそうだ。",
+      "npc_ids_required": [
+        "warlock",
+        "mina"
+      ]
     },
     {
       "id": "warlock",
@@ -26401,7 +26709,10 @@
       "requirements": {
         "flag": "warlock_rescue_available"
       },
-      "text": "青いローブの魔法使いは今日も魔法店で気だるげに店番をしている。窓辺には、溶けない氷の花が一輪飾られている。"
+      "text": "青いローブの魔法使いは今日も魔法店で気だるげに店番をしている。窓辺には、溶けない氷の花が一輪飾られている。",
+      "npc_ids_required": [
+        "warlock"
+      ]
     },
     {
       "id": "robin",
@@ -26552,7 +26863,10 @@
       "requirements": {
         "flag": "fire_seed_removed"
       },
-      "text": "胸の火種は消え去った。骸骨の魔法使いザンザスの行方を知る者はいない。"
+      "text": "胸の火種は消え去った。骸骨の魔法使いザンザスの行方を知る者はいない。",
+      "npc_ids_required": [
+        "xanxus"
+      ]
     },
     {
       "id": "xanxus_core",
@@ -26565,7 +26879,10 @@
       "requirements": {
         "flag": "xanxus_took_core"
       },
-      "text": "紅竜の心臓を手にしたザンザスは、どこかで新たな企みを巡らせているという。"
+      "text": "紅竜の心臓を手にしたザンザスは、どこかで新たな企みを巡らせているという。",
+      "npc_ids_required": [
+        "xanxus"
+      ]
     },
     {
       "id": "king_trust_only",
@@ -26590,6 +26907,19 @@
         "flag": "town_blood"
       },
       "text": "町の人々は、あの日の惨劇を忘れていない。英雄の名が語られるとき、そこには必ず血の影がつきまとった。"
+    },
+    {
+      "id": "defeated_xanxus",
+      "endings": [
+        "ignis_defeated",
+        "ignis_purified",
+        "draco_defeated",
+        "draco_defeated_with_ignis"
+      ],
+      "requirements": {
+        "flag": "defeated_xanxus"
+      },
+      "text": "燃える街道に、赤い法衣の灰だけが残された。白竜の企みを知る者が、一人この世から消えた。"
     }
   ],
   "npc_combat": {
@@ -26637,6 +26967,30 @@
   },
   "npc_absence_texts": [
     {
+      "text": "ザンザスは頭を抱えて炎の彼方へ逃げ去った。ワーロックは、かつて元素・人類・竜が互いを害さない条約を結び、竜と人類は友好関係にあったと説明する。邪竜の暴走には誰かの思惑があり、多くの者が別々の狙いを抱えている。『くれぐれも用心してください。私は背後から見守っています』そう告げると、ワーロックは姿を消した。",
+      "npc_ids": [
+        "warlock"
+      ],
+      "path": "/locations/warlock_rescue_battle/combat/result_texts/victory",
+      "replacement": "ワーロックはもうここにはいない。",
+      "replacements": {
+        "warlock": "ワーロックはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "青い光が走り、ワーロックがあなたの前に立った。彼の杖が火種を凍らせて砕く。「ザンザス、もう白竜の手先は終わりだ」ザンザスは舌打ちし、炎の中へ消えた。ワーロックは振り返る。「あの骸骨は、白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ」",
+      "npc_ids": [
+        "warlock"
+      ],
+      "path": "/locations/xanxus_at_nest/actions/call_warlock/result_text",
+      "replacement": "ワーロックはもうここにはいない。",
+      "replacements": {
+        "warlock": "ワーロックはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
       "text": "「よし、少し待っていろ」ローベルトは鉄の剣を受け取ると、奥から見事な大剣を取り出し、氷の護符を柄に埋め込んだ。目も眩むような青い輝きが剣を包み込む。「完成だ。名付けて『氷鉄の大剣』。邪竜の鱗も容易く貫き、お前の魔力に応じた追撃も発生する至高の品だ」",
       "npc_ids": [
         "blacksmith"
@@ -26675,6 +27029,18 @@
       "status": "TODO(design)"
     },
     {
+      "text": "ザンザスがとどめの炎を放とうとした瞬間、青い光が火線を切り裂いた。姿を消していたワーロックがあなたを背後へ庇う。『ザンザス、それは少しやり過ぎだ』青いローブの周囲に八属性の水晶球が展開し、二人の魔法使いの戦闘が始まる。",
+      "npc_ids": [
+        "warlock"
+      ],
+      "path": "/locations/xanxus_ultimatum/hybrid/prepared_turns/warlock_rescue/draft/gm_text",
+      "replacement": "ワーロックはもうここにはいない。",
+      "replacements": {
+        "warlock": "ワーロックはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
       "text": "鍛冶師ローベルトは手を止め、低い声で語り始めた。「通常の物理攻撃や炎は、あの邪竜イグニスには一切通用せん。だが、『氷の護符』の力を武器に纏わせれば、自身の攻撃を氷属性に変換できる。それなら奴にも傷を負わせられるはずだ」",
       "npc_ids": [
         "blacksmith"
@@ -26683,6 +27049,18 @@
       "replacement": "ローベルトはもうここにはいない。",
       "replacements": {
         "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "青い光とともにワーロックが現れた。「先へ進む前に伝えておく。ザンザスは白竜と密約を交わしていた。紅竜の心臓と引き換えに、王国の半分をもらう約束だったそうだ。……気をつけろ」そう言い残し、彼は再び姿を消した。",
+      "npc_ids": [
+        "warlock"
+      ],
+      "path": "/locations/warlock_at_nest/entry_text",
+      "replacement": "ワーロックはもうここにはいない。",
+      "replacements": {
+        "warlock": "ワーロックはもうここにはいない。"
       },
       "status": "TODO(design)"
     },
@@ -26858,6 +27236,18 @@
       "status": "final"
     },
     {
+      "text": "薬草と古い紙の匂いが漂う店内で、青いローブの銀髪の魔法使いが顔を上げた。棚の小瓶が、窓からの光を受けて淡く瞬いている。「何かお探しかな」",
+      "npc_ids": [
+        "warlock"
+      ],
+      "path": "/locations/magic_shop/hybrid/prepared_turns/magic_shop_opening/draft/gm_text",
+      "replacement": "ワーロックはもうここにはいない。",
+      "replacements": {
+        "warlock": "ワーロックはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
       "text": "ロビンは笑って頷いた。「同行してもいいわよ。でもその前に、私の手伝いをしてくれない？王国商人の荷物が、闇の森のゴブリンに奪われたの」",
       "npc_ids": [
         "robin"
@@ -26982,6 +27372,18 @@
       "status": "TODO(design)"
     },
     {
+      "text": "魔導書の余白に書き込まれた術式を、白紙の巻物に写し取った。ワーロックが片眉を上げる。「……ほう。持っていくといい」",
+      "npc_ids": [
+        "warlock"
+      ],
+      "path": "/locations/magic_shop/actions/read_magic_tomes/result_texts/success",
+      "replacement": "ワーロックはもうここにはいない。",
+      "replacements": {
+        "warlock": "ワーロックはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
       "text": "火コウモリ竜はあなたの匂いを嗅ぐと肩へ飛び乗った。サラは嬉しそうに笑い、「ちゃんと連れて帰ってね」と送り出した。",
       "npc_ids": [
         "sarah",
@@ -26992,6 +27394,18 @@
       "replacements": {
         "sarah": "サラはもうここにはいない。",
         "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "青いローブの魔法使いは声を潜めた。「邪竜の復活は自然なものではない。誰かが意図して呼び戻した、と私は見ています」",
+      "npc_ids": [
+        "warlock"
+      ],
+      "path": "/locations/magic_shop/hybrid/prepared_turns/blue_mage_rumor_success/draft/gm_text",
+      "replacement": "ワーロックはもうここにはいない。",
+      "replacements": {
+        "warlock": "ワーロックはもうここにはいない。"
       },
       "status": "TODO(design)"
     },
@@ -27454,6 +27868,18 @@
       "status": "TODO(design)"
     },
     {
+      "text": "ワーロックがあなたを背後へ庇い、元素の水晶球を展開する。",
+      "npc_ids": [
+        "warlock"
+      ],
+      "path": "/locations/warlock_rescue_battle/hybrid/summary",
+      "replacement": "ワーロックはもうここにはいない。",
+      "replacements": {
+        "warlock": "ワーロックはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
       "text": "冷気を放つと炎が一瞬で退き、その隙に男の子を連れ出した。",
       "npc_ids": [
         "riku"
@@ -27491,6 +27917,18 @@
       "status": "TODO(design)"
     },
     {
+      "text": "青いローブの銀髪の魔法使いが、杖を背に店番をしている。",
+      "npc_ids": [
+        "warlock"
+      ],
+      "path": "/maps/royal_return/nodes/magic_shop/description",
+      "replacement": "青いローブが床に広がり、杖の先の光がふっと消えた。棚の小瓶が、一斉に色を失っていく。",
+      "replacements": {
+        "warlock": "青いローブが床に広がり、杖の先の光がふっと消えた。棚の小瓶が、一斉に色を失っていく。"
+      },
+      "status": "final"
+    },
+    {
       "text": "イアンは砕けた刃を見つめたまま、何も言わなかった。",
       "npc_ids": [
         "ian"
@@ -27523,6 +27961,18 @@
       "replacement": "長老はもうここにはいない。",
       "replacements": {
         "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "元素魔法を極めた青いローブの魔法使い。",
+      "npc_ids": [
+        "warlock"
+      ],
+      "path": "/characters/warlock/description",
+      "replacement": "ワーロックはもうここにはいない。",
+      "replacements": {
+        "warlock": "ワーロックはもうここにはいない。"
       },
       "status": "TODO(design)"
     },

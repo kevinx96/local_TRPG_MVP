@@ -1,0 +1,13 @@
+{
+  "id": "045_npc_xanxus_at_nest",
+  "scenario": "host/prompt/processed/dragon_rpg.json",
+  "gm_mode": "full",
+  "character_id": "hero",
+  "location_id": "xanxus_at_nest",
+  "via": ["village"],
+  "flags": {"accepted_fire_seed": true, "xanxus_encountered": true, "nest_event_seen": true},
+  "hp_delta": 0,
+  "inventory_add": [{"id": "fire_seed", "name": "火種", "quantity": 1}],
+  "inventory_remove": [],
+  "recent_messages": []
+}

@@ -1,4 +1,4 @@
-"""Idempotent spec 041 migration, shared by both scenario packs."""
+"""Idempotent specs 041/045 migration, shared by both scenario packs."""
 from __future__ import annotations
 
 import json
@@ -11,8 +11,6 @@ from .upgrade_forest import upsert
 
 
 BLOCKED = {
-    "warlock": "杖を振るより早く、見えない壁があなたの腕を押し戻した。ワーロックは本から目を上げもしない。「店の中では静かに頼むよ」",
-    "mina": "見えない壁があなたの腕を押し戻した。ワーロックが静かに本を閉じる。「弟子に手を出すのはやめてもらおうか」",
     "old_soldier_ghost": "刃は半透明の体をすり抜け、冷たい風だけが残った。亡霊の兵士は悲しげにあなたを見つめている。",
     "generic": "今は、その相手に刃を向けるべき時ではない。",
 }
@@ -38,6 +36,8 @@ FALLEN = {
     "brigitte": "ブリギッテは前掛けを血に染めて、金床の横に崩れ落ちた。",
     "elio": "エリオの周りの水が、ただの水たまりになって床に広がった。",
     "mina": "ミーナは杖を握ったまま、湯けむりの中に倒れた。",
+    "warlock": "青いローブが床に広がり、杖の先の光がふっと消えた。棚の小瓶が、一斉に色を失っていく。",
+    "xanxus": "炎が掻き消え、骸骨は乾いた音を立てて崩れ落ちた。赤い法衣だけが、灰の上に残っている。法衣の中から、王家の紋が入った封書がこぼれ落ちた。",
 }
 DIALOGUE = [
     "「ノクスは南風が好きでな。霧の古戦場から風が吹く日は、機嫌が悪い」",
@@ -51,6 +51,7 @@ TRANSITION = "飛竜ノクスが翼を裂かれ、地に落ちた。ガレスは
 VICTORY = "ガレスは槍を杖にして膝をついた。「民の血を……忘れるな」 飛竜が主をくわえ、灰色の空へ飛び去っていった。"
 DEFEAT = "竜騎士の槍があなたを貫いた。「守護団の名において」"
 EPILOGUE = "町の人々は、あの日の惨劇を忘れていない。英雄の名が語られるとき、そこには必ず血の影がつきまとった。"
+XANXUS_EPILOGUE = "燃える街道に、赤い法衣の灰だけが残された。白竜の企みを知る者が、一人この世から消えた。"
 # Template choices within the authored ranges; exact choices are listed in the engineering report.
 TEMPLATES = {
     "ian": (14, "1d6+2", 65, "physical"), "robin": (28, "1d8+3", 85, "physical"),
@@ -67,7 +68,7 @@ GUARDIANS = {"ian": [{"npc_id": "robin"}], "robin": [{"npc_id": "ian"}],
     "walter": [{"npc_id": "guardian_guard", "count": 2}],
     "brigitte": [{"npc_id": "guardian_guard"}],
     "oaksdawn_priest": [{"npc_id": "liese", "requirements": {"not_flag": "recruited_liese"}}]}
-COMPANIONS = {"robin": "robin", "fire_bat_dragon": "fire_bat_dragon", "liese": "paladin_liese", "elio": "hydromancer_elio", "mina": "mina"}
+COMPANIONS = {"robin": "robin", "fire_bat_dragon": "fire_bat_dragon", "liese": "paladin_liese", "elio": "hydromancer_elio", "mina": "mina", "warlock": "blue_robed_mage"}
 TOWNS = {"castle_town", "forge", "inn", "magic_shop", "item_shop", "alley", "alley_night", "village", "festival_town", "ian_ice_katana_aftermath"}
 ACTION_NPCS = {
     "rest_at_inn": "ian", "ask_ian": "ian", "ask_robin": "robin", "accept_robin_goblin_quest": "robin",
@@ -88,6 +89,8 @@ ACTION_NPCS = {
     "talk_elio": "elio", "recruit_elio_gold": "elio", "recruit_elio_water": "elio", "recruit_elio_persuade": "elio",
     "elio_flood_worm": "elio", "visit_village": "elder",
     "break_burning_beam": "riku", "climb_to_window": "riku", "douse_with_ice": "riku",
+    "ask_blue_mage_rumor": "warlock", "invite_blue_mage": "warlock", "ask_seal_lore": "warlock",
+    "refuse_xanxus_with_rescue": "warlock", "call_warlock": "warlock",
 }
 
 
@@ -113,8 +116,8 @@ def apply(pack: dict[str, Any]) -> None:
         profile: dict[str, Any] = dict(category="protected", blocked_text=BLOCKED["generic"], town=False, guardians=[], aftermath="none")
         if identifier in TREASON:
             profile.update(category="treason", ending_text=TREASON[identifier])
-        elif identifier in {"blue_robed_mage", "warlock", "old_soldier_ghost"}:
-            profile["blocked_text"] = BLOCKED["warlock" if identifier == "blue_robed_mage" else identifier]
+        elif identifier == "old_soldier_ghost":
+            profile["blocked_text"] = BLOCKED[identifier]
         elif identifier in TEMPLATES or identifier in {"sarah", "riku"}:
             profile.update(category="child" if identifier in {"sarah", "riku"} else "killable",
                            town=identifier not in {"lost_goblin", "mina"}, guardians=deepcopy(GUARDIANS.get(identifier, [])),
@@ -136,7 +139,8 @@ def apply(pack: dict[str, Any]) -> None:
             if identifier in {"fire_bat_dragon", "elder"}:
                 profile["flee_dependents"] = ["sarah" if identifier == "fire_bat_dragon" else "riku"]
             if identifier == "mina":
-                profile["locations"] = {"magic_shop": dict(category="protected", blocked_text=BLOCKED["mina"], town=True)}
+                # TODO(design): the authored Mina death text only covers the hot spring.
+                profile["locations"] = {"magic_shop": dict(town=True, guardians=[{"npc_id": "warlock"}], fallen_text="")}
         elif identifier == "dragon_knight":
             profile.update(category="special", aftermath="withdrawn")
         npc["npc_combat"] = profile
@@ -151,7 +155,8 @@ def apply(pack: dict[str, Any]) -> None:
                 companion["npc_id"] = identifier
     for shop in pack.get("shops", []):
         shop["counter_gold"] = {"sarah_shop": 30, "forge_shop": 40, "village_shop": 20,
-                                "gald_shop": 50, "gald_capital_shop": 50, "oaksdawn_workshop_shop": 60}.get(shop["id"], 0)
+                                "gald_shop": 50, "gald_capital_shop": 50, "oaksdawn_workshop_shop": 60,
+                                "magic_shop": 50}.get(shop["id"], 0)
 
     def annotate(actions: list[dict[str, Any]], location_id: str, inherited: str = "") -> None:
         for entry in actions:
@@ -235,6 +240,7 @@ def apply(pack: dict[str, Any]) -> None:
         locations[identifier]["connected_location_ids"] = ["royal_gate", "dragon_valley_return"]
     upsert(pack["epilogues"], dict(id="town_blood", endings=["ignis_defeated", "ignis_purified", "draco_defeated", "draco_defeated_with_ignis"],
                                  requirements={"flag": "town_blood"}, text=EPILOGUE))
+    _attackable_mages(pack, locations, npcs)
     _absence_inventory(pack)
     # Earlier migrations append their own records; keep their established order stable.
     for section, identifier in (("enemies", "tutorial_slime"), ("items", "travel_potion")):
@@ -252,12 +258,93 @@ def apply(pack: dict[str, Any]) -> None:
     annotate_risks(pack)
     ruby_names(pack)
     pack["meta"]["npc_combat_v041"] = True
-    pack["meta"]["content_revision"] = "2026-10-19-ruby-041-npc-combat"
+    pack["meta"]["npc_combat_v045"] = True
+    pack["meta"]["content_revision"] = "2026-10-19-ruby-045-npc-combat"
+
+
+def _attackable_mages(pack: dict[str, Any], locations: dict[str, Any], npcs: dict[str, Any]) -> None:
+    character = next(record for record in pack["characters"] if record["id"] == "warlock")
+    enemy = {key: deepcopy(character[key]) for key in (
+        "name", "description", "hp", "max_hp", "mp", "max_mp", "sp", "max_sp",
+        "attributes", "resistances", "combat", "skills", "image")}
+    enemy.update(id="npc_warlock", npc_id="warlock")
+    upsert(pack["enemies"], enemy)
+    for identifier in ("warlock", "blue_robed_mage"):
+        npcs[identifier]["npc_combat"] = dict(category="killable", town=True, guardians=[], aftermath="dead",
+            shared_npc_ids=["warlock", "blue_robed_mage"], enemy_id="npc_warlock", companion_id="blue_robed_mage",
+            fallen_text=FALLEN["warlock"], fallen_effects=[{"unset_flag": "warlock_rescue_available"}],
+            encounter={"npc_town": True})
+    npcs["xanxus"]["npc_combat"] = dict(category="killable", town=False, guardians=[], aftermath="dead",
+        enemy_id="xanxus", gone_flag="defeated_xanxus", fallen_text=FALLEN["xanxus"],
+        fallen_effects=[{"set_flag": flag} for flag in ("defeated_xanxus", "heard_xanxus_betrayal", "xanxus_encountered")] + [
+            {"branch": {"requirements": {"has_item": "火種"}, "then": [
+                {"remove_item": {"name": "火種", "quantity": 1, "force": True}}, {"set_flag": "fire_seed_removed"}]}}],
+        encounter={"npc_town": False}, locations={
+            location: {"encounter": {"npc_town": False, "victory_effects": [
+                {"current_location": "valley_nest_gate" if location == "xanxus_at_nest" else "village_frozen_clue"}
+            ] + ([{"set_flag": "nest_event_seen"}] if location == "xanxus_at_nest" else [])}}
+            for location in ("xanxus_confrontation", "xanxus_ultimatum", "xanxus_at_nest")})
+    # The original scripted loss still continues; a genuine victory shares the death consequences.
+    locations["xanxus_battle"]["combat"].update(
+        npc_participants=["xanxus"], npc_enemy_map={"xanxus": "xanxus"}, npc_town=False)
+
+    alive = both({"not_flag": "npc_gone_warlock"}, {"not_flag": "npc_gone_blue_robed_mage"})
+    for entry in locations["magic_shop"]["actions"]:
+        if entry["id"] in {"ask_mina_missing", "report_mina_safe"}:
+            entry["npc_ids_required"] = ["warlock"]
+        if entry["id"] == "forge_prism_weapon":
+            # The existing rescued-Mina variant explicitly lets her craft in her master's place.
+            entry["visible_requirements"] = {"any": [alive, both({"flag": "mina_quest_done"}, {"not_flag": "npc_gone_mina"})]}
+    refusal = next(a for a in locations["xanxus_ultimatum"]["actions"] if a["id"] == "refuse_xanxus_without_rescue")
+    refusal.pop("hidden_after", None)
+    refusal["visible_requirements"] = {"any": [{"not_flag": "warlock_rescue_available"},
+        {"flag": "npc_gone_warlock"}, {"flag": "npc_gone_blue_robed_mage"}]}
+    for location_id, before_id, after_id in (
+            ("village_frozen_clue", "skip_frozen_clue_before_xanxus", "skip_frozen_clue_after_xanxus"),
+            ("ian_ice_katana_aftermath", "refuse_ian_before_xanxus", "refuse_ian_after_xanxus")):
+        for entry in locations[location_id]["actions"]:
+            if entry["id"] == before_id:
+                entry["visible_requirements"] = {"not_flag": "defeated_xanxus"}
+            elif entry["id"] == after_id:
+                entry.pop("visible_after", None)
+                entry["visible_requirements"] = {"any": [{"flag": "xanxus_encountered"}, {"flag": "defeated_xanxus"}]}
+    escape = next(a for a in locations["village_approach"]["actions"] if a["id"] == "escape_from_burning_village")
+    escape["effects"] = [{"branch": {"requirements": {"flag": "defeated_xanxus"},
+        "then": [{"current_location": "village_frozen_clue"}], "else": [{"current_location": "xanxus_confrontation"}]}}]
+    nest = locations["valley_nest_gate"]["entry_effects"][0]["branch"]["then"][1]["branch"]
+    nest["requirements"] = both({"flag": "accepted_fire_seed"}, {"not_flag": "fire_seed_removed"}, {"not_flag": "defeated_xanxus"})
+    nest["else"][0]["branch"]["requirements"] = both({"flag": "warlock_rescue_available"}, alive)
+
+    def guard_core_claim(value: Any) -> None:
+        if isinstance(value, dict):
+            requirement = value.get("requirements")
+            if isinstance(requirement, dict):
+                terms = requirement.get("all", [requirement])
+                if any(term in terms for term in ({"flag": "promised_core_to_xanxus"}, {"flag": "xanxus_took_core"})):
+                    if {"not_flag": "defeated_xanxus"} not in terms:
+                        value["requirements"] = both(*terms, {"not_flag": "defeated_xanxus"})
+            for child in value.values():
+                guard_core_claim(child)
+        elif isinstance(value, list):
+            for child in value:
+                guard_core_claim(child)
+    for identifier in ("dragon_valley_loc", "ignis_last_breath", "ignis_purified"):
+        guard_core_claim(locations[identifier])
+    for entry in pack["epilogues"]:
+        if entry["id"] in {"fire_seed_removed", "xanxus_core"}:
+            entry["npc_ids_required"] = ["xanxus"]
+        elif entry["id"] in {"warlock", "mina_done", "mina_alone"}:
+            entry["npc_ids_required"] = ["warlock"] + (["mina"] if entry["id"].startswith("mina_") else [])
+    endings = next(entry["endings"] for entry in pack["epilogues"] if entry["id"] == "xanxus_core")
+    upsert(pack["epilogues"], dict(id="defeated_xanxus", endings=deepcopy(endings),
+        requirements={"flag": "defeated_xanxus"}, text=XANXUS_EPILOGUE))
 
 
 # Final prose for visible passages about someone who is gone (design lead, 2026-10-19).
 # Key: the authored passage; value: (npc ids, replacement shown when any of them is gone).
 FINAL_ABSENCE = {
+    "青いローブの銀髪の魔法使いが、杖を背に店番をしている。":
+        (["warlock"], FALLEN["warlock"]),
     "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。長老が人々を励まし、行商人の荷車の周りには小さな人だかりができている。":
         (["elder"], "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。人々を励ます声は、もう聞こえない。"),
     "地図と剣が並ぶ質素な広間。白髪の老騎士――守護団長ヴァルターが、卓上の地図から顔を上げた。":
@@ -309,7 +396,8 @@ def _absence_inventory(pack: dict[str, Any]) -> None:
              "blacksmith": ["ローベルト"], "suspicious_merchant": ["怪しい商人"], "gald": ["ガルド"],
              "elder": ["長老"], "riku": ["リク"], "shopkeeper": ["道具屋の店主"], "lost_goblin": ["迷子のゴブリン"],
              "walter": ["ヴァルター"], "liese": ["リーゼ"], "oaksdawn_priest": ["老司祭", "司祭"],
-             "brigitte": ["ブリギッテ"], "elio": ["エリオ"], "mina": ["ミーナ"]}
+             "brigitte": ["ブリギッテ"], "elio": ["エリオ"], "mina": ["ミーナ"],
+             "warlock": ["ワーロック", "青いローブの魔法使い", "青いローブの銀髪の魔法使い"]}
     entries: dict[str, dict[str, Any]] = {}
 
     def walk(value: Any, path: str, key: str = "") -> None:
@@ -345,7 +433,7 @@ def _absence_inventory(pack: dict[str, Any]) -> None:
     for entry in pack.get("epilogues", []):
         identifiers = [identifier for identifier, aliases in names.items() if any(alias in entry["text"] for alias in aliases)]
         if identifiers:
-            entry["npc_ids_required"] = identifiers
+            entry["npc_ids_required"] = list(dict.fromkeys([*entry.get("npc_ids_required", []), *identifiers]))
     # Gald's rescue must never resurrect him or grant rescue rewards after his death.
     for location in pack["locations"]:
         if location["id"] != "forest_wolves":

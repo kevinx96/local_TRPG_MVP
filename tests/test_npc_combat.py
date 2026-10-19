@@ -47,9 +47,8 @@ class NpcCombatTests(unittest.TestCase):
 
     def test_protected_categories_exact_text_and_no_confirmation(self):
         for location, identifier, expected in (("castle", "king", "treason"), ("castle", "general", "treason"),
-                ("magic_shop", "blue_robed_mage", "warlock"), ("magic_shop", "mina", "mina"),
                 ("ruined_watchtower", "old_soldier_ghost", "old_soldier_ghost"),
-                ("ignis_purified", "ignis_calm", "generic"), ("xanxus_confrontation", "xanxus", "generic")):
+                ("ignis_purified", "ignis_calm", "generic")):
             with self.subTest(identifier=identifier):
                 session = self.session(location)
                 if identifier == "mina":
@@ -390,7 +389,7 @@ class NpcCombatTests(unittest.TestCase):
         self.assertIn("冗談・脅し・仮定・否定の攻撃は attack にしない。攻撃の意思がはっきりしている時だけ attack。", free_actions.PLAN_PROMPT)
         self.assertNotIn("attack(", free_actions.LEGACY_PLAN_PROMPT)
         candidates = [json.loads(line) for line in (ROOT / "eval/candidates/041-npc-attacks.jsonl").read_text(encoding="utf-8").splitlines()]
-        self.assertEqual(len(candidates), 27)
+        self.assertEqual(len(candidates), 30)
         self.assertTrue(all(case["label_status"] == "design_reviewed_041" and case["gold"] for case in candidates))
 
 

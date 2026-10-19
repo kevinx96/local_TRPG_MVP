@@ -27,8 +27,9 @@ class EpilogueTests(unittest.TestCase):
             with self.subTest(pack=filename):
                 entries = _session(filename)["scenario_pack"]["epilogues"]
                 self.assertEqual([{k: v for k, v in entry.items() if k != "npc_ids_required"}
-                                  for entry in entries if entry["id"] != "town_blood"], EPILOGUES)
+                                  for entry in entries if entry["id"] not in {"town_blood", "defeated_xanxus"}], EPILOGUES)
                 self.assertEqual(sum(entry["id"] == "town_blood" for entry in entries), 1)
+                self.assertEqual(sum(entry["id"] == "defeated_xanxus" for entry in entries), 1)
 
     def test_lines_follow_earned_flags_including_flags_set_in_the_final_delta(self):
         lines = _end(_session(), "draco_defeated_with_ignis",

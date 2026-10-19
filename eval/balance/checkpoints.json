@@ -1,6 +1,6 @@
 {
   "scenario": "host/prompt/processed/dragon_rpg.json",
-  "scenario_sha256": "1a2a095ace725741737b81defd35a71b9f2585aa2a919ac9c3356cd38704faf0",
+  "scenario_sha256": "01d0708ade75caf1aba771ad0da3b11a527a07f71fbc190be1b1cd319dc91b89",
   "notes": [
     "TODO(design): 以下路线只是可达的 proposed 装备快照，不能唯一代表正常推进；请审定同伴、支线与装备选择。",
     "从角色模板开始，按列出的动作和战斗奖励推导；先前战斗假定获胜，不估算其药草消耗。每场模拟 HP/MP/SP 回满，不代表连续闯关胜率。",
@@ -214,6 +214,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -638,6 +639,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -1142,6 +1144,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -1570,6 +1573,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -2093,6 +2097,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -2580,6 +2585,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -3147,6 +3153,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -3638,6 +3645,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -4239,6 +4247,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -4831,6 +4840,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -5503,6 +5513,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -6100,6 +6111,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -6783,6 +6795,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -7422,6 +7435,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -8141,6 +8155,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -8785,6 +8800,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -9380,6 +9396,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -9641,6 +9658,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -9855,6 +9873,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -10072,6 +10091,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -10312,6 +10332,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -10626,6 +10647,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -10893,6 +10915,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -11163,6 +11186,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -11442,6 +11466,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -11812,6 +11837,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -12135,6 +12161,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -12461,6 +12488,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -12786,6 +12814,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -13158,6 +13187,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -13483,6 +13513,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -13811,6 +13842,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -14138,6 +14170,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -14537,6 +14570,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -14889,6 +14923,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -15244,6 +15279,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -15598,6 +15634,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -16024,6 +16061,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -16403,6 +16441,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -16785,6 +16824,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -17156,6 +17196,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -17488,6 +17529,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -17773,6 +17815,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -18061,6 +18104,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -18358,6 +18402,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -18722,6 +18767,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -19039,6 +19085,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -19359,6 +19406,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -19694,6 +19742,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -20120,6 +20169,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -20499,6 +20549,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -20881,6 +20932,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -21262,6 +21314,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -21689,6 +21742,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -22069,6 +22123,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -22452,6 +22507,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -22834,6 +22890,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -23291,6 +23348,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -23701,6 +23759,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -24114,6 +24173,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -24526,6 +24586,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -25005,6 +25066,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -25437,6 +25499,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -25872,6 +25935,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -26335,6 +26399,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -26908,6 +26973,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -27423,6 +27489,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -27941,6 +28008,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -52731,6 +52799,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -53037,6 +53106,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -53362,6 +53432,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
@@ -53673,6 +53744,7 @@
               ],
               "reason": "ワーロックの助言"
             },
+            "npc_id": "warlock",
             "title": "青いローブの魔法使い・ワーロック",
             "keywords": []
           },
