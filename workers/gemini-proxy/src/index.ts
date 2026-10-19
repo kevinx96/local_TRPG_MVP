@@ -2,6 +2,7 @@
 // and only this game's request shape and prompts are forwarded, within per-IP and per-day limits.
 import { DurableObject } from "cloudflare:workers";
 import { FINGERPRINTS } from "./fingerprints";
+import { error, forwardRequest, proxyLimit } from "./key-rotation";
 
 const ALLOWED_MODELS = new Set(["gemini-3.1-flash-lite", "gemini-3.5-flash-lite", "gemini-3.6-flash"]);
 const ALLOWED_FIELDS = new Set(["contents", "systemInstruction", "generationConfig", "safetySettings"]);
@@ -24,11 +25,6 @@ export class DailyBudget extends DurableObject<Env> {
 			.one();
 		return { allowed: row.n <= limit, used: row.n };
 	}
-}
-
-// Errors use Gemini's own shape so the game's existing client surfaces the message unchanged.
-function error(status: number, reason: string, message: string): Response {
-	return Response.json({ error: { code: status, status: reason, message } }, { status });
 }
 
 async function tokenMatches(given: string, expected: string): Promise<boolean> {
@@ -82,7 +78,7 @@ export default {
 
 		const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";
 		const { success } = await env.PER_IP_LIMITER.limit({ key: ip });
-		if (!success) return error(429, "RESOURCE_EXHAUSTED", "Too many requests from this address. Please wait a minute.");
+		if (!success) return proxyLimit("Too many requests from this address. Please wait a minute.");
 
 		const declared = Number(request.headers.get("content-length") ?? "0");
 		if (declared > MAX_BODY_BYTES) return error(413, "INVALID_ARGUMENT", "Request body is too large.");
@@ -99,20 +95,6 @@ export default {
 		const kind = promptKind(payload);
 		if (!kind) return error(403, "PERMISSION_DENIED", "This endpoint only serves the game client.");
 
-		const day = new Date().toISOString().slice(0, 10);
-		const budget = await env.BUDGET.getByName(`day-${day}`).consume(Number(env.DAILY_REQUEST_LIMIT));
-		if (!budget.allowed) return error(429, "RESOURCE_EXHAUSTED", "The demo's daily request budget is used up. Please try again tomorrow (UTC).");
-
-		const upstream = await fetch(`${env.UPSTREAM_BASE}/v1beta/models/${model}:generateContent`, {
-			method: "POST",
-			headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-			body: JSON.stringify(payload),
-		});
-		console.log(JSON.stringify({ event: "proxy", kind, model, status: upstream.status, used: budget.used, colo: request.cf?.colo }));
-		// Stream the upstream body straight through instead of buffering it.
-		return new Response(upstream.body, {
-			status: upstream.status,
-			headers: { "content-type": upstream.headers.get("content-type") ?? "application/json" },
-		});
+		return forwardRequest(request, env, model, payload, kind);
 	},
 } satisfies ExportedHandler<Env>;

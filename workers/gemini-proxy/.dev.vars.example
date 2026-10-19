@@ -1,0 +1,4 @@
+# Fake values only; npm run types uses this file without loading local secrets.
+DEMO_TOKEN=fake-demo-token
+GEMINI_API_KEYS=fake-first-key,fake-second-key
+GEMINI_API_KEY=fake-legacy-key

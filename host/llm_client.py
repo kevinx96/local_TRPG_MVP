@@ -9,7 +9,7 @@ import time
 from contextlib import contextmanager
 from contextvars import ContextVar
 from typing import Any, Callable, Iterable, Iterator, Optional, Union
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit
 
 import requests
 
@@ -22,7 +22,12 @@ class LLMKeyError(LLMClientError):
     """A credential failure, including quota exhaustion; retry with the next key."""
 
 
+class LLMWorkerError(LLMClientError):
+    """A proxy rejection that must not retry local credentials or models."""
+
+
 ALL_KEYS_EXHAUSTED = "すべての API キーが上限に達したか、無効です。"
+WORKER_KEYS_EXHAUSTED = "The demo's API keys are all used up. Please try again later."
 _session: ContextVar = ContextVar("llm_session", default=None)
 
 
@@ -41,6 +46,9 @@ def backend_api_keys(backend_name: str, backend: dict[str, Any]) -> list[str]:
         if not isinstance(keys, list) or any(not isinstance(key, str) for key in keys):
             raise LLMClientError("api_keys must be a list of strings.")
         return [key.strip() for key in keys]
+    if _is_worker_backend(backend_name, backend):
+        # A demo token must never be replaced by a personal Gemini environment key.
+        return [str(backend.get("api_key") or "").strip()]
     if _is_gemini_backend(backend_name, backend):
         env_keys = os.environ.get("GEMINI_API_KEYS", "").strip()
         if env_keys:
@@ -72,10 +80,12 @@ def is_key_failure(status: Optional[int], body: str) -> bool:
 class KeyRotation:
     def __init__(self, backend_name: str, backend: dict[str, Any],
                  session: Optional[dict[str, Any]] = None):
-        self.backend = backend
+        self.worker = _is_worker_backend(backend_name, backend)
+        self.backend = ({**backend, "_worker_session": session if session is not None else {}}
+                        if self.worker else backend)
         self.keys = backend_api_keys(backend_name, backend)
         self.failed = (session.setdefault("llm_failed_keys", {}).setdefault(backend_name, [])
-                       if session is not None else [])
+                       if session is not None and not self.worker else [])
         self.last_error: Optional[LLMKeyError] = None
 
     def attempts(self) -> Iterable[tuple[dict[str, Any], dict[str, Any]]]:
@@ -86,8 +96,14 @@ class KeyRotation:
             if any(failed.get("sha256") == marker["sha256"] for failed in self.failed):
                 continue
             yield {**self.backend, "_selected_api_key": key, "_redact_keys": self.keys}, marker
+            if self.worker:
+                return
 
     def reject(self, marker: dict[str, Any], error: LLMKeyError) -> None:
+        if self.worker:
+            # Preserve request-policy quota metadata without rejecting the demo token.
+            error.args = (redact_api_keys(str(error), self.keys),)
+            raise error from None
         if marker not in self.failed:
             self.failed.append(marker)
         # Preserve structured quota metadata used by the evaluation runner.
@@ -201,8 +217,10 @@ def stream_chat_completion(
                 except LLMKeyError as exc:
                     rotation.reject(marker, exc)
             raise rotation.exhausted()
+        except LLMWorkerError:
+            raise
         except LLMClientError as exc:
-            if not any(rotation.attempts()):
+            if (rotation.worker and isinstance(exc, LLMKeyError)) or not any(rotation.attempts()):
                 raise
             exc.args = (redact_api_keys(str(exc), rotation.keys),)
             last_error = exc
@@ -232,8 +250,10 @@ def chat_completion(
         try:
             return rotation.call(lambda selected: _chat_completion_once(
                 config, selected, backend_name, model, messages, index, len(candidates), usage_out))
+        except LLMWorkerError:
+            raise
         except LLMClientError as exc:
-            if not any(rotation.attempts()):
+            if (rotation.worker and isinstance(exc, LLMKeyError)) or not any(rotation.attempts()):
                 raise
             last_error = exc
             if debug_enabled and index < len(candidates):
@@ -453,6 +473,32 @@ def _is_gemini_backend(backend_name: str, backend: dict[str, Any]) -> bool:
     return backend_name.lower() == "gemini" or backend_type == "gemini"
 
 
+def _is_worker_backend(backend_name: str, backend: dict[str, Any]) -> bool:
+    base_url = str(backend.get("base_url") or "")
+    return (_is_gemini_backend(backend_name, backend) and bool(base_url)
+            and urlsplit(base_url).hostname != "generativelanguage.googleapis.com")
+
+
+def _worker_response(response: requests.Response, backend: dict[str, Any], backend_name: str) -> None:
+    session = backend.get("_worker_session", {})
+    slot_text = response.headers.get("x-trpg-key-slot", "")
+    slot = int(slot_text) if re.fullmatch(r"[0-9]{1,16}", slot_text) else None
+    if slot is not None:
+        session.setdefault("llm_worker_key_slot", {})[backend_name] = slot
+    if not is_key_failure(response.status_code, response.text):
+        return
+    if (response.status_code == 429 and response.headers.get("x-trpg-proxy-limit") != "1"
+            and slot is not None):
+        # The exhausted slot equals the key count; sending it back would reset to 0.
+        session.setdefault("llm_worker_keys_exhausted", {})[backend_name] = True
+    try:
+        data = response.json()
+        message = str(data["error"]["message"])
+    except (ValueError, KeyError, TypeError):
+        message = f"LLM request failed (HTTP {response.status_code})."
+    raise LLMWorkerError(redact_api_keys(message, backend.get("_redact_keys", [])))
+
+
 def _gemini_chat_completion_once(
     config: dict[str, Any],
     backend: dict[str, Any],
@@ -472,6 +518,14 @@ def _gemini_chat_completion_once(
     timeout = min(int(config.get("request_timeout_seconds", 15)), int(config.get("gameplay_timeout_seconds", 15)))
     url = f"{base_url}/models/{quote(model, safe='')}:generateContent"
     payload = _gemini_payload(messages, config)
+    headers = {"Content-Type": "application/json", "x-goog-api-key": api_key}
+    worker = _is_worker_backend(backend_name, backend)
+    if worker:
+        session = backend.get("_worker_session", {})
+        if session.get("llm_worker_keys_exhausted", {}).get(backend_name):
+            raise LLMWorkerError(WORKER_KEYS_EXHAUSTED)
+        slot = session.get("llm_worker_key_slot", {}).get(backend_name, 0)
+        headers["x-trpg-key-start"] = str(slot if type(slot) is int and slot >= 0 else 0)
 
     if debug_enabled:
         total_chars = sum(len(message.get("content", "")) for message in messages)
@@ -485,7 +539,9 @@ def _gemini_chat_completion_once(
 
     try:
         start_time = time.time()
-        response = _post(config, url, headers={"Content-Type": "application/json", "x-goog-api-key": api_key}, json=payload, timeout=timeout)
+        response = _post(config, url, headers=headers, json=payload, timeout=timeout)
+        if worker:
+            _worker_response(response, backend, backend_name)
         ttfb_ms = (time.time() - start_time) * 1000
         if debug_enabled:
             _backend_debug_log(backend,
@@ -494,7 +550,8 @@ def _gemini_chat_completion_once(
                 f"ttfb_ms={ttfb_ms:.0f}"
             )
         if response.status_code >= 400:
-            _check_key_failure(response)
+            if not worker:
+                _check_key_failure(response)
             preview = redact_api_keys(response.text, backend.get("_redact_keys", []))[:1000]
             if debug_enabled:
                 _backend_debug_log(backend, f"LLM HTTP error body={preview!r}")
