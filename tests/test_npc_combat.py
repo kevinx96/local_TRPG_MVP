@@ -258,6 +258,19 @@ class NpcCombatTests(unittest.TestCase):
             self.assertFalse(any(a.get("npc_id") == "gald" for a in current_actions_for_session(session)))
         self.assertIn(migration.EPILOGUE, state._epilogue_lines(session, {"ending": "ignis_defeated"}))
 
+    def test_plan_context_aliases_and_last_result_from_this_place_only(self):
+        session = self.session("inn")
+        session["last_free_action"] = {"location_id": "magic_shop", "operation": "attack", "outcome": "blocked", "text": "x"}
+        context = json.loads(free_actions.build_plan_messages(session, "Ianを攻撃する")[1]["content"])
+        self.assertEqual(context["last_result"], {})
+        self.assertEqual(next(n for n in context["npcs"] if n["id"] == "ian")["aliases"], ["Ian"])
+        session["last_free_action"]["location_id"] = "inn"
+        context = json.loads(free_actions.build_plan_messages(session, "Ianを攻撃する")[1]["content"])
+        self.assertEqual(context["last_result"]["outcome"], "blocked")
+        with patch.object(free_actions, "LEGACY_PLAN", True):
+            legacy = json.loads(free_actions.build_plan_messages(session, "Ianを攻撃する")[1]["content"])
+        self.assertNotIn("aliases", json.dumps(legacy["npcs"]))
+
     def test_attack_plan_drops_restated_weapon(self):
         raw = json.dumps(dict(kind="interact", action_id="", operation="attack", target_id="general", item_id="iron_sword",
                               advance=False, approach="剣で斬りかかる", reply=""), ensure_ascii=False)
@@ -377,7 +390,7 @@ class NpcCombatTests(unittest.TestCase):
         self.assertIn("冗談・脅し・仮定・否定の攻撃は attack にしない。攻撃の意思がはっきりしている時だけ attack。", free_actions.PLAN_PROMPT)
         self.assertNotIn("attack(", free_actions.LEGACY_PLAN_PROMPT)
         candidates = [json.loads(line) for line in (ROOT / "eval/candidates/041-npc-attacks.jsonl").read_text(encoding="utf-8").splitlines()]
-        self.assertEqual(len(candidates), 24)
+        self.assertEqual(len(candidates), 27)
         self.assertTrue(all(case["label_status"] == "design_reviewed_041" and case["gold"] for case in candidates))
 
 

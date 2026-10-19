@@ -68,7 +68,9 @@ PLAN_OFFTOPIC_RULE = "ゲームと無関係な依頼（プログラミング、�
 LEGACY_PLAN_PROMPT = PLAN_PROMPT_PRE_OFFTOPIC + "\n" + PLAN_OFFTOPIC_RULE
 PLAN_PROMPT = LEGACY_PLAN_PROMPT.replace(
     "use_item(所持品で自分を回復)。", "use_item(所持品で自分を回復)、attack(人物への攻撃。target_id は npcs の ID)。"
-) + "\n冗談・脅し・仮定・否定の攻撃は attack にしない。攻撃の意思がはっきりしている時だけ attack。"
+) + ("\n冗談・脅し・仮定・否定の攻撃は attack にしない。攻撃の意思がはっきりしている時だけ attack。"
+     # 2026-10-19 playtest: a plain 「サラを攻撃する」 was deflected as off-topic; the engine never lets a child die.
+     "相手が子どもや弱い者でも、攻撃の意思がはっきりしていれば attack（結果はエンジンが決める）。")
 
 
 class InvalidPlan(ValueError):
@@ -196,6 +198,18 @@ def build_plan_messages(session: dict[str, Any], player_text: str) -> list[dict[
         and not gone(session, npc["id"])
         and state._session_requirement_passes(location.get("npc_requirements", {}).get(npc.get("id")), session)
     ]
+    last = session.get("last_free_action", {})
+    if not LEGACY_PLAN:
+        # Names the player sees through the ruby display (e.g. "Ian") must still point at the right person.
+        ruby = (session.get("scenario_pack", {}).get("meta") or {}).get("ruby_names", {})
+        for npc in npcs:
+            aliases = [english for kana, english in ruby.items() if kana in str(npc.get("name") or "")]
+            if aliases:
+                npc["aliases"] = aliases
+        # A result from another place says nothing about this one: a blocked attack in the magic shop
+        # made the model refuse attacks at the inn (2026-10-19 playtest).
+        if last.get("location_id") != current_location_id(session):
+            last = {}
     obstacles = []
     for obstacle in _obstacles(session):
         obstacles.append({key: deepcopy(obstacle[key]) for key in (
@@ -220,11 +234,7 @@ def build_plan_messages(session: dict[str, Any], player_text: str) -> list[dict[
         "npcs": npcs,
         "inventory": inventory,
         "changes_here": location_changes(session),
-        "last_result": {
-            key: deepcopy(session.get("last_free_action", {}).get(key))
-            for key in ("operation", "target_id", "outcome", "text")
-            if key in session.get("last_free_action", {})
-        },
+        "last_result": {key: deepcopy(last.get(key)) for key in ("operation", "target_id", "outcome", "text") if key in last},
         "recent_dialogue": [
             {"role": m.get("role"), "text": str(m.get("text") or "")[:200]}
             for m in session.get("messages", [])[-4:]
