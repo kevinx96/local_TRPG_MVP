@@ -1,7 +1,10 @@
 {
   "backends": {
     "gemini": {
-      "api_key": "ここに Gemini API キーを入力"
+      "api_keys": [
+        "ここに 1 つ目の Gemini API キーを入力",
+        "ここに 2 つ目の Gemini API キーを入力（なければ削除）"
+      ]
     }
   }
 }
