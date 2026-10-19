@@ -15,6 +15,7 @@ const state = {
   scenarioPath: "host/prompt/processed/dragon_rpg_hybrid.json",
   lastDiceLogLength: 0,
   lastDiceSignature: "",
+  diceBannerTurn: 0,
   diceAnimationTimer: null,
   pendingCheck: null,
   dicePresentation: null,
@@ -549,6 +550,7 @@ async function submitChoice(choiceText, actionId = "", check = null) {
     portrait: state.choicePortrait, revealed: state.choicesRevealed,
   };
   addMessage("user", "プレイヤー", choiceText);
+  hideDiceBanner();
   hideChoices();
   clearPendingChoices();
   setBusy(true);
@@ -671,7 +673,8 @@ function renderSession(session) {
   renderEnding(session.game_over);
 
   /* Dice log */
-  renderLatestDiceResult(session.dice_log || []);
+  renderLatestDiceResult(session.dice_log || [], (session.messages || []).length);
+  if (session.last_turn_narrated === false) hideDiceBanner();
   renderList(
     els.diceLog,
     (session.dice_log || []).slice(-5).reverse().map(
@@ -1264,10 +1267,11 @@ function hideDiceBanner() {
   if (els.diceBanner) els.diceBanner.style.display = "none";
 }
 
-function renderLatestDiceResult(diceLog) {
+function renderLatestDiceResult(diceLog, turnKey = 0) {
   if (!Array.isArray(diceLog) || !diceLog.length) {
     state.lastDiceLogLength = 0;
     state.lastDiceSignature = "";
+    hideDiceBanner();
     return;
   }
   const latest = diceLog[diceLog.length - 1];
@@ -1275,7 +1279,12 @@ function renderLatestDiceResult(diceLog) {
   const hasNewRoll = diceLog.length !== state.lastDiceLogLength || signature !== state.lastDiceSignature;
   state.lastDiceLogLength = diceLog.length;
   state.lastDiceSignature = signature;
-  if (!hasNewRoll) return;
+  // The banner belongs to the turn that rolled; a later turn without a new roll clears it.
+  if (!hasNewRoll) {
+    if (turnKey !== state.diceBannerTurn) hideDiceBanner();
+    return;
+  }
+  state.diceBannerTurn = turnKey;
   if (isCheckRoll(latest)) {
     showDiceResult(latest);
   }
@@ -1581,6 +1590,7 @@ function revealPendingChoices() {
   });
   if (state.turnBusy || state.pendingCheck || state.choicesRevealed || !state.pendingChoices.length) return;
   state.choicesRevealed = true;
+  hideDiceBanner();
   renderChoices(state.pendingChoices);
 }
 
