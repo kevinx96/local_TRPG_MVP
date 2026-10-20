@@ -8,6 +8,7 @@ __pycache__/
 eval/runs/
 eval/cache/
 .codex-runs/
+.agy-runs/
 .venv/
 venv/
 
