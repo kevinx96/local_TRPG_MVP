@@ -40,6 +40,8 @@ def session(mode="normal", category="trash", *, start=True):
 def apply(value, actor, identifier, source=None, **spec):
     return status_effects.apply(value, actor, {"id": identifier, **spec}, source or value["character"], random.Random(51))
 
+from scripts.scenario.spring_postgame import apply as apply_spring_postgame
+
 
 class EvadeTests(unittest.TestCase):
     def test_fixed_dex_and_boundaries(self):
@@ -520,7 +522,9 @@ class MigrationAndGoldenTests(unittest.TestCase):
             original.pop("status_defs")
             original["difficulty_overlays"] = {"normal": []}
             original["meta"]["content_revision"] = "2026-10-20-difficulty-047"
-            self.assertEqual(migrate(original), pack)
+            migrated = migrate(original)
+            apply_spring_postgame(migrated)
+            self.assertEqual(migrated, pack)
             self.assertEqual(difficulty.numeric_snapshot(original), difficulty.numeric_snapshot(pack))
             try:
                 import jsonschema

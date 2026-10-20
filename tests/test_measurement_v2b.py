@@ -7,6 +7,7 @@ from copy import deepcopy
 from dataclasses import replace
 
 from host import combat, state
+from spring_legacy_balance import legacy_spring_balance_pack
 from scripts.balance import archetypes, checkpoints, metrics_v2, probes_v2, route_v2, sim
 from scripts.playtest import save_telemetry
 
@@ -147,6 +148,7 @@ class MeasurementV2IntegrationTests(unittest.TestCase):
 
     def test_hp70_strict_free_rest_is_not_limited_to_three(self):
         run = route_v2.MeasurementRun(self.pack, 'hero', 1, archetypes.P0B)
+        run.session['scenario_pack'] = legacy_spring_balance_pack(run.session['scenario_pack'])
         run.session['world_state'] = {'scene_id': 'dark_forest', 'location_id': 'elf_spring'}
         run.session['flags']['defeated_slime_king'] = True
         actor = run.session['character']; actor['hp'] = actor['max_hp'] * .7

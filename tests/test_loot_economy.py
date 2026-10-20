@@ -11,6 +11,8 @@ from scripts.balance import checkpoints
 from scripts.balance import loot_economy as budget
 from scripts.scenario.loot_economy import BOSSES, LOOT, PACKS, REQUESTS, WARNING, apply
 
+from scripts.scenario.spring_postgame import apply as apply_spring_postgame
+
 
 class LootEconomyTests(unittest.TestCase):
     @classmethod
@@ -219,6 +221,7 @@ class LootEconomyTests(unittest.TestCase):
         for pack in self.packs:
             updated = deepcopy(pack)
             apply(updated)
+            apply_spring_postgame(updated)
             self.assertEqual(updated, pack)
         for key, identifiers in (("items", set(LOOT)), ("quests", {f"side_{r['id']}" for r in REQUESTS}),
                                  ("shops", {"oaksdawn_workshop_shop"})):

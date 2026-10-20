@@ -47,7 +47,7 @@ class ScenarioInvariantTests(unittest.TestCase):
             ("goblin_fort_third_gate", "admit_no_password", "goblin_fort_third_guards", "危険（戦闘）", "危険（戦闘）"),
             ("castle_town", "go_inn", "inn", "判定不要", "判定不要"),
             ("festival_town", "go_inn", "inn", "不明", "判定不要"),
-            ("elf_spring", "rest_at_elf_spring", "slime_ambush_one", "休息中に襲われる恐れあり", "休息中に襲われる恐れあり"),
+            ("elf_spring", "rest_at_elf_spring", "slime_ambush_one", "危険（戦闘）", "危険（戦闘）"),
         ]
         for filename in PACKS:
             pack = state.load_scenario_pack(ROOT / "host/prompt/processed" / filename)

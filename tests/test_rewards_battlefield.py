@@ -11,6 +11,8 @@ from host.scenario_context import select_hybrid_prepared_turn
 from scripts.balance.checkpoints import DEFAULT_SCENARIO, fresh_session
 from scripts.scenario.rewards_battlefield import BOOSTS, DROPS, ELITE_REGIONS, FRUIT_AMOUNT, STEALS, ZEBOK_TEXTS, upgrade
 
+from scripts.scenario.spring_postgame import apply as apply_spring_postgame
+
 
 class RewardsBattlefieldTests(unittest.TestCase):
     @classmethod
@@ -283,6 +285,7 @@ class RewardsBattlefieldTests(unittest.TestCase):
             pack = state.load_scenario_pack(DEFAULT_SCENARIO.with_name(filename))
             before = deepcopy(pack)
             apply(pack)
+            apply_spring_postgame(pack)
             self.assertEqual(pack, before)
             for character in ("hero", "cleric", "mage", "thief"):
                 for empty in (False, True):
@@ -317,6 +320,7 @@ class RewardsBattlefieldTests(unittest.TestCase):
             pack = json.loads(DEFAULT_SCENARIO.with_name(filename).read_text(encoding="utf-8"))
             upgraded = deepcopy(pack)
             upgrade(upgraded)
+            apply_spring_postgame(upgraded)
             self.assertEqual(upgraded, pack)
             pack = state.load_scenario_pack(DEFAULT_SCENARIO.with_name(filename))
             session = fresh_session(pack, "hero")

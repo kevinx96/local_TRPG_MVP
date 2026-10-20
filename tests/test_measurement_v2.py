@@ -11,13 +11,14 @@ from dataclasses import replace
 from unittest.mock import patch
 
 from host import combat, state
+from spring_legacy_balance import legacy_spring_balance_pack
 from scripts.balance import archetypes, budget, checkpoints, class_aware, report, reproduction_v2, route, route_v2, sim
 
 
 class MeasurementV2Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
+        cls.pack = legacy_spring_balance_pack(state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO))
         cls.cp = json.loads(checkpoints.DEFAULT_CHECKPOINTS.read_text(encoding="utf-8"))
         cls.human = reproduction_v2.berserker_checkpoints(cls.pack)
 

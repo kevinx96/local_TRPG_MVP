@@ -1,10 +1,10 @@
 {
   "dragon_rpg.json": {
-    "content_revision": "2026-10-20-mechanics-051",
+    "content_revision": "2026-10-21-guidance-048",
     "overlay_sha256": "1a6302d04339f820e1c4b176bf03a83c553efaf7d627ac5193cc6c0872ebd9ad"
   },
   "dragon_rpg_hybrid.json": {
-    "content_revision": "2026-10-20-mechanics-051",
+    "content_revision": "2026-10-21-guidance-048",
     "overlay_sha256": "1a6302d04339f820e1c4b176bf03a83c553efaf7d627ac5193cc6c0872ebd9ad"
   }
 }

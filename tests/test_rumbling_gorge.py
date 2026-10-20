@@ -13,6 +13,8 @@ from scripts.balance.checkpoints import DEFAULT_SCENARIO, fresh_session
 from scripts.scenario.rumbling_gorge import BATTLES, CLUES, DESCRIPTIONS, ENEMIES, apply
 from tests.test_map_layout import edge_node_collisions
 
+from scripts.scenario.spring_postgame import apply as apply_spring_postgame
+
 
 class RumblingGorgeTests(unittest.TestCase):
     @classmethod
@@ -294,6 +296,7 @@ class RumblingGorgeTests(unittest.TestCase):
             pack = json.loads(DEFAULT_SCENARIO.with_name(filename).read_text(encoding="utf-8"))
             upgraded = deepcopy(pack)
             apply(upgraded)
+            apply_spring_postgame(upgraded)
             self.assertEqual(upgraded, pack)
             for loc in pack["locations"]:
                 if loc["id"] in DESCRIPTIONS:

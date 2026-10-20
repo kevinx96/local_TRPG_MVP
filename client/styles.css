@@ -1096,6 +1096,28 @@ button, select, textarea, input { font: inherit; }
 .choice-card.unknown-choice { border-style: dashed; }
 .choice-card.unknown-choice:focus-visible { outline-style: dashed; }
 .choice-card.unknown-choice .choice-text { color: var(--muted); }
+.choice-card.guidance-choice {
+  --guidance-color: var(--gold);
+  --guidance-bg: var(--gold-dim);
+  --guidance-hover: var(--panel-3);
+  grid-template-columns: 38px minmax(0, 1fr);
+  border-color: var(--guidance-color);
+  background: var(--guidance-bg);
+  box-shadow: inset 4px 0 0 var(--guidance-color);
+}
+.choice-card.guidance-choice .choice-text { color: var(--guidance-color); }
+.choice-card.guidance-choice .choice-number { width: auto; min-width: 28px; display: flex; justify-content: center; gap: 3px; background: var(--gold-dim); color: var(--guidance-color); }
+.guidance-marker { font-size: 13px; }
+.choice-card.guidance-choice:hover { background: var(--guidance-hover); box-shadow: inset 4px 0 0 var(--guidance-color), 0 0 0 1px var(--guidance-color); }
+.choice-card.guidance-choice:focus-visible { outline: 3px solid var(--guidance-color); outline-offset: -3px; }
+.choice-card.guidance-choice.disabled-choice,
+.choice-card.guidance-choice.disabled-choice:hover { background: var(--panel-2); border-color: var(--line); box-shadow: none; }
+.choice-card.guidance-choice.disabled-choice .choice-text,
+.choice-card.guidance-choice.disabled-choice .choice-number { color: var(--muted); }
+.choice-card.guidance-choice.disabled-choice:focus-visible { outline-color: var(--gold); }
+@media (prefers-color-scheme: light) {
+  .choice-card.guidance-choice { --guidance-color: var(--bg); --guidance-bg: var(--gold); --guidance-hover: var(--gold); }
+}
 @media (hover: none) {
   .choice-card { padding: 14px 16px; }
   .choice-body { display: block; }

@@ -1403,12 +1403,22 @@ function renderChoices(choices) {
       card.className = `choice-card ${isCombatChoice(text, preview, risk) ? "combat-choice" : ""} ${enabled ? "" : "disabled-choice"}`;
     }
     card.classList.toggle("unknown-choice", unknown);
+    const guidance = choice.guidance === true && !unknown;
+    card.classList.toggle("guidance-choice", guidance);
 
     const riskClass = classifyRisk(risk);
 
     const numberDiv = document.createElement("div");
     numberDiv.className = "choice-number";
     numberDiv.textContent = String(i + 1);
+    if (guidance) {
+      const marker = document.createElement("span");
+      marker.className = "guidance-marker";
+      marker.textContent = "★";
+      marker.setAttribute("role", "img");
+      marker.setAttribute("aria-label", "メイン");
+      numberDiv.prepend(marker);
+    }
 
     const textDiv = document.createElement("div");
     textDiv.className = "choice-text";

@@ -741,7 +741,9 @@ def player_choices_for_session(choices: list[dict[str, Any]], session: dict[str,
                            "disabled_reason": "まだ知らない何かが必要なようだ。"})
             continue
         choice = {key: deepcopy(value) for key, value in source.items()
-                  if key in {"id", "action_id", "text", "preview", "risk", "enabled", "disabled_reason", "children", "open_shop", "portrait_image"}}
+                  if key in {"id", "action_id", "text", "preview", "risk", "enabled", "disabled_reason", "children", "open_shop", "portrait_image", "guidance"}}
+        if not (session.get("flags", {}).get("defeated_ignis") or session.get("flags", {}).get("ignis_purified")):
+            choice.pop("guidance", None)
         if isinstance(source.get("roll"), dict) and choice.get("text") != "？？？":
             expression, dc = action_dice_settings(source, session=session)
             if 0 < dc < 100:

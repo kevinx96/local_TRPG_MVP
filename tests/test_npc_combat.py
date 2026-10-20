@@ -12,6 +12,7 @@ from host import area_retry, combat, free_actions, npc_combat, shops, state
 from host.scenario_context import current_actions_for_session, fallback_choices_for_session, select_scenario_context
 from scripts.balance.checkpoints import fresh_session
 from scripts.scenario import npc_combat as migration
+from scripts.scenario.spring_postgame import apply as apply_spring_postgame
 
 app = importlib.import_module("host.app")
 ROOT = Path(__file__).resolve().parents[1]
@@ -221,6 +222,7 @@ class NpcCombatTests(unittest.TestCase):
             pack = json.loads((ROOT / "host/prompt/processed" / name).read_text(encoding="utf-8"))
             before = deepcopy(pack)
             migration.apply(pack)
+            apply_spring_postgame(pack)
             self.assertEqual(before, pack)
             results.append(pack)
         self.assertEqual(results[0]["npc_combat"], results[1]["npc_combat"])

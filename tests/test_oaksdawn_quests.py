@@ -15,6 +15,8 @@ from scripts.balance.checkpoints import DEFAULT_SCENARIO, fresh_session
 from scripts.balance import dawn
 from scripts.scenario.oaksdawn_quests import BELL_REQUEST, BELL_TEXT, FOG_TEXT, LIESE_THANKS, WEAPONS, apply
 
+from scripts.scenario.spring_postgame import apply as apply_spring_postgame
+
 
 class OaksdawnQuestsTests(unittest.TestCase):
     @classmethod
@@ -263,6 +265,7 @@ class OaksdawnQuestsTests(unittest.TestCase):
             pack = json.loads(DEFAULT_SCENARIO.with_name(filename).read_text(encoding="utf-8"))
             original = deepcopy(pack)
             apply(pack)
+            apply_spring_postgame(pack)
             self.assertEqual(pack, original)
             reference = json.loads(DEFAULT_SCENARIO.read_text(encoding="utf-8"))
             self.assertEqual({i["id"]: i["icon"] for i in pack["items"]},

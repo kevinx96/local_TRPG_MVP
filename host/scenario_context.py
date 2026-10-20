@@ -400,12 +400,17 @@ def current_action_choices(session: dict[str, Any]) -> list[dict[str, Any]]:
     flags = session.get("flags") if isinstance(session.get("flags"), dict) else {}
     character = session.get("character", {}) if isinstance(session.get("character"), dict) else {}
     character_id = str(character.get("id") or character.get("character_id") or "")
-    return _visible_action_choices(choices, flags, character_id)
+    return _visible_action_choices(choices, flags, character_id, session)
 
 
-def _visible_action_choices(choices: list[dict[str, Any]], flags: dict[str, Any], character_id: str = "") -> list[dict[str, Any]]:
+def _visible_action_choices(choices: list[dict[str, Any]], flags: dict[str, Any], character_id: str = "",
+                            session: Optional[dict[str, Any]] = None) -> list[dict[str, Any]]:
+    from .state import _session_requirement_passes
+
     visible: list[dict[str, Any]] = []
     for choice in choices:
+        if session is not None and not _session_requirement_passes(choice.get("visible_requirements"), session):
+            continue
         visible_flag = str(choice.get("visible_after") or "")
         if visible_flag and not flags.get(visible_flag):
             continue
@@ -419,8 +424,10 @@ def _visible_action_choices(choices: list[dict[str, Any]], flags: dict[str, Any]
         if hidden_character and hidden_character == character_id:
             continue
         item = deepcopy(choice)
+        if not (flags.get("defeated_ignis") or flags.get("ignis_purified")):
+            item.pop("guidance", None)
         if isinstance(item.get("children"), list):
-            item["children"] = _visible_action_choices(item["children"], flags, character_id)
+            item["children"] = _visible_action_choices(item["children"], flags, character_id, session)
         visible.append(item)
     return visible
 
@@ -552,7 +559,7 @@ def normalize_choices(raw: Any) -> list[dict[str, Any]]:
                 }
                 for key in (
                     "id", "action_id", "intent_keywords", "roll", "effects",
-                    "success_effects", "failure_effects", "once", "disabled_after", "visible_after", "hidden_after",
+                    "success_effects", "failure_effects", "once", "disabled_after", "visible_after", "hidden_after", "visible_requirements",
                     "prepared_turn_id", "outcome", "secret",
                 ):
                     if key in item:

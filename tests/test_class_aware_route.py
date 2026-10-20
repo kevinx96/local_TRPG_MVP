@@ -6,13 +6,14 @@ import unittest
 from unittest.mock import patch
 
 from host import combat, state
+from spring_legacy_balance import legacy_spring_balance_pack
 from scripts.balance import checkpoints, class_aware, route
 
 
 class ClassAwareRouteTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
+        cls.pack = legacy_spring_balance_pack(state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO))
         cls.cp = json.loads(checkpoints.DEFAULT_CHECKPOINTS.read_text(encoding="utf-8"))
 
     def session(self, location: str, character: str = "thief", **attributes: int):

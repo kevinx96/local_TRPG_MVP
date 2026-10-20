@@ -50,11 +50,14 @@ class Chapter34RestTests(unittest.TestCase):
                     session["character"]["hp"] = 1
                 return {"encounter": location, "status": "defeat" if defeated else "victory", "continue": not defeated}
             with patch.object(checkpoints, "fresh_session", return_value=session), patch.object(route, "fight", side_effect=fight):
-                result = route.trial(self.pack, [dict(location="elf_spring", step="continue_from_elf_spring")],
-                                     "forest_wolves", "hero", 1, rest_policy="hp70")
+                result = route.trial(self.pack, [dict(location=location, step=step) for location, step in (
+                    ("elf_spring", "rest_at_elf_spring"), ("slime_ambush_one", "@victory"),
+                    ("slime_ambush_two", "@victory"), ("slime_king_battle", "@victory"))],
+                                     "forest_wolves", "hero", 1)
             self.assertEqual(result["completed"], not defeated)
             self.assertEqual(result["paid_rests"], 0)
-            self.assertEqual(len(result["rests"]), 1 if defeated else 2)
+            self.assertEqual(result["rests"], [])  # Explicit route rest, not automatic rest-policy accounting.
+            self.assertTrue(session["flags"]["rested_at_elf_spring"])
             self.assertEqual([b["encounter"] for b in result["battles"]],
                              ["slime_ambush_one"] if defeated else
                              ["slime_ambush_one", "slime_ambush_two", "slime_king_battle", "forest_wolves"])

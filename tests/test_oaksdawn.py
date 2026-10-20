@@ -12,6 +12,8 @@ from scripts.balance.checkpoints import DEFAULT_SCENARIO, fresh_session
 from scripts.scenario.oaksdawn import CLUES, DESCRIPTIONS, UNDEAD, apply
 from tests.test_map_layout import edge_node_collisions
 
+from scripts.scenario.spring_postgame import apply as apply_spring_postgame
+
 
 class OaksdawnTests(unittest.TestCase):
     @classmethod
@@ -200,6 +202,7 @@ class OaksdawnTests(unittest.TestCase):
             pack = json.loads(DEFAULT_SCENARIO.with_name(filename).read_text(encoding="utf-8"))
             upgraded = deepcopy(pack)
             apply(upgraded)
+            apply_spring_postgame(upgraded)
             self.assertEqual(upgraded, pack)
             for enemy in pack["enemies"]:
                 if enemy["id"] in UNDEAD:

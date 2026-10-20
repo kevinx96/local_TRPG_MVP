@@ -8,6 +8,8 @@ from host import state
 from scripts.balance import checkpoints
 from scripts.scenario.checks_e import CHECKS, LINKS, OBSERVES, PACKS, apply
 
+from scripts.scenario.spring_postgame import apply as apply_spring_postgame
+
 
 class ChecksETests(unittest.TestCase):
     @classmethod
@@ -21,6 +23,7 @@ class ChecksETests(unittest.TestCase):
         for pack in self.packs:
             again = deepcopy(pack)
             apply(again)
+            apply_spring_postgame(again)
             self.assertEqual(again, pack)
         ids = {entry[0] for entry in CHECKS}
         first, second = (self.actions(pack) for pack in self.packs)

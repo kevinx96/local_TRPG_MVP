@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-20-mechanics-051",
+    "content_revision": "2026-10-21-guidance-048",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -341,17 +341,47 @@
         {
           "text": "国王に邪竜の詳しい話を聞く",
           "preview": "旅の目的と手がかりを確認できます",
-          "risk": "判定不要"
+          "risk": "判定不要",
+          "visible_requirements": {
+            "all": [
+              {
+                "not_flag": "defeated_ignis"
+              },
+              {
+                "not_flag": "ignis_purified"
+              }
+            ]
+          }
         },
         {
           "text": "将軍ドラコに助言を求める",
           "preview": "実用的な戦術情報が得られるかもしれません",
-          "risk": "筋力または耐久が10以上で1d20判定（DC15）"
+          "risk": "筋力または耐久が10以上で1d20判定（DC15）",
+          "visible_requirements": {
+            "all": [
+              {
+                "not_flag": "defeated_ignis"
+              },
+              {
+                "not_flag": "ignis_purified"
+              }
+            ]
+          }
         },
         {
           "text": "侍従から旅の支給品を受け取る",
           "preview": "教会から届いた聖水を受け取ります",
-          "risk": "判定不要"
+          "risk": "判定不要",
+          "visible_requirements": {
+            "all": [
+              {
+                "not_flag": "defeated_ignis"
+              },
+              {
+                "not_flag": "ignis_purified"
+              }
+            ]
+          }
         },
         {
           "text": "城下町へ出る",
@@ -382,7 +412,17 @@
           ],
           "portrait_image": "/static/images/npc_king.png",
           "result_text": "「イグニスは炎を操る恐ろしい竜だ」と国王は杖を強く握りしめる。「だが、竜の谷の古文書によれば、奴は冷気を帯びた攻撃を極端に嫌うそうだ。氷の魔力を持つ武器か、その性質を突く工夫が必要になるだろう」。その言葉には、かつて多くの騎士たちが挑み、そして散った無念が滲んでいる。",
-          "risk_source": "action"
+          "risk_source": "action",
+          "visible_requirements": {
+            "all": [
+              {
+                "not_flag": "defeated_ignis"
+              },
+              {
+                "not_flag": "ignis_purified"
+              }
+            ]
+          }
         },
         {
           "id": "ask_general_advice",
@@ -427,7 +467,17 @@
               "text": "話し終えた将軍の吐息が、なぜか白く凍っていた。"
             }
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "visible_requirements": {
+            "all": [
+              {
+                "not_flag": "defeated_ignis"
+              },
+              {
+                "not_flag": "ignis_purified"
+              }
+            ]
+          }
         },
         {
           "id": "check_supplies",
@@ -457,7 +507,17 @@
             }
           ],
           "result_text": "侍従が小箱を差し出した。「教会より、邪竜討伐に向かわれる方へ」中には清められた聖水が二本収められている。",
-          "risk_source": "action"
+          "risk_source": "action",
+          "visible_requirements": {
+            "all": [
+              {
+                "not_flag": "defeated_ignis"
+              },
+              {
+                "not_flag": "ignis_purified"
+              }
+            ]
+          }
         },
         {
           "id": "go_castle_town",
@@ -472,7 +532,8 @@
               "current_location": "castle_town"
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "ask_king_ten_years",
@@ -501,6 +562,44 @@
           "risk_source": "action",
           "once": "ask_king_ten_years_done",
           "npc_id": "king"
+        },
+        {
+          "id": "postgame_chat_king",
+          "text": "【仮】国王と討伐後の話をする。",
+          "npc_id": "king",
+          "once": "castle:postgame_chat_king",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "risk_source": "action"
+        },
+        {
+          "id": "postgame_chat_general",
+          "text": "【仮】将軍ドラコと討伐後の話をする。",
+          "npc_id": "general",
+          "once": "castle:postgame_chat_general",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_dragon_rpg.png",
@@ -705,10 +804,35 @@
           ],
           "effects": [
             {
-              "current_location": "castle"
+              "branch": {
+                "requirements": {
+                  "any": [
+                    {
+                      "flag": "defeated_ignis"
+                    },
+                    {
+                      "flag": "ignis_purified"
+                    }
+                  ]
+                },
+                "then": [
+                  {
+                    "set_flag": "returned_to_capital"
+                  },
+                  {
+                    "current_location": "festival_town"
+                  }
+                ],
+                "else": [
+                  {
+                    "current_location": "castle"
+                  }
+                ]
+              }
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "go_dark_forest",
@@ -802,6 +926,26 @@
           "once": "ask_gald_extra_done",
           "npc_id": "gald",
           "visible_after": "saved_gald"
+        },
+        {
+          "id": "postgame_chat_gald",
+          "text": "【仮】行商人ガルドと討伐後の話をする。",
+          "npc_id": "gald",
+          "once": "castle_town:postgame_chat_gald",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "visible_after": "saved_gald",
+          "risk_source": "action"
         }
       ],
       "hybrid": {
@@ -975,7 +1119,17 @@
         {
           "text": "邪竜を討つ方法を聞く",
           "preview": "鍛冶師の知恵を借りる",
-          "risk": "判定不要"
+          "risk": "判定不要",
+          "visible_requirements": {
+            "all": [
+              {
+                "not_flag": "defeated_ignis"
+              },
+              {
+                "not_flag": "ignis_purified"
+              }
+            ]
+          }
         },
         {
           "text": "鍛冶師に剣を見せる",
@@ -1097,7 +1251,17 @@
           "portrait_image": "/static/images/npc_blacksmith.png",
           "result_text": "鍛冶師ローベルトは手を止め、低い声で語り始めた。「通常の物理攻撃や炎は、あの邪竜イグニスには一切通用せん。だが、『氷の護符』の力を武器に纏わせれば、自身の攻撃を氷属性に変換できる。それなら奴にも傷を負わせられるはずだ」",
           "risk_source": "action",
-          "npc_id": "blacksmith"
+          "npc_id": "blacksmith",
+          "visible_requirements": {
+            "all": [
+              {
+                "not_flag": "defeated_ignis"
+              },
+              {
+                "not_flag": "ignis_purified"
+              }
+            ]
+          }
         },
         {
           "id": "show_sword_to_blacksmith",
@@ -1244,7 +1408,8 @@
               }
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "forge_ice_charm",
@@ -1398,6 +1563,25 @@
           "risk_source": "action",
           "once": "dig_forge_scrap_done",
           "npc_id": "blacksmith"
+        },
+        {
+          "id": "postgame_chat_blacksmith",
+          "text": "【仮】鍛冶師ローベルトと討伐後の話をする。",
+          "npc_id": "blacksmith",
+          "once": "forge:postgame_chat_blacksmith",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_forge.png",
@@ -1930,7 +2114,8 @@
               }
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "listen_inn_gossip",
@@ -1995,6 +2180,44 @@
           "once": "robin_archery_done",
           "npc_id": "robin",
           "hidden_after": "recruited_robin"
+        },
+        {
+          "id": "postgame_chat_ian",
+          "text": "【仮】イアンと討伐後の話をする。",
+          "npc_id": "ian",
+          "once": "inn:postgame_chat_ian",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "risk_source": "action"
+        },
+        {
+          "id": "postgame_chat_robin",
+          "text": "【仮】ロビンと討伐後の話をする。",
+          "npc_id": "robin",
+          "once": "inn:postgame_chat_robin",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "risk_source": "action"
         }
       ],
       "hybrid": {
@@ -2153,7 +2376,17 @@
             {
               "text": "長老に邪竜の弱点を聞く",
               "preview": "冷気の弱点について情報を得ます",
-              "risk": "判定不要"
+              "risk": "判定不要",
+              "visible_requirements": {
+                "all": [
+                  {
+                    "not_flag": "defeated_ignis"
+                  },
+                  {
+                    "not_flag": "ignis_purified"
+                  }
+                ]
+              }
             },
             {
               "text": "古い盟約について聞く",
@@ -2271,7 +2504,17 @@
               ],
               "portrait_image": "/static/images/npc_elder.png",
               "risk_source": "action",
-              "npc_id": "elder"
+              "npc_id": "elder",
+              "visible_requirements": {
+                "all": [
+                  {
+                    "not_flag": "defeated_ignis"
+                  },
+                  {
+                    "not_flag": "ignis_purified"
+                  }
+                ]
+              }
             },
             {
               "id": "ask_elder_treaty",
@@ -2342,7 +2585,31 @@
               "set_flag": "returned_from_village"
             },
             {
-              "current_location": "castle_town"
+              "branch": {
+                "requirements": {
+                  "any": [
+                    {
+                      "flag": "defeated_ignis"
+                    },
+                    {
+                      "flag": "ignis_purified"
+                    }
+                  ]
+                },
+                "then": [
+                  {
+                    "set_flag": "returned_to_capital"
+                  },
+                  {
+                    "current_location": "festival_town"
+                  }
+                ],
+                "else": [
+                  {
+                    "current_location": "castle_town"
+                  }
+                ]
+              }
             }
           ],
           "result_text": "村を発ち、来た道を引き返す。森を抜けて城門をくぐると、見慣れた城下町の大通りが広がっていた。",
@@ -2543,6 +2810,44 @@
           "risk_source": "action",
           "once": "ask_elder_legend_done",
           "npc_id": "elder"
+        },
+        {
+          "id": "postgame_chat_elder",
+          "text": "【仮】長老と討伐後の話をする。",
+          "npc_id": "elder",
+          "once": "village:postgame_chat_elder",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "risk_source": "action"
+        },
+        {
+          "id": "postgame_chat_shopkeeper",
+          "text": "【仮】道具屋の店主と討伐後の話をする。",
+          "npc_id": "shopkeeper",
+          "once": "village:postgame_chat_shopkeeper",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_village.png",
@@ -2825,7 +3130,17 @@
         {
           "text": "邪竜についての噂を聞く",
           "preview": "魔法使いが知る不穏な噂",
-          "risk": "1d20+wis判定（DC14）"
+          "risk": "1d20+wis判定（DC14）",
+          "visible_requirements": {
+            "all": [
+              {
+                "not_flag": "defeated_ignis"
+              },
+              {
+                "not_flag": "ignis_purified"
+              }
+            ]
+          }
         },
         {
           "text": "パーティーへ招く",
@@ -3061,7 +3376,17 @@
           ],
           "portrait_image": "/static/images/npc_warlock.png",
           "risk_source": "action",
-          "npc_id": "warlock"
+          "npc_id": "warlock",
+          "visible_requirements": {
+            "all": [
+              {
+                "not_flag": "defeated_ignis"
+              },
+              {
+                "not_flag": "ignis_purified"
+              }
+            ]
+          }
         },
         {
           "id": "invite_blue_mage",
@@ -3111,7 +3436,8 @@
               }
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "ask_seal_lore",
@@ -3520,6 +3846,45 @@
           "risk_source": "action",
           "once": "read_magic_tomes_done",
           "npc_id": "blue_robed_mage"
+        },
+        {
+          "id": "postgame_chat_warlock",
+          "text": "【仮】青いローブの魔法使いと討伐後の話をする。",
+          "npc_id": "warlock",
+          "once": "magic_shop:postgame_chat_warlock",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "risk_source": "action"
+        },
+        {
+          "id": "postgame_chat_mina",
+          "text": "【仮】ミーナと討伐後の話をする。",
+          "npc_id": "mina",
+          "once": "magic_shop:postgame_chat_mina",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "visible_after": "mina_quest_done",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_magic_shop.png",
@@ -3791,7 +4156,8 @@
               }
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "ask_sarah_request",
@@ -3956,6 +4322,25 @@
           "risk_source": "action",
           "once": "help_sarah_shelves_done",
           "npc_id": "sarah"
+        },
+        {
+          "id": "postgame_chat_sarah",
+          "text": "【仮】サラと討伐後の話をする。",
+          "npc_id": "sarah",
+          "once": "item_shop:postgame_chat_sarah",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_item_shop.png",
@@ -4085,7 +4470,8 @@
               }
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "search_alley_day",
@@ -4867,7 +5253,8 @@
             }
           ],
           "portrait_image": "/static/images/npc_zebok_merchant.png",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "buy_white_scale",
@@ -4926,6 +5313,25 @@
           "risk_source": "action",
           "once": "see_through_merchant_done",
           "npc_id": "suspicious_merchant"
+        },
+        {
+          "id": "postgame_chat_suspicious_merchant",
+          "text": "【仮】怪しい商人と討伐後の話をする。",
+          "npc_id": "suspicious_merchant",
+          "once": "alley_night:postgame_chat_suspicious_merchant",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "risk_source": "action"
         }
       ],
       "background_image": "/static/images/bg_alley_night.png",
@@ -5079,7 +5485,8 @@
               }
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         }
       ],
       "background_image": "/static/images/bg_alley_night.png",
@@ -5729,7 +6136,7 @@
       "id": "elf_spring",
       "scene_id": "dark_forest",
       "title": "精霊の泉",
-      "description": "淡い光を帯びた泉。休めば力を取り戻せそうだ。",
+      "description": "【仮】精霊の泉では一度だけ休める。",
       "keywords": [
         "精霊の泉"
       ],
@@ -5741,8 +6148,13 @@
       "choices": [
         {
           "text": "精霊の泉で休む",
-          "preview": "泉で休めば力を取り戻せる。ただ、水面の下で何かがうごめいている気がする",
-          "risk": "休息中に襲われる恐れあり"
+          "preview": "【仮】泉で休めるのは一度だけで、休息中に襲われる恐れがある。",
+          "risk": "休息中に襲われる恐れあり",
+          "visible_requirements": {
+            "not_flag": "defeated_slime_king"
+          },
+          "once": "rested_at_elf_spring",
+          "hidden_after": "rested_at_elf_spring"
         },
         {
           "text": "休まず先へ進む",
@@ -5775,7 +6187,7 @@
       ],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "淡い光を帯びた泉。休めば力を取り戻せそうだ。",
+        "summary": "【仮】精霊の泉では一度だけ休める。",
         "prepared_turns": [
           {
             "id": "elf_spring_rest",
@@ -5806,8 +6218,8 @@
         {
           "id": "rest_at_elf_spring",
           "text": "精霊の泉で休む",
-          "preview": "泉で休めば力を取り戻せる。ただ、水面の下で何かがうごめいている気がする",
-          "risk": "休息中に襲われる恐れあり",
+          "preview": "【仮】泉で休めるのは一度だけで、休息中に襲われる恐れがある。",
+          "risk": "危険（戦闘）",
           "intent_keywords": [
             "精霊の泉で休む"
           ],
@@ -5816,23 +6228,18 @@
               "restore_full": true
             },
             {
-              "branch": {
-                "requirements": {
-                  "flag": "defeated_slime_king"
-                },
-                "then": [],
-                "else": [
-                  {
-                    "current_location": "slime_ambush_one"
-                  },
-                  {
-                    "start_combat": true
-                  }
-                ]
-              }
+              "current_location": "slime_ambush_one"
+            },
+            {
+              "start_combat": true
             }
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "once": "rested_at_elf_spring",
+          "hidden_after": "rested_at_elf_spring",
+          "visible_requirements": {
+            "not_flag": "defeated_slime_king"
+          }
         },
         {
           "id": "continue_from_elf_spring",
@@ -6367,7 +6774,7 @@
           "slime_king"
         ],
         "victory_effects": {
-          "current_location": "elf_spring"
+          "current_location": "forest_wolves"
         },
         "defeat_effects": {
           "hp": 0,
@@ -6377,7 +6784,8 @@
           }
         },
         "result_texts": {
-          "defeat": "精霊の泉・スライム王で力尽きた。冒険はここで終わりを迎える。"
+          "defeat": "精霊の泉・スライム王で力尽きた。冒険はここで終わりを迎える。",
+          "victory": "【仮】泉でのひと休みを終え、先へ進む。"
         },
         "encounter_class": "boss",
         "one_time_reward": {
@@ -9236,7 +9644,44 @@
             }
           ],
           "risk_source": "destination",
-          "npc_id": "elder"
+          "npc_id": "elder",
+          "visible_requirements": {
+            "all": [
+              {
+                "not_flag": "defeated_ignis"
+              },
+              {
+                "not_flag": "ignis_purified"
+              }
+            ]
+          }
+        },
+        {
+          "id": "visit_village_postgame",
+          "text": "【仮】長老のいる村へ向かう。",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [],
+          "effects": [
+            {
+              "current_location": "village",
+              "flags_set": [
+                "reached_village"
+              ]
+            }
+          ],
+          "risk_source": "destination",
+          "npc_id": "elder",
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          }
         }
       ],
       "background_image": "/static/images/bg_frozen_village.png",
@@ -9695,7 +10140,17 @@
             }
           ],
           "risk_source": "destination",
-          "npc_id": "elder"
+          "npc_id": "elder",
+          "visible_requirements": {
+            "all": [
+              {
+                "not_flag": "defeated_ignis"
+              },
+              {
+                "not_flag": "ignis_purified"
+              }
+            ]
+          }
         },
         {
           "id": "leave_without_ian",
@@ -9738,6 +10193,33 @@
           "risk_source": "action",
           "once": "read_ian_grief_done",
           "npc_id": "ian"
+        },
+        {
+          "id": "visit_village_postgame",
+          "text": "【仮】長老のいる村へ向かう。",
+          "preview": "",
+          "risk": "判定不要",
+          "intent_keywords": [],
+          "effects": [
+            {
+              "current_location": "village",
+              "flags_set": [
+                "reached_village"
+              ]
+            }
+          ],
+          "risk_source": "destination",
+          "npc_id": "elder",
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          }
         }
       ],
       "background_image": "/static/images/bg_frozen_village.png",
@@ -9841,7 +10323,8 @@
               },
               "text": "谷を抜けようとしたとき、頭上を大きな影が横切った。灰色の飛竜が岩棚に降り立ち、その背から竜騎士が槍を構える。「竜を討った英雄、か。だが町の者の血は、竜の血では洗い流せない」「ここで裁く。ノクス、行くぞ」"
             }
-          ]
+          ],
+          "guidance": true
         }
       ],
       "npc_ids": [],
@@ -9974,7 +10457,8 @@
               "text": "あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」あなたが日誌を掲げると、ドラコの表情から初めて笑みが消えた。"
             }
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "guidance": true
         },
         {
           "id": "report_normally",
@@ -10017,7 +10501,8 @@
               }
             }
           ],
-          "risk_source": "action"
+          "risk_source": "action",
+          "guidance": true
         }
       ],
       "npc_ids": [
@@ -10352,7 +10837,8 @@
               },
               "text": "谷を抜けようとしたとき、頭上を大きな影が横切った。灰色の飛竜が岩棚に降り立ち、その背から竜騎士が槍を構える。「竜を討った英雄、か。だが町の者の血は、竜の血では洗い流せない」「ここで裁く。ノクス、行くぞ」"
             }
-          ]
+          ],
+          "guidance": true
         }
       ],
       "npc_ids": [
@@ -12751,7 +13237,8 @@
               "current_location": "festival_town"
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "bless_before_report",
@@ -12891,7 +13378,8 @@
           },
           "secret": true,
           "unlock_flag": "mansion_unlocked",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "request_king_audience",
@@ -12944,7 +13432,8 @@
             ]
           },
           "secret": true,
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "go_report_hall",
@@ -12960,7 +13449,8 @@
             }
           ],
           "risk_source": "destination",
-          "preparation_warning": "（強敵の気配がする。心もとないなら、一度王都か城塞へ戻って補給するのも手だ）"
+          "preparation_warning": "（強敵の気配がする。心もとないなら、一度王都か城塞へ戻って補給するのも手だ）",
+          "guidance": true
         },
         {
           "id": "open_gald_capital_shop",
@@ -13042,6 +13532,26 @@
           "requirements": {
             "gold_gte": 20
           }
+        },
+        {
+          "id": "postgame_chat_gald",
+          "text": "【仮】行商人ガルドと討伐後の話をする。",
+          "npc_id": "gald",
+          "once": "festival_town:postgame_chat_gald",
+          "effects": [],
+          "visible_requirements": {
+            "any": [
+              {
+                "flag": "defeated_ignis"
+              },
+              {
+                "flag": "ignis_purified"
+              }
+            ]
+          },
+          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "visible_after": "saved_gald",
+          "risk_source": "action"
         }
       ],
       "npc_ids": [
@@ -13174,7 +13684,8 @@
             "success": "物音ひとつ立てず、裏口の錠を外した。",
             "failure": "扉が軋み、屋敷の奥で何かが動く気配がした。"
           },
-          "risk_source": "action"
+          "risk_source": "action",
+          "guidance": true
         },
         {
           "id": "robin_picks_lock",
@@ -13196,7 +13707,8 @@
             "flag": "recruited_robin"
           },
           "result_text": "ロビンが細い針金を差し込むと、錠はあっさりと外れた。「将軍様の屋敷ってのは、案外ちょろいもんだね」",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "leave_mansion",
@@ -13300,7 +13812,8 @@
             }
           ],
           "result_text": "一歩近づくと、氷の番兵が軋む音を立てて槍を構え、扉の前を塞いだ。",
-          "risk_source": "action"
+          "risk_source": "action",
+          "guidance": true
         },
         {
           "id": "evade_ice_sentinels",
@@ -13342,7 +13855,8 @@
             "failure": "凍った床がきしみ、番兵の兜がこちらを向いた。冷たい槍が先に突き出される。"
           },
           "risk_source": "action",
-          "steal_encounter": "mansion_corridor"
+          "steal_encounter": "mansion_corridor",
+          "guidance": true
         },
         {
           "id": "pass_cleared_sentinels",
@@ -13358,7 +13872,8 @@
             }
           ],
           "visible_after": "combat_defeated:mansion_corridor:ice_sentinel",
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         }
       ],
       "npc_ids": [],
@@ -13480,7 +13995,8 @@
           ],
           "once": "draco_journal",
           "result_text": "日誌には、十年前に紅竜の傷へ霜を打ち込んだこと、ザンザスと交わした密約、そして王国を手に入れる計画が、几帳面な文字で記されていた。",
-          "risk_source": "action"
+          "risk_source": "action",
+          "guidance": true
         },
         {
           "id": "open_scale_box",
@@ -13515,7 +14031,8 @@
               "current_location": "festival_town"
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "search_hidden_drawer",
@@ -13575,7 +14092,8 @@
           "effects": [],
           "once": "king_trust",
           "result_text": "王は長い沈黙の後、重い口を開いた。「……十年前、竜の谷へ兵を送れと進言したのは、ドラコだった。わしはそれを信じ、紅竜を怒らせてしまった。もしそなたの言う通りなら……その時は、わしが近衛兵に命じよう。そなたを守れ、と」",
-          "risk_source": "action"
+          "risk_source": "action",
+          "guidance": true
         },
         {
           "id": "ask_king_rest",
@@ -13609,7 +14127,8 @@
               "current_location": "festival_town"
             }
           ],
-          "risk_source": "destination"
+          "risk_source": "destination",
+          "guidance": true
         },
         {
           "id": "gauge_king_resolve",
@@ -23988,7 +24507,7 @@
             "slime_ambush_two",
             "slime_king_battle"
           ],
-          "description": "淡い光を帯びた泉。休めば力を取り戻せそうだ。"
+          "description": "【仮】精霊の泉では一度だけ休める。"
         },
         {
           "id": "F4",

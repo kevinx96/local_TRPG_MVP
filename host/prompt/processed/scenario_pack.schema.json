@@ -1643,6 +1643,9 @@
               "items": {
                 "$ref": "#/$defs/choice"
               }
+            },
+            "guidance": {
+              "type": "boolean"
             }
           }
         }
@@ -1767,6 +1770,9 @@
               "type": "string"
             }
           }
+        },
+        "guidance": {
+          "type": "boolean"
         }
       }
     },
