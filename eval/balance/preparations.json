@@ -1,0 +1,92 @@
+{
+  "version": 2,
+  "status": "proposed",
+  "source": "docs/specs/046-measurement-v2.md §3; current scenario actions",
+  "method": "同一 checkpoint 配置、同一 seed，比全准备与只移除一项；不返还金币；其余配置保持相同。净化路线成功包括 victory/purified。",
+  "encounters": {
+    "dragon_valley_loc": {
+      "items": [
+        {
+          "id": "ruby_charm",
+          "name": "紅玉の護符",
+          "item_ids": [
+            "ruby_charm"
+          ],
+          "remove": {
+            "kind": "equipment",
+            "fallback": null
+          },
+          "status": "proposed",
+          "critical": true
+        },
+        {
+          "id": "adamantite_armor",
+          "name": "アダマンタイトの鎧",
+          "item_ids": [
+            "adamantite_armor"
+          ],
+          "remove": {
+            "kind": "equipment",
+            "fallback": "革の鎧"
+          },
+          "status": "proposed",
+          "critical": true
+        },
+        {
+          "id": "purification",
+          "name": "聖水",
+          "item_ids": [
+            "holy_water"
+          ],
+          "flags": [
+            "frost_trace_seen",
+            "heard_treaty_lore"
+          ],
+          "remove": {
+            "kind": "purification_route"
+          },
+          "status": "proposed",
+          "critical": true
+        },
+        {
+          "id": "ice_iron_greatsword",
+          "name": "氷鉄の大剣",
+          "item_ids": [
+            "ice_iron_greatsword"
+          ],
+          "remove": {
+            "kind": "equipment",
+            "fallback": "鉄の剣"
+          },
+          "status": "proposed",
+          "critical": true
+        },
+        {
+          "id": "fire_bat_dragon",
+          "name": "火コウモリ竜",
+          "flags": [
+            "borrowed_fire_bat_dragon"
+          ],
+          "remove": {
+            "kind": "companion"
+          },
+          "status": "proposed",
+          "critical": true
+        },
+        {
+          "id": "fire_bat_empowered",
+          "name": "火コウモリ竜",
+          "flags": [
+            "fire_bat_empowered"
+          ],
+          "remove": {
+            "kind": "flag",
+            "flag": "fire_bat_empowered"
+          },
+          "status": "proposed",
+          "critical": true
+        }
+      ]
+    }
+  }
+}

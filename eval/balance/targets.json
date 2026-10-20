@@ -197,5 +197,250 @@
         ]
       }
     }
+  },
+  "version": 2,
+  "status": "draft",
+  "archetypes": {
+    "P0a": {
+      "completion_rate": [
+        0,
+        0.05
+      ],
+      "mage_completion_rate": [
+        0,
+        0.15
+      ],
+      "status": "draft"
+    },
+    "P0b": {
+      "completion_rate": [
+        0,
+        0.05
+      ],
+      "mage_completion_rate": [
+        0,
+        0.15
+      ],
+      "status": "draft"
+    },
+    "P1": {
+      "completion_rate": [
+        0.15,
+        0.35
+      ],
+      "status": "draft"
+    },
+    "P2": {
+      "completion_rate": [
+        0.55,
+        0.75
+      ],
+      "status": "draft"
+    },
+    "P3": {
+      "completion_rate": [
+        0.8,
+        1
+      ],
+      "status": "draft"
+    },
+    "P2s": {
+      "completion_gap_pp_max": 10,
+      "node_level_gap_max": 1,
+      "status": "draft"
+    },
+    "P0g": {
+      "mode": "report",
+      "resource_cost_per_level": null,
+      "status": "draft"
+    }
+  },
+  "incoming_damage_bandwidth": {
+    "trash": [
+      0.1,
+      0.15
+    ],
+    "elite": [
+      0.18,
+      0.25
+    ],
+    "boss": [
+      0.28,
+      0.35
+    ]
+  },
+  "damage_cv": {
+    "ordinary_max": 0.5,
+    "requires_telegraph_above": 0.5,
+    "status": "draft",
+    "applies_after": "100% 敌人命中率实装后"
+  },
+  "combat_cost": {
+    "trash": [
+      0.1,
+      0.25
+    ],
+    "elite": [
+      0.3,
+      0.5
+    ],
+    "boss": [
+      0.7,
+      1.1
+    ]
+  },
+  "metrics_v2": {
+    "M1": {
+      "target": {
+        "p0_max": 0.05,
+        "mage_max": 0.15
+      },
+      "hard_gate": true,
+      "status": "draft"
+    },
+    "M1'": {
+      "target": {
+        "adjacent_gap_min": 0.15
+      },
+      "hard_gate": false,
+      "status": "draft"
+    },
+    "M2": {
+      "target": {
+        "critical_uplift_min": 0.1,
+        "noncritical_uplift_max": 0.25
+      },
+      "hard_gate": false,
+      "status": "draft"
+    },
+    "M3": {
+      "target": {
+        "p0b_sustain_lt": 0.5
+      },
+      "hard_gate": true,
+      "status": "draft"
+    },
+    "M3'": {
+      "target": {
+        "p0b_race_gt": 1.3,
+        "p2_race": [
+          0.6,
+          0.9
+        ]
+      },
+      "hard_gate": false,
+      "status": "draft"
+    },
+    "M4": {
+      "target": {
+        "median_rounds_max": 14,
+        "sandbag_gt": 18
+      },
+      "hard_gate": true,
+      "status": "draft"
+    },
+    "M5": {
+      "target": {
+        "healing_hp_ratio_max": 1.5,
+        "healing_usage": [
+          0.4,
+          0.8
+        ],
+        "unspent_gold_ratio_max": 0.3
+      },
+      "hard_gate": false,
+      "status": "draft"
+    },
+    "M6": {
+      "target": {
+        "free_dominance_max": 0.7,
+        "requires_p0_choice": true
+      },
+      "hard_gate": false,
+      "status": "draft"
+    },
+    "M7": {
+      "target": {
+        "completion_loss_min": 0.05,
+        "resource_loss_min": 0.15
+      },
+      "hard_gate": false,
+      "status": "draft"
+    },
+    "M8": {
+      "target": {
+        "companion_uplift": [
+          0.1,
+          0.2
+        ]
+      },
+      "hard_gate": false,
+      "status": "draft"
+    },
+    "M9": {
+      "target": {
+        "trash": [
+          0.1,
+          0.15
+        ],
+        "elite": [
+          0.18,
+          0.25
+        ],
+        "boss": [
+          0.28,
+          0.35
+        ]
+      },
+      "hard_gate": true,
+      "status": "draft"
+    },
+    "M10": {
+      "target": {
+        "ordinary_cv_max": 0.5,
+        "requires_telegraph_above": 0.5
+      },
+      "hard_gate": false,
+      "status": "draft"
+    },
+    "M11": {
+      "target": {
+        "trash": [
+          0.1,
+          0.25
+        ],
+        "elite": [
+          0.3,
+          0.5
+        ],
+        "boss": [
+          0.7,
+          1.1
+        ]
+      },
+      "hard_gate": false,
+      "status": "draft"
+    },
+    "M12": {
+      "target": {
+        "skill_turn_ratio_min": 0.35,
+        "single_skill_ratio_max": 0.6,
+        "dead_options_max": 0,
+        "passive_value_gap_max": 0.1
+      },
+      "hard_gate": false,
+      "status": "draft"
+    },
+    "M13": {
+      "target": {
+        "per_level_uplift": [
+          0.08,
+          0.15
+        ],
+        "p0_p2_ignis_level_gap_min": 2
+      },
+      "hard_gate": false,
+      "status": "draft"
+    }
   }
 }

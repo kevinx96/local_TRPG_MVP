@@ -110,7 +110,7 @@ def free_action_damage(action: dict[str, Any], actor: dict[str, Any], enemy: dic
 def choose_action(session: dict[str, Any], policy: str, *, purify: bool = True,
                   reserve_purification: bool = False,
                   elite_holy_water: bool = True,
-                  recovery_threshold: float = .30) -> tuple[dict[str, Any], str]:
+                  recovery_threshold: Optional[float] = None) -> tuple[dict[str, Any], str]:
     if policy not in POLICIES:
         raise ValueError(f"Unknown policy: {policy}")
     actions = [a for a in combat.combat_actions(session) if a.get("enabled")]
@@ -123,7 +123,7 @@ def choose_action(session: dict[str, Any], policy: str, *, purify: bool = True,
         healing = [a for a in actions if a.get("kind") == "heal"]
         if combat._equipped_effect(actor, "healing_harms_humans") and not actor.get("undead_parts"):
             healing = [a for a in healing if a["type"] == "item"]
-        if actor["hp"] < actor["max_hp"] * recovery_threshold and healing:
+        if actor["hp"] < actor["max_hp"] * (.30 if recovery_threshold is None else recovery_threshold) and healing:
             return max(healing, key=lambda a: min(actor["max_hp"] - actor["hp"],
                 actor["max_hp"] * a["max_hp_ratio"] if "max_hp_ratio" in a
                 else formula_mean(str(a.get("healing") or "10"), actor))), first_target
@@ -169,7 +169,7 @@ def choose_action(session: dict[str, Any], policy: str, *, purify: bool = True,
         healing = [a for a in actions if a.get("kind") == "heal"]
         if combat._equipped_effect(actor, "healing_harms_humans") and not actor.get("undead_parts"):
             healing = [a for a in healing if a["type"] == "item"]
-        if actor["hp"] < actor["max_hp"] * .35 and healing:
+        if actor["hp"] < actor["max_hp"] * (.35 if recovery_threshold is None else recovery_threshold) and healing:
             best = max(healing, key=lambda a: min(actor["max_hp"] - actor["hp"],
                 int(actor["max_hp"] * a["max_hp_ratio"]) if "max_hp_ratio" in a
                 else formula_mean(str(a.get("healing") or "10"), actor)))

@@ -33,7 +33,7 @@ class MeasurementV2Tests(unittest.TestCase):
         self.assertEqual(archetypes.P0A.sidequests, ())
         for value in archetypes.ARCHETYPES.values():
             self.assertEqual(value.recovery_threshold, .30)
-            self.assertEqual(value.rest_rule, "spring_three")
+            self.assertEqual(value.rest_rule, "free_hp70")
         for bad in (replace(archetypes.P0B, optional_limit=2),
                     replace(archetypes.P0A, recovery_threshold=1.1),
                     replace(archetypes.P0A, equipment_rule="invented")):
@@ -42,9 +42,8 @@ class MeasurementV2Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             archetypes.validate([archetypes.P0A, archetypes.P0A])
 
-    def test_future_archetypes_do_not_silently_run_incomplete_routes(self):
-        with self.assertRaisesRegex(ValueError, "reproduction gate"):
-            route_v2.trial(self.pack, "hero", 1, archetypes.P3)
+    def test_all_archetypes_are_enabled_after_046b_acceptance(self):
+        self.assertEqual(route_v2.SUPPORTED_ARCHETYPES, tuple(archetypes.ARCHETYPES))
 
     def test_level_model_and_passive_extension_contracts(self):
         session = self.session()
@@ -178,7 +177,7 @@ class MeasurementV2Tests(unittest.TestCase):
         self.assertEqual([r["policy"] for r in matrix["rows"] if r["experiment"] == "matrix"], list(sim.LEGACY_POLICIES))
 
     def test_process_and_serial_results_are_byte_identical(self):
-        jobs = [(checkpoints.DEFAULT_SCENARIO, a, "hero", 2, 46001) for a in route_v2.SUPPORTED_ARCHETYPES]
+        jobs = [(checkpoints.DEFAULT_SCENARIO, a, "hero", 2, 46001) for a in ("P0a", "P0b")]
         serial = route_v2.run_jobs(jobs, 1)
         parallel = route_v2.run_jobs(jobs, 2)
         self.assertEqual(json.dumps(serial, ensure_ascii=False).encode("utf-8"), json.dumps(parallel, ensure_ascii=False).encode("utf-8"))

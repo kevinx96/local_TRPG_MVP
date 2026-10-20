@@ -11,6 +11,9 @@ TERMINAL_LOCATION = "draco_battle"
 MAINLINE_NODES = ("castle", "dark_forest_loc", "elf_spring", "forest_exit",
                   "village_frozen_clue", "ian_ice_katana_aftermath", "valley_entrance",
                   "dragon_valley_loc", "royal_gate", "draco_battle")
+SIDEQUESTS = {"gald", "riku", "cave_full", "fort", "purification", "town_errands", "mina",
+              "battlefield", "oaksdawn", "gorge", "mansion", "merchant", "robin", "sarah",
+              "hearth", "nameless_soldiers", "fire_seed"}
 
 
 @dataclass(frozen=True)
@@ -22,12 +25,13 @@ class Archetype:
     shopping_rule: str
     sidequests: tuple[str, ...]
     combat_policy: str
-    rest_rule: str = "spring_three"
+    rest_rule: str = "free_hp70"
     recovery_threshold: float = .30
     optional_limit: Optional[int] = None
     avoid_battles: bool = False
     grind: bool = False
     passive_mode: str = "first"
+    decision_rule: str = "backbone"
     status: str = "proposed"
 
     def to_dict(self) -> dict[str, Any]:
@@ -38,11 +42,12 @@ P0A = Archetype("P0a", (), "none", "initial", "none", (), "best_free", optional_
 P0B = Archetype("P0b", ("ask_king_info", "shop:sarah_shop:ice_charm", "borrow_fire_bat_dragon"),
                "fire_bat_dragon", "equip_acquired", "hinted_one", (), "best_free", optional_limit=3)
 P1 = replace(P0B, id="P1", sidequests=("gald", "riku"), optional_limit=None,
-             combat_policy="heuristic")
+             combat_policy="heuristic", decision_rule="checks")
 P2 = replace(P1, id="P2", sidequests=(*P1.sidequests, "cave_full", "fort", "purification"),
              shopping_rule="preparations", passive_mode="battle_best")
 P3 = replace(P2, id="P3", sidequests=(*P2.sidequests, "town_errands", "mina", "battlefield",
-                                    "oaksdawn", "gorge", "mansion", "merchant"),
+                                    "oaksdawn", "gorge", "mansion", "merchant", "robin",
+                                    "sarah", "hearth", "nameless_soldiers", "fire_seed"),
              shopping_rule="all_shops")
 ARCHETYPES = {a.id: a for a in (P0A, P0B, P1, P2, P3,
                               replace(P2, id="P2s", avoid_battles=True),
@@ -63,8 +68,12 @@ def validate(archetypes: Iterable[Archetype] = ARCHETYPES.values()) -> None:
             raise ValueError("unknown equipment rule")
         if a.shopping_rule not in {"none", "hinted_one", "preparations", "all_shops"}:
             raise ValueError("unknown shopping rule")
-        if a.rest_rule not in {"spring_three", "none"} or a.passive_mode not in {"first", "battle_best", "enumerate"}:
+        if a.combat_policy not in {"attack_only", "greedy", "heuristic", "best_free"} or not set(a.sidequests) <= SIDEQUESTS:
+            raise ValueError("unknown combat policy or side quest")
+        if a.rest_rule not in {"free_hp70", "none"} or a.passive_mode not in {"first", "battle_best", "enumerate"}:
             raise ValueError("unknown extension policy")
+        if a.decision_rule not in {"backbone", "checks", "avoid"}:
+            raise ValueError("unknown decision rule")
 
 
 class LevelModel(Protocol):

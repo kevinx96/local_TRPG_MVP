@@ -1,0 +1,1989 @@
+{
+  "version": 2,
+  "session_id": "e2b9fdd9631c441298685da5d75d6cfb",
+  "available_fields": {
+    "id": {
+      "type": "str",
+      "count": null
+    },
+    "scenario_path": {
+      "type": "str",
+      "count": null
+    },
+    "scenario_title": {
+      "type": "str",
+      "count": null
+    },
+    "gm_mode": {
+      "type": "str",
+      "count": null
+    },
+    "scenario_pack": {
+      "type": "dict",
+      "count": 24
+    },
+    "world_state": {
+      "type": "dict",
+      "count": 2
+    },
+    "character": {
+      "type": "dict",
+      "count": 18
+    },
+    "messages": {
+      "type": "list",
+      "count": 155
+    },
+    "system_logs": {
+      "type": "list",
+      "count": 222
+    },
+    "event_log": {
+      "type": "list",
+      "count": 240
+    },
+    "dice_log": {
+      "type": "list",
+      "count": 14
+    },
+    "choices": {
+      "type": "list",
+      "count": 0
+    },
+    "flags": {
+      "type": "dict",
+      "count": 98
+    },
+    "companion": {
+      "type": "dict",
+      "count": 9
+    },
+    "game_over": {
+      "type": "dict",
+      "count": 5
+    },
+    "last_action_result": {
+      "type": "dict",
+      "count": 11
+    },
+    "last_turn_narrated": {
+      "type": "bool",
+      "count": null
+    },
+    "combat": {
+      "type": "NoneType",
+      "count": null
+    },
+    "area_snapshots": {
+      "type": "dict",
+      "count": 8
+    },
+    "retry_count": {
+      "type": "int",
+      "count": null
+    },
+    "last_combat_result": {
+      "type": "dict",
+      "count": 11
+    },
+    "next_dice_type": {
+      "type": "str",
+      "count": null
+    },
+    "next_dice_dc": {
+      "type": "int",
+      "count": null
+    },
+    "needs_opening": {
+      "type": "bool",
+      "count": null
+    },
+    "created_at": {
+      "type": "str",
+      "count": null
+    },
+    "updated_at": {
+      "type": "str",
+      "count": null
+    },
+    "visited_locations": {
+      "type": "list",
+      "count": 43
+    },
+    "known_item_names": {
+      "type": "list",
+      "count": 36
+    },
+    "completed_milestones": {
+      "type": "list",
+      "count": 4
+    },
+    "llm_worker_key_slot": {
+      "type": "dict",
+      "count": 1
+    },
+    "opening_effects_applied": {
+      "type": "bool",
+      "count": null
+    },
+    "last_intent_resolution": {
+      "type": "dict",
+      "count": 8
+    },
+    "shop_stock": {
+      "type": "dict",
+      "count": 1
+    },
+    "scene_changes": {
+      "type": "dict",
+      "count": 2
+    }
+  },
+  "coverage": {
+    "event_log": 240,
+    "event_log_may_be_truncated": true,
+    "system_logs": 222,
+    "matched_auxiliary": 0,
+    "combat_action_history": "missing"
+  },
+  "battles": [
+    {
+      "event_id": "3e658ae3ff174ee1b9734dbd711a626a",
+      "encounter": "dark_forest_loc",
+      "encounter_class": "trash",
+      "rounds": null,
+      "outcome": "victory",
+      "end_hp": 17,
+      "max_hp": 20,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T06:56:09.850408+00:00",
+      "evidence": "system_log_text",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "89abe9e2613644b6b1dffd817a621be1",
+      "encounter": "goblin_fort",
+      "encounter_class": "trash",
+      "rounds": null,
+      "outcome": "victory",
+      "end_hp": 20,
+      "max_hp": 20,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T06:57:20.862682+00:00",
+      "evidence": "system_log_text",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "cc81985e45694afc982bac51be6c174d",
+      "encounter": "goblin_fort_second_right",
+      "encounter_class": "elite",
+      "rounds": null,
+      "outcome": "victory",
+      "end_hp": 20,
+      "max_hp": 20,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T06:58:27.984122+00:00",
+      "evidence": "system_log_text",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "c557f0cb16b6496dbd49730084804b05",
+      "encounter": "goblin_fort_fourth",
+      "encounter_class": "boss",
+      "rounds": null,
+      "outcome": "victory",
+      "end_hp": 30,
+      "max_hp": 30,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T06:59:24.796430+00:00",
+      "evidence": "system_log_text",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "47bf8d444e1745658dda845a67fed79d",
+      "encounter": "slime_ambush_one",
+      "encounter_class": "trash",
+      "rounds": 2,
+      "outcome": "victory",
+      "end_hp": 30,
+      "max_hp": 30,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:00:15.528632+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "ff78551f18b543599169ab2e6d1ceb41",
+      "encounter": "slime_ambush_two",
+      "encounter_class": "trash",
+      "rounds": 3,
+      "outcome": "victory",
+      "end_hp": 28,
+      "max_hp": 30,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:00:26.391733+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "eba5b45725de4756854084694e5983c9",
+      "encounter": "slime_king_battle",
+      "encounter_class": "boss",
+      "rounds": 9,
+      "outcome": "victory",
+      "end_hp": 20,
+      "max_hp": 30,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:00:50.156210+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "8675e272c4cc4fa1996b333270463c11",
+      "encounter": "cave_heat_corridor",
+      "encounter_class": "elite",
+      "rounds": 5,
+      "outcome": "victory",
+      "end_hp": 18,
+      "max_hp": 30,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:01:36.856233+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "3a3803996e9e45eea75c564d26d98cbb",
+      "encounter": "cave_lava_room",
+      "encounter_class": "elite",
+      "rounds": 5,
+      "outcome": "victory",
+      "end_hp": 11,
+      "max_hp": 30,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:02:13.351585+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "50369e3351f848f8b4f603551aa50e70",
+      "encounter": "cave_prism_tree",
+      "encounter_class": "boss",
+      "rounds": 26,
+      "outcome": "victory",
+      "end_hp": 26,
+      "max_hp": 30,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:04:07.258830+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "6a68391495bd44b7bce63e10fd5c8805",
+      "encounter": "forest_wolves",
+      "encounter_class": "elite",
+      "rounds": 2,
+      "outcome": "victory",
+      "end_hp": 30,
+      "max_hp": 30,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:05:21.781844+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "78795e5ea3cc47a8b0ce91fe1846b4d3",
+      "encounter": "village_fire_slime",
+      "encounter_class": "trash",
+      "rounds": 4,
+      "outcome": "victory",
+      "end_hp": 35,
+      "max_hp": 35,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:05:59.233032+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "7b7d9d8efc5a4b0295017edb0e3b0f03",
+      "encounter": "ice_elemental_encounter",
+      "encounter_class": "elite",
+      "rounds": 2,
+      "outcome": "victory",
+      "end_hp": 27,
+      "max_hp": 35,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:06:30.873468+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "28f756b475c144c294d79f6dbabe4648",
+      "encounter": "frost_wolf_battle",
+      "encounter_class": "boss",
+      "rounds": 3,
+      "outcome": "victory",
+      "end_hp": 35,
+      "max_hp": 35,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:06:43.091966+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "1425c6048243427dba144bcac119b64e",
+      "encounter": "valley_entrance",
+      "encounter_class": "elite",
+      "rounds": 2,
+      "outcome": "victory",
+      "end_hp": 35,
+      "max_hp": 35,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:07:08.136216+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "87288be455054a68bafd5cbe3f75c825",
+      "encounter": "dragon_valley_loc",
+      "encounter_class": "boss",
+      "rounds": 20,
+      "outcome": "victory",
+      "end_hp": 29,
+      "max_hp": 40,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:08:17.108232+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    },
+    {
+      "event_id": "a5a90fa886db48beaf107e9d82866f81",
+      "encounter": "mansion_corridor",
+      "encounter_class": "elite",
+      "rounds": 4,
+      "outcome": "victory",
+      "end_hp": 40,
+      "max_hp": 40,
+      "actions": null,
+      "actions_coverage": "missing",
+      "created_at": "2026-10-20T07:10:09.011468+00:00",
+      "evidence": "structured_event",
+      "location_evidence": "position_history_and_enemy_ids"
+    }
+  ],
+  "boss_arrivals": {
+    "goblin_fort_fourth": {
+      "hp": 20,
+      "max_hp": 20,
+      "healing_hp": null,
+      "level": null,
+      "inventory": null,
+      "evidence": "reconstructed_from_previous_resolution_and_resource_events",
+      "reason": "非开战直接快照；按可观察流水重建，未记录的变化不可排除。"
+    },
+    "slime_king_battle": {
+      "hp": 28,
+      "max_hp": 30,
+      "healing_hp": 288.0,
+      "level": 3,
+      "inventory": [
+        {
+          "name": "鉄の剣",
+          "quantity": 1
+        },
+        {
+          "name": "革の鎧",
+          "quantity": 1
+        },
+        {
+          "name": "薬草",
+          "quantity": 10
+        },
+        {
+          "name": "携帯食",
+          "quantity": 2
+        },
+        {
+          "name": "聖水",
+          "quantity": 1
+        },
+        {
+          "name": "氷の護符",
+          "quantity": 1
+        },
+        {
+          "name": "旅の治療薬",
+          "quantity": 1
+        },
+        {
+          "name": "治療の巻物",
+          "quantity": 6
+        },
+        {
+          "name": "スライムの核",
+          "quantity": 3
+        },
+        {
+          "name": "ゴブリンの飾り物",
+          "quantity": 5
+        },
+        {
+          "name": "生命の果実",
+          "quantity": 1
+        },
+        {
+          "name": "刻印のハンマー",
+          "quantity": 1
+        },
+        {
+          "name": "剛力の霊薬",
+          "quantity": 1
+        }
+      ],
+      "evidence": "reconstructed_from_previous_resolution_and_resource_events",
+      "reason": "非开战直接快照；按可观察流水重建，未记录的变化不可排除。"
+    },
+    "cave_prism_tree": {
+      "hp": 11,
+      "max_hp": 30,
+      "healing_hp": 278.0,
+      "level": 3,
+      "inventory": [
+        {
+          "name": "鉄の剣",
+          "quantity": 1
+        },
+        {
+          "name": "革の鎧",
+          "quantity": 1
+        },
+        {
+          "name": "薬草",
+          "quantity": 9
+        },
+        {
+          "name": "携帯食",
+          "quantity": 2
+        },
+        {
+          "name": "氷の護符",
+          "quantity": 1
+        },
+        {
+          "name": "旅の治療薬",
+          "quantity": 1
+        },
+        {
+          "name": "治療の巻物",
+          "quantity": 6
+        },
+        {
+          "name": "スライムの核",
+          "quantity": 5
+        },
+        {
+          "name": "ゴブリンの飾り物",
+          "quantity": 5
+        },
+        {
+          "name": "生命の果実",
+          "quantity": 2
+        },
+        {
+          "name": "刻印のハンマー",
+          "quantity": 1
+        },
+        {
+          "name": "剛力の霊薬",
+          "quantity": 1
+        },
+        {
+          "name": "錆びた王冠",
+          "quantity": 1
+        },
+        {
+          "name": "鉄壁の霊薬",
+          "quantity": 1
+        },
+        {
+          "name": "光苔",
+          "quantity": 1
+        },
+        {
+          "name": "残り火の欠片",
+          "quantity": 5
+        },
+        {
+          "name": "焼けた溶岩石",
+          "quantity": 1
+        },
+        {
+          "name": "火球術の巻物",
+          "quantity": 2
+        },
+        {
+          "name": "紅玉の護符",
+          "quantity": 1
+        }
+      ],
+      "evidence": "reconstructed_from_previous_resolution_and_resource_events",
+      "reason": "非开战直接快照；按可观察流水重建，未记录的变化不可排除。"
+    },
+    "frost_wolf_battle": {
+      "hp": 27,
+      "max_hp": 35,
+      "healing_hp": 310.0,
+      "level": 4,
+      "inventory": [
+        {
+          "name": "鉄の剣",
+          "quantity": 1
+        },
+        {
+          "name": "革の鎧",
+          "quantity": 1
+        },
+        {
+          "name": "薬草",
+          "quantity": 7
+        },
+        {
+          "name": "携帯食",
+          "quantity": 2
+        },
+        {
+          "name": "氷の護符",
+          "quantity": 1
+        },
+        {
+          "name": "治療の巻物",
+          "quantity": 8
+        },
+        {
+          "name": "スライムの核",
+          "quantity": 5
+        },
+        {
+          "name": "ゴブリンの飾り物",
+          "quantity": 5
+        },
+        {
+          "name": "生命の果実",
+          "quantity": 3
+        },
+        {
+          "name": "刻印のハンマー",
+          "quantity": 1
+        },
+        {
+          "name": "剛力の霊薬",
+          "quantity": 1
+        },
+        {
+          "name": "錆びた王冠",
+          "quantity": 1
+        },
+        {
+          "name": "鉄壁の霊薬",
+          "quantity": 1
+        },
+        {
+          "name": "光苔",
+          "quantity": 1
+        },
+        {
+          "name": "残り火の欠片",
+          "quantity": 6
+        },
+        {
+          "name": "焼けた溶岩石",
+          "quantity": 1
+        },
+        {
+          "name": "火球術の巻物",
+          "quantity": 1
+        },
+        {
+          "name": "紅玉の護符",
+          "quantity": 1
+        },
+        {
+          "name": "虹晶の欠片",
+          "quantity": 1
+        },
+        {
+          "name": "叡智の霊薬",
+          "quantity": 1
+        },
+        {
+          "name": "色水晶の欠片",
+          "quantity": 2
+        },
+        {
+          "name": "精霊の泉の水",
+          "quantity": 1
+        },
+        {
+          "name": "獣の毛皮",
+          "quantity": 1
+        },
+        {
+          "name": "氷の結晶",
+          "quantity": 1
+        },
+        {
+          "name": "魔力の果実",
+          "quantity": 1
+        },
+        {
+          "name": "霜の欠片",
+          "quantity": 1
+        }
+      ],
+      "evidence": "reconstructed_from_previous_resolution_and_resource_events",
+      "reason": "非开战直接快照；按可观察流水重建，未记录的变化不可排除。"
+    },
+    "dragon_valley_loc": {
+      "hp": 40,
+      "max_hp": 40,
+      "healing_hp": 310.0,
+      "level": 5,
+      "inventory": [
+        {
+          "name": "鉄の剣",
+          "quantity": 1
+        },
+        {
+          "name": "革の鎧",
+          "quantity": 1
+        },
+        {
+          "name": "薬草",
+          "quantity": 7
+        },
+        {
+          "name": "携帯食",
+          "quantity": 2
+        },
+        {
+          "name": "氷の護符",
+          "quantity": 1
+        },
+        {
+          "name": "治療の巻物",
+          "quantity": 8
+        },
+        {
+          "name": "スライムの核",
+          "quantity": 5
+        },
+        {
+          "name": "ゴブリンの飾り物",
+          "quantity": 5
+        },
+        {
+          "name": "生命の果実",
+          "quantity": 3
+        },
+        {
+          "name": "刻印のハンマー",
+          "quantity": 1
+        },
+        {
+          "name": "剛力の霊薬",
+          "quantity": 1
+        },
+        {
+          "name": "錆びた王冠",
+          "quantity": 1
+        },
+        {
+          "name": "鉄壁の霊薬",
+          "quantity": 1
+        },
+        {
+          "name": "光苔",
+          "quantity": 1
+        },
+        {
+          "name": "残り火の欠片",
+          "quantity": 6
+        },
+        {
+          "name": "焼けた溶岩石",
+          "quantity": 1
+        },
+        {
+          "name": "火球術の巻物",
+          "quantity": 1
+        },
+        {
+          "name": "紅玉の護符",
+          "quantity": 1
+        },
+        {
+          "name": "虹晶の欠片",
+          "quantity": 1
+        },
+        {
+          "name": "叡智の霊薬",
+          "quantity": 1
+        },
+        {
+          "name": "色水晶の欠片",
+          "quantity": 2
+        },
+        {
+          "name": "精霊の泉の水",
+          "quantity": 1
+        },
+        {
+          "name": "獣の毛皮",
+          "quantity": 1
+        },
+        {
+          "name": "氷の結晶",
+          "quantity": 1
+        },
+        {
+          "name": "魔力の果実",
+          "quantity": 2
+        },
+        {
+          "name": "霜の欠片",
+          "quantity": 3
+        },
+        {
+          "name": "白い竜鱗",
+          "quantity": 1
+        },
+        {
+          "name": "迅速の霊薬",
+          "quantity": 1
+        },
+        {
+          "name": "氷鉄の大剣",
+          "quantity": 1
+        },
+        {
+          "name": "煤の精",
+          "quantity": 2
+        }
+      ],
+      "evidence": "reconstructed_from_previous_resolution_and_resource_events",
+      "reason": "非开战直接快照；按可观察流水重建，未记录的变化不可排除。"
+    }
+  },
+  "resource_ledger": [
+    {
+      "event_id": "db6f30cb3cad4e8ea6fdccba9b436ce4",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T06:52:37.443560+00:00",
+      "evidence": "system_log_text",
+      "change": 100
+    },
+    {
+      "event_id": "6829b200ab214aa7bb78c77d4199985e",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:52:37.443560+00:00",
+      "evidence": "system_log_text",
+      "item": "薬草",
+      "quantity": 1
+    },
+    {
+      "event_id": "71bda0d4bac4443db6a59b0a1980ef56",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:53:24.894800+00:00",
+      "evidence": "system_log_text",
+      "item": "聖水",
+      "quantity": 2
+    },
+    {
+      "event_id": "43353d02a2054f6cafd3ae5ece487bb0",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T06:54:54.606930+00:00",
+      "evidence": "system_log_text",
+      "change": -80
+    },
+    {
+      "event_id": "45e9a797d2ea4753a90c10eb562604a6",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:54:54.608137+00:00",
+      "evidence": "system_log_text",
+      "item": "氷の護符",
+      "quantity": 1
+    },
+    {
+      "event_id": "29307b08b85a4a129b61451a07d16321",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T06:55:04.297286+00:00",
+      "evidence": "system_log_text",
+      "change": 10
+    },
+    {
+      "event_id": "04ac886b38834df1a22e19484399a4b0",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:55:26.113297+00:00",
+      "evidence": "system_log_text",
+      "item": "薬草",
+      "quantity": 1
+    },
+    {
+      "event_id": "2ee4c0f95299464ab2a3d0b3b167eb52",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T06:56:05.627783+00:00",
+      "evidence": "system_log_text",
+      "change": 5
+    },
+    {
+      "event_id": "a1f103912f7e432ba477af6060c720c8",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:56:05.627783+00:00",
+      "evidence": "system_log_text",
+      "item": "薬草",
+      "quantity": 2
+    },
+    {
+      "event_id": "eb4ae4ca75e74d49a757e76af3a07f83",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:56:05.628320+00:00",
+      "evidence": "system_log_text",
+      "item": "治療の巻物",
+      "quantity": 1
+    },
+    {
+      "event_id": "5434080ec515451688139bceea56c624",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:56:05.628320+00:00",
+      "evidence": "system_log_text",
+      "item": "スライムの核",
+      "quantity": 1
+    },
+    {
+      "event_id": "a749fd56a4fe4159a97e99c617bce1e1",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T06:57:17.431363+00:00",
+      "evidence": "system_log_text",
+      "change": 5
+    },
+    {
+      "event_id": "4edd0f8d602a4dc1a39d87fbad9ee606",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:57:17.431363+00:00",
+      "evidence": "system_log_text",
+      "item": "治療の巻物",
+      "quantity": 1
+    },
+    {
+      "event_id": "88e6ce9b3e6b44ccb838de62d9e3a52a",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:57:17.431363+00:00",
+      "evidence": "system_log_text",
+      "item": "ゴブリンの飾り物",
+      "quantity": 1
+    },
+    {
+      "event_id": "8a8aba361970469e92d614e02f0e3052",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:57:37.908202+00:00",
+      "evidence": "system_log_text",
+      "item": "生命の果実",
+      "quantity": 1
+    },
+    {
+      "event_id": "fca56efa41b74cb08b2417644fbca2ee",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T06:58:24.556936+00:00",
+      "evidence": "system_log_text",
+      "change": 5
+    },
+    {
+      "event_id": "4505863f8f0147d399723e62e11aec68",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:58:24.556936+00:00",
+      "evidence": "system_log_text",
+      "item": "薬草",
+      "quantity": 1
+    },
+    {
+      "event_id": "ec181e9579804a4bb184e9f22f358d93",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:58:24.556936+00:00",
+      "evidence": "system_log_text",
+      "item": "ゴブリンの飾り物",
+      "quantity": 1
+    },
+    {
+      "event_id": "724d8e21009841399b9c60961f6f3e0f",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T06:59:21.394752+00:00",
+      "evidence": "system_log_text",
+      "change": 105
+    },
+    {
+      "event_id": "1d788aa8ed1d4a259c5e29d72d90263c",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:59:21.394752+00:00",
+      "evidence": "system_log_text",
+      "item": "治療の巻物",
+      "quantity": 2
+    },
+    {
+      "event_id": "8c81c1de4d284a59aa7c519db014c093",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:59:21.395585+00:00",
+      "evidence": "system_log_text",
+      "item": "刻印のハンマー",
+      "quantity": 1
+    },
+    {
+      "event_id": "dabcee9729074e1e83350562f9833317",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:59:21.395585+00:00",
+      "evidence": "system_log_text",
+      "item": "剛力の霊薬",
+      "quantity": 1
+    },
+    {
+      "event_id": "a0f0988467b44d9fbbda7842096c325a",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:59:21.395585+00:00",
+      "evidence": "system_log_text",
+      "item": "ゴブリンの飾り物",
+      "quantity": 2
+    },
+    {
+      "event_id": "8eafcf55643e40a6bbc8a406bdbbec5b",
+      "kind": "item_added",
+      "created_at": "2026-10-20T06:59:21.395585+00:00",
+      "evidence": "system_log_text",
+      "item": "ゴブリンの飾り物",
+      "quantity": 1
+    },
+    {
+      "event_id": "c0f30e8840714473815c4a83204cc97c",
+      "kind": "item_removed",
+      "created_at": "2026-10-20T06:59:50.346965+00:00",
+      "evidence": "system_log_text",
+      "item": "聖水",
+      "quantity": 1
+    },
+    {
+      "event_id": "fee295248b9b4f53b154b24d0727761f",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:00:11.532218+00:00",
+      "evidence": "system_log_text",
+      "change": 5
+    },
+    {
+      "event_id": "c67842ebf69f48dd8a9cb7b02d06ce7f",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:00:11.532218+00:00",
+      "evidence": "system_log_text",
+      "item": "薬草",
+      "quantity": 2
+    },
+    {
+      "event_id": "13d796a18529451685c0c7ed395dc536",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:00:11.532218+00:00",
+      "evidence": "system_log_text",
+      "item": "治療の巻物",
+      "quantity": 1
+    },
+    {
+      "event_id": "eee073d2220b44988b82bd28e8fbcac2",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:00:11.532218+00:00",
+      "evidence": "system_log_text",
+      "item": "スライムの核",
+      "quantity": 1
+    },
+    {
+      "event_id": "58c3556e77484f5da9203a1913fa087e",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:00:22.061434+00:00",
+      "evidence": "structured_event",
+      "before": 155,
+      "after": 160,
+      "change": 5
+    },
+    {
+      "event_id": "c55b8246b84445af90e733979bb8e4db",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:00:22.061434+00:00",
+      "evidence": "structured_event",
+      "item": "薬草",
+      "quantity": 2
+    },
+    {
+      "event_id": "0d7f8e643b0242cd898195a6be3a2f6b",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:00:22.061434+00:00",
+      "evidence": "structured_event",
+      "item": "治療の巻物",
+      "quantity": 1
+    },
+    {
+      "event_id": "45e4fba5d3fe4bbba997463fc4272c5b",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:00:22.061434+00:00",
+      "evidence": "structured_event",
+      "item": "スライムの核",
+      "quantity": 1
+    },
+    {
+      "event_id": "dcfeb55eace64bc8b78f62475496cb4b",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:00:45.908357+00:00",
+      "evidence": "structured_event",
+      "before": 160,
+      "after": 250,
+      "change": 90
+    },
+    {
+      "event_id": "325331451d7c4b81ab3687b790533c2b",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:00:45.908357+00:00",
+      "evidence": "structured_event",
+      "item": "錆びた王冠",
+      "quantity": 1
+    },
+    {
+      "event_id": "b198c32533ed4aac803e77eea522d110",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:00:45.908357+00:00",
+      "evidence": "structured_event",
+      "item": "鉄壁の霊薬",
+      "quantity": 1
+    },
+    {
+      "event_id": "dce94bc6fa104490901091a10deb01df",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:00:45.908357+00:00",
+      "evidence": "structured_event",
+      "item": "スライムの核",
+      "quantity": 2
+    },
+    {
+      "event_id": "f30713bc731948ef9339be67b369b774",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:01:33.648370+00:00",
+      "evidence": "structured_event",
+      "before": 250,
+      "after": 270,
+      "change": 20
+    },
+    {
+      "event_id": "b8a0b03ce8944cd4acde52ecd164d4c7",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:01:33.648370+00:00",
+      "evidence": "structured_event",
+      "item": "光苔",
+      "quantity": 1
+    },
+    {
+      "event_id": "0a5bf763220847789f82d33c01ec37f8",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:01:33.648370+00:00",
+      "evidence": "structured_event",
+      "item": "生命の果実",
+      "quantity": 1
+    },
+    {
+      "event_id": "6e3fb8ab2b594d5ba5c2faf42feebc5c",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:01:33.649446+00:00",
+      "evidence": "structured_event",
+      "item": "残り火の欠片",
+      "quantity": 1
+    },
+    {
+      "event_id": "0644122bfcc4498096ea06ac63690ec0",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:01:33.649446+00:00",
+      "evidence": "structured_event",
+      "item": "残り火の欠片",
+      "quantity": 1
+    },
+    {
+      "event_id": "8ab2dc1c0e7c43728bd45ec7daa3fecf",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:02:10.578425+00:00",
+      "evidence": "structured_event",
+      "before": 270,
+      "after": 290,
+      "change": 20
+    },
+    {
+      "event_id": "1158566baed64192b3c5d58d3049f5f2",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:02:10.579505+00:00",
+      "evidence": "structured_event",
+      "item": "残り火の欠片",
+      "quantity": 1
+    },
+    {
+      "event_id": "35afb44ba5e6441d91c4a911f99d4a3a",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:02:10.579505+00:00",
+      "evidence": "structured_event",
+      "item": "残り火の欠片",
+      "quantity": 1
+    },
+    {
+      "event_id": "27885eff8cd84a908bbab4ae06ea9b6b",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:02:10.579505+00:00",
+      "evidence": "structured_event",
+      "item": "残り火の欠片",
+      "quantity": 1
+    },
+    {
+      "event_id": "f3bd1bb087474535b1a122cb4be6ad8e",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:02:21.614955+00:00",
+      "evidence": "structured_event",
+      "item": "焼けた溶岩石",
+      "quantity": 1
+    },
+    {
+      "event_id": "7a6330b5d25e4ecdb5aafcf5eb7b5649",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:02:26.619592+00:00",
+      "evidence": "structured_event",
+      "item": "火球術の巻物",
+      "quantity": 2
+    },
+    {
+      "event_id": "d599b0345b584dc8a1041c132dab1fbf",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:02:26.620670+00:00",
+      "evidence": "structured_event",
+      "item": "紅玉の護符",
+      "quantity": 1
+    },
+    {
+      "event_id": "a38d6d86c64b402e8e91d7caf689ec81",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:04:04.014876+00:00",
+      "evidence": "structured_event",
+      "before": 290,
+      "after": 480,
+      "change": 190
+    },
+    {
+      "event_id": "10b08a3c97934156bcf5d966e29736a4",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:04:04.016431+00:00",
+      "evidence": "structured_event",
+      "item": "虹晶の欠片",
+      "quantity": 1
+    },
+    {
+      "event_id": "7ffc59985a99477b971030442e9c1381",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:04:04.016431+00:00",
+      "evidence": "structured_event",
+      "item": "叡智の霊薬",
+      "quantity": 1
+    },
+    {
+      "event_id": "b870670bfefd45758f46c0f21aa2fdfe",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:04:04.017479+00:00",
+      "evidence": "structured_event",
+      "item": "色水晶の欠片",
+      "quantity": 2
+    },
+    {
+      "event_id": "efc5c3e886f14041b838a951604e1d9e",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:04:19.748597+00:00",
+      "evidence": "structured_event",
+      "item": "精霊の泉の水",
+      "quantity": 1
+    },
+    {
+      "event_id": "ebe0142f4da6449c855f8fe361cefe2c",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:05:18.006379+00:00",
+      "evidence": "structured_event",
+      "before": 480,
+      "after": 495,
+      "change": 15
+    },
+    {
+      "event_id": "ea2a2486434c4b1996365eaf6273bbee",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:05:18.006379+00:00",
+      "evidence": "structured_event",
+      "item": "生命の果実",
+      "quantity": 1
+    },
+    {
+      "event_id": "b4f211c3e0a64502a7cd59de2a21568a",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:05:18.006379+00:00",
+      "evidence": "structured_event",
+      "item": "獣の毛皮",
+      "quantity": 1
+    },
+    {
+      "event_id": "3f08d13ca0da4779a51c9fcfc50b861f",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:05:55.169097+00:00",
+      "evidence": "structured_event",
+      "before": 495,
+      "after": 501,
+      "change": 6
+    },
+    {
+      "event_id": "ad51ad640e3a476aaac51cb62576b323",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:05:55.169097+00:00",
+      "evidence": "structured_event",
+      "item": "治療の巻物",
+      "quantity": 2
+    },
+    {
+      "event_id": "a657ff6d4a414e8398c27ba4a0c59049",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:05:55.169097+00:00",
+      "evidence": "structured_event",
+      "item": "残り火の欠片",
+      "quantity": 1
+    },
+    {
+      "event_id": "b16c9aa87a364fc28ae2fee3bf9bc0c9",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:06:27.519338+00:00",
+      "evidence": "structured_event",
+      "before": 501,
+      "after": 516,
+      "change": 15
+    },
+    {
+      "event_id": "893832726e8f4d4fbf624a5494e93c30",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:06:27.520338+00:00",
+      "evidence": "structured_event",
+      "item": "氷の結晶",
+      "quantity": 1
+    },
+    {
+      "event_id": "59428e80142d489a93530ce50ba54787",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:06:27.521339+00:00",
+      "evidence": "structured_event",
+      "item": "魔力の果実",
+      "quantity": 1
+    },
+    {
+      "event_id": "19db00661e5444d091480be0bad2b3da",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:06:27.521339+00:00",
+      "evidence": "structured_event",
+      "item": "霜の欠片",
+      "quantity": 1
+    },
+    {
+      "event_id": "436785b18b264fe0b7f0032bb30ee1b1",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:06:39.344222+00:00",
+      "evidence": "structured_event",
+      "before": 516,
+      "after": 566,
+      "change": 50
+    },
+    {
+      "event_id": "43a66379596345eb8e833984193273e5",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:06:39.345222+00:00",
+      "evidence": "structured_event",
+      "item": "白い竜鱗",
+      "quantity": 1
+    },
+    {
+      "event_id": "f3599915ce244c0eaee53964604dade7",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:06:39.345222+00:00",
+      "evidence": "structured_event",
+      "item": "迅速の霊薬",
+      "quantity": 1
+    },
+    {
+      "event_id": "8c778837c8b14dfebac8da8cafaff52c",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:06:39.345222+00:00",
+      "evidence": "structured_event",
+      "item": "霜の欠片",
+      "quantity": 2
+    },
+    {
+      "event_id": "e31bc1d6cc814783983b2939a201db3d",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:06:47.675397+00:00",
+      "evidence": "structured_event",
+      "item": "氷鉄の大剣",
+      "quantity": 1
+    },
+    {
+      "event_id": "e310a392b78c4c979ab7b7a400bfabf8",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:07:04.544358+00:00",
+      "evidence": "structured_event",
+      "before": 566,
+      "after": 601,
+      "change": 35
+    },
+    {
+      "event_id": "360a9969c9b14758b4e5d1b809a41db0",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:07:04.544358+00:00",
+      "evidence": "structured_event",
+      "item": "魔力の果実",
+      "quantity": 1
+    },
+    {
+      "event_id": "2f885cd335584cdbae9b4ae54d964f57",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:07:04.544358+00:00",
+      "evidence": "structured_event",
+      "item": "煤の精",
+      "quantity": 1
+    },
+    {
+      "event_id": "0ba0548661bd4eddadeb23b4da592f29",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:07:04.544358+00:00",
+      "evidence": "structured_event",
+      "item": "煤の精",
+      "quantity": 1
+    },
+    {
+      "event_id": "bf2bef0fb7ea4b699030e7b30d8bf616",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:08:09.028199+00:00",
+      "evidence": "structured_event",
+      "before": 601,
+      "after": 701,
+      "change": 100
+    },
+    {
+      "event_id": "f8f633549a1d4aef898345cb4c566fb5",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:08:09.028199+00:00",
+      "evidence": "structured_event",
+      "item": "紅竜の炎核",
+      "quantity": 1
+    },
+    {
+      "event_id": "18ba7df34f994c798f88911ae61e20a6",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:09:01.002430+00:00",
+      "evidence": "structured_event",
+      "item": "治療の巻物",
+      "quantity": 1
+    },
+    {
+      "event_id": "3ff03d043d664433865909349108e55c",
+      "kind": "item_removed",
+      "created_at": "2026-10-20T07:09:01.003429+00:00",
+      "evidence": "structured_event",
+      "item": "光苔",
+      "quantity": 1
+    },
+    {
+      "event_id": "9428a56fead74cedbc26504a227106f0",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:10:06.044793+00:00",
+      "evidence": "structured_event",
+      "before": 701,
+      "after": 726,
+      "change": 25
+    },
+    {
+      "event_id": "531c4ea33ffb42f082bb1a68b67ad870",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:10:06.044793+00:00",
+      "evidence": "structured_event",
+      "item": "魔力の果実",
+      "quantity": 1
+    },
+    {
+      "event_id": "3d2ada789bc84785ad6c8a0ec6797f1c",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:10:06.046298+00:00",
+      "evidence": "structured_event",
+      "item": "霜の欠片",
+      "quantity": 1
+    },
+    {
+      "event_id": "2d53802dac734db4b8d5125c78dbaa83",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:10:06.046298+00:00",
+      "evidence": "structured_event",
+      "item": "霜の欠片",
+      "quantity": 1
+    },
+    {
+      "event_id": "a1b325a2d74a48a997b2947c8c1d3716",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:10:14.460777+00:00",
+      "evidence": "structured_event",
+      "item": "白竜の日誌",
+      "quantity": 1
+    },
+    {
+      "event_id": "09182ce4e4634f80a109f69ce3f97b12",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:10:18.091816+00:00",
+      "evidence": "structured_event",
+      "item": "霜封じの護符",
+      "quantity": 1
+    },
+    {
+      "event_id": "6ad9112e2acb4846bde1461891987fc9",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:10:51.130909+00:00",
+      "evidence": "structured_event",
+      "item": "アダマンタイトの鎧",
+      "quantity": 1
+    },
+    {
+      "event_id": "ac63191288bc437f81415fb53afa40ac",
+      "kind": "item_removed",
+      "created_at": "2026-10-20T07:10:51.131934+00:00",
+      "evidence": "structured_event",
+      "item": "刻印のハンマー",
+      "quantity": 1
+    },
+    {
+      "event_id": "10f9d0b85391471a92abe6460fb68652",
+      "kind": "gold_changed",
+      "created_at": "2026-10-20T07:10:55.350833+00:00",
+      "evidence": "structured_event",
+      "before": 726,
+      "after": 706,
+      "change": -20
+    },
+    {
+      "event_id": "15942aff598b4c4abb1d4d03bdebe8d0",
+      "kind": "item_added",
+      "created_at": "2026-10-20T07:10:55.350833+00:00",
+      "evidence": "structured_event",
+      "item": "氷の護符",
+      "quantity": 1
+    },
+    {
+      "event_id": "9de4e7f7b27a40189ea5409ad4666e01",
+      "kind": "item_removed",
+      "created_at": "2026-10-20T07:10:55.350833+00:00",
+      "evidence": "structured_event",
+      "item": "氷の結晶",
+      "quantity": 1
+    }
+  ],
+  "healing_items": {
+    "obtained_observed": {
+      "薬草": 9,
+      "治療の巻物": 9
+    },
+    "removed_observed": {},
+    "used": null,
+    "reason": "移除不等于使用，且日志可能截断。",
+    "final_healing_hp": 340.0
+  },
+  "gold": {
+    "earned_observed": 806,
+    "spent_observed": 100,
+    "final": 706,
+    "coverage": "system_logs_and_structured_events_deduplicated"
+  },
+  "checks": {
+    "count": 14,
+    "successes": 10,
+    "success_rate": 0.7142857142857143,
+    "failures": [
+      {
+        "expression": "1d20+dex",
+        "rolls": [
+          1
+        ],
+        "total": 1,
+        "created_at": "2026-10-20T06:56:57.069113+00:00",
+        "skill": "隠密",
+        "proficiency_bonus": 0,
+        "advantage": null,
+        "advantage_reasons": [],
+        "critical_enabled": true,
+        "selected_roll": 1,
+        "selected_index": 0,
+        "critical_success": false,
+        "critical_failure": true,
+        "dc": 10,
+        "success": false,
+        "base_total": 1,
+        "attr_mod": 0,
+        "attr_key": "dex",
+        "outcome": "critical_failure"
+      },
+      {
+        "expression": "1d20+dex",
+        "rolls": [
+          2
+        ],
+        "total": 2,
+        "created_at": "2026-10-20T06:57:08.039367+00:00",
+        "skill": "隠密",
+        "proficiency_bonus": 0,
+        "advantage": null,
+        "advantage_reasons": [
+          "見張りの交代を知っている",
+          "見張りが警戒している"
+        ],
+        "critical_enabled": true,
+        "selected_roll": 2,
+        "selected_index": 0,
+        "critical_success": false,
+        "critical_failure": false,
+        "dc": 10,
+        "success": false,
+        "base_total": 2,
+        "attr_mod": 0,
+        "attr_key": "dex",
+        "outcome": "failure",
+        "crucial": true,
+        "crucial_reason": "combat"
+      },
+      {
+        "expression": "1d20+wis",
+        "rolls": [
+          4
+        ],
+        "total": 4,
+        "created_at": "2026-10-20T07:04:26.555248+00:00",
+        "skill": "信仰",
+        "proficiency_bonus": 0,
+        "advantage": null,
+        "advantage_reasons": [],
+        "critical_enabled": true,
+        "selected_roll": 4,
+        "selected_index": 0,
+        "critical_success": false,
+        "critical_failure": false,
+        "dc": 10,
+        "success": false,
+        "base_total": 4,
+        "attr_mod": 0,
+        "attr_key": "wis",
+        "outcome": "failure"
+      },
+      {
+        "expression": "1d20+dex",
+        "rolls": [
+          5
+        ],
+        "total": 5,
+        "created_at": "2026-10-20T07:09:43.026669+00:00",
+        "skill": "隠密",
+        "proficiency_bonus": 0,
+        "advantage": null,
+        "advantage_reasons": [],
+        "critical_enabled": true,
+        "selected_roll": 5,
+        "selected_index": 0,
+        "critical_success": false,
+        "critical_failure": false,
+        "dc": 12,
+        "success": false,
+        "base_total": 5,
+        "attr_mod": 0,
+        "attr_key": "dex",
+        "outcome": "failure"
+      }
+    ],
+    "attributed": [
+      {
+        "action": "sneak_crystal",
+        "outcome": "success",
+        "created_at": "2026-10-20T07:02:39.113236+00:00",
+        "failure_cost": null,
+        "reason": "资源事件缺少 action_id，不能作因果归属。"
+      },
+      {
+        "action": "commune_spring",
+        "outcome": "failure",
+        "created_at": "2026-10-20T07:04:26.556752+00:00",
+        "failure_cost": null,
+        "reason": "资源事件缺少 action_id，不能作因果归属。"
+      },
+      {
+        "action": "approach_burning_village_carefully",
+        "outcome": "success",
+        "created_at": "2026-10-20T07:05:43.042291+00:00",
+        "failure_cost": null,
+        "reason": "资源事件缺少 action_id，不能作因果归属。"
+      },
+      {
+        "action": "cross_lava_bridge",
+        "outcome": "success",
+        "created_at": "2026-10-20T07:07:14.549450+00:00",
+        "failure_cost": null,
+        "reason": "资源事件缺少 action_id，不能作因果归属。"
+      },
+      {
+        "action": "bless_before_report",
+        "outcome": "critical_success",
+        "created_at": "2026-10-20T07:08:37.949461+00:00",
+        "failure_cost": null,
+        "reason": "资源事件缺少 action_id，不能作因果归属。"
+      },
+      {
+        "action": "sneak_into_mansion",
+        "outcome": "failure",
+        "created_at": "2026-10-20T07:09:43.031612+00:00",
+        "failure_cost": null,
+        "reason": "资源事件缺少 action_id，不能作因果归属。"
+      }
+    ]
+  },
+  "equipment_changes": {
+    "count_observed": 2,
+    "events": [
+      {
+        "created_at": "2026-10-20T07:02:26.620670+00:00",
+        "item_id": "ruby_charm",
+        "slot": "accessory",
+        "removed": null
+      },
+      {
+        "created_at": "2026-10-20T07:10:51.131934+00:00",
+        "item_id": "adamantite_armor",
+        "slot": "armor",
+        "removed": "革の鎧"
+      }
+    ]
+  },
+  "rests": [
+    {
+      "action": "rest_at_elf_spring",
+      "created_at": "2026-10-20T07:00:05.839213+00:00",
+      "evidence": "exact_user_choice",
+      "location": "elf_spring"
+    },
+    {
+      "action": "rest_at_elf_spring",
+      "created_at": "2026-10-20T07:00:57.490326+00:00",
+      "evidence": "action_resolved",
+      "location": "elf_spring"
+    },
+    {
+      "action": "rest_at_elf_spring",
+      "created_at": "2026-10-20T07:04:44.470807+00:00",
+      "evidence": "action_resolved",
+      "location": "elf_spring"
+    }
+  ],
+  "preparations": [
+    {
+      "encounter": "dragon_valley_loc",
+      "preparation": "ruby_charm",
+      "acquired": true,
+      "used_anywhere_observed": true,
+      "used_in_target_battle": true,
+      "acquired_by_target_battle": true,
+      "usage_evidence": "end_equipment_rollback_after_target; exploration_only_equipping"
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "preparation": "adamantite_armor",
+      "acquired": true,
+      "used_anywhere_observed": true,
+      "used_in_target_battle": false,
+      "acquired_by_target_battle": false,
+      "usage_evidence": "end_equipment_rollback_after_target; exploration_only_equipping"
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "preparation": "purification",
+      "acquired": true,
+      "used_anywhere_observed": null,
+      "used_in_target_battle": null,
+      "acquired_by_target_battle": false
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "preparation": "ice_iron_greatsword",
+      "acquired": true,
+      "used_anywhere_observed": false,
+      "used_in_target_battle": false,
+      "acquired_by_target_battle": true,
+      "usage_evidence": "end_equipment_rollback_after_target; exploration_only_equipping"
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "preparation": "fire_bat_dragon",
+      "acquired": true,
+      "used_anywhere_observed": null,
+      "used_in_target_battle": null,
+      "acquired_by_target_battle": null
+    },
+    {
+      "encounter": "dragon_valley_loc",
+      "preparation": "fire_bat_empowered",
+      "acquired": true,
+      "used_anywhere_observed": true,
+      "used_in_target_battle": null,
+      "acquired_by_target_battle": null
+    }
+  ],
+  "comparison": {
+    "nearest": "P2",
+    "status": "proposed",
+    "features": {
+      "sidequests": 6,
+      "cave": true,
+      "fort": true,
+      "purification": false
+    },
+    "reason": "按可观察支线行为归类；洞窟/砦超过 P0b 的三次交互预算，未完成全部准备链。",
+    "rows": [
+      {
+        "archetype": "P0a",
+        "character": "hero",
+        "n": 500,
+        "completion_rate": 0,
+        "ignis_rate": 0,
+        "terminal_rate": 1,
+        "ignis_rounds_median": 13,
+        "levels_mean": {
+          "castle": 1,
+          "dark_forest_loc": 1,
+          "dragon_valley_loc": 5,
+          "elf_spring": 1,
+          "forest_exit": 2,
+          "ian_ice_katana_aftermath": 4,
+          "valley_entrance": 4,
+          "village_frozen_clue": 4
+        },
+        "failures": {
+          "valley_entrance": 27,
+          "slime_king_battle": 348,
+          "dragon_valley_loc": 97,
+          "ice_elemental_encounter": 15,
+          "village_fire_elemental": 7,
+          "frost_wolf_battle": 6
+        }
+      },
+      {
+        "archetype": "P0b",
+        "character": "hero",
+        "n": 500,
+        "completion_rate": 0.502,
+        "ignis_rate": 0.502,
+        "terminal_rate": 1,
+        "ignis_rounds_median": 11.0,
+        "levels_mean": {
+          "castle": 1,
+          "dark_forest_loc": 1,
+          "dragon_valley_loc": 5,
+          "elf_spring": 1,
+          "forest_exit": 2,
+          "ian_ice_katana_aftermath": 4,
+          "royal_gate": 5,
+          "valley_entrance": 4,
+          "village_frozen_clue": 4
+        },
+        "failures": {
+          "dragon_valley_loc": 57,
+          "slime_king_battle": 123,
+          "valley_entrance": 57,
+          "ice_elemental_encounter": 5,
+          "village_fire_elemental": 6,
+          "frost_wolf_battle": 1
+        }
+      },
+      {
+        "archetype": "P1",
+        "character": "hero",
+        "n": 500,
+        "completion_rate": 0.52,
+        "ignis_rate": 0.52,
+        "terminal_rate": 1,
+        "ignis_rounds_median": 11.0,
+        "levels_mean": {
+          "castle": 1,
+          "dark_forest_loc": 1,
+          "dragon_valley_loc": 5,
+          "elf_spring": 1,
+          "forest_exit": 2,
+          "ian_ice_katana_aftermath": 4,
+          "royal_gate": 5,
+          "valley_entrance": 4,
+          "village_frozen_clue": 4
+        },
+        "failures": {
+          "slime_king_battle": 108,
+          "valley_entrance": 62,
+          "dragon_valley_loc": 62,
+          "village_fire_elemental": 5,
+          "ice_elemental_encounter": 3
+        }
+      },
+      {
+        "archetype": "P2",
+        "character": "hero",
+        "n": 500,
+        "completion_rate": 0.168,
+        "ignis_rate": 0.2,
+        "terminal_rate": 0.894,
+        "ignis_rounds_median": 10,
+        "levels_mean": {
+          "castle": 1,
+          "dark_forest_loc": 1,
+          "draco_battle": 5,
+          "dragon_valley_loc": 5,
+          "elf_spring": 3,
+          "forest_exit": 3,
+          "ian_ice_katana_aftermath": 4,
+          "royal_gate": 5,
+          "valley_entrance": 4,
+          "village_frozen_clue": 4
+        },
+        "failures": {
+          "goblin_fort_fourth": 337,
+          "valley_entrance": 9,
+          "cave_lava_room": 16,
+          "cave_heat_corridor": 6,
+          "cave_crystal_corridor": 17,
+          "cave_prism_tree": 14,
+          "draco_battle": 16,
+          "dragon_valley_loc": 1
+        }
+      },
+      {
+        "archetype": "P3",
+        "character": "hero",
+        "n": 500,
+        "completion_rate": 0.02,
+        "ignis_rate": 0.088,
+        "terminal_rate": 0.876,
+        "ignis_rounds_median": 11,
+        "levels_mean": {
+          "castle": 1,
+          "dark_forest_loc": 1,
+          "draco_battle": 5,
+          "dragon_valley_loc": 5,
+          "elf_spring": 3,
+          "forest_exit": 3,
+          "ian_ice_katana_aftermath": 4,
+          "royal_gate": 5,
+          "valley_entrance": 4,
+          "village_frozen_clue": 4
+        },
+        "failures": {
+          "merchant_battle": 50,
+          "goblin_fort_fourth": 335,
+          "cave_crystal_corridor": 13,
+          "cave_prism_tree": 19,
+          "valley_entrance": 3,
+          "goblin_fort_first_second": 2,
+          "dragon_valley_return": 1,
+          "xanxus_phantom_battle": 7,
+          "cave_lava_room": 10,
+          "grave_chapel": 8,
+          "cave_heat_corridor": 5,
+          "draco_battle": 25,
+          "mansion_corridor": 8,
+          "dragon_valley_loc": 1,
+          "ice_elemental_encounter": 3
+        }
+      },
+      {
+        "archetype": "P2s",
+        "character": "hero",
+        "n": 500,
+        "completion_rate": 0.2,
+        "ignis_rate": 0.222,
+        "terminal_rate": 0.946,
+        "ignis_rounds_median": 11,
+        "levels_mean": {
+          "castle": 1,
+          "dark_forest_loc": 1,
+          "draco_battle": 5,
+          "dragon_valley_loc": 5,
+          "elf_spring": 3,
+          "forest_exit": 3,
+          "ian_ice_katana_aftermath": 4,
+          "royal_gate": 5,
+          "valley_entrance": 4,
+          "village_frozen_clue": 4
+        },
+        "failures": {
+          "goblin_fort_fourth": 351,
+          "cave_prism_tree": 11,
+          "cave_lava_room": 7,
+          "draco_battle": 11,
+          "cave_crystal_corridor": 6,
+          "valley_entrance": 11,
+          "cave_heat_corridor": 3
+        }
+      },
+      {
+        "archetype": "P0g",
+        "character": "hero",
+        "n": 500,
+        "completion_rate": 0.502,
+        "ignis_rate": 0.502,
+        "terminal_rate": 1,
+        "ignis_rounds_median": 11.0,
+        "levels_mean": {
+          "castle": 1,
+          "dark_forest_loc": 1,
+          "dragon_valley_loc": 5,
+          "elf_spring": 1,
+          "forest_exit": 2,
+          "ian_ice_katana_aftermath": 4,
+          "royal_gate": 5,
+          "valley_entrance": 4,
+          "village_frozen_clue": 4
+        },
+        "failures": {
+          "dragon_valley_loc": 57,
+          "slime_king_battle": 123,
+          "valley_entrance": 57,
+          "ice_elemental_encounter": 5,
+          "village_fire_elemental": 6,
+          "frost_wolf_battle": 1
+        }
+      }
+    ],
+    "completed": true
+  },
+  "engine_recording_gaps": [
+    "combat_id 关联的完整战斗开始/结束快照、遭遇 ID、类别和等级；event_log 当前会截断。",
+    "逐回合玩家行动 ID、目标、消耗、伤害/回复，以及状态/冷却；recent_events 只有末尾文本。",
+    "道具移除的原因（使用、交易或剧情交付）及其 action_id/combat_id；移除不能直接算回复使用。",
+    "带 action_id 的完整判定和其失败资源变化/后续战斗关联；dice_log 本身没有地点或 action_id。",
+    "完整配装/同伴/休息流水，以及准备项在具体战斗中生效的记录。",
+    "存档所用引擎版本及剧本指纹；区域回退快照不是某场 Boss 的开战快照。"
+  ],
+  "save_sha256": "60075b6de2d3f970b252fa9188920130accb7143244f26982bc449fab05489e0"
+}
