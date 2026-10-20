@@ -194,10 +194,14 @@ def create_session(
     character_overrides: Optional[dict[str, Any]] = None,
     gm_mode: Optional[str] = None,
     character_id: Optional[str] = None,
+    difficulty: Optional[str] = None,
 ) -> dict[str, Any]:
+    from .difficulty import apply_difficulty
+
+    difficulty = "normal" if difficulty is None else difficulty
     normalized_gm_mode = _normalize_gm_mode(gm_mode)
     path = _scenario_path_for_gm_mode(resolve_local_path(scenario_path), normalized_gm_mode)
-    scenario_pack = load_scenario_pack(path)
+    scenario_pack = apply_difficulty(load_scenario_pack(path), difficulty)
     character = deepcopy(DEFAULT_CHARACTER)
 
     if character_id:
@@ -221,6 +225,7 @@ def create_session(
         "scenario_path": str(path),
         "scenario_title": str(meta.get("title") or path.stem),
         "gm_mode": normalized_gm_mode,
+        "difficulty": difficulty,
         "scenario_pack": scenario_pack,
         "world_state": {
             "scene_id": str(meta.get("initial_scene") or "start"),
@@ -280,11 +285,13 @@ def load_session(session_id: str) -> dict[str, Any]:
     if not path.exists():
         raise FileNotFoundError(f"Session not found: {session_id}")
     session = json.loads(path.read_text(encoding="utf-8"))
+    legacy_difficulty = "difficulty" not in session
+    session.setdefault("difficulty", "baby")
     ensure_world_state(session)
     session.setdefault("event_log", [])
     session.setdefault("area_snapshots", {})
     session.setdefault("retry_count", 0)
-    changed = _refresh_session_scenario_pack(session)
+    changed = _refresh_session_scenario_pack(session) or legacy_difficulty
     if session.get('scenario_pack', {}).get('meta', {}).get('chapter5_v5') and current_scene_id(session) == 'castle_return':
         if not session.setdefault('flags', {}).get('returned_to_capital'):
             session['flags']['returned_to_capital'] = True
@@ -329,6 +336,8 @@ def load_session(session_id: str) -> dict[str, Any]:
 
 
 def _refresh_session_scenario_pack(session: dict[str, Any]) -> bool:
+    from .difficulty import apply_difficulty
+
     scenario_path = str(session.get("scenario_path") or "").strip()
     current_pack = session.get("scenario_pack") if isinstance(session.get("scenario_pack"), dict) else {}
     current_revision = str((current_pack.get("meta") or {}).get("content_revision") or "")
@@ -336,8 +345,9 @@ def _refresh_session_scenario_pack(session: dict[str, Any]) -> bool:
         return False
     try:
         latest_pack = load_scenario_pack(HOST_ROOT / "prompt" / "processed" / Path(scenario_path).name)
-    except (OSError, ValueError, json.JSONDecodeError):
+    except (OSError, json.JSONDecodeError):
         return False
+    latest_pack = apply_difficulty(latest_pack, session.get("difficulty", "baby"))
     latest_revision = str((latest_pack.get("meta") or {}).get("content_revision") or "")
     if not latest_revision or current_revision >= latest_revision:
         return False
@@ -440,11 +450,14 @@ def save_session(session: dict[str, Any]) -> None:
 
 
 def public_session(session: dict[str, Any]) -> dict[str, Any]:
+    from .difficulty import DIFFICULTY_LABELS
     from .npc_combat import gone
 
     world = ensure_world_state(session)
     combat = public_combat(session)
     public = deepcopy(session)
+    public["difficulty"] = session.get("difficulty", "baby")
+    public["difficulty_label"] = DIFFICULTY_LABELS[public["difficulty"]]
     public.pop("scenario_prompt", None)
     public.pop("scenario_pack", None)
     public.pop("last_intent_resolution", None)

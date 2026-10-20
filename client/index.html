@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/static/styles.css?v=20261019-dice-visual-b" />
+    <link rel="stylesheet" href="/static/styles.css?v=20261020-difficulty-047" />
     <link rel="preload" as="image" href="/static/images/dice_ruby.webp" />
     <link rel="preload" as="image" href="/static/images/dice_ruby_cracked.webp" />
     <link rel="preload" as="image" href="/static/images/dice_tray.webp" />
@@ -24,6 +24,18 @@
         <p class="start-subtitle">AIのGMと紡ぐ、あなただけの冒険</p>
         <div class="start-form">
           <div id="characterCards" class="char-cards" role="group" aria-label="キャラクター"></div>
+          <fieldset class="difficulty-select">
+            <legend class="start-label">難易度</legend>
+            <!-- TODO(design): 難易度の説明文を確定する。 -->
+            <label class="difficulty-option">
+              <input type="radio" name="difficulty" value="baby">
+              <span><strong>やさしい</strong><small>（仮）説明文は設計担当が提供</small></span>
+            </label>
+            <label class="difficulty-option">
+              <input type="radio" name="difficulty" value="normal" checked>
+              <span><strong>ふつう</strong><small>（仮）説明文は設計担当が提供</small></span>
+            </label>
+          </fieldset>
           <div class="start-identity">
             <div class="start-name">
               <label for="heroNameInput" class="start-label">名前</label>
@@ -256,6 +268,7 @@
           <aside class="sidebar">
             <h2 id="characterName" class="char-name-display">アルス</h2>
             <p id="characterDescription">世界を救うため旅立つ若き勇者。</p>
+            <p id="sessionDifficulty" class="session-difficulty"></p>
             <div id="companionInfo" class="companion-info" hidden></div>
             <div class="meters">
               <div class="meter-row"><span class="meter-label">HP</span><div class="meter hp-meter"><i id="hpBar"></i></div><strong id="hpText">20/20</strong></div>
@@ -304,7 +317,7 @@
       </div>
     </main>
 
-    <script src="/static/battle-fx.js?v=20261014-companions"></script>
-    <script src="/static/app.js?v=20261019-dice-banner"></script>
+    <script src="/static/battle-fx.js?v=20261020-difficulty-047"></script>
+    <script src="/static/app.js?v=20261020-difficulty-047"></script>
   </body>
 </html>

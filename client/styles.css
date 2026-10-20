@@ -96,6 +96,38 @@ button, select, textarea, input { font: inherit; }
 
 .start-eyebrow { letter-spacing: .3em; }
 
+.difficulty-select {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  text-align: left;
+}
+.difficulty-select legend { margin-bottom: 8px; }
+.difficulty-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  cursor: pointer;
+}
+.difficulty-option:has(input:checked) {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+}
+.difficulty-option:focus-within { outline: 2px solid var(--gold); outline-offset: 2px; }
+.difficulty-option input { accent-color: var(--gold); }
+.difficulty-option strong, .difficulty-option small { display: block; }
+.difficulty-option small, .session-difficulty { color: var(--text-dim); font-size: 12px; }
+@media (max-width: 520px) {
+  .difficulty-select { grid-template-columns: 1fr; }
+}
+
 .start-title {
   font-size: 48px;
   line-height: 1.2;

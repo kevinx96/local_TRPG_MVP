@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-19-ruby-045-npc-combat",
+    "content_revision": "2026-10-20-difficulty-047",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -40,7 +40,21 @@
     "checks_v2_v040": true,
     "checks_e": true,
     "npc_combat_v041": true,
-    "npc_combat_v045": true
+    "npc_combat_v045": true,
+    "difficulty": {
+      "default": "normal",
+      "base": "baby",
+      "modes": [
+        {
+          "id": "baby",
+          "label": "やさしい"
+        },
+        {
+          "id": "normal",
+          "label": "ふつう"
+        }
+      ]
+    }
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -26400,5 +26414,8 @@
       },
       "status": "final"
     }
-  ]
+  ],
+  "difficulty_overlays": {
+    "normal": []
+  }
 }

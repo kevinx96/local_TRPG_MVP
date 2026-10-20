@@ -83,6 +83,7 @@ class CreateSessionRequest(BaseModel):
     gm_mode: Optional[str] = None
     character_id: Optional[str] = None
     character: Optional[dict[str, Any]] = None
+    difficulty: Optional[str] = None
 
 
 class TurnRequest(BaseModel):
@@ -414,6 +415,7 @@ def api_create_session(request: CreateSessionRequest) -> dict[str, Any]:
             request.character,
             gm_mode=request.gm_mode,
             character_id=request.character_id,
+            difficulty=request.difficulty,
         )
         session = load_session(session_public["id"])
         if session.get("needs_opening"):

@@ -63,6 +63,9 @@ def legacy_text_pack(path: Path) -> dict[str, Any]:
 
 
 def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) -> dict[str, Any]:
+    from .difficulty import validate_difficulty
+
+    validate_difficulty(raw)
     meta_raw = raw.get("meta") if isinstance(raw.get("meta"), dict) else {}
     meta = {key: deepcopy(value) for key, value in meta_raw.items()}
     meta.update({
@@ -132,6 +135,9 @@ def normalize_scenario_pack(raw: dict[str, Any], path: Optional[Path] = None) ->
     pack['item_flags'] = deepcopy(raw.get('item_flags', {}))
     pack["npc_combat"] = deepcopy(raw.get("npc_combat", {}))
     pack["npc_absence_texts"] = deepcopy(raw.get("npc_absence_texts", []))
+    for key in ("difficulty_overlays", "progression", "exp_table"):
+        if key in raw:
+            pack[key] = deepcopy(raw[key])
     return pack
 
 
@@ -200,7 +206,7 @@ def select_scenario_context(session: dict[str, Any], player_text: str = "") -> d
     )
 
     context: dict[str, Any] = {
-        "meta": pack.get("meta", {}),
+        "meta": {key: value for key, value in pack.get("meta", {}).items() if key != "difficulty"},
         "rules": pack.get("rules", []),
         "current_scene": _trim_record(_public_record(scene)),
         "matched": matched,

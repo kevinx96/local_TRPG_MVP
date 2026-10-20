@@ -284,6 +284,47 @@
         },
         "initial_scene": {
           "type": "string"
+        },
+        "difficulty": {
+          "type": "object",
+          "required": [
+            "default",
+            "base",
+            "modes"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "default": {
+              "const": "normal"
+            },
+            "base": {
+              "const": "baby"
+            },
+            "modes": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "label"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "enum": [
+                      "baby",
+                      "normal"
+                    ]
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -827,6 +868,72 @@
           "requirements": {},
           "text": {
             "type": "string"
+          }
+        }
+      }
+    },
+    "difficulty_overlays": {
+      "type": "object",
+      "required": [
+        "normal"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "normal": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "entity",
+              "id",
+              "path"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "entity": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "set": {
+                "type": [
+                  "number",
+                  "string",
+                  "boolean",
+                  "null"
+                ]
+              },
+              "add": {
+                "type": "number"
+              },
+              "mul": {
+                "type": "number"
+              }
+            },
+            "oneOf": [
+              {
+                "required": [
+                  "set"
+                ]
+              },
+              {
+                "required": [
+                  "add"
+                ]
+              },
+              {
+                "required": [
+                  "mul"
+                ]
+              }
+            ]
           }
         }
       }
@@ -1439,7 +1546,18 @@
       "additionalProperties": true,
       "properties": {
         "skill": {
-          "enum": ["運動", "軽業", "隠密", "知覚", "洞察", "説得", "信仰", "調査", "魔法学", "はったり"]
+          "enum": [
+            "運動",
+            "軽業",
+            "隠密",
+            "知覚",
+            "洞察",
+            "説得",
+            "信仰",
+            "調査",
+            "魔法学",
+            "はったり"
+          ]
         },
         "advantage": {
           "$ref": "#/$defs/check_conditions"
@@ -1459,10 +1577,18 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["requirements", "reason"],
+        "required": [
+          "requirements",
+          "reason"
+        ],
         "properties": {
-          "requirements": { "$ref": "#/$defs/choice_requirements" },
-          "reason": { "type": "string", "minLength": 1 }
+          "requirements": {
+            "$ref": "#/$defs/choice_requirements"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       }
     },

@@ -7,7 +7,7 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-19-ruby-045-npc-combat",
+    "content_revision": "2026-10-20-difficulty-047",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -43,7 +43,21 @@
     "checks_v2_v040": true,
     "checks_e": true,
     "npc_combat_v041": true,
-    "npc_combat_v045": true
+    "npc_combat_v045": true,
+    "difficulty": {
+      "default": "normal",
+      "base": "baby",
+      "modes": [
+        {
+          "id": "baby",
+          "label": "やさしい"
+        },
+        {
+          "id": "normal",
+          "label": "ふつう"
+        }
+      ]
+    }
   },
   "rules": [
     "プレイヤーの行動を代行せず、結果と状況だけを描写する。",
@@ -28012,5 +28026,8 @@
       },
       "status": "final"
     }
-  ]
+  ],
+  "difficulty_overlays": {
+    "normal": []
+  }
 }

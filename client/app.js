@@ -429,6 +429,7 @@ async function startGame() {
   const backend = els.backendSelect ? els.backendSelect.value : "gemini";
   const model = els.modelSelect ? els.modelSelect.value : "";
   const gmMode = document.querySelector('input[name="gmMode"]:checked')?.value || "semi";
+  const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value || "normal";
   const scenarioPath = state.scenarioPath;
   const selectedCharacter = currentSelectedCharacter();
   const characterId = selectedCharacter?.id || state.selectedCharacterId;
@@ -455,6 +456,7 @@ async function startGame() {
       body: JSON.stringify({
         scenario_path: scenarioPath,
         gm_mode: gmMode,
+        difficulty,
         character_id: characterId,
         character: charPayload,
       }),
@@ -599,6 +601,8 @@ function renderSession(session) {
     document.querySelector("#notifications").replaceChildren();
   }
   state.session = session;
+  const difficultyStatus = document.querySelector("#sessionDifficulty");
+  if (difficultyStatus) difficultyStatus.textContent = `難易度：${session.difficulty_label || (session.difficulty === "normal" ? "ふつう" : "やさしい")}`;
   state.sessionId = session.id;
   renderMaps();
   if (els.input) els.input.placeholder = session.free_input_hint || "行動や台詞を自由に入力してください";

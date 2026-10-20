@@ -1,0 +1,10 @@
+{
+  "dragon_rpg.json": {
+    "content_revision": "2026-10-20-difficulty-047",
+    "overlay_sha256": "96bf602b1393f21601bc0910855b19f24981779a522a2ecefafba0809adce018"
+  },
+  "dragon_rpg_hybrid.json": {
+    "content_revision": "2026-10-20-difficulty-047",
+    "overlay_sha256": "96bf602b1393f21601bc0910855b19f24981779a522a2ecefafba0809adce018"
+  }
+}

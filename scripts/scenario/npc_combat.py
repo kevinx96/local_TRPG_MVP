@@ -260,7 +260,7 @@ def apply(pack: dict[str, Any]) -> None:
     ruby_names(pack)
     pack["meta"]["npc_combat_v041"] = True
     pack["meta"]["npc_combat_v045"] = True
-    pack["meta"]["content_revision"] = "2026-10-19-ruby-045-npc-combat"
+    pack["meta"]["content_revision"] = max(pack["meta"].get("content_revision", ""), "2026-10-19-ruby-045-npc-combat")
 
 
 def _attackable_mages(pack: dict[str, Any], locations: dict[str, Any], npcs: dict[str, Any]) -> None:
