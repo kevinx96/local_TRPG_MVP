@@ -1,0 +1,1028 @@
+{
+  "seed": 46001,
+  "sim_check_exit": 1,
+  "sim_check_stdout": "{\n  \"rows\": [\n    {\n      \"encounter\": \"forest_wolves\",\n      \"encounter_class\": \"elite\",\n      \"character\": \"hero\",\n      \"policy\": \"heuristic\",\n      \"defense_mode\": \"flat\",\n      \"companion\": true,\n      \"n\": 3,\n      \"seed\": 46001,\n      \"stat_scaling\": {},\n      \"skill_variant\": \"none\",\n      \"level\": 1,\n      \"enemy_count\": 1,\n      \"preparation\": \"default\",\n      \"phase_rounds_mean\": {\n        \"forest_wolf\": 2\n      },\n      \"purify\": true,\n      \"outcomes\": {\n        \"victory\": 3\n      },\n      \"rounds_mean\": 2,\n      \"success_rounds_mean\": 2,\n      \"threshold_reached\": 0,\n      \"threshold_rounds_mean\": null,\n      \"phase_reached\": {\n        \"forest_wolf\": 3\n      },\n      \"win_rate\": 1.0,\n      \"rounds_median\": 2,\n      \"hp_left_mean\": 0.9833333333333333,\n      \"healing_items_mean\": {},\n      \"consumables_mean\": {},\n      \"mp_spent_mean\": 0.0,\n      \"sp_spent_mean\": 6.0,\n      \"defeat_rounds\": {},\n      \"defeat_causes\": {}\n    },\n    {\n      \"encounter\": \"forest_wolves\",\n      \"encounter_class\": \"elite\",\n      \"character\": \"hero\",\n      \"policy\": \"attack_only\",\n      \"defense_mode\": \"flat\",\n      \"companion\": true,\n      \"n\": 3,\n      \"seed\": 46001,\n      \"stat_scaling\": {},\n      \"skill_variant\": \"none\",\n      \"level\": 1,\n      \"enemy_count\": 1,\n      \"preparation\": \"default\",\n      \"phase_rounds_mean\": {\n        \"forest_wolf\": 2\n      },\n      \"purify\": true,\n      \"outcomes\": {\n        \"victory\": 3\n      },\n      \"rounds_mean\": 2,\n      \"success_rounds_mean\": 2,\n      \"threshold_reached\": 0,\n      \"threshold_rounds_mean\": null,\n      \"phase_reached\": {\n        \"forest_wolf\": 3\n      },\n      \"win_rate\": 1.0,\n      \"rounds_median\": 2,\n      \"hp_left_mean\": 0.9833333333333333,\n      \"healing_items_mean\": {},\n      \"consumables_mean\": {},\n      \"mp_spent_mean\": 0.0,\n      \"sp_spent_mean\": 0.0,\n      \"defeat_rounds\": {},\n      \"defeat_causes\": {}\n    }\n  ],\n  \"elapsed_seconds\": 0,\n  \"violations\": [\n    {\n      \"encounter\": \"forest_wolves\",\n      \"character\": \"hero\",\n      \"defense_mode\": \"flat\",\n      \"metric\": \"win_rate\",\n      \"value\": 1.0,\n      \"target\": [\n        0.75,\n        0.9\n      ]\n    }\n  ]\n}\n",
+  "route_hp70": {
+    "character": "hero",
+    "route": "dragon_valley_loc",
+    "policy": "heuristic",
+    "n": 3,
+    "seed": 46001,
+    "rest_at_inn": false,
+    "rest_policy": "hp70",
+    "rest_counts": {},
+    "rest_gold": 0,
+    "completion_rate": 0.6666666666666666,
+    "failure_counts": {
+      "valley_entrance": 1
+    },
+    "ending_counts": {},
+    "boss_arrivals": 2,
+    "boss_resources_mean": {
+      "hp": 40,
+      "mp": 12,
+      "sp": 18,
+      "level": 5,
+      "inventory": {
+        "ゴブリンの飾り物": 1,
+        "スライムの核": 1,
+        "携帯食": 2,
+        "旅の治療薬": 1,
+        "残り火の欠片": 1,
+        "氷の結晶": 1,
+        "氷鉄の大剣": 2,
+        "治療の巻物": 3,
+        "煤の精": 2,
+        "獣の毛皮": 1,
+        "生命の果実": 1,
+        "白い竜鱗": 1,
+        "薬草": 4,
+        "迅速の霊薬": 1,
+        "霜の欠片": 3,
+        "革の鎧": 1,
+        "魔力の果実": 2
+      }
+    },
+    "battle_reached": {
+      "dark_forest_loc": 3,
+      "lost_goblin_crossroads": 3,
+      "forest_wolves": 3,
+      "village_fire_slime": 3,
+      "ice_elemental_encounter": 3,
+      "frost_wolf_battle": 3,
+      "valley_entrance": 3,
+      "dragon_valley_loc": 2
+    },
+    "consumables_per_reached_battle": {
+      "dark_forest_loc": {},
+      "lost_goblin_crossroads": {},
+      "forest_wolves": {},
+      "village_fire_slime": {},
+      "ice_elemental_encounter": {
+        "治療の巻物": 0.3333333333333333
+      },
+      "frost_wolf_battle": {
+        "聖水": 2.0,
+        "治療の巻物": 0.3333333333333333
+      },
+      "valley_entrance": {},
+      "dragon_valley_loc": {
+        "治療の巻物": 2.0
+      }
+    },
+    "sample_trial": {
+      "completed": false,
+      "failed_at": "valley_entrance",
+      "boss_arrival": null,
+      "battles": [
+        {
+          "encounter": "dark_forest_loc",
+          "status": "victory",
+          "continue": true,
+          "before": {
+            "hp": 20,
+            "mp": 8,
+            "sp": 10,
+            "level": 1,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 2,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1
+            }
+          },
+          "after_combat": {
+            "hp": 16,
+            "mp": 8,
+            "sp": 1,
+            "level": 1,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 2,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1
+            }
+          },
+          "after_resolution": {
+            "hp": 16,
+            "mp": 8,
+            "sp": 1,
+            "level": 1,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 1,
+              "スライムの核": 1
+            }
+          },
+          "consumables": {}
+        },
+        {
+          "encounter": "lost_goblin_crossroads",
+          "status": "victory",
+          "continue": true,
+          "before": {
+            "hp": 16,
+            "mp": 8,
+            "sp": 1,
+            "level": 1,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 1,
+              "スライムの核": 1
+            }
+          },
+          "after_combat": {
+            "hp": 16,
+            "mp": 8,
+            "sp": 1,
+            "level": 1,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 1,
+              "スライムの核": 1
+            }
+          },
+          "after_resolution": {
+            "hp": 16,
+            "mp": 8,
+            "sp": 1,
+            "level": 1,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 2,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1
+            }
+          },
+          "consumables": {}
+        },
+        {
+          "encounter": "forest_wolves",
+          "status": "victory",
+          "continue": true,
+          "before": {
+            "hp": 16,
+            "mp": 8,
+            "sp": 1,
+            "level": 1,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 2,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1
+            }
+          },
+          "after_combat": {
+            "hp": 17,
+            "mp": 8,
+            "sp": 2,
+            "level": 1,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 2,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1
+            }
+          },
+          "after_resolution": {
+            "hp": 25,
+            "mp": 9,
+            "sp": 12,
+            "level": 2,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 2,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1
+            }
+          },
+          "consumables": {}
+        },
+        {
+          "encounter": "village_fire_slime",
+          "status": "victory",
+          "continue": true,
+          "before": {
+            "hp": 35,
+            "mp": 11,
+            "sp": 16,
+            "level": 4,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 2,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1
+            }
+          },
+          "after_combat": {
+            "hp": 33,
+            "mp": 11,
+            "sp": 16,
+            "level": 4,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 2,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1
+            }
+          },
+          "after_resolution": {
+            "hp": 33,
+            "mp": 11,
+            "sp": 16,
+            "level": 4,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 4,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1,
+              "残り火の欠片": 1
+            }
+          },
+          "consumables": {}
+        },
+        {
+          "encounter": "ice_elemental_encounter",
+          "status": "victory",
+          "continue": true,
+          "before": {
+            "hp": 33,
+            "mp": 11,
+            "sp": 16,
+            "level": 4,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 4,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1,
+              "残り火の欠片": 1
+            }
+          },
+          "after_combat": {
+            "hp": 27,
+            "mp": 11,
+            "sp": 9,
+            "level": 4,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 4,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1,
+              "残り火の欠片": 1
+            }
+          },
+          "after_resolution": {
+            "hp": 27,
+            "mp": 11,
+            "sp": 9,
+            "level": 4,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 4,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1,
+              "残り火の欠片": 1,
+              "氷の結晶": 1,
+              "魔力の果実": 1,
+              "霜の欠片": 1
+            }
+          },
+          "consumables": {}
+        },
+        {
+          "encounter": "frost_wolf_battle",
+          "status": "victory",
+          "continue": true,
+          "before": {
+            "hp": 27,
+            "mp": 11,
+            "sp": 9,
+            "level": 4,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "聖水": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 4,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1,
+              "残り火の欠片": 1,
+              "氷の結晶": 1,
+              "魔力の果実": 1,
+              "霜の欠片": 1
+            }
+          },
+          "after_combat": {
+            "hp": 22,
+            "mp": 11,
+            "sp": 12,
+            "level": 4,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 4,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1,
+              "残り火の欠片": 1,
+              "氷の結晶": 1,
+              "魔力の果実": 1,
+              "霜の欠片": 1
+            }
+          },
+          "after_resolution": {
+            "hp": 22,
+            "mp": 11,
+            "sp": 12,
+            "level": 4,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "氷鉄の大剣": 1,
+              "旅の治療薬": 1,
+              "治療の巻物": 4,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1,
+              "残り火の欠片": 1,
+              "氷の結晶": 1,
+              "魔力の果実": 1,
+              "霜の欠片": 3,
+              "白い竜鱗": 1,
+              "迅速の霊薬": 1
+            }
+          },
+          "consumables": {
+            "聖水": 2
+          }
+        },
+        {
+          "encounter": "valley_entrance",
+          "status": "defeat",
+          "continue": false,
+          "before": {
+            "hp": 22,
+            "mp": 11,
+            "sp": 12,
+            "level": 4,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "氷鉄の大剣": 2,
+              "旅の治療薬": 1,
+              "治療の巻物": 4,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1,
+              "残り火の欠片": 1,
+              "氷の結晶": 1,
+              "魔力の果実": 1,
+              "霜の欠片": 3,
+              "白い竜鱗": 1,
+              "迅速の霊薬": 1
+            }
+          },
+          "after_combat": {
+            "hp": 0,
+            "mp": 11,
+            "sp": 12,
+            "level": 4,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "氷鉄の大剣": 2,
+              "旅の治療薬": 1,
+              "治療の巻物": 4,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1,
+              "残り火の欠片": 1,
+              "氷の結晶": 1,
+              "魔力の果実": 1,
+              "霜の欠片": 3,
+              "白い竜鱗": 1,
+              "迅速の霊薬": 1
+            }
+          },
+          "after_resolution": {
+            "hp": 0,
+            "mp": 11,
+            "sp": 12,
+            "level": 4,
+            "inventory": {
+              "革の鎧": 1,
+              "薬草": 4,
+              "携帯食": 2,
+              "氷鉄の大剣": 2,
+              "旅の治療薬": 1,
+              "治療の巻物": 4,
+              "スライムの核": 1,
+              "ゴブリンの飾り物": 1,
+              "生命の果実": 1,
+              "獣の毛皮": 1,
+              "残り火の欠片": 1,
+              "氷の結晶": 1,
+              "魔力の果実": 1,
+              "霜の欠片": 3,
+              "白い竜鱗": 1,
+              "迅速の霊薬": 1
+            }
+          },
+          "consumables": {}
+        }
+      ],
+      "paid_rests": 0,
+      "rests": []
+    }
+  },
+  "class_aware_backbone": {
+    "completed": false,
+    "failed_at": "valley_entrance",
+    "boss_arrival": null,
+    "battles": [
+      {
+        "encounter": "dark_forest_loc",
+        "status": "victory",
+        "continue": true,
+        "before": {
+          "hp": 20,
+          "mp": 8,
+          "sp": 10,
+          "level": 1,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 2,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1
+          }
+        },
+        "after_combat": {
+          "hp": 16,
+          "mp": 8,
+          "sp": 1,
+          "level": 1,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 2,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1
+          }
+        },
+        "after_resolution": {
+          "hp": 16,
+          "mp": 8,
+          "sp": 1,
+          "level": 1,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 1,
+            "スライムの核": 1
+          }
+        },
+        "consumables": {}
+      },
+      {
+        "encounter": "lost_goblin_crossroads",
+        "status": "victory",
+        "continue": true,
+        "before": {
+          "hp": 16,
+          "mp": 8,
+          "sp": 1,
+          "level": 1,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 1,
+            "スライムの核": 1
+          }
+        },
+        "after_combat": {
+          "hp": 16,
+          "mp": 8,
+          "sp": 1,
+          "level": 1,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 1,
+            "スライムの核": 1
+          }
+        },
+        "after_resolution": {
+          "hp": 16,
+          "mp": 8,
+          "sp": 1,
+          "level": 1,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 2,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1
+          }
+        },
+        "consumables": {}
+      },
+      {
+        "encounter": "forest_wolves",
+        "status": "victory",
+        "continue": true,
+        "before": {
+          "hp": 16,
+          "mp": 8,
+          "sp": 1,
+          "level": 1,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 2,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1
+          }
+        },
+        "after_combat": {
+          "hp": 13,
+          "mp": 8,
+          "sp": 2,
+          "level": 1,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 2,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1
+          }
+        },
+        "after_resolution": {
+          "hp": 25,
+          "mp": 9,
+          "sp": 12,
+          "level": 2,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 2,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1
+          }
+        },
+        "consumables": {}
+      },
+      {
+        "encounter": "village_fire_slime",
+        "status": "victory",
+        "continue": true,
+        "before": {
+          "hp": 35,
+          "mp": 11,
+          "sp": 16,
+          "level": 4,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 2,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1
+          }
+        },
+        "after_combat": {
+          "hp": 35,
+          "mp": 11,
+          "sp": 16,
+          "level": 4,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 2,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1
+          }
+        },
+        "after_resolution": {
+          "hp": 35,
+          "mp": 11,
+          "sp": 16,
+          "level": 4,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 4,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1,
+            "残り火の欠片": 1
+          }
+        },
+        "consumables": {}
+      },
+      {
+        "encounter": "ice_elemental_encounter",
+        "status": "victory",
+        "continue": true,
+        "before": {
+          "hp": 35,
+          "mp": 11,
+          "sp": 16,
+          "level": 4,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 4,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1,
+            "残り火の欠片": 1
+          }
+        },
+        "after_combat": {
+          "hp": 29,
+          "mp": 11,
+          "sp": 9,
+          "level": 4,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 4,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1,
+            "残り火の欠片": 1
+          }
+        },
+        "after_resolution": {
+          "hp": 29,
+          "mp": 11,
+          "sp": 9,
+          "level": 4,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 4,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1,
+            "残り火の欠片": 1,
+            "氷の結晶": 1,
+            "魔力の果実": 1,
+            "霜の欠片": 1
+          }
+        },
+        "consumables": {}
+      },
+      {
+        "encounter": "frost_wolf_battle",
+        "status": "victory",
+        "continue": true,
+        "before": {
+          "hp": 29,
+          "mp": 11,
+          "sp": 9,
+          "level": 4,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "聖水": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 4,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1,
+            "残り火の欠片": 1,
+            "氷の結晶": 1,
+            "魔力の果実": 1,
+            "霜の欠片": 1
+          }
+        },
+        "after_combat": {
+          "hp": 24,
+          "mp": 11,
+          "sp": 12,
+          "level": 4,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 4,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1,
+            "残り火の欠片": 1,
+            "氷の結晶": 1,
+            "魔力の果実": 1,
+            "霜の欠片": 1
+          }
+        },
+        "after_resolution": {
+          "hp": 24,
+          "mp": 11,
+          "sp": 12,
+          "level": 4,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "氷鉄の大剣": 1,
+            "旅の治療薬": 1,
+            "治療の巻物": 4,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1,
+            "残り火の欠片": 1,
+            "氷の結晶": 1,
+            "魔力の果実": 1,
+            "霜の欠片": 3,
+            "白い竜鱗": 1,
+            "迅速の霊薬": 1
+          }
+        },
+        "consumables": {
+          "聖水": 2
+        }
+      },
+      {
+        "encounter": "valley_entrance",
+        "status": "defeat",
+        "continue": false,
+        "before": {
+          "hp": 24,
+          "mp": 11,
+          "sp": 12,
+          "level": 4,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "氷鉄の大剣": 2,
+            "旅の治療薬": 1,
+            "治療の巻物": 4,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1,
+            "残り火の欠片": 1,
+            "氷の結晶": 1,
+            "魔力の果実": 1,
+            "霜の欠片": 3,
+            "白い竜鱗": 1,
+            "迅速の霊薬": 1
+          }
+        },
+        "after_combat": {
+          "hp": 0,
+          "mp": 11,
+          "sp": 12,
+          "level": 4,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "氷鉄の大剣": 2,
+            "旅の治療薬": 1,
+            "治療の巻物": 4,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1,
+            "残り火の欠片": 1,
+            "氷の結晶": 1,
+            "魔力の果実": 1,
+            "霜の欠片": 3,
+            "白い竜鱗": 1,
+            "迅速の霊薬": 1
+          }
+        },
+        "after_resolution": {
+          "hp": 0,
+          "mp": 11,
+          "sp": 12,
+          "level": 4,
+          "inventory": {
+            "革の鎧": 1,
+            "薬草": 4,
+            "携帯食": 2,
+            "氷鉄の大剣": 2,
+            "旅の治療薬": 1,
+            "治療の巻物": 4,
+            "スライムの核": 1,
+            "ゴブリンの飾り物": 1,
+            "生命の果実": 1,
+            "獣の毛皮": 1,
+            "残り火の欠片": 1,
+            "氷の結晶": 1,
+            "魔力の果実": 1,
+            "霜の欠片": 3,
+            "白い竜鱗": 1,
+            "迅速の霊薬": 1
+          }
+        },
+        "consumables": {}
+      }
+    ],
+    "paid_rests": 0,
+    "rests": [],
+    "choices": [
+      {
+        "node": "lost_goblin_crossroads",
+        "option": "ignore",
+        "values": {}
+      },
+      {
+        "node": "forest_wolves",
+        "option": "fight",
+        "values": {}
+      },
+      {
+        "node": "village_approach",
+        "option": "careful",
+        "values": {}
+      },
+      {
+        "node": "burning_house",
+        "option": "leave",
+        "values": {}
+      },
+      {
+        "node": "ice_elemental_encounter",
+        "option": "fight",
+        "values": {}
+      },
+      {
+        "node": "valley_entrance",
+        "option": "fight",
+        "values": {}
+      }
+    ],
+    "quests": [],
+    "ending": "dragon_valley_defeat"
+  }
+}

@@ -17,7 +17,8 @@ from unittest.mock import patch
 from host import combat, state
 from .checkpoints import DEFAULT_CHECKPOINTS, DEFAULT_SCENARIO, ROOT, fresh_session
 
-POLICIES = ("attack_only", "greedy", "heuristic")
+LEGACY_POLICIES = ("attack_only", "greedy", "heuristic")
+POLICIES = (*LEGACY_POLICIES, "best_free")
 MODES = ("flat", "floor", "ratio")
 TARGETS = ROOT / "eval/balance/targets.json"
 SKILL_CANDIDATES = ROOT / "eval/balance/skill_candidates.json"
@@ -78,9 +79,38 @@ def rare_consumable(session: dict[str, Any], action: dict[str, Any]) -> bool:
                for enemy in combat._alive_enemies(session["combat"]))
 
 
+def free_action_damage(action: dict[str, Any], actor: dict[str, Any], enemy: dict[str, Any],
+                       rules: dict[str, Any]) -> float:
+    """Exact integer-damage expectation for the opt-in best_free policy."""
+    from .budget import formula_distribution
+
+    chance = 1.0 if action.get("true_damage") else max(5, min(100, int(action.get("accuracy", 90)) -
+        int(enemy.get("combat", {}).get("evade", 0)))) / 100
+    damage = 0.0
+    for element in action.get("multi_elements") or [action.get("element", "physical")]:
+        if element == "counter":
+            element = combat.counter_attack_element(enemy)
+        elif element == "weakness":
+            element = combat.weakness_attack_element(enemy)
+        multiplier = combat._resistance_multiplier(enemy, element)
+        defense = 0 if action.get("ignores_defense") else combat._actor_defense(enemy)
+        for raw, probability in formula_distribution(str(action.get("damage") or "1d4"), actor).items():
+            raw = max(0, round(raw * float(action.get("damage_multiplier", 1) or 1)))
+            amount = raw if action.get("true_damage") else combat.damage_after_defense(raw, multiplier, defense, rules)
+            for status in enemy.get("statuses", []):
+                amount = max(0, round(amount * float(status.get("guard_multiplier", 1))))
+            if combat._negative_undead(enemy) and element not in {"holy", "light"}:
+                amount = -amount
+            damage += amount * probability * chance * int(action.get("hits_per_element", 1))
+    for followup in action.get("followups", []):
+        damage += free_action_damage(followup, actor, enemy, rules)
+    return damage
+
+
 def choose_action(session: dict[str, Any], policy: str, *, purify: bool = True,
                   reserve_purification: bool = False,
-                  elite_holy_water: bool = True) -> tuple[dict[str, Any], str]:
+                  elite_holy_water: bool = True,
+                  recovery_threshold: float = .30) -> tuple[dict[str, Any], str]:
     if policy not in POLICIES:
         raise ValueError(f"Unknown policy: {policy}")
     actions = [a for a in combat.combat_actions(session) if a.get("enabled")]
@@ -89,6 +119,24 @@ def choose_action(session: dict[str, Any], policy: str, *, purify: bool = True,
     first_target = enemies[0]["id"]
     if policy == "attack_only":
         return next(a for a in actions if a["type"] == "attack"), first_target
+    if policy == "best_free":
+        healing = [a for a in actions if a.get("kind") == "heal"]
+        if combat._equipped_effect(actor, "healing_harms_humans") and not actor.get("undead_parts"):
+            healing = [a for a in healing if a["type"] == "item"]
+        if actor["hp"] < actor["max_hp"] * recovery_threshold and healing:
+            return max(healing, key=lambda a: min(actor["max_hp"] - actor["hp"],
+                actor["max_hp"] * a["max_hp_ratio"] if "max_hp_ratio" in a
+                else formula_mean(str(a.get("healing") or "10"), actor))), first_target
+        free = [a for a in actions if int(a.get("cost", 0)) == 0
+                and (a["type"] != "item" or not combat.item_combat_spec(
+                    combat._find_entry(actor["inventory"], a["id"], "item")).get("consumable", True))
+                and (a["type"] == "attack" or a.get("kind") in {"attack", "damage"})]
+        rules = combat._combat_rules(session)
+        candidates = [(a, e["id"], sum(free_action_damage(a, actor, t, rules) for t in enemies)
+                       if a.get("all_targets") else free_action_damage(a, actor, e, rules))
+                      for a in free for e in enemies]
+        action, target, _ = max(candidates, key=lambda candidate: candidate[2])
+        return action, target
     if session["combat"]["encounter"].get("encounter_class") in {"trash", "elite"}:
         allow_holy = (elite_holy_water
                       and session["combat"]["encounter"].get("encounter_class") == "elite"
@@ -178,6 +226,7 @@ def prepare_session(pack: dict[str, Any], encounter: str, character_id: str,
             if key in entry:
                 session["character"][key] = deepcopy(entry[key])
         session["completed_milestones"] = deepcopy(entry.get("completed_milestones", []))
+        session["flags"].update(deepcopy(entry.get("flags", {})))
         session["companion"] = deepcopy(entry["companion"])
         state._merge_inventory_catalog(session["character"]["inventory"], pack)
         state._normalize_character(session["character"])
@@ -412,7 +461,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     checkpoints = None if args.checkpoint == "none" else json.loads(Path(args.checkpoint).read_text(encoding="utf-8"))
     targets = json.loads(TARGETS.read_text(encoding="utf-8"))
     encounters = list(targets["encounters"]) if args.encounters == ["all"] else args.encounters
-    policies = list(POLICIES) if "all" in args.policies else args.policies
+    policies = list(LEGACY_POLICIES) if "all" in args.policies else args.policies
     if args.check:
         policies = list(dict.fromkeys([*policies, "heuristic", "attack_only"]))
     started = time.perf_counter()

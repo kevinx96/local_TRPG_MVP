@@ -1,11 +1,90 @@
 from __future__ import annotations
 
 import re
+import math
 from collections import defaultdict
+from copy import deepcopy
 from typing import Any
 
 from host import combat
 from .sim import formula_mean, prepare_session, selected_characters
+
+
+def attack_moments(ability: dict[str, Any], enemy: dict[str, Any],
+                   session: dict[str, Any]) -> tuple[float, float]:
+    """Mean/variance of HP damage, including zero damage on a miss and integer rounding."""
+    actor, rules = session["character"], combat._combat_rules(session)
+    mean, variance = 0.0, 0.0
+    elements = ability.get("multi_elements") or [ability.get("element", "physical")]
+    for element in elements:
+        if element == "current":
+            element = combat._primary_element(enemy)
+        elif element == "counter":
+            element = combat.counter_attack_element(actor)
+        elif element == "weakness":
+            element = combat.weakness_attack_element(actor)
+        accuracy = int(ability.get("accuracy", 85)) + sum(int(m.get("accuracy", 0))
+            for m in combat._encounter_modifiers(session, enemy)
+            if m.get("enemy_skill") in (ability.get("id"), ability.get("name")))
+        accuracy -= sum(int(s.get("accuracy_penalty", 0)) for s in enemy.get("statuses", []))
+        chance = 1.0 if ability.get("true_damage") else max(5, min(100, accuracy -
+            int(actor.get("combat", {}).get("evade", 0)))) / 100
+        values = []
+        for raw, probability in formula_distribution(str(ability.get("damage") or ability.get("dice_type") or "1d4"), enemy).items():
+            raw = max(0, round(raw * float(ability.get("damage_multiplier", 1) or 1)))
+            amount = raw
+            if not ability.get("true_damage"):
+                amount = combat.damage_after_defense(raw, combat._resistance_multiplier(actor, element),
+                    0 if ability.get("ignores_defense") else combat._actor_defense(actor), rules)
+                amount = combat._modified_received_damage(session, amount, element, enemy,
+                    ability.get("name", ""), ability.get("id", ""))
+                status = session.get("combat", {}).get("player_status", {})
+                guard = status.get("guard_multiplier", 1) if status.get("guard_disabled_round", 0) < session["combat"]["round"] else 1
+                amount = max(0, round(amount * guard))
+            values.append((amount, probability * chance))
+        mu = sum(value * probability for value, probability in values)
+        var = max(0.0, sum(value ** 2 * probability for value, probability in values) - mu ** 2)
+        hits = max(1, int(ability.get("hits_per_element" if ability.get("multi_elements") else "hits", 1)))
+        mean += hits * mu
+        variance += hits * var
+    return mean, variance
+
+
+def phase_moments(session: dict[str, Any], *, damaging_only: bool = False) -> dict[str, Any]:
+    """Current enemy phase, with exact AI availability and without consuming game RNG."""
+    total, variance, notes = 0.0, 0.0, set()
+    for original in combat._alive_enemies(session["combat"]):
+        if original.get("skip_rounds_remaining", 0) > 0:
+            continue
+        choices = []
+
+        class CaptureChoices:
+            def choices(self, entries, *, weights, k):
+                choices.extend(zip(entries, weights))
+                return entries[:1]
+
+        chosen = combat._choose_enemy_ability(deepcopy(original), session, CaptureChoices())
+        choices = choices or [(chosen, 1)]
+        if damaging_only:
+            choices = [(ability, weight) for ability, weight in choices
+                       if combat._ability_kind(ability) not in {"heal", "field", "status", "defend", "stance"}]
+        if not choices:
+            continue
+        weight = sum(w for _, w in choices)
+        mu, second = 0.0, 0.0
+        for ability, w in choices:
+            if combat._ability_kind(ability) in {"heal", "field", "status", "defend", "stance"}:
+                notes.add(combat._ability_kind(ability))
+                am, av = 0.0, 0.0
+            else:
+                am, av = attack_moments(ability, original, session)
+            mu += am * w / weight
+            second += (av + am ** 2) * w / weight
+        total += mu
+        variance += max(0.0, second - mu ** 2)
+    return {"expected_damage": total, "variance": variance,
+            "cv": math.sqrt(variance) / total if total else None,
+            "ratio": total / session["character"]["max_hp"], "notes": sorted(notes)}
 
 
 def formula_distribution(formula: str, actor: dict[str, Any]) -> dict[int, float]:

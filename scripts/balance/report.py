@@ -23,7 +23,7 @@ def run_job(job: dict[str, Any]) -> dict[str, Any]:
     common = dict(n=job["n"], seed=job["seed"], checkpoints=checkpoints, defense_mode=job["mode"])
     rows = []
     if job["kind"] == "matrix":
-        for policy in (sim.POLICIES if job["mode"] == "flat" else ["heuristic"]):
+        for policy in (sim.LEGACY_POLICIES if job["mode"] == "flat" else ["heuristic"]):
             rows.append({"experiment": "matrix", **sim.simulate(pack, job["encounter"], job["character"], policy, **common)})
         if job["mode"] == "flat":
             rows.append({"experiment": "without_companion", **sim.simulate(pack, job["encounter"], job["character"],
