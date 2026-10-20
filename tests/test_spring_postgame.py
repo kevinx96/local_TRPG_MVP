@@ -1,4 +1,5 @@
 from __future__ import annotations
+from scripts.scenario.levels_skills_v2 import migrate as levels
 
 import json
 import unittest
@@ -160,11 +161,15 @@ class SpringPostgameTests(unittest.TestCase):
         for name, pack in self.packs.items():
             actual = deepcopy(pack)
             apply(actual)
+            actual = levels(actual)
             self.assertEqual(actual, pack)
             apply(actual)
+            actual = levels(actual)
             self.assertEqual(actual, pack)
             self.assertEqual(numeric_snapshot(apply_difficulty(actual, 'baby')), frozen[name])
-            rows.extend((name, path, text) for path, text in placeholder_rows(actual))
+            legacy = apply_difficulty(actual, 'baby')
+            legacy['status_defs'] = [s for s in legacy['status_defs'] if s['id'] != 'mana_veil']
+            rows.extend((name, path, text) for path, text in placeholder_rows(legacy))
         self.assertEqual(len(rows), 96)
         self.assertTrue(all(text.count('【仮】') == 1 for _, _, text in rows))
         report = (ROOT / 'eval/reports/048-engineering.md').read_text(encoding='utf-8')

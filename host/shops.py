@@ -19,6 +19,8 @@ def require_exploration(session: dict[str, Any]) -> None:
 
 
 def item_category(item: dict[str, Any]) -> str:
+    if item.get("category") == "spellbook":
+        return "spellbook"
     if item.get("key_item"):
         return "key"
     if item.get("category") in {"consumable", "equipment", "material", "loot", "key"}:
@@ -79,7 +81,8 @@ def _sell_price(session: dict[str, Any], shop: dict[str, Any], item: dict[str, A
 def _can_sell(shop: dict[str, Any], item: dict[str, Any]) -> bool:
     return bool(shop.get("buys") and not item.get("key_item") and not item.get("non_removable")
                 and not item_combat_spec(item).get("non_removable")
-                and (not shop.get("buy_categories") or item_category(item) in shop["buy_categories"]))
+                and (not shop.get("buy_categories") or item_category(item) in shop["buy_categories"]
+                     or item_category(item) == "spellbook" and "consumable" in shop["buy_categories"]))
 
 
 def public_shop(session: dict[str, Any], shop_id: str) -> dict[str, Any]:

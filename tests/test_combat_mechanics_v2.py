@@ -524,6 +524,8 @@ class MigrationAndGoldenTests(unittest.TestCase):
             original["meta"]["content_revision"] = "2026-10-20-difficulty-047"
             migrated = migrate(original)
             apply_spring_postgame(migrated)
+            from scripts.scenario.levels_skills_v2 import migrate as levels
+            migrated = levels(migrated)
             self.assertEqual(migrated, pack)
             self.assertEqual(difficulty.numeric_snapshot(original), difficulty.numeric_snapshot(pack))
             try:

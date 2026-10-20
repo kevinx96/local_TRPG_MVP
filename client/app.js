@@ -644,6 +644,7 @@ function renderSession(session) {
   if (els.characterName) els.characterName.textContent = character.name || "冒険者";
   if (els.characterDescription) els.characterDescription.textContent = character.description || "";
   renderCharacterAttributes(character.attributes || {});
+  renderProgression(session);
   if (els.companionInfo) {
     const companion = session.companion;
     els.companionInfo.hidden = !companion;
@@ -753,7 +754,7 @@ function renderInventory(items) {
     return;
   }
   // TODO(design): Items without category stay ungrouped until their category is specified.
-  const groups = { consumable: "消耗品", equipment: "装備", material: "素材", loot: "戦利品", key: "重要", "": "" };
+  const groups = { consumable: "消耗品", spellbook: "【仮】術式巻物", equipment: "装備", material: "素材", loot: "戦利品", key: "重要", "": "" };
   for (const [category, label] of Object.entries(groups)) {
     const grouped = items.filter(item => (item.category || "") === category);
     if (!grouped.length) continue;
@@ -798,6 +799,7 @@ function renderInventory(items) {
           ${desc ? `<div class="item-desc">${rubyHtml(desc)}</div>` : ''}
           ${effect ? `<div class="item-effect">${rubyHtml(effect)}</div>` : ''}
           ${usable ? `<button type="button" class="start-btn item-use">${equippable ? escapeHtml(equipLabel) : "使う"}</button>` : ''}
+          ${item.learn && idle ? `<button type="button" class="start-btn item-learn" ${item.learn.enabled ? "" : "disabled"}>解析する</button><p>${escapeHtml(item.learn.reason || "")}</p>` : ""}
         </div>
       ` : ''}
     `;
@@ -813,11 +815,110 @@ function renderInventory(items) {
       });
     }
     li.querySelector(".item-use")?.addEventListener("click", () => useInventoryItem(item.id || name));
+    li.querySelector(".item-learn")?.addEventListener("click", async event => {
+      event.currentTarget.disabled = true;
+      try {
+        renderSession(await fetchJson(`/api/sessions/${state.sessionId}/items/learn`, {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ item_id: item.id }),
+        }));
+      } catch (error) {
+        showNotification(error.message);
+        event.currentTarget.disabled = !item.learn.enabled;
+      }
+    });
 
     els.inventory.append(li);
     }
   }
 }
+
+let passiveAutoKey = "";
+let passiveSelection = null;
+
+function renderProgression(session) {
+  const panel = document.querySelector("#progressionStatus");
+  const hud = document.querySelector("#progressionHud");
+  const progress = session.progression;
+  panel.hidden = !progress;
+  hud.hidden = !progress;
+  if (!progress) return;
+  const pending = progress.pending || [];
+  const total = progress.exp_to_next === null ? 1 : progress.exp + progress.exp_to_next;
+  hud.innerHTML = `<strong>Lv ${progress.level}</strong>
+    <span>EXP ${progress.exp_to_next === null ? "MAX" : `${progress.exp} / ${total}`}</span>
+    <progress max="${total}" value="${progress.exp_to_next === null ? 1 : progress.exp}" aria-label="EXP"></progress>
+    ${pending.length ? `<span>【仮】パッシブ未選択</span><button type="button" ${session.in_combat ? 'disabled title="【仮】戦闘終了後に選択できます。"' : ""}>パッシブを選ぶ（${pending.length}）</button>` : ""}`;
+  hud.querySelector("button")?.addEventListener("click", openPassiveDialog);
+  panel.innerHTML = `<strong>Lv ${progress.level}</strong>
+    <span>EXP ${progress.exp_to_next === null ? "MAX" : `${progress.exp} / ${total}`}</span>
+    <progress max="${total}" value="${progress.exp_to_next === null ? 1 : progress.exp}" aria-label="EXP"></progress>
+    ${progress.passives.map(p => `<p title="${escapeAttr(p.description)}">${escapeHtml(p.name)}</p>`).join("")}
+    ${pending.length ? `<p>【仮】パッシブ未選択</p><button id="choosePassiveButton" type="button" ${session.in_combat ? "disabled" : ""}>パッシブを選ぶ（${pending.length}）</button>${session.in_combat ? "<small>【仮】戦闘終了後に選択できます。</small>" : ""}` : ""}`;
+  document.querySelector("#choosePassiveButton")?.addEventListener("click", openPassiveDialog);
+  const key = `${session.id}:${pending.map(p => p.level).join(",")}`;
+  if (pending.length && !session.in_combat && !session.game_over && passiveAutoKey !== key) {
+    passiveAutoKey = key;
+    // Wait until the result render has completed before opening the choice.
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (state.session?.id === session.id && !state.session.in_combat) openPassiveDialog();
+    }));
+  }
+}
+
+function openPassiveDialog() {
+  if (state.session?.in_combat) return;
+  const group = state.session?.progression?.pending?.[0];
+  if (!group) return;
+  const dialog = document.querySelector("#passiveDialog");
+  passiveSelection = null;
+  document.querySelector("#passiveTitle").textContent = `【仮】Lv${group.level} パッシブを選ぶ`;
+  document.querySelector("#passiveConfirmation").hidden = true;
+  document.querySelector("#passiveError").textContent = "";
+  const options = document.querySelector("#passiveOptions");
+  options.hidden = false;
+  options.replaceChildren();
+  for (const option of group.options) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "passive-card";
+    button.innerHTML = `<strong>${escapeHtml(option.name)} → ${escapeHtml(option.next_name)}</strong>
+      <p>${escapeHtml(option.current_description || "【仮】未修得")} → ${escapeHtml(option.next_description)}</p>`;
+    button.addEventListener("click", () => {
+      passiveSelection = { level: group.level, passive_id: option.id };
+      options.hidden = true;
+      document.querySelector("#passiveConfirmation").hidden = false;
+      document.querySelector("#passiveConfirm").focus();
+    });
+    options.append(button);
+  }
+  if (!dialog.open) dialog.showModal();
+}
+
+document.querySelector("#passiveClose").addEventListener("click", () => document.querySelector("#passiveDialog").close());
+document.querySelector("#passiveDialog").addEventListener("click", event => {
+  if (event.target !== event.currentTarget) return;
+  const rect = event.currentTarget.getBoundingClientRect();
+  if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) {
+    event.currentTarget.close();
+  }
+});
+document.querySelector("#passiveBack").addEventListener("click", openPassiveDialog);
+document.querySelector("#passiveConfirm").addEventListener("click", async event => {
+  if (!passiveSelection) return;
+  const button = event.currentTarget;
+  button.disabled = true;
+  try {
+    const session = await fetchJson(`/api/sessions/${state.sessionId}/passives/choose`, {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(passiveSelection),
+    });
+    document.querySelector("#passiveDialog").close();
+    renderSession(session);
+  } catch (error) {
+    document.querySelector("#passiveError").textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+});
 
 function showNotification(text) {
   const toast = document.createElement("div");
@@ -1789,7 +1890,8 @@ function renderCombatActions(actions) {
     action = { ...action, enabled: action.enabled !== false && validTarget,
       disabled_reason: action.enabled === false ? action.disabled_reason : (!validTarget ? action.target_disabled_reason : ""),
       accuracy: action.hit_chance_by_target?.[state.combatTargetId] ?? action.accuracy };
-    const cost = action.cost ? `${String(action.cost_item_name || action.cost_type || "").toUpperCase()} ${action.cost}` : "";
+    const cost = action.costs ? Object.entries(action.costs).filter(([, n]) => n > 0).map(([key, n]) => `${key.toUpperCase()} ${n}`).join(" + ")
+      : action.cost ? `${String(action.cost_item_name || action.cost_type || "").toUpperCase()} ${action.cost}` : "";
     const description = action.enabled === false ? (action.disabled_reason || "使用できません") : (action.description || "");
     const label = [action.name || action.id || "行動", ...abilityTagTexts([action]), cost, description].filter(Boolean).join(" ");
     return `<button type="button" class="combat-action" aria-label="${escapeAttr(label)}" data-combat-action-type="${escapeAttr(action.type || "")}" data-combat-action-id="${escapeAttr(action.id || "")}" ${action.enabled === false ? "disabled" : ""}>

@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-21-guidance-048",
+    "content_revision": "2026-10-21-levels-skills-v2",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -19880,6 +19880,60 @@
         "consumable": true
       },
       "icon": "/static/images/icon_travel_potion.png"
+    },
+    {
+      "id": "spellbook_lightning",
+      "name": "雷撃の術式巻物",
+      "description": "【仮】",
+      "category": "spellbook",
+      "icon": "/static/images/icon_magic_scroll.png",
+      "difficulty_only": [
+        "normal"
+      ],
+      "learn_skill": {
+        "id": "lightning",
+        "name": "雷撃",
+        "description": "【仮】",
+        "cost": 5,
+        "cost_type": "mp",
+        "damage": "1d4+int/4",
+        "accuracy": 90,
+        "element": "lightning",
+        "all_targets": true,
+        "spell_tier": "basic"
+      },
+      "learnable_by": [
+        "mage"
+      ],
+      "consumable": true,
+      "sell_price": 30
+    },
+    {
+      "id": "spellbook_arcane_lance",
+      "name": "魔力の槍の術式巻物",
+      "description": "【仮】",
+      "category": "spellbook",
+      "icon": "/static/images/icon_magic_scroll.png",
+      "difficulty_only": [
+        "normal"
+      ],
+      "learn_skill": {
+        "id": "arcane_lance",
+        "name": "魔力の槍",
+        "description": "【仮】",
+        "cost": 4,
+        "cost_type": "mp",
+        "damage": "1d6+int/2",
+        "accuracy": 95,
+        "element": "arcane",
+        "ignores_defense": true,
+        "spell_tier": "basic"
+      },
+      "learnable_by": [
+        "mage"
+      ],
+      "consumable": true,
+      "sell_price": 22
     }
   ],
   "clues": [
@@ -23780,6 +23834,22 @@
           "item_id": "fireball_scroll",
           "price": 10,
           "stock": null
+        },
+        {
+          "item_id": "spellbook_lightning",
+          "price": 60,
+          "stock": 1,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "spellbook_arcane_lance",
+          "price": 45,
+          "stock": 1,
+          "difficulty_only": [
+            "normal"
+          ]
         }
       ],
       "buys": true,
@@ -26987,6 +27057,124 @@
           "source": "previous_damage_enemy",
           "ratio": 1.5
         }
+      },
+      {
+        "entity": "progression",
+        "id": "$",
+        "path": "level_model",
+        "set": "exp"
+      },
+      {
+        "entity": "progression",
+        "id": "$",
+        "path": "max_level",
+        "set": 8
+      },
+      {
+        "entity": "progression",
+        "id": "$",
+        "path": "exp_table",
+        "set": {
+          "2": 20,
+          "3": 50,
+          "4": 90,
+          "5": 140,
+          "6": 200,
+          "7": 280,
+          "8": 380
+        }
+      },
+      {
+        "entity": "progression",
+        "id": "$",
+        "path": "exp_rewards",
+        "set": {
+          "trash": 5,
+          "elite": 15,
+          "boss": 40,
+          "unclassified": 5,
+          "quest": 10,
+          "scripted_loss": 0,
+          "guest": 0
+        }
+      },
+      {
+        "entity": "progression",
+        "id": "$",
+        "path": "level_gains",
+        "set": {
+          "hero": {
+            "max_hp": 5,
+            "max_mp": 1,
+            "max_sp": 2,
+            "attributes": {
+              "str": 2,
+              "end": 1
+            }
+          },
+          "cleric": {
+            "max_hp": 5,
+            "max_mp": 2,
+            "max_sp": 1,
+            "attributes": {
+              "wis": 2,
+              "int": 1
+            }
+          },
+          "mage": {
+            "max_hp": 3,
+            "max_mp": 3,
+            "max_sp": 1,
+            "attributes": {
+              "int": 2,
+              "wis": 1
+            }
+          },
+          "thief": {
+            "max_hp": 4,
+            "max_mp": 1,
+            "max_sp": 2,
+            "attributes": {
+              "dex": 2,
+              "str": 1
+            }
+          }
+        }
+      },
+      {
+        "entity": "characters",
+        "id": "mage",
+        "path": "skills.@id=fireball.conditional_bonus",
+        "set": [
+          {
+            "if": "target_hp_full",
+            "damage": "1d6"
+          }
+        ]
+      },
+      {
+        "entity": "characters",
+        "id": "mage",
+        "path": "skills.@id=fireball.spell_tier",
+        "set": "basic"
+      },
+      {
+        "entity": "characters",
+        "id": "mage",
+        "path": "skills.@id=ice_arrow.conditional_bonus",
+        "set": [
+          {
+            "if": "target_hp_ratio_lte",
+            "ratio": 0.5,
+            "damage": "1d6"
+          }
+        ]
+      },
+      {
+        "entity": "characters",
+        "id": "mage",
+        "path": "skills.@id=ice_arrow.spell_tier",
+        "set": "basic"
       }
     ]
   },
@@ -27288,6 +27476,990 @@
         "debuff"
       ],
       "description": "【仮】ラウンド終了時に1ダメージ。浄化で解除できる。"
+    },
+    {
+      "id": "mana_veil",
+      "name": "凝縮の構え",
+      "description": "【仮】",
+      "kind": "modifier",
+      "duration": 1,
+      "tags": [
+        "buff"
+      ],
+      "cleansable": false,
+      "expires": "enemy_phase_end",
+      "modifiers": {
+        "received_damage_multiplier": 0.5
+      }
+    }
+  ],
+  "progression": {},
+  "class_progression": [
+    {
+      "id": "hero",
+      "difficulty_only": [
+        "normal"
+      ],
+      "actives": [
+        {
+          "id": "3",
+          "level": 3,
+          "skill": {
+            "id": "holy_sword_art",
+            "name": "聖光の剣技",
+            "description": "【仮】",
+            "cost": 2,
+            "cost_type": "mp",
+            "damage": "1d6+str/4",
+            "accuracy": 92,
+            "multi_elements": [
+              "physical",
+              "holy"
+            ],
+            "hits_per_element": 1,
+            "self_status": "holy_blessing"
+          }
+        },
+        {
+          "id": "5",
+          "level": 5,
+          "skill": {
+            "id": "sweep",
+            "name": "薙ぎ払い",
+            "description": "【仮】",
+            "cost": 3,
+            "cost_type": "sp",
+            "damage": "1d6+str/4",
+            "accuracy": 90,
+            "element": "physical",
+            "all_targets": true,
+            "conditional_multipliers": [
+              {
+                "if": "single_enemy",
+                "x": 1.75
+              }
+            ]
+          }
+        },
+        {
+          "id": "7",
+          "level": 7,
+          "skill": {
+            "id": "dragon_slash",
+            "name": "竜断ちの一太刀",
+            "description": "【仮】",
+            "cost": 0,
+            "cost_type": "mp",
+            "costs": {
+              "sp": 7,
+              "mp": 5
+            },
+            "damage": "2d10+str/2+5",
+            "accuracy": 100,
+            "element": "physical",
+            "ignores_defense": true,
+            "ignores_resistance": true,
+            "conditional_multipliers": [
+              {
+                "if": "any",
+                "conditions": [
+                  {
+                    "if": "target_boss"
+                  },
+                  {
+                    "if": "target_id_in",
+                    "ids": [
+                      "ignis",
+                      "draco_dragon",
+                      "dragon_knight_mounted",
+                      "lava_drake"
+                    ]
+                  },
+                  {
+                    "if": "target_max_hp_gte",
+                    "value": 80
+                  }
+                ],
+                "x": 1.35
+              }
+            ]
+          }
+        }
+      ],
+      "passive_groups": [
+        {
+          "id": "2",
+          "level": 2,
+          "options": [
+            "departure_spirit",
+            "heavy_armor_lore"
+          ]
+        },
+        {
+          "id": "4",
+          "level": 4,
+          "options": [
+            "departure_spirit",
+            "unsinkable_shield"
+          ]
+        },
+        {
+          "id": "6",
+          "level": 6,
+          "options": [
+            "sword_followup",
+            "adversity_flame"
+          ]
+        },
+        {
+          "id": "8",
+          "level": 8,
+          "options": [
+            "sword_saint",
+            "dragon_destiny"
+          ]
+        }
+      ],
+      "passives": [
+        {
+          "id": "departure_spirit",
+          "name": "旅立ちの気概",
+          "stackable": true,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "opening_rounds": 1,
+                "opening_sp": 3
+              }
+            },
+            {
+              "id": "2",
+              "tier": 2,
+              "description": "【仮】",
+              "effects": {
+                "opening_rounds": 2,
+                "opening_sp": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "heavy_armor_lore",
+          "name": "重装の心得",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "armor_min": 1,
+                "armor_bonus": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "unsinkable_shield",
+          "name": "不沈の盾",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "skill_overrides": {
+                  "divine_guard": {
+                    "free_action": true,
+                    "cooldown": 2
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "sword_followup",
+          "name": "追い打ちの剣",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "hit_followup": {
+                  "weapon_half_dice": true,
+                  "element": "physical",
+                  "accuracy": 100,
+                  "skills": [
+                    "power_slash",
+                    "holy_sword_art",
+                    "dragon_slash"
+                  ],
+                  "basic": true
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "adversity_flame",
+          "name": "逆境の焔",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "low_hp": {
+                  "ratio": 0.5,
+                  "cost_multiplier": 0.5,
+                  "damage_multiplier": 1.25
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "sword_saint",
+          "name": "剣聖の境地",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "physical_penetration": 0.3
+              }
+            }
+          ]
+        },
+        {
+          "id": "dragon_destiny",
+          "name": "竜殺しの宿命",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "taken_elements": {
+                  "fire": 0.8,
+                  "ice": 0.8,
+                  "wind": 0.8,
+                  "dark": 0.8
+                },
+                "weakness_followup": {
+                  "element": "weakness",
+                  "damage": "1d4+str/6",
+                  "accuracy": 100
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cleric",
+      "difficulty_only": [
+        "normal"
+      ],
+      "actives": [
+        {
+          "id": "3",
+          "level": 3,
+          "skill": {
+            "id": "atonement_mark",
+            "name": "贖罪の印",
+            "description": "【仮】",
+            "cost": 2,
+            "cost_type": "sp",
+            "kind": "attack",
+            "damage": "0",
+            "accuracy": 95,
+            "element": "holy",
+            "status_on_hit": true,
+            "on_hit_status": {
+              "id": "holy_mark",
+              "duration": 3
+            }
+          }
+        },
+        {
+          "id": "5",
+          "level": 5,
+          "skill": {
+            "id": "great_heal_cleanse",
+            "name": "大いなる癒し・浄化",
+            "description": "【仮】",
+            "cost": 14,
+            "cost_type": "mp",
+            "kind": "heal",
+            "healing": "2d6+wis/2",
+            "replaces": "大いなる癒し",
+            "cleanse": {
+              "tags": [
+                "debuff"
+              ],
+              "count": "all"
+            },
+            "overflow_shield": {
+              "id": "holy_afterglow",
+              "max_hp_ratio": 0.25
+            }
+          }
+        },
+        {
+          "id": "7",
+          "level": 7,
+          "skill": {
+            "id": "seraphim_gospel",
+            "name": "セラフィムの福音",
+            "description": "【仮】",
+            "cost": 12,
+            "cost_type": "mp",
+            "kind": "status",
+            "max_uses_per_battle": 1,
+            "self_status": {
+              "id": "gospel",
+              "duration": 3,
+              "modifiers": {
+                "max_hp_multiplier": 2,
+                "heal_after_attack_ratio": 0.08,
+                "heal_limit_per_round": 2
+              }
+            }
+          }
+        }
+      ],
+      "passive_groups": [
+        {
+          "id": "2",
+          "level": 2,
+          "options": [
+            "pious_heart",
+            "overflow_mercy"
+          ]
+        },
+        {
+          "id": "4",
+          "level": 4,
+          "options": [
+            "pious_heart",
+            "ascetic_wisdom"
+          ]
+        },
+        {
+          "id": "6",
+          "level": 6,
+          "options": [
+            "overflow_mercy",
+            "holy_halo"
+          ]
+        },
+        {
+          "id": "8",
+          "level": 8,
+          "options": [
+            "immortal_sanctuary",
+            "pious_heart"
+          ]
+        }
+      ],
+      "passives": [
+        {
+          "id": "pious_heart",
+          "name": "敬虔なる心",
+          "stackable": true,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "regen_ratio": 0.03
+              }
+            },
+            {
+              "id": "2",
+              "tier": 2,
+              "description": "【仮】",
+              "effects": {
+                "regen_ratio": 0.05
+              }
+            },
+            {
+              "id": "3",
+              "tier": 3,
+              "description": "【仮】",
+              "effects": {
+                "regen_ratio": 0.07
+              }
+            }
+          ]
+        },
+        {
+          "id": "overflow_mercy",
+          "name": "溢れる慈愛",
+          "stackable": true,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "overflow_ratio": 0.75
+              }
+            },
+            {
+              "id": "2",
+              "tier": 2,
+              "description": "【仮】",
+              "effects": {
+                "overflow_ratio": 1.25
+              }
+            }
+          ]
+        },
+        {
+          "id": "ascetic_wisdom",
+          "name": "苦行の悟り",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "sp_for_mp": {
+                  "rate": 2,
+                  "max_ratio": 0.5
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "holy_halo",
+          "name": "光輪の加護",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "round_attack": {
+                  "hp_ratio_gt": 0.7,
+                  "damage": "1d3+wis/8",
+                  "element": "holy",
+                  "accuracy": 100,
+                  "target": "random_enemy"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "immortal_sanctuary",
+          "name": "不滅の聖域",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "free_skills": [
+                  "healing_prayer"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mage",
+      "difficulty_only": [
+        "normal"
+      ],
+      "actives": [
+        {
+          "id": "3",
+          "level": 3,
+          "skill": {
+            "id": "mana_condense",
+            "name": "魔力凝縮",
+            "description": "【仮】",
+            "cost": 3,
+            "cost_type": "sp",
+            "kind": "restore",
+            "resource": "mp",
+            "amount": "int/3+2",
+            "self_status": [
+              {
+                "id": "magic_focus",
+                "modifiers": {
+                  "next_spell_damage_multiplier": 1.3
+                }
+              },
+              {
+                "id": "mana_veil",
+                "modifiers": {
+                  "received_damage_multiplier": 0.5
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "5",
+          "level": 5,
+          "skill": {
+            "id": "twin_storm",
+            "name": "氷炎の双嵐",
+            "description": "【仮】",
+            "cost": 7,
+            "cost_type": "mp",
+            "damage": "1d6+int/6",
+            "accuracy": 92,
+            "spell_tier": "advanced",
+            "multi_elements": [
+              "fire",
+              "ice"
+            ],
+            "hits_per_element": 1,
+            "conditional_multipliers": [
+              {
+                "if": "target_hp_full",
+                "element": "fire",
+                "x": 2
+              },
+              {
+                "if": "target_hp_ratio_lte",
+                "ratio": 0.5,
+                "element": "ice",
+                "x": 2
+              }
+            ]
+          }
+        },
+        {
+          "id": "7",
+          "level": 7,
+          "skill": {
+            "id": "elemental_collapse",
+            "name": "元素崩壊",
+            "description": "【仮】",
+            "cost": 18,
+            "cost_type": "mp",
+            "damage": "1d4+int/5",
+            "accuracy": 95,
+            "spell_tier": "advanced",
+            "learned_elements": true,
+            "max_hits": 4,
+            "resonance_exempt": true
+          }
+        }
+      ],
+      "passive_groups": [
+        {
+          "id": "2",
+          "level": 2,
+          "options": [
+            "mana_cycle",
+            "arcane_guard"
+          ]
+        },
+        {
+          "id": "4",
+          "level": 4,
+          "options": [
+            "element_resonance",
+            "mana_cycle"
+          ]
+        },
+        {
+          "id": "6",
+          "level": 6,
+          "options": [
+            "mana_armor",
+            "arcane_guard"
+          ]
+        },
+        {
+          "id": "8",
+          "level": 8,
+          "options": [
+            "omni_master",
+            "mana_cycle"
+          ]
+        }
+      ],
+      "passives": [
+        {
+          "id": "mana_cycle",
+          "name": "魔力循環",
+          "stackable": true,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "mana_cycle": {
+                  "amount": 1,
+                  "cap_ratio": 0.2
+                }
+              }
+            },
+            {
+              "id": "2",
+              "tier": 2,
+              "description": "【仮】",
+              "effects": {
+                "mana_cycle": {
+                  "amount": 2,
+                  "cap_ratio": 0.3
+                }
+              }
+            },
+            {
+              "id": "3",
+              "tier": 3,
+              "description": "【仮】",
+              "effects": {
+                "mana_cycle": {
+                  "amount": 3,
+                  "cap_ratio": 0.4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "arcane_guard",
+          "name": "魔導の盾",
+          "stackable": true,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "battle_shield": {
+                  "id": "arcane_shield"
+                }
+              }
+            },
+            {
+              "id": "2",
+              "tier": 2,
+              "description": "【仮】",
+              "effects": {
+                "battle_shield": {
+                  "id": "arcane_shield"
+                },
+                "shield_regain": {
+                  "every": 3,
+                  "max": 2,
+                  "status": {
+                    "id": "arcane_shield",
+                    "modifiers": {
+                      "shield": {
+                        "block_one_attack": true,
+                        "max_hp_ratio": 0.2
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "element_resonance",
+          "name": "元素共鳴",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "resonance": {
+                  "multiplier": 1.15,
+                  "refund": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "mana_armor",
+          "name": "マナ・アーマー",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "mana_armor": 0.25
+              }
+            }
+          ]
+        },
+        {
+          "id": "omni_master",
+          "name": "万象の支配者",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "basic_element": "weakness",
+                "fallback_element": "arcane",
+                "weak_multiplier": 1.25
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thief",
+      "difficulty_only": [
+        "normal"
+      ],
+      "actives": [
+        {
+          "id": "3",
+          "level": 3,
+          "skill": {
+            "id": "blinding_throw",
+            "name": "目潰し投げ",
+            "description": "【仮】",
+            "cost": 2,
+            "cost_type": "mp",
+            "damage": "1d4+dex/4",
+            "accuracy": 95,
+            "element": "physical",
+            "on_hit_status": {
+              "id": "blind",
+              "duration": 2
+            }
+          }
+        },
+        {
+          "id": "5",
+          "level": 5,
+          "skill": {
+            "id": "blade_dance",
+            "name": "刃の乱舞",
+            "description": "【仮】",
+            "cost": 4,
+            "cost_type": "sp",
+            "damage": "1d4+dex/4",
+            "accuracy": 95,
+            "element": "physical",
+            "all_targets": true,
+            "on_hit_status": {
+              "id": "poison",
+              "stacks": 1
+            }
+          }
+        },
+        {
+          "id": "7",
+          "level": 7,
+          "skill": {
+            "id": "shadow_haste",
+            "name": "神速の影分身",
+            "description": "【仮】",
+            "cost": 0,
+            "cost_type": "mp",
+            "costs": {
+              "sp": 8,
+              "mp": 4
+            },
+            "kind": "status",
+            "cooldown": 5,
+            "self_status": {
+              "id": "haste",
+              "duration": 3
+            }
+          }
+        }
+      ],
+      "passive_groups": [
+        {
+          "id": "2",
+          "level": 2,
+          "options": [
+            "acrobatics",
+            "poison_craft"
+          ]
+        },
+        {
+          "id": "4",
+          "level": 4,
+          "options": [
+            "hidden_weapon_master",
+            "acrobatics"
+          ]
+        },
+        {
+          "id": "6",
+          "level": 6,
+          "options": [
+            "counter_sight",
+            "poison_craft"
+          ]
+        },
+        {
+          "id": "8",
+          "level": 8,
+          "options": [
+            "unseen_assassin",
+            "acrobatics"
+          ]
+        }
+      ],
+      "passives": [
+        {
+          "id": "acrobatics",
+          "name": "軽業の身のこなし",
+          "stackable": true,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "evade_bonus": 5,
+                "miss_sp": 1,
+                "miss_sp_cap": 2
+              }
+            },
+            {
+              "id": "2",
+              "tier": 2,
+              "description": "【仮】",
+              "effects": {
+                "evade_bonus": 8,
+                "miss_sp": 1,
+                "miss_sp_cap": 3
+              }
+            },
+            {
+              "id": "3",
+              "tier": 3,
+              "description": "【仮】",
+              "effects": {
+                "evade_bonus": 10,
+                "miss_sp": 2,
+                "miss_sp_cap": 4
+              }
+            }
+          ]
+        },
+        {
+          "id": "poison_craft",
+          "name": "毒使いの技",
+          "stackable": true,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "hit_status": {
+                  "id": "poison",
+                  "stacks": 1,
+                  "max_stacks": 3
+                }
+              }
+            },
+            {
+              "id": "2",
+              "tier": 2,
+              "description": "【仮】",
+              "effects": {
+                "hit_status": {
+                  "id": "poison",
+                  "stacks": 1,
+                  "max_stacks": 5
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "hidden_weapon_master",
+          "name": "暗器の達人",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "free_item_uses": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "counter_sight",
+          "name": "見切り反撃",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "counter_attack": {
+                  "damage": "1d6",
+                  "element": "physical",
+                  "accuracy": 100
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "unseen_assassin",
+          "name": "無明の暗殺者",
+          "stackable": false,
+          "tiers": [
+            {
+              "id": "1",
+              "tier": 1,
+              "description": "【仮】",
+              "effects": {
+                "encounter_damage": {
+                  "elite": 1.15,
+                  "boss": 1.15
+                }
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

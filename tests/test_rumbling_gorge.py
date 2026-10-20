@@ -1,4 +1,5 @@
 from __future__ import annotations
+from scripts.scenario.levels_skills_v2 import migrate as levels
 
 import json
 import random
@@ -297,6 +298,7 @@ class RumblingGorgeTests(unittest.TestCase):
             upgraded = deepcopy(pack)
             apply(upgraded)
             apply_spring_postgame(upgraded)
+            upgraded = levels(upgraded)
             self.assertEqual(upgraded, pack)
             for loc in pack["locations"]:
                 if loc["id"] in DESCRIPTIONS:

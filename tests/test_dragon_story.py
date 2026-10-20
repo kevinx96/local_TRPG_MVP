@@ -87,7 +87,8 @@ class DragonStoryTests(unittest.TestCase):
     def test_town_catalog_and_companions_are_complete(self):
         for filename in SCENARIO_FILES:
             with self.subTest(filename=filename):
-                pack = self.load_raw(filename)
+                from host.difficulty import apply_difficulty
+                pack = apply_difficulty(self.load_raw(filename), "baby")
                 locations = records(pack, "locations")
                 items = records(pack, "items")
                 companions = records(pack, "companions")

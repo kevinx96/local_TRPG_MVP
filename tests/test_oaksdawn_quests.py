@@ -266,6 +266,8 @@ class OaksdawnQuestsTests(unittest.TestCase):
             original = deepcopy(pack)
             apply(pack)
             apply_spring_postgame(pack)
+            from scripts.scenario.levels_skills_v2 import migrate as levels
+            pack = levels(pack)
             self.assertEqual(pack, original)
             reference = json.loads(DEFAULT_SCENARIO.read_text(encoding="utf-8"))
             self.assertEqual({i["id"]: i["icon"] for i in pack["items"]},

@@ -5,6 +5,9 @@ pack["difficulty_overlays"]["normal"] in BOTH packs, and bump content_revision.
 NUMERIC_FIELDS is the single numeric path whitelist (* matches one component).
 Add new numeric paths here; existing patterns cover new records automatically.
 EXP tables use ID-keyed objects or records with IDs, never array positions.
+Records with difficulty_only are recursively filtered from effective packs.
+Normal-only records carry their normal numeric values in the base pack; 052
+may tune those records directly. They are absent from the effective baby pack.
 MECHANIC_FIELDS is a separate entity/path -> allowed-values whitelist, empty
 until a design spec authorizes difficulty-changing rules. Only these fields
 may be created with set, and their parent must already exist.
@@ -314,6 +317,35 @@ MECHANIC_FIELDS: dict[str, dict[str, tuple[Any, ...]]] = {
         {"source": "previous_damage_enemy", "ratio": 1.5},
     )},
 }
+MECHANIC_FIELDS["progression"] = {key: () for key in
+                                ("level_model", "max_level", "exp_table", "exp_rewards", "level_gains")}
+MECHANIC_FIELDS["characters"].update({"skills.*.conditional_bonus": (), "skills.*.spell_tier": ("basic",)})
+NUMERIC_FIELDS["progression"] += ("exp_rewards.*", "level_gains.*.max_hp", "level_gains.*.max_mp",
+                                 "level_gains.*.max_sp", "level_gains.*.attributes.*")
+_SKILL_NUMBERS = (
+    "cost", "costs.*", "accuracy", "damage", "healing", "amount", "cooldown", "hits_per_element",
+    "max_hits", "max_uses_per_battle", "conditional_bonus.*.ratio", "conditional_bonus.*.damage",
+    "conditional_multipliers.*.x", "conditional_multipliers.*.ratio", "conditional_multipliers.*.conditions.*.value",
+    "on_hit_status.duration", "on_hit_status.stacks", "overflow_shield.max_hp_ratio",
+    "self_status.duration", "self_status.modifiers.*", "self_status.*.modifiers.*",
+)
+NUMERIC_FIELDS["characters"] += tuple("skills.*." + p for p in ("conditional_bonus.*.ratio", "conditional_bonus.*.damage"))
+NUMERIC_FIELDS["items"] += tuple("learn_skill." + p for p in _SKILL_NUMBERS)
+NUMERIC_FIELDS["class_progression"] = (
+    "actives.*.level", "passive_groups.*.level", "passives.*.tiers.*.tier",
+    *(f"actives.*.skill.{p}" for p in _SKILL_NUMBERS),
+    *(f"passives.*.tiers.*.effects.{p}" for p in (
+        "opening_rounds", "opening_sp", "armor_min", "armor_bonus", "skill_overrides.*.cooldown",
+        "hit_followup.accuracy", "low_hp.ratio", "low_hp.cost_multiplier", "low_hp.damage_multiplier",
+        "physical_penetration", "taken_elements.*", "weakness_followup.damage", "weakness_followup.accuracy",
+        "regen_ratio", "overflow_ratio", "sp_for_mp.rate", "sp_for_mp.max_ratio", "round_attack.hp_ratio_gt",
+        "round_attack.damage", "round_attack.accuracy", "mana_cycle.amount", "mana_cycle.cap_ratio",
+        "shield_regain.every", "shield_regain.max", "shield_regain.status.modifiers.shield.max_hp_ratio",
+        "resonance.multiplier", "resonance.refund", "mana_armor", "weak_multiplier",
+        "evade_bonus", "miss_sp", "miss_sp_cap", "hit_status.stacks", "hit_status.max_stacks",
+        "free_item_uses", "counter_attack.damage", "counter_attack.accuracy", "encounter_damage.*",
+    )),
+)
 # Inert definitions are shared metadata, never active baby balance values.
 NON_BALANCE_FIELDS += ("status_defs.*.*", "status_defs.*.*.*", "status_defs.*.*.*.*", "status_defs.*.*.*.*.*")
 DIFFICULTY_LABELS = {"baby": "やさしい", "normal": "ふつう"}
@@ -460,6 +492,27 @@ def _apply_overlays(pack: dict[str, Any]) -> None:
                 valid = (isinstance(value, dict) and set(value) == {"source", "ratio"}
                          and value["source"] == "previous_damage_enemy"
                          and _number(value["ratio"]) and value["ratio"] >= 0)
+            elif group == "progression":
+                if pattern == "level_model":
+                    valid = value == "exp"
+                elif pattern == "max_level":
+                    valid = type(value) is int and value >= 2
+                elif pattern in {"exp_table", "exp_rewards"}:
+                    valid = (isinstance(value, dict) and bool(value)
+                             and all(type(n) is int and n >= 0 for n in value.values()))
+                elif pattern == "level_gains":
+                    valid = (isinstance(value, dict) and set(value) == {"hero", "cleric", "mage", "thief"}
+                             and all(isinstance(g, dict) and set(g) == {"max_hp", "max_mp", "max_sp", "attributes"}
+                                     and isinstance(g["attributes"], dict)
+                                     and all(type(n) is int and n >= 0 for k, n in g.items() if k != "attributes")
+                                     and all(type(n) is int and n >= 0 for n in g["attributes"].values())
+                                     for g in value.values()))
+            elif group == "characters" and pattern == "skills.*.conditional_bonus":
+                valid = (isinstance(value, list) and bool(value)
+                         and all(isinstance(c, dict) and c.get("if") in {"target_hp_full", "target_hp_ratio_lte"}
+                                 and isinstance(c.get("damage"), str) and bool(FORMULA.fullmatch(c["damage"]))
+                                 and (c["if"] != "target_hp_ratio_lte"
+                                      or _number(c.get("ratio")) and 0 <= c["ratio"] <= 1) for c in value))
             if operation != "set" or not valid:
                 raise ValueError(f"Invalid mechanic setting: {group}/{path}")
         else:
@@ -494,6 +547,16 @@ def _apply_overlays(pack: dict[str, Any]) -> None:
             if not _number(result):
                 raise ValueError("Difficulty arithmetic must produce a finite number")
             parent[key] = result
+    config = pack.get("progression", {})
+    if config.get("level_model") == "exp":
+        maximum, table = config.get("max_level", 0), config.get("exp_table", {})
+        if set(table) != {str(n) for n in range(2, maximum + 1)}:
+            raise ValueError("EXP table must cover levels 2 through max_level")
+        thresholds = [0] + [table[str(n)] for n in range(2, maximum + 1)]
+        if any(a >= b for a, b in zip(thresholds, thresholds[1:])):
+            raise ValueError("EXP thresholds must be strictly increasing")
+        if not {"trash", "elite", "boss", "unclassified", "quest", "scripted_loss", "guest"} <= set(config.get("exp_rewards", {})):
+            raise ValueError("Missing EXP reward source")
 
 
 def validate_difficulty(pack: dict[str, Any]) -> None:
@@ -511,6 +574,17 @@ def apply_difficulty(pack: dict[str, Any], mode: str) -> dict[str, Any]:
         _apply_overlays(result)
     else:
         validate_difficulty(pack)
+    def filtered(value: Any) -> Any:
+        if isinstance(value, list):
+            return [filtered(entry) for entry in value
+                    if not isinstance(entry, dict) or mode in entry.get("difficulty_only", [mode])]
+        if isinstance(value, dict):
+            return {key: filtered(child) for key, child in value.items()}
+        return value
+
+    result = filtered(result)
+    if not result.get("class_progression"):
+        result.pop("class_progression", None)
     return result
 
 

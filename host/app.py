@@ -121,6 +121,37 @@ class ItemUseRequest(BaseModel):
     item_id: str
 
 
+class PassiveChoiceRequest(BaseModel):
+    level: Any
+    passive_id: str
+
+
+@app.post("/api/sessions/{session_id}/passives/choose")
+def api_choose_passive(session_id: str, request: PassiveChoiceRequest) -> dict[str, Any]:
+    from .progression import choose_passive
+    try:
+        session = choose_passive(load_session(session_id), request.level, request.passive_id)
+        save_session(session)
+        return public_session(session)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.post("/api/sessions/{session_id}/items/learn")
+def api_learn_spell(session_id: str, request: ItemUseRequest) -> dict[str, Any]:
+    from .progression import learn_spell
+    try:
+        session = learn_spell(load_session(session_id), request.item_id)
+        save_session(session)
+        return public_session(session)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
 class ShopTradeRequest(ItemUseRequest):
     quantity: conint(strict=True, gt=0)
 

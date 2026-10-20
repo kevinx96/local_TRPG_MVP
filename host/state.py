@@ -15,6 +15,7 @@ from typing import Any, Optional, Union
 from .intent_resolver import resolve_intent
 from .item_mechanics import equipped_items, item_combat_spec, item_slot, structured_item_effect
 from .quests import public_quests, record_quest_changes
+from . import progression
 from .maps import public_maps
 from .shops import item_category
 from .scenario_context import (
@@ -252,6 +253,7 @@ def create_session(
         "created_at": utc_now(),
         "updated_at": utc_now(),
     }
+    progression.initialize(session)
     capture_entries(session, None, set())
     ensure_combat_started(session)
     record_quest_changes(session, [])
@@ -292,6 +294,7 @@ def load_session(session_id: str) -> dict[str, Any]:
     session.setdefault("area_snapshots", {})
     session.setdefault("retry_count", 0)
     changed = _refresh_session_scenario_pack(session) or legacy_difficulty
+    changed = progression.initialize(session) or changed
     if session.get('scenario_pack', {}).get('meta', {}).get('chapter5_v5') and current_scene_id(session) == 'castle_return':
         if not session.setdefault('flags', {}).get('returned_to_capital'):
             session['flags']['returned_to_capital'] = True
@@ -464,6 +467,7 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
     from .difficulty import DIFFICULTY_LABELS
     from .npc_combat import gone
 
+    progression.initialize(session)
     world = ensure_world_state(session)
     combat = public_combat(session)
     public = deepcopy(session)
@@ -487,11 +491,19 @@ def public_session(session: dict[str, Any]) -> dict[str, Any]:
                                     for key, value in (session.get("last_action_result") or {}).items()
                                     if key in {"action_id", "event_id", "open_shop"}}
     public["quests"] = public_quests(session)
+    progress = progression.public_progression(session)
+    if progress is not None:
+        public["progression"] = progress
     public["map"] = public_maps(session)
     public["character"]["inventory"] = [
         _enrich_item(item if isinstance(item, dict) else {"name": item}, session.get("scenario_pack"))
         for item in session["character"].get("inventory", [])
     ]
+    if progress is not None:
+        for item in public["character"]["inventory"]:
+            if item.get("category") == "spellbook":
+                reason = progression.learn_reason(session, item)
+                item["learn"] = {"enabled": not reason, "reason": reason}
     public["current_scene"] = world["scene_id"]
     public["current_location"] = world["location_id"]
     public["current_scene_title"] = scene_title(session)
@@ -889,6 +901,9 @@ def record_state_event(
     if kind == "item_added":
         session["known_item_names"] = sorted(known_item_names(session) | {str(event["data"]["item"])})
     if len(events) > 240:
+        battle = session.get("combat")
+        if progression.enabled(session) and isinstance(battle, dict):
+            battle["event_cursor"] = max(0, int(battle.get("event_cursor", 0)) - (len(events) - 240))
         session["event_log"] = events[-240:]
     if visible and text:
         session.setdefault("system_logs", []).append({
@@ -2211,6 +2226,9 @@ def apply_state_delta(
     _sync_scenario_item_flags(session)
     _unlock_visible_actions(session)
     record_quest_changes(session, before)
+    progression.quest_rewards(session, before)
+    if delta.get("_exp_reward"):
+        progression.reward(session, int(delta["_exp_reward"]["amount"]), str(delta["_exp_reward"]["source"]))
     if current_location_id(session) != previous_location:
         capture_entries(session, previous_location, previous_areas)
 
@@ -2412,6 +2430,8 @@ def _apply_state_delta(
         removed_skills = len(character.get("skills") or [])
         character["skills"] = []
         character["skills_cleared_through_level"] = character.get("level", 1)
+        if progression.enabled(session):
+            character["learned_spells"] = []
         record_state_event(
             session,
             "skills_cleared",
@@ -2528,6 +2548,9 @@ def _milestone_flags(milestone: dict[str, Any]) -> list[str]:
 
 
 def _initialize_milestones(session: dict[str, Any]) -> None:
+    if progression.enabled(session):
+        session["character"].setdefault("level", 1)
+        return
     character = session["character"]
     if "level" not in character:
         character["level"] = 1
@@ -2541,6 +2564,8 @@ def _initialize_milestones(session: dict[str, Any]) -> None:
 
 
 def _apply_milestones(session: dict[str, Any]) -> None:
+    if progression.enabled(session):
+        return
     character = session["character"]
     completed = session["completed_milestones"]
     milestones = sorted(session.get("scenario_pack", {}).get("milestones", []), key=lambda m: m["level"])
@@ -2572,6 +2597,8 @@ def _apply_milestones(session: dict[str, Any]) -> None:
 
 
 def _unlock_level_skills(session: dict[str, Any], *, restoring: bool = False) -> None:
+    if progression.enabled(session):
+        return
     character = session["character"]
     template = _find_character_in_pack(session["scenario_pack"], character["character_id"]) or {}
     skills = character.setdefault("skills", [])
@@ -2728,7 +2755,8 @@ def _enrich_item(item: dict[str, Any], scenario_pack: Optional[dict[str, Any]] =
         "effect": structured_item_effect(merged) or str(merged.get("effect") or ""),
         "quantity": _safe_quantity(item.get("quantity"), 1),
     }
-    for key in ("id", "icon", "combat", "traits", "category", "sell_price", "key_item", "non_removable", "slot"):
+    for key in ("id", "icon", "combat", "traits", "category", "sell_price", "key_item", "non_removable", "slot",
+                "learn_skill", "learnable_by", "consumable"):
         if key in merged:
             enriched[key] = deepcopy(merged[key])
     category = item_category(enriched)

@@ -1,0 +1,4608 @@
+{
+  "hero": [
+    {
+      "character": {
+        "name": "アルス",
+        "description": "王国に選ばれし若き冒険者。バランスの取れた能力を持つ。",
+        "character_id": "hero",
+        "hp": 25,
+        "max_hp": 25,
+        "mp": 9,
+        "max_mp": 9,
+        "sp": 12,
+        "max_sp": 12,
+        "gold": 0,
+        "attributes": {
+          "str": 14,
+          "dex": 5,
+          "int": 5,
+          "wis": 5,
+          "end": 11
+        },
+        "skills": [
+          {
+            "name": "渾身斬り",
+            "kind": "attack",
+            "description": "気合を込めた全力の一撃。",
+            "effect": "1d4+str判定ダメージ",
+            "damage": "1d10+str/2",
+            "dice_type": "1d10+str/2",
+            "accuracy": 85,
+            "element": "physical",
+            "cost": 3,
+            "cost_type": "sp"
+          },
+          {
+            "name": "神聖の庇護",
+            "kind": "defend",
+            "description": "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。",
+            "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+            "guard_multiplier": 0.5,
+            "survive_at_one": true,
+            "cost": 0
+          }
+        ],
+        "inventory": [
+          {
+            "name": "鉄の剣",
+            "description": "一見質素な一振りの剣……",
+            "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
+            "quantity": 1,
+            "icon": "/static/images/icon_iron_sword.png",
+            "combat": {
+              "kind": "weapon",
+              "name": "鉄の剣",
+              "damage": "1d8+str/3",
+              "accuracy": 90,
+              "element": "physical"
+            },
+            "category": "equipment",
+            "slot": "weapon"
+          },
+          {
+            "name": "革の鎧",
+            "description": "なめした革で作られた軽量の鎧。",
+            "effect": "被ダメージを1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_leather_armor.png",
+            "combat": {
+              "kind": "armor",
+              "defense": 1
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 1,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "鉄の剣",
+          "革の鎧"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_male_hero_v2.png",
+        "level": 2,
+        "combat": {
+          "basic_attack": {
+            "name": "鉄の剣",
+            "damage": "1d8+str/3",
+            "accuracy": 90,
+            "element": "physical"
+          },
+          "defense": 0,
+          "evade": 0,
+          "base_attack": {
+            "name": "鉄の剣",
+            "damage": "1d8+str/3",
+            "accuracy": 90,
+            "element": "physical"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "アルス",
+        "description": "王国に選ばれし若き冒険者。バランスの取れた能力を持つ。",
+        "character_id": "hero",
+        "hp": 30,
+        "max_hp": 30,
+        "mp": 10,
+        "max_mp": 10,
+        "sp": 14,
+        "max_sp": 14,
+        "gold": 0,
+        "attributes": {
+          "str": 16,
+          "dex": 5,
+          "int": 5,
+          "wis": 5,
+          "end": 12
+        },
+        "skills": [
+          {
+            "name": "渾身斬り・改",
+            "kind": "attack",
+            "damage": "1d8+str/2",
+            "accuracy": 92,
+            "element": "physical",
+            "cost": 3,
+            "cost_type": "sp",
+            "description": "気合を込めた全力の一撃。",
+            "unlock_level": 3,
+            "effect": "敵に1d8+str/2ダメージを与える。",
+            "replaces": "渾身斬り"
+          },
+          {
+            "name": "神聖の庇護",
+            "kind": "defend",
+            "description": "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。",
+            "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+            "guard_multiplier": 0.5,
+            "survive_at_one": true,
+            "cost": 0
+          }
+        ],
+        "inventory": [
+          {
+            "name": "鉄の剣",
+            "description": "一見質素な一振りの剣……",
+            "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
+            "quantity": 1,
+            "icon": "/static/images/icon_iron_sword.png",
+            "combat": {
+              "kind": "weapon",
+              "name": "鉄の剣",
+              "damage": "1d8+str/3",
+              "accuracy": 90,
+              "element": "physical"
+            },
+            "category": "equipment",
+            "slot": "weapon"
+          },
+          {
+            "name": "革の鎧",
+            "description": "なめした革で作られた軽量の鎧。",
+            "effect": "被ダメージを1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_leather_armor.png",
+            "combat": {
+              "kind": "armor",
+              "defense": 1
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 1,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "鉄の剣",
+          "革の鎧"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_male_hero_v2.png",
+        "level": 3,
+        "combat": {
+          "basic_attack": {
+            "name": "鉄の剣",
+            "damage": "1d8+str/3",
+            "accuracy": 90,
+            "element": "physical"
+          },
+          "defense": 0,
+          "evade": 0,
+          "base_attack": {
+            "name": "鉄の剣",
+            "damage": "1d8+str/3",
+            "accuracy": 90,
+            "element": "physical"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "アルス",
+        "description": "王国に選ばれし若き冒険者。バランスの取れた能力を持つ。",
+        "character_id": "hero",
+        "hp": 35,
+        "max_hp": 35,
+        "mp": 11,
+        "max_mp": 11,
+        "sp": 16,
+        "max_sp": 16,
+        "gold": 0,
+        "attributes": {
+          "str": 18,
+          "dex": 5,
+          "int": 5,
+          "wis": 5,
+          "end": 13
+        },
+        "skills": [
+          {
+            "name": "渾身斬り・改",
+            "kind": "attack",
+            "damage": "1d8+str/2",
+            "accuracy": 92,
+            "element": "physical",
+            "cost": 3,
+            "cost_type": "sp",
+            "description": "気合を込めた全力の一撃。",
+            "unlock_level": 3,
+            "effect": "敵に1d8+str/2ダメージを与える。",
+            "replaces": "渾身斬り"
+          },
+          {
+            "name": "神聖の庇護",
+            "kind": "defend",
+            "description": "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。",
+            "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+            "guard_multiplier": 0.5,
+            "survive_at_one": true,
+            "cost": 0
+          }
+        ],
+        "inventory": [
+          {
+            "name": "鉄の剣",
+            "description": "一見質素な一振りの剣……",
+            "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
+            "quantity": 1,
+            "icon": "/static/images/icon_iron_sword.png",
+            "combat": {
+              "kind": "weapon",
+              "name": "鉄の剣",
+              "damage": "1d8+str/3",
+              "accuracy": 90,
+              "element": "physical"
+            },
+            "category": "equipment",
+            "slot": "weapon"
+          },
+          {
+            "name": "革の鎧",
+            "description": "なめした革で作られた軽量の鎧。",
+            "effect": "被ダメージを1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_leather_armor.png",
+            "combat": {
+              "kind": "armor",
+              "defense": 1
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 1,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "鉄の剣",
+          "革の鎧"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_male_hero_v2.png",
+        "level": 4,
+        "combat": {
+          "basic_attack": {
+            "name": "鉄の剣",
+            "damage": "1d8+str/3",
+            "accuracy": 90,
+            "element": "physical"
+          },
+          "defense": 0,
+          "evade": 0,
+          "base_attack": {
+            "name": "鉄の剣",
+            "damage": "1d8+str/3",
+            "accuracy": 90,
+            "element": "physical"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "reached_village",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが4に上がりました。",
+          "data": {
+            "milestone_id": "lv4",
+            "level": 4,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "アルス",
+        "description": "王国に選ばれし若き冒険者。バランスの取れた能力を持つ。",
+        "character_id": "hero",
+        "hp": 40,
+        "max_hp": 40,
+        "mp": 12,
+        "max_mp": 12,
+        "sp": 18,
+        "max_sp": 18,
+        "gold": 0,
+        "attributes": {
+          "str": 20,
+          "dex": 5,
+          "int": 5,
+          "wis": 5,
+          "end": 14
+        },
+        "skills": [
+          {
+            "name": "渾身斬り・改",
+            "kind": "attack",
+            "damage": "1d8+str/2",
+            "accuracy": 92,
+            "element": "physical",
+            "cost": 3,
+            "cost_type": "sp",
+            "description": "気合を込めた全力の一撃。",
+            "unlock_level": 3,
+            "effect": "敵に1d8+str/2ダメージを与える。",
+            "replaces": "渾身斬り"
+          },
+          {
+            "name": "神聖の庇護",
+            "kind": "defend",
+            "description": "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。",
+            "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+            "guard_multiplier": 0.5,
+            "survive_at_one": true,
+            "cost": 0
+          },
+          {
+            "name": "不屈の構え",
+            "kind": "defend",
+            "guard_multiplier": 0.25,
+            "survive_at_one": true,
+            "cost": 2,
+            "cost_type": "sp",
+            "description": "構えを固め、致死ダメージにも耐え抜く。",
+            "unlock_level": 5,
+            "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "鉄の剣",
+            "description": "一見質素な一振りの剣……",
+            "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
+            "quantity": 1,
+            "icon": "/static/images/icon_iron_sword.png",
+            "combat": {
+              "kind": "weapon",
+              "name": "鉄の剣",
+              "damage": "1d8+str/3",
+              "accuracy": 90,
+              "element": "physical"
+            },
+            "category": "equipment",
+            "slot": "weapon"
+          },
+          {
+            "name": "革の鎧",
+            "description": "なめした革で作られた軽量の鎧。",
+            "effect": "被ダメージを1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_leather_armor.png",
+            "combat": {
+              "kind": "armor",
+              "defense": 1
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 1,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "鉄の剣",
+          "革の鎧"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_male_hero_v2.png",
+        "level": 5,
+        "combat": {
+          "basic_attack": {
+            "name": "鉄の剣",
+            "damage": "1d8+str/3",
+            "accuracy": 90,
+            "element": "physical"
+          },
+          "defense": 0,
+          "evade": 0,
+          "base_attack": {
+            "name": "鉄の剣",
+            "damage": "1d8+str/3",
+            "accuracy": 90,
+            "element": "physical"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "reached_village",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが4に上がりました。",
+          "data": {
+            "milestone_id": "lv4",
+            "level": 4,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "nest_event_seen",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが5に上がりました。",
+          "data": {
+            "milestone_id": "lv5",
+            "level": 5,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "アルス",
+        "description": "王国に選ばれし若き冒険者。バランスの取れた能力を持つ。",
+        "character_id": "hero",
+        "hp": 40,
+        "max_hp": 40,
+        "mp": 12,
+        "max_mp": 12,
+        "sp": 18,
+        "max_sp": 18,
+        "gold": 0,
+        "attributes": {
+          "str": 20,
+          "dex": 5,
+          "int": 5,
+          "wis": 5,
+          "end": 14
+        },
+        "skills": [
+          {
+            "name": "渾身斬り・改",
+            "kind": "attack",
+            "damage": "1d8+str/2",
+            "accuracy": 92,
+            "element": "physical",
+            "cost": 3,
+            "cost_type": "sp",
+            "description": "気合を込めた全力の一撃。",
+            "unlock_level": 3,
+            "effect": "敵に1d8+str/2ダメージを与える。",
+            "replaces": "渾身斬り"
+          },
+          {
+            "name": "神聖の庇護",
+            "kind": "defend",
+            "description": "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。",
+            "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+            "guard_multiplier": 0.5,
+            "survive_at_one": true,
+            "cost": 0
+          },
+          {
+            "name": "不屈の構え",
+            "kind": "defend",
+            "guard_multiplier": 0.25,
+            "survive_at_one": true,
+            "cost": 2,
+            "cost_type": "sp",
+            "description": "構えを固め、致死ダメージにも耐え抜く。",
+            "unlock_level": 5,
+            "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "鉄の剣",
+            "description": "一見質素な一振りの剣……",
+            "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
+            "quantity": 1,
+            "icon": "/static/images/icon_iron_sword.png",
+            "combat": {
+              "kind": "weapon",
+              "name": "鉄の剣",
+              "damage": "1d8+str/3",
+              "accuracy": 90,
+              "element": "physical"
+            },
+            "category": "equipment",
+            "slot": "weapon"
+          },
+          {
+            "name": "革の鎧",
+            "description": "なめした革で作られた軽量の鎧。",
+            "effect": "被ダメージを1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_leather_armor.png",
+            "combat": {
+              "kind": "armor",
+              "defense": 1
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 1,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "鉄の剣",
+          "革の鎧"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_male_hero_v2.png",
+        "level": 5,
+        "combat": {
+          "basic_attack": {
+            "name": "鉄の剣",
+            "damage": "1d8+str/3",
+            "accuracy": 90,
+            "element": "physical"
+          },
+          "defense": 0,
+          "evade": 0,
+          "base_attack": {
+            "name": "鉄の剣",
+            "damage": "1d8+str/3",
+            "accuracy": 90,
+            "element": "physical"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "reached_village",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが4に上がりました。",
+          "data": {
+            "milestone_id": "lv4",
+            "level": 4,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "nest_event_seen",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが5に上がりました。",
+          "data": {
+            "milestone_id": "lv5",
+            "level": 5,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "str": 2,
+                "end": 1
+              }
+            }
+          },
+          "source": "engine"
+        }
+      ]
+    }
+  ],
+  "cleric": [
+    {
+      "character": {
+        "name": "マリア",
+        "description": "神聖魔法を操る癒し手。HPとMPが高く、知力に優れる。",
+        "character_id": "cleric",
+        "hp": 23,
+        "max_hp": 23,
+        "mp": 16,
+        "max_mp": 16,
+        "sp": 9,
+        "max_sp": 9,
+        "gold": 0,
+        "attributes": {
+          "str": 6,
+          "dex": 8,
+          "int": 15,
+          "wis": 14,
+          "end": 15
+        },
+        "skills": [
+          {
+            "name": "治癒の祈り",
+            "kind": "heal",
+            "description": "聖なる祈りで傷を癒す。",
+            "effect": "HPを1d6+知力/4回復",
+            "healing": "1d6+int/4",
+            "dice_type": "1d6+int/4",
+            "cost": 4,
+            "cost_type": "mp"
+          },
+          {
+            "name": "聖なる守護",
+            "kind": "defend",
+            "description": "聖光の盾で味方を守る。致死ダメージも耐え抜く。",
+            "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+            "guard_multiplier": 0.5,
+            "survive_at_one": true,
+            "cost": 6,
+            "cost_type": "mp"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "聖なる杖",
+            "description": "神聖魔法を増幅する杖。",
+            "effect": "回復技能回復量+2",
+            "quantity": 1,
+            "icon": "/static/images/icon_holy_staff.png",
+            "combat": {
+              "kind": "equipment",
+              "skill_healing_bonus": 2,
+              "applies_to": [
+                "heal"
+              ]
+            },
+            "category": "equipment",
+            "slot": "accessory"
+          },
+          {
+            "name": "ローブ",
+            "description": "僧侶の簡素な衣。",
+            "effect": "MP消費を1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_robe.png",
+            "combat": {
+              "kind": "equipment",
+              "cost_reduction": {
+                "mp": 1
+              },
+              "applies_to": [
+                "heal"
+              ]
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 2,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "聖なる杖",
+          "ローブ"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_cleric_v2.png",
+        "level": 2,
+        "combat": {
+          "basic_attack": {
+            "name": "聖なる杖",
+            "damage": "1d8+wis/4",
+            "accuracy": 88,
+            "element": "holy"
+          },
+          "defense": 0,
+          "evade": 0,
+          "base_attack": {
+            "name": "聖なる杖",
+            "damage": "1d8+wis/4",
+            "accuracy": 88,
+            "element": "holy"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "マリア",
+        "description": "神聖魔法を操る癒し手。HPとMPが高く、知力に優れる。",
+        "character_id": "cleric",
+        "hp": 28,
+        "max_hp": 28,
+        "mp": 18,
+        "max_mp": 18,
+        "sp": 10,
+        "max_sp": 10,
+        "gold": 0,
+        "attributes": {
+          "str": 6,
+          "dex": 8,
+          "int": 16,
+          "wis": 16,
+          "end": 15
+        },
+        "skills": [
+          {
+            "name": "治癒の祈り",
+            "kind": "heal",
+            "description": "聖なる祈りで傷を癒す。",
+            "effect": "HPを1d6+知力/4回復",
+            "healing": "1d6+int/4",
+            "dice_type": "1d6+int/4",
+            "cost": 4,
+            "cost_type": "mp"
+          },
+          {
+            "name": "聖なる守護",
+            "kind": "defend",
+            "description": "聖光の盾で味方を守る。致死ダメージも耐え抜く。",
+            "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+            "guard_multiplier": 0.5,
+            "survive_at_one": true,
+            "cost": 6,
+            "cost_type": "mp"
+          },
+          {
+            "name": "聖なる裁き",
+            "kind": "attack",
+            "damage": "1d8+wis/2",
+            "accuracy": 92,
+            "element": "holy",
+            "cost": 3,
+            "cost_type": "mp",
+            "description": "聖光で敵を攻撃する。",
+            "unlock_level": 3,
+            "effect": "敵に1d8+wis/2ダメージを与える。"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "聖なる杖",
+            "description": "神聖魔法を増幅する杖。",
+            "effect": "回復技能回復量+2",
+            "quantity": 1,
+            "icon": "/static/images/icon_holy_staff.png",
+            "combat": {
+              "kind": "equipment",
+              "skill_healing_bonus": 2,
+              "applies_to": [
+                "heal"
+              ]
+            },
+            "category": "equipment",
+            "slot": "accessory"
+          },
+          {
+            "name": "ローブ",
+            "description": "僧侶の簡素な衣。",
+            "effect": "MP消費を1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_robe.png",
+            "combat": {
+              "kind": "equipment",
+              "cost_reduction": {
+                "mp": 1
+              },
+              "applies_to": [
+                "heal"
+              ]
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 2,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "聖なる杖",
+          "ローブ"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_cleric_v2.png",
+        "level": 3,
+        "combat": {
+          "basic_attack": {
+            "name": "聖なる杖",
+            "damage": "1d8+wis/4",
+            "accuracy": 88,
+            "element": "holy"
+          },
+          "defense": 0,
+          "evade": 0,
+          "base_attack": {
+            "name": "聖なる杖",
+            "damage": "1d8+wis/4",
+            "accuracy": 88,
+            "element": "holy"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "マリア",
+        "description": "神聖魔法を操る癒し手。HPとMPが高く、知力に優れる。",
+        "character_id": "cleric",
+        "hp": 33,
+        "max_hp": 33,
+        "mp": 20,
+        "max_mp": 20,
+        "sp": 11,
+        "max_sp": 11,
+        "gold": 0,
+        "attributes": {
+          "str": 6,
+          "dex": 8,
+          "int": 17,
+          "wis": 18,
+          "end": 15
+        },
+        "skills": [
+          {
+            "name": "治癒の祈り",
+            "kind": "heal",
+            "description": "聖なる祈りで傷を癒す。",
+            "effect": "HPを1d6+知力/4回復",
+            "healing": "1d6+int/4",
+            "dice_type": "1d6+int/4",
+            "cost": 4,
+            "cost_type": "mp"
+          },
+          {
+            "name": "聖なる守護",
+            "kind": "defend",
+            "description": "聖光の盾で味方を守る。致死ダメージも耐え抜く。",
+            "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+            "guard_multiplier": 0.5,
+            "survive_at_one": true,
+            "cost": 6,
+            "cost_type": "mp"
+          },
+          {
+            "name": "聖なる裁き",
+            "kind": "attack",
+            "damage": "1d8+wis/2",
+            "accuracy": 92,
+            "element": "holy",
+            "cost": 3,
+            "cost_type": "mp",
+            "description": "聖光で敵を攻撃する。",
+            "unlock_level": 3,
+            "effect": "敵に1d8+wis/2ダメージを与える。"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "聖なる杖",
+            "description": "神聖魔法を増幅する杖。",
+            "effect": "回復技能回復量+2",
+            "quantity": 1,
+            "icon": "/static/images/icon_holy_staff.png",
+            "combat": {
+              "kind": "equipment",
+              "skill_healing_bonus": 2,
+              "applies_to": [
+                "heal"
+              ]
+            },
+            "category": "equipment",
+            "slot": "accessory"
+          },
+          {
+            "name": "ローブ",
+            "description": "僧侶の簡素な衣。",
+            "effect": "MP消費を1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_robe.png",
+            "combat": {
+              "kind": "equipment",
+              "cost_reduction": {
+                "mp": 1
+              },
+              "applies_to": [
+                "heal"
+              ]
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 2,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "聖なる杖",
+          "ローブ"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_cleric_v2.png",
+        "level": 4,
+        "combat": {
+          "basic_attack": {
+            "name": "聖なる杖",
+            "damage": "1d8+wis/4",
+            "accuracy": 88,
+            "element": "holy"
+          },
+          "defense": 0,
+          "evade": 0,
+          "base_attack": {
+            "name": "聖なる杖",
+            "damage": "1d8+wis/4",
+            "accuracy": 88,
+            "element": "holy"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "reached_village",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが4に上がりました。",
+          "data": {
+            "milestone_id": "lv4",
+            "level": 4,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "マリア",
+        "description": "神聖魔法を操る癒し手。HPとMPが高く、知力に優れる。",
+        "character_id": "cleric",
+        "hp": 38,
+        "max_hp": 38,
+        "mp": 22,
+        "max_mp": 22,
+        "sp": 12,
+        "max_sp": 12,
+        "gold": 0,
+        "attributes": {
+          "str": 6,
+          "dex": 8,
+          "int": 18,
+          "wis": 20,
+          "end": 15
+        },
+        "skills": [
+          {
+            "name": "治癒の祈り",
+            "kind": "heal",
+            "description": "聖なる祈りで傷を癒す。",
+            "effect": "HPを1d6+知力/4回復",
+            "healing": "1d6+int/4",
+            "dice_type": "1d6+int/4",
+            "cost": 4,
+            "cost_type": "mp"
+          },
+          {
+            "name": "聖なる守護",
+            "kind": "defend",
+            "description": "聖光の盾で味方を守る。致死ダメージも耐え抜く。",
+            "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+            "guard_multiplier": 0.5,
+            "survive_at_one": true,
+            "cost": 6,
+            "cost_type": "mp"
+          },
+          {
+            "name": "聖なる裁き",
+            "kind": "attack",
+            "damage": "1d8+wis/2",
+            "accuracy": 92,
+            "element": "holy",
+            "cost": 3,
+            "cost_type": "mp",
+            "description": "聖光で敵を攻撃する。",
+            "unlock_level": 3,
+            "effect": "敵に1d8+wis/2ダメージを与える。"
+          },
+          {
+            "name": "大いなる癒し",
+            "kind": "heal",
+            "healing": "2d6+wis/2",
+            "cost": 14,
+            "cost_type": "mp",
+            "description": "聖なる祈りで大きく傷を癒す。",
+            "unlock_level": 5,
+            "effect": "HPを2d6+wis/2回復する。"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "聖なる杖",
+            "description": "神聖魔法を増幅する杖。",
+            "effect": "回復技能回復量+2",
+            "quantity": 1,
+            "icon": "/static/images/icon_holy_staff.png",
+            "combat": {
+              "kind": "equipment",
+              "skill_healing_bonus": 2,
+              "applies_to": [
+                "heal"
+              ]
+            },
+            "category": "equipment",
+            "slot": "accessory"
+          },
+          {
+            "name": "ローブ",
+            "description": "僧侶の簡素な衣。",
+            "effect": "MP消費を1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_robe.png",
+            "combat": {
+              "kind": "equipment",
+              "cost_reduction": {
+                "mp": 1
+              },
+              "applies_to": [
+                "heal"
+              ]
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 2,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "聖なる杖",
+          "ローブ"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_cleric_v2.png",
+        "level": 5,
+        "combat": {
+          "basic_attack": {
+            "name": "聖なる杖",
+            "damage": "1d8+wis/4",
+            "accuracy": 88,
+            "element": "holy"
+          },
+          "defense": 0,
+          "evade": 0,
+          "base_attack": {
+            "name": "聖なる杖",
+            "damage": "1d8+wis/4",
+            "accuracy": 88,
+            "element": "holy"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "reached_village",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが4に上がりました。",
+          "data": {
+            "milestone_id": "lv4",
+            "level": 4,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "nest_event_seen",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが5に上がりました。",
+          "data": {
+            "milestone_id": "lv5",
+            "level": 5,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "マリア",
+        "description": "神聖魔法を操る癒し手。HPとMPが高く、知力に優れる。",
+        "character_id": "cleric",
+        "hp": 38,
+        "max_hp": 38,
+        "mp": 22,
+        "max_mp": 22,
+        "sp": 12,
+        "max_sp": 12,
+        "gold": 0,
+        "attributes": {
+          "str": 6,
+          "dex": 8,
+          "int": 18,
+          "wis": 20,
+          "end": 15
+        },
+        "skills": [
+          {
+            "name": "治癒の祈り",
+            "kind": "heal",
+            "description": "聖なる祈りで傷を癒す。",
+            "effect": "HPを1d6+知力/4回復",
+            "healing": "1d6+int/4",
+            "dice_type": "1d6+int/4",
+            "cost": 4,
+            "cost_type": "mp"
+          },
+          {
+            "name": "聖なる守護",
+            "kind": "defend",
+            "description": "聖光の盾で味方を守る。致死ダメージも耐え抜く。",
+            "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+            "guard_multiplier": 0.5,
+            "survive_at_one": true,
+            "cost": 6,
+            "cost_type": "mp"
+          },
+          {
+            "name": "聖なる裁き",
+            "kind": "attack",
+            "damage": "1d8+wis/2",
+            "accuracy": 92,
+            "element": "holy",
+            "cost": 3,
+            "cost_type": "mp",
+            "description": "聖光で敵を攻撃する。",
+            "unlock_level": 3,
+            "effect": "敵に1d8+wis/2ダメージを与える。"
+          },
+          {
+            "name": "大いなる癒し",
+            "kind": "heal",
+            "healing": "2d6+wis/2",
+            "cost": 14,
+            "cost_type": "mp",
+            "description": "聖なる祈りで大きく傷を癒す。",
+            "unlock_level": 5,
+            "effect": "HPを2d6+wis/2回復する。"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "聖なる杖",
+            "description": "神聖魔法を増幅する杖。",
+            "effect": "回復技能回復量+2",
+            "quantity": 1,
+            "icon": "/static/images/icon_holy_staff.png",
+            "combat": {
+              "kind": "equipment",
+              "skill_healing_bonus": 2,
+              "applies_to": [
+                "heal"
+              ]
+            },
+            "category": "equipment",
+            "slot": "accessory"
+          },
+          {
+            "name": "ローブ",
+            "description": "僧侶の簡素な衣。",
+            "effect": "MP消費を1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_robe.png",
+            "combat": {
+              "kind": "equipment",
+              "cost_reduction": {
+                "mp": 1
+              },
+              "applies_to": [
+                "heal"
+              ]
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 2,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "聖なる杖",
+          "ローブ"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_cleric_v2.png",
+        "level": 5,
+        "combat": {
+          "basic_attack": {
+            "name": "聖なる杖",
+            "damage": "1d8+wis/4",
+            "accuracy": 88,
+            "element": "holy"
+          },
+          "defense": 0,
+          "evade": 0,
+          "base_attack": {
+            "name": "聖なる杖",
+            "damage": "1d8+wis/4",
+            "accuracy": 88,
+            "element": "holy"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "reached_village",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが4に上がりました。",
+          "data": {
+            "milestone_id": "lv4",
+            "level": 4,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "nest_event_seen",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが5に上がりました。",
+          "data": {
+            "milestone_id": "lv5",
+            "level": 5,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 5,
+              "max_mp": 2,
+              "max_sp": 1,
+              "attributes": {
+                "wis": 2,
+                "int": 1
+              }
+            }
+          },
+          "source": "engine"
+        }
+      ]
+    }
+  ],
+  "mage": [
+    {
+      "character": {
+        "name": "ゴウダン",
+        "description": "攻撃魔法を極めた学者。MPが非常に高く、知力に長ける。",
+        "character_id": "mage",
+        "hp": 15,
+        "max_hp": 15,
+        "mp": 23,
+        "max_mp": 23,
+        "sp": 7,
+        "max_sp": 7,
+        "gold": 0,
+        "attributes": {
+          "str": 4,
+          "dex": 8,
+          "int": 18,
+          "wis": 11,
+          "end": 6
+        },
+        "skills": [
+          {
+            "name": "火球・改",
+            "kind": "attack",
+            "damage": "1d8+int/2",
+            "accuracy": 92,
+            "element": "fire",
+            "cost": 6,
+            "cost_type": "mp",
+            "all_targets": true,
+            "description": "火球で敵全体を攻撃する。",
+            "unlock_level": 2,
+            "effect": "敵全体に1d8+int/2ダメージを与える。",
+            "replaces": "火球"
+          },
+          {
+            "name": "氷の矢",
+            "kind": "attack",
+            "description": "冷気の矢を放つ。",
+            "effect": "int/2ダメージ，ｈｐ5０％以下に対して，1d6追加ダメージを与える",
+            "damage": "1d6+int/2",
+            "dice_type": "1d6+int/2",
+            "accuracy": 92,
+            "element": "ice",
+            "cost": 3,
+            "cost_type": "mp"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "魔導書",
+            "description": "古代の魔法が記された書物。",
+            "effect": "攻撃技能ダメージ+3",
+            "quantity": 1,
+            "icon": "/static/images/icon_grimoire.png",
+            "combat": {
+              "kind": "equipment",
+              "skill_damage_bonus": 3,
+              "applies_to": [
+                "attack"
+              ]
+            },
+            "category": "equipment",
+            "slot": "accessory"
+          },
+          {
+            "name": "魔法のローブ",
+            "description": "魔力を帯びた上質なローブ。",
+            "effect": "MP消費を1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_magic_robe.png",
+            "combat": {
+              "kind": "equipment",
+              "cost_reduction": {
+                "mp": 1
+              }
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 1,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "魔導書",
+          "魔法のローブ"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_mage_v2.png",
+        "level": 2,
+        "combat": {
+          "basic_attack": {
+            "name": "魔力弾",
+            "damage": "1d4+int/4",
+            "accuracy": 90,
+            "element": "arcane"
+          },
+          "defense": 0,
+          "evade": 2,
+          "base_attack": {
+            "name": "魔力弾",
+            "damage": "1d4+int/4",
+            "accuracy": 90,
+            "element": "arcane"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "ゴウダン",
+        "description": "攻撃魔法を極めた学者。MPが非常に高く、知力に長ける。",
+        "character_id": "mage",
+        "hp": 18,
+        "max_hp": 18,
+        "mp": 26,
+        "max_mp": 26,
+        "sp": 8,
+        "max_sp": 8,
+        "gold": 0,
+        "attributes": {
+          "str": 4,
+          "dex": 8,
+          "int": 20,
+          "wis": 12,
+          "end": 6
+        },
+        "skills": [
+          {
+            "name": "火球・改",
+            "kind": "attack",
+            "damage": "1d8+int/2",
+            "accuracy": 92,
+            "element": "fire",
+            "cost": 6,
+            "cost_type": "mp",
+            "all_targets": true,
+            "description": "火球で敵全体を攻撃する。",
+            "unlock_level": 2,
+            "effect": "敵全体に1d8+int/2ダメージを与える。",
+            "replaces": "火球"
+          },
+          {
+            "name": "氷の矢",
+            "kind": "attack",
+            "description": "冷気の矢を放つ。",
+            "effect": "int/2ダメージ，ｈｐ5０％以下に対して，1d6追加ダメージを与える",
+            "damage": "1d6+int/2",
+            "dice_type": "1d6+int/2",
+            "accuracy": 92,
+            "element": "ice",
+            "cost": 3,
+            "cost_type": "mp"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "魔導書",
+            "description": "古代の魔法が記された書物。",
+            "effect": "攻撃技能ダメージ+3",
+            "quantity": 1,
+            "icon": "/static/images/icon_grimoire.png",
+            "combat": {
+              "kind": "equipment",
+              "skill_damage_bonus": 3,
+              "applies_to": [
+                "attack"
+              ]
+            },
+            "category": "equipment",
+            "slot": "accessory"
+          },
+          {
+            "name": "魔法のローブ",
+            "description": "魔力を帯びた上質なローブ。",
+            "effect": "MP消費を1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_magic_robe.png",
+            "combat": {
+              "kind": "equipment",
+              "cost_reduction": {
+                "mp": 1
+              }
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 1,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "魔導書",
+          "魔法のローブ"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_mage_v2.png",
+        "level": 3,
+        "combat": {
+          "basic_attack": {
+            "name": "魔力弾",
+            "damage": "1d4+int/4",
+            "accuracy": 90,
+            "element": "arcane"
+          },
+          "defense": 0,
+          "evade": 2,
+          "base_attack": {
+            "name": "魔力弾",
+            "damage": "1d4+int/4",
+            "accuracy": 90,
+            "element": "arcane"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "ゴウダン",
+        "description": "攻撃魔法を極めた学者。MPが非常に高く、知力に長ける。",
+        "character_id": "mage",
+        "hp": 21,
+        "max_hp": 21,
+        "mp": 29,
+        "max_mp": 29,
+        "sp": 9,
+        "max_sp": 9,
+        "gold": 0,
+        "attributes": {
+          "str": 4,
+          "dex": 8,
+          "int": 22,
+          "wis": 13,
+          "end": 6
+        },
+        "skills": [
+          {
+            "name": "火球・改",
+            "kind": "attack",
+            "damage": "1d8+int/2",
+            "accuracy": 92,
+            "element": "fire",
+            "cost": 6,
+            "cost_type": "mp",
+            "all_targets": true,
+            "description": "火球で敵全体を攻撃する。",
+            "unlock_level": 2,
+            "effect": "敵全体に1d8+int/2ダメージを与える。",
+            "replaces": "火球"
+          },
+          {
+            "name": "氷の矢",
+            "kind": "attack",
+            "description": "冷気の矢を放つ。",
+            "effect": "int/2ダメージ，ｈｐ5０％以下に対して，1d6追加ダメージを与える",
+            "damage": "1d6+int/2",
+            "dice_type": "1d6+int/2",
+            "accuracy": 92,
+            "element": "ice",
+            "cost": 3,
+            "cost_type": "mp"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "魔導書",
+            "description": "古代の魔法が記された書物。",
+            "effect": "攻撃技能ダメージ+3",
+            "quantity": 1,
+            "icon": "/static/images/icon_grimoire.png",
+            "combat": {
+              "kind": "equipment",
+              "skill_damage_bonus": 3,
+              "applies_to": [
+                "attack"
+              ]
+            },
+            "category": "equipment",
+            "slot": "accessory"
+          },
+          {
+            "name": "魔法のローブ",
+            "description": "魔力を帯びた上質なローブ。",
+            "effect": "MP消費を1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_magic_robe.png",
+            "combat": {
+              "kind": "equipment",
+              "cost_reduction": {
+                "mp": 1
+              }
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 1,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "魔導書",
+          "魔法のローブ"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_mage_v2.png",
+        "level": 4,
+        "combat": {
+          "basic_attack": {
+            "name": "魔力弾",
+            "damage": "1d4+int/4",
+            "accuracy": 90,
+            "element": "arcane"
+          },
+          "defense": 0,
+          "evade": 2,
+          "base_attack": {
+            "name": "魔力弾",
+            "damage": "1d4+int/4",
+            "accuracy": 90,
+            "element": "arcane"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "reached_village",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが4に上がりました。",
+          "data": {
+            "milestone_id": "lv4",
+            "level": 4,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "ゴウダン",
+        "description": "攻撃魔法を極めた学者。MPが非常に高く、知力に長ける。",
+        "character_id": "mage",
+        "hp": 24,
+        "max_hp": 24,
+        "mp": 32,
+        "max_mp": 32,
+        "sp": 10,
+        "max_sp": 10,
+        "gold": 0,
+        "attributes": {
+          "str": 4,
+          "dex": 8,
+          "int": 24,
+          "wis": 14,
+          "end": 6
+        },
+        "skills": [
+          {
+            "name": "火球・改",
+            "kind": "attack",
+            "damage": "1d8+int/2",
+            "accuracy": 92,
+            "element": "fire",
+            "cost": 6,
+            "cost_type": "mp",
+            "all_targets": true,
+            "description": "火球で敵全体を攻撃する。",
+            "unlock_level": 2,
+            "effect": "敵全体に1d8+int/2ダメージを与える。",
+            "replaces": "火球"
+          },
+          {
+            "name": "氷の矢・改",
+            "kind": "attack",
+            "damage": "2d8+int/2",
+            "accuracy": 92,
+            "element": "ice",
+            "cost": 5,
+            "cost_type": "mp",
+            "description": "氷の矢で敵を貫く。",
+            "unlock_level": 5,
+            "effect": "敵に2d8+int/2ダメージを与える。",
+            "replaces": "氷の矢"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "魔導書",
+            "description": "古代の魔法が記された書物。",
+            "effect": "攻撃技能ダメージ+3",
+            "quantity": 1,
+            "icon": "/static/images/icon_grimoire.png",
+            "combat": {
+              "kind": "equipment",
+              "skill_damage_bonus": 3,
+              "applies_to": [
+                "attack"
+              ]
+            },
+            "category": "equipment",
+            "slot": "accessory"
+          },
+          {
+            "name": "魔法のローブ",
+            "description": "魔力を帯びた上質なローブ。",
+            "effect": "MP消費を1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_magic_robe.png",
+            "combat": {
+              "kind": "equipment",
+              "cost_reduction": {
+                "mp": 1
+              }
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 1,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "魔導書",
+          "魔法のローブ"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_mage_v2.png",
+        "level": 5,
+        "combat": {
+          "basic_attack": {
+            "name": "魔力弾",
+            "damage": "1d4+int/4",
+            "accuracy": 90,
+            "element": "arcane"
+          },
+          "defense": 0,
+          "evade": 2,
+          "base_attack": {
+            "name": "魔力弾",
+            "damage": "1d4+int/4",
+            "accuracy": 90,
+            "element": "arcane"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "reached_village",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが4に上がりました。",
+          "data": {
+            "milestone_id": "lv4",
+            "level": 4,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "nest_event_seen",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが5に上がりました。",
+          "data": {
+            "milestone_id": "lv5",
+            "level": 5,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "ゴウダン",
+        "description": "攻撃魔法を極めた学者。MPが非常に高く、知力に長ける。",
+        "character_id": "mage",
+        "hp": 24,
+        "max_hp": 24,
+        "mp": 32,
+        "max_mp": 32,
+        "sp": 10,
+        "max_sp": 10,
+        "gold": 0,
+        "attributes": {
+          "str": 4,
+          "dex": 8,
+          "int": 24,
+          "wis": 14,
+          "end": 6
+        },
+        "skills": [],
+        "inventory": [
+          {
+            "name": "魔導書",
+            "description": "古代の魔法が記された書物。",
+            "effect": "攻撃技能ダメージ+3",
+            "quantity": 1,
+            "icon": "/static/images/icon_grimoire.png",
+            "combat": {
+              "kind": "equipment",
+              "skill_damage_bonus": 3,
+              "applies_to": [
+                "attack"
+              ]
+            },
+            "category": "equipment",
+            "slot": "accessory"
+          },
+          {
+            "name": "魔法のローブ",
+            "description": "魔力を帯びた上質なローブ。",
+            "effect": "MP消費を1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_magic_robe.png",
+            "combat": {
+              "kind": "equipment",
+              "cost_reduction": {
+                "mp": 1
+              }
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "薬草",
+            "description": "傷を癒す薬草。",
+            "effect": "HPを10回復 / 消耗品",
+            "quantity": 1,
+            "icon": "/static/images/icon_herb.png",
+            "combat": {
+              "kind": "heal",
+              "healing": "10",
+              "consumable": true
+            },
+            "category": "consumable"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "魔導書",
+          "魔法のローブ"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_mage_v2.png",
+        "level": 5,
+        "combat": {
+          "basic_attack": {
+            "name": "魔力弾",
+            "damage": "1d4+int/4",
+            "accuracy": 90,
+            "element": "arcane"
+          },
+          "defense": 0,
+          "evade": 2,
+          "base_attack": {
+            "name": "魔力弾",
+            "damage": "1d4+int/4",
+            "accuracy": 90,
+            "element": "arcane"
+          }
+        },
+        "skills_cleared_through_level": 5
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "reached_village",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが4に上がりました。",
+          "data": {
+            "milestone_id": "lv4",
+            "level": 4,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "nest_event_seen",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが5に上がりました。",
+          "data": {
+            "milestone_id": "lv5",
+            "level": 5,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 3,
+              "max_mp": 3,
+              "max_sp": 1,
+              "attributes": {
+                "int": 2,
+                "wis": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "skills_cleared",
+          "text": "すべての技能を失いました。",
+          "data": {
+            "removed": 2,
+            "level": 5
+          },
+          "source": "engine"
+        }
+      ]
+    }
+  ],
+  "thief": [
+    {
+      "character": {
+        "name": "ファング",
+        "description": "影に生きる敏捷の達人。素早さと器用さに優れる。",
+        "character_id": "thief",
+        "hp": 18,
+        "max_hp": 18,
+        "mp": 7,
+        "max_mp": 7,
+        "sp": 16,
+        "max_sp": 16,
+        "gold": 0,
+        "attributes": {
+          "str": 9,
+          "dex": 18,
+          "int": 10,
+          "wis": 6,
+          "end": 8
+        },
+        "skills": [
+          {
+            "name": "影隠れ",
+            "kind": "defend",
+            "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
+            "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
+            "guard_multiplier": 0.25,
+            "dice_type": "1d20+dex",
+            "cost": 2,
+            "cost_type": "sp"
+          },
+          {
+            "name": "急所突き",
+            "kind": "attack",
+            "description": "敵の急所を正確に狙う。",
+            "effect": "3d6判定ダメージ",
+            "damage": "3d6",
+            "dice_type": "3d6",
+            "accuracy": 82,
+            "element": "physical",
+            "cost": 4,
+            "cost_type": "sp"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "ダガー",
+            "description": "軽量で扱いやすい短剣。",
+            "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
+            "quantity": 1,
+            "icon": "/static/images/icon_dagger.png",
+            "combat": {
+              "kind": "weapon",
+              "name": "ダガー",
+              "damage": "1d6+dex/4",
+              "accuracy": 95,
+              "element": "physical"
+            },
+            "category": "equipment",
+            "slot": "weapon"
+          },
+          {
+            "name": "革の鎧",
+            "description": "動きやすさを重視した軽装鎧。",
+            "effect": "被ダメージを1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_leather_armor.png",
+            "combat": {
+              "kind": "armor",
+              "defense": 1
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "盗賊道具",
+            "description": "鍵開けや罠解除に使う道具一式。",
+            "effect": "探索・解除判定+2",
+            "quantity": 1,
+            "icon": "/static/images/icon_thieves_tools.png"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "ダガー",
+          "革の鎧"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_thief_v2.png",
+        "level": 2,
+        "combat": {
+          "basic_attack": {
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          },
+          "defense": 0,
+          "evade": 8,
+          "base_attack": {
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "ファング",
+        "description": "影に生きる敏捷の達人。素早さと器用さに優れる。",
+        "character_id": "thief",
+        "hp": 22,
+        "max_hp": 22,
+        "mp": 8,
+        "max_mp": 8,
+        "sp": 18,
+        "max_sp": 18,
+        "gold": 0,
+        "attributes": {
+          "str": 10,
+          "dex": 20,
+          "int": 10,
+          "wis": 6,
+          "end": 8
+        },
+        "skills": [
+          {
+            "name": "影隠れ・改",
+            "kind": "defend",
+            "guard_multiplier": 0.25,
+            "survive_at_one": true,
+            "cost": 2,
+            "cost_type": "sp",
+            "description": "影に溶けて攻撃に備える。",
+            "unlock_level": 3,
+            "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+            "replaces": "影隠れ"
+          },
+          {
+            "name": "急所突き",
+            "kind": "attack",
+            "description": "敵の急所を正確に狙う。",
+            "effect": "3d6判定ダメージ",
+            "damage": "3d6",
+            "dice_type": "3d6",
+            "accuracy": 82,
+            "element": "physical",
+            "cost": 4,
+            "cost_type": "sp"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "ダガー",
+            "description": "軽量で扱いやすい短剣。",
+            "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
+            "quantity": 1,
+            "icon": "/static/images/icon_dagger.png",
+            "combat": {
+              "kind": "weapon",
+              "name": "ダガー",
+              "damage": "1d6+dex/4",
+              "accuracy": 95,
+              "element": "physical"
+            },
+            "category": "equipment",
+            "slot": "weapon"
+          },
+          {
+            "name": "革の鎧",
+            "description": "動きやすさを重視した軽装鎧。",
+            "effect": "被ダメージを1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_leather_armor.png",
+            "combat": {
+              "kind": "armor",
+              "defense": 1
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "盗賊道具",
+            "description": "鍵開けや罠解除に使う道具一式。",
+            "effect": "探索・解除判定+2",
+            "quantity": 1,
+            "icon": "/static/images/icon_thieves_tools.png"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "ダガー",
+          "革の鎧"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_thief_v2.png",
+        "level": 3,
+        "combat": {
+          "basic_attack": {
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          },
+          "defense": 0,
+          "evade": 8,
+          "base_attack": {
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "ファング",
+        "description": "影に生きる敏捷の達人。素早さと器用さに優れる。",
+        "character_id": "thief",
+        "hp": 26,
+        "max_hp": 26,
+        "mp": 9,
+        "max_mp": 9,
+        "sp": 20,
+        "max_sp": 20,
+        "gold": 0,
+        "attributes": {
+          "str": 11,
+          "dex": 22,
+          "int": 10,
+          "wis": 6,
+          "end": 8
+        },
+        "skills": [
+          {
+            "name": "影隠れ・改",
+            "kind": "defend",
+            "guard_multiplier": 0.25,
+            "survive_at_one": true,
+            "cost": 2,
+            "cost_type": "sp",
+            "description": "影に溶けて攻撃に備える。",
+            "unlock_level": 3,
+            "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+            "replaces": "影隠れ"
+          },
+          {
+            "name": "急所突き",
+            "kind": "attack",
+            "description": "敵の急所を正確に狙う。",
+            "effect": "3d6判定ダメージ",
+            "damage": "3d6",
+            "dice_type": "3d6",
+            "accuracy": 82,
+            "element": "physical",
+            "cost": 4,
+            "cost_type": "sp"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "ダガー",
+            "description": "軽量で扱いやすい短剣。",
+            "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
+            "quantity": 1,
+            "icon": "/static/images/icon_dagger.png",
+            "combat": {
+              "kind": "weapon",
+              "name": "ダガー",
+              "damage": "1d6+dex/4",
+              "accuracy": 95,
+              "element": "physical"
+            },
+            "category": "equipment",
+            "slot": "weapon"
+          },
+          {
+            "name": "革の鎧",
+            "description": "動きやすさを重視した軽装鎧。",
+            "effect": "被ダメージを1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_leather_armor.png",
+            "combat": {
+              "kind": "armor",
+              "defense": 1
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "盗賊道具",
+            "description": "鍵開けや罠解除に使う道具一式。",
+            "effect": "探索・解除判定+2",
+            "quantity": 1,
+            "icon": "/static/images/icon_thieves_tools.png"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "ダガー",
+          "革の鎧"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_thief_v2.png",
+        "level": 4,
+        "combat": {
+          "basic_attack": {
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          },
+          "defense": 0,
+          "evade": 8,
+          "base_attack": {
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "reached_village",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが4に上がりました。",
+          "data": {
+            "milestone_id": "lv4",
+            "level": 4,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "ファング",
+        "description": "影に生きる敏捷の達人。素早さと器用さに優れる。",
+        "character_id": "thief",
+        "hp": 30,
+        "max_hp": 30,
+        "mp": 10,
+        "max_mp": 10,
+        "sp": 22,
+        "max_sp": 22,
+        "gold": 0,
+        "attributes": {
+          "str": 12,
+          "dex": 24,
+          "int": 10,
+          "wis": 6,
+          "end": 8
+        },
+        "skills": [
+          {
+            "name": "影隠れ・改",
+            "kind": "defend",
+            "guard_multiplier": 0.25,
+            "survive_at_one": true,
+            "cost": 2,
+            "cost_type": "sp",
+            "description": "影に溶けて攻撃に備える。",
+            "unlock_level": 3,
+            "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+            "replaces": "影隠れ"
+          },
+          {
+            "name": "急所突き・改",
+            "kind": "attack",
+            "damage": "8d8+dex/2",
+            "accuracy": 92,
+            "element": "physical",
+            "cost": 5,
+            "cost_type": "sp",
+            "description": "敵の急所を正確に狙う。",
+            "unlock_level": 5,
+            "effect": "敵に8d8+dex/2ダメージを与える。",
+            "replaces": "急所突き"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "ダガー",
+            "description": "軽量で扱いやすい短剣。",
+            "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
+            "quantity": 1,
+            "icon": "/static/images/icon_dagger.png",
+            "combat": {
+              "kind": "weapon",
+              "name": "ダガー",
+              "damage": "1d6+dex/4",
+              "accuracy": 95,
+              "element": "physical"
+            },
+            "category": "equipment",
+            "slot": "weapon"
+          },
+          {
+            "name": "革の鎧",
+            "description": "動きやすさを重視した軽装鎧。",
+            "effect": "被ダメージを1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_leather_armor.png",
+            "combat": {
+              "kind": "armor",
+              "defense": 1
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "盗賊道具",
+            "description": "鍵開けや罠解除に使う道具一式。",
+            "effect": "探索・解除判定+2",
+            "quantity": 1,
+            "icon": "/static/images/icon_thieves_tools.png"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "ダガー",
+          "革の鎧"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_thief_v2.png",
+        "level": 5,
+        "combat": {
+          "basic_attack": {
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          },
+          "defense": 0,
+          "evade": 8,
+          "base_attack": {
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "reached_village",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが4に上がりました。",
+          "data": {
+            "milestone_id": "lv4",
+            "level": 4,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "nest_event_seen",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが5に上がりました。",
+          "data": {
+            "milestone_id": "lv5",
+            "level": 5,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        }
+      ]
+    },
+    {
+      "character": {
+        "name": "ファング",
+        "description": "影に生きる敏捷の達人。素早さと器用さに優れる。",
+        "character_id": "thief",
+        "hp": 30,
+        "max_hp": 30,
+        "mp": 10,
+        "max_mp": 10,
+        "sp": 22,
+        "max_sp": 22,
+        "gold": 0,
+        "attributes": {
+          "str": 12,
+          "dex": 24,
+          "int": 10,
+          "wis": 6,
+          "end": 8
+        },
+        "skills": [
+          {
+            "name": "影隠れ・改",
+            "kind": "defend",
+            "guard_multiplier": 0.25,
+            "survive_at_one": true,
+            "cost": 2,
+            "cost_type": "sp",
+            "description": "影に溶けて攻撃に備える。",
+            "unlock_level": 3,
+            "effect": "次に受けるダメージを4分の1にし、致死ダメージを受けてもHP1で耐える。",
+            "replaces": "影隠れ"
+          },
+          {
+            "name": "急所突き・改",
+            "kind": "attack",
+            "damage": "8d8+dex/2",
+            "accuracy": 92,
+            "element": "physical",
+            "cost": 5,
+            "cost_type": "sp",
+            "description": "敵の急所を正確に狙う。",
+            "unlock_level": 5,
+            "effect": "敵に8d8+dex/2ダメージを与える。",
+            "replaces": "急所突き"
+          }
+        ],
+        "inventory": [
+          {
+            "name": "ダガー",
+            "description": "軽量で扱いやすい短剣。",
+            "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
+            "quantity": 1,
+            "icon": "/static/images/icon_dagger.png",
+            "combat": {
+              "kind": "weapon",
+              "name": "ダガー",
+              "damage": "1d6+dex/4",
+              "accuracy": 95,
+              "element": "physical"
+            },
+            "category": "equipment",
+            "slot": "weapon"
+          },
+          {
+            "name": "革の鎧",
+            "description": "動きやすさを重視した軽装鎧。",
+            "effect": "被ダメージを1軽減",
+            "quantity": 1,
+            "icon": "/static/images/icon_leather_armor.png",
+            "combat": {
+              "kind": "armor",
+              "defense": 1
+            },
+            "category": "equipment",
+            "slot": "armor"
+          },
+          {
+            "name": "盗賊道具",
+            "description": "鍵開けや罠解除に使う道具一式。",
+            "effect": "探索・解除判定+2",
+            "quantity": 1,
+            "icon": "/static/images/icon_thieves_tools.png"
+          },
+          {
+            "name": "携帯食",
+            "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+            "effect": "",
+            "quantity": 2,
+            "icon": "/static/images/icon_trail_ration.png",
+            "traits": [
+              "food"
+            ],
+            "category": "consumable"
+          }
+        ],
+        "equipment": [
+          "ダガー",
+          "革の鎧"
+        ],
+        "background_image": "/static/images/bg_dragon_rpg.png",
+        "character_image": "/static/images/char_thief_v2.png",
+        "level": 5,
+        "combat": {
+          "basic_attack": {
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          },
+          "defense": 0,
+          "evade": 8,
+          "base_attack": {
+            "name": "ダガー",
+            "damage": "1d6+dex/4",
+            "accuracy": 95,
+            "element": "physical"
+          }
+        }
+      },
+      "events": [
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "passed_forest_wolves",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが2に上がりました。",
+          "data": {
+            "milestone_id": "lv2",
+            "level": 2,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "cleared_goblin_fort",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが3に上がりました。",
+          "data": {
+            "milestone_id": "lv3",
+            "level": 3,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト達成：義賊ロビンの依頼",
+          "data": {
+            "quest_id": "side_robin",
+            "status": "completed"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "reached_village",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが4に上がりました。",
+          "data": {
+            "milestone_id": "lv4",
+            "level": 4,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "quest_updated",
+          "text": "クエスト更新：紅き邪竜の討伐",
+          "data": {
+            "quest_id": "main_ignis",
+            "status": "active"
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "flag_set",
+          "text": "",
+          "data": {
+            "flag": "nest_event_seen",
+            "value": true
+          },
+          "source": "engine"
+        },
+        {
+          "kind": "level_up",
+          "text": "レベルが5に上がりました。",
+          "data": {
+            "milestone_id": "lv5",
+            "level": 5,
+            "levels_gained": 1,
+            "gains_per_level": {
+              "max_hp": 4,
+              "max_mp": 1,
+              "max_sp": 2,
+              "attributes": {
+                "dex": 2,
+                "str": 1
+              }
+            }
+          },
+          "source": "engine"
+        }
+      ]
+    }
+  ]
+}

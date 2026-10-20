@@ -1,10 +1,10 @@
 {
   "dragon_rpg.json": {
-    "content_revision": "2026-10-21-guidance-048",
-    "overlay_sha256": "1a6302d04339f820e1c4b176bf03a83c553efaf7d627ac5193cc6c0872ebd9ad"
+    "content_revision": "2026-10-21-levels-skills-v2",
+    "overlay_sha256": "ed3814780ecc503ebe76cfe676b2f43a4e039b946f6ccb71ce5441812c53eddc"
   },
   "dragon_rpg_hybrid.json": {
-    "content_revision": "2026-10-21-guidance-048",
-    "overlay_sha256": "1a6302d04339f820e1c4b176bf03a83c553efaf7d627ac5193cc6c0872ebd9ad"
+    "content_revision": "2026-10-21-levels-skills-v2",
+    "overlay_sha256": "ed3814780ecc503ebe76cfe676b2f43a4e039b946f6ccb71ce5441812c53eddc"
   }
 }

@@ -1,4 +1,5 @@
 from __future__ import annotations
+from scripts.scenario.levels_skills_v2 import migrate as levels
 
 import json
 import random
@@ -286,6 +287,7 @@ class RewardsBattlefieldTests(unittest.TestCase):
             before = deepcopy(pack)
             apply(pack)
             apply_spring_postgame(pack)
+            pack = levels(pack)
             self.assertEqual(pack, before)
             for character in ("hero", "cleric", "mage", "thief"):
                 for empty in (False, True):
@@ -321,6 +323,7 @@ class RewardsBattlefieldTests(unittest.TestCase):
             upgraded = deepcopy(pack)
             upgrade(upgraded)
             apply_spring_postgame(upgraded)
+            upgraded = levels(upgraded)
             self.assertEqual(upgraded, pack)
             pack = state.load_scenario_pack(DEFAULT_SCENARIO.with_name(filename))
             session = fresh_session(pack, "hero")

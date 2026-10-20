@@ -82,6 +82,15 @@
                 },
                 "recommended": {
                   "type": "string"
+                },
+                "difficulty_only": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "baby",
+                      "normal"
+                    ]
+                  }
                 }
               }
             }
@@ -105,6 +114,15 @@
                   "type": "string"
                 }
               }
+            }
+          },
+          "difficulty_only": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "baby",
+                "normal"
+              ]
             }
           }
         }
@@ -190,6 +208,15 @@
             "items": {
               "type": "string"
             }
+          },
+          "difficulty_only": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "baby",
+                "normal"
+              ]
+            }
           }
         }
       }
@@ -245,6 +272,15 @@
                     "null"
                   ],
                   "minimum": 0
+                },
+                "difficulty_only": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "baby",
+                      "normal"
+                    ]
+                  }
                 }
               }
             }
@@ -258,7 +294,17 @@
                 "equipment",
                 "material",
                 "loot",
-                "key"
+                "key",
+                "spellbook"
+              ]
+            }
+          },
+          "difficulty_only": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "baby",
+                "normal"
               ]
             }
           }
@@ -320,6 +366,15 @@
                   },
                   "label": {
                     "type": "string"
+                  },
+                  "difficulty_only": {
+                    "type": "array",
+                    "items": {
+                      "enum": [
+                        "baby",
+                        "normal"
+                      ]
+                    }
                   }
                 }
               }
@@ -396,6 +451,15 @@
                   }
                 }
               }
+            }
+          },
+          "difficulty_only": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "baby",
+                "normal"
+              ]
             }
           }
         }
@@ -552,6 +616,15 @@
                     },
                     "observe_reveals": {
                       "$ref": "#/$defs/observe_reveals"
+                    },
+                    "difficulty_only": {
+                      "type": "array",
+                      "items": {
+                        "enum": [
+                          "baby",
+                          "normal"
+                        ]
+                      }
                     }
                   }
                 }
@@ -591,7 +664,8 @@
                   "equipment",
                   "material",
                   "loot",
-                  "key"
+                  "key",
+                  "spellbook"
                 ]
               },
               "key_item": {
@@ -710,6 +784,15 @@
               "quantity": {
                 "type": "integer",
                 "minimum": 1
+              },
+              "difficulty_only": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "baby",
+                    "normal"
+                  ]
+                }
               }
             }
           },
@@ -723,6 +806,15 @@
             "type": "array",
             "items": {
               "type": "string"
+            }
+          },
+          "difficulty_only": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "baby",
+                "normal"
+              ]
             }
           }
         }
@@ -753,6 +845,15 @@
           "initial_value": {
             "type": "number",
             "default": 8
+          },
+          "difficulty_only": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "baby",
+                "normal"
+              ]
+            }
           }
         }
       }
@@ -848,6 +949,15 @@
             "items": {
               "$ref": "#/$defs/combat_skill"
             }
+          },
+          "difficulty_only": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "baby",
+                "normal"
+              ]
+            }
           }
         }
       }
@@ -880,6 +990,15 @@
           "requirements": {},
           "text": {
             "type": "string"
+          },
+          "difficulty_only": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "baby",
+                "normal"
+              ]
+            }
           }
         }
       }
@@ -927,6 +1046,15 @@
               },
               "mul": {
                 "type": "number"
+              },
+              "difficulty_only": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "baby",
+                    "normal"
+                  ]
+                }
               }
             },
             "oneOf": [
@@ -976,6 +1104,163 @@
           }
         ]
       }
+    },
+    "progression": {
+      "type": "object",
+      "properties": {
+        "level_model": {
+          "enum": [
+            "milestone",
+            "exp"
+          ]
+        },
+        "max_level": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "exp_table": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "exp_rewards": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "level_gains": {
+          "type": "object",
+          "required": [
+            "hero",
+            "cleric",
+            "mage",
+            "thief"
+          ]
+        }
+      }
+    },
+    "class_progression": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "difficulty_only",
+          "actives",
+          "passive_groups",
+          "passives"
+        ],
+        "properties": {
+          "id": {
+            "enum": [
+              "hero",
+              "cleric",
+              "mage",
+              "thief"
+            ]
+          },
+          "difficulty_only": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "normal",
+                "baby"
+              ]
+            }
+          },
+          "actives": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "level",
+                "skill"
+              ],
+              "properties": {
+                "level": {
+                  "enum": [
+                    3,
+                    5,
+                    7
+                  ]
+                },
+                "skill": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "passive_groups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "level",
+                "options"
+              ],
+              "properties": {
+                "level": {
+                  "enum": [
+                    2,
+                    4,
+                    6,
+                    8
+                  ]
+                },
+                "options": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "passives": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "tiers"
+              ],
+              "properties": {
+                "stackable": {
+                  "type": "boolean"
+                },
+                "tiers": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "tier",
+                      "description",
+                      "effects"
+                    ],
+                    "properties": {
+                      "tier": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "effects": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "$defs": {
@@ -1018,6 +1303,15 @@
         },
         "rare": {
           "type": "boolean"
+        },
+        "difficulty_only": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "baby",
+              "normal"
+            ]
+          }
         }
       }
     },
@@ -1080,6 +1374,15 @@
         },
         "log_text": {
           "type": "string"
+        },
+        "difficulty_only": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "baby",
+              "normal"
+            ]
+          }
         }
       }
     },
@@ -1116,6 +1419,15 @@
           "type": "array",
           "items": {
             "type": "object"
+          }
+        },
+        "difficulty_only": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "baby",
+              "normal"
+            ]
           }
         }
       }
@@ -1538,6 +1850,15 @@
               }
             }
           ]
+        },
+        "difficulty_only": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "baby",
+              "normal"
+            ]
+          }
         }
       }
     },
@@ -1646,6 +1967,15 @@
             },
             "guidance": {
               "type": "boolean"
+            },
+            "difficulty_only": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "baby",
+                  "normal"
+                ]
+              }
             }
           }
         }
@@ -1773,6 +2103,15 @@
         },
         "guidance": {
           "type": "boolean"
+        },
+        "difficulty_only": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "baby",
+              "normal"
+            ]
+          }
         }
       }
     },
@@ -2044,6 +2383,15 @@
               }
             }
           }
+        },
+        "difficulty_only": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "baby",
+              "normal"
+            ]
+          }
         }
       }
     },
@@ -2114,6 +2462,15 @@
           "items": {
             "type": "string"
           }
+        },
+        "difficulty_only": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "baby",
+              "normal"
+            ]
+          }
         }
       }
     },
@@ -2178,6 +2535,15 @@
         "stacks": {
           "type": "integer",
           "minimum": 1
+        },
+        "difficulty_only": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "baby",
+              "normal"
+            ]
+          }
         }
       }
     },
@@ -2279,6 +2645,15 @@
           "type": "array",
           "items": {
             "type": "string"
+          }
+        },
+        "difficulty_only": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "baby",
+              "normal"
+            ]
           }
         }
       }

@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/static/styles.css?v=20261021-guidance-048" />
+    <link rel="stylesheet" href="/static/styles.css?v=20261021-progression-050" />
     <link rel="preload" as="image" href="/static/images/dice_ruby.webp" />
     <link rel="preload" as="image" href="/static/images/dice_ruby_cracked.webp" />
     <link rel="preload" as="image" href="/static/images/dice_tray.webp" />
@@ -113,6 +113,7 @@
           <p class="eyebrow">現在の場面</p>
           <h1 id="sceneTitle">開始準備</h1>
           <div id="enemyPanel" class="enemy-panel" style="display:none"></div>
+          <div id="progressionHud" hidden></div>
         </div>
         <div class="map-controls">
           <div><button id="mapToggleBtn" type="button" class="gal-icon-btn" disabled>MAP</button>
@@ -270,6 +271,7 @@
             <h2 id="characterName" class="char-name-display">アルス</h2>
             <p id="characterDescription">世界を救うため旅立つ若き勇者。</p>
             <p id="sessionDifficulty" class="session-difficulty"></p>
+            <div id="progressionStatus" hidden></div>
             <div id="companionInfo" class="companion-info" hidden></div>
             <div class="meters">
               <div class="meter-row"><span class="meter-label">HP</span><div class="meter hp-meter"><i id="hpBar"></i></div><strong id="hpText">20/20</strong></div>
@@ -319,6 +321,17 @@
     </main>
 
     <script src="/static/battle-fx.js?v=20261020-mechanics-051"></script>
-    <script src="/static/app.js?v=20261021-guidance-048"></script>
+    <dialog id="passiveDialog" aria-labelledby="passiveTitle">
+      <button id="passiveClose" type="button" aria-label="閉じる">×</button>
+      <h2 id="passiveTitle"></h2>
+      <div id="passiveOptions"></div>
+      <div id="passiveConfirmation" hidden>
+        <p>【仮】この選択は取り消せません。</p>
+        <button id="passiveConfirm" type="button">決定</button>
+        <button id="passiveBack" type="button">戻る</button>
+      </div>
+      <p id="passiveError" role="alert"></p>
+    </dialog>
+    <script src="/static/app.js?v=20261021-progression-050"></script>
   </body>
 </html>

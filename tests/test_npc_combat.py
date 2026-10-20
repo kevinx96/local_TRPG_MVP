@@ -223,6 +223,8 @@ class NpcCombatTests(unittest.TestCase):
             before = deepcopy(pack)
             migration.apply(pack)
             apply_spring_postgame(pack)
+            from scripts.scenario.levels_skills_v2 import migrate as levels
+            pack = levels(pack)
             self.assertEqual(before, pack)
             results.append(pack)
         self.assertEqual(results[0]["npc_combat"], results[1]["npc_combat"])

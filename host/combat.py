@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from . import progression
+
 import random
 import math
 import re
@@ -165,6 +167,11 @@ def ensure_combat_started(session: dict[str, Any], intro_text: str = "") -> bool
     }
     if original_character is not None:
         session["combat"]["original_character"] = original_character
+    if progression.enabled(session):
+        session["combat"]["passive_state"] = {}
+        shield = progression.effects(session).get("battle_shield")
+        if shield:
+            status_effects.apply(session, session["character"], shield, session["character"], random)
     session["choices"] = []
     session.pop("combat_start_requested", None)
     _log(session, "system", "start", f"戦闘開始: {'、'.join(enemy['name'] for enemy in enemies)}")
@@ -219,12 +226,22 @@ def perform_combat_action(
         raise CombatError("不明な戦闘行動です。")
 
     _validate_player_ability(session, normalized_type, action_id, target_id)
+    free_action = False
+    passive_state = combat.get("passive_state", {})
+    if progression.enabled(session):
+        passive_state["action_followups"] = []
+        if normalized_type == "skill":
+            free_action = bool(_player_ability(session, "skill", action_id).get("free_action"))
+        elif normalized_type == "item":
+            ability = _player_ability(session, "item", action_id)
+            free_action = (ability.get("consumable", True)
+                           and passive_state.get("free_items_used", 0) < progression.effects(session).get("free_item_uses", 0))
 
     previous_events = combat.get("action_events")
     combat["action_events"] = []
     try:
         if status_effects.skip_action(session, session["character"], random_source):
-            pass
+            free_action = False
         elif normalized_type == "attack":
             _player_attack(session, target_id, random_source)
         elif normalized_type == "skill":
@@ -245,10 +262,12 @@ def perform_combat_action(
         raise
 
     combat.setdefault("player_action_types", []).append(normalized_type)
+    if free_action and normalized_type == "item":
+        passive_state["free_items_used"] = passive_state.get("free_items_used", 0) + 1
     if combat.get("status") == "active":
         _check_victory_or_defeat(session)
     if combat.get("status") == "active":
-        combat["actions_remaining"] = max(0, _safe_int(combat.get("actions_remaining"), 1) - 1)
+        combat["actions_remaining"] = max(0, _safe_int(combat.get("actions_remaining"), 1) - int(not free_action))
     player_continues = combat.get("status") == "active" and _safe_int(combat.get("actions_remaining"), 0) > 0
     if combat.get("status") == "active" and not player_continues:
         status_effects.tick(session, session["character"], random_source)
@@ -258,6 +277,7 @@ def perform_combat_action(
     if combat.get("status") == "active" and not player_continues:
         _check_victory_or_defeat(session)
     if combat.get("status") == "active" and not player_continues:
+        _passive_round_end(session)
         _tick_cooldowns(session)
         combat["round"] = int(combat.get("round", 1)) + 1
         combat["turn"] = "player"
@@ -344,6 +364,7 @@ def clear_combat_after_resolution(session: dict[str, Any]) -> dict[str, Any]:
         session["character"] = deepcopy(original_character)
     session["last_combat_result"] = result
     session["combat"] = None
+    progression.initialize(session)
     return result
 
 
@@ -408,11 +429,15 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
         if not isinstance(skill, dict):
             continue
         skill_id = _entry_id(skill, "skill", index)
+        resolved_skill = _normal_skill(session, effective_ability(character, skill))
         cost = effective_ability_cost(character, skill)
         cost_type = str(skill.get("cost_type") or "").lower()
         available = _safe_int(character.get(cost_type), 0) if cost_type in {"mp", "sp", "hp"} else cost
         enabled = available >= cost
-        resolved_skill = effective_ability(character, skill)
+        if progression.enabled(session):
+            enabled = _can_pay_cost(character, resolved_skill)
+            costs = resolved_skill.get("_resolved_costs", {})
+            cost = costs.get(cost_type, 0)
         actions.append({
             "type": "skill",
             "id": skill_id,
@@ -424,6 +449,8 @@ def combat_actions(session: dict[str, Any]) -> list[dict[str, Any]]:
             "enabled": enabled,
             "disabled_reason": "リソースが不足しています。" if not enabled else "",
             **_combat_action_details(resolved_skill),
+            **({"costs": resolved_skill.get("_resolved_costs", {}),
+                "free_action": bool(resolved_skill.get("free_action"))} if progression.enabled(session) else {}),
         })
     for index, item in enumerate(character.get("inventory") or []):
         normalized = item if isinstance(item, dict) else {"name": str(item), "quantity": 1}
@@ -489,7 +516,182 @@ def _player_ability(session: dict[str, Any], action_type: str, action_id: str) -
     actor = session["character"]
     entry = _find_entry(_available_skills(actor) if action_type == "skill" else actor.get("inventory", []),
                         action_id, action_type)
-    return effective_ability(actor, entry) if entry and action_type == "skill" else item_combat_spec(entry)
+    return _normal_skill(session, effective_ability(actor, entry)) if entry and action_type == "skill" else item_combat_spec(entry)
+
+
+def _normal_skill(session: dict[str, Any], ability: dict[str, Any]) -> dict[str, Any]:
+    if not progression.enabled(session):
+        return ability
+    result = deepcopy(ability)
+    actor, passive = session["character"], progression.effects(session)
+    result.update(passive.get("skill_overrides", {}).get(result.get("id"), {}))
+    raw = result.get("costs", {result.get("cost_type", ""): result.get("cost", 0)})
+    costs = {key: effective_ability_cost(actor, {**result, "cost_type": key, "cost": value})
+             for key, value in raw.items() if key in {"hp", "mp", "sp"}}
+    low = passive.get("low_hp", {})
+    if low and _hp_ratio(actor) < low["ratio"]:
+        costs = {key: math.ceil(value * low["cost_multiplier"]) for key, value in costs.items()}
+        result["damage_multiplier"] = result.get("damage_multiplier", 1) * low["damage_multiplier"]
+    if result.get("id") in passive.get("free_skills", []):
+        costs["mp"] = 0
+    exchange = passive.get("sp_for_mp")
+    if exchange and costs.get("mp", 0):
+        count = min(math.floor(costs["mp"] * exchange["max_ratio"]),
+                    max(0, actor.get("sp", 0) - costs.get("sp", 0)) // exchange["rate"])
+        costs["mp"] -= count
+        costs["sp"] = costs.get("sp", 0) + count * exchange["rate"]
+    result["_resolved_costs"] = costs
+    return result
+
+
+def _condition(session: dict[str, Any], condition: dict[str, Any], target: dict[str, Any]) -> bool:
+    kind = condition.get("if")
+    if kind == "any":
+        return any(_condition(session, child, target) for child in condition["conditions"])
+    if kind == "target_hp_full":
+        return target.get("hp", 0) == target.get("max_hp")
+    if kind == "target_hp_ratio_lte":
+        return _hp_ratio(target) <= condition["ratio"]
+    if kind == "single_enemy":
+        return len(_alive_enemies(session["combat"])) == 1
+    if kind == "target_boss":
+        return status_effects.is_boss(session, target)
+    if kind == "target_id_in":
+        return target.get("template_id", target.get("id")) in condition["ids"]
+    if kind == "target_max_hp_gte":
+        return target.get("max_hp", 0) >= condition["value"]
+    return False
+
+
+def _learned_elements(actor: dict[str, Any], target: dict[str, Any], maximum: int) -> list[str]:
+    spells = {s.get("id"): s for s in actor.get("skills", []) if s.get("spell_tier") == "basic"}
+    elements = list(dict.fromkeys(spells[s]["element"] for s in actor.get("learned_spells", []) if s in spells))
+    if len(elements) > maximum:
+        elements.sort(key=lambda element: -_resistance_multiplier(target, element))
+    return elements[:maximum]
+
+
+def _prepare_spell(session: dict[str, Any], ability: dict[str, Any]) -> None:
+    if not ability.get("spell_tier"):
+        return
+    actor = session["character"]
+    for status in list(actor.get("statuses", [])):
+        multiplier = status.get("modifiers", {}).get("next_spell_damage_multiplier")
+        if status_effects.modern(status) and multiplier:
+            ability["damage_multiplier"] = ability.get("damage_multiplier", 1) * multiplier
+            status_effects.remove(actor, status)
+    if ability.get("resonance_exempt"):
+        return
+    memory = session["combat"]["passive_state"]
+    elements = ability.get("multi_elements") or [ability.get("element")]
+    previous = memory.get("spell_elements")
+    resonance = progression.effects(session).get("resonance")
+    if resonance and previous and previous != elements:
+        ability["damage_multiplier"] = ability.get("damage_multiplier", 1) * resonance["multiplier"]
+        _restore_actor_resource(actor, "mp", resonance["refund"])
+    memory["spell_elements"] = deepcopy(elements)
+
+
+def _passive_attack(session: dict[str, Any], target: dict[str, Any], attack: dict[str, Any], rng: Any) -> None:
+    if session["character"].get("hp", 0) > 0 and not _enemy_is_defeated(target):
+        _resolve_attack(session, session["character"], target, {**attack, "status_followup": True}, "player", rng)
+
+
+def _heal_overflow(session: dict[str, Any], overflow: int, ability: dict[str, Any], rng: Any) -> None:
+    if not progression.enabled(session) or overflow <= 0:
+        return
+    actor = session["character"]
+    shield = ability.get("overflow_shield")
+    if shield:
+        status_effects.apply(session, actor, {"id": shield["id"], "modifiers": {
+            "shield": {"amount": overflow, "max_hp_ratio": shield["max_hp_ratio"]}}}, actor, rng)
+    ratio = progression.effects(session).get("overflow_ratio", 0)
+    targets = _alive_enemies(session["combat"])
+    if ratio and targets:
+        _passive_attack(session, rng.choice(targets), {"damage": str(round(overflow * ratio)),
+                        "accuracy": 100, "element": "holy"}, rng)
+
+
+def _passive_hit(session: dict[str, Any], target: dict[str, Any], ability: dict[str, Any], rng: Any) -> None:
+    if not progression.enabled(session) or _enemy_is_defeated(target) or ability.get("status_on_hit"):
+        return
+    actor, passive = session["character"], progression.effects(session)
+    if passive.get("hit_status"):
+        status_effects.apply(session, target, passive["hit_status"], actor, rng)
+    used = session["combat"].setdefault("passive_state", {}).setdefault("action_followups", [])
+    followup = passive.get("hit_followup", {})
+    if followup and "hit" not in used and (ability.get("_basic_action") and followup.get("basic")
+                                         or ability.get("id") in followup.get("skills", [])):
+        used.append("hit")
+        attack = deepcopy(followup)
+        if attack.get("weapon_half_dice"):
+            weapon = _equipped_weapon_attack(actor)
+            dice = re.search(r"(\d+)d(\d+)", weapon.get("damage", ""))
+            attack["damage"] = f"{dice[1]}d{max(1, int(dice[2]) // 2)}" if dice else "0"
+        _passive_attack(session, target, attack, rng)
+    if (passive.get("weakness_followup") and "weakness" not in used
+            and any(_resistance_multiplier(target, element) > 1 for element in target.get("resistances", {}))):
+        used.append("weakness")
+        _passive_attack(session, target, passive["weakness_followup"], rng)
+
+
+def _enemy_reaction(session: dict[str, Any], enemy: dict[str, Any], rng: Any, *, missed: bool) -> None:
+    if not progression.enabled(session):
+        return
+    passive, actor = progression.effects(session), session["character"]
+    memory = session["combat"]["passive_state"]
+    if missed and passive.get("miss_sp"):
+        amount = min(passive["miss_sp"], max(0, passive["miss_sp_cap"] - memory.get("miss_sp", 0)))
+        memory["miss_sp"] = memory.get("miss_sp", 0) + amount
+        _restore_actor_resource(actor, "sp", amount)
+    guarded = bool(session["combat"].get("player_status", {}).get("guard_multiplier"))
+    guard_skill = next((s for s in actor.get("skills", []) if s.get("id") == memory.get("guard_skill")), {})
+    if passive.get("counter_attack") and (missed or guarded and guard_skill.get("name") == "影隠れ"):
+        _passive_attack(session, enemy, passive["counter_attack"], rng)
+
+
+def _passive_round_start(session: dict[str, Any], rng: Any) -> None:
+    if not progression.enabled(session):
+        return
+    battle, actor, passive = session["combat"], session["character"], progression.effects(session)
+    memory = battle.setdefault("passive_state", {})
+    memory["miss_sp"] = 0
+    memory.pop("guard_skill", None)
+    if actor.get("hp", 0) <= 0:
+        return
+    if battle["round"] <= passive.get("opening_rounds", 0):
+        actor["sp"] += passive["opening_sp"]
+    cycle = passive.get("mana_cycle")
+    if cycle:
+        amount = min(cycle["amount"], max(0, math.floor(actor["max_mp"] * cycle["cap_ratio"]) - memory.get("mana_restored", 0)))
+        restored = _restore_actor_resource(actor, "mp", amount)
+        memory["mana_restored"] = memory.get("mana_restored", 0) + restored
+    regain = passive.get("shield_regain")
+    if (regain and "shield_broken_round" in memory
+            and battle["round"] - memory["shield_broken_round"] >= regain["every"]
+            and memory.get("shield_regains", 0) < regain["max"]
+            and not any(s.get("id") == "arcane_shield" for s in actor.get("statuses", []))):
+        status_effects.apply(session, actor, regain["status"], actor, rng)
+        memory["shield_regains"] = memory.get("shield_regains", 0) + 1
+        memory.pop("shield_broken_round", None)
+    attack = passive.get("round_attack")
+    targets = _alive_enemies(battle)
+    if attack and _hp_ratio(actor) > attack["hp_ratio_gt"] and targets:
+        _passive_attack(session, rng.choice(targets), attack, rng)
+
+
+def _passive_round_end(session: dict[str, Any]) -> None:
+    if not progression.enabled(session) or session["character"].get("hp", 0) <= 0:
+        return
+    ratio = progression.effects(session).get("regen_ratio", 0)
+    if ratio:
+        memory, actor = session["combat"]["passive_state"], session["character"]
+        value = memory.get("regen_fraction", 0) + actor["max_hp"] * ratio
+        amount = math.floor(value + 1e-9)
+        memory["regen_fraction"] = value - amount
+        healed = _heal_actor(actor, amount)
+        if healed:
+            _log(session, "player", "heal", "【仮】", {"amount": healed})
 
 
 def _weakness_reason(ability: dict[str, Any]) -> str:
@@ -527,6 +729,12 @@ def _ability_disabled_reason(session: dict[str, Any], action_type: str, action_i
     remaining = _cooldown_remaining(session, action_type, action_id)
     if remaining:
         return COOLDOWN_REASON.format(rounds=remaining)
+    if progression.enabled(session):
+        if action_type == "skill" and not _can_pay_cost(session["character"], ability):
+            return "【仮】リソースが不足しています。"
+        uses = session["combat"].get("passive_state", {}).get("uses", {}).get(action_id, 0)
+        if ability.get("max_uses_per_battle") is not None and uses >= ability["max_uses_per_battle"]:
+            return "【仮】この戦闘ではこれ以上使用できません。"
     raw = ability.get("self_status")
     for spec in raw if isinstance(raw, list) else [raw]:
         identifier = spec if isinstance(spec, str) else (spec or {}).get("id")
@@ -615,6 +823,10 @@ def _player_attack(session: dict[str, Any], target_id: str, rng: Any) -> None:
     attack = _merge_dict(rules.get("basic_attack"), char_combat.get("basic_attack"))
     attack = _merge_dict(attack, _equipped_weapon_attack(character))
     attack["_basic_action"] = True
+    passive = progression.effects(session)
+    if passive.get("basic_element"):
+        attack.update(element=passive["basic_element"], fallback_element=passive.get("fallback_element", "physical"),
+                      weakness_multiplier=passive.get("weak_multiplier", 1))
     _resolve_attack(session, character, target, attack, "player", rng)
     followups = equipped_basic_attack_followups(character) + [m['basic_followup'] for m in _encounter_modifiers(session, target) if m.get('basic_followup')]
     for followup in followups:
@@ -628,11 +840,15 @@ def _player_skill(session: dict[str, Any], skill_id: str, target_id: str, rng: A
     skill = _find_entry(_available_skills(character), skill_id, "skill")
     if not skill:
         raise CombatError("技能が見つかりません。")
-    resolved_skill = effective_ability(character, skill)
+    resolved_skill = _normal_skill(session, effective_ability(character, skill))
     resolved_skill["_skill_action"] = True
     _validate_player_ability(session, "skill", skill_id, target_id)
     _pay_cost(character, resolved_skill)
     _start_cooldown(session, "skill", skill_id, resolved_skill)
+    if progression.enabled(session):
+        uses = session["combat"].setdefault("passive_state", {}).setdefault("uses", {})
+        uses[skill_id] = uses.get(skill_id, 0) + 1
+        _prepare_spell(session, resolved_skill)
     check = resolved_skill.get("check") if isinstance(resolved_skill.get("check"), dict) else {}
     if check:
         total, detail = _roll_formula(str(check.get("formula") or "1d20+int"), character, rng)
@@ -654,11 +870,18 @@ def _player_skill(session: dict[str, Any], skill_id: str, target_id: str, rng: A
             _log(session, "player", "self_damage", f"呪われた治癒でHPを{amount}失った。", {"amount": amount, "formula": detail})
         else:
             healed = _heal_actor(character, amount)
+            _heal_overflow(session, max(0, amount - healed), resolved_skill, rng)
             _log(session, "player", "heal", f"{resolved_skill.get('name', '技能')}でHPを{healed}回復した。", {"amount": healed, "formula": detail})
+    elif kind == "restore":
+        amount, detail = _roll_formula(str(resolved_skill.get("amount", "0")), character, rng)
+        restored = _restore_actor_resource(character, resolved_skill.get("resource", "mp"), amount)
+        _log(session, "player", "restore", "【仮】" + resolved_skill["name"], {"amount": restored, "formula": detail})
     elif kind == "defend":
         multiplier = float(resolved_skill.get("guard_multiplier", _combat_rules(session).get("defend_multiplier", 0.5)) or 0.5)
         session["combat"].setdefault("player_status", {})["guard_multiplier"] = max(0.0, min(1.0, multiplier))
         session["combat"]["player_status"]["survive_at_one"] = bool(resolved_skill.get("survive_at_one", True))
+        if progression.enabled(session):
+            session["combat"]["passive_state"]["guard_skill"] = skill_id
         _log(session, "player", "defend", f"{resolved_skill.get('name', '防御技能')}を使用し、守りを固めた。")
     elif kind == "stance":
         target = _target_enemy(session["combat"], target_id)
@@ -667,8 +890,14 @@ def _player_skill(session: dict[str, Any], skill_id: str, target_id: str, rng: A
             character["combat_immunities"] = [element]
             _log(session, "player", "stance", f"{resolved_skill.get('name', '構え')}で{element}属性を無効化した。", {"element": element})
     elif kind not in {"status", "cleanse"}:
+        if resolved_skill.get("learned_elements"):
+            target = _target_enemy(session["combat"], target_id)
+            resolved_skill["multi_elements"] = _learned_elements(character, target, resolved_skill["max_hits"])
+        if resolved_skill.get("multi_elements"):
+            target = _target_enemy(session["combat"], target_id)
+            resolved_skill["_target_snapshot"] = deepcopy(target)
         multi_elements = resolved_skill.get("multi_elements")
-        if isinstance(multi_elements, list) and multi_elements:
+        if isinstance(multi_elements, list) and (multi_elements or resolved_skill.get("learned_elements")):
             target = _target_enemy(session["combat"], target_id)
             hits = max(1, _safe_int(resolved_skill.get("hits_per_element"), 1))
             for element in multi_elements:
@@ -706,6 +935,7 @@ def _player_item(session: dict[str, Any], item_id: str, target_id: str, rng: Any
         else:
             amount, detail = _roll_formula(str(spec.get("healing") or spec.get("formula") or "10"), character, rng)
         healed = _heal_actor(character, amount)
+        _heal_overflow(session, max(0, amount - healed), spec, rng)
         _log(session, "player", "item", f"{item.get('name', '道具')}を使い、HPを{healed}回復した。", {"amount": healed, "formula": detail})
     elif kind == "restore":
         resource = str(spec.get("resource") or "mp").lower()
@@ -713,6 +943,8 @@ def _player_item(session: dict[str, Any], item_id: str, target_id: str, rng: Any
             raise CombatError("未対応の回復対象です。")
         amount, detail = _roll_formula(str(spec.get("amount") or spec.get("formula") or "10"), character, rng)
         restored = _restore_actor_resource(character, resource, amount)
+        if resource == "hp":
+            _heal_overflow(session, max(0, amount - restored), spec, rng)
         _log(
             session,
             "player",
@@ -940,13 +1172,23 @@ def _resolve_attack(
     defender_name = str(defender.get("name") or "敵")
     if hit_roll > chance:
         _log(session, actor_id, "miss", f"{name}は{defender_name}に当たらなかった。", {"roll": hit_roll, "chance": chance, "element": ability.get("element", "physical")}, target=defender)
+        if defender is session.get("character"):
+            _enemy_reaction(session, attacker, rng, missed=True)
         return 0
 
     formula = str(ability.get("damage") or ability.get("dice_type") or "1d4")
     raw_damage, detail = _roll_formula(formula, attacker, rng)
+    snapshot = ability.get("_target_snapshot", defender)
+    for bonus in ability.get("conditional_bonus", []):
+        if _condition(session, bonus, snapshot):
+            extra, _ = _roll_formula(bonus["damage"], attacker, rng)
+            raw_damage += extra
+    for condition in ability.get("conditional_multipliers", []):
+        if (not condition.get("element") or condition["element"] == ability.get("element")) and _condition(session, condition, snapshot):
+            raw_damage *= condition["x"]
     raw_damage = max(0, int(round(raw_damage * float(ability.get("damage_multiplier", 1) or 1))))
     if not ability.get("true_damage"):
-        if actor_id == "player" and ability.get("_skill_action") and ability.get("element") not in {None, "physical"} and not ability.get("status_followup"):
+        if not progression.enabled(session) and actor_id == "player" and ability.get("_skill_action") and ability.get("element") not in {None, "physical"} and not ability.get("status_followup"):
             for status in list(attacker.get("statuses", [])):
                 multiplier = status.get("modifiers", {}).get("next_spell_damage_multiplier")
                 if status_effects.modern(status) and multiplier:
@@ -957,13 +1199,37 @@ def _resolve_attack(
         element = counter_attack_element(defender)
     elif element == "weakness":
         element = weakness_attack_element(defender)
+        if _resistance_multiplier(defender, element) <= 1:
+            element = ability.get("fallback_element", element)
     multiplier = _resistance_multiplier(defender, element)
+    if ability.get("ignores_resistance"):
+        multiplier = max(1.0, multiplier)
+    if multiplier > 1:
+        raw_damage *= ability.get("weakness_multiplier", 1)
     defense = _actor_defense(defender)
+    passive = progression.effects(session)
+    if actor_id == "player":
+        penetration = passive.get("physical_penetration", 0) if element == "physical" or ability.get("_basic_action") else 0
+        if penetration:
+            defense *= 1 - penetration
+        if element == "physical" and multiplier < 1:
+            multiplier += (1 - multiplier) * penetration
+    elif defender is session.get("character") and passive.get("armor_bonus"):
+        armor = [item_combat_spec(item) for item in equipped_items(defender) if item.get("slot") == "armor"]
+        if any(spec.get("defense", 0) >= passive.get("armor_min", 1) for spec in armor):
+            defense += passive["armor_bonus"]
     if defender is not session.get('character'):
         defense = max(0, defense + sum(int(m.get('enemy_defense', 0)) for m in _encounter_modifiers(session, defender)))
     if ability.get("ignores_defense"):
         defense = 0
     damage = damage_after_defense(raw_damage, multiplier, defense, _combat_rules(session))
+    if not isinstance(damage, int):
+        damage = round(damage)
+    if ability.get("status_on_hit"):
+        damage = 0
+    if actor_id == "player" and not true_damage:
+        encounter_class = defender.get("encounter_class", session["combat"].get("encounter", {}).get("encounter_class"))
+        damage = round(damage * passive.get("encounter_damage", {}).get(encounter_class, 1))
     if not true_damage:
         damage = max(0, round(damage * status_effects.product(attacker, "damage_dealt_multiplier")))
     if true_damage:
@@ -986,7 +1252,15 @@ def _resolve_attack(
             damage = max(0, round(unguarded_damage * max(.25, guard * received)))
         else:
             damage = max(0, round(damage * received))
+        had_shield = any(s.get("id") == "arcane_shield" for s in defender.get("statuses", []))
         damage = status_effects.absorb(defender, damage)
+        if defender is session.get("character"):
+            if had_shield and not any(s.get("id") == "arcane_shield" for s in defender.get("statuses", [])) and progression.enabled(session):
+                session["combat"]["passive_state"]["shield_broken_round"] = session["combat"]["round"]
+            diverted = min(defender.get("mp", 0), math.floor(damage * passive.get("mana_armor", 0) + .5))
+            if diverted:
+                defender["mp"] -= diverted
+            damage -= diverted
     before_hp = _safe_int(defender.get("hp"), 0)
     if _negative_undead(defender):
         if element.lower() in {"holy", "light"} or ability.get("heals_negative_undead"):
@@ -1011,7 +1285,9 @@ def _resolve_attack(
         target=defender,
     )
     status_spec = ability.get("on_hit_status")
-    if isinstance(status_spec, dict) and damage > 0:
+    if isinstance(status_spec, dict) and (damage > 0 or ability.get("status_on_hit")):
+        if passive.get("hit_status") and status_spec.get("id") == passive["hit_status"]["id"]:
+            status_spec = {**status_spec, "max_stacks": passive["hit_status"].get("max_stacks", 3)}
         recipient = attacker if status_spec.get("target") == "self" else defender
         if ("damage" in status_spec or "remaining_rounds" in status_spec or "accuracy_penalty" in status_spec) and "kind" not in status_spec:
             chance = max(0, min(100, int(status_spec.get("chance", 100))))
@@ -1030,6 +1306,10 @@ def _resolve_attack(
         _trigger_enemy_auto_abilities(session, defender, rng)
     actual_damage = max(0, min(damage, before_hp)) if not _negative_undead(defender) else 0
     status_effects.after_damage(session, defender, actual_damage)
+    if actor_id == "player" and (ability.get("_basic_action") or ability.get("_skill_action")) and not ability.get("status_followup"):
+        _passive_hit(session, defender, ability, rng)
+    elif defender is session.get("character") and not ability.get("status_followup"):
+        _enemy_reaction(session, attacker, rng, missed=False)
     if actor_id == "player" and (ability.get("_basic_action") or ability.get("_skill_action")) and actual_damage > 0 and not ability.get("status_followup") and not _enemy_is_defeated(defender):
         for status in list(defender.get("statuses", [])):
             followup = status.get("modifiers", {}).get("on_damage_followup")
@@ -1042,6 +1322,9 @@ def attack_chance(session: dict[str, Any], attacker: dict[str, Any], defender: d
                   ability: dict[str, Any], actor_id: str) -> int:
     if ability.get("true_damage"):
         return 100
+    if actor_id == "player" and progression.enabled(session):
+        if ability.get("status_followup") or session["combat"]["round"] <= progression.effects(session).get("opening_rounds", 0):
+            return 100
     accuracy = _safe_int(ability.get("accuracy"), 90 if actor_id == "player" else 85)
     override = _combat_rules(session).get("enemy_accuracy_override")
     if override is not None and any(attacker is enemy for enemy in session["combat"].get("enemies", [])):
@@ -1063,6 +1346,8 @@ def actor_evade(session: dict[str, Any], actor: dict[str, Any]) -> int:
     else:
         base = _safe_int((actor.get("combat") or {}).get("evade", actor.get("evade", 0)), 0)
     bonus = sum(float(value) for value in status_effects.modifiers(actor, "evade_bonus"))
+    if actor is session.get("character"):
+        bonus += progression.effects(session).get("evade_bonus", 0)
     if rules.get("evade_model") == "fixed" and not bonus:
         return base
     return max(0, min(int(rules["total_evade_cap"]), round(base + bonus)))
@@ -1183,6 +1468,9 @@ def _finish_combat(session: dict[str, Any], status: str, summary: str) -> None:
     _log(session, "system", status, summary)
     for actor in [session["character"], *enemies]:
         status_effects.clear(actor)
+    if progression.enabled(session):
+        session["character"]["sp"] = min(session["character"]["sp"], session["character"]["max_sp"])
+        combat.pop("passive_state", None)
 
 
 def _victory_delta(session: dict[str, Any], enemies: list[dict[str, Any]], encounter: dict[str, Any]) -> dict[str, Any]:
@@ -1229,6 +1517,12 @@ def _victory_delta(session: dict[str, Any], enemies: list[dict[str, Any]], encou
         delta.pop("inventory_add")
     if not delta["flags_set"]:
         delta.pop("flags_set")
+    if progression.enabled(session):
+        category = encounter.get("encounter_class", "unclassified")
+        rewards = session["scenario_pack"]["progression"]["exp_rewards"]
+        amount = rewards.get(category, rewards["unclassified"])
+        if amount:
+            delta["_exp_reward"] = {"amount": amount, "source": "combat:" + str(session["combat"].get("id", ""))}
     return delta
 
 
@@ -1251,7 +1545,10 @@ def _regenerate_round_resources(session: dict[str, Any]) -> None:
     character = session["character"]
     amount = max(0, _safe_int(_combat_rules(session).get("sp_regen_per_round"), 1))
     if amount:
-        character["sp"] = min(_safe_int(character.get("max_sp"), 0), _safe_int(character.get("sp"), 0) + amount)
+        maximum = _safe_int(character.get("max_sp"), 0)
+        if progression.enabled(session):
+            maximum = max(maximum, character.get("sp", 0))
+        character["sp"] = min(maximum, _safe_int(character.get("sp"), 0) + amount)
 
 
 def _apply_round_start_effects(session: dict[str, Any], rng: Any) -> None:
@@ -1259,6 +1556,7 @@ def _apply_round_start_effects(session: dict[str, Any], rng: Any) -> None:
     if not isinstance(combat, dict) or combat.get("status") != "active":
         return
     combat["round_received_multiplier"] = 1.0
+    _passive_round_start(session, rng)
     companion = session.get("companion") if isinstance(session.get("companion"), dict) else {}
     if (combat.get("encounter") or {}).get("disable_companion"):
         companion = {}
@@ -1361,7 +1659,7 @@ def _activate_encounter_modifiers(session: dict[str, Any]) -> None:
 
 def _modified_received_damage(session: dict[str, Any], damage: int, element: str,
                               enemy: dict[str, Any], name: str, skill_id: str = '') -> int:
-    multiplier = 1.0
+    multiplier = progression.effects(session).get("taken_elements", {}).get(element, 1.0)
     for modifier in _encounter_modifiers(session, enemy):
         if modifier.get('received_element') == element:
             multiplier *= float(modifier.get('received_multiplier', 1))
@@ -1380,8 +1678,10 @@ def _modified_received_damage(session: dict[str, Any], damage: int, element: str
     return _round_received_damage(session, damage)
 
 
-def _round_received_damage(session: dict[str, Any], damage: int) -> int:
+def _round_received_damage(session: dict[str, Any], damage: int, element: str | None = None) -> int:
     multiplier = float((session.get("combat") or {}).get("round_received_multiplier", 1.0))
+    if element:
+        multiplier *= progression.effects(session).get("taken_elements", {}).get(element, 1.0)
     return max(0, int(round(damage * multiplier)))
 
 
@@ -1464,7 +1764,7 @@ def _tick_enemy_statuses(session: dict[str, Any], rng: Any) -> None:
             damage, detail = _roll_formula(str(status.get("damage") or "0"), session["character"], rng)
             damage = max(0, damage * stacks)
             if enemy is session.get("character"):
-                damage = _round_received_damage(session, damage)
+                damage = _round_received_damage(session, damage, status.get("element"))
             if damage:
                 next_hp = _safe_int(enemy.get("hp"), 0) - damage
                 enemy["hp"] = next_hp if _negative_undead(enemy) else max(0, next_hp)
@@ -1622,6 +1922,10 @@ def _choose_enemy_ability(enemy: dict[str, Any], session: dict[str, Any], rng: A
 def _pay_cost(actor: dict[str, Any], ability: dict[str, Any]) -> None:
     if not _can_pay_cost(actor, ability):
         raise CombatError("リソースが不足しています。")
+    if "_resolved_costs" in ability or "costs" in ability:
+        for resource, cost in ability.get("_resolved_costs", ability.get("costs", {})).items():
+            actor[resource] -= cost
+        return
     cost = effective_ability_cost(actor, ability)
     cost_type = str(ability.get("cost_type") or "").lower()
     if cost and cost_type in {"hp", "mp", "sp"}:
@@ -1629,6 +1933,8 @@ def _pay_cost(actor: dict[str, Any], ability: dict[str, Any]) -> None:
 
 
 def _can_pay_cost(actor: dict[str, Any], ability: dict[str, Any]) -> bool:
+    if "_resolved_costs" in ability or "costs" in ability:
+        return all(actor.get(key, 0) >= amount for key, amount in ability.get("_resolved_costs", ability.get("costs", {})).items())
     cost = effective_ability_cost(actor, ability)
     cost_type = str(ability.get("cost_type") or "").lower()
     return not cost_type or cost_type not in {"hp", "mp", "sp"} or _safe_int(actor.get(cost_type), 0) >= cost
@@ -1722,7 +2028,7 @@ def _consume_inventory_item(character: dict[str, Any], item: dict[str, Any]) -> 
 
 def _ability_kind(ability: dict[str, Any]) -> str:
     explicit = str(ability.get("kind") or ability.get("type") or "").lower()
-    if explicit in {"attack", "damage", "heal", "defend", "status", "field", "stance"}:
+    if explicit in {"attack", "damage", "heal", "restore", "cleanse", "defend", "status", "field", "stance"}:
         return "attack" if explicit == "damage" else explicit
     text = f"{ability.get('name', '')} {ability.get('effect', '')} {ability.get('description', '')}".lower()
     if "回復" in text or "heal" in text:

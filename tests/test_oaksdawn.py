@@ -203,6 +203,8 @@ class OaksdawnTests(unittest.TestCase):
             upgraded = deepcopy(pack)
             apply(upgraded)
             apply_spring_postgame(upgraded)
+            from scripts.scenario.levels_skills_v2 import migrate as levels
+            upgraded = levels(upgraded)
             self.assertEqual(upgraded, pack)
             for enemy in pack["enemies"]:
                 if enemy["id"] in UNDEAD:

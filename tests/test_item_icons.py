@@ -5,15 +5,22 @@ import struct
 import unittest
 from copy import deepcopy
 
+from unittest.mock import patch
+from host.difficulty import apply_difficulty
 from host import combat, shops, state
 from scripts.balance.checkpoints import DEFAULT_SCENARIO, fresh_session
-from scripts.scenario.item_icons import PACKS, PILOTS, ROOT, apply, catalog, records
+from scripts.scenario.item_icons import PACKS, PILOTS, ROOT, apply, catalog as legacy_catalog, records
+
+
+def catalog():
+    with patch("scripts.scenario.item_icons.records", side_effect=lambda pack: records(apply_difficulty(pack, "baby"))):
+        return legacy_catalog()
 
 
 class ItemIconTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.packs = [json.loads(DEFAULT_SCENARIO.with_name(name).read_text(encoding="utf-8")) for name in PACKS]
+        cls.packs = [apply_difficulty(json.loads(DEFAULT_SCENARIO.with_name(name).read_text(encoding="utf-8")), "baby") for name in PACKS]
 
     def test_all_catalog_and_inline_items_have_existing_icons(self):
         shared = {}

@@ -24,6 +24,8 @@ class ChecksETests(unittest.TestCase):
             again = deepcopy(pack)
             apply(again)
             apply_spring_postgame(again)
+            from scripts.scenario.levels_skills_v2 import migrate as levels
+            again = levels(again)
             self.assertEqual(again, pack)
         ids = {entry[0] for entry in CHECKS}
         first, second = (self.actions(pack) for pack in self.packs)

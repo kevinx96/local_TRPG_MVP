@@ -222,6 +222,8 @@ class LootEconomyTests(unittest.TestCase):
             updated = deepcopy(pack)
             apply(updated)
             apply_spring_postgame(updated)
+            from scripts.scenario.levels_skills_v2 import migrate as levels
+            updated = levels(updated)
             self.assertEqual(updated, pack)
         for key, identifiers in (("items", set(LOOT)), ("quests", {f"side_{r['id']}" for r in REQUESTS}),
                                  ("shops", {"oaksdawn_workshop_shop"})):

@@ -6,6 +6,7 @@ import unittest
 from copy import deepcopy
 from unittest.mock import Mock, patch
 
+from host.difficulty import apply_difficulty
 from host import area_retry, combat, free_actions, npc_combat, shops, state
 from host.scenario_context import fallback_choices_for_session, select_scenario_context
 from scripts.balance.checkpoints import DEFAULT_SCENARIO, fresh_session
@@ -20,7 +21,7 @@ class AttackableMagesTests(unittest.TestCase):
 
     def sessions(self, location):
         for pack in self.packs:
-            session = fresh_session(deepcopy(pack), "hero")
+            session = fresh_session(apply_difficulty(pack, "baby"), "hero")
             scene = next(loc["scene_id"] for loc in pack["locations"] if loc["id"] == location)
             session["world_state"] = dict(scene_id=scene, location_id=location)
             session["needs_opening"] = False
