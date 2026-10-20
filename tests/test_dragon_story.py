@@ -526,7 +526,7 @@ class DragonStoryTests(unittest.TestCase):
         enemy["auto_triggered"] = ["rebirth_in_fire"]
         before_logs = len(warlock["combat"]["log"])
         combat._player_skill(warlock, "element_prayer", enemy["id"], random.Random(5))
-        attack_logs = [entry for entry in warlock["combat"]["log"][before_logs:] if entry.get("kind") == "damage"]
+        attack_logs = [entry for entry in warlock["combat"]["log"][before_logs:] if entry.get("kind") in {"damage", "miss"}]
         self.assertGreaterEqual(len(attack_logs), 20)
         self.assertLess(enemy["hp"], enemy["max_hp"])
 

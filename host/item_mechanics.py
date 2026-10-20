@@ -4,7 +4,7 @@ from copy import deepcopy
 from typing import Any
 
 
-USABLE_ITEM_KINDS = {"heal", "restore", "damage", "flee", "status", "shrink"}
+USABLE_ITEM_KINDS = {"heal", "restore", "damage", "flee", "status", "cleanse", "shrink"}
 EQUIPMENT_ITEM_KINDS = {"weapon", "armor", "equipment"}
 PASSIVE_ITEM_KINDS = {"passive"}
 SUPPORTED_ITEM_KINDS = USABLE_ITEM_KINDS | EQUIPMENT_ITEM_KINDS | PASSIVE_ITEM_KINDS | {"permanent"}
@@ -98,7 +98,7 @@ def structured_item_effect(item: Any) -> str:
             parts.append(f"{element_label(spec['element'])}属性")
     elif kind == "flee":
         parts.append("戦闘から確実に離脱")
-    elif kind == "status":
+    elif kind in {"status", "cleanse"}:
         parts.append(str(spec.get("description") or "状態効果を付与"))
     elif kind == "shrink":
         parts.append(f"{_as_int(spec.get('chance'), 2)}%で敵のHPと最大HPを1/10")

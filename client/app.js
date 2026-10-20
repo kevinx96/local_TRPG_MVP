@@ -139,6 +139,7 @@ const els = {
   combatPlayerHpBar: document.querySelector("#combatPlayerHpBar"),
   combatPlayerMpBar: document.querySelector("#combatPlayerMpBar"),
   combatPlayerSpBar: document.querySelector("#combatPlayerSpBar"),
+  combatPlayerStatuses: document.querySelector("#combatPlayerStatuses"),
   combatEnemies: document.querySelector("#combatEnemies"),
   combatLog: document.querySelector("#combatLog"),
   combatLogToggle: document.querySelector("#combatLogToggle"),
@@ -1381,7 +1382,7 @@ function renderChoices(choices) {
     const choice = choices[i];
     const text = typeof choice === "string" ? choice : (choice.text || "");
     const preview = typeof choice === "object" ? (choice.preview || "") : "";
-    const risk = typeof choice === "object" ? (choice.risk || "") : "";
+    const risk = typeof choice === "object" ? [choice.risk, choice.hazard?.warning].filter(Boolean).join(" / ") : "";
     const enabled = typeof choice === "object" && choice.enabled === false ? false : true;
     const disabledReason = typeof choice === "object" ? (choice.disabled_reason || "") : "";
     const unknown = choice.visibility === "unknown";
@@ -1682,6 +1683,7 @@ function renderCombat(session) {
   setCombatResource("PlayerHp", session.character, "hp");
   setCombatResource("PlayerMp", session.character, "mp");
   setCombatResource("PlayerSp", session.character, "sp");
+  els.combatPlayerStatuses.innerHTML = combatStatusMarkup(combat.player_statuses || []);
 
   els.combatEnemies.classList.toggle("many-enemies", enemies.length >= 3);
   els.combatEnemies.innerHTML = enemies.map(enemy => combatEnemyMarkup(enemy, combat.presentation_state?.[enemy.id])).join("");
@@ -1737,6 +1739,7 @@ function combatEnemyMarkup(enemy, resources) {
       <span class="combatant-side">ENEMY</span>
       <h3>${rubyHtml(enemy.name || enemy.id || "敵")}</h3>
       <div class="combat-resource hp"><span>HP</span><i><b style="width:${percent}%"></b></i><strong>${hp}/${maxHp}</strong></div>
+      <span class="combat-statuses">${combatStatusMarkup(enemy.statuses || [])}</span>
       ${enemy.description ? `<p>${rubyHtml(enemy.description)}</p>` : ""}
       ${renderAbilityTags(enemy.skills || [], true)}
     </button>`;
@@ -1747,6 +1750,15 @@ function setCombatResource(suffix, actor, stat) {
   const max = Math.max(1, Number(actor?.[`max_${stat}`] || value || 1));
   els[`combat${suffix}`].textContent = `${value}/${max}`;
   els[`combat${suffix}Bar`].style.width = `${Math.max(0, Math.min(100, (value / max) * 100))}%`;
+}
+
+function combatStatusMarkup(statuses) {
+  return statuses.map((status) => {
+    const stacks = Number(status.stacks || 1);
+    const rounds = status.remaining_rounds;
+    const label = `${status.icon || "◇"} ${status.name || status.id}${stacks > 1 ? ` ×${stacks}` : ""}${rounds !== undefined ? ` (${rounds}R)` : ""}`;
+    return `<span class="combat-status" tabindex="0" title="${escapeAttr(status.description || "")}" data-description="${escapeAttr(status.description || "")}">${escapeHtml(label)}</span>`;
+  }).join("");
 }
 
 function renderCombatActions(actions) {
@@ -1763,6 +1775,10 @@ function renderCombatActions(actions) {
   const current = groups.find((group) => group.id === state.combatActionTab);
   const visible = current ? actions.filter((action) => current.types.includes(action.type)) : [];
   els.combatActions.innerHTML = visible.map((action) => {
+    const validTarget = !action.valid_target_ids || action.valid_target_ids.includes(state.combatTargetId);
+    action = { ...action, enabled: action.enabled !== false && validTarget,
+      disabled_reason: action.enabled === false ? action.disabled_reason : (!validTarget ? action.target_disabled_reason : ""),
+      accuracy: action.hit_chance_by_target?.[state.combatTargetId] ?? action.accuracy };
     const cost = action.cost ? `${String(action.cost_item_name || action.cost_type || "").toUpperCase()} ${action.cost}` : "";
     const description = action.enabled === false ? (action.disabled_reason || "使用できません") : (action.description || "");
     const label = [action.name || action.id || "行動", ...abilityTagTexts([action]), cost, description].filter(Boolean).join(" ");
@@ -2145,6 +2161,7 @@ if (els.combatScreen) {
       els.combatEnemies.querySelectorAll(".combat-enemy").forEach((enemy) => {
         enemy.classList.toggle("selected", enemy.dataset.combatTarget === state.combatTargetId);
       });
+      renderCombatActions(state.combatActions);
       return;
     }
     const tab = event.target.closest("[data-combat-tab]");

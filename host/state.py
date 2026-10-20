@@ -363,6 +363,17 @@ def _refresh_session_scenario_pack(session: dict[str, Any]) -> bool:
     for actor in actors:
         if not isinstance(actor, dict):
             continue
+        previous_template = _find_character_in_pack(current_pack, actor.get("character_id")) or {}
+        latest_template = _find_character_in_pack(latest_pack, actor.get("character_id")) or {}
+        previous_skills = {skill.get("id"): skill for skill in previous_template.get("skills", [])}
+        latest_skills = {skill.get("id"): skill for skill in latest_template.get("skills", [])}
+        for skill in actor.get("skills", []):
+            if not isinstance(skill, dict) or skill.get("id") not in latest_skills:
+                continue
+            prior = previous_skills.get(skill["id"], {})
+            latest = latest_skills[skill["id"]]
+            if "cooldown" in latest and skill.get("cooldown") == prior.get("cooldown"):
+                skill["cooldown"] = latest["cooldown"]
         for item in actor.get("inventory", []):
             if not isinstance(item, dict) or item.get("id") not in changed_items:
                 continue
@@ -1792,8 +1803,15 @@ def _effects_to_state_delta(effects: list[Any], session: Optional[dict[str, Any]
         if effect.get("restore_full") is True:
             delta["restore_full"] = True
         if isinstance(effect.get("restore_ratio"), (int, float)) and session:
+            delta["clear_statuses"] = True
             for resource in ("hp", "mp", "sp"):
                 delta[f"{resource}_change"] = int(session["character"][f"max_{resource}"] * effect["restore_ratio"])
+        if isinstance(effect.get("damage_player"), dict):
+            delta.setdefault("damage_player", []).append(deepcopy(effect["damage_player"]))
+        if isinstance(effect.get("apply_status"), (str, dict)):
+            delta.setdefault("apply_status", []).append(deepcopy(effect["apply_status"]))
+        if isinstance(effect.get("cleanse"), dict):
+            delta.setdefault("cleanse", []).append(deepcopy(effect["cleanse"]))
         if effect.get("enemy_first") is True:
             delta["enemy_first"] = True
         if isinstance(effect.get("set_flag"), str):
@@ -2223,6 +2241,10 @@ def _apply_state_delta(
 ) -> None:
     _initialize_milestones(session)
     character = session["character"]
+    if delta.get("restore_full") is True or delta.get("clear_statuses") is True:
+        from .status_effects import clear
+
+        clear(character)
     if delta.get("restore_full") is True:
         for stat in ("hp", "mp", "sp"):
             character[stat] = int(character.get(f"max_{stat}", character.get(stat, 0)))
@@ -2250,6 +2272,27 @@ def _apply_state_delta(
                 f"{stat.upper()}が{abs(actual_change)}減少しました。",
                 {"resource": stat, "before": before, "after": int(character[stat]), "change": actual_change},
             )
+
+    for damage_spec in _as_list(delta.get("damage_player")):
+        if not isinstance(damage_spec, dict):
+            continue
+        from .combat import _roll_formula
+
+        rolled, _ = _roll_formula(str(damage_spec.get("dice", "0")), character, random)
+        amount = max(0, rolled + int(damage_spec.get("flat", 0))
+                     + int(math.floor(character["max_hp"] * float(damage_spec.get("max_hp_ratio", 0)) + .5)))
+        before = character["hp"]
+        character["hp"] = max(1, before - amount)
+        record_state_event(session, "resource_changed", f"HPが{before - character['hp']}減少しました。",
+                           {"resource": "hp", "before": before, "after": character["hp"], "change": character["hp"] - before})
+    for status_spec in _as_list(delta.get("apply_status")):
+        from .status_effects import apply
+
+        apply(session, character, status_spec, {}, random)
+    for cleanse_spec in _as_list(delta.get("cleanse")):
+        from .status_effects import cleanse
+
+        cleanse(session, character, cleanse_spec)
 
     if isinstance(delta.get("gold_change"), (int, float)):
         before = int(character.get("gold", 0))

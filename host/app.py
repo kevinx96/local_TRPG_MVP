@@ -588,6 +588,13 @@ def _run_turn(session: dict[str, Any], request: TurnRequest, *, allow_narration:
     if session.get("game_over"):
         raise HTTPException(status_code=409, detail="物語はすでに終了しています。")
     if combat_is_active(session):
+        from .combat import combat_actions
+
+        requested = request.action_id or request.text.strip()
+        action = next((entry for entry in combat_actions(session)
+                       if requested in {entry["id"], entry["name"]}), None)
+        if action and action.get("enabled") is False:
+            raise HTTPException(status_code=409, detail=action["disabled_reason"])
         raise HTTPException(status_code=409, detail="戦闘中は戦闘コマンドを使用してください。")
     if combat_needs_resolution(session):
         raise HTTPException(status_code=409, detail="戦闘結果を確定してください。")

@@ -712,6 +712,18 @@
                 "minimum": 1
               }
             }
+          },
+          "status_immunity": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status_allow": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }
@@ -937,6 +949,33 @@
           }
         }
       }
+    },
+    "status_defs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/status_definition"
+      }
+    },
+    "companions": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/record"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "round_start_effects": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/companion_effect"
+                }
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "$defs": {
@@ -1093,7 +1132,13 @@
             "equipment",
             "heal",
             "restore",
-            "damage"
+            "damage",
+            "status",
+            "cleanse",
+            "flee",
+            "shrink",
+            "passive",
+            "permanent"
           ]
         },
         "name": {
@@ -1172,6 +1217,45 @@
               "status"
             ]
           }
+        },
+        "cooldown": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "requires_target_weakness": {
+          "type": "string"
+        },
+        "all_targets": {
+          "type": "boolean"
+        },
+        "on_hit_status": {
+          "$ref": "#/$defs/status_application"
+        },
+        "cleanse": {
+          "$ref": "#/$defs/cleanse"
+        },
+        "self_status": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/$defs/status_application"
+            },
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/$defs/status_application"
+                  }
+                ]
+              }
+            }
+          ]
         }
       }
     },
@@ -1220,6 +1304,49 @@
         "max_rounds": {
           "type": "integer",
           "minimum": 1
+        },
+        "evade_model": {
+          "enum": [
+            "fixed",
+            "dex"
+          ]
+        },
+        "evade_formula": {
+          "type": "object",
+          "required": [
+            "base",
+            "per_dex",
+            "cap"
+          ],
+          "properties": {
+            "base": {
+              "type": "number"
+            },
+            "per_dex": {
+              "type": "number"
+            },
+            "cap": {
+              "type": "number"
+            }
+          }
+        },
+        "enemy_accuracy_override": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "total_evade_cap": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 40
+        },
+        "temporary_evade_max_rounds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
         }
       }
     },
@@ -1236,6 +1363,10 @@
         },
         "evade": {
           "type": "integer"
+        },
+        "evade_cap": {
+          "type": "number",
+          "minimum": 0
         }
       }
     },
@@ -1256,6 +1387,45 @@
         },
         "element": {
           "type": "string"
+        },
+        "cooldown": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "requires_target_weakness": {
+          "type": "string"
+        },
+        "all_targets": {
+          "type": "boolean"
+        },
+        "on_hit_status": {
+          "$ref": "#/$defs/status_application"
+        },
+        "cleanse": {
+          "$ref": "#/$defs/cleanse"
+        },
+        "self_status": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/$defs/status_application"
+            },
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/$defs/status_application"
+                  }
+                ]
+              }
+            }
+          ]
         }
       }
     },
@@ -1277,7 +1447,9 @@
             "attack",
             "heal",
             "defend",
-            "status"
+            "status",
+            "cleanse",
+            "stance"
           ]
         },
         "description": {
@@ -1327,6 +1499,45 @@
         },
         "status_effect": {
           "type": "string"
+        },
+        "cooldown": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "requires_target_weakness": {
+          "type": "string"
+        },
+        "all_targets": {
+          "type": "boolean"
+        },
+        "on_hit_status": {
+          "$ref": "#/$defs/status_application"
+        },
+        "cleanse": {
+          "$ref": "#/$defs/cleanse"
+        },
+        "self_status": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/$defs/status_application"
+            },
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/$defs/status_application"
+                  }
+                ]
+              }
+            }
+          ]
         }
       }
     },
@@ -1538,6 +1749,24 @@
               }
             }
           }
+        },
+        "hazard": {
+          "type": "object",
+          "required": [
+            "kind",
+            "warning"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "trap",
+                "rockfall"
+              ]
+            },
+            "warning": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -1624,6 +1853,37 @@
         },
         "next_location": {
           "type": "string"
+        },
+        "damage_player": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "dice": {
+              "type": "string"
+            },
+            "flat": {
+              "type": "number",
+              "minimum": 0
+            },
+            "max_hp_ratio": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+        "apply_status": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/$defs/status_application"
+            }
+          ]
+        },
+        "cleanse": {
+          "$ref": "#/$defs/cleanse"
         }
       }
     },
@@ -1885,6 +2145,180 @@
         },
         "failure_text": {
           "type": "string"
+        }
+      }
+    },
+    "status_application": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "chance": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "target": {
+          "enum": [
+            "target",
+            "self"
+          ]
+        },
+        "stacks": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "status_definition": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "duration",
+        "modifiers",
+        "cleansable"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "dot",
+            "modifier",
+            "skip_turn"
+          ]
+        },
+        "stackable": {
+          "type": "boolean"
+        },
+        "max_stacks": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "duration": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "cleansable": {
+          "type": "boolean"
+        },
+        "tick": {
+          "type": "object",
+          "properties": {
+            "damage": {
+              "type": "string"
+            },
+            "element": {
+              "type": "string"
+            },
+            "ignore_defense": {
+              "type": "boolean"
+            }
+          }
+        },
+        "modifiers": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "damage_dealt_multiplier": {
+              "type": "number",
+              "minimum": 0
+            },
+            "accuracy_penalty": {
+              "type": "number"
+            },
+            "evade_bonus": {
+              "type": "number"
+            },
+            "received_damage_multiplier": {
+              "type": "number",
+              "minimum": 0
+            },
+            "damage_taken_multipliers": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "skip_chance": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "cleanse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "oneOf": [
+            {
+              "const": "all"
+            },
+            {
+              "type": "integer",
+              "minimum": 1
+            }
+          ]
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "companion_effect": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "scale_from_damage": {
+          "type": "object",
+          "required": [
+            "source",
+            "ratio"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "source": {
+              "const": "previous_damage_enemy"
+            },
+            "ratio": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
         }
       }
     }

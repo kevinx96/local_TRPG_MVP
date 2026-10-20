@@ -2002,3 +2002,8 @@ button, select, textarea, input { font: inherit; }
 @media (max-width: 600px) { .map-label { width: 85px; font-size: 10px; } .full-map { margin: 20px 8%; } }
 
 ruby rt { font-size: .55em; font-weight: 500; color: var(--text-dim); letter-spacing: 0; }
+.combat-statuses { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.combat-statuses:empty { display: none; }
+.combat-status { position: relative; border: 1px solid #a99b82; border-radius: 4px; padding: 2px 5px; background: #242832; color: #f4e5bf; font-size: 11px; line-height: 1.4; }
+.combat-status:focus::after { content: attr(data-description); position: absolute; z-index: 10; left: 0; top: 100%; width: 180px; padding: 6px; background: #242832; color: #fff; border: 1px solid #a99b82; }
+@media (max-width: 700px) { .player-combatant .combat-statuses { grid-column: 1 / -1; margin-top: 2px; } }

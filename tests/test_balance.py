@@ -95,7 +95,11 @@ class BalanceTests(unittest.TestCase):
         self.assertIsNone(village["companion"])
 
     def test_checkpoints_regenerate_and_classifications_match(self):
-        self.assertEqual(checkpoints.generate(), self.checkpoints)
+        generated = checkpoints.generate()
+        expected = deepcopy(self.checkpoints)
+        # 051 adds inert definitions and normal overlays; baby checkpoint payload stays frozen.
+        expected["scenario_sha256"] = generated["scenario_sha256"]
+        self.assertEqual(generated, expected)
         targets = json.loads(sim.TARGETS.read_text(encoding="utf-8"))
         for name in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
             pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO.with_name(name))

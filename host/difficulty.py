@@ -301,7 +301,21 @@ NUMERIC_FIELDS["locations"] += (
     "actions.*.roll_bonuses.*.effects.*.sp_change",
     "actions.*.roll_bonuses.*.effects.*.gold_change",
 )
-MECHANIC_FIELDS: dict[str, dict[str, tuple[Any, ...]]] = {}
+MECHANIC_FIELDS: dict[str, dict[str, tuple[Any, ...]]] = {
+    "combat_rules": {
+        "evade_model": ("fixed", "dex"),
+        "evade_formula": ({"base": 4, "per_dex": 1.5, "cap": 20},),
+        "enemy_accuracy_override": (None, 100),
+    },
+    "characters": {"skills.*.cooldown": (1,)},
+    "items": {"combat.requires_target_weakness": ("ice",)},
+    "companions": {"round_start_effects.*.scale_from_damage": (
+        {"source": "previous_damage_enemy", "ratio": 0.75},
+        {"source": "previous_damage_enemy", "ratio": 1.5},
+    )},
+}
+# Inert definitions are shared metadata, never active baby balance values.
+NON_BALANCE_FIELDS += ("status_defs.*.*", "status_defs.*.*.*", "status_defs.*.*.*.*", "status_defs.*.*.*.*.*")
 DIFFICULTY_LABELS = {"baby": "やさしい", "normal": "ふつう"}
 
 FORMULA = re.compile(
@@ -431,8 +445,22 @@ def _apply_overlays(pack: dict[str, Any]) -> None:
         mechanics = [values for allowed, values in MECHANIC_FIELDS.get(group, {}).items()
                      if _matches(pattern, allowed)]
         if mechanics:
-            if operation != "set" or not any(type(value) is type(candidate) and value == candidate
-                                             for values in mechanics for candidate in values):
+            valid = any(type(value) is type(candidate) and value == candidate
+                        for values in mechanics for candidate in values)
+            # Numeric rule parameters remain tunable in data without changing baby.
+            if group == "combat_rules" and pattern == "evade_formula":
+                valid = (isinstance(value, dict) and set(value) == {"base", "per_dex", "cap"}
+                         and all(_number(item) for item in value.values())
+                         and value["per_dex"] >= 0 and 0 <= value["cap"] <= 40)
+            elif group == "combat_rules" and pattern == "enemy_accuracy_override":
+                valid = value is None or (type(value) is int and 0 <= value <= 100)
+            elif group == "characters" and pattern == "skills.*.cooldown":
+                valid = type(value) is int and value >= 1
+            elif group == "companions" and pattern == "round_start_effects.*.scale_from_damage":
+                valid = (isinstance(value, dict) and set(value) == {"source", "ratio"}
+                         and value["source"] == "previous_damage_enemy"
+                         and _number(value["ratio"]) and value["ratio"] >= 0)
+            if operation != "set" or not valid:
                 raise ValueError(f"Invalid mechanic setting: {group}/{path}")
         else:
             if not any(_matches(pattern, allowed) for allowed in NUMERIC_FIELDS.get(group, ())):

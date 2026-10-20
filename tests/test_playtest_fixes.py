@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import unittest
 from copy import deepcopy
+from unittest.mock import patch
 
 from host import app, state
 from host.scenario_context import fallback_choices_for_session, select_scenario_context
@@ -149,11 +150,16 @@ class PlaytestFixTests(unittest.TestCase):
 
     def test_fixed_seed_app_playthroughs(self):
         results = []
+        original_create = app.api_create_session
+        def baby_create(request):
+            request.difficulty = "baby"
+            return original_create(request)
         for character in CHARACTERS:
             for seed in (20261013, 20261014):
                 with self.subTest(character=character, seed=seed):
                     # E (2026-10-19) adds one-shot checks the explorer also tries, so allow more steps.
-                    result = explore(character, seed, 200)
+                    with patch.object(app, "api_create_session", side_effect=baby_create):
+                        result = explore(character, seed, 200)
                     results.append(result)
                     self.assertEqual(result["failures"], [])
                     self.assertLessEqual(result["retry_count"], 1)

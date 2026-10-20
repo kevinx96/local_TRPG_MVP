@@ -132,9 +132,8 @@ class DifficultyTests(unittest.TestCase):
     def test_mechanic_channel_can_create_only_authorized_leaf(self):
         pack = sample()
         pack["difficulty_overlays"]["normal"] = [overlay("combat_rules", "$", "evade_model", set="dex")]
-        self.assertEqual(difficulty.MECHANIC_FIELDS, {})
-        with self.assertRaises(ValueError):
-            difficulty.apply_difficulty(pack, "normal")
+        self.assertIn("evade_model", difficulty.MECHANIC_FIELDS["combat_rules"])
+        self.assertEqual(difficulty.apply_difficulty(pack, "normal")["combat_rules"]["evade_model"], "dex")
         with patch.dict(difficulty.MECHANIC_FIELDS, {"combat_rules": {"evade_model": ("legacy", "dex")}}):
             result = difficulty.apply_difficulty(pack, "normal")
             self.assertEqual(result["combat_rules"]["evade_model"], "dex")
@@ -177,7 +176,10 @@ class DifficultyTests(unittest.TestCase):
             frozen = deepcopy(original)
             migrated = migrate(original)
             self.assertEqual(original, frozen)
-            self.assertEqual(migrated, pack)
+            expected = deepcopy(pack)
+            expected["difficulty_overlays"] = {"normal": []}
+            expected["meta"]["content_revision"] = "2026-10-20-difficulty-047"
+            self.assertEqual(migrated, expected)
             self.assertEqual(migrate(migrated), migrated)
             self.assertEqual(difficulty.numeric_snapshot(original), difficulty.numeric_snapshot(migrated))
 

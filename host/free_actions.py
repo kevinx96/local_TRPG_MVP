@@ -299,6 +299,18 @@ def adjudicate(session: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]:
 
 def _adjudicate(session: dict[str, Any], plan: dict[str, Any]) -> dict[str, Any]:
     from .npc_combat import present, request_attack
+    from .combat import CombatError, combat_is_active, perform_combat_action
+
+    if combat_is_active(session):
+        action_type = "item" if plan.get("operation") == "use_item" else "skill"
+        identifier = plan.get("item_id") if action_type == "item" else plan.get("action_id")
+        if not identifier:
+            return _result("戦闘中は戦闘コマンドを使用してください。")
+        try:
+            perform_combat_action(session, action_type, str(identifier), str(plan.get("target_id") or ""))
+        except CombatError as exc:
+            return _result(str(exc))
+        return _result("戦闘行動を実行した。", "success")
 
     if session.get("pending_npc_attack"):
         return _result("現在の選択肢から選んでください。")
