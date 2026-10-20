@@ -19,6 +19,7 @@ host/prompt/processed/*
 !host/prompt/processed/dragon_rpg.json
 !host/prompt/processed/dragon_rpg_hybrid.json
 !host/prompt/processed/scenario_pack.schema.json
+!host/prompt/processed/difficulty/
 
 # Large local model files
 host/models/
