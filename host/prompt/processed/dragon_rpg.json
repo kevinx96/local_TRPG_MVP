@@ -565,7 +565,7 @@
         },
         {
           "id": "postgame_chat_king",
-          "text": "【仮】国王と討伐後の話をする。",
+          "text": "玉座の国王に戦いの首尾を伝える",
           "npc_id": "king",
           "once": "castle:postgame_chat_king",
           "effects": [],
@@ -579,12 +579,20 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
-          "risk_source": "action"
+          "result_text": "老王は深く息を吐き、疲れた目で頷いた。「……そうか、イグニスは斃れたか。十年の災厄を断ち切ったそなたの武勲、後に凱旋の間で正式に労おう」",
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "老王は目を見開き、震える手で胸を押さえた。「……なんと、イグニスが正気を取り戻したと申すか。古の盟約がまだ消えておらなんだとは……！」"
+            }
+          ]
         },
         {
           "id": "postgame_chat_general",
-          "text": "【仮】将軍ドラコと討伐後の話をする。",
+          "text": "佇むドラコ将軍に勝利を告げる",
           "npc_id": "general",
           "once": "castle:postgame_chat_general",
           "effects": [],
@@ -598,8 +606,16 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
-          "risk_source": "action"
+          "result_text": "ドラコは静かに拍手を送り、穏やかに微笑んだ。「見事だ。赤き竜の焔が消え、谷の均衡もこれで変わるだろう。……まずは凱旋の間で胸を張るといい」",
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "ドラコは一瞬だけ目を細め、すぐに称賛の笑みを浮かべた。「ほう、殺さずに呪いを解いたか。想定外の結末だが……見事な手並みだ。陛下も喜ばれよう」"
+            }
+          ]
         }
       ],
       "background_image": "/static/images/bg_dragon_rpg.png",
@@ -929,7 +945,7 @@
         },
         {
           "id": "postgame_chat_gald",
-          "text": "【仮】行商人ガルドと討伐後の話をする。",
+          "text": "荷を広げるガルドに声をかける",
           "npc_id": "gald",
           "once": "castle_town:postgame_chat_gald",
           "effects": [],
@@ -943,9 +959,17 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "result_text": "ガルドは相好を崩して肩を叩いてきた。「よう、命の恩人！あんたが赤竜を討ったって噂で持ちきりだぜ。王城への報告が済んだら一杯おごらせてくれよな！」",
           "visible_after": "saved_gald",
-          "risk_source": "action"
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "ガルドは目を丸くして口笛を吹いた。「へえっ、あの恐ろしい赤竜を生かしたまま鎮めちまったのかい！あんたらしいが、商売人としては腰が抜ける話だぜ」"
+            }
+          ]
         }
       ],
       "hybrid": {
@@ -1566,7 +1590,7 @@
         },
         {
           "id": "postgame_chat_blacksmith",
-          "text": "【仮】鍛冶師ローベルトと討伐後の話をする。",
+          "text": "炉の前に立つローベルトを見る",
           "npc_id": "blacksmith",
           "once": "forge:postgame_chat_blacksmith",
           "effects": [],
@@ -1580,8 +1604,16 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
-          "risk_source": "action"
+          "result_text": "ローベルトは黙って得物の刃筋を検め、短く鼻を鳴らした。「……竜の鱗を断ってなお折れなかったか。よく振ったな。手直しが要るならいつでも置いていけ」",
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "ローベルトは刃に血脂が焼き付いていないのを見て眉を上げた。「……竜を斬らずに鎮めたのか。妙な戦い方をする奴だが、得物を大事にする腕前は気に入った」"
+            }
+          ]
         }
       ],
       "background_image": "/static/images/bg_forge.png",
@@ -2183,7 +2215,7 @@
         },
         {
           "id": "postgame_chat_ian",
-          "text": "【仮】イアンと討伐後の話をする。",
+          "text": "杯を磨くイアンに近況を話す",
           "npc_id": "ian",
           "once": "inn:postgame_chat_ian",
           "effects": [],
@@ -2197,12 +2229,20 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
-          "risk_source": "action"
+          "result_text": "イアンは杯を磨く手を止め、懐かしそうに目を細めた。「イグニスを討ったか。麓で槌を振るってた頃には、こんな日が来るとは思わなかったよ。今夜はゆっくりしていけ」",
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "イアンは目を丸くし、やがて笑った。「竜を正気に戻した、か。鍛冶屋だった頃に聞いた古い盟約の話、まんざら作り話でもなかったんだな」"
+            }
+          ]
         },
         {
           "id": "postgame_chat_robin",
-          "text": "【仮】ロビンと討伐後の話をする。",
+          "text": "窓辺のロビンに首尾を明かす",
           "npc_id": "robin",
           "once": "inn:postgame_chat_robin",
           "effects": [],
@@ -2216,8 +2256,16 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
-          "risk_source": "action"
+          "result_text": "ロビンは肩をすくめ、不敵に口の端を上げた。「本当に赤竜を仕留めてくるとはね。街はお祭り騒ぎだけど、あんたを狙う妙な視線には気をつけなよ」",
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "ロビンは驚いたように瞬きし、くすっと笑った。「へえ、殺さずに手懐けてきたってわけ？あんた、見た目よりずっとお人好しだね。嫌いじゃないさ」"
+            }
+          ]
         }
       ],
       "hybrid": {
@@ -2813,7 +2861,7 @@
         },
         {
           "id": "postgame_chat_elder",
-          "text": "【仮】長老と討伐後の話をする。",
+          "text": "杖をつく長老に谷の結末を語る",
           "npc_id": "elder",
           "once": "village:postgame_chat_elder",
           "effects": [],
@@ -2827,12 +2875,20 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
-          "risk_source": "action"
+          "result_text": "長老は深い皺を刻んだ顔で静かに合掌した。「……そうか、ついに赤竜の焔が消えたか。これで谷の脅威も去ったが、心なしか風が冷たくなった気がするのう」",
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "長老は感極まったように何度も頷いた。「なんと、盟約の竜が正気に戻られたか！古き約束は、まだ生きておったのじゃな。王様にも早く知らせておくれ」"
+            }
+          ]
         },
         {
           "id": "postgame_chat_shopkeeper",
-          "text": "【仮】道具屋の店主と討伐後の話をする。",
+          "text": "棚を整理する店主に声をかける",
           "npc_id": "shopkeeper",
           "once": "village:postgame_chat_shopkeeper",
           "effects": [],
@@ -2846,8 +2902,16 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
-          "risk_source": "action"
+          "result_text": "店主は荷縄を締める手を止めて大きく頷いた。「あんたが赤竜を討ってくれたのか！これで王都からの荷馬車も安心して通れるようになるよ、本当にありがとうな！」",
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "店主は驚いて目を丸くしたあと、ほっと胸を撫で下ろした。「赤竜が正気に戻ったのかい？また暴れ出さないなら何よりだ。あんたのおかげで村も落ち着くよ」"
+            }
+          ]
         }
       ],
       "background_image": "/static/images/bg_village.png",
@@ -3849,7 +3913,7 @@
         },
         {
           "id": "postgame_chat_warlock",
-          "text": "【仮】青いローブの魔法使いと討伐後の話をする。",
+          "text": "魔道書を閉じるワーロックを見る",
           "npc_id": "warlock",
           "once": "magic_shop:postgame_chat_warlock",
           "effects": [],
@@ -3863,12 +3927,20 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
-          "risk_source": "action"
+          "result_text": "ワーロックは静かに茶を啜り、値踏みするようにこちらを見た。「……赤竜の魔力反応が完全に消えたな。だが、これで全てが片付いたと気を抜くなよ」",
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "ワーロックは珍しく感嘆の息を漏らした。「……ほう、暴走の呪詛だけを剥がしてイグニスを生かしたか。あの竜の証言があれば、十年前の闇も暴けるかもしれんな」"
+            }
+          ]
         },
         {
           "id": "postgame_chat_mina",
-          "text": "【仮】ミーナと討伐後の話をする。",
+          "text": "目を輝かせるミーナに手を振る",
           "npc_id": "mina",
           "once": "magic_shop:postgame_chat_mina",
           "effects": [],
@@ -3882,9 +3954,17 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "result_text": "ミーナは杖を抱えてぴょんぴょん跳ねた。「すごいです！あのイグニスを倒しちゃうなんて、まるでおとぎ話の英雄ですね！お城での報告、頑張ってください！」",
           "visible_after": "mina_quest_done",
-          "risk_source": "action"
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "ミーナは両手を合わせて顔をほころばせた。「赤竜さんを倒さずに正気に戻してあげたんですね！きっと優しい竜さんに戻れたはずです、本当にすごいです！」"
+            }
+          ]
         }
       ],
       "background_image": "/static/images/bg_magic_shop.png",
@@ -4325,7 +4405,7 @@
         },
         {
           "id": "postgame_chat_sarah",
-          "text": "【仮】サラと討伐後の話をする。",
+          "text": "子竜を抱くサラに微笑みかける",
           "npc_id": "sarah",
           "once": "item_shop:postgame_chat_sarah",
           "effects": [],
@@ -4339,8 +4419,16 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
-          "risk_source": "action"
+          "result_text": "サラは小竜の頭を撫でながら少し複雑な顔をした。「無事でよかった！……大きな赤い竜さん、もう苦しまずに眠れたならいいんだけどな」",
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "サラはぱっと笑顔になり、小竜も嬉しそうに鳴いた。「本当！？赤い竜さん、元気になったんだね！いつかこの子と一緒に会いに行けたらいいなあ！」"
+            }
+          ]
         }
       ],
       "background_image": "/static/images/bg_item_shop.png",
@@ -5316,7 +5404,7 @@
         },
         {
           "id": "postgame_chat_suspicious_merchant",
-          "text": "【仮】怪しい商人と討伐後の話をする。",
+          "text": "暗がりの商人の様子を窺う",
           "npc_id": "suspicious_merchant",
           "once": "alley_night:postgame_chat_suspicious_merchant",
           "effects": [],
@@ -5330,8 +5418,16 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
-          "risk_source": "action"
+          "result_text": "フードの奥で男が低く喉を鳴らした。「ヒヒ……赤竜の首級とは恐れ入りましたねえ。王城でどんな褒美が待っているか、せいぜい楽しみになさることです」",
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "男はフードの陰でピクリと肩を揺らした。「……ほう、あの狂竜を生かして鎮めましたか。余計な真似を……いやいや、お見事な慈悲でございますねえ、ヒヒ」"
+            }
+          ]
         }
       ],
       "background_image": "/static/images/bg_alley_night.png",
@@ -6136,7 +6232,7 @@
       "id": "elf_spring",
       "scene_id": "dark_forest",
       "title": "精霊の泉",
-      "description": "【仮】精霊の泉では一度だけ休める。",
+      "description": "神秘的な光が揺れるエルフの泉。澄んだ霊水は一度だけ傷と魔力を癒やしてくれる。",
       "keywords": [
         "精霊の泉"
       ],
@@ -6148,7 +6244,7 @@
       "choices": [
         {
           "text": "精霊の泉で休む",
-          "preview": "【仮】泉で休めるのは一度だけで、休息中に襲われる恐れがある。",
+          "preview": "泉の恵みで休めるのは一度きりだ。無防備な休息中は魔物に襲われる危険もある。",
           "risk": "休息中に襲われる恐れあり",
           "visible_requirements": {
             "not_flag": "defeated_slime_king"
@@ -6187,7 +6283,7 @@
       ],
       "hybrid": {
         "mode": "prepared_gm_turns",
-        "summary": "【仮】精霊の泉では一度だけ休める。",
+        "summary": "神秘的な光が揺れるエルフの泉。澄んだ霊水は一度だけ傷と魔力を癒やしてくれる。",
         "prepared_turns": [
           {
             "id": "elf_spring_rest",
@@ -6218,7 +6314,7 @@
         {
           "id": "rest_at_elf_spring",
           "text": "精霊の泉で休む",
-          "preview": "【仮】泉で休めるのは一度だけで、休息中に襲われる恐れがある。",
+          "preview": "泉の恵みで休めるのは一度きりだ。無防備な休息中は魔物に襲われる危険もある。",
           "risk": "危険（戦闘）",
           "intent_keywords": [
             "精霊の泉で休む"
@@ -6785,7 +6881,7 @@
         },
         "result_texts": {
           "defeat": "精霊の泉・スライム王で力尽きた。冒険はここで終わりを迎える。",
-          "victory": "【仮】泉でのひと休みを終え、先へ進む。"
+          "victory": "スライム王は弾けて消え、泉に静寂が戻った。短い休息を終え、森の奥へと歩を進める。"
         },
         "encounter_class": "boss",
         "one_time_reward": {
@@ -9658,7 +9754,7 @@
         },
         {
           "id": "visit_village_postgame",
-          "text": "【仮】長老のいる村へ向かう。",
+          "text": "長老のいる麓の村へ向かう",
           "preview": "",
           "risk": "判定不要",
           "intent_keywords": [],
@@ -10196,7 +10292,7 @@
         },
         {
           "id": "visit_village_postgame",
-          "text": "【仮】長老のいる村へ向かう。",
+          "text": "長老のいる麓の村へ向かう",
           "preview": "",
           "risk": "判定不要",
           "intent_keywords": [],
@@ -13535,7 +13631,7 @@
         },
         {
           "id": "postgame_chat_gald",
-          "text": "【仮】行商人ガルドと討伐後の話をする。",
+          "text": "屋台脇のガルドと祝祭を語らう",
           "npc_id": "gald",
           "once": "festival_town:postgame_chat_gald",
           "effects": [],
@@ -13549,9 +13645,17 @@
               }
             ]
           },
-          "result_text": "【仮】邪竜の脅威が去った後の話をする。",
+          "result_text": "ガルドは賑わう大通りを見渡して笑った。「見ろよこの騒ぎ！赤竜が倒れて街道の封鎖も解けるってんで、商人連中も大喜びさ。あんたは国の救い主だぜ！」",
           "visible_after": "saved_gald",
-          "risk_source": "action"
+          "risk_source": "action",
+          "result_variants": [
+            {
+              "requirements": {
+                "flag": "ignis_purified"
+              },
+              "text": "ガルドは祝祭の旗を見上げて苦笑した。「街じゃ討伐祝いのつもりで騒いでるが、まさか竜と和解して帰ってくるとはな。王様への報告、どんな顔されるか楽しみだぜ」"
+            }
+          ]
         }
       ],
       "npc_ids": [
@@ -24577,7 +24681,7 @@
             "slime_ambush_two",
             "slime_king_battle"
           ],
-          "description": "【仮】精霊の泉では一度だけ休める。"
+          "description": "神秘的な光が揺れるエルフの泉。澄んだ霊水は一度だけ傷と魔力を癒やしてくれる。"
         },
         {
           "id": "F4",
@@ -26167,6 +26271,18 @@
       "status": "TODO(design)"
     },
     {
+      "text": "イアンは杯を磨く手を止め、懐かしそうに目を細めた。「イグニスを討ったか。麓で槌を振るってた頃には、こんな日が来るとは思わなかったよ。今夜はゆっくりしていけ」",
+      "npc_ids": [
+        "ian"
+      ],
+      "path": "/locations/inn/actions/postgame_chat_ian/result_text",
+      "replacement": "イアンはもうここにはいない。",
+      "replacements": {
+        "ian": "イアンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
       "text": "ローベルトは武器の柄へ氷の護符を嵌め込み、槌で魔力の流れを整えた。青白い光が刃を走る。「活性化は済んだ。これからは斬撃のたびに冷気が追い打ちをかける」",
       "npc_ids": [
         "blacksmith"
@@ -26175,6 +26291,18 @@
       "replacement": "ローベルトはもうここにはいない。",
       "replacements": {
         "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ミーナは杖を抱えてぴょんぴょん跳ねた。「すごいです！あのイグニスを倒しちゃうなんて、まるでおとぎ話の英雄ですね！お城での報告、頑張ってください！」",
+      "npc_ids": [
+        "mina"
+      ],
+      "path": "/locations/magic_shop/actions/postgame_chat_mina/result_text",
+      "replacement": "ミーナはもうここにはいない。",
+      "replacements": {
+        "mina": "ミーナはもうここにはいない。"
       },
       "status": "TODO(design)"
     },
@@ -26191,6 +26319,42 @@
       "status": "TODO(design)"
     },
     {
+      "text": "ガルドは相好を崩して肩を叩いてきた。「よう、命の恩人！あんたが赤竜を討ったって噂で持ちきりだぜ。王城への報告が済んだら一杯おごらせてくれよな！」",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/castle_town/actions/postgame_chat_gald/result_text",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ローベルトは黙って得物の刃筋を検め、短く鼻を鳴らした。「……竜の鱗を断ってなお折れなかったか。よく振ったな。手直しが要るならいつでも置いていけ」",
+      "npc_ids": [
+        "blacksmith"
+      ],
+      "path": "/locations/forge/actions/postgame_chat_blacksmith/result_text",
+      "replacement": "ローベルトはもうここにはいない。",
+      "replacements": {
+        "blacksmith": "ローベルトはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "長老は深い皺を刻んだ顔で静かに合掌した。「……そうか、ついに赤竜の焔が消えたか。これで谷の脅威も去ったが、心なしか風が冷たくなった気がするのう」",
+      "npc_ids": [
+        "elder"
+      ],
+      "path": "/locations/village/actions/postgame_chat_elder/result_text",
+      "replacement": "長老はもうここにはいない。",
+      "replacements": {
+        "elder": "長老はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
       "text": "エリオが杖を掲げると、峡谷の湧き水が渦を巻いて巣穴へ流れ込んだ。地中で何かが苦しげにのたうち、地鳴りが遠ざかっていく。「今のうちだ、行こう！」",
       "npc_ids": [
         "elio"
@@ -26199,6 +26363,18 @@
       "replacement": "エリオはもうここにはいない。",
       "replacements": {
         "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "ガルドは賑わう大通りを見渡して笑った。「見ろよこの騒ぎ！赤竜が倒れて街道の封鎖も解けるってんで、商人連中も大喜びさ。あんたは国の救い主だぜ！」",
+      "npc_ids": [
+        "gald"
+      ],
+      "path": "/locations/festival_town/actions/postgame_chat_gald/result_text",
+      "replacement": "ガルドはもうここにはいない。",
+      "replacements": {
+        "gald": "ガルドはもうここにはいない。"
       },
       "status": "TODO(design)"
     },
@@ -26215,6 +26391,18 @@
       "status": "TODO(design)"
     },
     {
+      "text": "ワーロックは静かに茶を啜り、値踏みするようにこちらを見た。「……赤竜の魔力反応が完全に消えたな。だが、これで全てが片付いたと気を抜くなよ」",
+      "npc_ids": [
+        "warlock"
+      ],
+      "path": "/locations/magic_shop/actions/postgame_chat_warlock/result_text",
+      "replacement": "ワーロックはもうここにはいない。",
+      "replacements": {
+        "warlock": "ワーロックはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
       "text": "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。長老が人々を励まし、行商人の荷車の周りには小さな人だかりができている。",
       "npc_ids": [
         "elder"
@@ -26225,6 +26413,18 @@
         "elder": "村外れの石造りの集会所に、焼け出された村人たちが身を寄せ合っている。人々を励ます声は、もう聞こえない。"
       },
       "status": "final"
+    },
+    {
+      "text": "ロビンは肩をすくめ、不敵に口の端を上げた。「本当に赤竜を仕留めてくるとはね。街はお祭り騒ぎだけど、あんたを狙う妙な視線には気をつけなよ」",
+      "npc_ids": [
+        "robin"
+      ],
+      "path": "/locations/inn/actions/postgame_chat_robin/result_text",
+      "replacement": "ロビンはもうここにはいない。",
+      "replacements": {
+        "robin": "ロビンはもうここにはいない。"
+      },
+      "status": "TODO(design)"
     },
     {
       "text": "薬草と古い紙の匂いが漂う店内で、青いローブの銀髪の魔法使いが顔を上げた。棚の小瓶が、窓からの光を受けて淡く瞬いている。「何かお探しかな」",
@@ -26259,6 +26459,18 @@
       "replacement": "エリオはもうここにはいない。",
       "replacements": {
         "elio": "エリオはもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
+      "text": "サラは小竜の頭を撫でながら少し複雑な顔をした。「無事でよかった！……大きな赤い竜さん、もう苦しまずに眠れたならいいんだけどな」",
+      "npc_ids": [
+        "sarah"
+      ],
+      "path": "/locations/item_shop/actions/postgame_chat_sarah/result_text",
+      "replacement": "サラはもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。"
       },
       "status": "TODO(design)"
     },
@@ -27198,7 +27410,7 @@
         "fire",
         "debuff"
       ],
-      "description": "【仮】火傷による持続ダメージを受ける。"
+      "description": "毎ラウンド、防御を無視する火属性ダメージを受ける。"
     },
     {
       "id": "poison",
@@ -27218,7 +27430,7 @@
       "tags": [
         "debuff"
       ],
-      "description": "【仮】層ごとに持続ダメージ。重ねると残り時間を更新する。",
+      "description": "層の数だけ毎ラウンドダメージを受ける。最大3層、重ねると効果時間が戻る。",
       "by_source": {
         "player": {
           "tick": {
@@ -27248,7 +27460,7 @@
       "tags": [
         "debuff"
       ],
-      "description": "【仮】与えるダメージが0.75倍になる。"
+      "description": "与えるダメージが0.75倍になる。"
     },
     {
       "id": "paralysis",
@@ -27266,7 +27478,7 @@
       "tags": [
         "debuff"
       ],
-      "description": "【仮】25%の確率で行動できない。リソースは消費しない。"
+      "description": "25%の確率で行動できない。その際MPやSPは消費しない。"
     },
     {
       "id": "stun",
@@ -27282,7 +27494,7 @@
       "tags": [
         "debuff"
       ],
-      "description": "【仮】次の行動を失い、その後2ラウンドは気絶を防ぐ。",
+      "description": "次の行動を失う。浄化不可。解けた後2ラウンドは再び気絶しない。",
       "immunity_after": 2
     },
     {
@@ -27309,7 +27521,7 @@
       "tags": [
         "debuff"
       ],
-      "description": "【仮】聖属性の持続ダメージと、攻撃命中時の聖属性追撃。"
+      "description": "毎ラウンド聖属性ダメージを受け、攻撃を受けるたびに聖なる追撃が走る。"
     },
     {
       "id": "blind",
@@ -27327,7 +27539,7 @@
       "tags": [
         "debuff"
       ],
-      "description": "【仮】命中率が下がる。ボスと冒険者への効果は20%。",
+      "description": "命中率が下がる。通常の敵は30%、ボスと冒険者は20%。",
       "boss_modifiers": {
         "accuracy_penalty": 20
       },
@@ -27355,7 +27567,7 @@
       "tags": [
         "buff"
       ],
-      "description": "【仮】毎ラウンドの行動回数が1増える。持続中は重ねられない。",
+      "description": "毎ラウンドの行動が1回増える。効果中は掛け直せない。",
       "no_reapply": true
     },
     {
@@ -27377,7 +27589,7 @@
       "tags": [
         "buff"
       ],
-      "description": "【仮】次の敵フェーズ終了まで攻撃ダメージを吸収する。上限は最大HPの25%。",
+      "description": "次の敵フェーズ終了まで、攻撃ダメージを最大HPの25%まで吸収する。",
       "expires": "enemy_phase_end"
     },
     {
@@ -27398,7 +27610,7 @@
       "tags": [
         "buff"
       ],
-      "description": "【仮】一度だけ攻撃ダメージを防ぐ。"
+      "description": "次に受ける攻撃のダメージを1回だけ完全に防ぐ。"
     },
     {
       "id": "gospel",
@@ -27418,7 +27630,7 @@
       "tags": [
         "buff"
       ],
-      "description": "【仮】最大HPが2倍になり、増加分を回復する。攻撃を受けると元の最大HPの8%を回復する。毎ラウンド2回まで。"
+      "description": "最大HP2倍、増加分を回復。被弾時に元の最大HPの8%回復（毎ラウンド2回まで）。"
     },
     {
       "id": "holy_blessing",
@@ -27436,7 +27648,7 @@
       "tags": [
         "buff"
       ],
-      "description": "【仮】この敵フェーズの被ダメージが0.75倍になる。",
+      "description": "次の敵フェーズ終了まで、被ダメージが0.75倍になる。",
       "expires": "enemy_phase_end"
     },
     {
@@ -27455,7 +27667,7 @@
       "tags": [
         "buff"
       ],
-      "description": "【仮】次の攻撃魔法のダメージが1.3倍になる。"
+      "description": "次に放つ攻撃魔法のダメージが1.3倍になる。"
     },
     {
       "id": "suffocation",
@@ -27475,7 +27687,7 @@
       "tags": [
         "debuff"
       ],
-      "description": "【仮】ラウンド終了時に1ダメージ。浄化で解除できる。"
+      "description": "息が詰まり、毎ラウンド1ダメージを受ける。"
     },
     {
       "id": "mana_veil",

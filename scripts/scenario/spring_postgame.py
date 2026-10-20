@@ -37,19 +37,87 @@ HIDE = {
     "magic_shop": ("ask_blue_mage_rumor",),
     "village": ("ask_elder_weakness",),
 }
-# (location, NPC ID, existing name). Shops and unrelated quests remain available.
+# Shops and unrelated quests remain available.
 CHATS = (
     ("castle", "king", "国王"), ("castle", "general", "将軍ドラコ"),
-    ("castle_town", "gald", "行商人ガルド"),
-    ("festival_town", "gald", "行商人ガルド"),
-    ("forge", "blacksmith", "鍛冶師ローベルト"),
-    ("magic_shop", "warlock", "青いローブの魔法使い"),
-    ("magic_shop", "mina", "ミーナ"), ("inn", "ian", "イアン"),
-    ("inn", "robin", "ロビン"), ("item_shop", "sarah", "サラ"),
-    ("alley_night", "suspicious_merchant", "怪しい商人"),
+    ("castle_town", "gald", "行商人ガルド"), ("festival_town", "gald", "行商人ガルド"),
+    ("forge", "blacksmith", "鍛冶師ローベルト"), ("magic_shop", "warlock", "青いローブの魔法使い"),
+    ("magic_shop", "mina", "ミーナ"), ("inn", "ian", "イアン"), ("inn", "robin", "ロビン"),
+    ("item_shop", "sarah", "サラ"), ("alley_night", "suspicious_merchant", "怪しい商人"),
     ("village", "elder", "長老"), ("village", "shopkeeper", "道具屋の店主"),
 )
-TRANSITION = "【仮】泉でのひと休みを終え、先へ進む。"
+CHAT_TEXTS: dict[tuple[str, str], tuple[str, str, str]] = {
+    ("castle", "king"): (
+        "玉座の国王に戦いの首尾を伝える",
+        "老王は深く息を吐き、疲れた目で頷いた。「……そうか、イグニスは斃れたか。十年の災厄を断ち切ったそなたの武勲、後に凱旋の間で正式に労おう」",
+        "老王は目を見開き、震える手で胸を押さえた。「……なんと、イグニスが正気を取り戻したと申すか。古の盟約がまだ消えておらなんだとは……！」",
+    ),
+    ("castle", "general"): (
+        "佇むドラコ将軍に勝利を告げる",
+        "ドラコは静かに拍手を送り、穏やかに微笑んだ。「見事だ。赤き竜の焔が消え、谷の均衡もこれで変わるだろう。……まずは凱旋の間で胸を張るといい」",
+        "ドラコは一瞬だけ目を細め、すぐに称賛の笑みを浮かべた。「ほう、殺さずに呪いを解いたか。想定外の結末だが……見事な手並みだ。陛下も喜ばれよう」",
+    ),
+    ("castle_town", "gald"): (
+        "荷を広げるガルドに声をかける",
+        "ガルドは相好を崩して肩を叩いてきた。「よう、命の恩人！あんたが赤竜を討ったって噂で持ちきりだぜ。王城への報告が済んだら一杯おごらせてくれよな！」",
+        "ガルドは目を丸くして口笛を吹いた。「へえっ、あの恐ろしい赤竜を生かしたまま鎮めちまったのかい！あんたらしいが、商売人としては腰が抜ける話だぜ」",
+    ),
+    ("festival_town", "gald"): (
+        "屋台脇のガルドと祝祭を語らう",
+        "ガルドは賑わう大通りを見渡して笑った。「見ろよこの騒ぎ！赤竜が倒れて街道の封鎖も解けるってんで、商人連中も大喜びさ。あんたは国の救い主だぜ！」",
+        "ガルドは祝祭の旗を見上げて苦笑した。「街じゃ討伐祝いのつもりで騒いでるが、まさか竜と和解して帰ってくるとはな。王様への報告、どんな顔されるか楽しみだぜ」",
+    ),
+    ("forge", "blacksmith"): (
+        "炉の前に立つローベルトを見る",
+        "ローベルトは黙って得物の刃筋を検め、短く鼻を鳴らした。「……竜の鱗を断ってなお折れなかったか。よく振ったな。手直しが要るならいつでも置いていけ」",
+        "ローベルトは刃に血脂が焼き付いていないのを見て眉を上げた。「……竜を斬らずに鎮めたのか。妙な戦い方をする奴だが、得物を大事にする腕前は気に入った」",
+    ),
+    ("magic_shop", "warlock"): (
+        "魔道書を閉じるワーロックを見る",
+        "ワーロックは静かに茶を啜り、値踏みするようにこちらを見た。「……赤竜の魔力反応が完全に消えたな。だが、これで全てが片付いたと気を抜くなよ」",
+        "ワーロックは珍しく感嘆の息を漏らした。「……ほう、暴走の呪詛だけを剥がしてイグニスを生かしたか。あの竜の証言があれば、十年前の闇も暴けるかもしれんな」",
+    ),
+    ("magic_shop", "mina"): (
+        "目を輝かせるミーナに手を振る",
+        "ミーナは杖を抱えてぴょんぴょん跳ねた。「すごいです！あのイグニスを倒しちゃうなんて、まるでおとぎ話の英雄ですね！お城での報告、頑張ってください！」",
+        "ミーナは両手を合わせて顔をほころばせた。「赤竜さんを倒さずに正気に戻してあげたんですね！きっと優しい竜さんに戻れたはずです、本当にすごいです！」",
+    ),
+    ("inn", "ian"): (
+        "杯を磨くイアンに近況を話す",
+        "イアンは杯を磨く手を止め、懐かしそうに目を細めた。「イグニスを討ったか。麓で槌を振るってた頃には、こんな日が来るとは思わなかったよ。今夜はゆっくりしていけ」",
+        "イアンは目を丸くし、やがて笑った。「竜を正気に戻した、か。鍛冶屋だった頃に聞いた古い盟約の話、まんざら作り話でもなかったんだな」",
+    ),
+    ("inn", "robin"): (
+        "窓辺のロビンに首尾を明かす",
+        "ロビンは肩をすくめ、不敵に口の端を上げた。「本当に赤竜を仕留めてくるとはね。街はお祭り騒ぎだけど、あんたを狙う妙な視線には気をつけなよ」",
+        "ロビンは驚いたように瞬きし、くすっと笑った。「へえ、殺さずに手懐けてきたってわけ？あんた、見た目よりずっとお人好しだね。嫌いじゃないさ」",
+    ),
+    ("item_shop", "sarah"): (
+        "子竜を抱くサラに微笑みかける",
+        "サラは小竜の頭を撫でながら少し複雑な顔をした。「無事でよかった！……大きな赤い竜さん、もう苦しまずに眠れたならいいんだけどな」",
+        "サラはぱっと笑顔になり、小竜も嬉しそうに鳴いた。「本当！？赤い竜さん、元気になったんだね！いつかこの子と一緒に会いに行けたらいいなあ！」",
+    ),
+    ("alley_night", "suspicious_merchant"): (
+        "暗がりの商人の様子を窺う",
+        "フードの奥で男が低く喉を鳴らした。「ヒヒ……赤竜の首級とは恐れ入りましたねえ。王城でどんな褒美が待っているか、せいぜい楽しみになさることです」",
+        "男はフードの陰でピクリと肩を揺らした。「……ほう、あの狂竜を生かして鎮めましたか。余計な真似を……いやいや、お見事な慈悲でございますねえ、ヒヒ」",
+    ),
+    ("village", "elder"): (
+        "杖をつく長老に谷の結末を語る",
+        "長老は深い皺を刻んだ顔で静かに合掌した。「……そうか、ついに赤竜の焔が消えたか。これで谷の脅威も去ったが、心なしか風が冷たくなった気がするのう」",
+        "長老は感極まったように何度も頷いた。「なんと、盟約の竜が正気に戻られたか！古き約束は、まだ生きておったのじゃな。王様にも早く知らせておくれ」",
+    ),
+    ("village", "shopkeeper"): (
+        "棚を整理する店主に声をかける",
+        "店主は荷縄を締める手を止めて大きく頷いた。「あんたが赤竜を討ってくれたのか！これで王都からの荷馬車も安心して通れるようになるよ、本当にありがとうな！」",
+        "店主は驚いて目を丸くしたあと、ほっと胸を撫で下ろした。「赤竜が正気に戻ったのかい？また暴れ出さないなら何よりだ。あんたのおかげで村も落ち着くよ」",
+    ),
+}
+SPRING_DESCRIPTION = "神秘的な光が揺れるエルフの泉。澄んだ霊水は一度だけ傷と魔力を癒やしてくれる。"
+REST_PREVIEW = "泉の恵みで休めるのは一度きりだ。無防備な休息中は魔物に襲われる危険もある。"
+TRANSITION_PLACEHOLDER = "【仮】泉でのひと休みを終え、先へ進む。"
+TRANSITION = "スライム王は弾けて消え、泉に静寂が戻った。短い休息を終え、森の奥へと歩を進める。"
+VILLAGE_BUTTON = "長老のいる麓の村へ向かう"
 
 
 def walk_actions(actions: list[dict[str, Any]]) -> Iterator[dict[str, Any]]:
@@ -75,9 +143,9 @@ def apply(pack: dict[str, Any]) -> None:
                 visible_requirements={"not_flag": "defeated_slime_king"},
                 risk="危険（戦闘）",
                 effects=[{"restore_full": True}, {"current_location": "slime_ambush_one"}, {"start_combat": True}])
-    # Reuse the existing description, making the authorized one-use limit explicit.
-    rest["preview"] = "【仮】泉で休めるのは一度だけで、休息中に襲われる恐れがある。"
-    spring["description"] = "【仮】精霊の泉では一度だけ休める。"
+    # Keep the one-use rest limit explicit in the finalized description.
+    rest["preview"] = REST_PREVIEW
+    spring["description"] = SPRING_DESCRIPTION
     if isinstance(spring.get("hybrid"), dict):
         spring["hybrid"]["summary"] = spring["description"]
     for game_map in pack.get("maps", []):
@@ -87,9 +155,11 @@ def apply(pack: dict[str, Any]) -> None:
     boss = locations["slime_king_battle"]["combat"]
     boss["victory_effects"]["current_location"] = "forest_wolves"
     texts = boss.setdefault("result_texts", {})
-    original = texts.get("victory", "")
+    original = texts.get("victory", "").replace(TRANSITION_PLACEHOLDER, "").rstrip()
     if TRANSITION not in original:
         texts["victory"] = original + ("\n" if original else "") + TRANSITION
+    else:
+        texts["victory"] = original
 
     for location_id, ids in HIDE.items():
         for action in walk_actions(locations[location_id]["actions"]):
@@ -98,23 +168,31 @@ def apply(pack: dict[str, Any]) -> None:
     for location_id in ("village_frozen_clue", "ian_ice_katana_aftermath"):
         action = next(a for a in locations[location_id]["actions"] if a["id"] == "visit_village")
         action["visible_requirements"] = both(action.get("visible_requirements"), BEFORE)
-        replacement = deepcopy(action)
-        replacement.update(id="visit_village_postgame", text="【仮】長老のいる村へ向かう。",
-                           intent_keywords=[], visible_requirements=deepcopy(POSTGAME))
-        if not any(a["id"] == replacement["id"] for a in locations[location_id]["actions"]):
+        replacement_id = "visit_village_postgame"
+        replacement = next((a for a in locations[location_id]["actions"] if a["id"] == replacement_id), None)
+        if replacement is None:
+            replacement = deepcopy(action)
+            replacement.update(id=replacement_id, text=VILLAGE_BUTTON, intent_keywords=[],
+                               visible_requirements=deepcopy(POSTGAME))
             locations[location_id]["actions"].append(replacement)
+        else:
+            replacement.update(text=VILLAGE_BUTTON, visible_requirements=deepcopy(POSTGAME))
 
-    for location_id, npc_id, name in CHATS:
+    for location_id, npc_id, _ in CHATS:
         actions = locations[location_id]["actions"]
         identifier = "postgame_chat_" + npc_id
+        button, defeated_text, purified_text = CHAT_TEXTS[(location_id, npc_id)]
+        result_variants = [{"requirements": {"flag": "ignis_purified"}, "text": purified_text}]
         if any(a["id"] == identifier for a in actions):
             existing = next(a for a in actions if a["id"] == identifier)
-            existing.update(result_text="【仮】邪竜の脅威が去った後の話をする。", risk_source="action")
+            existing.update(text=button, result_text=defeated_text,
+                            result_variants=result_variants, risk_source="action")
             continue
-        action = dict(id=identifier, text=f"【仮】{name}と討伐後の話をする。",
+        action = dict(id=identifier, text=button,
                       npc_id=npc_id, once=f"{location_id}:{identifier}", effects=[],
                       visible_requirements=deepcopy(POSTGAME),
-                      result_text="【仮】邪竜の脅威が去った後の話をする。", risk_source="action")
+                      result_text=defeated_text, result_variants=result_variants,
+                      risk_source="action")
         if npc_id == "gald":
             action["visible_after"] = "saved_gald"
         if npc_id == "mina":
@@ -175,6 +253,9 @@ def apply(pack: dict[str, Any]) -> None:
             for child in value:
                 sync(child)
     sync(pack)
+    from .npc_combat import _absence_inventory
+
+    _absence_inventory(pack)
 
 
 def placeholder_rows(pack: dict[str, Any], path: str = "") -> Iterator[tuple[str, str]]:

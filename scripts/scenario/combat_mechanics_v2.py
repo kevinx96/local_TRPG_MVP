@@ -13,48 +13,48 @@ REVISION = "2026-10-20-mechanics-051"
 
 
 def status_definitions() -> list[dict[str, Any]]:
-    # TODO(design): Finalize descriptions, hazard placements and the shop item list.
+    # TODO(design): Finalize hazard placements and the shop item list.
     def status(identifier: str, name: str, kind: str, duration: Any, description: str,
                *, modifiers: Any = None, tick: Any = None, cleansable: bool = True,
                tags: Any = None, **extra: Any) -> dict[str, Any]:
         return {"id": identifier, "name": name, "icon": name[:1], "kind": kind,
                 "stackable": False, "max_stacks": 1, "duration": duration,
                 "tick": tick or {}, "modifiers": modifiers or {}, "cleansable": cleansable,
-                "tags": tags or ["debuff"], "description": "【仮】" + description, **extra}
+                "tags": tags or ["debuff"], "description": description, **extra}
 
     return [
-        status("burn", "火傷", "dot", 2, "火傷による持続ダメージを受ける。",
+        status("burn", "火傷", "dot", 2, "毎ラウンド、防御を無視する火属性ダメージを受ける。",
                tick={"damage": "2", "element": "fire", "ignore_defense": True}, tags=["fire", "debuff"]),
-        status("poison", "毒", "dot", 3, "層ごとに持続ダメージ。重ねると残り時間を更新する。",
+        status("poison", "毒", "dot", 3, "層の数だけ毎ラウンドダメージを受ける。最大3層、重ねると効果時間が戻る。",
                tick={"damage": "1", "element": "physical", "ignore_defense": True}, stackable=True, max_stacks=3,
                by_source={"player": {"tick": {"damage": "2"}}, "enemy": {"tick": {"damage": "1"}}}),
         status("weaken", "弱体", "modifier", 2, "与えるダメージが0.75倍になる。",
                modifiers={"damage_dealt_multiplier": .75}),
-        status("paralysis", "麻痺", "modifier", 2, "25%の確率で行動できない。リソースは消費しない。",
+        status("paralysis", "麻痺", "modifier", 2, "25%の確率で行動できない。その際MPやSPは消費しない。",
                modifiers={"skip_chance": .25}),
-        status("stun", "気絶", "skip_turn", 1, "次の行動を失い、その後2ラウンドは気絶を防ぐ。",
+        status("stun", "気絶", "skip_turn", 1, "次の行動を失う。浄化不可。解けた後2ラウンドは再び気絶しない。",
                cleansable=False, immunity_after=2),
-        status("holy_mark", "聖印", "dot", 3, "聖属性の持続ダメージと、攻撃命中時の聖属性追撃。",
+        status("holy_mark", "聖印", "dot", 3, "毎ラウンド聖属性ダメージを受け、攻撃を受けるたびに聖なる追撃が走る。",
                tick={"damage": "1d3+wis/8", "element": "holy", "ignore_defense": True},
                modifiers={"on_damage_followup": {"damage": "1d3", "element": "holy", "accuracy": 100}}),
-        status("blind", "目潰し", "modifier", 2, "命中率が下がる。ボスと冒険者への効果は20%。",
+        status("blind", "目潰し", "modifier", 2, "命中率が下がる。通常の敵は30%、ボスと冒険者は20%。",
                modifiers={"accuracy_penalty": 30}, boss_modifiers={"accuracy_penalty": 20},
                by_source={"enemy": {"modifiers": {"accuracy_penalty": 20}}}),
-        status("haste", "神速", "modifier", 3, "毎ラウンドの行動回数が1増える。持続中は重ねられない。",
+        status("haste", "神速", "modifier", 3, "毎ラウンドの行動が1回増える。効果中は掛け直せない。",
                modifiers={"extra_actions_per_round": 1}, cleansable=False, tags=["buff"], no_reapply=True),
-        status("holy_afterglow", "聖なる余光", "modifier", 1, "次の敵フェーズ終了まで攻撃ダメージを吸収する。上限は最大HPの25%。",
+        status("holy_afterglow", "聖なる余光", "modifier", 1, "次の敵フェーズ終了まで、攻撃ダメージを最大HPの25%まで吸収する。",
                modifiers={"shield": {"amount": 0, "max_hp_ratio": .25}}, cleansable=False,
                tags=["buff"], expires="enemy_phase_end"),
-        status("arcane_shield", "魔導の盾", "modifier", None, "一度だけ攻撃ダメージを防ぐ。",
+        status("arcane_shield", "魔導の盾", "modifier", None, "次に受ける攻撃のダメージを1回だけ完全に防ぐ。",
                modifiers={"shield": {"block_one_attack": True}}, cleansable=False, tags=["buff"]),
-        status("gospel", "福音", "modifier", 3, "最大HPが2倍になり、増加分を回復する。攻撃を受けると元の最大HPの8%を回復する。毎ラウンド2回まで。",
+        status("gospel", "福音", "modifier", 3, "最大HP2倍、増加分を回復。被弾時に元の最大HPの8%回復（毎ラウンド2回まで）。",
                modifiers={"max_hp_multiplier": 2, "heal_after_attack_ratio": .08, "heal_limit_per_round": 2},
                cleansable=False, tags=["buff"]),
-        status("holy_blessing", "聖光の加護", "modifier", 1, "この敵フェーズの被ダメージが0.75倍になる。",
+        status("holy_blessing", "聖光の加護", "modifier", 1, "次の敵フェーズ終了まで、被ダメージが0.75倍になる。",
                modifiers={"received_damage_multiplier": .75}, cleansable=False, tags=["buff"], expires="enemy_phase_end"),
-        status("magic_focus", "魔力集中", "modifier", None, "次の攻撃魔法のダメージが1.3倍になる。",
+        status("magic_focus", "魔力集中", "modifier", None, "次に放つ攻撃魔法のダメージが1.3倍になる。",
                modifiers={"next_spell_damage_multiplier": 1.3}, cleansable=False, tags=["buff"]),
-        status("suffocation", "窒息", "dot", 2, "ラウンド終了時に1ダメージ。浄化で解除できる。",
+        status("suffocation", "窒息", "dot", 2, "息が詰まり、毎ラウンド1ダメージを受ける。",
                tick={"damage": "1", "element": "physical", "ignore_defense": True}),
     ]
 
@@ -65,8 +65,11 @@ def migrate(pack: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("051 requires the 047 difficulty migration")
     definitions = result.setdefault("status_defs", [])
     for definition in status_definitions():
-        if not any(entry["id"] == definition["id"] for entry in definitions):
+        existing = next((entry for entry in definitions if entry["id"] == definition["id"]), None)
+        if existing is None:
             definitions.append(definition)
+        else:
+            existing["description"] = definition["description"]
     # TODO(design): Reconcile the shared-dex note with the brief's normal-only rules and baby freeze.
     entries = [
         {"entity": "combat_rules", "id": "$", "path": "evade_model", "set": "dex"},

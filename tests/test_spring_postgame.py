@@ -1,5 +1,6 @@
 from __future__ import annotations
 from scripts.scenario.levels_skills_v2 import migrate as levels
+from scripts.scenario.combat_mechanics_v2 import migrate as migrate_combat_mechanics
 
 import json
 import unittest
@@ -13,7 +14,7 @@ from host.difficulty import apply_difficulty, numeric_snapshot
 from host.scenario_context import current_action_choices, select_scenario_context
 from scripts.balance import checkpoints
 from scripts.scenario.spring_postgame import (
-    CHATS, GUIDANCE, HIDE, PACKS, ROOT, apply, placeholder_rows, recovery_audit, walk_actions,
+    CHAT_TEXTS, CHATS, GUIDANCE, HIDE, PACKS, ROOT, apply, placeholder_rows, recovery_audit, walk_actions,
 )
 
 
@@ -136,13 +137,22 @@ class SpringPostgameTests(unittest.TestCase):
                 session['flags'].update(saved_gald=True, mina_quest_done=True)
                 aid = 'postgame_chat_' + npc
                 self.assertNotIn(aid, {c.get('id') for c in self.choices(session)})
-                session['flags']['ignis_purified'] = True
-                self.assertIn(aid, {c.get('id') for c in self.choices(session)})
-                action = state.resolve_action(session, action_id=aid)
-                self.assertEqual(action['effects'], [])
-                old_flags = set(session['flags'])
-                checkpoints.replay_step(session, aid)
-                self.assertEqual(set(session['flags']) - old_flags, {action['once']})
+                button, defeated_text, purified_text = CHAT_TEXTS[(location, npc)]
+                for flag, expected_text in (('defeated_ignis', defeated_text), ('ignis_purified', purified_text)):
+                    session = self.session(pack, location, flag)
+                    session['flags'].update(saved_gald=True, mina_quest_done=True)
+                    self.assertIn(aid, {c.get('id') for c in self.choices(session)})
+                    action = state.resolve_action(session, action_id=aid)
+                    self.assertEqual(action['text'], button)
+                    self.assertEqual(action['result_text'], defeated_text)
+                    self.assertEqual(action['result_variants'], [
+                        {'requirements': {'flag': 'ignis_purified'}, 'text': purified_text},
+                    ])
+                    self.assertEqual(action['effects'], [])
+                    old_flags = set(session['flags'])
+                    checkpoints.replay_step(session, aid)
+                    self.assertEqual(session['last_action_result']['result_text'], expected_text)
+                    self.assertEqual(set(session['flags']) - old_flags, {action['once']})
 
     def test_postgame_every_location_has_an_action_or_forced_battle(self):
         for pack in self.packs.values():
@@ -161,19 +171,46 @@ class SpringPostgameTests(unittest.TestCase):
         for name, pack in self.packs.items():
             actual = deepcopy(pack)
             apply(actual)
+            actual = migrate_combat_mechanics(actual)
             actual = levels(actual)
             self.assertEqual(actual, pack)
             apply(actual)
+            actual = migrate_combat_mechanics(actual)
             actual = levels(actual)
             self.assertEqual(actual, pack)
             self.assertEqual(numeric_snapshot(apply_difficulty(actual, 'baby')), frozen[name])
-            legacy = apply_difficulty(actual, 'baby')
+            legacy = deepcopy(actual)
             legacy['status_defs'] = [s for s in legacy['status_defs'] if s['id'] != 'mana_veil']
             rows.extend((name, path, text) for path, text in placeholder_rows(legacy))
-        self.assertEqual(len(rows), 96)
-        self.assertTrue(all(text.count('【仮】') == 1 for _, _, text in rows))
+
+        status_ids = {
+            'burn', 'poison', 'weaken', 'paralysis', 'stun', 'holy_mark', 'blind', 'haste',
+            'holy_afterglow', 'arcane_shield', 'gospel', 'holy_blessing', 'magic_focus', 'suffocation',
+        }
+        spring_paths = {
+            '/locations/elf_spring/description', '/locations/elf_spring/choices/0/preview',
+            '/locations/elf_spring/hybrid/summary', '/locations/elf_spring/actions/rest_at_elf_spring/preview',
+            '/locations/slime_king_battle/combat/result_texts/victory',
+            '/locations/village_frozen_clue/actions/visit_village_postgame/text',
+            '/locations/ian_ice_katana_aftermath/actions/visit_village_postgame/text',
+            '/maps/forest/nodes/F3/description',
+        }
+        def is_048_placeholder(path):
+            if '/actions/postgame_chat_' in path:
+                return path.endswith(('/text', '/result_text'))
+            if path.startswith('/status_defs/') and path.endswith('/description'):
+                return path.split('/')[2] in status_ids
+            return path in spring_paths
+
+        self.assertFalse([(name, path) for name, path, _ in rows if is_048_placeholder(path)])
+        placeholders_050 = [(name, path, text) for name, path, text in rows if not is_048_placeholder(path)]
+        self.assertEqual(len(placeholders_050), 96)
+        self.assertTrue(all(sum(name == pack_name for name, _, _ in placeholders_050) == 48 for pack_name in self.packs))
+        self.assertTrue(all(path.startswith('/class_progression/') or path.startswith('/items/spellbook_')
+                            for _, path, _ in placeholders_050))
+        self.assertTrue(all(text == '\u3010\u4eee\u3011' for _, _, text in placeholders_050))
         report = (ROOT / 'eval/reports/048-engineering.md').read_text(encoding='utf-8')
-        self.assertEqual(sum(line.startswith('| P') for line in report.splitlines()), len(rows))
+        self.assertEqual(sum(line.startswith('| P') for line in report.splitlines()), 96)
         first, second = self.packs.values()
         for a, b in zip(first['locations'], second['locations']):
             self.assertEqual(a['id'], b['id'])

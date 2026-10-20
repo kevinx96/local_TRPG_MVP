@@ -383,7 +383,7 @@ class StatusTests(unittest.TestCase):
         actor = value["character"]
         combat._apply_status(actor, {"id": "burn", "name": "火傷", "damage": "1", "remaining_rounds": 2})
         label = combat.public_combat(value)["player_statuses"][0]
-        self.assertTrue(label["description"].startswith("【仮】"))
+        self.assertEqual(label["description"], status_definitions()[0]["description"])
         status_effects.cleanse(value, actor, {"count": "all", "tags": ["debuff"]})
         self.assertEqual(actor["statuses"], [])
 
@@ -538,6 +538,12 @@ class MigrationAndGoldenTests(unittest.TestCase):
             packs.append(pack)
         self.assertEqual(packs[0]["status_defs"], packs[1]["status_defs"])
         self.assertEqual(packs[0]["difficulty_overlays"], packs[1]["difficulty_overlays"])
+        expected_descriptions = {status["id"]: status["description"] for status in status_definitions()}
+        self.assertEqual(
+            {status["id"]: status["description"] for status in packs[0]["status_defs"]
+             if status["id"] in expected_descriptions},
+            expected_descriptions,
+        )
 
     def test_full_log_samples_baby_and_empty_normal(self):
         from combat_v2_golden import stable

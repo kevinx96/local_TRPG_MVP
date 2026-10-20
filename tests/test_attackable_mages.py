@@ -347,7 +347,9 @@ class AttackableMagesTests(unittest.TestCase):
             self.assertEqual(len(drafts), 4)
             self.assertTrue(all("もうここにはいない" not in entry["replacement"] for entry in drafts))
             placeholders = [entry for entry in entries if entry["status"] == "TODO(design)"]
-            self.assertEqual(len(placeholders), 6)
+            self.assertEqual(len(placeholders), 7)
+            self.assertIn("/locations/magic_shop/actions/postgame_chat_warlock/result_text",
+                          {entry["path"] for entry in placeholders})
             self.assertTrue(all(entry["replacement"] == "ワーロックはもうここにはいない。" for entry in placeholders))
             for identifier in ("read_magic_tomes", "ask_blue_mage_rumor"):
                 session["flags"]["npc_gone_warlock"] = True
