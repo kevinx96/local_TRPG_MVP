@@ -1,0 +1,13 @@
+{
+  "status": "engineering_policy",
+  "healing_threshold": 0.35,
+  "p0_healing_threshold": 0.30,
+  "high_incoming_hp_ratio": 0.20,
+  "cleanse_hp_ratio": 0.10,
+  "status_horizon_rounds": 3,
+  "resource_damage_penalty": 0.15,
+  "defense_value_weight": 1.0,
+  "restore_mp_ratio": 0.50,
+  "boss_defense_hp_ratio": 0.65,
+  "ultimate_ids": ["dragon_slash", "elemental_collapse", "shadow_haste", "seraphim_gospel"]
+}

@@ -230,7 +230,7 @@ def boss_policy_probes(pack, cp, targets, character, n, seed):
     for encounter, category in targets["encounters"].items():
         if category == "boss":
             template = sim.prepare_session(pack, encounter, character, cp)
-            for policy in sim.POLICIES:
+            for policy in (*sim.LEGACY_POLICIES, "best_free"):
                 result = _battles(template, n, seed, encounter, policy=policy)
                 rows.append(dict(encounter=encounter, character=character, policy=policy,
                                  rounds=[r["rounds"] for r in result], win_rate=_win(result)))
@@ -238,13 +238,56 @@ def boss_policy_probes(pack, cp, targets, character, n, seed):
 
 
 def run_job(job: tuple) -> list[dict[str, Any]]:
-    kind, path, character, n, seed = job
+    kind, path, character, n, seed, *extra = job
+    options = extra[0] if extra else {}
+    if options.get("difficulty", "baby") == "normal":
+        from . import probes_v3
+        return probes_v3.run_job(("normal_"+kind, path, character, n, seed, options))
+    from .legacy_spring import select_spring
+    from host.difficulty import apply_difficulty
     pack = state.load_scenario_pack(Path(path))
-    cp = json.loads(checkpoints.DEFAULT_CHECKPOINTS.read_text(encoding="utf-8"))
-    targets = json.loads((checkpoints.ROOT / "eval/balance/targets.json").read_text(encoding="utf-8"))
-    cp, targets = extended_inputs(pack, cp, targets)
+    pack = select_spring(apply_difficulty(pack, "baby"), options.get("spring", "current"))
+    if kind == "checkpoint_probes":
+        from .reproduction_v2 import checkpoint_trials
+        name = options["profile"]
+        result = checkpoint_trials(pack, {"profiles": {name: options["checkpoint_entry"]}}, n, seed)
+        return [{"profile": name, **result[name]}]
+    if options.get("probe_inputs_path"):
+        inputs = json.loads(Path(options["probe_inputs_path"]).read_text(encoding="utf-8"))
+        cp, targets = inputs["checkpoints"], inputs["targets"]
+    else:
+        cp = json.loads(checkpoints.DEFAULT_CHECKPOINTS.read_text(encoding="utf-8"))
+        targets = json.loads((checkpoints.ROOT / "eval/balance/targets.json").read_text(encoding="utf-8"))
+        cp, targets = extended_inputs(pack, cp, targets)
+    if options.get("encounter"):
+        encounter = options["encounter"]
+        targets = {**targets, "encounters": {encounter: targets["encounters"][encounter]}}
     functions = {"preparation_probes": lambda: preparation_probes(pack, cp, character, n, seed),
                  "companion_probes": lambda: companion_probes(pack, cp, targets, character, n, seed),
                  "level_probes": lambda: level_probes(pack, cp, targets, character, n, seed),
                  "boss_policy_probes": lambda: boss_policy_probes(pack, cp, targets, character, n, seed)}
     return functions[kind]()
+
+
+def main(argv=None):
+    import argparse
+    parser = argparse.ArgumentParser(description="Offline paired balance probes")
+    parser.add_argument("--difficulty", choices=("baby", "normal"), default="baby")
+    parser.add_argument("--spring", choices=("legacy", "current"), default="current")
+    parser.add_argument("--scenario", type=Path, default=checkpoints.DEFAULT_SCENARIO)
+    parser.add_argument("--checkpoint", type=Path, default=checkpoints.ROOT / "eval/balance/checkpoints_normal_053.json")
+    parser.add_argument("--n", type=int, default=500)
+    parser.add_argument("--seed", type=int, default=20261020)
+    parser.add_argument("--kind", choices=("preparation_probes", "companion_probes", "level_probes", "boss_policy_probes", "passive_probes"), default="preparation_probes")
+    parser.add_argument("--character", choices=CHARACTERS, default="hero")
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args(argv)
+    rows = run_job((args.kind, args.scenario, args.character, args.n, args.seed,
+                    dict(difficulty=args.difficulty, spring=args.spring, checkpoint_path=str(args.checkpoint))))
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(rows, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

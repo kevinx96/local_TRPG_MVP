@@ -144,5 +144,16 @@ class ClassAwareRouteTests(unittest.TestCase):
         self.assertEqual(stats["first_choice_per_trial"], {"burning_house": {"climb": 1, "beam": 1}})
 
 
+class CurrentSpringTests(unittest.TestCase):
+    def test_old_run_rest_finishes_in_current_topology(self):
+        for decisions in ('backbone', 'class_aware'):
+            run = class_aware.Run(state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO), [], 'hero', 4, decisions=decisions)
+            run.session['world_state'] = {'scene_id': 'dark_forest', 'location_id': 'elf_spring'}
+            run.session['character'].update(hp=100, max_hp=500)
+            run.rest_point()
+            self.assertEqual(run.location, 'forest_wolves')
+            self.assertEqual(len(run.rests), 1)
+
+
 if __name__ == "__main__":
     unittest.main()

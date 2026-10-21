@@ -14,11 +14,11 @@ from statistics import mean, median
 from typing import Any, Optional
 from unittest.mock import patch
 
-from host import combat, state
+from host import combat, state, progression
 from .checkpoints import DEFAULT_CHECKPOINTS, DEFAULT_SCENARIO, ROOT, fresh_session
 
 LEGACY_POLICIES = ("attack_only", "greedy", "heuristic")
-POLICIES = (*LEGACY_POLICIES, "best_free")
+POLICIES = (*LEGACY_POLICIES, "best_free", "heuristic_v3")
 MODES = ("flat", "floor", "ratio")
 TARGETS = ROOT / "eval/balance/targets.json"
 SKILL_CANDIDATES = ROOT / "eval/balance/skill_candidates.json"
@@ -111,8 +111,23 @@ def choose_action(session: dict[str, Any], policy: str, *, purify: bool = True,
                   reserve_purification: bool = False,
                   elite_holy_water: bool = True,
                   recovery_threshold: Optional[float] = None) -> tuple[dict[str, Any], str]:
+    from .views_v3 import decision_views
     if policy not in POLICIES:
         raise ValueError(f"Unknown policy: {policy}")
+    with decision_views(session):
+        return _choose_action(session, policy, purify=purify, reserve_purification=reserve_purification,
+                              elite_holy_water=elite_holy_water, recovery_threshold=recovery_threshold)
+
+
+def _choose_action(session: dict[str, Any], policy: str, *, purify: bool = True,
+                   reserve_purification: bool = False, elite_holy_water: bool = True,
+                   recovery_threshold: Optional[float] = None) -> tuple[dict[str, Any], str]:
+    if policy not in POLICIES:
+        raise ValueError(f"Unknown policy: {policy}")
+    if session.get("difficulty") == "normal":
+        from .policy_v3 import choose
+        return choose(session, policy, purify=purify, reserve_purification=reserve_purification,
+                      recovery_threshold=recovery_threshold)
     actions = [a for a in combat.combat_actions(session) if a.get("enabled")]
     actor = session["character"]
     enemies = combat._alive_enemies(session["combat"])
@@ -209,15 +224,45 @@ def scale_actor(actor: dict[str, Any], scaling: dict[str, Any], pack: dict[str, 
         actor[resource] = actor[f"max_{resource}"]
 
 
+def perform_action(session: dict[str, Any], action: dict[str, Any], target: str, rng: random.Random):
+    if session.get("difficulty") == "normal":
+        key = f"{action['type']}:{action['id']}"
+        round_number = session["combat"]["round"]
+        used = session.setdefault("_balance_free_actions", {})
+        if used.get(key) == round_number:
+            raise ValueError("Repeated free action in the same round")
+        free = action.get("free_action") or (action["type"] == "item" and
+            session["combat"].get("passive_state", {}).get("free_items_used", 0) <
+            progression.effects(session).get("free_item_uses", 0))
+        if free:
+            used[key] = round_number
+        from .views_v3 import action_rules
+        with action_rules(session):
+            return combat.perform_combat_action(session, action["type"], action["id"], target, rng=rng)
+    return combat.perform_combat_action(session, action["type"], action["id"], target, rng=rng)
+
+
 def prepare_session(pack: dict[str, Any], encounter: str, character_id: str,
                     checkpoints: Optional[dict[str, Any]] = None, *, defense_mode: str = "flat",
                     stat_scaling: Optional[dict[str, Any]] = None, companion: bool = True,
-                    skill_variant: str = "none") -> dict[str, Any]:
-    isolated = deepcopy(pack)
+                    skill_variant: str = "none", difficulty: str = "baby", effective: bool = False) -> dict[str, Any]:
+    from host.difficulty import apply_difficulty
+    isolated = deepcopy(pack) if difficulty == "baby" or effective else apply_difficulty(pack, difficulty)
     location = next(l for l in isolated["locations"] if l["id"] == encounter)
     guest = location.get("combat", {}).get("player_character_id")
     actual_id = guest or character_id
-    session = fresh_session(isolated, actual_id)
+    session = fresh_session(isolated, actual_id, difficulty, effective=True)
+    snapshot = None if checkpoints is None else checkpoints.get("encounters", {}).get(encounter, {}).get("characters", {}).get(character_id, {}).get("snapshot")
+    if snapshot and not guest:
+        from .snapshots_v3 import restore
+        session = restore(isolated, snapshot, difficulty)
+        if not companion:
+            session["companion"] = None
+        isolated.setdefault("combat_rules", {})["defense_mode"] = defense_mode
+        if stat_scaling:
+            scale_actor(session["character"], stat_scaling, isolated)
+        session["combat_start_requested"] = True
+        return session
     if checkpoints is not None and not guest:
         entry = checkpoints["encounters"][encounter]["characters"][character_id]
         for key in ("inventory", "equipment", "gold"):
@@ -281,11 +326,12 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
              n: int = 500, seed: int = 20261011, checkpoints: Optional[dict[str, Any]] = None,
              defense_mode: str = "flat", stat_scaling: Optional[dict[str, Any]] = None,
              companion: bool = True, skill_variant: str = "none", preparation: str = "default",
-             purify: bool = True, initial_delta: Optional[dict[str, Any]] = None) -> dict[str, Any]:
+             purify: bool = True, initial_delta: Optional[dict[str, Any]] = None,
+             difficulty: str = "baby") -> dict[str, Any]:
     if n < 1:
         raise ValueError("n must be positive")
     template = prepare_session(pack, encounter, character_id, checkpoints, defense_mode=defense_mode,
-                               stat_scaling=stat_scaling, companion=companion, skill_variant=skill_variant)
+                               stat_scaling=stat_scaling, companion=companion, skill_variant=skill_variant, difficulty=difficulty)
     if preparation != "default":
         if preparation not in {"standard", "no_fire", "purification"}:
             raise ValueError("Unknown preparation")
@@ -340,7 +386,7 @@ def simulate(pack: dict[str, Any], encounter: str, character_id: str, policy: st
                         if action.get("kind") in {"heal", "restore"}:
                             healing_items[action["name"]] += 1
                 action_round = session["combat"]["round"]
-                combat.perform_combat_action(session, action["type"], action["id"], target_id, rng=rng)
+                perform_action(session, action, target_id, rng)
                 if encounter == "dragon_valley_loc" and 0 < combat._hp_ratio(session["combat"]["enemies"][0]) <= .4:
                     session["combat"].setdefault("threshold_round", action_round)
             battle = session["combat"]
@@ -446,6 +492,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--checkpoint", default=str(DEFAULT_CHECKPOINTS), help="JSON path or none")
     parser.add_argument("--policies", "--policy", nargs="+", choices=[*POLICIES, "all"], default=["heuristic"])
     parser.add_argument("--n", "-N", type=int, default=500)
+    parser.add_argument("--difficulty", choices=("baby", "normal"), default="baby")
+    parser.add_argument("--spring", choices=("current", "legacy"), default="current")
     parser.add_argument("--seed", type=int, default=20261011)
     parser.add_argument("--defense-mode", "--defense_mode", choices=MODES, default="flat")
     parser.add_argument("--stat-scaling", "--stat_scaling", default="{}", help="JSON object")
@@ -458,26 +506,48 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
     pack = state.load_scenario_pack(args.scenario)
-    checkpoints = None if args.checkpoint == "none" else json.loads(Path(args.checkpoint).read_text(encoding="utf-8"))
+    from .legacy_spring import select_spring
+    pack = select_spring(pack, args.spring)
+    checkpoint_path = Path(args.checkpoint) if args.checkpoint != "none" else None
+    if args.difficulty == "normal" and checkpoint_path == DEFAULT_CHECKPOINTS:
+        checkpoint_path = ROOT / "eval/balance/checkpoints_normal_053.json"
+        if not checkpoint_path.exists():
+            parser.error("Run measurement_v2 --difficulty normal first, or pass --checkpoint none")
+    checkpoints = None if checkpoint_path is None else json.loads(checkpoint_path.read_text(encoding="utf-8"))
     targets = json.loads(TARGETS.read_text(encoding="utf-8"))
     encounters = list(targets["encounters"]) if args.encounters == ["all"] else args.encounters
     policies = list(LEGACY_POLICIES) if "all" in args.policies else args.policies
     if args.check:
         policies = list(dict.fromkeys([*policies, "heuristic", "attack_only"]))
     started = time.perf_counter()
+    missing = []
+    def characters_for(encounter):
+        characters = selected_characters(pack, encounter, args.characters)
+        if args.difficulty == "normal" and checkpoints is not None:
+            observed = checkpoints.get("encounters", {}).get(encounter, {}).get("characters", {})
+            missing.extend({"encounter": encounter, "character": character, "reason": "No observed normal opening snapshot"}
+                           for character in characters if not observed.get(character, {}).get("snapshot"))
+            characters = [c for c in characters if observed.get(c, {}).get("snapshot")]
+        return characters
     rows = [simulate(pack, encounter, character, policy, n=args.n, seed=args.seed, checkpoints=checkpoints,
                      defense_mode=args.defense_mode, stat_scaling=json.loads(args.stat_scaling), companion=not args.no_companion,
-                     skill_variant=args.skills, preparation=args.preparation)
-            for encounter in encounters for character in selected_characters(pack, encounter, args.characters) for policy in policies]
+                     skill_variant=args.skills, preparation=args.preparation, difficulty=args.difficulty)
+            for encounter in encounters for character in characters_for(encounter) for policy in policies]
     result = {"rows": rows, "elapsed_seconds": time.perf_counter() - started}
-    if args.check:
+    if args.check and (args.difficulty == "normal" or args.spring == "legacy"):
         result["violations"] = check_results(rows, targets, check_resource_metrics=args.check_resource_metrics)
+    elif args.check:
+        result.update(violations=[], status="report")
+    if args.difficulty == "normal":
+        from host.difficulty import overlay_fingerprint
+        result.update(difficulty=args.difficulty, spring=args.spring, seed=args.seed,
+                      overlay_fingerprint=overlay_fingerprint(pack), unavailable=missing)
     text = json.dumps(result, ensure_ascii=False, indent=2)
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(text + "\n", encoding="utf-8")
     print(text)
-    return 1 if result.get("violations") else 0
+    return 1 if result.get("violations") or args.check and args.difficulty == "normal" and not rows else 0
 
 
 if __name__ == "__main__":

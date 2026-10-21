@@ -51,10 +51,10 @@ class MeasurementV2Tests(unittest.TestCase):
         before = deepcopy(session)
         self.assertEqual(archetypes.MilestoneLevelModel().observe(session, "dragon_valley_loc"), 5)
         self.assertEqual(session, before)
-        for mode in ("first", "battle_best", "enumerate"):
+        for mode in ("first", "table", "enumerate"):
             self.assertEqual(archetypes.PassivePicker(mode).pick([]), [])
         self.assertEqual(archetypes.PassivePicker("first").pick(["a", "b"]), ["a"])
-        self.assertEqual(archetypes.PassivePicker("battle_best").pick(["a", "b"], {"a": 1, "b": 2}), ["b"])
+        self.assertEqual(archetypes.PassivePicker("table").pick(["a", "b"]), ["a"])
         picker = archetypes.PassivePicker("enumerate")
         self.assertEqual(picker.combinations([["a", "b"], ["c", "d"]]), [["a", "c"], ["a", "d"], ["b", "c"], ["b", "d"]])
         self.assertEqual(picker.combinations([]), [[]])
@@ -159,7 +159,7 @@ class MeasurementV2Tests(unittest.TestCase):
         baseline = json.loads((checkpoints.ROOT / "eval/balance/046-legacy-output.json").read_text(encoding="utf-8"))
         stdout = io.StringIO()
         with contextlib.redirect_stdout(stdout), patch.object(sim.time, "perf_counter", return_value=0):
-            status = sim.main(["--check", "--encounters", "forest_wolves", "--characters", "hero", "--n", "3", "--seed", "46001"])
+            status = sim.main(["--check", "--spring", "legacy", "--encounters", "forest_wolves", "--characters", "hero", "--n", "3", "--seed", "46001"])
         self.assertEqual(status, baseline["sim_check_exit"])
         self.assertEqual(stdout.getvalue().encode("utf-8"), baseline["sim_check_stdout"].encode("utf-8"))
         actual = route.simulate_route(self.pack, self.cp, "hero", n=3, seed=46001, rest_policy="hp70")

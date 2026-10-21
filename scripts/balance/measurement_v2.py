@@ -16,7 +16,7 @@ from .archetypes import ARCHETYPES, CHARACTERS, COMPLETION_TITLE
 
 def input_fingerprints(scenario: Path, save: Path) -> dict[str, str]:
     paths = {scenario, save, checkpoints.DEFAULT_CHECKPOINTS, probes_v2.PREPARATIONS,
-             checkpoints.ROOT / "eval/balance/targets.json"}
+             checkpoints.ROOT / "eval/balance/targets.json", checkpoints.ROOT / "eval/balance/strategy_v3.json"}
     paths.update((checkpoints.ROOT / "host").glob("*.py"))
     paths.update((checkpoints.ROOT / "scripts/balance").glob("*.py"))
     paths.add(checkpoints.ROOT / "scripts/playtest/save_telemetry.py")
@@ -79,74 +79,8 @@ def markdown(result: dict[str, Any]) -> str:
 
 
 def main(argv: Optional[list[str]] = None) -> int:
-    parser = argparse.ArgumentParser(description="046b complete measurement, offline only")
-    parser.add_argument("--n", type=int, default=500)
-    parser.add_argument("--probe-n", type=int, default=500)
-    parser.add_argument("--seed", type=int, default=20261020)
-    parser.add_argument("--workers", type=int, default=1)
-    parser.add_argument("--scenario", type=Path, default=checkpoints.DEFAULT_SCENARIO)
-    parser.add_argument("--save", type=Path, default=save_telemetry.DEFAULT_SAVE)
-    parser.add_argument("--output", type=Path, default=route_v2.DEFAULT_OUTPUT)
-    parser.add_argument("--records-output", type=Path, help="Optional full reducer inputs for auditing/reducing again")
-    parser.add_argument("--check", action="store_true", help="Exit 1 for failed hard draft gates")
-    args = parser.parse_args(argv)
-    if min(args.n, args.probe_n, args.workers) < 1:
-        parser.error("n, probe-n and workers must be positive")
-    started = time.perf_counter()
-    fingerprints = input_fingerprints(args.scenario, args.save)
-    targets_path = checkpoints.ROOT / "eval/balance/targets.json"
-    targets = json.loads(targets_path.read_text(encoding="utf-8"))
-    pack = state.load_scenario_pack(args.scenario)
-    cp = json.loads(checkpoints.DEFAULT_CHECKPOINTS.read_text(encoding="utf-8"))
-    probe_cp, probe_targets = probes_v2.extended_inputs(pack, cp, targets)
-    save = json.loads(args.save.read_text(encoding="utf-8"))
-    timings = {}
-    stage = time.perf_counter()
-    records = route_v2.run_jobs([(args.scenario, a, c, args.n, args.seed) for a in ARCHETYPES for c in CHARACTERS], args.workers)
-    timings["routes"] = time.perf_counter()-stage
-    print(f"routes complete: {len(records)} records / {timings['routes']:.2f}s", flush=True)
-    rows = route_v2.summarize(records)
-    bundle = {"records": records, "targets": targets, "fingerprints": fingerprints,
-              "damage_budget_v2": probes_v2.damage_budget(pack, probe_cp, probe_targets)}
-    for kind in ("preparation_probes", "companion_probes", "level_probes", "boss_policy_probes"):
-        stage = time.perf_counter()
-        bundle[kind] = route_v2.run_jobs([(kind, args.scenario, c, args.probe_n, args.seed) for c in CHARACTERS], args.workers)
-        timings[kind] = time.perf_counter()-stage
-        print(f"{kind}: {len(bundle[kind])} cells / {timings[kind]:.2f}s", flush=True)
-    if args.records_output:
-        args.records_output.parent.mkdir(parents=True, exist_ok=True)
-        args.records_output.write_text(json.dumps(bundle, ensure_ascii=False, allow_nan=False)+"\n", encoding="utf-8")
-    stage = time.perf_counter()
-    human = probes_v2.observed_checkpoint(save)
-    route_v2.BERSERKER.write_text(json.dumps(human, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
-    profiles = reproduction_v2.checkpoint_trials(pack, human, args.n, args.seed)
-    timings["human_checkpoint"] = time.perf_counter()-stage
-    telemetry = save_telemetry.extract(save, preparations=json.loads(probes_v2.PREPARATIONS.read_text(encoding="utf-8")), archetype_rows=rows)
-    telemetry["save_sha256"] = hashlib.sha256(args.save.read_bytes()).hexdigest()
-    telemetry_path = args.output.parent / "046b-save-telemetry.json"
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    telemetry_path.write_text(json.dumps(telemetry, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
-    telemetry_path.with_suffix(".md").write_text(save_telemetry.markdown(telemetry), encoding="utf-8")
-    metrics = metrics_v2.evaluate(bundle)
-    if input_fingerprints(args.scenario, args.save) != fingerprints:
-        raise RuntimeError("Measurement inputs changed during the run; use a stable checkout or snapshot and rerun")
-    result = {"version": 2, "status": "measurement_complete", "reproduction_status": "accepted_by_046b",
-              "n": args.n, "probe_n": args.probe_n, "seed": args.seed, "workers": args.workers,
-              "completion_definition": COMPLETION_TITLE, "original_save_available": True,
-              "terminal_definition": "draco_battle or any engine ending, including defeat endings",
-              "rows": rows, "metrics": metrics, "targets": targets,
-              "archetypes": {key: value.to_dict() for key, value in ARCHETYPES.items()},
-              "checkpoint_probes": profiles, "threat_scan": reproduction_v2.threat_scan(pack, cp),
-              "p2s_comparison": variant_comparison(rows),
-              "samples": [next(t for t in records if t["archetype"] == row["archetype"] and t["character"] == row["character"]) for row in rows],
-              "engine_recording_gaps": telemetry["engine_recording_gaps"],
-              "fingerprints": fingerprints,
-              "timings": timings, "elapsed_seconds": time.perf_counter()-started}
-    args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False)+"\n", encoding="utf-8")
-    args.output.with_suffix(".md").write_text(markdown(result), encoding="utf-8")
-    print(json.dumps({"status": result["status"], "elapsed_seconds": result["elapsed_seconds"],
-                      "metrics": {m["id"]: m["status"] for m in metrics}}, ensure_ascii=False), flush=True)
-    return int(args.check and any(m["hard_gate"] and m["status"] == "fail" for m in metrics))
+    from .measurement_v3 import main as measure
+    return measure(argv)
 
 
 if __name__ == "__main__":

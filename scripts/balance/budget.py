@@ -13,6 +13,12 @@ from .sim import formula_mean, prepare_session, selected_characters
 def attack_moments(ability: dict[str, Any], enemy: dict[str, Any],
                    session: dict[str, Any]) -> tuple[float, float]:
     """Mean/variance of HP damage, including zero damage on a miss and integer rounding."""
+    if session.get("difficulty") == "normal":
+        from .policy_v3 import strike_moments
+        elements = ability.get("multi_elements") or [ability.get("element", "physical")]
+        moments = [strike_moments(session, enemy, session["character"], {**ability, "element": e}, enemy["id"]) for e in elements]
+        hits = max(1, int(ability.get("hits_per_element" if ability.get("multi_elements") else "hits", 1)))
+        return sum(m[0] for m in moments)*hits, sum(m[1] for m in moments)*hits
     actor, rules = session["character"], combat._combat_rules(session)
     mean, variance = 0.0, 0.0
     elements = ability.get("multi_elements") or [ability.get("element", "physical")]
@@ -56,6 +62,13 @@ def phase_moments(session: dict[str, Any], *, damaging_only: bool = False) -> di
     for original in combat._alive_enemies(session["combat"]):
         if original.get("skip_rounds_remaining", 0) > 0:
             continue
+        skip = 0.0
+        if session.get("difficulty") == "normal":
+            statuses = original.get("statuses", [])
+            skip = 1.0 if any(s.get("kind") == "skip_turn" for s in statuses) else 1-math.prod(
+                1-float(s.get("modifiers", {}).get("skip_chance", 0)) for s in statuses)
+            if skip >= 1:
+                continue
         choices = []
 
         class CaptureChoices:
@@ -80,6 +93,7 @@ def phase_moments(session: dict[str, Any], *, damaging_only: bool = False) -> di
                 am, av = attack_moments(ability, original, session)
             mu += am * w / weight
             second += (av + am ** 2) * w / weight
+        mu, second = mu*(1-skip), second*(1-skip)
         total += mu
         variance += max(0.0, second - mu ** 2)
     return {"expected_damage": total, "variance": variance,

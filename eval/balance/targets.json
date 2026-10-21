@@ -198,6 +198,13 @@
       }
     }
   },
+  "ignis_level": {
+    "P0": 4,
+    "P1": 5,
+    "P2": 6,
+    "P3": 7,
+    "status": "draft"
+  },
   "version": 2,
   "status": "draft",
   "archetypes": {

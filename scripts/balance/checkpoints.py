@@ -7,21 +7,30 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
-from host import combat, state
+from host import combat, state, progression
+from host.difficulty import apply_difficulty
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SCENARIO = ROOT / "host/prompt/processed/dragon_rpg.json"
 DEFAULT_CHECKPOINTS = ROOT / "eval/balance/checkpoints.json"
 
 
-def fresh_session(pack: dict[str, Any], character_id: str) -> dict[str, Any]:
+def fresh_session(pack: dict[str, Any], character_id: str, difficulty: str = "baby",
+                  *, effective: bool = False) -> dict[str, Any]:
+    if difficulty not in {"baby", "normal"}:
+        raise ValueError("Unknown difficulty")
+    if difficulty == "normal" and not effective:
+        pack = apply_difficulty(pack, difficulty)
     template = next(c for c in pack["characters"] if c["id"] == character_id)
     scene_id = pack["meta"]["initial_scene"]
-    return {"id": "balance", "scenario_pack": pack, "gm_mode": "full",
+    session = {"id": "balance", "scenario_pack": pack, "gm_mode": "full",
             "character": state._character_from_template(template, pack),
             "world_state": {"scene_id": scene_id, "location_id": state._resolve_initial_location(pack, scene_id)},
             "flags": {}, "companion": None, "game_over": None, "combat": None,
             "event_log": [], "system_logs": [], "messages": [], "dice_log": [], "choices": []}
+    session["difficulty"] = difficulty
+    progression.initialize(session)
+    return session
 
 
 def proposed_routes() -> dict[str, list[str]]:

@@ -423,10 +423,11 @@ def resources(session: dict[str, Any]) -> dict[str, Any]:
 class Run:
     def __init__(self, pack: dict[str, Any], prelude: list[str], character: str, seed: int, *,
                  quests: Iterable[str] = (), decisions: str = "class_aware", dice: str = "real",
-                 policy: str = "heuristic", rest_policy: str = "hp70", evaluator: Optional[Evaluator] = None):
+                 policy: str = "heuristic", rest_policy: str = "hp70", evaluator: Optional[Evaluator] = None,
+                 difficulty: str = "baby", effective: bool = False):
         if decisions not in {"class_aware", "backbone"} or dice not in {"real", "forced"}:
             raise ValueError("unknown decision or dice mode")
-        self.session = checkpoints.fresh_session(pack, character)
+        self.session = checkpoints.fresh_session(pack, character, difficulty, effective=effective)
         self.rng = random.Random(seed)
         self.prelude, self.policy, self.rest_policy = prelude, policy, rest_policy
         self.quests = frozenset(quests)
@@ -459,7 +460,7 @@ class Run:
         location = self.location
         while rest := route.rest_if_needed(self.session):
             self.rests.append(rest)
-            while self.location != location:
+            while combat_pending(self.session):
                 battle = route.fight(self.session, self.policy, self.rng)
                 self.battles.append(battle)
                 if not battle["continue"]:
@@ -507,7 +508,8 @@ class Run:
         else:
             self.decide("lost_goblin_crossroads")
         self.rest_point()
-        self.act("continue_from_elf_spring")
+        if self.location == "elf_spring":
+            self.act("continue_from_elf_spring")
         self.decide("forest_wolves")
         if self.quests & {"cave_chest", "cave_full"}:
             for step in ("exit_back", "wolves_back"):
@@ -515,7 +517,8 @@ class Run:
             self.rest_point()
             self.cave()
             self.rest_point()
-            self.act("continue_from_elf_spring")
+            if self.location == "elf_spring":
+                self.act("continue_from_elf_spring")
             self.act("pass_cleared_wolves")
         self.town_trip()
         self.act("leave_forest_for_village")
@@ -641,8 +644,10 @@ def choice_stats(results: Iterable[dict[str, Any]]) -> dict[str, Any]:
 def _route_job(args: tuple) -> dict[str, Any]:
     from . import route
 
-    character, n, seed, rest_policy, quests, decisions, dice = args
+    character, n, seed, rest_policy, quests, decisions, dice, *extra = args
     pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
+    from .legacy_spring import select_spring
+    pack = select_spring(pack, extra[0] if extra else "current")
     cp = json.loads(checkpoints.DEFAULT_CHECKPOINTS.read_text(encoding="utf-8"))
     row = route.simulate_route(pack, cp, character, n=n, seed=seed, rest_policy=rest_policy,
                                quests=quests, decisions=decisions, dice=dice)
@@ -709,7 +714,7 @@ def select_quests(characters: list[str], n: int, seed: int, workers: int, shards
             "selected": {c: list(q) for c, q in current.items()}, "log": log}
 
 
-def report(characters: list[str], n: int, seed: int, workers: int, quests: dict[str, list[str]]) -> dict[str, Any]:
+def report(characters: list[str], n: int, seed: int, workers: int, quests: dict[str, list[str]], spring: str = "current") -> dict[str, Any]:
     configs = [("none", "none", (), "backbone", "forced"), ("hp70", "hp70", (), "backbone", "forced"),
                ("class_aware", "class_aware", None, "class_aware", "real"),
                ("hp70_real_dice", "class_aware", (), "backbone", "real"),
@@ -718,7 +723,7 @@ def report(characters: list[str], n: int, seed: int, workers: int, quests: dict[
     for label, rest_policy, quest_set, decisions, dice in configs:
         for c in characters:
             selected = tuple(quests.get(c, ())) if quest_set is None else quest_set
-            jobs.append((c, n, seed, rest_policy, selected, decisions, dice))
+            jobs.append((c, n, seed, rest_policy, selected, decisions, dice, spring))
             labels.append(label)
     rows = run_jobs(jobs, workers)
     for label, row in zip(labels, rows):
@@ -729,6 +734,7 @@ def report(characters: list[str], n: int, seed: int, workers: int, quests: dict[
 def main(argv: Optional[list[str]] = None) -> int:
     parser = argparse.ArgumentParser(description="027 class-aware continuous route (offline)")
     parser.add_argument("--n", type=int, default=500)
+    parser.add_argument("--spring", choices=("current", "legacy"), default="current")
     parser.add_argument("--seed", type=int, default=20261012)
     parser.add_argument("--characters", nargs="+", default=["hero", "cleric", "mage", "thief"])
     parser.add_argument("--workers", type=int, default=1)
@@ -746,7 +752,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     if args.select_quests:
         result = select_quests(args.characters, args.n, args.seed, args.workers, args.shards)
     else:
-        result = report(args.characters, args.n, args.seed, args.workers, load_quests(args.quests))
+        result = report(args.characters, args.n, args.seed, args.workers, load_quests(args.quests), args.spring)
         paths.append(args.quests)
     result["fingerprints"] = {p.relative_to(checkpoints.ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
                               for p in paths if p.exists()}

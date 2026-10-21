@@ -31,6 +31,8 @@ def rest_if_needed(session: dict[str, Any]) -> Optional[dict[str, Any]]:
         return None
     before = resources(session)
     checkpoints.replay_step(session, identifier)
+    if state.current_location_id(session) != location:
+        session["combat_start_requested"] = True
     return dict(location=location, action=identifier, cost=cost, before=before, after=resources(session))
 
 
@@ -91,12 +93,16 @@ def trial(pack: dict[str, Any], sources: list[dict[str, Any]], encounter: str, c
                     rests.append(rest)
                     paid_rests += int(rest["cost"] > 0)
                     # The spring's first rest triggers the authored slime ambush chain.
-                    while state.current_location_id(session) != source["location"]:
+                    from .class_aware import combat_pending
+                    while combat_pending(session):
                         battle = fight(session, policy, rng, purify=purify)
                         battles.append(battle)
                         if not battle["continue"]:
                             return dict(completed=False, failed_at=battle["encounter"], boss_arrival=arrival,
                                         battles=battles, paid_rests=paid_rests, rests=rests)
+            if (source["step"] == "continue_from_elf_spring"
+                    and state.current_location_id(session) == "forest_wolves"):
+                continue
             if (rest_at_inn and source["location"] == "inn" and source["step"] != "rest_at_inn"
                     and actor.get("gold", 0) >= 10
                     and any(actor[r] < actor[f"max_{r}"] for r in ("hp", "mp", "sp"))):
@@ -246,6 +252,7 @@ def check_results(rows: list[dict[str, Any]], targets: dict[str, Any], *,
 def main(argv: Optional[list[str]] = None) -> int:
     parser = argparse.ArgumentParser(description="Offline continuous checkpoint routes; no implicit refill")
     parser.add_argument("--n", type=int, default=500)
+    parser.add_argument("--spring", choices=("current", "legacy"), default="current")
     parser.add_argument("--seed", type=int, default=20261011)
     parser.add_argument("--routes", nargs="+", default=["dragon_valley_loc"])
     parser.add_argument("--shard", type=int, default=0)
@@ -264,6 +271,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     if args.check and args.shards != 1:
         parser.error("--check requires an unsharded result")
     pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
+    from .legacy_spring import select_spring
+    pack = select_spring(pack, args.spring)
     cp = json.loads(checkpoints.DEFAULT_CHECKPOINTS.read_text(encoding="utf-8"))
     targets = json.loads(args.targets.read_text(encoding="utf-8"))
     routes = list(targets["route_targets"]["routes"]) if args.check else (

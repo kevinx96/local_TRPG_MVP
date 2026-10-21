@@ -1,0 +1,774 @@
+{
+  "status": "proposed",
+  "seed_rule": "sha256(f'{seed}:{key}:{character}:{trial_index}')[:8] big-endian; variants omit passive/companion/level/preparation; route key=route_v2",
+  "characters": {
+    "hero": {
+      "choices": {
+        "2": "heavy_armor_lore",
+        "4": "unsinkable_shield",
+        "6": "adversity_flame",
+        "8": "sword_saint"
+      },
+      "evidence": [
+        {
+          "level": 2,
+          "selected": "heavy_armor_lore",
+          "comparisons": [
+            {
+              "option": "departure_spirit",
+              "wins": 29,
+              "n": 200,
+              "rate": 0.145,
+              "reached_level": 199
+            },
+            {
+              "option": "heavy_armor_lore",
+              "wins": 36,
+              "n": 200,
+              "rate": 0.18,
+              "reached_level": 199
+            }
+          ],
+          "absolute_gap_pp": 3.5000000000000004,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        },
+        {
+          "level": 4,
+          "selected": "unsinkable_shield",
+          "comparisons": [
+            {
+              "option": "departure_spirit",
+              "wins": 36,
+              "n": 200,
+              "rate": 0.18,
+              "reached_level": 42
+            },
+            {
+              "option": "unsinkable_shield",
+              "wins": 40,
+              "n": 200,
+              "rate": 0.2,
+              "reached_level": 42
+            }
+          ],
+          "absolute_gap_pp": 2.0000000000000018,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        },
+        {
+          "level": 6,
+          "selected": "adversity_flame",
+          "comparisons": [
+            {
+              "option": "sword_followup",
+              "wins": 40,
+              "n": 200,
+              "rate": 0.2,
+              "reached_level": 42
+            },
+            {
+              "option": "adversity_flame",
+              "wins": 42,
+              "n": 200,
+              "rate": 0.21,
+              "reached_level": 42
+            }
+          ],
+          "absolute_gap_pp": 0.9999999999999981,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        },
+        {
+          "level": 8,
+          "selected": "sword_saint",
+          "comparisons": [
+            {
+              "option": "sword_saint",
+              "wins": 42,
+              "n": 200,
+              "rate": 0.21,
+              "reached_level": 40
+            },
+            {
+              "option": "dragon_destiny",
+              "wins": 42,
+              "n": 200,
+              "rate": 0.21,
+              "reached_level": 40
+            }
+          ],
+          "absolute_gap_pp": 0.0,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        }
+      ],
+      "value_pairs": [
+        {
+          "level": 2,
+          "options": [
+            "departure_spirit",
+            "heavy_armor_lore"
+          ],
+          "n": 200,
+          "other_choices": {
+            "4": "unsinkable_shield",
+            "6": "adversity_flame",
+            "8": "sword_saint"
+          },
+          "absolute_gap_pp": 5.0,
+          "a": 0.16,
+          "b": 0.21,
+          "b_minus_a": 0.05,
+          "ci95": [
+            -0.011746604895171375,
+            0.11174660489517138
+          ],
+          "paired_discordant": 40,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        },
+        {
+          "level": 4,
+          "options": [
+            "departure_spirit",
+            "unsinkable_shield"
+          ],
+          "n": 200,
+          "other_choices": {
+            "2": "heavy_armor_lore",
+            "6": "adversity_flame",
+            "8": "sword_saint"
+          },
+          "absolute_gap_pp": 2.0,
+          "a": 0.19,
+          "b": 0.21,
+          "b_minus_a": 0.02,
+          "ci95": [
+            0.000548299734571267,
+            0.039451700265428734
+          ],
+          "paired_discordant": 4,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        },
+        {
+          "level": 6,
+          "options": [
+            "sword_followup",
+            "adversity_flame"
+          ],
+          "n": 200,
+          "other_choices": {
+            "2": "heavy_armor_lore",
+            "4": "unsinkable_shield",
+            "8": "sword_saint"
+          },
+          "absolute_gap_pp": 1.0,
+          "a": 0.2,
+          "b": 0.21,
+          "b_minus_a": 0.01,
+          "ci95": [
+            -0.0038244267103322103,
+            0.023824426710332212
+          ],
+          "paired_discordant": 2,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        },
+        {
+          "level": 8,
+          "options": [
+            "sword_saint",
+            "dragon_destiny"
+          ],
+          "n": 200,
+          "other_choices": {
+            "2": "heavy_armor_lore",
+            "4": "unsinkable_shield",
+            "6": "adversity_flame"
+          },
+          "absolute_gap_pp": 0,
+          "a": 0.21,
+          "b": 0.21,
+          "b_minus_a": 0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "paired_discordant": 0,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        }
+      ]
+    },
+    "cleric": {
+      "choices": {
+        "2": "overflow_mercy",
+        "4": "pious_heart",
+        "6": "holy_halo",
+        "8": "immortal_sanctuary"
+      },
+      "evidence": [
+        {
+          "level": 2,
+          "selected": "overflow_mercy",
+          "comparisons": [
+            {
+              "option": "pious_heart",
+              "wins": 7,
+              "n": 200,
+              "rate": 0.035,
+              "reached_level": 199
+            },
+            {
+              "option": "overflow_mercy",
+              "wins": 13,
+              "n": 200,
+              "rate": 0.065,
+              "reached_level": 199
+            }
+          ],
+          "absolute_gap_pp": 3.0,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        },
+        {
+          "level": 4,
+          "selected": "pious_heart",
+          "comparisons": [
+            {
+              "option": "pious_heart",
+              "wins": 13,
+              "n": 200,
+              "rate": 0.065,
+              "reached_level": 17
+            },
+            {
+              "option": "ascetic_wisdom",
+              "wins": 12,
+              "n": 200,
+              "rate": 0.06,
+              "reached_level": 17
+            }
+          ],
+          "absolute_gap_pp": 0.5000000000000004,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        },
+        {
+          "level": 6,
+          "selected": "holy_halo",
+          "comparisons": [
+            {
+              "option": "overflow_mercy",
+              "wins": 13,
+              "n": 200,
+              "rate": 0.065,
+              "reached_level": 16
+            },
+            {
+              "option": "holy_halo",
+              "wins": 16,
+              "n": 200,
+              "rate": 0.08,
+              "reached_level": 16
+            }
+          ],
+          "absolute_gap_pp": 1.5,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        },
+        {
+          "level": 8,
+          "selected": "immortal_sanctuary",
+          "comparisons": [
+            {
+              "option": "immortal_sanctuary",
+              "wins": 16,
+              "n": 200,
+              "rate": 0.08,
+              "reached_level": 15
+            },
+            {
+              "option": "pious_heart",
+              "wins": 16,
+              "n": 200,
+              "rate": 0.08,
+              "reached_level": 15
+            }
+          ],
+          "absolute_gap_pp": 0.0,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        }
+      ],
+      "value_pairs": [
+        {
+          "level": 2,
+          "options": [
+            "pious_heart",
+            "overflow_mercy"
+          ],
+          "n": 200,
+          "other_choices": {
+            "4": "pious_heart",
+            "6": "holy_halo",
+            "8": "immortal_sanctuary"
+          },
+          "absolute_gap_pp": 4.5,
+          "a": 0.035,
+          "b": 0.08,
+          "b_minus_a": 0.045,
+          "ci95": [
+            0.004977596726094824,
+            0.08502240327390517
+          ],
+          "paired_discordant": 17,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        },
+        {
+          "level": 4,
+          "options": [
+            "pious_heart",
+            "ascetic_wisdom"
+          ],
+          "n": 200,
+          "other_choices": {
+            "2": "overflow_mercy",
+            "6": "holy_halo",
+            "8": "immortal_sanctuary"
+          },
+          "absolute_gap_pp": 0.5,
+          "a": 0.08,
+          "b": 0.075,
+          "b_minus_a": -0.005,
+          "ci95": [
+            -0.0148,
+            0.0048
+          ],
+          "paired_discordant": 1,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        },
+        {
+          "level": 6,
+          "options": [
+            "overflow_mercy",
+            "holy_halo"
+          ],
+          "n": 200,
+          "other_choices": {
+            "2": "overflow_mercy",
+            "4": "pious_heart",
+            "8": "immortal_sanctuary"
+          },
+          "absolute_gap_pp": 1.5,
+          "a": 0.065,
+          "b": 0.08,
+          "b_minus_a": 0.015,
+          "ci95": [
+            -0.0018885855419582195,
+            0.03188858554195822
+          ],
+          "paired_discordant": 3,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        },
+        {
+          "level": 8,
+          "options": [
+            "immortal_sanctuary",
+            "pious_heart"
+          ],
+          "n": 200,
+          "other_choices": {
+            "2": "overflow_mercy",
+            "4": "pious_heart",
+            "6": "holy_halo"
+          },
+          "absolute_gap_pp": 0,
+          "a": 0.08,
+          "b": 0.08,
+          "b_minus_a": 0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "paired_discordant": 0,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        }
+      ]
+    },
+    "mage": {
+      "choices": {
+        "2": "arcane_guard",
+        "4": "element_resonance",
+        "6": "arcane_guard",
+        "8": "omni_master"
+      },
+      "evidence": [
+        {
+          "level": 2,
+          "selected": "arcane_guard",
+          "comparisons": [
+            {
+              "option": "mana_cycle",
+              "wins": 1,
+              "n": 200,
+              "rate": 0.005,
+              "reached_level": 194
+            },
+            {
+              "option": "arcane_guard",
+              "wins": 11,
+              "n": 200,
+              "rate": 0.055,
+              "reached_level": 194
+            }
+          ],
+          "absolute_gap_pp": 5.0,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        },
+        {
+          "level": 4,
+          "selected": "element_resonance",
+          "comparisons": [
+            {
+              "option": "element_resonance",
+              "wins": 11,
+              "n": 200,
+              "rate": 0.055,
+              "reached_level": 22
+            },
+            {
+              "option": "mana_cycle",
+              "wins": 11,
+              "n": 200,
+              "rate": 0.055,
+              "reached_level": 22
+            }
+          ],
+          "absolute_gap_pp": 0.0,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        },
+        {
+          "level": 6,
+          "selected": "arcane_guard",
+          "comparisons": [
+            {
+              "option": "mana_armor",
+              "wins": 11,
+              "n": 200,
+              "rate": 0.055,
+              "reached_level": 15
+            },
+            {
+              "option": "arcane_guard",
+              "wins": 14,
+              "n": 200,
+              "rate": 0.07,
+              "reached_level": 15
+            }
+          ],
+          "absolute_gap_pp": 1.5000000000000007,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        },
+        {
+          "level": 8,
+          "selected": "omni_master",
+          "comparisons": [
+            {
+              "option": "omni_master",
+              "wins": 14,
+              "n": 200,
+              "rate": 0.07,
+              "reached_level": 14
+            },
+            {
+              "option": "mana_cycle",
+              "wins": 14,
+              "n": 200,
+              "rate": 0.07,
+              "reached_level": 14
+            }
+          ],
+          "absolute_gap_pp": 0.0,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        }
+      ],
+      "value_pairs": [
+        {
+          "level": 2,
+          "options": [
+            "mana_cycle",
+            "arcane_guard"
+          ],
+          "n": 200,
+          "other_choices": {
+            "4": "element_resonance",
+            "6": "arcane_guard",
+            "8": "omni_master"
+          },
+          "absolute_gap_pp": 6.5,
+          "a": 0.005,
+          "b": 0.07,
+          "b_minus_a": 0.065,
+          "ci95": [
+            0.030747520355322522,
+            0.09925247964467748
+          ],
+          "paired_discordant": 13,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        },
+        {
+          "level": 4,
+          "options": [
+            "element_resonance",
+            "mana_cycle"
+          ],
+          "n": 200,
+          "other_choices": {
+            "2": "arcane_guard",
+            "6": "arcane_guard",
+            "8": "omni_master"
+          },
+          "absolute_gap_pp": 1.0,
+          "a": 0.07,
+          "b": 0.06,
+          "b_minus_a": -0.01,
+          "ci95": [
+            -0.0296,
+            0.0096
+          ],
+          "paired_discordant": 4,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        },
+        {
+          "level": 6,
+          "options": [
+            "mana_armor",
+            "arcane_guard"
+          ],
+          "n": 200,
+          "other_choices": {
+            "2": "arcane_guard",
+            "4": "element_resonance",
+            "8": "omni_master"
+          },
+          "absolute_gap_pp": 1.5,
+          "a": 0.055,
+          "b": 0.07,
+          "b_minus_a": 0.015,
+          "ci95": [
+            -0.006869374653581055,
+            0.036869374653581054
+          ],
+          "paired_discordant": 5,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        },
+        {
+          "level": 8,
+          "options": [
+            "omni_master",
+            "mana_cycle"
+          ],
+          "n": 200,
+          "other_choices": {
+            "2": "arcane_guard",
+            "4": "element_resonance",
+            "6": "arcane_guard"
+          },
+          "absolute_gap_pp": 0,
+          "a": 0.07,
+          "b": 0.07,
+          "b_minus_a": 0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "paired_discordant": 0,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        }
+      ]
+    },
+    "thief": {
+      "choices": {
+        "2": "acrobatics",
+        "4": "hidden_weapon_master",
+        "6": "counter_sight",
+        "8": "unseen_assassin"
+      },
+      "evidence": [
+        {
+          "level": 2,
+          "selected": "acrobatics",
+          "comparisons": [
+            {
+              "option": "acrobatics",
+              "wins": 87,
+              "n": 200,
+              "rate": 0.435,
+              "reached_level": 193
+            },
+            {
+              "option": "poison_craft",
+              "wins": 24,
+              "n": 200,
+              "rate": 0.12,
+              "reached_level": 193
+            }
+          ],
+          "absolute_gap_pp": 31.5,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        },
+        {
+          "level": 4,
+          "selected": "hidden_weapon_master",
+          "comparisons": [
+            {
+              "option": "hidden_weapon_master",
+              "wins": 87,
+              "n": 200,
+              "rate": 0.435,
+              "reached_level": 101
+            },
+            {
+              "option": "acrobatics",
+              "wins": 86,
+              "n": 200,
+              "rate": 0.43,
+              "reached_level": 101
+            }
+          ],
+          "absolute_gap_pp": 0.5000000000000004,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        },
+        {
+          "level": 6,
+          "selected": "counter_sight",
+          "comparisons": [
+            {
+              "option": "counter_sight",
+              "wins": 87,
+              "n": 200,
+              "rate": 0.435,
+              "reached_level": 94
+            },
+            {
+              "option": "poison_craft",
+              "wins": 81,
+              "n": 200,
+              "rate": 0.405,
+              "reached_level": 94
+            }
+          ],
+          "absolute_gap_pp": 2.9999999999999973,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        },
+        {
+          "level": 8,
+          "selected": "unseen_assassin",
+          "comparisons": [
+            {
+              "option": "unseen_assassin",
+              "wins": 87,
+              "n": 200,
+              "rate": 0.435,
+              "reached_level": 85
+            },
+            {
+              "option": "acrobatics",
+              "wins": 87,
+              "n": 200,
+              "rate": 0.435,
+              "reached_level": 85
+            }
+          ],
+          "absolute_gap_pp": 0.0,
+          "rule": "previous choices fixed; later choices A; tie A; P2 route Ignis success"
+        }
+      ],
+      "value_pairs": [
+        {
+          "level": 2,
+          "options": [
+            "acrobatics",
+            "poison_craft"
+          ],
+          "n": 200,
+          "other_choices": {
+            "4": "hidden_weapon_master",
+            "6": "counter_sight",
+            "8": "unseen_assassin"
+          },
+          "absolute_gap_pp": 31.5,
+          "a": 0.435,
+          "b": 0.12,
+          "b_minus_a": -0.315,
+          "ci95": [
+            -0.38796372196933276,
+            -0.24203627803066724
+          ],
+          "paired_discordant": 75,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        },
+        {
+          "level": 4,
+          "options": [
+            "hidden_weapon_master",
+            "acrobatics"
+          ],
+          "n": 200,
+          "other_choices": {
+            "2": "acrobatics",
+            "6": "counter_sight",
+            "8": "unseen_assassin"
+          },
+          "absolute_gap_pp": 0.5,
+          "a": 0.435,
+          "b": 0.43,
+          "b_minus_a": -0.005,
+          "ci95": [
+            -0.045501874142380445,
+            0.03550187414238045
+          ],
+          "paired_discordant": 17,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        },
+        {
+          "level": 6,
+          "options": [
+            "counter_sight",
+            "poison_craft"
+          ],
+          "n": 200,
+          "other_choices": {
+            "2": "acrobatics",
+            "4": "hidden_weapon_master",
+            "8": "unseen_assassin"
+          },
+          "absolute_gap_pp": 3.0,
+          "a": 0.435,
+          "b": 0.405,
+          "b_minus_a": -0.03,
+          "ci95": [
+            -0.06907669047774476,
+            0.009076690477744752
+          ],
+          "paired_discordant": 16,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        },
+        {
+          "level": 8,
+          "options": [
+            "unseen_assassin",
+            "acrobatics"
+          ],
+          "n": 200,
+          "other_choices": {
+            "2": "acrobatics",
+            "4": "hidden_weapon_master",
+            "6": "counter_sight"
+          },
+          "absolute_gap_pp": 0,
+          "a": 0.435,
+          "b": 0.435,
+          "b_minus_a": 0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "paired_discordant": 0,
+          "ci_method": "paired difference normal approximation; n=1 uninformative"
+        }
+      ]
+    }
+  }
+}

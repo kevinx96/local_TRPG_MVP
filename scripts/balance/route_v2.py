@@ -17,14 +17,15 @@ from statistics import mean, median
 from typing import Any, Optional
 from unittest.mock import patch
 
-from host import combat, state
+from host import combat, state, progression
 from host.shops import trade
+from host import shops
 from . import budget, checkpoints, class_aware, route, sim
 from .archetypes import (ARCHETYPES, CHARACTERS, COMPLETION_TITLE, IGNIS_FLAGS,
                          MAINLINE_NODES, TERMINAL_LOCATION, Archetype,
-                         LevelModel, MilestoneLevelModel, PassivePicker)
+                         LevelModel, MilestoneLevelModel, ExpLevelModel, PassivePicker)
 
-DEFAULT_OUTPUT = checkpoints.ROOT / "eval/reports/046-measurement-v2-baseline.json"
+DEFAULT_OUTPUT = checkpoints.ROOT / ".tmp-test/053/053-route-v3.json"
 BERSERKER = checkpoints.ROOT / "eval/balance/checkpoints_berserker.json"
 SUPPORTED_ARCHETYPES = tuple(ARCHETYPES)
 
@@ -105,7 +106,11 @@ def sustain(session: dict[str, Any]) -> float:
 
 
 def fight(session: dict[str, Any], policy: str, rng: random.Random, *, purify: bool = False,
-          recovery_threshold: float = .30) -> dict[str, Any]:
+          recovery_threshold: float = .30, instrument: bool = True) -> dict[str, Any]:
+    if session.get("difficulty") == "normal":
+        from .battle_v3 import fight as measured_fight, fast_fight
+        normal_fight = measured_fight if instrument else fast_fight
+        return normal_fight(session, policy, rng, purify=purify, recovery_threshold=recovery_threshold)
     location, before = state.current_location_id(session), resources(session)
     opening: dict[str, Any] = {}
     expected_healing = 0.0
@@ -172,14 +177,28 @@ class MeasurementRun(class_aware.Run):
     """Run's authored mainline/fort/cave macros, with observable deterministic engine calls."""
 
     def __init__(self, pack: dict[str, Any], character: str, seed: int, archetype: Archetype,
-                 *, level_model: Optional[LevelModel] = None):
+                 *, level_model: Optional[LevelModel] = None, difficulty: str = "baby",
+                 spring: str = "current", passive_table: Optional[dict[str, str]] = None,
+                 branches: Optional[dict[str, str]] = None, effective: bool = False, measure: bool = True):
         super().__init__(pack, [], character, seed, quests=archetype.sidequests, decisions="class_aware",
                          policy=archetype.combat_policy, rest_policy="none",
-                         evaluator=object())
+                         evaluator=object(), difficulty=difficulty, effective=effective)
+        self.spring = spring
+        self.measure = measure
+        self.branches = branches or {}
+        if difficulty == "normal" and archetype.id in {"P1", "P2", "P3", "P2s"}:
+            self.policy = "heuristic_v3"
         self.archetype = archetype
-        self.level_model = level_model or MilestoneLevelModel()
-        self.passive_picker = PassivePicker(archetype.passive_mode)
+        self.level_model = level_model or (ExpLevelModel() if difficulty == "normal" else MilestoneLevelModel())
+        self.passive_picker = PassivePicker(archetype.passive_mode, passive_table)
         self.levels: dict[str, int] = {}
+        self.exp_nodes: dict[str, Any] = {}
+        self.snapshots: dict[str, Any] = {}
+        self.level_costs: list[dict[str, Any]] = []
+        self.last_level_resource = (self.session["character"].get("level", 1), class_aware.resource_score(self.session))
+        self.scrolls: list[dict[str, Any]] = []
+        self.cleared_spells: list[str] = []
+        self.spring_visits = 0
         self.steps: list[dict[str, Any]] = []
         self.boss_arrivals: dict[str, Any] = {}
         self.optional_count = self.spring_rests = 0
@@ -195,15 +214,34 @@ class MeasurementRun(class_aware.Run):
     def record_node(self) -> None:
         if self.location in MAINLINE_NODES and self.location not in self.levels:
             self.levels[self.location] = self.level_model.observe(self.session, self.location)
+            if isinstance(self.level_model, ExpLevelModel):
+                self.exp_nodes.setdefault(self.location, self.level_model.snapshot(self.session))
+
+    def choose_passives(self) -> None:
+        self.session = self.passive_picker.apply(self.session)
 
     def settle(self) -> None:
         while class_aware.combat_pending(self.session):
             encounter = combat._encounter_for_session(self.session, self.session["scenario_pack"])
+            if self.session.get("difficulty") == "normal" and self.measure:
+                from .snapshots_v3 import capture
+                self.snapshots.setdefault(self.location, capture(self.session))
+                self.exp_nodes.setdefault(self.location, self.level_model.snapshot(self.session))
+                self.levels.setdefault(self.location, self.level_model.observe(self.session, self.location))
             if encounter.get("encounter_class") == "boss":
                 self.boss_arrivals.setdefault(self.location, resources(self.session))
             battle = fight(self.session, self.policy, self.rng, purify="purification" in self.quests,
-                           recovery_threshold=self.archetype.recovery_threshold)
+                           recovery_threshold=self.archetype.recovery_threshold, instrument=self.measure)
             self.battles.append(battle)
+            self.choose_passives()
+            if self.session.get("difficulty") == "normal":
+                level = self.session["character"]["level"]
+                if level > self.last_level_resource[0]:
+                    score = class_aware.resource_score(self.session)
+                    self.level_costs.append({"from_level": self.last_level_resource[0], "to_level": level,
+                                             "resource_cost_per_level": (self.last_level_resource[1]-score)/(level-self.last_level_resource[0]),
+                                             "includes_level_refill_and_rewards": True})
+                    self.last_level_resource = (level, score)
             self.equip_acquired()
             self.record_node()
             if not battle["continue"]:
@@ -227,11 +265,15 @@ class MeasurementRun(class_aware.Run):
     def act(self, action_id: str, *, settle: bool = True) -> None:
         before = resources(self.session)
         source = self.location
+        spells_before = set(self.session["character"].get("learned_spells", []))
         available = class_aware.available_actions(self.session)
         selected = available.get(action_id)
-        if selected and selected.get("roll") and state.action_failure_risk(selected, self.session).get("crucial"):
+        if self.measure and selected and selected.get("roll") and state.action_failure_risk(selected, self.session).get("crucial"):
             self.probe_check(selected)
         action = class_aware.act(self.session, action_id, self.rng)
+        self.cleared_spells.extend(sorted(spells_before-set(self.session["character"].get("learned_spells", []))))
+        if not self.session.get("combat"):
+            self.choose_passives()
         self.equip_acquired()
         after = resources(self.session)
         self.equipment_changes += before["equipment"] != after["equipment"]
@@ -258,10 +300,15 @@ class MeasurementRun(class_aware.Run):
                 # No criticals: measure the two ordinary authored effects.
                 state.apply_action_result(copy, action, {"dc": dc, "success": label == "success",
                                                         "outcome": label})
+                if copy.get("difficulty") == "normal" and not copy.get("combat"):
+                    copy = self.passive_picker.apply(copy)
                 for _ in range(12):
                     if not class_aware.combat_pending(copy):
                         break
-                    if not fight(copy, self.policy, rng, purify="purification" in self.quests)["continue"]:
+                    result = fight(copy, self.policy, rng, purify="purification" in self.quests)
+                    if copy.get("difficulty") == "normal":
+                        copy = self.passive_picker.apply(copy)
+                    if not result["continue"]:
                         break
             values[label] = class_aware.resource_score(copy)
         self.check_probes.append({"action": action["id"], "location": self.location, **values,
@@ -317,6 +364,18 @@ class MeasurementRun(class_aware.Run):
         identifier, cost = route.REST_ACTIONS[location]
         if cost:
             return
+        if location == "elf_spring" and self.spring == "current":
+            self.spring_visits += 1
+            mode = self.archetype.spring_rest
+            if self.spring_rests or mode == "never" or mode == "last_visit_once" and not getattr(self, "spring_last_visit", False):
+                return
+            if mode == "first_hp70" and (self.spring_visits > 1 or self.session["character"]["hp"] >= self.session["character"]["max_hp"] * .70):
+                return
+            before = resources(self.session)
+            if self.try_act(identifier):
+                self.spring_rests += 1
+                self.rests.append({"location": location, "action": identifier, "cost": 0, "before": before, "after": resources(self.session)})
+            return
         # Spring is unlimited in the scenario; partial hot-spring recovery may
         # need two visits, but full HP immediately stops this rule.
         while self.location == location and self.session["character"]["hp"] < self.session["character"]["max_hp"] * .70:
@@ -342,7 +401,20 @@ class MeasurementRun(class_aware.Run):
     def hook(self, phase: str) -> None:
         for quest in self.archetype.sidequests:
             for identifier in QUEST_STEPS.get(quest, {}).get(phase, ()):
+                if self.session.get("difficulty") == "normal" and quest == "mina" and identifier == "escort_mina" and self.location == "cave_fork":
+                    self.act("cave_right")
+                if self.session.get("difficulty") == "normal" and quest == "fire_seed" and identifier == "accept_xanxus_fire_seed" and self.branches.get("fire_seed") == "refuse":
+                    identifier = "refuse_xanxus_with_rescue"
+                    if self.location == "xanxus_ultimatum" and identifier not in class_aware.available_actions(self.session):
+                        identifier = "refuse_xanxus_without_rescue"
+                if self.session.get("difficulty") == "normal" and identifier == "accept_robin_goblin_quest":
+                    # Accepting teleports directly into the fort; handle it in the route macro.
+                    continue
                 self.quest_attempts.append({"quest": quest, "action": identifier, "available": self.try_act(identifier)})
+        if self.session.get("difficulty") == "normal" and phase == "spring" and "sarah" in self.quests:
+            from host.free_actions import adjudicate
+            if not self.session["flags"].get("sarah_moss_done"):
+                adjudicate(self.session, dict(kind="interact", operation="observe", target_id="glowing_moss_patch", item_id="", action_id="", advance=False, approach="観察する", reply=""))
 
     def shop_here(self) -> None:
         if self.archetype.shopping_rule == "all_shops":
@@ -351,16 +423,46 @@ class MeasurementRun(class_aware.Run):
                     # Unlimited stock is not an instruction to buy forever.
                     # One of each listing per shop per playthrough is the proposal.
                     for listing in shop["items"]:
+                        if listing["item_id"].startswith("spellbook_"):
+                            continue
                         if not any(p["shop"] == shop["id"] and p["item"] == listing["item_id"] for p in self.purchases):
                             self.buy(shop["id"], listing["item_id"])
         elif self.archetype.shopping_rule == "preparations":
             for shop, item in (("forge_shop", "adamantite_armor"), ("sarah_shop", "holy_water")):
                 if not any(p["shop"] == shop and p["item"] == item for p in self.purchases):
                     self.buy(shop, item)
+        self.buy_scrolls()
+
+    def buy_scrolls(self) -> None:
+        if self.session.get("difficulty") != "normal" or self.session["character"]["character_id"] != "mage" or self.archetype.id not in {"P1", "P2", "P3", "P2s"} or self.location != "magic_shop":
+            return
+        for identifier in ("spellbook_lightning", "spellbook_arcane_lance"):
+            item = next(i for i in self.session["scenario_pack"]["items"] if i["id"] == identifier)
+            if any(s["id"] == item["learn_skill"]["id"] for s in self.session["character"]["skills"]) or any(s["item"] == identifier for s in self.scrolls):
+                continue
+            if self.buy("magic_shop", identifier):
+                self.session = progression.learn_spell(self.session, identifier)
+                self.scrolls.append({"item": identifier, "skill": item["learn_skill"]["id"], "location": self.location,
+                                     "level": self.session["character"]["level"], "before_encounter": self.battles[-1]["encounter"] if self.battles else None,
+                                     "after_battles": len(self.battles)})
+
+    def visit_scroll_shop(self) -> None:
+        if self.session.get("difficulty") != "normal" or self.session["character"]["character_id"] != "mage" or self.archetype.id not in {"P1", "P2", "P3", "P2s"}:
+            return
+        shop = next(s for s in self.session["scenario_pack"]["shops"] if s["id"] == "magic_shop")
+        purchased = {s["item"] for s in self.scrolls}
+        stock = self.session.get("shop_stock", {}).get("magic_shop", {})
+        eligible = [offer for offer in shop["items"] if offer["item_id"].startswith("spellbook_")
+                    and offer["item_id"] not in purchased and stock.get(offer["item_id"], offer.get("stock")) != 0
+                    and self.session["character"]["gold"] >= shops._price(self.session, shop, offer)]
+        if eligible and self.try_act("go_magic_shop"):
+            self.buy_scrolls()
+            self.act("return_castle_from_magic_shop")
 
     def play(self) -> None:
         checkpoints.replay_step(self.session, "@opening")
         self.initial = resources(self.session)
+        self.last_level_resource = (self.session["character"].get("level", 1), class_aware.resource_score(self.session))
         if "ask_king_info" in self.archetype.optional_interactions:
             self.act("ask_king_info")
             self.optional_count += 1
@@ -377,11 +479,27 @@ class MeasurementRun(class_aware.Run):
             self.act("return_castle_from_item_shop")
         if self.quests & {"preparations", "purification", "town_errands", "mina"}:
             self.town_shops()
+        else:
+            self.visit_scroll_shop()
         # Reuse the existing continuous route; the prelude has already run.
         self.run_mainline()
 
     def run_mainline(self) -> None:
         # Run.play's final fight uses route.fight; the overridden act/settle records it here instead.
+        if self.session.get("difficulty") == "normal" and "robin" in self.quests:
+            self.act("go_inn")
+            self.try_act("invite_robin")
+            if self.try_act("accept_robin_goblin_quest"):
+                self.fort()
+                self.act("crossroads_forward")
+            else:
+                self.act("return_castle_from_inn")
+                self.start_forest()
+        else:
+            self.start_forest()
+        self.forest_and_beyond()
+
+    def start_forest(self) -> None:
         self.act("go_dark_forest")
         self.act("attack_slime")
         if "fort" in self.quests:
@@ -391,14 +509,21 @@ class MeasurementRun(class_aware.Run):
             self.act("crossroads_forward")
         else:
             self.decide("lost_goblin_crossroads")
+
+    def forest_and_beyond(self) -> None:
         self.rest_point()
+        if self.location == "forest_wolves" and self.quests & {"cave_full", "purification"}:
+            self.act("wolves_back")
         self.hook("spring")
         if "cave_full" in self.quests:
             self.cave()
+        self.spring_last_visit = True
+        if self.spring == "current" or "cave_full" in self.quests:
             self.rest_point()
         if self.archetype.grind:
             self.grind_repeatable()
-        self.act("continue_from_elf_spring")
+        if self.location == "elf_spring":
+            self.act("continue_from_elf_spring")
         self.decide("forest_wolves")
         if self.quests & {"town_errands", "purification"}:
             self.act("return_inn_after_forest")
@@ -413,7 +538,10 @@ class MeasurementRun(class_aware.Run):
             character = self.session["character"]["character_id"]
             self.try_act("hear_curse_offer_" + character)
             self.try_act("accept_curse_offer_" + character)
-            self.act("betray_cursed_merchant")
+            if self.session.get("difficulty") == "normal" and self.branches.get("merchant") == "pay":
+                self.try_act("pay_curse_price_" + character)
+            else:
+                self.act("betray_cursed_merchant")
             self.act("return_castle_after_curse")
             self.act("return_forest_exit")
         self.act("leave_forest_for_village")
@@ -421,6 +549,8 @@ class MeasurementRun(class_aware.Run):
         self.decide("burning_house")
         self.act("visit_village")
         self.try_act("return_riku") if "riku" in self.quests else None
+        if self.session.get("difficulty") == "normal" and "gald" in self.quests:
+            self.try_act("open_gald_shop")
         self.hook("village")
         self.shop_here()
         self.act("return_frozen_clue")
@@ -453,6 +583,7 @@ class MeasurementRun(class_aware.Run):
             self.act("leave_mansion_study")
         if "town_errands" in self.quests:
             self.town_shops(returning=True)
+        self.visit_scroll_shop()
         self.act("go_report_hall")
         # Ordinary players do not automatically expose Draco just because a clue exists.
         if "purification" in self.quests and "report_with_evidence" in class_aware.available_actions(self.session):
@@ -573,7 +704,7 @@ class MeasurementRun(class_aware.Run):
         # it or resting cannot respawn enemies. Do not clear flags to invent EXP.
         self.grinding = {"repeatable_encounters": [], "fights": 0, "levels_gained": 0,
                          "resource_cost_per_level": None, "status": "not_applicable",
-                         "reason": "待 050/051：当前无可重复获益战斗，也没有战斗 EXP；不重置 defeated flags。"}
+                         "reason": "当前无可重复获益战斗；不重置 defeated flags。normal 使用 P0b 升级间净资源差估计。"}
 
     def result(self, failed_at: Optional[str]) -> dict[str, Any]:
         ending = self.session.get("game_over") or {}
@@ -590,19 +721,24 @@ class MeasurementRun(class_aware.Run):
                 "healing_item_names": [i["name"] for i in self.session["scenario_pack"].get("items", [])
                                        if combat.item_combat_spec(i).get("kind") == "heal"],
                 "quest_attempts": self.quest_attempts, "check_probes": self.check_probes,
-                "passives": self.passive_picker.pick([]), "final": final,
+                "passives": self.session["character"].get("passive_history", []), "final": final,
+                "exp_nodes": self.exp_nodes, "snapshots": self.snapshots, "level_costs": self.level_costs,
+                "scrolls": [{**s, "uses": sum(b.get("skill_usage", {}).get(s["skill"], {}).get("uses", 0) for b in self.battles[s["after_battles"]:])} for s in self.scrolls],
+                "cleared_spells": self.cleared_spells,
                 "grinding": getattr(self, "grinding", {"status": "not_applicable", "reason": "待 050/051：无战斗 EXP。"}) if self.archetype.grind else None}
 
 
-def trial(pack: dict[str, Any], character: str, seed: int, archetype: Archetype) -> dict[str, Any]:
-    run = MeasurementRun(pack, character, seed, archetype)
+def trial(pack: dict[str, Any], character: str, seed: int, archetype: Archetype, **kwargs: Any) -> dict[str, Any]:
+    from .snapshots_v3 import ExpObserver
+    run = MeasurementRun(pack, character, seed, archetype, **kwargs)
     failed = None
-    with patch.object(combat, "random", run.rng), patch.object(state, "random", run.rng):
+    with patch.object(combat, "random", run.rng), patch.object(state, "random", run.rng), ExpObserver():
         try:
             run.play()
         except class_aware.Defeat as error:
             failed = error.location
     result = run.result(failed)
+    result["difficulty"] = run.session.get("difficulty", "baby")
     result["seed"] = seed
     return result
 
@@ -627,30 +763,69 @@ def summarize(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 def _job(job: tuple) -> list[dict[str, Any]]:
     if str(job[0]).endswith("_probes"):
+        if str(job[0]).startswith("normal_") or job[0] == "enumerate_probes":
+            from . import probes_v3
+            return probes_v3.run_job(job)
         from . import probes_v2
         return probes_v2.run_job(job)
-    path, archetype, character, n, seed = job
+    path, archetype, character, n, seed, *options = job
+    settings = options[0] if options else {}
+    difficulty, spring = settings.get("difficulty", "baby"), settings.get("spring", "current")
+    from .legacy_spring import select_spring
+    from host.difficulty import apply_difficulty
     pack = state.load_scenario_pack(Path(path))
+    pack = select_spring(apply_difficulty(pack, difficulty), spring)
     records = []
+    candidates: dict[str, dict[int, dict[str, Any]]] = {}
+    histograms: dict[str, Counter] = {}
     for index in range(n):
-        record = trial(pack, character, sim.trial_seed(seed, "route_v2", character, index), ARCHETYPES[archetype])
+        record = trial(pack, character, sim.trial_seed(seed, "route_v2", character, index), ARCHETYPES[archetype],
+                       difficulty=difficulty, spring=spring, effective=True,
+                       passive_table=settings.get("passive_table"), branches=settings.get("branches"), measure=settings.get("measure", True))
+        if settings.get("branch_proposal"):
+            record["branch_proposal"] = settings["branch_proposal"]
+        for encounter, snapshot in record.pop("snapshots", {}).items():
+            level = snapshot["character"]["level"]
+            candidates.setdefault(encounter, {}).setdefault(level, {"snapshot": snapshot, "seed": record["seed"], "trial_index": index})
+            histograms.setdefault(encounter, Counter())[level] += 1
         if index:
             # Keep one full audit trace per cell, the remaining records retain
             # every input used by the reducers without three inventory copies.
             record.pop("steps")
             record.pop("quest_attempts")
             for battle in record["battles"]:
-                battle.pop("after_combat")
-                battle.pop("after_resolution")
+                battle.pop("after_combat", None)
+                battle.pop("after_resolution", None)
                 battle["before"].pop("inventory")
                 battle["before"].pop("equipment")
         records.append(record)
+    if candidates:
+        records[0]["checkpoint_candidates"] = {}
+        for encounter, by_level in candidates.items():
+            values = list(histograms[encounter].elements())
+            middle = median(values)
+            level = min(by_level, key=lambda level: (abs(level-middle), by_level[level]["trial_index"]))
+            records[0]["checkpoint_candidates"][encounter] = {**by_level[level], "median_level": middle,
+                "arrival_count": len(values), "level_histogram": {str(level): count for level, count in sorted(histograms[encounter].items())}}
     return records
 
 
-def run_jobs(jobs: list[tuple], workers: int) -> list[dict[str, Any]]:
+def run_jobs(jobs: list[tuple], workers: int, *, difficulty: Optional[str] = None,
+             spring: Optional[str] = None) -> list[dict[str, Any]]:
     if workers < 1:
         raise ValueError("workers must be positive")
+    if difficulty is not None or spring is not None:
+        if difficulty is not None and difficulty not in {"baby", "normal"} or spring is not None and spring not in {"current", "legacy"}:
+            raise ValueError("Invalid measurement mode")
+        updated = []
+        for job in jobs:
+            settings = dict(job[5]) if len(job) > 5 else {}
+            if difficulty is not None:
+                settings["difficulty"] = difficulty
+            if spring is not None:
+                settings["spring"] = spring
+            updated.append((*job[:5], settings))
+        jobs = updated
     if workers == 1:
         batches = map(_job, jobs)
         return [record for batch in batches for record in batch]
@@ -664,7 +839,8 @@ def run_jobs(jobs: list[tuple], workers: int) -> list[dict[str, Any]]:
 
 
 def _file_workers(jobs: list[tuple], workers: int) -> list[dict[str, Any]]:
-    folder = checkpoints.ROOT / "eval/reports" / f"046-workers-{uuid.uuid4().hex}"
+    folder = checkpoints.ROOT / ".tmp-test/053" / f"workers-{uuid.uuid4().hex}"
+    folder.parent.mkdir(parents=True, exist_ok=True)
     folder.mkdir()
     try:
         def execute(index_job):
@@ -690,6 +866,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--n", type=int, default=500)
     parser.add_argument("--seed", type=int, default=20261020)
     parser.add_argument("--workers", type=int, default=1)
+    parser.add_argument("--difficulty", choices=("baby", "normal"), default="baby")
+    parser.add_argument("--spring", choices=("current", "legacy"), default="current")
     parser.add_argument("--scenario", type=Path, default=checkpoints.DEFAULT_SCENARIO)
     parser.add_argument("--archetypes", nargs="+", choices=SUPPORTED_ARCHETYPES, default=list(SUPPORTED_ARCHETYPES))
     parser.add_argument("--characters", nargs="+", choices=CHARACTERS, default=list(CHARACTERS))
@@ -706,8 +884,10 @@ def main(argv: Optional[list[str]] = None) -> int:
     if args.n < 1 or args.workers < 1:
         parser.error("n and workers must be positive")
     started = time.perf_counter()
-    records = run_jobs([(args.scenario, a, c, args.n, args.seed) for a in args.archetypes for c in args.characters], args.workers)
-    result = {"version": 2, "n": args.n, "seed": args.seed, "workers": args.workers,
+    settings = dict(difficulty=args.difficulty, spring=args.spring)
+    records = run_jobs([(args.scenario, a, c, args.n, args.seed, settings) for a in args.archetypes for c in args.characters], args.workers)
+    result = {"version": 3, "difficulty": args.difficulty, "spring": args.spring,
+              "n": args.n, "seed": args.seed, "workers": args.workers,
               "completion_definition": COMPLETION_TITLE, "rows": summarize(records), "records": records,
               "elapsed_seconds": time.perf_counter() - started,
               "scenario_sha256": hashlib.sha256(args.scenario.read_bytes()).hexdigest()}

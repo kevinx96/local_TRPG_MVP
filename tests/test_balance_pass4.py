@@ -52,7 +52,7 @@ class BalancePass4Tests(unittest.TestCase):
     def test_cli_passes_resource_check_switch(self):
         with patch.object(sim, "simulate", return_value={}), patch.object(sim, "check_results", return_value=[]) as check, patch("builtins.print"):
             for enabled in (False, True):
-                args = ["--check", "--n", "1", "--encounters", "forest_wolves", "--characters", "hero"]
+                args = ["--check", "--spring", "legacy", "--n", "1", "--encounters", "forest_wolves", "--characters", "hero"]
                 self.assertEqual(sim.main(args + (["--check-resource-metrics"] if enabled else [])), 0)
                 self.assertEqual(check.call_args.kwargs["check_resource_metrics"], enabled)
 

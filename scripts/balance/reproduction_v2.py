@@ -176,46 +176,8 @@ def markdown(result: dict[str, Any]) -> str:
 
 
 def main(argv: Optional[list[str]] = None) -> int:
-    parser = argparse.ArgumentParser(description="046 A.4 reproduction gate; stop on failure")
-    parser.add_argument("--n", type=int, default=500)
-    parser.add_argument("--seed", type=int, default=20261020)
-    parser.add_argument("--workers", type=int, default=1)
-    parser.add_argument("--output", type=Path, default=route_v2.DEFAULT_OUTPUT)
-    args = parser.parse_args(argv)
-    if args.n < 1 or args.workers < 1:
-        parser.error("n and workers must be positive")
-    started = time.perf_counter()
-    pack = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
-    cp = json.loads(checkpoints.DEFAULT_CHECKPOINTS.read_text(encoding="utf-8"))
-    data = berserker_checkpoints(pack)
-    route_v2.BERSERKER.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    records = route_v2.run_jobs([(checkpoints.DEFAULT_SCENARIO, a, c, args.n, args.seed)
-                                for a in ("P0a", "P0b") for c in ("hero", "cleric", "mage", "thief")], args.workers)
-    rows = route_v2.summarize(records)
-    profiles = checkpoint_trials(pack, data, args.n, args.seed)
-    threats = threat_scan(pack, cp)
-    checks = gates(rows, profiles, threats)
-    result = {"version": 2, "status": "reproduced" if all(g["pass"] for g in checks) else "stopped_at_reproduction_gate",
-              "source": SOURCE, "original_save_available": False, "seed": args.seed, "n": args.n, "workers": args.workers,
-              "rows": rows, "gates": checks, "checkpoint_probes": profiles, "threat_scan": threats,
-              "human_timeline": [dict(encounter=e, name=name, encounter_class=kind, rounds=r, hp=hp, max_hp=maximum)
-                                 for e, name, kind, r, hp, maximum in HUMAN_TIMELINE],
-              "archetypes": {key: value.to_dict() for key, value in ARCHETYPES.items()},
-              "samples": [next(t for t in records if t["archetype"] == row["archetype"] and t["character"] == row["character"]) for row in rows],
-              "findings": ["严格 P0b 的三项可选交互为：国王提示、购买氷の護符、尝试借火コウモリ竜；借用有真实判定，不强行成功（当前勇者判定成功概率55%）。",
-                           "accept_ian_request 作为直接主线路径行动执行，获得的氷鉄の大剣按 P0b 规则装备；P0a 保留初始配装。",
-                           "精霊の泉三次休息统一安排在首次到泉时；第一次触发三场スライム连战。该排程是推断，文档未给时间点。",
-                           "主线森林之前没有升级旗标，スライム王开战为 Lv1/20HP；试玩参照为30HP，需要额外成长或不同休息排程。",
-                           "强化火コウモリ竜和紅玉の護符需要洞窟；严格三次交互 P0b 不包含此链，不能把人类 checkpoint 当作路线原型。",
-                           "不补造第四种霊薬；恢复库存为文档通关后快照，只用于独立配置探针。"],
-              "fingerprints": {str(path.relative_to(checkpoints.ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
-                               for path in (checkpoints.DEFAULT_SCENARIO, checkpoints.DEFAULT_CHECKPOINTS)},
-              "elapsed_seconds": time.perf_counter() - started}
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    args.output.with_suffix(".md").write_text(markdown(result), encoding="utf-8")
-    print(json.dumps({"status": result["status"], "gates": checks, "elapsed_seconds": result["elapsed_seconds"]}, ensure_ascii=False, indent=2))
-    return int(not all(g["pass"] for g in checks))
+    from .measurement_v3 import main as measure
+    return measure(argv)
 
 
 if __name__ == "__main__":

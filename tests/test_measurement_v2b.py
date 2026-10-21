@@ -146,8 +146,8 @@ class MeasurementV2IntegrationTests(unittest.TestCase):
         cls.cp = json.loads(checkpoints.DEFAULT_CHECKPOINTS.read_text(encoding='utf-8'))
         cls.save = json.loads(save_telemetry.DEFAULT_SAVE.read_text(encoding='utf-8'))
 
-    def test_hp70_strict_free_rest_is_not_limited_to_three(self):
-        run = route_v2.MeasurementRun(self.pack, 'hero', 1, archetypes.P0B)
+    def test_legacy_hp70_strict_free_rest_is_not_limited_to_three(self):
+        run = route_v2.MeasurementRun(self.pack, 'hero', 1, archetypes.P0B, spring='legacy')
         run.session['scenario_pack'] = legacy_spring_balance_pack(run.session['scenario_pack'])
         run.session['world_state'] = {'scene_id': 'dark_forest', 'location_id': 'elf_spring'}
         run.session['flags']['defeated_slime_king'] = True
@@ -156,6 +156,29 @@ class MeasurementV2IntegrationTests(unittest.TestCase):
         for _ in range(4):
             actor['hp'] = 1; run.rest_point()
         self.assertEqual(len(run.rests), 4)
+
+
+    def test_three_spring_modes_once_and_wolves_back(self):
+        for mode, should_rest in [('first_hp70', True), ('last_visit_once', True), ('never', False)]:
+            run = route_v2.MeasurementRun(self.pack, 'hero', 3, replace(archetypes.P0B, spring_rest=mode))
+            run.session['world_state'] = {'scene_id': 'dark_forest', 'location_id': 'elf_spring'}
+            run.session['character']['max_hp'] = run.session['character']['hp'] = 500
+            if mode == 'first_hp70':
+                run.session['character']['hp'] = 200
+            run.spring_last_visit = mode == 'last_visit_once'
+            run.rest_point()
+            self.assertLessEqual(run.spring_rests, 1)
+            self.assertEqual(bool(run.spring_rests), should_rest)
+            if should_rest:
+                self.assertEqual(run.location, 'forest_wolves')
+                run.act('wolves_back')
+                self.assertEqual(run.location, 'elf_spring')
+                run.session['character']['hp'] = 1
+                run.rest_point()
+                self.assertEqual(run.spring_rests, 1)
+                run.act('continue_from_elf_spring')
+                run.decide('forest_wolves')
+                self.assertEqual(run.location, 'forest_exit')
 
     def test_parameters_and_grinding_preserve_engine_state(self):
         archetypes.validate()
