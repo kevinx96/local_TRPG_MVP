@@ -186,6 +186,7 @@ class MeasurementRun(class_aware.Run):
         self.spring = spring
         self.measure = measure
         self.branches = branches or {}
+        self.escort_audit: list[dict[str, Any]] = []
         if difficulty == "normal" and archetype.id in {"P1", "P2", "P3", "P2s"}:
             self.policy = "heuristic_v3"
         self.archetype = archetype
@@ -271,6 +272,12 @@ class MeasurementRun(class_aware.Run):
         if self.measure and selected and selected.get("roll") and state.action_failure_risk(selected, self.session).get("crucial"):
             self.probe_check(selected)
         action = class_aware.act(self.session, action_id, self.rng)
+        if self.session.get("difficulty") == "normal" and self.branches.get("escort_order") and action_id in {
+                "borrow_fire_bat_dragon", "borrow_fire_bat_dragon_again", "escort_mina", "report_mina_safe"}:
+            self.escort_audit.append({"action": action_id, "location": source,
+                                      "companion_after": (self.session.get("companion") or {}).get("id"),
+                                      "mina_quest_done": bool(self.session["flags"].get("mina_quest_done")),
+                                      "borrowed": bool(self.session["flags"].get("borrowed_fire_bat_dragon"))})
         self.cleared_spells.extend(sorted(spells_before-set(self.session["character"].get("learned_spells", []))))
         if not self.session.get("combat"):
             self.choose_passives()
@@ -471,7 +478,9 @@ class MeasurementRun(class_aware.Run):
         if self.archetype.shopping_rule != "none":
             self.act("go_item_shop")
             self.optional_count += int(self.buy("sarah_shop", "ice_charm"))
-            if self.archetype.companion_rule == "fire_bat_dragon":
+            if self.archetype.companion_rule == "fire_bat_dragon" and not (
+                    self.session.get("difficulty") == "normal" and self.archetype.id == "P3"
+                    and self.branches.get("escort_order") == "borrow_after_report"):
                 self.act("borrow_fire_bat_dragon")
                 self.optional_count += 1
             self.hook("opening")
@@ -578,9 +587,10 @@ class MeasurementRun(class_aware.Run):
             self.act("go_general_mansion")
             self.act("sneak_into_mansion")
             self.act("fight_ice_sentinels")
-            self.act("take_draco_journal")
-            self.try_act("open_scale_box")
-            self.act("leave_mansion_study")
+            if self.session.get("difficulty") != "normal" or self.location == "mansion_study":
+                self.act("take_draco_journal")
+                self.try_act("open_scale_box")
+                self.act("leave_mansion_study")
         if "town_errands" in self.quests:
             self.town_shops(returning=True)
         self.visit_scroll_shop()
@@ -597,16 +607,22 @@ class MeasurementRun(class_aware.Run):
         if self.location != "cave_heat_corridor":
             return
         self.decide("cave_heat_corridor")
+        if self.session.get("difficulty") == "normal" and self.location == "elf_spring":
+            return
         self.act("cave_left")
         if "hearth" in self.quests:
             self.try_act("pick_baked_lava_stone")
         self.act("open_lava_chest")
+        if self.session.get("difficulty") == "normal" and self.location == "elf_spring":
+            return
         self.act("lava_back")
         self.act("cave_right")
         self.rest_point()
         self.hook("hot_spring")
         self.act("hot_spring_forward")
         self.decide("cave_crystal_corridor")
+        if self.session.get("difficulty") == "normal" and self.location == "elf_spring":
+            return
         self.hook("after_tree")
         if self.location == "cave_prism_tree":
             self.act("leave_prism_tree")
@@ -637,6 +653,21 @@ class MeasurementRun(class_aware.Run):
                 self.try_act("ask_blacksmith_weakness")
             self.shop_here()
             self.act(back)
+        if (returning and self.session.get("difficulty") == "normal" and self.archetype.id == "P3"
+                and self.session["flags"].get("mina_quest_done")):
+            borrow = None
+            flags = self.session["flags"]
+            if self.branches.get("escort_order") == "borrow_after_report" and not flags.get("asked_to_borrow_fire_bat_dragon"):
+                borrow = "borrow_fire_bat_dragon"
+            elif (self.branches.get("escort_order") == "borrow_before_escort"
+                  and flags.get("borrowed_fire_bat_dragon") and not self.session.get("companion")
+                  and not flags.get("asked_to_borrow_fire_bat_dragon_again")):
+                borrow = "borrow_fire_bat_dragon_again"
+            if borrow:
+                self.act("go_item_shop")
+                if self.try_act(borrow):
+                    self.optional_count += 1
+                self.act("return_castle_from_item_shop")
         if self.quests & {"robin", "purification"} and not returning:
             self.act("go_inn")
             self.hook("inn")
@@ -710,6 +741,7 @@ class MeasurementRun(class_aware.Run):
         ending = self.session.get("game_over") or {}
         final = resources(self.session)
         return {"archetype": self.archetype.id, "character": self.session["character"]["character_id"],
+                **({"escort_audit": self.escort_audit} if self.session.get("difficulty") == "normal" and self.branches.get("escort_order") else {}),
                 "completed": ending.get("title") == COMPLETION_TITLE,
                 "ignis_defeated": any(self.session["flags"].get(flag) for flag in IGNIS_FLAGS),
                 "reached_terminal": TERMINAL_LOCATION in self.levels or bool(ending.get("ending")),

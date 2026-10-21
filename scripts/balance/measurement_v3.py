@@ -95,7 +95,8 @@ def stats(records):
 
 
 def markdown(result):
-    lines = [f"# 053 模拟器 v3：{result['difficulty']} / {result['spring']}（调参前）", "",
+    title = "052 normal 测量" if result.get("measurement_scope") == "052" else "053 模拟器 v3"
+    lines = [f"# {title}：{result['difficulty']} / {result['spring']}（调参前）", "",
              "主通关口径：冒険完了；终局含引擎失败结局。所有统计来自离线确定性引擎。", "",
              f"N={result['n']}，probe-n={result['probe_n']}，passive-n={result['passive_n']}，seed={result['seed']}。", "",
              "| 原型 | 职业 | 通关 | Ignis | 终局 | Ignis回合中位 | baby通关 | baby Ignis |", "|---|---|---:|---:|---:|---:|---:|---:|"]
@@ -135,16 +136,45 @@ def main(argv=None):
     parser.add_argument("--save", type=Path, default=save_telemetry.DEFAULT_SAVE)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--records-output", type=Path)
-    parser.add_argument("--checkpoint-output", type=Path, default=checkpoints.ROOT / "eval/balance/checkpoints_normal_053.json")
-    parser.add_argument("--passive-output", type=Path, default=checkpoints.ROOT / "eval/balance/passive_defaults.json")
+    parser.add_argument("--checkpoint-output", type=Path)
+    parser.add_argument("--passive-output", type=Path)
+    parser.add_argument("--passive-table", type=Path, help="Read-only frozen normal passive defaults")
+    parser.add_argument("--skip-passive-enumeration", action="store_true")
+    parser.add_argument("--skip-passive-probes", action="store_true")
+    parser.add_argument("--tuning-052", action="store_true", help="Normal-only corrected M9 and escort branch measurement")
     parser.add_argument("--baby-reference", type=Path)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args(argv)
+    if args.skip_passive_enumeration != bool(args.passive_table):
+        parser.error("--passive-table and --skip-passive-enumeration must be used together")
+    if args.difficulty != "normal" and (args.passive_table or args.tuning_052 or args.skip_passive_probes):
+        parser.error("052 options apply only to normal")
+    if args.tuning_052 and not args.passive_table:
+        parser.error("052a/b require a frozen --passive-table")
+    normal_output = args.output.parent if args.output else checkpoints.ROOT / ".tmp-test/052a"
+    args.checkpoint_output = args.checkpoint_output or normal_output / "checkpoints-normal.json"
+    args.passive_output = args.passive_output or normal_output / "passive-defaults.json"
+    if args.difficulty == "normal":
+        protected = {checkpoints.ROOT / "eval/balance/checkpoints_normal_053.json",
+                     checkpoints.ROOT / "eval/balance/passive_defaults.json"}
+        if args.checkpoint_output.resolve() in protected or (not args.passive_table and args.passive_output.resolve() in protected):
+            parser.error("053 checkpoints and passive defaults are frozen")
+    passive_digest = hashlib.sha256(args.passive_table.read_bytes()).hexdigest() if args.passive_table else None
     args.passive_n = args.passive_n or min(200, args.n)
     if min(args.n, args.probe_n, args.passive_n, args.workers) < 1:
         parser.error("sample sizes and workers must be positive")
     label = "baby-legacy" if args.difficulty == "baby" and args.spring == "legacy" else args.difficulty
-    args.output = args.output or OUTPUT_ROOT / f"053-measurement-v3-{label}.json"
+    args.output = args.output or (normal_output / "measurement-normal.json" if args.difficulty == "normal" else OUTPUT_ROOT / f"053-measurement-v3-{label}.json")
+    destinations = [args.output, args.output.with_suffix(".md"), args.records_output]
+    if args.difficulty == "normal":
+        destinations.append(args.checkpoint_output)
+        if not args.passive_table:
+            destinations.append(args.passive_output)
+        if any(path and path.resolve() in protected for path in destinations):
+            parser.error("Output paths cannot overwrite frozen 053 artifacts")
+    if args.passive_table:
+        if any(path and path.resolve() == args.passive_table.resolve() for path in destinations):
+            parser.error("Output paths cannot overwrite the read-only passive table")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     from .measurement_v2 import input_fingerprints, variant_comparison
     started = time.perf_counter()
@@ -165,37 +195,51 @@ def main(argv=None):
         return rows
 
     if args.difficulty == "normal":
-        enumeration = run_stage("passive_enumeration", [("enumerate_probes", args.scenario, c, args.passive_n, args.seed, {**settings, "choices": choices}) for c in CHARACTERS for choices in probes_v3.combinations(pack, c)])
-        defaults = probes_v3.choose_defaults(pack, enumeration)
-        args.passive_output.parent.mkdir(parents=True, exist_ok=True)
-        args.passive_output.write_text(json.dumps(defaults, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
-        branch_jobs = []
-        for character in CHARACTERS:
-            for fire_seed in ("accept", "refuse"):
-                for merchant in ("betray", "pay"):
-                    choice = dict(fire_seed=fire_seed, merchant=merchant)
-                    branch_jobs.append((args.scenario, "P3", character, args.passive_n, args.seed,
-                        {**settings, "passive_table": defaults["characters"][character]["choices"], "branches": choice,
-                         "branch_proposal": fire_seed+":"+merchant, "measure": False}))
-        branch_records = run_stage("branch_proposals", branch_jobs)
-        for character in CHARACTERS:
-            proposals = []
-            table = defaults["characters"][character]["choices"]
-            # Use the same start seeds for the four mutually exclusive branch proposals.
-            for fire_seed in ("accept", "refuse"):
-                for merchant in ("betray", "pay"):
-                    choice = dict(fire_seed=fire_seed, merchant=merchant)
-                    records = [r for r in branch_records if r["character"] == character and r["branch_proposal"] == fire_seed+":"+merchant]
-                    proposals.append({"choices": choice, "n": len(records), "ignis_rate": mean(t["ignis_defeated"] for t in records)})
-            best = max(proposals, key=lambda row: row["ignis_rate"])
-            branches[character] = {"status": "proposed", "selected": best["choices"], "evidence": proposals, "tie": "first listed: accept then betray"}
-        del branch_records
+        if args.passive_table:
+            defaults = json.loads(args.passive_table.read_text(encoding="utf-8"))
+            for character in CHARACTERS:
+                if defaults["characters"][character]["choices"] not in probes_v3.combinations(pack, character):
+                    raise ValueError(f"Invalid frozen passive choices: {character}")
+        else:
+            enumeration = run_stage("passive_enumeration", [("enumerate_probes", args.scenario, c, args.passive_n, args.seed, {**settings, "choices": choices}) for c in CHARACTERS for choices in probes_v3.combinations(pack, c)])
+            defaults = probes_v3.choose_defaults(pack, enumeration)
+            args.passive_output.parent.mkdir(parents=True, exist_ok=True)
+            args.passive_output.write_text(json.dumps(defaults, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+        if args.tuning_052:
+            from .normal_052 import escort_proposals
+            branches = escort_proposals(args, settings, defaults, run_stage)
+        else:
+            branch_jobs = []
+            for character in CHARACTERS:
+                for fire_seed in ("accept", "refuse"):
+                    for merchant in ("betray", "pay"):
+                        choice = dict(fire_seed=fire_seed, merchant=merchant)
+                        branch_jobs.append((args.scenario, "P3", character, args.passive_n, args.seed,
+                            {**settings, "passive_table": defaults["characters"][character]["choices"], "branches": choice,
+                             "branch_proposal": fire_seed+":"+merchant, "measure": False}))
+            branch_records = run_stage("branch_proposals", branch_jobs)
+            for character in CHARACTERS:
+                proposals = []
+                table = defaults["characters"][character]["choices"]
+                # Use the same start seeds for the four mutually exclusive branch proposals.
+                for fire_seed in ("accept", "refuse"):
+                    for merchant in ("betray", "pay"):
+                        choice = dict(fire_seed=fire_seed, merchant=merchant)
+                        records = [r for r in branch_records if r["character"] == character and r["branch_proposal"] == fire_seed+":"+merchant]
+                        proposals.append({"choices": choice, "n": len(records), "ignis_rate": mean(t["ignis_defeated"] for t in records)})
+                best = max(proposals, key=lambda row: row["ignis_rate"])
+                branches[character] = {"status": "proposed", "selected": best["choices"], "evidence": proposals, "tie": "first listed: accept then betray"}
+            del branch_records
     jobs = [(args.scenario, a, c, args.n, args.seed, {**settings,
              "passive_table": defaults.get("characters", {}).get(c, {}).get("choices", {}),
              "branches": branches.get(c, {}).get("selected", {})}) for a in ARCHETYPES for c in CHARACTERS]
     records = run_stage("routes", jobs)
     metadata = {"spring": args.spring, "effective_pack_fingerprint": digest(pack), "overlay_fingerprint": overlay_fingerprint(base),
                 "code_fingerprint": digest({k: v for k, v in fingerprints.items() if k.endswith(".py")}), "seed": args.seed, "seed_rule": probes_v3.SEED_RULE}
+    if args.passive_table:
+        metadata.update(passive_table_sha256=passive_digest, passive_table_mode="frozen_read_only")
+    if args.tuning_052:
+        metadata["measurement_scope"] = "052"
     bundle = {"records": records, "targets": targets, "difficulty": args.difficulty, "passive_defaults": defaults}
     if args.difficulty == "normal":
         cp = probes_v3.export_checkpoints(records, metadata)
@@ -209,17 +253,27 @@ def main(argv=None):
                 original = combat._apply_round_start_effects
                 def capture_opening(current, rng):
                     if not opening:
-                        opening.update(budget.phase_moments(current))
+                        if args.tuning_052:
+                            from .normal_052 import opening_moments
+                            opening.update(opening_moments(current))
+                        else:
+                            opening.update(budget.phase_moments(current))
                     return original(current, rng)
                 rng = random.Random(route_v2.sim.trial_seed(args.seed, "opening:"+encounter, character, 0))
                 session["combat_start_requested"] = True
                 with patch.object(combat, "random", rng), patch.object(state, "random", rng), patch.object(combat, "_apply_round_start_effects", capture_opening):
                     combat.ensure_combat_started(session)
                 if opening:
+                    if args.tuning_052:
+                        from .normal_052 import first_three_rounds
+                        opening["first_three_rounds"] = first_three_rounds(pack, entry["snapshot"], args.seed, encounter)
                     bundle["damage_budget_v2"].append({"character": character, "encounter": encounter,
                         "encounter_class": session["combat"]["encounter"].get("encounter_class"), "level": session["character"]["level"],
                         "source": "P2 observed median-level opening, before first round-start attacks", **opening})
         for kind in ("preparation_probes", "companion_probes", "level_probes", "boss_policy_probes", "passive_probes"):
+            if kind == "passive_probes" and args.skip_passive_probes:
+                bundle[kind] = []
+                continue
             bundle[kind] = run_stage(kind, [("normal_"+kind, args.scenario, c, args.probe_n, args.seed,
                 {**settings, "checkpoint_path": str(args.checkpoint_output), "passive_table": defaults["characters"][c]["choices"], "encounter": encounter})
                 for encounter, point in cp["encounters"].items() for c in CHARACTERS if c in point["characters"]])
@@ -267,6 +321,8 @@ def main(argv=None):
         "timings": timings, "elapsed_seconds": time.perf_counter()-started}
     if input_fingerprints(args.scenario, args.save) != fingerprints:
         raise RuntimeError("Measurement inputs changed during run")
+    if args.passive_table and hashlib.sha256(args.passive_table.read_bytes()).hexdigest() != passive_digest:
+        raise RuntimeError("Frozen passive table changed during run")
     if frozen != {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in FROZEN}:
         raise RuntimeError("Frozen historical artifact changed")
     if args.records_output:

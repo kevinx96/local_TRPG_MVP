@@ -28,13 +28,21 @@ def fast_fight(session: dict[str, Any], policy: str, rng: random.Random, *, puri
     summary = {"encounter": location, "encounter_class": battle["encounter"].get("encounter_class"),
                "status": battle["status"], "rounds": battle["round"], "before": before,
                "skill_usage": {}, "statuses": []}
-    continuing = battle["status"] in {"victory", "purified"} or summary["encounter_class"] == "scripted_loss"
+    continuing = (battle["status"] in {"victory", "purified"} or summary["encounter_class"] == "scripted_loss"
+                  or recoverable_defeat(session, battle))
     state.apply_state_delta(session, combat.consume_combat_state_delta(session), allow_world_transition=True)
     combat.clear_combat_after_resolution(session)
     summary["continue"] = continuing and not session.get("game_over") and session["character"]["hp"] > 0
     if (session.get("game_over") or {}).get("title") == COMPLETION_TITLE:
         summary["continue"] = True
     return summary
+
+
+def recoverable_defeat(session: dict[str, Any], battle: dict[str, Any]) -> bool:
+    effects = battle["encounter"].get("defeat_effects", {})
+    return (session.get("difficulty") == "normal" and battle["status"] == "defeat"
+            and effects.get("hp", 0) > 0 and bool(effects.get("current_location"))
+            and not effects.get("game_over"))
 
 
 def sustain(session: dict[str, Any]) -> float:
@@ -198,7 +206,8 @@ def fight(session: dict[str, Any], policy: str, rng: random.Random, *, purify: b
     state.apply_state_delta(session, delta, allow_world_transition=True)
     combat.clear_combat_after_resolution(session)
     summary["after_resolution"] = resources(session)
-    summary["continue"] = (status in {"victory", "purified"} or summary["encounter_class"] == "scripted_loss") and not session.get("game_over") and session["character"]["hp"] > 0
+    summary["continue"] = (status in {"victory", "purified"} or summary["encounter_class"] == "scripted_loss"
+                           or recoverable_defeat(session, battle)) and not session.get("game_over") and session["character"]["hp"] > 0
     if (session.get("game_over") or {}).get("title") == COMPLETION_TITLE:
         summary["continue"] = True
     return summary
