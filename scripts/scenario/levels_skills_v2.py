@@ -101,11 +101,11 @@ def passive(identifier: str, name: str, *tiers: dict[str, Any]) -> dict[str, Any
 
 def classes() -> list[dict[str, Any]]:
     hero = [
-        skill("holy_sword_art", "聖光の剣技", 2, damage="1d6+str/4", accuracy=92,
+        skill("holy_sword_art", "聖光の剣技", 2, kind="attack", damage="1d6+str/4", accuracy=92,
               multi_elements=["physical", "holy"], hits_per_element=1, self_status="holy_blessing"),
-        skill("sweep", "薙ぎ払い", 3, "sp", damage="1d6+str/4", accuracy=90, element="physical", all_targets=True,
+        skill("sweep", "薙ぎ払い", 3, "sp", kind="attack", damage="1d6+str/4", accuracy=90, element="physical", all_targets=True,
               conditional_multipliers=[{"if": "single_enemy", "x": 1.75}]),
-        skill("dragon_slash", "竜断ちの一太刀", costs={"sp": 7, "mp": 5}, damage="2d10+str/2+5",
+        skill("dragon_slash", "竜断ちの一太刀", costs={"sp": 7, "mp": 5}, kind="attack", damage="2d10+str/2+5",
               accuracy=100, element="physical", ignores_defense=True, ignores_resistance=True,
               conditional_multipliers=[{"if": "any", "conditions": [
                   {"if": "target_boss"}, {"if": "target_id_in", "ids": ["ignis", "draco_dragon", "dragon_knight_mounted", "lava_drake"]},
@@ -124,17 +124,17 @@ def classes() -> list[dict[str, Any]]:
         skill("mana_condense", "魔力凝縮", 3, "sp", kind="restore", resource="mp", amount="int/3+2",
               self_status=[{"id": "magic_focus", "modifiers": {"next_spell_damage_multiplier": 1.3}},
                            {"id": "mana_veil", "modifiers": {"received_damage_multiplier": .5}}]),
-        skill("twin_storm", "氷炎の双嵐", 7, damage="1d6+int/6", accuracy=92, spell_tier="advanced",
+        skill("twin_storm", "氷炎の双嵐", 7, kind="attack", damage="1d6+int/6", accuracy=92, spell_tier="advanced",
               multi_elements=["fire", "ice"], hits_per_element=1,
               conditional_multipliers=[{"if": "target_hp_full", "element": "fire", "x": 2},
                                       {"if": "target_hp_ratio_lte", "ratio": .5, "element": "ice", "x": 2}]),
-        skill("elemental_collapse", "元素崩壊", 18, damage="1d4+int/5", accuracy=95, spell_tier="advanced",
+        skill("elemental_collapse", "元素崩壊", 18, kind="attack", damage="1d4+int/5", accuracy=95, spell_tier="advanced",
               learned_elements=True, max_hits=4, resonance_exempt=True),
     ]
     thief = [
-        skill("blinding_throw", "目潰し投げ", 2, damage="1d4+dex/4", accuracy=95, element="physical",
+        skill("blinding_throw", "目潰し投げ", 2, kind="attack", damage="1d4+dex/4", accuracy=95, element="physical",
               on_hit_status={"id": "blind", "duration": 2}),
-        skill("blade_dance", "刃の乱舞", 4, "sp", damage="1d4+dex/4", accuracy=95, element="physical",
+        skill("blade_dance", "刃の乱舞", 4, "sp", kind="attack", damage="1d4+dex/4", accuracy=95, element="physical",
               all_targets=True, on_hit_status={"id": "poison", "stacks": 1}),
         skill("shadow_haste", "神速の影分身", costs={"sp": 8, "mp": 4}, kind="status", cooldown=5,
               self_status={"id": "haste", "duration": 3}),
@@ -220,9 +220,9 @@ def migrate(pack: dict[str, Any]) -> dict[str, Any]:
     result["difficulty_overlays"]["normal"] = [e for e in existing if (e["entity"], e["id"], e["path"]) not in addresses] + entries
     books = [
         ("spellbook_lightning", "雷撃の術式巻物", 60,
-         skill("lightning", "雷撃", 5, damage="1d4+int/4", accuracy=90, element="lightning", all_targets=True, spell_tier="basic")),
+         skill("lightning", "雷撃", 5, kind="attack", damage="1d4+int/4", accuracy=90, element="lightning", all_targets=True, spell_tier="basic")),
         ("spellbook_arcane_lance", "魔力の槍の術式巻物", 45,
-         skill("arcane_lance", "魔力の槍", 4, damage="1d6+int/2", accuracy=95, element="arcane", ignores_defense=True, spell_tier="basic")),
+         skill("arcane_lance", "魔力の槍", 4, kind="attack", damage="1d6+int/2", accuracy=95, element="arcane", ignores_defense=True, spell_tier="basic")),
     ]
     shop = next(s for s in result["shops"] if s["id"] == "magic_shop")
     for identifier, name, price, spell in books:
