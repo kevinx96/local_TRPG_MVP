@@ -11,15 +11,14 @@ from host.difficulty import apply_difficulty, numeric_snapshot
 ROOT = Path(__file__).resolve().parents[2]
 PACKS = ("dragon_rpg.json", "dragon_rpg_hybrid.json")
 
-ESCORT_NOTICE = "【仮】今の同行者とは別れることになる。"
+ESCORT_NOTICE = "今の同行者とは別れることになる。"
 REBORROW_ACTION_ID = "borrow_fire_bat_dragon_again"
 REBORROW_ACTION_TEXT = "ペットの火コウモリ竜をもう一度借りる"
 REBORROW_PREVIEW = "もう一度、火コウモリ竜を借りる"
 REBORROW_ONCE_FLAG = "asked_to_borrow_fire_bat_dragon_again"
-# TODO(design): approve the tentative reborrow dialogue before removing its 【仮】 marker.
 REBORROW_SUCCESS_TEXT = (
     "火コウモリ竜はあなたの匂いを嗅ぐと肩へ飛び乗った。"
-    "サラは嬉しそうに笑い、「【仮】ちゃんと連れて帰ってね」と送り出した。"
+    "サラは嬉しそうに笑い、「ちゃんと連れて帰ってね」と送り出した。"
 )
 
 
@@ -66,6 +65,7 @@ def migrate(pack: dict[str, Any]) -> dict[str, Any]:
     spring = _location(result, "cave_hot_spring")
     escort = _action(spring, "escort_mina")
     preview = str(escort.get("preview") or "").rstrip()
+    preview = preview.replace("【仮】" + ESCORT_NOTICE, "")
     if ESCORT_NOTICE not in preview:
         preview = preview.rstrip("。") + "。" + ESCORT_NOTICE
     escort["preview"] = preview

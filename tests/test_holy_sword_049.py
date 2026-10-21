@@ -10,10 +10,23 @@ from unittest.mock import patch
 
 from host import app, combat, difficulty, progression, state, status_effects
 from host.item_mechanics import equipped_items
+from host.scenario_context import select_hybrid_prepared_turn
 from host.shops import _can_sell
 from scripts.balance import checkpoints, probes_v3
 from scripts.balance.holy_sword_049 import gate_session, run_jobs
-from scripts.scenario.holy_sword_049 import AWAKEN_TEXT, REVEAL_TEXT, START_TEXT, migrate
+from scripts.scenario.holy_sword_049 import (
+    AWAKEN_TEXT,
+    BLACKSMITH_HINT,
+    IRON_HINT,
+    LOCK_TEXT,
+    REVEAL_DIARY_TEXT,
+    REVEAL_NO_DIARY_TEXT,
+    SWORD_DESCRIPTION,
+    SWORD_EFFECT,
+    START_TEXT,
+    STOLEN_SKILL_NAME,
+    migrate,
+)
 
 ROOT = Path.cwd()
 BASE = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
@@ -250,16 +263,111 @@ class HolySwordTests(unittest.TestCase):
                 with patch.object(app, "save_session"), patch.object(app, "chat_completion", side_effect=AssertionError("network")):
                     app._run_turn(value, app.TurnRequest(text="将軍ドラコの正体を問いただす", action_id="report_with_evidence"), allow_narration=narration)
                 text = value["messages"][-1]["text"]
-                self.assertIn(REVEAL_TEXT, text)
+                expected = REVEAL_DIARY_TEXT if diary else REVEAL_NO_DIARY_TEXT
+                other = REVEAL_NO_DIARY_TEXT if diary else REVEAL_DIARY_TEXT
+                self.assertIn(expected, text)
+                self.assertNotIn(other, text)
                 self.assertEqual("日誌を掲げる" in text, diary)
                 evidence.append({"mode": mode, "allow_narration": narration, "diary": diary, "text": text})
-        (ROOT / ".tmp-test/049/reveal-modes.json").write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding="utf-8")
+        output = ROOT / ".tmp-test/049/reveal-modes.json"
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    def test_final_holy_sword_texts_and_normal_gating(self):
+        for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
+            with self.subTest(filename=filename):
+                pack = json.loads((ROOT / "host/prompt/processed" / filename).read_text(encoding="utf-8"))
+                item = next(item for item in pack["items"] if item["id"] == "hero_holy_sword")
+                self.assertEqual(item["description"], SWORD_DESCRIPTION)
+                self.assertEqual(item["effect"], SWORD_EFFECT)
+                self.assertEqual(item["awakening_origin"]["description_suffix"], IRON_HINT)
+
+                locations = {location["id"]: location for location in pack["locations"]}
+                modifiers = {entry["id"]: entry for entry in locations["draco_battle"]["combat"]["encounter_modifiers"]}
+                awakening = modifiers["hero_holy_sword"]["lethal_awakening"]
+                self.assertEqual(awakening["lock_text"], LOCK_TEXT)
+                self.assertEqual(awakening["text"], AWAKEN_TEXT)
+                stolen = modifiers["draco_holy_sword"]
+                self.assertEqual(stolen["text"], START_TEXT)
+                self.assertEqual(stolen["extra_enemy_skills"][0]["name"], STOLEN_SKILL_NAME)
+
+                reveal = {variant["id"]: variant["text"] for variant in
+                          next(action for action in locations["castle_report"]["actions"]
+                               if action["id"] == "report_with_evidence")["result_variants"]
+                          if variant.get("id")}
+                self.assertTrue(reveal["holy_sword_diary"].endswith(REVEAL_DIARY_TEXT))
+                self.assertTrue(reveal["holy_sword_neutral"].endswith(REVEAL_NO_DIARY_TEXT))
+                self.assertNotIn(REVEAL_NO_DIARY_TEXT, reveal["holy_sword_diary"])
+                self.assertNotIn(REVEAL_DIARY_TEXT, reveal["holy_sword_neutral"])
+
+                blacksmith = next(action for action in locations["forge"]["actions"]
+                                  if action["id"] == "show_sword_to_blacksmith")
+                self.assertEqual(blacksmith["requirements"], {"character_id": "hero"})
+                hint = next(variant for variant in blacksmith["result_variants"]
+                            if variant["id"] == "holy_sword_blacksmith_hint")
+                self.assertEqual(hint["difficulty_only"], ["normal"])
+                self.assertEqual(hint["text"], blacksmith["result_text"] + BLACKSMITH_HINT)
+                self.assertFalse(any("【仮】" in text for text in (
+                    item["description"], item["effect"], item["awakening_origin"]["description_suffix"],
+                    awakening["lock_text"], awakening["text"], stolen["text"],
+                    stolen["extra_enemy_skills"][0]["name"], reveal["holy_sword_diary"],
+                    reveal["holy_sword_neutral"], hint["text"],
+                )))
+
+                baby = difficulty.apply_difficulty(pack, "baby")
+                baby_forge = next(location for location in baby["locations"] if location["id"] == "forge")
+                baby_blacksmith = next(action for action in baby_forge["actions"]
+                                       if action["id"] == "show_sword_to_blacksmith")
+                self.assertFalse(any(variant.get("id") == "holy_sword_blacksmith_hint"
+                                     for variant in baby_blacksmith.get("result_variants", [])))
+
+    def test_hybrid_reveal_prepared_turns_follow_diary_inventory(self):
+        pack = difficulty.apply_difficulty(state.load_scenario_pack(
+            ROOT / "host/prompt/processed/dragon_rpg_hybrid.json"), "normal")
+        for diary, expected_id, expected_text in (
+            (False, "holy_sword_reveal_neutral", REVEAL_NO_DIARY_TEXT),
+            (True, "holy_sword_reveal_diary", REVEAL_DIARY_TEXT),
+        ):
+            with self.subTest(diary=diary):
+                value = checkpoints.fresh_session(pack, "hero", "normal", effective=True)
+                value["flags"] = {"accepted_sword_fusion": True}
+                value["world_state"] = {"scene_id": "castle_return", "location_id": "draco_battle"}
+                if diary:
+                    state.apply_state_delta(value, {"inventory_add": [{"name": "白竜の日誌"}]})
+                value["last_action_result"] = {
+                    "action_id": "report_with_evidence",
+                    "outcome": "neutral",
+                    "source_location_id": "castle_report",
+                    "state_delta": {},
+                }
+                prepared = select_hybrid_prepared_turn(value, "将軍ドラコの正体を問いただす")
+                self.assertEqual(prepared["id"], expected_id)
+                self.assertIn(expected_text, prepared["draft"]["gm_text"])
+
+        baby = difficulty.apply_difficulty(state.load_scenario_pack(
+            ROOT / "host/prompt/processed/dragon_rpg_hybrid.json"), "baby")
+        turns = next(location for location in baby["locations"] if location["id"] == "castle_report")["hybrid"]["prepared_turns"]
+        self.assertFalse(any(turn.get("id") in {"holy_sword_reveal_neutral", "holy_sword_reveal_diary"}
+                             for turn in turns))
+
+    def test_blacksmith_hint_result_is_normal_only(self):
+        base = state.load_scenario_pack(ROOT / "host/prompt/processed/dragon_rpg_hybrid.json")
+        for mode, expected in (("normal", True), ("baby", False)):
+            with self.subTest(mode=mode):
+                pack = difficulty.apply_difficulty(base, mode)
+                value = checkpoints.fresh_session(pack, "hero", mode, effective=True)
+                forge = next(location for location in pack["locations"] if location["id"] == "forge")
+                value["world_state"] = {"scene_id": forge["scene_id"], "location_id": "forge"}
+                action = state.resolve_action(value, action_id="show_sword_to_blacksmith")
+                self.assertIsNotNone(action)
+                result = state.apply_action_result(value, action, {"expression": "none", "rolls": [], "total": 0, "dc": 0})
+                self.assertEqual(BLACKSMITH_HINT in result["result_text"], expected)
 
     def test_iron_unsellable_normal_but_fusion_and_merchant_removal_work(self):
         value = session(False)
         iron = next(i for i in value["character"]["inventory"] if i.get("id") == "iron_sword")
         self.assertFalse(_can_sell({"buys": True}, iron))
-        self.assertIn("【仮】", iron["description"])
+        self.assertTrue(iron["description"].endswith(IRON_HINT))
         state.apply_state_delta(value, {"inventory_remove": [{"name": "鉄の剣"}]})
         self.assertFalse(any(i.get("id") == "iron_sword" for i in value["character"]["inventory"]))
         baby = checkpoints.fresh_session(difficulty.apply_difficulty(BASE, "baby"), "hero")
@@ -290,6 +398,18 @@ class HolySwordTests(unittest.TestCase):
             before = difficulty.apply_difficulty(mina_reborrow(json.loads(raw)), "baby")
             after = difficulty.apply_difficulty(json.loads((ROOT / "host/prompt/processed" / filename).read_text(encoding="utf-8")), "baby")
             before["meta"]["content_revision"] = after["meta"]["content_revision"]
+            def remove_empty_result_variants(value):
+                if isinstance(value, dict):
+                    for key, child in list(value.items()):
+                        if key == "result_variants" and child == []:
+                            value.pop(key)
+                        else:
+                            remove_empty_result_variants(child)
+                elif isinstance(value, list):
+                    for child in value:
+                        remove_empty_result_variants(child)
+            remove_empty_result_variants(before)
+            remove_empty_result_variants(after)
             self.assertEqual(before, after)
 
 

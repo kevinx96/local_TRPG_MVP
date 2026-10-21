@@ -343,7 +343,9 @@ class NpcCombatTests(unittest.TestCase):
     def test_confirmation_survives_save_reload(self):
         session = self.session()
         self.request(session, "ian")
-        with tempfile.TemporaryDirectory(dir=ROOT / ".tmp-test") as temporary, patch.object(state, "SAVE_DIR", Path(temporary)):
+        temporary_root = ROOT / ".tmp-test"
+        temporary_root.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=temporary_root) as temporary, patch.object(state, "SAVE_DIR", Path(temporary)):
             state.save_session(session)
             restored = state.load_session(session["id"])
         self.assertEqual(restored["pending_npc_attack"], session["pending_npc_attack"])

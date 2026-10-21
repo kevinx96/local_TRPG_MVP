@@ -67,6 +67,7 @@ if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "baby"
     output = generate(mode)
     target = ROOT / ".tmp-test/051" / f"golden-{mode}.json"
+    target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     baseline = Path(__file__).parent / "fixtures/baby_combat_golden.json"
     expected = json.loads(baseline.read_text(encoding="utf-8"))

@@ -1307,7 +1307,16 @@
           "portrait_image": "/static/images/npc_blacksmith.png",
           "result_text": "ローベルトは君の鉄の剣をじっと見つめ、少し言葉を濁した。「お前の剣……氷の護符を埋め込むことはできるが、今の剣はボロボロすぎて耐えられん。俺が打った上質な剣に護符を融合させてやろう。護符の代金は要らん、その鉄の剣を置いていくならな」",
           "risk_source": "action",
-          "npc_id": "blacksmith"
+          "npc_id": "blacksmith",
+          "result_variants": [
+            {
+              "id": "holy_sword_blacksmith_hint",
+              "difficulty_only": [
+                "normal"
+              ],
+              "text": "ローベルトは君の鉄の剣をじっと見つめ、少し言葉を濁した。「お前の剣……氷の護符を埋め込むことはできるが、今の剣はボロボロすぎて耐えられん。俺が打った上質な剣に護符を融合させてやろう。護符の代金は要らん、その鉄の剣を置いていくならな」ローベルトは剣の重みを確かめ、ふと眉をひそめた。「……妙だな。ただの安物にしちゃ、芯に不思議な馴染みがある。手放すなら、よく考えてからにしな」"
+            }
+          ]
         },
         {
           "id": "accept_sword_fusion",
@@ -4145,7 +4154,7 @@
             "action_id": "borrow_fire_bat_dragon_again",
             "outcome": "success",
             "draft": {
-              "gm_text": "火コウモリ竜はあなたの匂いを嗅ぐと肩へ飛び乗った。サラは嬉しそうに笑い、「【仮】ちゃんと連れて帰ってね」と送り出した。",
+              "gm_text": "火コウモリ竜はあなたの匂いを嗅ぐと肩へ飛び乗った。サラは嬉しそうに笑い、「ちゃんと連れて帰ってね」と送り出した。",
               "system_log": "",
               "state_delta": {},
               "choices": []
@@ -10667,7 +10676,7 @@
                   }
                 ]
               },
-              "text": "あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」あなたが日誌を掲げると、ドラコの表情から初めて笑みが消えた。【仮】……もっとも、貴様の剣ならすでに我が手にある。我を脅かしうる唯一の刃だ"
+              "text": "あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」あなたが日誌を掲げると、ドラコの表情から初めて笑みが消えた。「……だが、お前が鍛冶屋に預けたあの剣は、すでに我が手にある。我を脅かしうる唯一の刃を手放すとは、愚かなことだ」"
             },
             {
               "id": "holy_sword_neutral",
@@ -10684,7 +10693,7 @@
                   }
                 ]
               },
-              "text": "あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」【仮】……もっとも、貴様の剣ならすでに我が手にある。我を脅かしうる唯一の刃だ"
+              "text": "あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」「……もっとも、お前が手放したあの古びた剣は、すでに我が手にある。眠れる力を宿した唯一の刃も、もはや我には届かぬ」"
             },
             {
               "requirements": {
@@ -10751,6 +10760,54 @@
       "hybrid": {
         "mode": "prepared_gm_turns",
         "prepared_turns": [
+          {
+            "id": "holy_sword_reveal_neutral",
+            "action_id": "report_with_evidence",
+            "outcome": "neutral",
+            "difficulty_only": [
+              "normal"
+            ],
+            "requirements": {
+              "all": [
+                {
+                  "character_id": "hero"
+                },
+                {
+                  "flag": "accepted_sword_fusion"
+                },
+                {
+                  "lacks_item": "白竜の日誌"
+                }
+              ]
+            },
+            "draft": {
+              "gm_text": "あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」「……もっとも、お前が手放したあの古びた剣は、すでに我が手にある。眠れる力を宿した唯一の刃も、もはや我には届かぬ」"
+            }
+          },
+          {
+            "id": "holy_sword_reveal_diary",
+            "action_id": "report_with_evidence",
+            "outcome": "neutral",
+            "difficulty_only": [
+              "normal"
+            ],
+            "requirements": {
+              "all": [
+                {
+                  "character_id": "hero"
+                },
+                {
+                  "flag": "accepted_sword_fusion"
+                },
+                {
+                  "has_item": "白竜の日誌"
+                }
+              ]
+            },
+            "draft": {
+              "gm_text": "あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」あなたが日誌を掲げると、ドラコの表情から初めて笑みが消えた。「……だが、お前が鍛冶屋に預けたあの剣は、すでに我が手にある。我を脅かしうる唯一の刃を手放すとは、愚かなことだ」"
+            }
+          },
           {
             "id": "report_with_evidence_neutral",
             "purpose": "choice_response",
@@ -10960,8 +11017,8 @@
                 "hp": "full"
               },
               "set_flag": "holy_sword_awakened",
-              "lock_text": "【仮】致命の一撃――だが、あなたは倒れなかった。",
-              "text": "【仮】鉄の剣が白く輝き、勇者の聖剣へと姿を変えた。傷がふさがっていく。"
+              "lock_text": "致命の一撃――だが、剣の温もりがあなたを踏みとどまらせた。",
+              "text": "握り続けた鉄の剣からまばゆい白光が溢れ出し、古い地金を脱ぎ捨てるように『勇者の聖剣』へと姿を変えた。あたたかな光が全身を駆け巡り、深く刻まれた傷口がたちまち塞がっていく。「……まだ、終わらせはしない」"
             }
           },
           {
@@ -10983,12 +11040,12 @@
               ]
             },
             "enemy_damage_multiplier": 1.3,
-            "text": "【仮】ドラコは勇者の聖剣を装備している。",
+            "text": "ドラコは奪い取った『勇者の聖剣』を携えている。",
             "log_kind": "warning",
             "extra_enemy_skills": [
               {
                 "id": "stolen_holy_blade",
-                "name": "【仮】聖剣の一閃",
+                "name": "簒奪の聖光斬",
                 "kind": "attack",
                 "damage": "1d8+5",
                 "accuracy": 90,
@@ -12021,7 +12078,7 @@
         {
           "id": "escort_mina",
           "text": "ミーナを連れて行く",
-          "preview": "同行者にする（2ラウンドごとに氷の魔法で援護）。【仮】今の同行者とは別れることになる。",
+          "preview": "同行者にする（2ラウンドごとに氷の魔法で援護）。今の同行者とは別れることになる。",
           "risk": "判定不要",
           "intent_keywords": [
             "ミーナを連れて行く"
@@ -20183,8 +20240,8 @@
       "difficulty_only": [
         "normal"
       ],
-      "description": "【仮】眠っていた力を取り戻した、勇者のための剣。",
-      "effect": "【仮】通常攻撃が光属性になる",
+      "description": "鉄の剣が真の輝きを取り戻した姿。盟約を乱す者を討つ、聖なる光の刃。",
+      "effect": "通常攻撃が敵の耐性を貫く光属性の大ダメージになる。",
       "category": "equipment",
       "slot": "weapon",
       "key_item": true,
@@ -20192,7 +20249,7 @@
       "awakening_only": true,
       "awakening_origin": {
         "item": "iron_sword",
-        "description_suffix": "【仮】"
+        "description_suffix": "手に馴染むほど、なぜか手放してはならない気がしてくる。"
       },
       "icon": "/static/images/icon_dawn_sword.png",
       "combat": {
@@ -26783,20 +26840,6 @@
       "status": "TODO(design)"
     },
     {
-      "text": "火コウモリ竜はあなたの匂いを嗅ぐと肩へ飛び乗った。サラは嬉しそうに笑い、「【仮】ちゃんと連れて帰ってね」と送り出した。",
-      "npc_ids": [
-        "sarah",
-        "fire_bat_dragon"
-      ],
-      "path": "/locations/item_shop/hybrid/prepared_turns/fire_bat_borrow_again_success/draft/gm_text",
-      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
-      "replacements": {
-        "sarah": "サラはもうここにはいない。",
-        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
-      },
-      "status": "TODO(design)"
-    },
-    {
       "text": "「……それは。どこでこれを」ローベルトは長い間ハンマーを握りしめていた。「礼だ。好きな防具を一つ、仕立て直してやる」",
       "npc_ids": [
         "blacksmith"
@@ -26838,7 +26881,7 @@
         "sarah",
         "fire_bat_dragon"
       ],
-      "path": "/locations/item_shop/hybrid/prepared_turns/fire_bat_borrow_success/draft/gm_text",
+      "path": "/locations/item_shop/hybrid/prepared_turns/fire_bat_borrow_again_success/draft/gm_text",
       "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
       "replacements": {
         "sarah": "サラはもうここにはいない。",

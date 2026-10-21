@@ -291,6 +291,8 @@ def select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", 
 
 
 def _select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "", opening: bool = False) -> dict[str, Any]:
+    from .state import _session_requirement_passes
+
     pack = session.get("scenario_pack")
     if not isinstance(pack, dict):
         return {}
@@ -300,6 +302,9 @@ def _select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "",
         return {}
     hybrid = location.get("hybrid") if isinstance(location.get("hybrid"), dict) else {}
     prepared_turns = hybrid.get("prepared_turns") if isinstance(hybrid.get("prepared_turns"), list) else []
+    prepared_turns = [turn for turn in prepared_turns
+                      if isinstance(turn, dict)
+                      and _session_requirement_passes(turn.get("requirements"), session)]
 
     if opening:
         if not prepared_turns:
@@ -326,6 +331,7 @@ def _select_hybrid_prepared_turn(session: dict[str, Any], player_text: str = "",
             turn for turn in candidate_turns
             if isinstance(turn, dict)
             and str(turn.get("action_id") or turn.get("prepared_turn_id") or "") == action_id
+            and _session_requirement_passes(turn.get("requirements"), session)
         ]
         exact_matches = [turn for turn in action_matches if str(turn.get("outcome") or "") == outcome]
         if exact_matches:

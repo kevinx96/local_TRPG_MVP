@@ -12,6 +12,7 @@ from host.scenario_context import select_hybrid_prepared_turn
 from scripts.scenario.mina_reborrow_055 import (
     ESCORT_NOTICE,
     REBORROW_ACTION_ID,
+    REBORROW_SUCCESS_TEXT,
     migrate as migrate_mina_reborrow,
 )
 
@@ -175,13 +176,15 @@ class DragonStoryTests(unittest.TestCase):
                 escort = next(action for action in locations["cave_hot_spring"]["actions"]
                               if action["id"] == "escort_mina")
                 self.assertIn(ESCORT_NOTICE, escort["preview"])
+                self.assertNotIn("【仮】", escort["preview"])
                 turns = records(locations["item_shop"].get("hybrid", {}), "prepared_turns")
                 self.assertEqual(
                     {turns[f"fire_bat_borrow_again_{outcome}"]["outcome"] for outcome in ("success", "failure")},
                     {"success", "failure"},
                 )
-                placeholder = "".join(chr(value) for value in (0x3010, 0x4EEE, 0x3011))
-                self.assertIn(placeholder, turns["fire_bat_borrow_again_success"]["draft"]["gm_text"])
+                self.assertEqual(turns["fire_bat_borrow_again_success"]["draft"]["gm_text"],
+                                 REBORROW_SUCCESS_TEXT)
+                self.assertNotIn("【仮】", REBORROW_SUCCESS_TEXT)
 
     def test_visual_assets_are_wired_and_present(self):
         client_root = Path("client")

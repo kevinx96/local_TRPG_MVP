@@ -229,7 +229,7 @@ class SpringPostgameTests(unittest.TestCase):
             '/items/hero_holy_sword/awakening_origin/description_suffix',
         }
         for pack_name in self.packs:
-            self.assertEqual({path for name, path, _ in rows if name == pack_name and path in paths_049}, paths_049)
+            self.assertEqual({path for name, path, _ in rows if name == pack_name and path in paths_049}, set())
         placeholders_050 = [(name, path, text) for name, path, text in rows
                             if not is_048_placeholder(path) and path not in paths_049]
         self.assertEqual(len(placeholders_050), 0)

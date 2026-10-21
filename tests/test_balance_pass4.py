@@ -58,7 +58,9 @@ class BalancePass4Tests(unittest.TestCase):
 
 
     def test_route_cli_reads_custom_targets_and_returns_failure(self):
-        with tempfile.TemporaryDirectory(dir=checkpoints.ROOT / ".tmp-test") as directory:
+        temporary_root = checkpoints.ROOT / ".tmp-test"
+        temporary_root.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=temporary_root) as directory:
             target = Path(directory) / "targets.json"
             output = Path(directory) / "out.json"
             self.targets["route_targets"]["routes"] = {
