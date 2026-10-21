@@ -27,7 +27,7 @@ def stable(value):
 def generate():
     result = {}
     saves = OUT / "baseline-saves"
-    saves.mkdir(exist_ok=True)
+    saves.mkdir(parents=True, exist_ok=True)
     with patch.object(state, "SAVE_DIR", saves):
         for cid in ("hero", "cleric", "mage", "thief"):
             public = state.create_session(character_id=cid, difficulty="baby")

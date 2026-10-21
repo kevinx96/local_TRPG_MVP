@@ -4,6 +4,15 @@ from __future__ import annotations
 from copy import deepcopy
 from typing import Any
 
+EVENT_TEMPLATES = {
+    "exp_gained": "経験値を{amount}獲得した。",
+    "level_up": "レベルが{level}に上がった！",
+    "skill_gained": "新たなスキル「{name}」を習得した！",
+    "passive_choice_pending": "Lv{level}のパッシブスキルが選択可能になった。",
+    "passive_chosen": "パッシブ「{name}」を習得した！",
+    "spell_learned": "術式を解読し、「{name}」を習得した！",
+}
+
 
 def enabled(session: dict[str, Any]) -> bool:
     return (session.get("difficulty", "baby") == "normal"
@@ -30,7 +39,7 @@ def effects(session: dict[str, Any]) -> dict[str, Any]:
 
 def _event(session: dict[str, Any], kind: str, data: dict[str, Any]) -> None:
     from .state import record_state_event
-    record_state_event(session, kind, "【仮】" + str(data.get("name") or ""), data)
+    record_state_event(session, kind, EVENT_TEMPLATES[kind].format(**data), data)
 
 
 def _grant_actives(session: dict[str, Any], actor: dict[str, Any], *, announce: bool = False) -> list[str]:
@@ -197,17 +206,17 @@ def choose_passive(session: dict[str, Any], level: int, passive_id: str) -> dict
     result = deepcopy(session)
     pending = result.get("pending_passive_choices", [])
     if not enabled(result) or result.get("combat") or not pending or type(level) is not int or level != min(pending):
-        raise ValueError("【仮】このレベルのパッシブは選択できません。")
+        raise ValueError("このレベルのパッシブは現在選択できません。")
     definitions = definition(result)
     group = next((g for g in definitions["passive_groups"] if g["level"] == level), {})
     if passive_id not in group.get("options", []):
-        raise ValueError("【仮】このパッシブは選択できません。")
+        raise ValueError("そのパッシブは選択できません。")
     actor = result["character"]
     selected = next((p for p in actor.setdefault("passives", []) if p["id"] == passive_id), None)
     entry = next(p for p in definitions["passives"] if p["id"] == passive_id)
     tier = selected["tier"] + 1 if selected else 1
     if tier > len(entry["tiers"]):
-        raise ValueError("【仮】このパッシブは選択できません。")
+        raise ValueError("そのパッシブは選択できません。")
     if selected:
         selected["tier"] = tier
     else:
@@ -220,14 +229,14 @@ def choose_passive(session: dict[str, Any], level: int, passive_id: str) -> dict
 
 def learn_reason(session: dict[str, Any], item: dict[str, Any]) -> str:
     if not enabled(session) or item.get("category") != "spellbook" or not item.get("learn_skill"):
-        return "【仮】この道具は解析できません。"
+        return "この道具は解読できる術式巻物ではない。"
     if session.get("combat"):
-        return "【仮】戦闘中は解析できません。"
+        return "戦闘中は術式巻物を解読できない。"
     actor = session["character"]
     if actor.get("character_id") not in item.get("learnable_by", []):
-        return "【仮】魔法使いにしか解読できない術式だ。"
+        return "魔法使いにしか解読できない術式だ。"
     if any(s.get("id") == item["learn_skill"]["id"] for s in actor.get("skills", [])):
-        return "【仮】この術式はすでに身につけている。"
+        return "この術式はすでに習得している。"
     return ""
 
 
@@ -236,7 +245,7 @@ def learn_spell(session: dict[str, Any], item_id: str) -> dict[str, Any]:
     actor = result["character"]
     item = next((i for i in actor.get("inventory", []) if i.get("id") == item_id and i.get("quantity", 1) > 0), None)
     if item is None:
-        raise ValueError("【仮】道具が見つかりません。")
+        raise ValueError("対象の道具を所持していません。")
     reason = learn_reason(result, item)
     if reason:
         raise ValueError(reason)
@@ -246,5 +255,5 @@ def learn_spell(session: dict[str, Any], item_id: str) -> dict[str, Any]:
     item["quantity"] = item.get("quantity", 1) - 1
     if item["quantity"] <= 0:
         actor["inventory"].remove(item)
-    _event(result, "spell_learned", {"skill_id": skill["id"], "item_id": item_id})
+    _event(result, "spell_learned", {"skill_id": skill["id"], "item_id": item_id, "name": skill["name"]})
     return result

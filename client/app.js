@@ -754,7 +754,7 @@ function renderInventory(items) {
     return;
   }
   // TODO(design): Items without category stay ungrouped until their category is specified.
-  const groups = { consumable: "消耗品", spellbook: "【仮】術式巻物", equipment: "装備", material: "素材", loot: "戦利品", key: "重要", "": "" };
+  const groups = { consumable: "消耗品", spellbook: "術式巻物", equipment: "装備", material: "素材", loot: "戦利品", key: "重要", "": "" };
   for (const [category, label] of Object.entries(groups)) {
     const grouped = items.filter(item => (item.category || "") === category);
     if (!grouped.length) continue;
@@ -847,13 +847,13 @@ function renderProgression(session) {
   hud.innerHTML = `<strong>Lv ${progress.level}</strong>
     <span>EXP ${progress.exp_to_next === null ? "MAX" : `${progress.exp} / ${total}`}</span>
     <progress max="${total}" value="${progress.exp_to_next === null ? 1 : progress.exp}" aria-label="EXP"></progress>
-    ${pending.length ? `<span>【仮】パッシブ未選択</span><button type="button" ${session.in_combat ? 'disabled title="【仮】戦闘終了後に選択できます。"' : ""}>パッシブを選ぶ（${pending.length}）</button>` : ""}`;
+    ${pending.length ? `<span>未選択のパッシブがあります</span><button type="button" ${session.in_combat ? 'disabled title="戦闘終了後に選択できます。"' : ""}>パッシブを選ぶ（${pending.length}）</button>` : ""}`;
   hud.querySelector("button")?.addEventListener("click", openPassiveDialog);
   panel.innerHTML = `<strong>Lv ${progress.level}</strong>
     <span>EXP ${progress.exp_to_next === null ? "MAX" : `${progress.exp} / ${total}`}</span>
     <progress max="${total}" value="${progress.exp_to_next === null ? 1 : progress.exp}" aria-label="EXP"></progress>
     ${progress.passives.map(p => `<p title="${escapeAttr(p.description)}">${escapeHtml(p.name)}</p>`).join("")}
-    ${pending.length ? `<p>【仮】パッシブ未選択</p><button id="choosePassiveButton" type="button" ${session.in_combat ? "disabled" : ""}>パッシブを選ぶ（${pending.length}）</button>${session.in_combat ? "<small>【仮】戦闘終了後に選択できます。</small>" : ""}` : ""}`;
+    ${pending.length ? `<p>未選択のパッシブがあります</p><button id="choosePassiveButton" type="button" ${session.in_combat ? "disabled" : ""}>パッシブを選ぶ（${pending.length}）</button>${session.in_combat ? "<small>戦闘終了後に選択できます。</small>" : ""}` : ""}`;
   document.querySelector("#choosePassiveButton")?.addEventListener("click", openPassiveDialog);
   const key = `${session.id}:${pending.map(p => p.level).join(",")}`;
   if (pending.length && !session.in_combat && !session.game_over && passiveAutoKey !== key) {
@@ -871,7 +871,7 @@ function openPassiveDialog() {
   if (!group) return;
   const dialog = document.querySelector("#passiveDialog");
   passiveSelection = null;
-  document.querySelector("#passiveTitle").textContent = `【仮】Lv${group.level} パッシブを選ぶ`;
+  document.querySelector("#passiveTitle").textContent = `Lv${group.level} パッシブ選択`;
   document.querySelector("#passiveConfirmation").hidden = true;
   document.querySelector("#passiveError").textContent = "";
   const options = document.querySelector("#passiveOptions");
@@ -881,8 +881,14 @@ function openPassiveDialog() {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "passive-card";
-    button.innerHTML = `<strong>${escapeHtml(option.name)} → ${escapeHtml(option.next_name)}</strong>
-      <p>${escapeHtml(option.current_description || "【仮】未修得")} → ${escapeHtml(option.next_description)}</p>`;
+    const isNew = !option.current_description;
+    const heading = isNew
+      ? `<strong>${escapeHtml(option.next_name)}</strong><span class="passive-badge">新規習得</span>`
+      : `<strong>${escapeHtml(option.name)} → ${escapeHtml(option.next_name)}</strong>`;
+    const description = isNew
+      ? option.next_description
+      : `${option.current_description} → ${option.next_description}`;
+    button.innerHTML = `${heading}<p>${escapeHtml(description)}</p>`;
     button.addEventListener("click", () => {
       passiveSelection = { level: group.level, passive_id: option.id };
       options.hidden = true;

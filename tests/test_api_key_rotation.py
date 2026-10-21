@@ -47,7 +47,7 @@ class APIKeyRotationTests(unittest.TestCase):
         self.stack = ExitStack()
         self.addCleanup(self.stack.close)
         self.directory = Path.cwd() / ".tmp-test" / ("keys-043-" + uuid.uuid4().hex)
-        self.directory.mkdir()
+        self.directory.mkdir(parents=True, exist_ok=True)
         self.addCleanup(shutil.rmtree, self.directory, ignore_errors=True)
         self.config = {"active_backend": "gemini", "max_model_attempts": 2, "debug_llm": True,
                        "backends": {"gemini": {"model": "primary", "fallback_models": ["fallback"], "api_keys": list(KEYS)}}}

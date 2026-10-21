@@ -19988,7 +19988,7 @@
     {
       "id": "spellbook_lightning",
       "name": "雷撃の術式巻物",
-      "description": "【仮】",
+      "description": "蒼い電光の術式が記された古い羊皮紙。魔法使いにしか解読できない。解析すると「雷撃」を習得する。",
       "category": "spellbook",
       "icon": "/static/images/icon_magic_scroll.png",
       "difficulty_only": [
@@ -19997,7 +19997,7 @@
       "learn_skill": {
         "id": "lightning",
         "name": "雷撃",
-        "description": "【仮】",
+        "description": "雷光を走らせ、敵単体に雷属性の魔法攻撃を行う。",
         "cost": 5,
         "cost_type": "mp",
         "damage": "1d4+int/4",
@@ -20015,7 +20015,7 @@
     {
       "id": "spellbook_arcane_lance",
       "name": "魔力の槍の術式巻物",
-      "description": "【仮】",
+      "description": "純粋魔力を槍と化す秘術が刻まれた巻物。魔法使いにしか解読できない。解析すると「魔力の槍」を習得する。",
       "category": "spellbook",
       "icon": "/static/images/icon_magic_scroll.png",
       "difficulty_only": [
@@ -20024,7 +20024,7 @@
       "learn_skill": {
         "id": "arcane_lance",
         "name": "魔力の槍",
-        "description": "【仮】",
+        "description": "防御力を無視する純粋魔力の槍で、敵単体に魔力属性の魔法攻撃を行う。",
         "cost": 4,
         "cost_type": "mp",
         "damage": "1d6+int/2",
@@ -27692,7 +27692,7 @@
     {
       "id": "mana_veil",
       "name": "凝縮の構え",
-      "description": "【仮】",
+      "description": "次の敵フェーズ終了まで、被ダメージが0.5倍になる。",
       "kind": "modifier",
       "duration": 1,
       "tags": [
@@ -27719,7 +27719,7 @@
           "skill": {
             "id": "holy_sword_art",
             "name": "聖光の剣技",
-            "description": "【仮】",
+            "description": "敵単体に物理と聖属性の2連撃。次の敵フェーズ終了まで被ダメージが0.75倍になる。",
             "cost": 2,
             "cost_type": "mp",
             "damage": "1d6+str/4",
@@ -27738,7 +27738,7 @@
           "skill": {
             "id": "sweep",
             "name": "薙ぎ払い",
-            "description": "【仮】",
+            "description": "敵全体に物理攻撃を行う。敵が1体のみの時はダメージが1.75倍になる。",
             "cost": 3,
             "cost_type": "sp",
             "damage": "1d6+str/4",
@@ -27759,7 +27759,7 @@
           "skill": {
             "id": "dragon_slash",
             "name": "竜断ちの一太刀",
-            "description": "【仮】",
+            "description": "防御と耐性を無視する必中の斬撃。竜・ボス・最大HP80以上の敵に威力1.35倍。",
             "cost": 0,
             "cost_type": "mp",
             "costs": {
@@ -27841,7 +27841,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "戦闘の1ラウンド目、自身の攻撃が必中になり、ラウンド開始時にSPを3回復する。",
               "effects": {
                 "opening_rounds": 1,
                 "opening_sp": 3
@@ -27850,7 +27850,7 @@
             {
               "id": "2",
               "tier": 2,
-              "description": "【仮】",
+              "description": "攻撃必中と毎ラウンド開始時のSP3回復の効果が、2ラウンド目まで継続するようになる。",
               "effects": {
                 "opening_rounds": 2,
                 "opening_sp": 3
@@ -27866,7 +27866,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "防御力1以上の鎧を装備している時、自身の防御力がさらに+1される。",
               "effects": {
                 "armor_min": 1,
                 "armor_bonus": 1
@@ -27882,7 +27882,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "「神聖の庇護」が行動を消費せずに発動でき、クールダウンが2ラウンドになる。",
               "effects": {
                 "skill_overrides": {
                   "divine_guard": {
@@ -27902,9 +27902,10 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "通常攻撃や単体剣技が命中した時、1行動につき1回、必中の物理追撃を行う。",
               "effects": {
                 "hit_followup": {
+                  "name": "追い打ちの剣",
                   "weapon_half_dice": true,
                   "element": "physical",
                   "accuracy": 100,
@@ -27927,7 +27928,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "HPが最大HPの50%未満の時、スキルの消費が半減し、スキルダメージが1.25倍になる。",
               "effects": {
                 "low_hp": {
                   "ratio": 0.5,
@@ -27946,7 +27947,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "物理攻撃時、敵の防御力と物理耐性による軽減をそれぞれ30%無視してダメージを与える。",
               "effects": {
                 "physical_penetration": 0.3
               }
@@ -27961,7 +27962,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "火・氷・風・闇の被ダメージ0.8倍。弱点を持つ敵への攻撃命中時、弱点属性で追撃する。",
               "effects": {
                 "taken_elements": {
                   "fire": 0.8,
@@ -27970,6 +27971,7 @@
                   "dark": 0.8
                 },
                 "weakness_followup": {
+                  "name": "竜殺しの宿命",
                   "element": "weakness",
                   "damage": "1d4+str/6",
                   "accuracy": 100
@@ -27992,7 +27994,7 @@
           "skill": {
             "id": "atonement_mark",
             "name": "贖罪の印",
-            "description": "【仮】",
+            "description": "敵単体に3ラウンドの間「聖印」を刻み、毎ラウンドの聖属性ダメージと追撃を誘発する。",
             "cost": 2,
             "cost_type": "sp",
             "kind": "attack",
@@ -28012,7 +28014,7 @@
           "skill": {
             "id": "great_heal_cleanse",
             "name": "大いなる癒し・浄化",
-            "description": "【仮】",
+            "description": "HPを大きく回復して弱体を全て浄化し、余剰回復分を最大HP25%までの障壁に変える。",
             "cost": 14,
             "cost_type": "mp",
             "kind": "heal",
@@ -28036,7 +28038,7 @@
           "skill": {
             "id": "seraphim_gospel",
             "name": "セラフィムの福音",
-            "description": "【仮】",
+            "description": "1戦闘1回。3ラウンドの間、最大HPを2倍にして増加分を回復し、被弾時にHPを回復する。",
             "cost": 12,
             "cost_type": "mp",
             "kind": "status",
@@ -28096,7 +28098,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "ラウンド終了時、自身のHPを最大HPの3%回復する。",
               "effects": {
                 "regen_ratio": 0.03
               }
@@ -28104,7 +28106,7 @@
             {
               "id": "2",
               "tier": 2,
-              "description": "【仮】",
+              "description": "ラウンド終了時のHP回復量が、最大HPの3%から5%に上昇する。",
               "effects": {
                 "regen_ratio": 0.05
               }
@@ -28112,7 +28114,7 @@
             {
               "id": "3",
               "tier": 3,
-              "description": "【仮】",
+              "description": "ラウンド終了時のHP回復量が、最大HPの5%から7%に上昇する。",
               "effects": {
                 "regen_ratio": 0.07
               }
@@ -28127,7 +28129,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "回復スキルや道具の余剰回復量の75%を、ランダムな敵1体への聖属性ダメージに変える。",
               "effects": {
                 "overflow_ratio": 0.75
               }
@@ -28135,7 +28137,7 @@
             {
               "id": "2",
               "tier": 2,
-              "description": "【仮】",
+              "description": "余剰回復量から聖属性ダメージへの変換率が、75%から125%に上昇する。",
               "effects": {
                 "overflow_ratio": 1.25
               }
@@ -28150,7 +28152,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "スキルの消費MPの最大50%までを、1MPにつき2SPで肩代わりして発動できる。",
               "effects": {
                 "sp_for_mp": {
                   "rate": 2,
@@ -28168,9 +28170,10 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "ラウンド開始時にHPが70%を超えていれば、ランダムな敵1体に聖属性の追撃を行う。",
               "effects": {
                 "round_attack": {
+                  "name": "光輪の加護",
                   "hp_ratio_gt": 0.7,
                   "damage": "1d3+wis/8",
                   "element": "holy",
@@ -28189,7 +28192,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "「治癒の祈り」の消費MPが0になる。使用回数の制限はない。",
               "effects": {
                 "free_skills": [
                   "healing_prayer"
@@ -28212,7 +28215,7 @@
           "skill": {
             "id": "mana_condense",
             "name": "魔力凝縮",
-            "description": "【仮】",
+            "description": "MPを回復して次の攻撃魔法の威力を1.3倍にし、次の敵フェーズ終了まで被ダメージを半減する。",
             "cost": 3,
             "cost_type": "sp",
             "kind": "restore",
@@ -28240,7 +28243,7 @@
           "skill": {
             "id": "twin_storm",
             "name": "氷炎の双嵐",
-            "description": "【仮】",
+            "description": "敵単体に火と氷の2連撃。敵のHPが満タンなら火、50%以下なら氷の威力が2倍になる。",
             "cost": 7,
             "cost_type": "mp",
             "damage": "1d6+int/6",
@@ -28272,7 +28275,7 @@
           "skill": {
             "id": "elemental_collapse",
             "name": "元素崩壊",
-            "description": "【仮】",
+            "description": "習得済みの基本属性魔法の力を解き放ち、敵単体に最大4連撃の属性魔法攻撃を行う。",
             "cost": 18,
             "cost_type": "mp",
             "damage": "1d4+int/5",
@@ -28327,7 +28330,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "ラウンド開始時にMPを1回復する。1戦闘につき最大MPの20%まで回復できる。",
               "effects": {
                 "mana_cycle": {
                   "amount": 1,
@@ -28338,7 +28341,7 @@
             {
               "id": "2",
               "tier": 2,
-              "description": "【仮】",
+              "description": "ラウンド開始時のMP回復量が2に増え、1戦闘の回復上限が最大MPの30%になる。",
               "effects": {
                 "mana_cycle": {
                   "amount": 2,
@@ -28349,7 +28352,7 @@
             {
               "id": "3",
               "tier": 3,
-              "description": "【仮】",
+              "description": "ラウンド開始時のMP回復量が3に増え、1戦闘の回復上限が最大MPの40%になる。",
               "effects": {
                 "mana_cycle": {
                   "amount": 3,
@@ -28367,7 +28370,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "戦闘開始時に「魔導の盾」を得て、最初に受ける1回分の攻撃ダメージを無効化する。",
               "effects": {
                 "battle_shield": {
                   "id": "arcane_shield"
@@ -28377,7 +28380,7 @@
             {
               "id": "2",
               "tier": 2,
-              "description": "【仮】",
+              "description": "盾が消えた3ラウンド後に最大HP20%までの盾を張り直す。1戦闘につき2回まで再展開する。",
               "effects": {
                 "battle_shield": {
                   "id": "arcane_shield"
@@ -28407,7 +28410,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "直前の攻撃魔法と異なる属性の攻撃魔法を使うと、威力が1.15倍になりMPが1回復する。",
               "effects": {
                 "resonance": {
                   "multiplier": 1.15,
@@ -28425,7 +28428,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "攻撃による被ダメージの25%を、HPではなくMPで肩代わりして受けるようになる。",
               "effects": {
                 "mana_armor": 0.25
               }
@@ -28440,7 +28443,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "通常攻撃が敵の弱点属性（なければ魔力属性）になり、弱点を突いた時は威力が1.25倍になる。",
               "effects": {
                 "basic_element": "weakness",
                 "fallback_element": "arcane",
@@ -28463,7 +28466,7 @@
           "skill": {
             "id": "blinding_throw",
             "name": "目潰し投げ",
-            "description": "【仮】",
+            "description": "敵単体に物理攻撃を行い、2ラウンドの間「目潰し」を付与して命中率を下げる。",
             "cost": 2,
             "cost_type": "mp",
             "damage": "1d4+dex/4",
@@ -28481,7 +28484,7 @@
           "skill": {
             "id": "blade_dance",
             "name": "刃の乱舞",
-            "description": "【仮】",
+            "description": "敵全体に物理攻撃を行い、命中した敵それぞれに「毒」を1スタック付与する。",
             "cost": 4,
             "cost_type": "sp",
             "damage": "1d4+dex/4",
@@ -28500,7 +28503,7 @@
           "skill": {
             "id": "shadow_haste",
             "name": "神速の影分身",
-            "description": "【仮】",
+            "description": "3ラウンドの間「神速」状態になり、毎ラウンドの行動回数が+1される。",
             "cost": 0,
             "cost_type": "mp",
             "costs": {
@@ -28559,7 +28562,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "回避率+5%。敵の攻撃が空振りした時、SPを1回復する（1ラウンド最大2SPまで）。",
               "effects": {
                 "evade_bonus": 5,
                 "miss_sp": 1,
@@ -28569,7 +28572,7 @@
             {
               "id": "2",
               "tier": 2,
-              "description": "【仮】",
+              "description": "回避率が+8%に上昇し、敵の空振りによるSP回復の上限が1ラウンド3SPに増える。",
               "effects": {
                 "evade_bonus": 8,
                 "miss_sp": 1,
@@ -28579,7 +28582,7 @@
             {
               "id": "3",
               "tier": 3,
-              "description": "【仮】",
+              "description": "回避率が+10%に上昇し、敵の空振り1回につきSPが2回復する（1ラウンド最大4SPまで）。",
               "effects": {
                 "evade_bonus": 10,
                 "miss_sp": 2,
@@ -28596,7 +28599,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "通常攻撃や攻撃スキルが命中した時、敵に「毒」を1スタック付与する（最大3スタック）。",
               "effects": {
                 "hit_status": {
                   "id": "poison",
@@ -28608,7 +28611,7 @@
             {
               "id": "2",
               "tier": 2,
-              "description": "【仮】",
+              "description": "毒の最大スタック数が3から5に増え、より深い毒を敵に重ねられるようになる。",
               "effects": {
                 "hit_status": {
                   "id": "poison",
@@ -28627,7 +28630,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "各戦闘で最初の1回のみ、消費アイテムを行動を消費せずに使用できる。",
               "effects": {
                 "free_item_uses": 1
               }
@@ -28642,9 +28645,10 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "敵の攻撃が空振りした時、または「影隠れ」中に被弾した時、必中の物理追撃を行う。",
               "effects": {
                 "counter_attack": {
+                  "name": "見切り反撃",
                   "damage": "1d6",
                   "element": "physical",
                   "accuracy": 100
@@ -28661,7 +28665,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "【仮】",
+              "description": "精鋭およびボス敵に対する直接攻撃のダメージが1.15倍になる。",
               "effects": {
                 "encounter_damage": {
                   "elite": 1.15,

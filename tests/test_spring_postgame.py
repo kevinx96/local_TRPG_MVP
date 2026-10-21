@@ -204,8 +204,8 @@ class SpringPostgameTests(unittest.TestCase):
 
         self.assertFalse([(name, path) for name, path, _ in rows if is_048_placeholder(path)])
         placeholders_050 = [(name, path, text) for name, path, text in rows if not is_048_placeholder(path)]
-        self.assertEqual(len(placeholders_050), 96)
-        self.assertTrue(all(sum(name == pack_name for name, _, _ in placeholders_050) == 48 for pack_name in self.packs))
+        self.assertEqual(len(placeholders_050), 0)
+        self.assertTrue(all(sum(name == pack_name for name, _, _ in placeholders_050) == 0 for pack_name in self.packs))
         self.assertTrue(all(path.startswith('/class_progression/') or path.startswith('/items/spellbook_')
                             for _, path, _ in placeholders_050))
         self.assertTrue(all(text == '\u3010\u4eee\u3011' for _, _, text in placeholders_050))

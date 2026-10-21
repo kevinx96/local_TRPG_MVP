@@ -571,6 +571,91 @@ class ProgressionTests(unittest.TestCase):
                 self.assertNotIn("progression", state.public_session(loaded))
                 self.assertEqual(loaded["character"]["skills"], before["skills"])
 
+    def test_progression_event_templates(self):
+        s = session(start=False)
+        cases = [
+            ("exp_gained", {"amount": 12, "source": "test", "total": 12, "next": 20}, "経験値を12獲得した。"),
+            ("level_up", {"level": 3}, "レベルが3に上がった！"),
+            ("skill_gained", {"skill_id": "holy_sword_art", "name": "聖光の剣技"}, "新たなスキル「聖光の剣技」を習得した！"),
+            ("passive_choice_pending", {"level": 2, "options": ["旅立ちの気概"]}, "Lv2のパッシブスキルが選択可能になった。"),
+            ("passive_chosen", {"level": 2, "passive_id": "departure_spirit", "name": "旅立ちの気概"}, "パッシブ「旅立ちの気概」を習得した！"),
+            ("spell_learned", {"skill_id": "lightning", "item_id": "spellbook_lightning", "name": "雷撃"}, "術式を解読し、「雷撃」を習得した！"),
+        ]
+        for kind, data, _ in cases:
+            progression._event(s, kind, data)
+        self.assertEqual([event["text"] for event in s["event_log"]], [case[2] for case in cases])
+        self.assertEqual([event["data"] for event in s["event_log"]], [case[1] for case in cases])
+
+    def test_050_description_texts_are_fully_migrated(self):
+        sources = (
+            "scripts/scenario/levels_skills_v2.py",
+            "host/progression.py",
+            "host/combat.py",
+            "client/app.js",
+            "client/index.html",
+        )
+        for relative in sources:
+            with self.subTest(source=relative):
+                self.assertNotIn("【仮】", (ROOT / relative).read_text(encoding="utf-8"))
+        for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
+            scenario_text = (ROOT / "host/prompt/processed" / filename).read_text(encoding="utf-8")
+            self.assertNotIn("【仮】", scenario_text)
+            pack = json.loads(scenario_text)
+            for definition in pack["class_progression"]:
+                for active in definition["actives"]:
+                    self.assertTrue(active["skill"]["description"])
+                for passive in definition["passives"]:
+                    for tier in passive["tiers"]:
+                        self.assertTrue(tier["description"])
+            for item_id in ("spellbook_lightning", "spellbook_arcane_lance"):
+                item = next(item for item in pack["items"] if item["id"] == item_id)
+                self.assertTrue(item["description"])
+                self.assertTrue(item["learn_skill"]["description"])
+            mana_veil = next(status for status in pack["status_defs"] if status["id"] == "mana_veil")
+            self.assertTrue(mana_veil["description"])
+        styles = (ROOT / "client/styles.css").read_text(encoding="utf-8")
+        self.assertIn("#passiveDialog", styles)
+        self.assertIn("margin: auto;", styles)
+        self.assertIn("新規習得", (ROOT / "client/app.js").read_text(encoding="utf-8"))
+
+    def test_blade_dance_and_poison_craft_add_two_stacks(self):
+        s = session("thief", 5)
+        select(s, "poison_craft")
+        use(s, "blade_dance")
+        poison = next(status for status in s["combat"]["enemies"][0]["statuses"] if status["id"] == "poison")
+        self.assertEqual(poison["stacks"], 2)
+
+    def test_passive_followup_logs_include_passive_names(self):
+        def assert_named_damage(s, name):
+            self.assertTrue(any(event["kind"] == "damage" and event["text"].startswith(name)
+                                for event in s["combat"]["log"]))
+
+        s = session("hero", 3)
+        select(s, "sword_followup")
+        enemy = s["combat"]["enemies"][0]
+        combat._player_attack(s, enemy["id"], Rolls())
+        assert_named_damage(s, "追い打ちの剣")
+
+        s = session("hero", 3)
+        select(s, "dragon_destiny")
+        enemy = s["combat"]["enemies"][0]
+        enemy["resistances"]["fire"] = 2
+        combat._resolve_attack(s, s["character"], enemy,
+                               {"id": "fire_test", "_skill_action": True, "damage": "1", "accuracy": 100, "element": "fire"},
+                               "player", Rolls())
+        assert_named_damage(s, "竜殺しの宿命")
+
+        s = session("cleric")
+        select(s, "holy_halo")
+        combat._passive_round_start(s, Rolls())
+        assert_named_damage(s, "光輪の加護")
+
+        s = session("thief")
+        select(s, "counter_sight")
+        combat._enemy_reaction(s, s["combat"]["enemies"][0], Rolls(), missed=True)
+        assert_named_damage(s, "見切り反撃")
+
+
 
 if __name__ == "__main__":
     unittest.main()

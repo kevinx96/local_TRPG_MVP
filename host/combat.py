@@ -691,7 +691,7 @@ def _passive_round_end(session: dict[str, Any]) -> None:
         memory["regen_fraction"] = value - amount
         healed = _heal_actor(actor, amount)
         if healed:
-            _log(session, "player", "heal", "【仮】", {"amount": healed})
+            _log(session, "player", "heal", f"敬虔なる心の祈りでHPが{healed}回復した。", {"amount": healed})
 
 
 def _weakness_reason(ability: dict[str, Any]) -> str:
@@ -731,10 +731,10 @@ def _ability_disabled_reason(session: dict[str, Any], action_type: str, action_i
         return COOLDOWN_REASON.format(rounds=remaining)
     if progression.enabled(session):
         if action_type == "skill" and not _can_pay_cost(session["character"], ability):
-            return "【仮】リソースが不足しています。"
+            return "リソースが不足しています。"
         uses = session["combat"].get("passive_state", {}).get("uses", {}).get(action_id, 0)
         if ability.get("max_uses_per_battle") is not None and uses >= ability["max_uses_per_battle"]:
-            return "【仮】この戦闘ではこれ以上使用できません。"
+            return "この戦闘ではこれ以上使用できません。"
     raw = ability.get("self_status")
     for spec in raw if isinstance(raw, list) else [raw]:
         identifier = spec if isinstance(spec, str) else (spec or {}).get("id")
@@ -875,7 +875,9 @@ def _player_skill(session: dict[str, Any], skill_id: str, target_id: str, rng: A
     elif kind == "restore":
         amount, detail = _roll_formula(str(resolved_skill.get("amount", "0")), character, rng)
         restored = _restore_actor_resource(character, resolved_skill.get("resource", "mp"), amount)
-        _log(session, "player", "restore", "【仮】" + resolved_skill["name"], {"amount": restored, "formula": detail})
+        resource = str(resolved_skill.get("resource") or "mp").upper()
+        _log(session, "player", "restore", f"{resolved_skill['name']}で{resource}を{restored}回復した。",
+             {"amount": restored, "formula": detail})
     elif kind == "defend":
         multiplier = float(resolved_skill.get("guard_multiplier", _combat_rules(session).get("defend_multiplier", 0.5)) or 0.5)
         session["combat"].setdefault("player_status", {})["guard_multiplier"] = max(0.0, min(1.0, multiplier))
