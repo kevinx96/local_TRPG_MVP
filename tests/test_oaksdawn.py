@@ -207,6 +207,8 @@ class OaksdawnTests(unittest.TestCase):
             apply_spring_postgame(upgraded)
             from scripts.scenario.levels_skills_v2 import migrate as levels
             upgraded = holy_sword(levels(upgraded))
+            from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
+            upgraded = mina_reborrow(upgraded)
             self.assertEqual(upgraded, pack)
             for enemy in pack["enemies"]:
                 if enemy["id"] in UNDEAD:

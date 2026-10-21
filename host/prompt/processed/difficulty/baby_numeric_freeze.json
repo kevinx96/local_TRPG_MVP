@@ -137,7 +137,9 @@
         "actions.@id=deliver_sarah_scarf.effects.@shape=44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a.gold_change": 30,
         "actions.@id=help_sarah_shelves.roll.dice_type": "1d20+str",
         "actions.@id=help_sarah_shelves.roll.dc": 8,
-        "actions.@id=help_sarah_shelves.success_effects.@shape=44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a.gold_change": 10
+        "actions.@id=help_sarah_shelves.success_effects.@shape=44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a.gold_change": 10,
+        "actions.@id=borrow_fire_bat_dragon_again.roll.dice_type": "1d20+wis",
+        "actions.@id=borrow_fire_bat_dragon_again.roll.dc": 10
       },
       "alley": {
         "actions.@id=search_alley_day.roll.dice_type": "1d20+wis",
@@ -2387,7 +2389,9 @@
         "actions.@id=deliver_sarah_scarf.effects.@shape=44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a.gold_change": 30,
         "actions.@id=help_sarah_shelves.roll.dice_type": "1d20+str",
         "actions.@id=help_sarah_shelves.roll.dc": 8,
-        "actions.@id=help_sarah_shelves.success_effects.@shape=44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a.gold_change": 10
+        "actions.@id=help_sarah_shelves.success_effects.@shape=44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a.gold_change": 10,
+        "actions.@id=borrow_fire_bat_dragon_again.roll.dice_type": "1d20+wis",
+        "actions.@id=borrow_fire_bat_dragon_again.roll.dc": 10
       },
       "alley": {
         "actions.@id=search_alley_day.roll.dice_type": "1d20+wis",

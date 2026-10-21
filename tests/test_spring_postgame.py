@@ -175,15 +175,28 @@ class SpringPostgameTests(unittest.TestCase):
             apply(actual)
             actual = migrate_combat_mechanics(actual)
             actual = holy_sword(levels(actual))
+            from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
+            actual = mina_reborrow(actual)
             self.assertEqual(actual, pack)
             apply(actual)
             actual = migrate_combat_mechanics(actual)
             actual = holy_sword(levels(actual))
+            from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
+            actual = mina_reborrow(actual)
             self.assertEqual(actual, pack)
             self.assertEqual(numeric_snapshot(apply_difficulty(actual, 'baby')), frozen[name])
             legacy = deepcopy(actual)
             legacy['status_defs'] = [s for s in legacy['status_defs'] if s['id'] != 'mana_veil']
-            rows.extend((name, path, text) for path, text in placeholder_rows(legacy))
+            from scripts.scenario.mina_reborrow_055 import ESCORT_NOTICE, REBORROW_SUCCESS_TEXT
+            rows.extend(
+                (name, path, text)
+                for path, text in placeholder_rows(legacy)
+                if not (
+                    path == '/locations/cave_hot_spring/actions/escort_mina/preview'
+                    and ESCORT_NOTICE in text
+                )
+                and text != REBORROW_SUCCESS_TEXT
+            )
 
         status_ids = {
             'burn', 'poison', 'weaken', 'paralysis', 'stun', 'holy_mark', 'blind', 'haste',

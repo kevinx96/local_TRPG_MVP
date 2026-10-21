@@ -28,6 +28,8 @@ class ChecksETests(unittest.TestCase):
             apply_spring_postgame(again)
             from scripts.scenario.levels_skills_v2 import migrate as levels
             again = holy_sword(levels(again))
+            from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
+            again = mina_reborrow(again)
             self.assertEqual(again, pack)
         ids = {entry[0] for entry in CHECKS}
         first, second = (self.actions(pack) for pack in self.packs)

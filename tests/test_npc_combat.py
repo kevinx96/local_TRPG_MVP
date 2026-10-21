@@ -227,6 +227,8 @@ class NpcCombatTests(unittest.TestCase):
             apply_spring_postgame(pack)
             from scripts.scenario.levels_skills_v2 import migrate as levels
             pack = holy_sword(levels(pack))
+            from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
+            pack = mina_reborrow(pack)
             self.assertEqual(before, pack)
             results.append(pack)
         self.assertEqual(results[0]["npc_combat"], results[1]["npc_combat"])

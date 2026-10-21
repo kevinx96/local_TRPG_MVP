@@ -528,6 +528,8 @@ class MigrationAndGoldenTests(unittest.TestCase):
             migrated = levels(migrated)
             from scripts.scenario.holy_sword_049 import migrate as holy_sword
             migrated = holy_sword(migrated)
+            from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
+            migrated = mina_reborrow(migrated)
             self.assertEqual(migrated, pack)
             self.assertEqual(difficulty.numeric_snapshot(original), difficulty.numeric_snapshot(pack))
             try:

@@ -290,6 +290,8 @@ class RewardsBattlefieldTests(unittest.TestCase):
             apply(pack)
             apply_spring_postgame(pack)
             pack = holy_sword(levels(pack))
+            from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
+            pack = mina_reborrow(pack)
             self.assertEqual(pack, before)
             for character in ("hero", "cleric", "mage", "thief"):
                 for empty in (False, True):
@@ -326,6 +328,8 @@ class RewardsBattlefieldTests(unittest.TestCase):
             upgrade(upgraded)
             apply_spring_postgame(upgraded)
             upgraded = holy_sword(levels(upgraded))
+            from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
+            upgraded = mina_reborrow(upgraded)
             self.assertEqual(upgraded, pack)
             pack = state.load_scenario_pack(DEFAULT_SCENARIO.with_name(filename))
             session = fresh_session(pack, "hero")

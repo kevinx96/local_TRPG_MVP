@@ -1,12 +1,19 @@
 import json
 import random
 import unittest
+from copy import deepcopy
 from pathlib import Path
 from unittest.mock import patch
 
 from host import app as app_module
 from host import combat, state
+from host.difficulty import apply_difficulty
 from host.scenario_context import select_hybrid_prepared_turn
+from scripts.scenario.mina_reborrow_055 import (
+    ESCORT_NOTICE,
+    REBORROW_ACTION_ID,
+    migrate as migrate_mina_reborrow,
+)
 
 
 SCENARIO_ROOT = Path("host/prompt/processed")
@@ -87,7 +94,6 @@ class DragonStoryTests(unittest.TestCase):
     def test_town_catalog_and_companions_are_complete(self):
         for filename in SCENARIO_FILES:
             with self.subTest(filename=filename):
-                from host.difficulty import apply_difficulty
                 pack = apply_difficulty(self.load_raw(filename), "baby")
                 locations = records(pack, "locations")
                 items = records(pack, "items")
@@ -123,6 +129,59 @@ class DragonStoryTests(unittest.TestCase):
                 self.assertEqual(locations["item_shop"]["npc_ids"], ["sarah", "fire_bat_dragon"])
                 forge_actions = {entry["id"]: entry for entry in locations["forge"]["actions"]}
                 self.assertEqual(forge_actions["activate_ice_charm"]["hidden_for_character"], "hero")
+
+    def test_mina_reborrow_migration_is_idempotent_and_gated_in_both_difficulties(self):
+        for filename in SCENARIO_FILES:
+            with self.subTest(filename=filename):
+                current = self.load_raw(filename)
+                legacy = deepcopy(current)
+                locations = records(legacy, "locations")
+                escort = next(action for action in locations["cave_hot_spring"]["actions"]
+                              if action["id"] == "escort_mina")
+                escort["preview"] = escort["preview"].replace(ESCORT_NOTICE, "").rstrip(chr(0x3002))
+                shop = locations["item_shop"]
+                shop["actions"] = [action for action in shop["actions"] if action["id"] != REBORROW_ACTION_ID]
+                shop["hybrid"]["prepared_turns"] = [
+                    turn for turn in shop["hybrid"]["prepared_turns"]
+                    if turn.get("action_id") != REBORROW_ACTION_ID
+                ]
+                migrated = migrate_mina_reborrow(legacy)
+                self.assertEqual(migrated, current)
+                self.assertEqual(migrate_mina_reborrow(migrated), migrated)
+                for difficulty in ("baby", "normal"):
+                    with self.subTest(difficulty=difficulty):
+                        pack = apply_difficulty(deepcopy(migrated), difficulty)
+                        locations = records(pack, "locations")
+                        actions = {action["id"]: action for action in iter_actions(
+                            locations["item_shop"]["actions"])}
+                        original = actions["borrow_fire_bat_dragon"]
+                        reborrow = actions[REBORROW_ACTION_ID]
+                        self.assertEqual(reborrow["roll"], original["roll"])
+                        self.assertEqual(reborrow["success_effects"], original["success_effects"])
+                        self.assertEqual(reborrow["failure_effects"], original["failure_effects"])
+                        self.assertEqual(reborrow["once"], "asked_to_borrow_fire_bat_dragon_again")
+                        ready = {"flags": {"borrowed_fire_bat_dragon": True, "mina_quest_done": True},
+                                 "companion": None}
+                        self.assertTrue(state._session_requirement_passes(reborrow["requirements"], ready))
+                        for companion in pack["companions"]:
+                            ready["companion"] = {"id": companion["id"]}
+                            self.assertFalse(state._session_requirement_passes(reborrow["requirements"], ready))
+                        ready["companion"] = None
+                        ready["flags"] = {"mina_quest_done": True}
+                        self.assertFalse(state._session_requirement_passes(reborrow["requirements"], ready))
+                        ready["flags"] = {"borrowed_fire_bat_dragon": True}
+                        self.assertFalse(state._session_requirement_passes(reborrow["requirements"], ready))
+                locations = records(current, "locations")
+                escort = next(action for action in locations["cave_hot_spring"]["actions"]
+                              if action["id"] == "escort_mina")
+                self.assertIn(ESCORT_NOTICE, escort["preview"])
+                turns = records(locations["item_shop"].get("hybrid", {}), "prepared_turns")
+                self.assertEqual(
+                    {turns[f"fire_bat_borrow_again_{outcome}"]["outcome"] for outcome in ("success", "failure")},
+                    {"success", "failure"},
+                )
+                placeholder = "".join(chr(value) for value in (0x3010, 0x4EEE, 0x3011))
+                self.assertIn(placeholder, turns["fire_bat_borrow_again_success"]["draft"]["gm_text"])
 
     def test_visual_assets_are_wired_and_present(self):
         client_root = Path("client")

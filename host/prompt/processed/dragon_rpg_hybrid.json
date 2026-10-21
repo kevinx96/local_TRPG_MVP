@@ -5902,6 +5902,42 @@
             "rewrite_notes": [
               "確定済みのアクション結果だけを自然な日本語で描写してください。"
             ]
+          },
+          {
+            "id": "fire_bat_borrow_again_success",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "borrow_fire_bat_dragon_again",
+            "trigger_keywords": [],
+            "action_id": "borrow_fire_bat_dragon_again",
+            "outcome": "success",
+            "draft": {
+              "gm_text": "火コウモリ竜はあなたの匂いを嗅ぐと肩へ飛び乗った。サラは嬉しそうに笑い、「【仮】ちゃんと連れて帰ってね」と送り出した。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
+          },
+          {
+            "id": "fire_bat_borrow_again_failure",
+            "purpose": "choice_response",
+            "source_choice": "",
+            "player_intent": "borrow_fire_bat_dragon_again",
+            "trigger_keywords": [],
+            "action_id": "borrow_fire_bat_dragon_again",
+            "outcome": "failure",
+            "draft": {
+              "gm_text": "火コウモリ竜は羽を逆立て、サラの背後へ隠れた。どうやら今は、あなたをあまり気に入っていないようだ。",
+              "system_log": "",
+              "state_delta": {},
+              "choices": []
+            },
+            "rewrite_notes": [
+              "確定済みのアクション結果だけを自然な日本語で描写してください。"
+            ]
           }
         ]
       },
@@ -5975,6 +6011,69 @@
           "npc_ids_required": [
             "fire_bat_dragon"
           ]
+        },
+        {
+          "id": "borrow_fire_bat_dragon_again",
+          "text": "ペットの火コウモリ竜をもう一度借りる",
+          "preview": "もう一度、火コウモリ竜を借りる",
+          "risk": "説得（知恵）判定・DC10",
+          "intent_keywords": [
+            "ペットの火コウモリ竜をもう一度借りる"
+          ],
+          "roll": {
+            "dice_type": "1d20+wis",
+            "dc": 10,
+            "skill": "説得"
+          },
+          "once": "asked_to_borrow_fire_bat_dragon_again",
+          "critical_enabled": false,
+          "success_effects": [
+            {
+              "set_companion": "fire_bat_dragon"
+            },
+            {
+              "set_flag": "borrowed_fire_bat_dragon"
+            }
+          ],
+          "failure_effects": [
+            {
+              "set_flag": "fire_bat_dragon_dislikes_player"
+            }
+          ],
+          "portrait_image": "/static/images/companion_fire_bat_dragon.png",
+          "risk_source": "action",
+          "npc_id": "sarah",
+          "npc_ids_required": [
+            "fire_bat_dragon"
+          ],
+          "requirements": {
+            "all": [
+              {
+                "flag": "borrowed_fire_bat_dragon"
+              },
+              {
+                "not_companion_id": "blue_robed_mage"
+              },
+              {
+                "not_companion_id": "fire_bat_dragon"
+              },
+              {
+                "not_companion_id": "hydromancer_elio"
+              },
+              {
+                "not_companion_id": "mina"
+              },
+              {
+                "not_companion_id": "paladin_liese"
+              },
+              {
+                "not_companion_id": "robin"
+              },
+              {
+                "flag": "mina_quest_done"
+              }
+            ]
+          }
         },
         {
           "id": "return_castle_from_item_shop",
@@ -13689,7 +13788,7 @@
         {
           "id": "escort_mina",
           "text": "ミーナを連れて行く",
-          "preview": "同行者にする（2ラウンドごとに氷の魔法で援護）",
+          "preview": "同行者にする（2ラウンドごとに氷の魔法で援護）。【仮】今の同行者とは別れることになる。",
           "risk": "判定不要",
           "intent_keywords": [
             "ミーナを連れて行く"
@@ -28466,6 +28565,20 @@
       "status": "TODO(design)"
     },
     {
+      "text": "火コウモリ竜はあなたの匂いを嗅ぐと肩へ飛び乗った。サラは嬉しそうに笑い、「【仮】ちゃんと連れて帰ってね」と送り出した。",
+      "npc_ids": [
+        "sarah",
+        "fire_bat_dragon"
+      ],
+      "path": "/locations/item_shop/hybrid/prepared_turns/fire_bat_borrow_again_success/draft/gm_text",
+      "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
+      "replacements": {
+        "sarah": "サラはもうここにはいない。",
+        "fire_bat_dragon": "火コウモリ竜はもうここにはいない。"
+      },
+      "status": "TODO(design)"
+    },
+    {
       "text": "「……それは。どこでこれを」ローベルトは長い間ハンマーを握りしめていた。「礼だ。好きな防具を一つ、仕立て直してやる」",
       "npc_ids": [
         "blacksmith"
@@ -28605,7 +28718,7 @@
         "sarah",
         "fire_bat_dragon"
       ],
-      "path": "/locations/item_shop/hybrid/prepared_turns/fire_bat_borrow_failure/draft/gm_text",
+      "path": "/locations/item_shop/hybrid/prepared_turns/fire_bat_borrow_again_failure/draft/gm_text",
       "replacement": "サラはもうここにはいない。 火コウモリ竜はもうここにはいない。",
       "replacements": {
         "sarah": "サラはもうここにはいない。",

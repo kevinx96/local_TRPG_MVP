@@ -270,6 +270,8 @@ class OaksdawnQuestsTests(unittest.TestCase):
             apply_spring_postgame(pack)
             from scripts.scenario.levels_skills_v2 import migrate as levels
             pack = holy_sword(levels(pack))
+            from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
+            pack = mina_reborrow(pack)
             self.assertEqual(pack, original)
             reference = json.loads(DEFAULT_SCENARIO.read_text(encoding="utf-8"))
             self.assertEqual({i["id"]: i["icon"] for i in pack["items"]},

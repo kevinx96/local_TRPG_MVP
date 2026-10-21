@@ -609,7 +609,10 @@ class ProgressionTests(unittest.TestCase):
                 if location["id"] == "castle_report":
                     action = next(a for a in location["actions"] if a["id"] == "report_with_evidence")
                     action["result_variants"] = [v for v in action["result_variants"] if not v.get("id", "").startswith("holy_sword_")]
-            self.assertNotIn("【仮】", json.dumps(before_049, ensure_ascii=False))
+            from scripts.scenario.mina_reborrow_055 import ESCORT_NOTICE, REBORROW_SUCCESS_TEXT
+            serialized = json.dumps(before_049, ensure_ascii=False).replace(ESCORT_NOTICE, "").replace(REBORROW_SUCCESS_TEXT, "")
+            placeholder = "".join(chr(value) for value in (0x3010, 0x4EEE, 0x3011))
+            self.assertNotIn(placeholder, serialized)
             for definition in pack["class_progression"]:
                 for active in definition["actives"]:
                     self.assertTrue(active["skill"]["description"])

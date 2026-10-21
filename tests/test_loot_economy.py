@@ -226,6 +226,8 @@ class LootEconomyTests(unittest.TestCase):
             apply_spring_postgame(updated)
             from scripts.scenario.levels_skills_v2 import migrate as levels
             updated = holy_sword(levels(updated))
+            from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
+            updated = mina_reborrow(updated)
             self.assertEqual(updated, pack)
         for key, identifiers in (("items", set(LOOT)), ("quests", {f"side_{r['id']}" for r in REQUESTS}),
                                  ("shops", {"oaksdawn_workshop_shop"})):

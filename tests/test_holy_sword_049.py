@@ -286,7 +286,8 @@ class HolySwordTests(unittest.TestCase):
     def test_baby_effective_diff_only_revision(self):
         for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
             raw = subprocess.check_output(["git", "show", f"HEAD:host/prompt/processed/{filename}"])
-            before = difficulty.apply_difficulty(json.loads(raw), "baby")
+            from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
+            before = difficulty.apply_difficulty(mina_reborrow(json.loads(raw)), "baby")
             after = difficulty.apply_difficulty(json.loads((ROOT / "host/prompt/processed" / filename).read_text(encoding="utf-8")), "baby")
             before["meta"]["content_revision"] = after["meta"]["content_revision"]
             self.assertEqual(before, after)

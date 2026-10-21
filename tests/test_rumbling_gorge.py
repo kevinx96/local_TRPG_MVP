@@ -301,6 +301,8 @@ class RumblingGorgeTests(unittest.TestCase):
             apply(upgraded)
             apply_spring_postgame(upgraded)
             upgraded = holy_sword(levels(upgraded))
+            from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
+            upgraded = mina_reborrow(upgraded)
             self.assertEqual(upgraded, pack)
             for loc in pack["locations"]:
                 if loc["id"] in DESCRIPTIONS:
