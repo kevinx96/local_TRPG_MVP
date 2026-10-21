@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from scripts.scenario.holy_sword_049 import migrate as holy_sword
+
 import json
 import random
 import unittest
@@ -204,7 +206,7 @@ class OaksdawnTests(unittest.TestCase):
             apply(upgraded)
             apply_spring_postgame(upgraded)
             from scripts.scenario.levels_skills_v2 import migrate as levels
-            upgraded = levels(upgraded)
+            upgraded = holy_sword(levels(upgraded))
             self.assertEqual(upgraded, pack)
             for enemy in pack["enemies"]:
                 if enemy["id"] in UNDEAD:

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from scripts.scenario.holy_sword_049 import migrate as holy_sword
+
 import json
 import unittest
 from copy import deepcopy
@@ -25,7 +27,7 @@ class ChecksETests(unittest.TestCase):
             apply(again)
             apply_spring_postgame(again)
             from scripts.scenario.levels_skills_v2 import migrate as levels
-            again = levels(again)
+            again = holy_sword(levels(again))
             self.assertEqual(again, pack)
         ids = {entry[0] for entry in CHECKS}
         first, second = (self.actions(pack) for pack in self.packs)

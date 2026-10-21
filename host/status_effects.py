@@ -191,7 +191,9 @@ def tick(session: dict[str, Any], actor: dict[str, Any], rng: Any) -> None:
                 limit -= damage
             if actor is session.get("character"):
                 damage = combat._round_received_damage(session, damage, element)
-            actor["hp"] = max(0, actor["hp"] - damage)
+                combat._damage_player(session, damage)
+            else:
+                actor["hp"] = max(0, actor["hp"] - damage)
             combat._log(session, "status", "status_damage", f"{actor.get('name', '敵')}は{status.get('name', status['id'])}で{damage}ダメージを受けた。",
                         {"damage": damage, "stacks": status["stacks"], "formula": detail, "element": element}, target=actor)
         if "remaining_rounds" in status and status.get("expires") != "enemy_phase_end":

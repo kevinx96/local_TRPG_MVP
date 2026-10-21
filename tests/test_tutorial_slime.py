@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+from scripts.scenario.holy_sword_049 import migrate as holy_sword
 from scripts.scenario.levels_skills_v2 import migrate as levels
 
 import json
@@ -37,7 +39,7 @@ class TutorialSlimeTests(unittest.TestCase):
             pack = json.loads(checkpoints.DEFAULT_SCENARIO.with_name(name).read_text(encoding="utf-8"))
             again = deepcopy(pack)
             apply(again)
-            again = levels(again)
+            again = holy_sword(levels(again))
             self.assertEqual(again, pack, name)
 
     def test_potion_is_given_silently_once(self):

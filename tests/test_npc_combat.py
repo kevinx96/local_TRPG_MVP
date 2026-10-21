@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from scripts.scenario.holy_sword_049 import migrate as holy_sword
+
 import importlib
 import json
 import tempfile
@@ -224,7 +226,7 @@ class NpcCombatTests(unittest.TestCase):
             migration.apply(pack)
             apply_spring_postgame(pack)
             from scripts.scenario.levels_skills_v2 import migrate as levels
-            pack = levels(pack)
+            pack = holy_sword(levels(pack))
             self.assertEqual(before, pack)
             results.append(pack)
         self.assertEqual(results[0]["npc_combat"], results[1]["npc_combat"])

@@ -1,0 +1,2426 @@
+{
+  "gate": {
+    "level6": {
+      "attributes": {
+        "dex": 5,
+        "end": 15,
+        "int": 5,
+        "str": 22,
+        "wis": 5
+      },
+      "exp": 200,
+      "hp": 45,
+      "level": 6,
+      "mp": 13,
+      "sp": 20
+    },
+    "n": 2000,
+    "seed": 20261021,
+    "sword": {
+      "accuracy": 95,
+      "damage": "1d8+78",
+      "element": "holy",
+      "ignores_resistance": true,
+      "kind": "weapon",
+      "name": "勇者の聖剣"
+    }
+  },
+  "gate_results": [
+    {
+      "choices": {
+        "2": "departure_spirit",
+        "4": "departure_spirit",
+        "6": "sword_followup"
+      },
+      "label": "G1",
+      "summary": {
+        "awakening_phase_round": {
+          "draco_dragon:10": 6,
+          "draco_dragon:11": 1,
+          "draco_dragon:3": 36,
+          "draco_dragon:4": 557,
+          "draco_dragon:5": 692,
+          "draco_dragon:6": 425,
+          "draco_dragon:7": 200,
+          "draco_dragon:8": 62,
+          "draco_dragon:9": 17,
+          "draco_human:5": 1,
+          "draco_human:6": 3
+        },
+        "dragon_remaining_hp": {
+          "0": 1655,
+          "123": 1,
+          "128": 1,
+          "129": 3,
+          "130": 4,
+          "131": 4,
+          "132": 6,
+          "133": 10,
+          "134": 4,
+          "135": 7,
+          "136": 6,
+          "137": 1,
+          "138": 4,
+          "139": 4,
+          "140": 2,
+          "141": 1,
+          "142": 1,
+          "214": 1,
+          "217": 1,
+          "40": 1,
+          "42": 1,
+          "44": 2,
+          "45": 4,
+          "46": 4,
+          "47": 5,
+          "48": 12,
+          "49": 15,
+          "50": 20,
+          "51": 16,
+          "52": 26,
+          "53": 29,
+          "54": 31,
+          "55": 30,
+          "56": 22,
+          "57": 22,
+          "58": 9,
+          "59": 18,
+          "60": 10,
+          "61": 3,
+          "62": 2,
+          "63": 2
+        },
+        "human_damage_mean": 14.636,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0,
+        "no_awakening_win_rate": 0.0,
+        "rounds_after_awakening": {
+          "3": 1518,
+          "4": 428,
+          "5": 49,
+          "6": 4,
+          "7": 1
+        },
+        "rounds_after_awakening_mean": 3.271,
+        "rounds_mean": 8.5155,
+        "wilson95": [
+          0.810317992553644,
+          0.8434263414771354
+        ],
+        "win_rate": 0.8275,
+        "wins": 1655
+      }
+    },
+    {
+      "choices": {
+        "2": "departure_spirit",
+        "4": "departure_spirit",
+        "6": "adversity_flame"
+      },
+      "label": "G2",
+      "summary": {
+        "awakening_phase_round": {
+          "draco_dragon:10": 8,
+          "draco_dragon:11": 3,
+          "draco_dragon:3": 9,
+          "draco_dragon:4": 472,
+          "draco_dragon:5": 674,
+          "draco_dragon:6": 513,
+          "draco_dragon:7": 204,
+          "draco_dragon:8": 79,
+          "draco_dragon:9": 24,
+          "draco_human:5": 6,
+          "draco_human:6": 7,
+          "draco_human:7": 1
+        },
+        "dragon_remaining_hp": {
+          "0": 1699,
+          "132": 1,
+          "133": 1,
+          "134": 4,
+          "135": 6,
+          "136": 4,
+          "137": 5,
+          "138": 3,
+          "139": 6,
+          "140": 3,
+          "141": 2,
+          "142": 1,
+          "143": 1,
+          "218": 1,
+          "220": 1,
+          "49": 1,
+          "50": 3,
+          "51": 8,
+          "52": 8,
+          "53": 20,
+          "54": 26,
+          "55": 21,
+          "56": 15,
+          "57": 25,
+          "58": 22,
+          "59": 35,
+          "60": 26,
+          "61": 14,
+          "62": 12,
+          "63": 16,
+          "64": 6,
+          "65": 3,
+          "66": 1
+        },
+        "human_damage_mean": 17.833,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0,
+        "no_awakening_win_rate": 0.0,
+        "rounds_after_awakening": {
+          "3": 1501,
+          "4": 423,
+          "5": 73,
+          "6": 3
+        },
+        "rounds_after_awakening_mean": 3.289,
+        "rounds_mean": 8.7045,
+        "wilson95": [
+          0.8331601825826263,
+          0.864499801367778
+        ],
+        "win_rate": 0.8495,
+        "wins": 1699
+      }
+    },
+    {
+      "choices": {
+        "2": "departure_spirit",
+        "4": "unsinkable_shield",
+        "6": "sword_followup"
+      },
+      "label": "G3",
+      "summary": {
+        "awakening_phase_round": {
+          "draco_dragon:10": 6,
+          "draco_dragon:11": 2,
+          "draco_dragon:3": 27,
+          "draco_dragon:4": 478,
+          "draco_dragon:5": 667,
+          "draco_dragon:6": 489,
+          "draco_dragon:7": 225,
+          "draco_dragon:8": 73,
+          "draco_dragon:9": 22,
+          "draco_human:5": 3,
+          "draco_human:6": 8
+        },
+        "dragon_remaining_hp": {
+          "0": 1660,
+          "123": 1,
+          "128": 1,
+          "129": 1,
+          "130": 2,
+          "131": 6,
+          "132": 4,
+          "133": 9,
+          "134": 2,
+          "135": 3,
+          "136": 9,
+          "137": 3,
+          "138": 3,
+          "139": 3,
+          "140": 2,
+          "142": 1,
+          "214": 1,
+          "215": 1,
+          "217": 1,
+          "40": 1,
+          "42": 1,
+          "44": 2,
+          "45": 4,
+          "46": 6,
+          "47": 5,
+          "48": 9,
+          "49": 12,
+          "50": 21,
+          "51": 18,
+          "52": 25,
+          "53": 27,
+          "54": 28,
+          "55": 36,
+          "56": 23,
+          "57": 26,
+          "58": 7,
+          "59": 16,
+          "60": 10,
+          "61": 5,
+          "62": 3,
+          "63": 1,
+          "64": 1
+        },
+        "human_damage_mean": 16.4705,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0,
+        "no_awakening_win_rate": 0.0,
+        "rounds_after_awakening": {
+          "3": 1502,
+          "4": 443,
+          "5": 49,
+          "6": 4,
+          "7": 2
+        },
+        "rounds_after_awakening_mean": 3.2805,
+        "rounds_mean": 8.6625,
+        "wilson95": [
+          0.8129084684026154,
+          0.8458262803917574
+        ],
+        "win_rate": 0.83,
+        "wins": 1660
+      }
+    },
+    {
+      "choices": {
+        "2": "departure_spirit",
+        "4": "unsinkable_shield",
+        "6": "adversity_flame"
+      },
+      "label": "G4",
+      "summary": {
+        "awakening_phase_round": {
+          "draco_dragon:10": 9,
+          "draco_dragon:11": 3,
+          "draco_dragon:13": 1,
+          "draco_dragon:3": 4,
+          "draco_dragon:4": 384,
+          "draco_dragon:5": 658,
+          "draco_dragon:6": 547,
+          "draco_dragon:7": 251,
+          "draco_dragon:8": 79,
+          "draco_dragon:9": 34,
+          "draco_human:5": 10,
+          "draco_human:6": 16,
+          "draco_human:7": 2,
+          "draco_human:8": 2
+        },
+        "dragon_remaining_hp": {
+          "0": 1679,
+          "132": 1,
+          "133": 1,
+          "134": 4,
+          "135": 4,
+          "136": 5,
+          "137": 5,
+          "138": 4,
+          "139": 7,
+          "140": 5,
+          "141": 2,
+          "142": 1,
+          "143": 1,
+          "218": 1,
+          "49": 1,
+          "50": 2,
+          "51": 5,
+          "52": 9,
+          "53": 19,
+          "54": 30,
+          "55": 19,
+          "56": 16,
+          "57": 21,
+          "58": 29,
+          "59": 36,
+          "60": 31,
+          "61": 18,
+          "62": 13,
+          "63": 16,
+          "64": 10,
+          "65": 3,
+          "66": 2
+        },
+        "human_damage_mean": 19.935,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0,
+        "no_awakening_win_rate": 0.0,
+        "rounds_after_awakening": {
+          "3": 1493,
+          "4": 429,
+          "5": 75,
+          "6": 3
+        },
+        "rounds_after_awakening_mean": 3.294,
+        "rounds_mean": 8.8575,
+        "wilson95": [
+          0.8227641986329085,
+          0.8549341262631208
+        ],
+        "win_rate": 0.8395,
+        "wins": 1679
+      }
+    },
+    {
+      "choices": {
+        "2": "heavy_armor_lore",
+        "4": "departure_spirit",
+        "6": "sword_followup"
+      },
+      "label": "G5",
+      "summary": {
+        "awakening_phase_round": {
+          "draco_dragon:10": 10,
+          "draco_dragon:11": 3,
+          "draco_dragon:3": 11,
+          "draco_dragon:4": 301,
+          "draco_dragon:5": 646,
+          "draco_dragon:6": 562,
+          "draco_dragon:7": 309,
+          "draco_dragon:8": 117,
+          "draco_dragon:9": 36,
+          "draco_human:6": 4,
+          "draco_human:7": 1
+        },
+        "dragon_remaining_hp": {
+          "0": 1741,
+          "123": 1,
+          "128": 2,
+          "129": 2,
+          "130": 4,
+          "131": 5,
+          "132": 3,
+          "133": 8,
+          "134": 2,
+          "135": 2,
+          "136": 6,
+          "137": 3,
+          "138": 2,
+          "142": 1,
+          "215": 1,
+          "40": 1,
+          "42": 1,
+          "43": 1,
+          "44": 1,
+          "45": 3,
+          "46": 4,
+          "47": 5,
+          "48": 8,
+          "49": 9,
+          "50": 17,
+          "51": 18,
+          "52": 20,
+          "53": 21,
+          "54": 16,
+          "55": 29,
+          "56": 13,
+          "57": 21,
+          "58": 6,
+          "59": 11,
+          "60": 7,
+          "61": 3,
+          "63": 1,
+          "64": 1
+        },
+        "human_damage_mean": 14.4145,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0,
+        "no_awakening_win_rate": 0.0,
+        "rounds_after_awakening": {
+          "3": 1428,
+          "4": 494,
+          "5": 71,
+          "6": 5,
+          "7": 2
+        },
+        "rounds_after_awakening_mean": 3.3295,
+        "rounds_mean": 9.0425,
+        "wilson95": [
+          0.8550719644987861,
+          0.8845075034658054
+        ],
+        "win_rate": 0.8705,
+        "wins": 1741
+      }
+    },
+    {
+      "choices": {
+        "2": "heavy_armor_lore",
+        "4": "departure_spirit",
+        "6": "adversity_flame"
+      },
+      "label": "G6",
+      "summary": {
+        "awakening_phase_round": {
+          "draco_dragon:10": 15,
+          "draco_dragon:11": 7,
+          "draco_dragon:13": 2,
+          "draco_dragon:3": 4,
+          "draco_dragon:4": 218,
+          "draco_dragon:5": 596,
+          "draco_dragon:6": 626,
+          "draco_dragon:7": 339,
+          "draco_dragon:8": 130,
+          "draco_dragon:9": 55,
+          "draco_human:6": 5,
+          "draco_human:7": 2,
+          "draco_human:8": 1
+        },
+        "dragon_remaining_hp": {
+          "0": 1760,
+          "132": 2,
+          "133": 1,
+          "134": 2,
+          "135": 3,
+          "136": 3,
+          "137": 1,
+          "138": 1,
+          "139": 6,
+          "140": 2,
+          "141": 2,
+          "142": 1,
+          "143": 1,
+          "49": 2,
+          "50": 3,
+          "51": 7,
+          "52": 13,
+          "53": 14,
+          "54": 23,
+          "55": 13,
+          "56": 22,
+          "57": 16,
+          "58": 20,
+          "59": 21,
+          "60": 19,
+          "61": 14,
+          "62": 10,
+          "63": 10,
+          "64": 6,
+          "65": 1,
+          "66": 1
+        },
+        "human_damage_mean": 17.4655,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0,
+        "no_awakening_win_rate": 0.0,
+        "rounds_after_awakening": {
+          "3": 1434,
+          "4": 482,
+          "5": 82,
+          "6": 2
+        },
+        "rounds_after_awakening_mean": 3.326,
+        "rounds_mean": 9.2425,
+        "wilson95": [
+          0.8650247373766291,
+          0.8935183066896186
+        ],
+        "win_rate": 0.88,
+        "wins": 1760
+      }
+    },
+    {
+      "choices": {
+        "2": "heavy_armor_lore",
+        "4": "unsinkable_shield",
+        "6": "sword_followup"
+      },
+      "label": "G7",
+      "summary": {
+        "awakening_phase_round": {
+          "draco_dragon:10": 15,
+          "draco_dragon:11": 5,
+          "draco_dragon:3": 8,
+          "draco_dragon:4": 241,
+          "draco_dragon:5": 606,
+          "draco_dragon:6": 589,
+          "draco_dragon:7": 331,
+          "draco_dragon:8": 139,
+          "draco_dragon:9": 49,
+          "draco_human:5": 4,
+          "draco_human:6": 6,
+          "draco_human:7": 3,
+          "draco_human:8": 1,
+          "draco_human:9": 3
+        },
+        "dragon_remaining_hp": {
+          "0": 1739,
+          "123": 1,
+          "126": 1,
+          "128": 2,
+          "129": 1,
+          "130": 4,
+          "131": 6,
+          "132": 3,
+          "133": 8,
+          "134": 2,
+          "135": 2,
+          "136": 6,
+          "137": 3,
+          "138": 1,
+          "140": 1,
+          "141": 2,
+          "142": 1,
+          "215": 1,
+          "220": 1,
+          "40": 1,
+          "42": 1,
+          "43": 1,
+          "44": 1,
+          "45": 2,
+          "46": 3,
+          "47": 5,
+          "48": 7,
+          "49": 8,
+          "50": 17,
+          "51": 15,
+          "52": 22,
+          "53": 20,
+          "54": 16,
+          "55": 25,
+          "56": 14,
+          "57": 20,
+          "58": 9,
+          "59": 15,
+          "60": 6,
+          "61": 4,
+          "63": 2,
+          "64": 1
+        },
+        "human_damage_mean": 16.4255,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0,
+        "no_awakening_win_rate": 0.0,
+        "rounds_after_awakening": {
+          "3": 1419,
+          "4": 500,
+          "5": 75,
+          "6": 4,
+          "7": 2
+        },
+        "rounds_after_awakening_mean": 3.335,
+        "rounds_mean": 9.2045,
+        "wilson95": [
+          0.8540258583313894,
+          0.8835574437277646
+        ],
+        "win_rate": 0.8695,
+        "wins": 1739
+      }
+    },
+    {
+      "choices": {
+        "2": "heavy_armor_lore",
+        "4": "unsinkable_shield",
+        "6": "adversity_flame"
+      },
+      "label": "G8",
+      "summary": {
+        "awakening_phase_round": {
+          "draco_dragon:10": 17,
+          "draco_dragon:11": 10,
+          "draco_dragon:13": 1,
+          "draco_dragon:3": 2,
+          "draco_dragon:4": 178,
+          "draco_dragon:5": 547,
+          "draco_dragon:6": 641,
+          "draco_dragon:7": 369,
+          "draco_dragon:8": 158,
+          "draco_dragon:9": 57,
+          "draco_human:5": 3,
+          "draco_human:6": 6,
+          "draco_human:7": 6,
+          "draco_human:8": 2,
+          "draco_human:9": 3
+        },
+        "dragon_remaining_hp": {
+          "0": 1746,
+          "132": 1,
+          "133": 1,
+          "134": 1,
+          "135": 4,
+          "136": 6,
+          "137": 1,
+          "138": 1,
+          "139": 6,
+          "140": 3,
+          "141": 5,
+          "142": 2,
+          "143": 1,
+          "49": 1,
+          "50": 2,
+          "51": 8,
+          "52": 12,
+          "53": 15,
+          "54": 20,
+          "55": 19,
+          "56": 18,
+          "57": 19,
+          "58": 21,
+          "59": 22,
+          "60": 20,
+          "61": 12,
+          "62": 14,
+          "63": 10,
+          "64": 7,
+          "65": 1,
+          "66": 1
+        },
+        "human_damage_mean": 19.284,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0,
+        "no_awakening_win_rate": 0.0,
+        "rounds_after_awakening": {
+          "3": 1436,
+          "4": 475,
+          "5": 84,
+          "6": 5
+        },
+        "rounds_after_awakening_mean": 3.329,
+        "rounds_mean": 9.373,
+        "wilson95": [
+          0.8576884946056319,
+          0.8868813881225533
+        ],
+        "win_rate": 0.873,
+        "wins": 1746
+      }
+    }
+  ],
+  "R1_R2": [
+    {
+      "choices": null,
+      "label": "R1:P2:none:heuristic_v3:ordinary",
+      "summary": {
+        "awakening_phase_round": {},
+        "dragon_remaining_hp": {
+          "0": 152,
+          "1": 10,
+          "10": 9,
+          "100": 7,
+          "101": 9,
+          "102": 9,
+          "103": 7,
+          "104": 7,
+          "105": 9,
+          "106": 4,
+          "107": 6,
+          "108": 7,
+          "109": 7,
+          "11": 13,
+          "110": 7,
+          "111": 8,
+          "112": 7,
+          "113": 9,
+          "114": 3,
+          "115": 2,
+          "116": 3,
+          "117": 4,
+          "118": 7,
+          "119": 3,
+          "12": 10,
+          "120": 2,
+          "121": 5,
+          "122": 2,
+          "123": 2,
+          "124": 5,
+          "125": 6,
+          "127": 3,
+          "128": 1,
+          "129": 3,
+          "13": 10,
+          "130": 1,
+          "131": 1,
+          "133": 2,
+          "134": 2,
+          "135": 2,
+          "136": 1,
+          "137": 1,
+          "138": 5,
+          "14": 10,
+          "140": 1,
+          "141": 3,
+          "143": 1,
+          "145": 1,
+          "146": 3,
+          "147": 1,
+          "148": 3,
+          "149": 1,
+          "15": 17,
+          "151": 2,
+          "153": 1,
+          "154": 2,
+          "158": 2,
+          "159": 1,
+          "16": 15,
+          "161": 1,
+          "163": 1,
+          "166": 2,
+          "17": 13,
+          "170": 1,
+          "173": 1,
+          "175": 2,
+          "177": 1,
+          "18": 17,
+          "181": 1,
+          "183": 1,
+          "187": 1,
+          "19": 9,
+          "190": 1,
+          "2": 4,
+          "20": 9,
+          "21": 4,
+          "22": 15,
+          "23": 14,
+          "24": 18,
+          "25": 17,
+          "26": 20,
+          "27": 18,
+          "28": 13,
+          "29": 25,
+          "3": 7,
+          "30": 12,
+          "31": 21,
+          "32": 19,
+          "33": 14,
+          "34": 22,
+          "35": 20,
+          "36": 22,
+          "37": 20,
+          "38": 31,
+          "39": 15,
+          "4": 4,
+          "40": 18,
+          "41": 23,
+          "42": 27,
+          "43": 21,
+          "44": 25,
+          "45": 27,
+          "46": 21,
+          "47": 26,
+          "48": 24,
+          "49": 23,
+          "5": 7,
+          "50": 23,
+          "51": 30,
+          "52": 26,
+          "53": 31,
+          "54": 29,
+          "55": 22,
+          "56": 25,
+          "57": 22,
+          "58": 16,
+          "59": 18,
+          "6": 10,
+          "60": 22,
+          "61": 22,
+          "62": 18,
+          "63": 21,
+          "64": 22,
+          "65": 19,
+          "66": 7,
+          "67": 20,
+          "68": 27,
+          "69": 19,
+          "7": 7,
+          "70": 19,
+          "71": 20,
+          "72": 28,
+          "73": 20,
+          "74": 18,
+          "75": 13,
+          "76": 12,
+          "77": 17,
+          "78": 13,
+          "79": 16,
+          "8": 12,
+          "80": 18,
+          "81": 17,
+          "82": 13,
+          "83": 19,
+          "84": 13,
+          "85": 10,
+          "86": 5,
+          "87": 10,
+          "88": 15,
+          "89": 9,
+          "9": 11,
+          "90": 15,
+          "91": 11,
+          "92": 10,
+          "93": 24,
+          "94": 9,
+          "95": 13,
+          "96": 19,
+          "97": 9,
+          "98": 7,
+          "99": 4
+        },
+        "human_damage_mean": 0.7125,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.924,
+        "no_awakening_win_rate": 0.076,
+        "rounds_after_awakening": {},
+        "rounds_after_awakening_mean": null,
+        "rounds_mean": 22.5515,
+        "wilson95": [
+          0.06518168804667072,
+          0.08844396804783176
+        ],
+        "win_rate": 0.076,
+        "wins": 152
+      }
+    },
+    {
+      "choices": null,
+      "label": "R1:P2:none:heuristic_v3:A",
+      "summary": {
+        "awakening_phase_round": {
+          "draco_dragon:12": 1,
+          "draco_dragon:13": 3,
+          "draco_dragon:14": 21,
+          "draco_dragon:15": 47,
+          "draco_dragon:16": 82,
+          "draco_dragon:17": 125,
+          "draco_dragon:18": 132,
+          "draco_dragon:19": 146,
+          "draco_dragon:20": 134,
+          "draco_dragon:21": 140,
+          "draco_dragon:22": 117,
+          "draco_dragon:23": 139,
+          "draco_dragon:24": 116,
+          "draco_dragon:25": 111,
+          "draco_dragon:26": 117,
+          "draco_dragon:27": 137,
+          "draco_dragon:28": 99,
+          "draco_dragon:29": 77,
+          "draco_dragon:30": 51,
+          "draco_dragon:31": 19,
+          "draco_dragon:32": 21,
+          "draco_dragon:33": 12,
+          "draco_dragon:34": 11,
+          "draco_dragon:35": 2
+        },
+        "dragon_remaining_hp": {
+          "0": 2000
+        },
+        "human_damage_mean": 0.7125,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0,
+        "no_awakening_win_rate": 0.07,
+        "rounds_after_awakening": {
+          "1": 1231,
+          "10": 1,
+          "2": 466,
+          "3": 135,
+          "4": 22,
+          "5": 4,
+          "8": 1
+        },
+        "rounds_after_awakening_mean": 1.4483870967741936,
+        "rounds_mean": 23.7985,
+        "wilson95": [
+          0.9980829527187469,
+          0.9999999999999998
+        ],
+        "win_rate": 1.0,
+        "wins": 2000
+      }
+    },
+    {
+      "choices": null,
+      "label": "R1:P2:none:attack_only:ordinary",
+      "summary": {
+        "awakening_phase_round": {},
+        "dragon_remaining_hp": {
+          "130": 1,
+          "133": 1,
+          "137": 1,
+          "138": 1,
+          "142": 1,
+          "143": 1,
+          "144": 2,
+          "147": 2,
+          "148": 4,
+          "149": 1,
+          "150": 1,
+          "151": 4,
+          "152": 6,
+          "153": 3,
+          "154": 5,
+          "155": 5,
+          "156": 5,
+          "157": 3,
+          "158": 12,
+          "159": 8,
+          "160": 6,
+          "161": 16,
+          "162": 9,
+          "163": 14,
+          "164": 24,
+          "165": 13,
+          "166": 19,
+          "167": 20,
+          "168": 20,
+          "169": 27,
+          "170": 25,
+          "171": 33,
+          "172": 31,
+          "173": 33,
+          "174": 40,
+          "175": 31,
+          "176": 34,
+          "177": 48,
+          "178": 44,
+          "179": 54,
+          "180": 50,
+          "181": 62,
+          "182": 54,
+          "183": 62,
+          "184": 57,
+          "185": 74,
+          "186": 69,
+          "187": 60,
+          "188": 83,
+          "189": 71,
+          "190": 69,
+          "191": 58,
+          "192": 70,
+          "193": 56,
+          "194": 61,
+          "195": 50,
+          "196": 54,
+          "197": 50,
+          "198": 43,
+          "199": 45,
+          "200": 33,
+          "201": 21,
+          "202": 31,
+          "203": 25,
+          "204": 23,
+          "205": 15,
+          "206": 14,
+          "207": 12,
+          "208": 5,
+          "209": 7,
+          "210": 3,
+          "211": 2,
+          "212": 2,
+          "213": 1
+        },
+        "human_damage_mean": 10.9895,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 1.0,
+        "no_awakening_win_rate": 0.0,
+        "rounds_after_awakening": {},
+        "rounds_after_awakening_mean": null,
+        "rounds_mean": 22.1585,
+        "wilson95": [
+          1.0842021724855044e-19,
+          0.001917047281252934
+        ],
+        "win_rate": 0.0,
+        "wins": 0
+      }
+    },
+    {
+      "choices": null,
+      "label": "R1:P2:none:attack_only:A",
+      "summary": {
+        "awakening_phase_round": {
+          "draco_dragon:11": 1,
+          "draco_dragon:12": 9,
+          "draco_dragon:13": 23,
+          "draco_dragon:14": 39,
+          "draco_dragon:15": 78,
+          "draco_dragon:16": 104,
+          "draco_dragon:17": 115,
+          "draco_dragon:18": 149,
+          "draco_dragon:19": 148,
+          "draco_dragon:20": 145,
+          "draco_dragon:21": 120,
+          "draco_dragon:22": 109,
+          "draco_dragon:23": 142,
+          "draco_dragon:24": 131,
+          "draco_dragon:25": 150,
+          "draco_dragon:26": 136,
+          "draco_dragon:27": 119,
+          "draco_dragon:28": 102,
+          "draco_dragon:29": 71,
+          "draco_dragon:30": 37,
+          "draco_dragon:31": 35,
+          "draco_dragon:32": 17,
+          "draco_dragon:33": 6,
+          "draco_dragon:34": 6,
+          "draco_dragon:35": 5,
+          "draco_dragon:36": 1,
+          "draco_dragon:37": 1,
+          "draco_dragon:39": 1
+        },
+        "dragon_remaining_hp": {
+          "0": 1900,
+          "1": 2,
+          "106": 2,
+          "107": 1,
+          "109": 1,
+          "114": 1,
+          "12": 1,
+          "122": 2,
+          "128": 1,
+          "14": 1,
+          "16": 2,
+          "17": 2,
+          "18": 1,
+          "19": 1,
+          "196": 1,
+          "2": 1,
+          "20": 3,
+          "21": 3,
+          "22": 2,
+          "23": 8,
+          "24": 4,
+          "25": 6,
+          "26": 1,
+          "27": 3,
+          "28": 5,
+          "29": 6,
+          "30": 1,
+          "31": 4,
+          "32": 3,
+          "33": 2,
+          "34": 2,
+          "35": 3,
+          "36": 6,
+          "37": 1,
+          "39": 1,
+          "4": 1,
+          "40": 1,
+          "42": 1,
+          "43": 1,
+          "44": 1,
+          "45": 2,
+          "5": 2,
+          "7": 2,
+          "8": 2,
+          "82": 1,
+          "85": 1,
+          "9": 1
+        },
+        "human_damage_mean": 10.9895,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0,
+        "no_awakening_win_rate": 0.0,
+        "rounds_after_awakening": {
+          "10": 29,
+          "11": 8,
+          "12": 3,
+          "13": 5,
+          "14": 2,
+          "2": 97,
+          "3": 1195,
+          "4": 399,
+          "5": 115,
+          "6": 51,
+          "7": 51,
+          "8": 23,
+          "9": 22
+        },
+        "rounds_after_awakening_mean": 3.751,
+        "rounds_mean": 25.9095,
+        "wilson95": [
+          0.9395558910656041,
+          0.9587187663812682
+        ],
+        "win_rate": 0.95,
+        "wins": 1900
+      }
+    },
+    {
+      "choices": null,
+      "label": "R1:P2:all:heuristic_v3:ordinary",
+      "summary": {
+        "awakening_phase_round": {},
+        "dragon_remaining_hp": {
+          "0": 1601,
+          "1": 16,
+          "10": 12,
+          "103": 1,
+          "11": 6,
+          "111": 2,
+          "12": 5,
+          "13": 9,
+          "14": 5,
+          "148": 1,
+          "15": 8,
+          "16": 10,
+          "17": 6,
+          "18": 11,
+          "19": 9,
+          "2": 12,
+          "20": 7,
+          "21": 8,
+          "22": 6,
+          "23": 7,
+          "24": 7,
+          "25": 4,
+          "26": 3,
+          "27": 9,
+          "28": 7,
+          "29": 5,
+          "3": 11,
+          "30": 4,
+          "31": 12,
+          "32": 3,
+          "33": 7,
+          "34": 3,
+          "35": 7,
+          "36": 8,
+          "37": 4,
+          "38": 5,
+          "39": 4,
+          "4": 11,
+          "40": 6,
+          "41": 6,
+          "42": 2,
+          "43": 5,
+          "44": 4,
+          "45": 2,
+          "46": 4,
+          "47": 2,
+          "48": 1,
+          "49": 2,
+          "5": 8,
+          "50": 3,
+          "51": 3,
+          "52": 2,
+          "53": 2,
+          "54": 1,
+          "55": 6,
+          "57": 2,
+          "58": 1,
+          "59": 2,
+          "6": 14,
+          "60": 1,
+          "62": 2,
+          "63": 1,
+          "64": 2,
+          "66": 1,
+          "67": 1,
+          "68": 1,
+          "69": 2,
+          "7": 19,
+          "70": 1,
+          "71": 1,
+          "72": 2,
+          "75": 1,
+          "77": 1,
+          "79": 1,
+          "8": 11,
+          "80": 2,
+          "81": 1,
+          "83": 1,
+          "84": 1,
+          "9": 10,
+          "90": 1,
+          "92": 1,
+          "95": 1
+        },
+        "human_damage_mean": 0.642,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.1995,
+        "no_awakening_win_rate": 0.8005,
+        "rounds_after_awakening": {},
+        "rounds_after_awakening_mean": null,
+        "rounds_mean": 25.0975,
+        "wilson95": [
+          0.78241724767193,
+          0.817430606912037
+        ],
+        "win_rate": 0.8005,
+        "wins": 1601
+      }
+    },
+    {
+      "choices": null,
+      "label": "R1:P2:all:heuristic_v3:A",
+      "summary": {
+        "awakening_phase_round": {
+          "draco_dragon:17": 3,
+          "draco_dragon:18": 3,
+          "draco_dragon:19": 4,
+          "draco_dragon:20": 12,
+          "draco_dragon:21": 3,
+          "draco_dragon:22": 19,
+          "draco_dragon:23": 8,
+          "draco_dragon:24": 12,
+          "draco_dragon:25": 9,
+          "draco_dragon:26": 9,
+          "draco_dragon:27": 17,
+          "draco_dragon:28": 25,
+          "draco_dragon:29": 32,
+          "draco_dragon:30": 29,
+          "draco_dragon:31": 39,
+          "draco_dragon:32": 49,
+          "draco_dragon:33": 34,
+          "draco_dragon:34": 29,
+          "draco_dragon:35": 37,
+          "draco_dragon:36": 22,
+          "draco_dragon:37": 9,
+          "draco_dragon:38": 8,
+          "draco_dragon:39": 3,
+          "draco_dragon:40": 1
+        },
+        "dragon_remaining_hp": {
+          "0": 2000
+        },
+        "human_damage_mean": 0.642,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0,
+        "no_awakening_win_rate": 0.792,
+        "rounds_after_awakening": {
+          "1": 364,
+          "2": 45,
+          "3": 5,
+          "4": 1,
+          "5": 1
+        },
+        "rounds_after_awakening_mean": 1.1490384615384615,
+        "rounds_mean": 25.304,
+        "wilson95": [
+          0.9980829527187469,
+          0.9999999999999998
+        ],
+        "win_rate": 1.0,
+        "wins": 2000
+      }
+    },
+    {
+      "choices": null,
+      "label": "R1:P2:all:attack_only:ordinary",
+      "summary": {
+        "awakening_phase_round": {},
+        "dragon_remaining_hp": {
+          "0": 25,
+          "1": 4,
+          "10": 6,
+          "100": 19,
+          "101": 21,
+          "102": 28,
+          "103": 20,
+          "104": 23,
+          "105": 26,
+          "106": 14,
+          "107": 12,
+          "108": 19,
+          "109": 17,
+          "11": 2,
+          "110": 19,
+          "111": 13,
+          "112": 16,
+          "113": 10,
+          "114": 23,
+          "115": 14,
+          "116": 14,
+          "117": 12,
+          "118": 17,
+          "119": 9,
+          "12": 1,
+          "120": 11,
+          "121": 10,
+          "122": 12,
+          "123": 10,
+          "124": 8,
+          "125": 6,
+          "126": 12,
+          "127": 10,
+          "128": 6,
+          "129": 11,
+          "13": 3,
+          "130": 5,
+          "131": 11,
+          "132": 6,
+          "133": 5,
+          "134": 3,
+          "135": 7,
+          "136": 4,
+          "137": 5,
+          "138": 2,
+          "139": 1,
+          "14": 5,
+          "140": 2,
+          "141": 3,
+          "142": 4,
+          "143": 4,
+          "144": 1,
+          "145": 1,
+          "146": 1,
+          "147": 1,
+          "148": 1,
+          "149": 2,
+          "15": 3,
+          "150": 1,
+          "151": 1,
+          "152": 2,
+          "153": 2,
+          "154": 1,
+          "156": 1,
+          "157": 1,
+          "16": 1,
+          "161": 1,
+          "164": 1,
+          "168": 2,
+          "17": 6,
+          "18": 5,
+          "19": 4,
+          "20": 1,
+          "21": 5,
+          "22": 2,
+          "23": 3,
+          "24": 4,
+          "25": 3,
+          "26": 4,
+          "27": 4,
+          "28": 8,
+          "29": 3,
+          "3": 3,
+          "30": 8,
+          "31": 8,
+          "32": 9,
+          "33": 6,
+          "34": 9,
+          "35": 9,
+          "36": 9,
+          "37": 9,
+          "38": 9,
+          "39": 9,
+          "4": 1,
+          "40": 12,
+          "41": 3,
+          "42": 10,
+          "43": 9,
+          "44": 8,
+          "45": 9,
+          "46": 13,
+          "47": 14,
+          "48": 11,
+          "49": 15,
+          "5": 3,
+          "50": 17,
+          "51": 13,
+          "52": 16,
+          "53": 21,
+          "54": 23,
+          "55": 13,
+          "56": 15,
+          "57": 24,
+          "58": 18,
+          "59": 21,
+          "6": 1,
+          "60": 19,
+          "61": 18,
+          "62": 25,
+          "63": 25,
+          "64": 20,
+          "65": 20,
+          "66": 21,
+          "67": 23,
+          "68": 22,
+          "69": 28,
+          "7": 3,
+          "70": 18,
+          "71": 29,
+          "72": 23,
+          "73": 29,
+          "74": 34,
+          "75": 32,
+          "76": 22,
+          "77": 26,
+          "78": 28,
+          "79": 32,
+          "8": 1,
+          "80": 31,
+          "81": 30,
+          "82": 33,
+          "83": 12,
+          "84": 30,
+          "85": 26,
+          "86": 35,
+          "87": 22,
+          "88": 18,
+          "89": 24,
+          "9": 2,
+          "90": 26,
+          "91": 29,
+          "92": 32,
+          "93": 21,
+          "94": 15,
+          "95": 26,
+          "96": 24,
+          "97": 21,
+          "98": 20,
+          "99": 21
+        },
+        "human_damage_mean": 3.1715,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.9875,
+        "no_awakening_win_rate": 0.0125,
+        "rounds_after_awakening": {},
+        "rounds_after_awakening_mean": null,
+        "rounds_mean": 31.4635,
+        "wilson95": [
+          0.008481081388571086,
+          0.018388039710650523
+        ],
+        "win_rate": 0.0125,
+        "wins": 25
+      }
+    },
+    {
+      "choices": null,
+      "label": "R1:P2:all:attack_only:A",
+      "summary": {
+        "awakening_phase_round": {
+          "draco_dragon:13": 1,
+          "draco_dragon:14": 2,
+          "draco_dragon:15": 2,
+          "draco_dragon:16": 10,
+          "draco_dragon:17": 13,
+          "draco_dragon:18": 9,
+          "draco_dragon:19": 17,
+          "draco_dragon:20": 13,
+          "draco_dragon:21": 18,
+          "draco_dragon:22": 27,
+          "draco_dragon:23": 27,
+          "draco_dragon:24": 29,
+          "draco_dragon:25": 41,
+          "draco_dragon:26": 50,
+          "draco_dragon:27": 61,
+          "draco_dragon:28": 94,
+          "draco_dragon:29": 156,
+          "draco_dragon:30": 183,
+          "draco_dragon:31": 180,
+          "draco_dragon:32": 187,
+          "draco_dragon:33": 199,
+          "draco_dragon:34": 184,
+          "draco_dragon:35": 122,
+          "draco_dragon:36": 120,
+          "draco_dragon:37": 81,
+          "draco_dragon:38": 63,
+          "draco_dragon:39": 43,
+          "draco_dragon:40": 20,
+          "draco_dragon:41": 13,
+          "draco_dragon:42": 6,
+          "draco_dragon:43": 3,
+          "draco_dragon:45": 1
+        },
+        "dragon_remaining_hp": {
+          "0": 2000
+        },
+        "human_damage_mean": 3.1715,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0,
+        "no_awakening_win_rate": 0.0125,
+        "rounds_after_awakening": {
+          "1": 962,
+          "2": 796,
+          "3": 180,
+          "4": 27,
+          "5": 5,
+          "6": 3,
+          "7": 2
+        },
+        "rounds_after_awakening_mean": 1.650126582278481,
+        "rounds_mean": 33.093,
+        "wilson95": [
+          0.9980829527187469,
+          0.9999999999999998
+        ],
+        "win_rate": 1.0,
+        "wins": 2000
+      }
+    },
+    {
+      "choices": null,
+      "label": "R2:P2:ordinary",
+      "summary": {
+        "awakening_phase_round": {},
+        "dragon_remaining_hp": {
+          "0": 1996,
+          "40": 1,
+          "48": 1,
+          "5": 1,
+          "9": 1
+        },
+        "human_damage_mean": 0.5455,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.002,
+        "no_awakening_win_rate": 0.998,
+        "rounds_after_awakening": {},
+        "rounds_after_awakening_mean": null,
+        "rounds_mean": 18.493,
+        "wilson95": [
+          0.994868648214923,
+          0.9992219726929489
+        ],
+        "win_rate": 0.998,
+        "wins": 1996
+      }
+    },
+    {
+      "choices": null,
+      "label": "R2:P2:B",
+      "summary": {
+        "awakening_phase_round": {},
+        "dragon_remaining_hp": {
+          "0": 1997,
+          "26": 1,
+          "5": 1,
+          "9": 1
+        },
+        "human_damage_mean": 0.773,
+        "human_defeat_rate": 0,
+        "n": 2000,
+        "no_awakening_loss_rate": 0.0015,
+        "no_awakening_win_rate": 0.9985,
+        "rounds_after_awakening": {},
+        "rounds_after_awakening_mean": null,
+        "rounds_mean": 18.483,
+        "wilson95": [
+          0.9955989674442294,
+          0.9994897364163615
+        ],
+        "win_rate": 0.9985,
+        "wins": 1997
+      }
+    }
+  ],
+  "missing_checkpoints": [
+    {
+      "profile": "P0b",
+      "reason": "053 did not observe a hero Draco opening"
+    }
+  ],
+  "R3": {
+    "source": ".tmp-test\\053\\accepted-records-normal.json",
+    "rows": [
+      {
+        "archetype": "P0a",
+        "n": 500,
+        "arrivals": 0,
+        "branches": {},
+        "equipment": {},
+        "wins": 0,
+        "conditional_win_rate": null
+      },
+      {
+        "archetype": "P0b",
+        "n": 500,
+        "arrivals": 0,
+        "branches": {},
+        "equipment": {},
+        "wins": 0,
+        "conditional_win_rate": null
+      },
+      {
+        "archetype": "P0g",
+        "n": 500,
+        "arrivals": 0,
+        "branches": {},
+        "equipment": {},
+        "wins": 0,
+        "conditional_win_rate": null
+      },
+      {
+        "archetype": "P1",
+        "n": 500,
+        "arrivals": 0,
+        "branches": {},
+        "equipment": {},
+        "wins": 0,
+        "conditional_win_rate": null
+      },
+      {
+        "archetype": "P2",
+        "n": 500,
+        "arrivals": 117,
+        "branches": {
+          "neither": 117
+        },
+        "equipment": {
+          "紅玉の護符 / アダマンタイトの鎧 / 氷鉄の大剣": 117
+        },
+        "wins": 104,
+        "conditional_win_rate": 0.8888888888888888
+      },
+      {
+        "archetype": "P2s",
+        "n": 500,
+        "arrivals": 77,
+        "branches": {
+          "neither": 77
+        },
+        "equipment": {
+          "紅玉の護符 / アダマンタイトの鎧 / 氷鉄の大剣": 77
+        },
+        "wins": 69,
+        "conditional_win_rate": 0.8961038961038961
+      },
+      {
+        "archetype": "P3",
+        "n": 500,
+        "arrivals": 45,
+        "branches": {
+          "neither": 45
+        },
+        "equipment": {
+          "守護団の小盾 / 守護団の鎖帷子 / 氷鉄の大剣": 45
+        },
+        "wins": 0,
+        "conditional_win_rate": 0.0
+      }
+    ],
+    "method": "053 final.equipment (Draco victory/defeat effects do not change equipment), ignis_defeated; route_v2/class_aware never call sword fusion; no arrival is missing, not neither"
+  },
+  "normal_regression": {
+    "cells": 79,
+    "n_per_cell": 200,
+    "seed": 20261021,
+    "different_cells": [],
+    "byte_equal": true
+  },
+  "playtest": {
+    "baby_summary_equal_HEAD": true,
+    "baby_runs_equal_HEAD": true,
+    "baby": {
+      "runs": 4,
+      "completed": 2,
+      "endings": {
+        "dragon_valley_defeat": 1,
+        "ignis_purified": 1,
+        "slime_king_battle_defeat": 1,
+        "draco_defeated": 1
+      },
+      "first_deaths": {
+        "valley_ledge": 1,
+        "draco_battle": 1,
+        "slime_ambush_two": 1
+      },
+      "retries": {
+        "1": 3,
+        "0": 1
+      },
+      "route_counts": {
+        "village": 3,
+        "battlefield": 0,
+        "gorge": 0
+      },
+      "route_counts_by_character": {
+        "hero": {
+          "village": 1,
+          "battlefield": 0,
+          "gorge": 0
+        },
+        "cleric": {
+          "village": 1,
+          "battlefield": 0,
+          "gorge": 0
+        },
+        "mage": {
+          "village": 0,
+          "battlefield": 0,
+          "gorge": 0
+        },
+        "thief": {
+          "village": 1,
+          "battlefield": 0,
+          "gorge": 0
+        }
+      },
+      "clue_counts": {
+        "frost_trace_seen": 2,
+        "has_assassin_crest": 0,
+        "heard_gald_rumor": 0,
+        "heard_guardian_refusal": 0,
+        "heard_human_caused_dragon_return": 4,
+        "heard_ignis_last_words": 1,
+        "heard_ignis_testimony": 0,
+        "heard_old_soldier_ghost": 0,
+        "heard_pass_rumor": 0,
+        "heard_treaty_lore": 0,
+        "heard_xanxus_betrayal": 3,
+        "noticed_general_frost": 2,
+        "read_miner_diary": 0,
+        "saw_white_claw": 0
+      },
+      "final_clue_counts": {
+        "frost_trace_seen": 2,
+        "has_assassin_crest": 0,
+        "heard_gald_rumor": 0,
+        "heard_guardian_refusal": 0,
+        "heard_human_caused_dragon_return": 4,
+        "heard_ignis_last_words": 1,
+        "heard_ignis_testimony": 0,
+        "heard_old_soldier_ghost": 0,
+        "heard_pass_rumor": 0,
+        "heard_treaty_lore": 0,
+        "heard_xanxus_betrayal": 3,
+        "noticed_general_frost": 2,
+        "read_miner_diary": 0,
+        "saw_white_claw": 0
+      },
+      "never_visited": [
+        {
+          "id": "alley_night",
+          "title": "城下町の路地裏・夜"
+        },
+        {
+          "id": "merchant_battle",
+          "title": "夜の路地・亡霊戦"
+        },
+        {
+          "id": "alley_after",
+          "title": "静まり返った夜の路地"
+        },
+        {
+          "id": "goblin_fort",
+          "title": "ゴブリン砦・一階前半"
+        },
+        {
+          "id": "goblin_fort_first_second",
+          "title": "ゴブリン砦・一階後半"
+        },
+        {
+          "id": "goblin_fort_second_choice",
+          "title": "ゴブリン砦・二階分岐"
+        },
+        {
+          "id": "goblin_fort_second_right",
+          "title": "ゴブリン砦・二階右"
+        },
+        {
+          "id": "goblin_fort_second_left",
+          "title": "ゴブリン砦・二階左"
+        },
+        {
+          "id": "goblin_fort_healing_circle",
+          "title": "ゴブリン砦・回復法陣"
+        },
+        {
+          "id": "goblin_fort_third_gate",
+          "title": "ゴブリン砦・三階鉄門"
+        },
+        {
+          "id": "goblin_fort_third_guards",
+          "title": "ゴブリン砦・三階警備戦"
+        },
+        {
+          "id": "goblin_fort_fourth",
+          "title": "ゴブリン砦・四階財宝庫"
+        },
+        {
+          "id": "goblin_fort_chest_choice",
+          "title": "ゴブリン砦・奪還した箱"
+        },
+        {
+          "id": "goblin_fort_chest_fight",
+          "title": "ゴブリン砦・箱の争奪"
+        },
+        {
+          "id": "village_fire_slime",
+          "title": "炎上する麓の村・ファイアスライム戦"
+        },
+        {
+          "id": "village_fire_elemental",
+          "title": "炎上する麓の村・火の精霊戦"
+        },
+        {
+          "id": "cave_heat_corridor",
+          "title": "熱気の回廊"
+        },
+        {
+          "id": "cave_fork",
+          "title": "分かれ道"
+        },
+        {
+          "id": "cave_lava_room",
+          "title": "溶岩の小部屋"
+        },
+        {
+          "id": "cave_hot_spring",
+          "title": "地底の温泉"
+        },
+        {
+          "id": "cave_crystal_corridor",
+          "title": "水晶の回廊"
+        },
+        {
+          "id": "cave_prism_tree",
+          "title": "虹晶樹の間"
+        },
+        {
+          "id": "burning_house",
+          "title": "燃える民家の前"
+        },
+        {
+          "id": "xanxus_at_nest",
+          "title": "竜の巣の前・ザンザス"
+        },
+        {
+          "id": "xanxus_phantom_battle",
+          "title": "ザンザスの分身"
+        },
+        {
+          "id": "inn_night_ambush",
+          "title": "宿屋・深夜の襲撃"
+        },
+        {
+          "id": "old_battlefield",
+          "title": "霧の古戦場"
+        },
+        {
+          "id": "bone_field",
+          "title": "骨の野"
+        },
+        {
+          "id": "ruined_watchtower",
+          "title": "崩れた見張り塔"
+        },
+        {
+          "id": "ghoul_marsh",
+          "title": "屍鬼の沼"
+        },
+        {
+          "id": "grave_chapel",
+          "title": "墓守の礼拝堂"
+        },
+        {
+          "id": "cave_waterway",
+          "title": "地底の水路"
+        },
+        {
+          "id": "oaksdawn_water_gate",
+          "title": "オークスドーンの水門"
+        },
+        {
+          "id": "oaksdawn_square",
+          "title": "城塞の大通り"
+        },
+        {
+          "id": "oaksdawn_hq",
+          "title": "守護団本営"
+        },
+        {
+          "id": "oaksdawn_chapel",
+          "title": "暁の礼拝堂"
+        },
+        {
+          "id": "oaksdawn_workshop",
+          "title": "城塞工房"
+        },
+        {
+          "id": "oaksdawn_inn",
+          "title": "樫の葉亭"
+        },
+        {
+          "id": "oaksdawn_wall",
+          "title": "城壁の見張り台"
+        },
+        {
+          "id": "gorge_entrance",
+          "title": "峡谷の入口"
+        },
+        {
+          "id": "gorge_rockfall_path",
+          "title": "落石の道"
+        },
+        {
+          "id": "gorge_miner_camp",
+          "title": "鉱夫の野営跡"
+        },
+        {
+          "id": "gorge_claw_cliff",
+          "title": "白い爪痕の崖"
+        },
+        {
+          "id": "gorge_giant_path",
+          "title": "岩の巨人の通り道"
+        },
+        {
+          "id": "gorge_worm_lair",
+          "title": "峡谷の底"
+        },
+        {
+          "id": "dragon_valley_return",
+          "title": "竜の谷・帰路"
+        }
+      ],
+      "overlap": {
+        "choices": {
+          "pairs": 1,
+          "mean": 0.3287671232876712,
+          "min": 0.3287671232876712,
+          "max": 0.3287671232876712
+        },
+        "locations": {
+          "pairs": 1,
+          "mean": 0.5952380952380952,
+          "min": 0.5952380952380952,
+          "max": 0.5952380952380952
+        },
+        "pairwise": [
+          {
+            "left": "cleric/20261013",
+            "right": "thief/20261013",
+            "choices": 0.3287671232876712,
+            "locations": 0.5952380952380952
+          }
+        ]
+      },
+      "invariants": {
+        "exceptions": 0,
+        "noncombat_dead_ends": 0,
+        "fallback_narrations": 0
+      }
+    },
+    "normal": {
+      "runs": 4,
+      "completed": 0,
+      "endings": {
+        "burning_village_defeat": 2,
+        "dragon_valley_defeat": 2
+      },
+      "first_deaths": {
+        "frost_wolf_battle": 1,
+        "valley_entrance": 1,
+        "slime_king_battle": 2
+      },
+      "retries": {
+        "1": 3,
+        "0": 1
+      },
+      "route_counts": {
+        "village": 4,
+        "battlefield": 0,
+        "gorge": 0
+      },
+      "route_counts_by_character": {
+        "hero": {
+          "village": 1,
+          "battlefield": 0,
+          "gorge": 0
+        },
+        "cleric": {
+          "village": 1,
+          "battlefield": 0,
+          "gorge": 0
+        },
+        "mage": {
+          "village": 1,
+          "battlefield": 0,
+          "gorge": 0
+        },
+        "thief": {
+          "village": 1,
+          "battlefield": 0,
+          "gorge": 0
+        }
+      },
+      "clue_counts": {
+        "frost_trace_seen": 3,
+        "has_assassin_crest": 0,
+        "heard_gald_rumor": 0,
+        "heard_guardian_refusal": 0,
+        "heard_human_caused_dragon_return": 4,
+        "heard_ignis_last_words": 0,
+        "heard_ignis_testimony": 0,
+        "heard_old_soldier_ghost": 0,
+        "heard_pass_rumor": 0,
+        "heard_treaty_lore": 1,
+        "heard_xanxus_betrayal": 0,
+        "noticed_general_frost": 2,
+        "read_miner_diary": 0,
+        "saw_white_claw": 0
+      },
+      "final_clue_counts": {
+        "frost_trace_seen": 2,
+        "has_assassin_crest": 0,
+        "heard_gald_rumor": 0,
+        "heard_guardian_refusal": 0,
+        "heard_human_caused_dragon_return": 4,
+        "heard_ignis_last_words": 0,
+        "heard_ignis_testimony": 0,
+        "heard_old_soldier_ghost": 0,
+        "heard_pass_rumor": 0,
+        "heard_treaty_lore": 1,
+        "heard_xanxus_betrayal": 0,
+        "noticed_general_frost": 2,
+        "read_miner_diary": 0,
+        "saw_white_claw": 0
+      },
+      "never_visited": [
+        {
+          "id": "dragon_valley_loc",
+          "title": "竜の谷"
+        },
+        {
+          "id": "alley_night",
+          "title": "城下町の路地裏・夜"
+        },
+        {
+          "id": "merchant_battle",
+          "title": "夜の路地・亡霊戦"
+        },
+        {
+          "id": "alley_after",
+          "title": "静まり返った夜の路地"
+        },
+        {
+          "id": "goblin_fort",
+          "title": "ゴブリン砦・一階前半"
+        },
+        {
+          "id": "goblin_fort_first_second",
+          "title": "ゴブリン砦・一階後半"
+        },
+        {
+          "id": "goblin_fort_second_choice",
+          "title": "ゴブリン砦・二階分岐"
+        },
+        {
+          "id": "goblin_fort_second_right",
+          "title": "ゴブリン砦・二階右"
+        },
+        {
+          "id": "goblin_fort_second_left",
+          "title": "ゴブリン砦・二階左"
+        },
+        {
+          "id": "goblin_fort_healing_circle",
+          "title": "ゴブリン砦・回復法陣"
+        },
+        {
+          "id": "goblin_fort_third_gate",
+          "title": "ゴブリン砦・三階鉄門"
+        },
+        {
+          "id": "goblin_fort_third_guards",
+          "title": "ゴブリン砦・三階警備戦"
+        },
+        {
+          "id": "goblin_fort_fourth",
+          "title": "ゴブリン砦・四階財宝庫"
+        },
+        {
+          "id": "goblin_fort_chest_choice",
+          "title": "ゴブリン砦・奪還した箱"
+        },
+        {
+          "id": "goblin_fort_chest_fight",
+          "title": "ゴブリン砦・箱の争奪"
+        },
+        {
+          "id": "village_fire_slime",
+          "title": "炎上する麓の村・ファイアスライム戦"
+        },
+        {
+          "id": "ignis_last_breath",
+          "title": "竜の谷・紅竜の最期"
+        },
+        {
+          "id": "castle_report",
+          "title": "王城・凱旋の間"
+        },
+        {
+          "id": "draco_battle",
+          "title": "王の間・剣聖ドラコ"
+        },
+        {
+          "id": "ignis_purified",
+          "title": "竜の谷・目覚めた紅竜"
+        },
+        {
+          "id": "cave_heat_corridor",
+          "title": "熱気の回廊"
+        },
+        {
+          "id": "cave_fork",
+          "title": "分かれ道"
+        },
+        {
+          "id": "cave_lava_room",
+          "title": "溶岩の小部屋"
+        },
+        {
+          "id": "cave_hot_spring",
+          "title": "地底の温泉"
+        },
+        {
+          "id": "cave_crystal_corridor",
+          "title": "水晶の回廊"
+        },
+        {
+          "id": "cave_prism_tree",
+          "title": "虹晶樹の間"
+        },
+        {
+          "id": "valley_nest_gate",
+          "title": "竜の巣の前"
+        },
+        {
+          "id": "xanxus_at_nest",
+          "title": "竜の巣の前・ザンザス"
+        },
+        {
+          "id": "xanxus_phantom_battle",
+          "title": "ザンザスの分身"
+        },
+        {
+          "id": "warlock_at_nest",
+          "title": "竜の巣の前"
+        },
+        {
+          "id": "royal_gate",
+          "title": "凱旋の城門"
+        },
+        {
+          "id": "festival_town",
+          "title": "凱旋の城下町"
+        },
+        {
+          "id": "mansion_garden",
+          "title": "将軍の屋敷・夜の庭"
+        },
+        {
+          "id": "mansion_corridor",
+          "title": "将軍の屋敷・凍てつく回廊"
+        },
+        {
+          "id": "mansion_study",
+          "title": "将軍の屋敷・書斎"
+        },
+        {
+          "id": "king_private_room",
+          "title": "王の私室"
+        },
+        {
+          "id": "inn_night_ambush",
+          "title": "宿屋・深夜の襲撃"
+        },
+        {
+          "id": "old_battlefield",
+          "title": "霧の古戦場"
+        },
+        {
+          "id": "bone_field",
+          "title": "骨の野"
+        },
+        {
+          "id": "ruined_watchtower",
+          "title": "崩れた見張り塔"
+        },
+        {
+          "id": "ghoul_marsh",
+          "title": "屍鬼の沼"
+        },
+        {
+          "id": "grave_chapel",
+          "title": "墓守の礼拝堂"
+        },
+        {
+          "id": "cave_waterway",
+          "title": "地底の水路"
+        },
+        {
+          "id": "oaksdawn_water_gate",
+          "title": "オークスドーンの水門"
+        },
+        {
+          "id": "oaksdawn_square",
+          "title": "城塞の大通り"
+        },
+        {
+          "id": "oaksdawn_hq",
+          "title": "守護団本営"
+        },
+        {
+          "id": "oaksdawn_chapel",
+          "title": "暁の礼拝堂"
+        },
+        {
+          "id": "oaksdawn_workshop",
+          "title": "城塞工房"
+        },
+        {
+          "id": "oaksdawn_inn",
+          "title": "樫の葉亭"
+        },
+        {
+          "id": "oaksdawn_wall",
+          "title": "城壁の見張り台"
+        },
+        {
+          "id": "gorge_entrance",
+          "title": "峡谷の入口"
+        },
+        {
+          "id": "gorge_rockfall_path",
+          "title": "落石の道"
+        },
+        {
+          "id": "gorge_miner_camp",
+          "title": "鉱夫の野営跡"
+        },
+        {
+          "id": "gorge_claw_cliff",
+          "title": "白い爪痕の崖"
+        },
+        {
+          "id": "gorge_giant_path",
+          "title": "岩の巨人の通り道"
+        },
+        {
+          "id": "gorge_worm_lair",
+          "title": "峡谷の底"
+        },
+        {
+          "id": "dragon_valley_return",
+          "title": "竜の谷・帰路"
+        }
+      ],
+      "overlap": {
+        "choices": {
+          "pairs": 0,
+          "mean": null,
+          "min": null,
+          "max": null
+        },
+        "locations": {
+          "pairs": 0,
+          "mean": null,
+          "min": null,
+          "max": null
+        },
+        "pairwise": []
+      },
+      "invariants": {
+        "exceptions": 0,
+        "noncombat_dead_ends": 0,
+        "fallback_narrations": 0
+      }
+    }
+  },
+  "determinism": {
+    "workers": [
+      1,
+      4
+    ],
+    "byte_equal": true,
+    "sha256": "532cee34dafb7a34a8599589a11926f4cb4cae94b2e4918e7606a46badce8bfe",
+    "n_per_combination": 2000,
+    "seed": 20261021
+  },
+  "benchmark": {
+    "exit_code": 0,
+    "run_id": "2026-10-21T042028281862Z-intent-gemini-gemini-3.1-flash-lite-guard_rules",
+    "live": false,
+    "total": 194,
+    "cache_hits": 194,
+    "severity": {
+      "S0": 173,
+      "S1": 12,
+      "S2": 8,
+      "S3": 1,
+      "S4": 0
+    },
+    "baseline": "2026-10-12T062656092753Z-intent-gemini-gemini-3.1-flash-lite-guard_rules",
+    "metrics_equal": true
+  },
+  "validation": {
+    "unittest-native.log": "Ran 919 tests in 1341.535s  FAILED (failures=13, errors=40, skipped=1)",
+    "unittest-overlay.log": "Ran 937 tests in 1363.173s  FAILED (failures=14, errors=1, skipped=1)",
+    "shards": "937 tests; all_passed=True; 4 isolated shards"
+  },
+  "validation_shards": {
+    "all_passed": true,
+    "total_tests": 937,
+    "shards": [
+      {
+        "shard": 0,
+        "exit_code": 0,
+        "tests": 257,
+        "patch_applied": true,
+        "files_byte_equal": true,
+        "command": [
+          "C:\\Users\\kevin\\miniconda3\\python.exe",
+          "D:\\TRPG_Game\\.tmp-test\\049\\run_tests.py",
+          "--shard",
+          "0",
+          "4"
+        ],
+        "cwd": "D:\\TRPG_Game\\.tmp-test\\049\\validation-shard-0"
+      },
+      {
+        "shard": 1,
+        "exit_code": 0,
+        "tests": 253,
+        "patch_applied": true,
+        "files_byte_equal": true,
+        "command": [
+          "C:\\Users\\kevin\\miniconda3\\python.exe",
+          "D:\\TRPG_Game\\.tmp-test\\049\\run_tests.py",
+          "--shard",
+          "1",
+          "4"
+        ],
+        "cwd": "D:\\TRPG_Game\\.tmp-test\\049\\validation-shard-1"
+      },
+      {
+        "shard": 2,
+        "exit_code": 0,
+        "tests": 218,
+        "patch_applied": true,
+        "files_byte_equal": true,
+        "command": [
+          "C:\\Users\\kevin\\miniconda3\\python.exe",
+          "D:\\TRPG_Game\\.tmp-test\\049\\run_tests.py",
+          "--shard",
+          "2",
+          "4"
+        ],
+        "cwd": "D:\\TRPG_Game\\.tmp-test\\049\\validation-shard-2"
+      },
+      {
+        "shard": 3,
+        "exit_code": 0,
+        "tests": 209,
+        "patch_applied": true,
+        "files_byte_equal": true,
+        "command": [
+          "C:\\Users\\kevin\\miniconda3\\python.exe",
+          "D:\\TRPG_Game\\.tmp-test\\049\\run_tests.py",
+          "--shard",
+          "3",
+          "4"
+        ],
+        "cwd": "D:\\TRPG_Game\\.tmp-test\\049\\validation-shard-3"
+      }
+    ],
+    "partition": "sorted test_*.py filenames, index modulo 4; disjoint complete union"
+  },
+  "artifacts_sha256": {
+    "gate-w1.json": "532cee34dafb7a34a8599589a11926f4cb4cae94b2e4918e7606a46badce8bfe",
+    "gate-w4.json": "532cee34dafb7a34a8599589a11926f4cb4cae94b2e4918e7606a46badce8bfe",
+    "reports-r1-r2.json": "59726edd23bc07c315d7f3a794a62c7842ca32682c868f534f2b0bd0b0a90b0c",
+    "r3.json": "e68a2ad89b030176b8c63b09a3d226c73ee21e8343151cedd45049a4751dc3bd",
+    "normal-regression.json": "6f36829378bc96a61d8b503f267a2a8e20282df8575fdc389fec642ef3f20d5b",
+    "normal-regression-head.json": "6f36829378bc96a61d8b503f267a2a8e20282df8575fdc389fec642ef3f20d5b"
+  }
+}

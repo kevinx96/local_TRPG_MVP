@@ -1692,7 +1692,8 @@ def _validated_model_items(session: dict[str, Any], raw_items: Any, *, removing:
             source = catalog.get(requested_name)
         label = requested_id or requested_name or "invalid"
         quantity = _strict_int(item.get("quantity", 1))
-        if source is None or quantity is None or quantity < 1 or quantity > MODEL_MAX_ITEM_QUANTITY:
+        if (source is None or source.get("awakening_only") or quantity is None
+                or quantity < 1 or quantity > MODEL_MAX_ITEM_QUANTITY):
             rejected.append(label)
             continue
         if removing:
@@ -2023,6 +2024,9 @@ def _requirement_passes(requirement: Any, attrs: dict[str, Any], character: dict
     max_gold = requirement.get("gold_lte", requirement.get("max_gold"))
     if isinstance(max_gold, (int, float)):
         return int(character.get("gold", 0)) <= int(max_gold)
+    if "equipped_item" in requirement:
+        wanted = requirement["equipped_item"]
+        return any(wanted in {item.get("id"), item.get("name")} for item in equipped_items(character))
     has_item = _requirement_item_name(requirement, ("has_item", "inventory_has", "requires_item"))
     if has_item:
         quantity = sum(max(0, _safe_int(item.get("quantity", 1))) if isinstance(item, dict) else 1
@@ -2730,6 +2734,33 @@ def _reforge_equipped_armor(session: dict[str, Any], spec: dict[str, Any]) -> No
     _equip_inventory_item(session, upgraded["id"])
 
 
+def replace_equipped_item(session: dict[str, Any], source: str, destination: str) -> bool:
+    character = session["character"]
+    item = next((item for item in equipped_items(character)
+                 if source in {item.get("id"), item.get("name")}), None)
+    template = next((item for item in session["scenario_pack"].get("items", [])
+                     if item.get("id") == destination), None)
+    if item is None or template is None:
+        return False
+    replacement = _enrich_item(template, session["scenario_pack"])
+    replacement["quantity"] = item.get("quantity", 1)
+    character["inventory"][character["inventory"].index(item)] = replacement
+    character["equipment"] = [replacement["name"] if entry in {item.get("name"), item.get("id")}
+                              else entry for entry in character["equipment"]]
+    _synchronize_equipment(character)
+    return True
+
+
+def _apply_awakening_origin(item: dict[str, Any], scenario_pack: Optional[dict[str, Any]]) -> None:
+    for rule in (scenario_pack or {}).get("items", []):
+        origin = rule.get("awakening_origin", {})
+        if origin.get("item") and origin["item"] in {item.get("name"), item.get("id")}:
+            item["key_item"] = True
+            hint = origin["description_suffix"]
+            if hint not in str(item.get("description", "")):
+                item["description"] = str(item.get("description", "")) + hint
+
+
 def _enrich_item(item: dict[str, Any], scenario_pack: Optional[dict[str, Any]] = None) -> dict[str, Any]:
     name = _item_name_from_dict(item) or "不明"
     catalog_entry: dict[str, Any] = deepcopy(DEFAULT_ITEM_CATALOG.get(name, {}))
@@ -2749,6 +2780,7 @@ def _enrich_item(item: dict[str, Any], scenario_pack: Optional[dict[str, Any]] =
             catalog_entry.update(deepcopy(scenario_item))
     merged = deepcopy(catalog_entry)
     merged.update(item)
+    _apply_awakening_origin(merged, scenario_pack)
     enriched: dict[str, Any] = {
         "name": name,
         "description": str(merged.get("description") or ""),
@@ -2756,7 +2788,7 @@ def _enrich_item(item: dict[str, Any], scenario_pack: Optional[dict[str, Any]] =
         "quantity": _safe_quantity(item.get("quantity"), 1),
     }
     for key in ("id", "icon", "combat", "traits", "category", "sell_price", "key_item", "non_removable", "slot",
-                "learn_skill", "learnable_by", "consumable"):
+                "learn_skill", "learnable_by", "consumable", "awakening_only"):
         if key in merged:
             enriched[key] = deepcopy(merged[key])
     category = item_category(enriched)
@@ -3167,6 +3199,7 @@ def _merge_inventory_catalog(inventory: list[Any], scenario_pack: Optional[dict[
         if source:
             merged = deepcopy(source)
             merged.update(entry)
+            _apply_awakening_origin(merged, scenario_pack)
             merged["effect"] = structured_item_effect(merged) or str(merged.get("effect") or "")
             inventory[index] = merged
         elif not isinstance(raw, dict):

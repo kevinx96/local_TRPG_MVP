@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from scripts.scenario.holy_sword_049 import migrate as holy_sword
+
 import json
 import tempfile
 import unittest
@@ -267,7 +269,7 @@ class OaksdawnQuestsTests(unittest.TestCase):
             apply(pack)
             apply_spring_postgame(pack)
             from scripts.scenario.levels_skills_v2 import migrate as levels
-            pack = levels(pack)
+            pack = holy_sword(levels(pack))
             self.assertEqual(pack, original)
             reference = json.loads(DEFAULT_SCENARIO.read_text(encoding="utf-8"))
             self.assertEqual({i["id"]: i["icon"] for i in pack["items"]},

@@ -10,6 +10,7 @@ from copy import deepcopy
 from unittest.mock import patch
 
 from host import combat, state
+from host.difficulty import apply_difficulty
 from spring_legacy_balance import legacy_spring_balance_pack
 from scripts.balance import checkpoints, sim
 from scripts.balance import report
@@ -96,7 +97,7 @@ class BalanceTests(unittest.TestCase):
         self.assertIsNone(village["companion"])
 
     def test_checkpoints_regenerate_and_classifications_match(self):
-        with patch.object(state, "load_scenario_pack", return_value=legacy_spring_balance_pack(self.pack)):
+        with patch.object(state, "load_scenario_pack", return_value=apply_difficulty(legacy_spring_balance_pack(self.pack), "baby")):
             generated = checkpoints.generate()
         expected = deepcopy(self.checkpoints)
         # 051 adds inert definitions and normal overlays; baby checkpoint payload stays frozen.

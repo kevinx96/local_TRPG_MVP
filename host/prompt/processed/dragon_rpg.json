@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-21-levels-skills-v2",
+    "content_revision": "2026-10-21-sword-049",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -10547,6 +10547,47 @@
           },
           "result_variants": [
             {
+              "id": "holy_sword_diary",
+              "difficulty_only": [
+                "normal"
+              ],
+              "requirements": {
+                "all": [
+                  {
+                    "all": [
+                      {
+                        "character_id": "hero"
+                      },
+                      {
+                        "flag": "accepted_sword_fusion"
+                      }
+                    ]
+                  },
+                  {
+                    "has_item": "白竜の日誌"
+                  }
+                ]
+              },
+              "text": "あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」あなたが日誌を掲げると、ドラコの表情から初めて笑みが消えた。【仮】……もっとも、貴様の剣ならすでに我が手にある。我を脅かしうる唯一の刃だ"
+            },
+            {
+              "id": "holy_sword_neutral",
+              "difficulty_only": [
+                "normal"
+              ],
+              "requirements": {
+                "all": [
+                  {
+                    "character_id": "hero"
+                  },
+                  {
+                    "flag": "accepted_sword_fusion"
+                  }
+                ]
+              },
+              "text": "あなたが証拠を示すと、王の間が凍りついたように静まり返った。ドラコは小さく笑い、その吐息が白く凍る。「……人の子にしては、よく嗅ぎつけたものだ」【仮】……もっとも、貴様の剣ならすでに我が手にある。我を脅かしうる唯一の刃だ"
+            },
+            {
               "requirements": {
                 "has_item": "白竜の日誌"
               },
@@ -10791,6 +10832,71 @@
             "enemy_skill": "凍てつく吐息",
             "damage_multiplier": 0.7,
             "text": "胸の護符が白く光り、吹きつける冷気を和らげた。"
+          },
+          {
+            "id": "hero_holy_sword",
+            "difficulty_only": [
+              "normal"
+            ],
+            "requirements": {
+              "all": [
+                {
+                  "character_id": "hero"
+                },
+                {
+                  "flag": "defeated_ignis"
+                },
+                {
+                  "equipped_item": "鉄の剣"
+                }
+              ]
+            },
+            "lethal_awakening": {
+              "id": "hero_holy_sword",
+              "transform_item": {
+                "from": "鉄の剣",
+                "to": "hero_holy_sword"
+              },
+              "restore": {
+                "hp": "full"
+              },
+              "set_flag": "holy_sword_awakened",
+              "lock_text": "【仮】致命の一撃――だが、あなたは倒れなかった。",
+              "text": "【仮】鉄の剣が白く輝き、勇者の聖剣へと姿を変えた。傷がふさがっていく。"
+            }
+          },
+          {
+            "id": "draco_holy_sword",
+            "difficulty_only": [
+              "normal"
+            ],
+            "enemy_ids": [
+              "draco_human"
+            ],
+            "requirements": {
+              "all": [
+                {
+                  "character_id": "hero"
+                },
+                {
+                  "flag": "accepted_sword_fusion"
+                }
+              ]
+            },
+            "enemy_damage_multiplier": 1.3,
+            "text": "【仮】ドラコは勇者の聖剣を装備している。",
+            "log_kind": "warning",
+            "extra_enemy_skills": [
+              {
+                "id": "stolen_holy_blade",
+                "name": "【仮】聖剣の一閃",
+                "kind": "attack",
+                "damage": "1d8+5",
+                "accuracy": 90,
+                "element": "holy",
+                "ai_weight": 2
+              }
+            ]
           }
         ],
         "phase_allies": [
@@ -19971,6 +20077,33 @@
       "sell_price": 30,
       "description": "灰竜の鱗",
       "icon": "/static/images/icon_grey_dragon_scale.png"
+    },
+    {
+      "id": "hero_holy_sword",
+      "name": "勇者の聖剣",
+      "difficulty_only": [
+        "normal"
+      ],
+      "description": "【仮】眠っていた力を取り戻した、勇者のための剣。",
+      "effect": "【仮】通常攻撃が光属性になる",
+      "category": "equipment",
+      "slot": "weapon",
+      "key_item": true,
+      "non_removable": true,
+      "awakening_only": true,
+      "awakening_origin": {
+        "item": "iron_sword",
+        "description_suffix": "【仮】"
+      },
+      "icon": "/static/images/icon_dawn_sword.png",
+      "combat": {
+        "kind": "weapon",
+        "name": "勇者の聖剣",
+        "element": "holy",
+        "damage": "1d8+78",
+        "accuracy": 95,
+        "ignores_resistance": true
+      }
     },
     {
       "id": "travel_potion",

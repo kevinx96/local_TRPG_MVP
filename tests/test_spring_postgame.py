@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+from scripts.scenario.holy_sword_049 import migrate as holy_sword
 from scripts.scenario.levels_skills_v2 import migrate as levels
 from scripts.scenario.combat_mechanics_v2 import migrate as migrate_combat_mechanics
 
@@ -172,11 +174,11 @@ class SpringPostgameTests(unittest.TestCase):
             actual = deepcopy(pack)
             apply(actual)
             actual = migrate_combat_mechanics(actual)
-            actual = levels(actual)
+            actual = holy_sword(levels(actual))
             self.assertEqual(actual, pack)
             apply(actual)
             actual = migrate_combat_mechanics(actual)
-            actual = levels(actual)
+            actual = holy_sword(levels(actual))
             self.assertEqual(actual, pack)
             self.assertEqual(numeric_snapshot(apply_difficulty(actual, 'baby')), frozen[name])
             legacy = deepcopy(actual)
@@ -203,7 +205,20 @@ class SpringPostgameTests(unittest.TestCase):
             return path in spring_paths
 
         self.assertFalse([(name, path) for name, path, _ in rows if is_048_placeholder(path)])
-        placeholders_050 = [(name, path, text) for name, path, text in rows if not is_048_placeholder(path)]
+        paths_049 = {
+            '/locations/castle_report/actions/report_with_evidence/result_variants/holy_sword_diary/text',
+            '/locations/castle_report/actions/report_with_evidence/result_variants/holy_sword_neutral/text',
+            '/locations/draco_battle/combat/encounter_modifiers/hero_holy_sword/lethal_awakening/lock_text',
+            '/locations/draco_battle/combat/encounter_modifiers/hero_holy_sword/lethal_awakening/text',
+            '/locations/draco_battle/combat/encounter_modifiers/draco_holy_sword/text',
+            '/locations/draco_battle/combat/encounter_modifiers/draco_holy_sword/extra_enemy_skills/stolen_holy_blade/name',
+            '/items/hero_holy_sword/description', '/items/hero_holy_sword/effect',
+            '/items/hero_holy_sword/awakening_origin/description_suffix',
+        }
+        for pack_name in self.packs:
+            self.assertEqual({path for name, path, _ in rows if name == pack_name and path in paths_049}, paths_049)
+        placeholders_050 = [(name, path, text) for name, path, text in rows
+                            if not is_048_placeholder(path) and path not in paths_049]
         self.assertEqual(len(placeholders_050), 0)
         self.assertTrue(all(sum(name == pack_name for name, _, _ in placeholders_050) == 0 for pack_name in self.packs))
         self.assertTrue(all(path.startswith('/class_progression/') or path.startswith('/items/spellbook_')

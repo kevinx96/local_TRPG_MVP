@@ -178,6 +178,13 @@ def ensure_combat_started(session: dict[str, Any], intro_text: str = "") -> bool
     _activate_phase_allies(session)
     _activate_encounter_modifiers(session)
     from .state import _session_requirement_passes
+    awakenings = [deepcopy(modifier["lethal_awakening"])
+                  for modifier in encounter.get("encounter_modifiers", [])
+                  if modifier.get("lethal_awakening")
+                  and session.get("difficulty", "baby") in modifier.get("difficulty_only", ["baby", "normal"])
+                  and _session_requirement_passes(modifier.get("requirements"), session)]
+    if awakenings:
+        session["combat"]["lethal_awakenings"] = awakenings
     for event in encounter.get('start_events', []):
         if _session_requirement_passes(event.get('requirements'), session):
             _log(session, 'system', 'warning', event['text'])
@@ -866,7 +873,7 @@ def _player_skill(session: dict[str, Any], skill_id: str, target_id: str, rng: A
         amount = max(0, int(round(amount * float(resolved_skill.get("healing_multiplier", 1) or 1))))
         if _equipped_effect(character, "healing_harms_humans") and not character.get("undead_parts"):
             amount = _round_received_damage(session, amount)
-            character["hp"] = max(0, _safe_int(character.get("hp"), 0) - amount)
+            _damage_player(session, amount)
             _log(session, "player", "self_damage", f"呪われた治癒でHPを{amount}失った。", {"amount": amount, "formula": detail})
         else:
             healed = _heal_actor(character, amount)
@@ -1126,7 +1133,10 @@ def _apply_direct_formula_damage(
     damage = max(0, int(round(max(0, raw_damage) * multiplier)))
     if defender is session.get('character'):
         damage = _modified_received_damage(session, damage, element, attacker, name)
-    defender["hp"] = max(0, _safe_int(defender.get("hp"), 0) - damage)
+    if defender is session.get("character"):
+        _damage_player(session, damage)
+    else:
+        defender["hp"] = max(0, _safe_int(defender.get("hp"), 0) - damage)
     _log(session, str(attacker.get("id") or "enemy"), "field_damage", f"{name}が{damage}ダメージを与えた。", {"damage": damage, "formula": detail, "element": element}, target=defender)
 
 
@@ -1156,6 +1166,41 @@ def _field_is_active(session: dict[str, Any], enemy: dict[str, Any], ability: di
 def _hp_ratio(actor: dict[str, Any]) -> float:
     maximum = max(1, _safe_int(actor.get("max_hp"), 1))
     return _safe_int(actor.get("hp"), 0) / maximum
+
+
+def _damage_player(session: dict[str, Any], damage: int, *, survive_at_one: bool = False) -> int:
+    """Commit final HP damage; awakening precedes the legacy attack-only guard."""
+    from .state import record_state_event, replace_equipped_item
+
+    character = session["character"]
+    before = _safe_int(character.get("hp"), 0)
+    battle = session.get("combat") or {}
+    if before > 0 and damage >= before and combat_is_active(session):
+        for awakening in battle.get("lethal_awakenings", []):
+            if awakening.get("used"):
+                continue
+            transform = awakening["transform_item"]
+            # Registration is immutable; an incompatible old/corrupt save cannot mint a sword.
+            if not any(transform["from"] in {item.get("id"), item.get("name")}
+                       for item in equipped_items(character)):
+                continue
+            awakening["used"] = True
+            character["hp"] = 1
+            data = {"awakening_id": awakening["id"], "round": battle["round"],
+                    "enemy_ids": [enemy["template_id"] for enemy in _alive_enemies(battle)]}
+            _log(session, "player", "awakening_lock", awakening["lock_text"], data, target=character)
+            replace_equipped_item(session, transform["from"], transform["to"])
+            character["hp"] = character["max_hp"]
+            session.setdefault("flags", {})[awakening["set_flag"]] = True
+            _log(session, "player", "awakening", awakening["text"],
+                 {**data, "amount": character["max_hp"] - 1}, target=character)
+            record_state_event(session, "awakening", awakening["text"], data)
+            return damage
+    after = max(0, before - damage)
+    if survive_at_one and before > 1 and after <= 0:
+        after, damage = 1, before - 1
+    character["hp"] = after
+    return damage
 
 
 def _resolve_attack(
@@ -1232,6 +1277,9 @@ def _resolve_attack(
     if actor_id == "player" and not true_damage:
         encounter_class = defender.get("encounter_class", session["combat"].get("encounter", {}).get("encounter_class"))
         damage = round(damage * passive.get("encounter_damage", {}).get(encounter_class, 1))
+    if attacker is not session.get("character") and not true_damage:
+        for modifier in _encounter_modifiers(session, attacker):
+            damage = round(damage * float(modifier.get("enemy_damage_multiplier", 1)))
     if not true_damage:
         damage = max(0, round(damage * status_effects.product(attacker, "damage_dealt_multiplier")))
     if true_damage:
@@ -1273,10 +1321,9 @@ def _resolve_attack(
         after_hp = max(0, before_hp - damage)
     if defender is session.get("character"):
         status = session["combat"].get("player_status") or {}
-        if status.get("survive_at_one") and before_hp > 1 and after_hp <= 0:
-            after_hp = 1
-            damage = before_hp - 1
-    defender["hp"] = after_hp
+        damage = _damage_player(session, damage, survive_at_one=bool(status.get("survive_at_one")))
+    else:
+        defender["hp"] = after_hp
     _log(
         session,
         actor_id,
@@ -1302,7 +1349,7 @@ def _resolve_attack(
     self_damage = max(0, _safe_int(ability.get("self_damage"), 0))
     if self_damage and attacker is session.get("character"):
         self_damage = _round_received_damage(session, self_damage)
-        attacker["hp"] = max(0, _safe_int(attacker.get("hp"), 0) - self_damage)
+        _damage_player(session, self_damage)
         _log(session, actor_id, "self_damage", f"反動でHPを{self_damage}失った。", {"damage": self_damage})
     if defender is not session.get("character") and damage > 0:
         _trigger_enemy_auto_abilities(session, defender, rng)
@@ -1626,6 +1673,10 @@ def _activate_encounter_modifiers(session: dict[str, Any]) -> None:
     battle = session['combat']
     active = []
     for modifier in battle['encounter'].get('encounter_modifiers', []):
+        if session.get("difficulty", "baby") not in modifier.get("difficulty_only", ["baby", "normal"]):
+            continue
+        if modifier.get("lethal_awakening"):
+            continue
         if modifier.get('enemy_ids') and not any(e['template_id'] in modifier['enemy_ids'] for e in _alive_enemies(battle)):
             continue
         if not _session_requirement_passes(modifier.get('requirements'), session):
@@ -1654,7 +1705,8 @@ def _activate_encounter_modifiers(session: dict[str, Any]) -> None:
                 applied.append(modifier['id'])
         seen = battle.setdefault('announced_modifiers', [])
         if modifier['id'] not in seen:
-            _log(session, modifier['id'], 'support', modifier['text'])
+            if modifier.get('text'):
+                _log(session, modifier['id'], modifier.get('log_kind', 'support'), modifier['text'])
             seen.append(modifier['id'])
     battle['active_modifiers'] = active
 
@@ -1878,7 +1930,9 @@ def _choose_enemy_ability(enemy: dict[str, Any], session: dict[str, Any], rng: A
     weights: list[int] = []
     disabled = {skill for modifier in _encounter_modifiers(session, enemy)
                 for skill in modifier.get('disabled_enemy_skills', [])}
-    for skill in enemy.get("skills") or []:
+    extra = [skill for modifier in _encounter_modifiers(session, enemy)
+             for skill in modifier.get("extra_enemy_skills", [])]
+    for skill in [*(enemy.get("skills") or []), *extra]:
         if not isinstance(skill, dict) or not _can_pay_cost(enemy, skill):
             continue
         if skill.get('id') in disabled or skill.get('name') in disabled:
@@ -2246,7 +2300,8 @@ def _log(session: dict[str, Any], actor: str, kind: str, text: str, data: Option
     actor_side = "enemy" if any(enemy["id"] == actor for enemy in enemies) else "party"
     visual_kind = {"damage": "damage", "field_damage": "damage", "status_damage": "damage",
                    "self_damage": "damage", "heal": "heal", "miss": "miss", "defend": "buff",
-                   "stance": "buff", "status": "buff", "phase_transition": "phase"}.get(kind)
+                   "stance": "buff", "status": "buff", "phase_transition": "phase",
+                   "awakening_lock": "buff", "awakening": "heal"}.get(kind)
     if kind == "item" and "amount" in details:
         visual_kind = "heal"
     if target is None and visual_kind:

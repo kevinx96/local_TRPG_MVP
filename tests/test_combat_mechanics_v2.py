@@ -526,6 +526,8 @@ class MigrationAndGoldenTests(unittest.TestCase):
             apply_spring_postgame(migrated)
             from scripts.scenario.levels_skills_v2 import migrate as levels
             migrated = levels(migrated)
+            from scripts.scenario.holy_sword_049 import migrate as holy_sword
+            migrated = holy_sword(migrated)
             self.assertEqual(migrated, pack)
             self.assertEqual(difficulty.numeric_snapshot(original), difficulty.numeric_snapshot(pack))
             try:

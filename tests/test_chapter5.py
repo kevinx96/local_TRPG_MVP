@@ -259,6 +259,8 @@ class Chapter5Tests(unittest.TestCase):
         for s in self.sessions('draco_battle'):
             modifiers = state._current_location_record(s)['combat']['encounter_modifiers']
             for modifier in modifiers:
+                if modifier.get('difficulty_only') == ['normal']:
+                    continue  # Normal-only variants are exercised by test_holy_sword_049.
                 for enabled in (False, True):
                     t = deepcopy(s)
                     req = modifier['requirements']

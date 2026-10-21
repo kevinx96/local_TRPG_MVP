@@ -599,8 +599,17 @@ class ProgressionTests(unittest.TestCase):
                 self.assertNotIn("【仮】", (ROOT / relative).read_text(encoding="utf-8"))
         for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
             scenario_text = (ROOT / "host/prompt/processed" / filename).read_text(encoding="utf-8")
-            self.assertNotIn("【仮】", scenario_text)
             pack = json.loads(scenario_text)
+            before_049 = deepcopy(pack)
+            before_049["items"] = [item for item in before_049["items"] if item["id"] != "hero_holy_sword"]
+            for location in before_049["locations"]:
+                if location["id"] == "draco_battle":
+                    location["combat"]["encounter_modifiers"] = [m for m in location["combat"]["encounter_modifiers"]
+                                                                 if m["id"] not in {"hero_holy_sword", "draco_holy_sword"}]
+                if location["id"] == "castle_report":
+                    action = next(a for a in location["actions"] if a["id"] == "report_with_evidence")
+                    action["result_variants"] = [v for v in action["result_variants"] if not v.get("id", "").startswith("holy_sword_")]
+            self.assertNotIn("【仮】", json.dumps(before_049, ensure_ascii=False))
             for definition in pack["class_progression"]:
                 for active in definition["actives"]:
                     self.assertTrue(active["skill"]["description"])

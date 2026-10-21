@@ -597,6 +597,12 @@
                       "scripted_loss",
                       "guest"
                     ]
+                  },
+                  "encounter_modifiers": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/encounter_modifier"
+                    }
                   }
                 }
               },
@@ -677,6 +683,25 @@
               "sell_price": {
                 "type": "integer",
                 "minimum": 0
+              },
+              "awakening_only": {
+                "type": "boolean"
+              },
+              "awakening_origin": {
+                "type": "object",
+                "required": [
+                  "item",
+                  "description_suffix"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "item": {
+                    "type": "string"
+                  },
+                  "description_suffix": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -2312,6 +2337,10 @@
             "item_quantity_gte": {
               "type": "integer",
               "minimum": 1
+            },
+            "equipped_item": {
+              "type": "string",
+              "minLength": 1
             }
           }
         }
@@ -2700,6 +2729,102 @@
               "minimum": 0
             }
           }
+        }
+      }
+    },
+    "lethal_awakening": {
+      "type": "object",
+      "required": [
+        "id",
+        "transform_item",
+        "restore",
+        "set_flag",
+        "lock_text",
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "transform_item": {
+          "type": "object",
+          "required": [
+            "from",
+            "to"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "string"
+            },
+            "to": {
+              "type": "string"
+            }
+          }
+        },
+        "restore": {
+          "type": "object",
+          "required": [
+            "hp"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "hp": {
+              "const": "full"
+            }
+          }
+        },
+        "set_flag": {
+          "type": "string"
+        },
+        "lock_text": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "encounter_modifier": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "difficulty_only": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "normal",
+              "baby"
+            ]
+          }
+        },
+        "requirements": {
+          "$ref": "#/$defs/choice_requirements"
+        },
+        "lethal_awakening": {
+          "$ref": "#/$defs/lethal_awakening"
+        },
+        "enemy_damage_multiplier": {
+          "type": "number",
+          "minimum": 0
+        },
+        "extra_enemy_skills": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/combat_skill"
+          }
+        },
+        "log_kind": {
+          "enum": [
+            "support",
+            "warning"
+          ]
         }
       }
     }

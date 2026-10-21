@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from scripts.scenario.holy_sword_049 import migrate as holy_sword
+
 import json
 import unittest
 from copy import deepcopy
@@ -223,7 +225,7 @@ class LootEconomyTests(unittest.TestCase):
             apply(updated)
             apply_spring_postgame(updated)
             from scripts.scenario.levels_skills_v2 import migrate as levels
-            updated = levels(updated)
+            updated = holy_sword(levels(updated))
             self.assertEqual(updated, pack)
         for key, identifiers in (("items", set(LOOT)), ("quests", {f"side_{r['id']}" for r in REQUESTS}),
                                  ("shops", {"oaksdawn_workshop_shop"})):

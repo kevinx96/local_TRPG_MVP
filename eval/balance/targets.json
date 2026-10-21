@@ -449,5 +449,14 @@
       "hard_gate": false,
       "status": "draft"
     }
+  },
+  "draco_battle_holy_sword": {
+    "status": "draft",
+    "attack_only_lv6_min_win_rate": 0.7,
+    "attack_only_lv6_max_win_rate": 0.9,
+    "difficulty": "normal",
+    "n": 2000,
+    "seed": 20261021,
+    "criterion": "minimum of 8 level 2/4/6 passive combinations; both phases; iron sword and leather armor; defeated_ignis only; no support or companion"
   }
 }
