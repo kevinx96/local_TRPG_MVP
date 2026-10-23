@@ -218,9 +218,9 @@ class MeasurementV3Tests(unittest.TestCase):
             self.assertEqual(battle['status'], 'victory')
             progression.reward(session, 10, 'quest:test')
         observed = archetypes.ExpLevelModel().snapshot(session)
-        self.assertEqual(observed['exp'], 15)
+        self.assertEqual(observed['exp'], self.normal['progression']['exp_rewards']['trash'] + 10)
         self.assertEqual(sum(observed['sources'].values()), observed['exp'])
-        self.assertEqual(observed['sources']['trash'], 5)
+        self.assertEqual(observed['sources']['trash'], self.normal['progression']['exp_rewards']['trash'])
         self.assertEqual(observed['sources']['quest'], 10)
 
     def test_level_probes_use_engine_growth_skills_and_table_passives(self):
@@ -228,7 +228,10 @@ class MeasurementV3Tests(unittest.TestCase):
         table = {str(g['level']): g['options'][0] for g in progression.definition(session)['passive_groups']}
         higher = snapshots_v3.at_level(session, 5, table)
         lower = snapshots_v3.at_level(session, 3, table)
-        self.assertEqual(higher['character']['max_hp']-lower['character']['max_hp'], 6)
+        gains = self.normal['progression']['level_gains']['mage']
+        expected = sum(gains.get('by_level', {}).get(str(level), {}).get('max_hp', gains['max_hp'])
+                       for level in (4, 5))
+        self.assertEqual(higher['character']['max_hp']-lower['character']['max_hp'], expected)
         self.assertIn('twin_storm', {s['id'] for s in higher['character']['skills']})
         self.assertNotIn('twin_storm', {s['id'] for s in lower['character']['skills']})
         self.assertEqual(set(higher['character']['passive_history']), {'2', '4'})

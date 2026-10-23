@@ -106,7 +106,8 @@ def main() -> None:
         revisions[name] = {"content_revision": updated["meta"]["content_revision"], "overlay_sha256": overlay_fingerprint(updated)}
         print(f"{name}: {updated['meta']['content_revision']}")
     guard = ROOT / "host/prompt/processed/difficulty/overlay_revision.json"
-    guard.write_text(json.dumps(revisions, indent=2) + "\n", encoding="utf-8")
+    with guard.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(revisions, indent=2) + "\n")
 
 
 if __name__ == "__main__":

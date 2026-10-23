@@ -99,14 +99,14 @@ class HolySwordTests(unittest.TestCase):
         actor["mp"], actor["sp"] = 3, 7
         actor["statuses"] = [{"id": "test", "remaining_rounds": 8}]
         hit(value)
-        self.assertEqual((actor["hp"], actor["mp"], actor["sp"]), (45, 3, 7))
+        self.assertEqual((actor["hp"], actor["mp"], actor["sp"]), (actor["max_hp"], 3, 7))
         self.assertEqual(actor["statuses"], [{"id": "test", "remaining_rounds": 8}])
         self.assertTrue(value["flags"]["holy_sword_awakened"])
         self.assertEqual([i["name"] for i in equipped_items(actor)], ["勇者の聖剣", "革の鎧"])
         entries = [e for e in value["combat"]["log"] if e["kind"].startswith("awakening")]
         self.assertEqual([e["kind"] for e in entries], ["awakening_lock", "awakening"])
         self.assertEqual(entries[0]["state"]["player"]["hp"], 1)
-        self.assertEqual(entries[1]["state"]["player"]["hp"], 45)
+        self.assertEqual(entries[1]["state"]["player"]["hp"], actor["max_hp"])
         hit(value)
         self.assertEqual(actor["hp"], 0)
         combat._check_victory_or_defeat(value)
@@ -119,7 +119,7 @@ class HolySwordTests(unittest.TestCase):
             value["character"]["hp"] = hp
             value["combat"]["player_status"]["survive_at_one"] = True
             hit(value)
-            self.assertEqual(value["character"]["hp"], 45)
+            self.assertEqual(value["character"]["hp"], value["character"]["max_hp"])
             self.assertTrue(value["combat"]["player_status"]["survive_at_one"])
             hit(value)
             self.assertEqual(value["character"]["hp"], 1)
@@ -177,7 +177,7 @@ class HolySwordTests(unittest.TestCase):
                     with patch.object(combat, "_equipped_effect", return_value=True):
                         combat._player_skill(value, "heal", "", Rolls())
                 self.assertTrue(value["flags"]["holy_sword_awakened"])
-                self.assertEqual(actor["hp"], 45)
+                self.assertEqual(actor["hp"], actor["max_hp"])
 
     def test_phase_registration_persists_and_transition_does_not_trigger(self):
         for awaken_first in (False, True):
@@ -189,7 +189,7 @@ class HolySwordTests(unittest.TestCase):
             self.assertEqual(value["combat"]["enemies"][0]["template_id"], "draco_dragon")
             self.assertEqual(bool(value["flags"].get("holy_sword_awakened")), awaken_first)
             hit(value)
-            self.assertEqual(value["character"]["hp"], 0 if awaken_first else 45)
+            self.assertEqual(value["character"]["hp"], 0 if awaken_first else value["character"]["max_hp"])
 
     def test_other_battle_and_old_active_save_have_no_registration(self):
         value = session(False)
@@ -398,6 +398,9 @@ class HolySwordTests(unittest.TestCase):
             before = difficulty.apply_difficulty(mina_reborrow(json.loads(raw)), "baby")
             after = difficulty.apply_difficulty(json.loads((ROOT / "host/prompt/processed" / filename).read_text(encoding="utf-8")), "baby")
             before["meta"]["content_revision"] = after["meta"]["content_revision"]
+            # Inactive authoring overlays are retained by apply_difficulty.
+            before.pop("difficulty_overlays", None)
+            after.pop("difficulty_overlays", None)
             def remove_empty_result_variants(value):
                 if isinstance(value, dict):
                     for key, child in list(value.items()):

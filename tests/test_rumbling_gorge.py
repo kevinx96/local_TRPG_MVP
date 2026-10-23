@@ -303,6 +303,13 @@ class RumblingGorgeTests(unittest.TestCase):
             upgraded = holy_sword(levels(upgraded))
             from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
             upgraded = mina_reborrow(upgraded)
+            from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
+            upgraded = normal_tuning(upgraded)
+            # Legacy migrations reappend overrides; compare their full content in the source order.
+            order = {(e["entity"], e["id"], e["path"]): i
+                     for i, e in enumerate(pack["difficulty_overlays"]["normal"])}
+            upgraded["difficulty_overlays"]["normal"].sort(
+                key=lambda e: order.get((e["entity"], e["id"], e["path"]), len(order)))
             self.assertEqual(upgraded, pack)
             for loc in pack["locations"]:
                 if loc["id"] in DESCRIPTIONS:

@@ -361,7 +361,8 @@ def main() -> None:
     guard = json.loads(guard_path.read_text(encoding="utf-8"))
     for entry in guard.values():
         entry["content_revision"] = "2026-10-21-guidance-048"
-    guard_path.write_text(json.dumps(guard, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    with guard_path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(guard, ensure_ascii=False, indent=2) + "\n")
 
 
 if __name__ == "__main__":

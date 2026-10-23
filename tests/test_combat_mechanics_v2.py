@@ -530,6 +530,8 @@ class MigrationAndGoldenTests(unittest.TestCase):
             migrated = holy_sword(migrated)
             from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
             migrated = mina_reborrow(migrated)
+            from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
+            migrated = normal_tuning(migrated)
             self.assertEqual(migrated, pack)
             self.assertEqual(difficulty.numeric_snapshot(original), difficulty.numeric_snapshot(pack))
             try:

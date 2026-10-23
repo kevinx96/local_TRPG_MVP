@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-21-sword-049",
+    "content_revision": "2026-10-23-tuning-052a",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -27580,11 +27580,11 @@
         "set": {
           "2": 20,
           "3": 50,
-          "4": 90,
-          "5": 140,
-          "6": 200,
-          "7": 280,
-          "8": 380
+          "4": 54,
+          "5": 99,
+          "6": 171,
+          "7": 319,
+          "8": 679
         }
       },
       {
@@ -27592,11 +27592,11 @@
         "id": "$",
         "path": "exp_rewards",
         "set": {
-          "trash": 5,
-          "elite": 15,
-          "boss": 40,
-          "unclassified": 5,
-          "quest": 10,
+          "trash": 4,
+          "elite": 12,
+          "boss": 25,
+          "quest": 30,
+          "unclassified": 4,
           "scripted_loss": 0,
           "guest": 0
         }
@@ -27607,16 +27607,38 @@
         "path": "level_gains",
         "set": {
           "hero": {
-            "max_hp": 5,
+            "max_hp": 3,
             "max_mp": 1,
-            "max_sp": 2,
+            "max_sp": 1,
             "attributes": {
               "str": 2,
               "end": 1
+            },
+            "by_level": {
+              "2": {
+                "max_sp": 2
+              },
+              "4": {
+                "max_sp": 2,
+                "attributes": {
+                  "dex": 1
+                }
+              },
+              "6": {
+                "max_sp": 2,
+                "attributes": {
+                  "dex": 1
+                }
+              },
+              "8": {
+                "attributes": {
+                  "dex": 1
+                }
+              }
             }
           },
           "cleric": {
-            "max_hp": 5,
+            "max_hp": 3,
             "max_mp": 2,
             "max_sp": 1,
             "attributes": {
@@ -27625,16 +27647,32 @@
             }
           },
           "mage": {
-            "max_hp": 3,
+            "max_hp": 2,
             "max_mp": 3,
             "max_sp": 1,
             "attributes": {
               "int": 2,
               "wis": 1
+            },
+            "by_level": {
+              "2": {
+                "max_hp": 3
+              },
+              "4": {
+                "max_hp": 3,
+                "attributes": {
+                  "dex": 1
+                }
+              },
+              "8": {
+                "attributes": {
+                  "dex": 1
+                }
+              }
             }
           },
           "thief": {
-            "max_hp": 4,
+            "max_hp": 2,
             "max_mp": 1,
             "max_sp": 2,
             "attributes": {
@@ -27678,6 +27716,222 @@
         "id": "mage",
         "path": "skills.@id=ice_arrow.spell_tier",
         "set": "basic"
+      },
+      {
+        "entity": "enemies",
+        "id": "ash_wraith",
+        "path": "skills.@id=ash_embrace.damage",
+        "set": "1"
+      },
+      {
+        "entity": "enemies",
+        "id": "ash_wraith",
+        "path": "skills.@id=resentment.damage",
+        "set": "1d2+9"
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_human",
+        "path": "skills.@id=ice_blade.damage",
+        "set": "1d2+24"
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_human",
+        "path": "skills.@id=sword_flash.damage",
+        "set": "1d2+8"
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_human",
+        "path": "hp",
+        "set": 15
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_human",
+        "path": "max_hp",
+        "set": 15
+      },
+      {
+        "entity": "enemies",
+        "id": "emerald_spider",
+        "path": "combat.basic_attack.damage",
+        "set": "1"
+      },
+      {
+        "entity": "enemies",
+        "id": "fire_elemental",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+12"
+      },
+      {
+        "entity": "enemies",
+        "id": "fire_slime",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+2"
+      },
+      {
+        "entity": "enemies",
+        "id": "forest_wolf",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+2"
+      },
+      {
+        "entity": "enemies",
+        "id": "frost_dire_wolf",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+8"
+      },
+      {
+        "entity": "enemies",
+        "id": "frost_dire_wolf",
+        "path": "hp",
+        "set": 56
+      },
+      {
+        "entity": "enemies",
+        "id": "frost_dire_wolf",
+        "path": "max_hp",
+        "set": 56
+      },
+      {
+        "entity": "enemies",
+        "id": "goblin",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+2"
+      },
+      {
+        "entity": "enemies",
+        "id": "goblin_archer",
+        "path": "combat.basic_attack.damage",
+        "set": "1"
+      },
+      {
+        "entity": "enemies",
+        "id": "goblin_king",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+4"
+      },
+      {
+        "entity": "enemies",
+        "id": "goblin_king",
+        "path": "hp",
+        "set": 51
+      },
+      {
+        "entity": "enemies",
+        "id": "goblin_king",
+        "path": "max_hp",
+        "set": 51
+      },
+      {
+        "entity": "enemies",
+        "id": "heat_lizard",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+2"
+      },
+      {
+        "entity": "enemies",
+        "id": "hobgoblin",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+3"
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_elemental",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+8"
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "skills.@id=fire_breath.damage",
+        "set": "2d4+17"
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "hp",
+        "set": 149
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "max_hp",
+        "set": 149
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "skills.@id=crystal_rain.damage",
+        "set": "2d4+6"
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "hp",
+        "set": 78
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "max_hp",
+        "set": 78
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "combat.defense",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "ruby_golem",
+        "path": "skills.@id=ruby_fist.damage",
+        "set": "1d2+5"
+      },
+      {
+        "entity": "enemies",
+        "id": "sapphire_moth",
+        "path": "combat.basic_attack.damage",
+        "set": "1"
+      },
+      {
+        "entity": "enemies",
+        "id": "slime",
+        "path": "combat.basic_attack.damage",
+        "set": "4"
+      },
+      {
+        "entity": "enemies",
+        "id": "slime_king",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+5"
+      },
+      {
+        "entity": "enemies",
+        "id": "slime_king",
+        "path": "hp",
+        "set": 93
+      },
+      {
+        "entity": "enemies",
+        "id": "slime_king",
+        "path": "max_hp",
+        "set": 93
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_dragon",
+        "path": "hp",
+        "set": 132
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_dragon",
+        "path": "max_hp",
+        "set": 132
       }
     ]
   },

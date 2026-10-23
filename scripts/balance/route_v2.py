@@ -610,6 +610,8 @@ class MeasurementRun(class_aware.Run):
         if self.session.get("difficulty") == "normal" and self.location == "elf_spring":
             return
         self.act("cave_left")
+        if self.session.get("difficulty") == "normal" and self.location == "elf_spring":
+            return
         if "hearth" in self.quests:
             self.try_act("pick_baked_lava_stone")
         self.act("open_lava_chest")

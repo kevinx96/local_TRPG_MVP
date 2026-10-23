@@ -292,6 +292,13 @@ class RewardsBattlefieldTests(unittest.TestCase):
             pack = holy_sword(levels(pack))
             from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
             pack = mina_reborrow(pack)
+            from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
+            pack = normal_tuning(pack)
+            # Legacy migrations reappend overrides; compare their full content in the source order.
+            order = {(e["entity"], e["id"], e["path"]): i
+                     for i, e in enumerate(before["difficulty_overlays"]["normal"])}
+            pack["difficulty_overlays"]["normal"].sort(
+                key=lambda e: order.get((e["entity"], e["id"], e["path"]), len(order)))
             self.assertEqual(pack, before)
             for character in ("hero", "cleric", "mage", "thief"):
                 for empty in (False, True):
@@ -330,6 +337,13 @@ class RewardsBattlefieldTests(unittest.TestCase):
             upgraded = holy_sword(levels(upgraded))
             from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
             upgraded = mina_reborrow(upgraded)
+            from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
+            upgraded = normal_tuning(upgraded)
+            # Legacy migrations reappend overrides; compare their full content in the source order.
+            order = {(e["entity"], e["id"], e["path"]): i
+                     for i, e in enumerate(pack["difficulty_overlays"]["normal"])}
+            upgraded["difficulty_overlays"]["normal"].sort(
+                key=lambda e: order.get((e["entity"], e["id"], e["path"]), len(order)))
             self.assertEqual(upgraded, pack)
             pack = state.load_scenario_pack(DEFAULT_SCENARIO.with_name(filename))
             session = fresh_session(pack, "hero")

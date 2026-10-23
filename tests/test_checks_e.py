@@ -30,6 +30,13 @@ class ChecksETests(unittest.TestCase):
             again = holy_sword(levels(again))
             from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
             again = mina_reborrow(again)
+            from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
+            again = normal_tuning(again)
+            # Legacy migrations reappend overrides; compare their full content in the source order.
+            order = {(e["entity"], e["id"], e["path"]): i
+                     for i, e in enumerate(pack["difficulty_overlays"]["normal"])}
+            again["difficulty_overlays"]["normal"].sort(
+                key=lambda e: order.get((e["entity"], e["id"], e["path"]), len(order)))
             self.assertEqual(again, pack)
         ids = {entry[0] for entry in CHECKS}
         first, second = (self.actions(pack) for pack in self.packs)

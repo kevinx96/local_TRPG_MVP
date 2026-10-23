@@ -228,6 +228,13 @@ class LootEconomyTests(unittest.TestCase):
             updated = holy_sword(levels(updated))
             from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
             updated = mina_reborrow(updated)
+            from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
+            updated = normal_tuning(updated)
+            # Legacy migrations reappend overrides; compare their full content in the source order.
+            order = {(e["entity"], e["id"], e["path"]): i
+                     for i, e in enumerate(pack["difficulty_overlays"]["normal"])}
+            updated["difficulty_overlays"]["normal"].sort(
+                key=lambda e: order.get((e["entity"], e["id"], e["path"]), len(order)))
             self.assertEqual(updated, pack)
         for key, identifiers in (("items", set(LOOT)), ("quests", {f"side_{r['id']}" for r in REQUESTS}),
                                  ("shops", {"oaksdawn_workshop_shop"})):

@@ -65,22 +65,27 @@ class ProgressionTests(unittest.TestCase):
         for cid in ("hero", "cleric", "mage", "thief"):
             s = session(cid, start=False)
             before = deepcopy(s["character"])
-            progression.reward(s, 500, "combat:test")
+            award = max(500, NORMAL["progression"]["exp_table"]["8"] + 1)
+            progression.reward(s, award, "combat:test")
             actor = s["character"]
-            self.assertEqual((actor["level"], actor["exp"]), (8, 500))
+            self.assertEqual((actor["level"], actor["exp"]), (8, award))
             self.assertEqual(s["pending_passive_choices"], [2, 4, 6, 8])
             self.assertEqual(sum(e["kind"] == "level_up" for e in s["event_log"]), 7)
             for resource in ("hp", "mp", "sp"):
                 maximum = "max_" + resource
-                self.assertEqual(actor[maximum], before[maximum] + 7 * NORMAL["progression"]["level_gains"][cid][maximum])
+                self.assertEqual(actor[maximum], before[maximum] + sum(
+                    NORMAL["progression"]["level_gains"][cid].get("by_level", {}).get(str(level), {}).get(
+                        maximum, NORMAL["progression"]["level_gains"][cid][maximum])
+                    for level in range(2, 9)))
                 self.assertEqual(actor[resource], actor[maximum])
             self.assertEqual(len([e for e in s["event_log"] if e["kind"] == "skill_gained"]), 3)
             self.assertIsNone(progression.public_progression(s)["exp_to_next"])
             progression.reward(s, 5, "combat:again")
-            self.assertEqual(actor["exp"], 505)
+            self.assertEqual(actor["exp"], award + 5)
 
     def test_all_encounter_rewards_and_zero_nonvictory(self):
-        for category, expected in (("trash", 5), ("elite", 15), ("boss", 40), ("guest", 0), ("scripted_loss", 0), (None, 5)):
+        for category in ("trash", "elite", "boss", "guest", "scripted_loss", None):
+            expected = NORMAL["progression"]["exp_rewards"][category or "unclassified"]
             s = session()
             s["combat"]["encounter"]["encounter_class"] = category
             for _ in range(2):
@@ -100,16 +105,16 @@ class ProgressionTests(unittest.TestCase):
             for q in ("side", "main_ignis")]
         for _ in range(2):
             state.apply_state_delta(s, {"flags_set": ["side", "main_ignis"]})
-        self.assertEqual(s["character"]["exp"], 10)
+        self.assertEqual(s["character"]["exp"], NORMAL["progression"]["exp_rewards"]["quest"])
         s["event_log"] = [{"kind": "other"}] * 240
         state.apply_state_delta(s, {"flags_unset": ["side"]})
         state.apply_state_delta(s, {"flags_set": ["side"]})
-        self.assertEqual(s["character"]["exp"], 10)
+        self.assertEqual(s["character"]["exp"], NORMAL["progression"]["exp_rewards"]["quest"])
 
     def test_committed_progression_events_survive_log_truncation(self):
         s = session(start=False)
         s["event_log"] = [{"kind": "old", "text": "", "data": {}}] * 240
-        s["character"]["exp"] = 15
+        s["character"]["exp"] = NORMAL["progression"]["exp_table"]["2"] - NORMAL["progression"]["exp_rewards"]["trash"]
         combat.ensure_combat_started(s)
         combat._finish_combat(s, "victory", "【仮】")
         state.apply_state_delta(s, combat.consume_combat_state_delta(s))
@@ -121,6 +126,7 @@ class ProgressionTests(unittest.TestCase):
 
     def test_milestones_and_model_rejection(self):
         s = session(start=False)
+        s["scenario_pack"]["progression"]["exp_rewards"]["quest"] = 0
         state.apply_state_delta(s, {"flags_set": ["passed_forest_wolves", "cleared_goblin_fort"]})
         self.assertEqual(s["character"]["level"], 1)
         self.assertFalse(s.get("completed_milestones"))
@@ -182,7 +188,7 @@ class ProgressionTests(unittest.TestCase):
         progression.initialize(s)
         self.assertEqual(s["character"]["skills"], [])
         self.assertEqual(s["character"]["learned_spells"], [])
-        progression.reward(s, 100, "test")
+        progression.reward(s, NORMAL["progression"]["exp_table"]["5"] - s["character"]["exp"], "test")
         self.assertEqual([x["id"] for x in s["character"]["skills"]], ["twin_storm"])
         self.assertTrue(s["character"]["passives"])
 
@@ -236,8 +242,10 @@ class ProgressionTests(unittest.TestCase):
             self.assertEqual(sum(i["item_id"].startswith("spellbook_") for i in offers), len(books))
         for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
             base = json.loads((ROOT / "host/prompt/processed" / filename).read_text(encoding="utf-8"))
-            self.assertEqual(migrate(base), base)
-            self.assertEqual(migrate(migrate(base)), base)
+            original = deepcopy(base)
+            updated = migrate(base)
+            self.assertEqual(migrate(updated), updated)
+            self.assertEqual(base, original)
 
     def test_each_active_executes_costs_and_server_rejects(self):
         for definition in NORMAL["class_progression"]:

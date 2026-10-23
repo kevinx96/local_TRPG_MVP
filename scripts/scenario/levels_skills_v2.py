@@ -255,7 +255,9 @@ def main() -> None:
         if updated != original:
             path.write_text(json.dumps(updated, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         manifest[name] = {"content_revision": updated["meta"]["content_revision"], "overlay_sha256": overlay_fingerprint(updated)}
-    (ROOT / "host/prompt/processed/difficulty/overlay_revision.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    guard = ROOT / "host/prompt/processed/difficulty/overlay_revision.json"
+    with guard.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(manifest, indent=2) + "\n")
 
 
 if __name__ == "__main__":

@@ -115,6 +115,17 @@ def initialize(session: dict[str, Any]) -> bool:
     return before != (actor, session["pending_passive_choices"], session["progression_revision"])
 
 
+def gains_at_level(config: dict[str, Any], character_id: str, level: int) -> dict[str, Any]:
+    """Resolve a destination level; unspecified attributes retain their defaults."""
+    defaults = config["level_gains"].get(character_id, {})
+    gains = deepcopy({key: value for key, value in defaults.items() if key != "by_level"})
+    override = defaults.get("by_level", {}).get(str(level), {}) if config.get("level_model") == "exp" else {}
+    gains.update({key: value for key, value in override.items() if key != "attributes"})
+    if "attributes" in override:
+        gains.setdefault("attributes", {}).update(override["attributes"])
+    return gains
+
+
 def reward(session: dict[str, Any], amount: int, source: str) -> None:
     if not enabled(session) or amount <= 0:
         return
@@ -134,7 +145,7 @@ def reward(session: dict[str, Any], amount: int, source: str) -> None:
         level = actor.get("level", 1) + 1
         if actor["exp"] < config["exp_table"][str(level)]:
             break
-        gains = config["level_gains"].get(actor.get("character_id"), {})
+        gains = gains_at_level(config, actor.get("character_id"), level)
         for resource in ("hp", "mp", "sp"):
             key = "max_" + resource
             actor[key] += int(gains.get(key, 0))

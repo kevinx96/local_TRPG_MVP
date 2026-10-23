@@ -177,12 +177,26 @@ class SpringPostgameTests(unittest.TestCase):
             actual = holy_sword(levels(actual))
             from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
             actual = mina_reborrow(actual)
+            from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
+            actual = normal_tuning(actual)
+            # Legacy migrations reappend overrides; compare their full content in the source order.
+            order = {(e["entity"], e["id"], e["path"]): i
+                     for i, e in enumerate(pack["difficulty_overlays"]["normal"])}
+            actual["difficulty_overlays"]["normal"].sort(
+                key=lambda e: order.get((e["entity"], e["id"], e["path"]), len(order)))
             self.assertEqual(actual, pack)
             apply(actual)
             actual = migrate_combat_mechanics(actual)
             actual = holy_sword(levels(actual))
             from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
             actual = mina_reborrow(actual)
+            from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
+            actual = normal_tuning(actual)
+            # Legacy migrations reappend overrides; compare their full content in the source order.
+            order = {(e["entity"], e["id"], e["path"]): i
+                     for i, e in enumerate(pack["difficulty_overlays"]["normal"])}
+            actual["difficulty_overlays"]["normal"].sort(
+                key=lambda e: order.get((e["entity"], e["id"], e["path"]), len(order)))
             self.assertEqual(actual, pack)
             self.assertEqual(numeric_snapshot(apply_difficulty(actual, 'baby')), frozen[name])
             legacy = deepcopy(actual)

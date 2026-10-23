@@ -325,7 +325,9 @@ MECHANIC_FIELDS["progression"] = {key: () for key in
                                 ("level_model", "max_level", "exp_table", "exp_rewards", "level_gains")}
 MECHANIC_FIELDS["characters"].update({"skills.*.conditional_bonus": (), "skills.*.spell_tier": ("basic",)})
 NUMERIC_FIELDS["progression"] += ("exp_rewards.*", "level_gains.*.max_hp", "level_gains.*.max_mp",
-                                 "level_gains.*.max_sp", "level_gains.*.attributes.*")
+                                 "level_gains.*.max_sp", "level_gains.*.attributes.*",
+                                 "level_gains.*.by_level.*.max_hp", "level_gains.*.by_level.*.max_mp",
+                                 "level_gains.*.by_level.*.max_sp", "level_gains.*.by_level.*.attributes.*")
 _SKILL_NUMBERS = (
     "cost", "costs.*", "accuracy", "damage", "healing", "amount", "cooldown", "hits_per_element",
     "max_hits", "max_uses_per_battle", "conditional_bonus.*.ratio", "conditional_bonus.*.damage",
@@ -459,6 +461,28 @@ def _destination(record: Any, path: str) -> tuple[dict[str, Any], str, str]:
     return current, parts[-1], ".".join(pattern + [parts[-1]])
 
 
+def _valid_level_gains(value: Any) -> bool:
+    fields = {"max_hp", "max_mp", "max_sp", "attributes"}
+
+    def valid_row(row: Any, partial: bool = False) -> bool:
+        return (isinstance(row, dict) and (set(row) <= fields if partial else set(row) == fields)
+                and all(type(n) is int and n >= 0 for key, n in row.items() if key != "attributes")
+                and isinstance(row.get("attributes", {}), dict)
+                and all(type(n) is int and n >= 0 for n in row.get("attributes", {}).values()))
+
+    if not isinstance(value, dict) or set(value) != {"hero", "cleric", "mage", "thief"}:
+        return False
+    for row in value.values():
+        if not isinstance(row, dict) or not valid_row({k: v for k, v in row.items() if k != "by_level"}):
+            return False
+        levels = row.get("by_level", {})
+        if not isinstance(levels, dict) or not all(
+                level in {str(n) for n in range(2, 9)} and valid_row(gains, partial=True)
+                for level, gains in levels.items()):
+            return False
+    return True
+
+
 def _apply_overlays(pack: dict[str, Any]) -> None:
     overlays = pack.get("difficulty_overlays", {"normal": []})
     if not isinstance(overlays, dict) or set(overlays) != {"normal"} or not isinstance(overlays["normal"], list):
@@ -505,12 +529,7 @@ def _apply_overlays(pack: dict[str, Any]) -> None:
                     valid = (isinstance(value, dict) and bool(value)
                              and all(type(n) is int and n >= 0 for n in value.values()))
                 elif pattern == "level_gains":
-                    valid = (isinstance(value, dict) and set(value) == {"hero", "cleric", "mage", "thief"}
-                             and all(isinstance(g, dict) and set(g) == {"max_hp", "max_mp", "max_sp", "attributes"}
-                                     and isinstance(g["attributes"], dict)
-                                     and all(type(n) is int and n >= 0 for k, n in g.items() if k != "attributes")
-                                     and all(type(n) is int and n >= 0 for n in g["attributes"].values())
-                                     for g in value.values()))
+                    valid = _valid_level_gains(value)
             elif group == "characters" and pattern == "skills.*.conditional_bonus":
                 valid = (isinstance(value, list) and bool(value)
                          and all(isinstance(c, dict) and c.get("if") in {"target_hp_full", "target_hp_ratio_lte"}

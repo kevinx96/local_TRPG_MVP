@@ -34,13 +34,15 @@ def at_level(session: dict[str, Any], level: int, table: dict[str, str]) -> dict
     result = deepcopy(session, {id(pack): pack})
     actor = result["character"]
     previous = actor["level"]
-    gains = pack["progression"]["level_gains"][actor["character_id"]]
+    history = [progression.gains_at_level(pack["progression"], actor["character_id"], old_level)
+               for old_level in range(2, previous + 1)]
     for resource in ("hp", "mp", "sp"):
         key = "max_" + resource
-        actor[key] -= (previous-1)*gains.get(key, 0)
+        actor[key] -= sum(gains.get(key, 0) for gains in history)
         actor[resource] = actor[key]
-    for key, value in gains.get("attributes", {}).items():
-        actor["attributes"][key] -= (previous-1)*value
+    for gains in history:
+        for key, value in gains.get("attributes", {}).items():
+            actor["attributes"][key] -= value
     active_ids = {a["skill"]["id"] for a in progression.definition(result).get("actives", [])}
     actor["skills"] = [s for s in actor["skills"] if s["id"] not in active_ids]
     actor.update(level=1, exp=0, passives=[], passive_history={})
