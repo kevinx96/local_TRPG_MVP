@@ -294,6 +294,8 @@ class RewardsBattlefieldTests(unittest.TestCase):
             pack = mina_reborrow(pack)
             from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
             pack = normal_tuning(pack)
+            from scripts.scenario.status_content_054 import migrate as status_content
+            pack = normal_tuning(status_content(pack))
             # Legacy migrations reappend overrides; compare their full content in the source order.
             order = {(e["entity"], e["id"], e["path"]): i
                      for i, e in enumerate(before["difficulty_overlays"]["normal"])}
@@ -339,6 +341,8 @@ class RewardsBattlefieldTests(unittest.TestCase):
             upgraded = mina_reborrow(upgraded)
             from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
             upgraded = normal_tuning(upgraded)
+            from scripts.scenario.status_content_054 import migrate as status_content
+            upgraded = normal_tuning(status_content(upgraded))
             # Legacy migrations reappend overrides; compare their full content in the source order.
             order = {(e["entity"], e["id"], e["path"]): i
                      for i, e in enumerate(pack["difficulty_overlays"]["normal"])}

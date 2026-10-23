@@ -497,6 +497,18 @@ class HolySwordTests(unittest.TestCase):
                         remove_empty_result_variants(child)
             remove_empty_result_variants(before)
             remove_empty_result_variants(after)
+            # 054 explicitly adds shared inert definitions; verify only those exact changes.
+            old_defs = {s["id"]: s for s in before["status_defs"]}
+            new_defs = {s["id"]: s for s in after["status_defs"]}
+            self.assertEqual(set(new_defs) - set(old_defs), {"haze"} if "haze" not in old_defs else set())
+            for sid in ("poison", "paralysis", "weaken", "blind"):
+                old_defs[sid]["tags"] = [sid, "debuff"]
+            for sid, definition in old_defs.items():
+                self.assertEqual(new_defs[sid], definition)
+            before["status_defs"] = after["status_defs"]
+            old_items = {item["id"]: item for item in before["items"]}
+            new_items = {item["id"]: item for item in after["items"]}
+            old_items["poison_dart"]["description"] = new_items["poison_dart"]["description"]
             self.assertEqual(before, after)
 
 

@@ -230,6 +230,8 @@ class LootEconomyTests(unittest.TestCase):
             updated = mina_reborrow(updated)
             from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
             updated = normal_tuning(updated)
+            from scripts.scenario.status_content_054 import migrate as status_content
+            updated = normal_tuning(status_content(updated))
             # Legacy migrations reappend overrides; compare their full content in the source order.
             order = {(e["entity"], e["id"], e["path"]): i
                      for i, e in enumerate(pack["difficulty_overlays"]["normal"])}

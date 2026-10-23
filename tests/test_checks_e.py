@@ -32,6 +32,8 @@ class ChecksETests(unittest.TestCase):
             again = mina_reborrow(again)
             from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
             again = normal_tuning(again)
+            from scripts.scenario.status_content_054 import migrate as status_content
+            again = normal_tuning(status_content(again))
             # Legacy migrations reappend overrides; compare their full content in the source order.
             order = {(e["entity"], e["id"], e["path"]): i
                      for i, e in enumerate(pack["difficulty_overlays"]["normal"])}

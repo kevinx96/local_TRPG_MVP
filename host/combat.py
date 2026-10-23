@@ -1067,6 +1067,9 @@ def _enemy_phase(session: dict[str, Any], rng: Any) -> None:
 
 def _execute_enemy_ability(session: dict[str, Any], enemy: dict[str, Any], ability: dict[str, Any], rng: Any) -> None:
     actor_id = str(enemy.get("id") or "enemy")
+    if ability.get("log_text"):
+        _log(session, actor_id, "status", ability["log_text"].replace("{enemy}", enemy["name"]),
+             {"skill_id": ability.get("id")}, target=enemy)
     if ability.get("release_text"):
         _log(session, actor_id, "status", ability["release_text"].format(enemy=enemy["name"]),
              {"skill_id": ability.get("id")}, target=enemy)

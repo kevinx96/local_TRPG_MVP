@@ -129,7 +129,9 @@ class NpcCombatTests(unittest.TestCase):
         self.assertTrue(npc_combat.gone(session, "fire_bat_dragon"))
         self.assertTrue(session["flags"]["town_blood"])
         self.assertEqual(delta["gold_change"], 30)
-        self.assertEqual({i["id"]: i["quantity"] for i in delta["inventory_add"]}, {"herb": 1, "ice_charm": 1, "fireball_scroll": 1})
+        self.assertEqual({i["id"]: i["quantity"] for i in delta["inventory_add"]}, {"herb": 1, "ice_charm": 1, "fireball_scroll": 1,
+                          "antidote_herb": 4, "burn_salve": 3, "smelling_salts": 3,
+                          "blinding_powder": 3, "haze_ball": 2})
         with self.assertRaises(shops.ShopError):
             shops.public_shop(session, "sarah_shop")
         self.assertEqual(self.request(session, "sarah")["outcome"], "rejected")
@@ -141,7 +143,7 @@ class NpcCombatTests(unittest.TestCase):
         self.request(session, "blacksmith")
         npc_combat.resolve_confirmation(session, "npc_attack_confirm")
         delta = self.settle(session)
-        self.assertEqual([(i["id"], i["quantity"]) for i in delta["inventory_add"]], [("ice_charm", 1)])
+        self.assertEqual([(i["id"], i["quantity"]) for i in delta["inventory_add"]], [("ice_charm", 1), ("oil_flask", 3), ("trap_probe", 1)])
 
     def test_partial_casualties_persist_after_flee(self):
         session = self.session()
@@ -231,6 +233,8 @@ class NpcCombatTests(unittest.TestCase):
             pack = mina_reborrow(pack)
             from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
             pack = normal_tuning(pack)
+            from scripts.scenario.status_content_054 import migrate as status_content
+            pack = normal_tuning(status_content(pack))
             # Legacy migrations reappend overrides; compare their full content in the source order.
             order = {(e["entity"], e["id"], e["path"]): i
                      for i, e in enumerate(before["difficulty_overlays"]["normal"])}

@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-23-tuning-052b",
+    "content_revision": "2026-10-24-status-content-054",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -6530,6 +6530,26 @@
           "success_effects": [
             {
               "hp_change": 5
+            },
+            {
+              "branch": {
+                "requirements": {
+                  "character_id": "cleric"
+                },
+                "then": [
+                  {
+                    "add_item": {
+                      "id": "purifying_bell",
+                      "name": "清めの鈴",
+                      "quantity": 1
+                    }
+                  }
+                ],
+                "else": []
+              },
+              "difficulty_only": [
+                "normal"
+              ]
             }
           ],
           "failure_effects": [],
@@ -6539,6 +6559,31 @@
           },
           "risk_source": "action",
           "once": "commune_spring_done"
+        },
+        {
+          "id": "gather_antidote_herb_054",
+          "text": "泉のほとりで薬草を摘む",
+          "preview": "",
+          "result_text": "泉のほとりで薬草を摘む。",
+          "risk": "判定不要",
+          "risk_source": "action",
+          "intent_keywords": [
+            "泉のほとりで薬草を摘む"
+          ],
+          "once": "gathered_antidote_herb_054",
+          "hidden_after": "gathered_antidote_herb_054",
+          "difficulty_only": [
+            "normal"
+          ],
+          "effects": [
+            {
+              "add_item": {
+                "id": "antidote_herb",
+                "name": "毒消し草",
+                "quantity": 1
+              }
+            }
+          ]
         }
       ],
       "background_image": "/static/images/bg_elf_spring.png",
@@ -7736,7 +7781,14 @@
             "dc": 10,
             "skill": "知覚"
           },
-          "success_effects": [],
+          "success_effects": [
+            {
+              "set_flag": "fort_corridors_heard_054",
+              "difficulty_only": [
+                "normal"
+              ]
+            }
+          ],
           "failure_effects": [],
           "result_texts": {
             "success": "右の通路からは重い足音が一つ。左からは水の滴る音と、かすかな呻き声が聞こえる。",
@@ -7744,6 +7796,101 @@
           },
           "risk_source": "action",
           "once": "listen_fort_corridors_done"
+        },
+        {
+          "id": "hazard_054_01",
+          "text": "通路脇の木箱を開ける",
+          "preview": "無造作に置かれた木箱だが、留め金のあたりに不自然な細工が見える。",
+          "risk": "軽業（敏捷）判定・DC10",
+          "risk_source": "action",
+          "intent_keywords": [
+            "通路脇の木箱を開ける"
+          ],
+          "difficulty_only": [
+            "normal"
+          ],
+          "once": "hazard_054_01_done",
+          "hidden_after": "hazard_054_01_done",
+          "hazard": {
+            "kind": "trap",
+            "warning": "無造作に置かれた木箱だが、留め金のあたりに不自然な細工が見える。"
+          },
+          "roll": {
+            "dice_type": "1d20+dex",
+            "skill": "軽業",
+            "dc": 10,
+            "advantage": [
+              {
+                "requirements": {
+                  "character_id": "thief"
+                },
+                "reason": "盗賊の勘"
+              },
+              {
+                "requirements": {
+                  "has_item": "探り棒"
+                },
+                "reason": "探り棒で確かめた"
+              },
+              {
+                "requirements": {
+                  "flag": "fort_corridors_heard_054"
+                },
+                "reason": "通路の奥に耳を澄ます"
+              }
+            ]
+          },
+          "critical_enabled": false,
+          "effects": [],
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "antidote_herb",
+                "name": "毒消し草",
+                "quantity": 1
+              }
+            },
+            {
+              "add_item": {
+                "id": "blinding_powder",
+                "name": "目くらまし粉",
+                "quantity": 1
+              }
+            }
+          ],
+          "failure_effects": [
+            {
+              "damage_player": {
+                "max_hp_ratio": 0.1
+              }
+            },
+            {
+              "apply_status": {
+                "id": "poison",
+                "chance": 100,
+                "stacks": 1,
+                "duration": 3
+              }
+            },
+            {
+              "add_item": {
+                "id": "antidote_herb",
+                "name": "毒消し草",
+                "quantity": 1
+              }
+            },
+            {
+              "add_item": {
+                "id": "blinding_powder",
+                "name": "目くらまし粉",
+                "quantity": 1
+              }
+            }
+          ],
+          "result_texts": {
+            "success": "箱の裏に張られた細い針金を指先で外し、仕掛けられた毒針をやり過ごして蓋を開けた。中から薬草と灰の詰まった小袋を手に入れた。",
+            "failure": "蓋を持ち上げた瞬間、箱の隙間からバネ仕掛けの毒針が飛び出した。とっさに手を引いたが、針先が皮膚を浅くかすめて毒が回る。"
+          }
         }
       ],
       "background_image": "/static/images/bg_goblin_fort.png",
@@ -11643,6 +11790,87 @@
           },
           "risk_source": "action",
           "once": "read_heat_flow_done"
+        },
+        {
+          "id": "hazard_054_02",
+          "text": "噴気孔のそばの結晶を拾う",
+          "preview": "岩の裂け目で結晶が光っているが、奥から不規則に熱気が噴き出している。",
+          "risk": "知覚（知恵）判定・DC10",
+          "risk_source": "action",
+          "intent_keywords": [
+            "噴気孔のそばの結晶を拾う"
+          ],
+          "difficulty_only": [
+            "normal"
+          ],
+          "once": "hazard_054_02_done",
+          "hidden_after": "hazard_054_02_done",
+          "hazard": {
+            "kind": "trap",
+            "warning": "岩の裂け目で結晶が光っているが、奥から不規則に熱気が噴き出している。"
+          },
+          "roll": {
+            "dice_type": "1d20+wis",
+            "skill": "知覚",
+            "dc": 10,
+            "advantage": [
+              {
+                "requirements": {
+                  "character_id": "thief"
+                },
+                "reason": "盗賊の勘"
+              },
+              {
+                "requirements": {
+                  "has_item": "探り棒"
+                },
+                "reason": "探り棒で確かめた"
+              },
+              {
+                "requirements": {
+                  "flag": "heat_rhythm_known"
+                },
+                "reason": "熱風の切れ目を知っている"
+              }
+            ]
+          },
+          "critical_enabled": false,
+          "effects": [],
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "burn_salve",
+                "name": "火傷薬",
+                "quantity": 2
+              }
+            }
+          ],
+          "failure_effects": [
+            {
+              "damage_player": {
+                "max_hp_ratio": 0.1
+              }
+            },
+            {
+              "apply_status": {
+                "id": "burn",
+                "chance": 100,
+                "stacks": 1,
+                "duration": 2
+              }
+            },
+            {
+              "add_item": {
+                "id": "burn_salve",
+                "name": "火傷薬",
+                "quantity": 2
+              }
+            }
+          ],
+          "result_texts": {
+            "success": "地底の唸りがふっと途切れた一瞬を見極め、素早く手を伸ばして結晶の脇を探った。誰かが落とした軟膏の壺を無事に拾い上げた。",
+            "failure": "手を伸ばした途端、岩の裂け目から灼熱の蒸気が激しく噴き上がった。熱風をまともに浴び、皮膚がひりつくような痛みに襲われる。"
+          }
         }
       ],
       "objects": [],
@@ -12421,6 +12649,94 @@
           },
           "risk_source": "action",
           "once": "tune_crystals_done"
+        },
+        {
+          "id": "hazard_054_03",
+          "text": "天井の大結晶を叩き落とす",
+          "preview": "天井から大結晶が危うく垂れ下がっている。衝撃を与えれば周囲ごと崩れそうだ。",
+          "risk": "運動（筋力）判定・DC12",
+          "risk_source": "action",
+          "intent_keywords": [
+            "天井の大結晶を叩き落とす"
+          ],
+          "difficulty_only": [
+            "normal"
+          ],
+          "once": "hazard_054_03_done",
+          "hidden_after": "hazard_054_03_done",
+          "hazard": {
+            "kind": "rockfall",
+            "warning": "天井から大結晶が危うく垂れ下がっている。衝撃を与えれば周囲ごと崩れそうだ。"
+          },
+          "roll": {
+            "dice_type": "1d20+str",
+            "skill": "運動",
+            "dc": 12,
+            "advantage": [
+              {
+                "requirements": {
+                  "character_id": "thief"
+                },
+                "reason": "盗賊の勘"
+              },
+              {
+                "requirements": {
+                  "has_item": "探り棒"
+                },
+                "reason": "探り棒で確かめた"
+              },
+              {
+                "requirements": {
+                  "flag": "calmed_crystals"
+                },
+                "reason": "水晶の共鳴を知っている"
+              }
+            ]
+          },
+          "critical_enabled": false,
+          "effects": [],
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "smelling_salts",
+                "name": "気付け薬",
+                "quantity": 1
+              }
+            },
+            {
+              "add_item": {
+                "id": "crystal_fragment",
+                "name": "色水晶の欠片",
+                "quantity": 2
+              }
+            }
+          ],
+          "failure_effects": [
+            {
+              "damage_player": {
+                "max_hp_ratio": 0.15
+              }
+            },
+            {
+              "add_item": {
+                "id": "smelling_salts",
+                "name": "気付け薬",
+                "quantity": 1
+              }
+            },
+            {
+              "add_item": {
+                "id": "crystal_fragment",
+                "name": "色水晶の欠片",
+                "quantity": 2
+              }
+            }
+          ],
+          "result_texts": {
+            "success": "結晶の根元を狙って一気に打ち抜き、落ちてくる破片の軌道を読み切って後ろへ跳び退いた。砕けた塊の中から輝く欠片と薬瓶を拾う。",
+            "failure": "結晶は砕け落ちたが、振動で天井の岩盤まで一緒に崩れ落ちてきた。逃げ遅れた肩口に重い岩片が直撃し、激しい衝撃に息が詰まる。"
+          },
+          "visible_after": "cleared_cave_crystal_corridor"
         }
       ],
       "objects": [],
@@ -12814,6 +13130,93 @@
           },
           "risk_source": "action",
           "once": "call_to_child_done"
+        },
+        {
+          "id": "hazard_054_04",
+          "text": "焼け落ちかけた納屋を探る",
+          "preview": "納屋の梁が赤く爆ぜて軋んでいる。中へ踏み込めば今にも崩れ落ちてきそうだ。",
+          "risk": "知覚（知恵）判定・DC10",
+          "risk_source": "action",
+          "intent_keywords": [
+            "焼け落ちかけた納屋を探る"
+          ],
+          "difficulty_only": [
+            "normal"
+          ],
+          "once": "hazard_054_04_done",
+          "hidden_after": "hazard_054_04_done",
+          "hazard": {
+            "kind": "rockfall",
+            "warning": "納屋の梁が赤く爆ぜて軋んでいる。中へ踏み込めば今にも崩れ落ちてきそうだ。"
+          },
+          "roll": {
+            "dice_type": "1d20+wis",
+            "skill": "知覚",
+            "dc": 10,
+            "advantage": [
+              {
+                "requirements": {
+                  "character_id": "thief"
+                },
+                "reason": "盗賊の勘"
+              },
+              {
+                "requirements": {
+                  "has_item": "探り棒"
+                },
+                "reason": "探り棒で確かめた"
+              },
+              {
+                "requirements": {
+                  "flag": "fire_upwind_known"
+                },
+                "reason": "風上を知っている"
+              }
+            ]
+          },
+          "critical_enabled": false,
+          "effects": [],
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "burn_salve",
+                "name": "火傷薬",
+                "quantity": 1
+              }
+            },
+            {
+              "gold_change": 15
+            }
+          ],
+          "failure_effects": [
+            {
+              "damage_player": {
+                "max_hp_ratio": 0.15
+              }
+            },
+            {
+              "apply_status": {
+                "id": "burn",
+                "chance": 100,
+                "stacks": 1,
+                "duration": 2
+              }
+            },
+            {
+              "add_item": {
+                "id": "burn_salve",
+                "name": "火傷薬",
+                "quantity": 1
+              }
+            },
+            {
+              "gold_change": 15
+            }
+          ],
+          "result_texts": {
+            "success": "火勢の弱い風上側から身を低くして滑り込み、梁が落ちる前に棚の荷物を掴んで外へ飛び出した。小銭の袋と軟膏が手元に残った。",
+            "failure": "納屋に踏み込んだ瞬間、燃え尽きた梁が轟音とともに崩れ落ちた。飛び散る火の粉と落ちてきた木材に打たれ、煙にむせながら這い出る。"
+          }
         }
       ],
       "npc_ids": [],
@@ -14442,6 +14845,93 @@
           },
           "risk_source": "action",
           "once": "search_hidden_drawer_done"
+        },
+        {
+          "id": "hazard_054_09",
+          "text": "書斎の金庫をこじ開ける",
+          "preview": "机の下に重厚な鉄の金庫が据えられている。鍵穴の奥に精巧な防犯の仕掛けがありそうだ。",
+          "risk": "軽業（敏捷）判定・DC14",
+          "risk_source": "action",
+          "intent_keywords": [
+            "書斎の金庫をこじ開ける"
+          ],
+          "difficulty_only": [
+            "normal"
+          ],
+          "once": "hazard_054_09_done",
+          "hidden_after": "hazard_054_09_done",
+          "hazard": {
+            "kind": "trap",
+            "warning": "机の下に重厚な鉄の金庫が据えられている。鍵穴の奥に精巧な防犯の仕掛けがありそうだ。"
+          },
+          "roll": {
+            "dice_type": "1d20+dex",
+            "skill": "軽業",
+            "dc": 14,
+            "advantage": [
+              {
+                "requirements": {
+                  "character_id": "thief"
+                },
+                "reason": "盗賊の勘"
+              },
+              {
+                "requirements": {
+                  "has_item": "探り棒"
+                },
+                "reason": "探り棒で確かめた"
+              },
+              {
+                "requirements": {
+                  "flag": "mansion_patrol_known"
+                },
+                "reason": "夜番の交代を知っている"
+              }
+            ]
+          },
+          "critical_enabled": false,
+          "effects": [],
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "panacea",
+                "name": "万能薬",
+                "quantity": 1
+              }
+            },
+            {
+              "gold_change": 30
+            }
+          ],
+          "failure_effects": [
+            {
+              "damage_player": {
+                "max_hp_ratio": 0.1
+              }
+            },
+            {
+              "apply_status": {
+                "id": "paralysis",
+                "chance": 100,
+                "stacks": 1,
+                "duration": 2
+              }
+            },
+            {
+              "add_item": {
+                "id": "panacea",
+                "name": "万能薬",
+                "quantity": 1
+              }
+            },
+            {
+              "gold_change": 30
+            }
+          ],
+          "result_texts": {
+            "success": "鍵穴の奥でかすかに光る放電針の継ぎ目を探り当て、金具で絶縁してから錠前を落とした。音も立てずに扉が開き、霊薬と金貨を手に入れた。",
+            "failure": "錠前を回した瞬間、鍵穴の奥から紫色の電光が弾けて指先を走った。激しい雷撃に全身の筋肉が硬直し、金庫の前で膝から崩れ落ちる。"
+          }
         }
       ],
       "npc_ids": [],
@@ -15009,6 +15499,126 @@
           },
           "risk_source": "action",
           "once": "identify_old_banner_done"
+        },
+        {
+          "id": "hazard_054_05",
+          "text": "呪符の墓標に供えられた品を取る",
+          "preview": "朽ちた剣の墓標に古い呪符が巻きつき、周囲の霧だけが重く淀んでいる。",
+          "risk": "信仰（知恵）判定・DC10",
+          "risk_source": "action",
+          "intent_keywords": [
+            "呪符の墓標に供えられた品を取る"
+          ],
+          "difficulty_only": [
+            "normal"
+          ],
+          "once": "hazard_054_05_done",
+          "hidden_after": "hazard_054_05_done",
+          "hazard": {
+            "kind": "trap",
+            "warning": "朽ちた剣の墓標に古い呪符が巻きつき、周囲の霧だけが重く淀んでいる。"
+          },
+          "roll": {
+            "dice_type": "1d20+wis",
+            "skill": "信仰",
+            "dc": 10,
+            "advantage": [
+              {
+                "requirements": {
+                  "character_id": "thief"
+                },
+                "reason": "盗賊の勘"
+              },
+              {
+                "requirements": {
+                  "has_item": "探り棒"
+                },
+                "reason": "探り棒で確かめた"
+              },
+              {
+                "requirements": {
+                  "has_item": "錆びた兵士の徽章"
+                },
+                "reason": "錆びた兵士の徽章"
+              }
+            ]
+          },
+          "critical_enabled": false,
+          "effects": [],
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "smelling_salts",
+                "name": "気付け薬",
+                "quantity": 2
+              }
+            }
+          ],
+          "failure_effects": [
+            {
+              "damage_player": {
+                "max_hp_ratio": 0.1
+              }
+            },
+            {
+              "apply_status": {
+                "id": "weaken",
+                "chance": 100,
+                "stacks": 1,
+                "duration": 2
+              }
+            },
+            {
+              "add_item": {
+                "id": "smelling_salts",
+                "name": "気付け薬",
+                "quantity": 2
+              }
+            }
+          ],
+          "result_texts": {
+            "success": "戦場に眠る死者へ静かに祈りを捧げてから手を伸ばすと、墓標に絡みついていた黒い怨気が霧散した。供えられていた薬瓶を謹んで受け取る。",
+            "failure": "無造作に供え物へ触れた瞬間、呪符が黒く焼け焦げて冷たい怨念が腕に絡みついた。骨の髄まで重く沈み込み、全身から力が抜けていく。"
+          }
+        },
+        {
+          "id": "hazard_054_05_holy_water",
+          "text": "聖水を振りかけて呪いを解く",
+          "preview": "聖水 ×1（判定なしで墓標の呪いを浄化し、供え物を回収する）",
+          "risk": "判定不要",
+          "risk_source": "action",
+          "intent_keywords": [
+            "聖水を振りかけて呪いを解く"
+          ],
+          "difficulty_only": [
+            "normal"
+          ],
+          "once": "hazard_054_05_done",
+          "hidden_after": "hazard_054_05_done",
+          "hazard": {
+            "kind": "trap",
+            "warning": "朽ちた剣の墓標に古い呪符が巻きつき、周囲の霧だけが重く淀んでいる。"
+          },
+          "critical_enabled": false,
+          "effects": [
+            {
+              "remove_item": {
+                "name": "聖水",
+                "quantity": 1
+              }
+            },
+            {
+              "add_item": {
+                "id": "smelling_salts",
+                "name": "気付け薬",
+                "quantity": 2
+              }
+            }
+          ],
+          "requirements": {
+            "has_item": "聖水"
+          },
+          "result_text": "墓標に聖水を振りかけると、呪符に宿っていた黒い怨気が白い湯気を立てて消え去った。清められた墓標の前から、供えられていた薬瓶を回収した。"
         }
       ],
       "npc_ids": [],
@@ -15321,6 +15931,87 @@
           },
           "risk_source": "action",
           "once": "probe_marsh_depth_done"
+        },
+        {
+          "id": "hazard_054_06",
+          "text": "沼に沈んだ箱を引き上げる",
+          "preview": "濁った泥水の底に古い箱が沈んでいる。足場がぬかるみ、不用意に引けば危険そうだ。",
+          "risk": "運動（筋力）判定・DC12",
+          "risk_source": "action",
+          "intent_keywords": [
+            "沼に沈んだ箱を引き上げる"
+          ],
+          "difficulty_only": [
+            "normal"
+          ],
+          "once": "hazard_054_06_done",
+          "hidden_after": "hazard_054_06_done",
+          "hazard": {
+            "kind": "trap",
+            "warning": "濁った泥水の底に古い箱が沈んでいる。足場がぬかるみ、不用意に引けば危険そうだ。"
+          },
+          "roll": {
+            "dice_type": "1d20+str",
+            "skill": "運動",
+            "dc": 12,
+            "advantage": [
+              {
+                "requirements": {
+                  "character_id": "thief"
+                },
+                "reason": "盗賊の勘"
+              },
+              {
+                "requirements": {
+                  "has_item": "探り棒"
+                },
+                "reason": "探り棒で確かめた"
+              },
+              {
+                "requirements": {
+                  "flag": "marsh_path_known"
+                },
+                "reason": "沈まない足場を知っている"
+              }
+            ]
+          },
+          "critical_enabled": false,
+          "effects": [],
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "panacea",
+                "name": "万能薬",
+                "quantity": 1
+              }
+            }
+          ],
+          "failure_effects": [
+            {
+              "damage_player": {
+                "max_hp_ratio": 0.1
+              }
+            },
+            {
+              "apply_status": {
+                "id": "paralysis",
+                "chance": 100,
+                "stacks": 1,
+                "duration": 2
+              }
+            },
+            {
+              "add_item": {
+                "id": "panacea",
+                "name": "万能薬",
+                "quantity": 1
+              }
+            }
+          ],
+          "result_texts": {
+            "success": "硬い木の根に足を掛けて踏ん張り、箱に絡む水草を切ってから一気に引き上げた。泥を拭うと、密閉された小箱の中に霊薬が残っていた。",
+            "failure": "泥に足を取られて体勢を崩し、箱の縁に仕込まれていた錆びた痺れ針に指先を突かれた。冷たい泥水の中で、腕から先が急速に痺れていく。"
+          }
         }
       ],
       "npc_ids": [],
@@ -16489,6 +17180,16 @@
             },
             {
               "set_flag": "recruited_liese"
+            },
+            {
+              "add_item": {
+                "id": "smelling_salts",
+                "name": "気付け薬",
+                "quantity": 1
+              },
+              "difficulty_only": [
+                "normal"
+              ]
             }
           ],
           "visible_after": "met_liese",
@@ -16528,6 +17229,16 @@
             },
             {
               "set_flag": "recruited_liese"
+            },
+            {
+              "add_item": {
+                "id": "smelling_salts",
+                "name": "気付け薬",
+                "quantity": 1
+              },
+              "difficulty_only": [
+                "normal"
+              ]
             }
           ],
           "visible_after": "met_liese",
@@ -16574,6 +17285,16 @@
             },
             {
               "set_flag": "recruited_liese"
+            },
+            {
+              "add_item": {
+                "id": "smelling_salts",
+                "name": "気付け薬",
+                "quantity": 1
+              },
+              "difficulty_only": [
+                "normal"
+              ]
             }
           ],
           "failure_effects": [],
@@ -17897,6 +18618,81 @@
           "visible_after": "passed_gorge_rockfall_path",
           "result_text": "守護団員がどけた岩の向こうに、深い峡谷が口を開けていた。足元が低く唸るように揺れ、岩壁から小石がぱらぱらと落ちてくる。",
           "risk_source": "destination"
+        },
+        {
+          "id": "hazard_054_07",
+          "text": "崩れかけた岩棚の袋を取る",
+          "preview": "頭上の岩棚に旅人の袋が引っかかっているが、地鳴りのたびに小石が落ちてくる。",
+          "risk": "軽業（敏捷）判定・DC10",
+          "risk_source": "action",
+          "intent_keywords": [
+            "崩れかけた岩棚の袋を取る"
+          ],
+          "difficulty_only": [
+            "normal"
+          ],
+          "once": "hazard_054_07_done",
+          "hidden_after": "hazard_054_07_done",
+          "hazard": {
+            "kind": "rockfall",
+            "warning": "頭上の岩棚に旅人の袋が引っかかっているが、地鳴りのたびに小石が落ちてくる。"
+          },
+          "roll": {
+            "dice_type": "1d20+dex",
+            "skill": "軽業",
+            "dc": 10,
+            "advantage": [
+              {
+                "requirements": {
+                  "character_id": "thief"
+                },
+                "reason": "盗賊の勘"
+              },
+              {
+                "requirements": {
+                  "has_item": "探り棒"
+                },
+                "reason": "探り棒で確かめた"
+              },
+              {
+                "requirements": {
+                  "flag": "gorge_tremor_rhythm"
+                },
+                "reason": "地鳴りの間隔を知っている"
+              }
+            ]
+          },
+          "critical_enabled": false,
+          "effects": [],
+          "success_effects": [
+            {
+              "set_flag": "passed_gorge_rockfall_path"
+            },
+            {
+              "add_item": {
+                "id": "antidote_herb",
+                "name": "毒消し草",
+                "quantity": 1
+              }
+            }
+          ],
+          "failure_effects": [
+            {
+              "damage_player": {
+                "max_hp_ratio": 0.15
+              }
+            },
+            {
+              "set_flag": "passed_gorge_rockfall_path"
+            }
+          ],
+          "result_texts": {
+            "success": "地鳴りが収まった静寂の隙を突き、岩肌を蹴って一気に袋を掴み取った。岩棚が崩れる前に安全な道へ着地し、中の道具を回収した。",
+            "failure": "手をかけた途端に地鳴りが響き、岩棚ごと大小の落石が雪崩れ落ちてきた。身をかわしきれずに岩角に打ち据えられ、砂煙の中でうずくまる。"
+          },
+          "visible_requirements": {
+            "not_flag": "passed_gorge_rockfall_path"
+          }
         }
       ],
       "choices": [
@@ -18059,6 +18855,83 @@
           },
           "risk_source": "action",
           "once": "search_miner_tent_done"
+        },
+        {
+          "id": "hazard_054_08",
+          "text": "放置された木箱を開ける",
+          "preview": "天幕の隅に鎖の巻かれた木箱が残されている。盗掘除けの仕掛けがあるかもしれない。",
+          "risk": "知覚（知恵）判定・DC12",
+          "risk_source": "action",
+          "intent_keywords": [
+            "放置された木箱を開ける"
+          ],
+          "difficulty_only": [
+            "normal"
+          ],
+          "once": "hazard_054_08_done",
+          "hidden_after": "hazard_054_08_done",
+          "hazard": {
+            "kind": "trap",
+            "warning": "天幕の隅に鎖の巻かれた木箱が残されている。盗掘除けの仕掛けがあるかもしれない。"
+          },
+          "roll": {
+            "dice_type": "1d20+wis",
+            "skill": "知覚",
+            "dc": 12,
+            "advantage": [
+              {
+                "requirements": {
+                  "character_id": "thief"
+                },
+                "reason": "盗賊の勘"
+              },
+              {
+                "requirements": {
+                  "has_item": "探り棒"
+                },
+                "reason": "探り棒で確かめた"
+              },
+              {
+                "requirements": {
+                  "flag": "read_miner_diary"
+                },
+                "reason": "鉱夫の荷物を調べる"
+              }
+            ]
+          },
+          "critical_enabled": false,
+          "effects": [],
+          "success_effects": [
+            {
+              "add_item": {
+                "id": "oil_flask",
+                "name": "油壺",
+                "quantity": 1
+              }
+            },
+            {
+              "gold_change": 15
+            }
+          ],
+          "failure_effects": [
+            {
+              "damage_player": {
+                "max_hp_ratio": 0.15
+              }
+            },
+            {
+              "apply_status": {
+                "id": "burn",
+                "chance": 100,
+                "stacks": 1,
+                "duration": 2
+              }
+            }
+          ],
+          "result_texts": {
+            "success": "鉱夫が仕掛けた掛け金の癖を見抜き、底板のバネを押さえながら慎重に蓋を開けた。仕掛けを動かさずに、中の小壺と金貨を手に入れた。",
+            "failure": "掛け金を外した瞬間、箱の底から火油の飛沫と火花が弾け飛んだ。顔面をかすめた炎に焼かれ、焦げ臭い煙の中で思わず後ずさる。"
+          }
         }
       ],
       "choices": [
@@ -19487,7 +20360,7 @@
     {
       "id": "poison_dart",
       "name": "毒矢",
-      "description": "1ダメージを与え、戦闘終了まで毎ラウンド4ダメージの毒を付与する。",
+      "description": "毒を塗った投げ矢。敵単体にわずかなダメージを与え、毒を付与する。",
       "combat": {
         "kind": "damage",
         "damage": "1",
@@ -20345,6 +21218,179 @@
       ],
       "consumable": true,
       "sell_price": 22
+    },
+    {
+      "id": "antidote_herb",
+      "name": "毒消し草",
+      "description": "苦みの強い薬草を煎じた丸薬。体内の毒をすべて浄化する。",
+      "difficulty_only": [
+        "normal"
+      ],
+      "category": "consumable",
+      "combat": {
+        "kind": "cleanse",
+        "cleanse": {
+          "count": "all",
+          "tags": [
+            "poison"
+          ]
+        },
+        "cooldown": 0,
+        "consumable": true
+      }
+    },
+    {
+      "id": "burn_salve",
+      "name": "火傷薬",
+      "description": "冷たい薬草を練り上げた軟膏。火傷を浄化する。",
+      "difficulty_only": [
+        "normal"
+      ],
+      "category": "consumable",
+      "combat": {
+        "kind": "cleanse",
+        "cleanse": {
+          "tags": [
+            "fire"
+          ]
+        },
+        "cooldown": 0,
+        "consumable": true
+      }
+    },
+    {
+      "id": "smelling_salts",
+      "name": "気付け薬",
+      "description": "鋭い香りで意識を研ぎ澄ます薬。麻痺・弱体・目潰しを浄化する。",
+      "difficulty_only": [
+        "normal"
+      ],
+      "category": "consumable",
+      "combat": {
+        "kind": "cleanse",
+        "cleanse": {
+          "tags": [
+            "paralysis",
+            "weaken",
+            "blind"
+          ]
+        },
+        "cooldown": 0,
+        "consumable": true
+      }
+    },
+    {
+      "id": "panacea",
+      "name": "万能薬",
+      "description": "希少な薬草を調合した霊薬。気絶以外の弱体状態をすべて浄化する。",
+      "difficulty_only": [
+        "normal"
+      ],
+      "category": "consumable",
+      "combat": {
+        "kind": "cleanse",
+        "cleanse": {
+          "count": "all",
+          "tags": [
+            "debuff"
+          ]
+        },
+        "cooldown": 0,
+        "consumable": true
+      }
+    },
+    {
+      "id": "blinding_powder",
+      "name": "目くらまし粉",
+      "description": "灰と薬草を混ぜた細かい粉。敵単体に投げつけて目潰しを付与する。",
+      "difficulty_only": [
+        "normal"
+      ],
+      "category": "consumable",
+      "combat": {
+        "kind": "damage",
+        "status_on_hit": true,
+        "accuracy": 95,
+        "on_hit_status": {
+          "id": "blind"
+        },
+        "consumable": true
+      }
+    },
+    {
+      "id": "oil_flask",
+      "name": "油壺",
+      "description": "燃えやすい油を詰めた小壺。敵単体に火属性ダメージを与え、火傷を付与する。",
+      "difficulty_only": [
+        "normal"
+      ],
+      "category": "consumable",
+      "combat": {
+        "kind": "damage",
+        "damage": "1d4",
+        "element": "fire",
+        "accuracy": 90,
+        "on_hit_status": {
+          "id": "burn"
+        },
+        "consumable": true
+      }
+    },
+    {
+      "id": "haze_ball",
+      "name": "霞玉",
+      "description": "白い霞を噴き出す小玉。足元を包み込み、自身の回避率を一時的に高める。",
+      "difficulty_only": [
+        "normal"
+      ],
+      "category": "consumable",
+      "combat": {
+        "kind": "status",
+        "self_status": {
+          "id": "haze"
+        },
+        "consumable": true
+      }
+    },
+    {
+      "id": "purifying_bell",
+      "name": "清めの鈴",
+      "description": "澄んだ音色で穢れを払う鈴。装備中、弱体状態を浄化する「清めの祈り」を使える。",
+      "difficulty_only": [
+        "normal"
+      ],
+      "category": "equipment",
+      "slot": "accessory",
+      "combat": {
+        "kind": "equipment",
+        "requires_equipped": true,
+        "grants_skills": [
+          {
+            "id": "purify_prayer",
+            "name": "清めの祈り",
+            "kind": "cleanse",
+            "cost": 3,
+            "cost_type": "mp",
+            "cooldown": 1,
+            "cleanse": {
+              "count": 1,
+              "tags": [
+                "debuff"
+              ]
+            },
+            "description": "澄んだ鈴の音とともに祈りを捧げ、自身の弱体状態を1つ浄化する。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "trap_probe",
+      "name": "探り棒",
+      "description": "先端に金具のついた細長い棒。所持していると、探索中の罠や落石を見抜きやすくなる。",
+      "difficulty_only": [
+        "normal"
+      ],
+      "category": "key"
     }
   ],
   "clues": [
@@ -20414,6 +21460,14 @@
           {
             "name": "治療の巻物",
             "quantity": 1
+          },
+          {
+            "id": "antidote_herb",
+            "name": "毒消し草",
+            "quantity": 1,
+            "difficulty_only": [
+              "normal"
+            ]
           }
         ],
         "flags": [
@@ -20675,7 +21729,16 @@
       "resistances": {},
       "rewards": {
         "gold": 0,
-        "items": [],
+        "items": [
+          {
+            "id": "smelling_salts",
+            "name": "気付け薬",
+            "quantity": 1,
+            "difficulty_only": [
+              "normal"
+            ]
+          }
+        ],
         "flags": []
       },
       "skills": [
@@ -20692,6 +21755,27 @@
           "ai_weight": 1,
           "damage_max_hp_ratio": 0.18,
           "release_text": "【仮】{enemy}は荒々しく唸り、顎を大きく開いて飛びかかった！"
+        },
+        {
+          "id": "intimidating_howl",
+          "name": "威嚇の遠吠え",
+          "kind": "attack",
+          "difficulty_only": [
+            "normal"
+          ],
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "every_n_rounds": 3,
+          "accuracy": 75,
+          "element": "physical",
+          "damage": "0",
+          "on_hit_status": {
+            "id": "weaken",
+            "chance": 100,
+            "stacks": 1,
+            "duration": 2
+          },
+          "log_text": "{enemy}は低く唸り、威嚇の遠吠えを響かせた。",
+          "status_on_hit": true
         }
       ],
       "image": "/static/images/enemy_war_hound.png",
@@ -20808,6 +21892,27 @@
           },
           "every_n_rounds": 0,
           "use_below_hp_ratio": 0.99
+        },
+        {
+          "id": "corrosive_slime",
+          "name": "腐食の粘液",
+          "kind": "attack",
+          "difficulty_only": [
+            "normal"
+          ],
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "every_n_rounds": 3,
+          "accuracy": 100,
+          "element": "physical",
+          "damage": "2d4+5",
+          "on_hit_status": {
+            "id": "poison",
+            "chance": 100,
+            "stacks": 2,
+            "duration": 3
+          },
+          "log_text": "{enemy}は酸の匂いが立ちこめる粘液を吐きかけた。",
+          "damage_multiplier": 0.6
         }
       ],
       "image": "/static/images/enemy_slime_king.png",
@@ -21431,7 +22536,16 @@
       },
       "rewards": {
         "gold": 0,
-        "items": [],
+        "items": [
+          {
+            "id": "burn_salve",
+            "name": "火傷薬",
+            "quantity": 1,
+            "difficulty_only": [
+              "normal"
+            ]
+          }
+        ],
         "flags": []
       },
       "skills": [
@@ -21636,7 +22750,16 @@
       },
       "rewards": {
         "gold": 0,
-        "items": [],
+        "items": [
+          {
+            "id": "antidote_herb",
+            "name": "毒消し草",
+            "quantity": 1,
+            "difficulty_only": [
+              "normal"
+            ]
+          }
+        ],
         "flags": []
       },
       "skills": [],
@@ -22291,6 +23414,27 @@
           },
           "every_n_rounds": 0,
           "use_below_hp_ratio": 0.99
+        },
+        {
+          "id": "binding_sword",
+          "name": "呪縛の剣",
+          "kind": "attack",
+          "difficulty_only": [
+            "normal"
+          ],
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "every_n_rounds": 3,
+          "accuracy": 70,
+          "element": "physical",
+          "damage": "2d8+5",
+          "on_hit_status": {
+            "id": "weaken",
+            "chance": 100,
+            "stacks": 1,
+            "duration": 2
+          },
+          "log_text": "{enemy}は黒い靄を纏わせた呪縛の剣を振るった。",
+          "damage_multiplier": 0.8
         }
       ],
       "combat": {
@@ -22482,6 +23626,27 @@
           },
           "every_n_rounds": 0,
           "use_below_hp_ratio": 0.99
+        },
+        {
+          "id": "gravel_spray",
+          "name": "砂礫の噴射",
+          "kind": "attack",
+          "difficulty_only": [
+            "normal"
+          ],
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "every_n_rounds": 3,
+          "accuracy": 70,
+          "element": "physical",
+          "damage": "1d10+2",
+          "on_hit_status": {
+            "id": "blind",
+            "chance": 100,
+            "stacks": 1,
+            "duration": 2
+          },
+          "log_text": "{enemy}は大口を開き、目潰しの砂礫を噴き上げた。",
+          "damage_multiplier": 0.5
         }
       ],
       "combat": {
@@ -24577,6 +25742,46 @@
           "item_id": "fireball_scroll",
           "price": 40,
           "stock": null
+        },
+        {
+          "item_id": "antidote_herb",
+          "price": 10,
+          "stock": 4,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "burn_salve",
+          "price": 10,
+          "stock": 3,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "smelling_salts",
+          "price": 15,
+          "stock": 3,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "blinding_powder",
+          "price": 20,
+          "stock": 3,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "haze_ball",
+          "price": 25,
+          "stock": 2,
+          "difficulty_only": [
+            "normal"
+          ]
         }
       ],
       "buys": true,
@@ -24627,6 +25832,22 @@
           "difficulty_only": [
             "normal"
           ]
+        },
+        {
+          "item_id": "panacea",
+          "price": 40,
+          "stock": 2,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "purifying_bell",
+          "price": 50,
+          "stock": 1,
+          "difficulty_only": [
+            "normal"
+          ]
         }
       ],
       "buys": true,
@@ -24660,6 +25881,22 @@
           "item_id": "ice_charm",
           "price": 50,
           "stock": 1
+        },
+        {
+          "item_id": "oil_flask",
+          "price": 15,
+          "stock": 3,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "trap_probe",
+          "price": 20,
+          "stock": 1,
+          "difficulty_only": [
+            "normal"
+          ]
         }
       ],
       "buys": true,
@@ -24684,6 +25921,22 @@
           "item_id": "herb",
           "price": 10,
           "stock": null
+        },
+        {
+          "item_id": "antidote_herb",
+          "price": 10,
+          "stock": 4,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "burn_salve",
+          "price": 10,
+          "stock": 4,
+          "difficulty_only": [
+            "normal"
+          ]
         }
       ],
       "buys": true,
@@ -24723,6 +25976,30 @@
           "item_id": "smoke_bomb",
           "price": 12,
           "stock": null
+        },
+        {
+          "item_id": "burn_salve",
+          "price": 8,
+          "stock": 3,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "blinding_powder",
+          "price": 15,
+          "stock": 3,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "haze_ball",
+          "price": 20,
+          "stock": 2,
+          "difficulty_only": [
+            "normal"
+          ]
         }
       ],
       "counter_gold": 50
@@ -24746,6 +26023,22 @@
           "item_id": "fire_dragon_oil",
           "price": 40,
           "stock": 2
+        },
+        {
+          "item_id": "panacea",
+          "price": 35,
+          "stock": 1,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "oil_flask",
+          "price": 12,
+          "stock": 3,
+          "difficulty_only": [
+            "normal"
+          ]
         }
       ],
       "counter_gold": 50
@@ -24769,6 +26062,38 @@
           "item_id": "herb",
           "price": 10,
           "stock": null
+        },
+        {
+          "item_id": "antidote_herb",
+          "price": 10,
+          "stock": 3,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "smelling_salts",
+          "price": 15,
+          "stock": 3,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "panacea",
+          "price": 40,
+          "stock": 1,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "purifying_bell",
+          "price": 45,
+          "stock": 1,
+          "difficulty_only": [
+            "normal"
+          ]
         }
       ],
       "counter_gold": 0
@@ -24792,6 +26117,22 @@
           "item_id": "holy_silver",
           "price": 120,
           "stock": null
+        },
+        {
+          "item_id": "oil_flask",
+          "price": 15,
+          "stock": 3,
+          "difficulty_only": [
+            "normal"
+          ]
+        },
+        {
+          "item_id": "trap_probe",
+          "price": 20,
+          "stock": 1,
+          "difficulty_only": [
+            "normal"
+          ]
         }
       ],
       "buy_categories": [
@@ -28028,6 +29369,17 @@
       {
         "entity": "enemies",
         "id": "ash_wraith",
+        "path": "skills.@id=ash_embrace.on_hit_status",
+        "set": {
+          "id": "suffocation",
+          "chance": 100,
+          "stacks": 1,
+          "duration": 2
+        }
+      },
+      {
+        "entity": "enemies",
+        "id": "ash_wraith",
         "path": "skills.@id=resentment.ai_weight",
         "set": 2
       },
@@ -28036,6 +29388,25 @@
         "id": "ash_wraith",
         "path": "skills.@id=resentment.damage",
         "set": "1d2+9"
+      },
+      {
+        "entity": "enemies",
+        "id": "ash_wraith",
+        "path": "skills.@id=resentment.on_hit_status",
+        "set": {
+          "id": "weaken",
+          "chance": 50,
+          "stacks": 1,
+          "duration": 2
+        }
+      },
+      {
+        "entity": "enemies",
+        "id": "ash_wraith",
+        "path": "status_immunity",
+        "set": [
+          "poison"
+        ]
       },
       {
         "entity": "enemies",
@@ -28159,6 +29530,17 @@
       },
       {
         "entity": "enemies",
+        "id": "emerald_spider",
+        "path": "combat.basic_attack.on_hit_status",
+        "set": {
+          "id": "poison",
+          "chance": 75,
+          "stacks": 1,
+          "duration": 3
+        }
+      },
+      {
+        "entity": "enemies",
         "id": "fire_elemental",
         "path": "combat.basic_attack.damage",
         "set": "1d2+12"
@@ -28171,9 +29553,31 @@
       },
       {
         "entity": "enemies",
+        "id": "fire_elemental",
+        "path": "skills.@id=flame_torrent.on_hit_status",
+        "set": {
+          "id": "burn",
+          "chance": 40,
+          "stacks": 1,
+          "duration": 2
+        }
+      },
+      {
+        "entity": "enemies",
         "id": "fire_slime",
         "path": "combat.basic_attack.damage",
         "set": "1d2+2"
+      },
+      {
+        "entity": "enemies",
+        "id": "fire_slime",
+        "path": "combat.basic_attack.on_hit_status",
+        "set": {
+          "id": "burn",
+          "chance": 25,
+          "stacks": 1,
+          "duration": 2
+        }
       },
       {
         "entity": "enemies",
@@ -28213,6 +29617,25 @@
       },
       {
         "entity": "enemies",
+        "id": "ghoul",
+        "path": "skills.@id=rotting_claw.on_hit_status",
+        "set": {
+          "id": "paralysis",
+          "chance": 25,
+          "stacks": 1,
+          "duration": 2
+        }
+      },
+      {
+        "entity": "enemies",
+        "id": "ghoul",
+        "path": "status_immunity",
+        "set": [
+          "poison"
+        ]
+      },
+      {
+        "entity": "enemies",
         "id": "goblin",
         "path": "combat.basic_attack.damage",
         "set": "1d2+2"
@@ -28249,6 +29672,14 @@
       },
       {
         "entity": "enemies",
+        "id": "grave_knight",
+        "path": "status_immunity",
+        "set": [
+          "poison"
+        ]
+      },
+      {
+        "entity": "enemies",
         "id": "heat_lizard",
         "path": "combat.basic_attack.damage",
         "set": "1d2+2"
@@ -28256,8 +29687,30 @@
       {
         "entity": "enemies",
         "id": "heat_lizard",
+        "path": "combat.basic_attack.on_hit_status",
+        "set": {
+          "id": "burn",
+          "chance": 50,
+          "stacks": 1,
+          "duration": 2
+        }
+      },
+      {
+        "entity": "enemies",
+        "id": "heat_lizard",
         "path": "combat.basic_attack_weight",
         "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "heat_lizard",
+        "path": "skills.@id=fire_spit.on_hit_status",
+        "set": {
+          "id": "burn",
+          "chance": 50,
+          "stacks": 1,
+          "duration": 2
+        }
       },
       {
         "entity": "enemies",
@@ -28273,6 +29726,17 @@
       },
       {
         "entity": "enemies",
+        "id": "hobgoblin",
+        "path": "skills.@id=skull_crush.on_hit_status",
+        "set": {
+          "id": "stun",
+          "chance": 50,
+          "stacks": 1,
+          "duration": 1
+        }
+      },
+      {
+        "entity": "enemies",
         "id": "ice_assassin",
         "path": "combat.basic_attack_weight",
         "set": 0
@@ -28282,6 +29746,17 @@
         "id": "ice_assassin",
         "path": "skills.@id=frozen_poison.ai_weight",
         "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_assassin",
+        "path": "skills.@id=frozen_poison.on_hit_status",
+        "set": {
+          "id": "poison",
+          "chance": 100,
+          "stacks": 2,
+          "duration": 3
+        }
       },
       {
         "entity": "enemies",
@@ -28321,6 +29796,17 @@
       },
       {
         "entity": "enemies",
+        "id": "ice_elemental",
+        "path": "skills.@id=freezing_breath.on_hit_status",
+        "set": {
+          "id": "paralysis",
+          "chance": 30,
+          "stacks": 1,
+          "duration": 2
+        }
+      },
+      {
+        "entity": "enemies",
         "id": "ice_sentinel",
         "path": "combat.basic_attack_weight",
         "set": 0
@@ -28342,6 +29828,17 @@
         "id": "ice_sentinel",
         "path": "skills.@id=ice_hammer.damage_max_hp_ratio",
         "set": 0.2
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_sentinel",
+        "path": "skills.@id=ice_hammer.on_hit_status",
+        "set": {
+          "id": "stun",
+          "chance": 50,
+          "stacks": 1,
+          "duration": 1
+        }
       },
       {
         "entity": "enemies",
@@ -28394,6 +29891,17 @@
       {
         "entity": "enemies",
         "id": "ignis",
+        "path": "skills.@id=fire_breath.on_hit_status",
+        "set": {
+          "id": "burn",
+          "chance": 100,
+          "stacks": 1,
+          "duration": 2
+        }
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
         "path": "skills.@id=fire_breath.release_text",
         "set": "【仮】{enemy}は深く息を吸い込み、灼熱の炎を吐き出した！"
       },
@@ -28435,6 +29943,17 @@
         "id": "lava_drake",
         "path": "skills.@id=lava_breath.damage_max_hp_ratio",
         "set": 0.2
+      },
+      {
+        "entity": "enemies",
+        "id": "lava_drake",
+        "path": "skills.@id=lava_breath.on_hit_status",
+        "set": {
+          "id": "burn",
+          "chance": 80,
+          "stacks": 1,
+          "duration": 2
+        }
       },
       {
         "entity": "enemies",
@@ -28726,6 +30245,17 @@
       },
       {
         "entity": "enemies",
+        "id": "rock_giant",
+        "path": "skills.@id=rock_crusher.on_hit_status",
+        "set": {
+          "id": "stun",
+          "chance": 50,
+          "stacks": 1,
+          "duration": 1
+        }
+      },
+      {
+        "entity": "enemies",
         "id": "ruby_golem",
         "path": "combat.basic_attack_weight",
         "set": 0
@@ -28768,6 +30298,25 @@
       },
       {
         "entity": "enemies",
+        "id": "sapphire_moth",
+        "path": "combat.basic_attack.on_hit_status",
+        "set": {
+          "id": "blind",
+          "chance": 40,
+          "stacks": 1,
+          "duration": 2
+        }
+      },
+      {
+        "entity": "enemies",
+        "id": "skeleton_soldier",
+        "path": "status_immunity",
+        "set": [
+          "poison"
+        ]
+      },
+      {
+        "entity": "enemies",
         "id": "slime",
         "path": "combat.basic_attack.damage",
         "set": "4"
@@ -28803,6 +30352,44 @@
         "set": 2
       },
       {
+        "entity": "enemies",
+        "id": "wraith",
+        "path": "combat.basic_attack.on_hit_status",
+        "set": {
+          "id": "weaken",
+          "chance": 40,
+          "stacks": 1,
+          "duration": 2
+        }
+      },
+      {
+        "entity": "enemies",
+        "id": "wraith",
+        "path": "status_immunity",
+        "set": [
+          "poison"
+        ]
+      },
+      {
+        "entity": "enemies",
+        "id": "xanxus_phantom",
+        "path": "skills.@id=inferno_focus.on_hit_status",
+        "set": {
+          "id": "burn",
+          "chance": 100,
+          "stacks": 1,
+          "duration": 2
+        }
+      },
+      {
+        "entity": "enemies",
+        "id": "zebok",
+        "path": "status_immunity",
+        "set": [
+          "poison"
+        ]
+      },
+      {
         "entity": "items",
         "id": "hero_holy_sword",
         "path": "combat.damage",
@@ -28813,6 +30400,15 @@
         "id": "ice_charm",
         "path": "combat.requires_target_weakness",
         "set": "ice"
+      },
+      {
+        "entity": "items",
+        "id": "poison_dart",
+        "path": "combat.on_hit_status",
+        "set": {
+          "id": "poison",
+          "stacks": 2
+        }
       },
       {
         "entity": "locations",
@@ -28992,6 +30588,7 @@
       "modifiers": {},
       "cleansable": true,
       "tags": [
+        "poison",
         "debuff"
       ],
       "description": "層の数だけ毎ラウンドダメージを受ける。最大3層、重ねると効果時間が戻る。",
@@ -29022,6 +30619,7 @@
       },
       "cleansable": true,
       "tags": [
+        "weaken",
         "debuff"
       ],
       "description": "与えるダメージが0.75倍になる。"
@@ -29040,6 +30638,7 @@
       },
       "cleansable": true,
       "tags": [
+        "paralysis",
         "debuff"
       ],
       "description": "25%の確率で行動できない。その際MPやSPは消費しない。"
@@ -29101,6 +30700,7 @@
       },
       "cleansable": true,
       "tags": [
+        "blind",
         "debuff"
       ],
       "description": "命中率が下がる。通常の敵は30%、ボスと冒険者は20%。",
@@ -29267,6 +30867,25 @@
       "modifiers": {
         "received_damage_multiplier": 0.5
       }
+    },
+    {
+      "id": "haze",
+      "name": "霞",
+      "icon": "霞",
+      "kind": "modifier",
+      "stackable": false,
+      "max_stacks": 1,
+      "duration": 2,
+      "tick": {},
+      "modifiers": {
+        "evade_bonus": 15
+      },
+      "tags": [
+        "buff"
+      ],
+      "cleansable": false,
+      "description": "白い霞に身を隠し、回避率が高まっている。",
+      "apply_text": "{target}は白い霞に身を隠した。"
     }
   ],
   "progression": {},

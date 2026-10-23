@@ -310,6 +310,18 @@ NUMERIC_FIELDS["locations"] += (
     "actions.*.roll_bonuses.*.effects.*.mp_change",
     "actions.*.roll_bonuses.*.effects.*.sp_change",
     "actions.*.roll_bonuses.*.effects.*.gold_change",
+    "actions.*.success_effects.*.branch.then.*.add_item.quantity",
+    "actions.*.failure_effects.*.add_item.quantity",
+    "actions.*.failure_effects.*.damage_player.max_hp_ratio",
+    "actions.*.failure_effects.*.apply_status.chance",
+    "actions.*.failure_effects.*.apply_status.stacks",
+    "actions.*.failure_effects.*.apply_status.duration",
+)
+NUMERIC_FIELDS["enemies"] += (
+    "skills.*.on_hit_status.chance", "skills.*.on_hit_status.stacks", "skills.*.on_hit_status.duration",
+)
+NUMERIC_FIELDS["items"] += (
+    "combat.cooldown", "combat.grants_skills.*.cooldown", "combat.grants_skills.*.cleanse.count",
 )
 MECHANIC_FIELDS: dict[str, dict[str, tuple[Any, ...]]] = {
     "locations": {"combat.encounter_class": ("trash",), "combat.encounter_modifiers": ()},
@@ -322,9 +334,11 @@ MECHANIC_FIELDS: dict[str, dict[str, tuple[Any, ...]]] = {
     "enemies": {"skills.*.damage_max_hp_ratio": (), "skills.*.telegraph": (),
                 "skills.*.release_text": (), "combat.basic_attack_weight": (),
                 "skills.*.every_n_rounds": (), "skills.*.ai_weight": (),
-                "resistances.*": (), "resistance_cycle.phases.*.resistances.*": ()},
+                "resistances.*": (), "resistance_cycle.phases.*.resistances.*": (),
+                "combat.basic_attack.on_hit_status": (), "skills.*.on_hit_status": (),
+                "status_immunity": ()},
     "characters": {"skills.*.cooldown": (1,)},
-    "items": {"combat.requires_target_weakness": ("ice",)},
+    "items": {"combat.requires_target_weakness": ("ice",), "combat.on_hit_status": ()},
     "companions": {"round_start_effects.*.scale_from_damage": (
         {"source": "previous_damage_enemy", "ratio": 0.75},
         {"source": "previous_damage_enemy", "ratio": 1.5},
@@ -520,7 +534,21 @@ def _apply_overlays(pack: dict[str, Any]) -> None:
             valid = any(type(value) is type(candidate) and value == candidate
                         for values in mechanics for candidate in values)
             # Numeric rule parameters remain tunable in data without changing baby.
-            if group == "combat_rules" and pattern == "evade_formula":
+            if key == "on_hit_status":
+                identifiers = {status["id"] for status in pack.get("status_defs", [])}
+                valid = (isinstance(value, dict) and "id" in value
+                         and set(value) <= {"id", "chance", "stacks", "duration", "target"}
+                         and isinstance(value["id"], str) and value["id"] in identifiers
+                         and all(type(value.get(field, low)) is int
+                                 and low <= value.get(field, low) <= high
+                                 for field, low, high in (("chance", 1, 100), ("stacks", 1, 3), ("duration", 1, 3)))
+                         and value.get("target", "target") == "target")
+                if any(isinstance(other, dict) and other.get("entity") == group
+                       and other.get("id") == identifier
+                       and isinstance(other.get("path"), str) and other["path"].startswith(path + ".")
+                       for other in overlays["normal"]):
+                    raise ValueError(f"Conflicting status overlays: {group}/{identifier}/{path}")
+            elif group == "combat_rules" and pattern == "evade_formula":
                 valid = (isinstance(value, dict) and set(value) == {"base", "per_dex", "cap"}
                          and all(_number(item) for item in value.values())
                          and value["per_dex"] >= 0 and 0 <= value["cap"] <= 40)
@@ -534,7 +562,11 @@ def _apply_overlays(pack: dict[str, Any]) -> None:
                          and value[0]["id"] == "trash_guards_052b" and _number(value[0]["enemy_damage_multiplier"])
                          and 0 <= value[0]["enemy_damage_multiplier"] <= 1)
             elif group == "enemies":
-                if _matches(pattern, "resistances.*") or _matches(pattern, "resistance_cycle.phases.*.resistances.*"):
+                if pattern == "status_immunity":
+                    identifiers = {status["id"] for status in pack.get("status_defs", [])}
+                    valid = (isinstance(value, list) and all(isinstance(item, str) and item in identifiers for item in value)
+                             and len(value) == len(set(value)))
+                elif _matches(pattern, "resistances.*") or _matches(pattern, "resistance_cycle.phases.*.resistances.*"):
                     valid = _number(value) and value >= 0
                 elif pattern == "skills.*.damage_max_hp_ratio":
                     valid = _number(value) and 0 < value <= 1

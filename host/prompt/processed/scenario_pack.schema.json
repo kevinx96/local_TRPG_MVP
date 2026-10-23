@@ -1557,7 +1557,7 @@
         },
         "cooldown": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 0
         },
         "requires_target_weakness": {
           "type": "string"
@@ -1884,6 +1884,9 @@
               "normal"
             ]
           }
+        },
+        "log_text": {
+          "type": "string"
         }
       }
     },

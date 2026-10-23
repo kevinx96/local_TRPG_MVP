@@ -126,7 +126,7 @@ class Telegraph052Tests(unittest.TestCase):
             self.assertIn(action["type"], {"skill", "defend"})
             combat.perform_combat_action(session, action["type"], action["id"], target, rng=random.Random(1))
 
-    def test_moves_normal_only_and_three_054_hooks_have_no_stun(self):
+    def test_moves_normal_only_and_three_054_hooks_have_stun(self):
         baby = difficulty.apply_difficulty(self.base, "baby")
         baby_enemies = {e["id"]: e for e in baby["enemies"]}
         normal_enemies = {e["id"]: e for e in self.pack["enemies"]}
@@ -139,7 +139,7 @@ class Telegraph052Tests(unittest.TestCase):
             self.assertNotIn("damage_max_hp_ratio", old)
             self.assertNotIn("telegraph", old)
             if enemy["id"] in {"hobgoblin", "rock_giant", "ice_sentinel"}:
-                self.assertNotEqual(skill.get("on_hit_status", {}).get("id"), "stun")
+                self.assertEqual(skill["on_hit_status"], {"id": "stun", "chance": 50, "stacks": 1, "duration": 1})
         self.assertEqual(normal_tuning_052.migrate(self.base), self.base)
 
     def test_invalid_new_mechanic_values_rejected(self):

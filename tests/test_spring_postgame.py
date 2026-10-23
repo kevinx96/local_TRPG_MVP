@@ -179,6 +179,8 @@ class SpringPostgameTests(unittest.TestCase):
             actual = mina_reborrow(actual)
             from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
             actual = normal_tuning(actual)
+            from scripts.scenario.status_content_054 import migrate as status_content
+            actual = normal_tuning(status_content(actual))
             # Legacy migrations reappend overrides; compare their full content in the source order.
             order = {(e["entity"], e["id"], e["path"]): i
                      for i, e in enumerate(pack["difficulty_overlays"]["normal"])}
@@ -192,6 +194,8 @@ class SpringPostgameTests(unittest.TestCase):
             actual = mina_reborrow(actual)
             from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
             actual = normal_tuning(actual)
+            from scripts.scenario.status_content_054 import migrate as status_content
+            actual = normal_tuning(status_content(actual))
             # Legacy migrations reappend overrides; compare their full content in the source order.
             order = {(e["entity"], e["id"], e["path"]): i
                      for i, e in enumerate(pack["difficulty_overlays"]["normal"])}

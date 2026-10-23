@@ -43,7 +43,7 @@ class EquipmentSlotsTests(unittest.TestCase):
                 self.assertEqual(pack, original)
                 items = pack["items"] + [item for char in pack["characters"] for item in char["inventory"]]
                 for item in items:
-                    expected = "weapon" if item.get("combat", {}).get("kind") == "weapon" else SLOTS.get(item["name"], "")
+                    expected = "weapon" if item.get("combat", {}).get("kind") == "weapon" else ({"清めの鈴": "accessory"} | SLOTS).get(item["name"], "")
                     self.assertEqual(item_slot(item), expected, item["name"])
                 offer = next(i for s in pack["shops"] if s["id"] == "forge_shop"
                              for i in s["items"] if i["item_id"] == "adamantite_armor")

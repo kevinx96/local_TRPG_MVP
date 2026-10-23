@@ -229,12 +229,13 @@ class ChecksV2Tests(unittest.TestCase):
             actions = {a["id"]: a for loc in migrated["locations"] for a in checks_v2.walk(loc.get("actions", []))}
             self.assertEqual(sum(a.get("roll", {}).get("dc") == 999 for a in actions.values()), 3)
             extra = len(checks_e.CHECKS) if migrated["meta"].get("checks_e") else 0
-            self.assertEqual(sum(bool(a.get("roll", {}).get("skill")) for a in actions.values()), 32 + extra)
+            self.assertEqual(sum(bool(a.get("roll", {}).get("skill")) for a in actions.values()), 32 + extra + sum(a["id"].startswith("hazard_054_") and bool(a.get("roll")) for a in actions.values()))
             for identifier, skill, dc in (("ask_ian_legend", "洞察", 8), ("invite_robin", "説得", 10)):
                 self.assertEqual(actions[identifier]["roll"], {"dice_type": "1d20+wis", "skill": skill, "dc": dc})
                 self.assertEqual(actions[identifier]["risk"], f"{skill}（知恵）判定・DC{dc}")
             output = checkpoints.ROOT / ".tmp-test" / f"checks-v2-{uuid.uuid4().hex}.json"
             self.addCleanup(output.unlink, missing_ok=True)
+            output.parent.mkdir(parents=True, exist_ok=True)
             output.write_bytes(path.read_bytes())
             checks_v2.fix_pack(output)
             first = output.read_bytes()

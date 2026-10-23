@@ -532,6 +532,8 @@ class MigrationAndGoldenTests(unittest.TestCase):
             migrated = mina_reborrow(migrated)
             from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
             migrated = normal_tuning(migrated)
+            from scripts.scenario.status_content_054 import migrate as status_content
+            migrated = normal_tuning(status_content(migrated))
             self.assertEqual(migrated, pack)
             self.assertEqual(difficulty.numeric_snapshot(original), difficulty.numeric_snapshot(pack))
             try:

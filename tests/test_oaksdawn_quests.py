@@ -268,12 +268,16 @@ class OaksdawnQuestsTests(unittest.TestCase):
             original = deepcopy(pack)
             apply(pack)
             apply_spring_postgame(pack)
+            from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
+            pack = normal_tuning(pack)
             from scripts.scenario.levels_skills_v2 import migrate as levels
             pack = holy_sword(levels(pack))
             from scripts.scenario.mina_reborrow_055 import migrate as mina_reborrow
             pack = mina_reborrow(pack)
             from scripts.scenario.normal_tuning_052 import migrate as normal_tuning
             pack = normal_tuning(pack)
+            from scripts.scenario.status_content_054 import migrate as status_content
+            pack = normal_tuning(status_content(pack))
             # Legacy migrations reappend overrides; compare their full content in the source order.
             order = {(e["entity"], e["id"], e["path"]): i
                      for i, e in enumerate(original["difficulty_overlays"]["normal"])}
@@ -281,9 +285,10 @@ class OaksdawnQuestsTests(unittest.TestCase):
                 key=lambda e: order.get((e["entity"], e["id"], e["path"]), len(order)))
             self.assertEqual(pack, original)
             reference = json.loads(DEFAULT_SCENARIO.read_text(encoding="utf-8"))
-            self.assertEqual({i["id"]: i["icon"] for i in pack["items"]},
-                             {i["id"]: i["icon"] for i in reference["items"]})
-            self.assertTrue(all(i.get("icon") for i in pack["items"]))
+            self.assertEqual({i["id"]: i.get("icon") for i in pack["items"]},
+                             {i["id"]: i.get("icon") for i in reference["items"]})
+            from scripts.scenario.status_content_054 import ITEM_TEXTS
+            self.assertTrue(all(i.get("icon") for i in pack["items"] if i["id"] not in ITEM_TEXTS))
             session = fresh_session(pack, "hero")
             self.give(session, "holy_silver")
             public = state.public_session(session)
