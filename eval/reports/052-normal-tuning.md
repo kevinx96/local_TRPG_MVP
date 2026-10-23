@@ -2625,3 +2625,1034 @@ TODO(design)：P0a/P1具体路线EXP顺序冲突、P0a无到达样本需决定�
 原始产物：`.tmp-test/052a3/{baseline-normal,acceptance-normal,acceptance-baby}.json`、对应 `-records.json`、`-audit.json`、每轮参数/记录/日志。最终 checkpoint 新存 `eval/balance/checkpoints_normal_052.json`，状态为 observed；分支选择保留 proposed 状态，候选数值例外仍待设计裁定。
 
 完整累积补丁 `.tmp-test/052a3/052a3.patch` 已包含 `tests.patch`；二者不要重复应用。manifest记录基准HEAD、文件列表、SHA256、建议提交信息和从HEAD实际应用的逐文件核对结果。建议提交信息：`[工程] 052a normal 数值候选、按等级成长与离线验收`。
+
+## 052b：百分比招式与预告、三场 Boss、049 联动（2026-10-23）
+
+交付状态：**实现候选，数值验收未全部通过**。按 §7.3/§4 C8 停止扩展调参，以下例外均待设计裁定；本报告不把例外视为已批准。任务派发要求只交补丁，不 git add、不提交、不写 .git。
+
+基线为已合入的 052a3 acceptance-normal（N=500，seed=20261020），本段评估 N=500、probe-n=500、冻结被动 v1；没有重新穷举。第 0 步归因沿用上一节：F6 是可恢复的屋敷失败结局需要继续路线，现有修复及历史固定种子回归保留。
+
+052b 的战斗表使用实际 P2 中位等级开场快照，保留开场 HP/资源，回合中位含胜败；因此低回合也可能意味着快速败北。无快照只记未验证。M9 按 2026-10-23 裁定，以每遭遇四职业平均判定，教程只报告、洞窟/砦允许上限 +0.05（goblin_fort_fourth 除外）。
+
+最终P2 heuristic_v3探针：虹晶樹四职业回合中位12/9/7/13，Ignis为9/7/7/10，均≤14；ドラコ为12/27/11/34，僧侶与盗賊仍超限，盗賊该固定开场快照胜率为0，不能用低胜率豁免heuristic行。整路线与固定快照资源分布不同，必须分别看胜率。
+
+### 门槛前后对照
+
+| 指标 | 052a 调参后 | 052b 候选 | 说明 |
+|---|---|---|---|
+| M1 | pass | pass | 冒険完了为主口径；试玩 checkpoint 不计入原型门槛。 |
+| M1' | report | report | 分别以 P0a、P0b 检查 P0→P1，避免自行合并两种 P0。 |
+| M2 | report | report | 准备清单为 proposed；净化按达成目标遭遇成功计（victory/purified）。 |
+| M3 | pass | pass | 可持续回复能力（未扣过量回复）/开场完整敌方每回合期望伤害；消耗品计入 M3'。 |
+| M3' | report | report | 击杀回合只取胜利/净化样本；失败为右删失。耗尽按当前 HP+库存回复与净开场伤害估计；有限 MP/SP 主动回复未换算进此静态资源池，实际使用仍影响击杀回合。净伤害≤0时耗尽为无限，赛跑比0。 |
+| M4 | fail | fail | 详见原始 JSON |
+| M5 | report | report | 只统计到达最终 Boss 的 P1；道具使用率=消耗/(消耗+结余)，金币含开局支给。 |
+| M6 | report | report | 详见原始 JSON |
+| M7 | report | report | 成对普通成功/失败分支，沿真实后果打完被迫战斗后比较 resource_score；不是观察性分组，也不估整路线通关差。 |
+| M8 | report | report | 每职业/每同伴/每 Boss，与同配置无同伴成对比较；负提升也保留。 |
+| M9 | fail | fail | 052 acceptance: arithmetic mean of four classes per encounter; incomplete snapshots unverified; tutorial report only. |
+| M10 | report | report | Engine attack_chance/actor_evade, enemy accuracy override and current statuses. Direct damage only; DoT separate. |
+| M11 | report | report | 在实际轨迹每次敌方阶段按当时存活敌人精确求期望并求和；不减回复，保留防御/抗性实际作用。 |
+| M12 | report | report | 95% paired CI excludes zero defines better; dead only within observed/reachable matrix. Unreached levels are unavailable, not dead. Same-group gaps use absolute P2 Ignis pp; proposed defaults await design approval. |
+| M13 | report | report | Engine EXP growth with active unlocks and table passives; arrival levels exclude Ignis EXP. Missing arrivals cannot certify the gap. |
+
+| 专项 | 前 | 后 | 状态 |
+|---|---|---|---|
+| 到达等级 | 见052a已批准例外 | {"report":9,"pass":19} | 按新裁定逐格检查 |
+| M4 ≤14 | 6 个超限 | 17 个超限 | 含全部路线与checkpoint探针，未全部通过 |
+| M9 四职业平均 | {"tutorial_report":1,"approved_optional":2,"pass":14,"fail":3,"unverified":16} | {"tutorial_report":1,"approved_optional":3,"pass":14,"fail":2,"unverified":16} | 旧数据按新口径重算 |
+| 049 A 八组合 | 049已批准门槛 | 81.30%–84.95% | 通过 |
+| 换剑整路线差 | 未测 | -19.20% | 软门槛失败 |
+| Lv1 虹晶樹 <35% | 既有要求 | {"hero":0.0,"cleric":0.0,"mage":0.132,"thief":0.0} | 详见专项 |
+| baby/normal空覆盖战斗金标 | 113项 | 113项；SHA256 14d374747913957829d5162d7aa6d52dfd3ce9ec9b3f8560d1e5f96f0fd1caee | 通过 |
+| 冻结 benchmark | 194/194 | 194/194 缓存命中、严重度不变、live=false | 通过 |
+
+### 28 格前后对照
+
+| 原型 | 职业 | 通关 | Ignis | 终局（含失败） | Ignis回合中位 |
+|---|---|---|---|---|---|
+| P0a | hero | 0.00% → 0.00% | 0.00% → 0.00% | 100.00% → 100.00% | None → 3.5 |
+| P0a | cleric | 0.00% → 0.00% | 0.00% → 0.00% | 100.00% → 100.00% | None → 7 |
+| P0a | mage | 0.00% → 0.00% | 0.00% → 0.00% | 100.00% → 100.00% | None → None |
+| P0a | thief | 0.00% → 0.00% | 0.00% → 0.00% | 100.00% → 100.00% | None → 2 |
+| P0b | hero | 0.00% → 3.20% | 0.00% → 3.20% | 100.00% → 100.00% | 3 → 8 |
+| P0b | cleric | 0.00% → 0.80% | 0.00% → 0.80% | 100.00% → 100.00% | 4.0 → 5.0 |
+| P0b | mage | 0.00% → 0.00% | 0.00% → 0.00% | 100.00% → 100.00% | None → 2 |
+| P0b | thief | 0.00% → 1.00% | 0.00% → 1.00% | 100.00% → 100.00% | 1.0 → 4.0 |
+| P1 | hero | 0.60% → 21.20% | 0.60% → 21.20% | 100.00% → 100.00% | 5 → 14 |
+| P1 | cleric | 0.40% → 13.40% | 0.40% → 13.40% | 100.00% → 100.00% | 4.0 → 8 |
+| P1 | mage | 0.20% → 2.40% | 0.20% → 2.40% | 100.00% → 100.00% | 2 → 2.0 |
+| P1 | thief | 0.00% → 3.20% | 0.00% → 3.20% | 100.00% → 100.00% | 4 → 5 |
+| P2 | hero | 51.60% → 69.20% | 73.80% → 97.60% | 100.00% → 100.00% | 11 → 10.0 |
+| P2 | cleric | 48.40% → 68.40% | 48.80% → 74.60% | 99.60% → 99.20% | 7 → 9.0 |
+| P2 | mage | 3.00% → 49.80% | 9.40% → 55.60% | 99.80% → 100.00% | 5 → 6 |
+| P2 | thief | 3.40% → 40.60% | 6.40% → 47.00% | 100.00% → 100.00% | 4 → 10 |
+| P3 | hero | 11.40% → 47.40% | 16.80% → 53.20% | 100.00% → 100.00% | 9 → 15 |
+| P3 | cleric | 0.00% → 13.60% | 0.80% → 14.20% | 99.80% → 100.00% | 9 → 12 |
+| P3 | mage | 2.80% → 43.60% | 7.40% → 47.60% | 99.80% → 99.80% | 5 → 6.0 |
+| P3 | thief | 0.00% → 11.80% | 2.00% → 18.60% | 100.00% → 99.80% | 4.5 → 11.0 |
+| P2s | hero | 47.60% → 67.40% | 76.80% → 98.00% | 100.00% → 100.00% | 11 → 10 |
+| P2s | cleric | 33.40% → 65.60% | 43.60% → 76.80% | 99.60% → 100.00% | 7.0 → 7 |
+| P2s | mage | 1.20% → 41.40% | 5.80% → 46.80% | 99.60% → 100.00% | 4 → 6 |
+| P2s | thief | 4.40% → 41.40% | 6.20% → 46.60% | 100.00% → 100.00% | 5 → 10 |
+| P0g | hero | 0.00% → 3.20% | 0.00% → 3.20% | 100.00% → 100.00% | 3 → 8 |
+| P0g | cleric | 0.00% → 0.80% | 0.00% → 0.80% | 100.00% → 100.00% | 4.0 → 5.0 |
+| P0g | mage | 0.00% → 0.00% | 0.00% → 0.00% | 100.00% → 100.00% | None → 2 |
+| P0g | thief | 0.00% → 1.00% | 0.00% → 1.00% | 100.00% → 100.00% | 1.0 → 4.0 |
+
+| 原型 | 职业 | 通关Wilson95 前→后 | Ignis Wilson95 前→后 | 终局Wilson95 前→后 |
+|---|---|---|---|---|
+| P0a | hero | [0.00%, 0.76%] → [0.00%, 0.76%] | [0.00%, 0.76%] → [0.00%, 0.76%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P0a | cleric | [0.00%, 0.76%] → [0.00%, 0.76%] | [0.00%, 0.76%] → [0.00%, 0.76%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P0a | mage | [0.00%, 0.76%] → [0.00%, 0.76%] | [0.00%, 0.76%] → [0.00%, 0.76%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P0a | thief | [0.00%, 0.76%] → [0.00%, 0.76%] | [0.00%, 0.76%] → [0.00%, 0.76%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P0b | hero | [0.00%, 0.76%] → [1.98%, 5.13%] | [0.00%, 0.76%] → [1.98%, 5.13%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P0b | cleric | [0.00%, 0.76%] → [0.31%, 2.04%] | [0.00%, 0.76%] → [0.31%, 2.04%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P0b | mage | [0.00%, 0.76%] → [0.00%, 0.76%] | [0.00%, 0.76%] → [0.00%, 0.76%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P0b | thief | [0.00%, 0.76%] → [0.43%, 2.32%] | [0.00%, 0.76%] → [0.43%, 2.32%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P1 | hero | [0.20%, 1.75%] → [17.84%, 25.00%] | [0.20%, 1.75%] → [17.84%, 25.00%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P1 | cleric | [0.11%, 1.45%] → [10.69%, 16.67%] | [0.11%, 1.45%] → [10.69%, 16.67%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P1 | mage | [0.04%, 1.12%] → [1.38%, 4.15%] | [0.04%, 1.12%] → [1.38%, 4.15%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P1 | thief | [0.00%, 0.76%] → [1.98%, 5.13%] | [0.00%, 0.76%] → [1.98%, 5.13%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P2 | hero | [47.22%, 55.95%] → [65.02%, 73.09%] | [69.77%, 77.46%] → [95.85%, 98.62%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P2 | cleric | [44.05%, 52.78%] → [64.20%, 72.32%] | [44.44%, 53.17%] → [70.61%, 78.22%] | [98.55%, 99.89%] → [97.96%, 99.69%] |
+| P2 | mage | [1.83%, 4.89%] → [45.44%, 54.17%] | [7.14%, 12.28%] → [51.22%, 59.90%] | [98.88%, 99.96%] → [99.24%, 100.00%] |
+| P2 | thief | [2.13%, 5.38%] → [36.38%, 44.96%] | [4.57%, 8.90%] → [42.66%, 51.38%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P3 | hero | [8.90%, 14.48%] → [43.06%, 51.78%] | [13.78%, 20.33%] → [48.82%, 57.53%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P3 | cleric | [0.00%, 0.76%] → [10.87%, 16.88%] | [0.31%, 2.04%] → [11.41%, 17.53%] | [98.88%, 99.96%] → [99.24%, 100.00%] |
+| P3 | mage | [1.68%, 4.64%] → [39.32%, 47.98%] | [5.42%, 10.03%] → [43.26%, 51.98%] | [98.88%, 99.96%] → [98.88%, 99.96%] |
+| P3 | thief | [0.00%, 0.76%] → [9.26%, 14.92%] | [1.09%, 3.64%] → [15.43%, 22.25%] | [99.24%, 100.00%] → [98.88%, 99.96%] |
+| P2s | hero | [43.26%, 51.98%] → [63.17%, 71.36%] | [72.90%, 80.29%] → [96.36%, 98.91%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P2s | cleric | [29.41%, 37.65%] → [61.33%, 69.63%] | [39.32%, 47.98%] → [72.90%, 80.29%] | [98.55%, 99.89%] → [99.24%, 100.00%] |
+| P2s | mage | [0.55%, 2.59%] → [37.16%, 45.77%] | [4.07%, 8.21%] → [42.47%, 51.18%] | [98.55%, 99.89%] → [99.24%, 100.00%] |
+| P2s | thief | [2.92%, 6.57%] → [37.16%, 45.77%] | [4.40%, 8.67%] → [42.27%, 50.98%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P0g | hero | [0.00%, 0.76%] → [1.98%, 5.13%] | [0.00%, 0.76%] → [1.98%, 5.13%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P0g | cleric | [0.00%, 0.76%] → [0.31%, 2.04%] | [0.00%, 0.76%] → [0.31%, 2.04%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P0g | mage | [0.00%, 0.76%] → [0.00%, 0.76%] | [0.00%, 0.76%] → [0.00%, 0.76%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+| P0g | thief | [0.00%, 0.76%] → [0.43%, 2.32%] | [0.00%, 0.76%] → [0.43%, 2.32%] | [99.24%, 100.00%] → [99.24%, 100.00%] |
+
+| 原型 | 职业 | 通关软目标 | 前→后判定 |
+|---|---|---|---|
+| P1 | hero | (0.15, 0.35) | 未达 → 通过 |
+| P1 | cleric | (0.15, 0.35) | 未达 → 未达 |
+| P1 | mage | (0.15, 0.35) | 未达 → 未达 |
+| P1 | thief | (0.15, 0.35) | 未达 → 未达 |
+| P2 | hero | (0.55, 0.75) | 未达 → 通过 |
+| P2 | cleric | (0.55, 0.75) | 未达 → 通过 |
+| P2 | mage | (0.55, 0.75) | 未达 → 未达 |
+| P2 | thief | (0.55, 0.75) | 未达 → 未达 |
+| P3 | hero | (0.8, 1) | 未达 → 未达 |
+| P3 | cleric | (0.8, 1) | 未达 → 未达 |
+| P3 | mage | (0.8, 1) | 未达 → 未达 |
+| P3 | thief | (0.8, 1) | 未达 → 未达 |
+
+P2s 与P2前后：[{"character":"hero","completion_gap_pp":4.0000000000000036,"level_gaps":{"castle":0,"cave_crystal_corridor":0,"cave_heat_corridor":0.18894009216589858,"cave_lava_room":0.12096774193548399,"cave_prism_tree":0,"dark_forest_loc":0,"draco_battle":0.11197916666666696,"dragon_valley_loc":0,"elf_spring":0.20362903225806495,"forest_exit":0.07459677419354804,"forest_wolves":0.0020408163265308588,"frost_wolf_battle":0.004032258064516014,"goblin_fort":0,"goblin_fort_first_second":0,"goblin_fort_fourth":0.21399999999999997,"goblin_fort_second_right":0.00209523809523815,"ian_ice_katana_aftermath":0,"ice_elemental_encounter":0,"royal_gate":0.8022738821138207,"slime_ambush_one":0.5271477946017109,"slime_ambush_two":0.5271477946017109,"slime_king_battle":0.6220128373930223,"valley_entrance":0,"village_fire_elemental":0.06293706293706336,"village_fire_slime":0.08024691358024683,"village_frozen_clue":0.05645161290322598},"meets_draft":true,"missing_nodes":[]},{"character":"cleric","completion_gap_pp":14.999999999999996,"level_gaps":{"castle":0,"cave_crystal_corridor":0,"cave_heat_corridor":0.17676767676767646,"cave_lava_room":0.08314087759815258,"cave_prism_tree":0,"dark_forest_loc":0,"draco_battle":0.744585651977741,"dragon_valley_loc":0,"elf_spring":0.16397228637413352,"forest_exit":0.0690690690690694,"forest_wolves":0.0050890585241729624,"frost_wolf_battle":0.0030120481927706777,"goblin_fort":0,"goblin_fort_first_second":0,"goblin_fort_fourth":0.242,"goblin_fort_second_right":0.001731343283582154,"ian_ice_katana_aftermath":0,"ice_elemental_encounter":0,"royal_gate":0,"slime_ambush_one":0.5540929473909992,"slime_ambush_two":0.5540929473909992,"slime_king_battle":0.636660198823817,"valley_entrance":0,"village_fire_elemental":0.11904761904761862,"village_fire_slime":0.06181818181818155,"village_frozen_clue":0.05722891566265087},"meets_draft":false,"missing_nodes":[]},{"character":"mage","completion_gap_pp":1.7999999999999998,"level_gaps":{"castle":0,"cave_crystal_corridor":0,"cave_heat_corridor":0.09433962264150964,"cave_lava_room":0.048850574712643535,"cave_prism_tree":0,"dark_forest_loc":0,"draco_battle":0.2758620689655169,"dragon_valley_loc":0,"elf_spring":0.09195402298850563,"forest_exit":0.10196131968145661,"forest_wolves":0.0585106382978724,"frost_wolf_battle":0.006849315068492956,"goblin_fort":0,"goblin_fort_first_second":0,"goblin_fort_fourth":0.22044088176352705,"goblin_fort_second_right":0.010147601476014678,"ian_ice_katana_aftermath":0,"ice_elemental_encounter":0,"royal_gate":0.7234042553191493,"slime_ambush_one":0.4618127683146378,"slime_ambush_two":0.4618127683146378,"slime_king_battle":0.5419609472372251,"valley_entrance":0,"village_fire_elemental":0.04166666666666696,"village_fire_slime":0.11361902834638293,"village_frozen_clue":0.09589041095890405},"meets_draft":true,"missing_nodes":[]},{"character":"thief","completion_gap_pp":0.9999999999999996,"level_gaps":{"castle":0,"cave_crystal_corridor":0,"cave_lava_room":0.4194528875379939,"cave_prism_tree":0,"dark_forest_loc":0,"draco_battle":0.41935483870967705,"dragon_valley_loc":0,"elf_spring":0.4194528875379939,"forest_exit":0.27610922451706355,"frost_wolf_battle":0.01195219123505975,"goblin_fort":0,"goblin_fort_first_second":0,"goblin_fort_fourth":0.252,"goblin_fort_second_right":0.0030389610389611743,"ian_ice_katana_aftermath":0,"ice_elemental_encounter":0.03418974976582412,"royal_gate":0.625,"slime_ambush_one":0.2606232294617561,"slime_ambush_two":0.2606232294617561,"slime_king_battle":0.40205963646383136,"valley_entrance":0,"village_fire_elemental":0.2956841138659323,"village_fire_slime":0.27783260955388833,"village_frozen_clue":0.19206860501257328},"meets_draft":true,"missing_nodes":["cave_heat_corridor","forest_wolves"]}] → [{"character":"hero","completion_gap_pp":1.7999999999999905,"level_gaps":{"castle":0,"cave_crystal_corridor":0,"cave_heat_corridor":0.46190476190476204,"cave_lava_room":0.27878787878787836,"cave_prism_tree":0,"dark_forest_loc":0,"draco_battle":0.2632653061224488,"dragon_valley_loc":0,"elf_spring":0.4747474747474749,"forest_exit":0.33333333333333304,"forest_wolves":0.07459677419354804,"frost_wolf_battle":0.020202020202019888,"goblin_fort":0,"goblin_fort_first_second":0,"goblin_fort_fourth":0.3400000000000001,"goblin_fort_second_right":0,"ian_ice_katana_aftermath":0.0020202020202022553,"ice_elemental_encounter":0.008968609865470434,"royal_gate":0.6290983606557381,"slime_ambush_one":0,"slime_ambush_two":0.19958455522971708,"slime_king_battle":0.5947091886608016,"valley_entrance":0.0020202020202022553,"village_fire_elemental":0.3311258278145699,"village_fire_slime":0.33865814696485597,"village_frozen_clue":0.2424242424242422},"meets_draft":true,"missing_nodes":[]},{"character":"cleric","completion_gap_pp":2.8000000000000025,"level_gaps":{"castle":0,"cave_crystal_corridor":0,"cave_heat_corridor":0.48241206030150785,"cave_lava_room":0.22737306843267113,"cave_prism_tree":0,"dark_forest_loc":0,"draco_battle":0.7364415773011617,"dragon_valley_loc":0,"elf_spring":0.43929359823399583,"forest_exit":0.22329220250330994,"forest_wolves":0.2251131221719458,"frost_wolf_battle":0.00731707317073127,"goblin_fort":0,"goblin_fort_first_second":0,"goblin_fort_fourth":0.3560000000000001,"goblin_fort_second_right":0,"ian_ice_katana_aftermath":0,"ice_elemental_encounter":0.009345794392523032,"royal_gate":0.46648793565683633,"slime_ambush_one":0,"slime_ambush_two":0.21141569485940348,"slime_king_battle":0.6280100783412044,"valley_entrance":0,"village_fire_elemental":0.24868421052631628,"village_fire_slime":0.21994134897360684,"village_frozen_clue":0.13932577998548812},"meets_draft":true,"missing_nodes":[]},{"character":"mage","completion_gap_pp":8.400000000000002,"level_gaps":{"castle":0,"cave_crystal_corridor":0,"cave_heat_corridor":0.3612903225806452,"cave_lava_room":0.23711340206185572,"cave_prism_tree":0,"dark_forest_loc":0,"draco_battle":0.24066900325893137,"dragon_valley_loc":0,"elf_spring":0.3814432989690726,"forest_exit":0.23710806939360207,"forest_wolves":0.07524271844660202,"frost_wolf_battle":0.01098901098901095,"goblin_fort":0,"goblin_fort_first_second":0,"goblin_fort_fourth":0.3270763052208836,"goblin_fort_second_right":0,"ian_ice_katana_aftermath":0,"ice_elemental_encounter":0.06666666666666643,"royal_gate":0.6762589928057556,"slime_ambush_one":0.002577319587628857,"slime_ambush_two":0.2009343537989814,"slime_king_battle":0.6309061058934304,"valley_entrance":0,"village_fire_elemental":0.2278481012658231,"village_fire_slime":0.24347968852612834,"village_frozen_clue":0.1654516215491828},"meets_draft":true,"missing_nodes":[]},{"character":"thief","completion_gap_pp":0.7999999999999952,"level_gaps":{"castle":0,"cave_crystal_corridor":0,"cave_lava_room":0.6489361702127656,"cave_prism_tree":0,"dark_forest_loc":0,"draco_battle":0.47646790247465987,"dragon_valley_loc":0,"elf_spring":0.6489361702127656,"forest_exit":0.4477208259119996,"frost_wolf_battle":0.02218730776264799,"goblin_fort":0,"goblin_fort_first_second":0,"goblin_fort_fourth":0.28800000000000003,"goblin_fort_second_right":0,"ian_ice_katana_aftermath":0,"ice_elemental_encounter":0.019751827298996716,"royal_gate":0.506382978723404,"slime_ambush_one":0.0026595744680850686,"slime_ambush_two":0.04048463356973997,"slime_king_battle":0.31471631205673756,"valley_entrance":0,"village_fire_elemental":0.44732891832229615,"village_fire_slime":0.4694949104496837,"village_frozen_clue":0.31857071795722103},"meets_draft":true,"missing_nodes":["cave_heat_corridor","forest_wolves"]}]
+
+P2职业差（依Q16不计魔法使い）：48.20% → 28.60%；软目标≤20pp。
+
+| 原型 | 职业 | 到达数/500 | 到达等级分布 前→后 | EXP 来源均值 前→后 |
+|---|---|---|---|---|
+| P0a | hero | 0 → 4 | {} → {"5":4} | {} → {"trash":16,"elite":36,"boss":50,"unclassified":0,"quest":0} |
+| P0a | cleric | 0 → 1 | {} → {"5":1} | {} → {"trash":16,"elite":36,"boss":50,"unclassified":0,"quest":0} |
+| P0a | mage | 0 → 0 | {} → {} | {} → {} |
+| P0a | thief | 0 → 1 | {} → {"4":1} | {} → {"trash":8,"elite":36,"boss":25,"unclassified":0,"quest":0} |
+| P0b | hero | 25 → 105 | {"4":25} → {"4":103,"5":2} | {"trash":7.68,"elite":36,"boss":25,"unclassified":0,"quest":0} → {"trash":7.542857142857143,"elite":36.68571428571428,"boss":25.476190476190474,"unclassified":0,"quest":0} |
+| P0b | cleric | 4 → 54 | {"4":4} → {"4":54} | {"trash":8,"elite":36,"boss":25,"unclassified":0,"quest":0} → {"trash":6.814814814814815,"elite":39.55555555555556,"boss":25,"unclassified":0,"quest":0} |
+| P0b | mage | 0 → 7 | {} → {"4":7} | {} → {"trash":6.857142857142857,"elite":36,"boss":25,"unclassified":0,"quest":0} |
+| P0b | thief | 4 → 60 | {"4":4} → {"4":58,"5":2} | {"trash":8,"elite":36,"boss":25,"unclassified":0,"quest":0} → {"trash":7.6,"elite":37.6,"boss":25.833333333333332,"unclassified":0,"quest":0} |
+| P1 | hero | 209 → 237 | {"4":2,"5":207} → {"4":10,"5":227} | {"trash":7.961722488038277,"elite":36,"boss":25,"unclassified":0,"quest":29.71291866028708} → {"trash":7.662447257383966,"elite":36.81012658227848,"boss":25.31645569620253,"unclassified":0,"quest":28.734177215189874} |
+| P1 | cleric | 50 → 215 | {"5":50} → {"4":5,"5":210} | {"trash":8,"elite":36,"boss":25,"unclassified":0,"quest":30} → {"trash":6.865116279069768,"elite":39.12558139534884,"boss":25,"unclassified":0,"quest":29.302325581395348} |
+| P1 | mage | 21 → 72 | {"5":21} → {"4":1,"5":71} | {"trash":8.380952380952381,"elite":36,"boss":26.19047619047619,"unclassified":0,"quest":30} → {"trash":9.055555555555555,"elite":37.333333333333336,"boss":29.86111111111111,"unclassified":0,"quest":29.583333333333332} |
+| P1 | thief | 59 → 145 | {"4":8,"5":51} → {"4":8,"5":137} | {"trash":7.186440677966102,"elite":36.813559322033896,"boss":25,"unclassified":0,"quest":25.93220338983051} → {"trash":7.337931034482758,"elite":38.48275862068966,"boss":26.20689655172414,"unclassified":0,"quest":28.344827586206897} |
+| P2 | hero | 487 → 496 | {"6":487} → {"6":496} | {"trash":16.229979466119097,"elite":94.69404517453799,"boss":99.84599589322382,"unclassified":0,"quest":88.52156057494867} → {"trash":18.427419354838708,"elite":87.7258064516129,"boss":94.90927419354838,"unclassified":0,"quest":87.94354838709677} |
+| P2 | cleric | 333 → 408 | {"6":333} → {"6":408} | {"trash":17.177177177177178,"elite":93.04504504504504,"boss":98.94894894894895,"unclassified":0,"quest":88.91891891891892} → {"trash":19.49019607843137,"elite":85.6470588235294,"boss":97.48774509803921,"unclassified":0,"quest":88.8970588235294} |
+| P2 | mage | 265 → 393 | {"6":265} → {"6":393} | {"trash":17.071698113207546,"elite":93.05660377358491,"boss":95,"unclassified":0,"quest":88.75471698113208} → {"trash":19.69465648854962,"elite":85.31297709923665,"boss":94.46564885496183,"unclassified":0,"quest":89.00763358778626} |
+| P2 | thief | 231 → 343 | {"6":231} → {"6":343} | {"trash":15.151515151515152,"elite":91.42857142857143,"boss":95.88744588744589,"unclassified":0,"quest":88.57142857142857} → {"trash":16.291545189504372,"elite":87.00874635568513,"boss":91.98250728862973,"unclassified":0,"quest":88.42565597667638} |
+| P3 | hero | 223 → 325 | {"7":223} → {"7":325} | {"trash":21.757847533632287,"elite":117.4170403587444,"boss":167.60089686098655,"unclassified":0,"quest":320.1793721973094} → {"trash":23.286153846153844,"elite":110.06769230769231,"boss":162.30769230769232,"unclassified":0,"quest":313.38461538461536} |
+| P3 | cleric | 11 → 79 | {"7":11} → {"7":79} | {"trash":22.181818181818183,"elite":120,"boss":179.54545454545453,"unclassified":0,"quest":305.45454545454544} → {"trash":23.746835443037973,"elite":108.60759493670886,"boss":167.72151898734177,"unclassified":0,"quest":319.746835443038} |
+| P3 | mage | 89 → 286 | {"7":86,"8":3} → {"7":286} | {"trash":22.696629213483146,"elite":115.68539325842697,"boss":184.26966292134833,"unclassified":0,"quest":310.44943820224717} → {"trash":23.524475524475523,"elite":109.3006993006993,"boss":192.13286713286712,"unclassified":0,"quest":318.041958041958} |
+| P3 | thief | 70 → 192 | {"7":70} → {"7":192} | {"trash":20.17142857142857,"elite":114.17142857142858,"boss":145.35714285714286,"unclassified":0,"quest":294} → {"trash":21.541666666666668,"elite":110.5,"boss":153.90625,"unclassified":0,"quest":302.34375} |
+| P2s | hero | 493 → 495 | {"6":493} → {"6":495} | {"trash":16.275862068965516,"elite":48.121703853955374,"boss":100,"unclassified":0,"quest":88.29614604462475} → {"trash":18.48080808080808,"elite":41.696969696969695,"boss":95.20202020202021,"unclassified":0,"quest":88.12121212121212} |
+| P2s | cleric | 302 → 401 | {"6":302} → {"6":401} | {"trash":17.178807947019866,"elite":44.58278145695364,"boss":99.58609271523179,"unclassified":0,"quest":88.6092715231788} → {"trash":19.321695760598505,"elite":37.61596009975062,"boss":98.75311720698254,"unclassified":0,"quest":88.50374064837905} |
+| P2s | mage | 209 → 347 | {"6":209} → {"6":347} | {"trash":17.129186602870814,"elite":41.97129186602871,"boss":97.96650717703349,"unclassified":0,"quest":87.99043062200957} → {"trash":19.239193083573486,"elite":34.65129682997118,"boss":98.19884726224784,"unclassified":0,"quest":88.35734870317003} |
+| P2s | thief | 217 → 297 | {"6":217} → {"6":297} | {"trash":15.133640552995391,"elite":35.28110599078341,"boss":97.11981566820276,"unclassified":0,"quest":88.20276497695852} → {"trash":15.919191919191919,"elite":33.21212121212121,"boss":94.78114478114477,"unclassified":0,"quest":88.18181818181819} |
+| P0g | hero | 25 → 105 | {"4":25} → {"4":103,"5":2} | {"trash":7.68,"elite":36,"boss":25,"unclassified":0,"quest":0} → {"trash":7.542857142857143,"elite":36.68571428571428,"boss":25.476190476190474,"unclassified":0,"quest":0} |
+| P0g | cleric | 4 → 54 | {"4":4} → {"4":54} | {"trash":8,"elite":36,"boss":25,"unclassified":0,"quest":0} → {"trash":6.814814814814815,"elite":39.55555555555556,"boss":25,"unclassified":0,"quest":0} |
+| P0g | mage | 0 → 7 | {} → {"4":7} | {} → {"trash":6.857142857142857,"elite":36,"boss":25,"unclassified":0,"quest":0} |
+| P0g | thief | 4 → 60 | {"4":4} → {"4":58,"5":2} | {"trash":8,"elite":36,"boss":25,"unclassified":0,"quest":0} → {"trash":7.6,"elite":37.6,"boss":25.833333333333332,"unclassified":0,"quest":0} |
+
+| 原型 | 职业 | 目标 | 众数 | 目标级占比/Wilson95 | 最高 | 判定 |
+|---|---|---|---|---|---|---|
+| P0a | hero | 4 | 5 | 0.00% [0.00%, 48.99%] | 5 | report |
+| P0a | cleric | 4 | 5 | 0.00% [0.00%, 79.35%] | 5 | report |
+| P0a | mage | 4 | None | 未验证 未验证 | None | report |
+| P0a | thief | 4 | 4 | 100.00% [20.65%, 100.00%] | 4 | report |
+| P0b | hero | 4 | 4 | 98.10% [93.32%, 99.48%] | 5 | pass |
+| P0b | cleric | 4 | 4 | 100.00% [93.36%, 100.00%] | 4 | pass |
+| P0b | mage | 4 | 4 | 100.00% [64.57%, 100.00%] | 4 | report |
+| P0b | thief | 4 | 4 | 96.67% [88.64%, 99.08%] | 5 | pass |
+| P1 | hero | 5 | 5 | 95.78% [92.41%, 97.69%] | 5 | pass |
+| P1 | cleric | 5 | 5 | 97.67% [94.67%, 99.00%] | 5 | pass |
+| P1 | mage | 5 | 5 | 98.61% [92.54%, 99.75%] | 5 | pass |
+| P1 | thief | 5 | 5 | 94.48% [89.49%, 97.18%] | 5 | pass |
+| P2 | hero | 6 | 6 | 100.00% [99.23%, 100.00%] | 6 | pass |
+| P2 | cleric | 6 | 6 | 100.00% [99.07%, 100.00%] | 6 | pass |
+| P2 | mage | 6 | 6 | 100.00% [99.03%, 100.00%] | 6 | pass |
+| P2 | thief | 6 | 6 | 100.00% [98.89%, 100.00%] | 6 | pass |
+| P3 | hero | 7 | 7 | 100.00% [98.83%, 100.00%] | 7 | pass |
+| P3 | cleric | 7 | 7 | 100.00% [95.36%, 100.00%] | 7 | pass |
+| P3 | mage | 7 | 7 | 100.00% [98.67%, 100.00%] | 7 | pass |
+| P3 | thief | 7 | 7 | 100.00% [98.04%, 100.00%] | 7 | pass |
+| P2s | hero | 6 | 6 | 100.00% [99.23%, 100.00%] | 6 | pass |
+| P2s | cleric | 6 | 6 | 100.00% [99.05%, 100.00%] | 6 | pass |
+| P2s | mage | 6 | 6 | 100.00% [98.91%, 100.00%] | 6 | pass |
+| P2s | thief | 6 | 6 | 100.00% [98.72%, 100.00%] | 6 | pass |
+| P0g | hero | 4 | 4 | 98.10% [93.32%, 99.48%] | 5 | report |
+| P0g | cleric | 4 | 4 | 100.00% [93.36%, 100.00%] | 4 | report |
+| P0g | mage | 4 | 4 | 100.00% [64.57%, 100.00%] | 4 | report |
+| P0g | thief | 4 | 4 | 96.67% [88.64%, 99.08%] | 5 | report |
+
+### M9 逐遭遇与单职业辅助值
+
+缺快照（遭遇/职业）：{"merchant_battle":["hero","cleric","mage","thief"],"lost_goblin_crossroads":["hero","cleric","mage","thief"],"goblin_fort_second_left":["hero","cleric","mage","thief"],"goblin_fort_third_guards":["hero","cleric","mage","thief"],"goblin_fort_chest_fight":["hero","cleric","mage","thief"],"valley_ledge":["hero","cleric","mage","thief"],"xanxus_phantom_battle":["hero","cleric","mage","thief"],"mansion_corridor":["hero","cleric","mage","thief"],"inn_night_ambush":["hero","cleric","mage","thief"],"bone_field":["hero","cleric","mage","thief"],"ghoul_marsh":["hero","cleric","mage","thief"],"grave_chapel":["hero","cleric","mage","thief"],"gorge_rockfall_path":["hero","cleric","mage","thief"],"gorge_giant_path":["hero","cleric","mage","thief"],"gorge_worm_lair":["hero","cleric","mage","thief"],"dragon_valley_return":["hero","cleric","mage","thief"]}
+
+| 遭遇 | 分类 | 前四职业均值 | 后四职业均值 | 后状态 | 后单职业 ratio / 含盾 / 前3轮 |
+|---|---|---|---|---|---|
+| bone_field | trash | 未验证 | 未验证 | unverified | [] |
+| cave_crystal_corridor | elite | 27.23% | 25.42% | approved_optional | [{"character":"hero","ratio":0.22229166666666664,"with_shields":0.22229166666666664,"first_three":0.18187499999999998,"first_three_with_shields":0.18187499999999998,"observed_rounds":3},{"character":"cleric","ratio":0.25240740740740736,"with_shields":0.25240740740740736,"first_three":0.25240740740740736,"first_three_with_shields":0.25240740740740736,"observed_rounds":3},{"character":"mage","ratio":0.308989898989899,"with_shields":0.0,"first_three":0.2811111111111111,"first_three_with_shields":0.17811447811447811,"observed_rounds":3},{"character":"thief","ratio":0.23295454545454544,"with_shields":0.23295454545454544,"first_three":0.2102272727272727,"first_three_with_shields":0.2102272727272727,"observed_rounds":3}] |
+| cave_heat_corridor | elite | 19.34% | 21.66% | pass | [{"character":"hero","ratio":0.15839965277777776,"with_shields":0.15839965277777776,"first_three":0.13254421296296295,"first_three_with_shields":0.13254421296296295,"observed_rounds":3},{"character":"cleric","ratio":0.24739407407407402,"with_shields":0.24739407407407402,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"mage","ratio":0.27878787878787875,"with_shields":0.0,"first_three":0.2323232323232323,"first_three_with_shields":0.13939393939393938,"observed_rounds":3},{"character":"thief","ratio":0.18181818181818182,"with_shields":0.18181818181818182,"first_three":0.18181818181818182,"first_three_with_shields":0.18181818181818182,"observed_rounds":3}] |
+| cave_lava_room | elite | 35.50% | 35.50% | fail | [{"character":"hero","ratio":0.2208482142857143,"with_shields":0.2208482142857143,"first_three":0.14723214285714287,"first_three_with_shields":0.14723214285714287,"observed_rounds":3},{"character":"cleric","ratio":0.37599999999999995,"with_shields":0.37599999999999995,"first_three":0.25066666666666665,"first_three_with_shields":0.25066666666666665,"observed_rounds":3},{"character":"mage","ratio":0.5018181818181818,"with_shields":0.0,"first_three":0.33454545454545453,"first_three_with_shields":0.16727272727272727,"observed_rounds":3},{"character":"thief","ratio":0.3214285714285714,"with_shields":0.3214285714285714,"first_three":null,"first_three_with_shields":null,"observed_rounds":1}] |
+| cave_prism_tree | boss | 23.86% | 32.56% | pass | [{"character":"hero","ratio":0.247236328125,"with_shields":0.247236328125,"first_three":0.16482421875,"first_three_with_shields":0.16482421875,"observed_rounds":3},{"character":"cleric","ratio":0.3182291666666667,"with_shields":0.3182291666666667,"first_three":0.21215277777777777,"first_three_with_shields":0.21215277777777777,"observed_rounds":3},{"character":"mage","ratio":0.4247159090909091,"with_shields":0.0,"first_three":0.2831439393939394,"first_three_with_shields":0.1415719696969697,"observed_rounds":3},{"character":"thief","ratio":0.31214488636363635,"with_shields":0.31214488636363635,"first_three":0.2080965909090909,"first_three_with_shields":0.2080965909090909,"observed_rounds":3}] |
+| dark_forest_loc | trash | 52.06% | 52.06% | tutorial_report | [{"character":"hero","ratio":0.4,"with_shields":0.4,"first_three":0.166,"first_three_with_shields":0.166,"observed_rounds":3},{"character":"cleric","ratio":0.4444444444444444,"with_shields":0.4444444444444444,"first_three":0.18296296296296294,"first_three_with_shields":0.18296296296296294,"observed_rounds":3},{"character":"mage","ratio":0.6666666666666666,"with_shields":0.6666666666666666,"first_three":0.27444444444444444,"first_three_with_shields":0.27444444444444444,"observed_rounds":3},{"character":"thief","ratio":0.5714285714285714,"with_shields":0.5714285714285714,"first_three":0.22952380952380952,"first_three_with_shields":0.22952380952380952,"observed_rounds":3}] |
+| draco_battle | boss | 32.75% | 30.59% | pass | [{"character":"hero","ratio":0.23157894736842108,"with_shields":0.23157894736842108,"first_three":0.13894736842105265,"first_three_with_shields":0.13894736842105265,"observed_rounds":3},{"character":"cleric","ratio":0.26111111111111107,"with_shields":0.26111111111111107,"first_three":0.15666666666666665,"first_three_with_shields":0.15666666666666665,"observed_rounds":3},{"character":"mage","ratio":0.4423076923076923,"with_shields":0.0,"first_three":0.2653846153846154,"first_three_with_shields":0.0,"observed_rounds":3},{"character":"thief","ratio":0.28846153846153844,"with_shields":0.28846153846153844,"first_three":0.1923076923076923,"first_three_with_shields":0.1923076923076923,"observed_rounds":3}] |
+| dragon_valley_loc | boss | 33.23% | 33.56% | pass | [{"character":"hero","ratio":0.24685714285714289,"with_shields":0.24685714285714289,"first_three":0.1645714285714286,"first_three_with_shields":0.1645714285714286,"observed_rounds":3},{"character":"cleric","ratio":0.2848484848484848,"with_shields":0.2848484848484848,"first_three":0.18989898989898987,"first_three_with_shields":0.18989898989898987,"observed_rounds":3},{"character":"mage","ratio":0.49833333333333335,"with_shields":0.0,"first_three":0.33222222222222225,"first_three_with_shields":0.0,"observed_rounds":3},{"character":"thief","ratio":0.3125,"with_shields":0.3125,"first_three":0.20833333333333334,"first_three_with_shields":0.20833333333333334,"observed_rounds":3}] |
+| dragon_valley_return | boss | 未验证 | 未验证 | unverified | [] |
+| forest_wolves | elite | 19.81% | 18.55% | pass | [{"character":"hero","ratio":0.15542857142857142,"with_shields":0.15542857142857142,"first_three":null,"first_three_with_shields":null,"observed_rounds":1},{"character":"cleric","ratio":0.1898989898989899,"with_shields":0.1898989898989899,"first_three":null,"first_three_with_shields":null,"observed_rounds":1},{"character":"mage","ratio":0.22999999999999998,"with_shields":0.0,"first_three":null,"first_three_with_shields":null,"observed_rounds":1},{"character":"thief","ratio":0.16666666666666666,"with_shields":0.16666666666666666,"first_three":null,"first_three_with_shields":null,"observed_rounds":2}] |
+| frost_wolf_battle | boss | 33.56% | 33.56% | pass | [{"character":"hero","ratio":0.24685714285714289,"with_shields":0.24685714285714289,"first_three":0.1645714285714286,"first_three_with_shields":0.1645714285714286,"observed_rounds":3},{"character":"cleric","ratio":0.2848484848484848,"with_shields":0.2848484848484848,"first_three":0.18989898989898987,"first_three_with_shields":0.18989898989898987,"observed_rounds":3},{"character":"mage","ratio":0.49833333333333335,"with_shields":0.0,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"thief","ratio":0.3125,"with_shields":0.3125,"first_three":0.20833333333333334,"first_three_with_shields":0.20833333333333334,"observed_rounds":3}] |
+| ghoul_marsh | elite | 未验证 | 未验证 | unverified | [] |
+| goblin_fort | trash | 18.15% | 18.15% | approved_optional | [{"character":"hero","ratio":0.12250000000000001,"with_shields":0.12250000000000001,"first_three":null,"first_three_with_shields":null,"observed_rounds":1},{"character":"cleric","ratio":0.1827777777777778,"with_shields":0.1827777777777778,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"mage","ratio":0.27416666666666667,"with_shields":0.27416666666666667,"first_three":null,"first_three_with_shields":null,"observed_rounds":1},{"character":"thief","ratio":0.1464285714285714,"with_shields":0.1464285714285714,"first_three":null,"first_three_with_shields":null,"observed_rounds":1}] |
+| goblin_fort_chest_fight | trash | 未验证 | 未验证 | unverified | [] |
+| goblin_fort_first_second | trash | 24.10% | 18.15% | approved_optional | [{"character":"hero","ratio":0.12250000000000001,"with_shields":0.12250000000000001,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"cleric","ratio":0.18277777777777776,"with_shields":0.18277777777777776,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"mage","ratio":0.2741666666666666,"with_shields":0.2741666666666666,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"thief","ratio":0.1464285714285714,"with_shields":0.1464285714285714,"first_three":null,"first_three_with_shields":null,"observed_rounds":2}] |
+| goblin_fort_fourth | boss | 30.30% | 30.30% | pass | [{"character":"hero","ratio":0.1917391304347826,"with_shields":0.1917391304347826,"first_three":0.14202898550724638,"first_three_with_shields":0.14202898550724638,"observed_rounds":3},{"character":"cleric","ratio":0.2909523809523809,"with_shields":0.2909523809523809,"first_three":0.20888888888888885,"first_three_with_shields":0.20888888888888885,"observed_rounds":3},{"character":"mage","ratio":0.40733333333333327,"with_shields":0.0,"first_three":0.2924444444444444,"first_three_with_shields":0.15666666666666665,"observed_rounds":3},{"character":"thief","ratio":0.3221428571428571,"with_shields":0.3221428571428571,"first_three":0.23428571428571426,"first_three_with_shields":0.23428571428571426,"observed_rounds":3}] |
+| goblin_fort_second_left | elite | 未验证 | 未验证 | unverified | [] |
+| goblin_fort_second_right | elite | 24.10% | 21.29% | pass | [{"character":"hero","ratio":0.17966666666666664,"with_shields":0.17966666666666664,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"cleric","ratio":0.20888888888888885,"with_shields":0.20888888888888885,"first_three":null,"first_three_with_shields":null,"observed_rounds":1},{"character":"mage","ratio":0.28722222222222216,"with_shields":0.28722222222222216,"first_three":0.28722222222222216,"first_three_with_shields":0.28722222222222216,"observed_rounds":3},{"character":"thief","ratio":0.1757142857142857,"with_shields":0.1757142857142857,"first_three":null,"first_three_with_shields":null,"observed_rounds":2}] |
+| goblin_fort_third_guards | elite | 未验证 | 未验证 | unverified | [] |
+| gorge_giant_path | elite | 未验证 | 未验证 | unverified | [] |
+| gorge_rockfall_path | trash | 未验证 | 未验证 | unverified | [] |
+| gorge_worm_lair | boss | 未验证 | 未验证 | unverified | [] |
+| grave_chapel | boss | 未验证 | 未验证 | unverified | [] |
+| ice_elemental_encounter | elite | 22.58% | 20.40% | pass | [{"character":"hero","ratio":0.16457142857142856,"with_shields":0.16457142857142856,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"cleric","ratio":0.18040404040404037,"with_shields":0.18040404040404037,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"mage","ratio":0.2938888888888889,"with_shields":0.0,"first_three":null,"first_three_with_shields":null,"observed_rounds":1},{"character":"thief","ratio":0.17708333333333334,"with_shields":0.17708333333333334,"first_three":null,"first_three_with_shields":null,"observed_rounds":2}] |
+| inn_night_ambush | elite | 未验证 | 未验证 | unverified | [] |
+| lost_goblin_crossroads | trash | 未验证 | 未验证 | unverified | [] |
+| mansion_corridor | elite | 未验证 | 未验证 | unverified | [] |
+| merchant_battle | boss | 未验证 | 未验证 | unverified | [] |
+| slime_ambush_one | trash | 10.96% | 11.39% | pass | [{"character":"hero","ratio":0.060625,"with_shields":0.060625,"first_three":null,"first_three_with_shields":null,"observed_rounds":1},{"character":"cleric","ratio":0.12533333333333332,"with_shields":0.12533333333333332,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"mage","ratio":0.16727272727272727,"with_shields":0.0,"first_three":null,"first_three_with_shields":null,"observed_rounds":1},{"character":"thief","ratio":0.10227272727272728,"with_shields":0.10227272727272728,"first_three":null,"first_three_with_shields":null,"observed_rounds":2}] |
+| slime_ambush_two | trash | 10.96% | 11.39% | pass | [{"character":"hero","ratio":0.060625,"with_shields":0.060625,"first_three":null,"first_three_with_shields":null,"observed_rounds":1},{"character":"cleric","ratio":0.12533333333333332,"with_shields":0.12533333333333332,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"mage","ratio":0.16727272727272727,"with_shields":0.0,"first_three":null,"first_three_with_shields":null,"observed_rounds":1},{"character":"thief","ratio":0.10227272727272728,"with_shields":0.10227272727272728,"first_three":null,"first_three_with_shields":null,"observed_rounds":2}] |
+| slime_king_battle | boss | 29.86% | 29.86% | pass | [{"character":"hero","ratio":0.21942857142857145,"with_shields":0.21942857142857145,"first_three":0.21333333333333335,"first_three_with_shields":0.21333333333333335,"observed_rounds":3},{"character":"cleric","ratio":0.2848484848484848,"with_shields":0.2848484848484848,"first_three":0.24370370370370367,"first_three_with_shields":0.24370370370370367,"observed_rounds":3},{"character":"mage","ratio":0.38333333333333336,"with_shields":0.0,"first_three":0.29814814814814816,"first_three_with_shields":0.1703703703703704,"observed_rounds":3},{"character":"thief","ratio":0.3068181818181818,"with_shields":0.3068181818181818,"first_three":0.23863636363636365,"first_three_with_shields":0.23863636363636365,"observed_rounds":3}] |
+| valley_entrance | elite | 21.33% | 21.88% | pass | [{"character":"hero","ratio":0.195047619047619,"with_shields":0.195047619047619,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"cleric","ratio":0.19622895622895617,"with_shields":0.19622895622895617,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"mage","ratio":0.2896296296296296,"with_shields":0.0,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"thief","ratio":0.19444444444444442,"with_shields":0.19444444444444442,"first_three":null,"first_three_with_shields":null,"observed_rounds":1}] |
+| valley_ledge | elite | 未验证 | 未验证 | unverified | [] |
+| village_fire_elemental | elite | 22.58% | 18.89% | pass | [{"character":"hero","ratio":0.14628571428571427,"with_shields":0.14628571428571427,"first_three":0.14628571428571427,"first_three_with_shields":0.14628571428571427,"observed_rounds":3},{"character":"cleric","ratio":0.16141414141414137,"with_shields":0.16141414141414137,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"mage","ratio":0.28111111111111114,"with_shields":0.0,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"thief","ratio":0.16666666666666666,"with_shields":0.16666666666666666,"first_three":0.16666666666666666,"first_three_with_shields":0.16666666666666666,"observed_rounds":3}] |
+| village_fire_slime | trash | 4.57% | 4.57% | fail | [{"character":"hero","ratio":0.027428571428571427,"with_shields":0.027428571428571427,"first_three":0.027428571428571427,"first_three_with_shields":0.027428571428571427,"observed_rounds":3},{"character":"cleric","ratio":0.028484848484848484,"with_shields":0.028484848484848484,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"mage","ratio":0.09583333333333334,"with_shields":0.0,"first_three":null,"first_three_with_shields":null,"observed_rounds":2},{"character":"thief","ratio":0.03125,"with_shields":0.03125,"first_three":null,"first_three_with_shields":null,"observed_rounds":2}] |
+| xanxus_phantom_battle | boss | 未验证 | 未验证 | unverified | [] |
+
+### M4 Boss 探针前后与超限
+
+| 原型 | 遭遇 | 职业 | 策略 | 前回合/胜率 | 后回合/胜率/Wilson95 | 判定 |
+|---|---|---|---|---|---|---|
+| checkpoint | goblin_fort_fourth | hero | attack_only | 6.0 / 100.00% | 6.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | goblin_fort_fourth | hero | best_free | 6.0 / 100.00% | 6.0 / 99.60% / [98.55%, 99.89%] | 通过 |
+| checkpoint | goblin_fort_fourth | hero | heuristic_v3 | 5.0 / 100.00% | 6.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | goblin_fort_fourth | cleric | attack_only | 6.0 / 100.00% | 7.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | goblin_fort_fourth | cleric | best_free | 6.0 / 94.60% | 7.0 / 98.80% / [97.41%, 99.45%] | 通过 |
+| checkpoint | goblin_fort_fourth | cleric | heuristic_v3 | 6.0 / 100.00% | 7.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | goblin_fort_fourth | mage | attack_only | 15.0 / 47.80% | 12.0 / 55.40% / [51.02%, 59.70%] | 通过 |
+| checkpoint | goblin_fort_fourth | mage | best_free | 15.0 / 41.80% | 12.0 / 53.80% / [49.42%, 58.12%] | 通过 |
+| checkpoint | goblin_fort_fourth | mage | heuristic_v3 | 7.0 / 98.60% | 6.0 / 86.60% / [83.33%, 89.31%] | 通过 |
+| checkpoint | goblin_fort_fourth | thief | attack_only | 6.0 / 84.60% | 6.0 / 98.80% / [97.41%, 99.45%] | 通过 |
+| checkpoint | goblin_fort_fourth | thief | best_free | 6.0 / 84.60% | 6.0 / 98.80% / [97.41%, 99.45%] | 通过 |
+| checkpoint | goblin_fort_fourth | thief | heuristic_v3 | 6.0 / 87.00% | 7.0 / 99.60% / [98.55%, 99.89%] | 通过 |
+| checkpoint | cave_prism_tree | hero | attack_only | 11.0 / 99.60% | 30.0 / 83.40% / [79.89%, 86.40%] | 超限/沙袋 |
+| checkpoint | cave_prism_tree | hero | best_free | 9.0 / 93.00% | 15.0 / 73.40% / [69.36%, 77.08%] | 超限 |
+| checkpoint | cave_prism_tree | hero | heuristic_v3 | 7.0 / 98.80% | 12.0 / 98.80% / [97.41%, 99.45%] | 通过 |
+| checkpoint | cave_prism_tree | cleric | attack_only | 9.0 / 95.40% | 26.0 / 52.00% / [47.62%, 56.35%] | 超限/沙袋 |
+| checkpoint | cave_prism_tree | cleric | best_free | 6.0 / 90.60% | 8.0 / 71.60% / [67.49%, 75.38%] | 通过 |
+| checkpoint | cave_prism_tree | cleric | heuristic_v3 | 6.0 / 95.40% | 9.0 / 89.20% / [86.17%, 91.63%] | 通过 |
+| checkpoint | cave_prism_tree | mage | attack_only | 10.0 / 24.20% | 13.0 / 28.20% / [24.43%, 32.30%] | 通过 |
+| checkpoint | cave_prism_tree | mage | best_free | 5.0 / 50.40% | 7.0 / 81.60% / [77.97%, 84.75%] | 通过 |
+| checkpoint | cave_prism_tree | mage | heuristic_v3 | 6.0 / 95.20% | 7.0 / 89.60% / [86.62%, 91.98%] | 通过 |
+| checkpoint | cave_prism_tree | thief | attack_only | 11.0 / 7.60% | 10.0 / 0.00% / [0.00%, 0.76%] | Q4只报告 |
+| checkpoint | cave_prism_tree | thief | best_free | 8.0 / 41.20% | 10.0 / 0.40% / [0.11%, 1.45%] | Q4只报告 |
+| checkpoint | cave_prism_tree | thief | heuristic_v3 | 8.0 / 64.20% | 13.0 / 14.80% / [11.96%, 18.18%] | 通过 |
+| checkpoint | slime_king_battle | hero | attack_only | 7.0 / 100.00% | 7.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | slime_king_battle | hero | best_free | 7.0 / 99.60% | 7.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | slime_king_battle | hero | heuristic_v3 | 6.0 / 100.00% | 6.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | slime_king_battle | cleric | attack_only | 8.0 / 98.40% | 7.0 / 99.80% / [98.88%, 99.96%] | 通过 |
+| checkpoint | slime_king_battle | cleric | best_free | 8.0 / 91.40% | 7.0 / 99.40% / [98.25%, 99.80%] | 通过 |
+| checkpoint | slime_king_battle | cleric | heuristic_v3 | 8.0 / 97.20% | 8.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | slime_king_battle | mage | attack_only | 13.0 / 10.20% | 9.0 / 96.00% / [93.90%, 97.40%] | 通过 |
+| checkpoint | slime_king_battle | mage | best_free | 9.0 / 6.60% | 9.0 / 94.60% / [92.26%, 96.26%] | 通过 |
+| checkpoint | slime_king_battle | mage | heuristic_v3 | 6.0 / 92.80% | 4.0 / 99.80% / [98.88%, 99.96%] | 通过 |
+| checkpoint | slime_king_battle | thief | attack_only | 11.0 / 17.80% | 13.0 / 52.80% / [48.42%, 57.14%] | 通过 |
+| checkpoint | slime_king_battle | thief | best_free | 5.0 / 8.20% | 10.0 / 35.60% / [31.53%, 39.89%] | 通过 |
+| checkpoint | slime_king_battle | thief | heuristic_v3 | 10.0 / 51.60% | 12.0 / 69.00% / [64.81%, 72.90%] | 通过 |
+| checkpoint | frost_wolf_battle | hero | attack_only | 5.0 / 100.00% | 5.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | frost_wolf_battle | hero | best_free | 5.0 / 98.40% | 5.0 / 99.60% / [98.55%, 99.89%] | 通过 |
+| checkpoint | frost_wolf_battle | hero | heuristic_v3 | 5.0 / 100.00% | 4.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | frost_wolf_battle | cleric | attack_only | 5.0 / 97.80% | 5.0 / 99.80% / [98.88%, 99.96%] | 通过 |
+| checkpoint | frost_wolf_battle | cleric | best_free | 5.0 / 91.80% | 5.0 / 99.40% / [98.25%, 99.80%] | 通过 |
+| checkpoint | frost_wolf_battle | cleric | heuristic_v3 | 6.0 / 98.40% | 6.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | frost_wolf_battle | mage | attack_only | 5.0 / 1.40% | 10.0 / 52.80% / [48.42%, 57.14%] | 通过 |
+| checkpoint | frost_wolf_battle | mage | best_free | 4.0 / 1.20% | 10.0 / 46.60% / [42.27%, 50.98%] | 通过 |
+| checkpoint | frost_wolf_battle | mage | heuristic_v3 | 5.0 / 34.80% | 6.0 / 86.20% / [82.90%, 88.95%] | 通过 |
+| checkpoint | frost_wolf_battle | thief | attack_only | 2.0 / 24.80% | 7.0 / 47.80% / [43.46%, 52.18%] | 通过 |
+| checkpoint | frost_wolf_battle | thief | best_free | 2.0 / 23.60% | 5.0 / 35.20% / [31.14%, 39.48%] | 通过 |
+| checkpoint | frost_wolf_battle | thief | heuristic_v3 | 2.0 / 29.80% | 8.0 / 67.60% / [63.38%, 71.55%] | 通过 |
+| checkpoint | dragon_valley_loc | hero | attack_only | 12.0 / 84.40% | 10.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | dragon_valley_loc | hero | best_free | 9.0 / 49.20% | 10.0 / 99.80% / [98.88%, 99.96%] | 通过 |
+| checkpoint | dragon_valley_loc | hero | heuristic_v3 | 11.0 / 87.60% | 9.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| checkpoint | dragon_valley_loc | cleric | attack_only | 9.0 / 64.80% | 8.0 / 99.60% / [98.55%, 99.89%] | 通过 |
+| checkpoint | dragon_valley_loc | cleric | best_free | 9.0 / 48.20% | 8.0 / 96.00% / [93.90%, 97.40%] | 通过 |
+| checkpoint | dragon_valley_loc | cleric | heuristic_v3 | 8.0 / 78.20% | 7.0 / 99.40% / [98.25%, 99.80%] | 通过 |
+| checkpoint | dragon_valley_loc | mage | attack_only | 2.0 / 1.20% | 8.0 / 37.20% / [33.08%, 41.52%] | 通过 |
+| checkpoint | dragon_valley_loc | mage | best_free | 2.0 / 5.60% | 2.0 / 12.00% / [9.44%, 15.14%] | 通过 |
+| checkpoint | dragon_valley_loc | mage | heuristic_v3 | 2.0 / 7.60% | 7.0 / 54.00% / [49.62%, 58.32%] | 通过 |
+| checkpoint | dragon_valley_loc | thief | attack_only | 6.0 / 14.80% | 10.0 / 42.00% / [37.75%, 46.37%] | 通过 |
+| checkpoint | dragon_valley_loc | thief | best_free | 6.0 / 11.80% | 10.0 / 36.20% / [32.11%, 40.50%] | 通过 |
+| checkpoint | dragon_valley_loc | thief | heuristic_v3 | 6.0 / 14.80% | 10.0 / 42.00% / [37.75%, 46.37%] | 通过 |
+| checkpoint | draco_battle | hero | attack_only | 25.0 / 45.80% | 29.0 / 61.60% / [57.26%, 65.76%] | 超限/沙袋 |
+| checkpoint | draco_battle | hero | best_free | 15.0 / 21.60% | 19.0 / 33.60% / [29.60%, 37.85%] | 超限/沙袋 |
+| checkpoint | draco_battle | hero | heuristic_v3 | 13.0 / 88.80% | 12.0 / 99.80% / [98.88%, 99.96%] | 通过 |
+| checkpoint | draco_battle | cleric | attack_only | 4.0 / 91.20% | 29.0 / 86.20% / [82.90%, 88.95%] | 超限/沙袋 |
+| checkpoint | draco_battle | cleric | best_free | 4.0 / 89.60% | 28.0 / 61.80% / [57.47%, 65.95%] | 超限/沙袋 |
+| checkpoint | draco_battle | cleric | heuristic_v3 | 4.0 / 99.40% | 27.0 / 99.80% / [98.88%, 99.96%] | 超限/沙袋 |
+| checkpoint | draco_battle | mage | attack_only | 5.5 / 0.00% | 14.0 / 0.00% / [0.00%, 0.76%] | Q4只报告 |
+| checkpoint | draco_battle | mage | best_free | 5.0 / 0.00% | 13.0 / 0.00% / [0.00%, 0.76%] | Q4只报告 |
+| checkpoint | draco_battle | mage | heuristic_v3 | 5.0 / 25.60% | 11.0 / 74.00% / [69.98%, 77.65%] | 通过 |
+| checkpoint | draco_battle | thief | attack_only | 8.0 / 2.80% | 8.0 / 0.00% / [0.00%, 0.76%] | Q4只报告 |
+| checkpoint | draco_battle | thief | best_free | 7.0 / 0.40% | 8.0 / 0.00% / [0.00%, 0.76%] | Q4只报告 |
+| checkpoint | draco_battle | thief | heuristic_v3 | 28.0 / 67.20% | 34.0 / 0.00% / [0.00%, 0.76%] | 超限/沙袋 |
+| P0a | dragon_valley_loc | cleric | best_free | None / 未验证 | 7 / 0.00% / [0.00%, 79.35%] | Q4只报告 |
+| P0a | frost_wolf_battle | cleric | best_free | 1 / 0.00% | 1.5 / 6.25% / [1.11%, 28.33%] | Q4只报告 |
+| P0a | slime_king_battle | cleric | best_free | 2 / 0.00% | 3 / 1.10% / [0.47%, 2.56%] | Q4只报告 |
+| P0a | dragon_valley_loc | hero | best_free | None / 未验证 | 3.5 / 0.00% / [0.00%, 48.99%] | Q4只报告 |
+| P0a | frost_wolf_battle | hero | best_free | None / 未验证 | 7 / 57.14% / [25.05%, 84.18%] | 通过 |
+| P0a | slime_king_battle | hero | best_free | 2.0 / 0.00% | 5.0 / 2.60% / [1.53%, 4.40%] | Q4只报告 |
+| P0a | frost_wolf_battle | mage | best_free | 1 / 0.00% | 1.0 / 0.00% / [0.00%, 27.75%] | Q4只报告 |
+| P0a | dragon_valley_loc | thief | best_free | None / 未验证 | 2 / 0.00% / [0.00%, 79.35%] | Q4只报告 |
+| P0a | frost_wolf_battle | thief | best_free | 1.0 / 0.00% | 1 / 1.20% / [0.21%, 6.51%] | Q4只报告 |
+| P0a | slime_king_battle | thief | best_free | 1 / 0.00% | 3 / 4.21% / [1.65%, 10.33%] | Q4只报告 |
+| P0b | dragon_valley_loc | cleric | best_free | 4.0 / 0.00% | 5.0 / 7.41% / [2.92%, 17.55%] | Q4只报告 |
+| P0b | frost_wolf_battle | cleric | best_free | 2.0 / 1.90% | 2 / 20.69% / [16.22%, 26.01%] | 通过 |
+| P0b | slime_king_battle | cleric | best_free | 2 / 0.00% | 3 / 0.76% / [0.13%, 4.20%] | Q4只报告 |
+| P0b | dragon_valley_loc | hero | best_free | 3 / 0.00% | 8 / 15.24% / [9.60%, 23.33%] | 通过 |
+| P0b | frost_wolf_battle | hero | best_free | 3 / 11.96% | 5.0 / 45.65% / [39.34%, 52.11%] | 通过 |
+| P0b | slime_king_battle | hero | best_free | 2.0 / 0.00% | 6.0 / 1.76% / [0.60%, 5.06%] | Q4只报告 |
+| P0b | dragon_valley_loc | mage | best_free | None / 未验证 | 2 / 0.00% / [0.00%, 35.43%] | Q4只报告 |
+| P0b | frost_wolf_battle | mage | best_free | 1.0 / 0.00% | 1 / 4.76% / [2.33%, 9.50%] | Q4只报告 |
+| P0b | slime_king_battle | mage | best_free | 2 / 0.00% | 4 / 0.00% / [0.00%, 25.88%] | Q4只报告 |
+| P0b | dragon_valley_loc | thief | best_free | 1.0 / 0.00% | 4.0 / 8.33% / [3.61%, 18.07%] | Q4只报告 |
+| P0b | frost_wolf_battle | thief | best_free | 2 / 2.68% | 2.0 / 26.75% / [21.43%, 32.85%] | 通过 |
+| P0b | slime_king_battle | thief | best_free | 2 / 0.00% | 4 / 5.45% / [1.87%, 14.85%] | Q4只报告 |
+| P0g | dragon_valley_loc | cleric | best_free | 4.0 / 0.00% | 5.0 / 7.41% / [2.92%, 17.55%] | Q4只报告 |
+| P0g | frost_wolf_battle | cleric | best_free | 2.0 / 1.90% | 2 / 20.69% / [16.22%, 26.01%] | 通过 |
+| P0g | slime_king_battle | cleric | best_free | 2 / 0.00% | 3 / 0.76% / [0.13%, 4.20%] | Q4只报告 |
+| P0g | dragon_valley_loc | hero | best_free | 3 / 0.00% | 8 / 15.24% / [9.60%, 23.33%] | 通过 |
+| P0g | frost_wolf_battle | hero | best_free | 3 / 11.96% | 5.0 / 45.65% / [39.34%, 52.11%] | 通过 |
+| P0g | slime_king_battle | hero | best_free | 2.0 / 0.00% | 6.0 / 1.76% / [0.60%, 5.06%] | Q4只报告 |
+| P0g | dragon_valley_loc | mage | best_free | None / 未验证 | 2 / 0.00% / [0.00%, 35.43%] | Q4只报告 |
+| P0g | frost_wolf_battle | mage | best_free | 1.0 / 0.00% | 1 / 4.76% / [2.33%, 9.50%] | Q4只报告 |
+| P0g | slime_king_battle | mage | best_free | 2 / 0.00% | 4 / 0.00% / [0.00%, 25.88%] | Q4只报告 |
+| P0g | dragon_valley_loc | thief | best_free | 1.0 / 0.00% | 4.0 / 8.33% / [3.61%, 18.07%] | Q4只报告 |
+| P0g | frost_wolf_battle | thief | best_free | 2 / 2.68% | 2.0 / 26.75% / [21.43%, 32.85%] | 通过 |
+| P0g | slime_king_battle | thief | best_free | 2 / 0.00% | 4 / 5.45% / [1.87%, 14.85%] | Q4只报告 |
+| P1 | dragon_valley_loc | cleric | heuristic_v3 | 4.0 / 4.00% | 8 / 31.16% / [25.35%, 37.64%] | 通过 |
+| P1 | frost_wolf_battle | cleric | heuristic_v3 | 5 / 23.61% | 8 / 77.35% / [72.17%, 81.81%] | 通过 |
+| P1 | slime_king_battle | cleric | heuristic_v3 | 3 / 0.00% | 5 / 0.00% / [0.00%, 3.81%] | 通过 |
+| P1 | dragon_valley_loc | hero | heuristic_v3 | 5 / 1.44% | 14 / 44.73% / [38.53%, 51.09%] | 通过 |
+| P1 | frost_wolf_battle | hero | heuristic_v3 | 4.0 / 95.00% | 4 / 98.34% / [95.81%, 99.35%] | 通过 |
+| P1 | slime_king_battle | hero | heuristic_v3 | 3 / 0.00% | 6 / 3.51% / [1.62%, 7.44%] | 通过 |
+| P1 | dragon_valley_loc | mage | heuristic_v3 | 2 / 4.76% | 2.0 / 16.67% / [9.80%, 26.91%] | 通过 |
+| P1 | frost_wolf_battle | mage | heuristic_v3 | 2.0 / 17.95% | 2.0 / 35.42% / [29.64%, 41.65%] | 通过 |
+| P1 | slime_king_battle | mage | heuristic_v3 | 2 / 0.96% | 4 / 21.05% / [16.07%, 27.08%] | 通过 |
+| P1 | dragon_valley_loc | thief | heuristic_v3 | 4 / 0.00% | 5 / 11.03% / [6.91%, 17.17%] | 通过 |
+| P1 | frost_wolf_battle | thief | heuristic_v3 | 4 / 39.13% | 6.0 / 67.52% / [61.28%, 73.20%] | 通过 |
+| P1 | slime_king_battle | thief | heuristic_v3 | 2 / 0.00% | 3 / 6.92% / [3.91%, 11.96%] | 通过 |
+| P2 | cave_prism_tree | cleric | heuristic_v3 | 7 / 93.52% | 9 / 83.02% / [79.39%, 86.12%] | 通过 |
+| P2 | draco_battle | cleric | heuristic_v3 | 4.0 / 99.18% | 14 / 91.69% / [88.44%, 94.08%] | 通过 |
+| P2 | dragon_valley_loc | cleric | heuristic_v3 | 7 / 73.27% | 9.0 / 91.42% / [88.30%, 93.77%] | 通过 |
+| P2 | frost_wolf_battle | cleric | heuristic_v3 | 6 / 86.82% | 6 / 95.42% / [93.04%, 97.02%] | 通过 |
+| P2 | goblin_fort_fourth | cleric | heuristic_v3 | 7.0 / 92.60% | 8.0 / 96.20% / [94.14%, 97.55%] | 通过 |
+| P2 | slime_king_battle | cleric | heuristic_v3 | 8 / 84.88% | 9 / 91.89% / [89.11%, 94.01%] | 通过 |
+| P2 | cave_prism_tree | hero | heuristic_v3 | 8.0 / 99.39% | 13.0 / 79.64% / [75.87%, 82.95%] | 通过 |
+| P2 | draco_battle | hero | heuristic_v3 | 12 / 69.92% | 17.0 / 70.90% / [66.72%, 74.76%] | 超限 |
+| P2 | dragon_valley_loc | hero | heuristic_v3 | 11 / 75.77% | 10.0 / 98.39% / [96.85%, 99.18%] | 通过 |
+| P2 | frost_wolf_battle | hero | heuristic_v3 | 5.0 / 99.39% | 5.0 / 100.00% / [99.23%, 100.00%] | 通过 |
+| P2 | goblin_fort_fourth | hero | heuristic_v3 | 6.0 / 98.00% | 7.0 / 99.20% / [97.96%, 99.69%] | 通过 |
+| P2 | slime_king_battle | hero | heuristic_v3 | 6.0 / 100.00% | 6.0 / 100.00% / [99.23%, 100.00%] | 通过 |
+| P2 | cave_prism_tree | mage | heuristic_v3 | 4.0 / 83.42% | 6.0 / 81.34% / [77.24%, 84.85%] | 通过 |
+| P2 | draco_battle | mage | heuristic_v3 | 5 / 31.91% | 9.0 / 89.57% / [85.42%, 92.64%] | 通过 |
+| P2 | dragon_valley_loc | mage | heuristic_v3 | 5 / 17.74% | 6 / 70.74% / [66.06%, 75.02%] | 通过 |
+| P2 | frost_wolf_battle | mage | heuristic_v3 | 4.0 / 72.97% | 4.0 / 96.83% / [94.65%, 98.14%] | 通过 |
+| P2 | goblin_fort_fourth | mage | heuristic_v3 | 5 / 83.17% | 5.0 / 85.74% / [82.40%, 88.54%] | 通过 |
+| P2 | slime_king_battle | mage | heuristic_v3 | 5 / 90.60% | 5 / 96.49% / [94.29%, 97.86%] | 通过 |
+| P2 | cave_prism_tree | thief | heuristic_v3 | 6 / 83.49% | 8 / 68.77% / [63.95%, 73.21%] | 通过 |
+| P2 | draco_battle | thief | heuristic_v3 | 26.5 / 53.12% | 31 / 86.38% / [81.41%, 90.19%] | 超限/沙袋 |
+| P2 | dragon_valley_loc | thief | heuristic_v3 | 4 / 13.85% | 10 / 68.51% / [63.42%, 73.20%] | 通过 |
+| P2 | frost_wolf_battle | thief | heuristic_v3 | 5.0 / 82.27% | 5 / 92.95% / [89.88%, 95.15%] | 通过 |
+| P2 | goblin_fort_fourth | thief | heuristic_v3 | 6.0 / 70.60% | 7.0 / 84.60% / [81.17%, 87.50%] | 通过 |
+| P2 | slime_king_battle | thief | heuristic_v3 | 7 / 81.02% | 8 / 88.18% / [84.75%, 90.92%] | 通过 |
+| P2s | cave_prism_tree | cleric | heuristic_v3 | 6 / 96.98% | 7.5 / 93.14% / [90.43%, 95.13%] | 通过 |
+| P2s | draco_battle | cleric | heuristic_v3 | 4.0 / 76.61% | 5.0 / 85.42% / [81.54%, 88.60%] | 通过 |
+| P2s | dragon_valley_loc | cleric | heuristic_v3 | 7.0 / 72.19% | 7 / 95.76% / [93.32%, 97.34%] | 通过 |
+| P2s | frost_wolf_battle | cleric | heuristic_v3 | 6.0 / 96.39% | 6.0 / 98.78% / [97.18%, 99.48%] | 通过 |
+| P2s | goblin_fort_fourth | cleric | heuristic_v3 | 7.0 / 86.60% | 8.0 / 90.60% / [87.72%, 92.86%] | 通过 |
+| P2s | slime_king_battle | cleric | heuristic_v3 | 8 / 76.91% | 10 / 91.17% / [88.20%, 93.45%] | 通过 |
+| P2s | cave_prism_tree | hero | heuristic_v3 | 7.0 / 100.00% | 12 / 80.81% / [77.11%, 84.03%] | 通过 |
+| P2s | draco_battle | hero | heuristic_v3 | 13.0 / 61.98% | 18.0 / 68.78% / [64.54%, 72.72%] | 超限 |
+| P2s | dragon_valley_loc | hero | heuristic_v3 | 11 / 77.89% | 10 / 98.99% / [97.66%, 99.57%] | 通过 |
+| P2s | frost_wolf_battle | hero | heuristic_v3 | 4.0 / 99.80% | 4 / 100.00% / [99.23%, 100.00%] | 通过 |
+| P2s | goblin_fort_fourth | hero | heuristic_v3 | 6.0 / 99.20% | 7.0 / 99.00% / [97.68%, 99.57%] | 通过 |
+| P2s | slime_king_battle | hero | heuristic_v3 | 6.0 / 100.00% | 7 / 100.00% / [99.23%, 100.00%] | 通过 |
+| P2s | cave_prism_tree | mage | heuristic_v3 | 4.0 / 94.91% | 4.0 / 95.48% / [92.88%, 97.16%] | 通过 |
+| P2s | draco_battle | mage | heuristic_v3 | 5 / 20.69% | 9.0 / 88.46% / [83.73%, 91.95%] | 通过 |
+| P2s | dragon_valley_loc | mage | heuristic_v3 | 4 / 13.88% | 6 / 67.44% / [62.34%, 72.15%] | 通过 |
+| P2s | frost_wolf_battle | mage | heuristic_v3 | 3.0 / 78.42% | 4.0 / 99.18% / [97.61%, 99.72%] | 通过 |
+| P2s | goblin_fort_fourth | mage | heuristic_v3 | 4 / 69.74% | 5.0 / 77.60% / [73.74%, 81.04%] | 通过 |
+| P2s | slime_king_battle | mage | heuristic_v3 | 5.0 / 84.20% | 5.0 / 94.33% / [91.56%, 96.23%] | 通过 |
+| P2s | cave_prism_tree | thief | heuristic_v3 | 6 / 85.14% | 8 / 73.99% / [69.31%, 78.19%] | 通过 |
+| P2s | draco_battle | thief | heuristic_v3 | 30 / 70.97% | 32 / 88.84% / [84.15%, 92.27%] | 超限/沙袋 |
+| P2s | dragon_valley_loc | thief | heuristic_v3 | 5 / 14.29% | 10 / 78.45% / [73.43%, 82.75%] | 通过 |
+| P2s | frost_wolf_battle | thief | heuristic_v3 | 5 / 86.45% | 5.0 / 91.10% / [87.52%, 93.73%] | 通过 |
+| P2s | goblin_fort_fourth | thief | heuristic_v3 | 6.0 / 65.80% | 7.0 / 75.20% / [71.23%, 78.78%] | 通过 |
+| P2s | slime_king_battle | thief | heuristic_v3 | 7 / 76.90% | 8.0 / 86.70% / [82.90%, 89.77%] | 通过 |
+| P3 | cave_prism_tree | cleric | heuristic_v3 | 7 / 89.22% | 14 / 69.57% / [65.32%, 73.50%] | 通过 |
+| P3 | draco_battle | cleric | heuristic_v3 | 10 / 0.00% | 23 / 95.77% / [88.30%, 98.55%] | 超限/沙袋 |
+| P3 | dragon_valley_loc | cleric | heuristic_v3 | 9 / 36.36% | 12 / 89.87% / [81.27%, 94.78%] | 通过 |
+| P3 | frost_wolf_battle | cleric | heuristic_v3 | 2.0 / 4.80% | 2 / 22.16% / [18.18%, 26.73%] | 通过 |
+| P3 | goblin_fort_fourth | cleric | heuristic_v3 | 7.0 / 94.60% | 7.0 / 97.40% / [95.60%, 98.47%] | 通过 |
+| P3 | gorge_worm_lair | cleric | heuristic_v3 | 2 / 100.00% | 3.0 / 100.00% / [99.02%, 100.00%] | 通过 |
+| P3 | grave_chapel | cleric | heuristic_v3 | 4.0 / 95.31% | 4.0 / 91.51% / [88.47%, 93.80%] | 通过 |
+| P3 | slime_king_battle | cleric | heuristic_v3 | 11 / 67.86% | 12 / 87.06% / [83.79%, 89.76%] | 通过 |
+| P3 | xanxus_phantom_battle | cleric | heuristic_v3 | 6 / 18.18% | 6 / 89.87% / [81.27%, 94.78%] | 通过 |
+| P3 | cave_prism_tree | hero | heuristic_v3 | 8.0 / 99.00% | 23.0 / 58.60% / [54.23%, 62.84%] | 超限/沙袋 |
+| P3 | draco_battle | hero | heuristic_v3 | 7.0 / 67.86% | 10.0 / 89.10% / [84.78%, 92.30%] | 通过 |
+| P3 | dragon_valley_loc | hero | heuristic_v3 | 9 / 37.67% | 15 / 81.85% / [77.29%, 85.66%] | 超限 |
+| P3 | frost_wolf_battle | hero | heuristic_v3 | 3.0 / 46.07% | 5 / 67.29% / [62.98%, 71.32%] | 通过 |
+| P3 | goblin_fort_fourth | hero | heuristic_v3 | 5.0 / 100.00% | 6.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| P3 | gorge_worm_lair | hero | heuristic_v3 | 2 / 100.00% | 2 / 100.00% / [99.23%, 100.00%] | 通过 |
+| P3 | grave_chapel | hero | heuristic_v3 | 3.0 / 99.40% | 4.0 / 99.40% / [98.25%, 99.80%] | 通过 |
+| P3 | slime_king_battle | hero | heuristic_v3 | 8.0 / 100.00% | 8.0 / 100.00% / [99.24%, 100.00%] | 通过 |
+| P3 | xanxus_phantom_battle | hero | heuristic_v3 | 9 / 70.40% | 8 / 95.69% / [92.90%, 97.42%] | 通过 |
+| P3 | cave_prism_tree | mage | heuristic_v3 | 4 / 85.26% | 6.0 / 78.74% / [74.55%, 82.41%] | 通过 |
+| P3 | draco_battle | mage | heuristic_v3 | 5 / 42.42% | 8.0 / 91.60% / [87.38%, 94.49%] | 通过 |
+| P3 | dragon_valley_loc | mage | heuristic_v3 | 5 / 41.57% | 6.0 / 83.22% / [78.45%, 87.10%] | 通过 |
+| P3 | dragon_valley_return | mage | heuristic_v3 | 12 / 89.19% | 7.0 / 100.00% / [98.41%, 100.00%] | 通过 |
+| P3 | frost_wolf_battle | mage | heuristic_v3 | 4 / 28.94% | 5 / 77.36% / [72.83%, 81.32%] | 通过 |
+| P3 | goblin_fort_fourth | mage | heuristic_v3 | 4 / 89.98% | 5.0 / 85.89% / [82.55%, 88.68%] | 通过 |
+| P3 | gorge_worm_lair | mage | heuristic_v3 | 3.0 / 100.00% | 2 / 100.00% / [99.01%, 100.00%] | 通过 |
+| P3 | grave_chapel | mage | heuristic_v3 | 3.0 / 94.92% | 4.0 / 99.22% / [97.74%, 99.74%] | 通过 |
+| P3 | merchant_battle | mage | heuristic_v3 | 6.0 / 100.00% | 6 / 100.00% / [99.01%, 100.00%] | 通过 |
+| P3 | slime_king_battle | mage | heuristic_v3 | 5 / 79.29% | 5.0 / 90.61% / [87.47%, 93.03%] | 通过 |
+| P3 | xanxus_phantom_battle | mage | heuristic_v3 | 5 / 52.81% | 5.0 / 89.51% / [85.42%, 92.55%] | 通过 |
+| P3 | cave_prism_tree | thief | heuristic_v3 | 6.0 / 71.88% | 13.0 / 60.41% / [55.78%, 64.86%] | 通过 |
+| P3 | draco_battle | thief | heuristic_v3 | 2.5 / 0.00% | 23 / 63.44% / [53.30%, 72.51%] | 超限/沙袋 |
+| P3 | dragon_valley_loc | thief | heuristic_v3 | 4.5 / 14.29% | 11.0 / 48.44% / [41.47%, 55.47%] | 通过 |
+| P3 | frost_wolf_battle | thief | heuristic_v3 | 5 / 68.93% | 5.0 / 79.75% / [74.24%, 84.33%] | 通过 |
+| P3 | goblin_fort_fourth | thief | heuristic_v3 | 6.0 / 74.40% | 6.0 / 92.00% / [89.29%, 94.07%] | 通过 |
+| P3 | gorge_worm_lair | thief | heuristic_v3 | 1.0 / 100.00% | 1.0 / 100.00% / [98.58%, 100.00%] | 通过 |
+| P3 | grave_chapel | thief | heuristic_v3 | 4.0 / 57.55% | 5.0 / 76.00% / [71.26%, 80.18%] | 通过 |
+| P3 | slime_king_battle | thief | heuristic_v3 | 8.0 / 58.33% | 8.0 / 76.96% / [72.89%, 80.57%] | 通过 |
+| P3 | xanxus_phantom_battle | thief | heuristic_v3 | 5.0 / 15.71% | 6.5 / 66.67% / [59.73%, 72.95%] | 通过 |
+
+### M3 样本前后
+
+| 职业 | 遭遇 | 原型 | 前（匹配样本组） | 后 |
+|---|---|---|---|---|
+| cleric | dragon_valley_loc | P0b | [{"character":"cleric","encounter":"dragon_valley_loc","companion":"fire_bat_dragon","value":0.09325780602376348,"zero_incoming":false,"n":4,"healing":1.35,"incoming":14.476}] | {"character":"cleric","encounter":"dragon_valley_loc","companion":"fire_bat_dragon","value":0.11047463175122753,"zero_incoming":false,"n":54,"healing":1.35,"incoming":12.219999999999997} |
+| cleric | frost_wolf_battle | P0b | [{"character":"cleric","encounter":"frost_wolf_battle","companion":"fire_bat_dragon","value":0.3134206219312603,"zero_incoming":false,"n":206,"healing":3.83,"incoming":12.219999999999997}] | {"character":"cleric","encounter":"frost_wolf_battle","companion":"fire_bat_dragon","value":0.3134206219312603,"zero_incoming":false,"n":256,"healing":3.83,"incoming":12.219999999999997} |
+| cleric | frost_wolf_battle | P0b | [{"character":"cleric","encounter":"frost_wolf_battle","companion":"none","value":0.05155482815057284,"zero_incoming":false,"n":4,"healing":0.63,"incoming":12.219999999999997}] | {"character":"cleric","encounter":"frost_wolf_battle","companion":"none","value":0.05155482815057284,"zero_incoming":false,"n":4,"healing":0.63,"incoming":12.219999999999997} |
+| cleric | frost_wolf_battle | P0b | [{"character":"cleric","encounter":"frost_wolf_battle","companion":"none","value":0.05155482815057284,"zero_incoming":false,"n":4,"healing":0.63,"incoming":12.219999999999997}] | {"character":"cleric","encounter":"frost_wolf_battle","companion":"none","value":0.11047463175122753,"zero_incoming":false,"n":1,"healing":1.35,"incoming":12.219999999999997} |
+| cleric | slime_king_battle | P0b | [{"character":"cleric","encounter":"slime_king_battle","companion":"none","value":0.0,"zero_incoming":false,"n":131,"healing":0,"incoming":9.399999999999999}] | {"character":"cleric","encounter":"slime_king_battle","companion":"none","value":0.0,"zero_incoming":false,"n":131,"healing":0,"incoming":9.399999999999999} |
+| hero | dragon_valley_loc | P0b | [{"character":"hero","encounter":"dragon_valley_loc","companion":"fire_bat_dragon","value":0.0,"zero_incoming":false,"n":25,"healing":0.0,"incoming":13.995714285714284}] | {"character":"hero","encounter":"dragon_valley_loc","companion":"fire_bat_dragon","value":0.0,"zero_incoming":false,"n":102,"healing":0.0,"incoming":11.64} |
+| hero | dragon_valley_loc | P0b | [] | {"character":"hero","encounter":"dragon_valley_loc","companion":"none","value":0.0,"zero_incoming":false,"n":3,"healing":0,"incoming":11.64} |
+| hero | frost_wolf_battle | P0b | [{"character":"hero","encounter":"frost_wolf_battle","companion":"fire_bat_dragon","value":0.27210884353741505,"zero_incoming":false,"n":208,"healing":3.2,"incoming":11.759999999999998}] | {"character":"hero","encounter":"frost_wolf_battle","companion":"fire_bat_dragon","value":0.27210884353741505,"zero_incoming":false,"n":226,"healing":3.2,"incoming":11.759999999999998} |
+| hero | frost_wolf_battle | P0b | [{"character":"hero","encounter":"frost_wolf_battle","companion":"none","value":0.0,"zero_incoming":false,"n":1,"healing":0,"incoming":11.759999999999998}] | {"character":"hero","encounter":"frost_wolf_battle","companion":"none","value":0.0,"zero_incoming":false,"n":4,"healing":0,"incoming":11.67} |
+| hero | slime_king_battle | P0b | [{"character":"hero","encounter":"slime_king_battle","companion":"none","value":0.0,"zero_incoming":false,"n":170,"healing":0,"incoming":8.82}] | {"character":"hero","encounter":"slime_king_battle","companion":"none","value":0.0,"zero_incoming":false,"n":170,"healing":0,"incoming":8.82} |
+| mage | dragon_valley_loc | P0b | [] | {"character":"mage","encounter":"dragon_valley_loc","companion":"fire_bat_dragon","value":0.0,"zero_incoming":false,"n":7,"healing":0.0,"incoming":11.96} |
+| mage | frost_wolf_battle | P0b | [{"character":"mage","encounter":"frost_wolf_battle","companion":"fire_bat_dragon","value":0.2618657937806875,"zero_incoming":false,"n":86,"healing":3.2,"incoming":12.219999999999997}] | {"character":"mage","encounter":"frost_wolf_battle","companion":"fire_bat_dragon","value":0.2618657937806875,"zero_incoming":false,"n":140,"healing":3.2,"incoming":12.219999999999997} |
+| mage | frost_wolf_battle | P0b | [] | {"character":"mage","encounter":"frost_wolf_battle","companion":"none","value":0.0,"zero_incoming":false,"n":7,"healing":0,"incoming":12.219999999999997} |
+| mage | slime_king_battle | P0b | [{"character":"mage","encounter":"slime_king_battle","companion":"fire_bat_dragon","value":0.31914893617021284,"zero_incoming":false,"n":11,"healing":3.0,"incoming":9.399999999999999}] | {"character":"mage","encounter":"slime_king_battle","companion":"fire_bat_dragon","value":0.31914893617021284,"zero_incoming":false,"n":11,"healing":3.0,"incoming":9.399999999999999} |
+| thief | dragon_valley_loc | P0b | [{"character":"thief","encounter":"dragon_valley_loc","companion":"fire_bat_dragon","value":0.0,"zero_incoming":false,"n":4,"healing":0.0,"incoming":10.821428571428571}] | {"character":"thief","encounter":"dragon_valley_loc","companion":"fire_bat_dragon","value":0.0,"zero_incoming":false,"n":58,"healing":0.0,"incoming":9.0} |
+| thief | dragon_valley_loc | P0b | [] | {"character":"thief","encounter":"dragon_valley_loc","companion":"none","value":0.0,"zero_incoming":false,"n":2,"healing":0,"incoming":9.0} |
+| thief | frost_wolf_battle | P0b | [{"character":"thief","encounter":"frost_wolf_battle","companion":"fire_bat_dragon","value":0.35555555555555557,"zero_incoming":false,"n":139,"healing":3.2,"incoming":9.0}] | {"character":"thief","encounter":"frost_wolf_battle","companion":"fire_bat_dragon","value":0.35555555555555557,"zero_incoming":false,"n":190,"healing":3.2,"incoming":9.0} |
+| thief | frost_wolf_battle | P0b | [{"character":"thief","encounter":"frost_wolf_battle","companion":"none","value":0.0,"zero_incoming":false,"n":10,"healing":0,"incoming":9.0}] | {"character":"thief","encounter":"frost_wolf_battle","companion":"none","value":0.0,"zero_incoming":false,"n":38,"healing":0,"incoming":9.0} |
+| thief | slime_king_battle | P0b | [{"character":"thief","encounter":"slime_king_battle","companion":"fire_bat_dragon","value":0.40650406504065045,"zero_incoming":false,"n":7,"healing":3.0,"incoming":7.379999999999999}] | {"character":"thief","encounter":"slime_king_battle","companion":"fire_bat_dragon","value":0.40650406504065045,"zero_incoming":false,"n":7,"healing":3.0,"incoming":7.379999999999999} |
+| thief | slime_king_battle | P0b | [{"character":"thief","encounter":"slime_king_battle","companion":"none","value":0.0,"zero_incoming":false,"n":48,"healing":0,"incoming":7.379999999999999}] | {"character":"thief","encounter":"slime_king_battle","companion":"none","value":0.0,"zero_incoming":false,"n":48,"healing":0,"incoming":7.379999999999999} |
+
+### M3' 样本前后
+
+| 职业 | 遭遇 | 原型 | 前（匹配样本组） | 后 |
+|---|---|---|---|---|
+| cleric | dragon_valley_loc | P0b | [{"archetype":"P0b","character":"cleric","encounter":"dragon_valley_loc","value":null,"n":4,"kill_time_samples":0,"censored_defeats":4,"infinite_depletion":0}] | {"archetype":"P0b","character":"cleric","encounter":"dragon_valley_loc","value":0.8097211052069554,"n":54,"kill_time_samples":4,"censored_defeats":50,"infinite_depletion":0} |
+| cleric | frost_wolf_battle | P0b | [{"archetype":"P0b","character":"cleric","encounter":"frost_wolf_battle","value":0.4095470004912849,"n":210,"kill_time_samples":4,"censored_defeats":206,"infinite_depletion":0}] | {"archetype":"P0b","character":"cleric","encounter":"frost_wolf_battle","value":0.4852017215962554,"n":261,"kill_time_samples":54,"censored_defeats":207,"infinite_depletion":0} |
+| cleric | slime_king_battle | P0b | [{"archetype":"P0b","character":"cleric","encounter":"slime_king_battle","value":null,"n":131,"kill_time_samples":0,"censored_defeats":131,"infinite_depletion":0}] | {"archetype":"P0b","character":"cleric","encounter":"slime_king_battle","value":0.8744186046511626,"n":131,"kill_time_samples":1,"censored_defeats":130,"infinite_depletion":0} |
+| hero | dragon_valley_loc | P0b | [{"archetype":"P0b","character":"hero","encounter":"dragon_valley_loc","value":null,"n":25,"kill_time_samples":0,"censored_defeats":25,"infinite_depletion":0}] | {"archetype":"P0b","character":"hero","encounter":"dragon_valley_loc","value":0.9899157215327649,"n":105,"kill_time_samples":16,"censored_defeats":89,"infinite_depletion":0} |
+| hero | frost_wolf_battle | P0b | [{"archetype":"P0b","character":"hero","encounter":"frost_wolf_battle","value":0.3509970239658324,"n":209,"kill_time_samples":25,"censored_defeats":184,"infinite_depletion":0}] | {"archetype":"P0b","character":"hero","encounter":"frost_wolf_battle","value":0.4149776284228191,"n":230,"kill_time_samples":105,"censored_defeats":125,"infinite_depletion":0} |
+| hero | slime_king_battle | P0b | [{"archetype":"P0b","character":"hero","encounter":"slime_king_battle","value":null,"n":170,"kill_time_samples":0,"censored_defeats":170,"infinite_depletion":0}] | {"archetype":"P0b","character":"hero","encounter":"slime_king_battle","value":0.8440143369175628,"n":170,"kill_time_samples":3,"censored_defeats":167,"infinite_depletion":0} |
+| mage | dragon_valley_loc | P0b | [] | {"archetype":"P0b","character":"mage","encounter":"dragon_valley_loc","value":null,"n":7,"kill_time_samples":0,"censored_defeats":7,"infinite_depletion":0} |
+| mage | frost_wolf_battle | P0b | [{"archetype":"P0b","character":"mage","encounter":"frost_wolf_battle","value":null,"n":86,"kill_time_samples":0,"censored_defeats":86,"infinite_depletion":0}] | {"archetype":"P0b","character":"mage","encounter":"frost_wolf_battle","value":0.4189853341006109,"n":147,"kill_time_samples":7,"censored_defeats":140,"infinite_depletion":0} |
+| mage | slime_king_battle | P0b | [{"archetype":"P0b","character":"mage","encounter":"slime_king_battle","value":null,"n":11,"kill_time_samples":0,"censored_defeats":11,"infinite_depletion":0}] | {"archetype":"P0b","character":"mage","encounter":"slime_king_battle","value":null,"n":11,"kill_time_samples":0,"censored_defeats":11,"infinite_depletion":0} |
+| thief | dragon_valley_loc | P0b | [{"archetype":"P0b","character":"thief","encounter":"dragon_valley_loc","value":null,"n":4,"kill_time_samples":0,"censored_defeats":4,"infinite_depletion":0}] | {"archetype":"P0b","character":"thief","encounter":"dragon_valley_loc","value":0.8136992741143302,"n":60,"kill_time_samples":5,"censored_defeats":55,"infinite_depletion":0} |
+| thief | frost_wolf_battle | P0b | [{"archetype":"P0b","character":"thief","encounter":"frost_wolf_battle","value":0.27131751152721545,"n":149,"kill_time_samples":4,"censored_defeats":145,"infinite_depletion":0}] | {"archetype":"P0b","character":"thief","encounter":"frost_wolf_battle","value":0.3435668004810689,"n":228,"kill_time_samples":61,"censored_defeats":167,"infinite_depletion":0} |
+| thief | slime_king_battle | P0b | [{"archetype":"P0b","character":"thief","encounter":"slime_king_battle","value":null,"n":55,"kill_time_samples":0,"censored_defeats":55,"infinite_depletion":0}] | {"archetype":"P0b","character":"thief","encounter":"slime_king_battle","value":0.5824777961764261,"n":55,"kill_time_samples":3,"censored_defeats":52,"infinite_depletion":0} |
+| cleric | cave_prism_tree | P2 | [{"archetype":"P2","character":"cleric","encounter":"cave_prism_tree","value":0.28283464751050924,"n":463,"kill_time_samples":433,"censored_defeats":30,"infinite_depletion":0}] | {"archetype":"P2","character":"cleric","encounter":"cave_prism_tree","value":0.48453171048069216,"n":477,"kill_time_samples":396,"censored_defeats":81,"infinite_depletion":0} |
+| cleric | draco_battle | P2 | [{"archetype":"P2","character":"cleric","encounter":"draco_battle","value":0.09645768285172406,"n":244,"kill_time_samples":242,"censored_defeats":2,"infinite_depletion":0}] | {"archetype":"P2","character":"cleric","encounter":"draco_battle","value":0.24164300670681962,"n":373,"kill_time_samples":342,"censored_defeats":31,"infinite_depletion":0} |
+| cleric | dragon_valley_loc | P2 | [{"archetype":"P2","character":"cleric","encounter":"dragon_valley_loc","value":0.18484119089495232,"n":333,"kill_time_samples":244,"censored_defeats":89,"infinite_depletion":0}] | {"archetype":"P2","character":"cleric","encounter":"dragon_valley_loc","value":0.31436292611908273,"n":408,"kill_time_samples":373,"censored_defeats":35,"infinite_depletion":0} |
+| cleric | frost_wolf_battle | P2 | [{"archetype":"P2","character":"cleric","encounter":"frost_wolf_battle","value":0.06255952874756217,"n":387,"kill_time_samples":336,"censored_defeats":51,"infinite_depletion":0}] | {"archetype":"P2","character":"cleric","encounter":"frost_wolf_battle","value":0.17794254970426274,"n":437,"kill_time_samples":417,"censored_defeats":20,"infinite_depletion":0} |
+| cleric | goblin_fort_fourth | P2 | [{"archetype":"P2","character":"cleric","encounter":"goblin_fort_fourth","value":0.21197979134462325,"n":500,"kill_time_samples":463,"censored_defeats":37,"infinite_depletion":0}] | {"archetype":"P2","character":"cleric","encounter":"goblin_fort_fourth","value":0.2758670671304334,"n":500,"kill_time_samples":481,"censored_defeats":19,"infinite_depletion":0} |
+| cleric | slime_king_battle | P2 | [{"archetype":"P2","character":"cleric","encounter":"slime_king_battle","value":0.157756589357138,"n":463,"kill_time_samples":393,"censored_defeats":70,"infinite_depletion":0}] | {"archetype":"P2","character":"cleric","encounter":"slime_king_battle","value":0.25163464277329617,"n":481,"kill_time_samples":442,"censored_defeats":39,"infinite_depletion":0} |
+| hero | cave_prism_tree | P2 | [{"archetype":"P2","character":"hero","encounter":"cave_prism_tree","value":0.27180791840343393,"n":490,"kill_time_samples":487,"censored_defeats":3,"infinite_depletion":0}] | {"archetype":"P2","character":"hero","encounter":"cave_prism_tree","value":0.5911053404936526,"n":496,"kill_time_samples":395,"censored_defeats":101,"infinite_depletion":0} |
+| hero | draco_battle | P2 | [{"archetype":"P2","character":"hero","encounter":"draco_battle","value":0.32125644867458075,"n":369,"kill_time_samples":258,"censored_defeats":111,"infinite_depletion":0}] | {"archetype":"P2","character":"hero","encounter":"draco_battle","value":0.3998232505585311,"n":488,"kill_time_samples":346,"censored_defeats":142,"infinite_depletion":0} |
+| hero | dragon_valley_loc | P2 | [{"archetype":"P2","character":"hero","encounter":"dragon_valley_loc","value":0.3501604732586009,"n":487,"kill_time_samples":369,"censored_defeats":118,"infinite_depletion":0}] | {"archetype":"P2","character":"hero","encounter":"dragon_valley_loc","value":0.45997032434167706,"n":496,"kill_time_samples":488,"censored_defeats":8,"infinite_depletion":0} |
+| hero | frost_wolf_battle | P2 | [{"archetype":"P2","character":"hero","encounter":"frost_wolf_battle","value":0.13994836569065153,"n":490,"kill_time_samples":487,"censored_defeats":3,"infinite_depletion":0}] | {"archetype":"P2","character":"hero","encounter":"frost_wolf_battle","value":0.15273901609761786,"n":496,"kill_time_samples":496,"censored_defeats":0,"infinite_depletion":0} |
+| hero | goblin_fort_fourth | P2 | [{"archetype":"P2","character":"hero","encounter":"goblin_fort_fourth","value":0.16853154136617152,"n":500,"kill_time_samples":490,"censored_defeats":10,"infinite_depletion":0}] | {"archetype":"P2","character":"hero","encounter":"goblin_fort_fourth","value":0.2171644661816553,"n":500,"kill_time_samples":496,"censored_defeats":4,"infinite_depletion":0} |
+| hero | slime_king_battle | P2 | [{"archetype":"P2","character":"hero","encounter":"slime_king_battle","value":0.12644822688271642,"n":490,"kill_time_samples":490,"censored_defeats":0,"infinite_depletion":0}] | {"archetype":"P2","character":"hero","encounter":"slime_king_battle","value":0.20548823907425098,"n":496,"kill_time_samples":496,"censored_defeats":0,"infinite_depletion":0} |
+| mage | cave_prism_tree | P2 | [{"archetype":"P2","character":"mage","encounter":"cave_prism_tree","value":0.0,"n":368,"kill_time_samples":307,"censored_defeats":61,"infinite_depletion":368}] | {"archetype":"P2","character":"mage","encounter":"cave_prism_tree","value":0.0,"n":402,"kill_time_samples":327,"censored_defeats":75,"infinite_depletion":402} |
+| mage | draco_battle | P2 | [{"archetype":"P2","character":"mage","encounter":"draco_battle","value":0.0,"n":47,"kill_time_samples":15,"censored_defeats":32,"infinite_depletion":47}] | {"archetype":"P2","character":"mage","encounter":"draco_battle","value":0.0,"n":278,"kill_time_samples":249,"censored_defeats":29,"infinite_depletion":278} |
+| mage | dragon_valley_loc | P2 | [{"archetype":"P2","character":"mage","encounter":"dragon_valley_loc","value":0.0,"n":265,"kill_time_samples":47,"censored_defeats":218,"infinite_depletion":265}] | {"archetype":"P2","character":"mage","encounter":"dragon_valley_loc","value":0.0,"n":393,"kill_time_samples":278,"censored_defeats":115,"infinite_depletion":393} |
+| mage | frost_wolf_battle | P2 | [{"archetype":"P2","character":"mage","encounter":"frost_wolf_battle","value":0.0,"n":370,"kill_time_samples":270,"censored_defeats":100,"infinite_depletion":370}] | {"archetype":"P2","character":"mage","encounter":"frost_wolf_battle","value":0.0,"n":410,"kill_time_samples":397,"censored_defeats":13,"infinite_depletion":410} |
+| mage | goblin_fort_fourth | P2 | [{"archetype":"P2","character":"mage","encounter":"goblin_fort_fourth","value":0.014063345760701146,"n":499,"kill_time_samples":415,"censored_defeats":84,"infinite_depletion":384}] | {"archetype":"P2","character":"mage","encounter":"goblin_fort_fourth","value":0.05531664556719098,"n":498,"kill_time_samples":427,"censored_defeats":71,"infinite_depletion":383} |
+| mage | slime_king_battle | P2 | [{"archetype":"P2","character":"mage","encounter":"slime_king_battle","value":0.0,"n":415,"kill_time_samples":376,"censored_defeats":39,"infinite_depletion":415}] | {"archetype":"P2","character":"mage","encounter":"slime_king_battle","value":0.0,"n":427,"kill_time_samples":412,"censored_defeats":15,"infinite_depletion":427} |
+| thief | cave_prism_tree | P2 | [{"archetype":"P2","character":"thief","encounter":"cave_prism_tree","value":0.292255658885031,"n":321,"kill_time_samples":268,"censored_defeats":53,"infinite_depletion":0}] | {"archetype":"P2","character":"thief","encounter":"cave_prism_tree","value":0.6262595054078905,"n":381,"kill_time_samples":262,"censored_defeats":119,"infinite_depletion":0} |
+| thief | draco_battle | P2 | [{"archetype":"P2","character":"thief","encounter":"draco_battle","value":0.7073235169025078,"n":32,"kill_time_samples":17,"censored_defeats":15,"infinite_depletion":0}] | {"archetype":"P2","character":"thief","encounter":"draco_battle","value":0.6663125202794037,"n":235,"kill_time_samples":203,"censored_defeats":32,"infinite_depletion":0} |
+| thief | dragon_valley_loc | P2 | [{"archetype":"P2","character":"thief","encounter":"dragon_valley_loc","value":0.3210071952740998,"n":231,"kill_time_samples":32,"censored_defeats":199,"infinite_depletion":0}] | {"archetype":"P2","character":"thief","encounter":"dragon_valley_loc","value":0.379726215340234,"n":343,"kill_time_samples":235,"censored_defeats":108,"infinite_depletion":0} |
+| thief | frost_wolf_battle | P2 | [{"archetype":"P2","character":"thief","encounter":"frost_wolf_battle","value":0.07595225135579278,"n":282,"kill_time_samples":232,"censored_defeats":50,"infinite_depletion":0}] | {"archetype":"P2","character":"thief","encounter":"frost_wolf_battle","value":0.14610813134378967,"n":369,"kill_time_samples":343,"censored_defeats":26,"infinite_depletion":0} |
+| thief | goblin_fort_fourth | P2 | [{"archetype":"P2","character":"thief","encounter":"goblin_fort_fourth","value":0.19138425799050507,"n":500,"kill_time_samples":353,"censored_defeats":147,"infinite_depletion":0}] | {"archetype":"P2","character":"thief","encounter":"goblin_fort_fourth","value":0.30126938586505486,"n":500,"kill_time_samples":423,"censored_defeats":77,"infinite_depletion":0} |
+| thief | slime_king_battle | P2 | [{"archetype":"P2","character":"thief","encounter":"slime_king_battle","value":0.1171876884377394,"n":353,"kill_time_samples":286,"censored_defeats":67,"infinite_depletion":0}] | {"archetype":"P2","character":"thief","encounter":"slime_king_battle","value":0.16734723001262344,"n":423,"kill_time_samples":373,"censored_defeats":50,"infinite_depletion":0} |
+
+### 预告响应与魔導の盾
+
+P2 Ignis/prism/Draco level/equipment and support flags retained; Draco controlled dragon phase; passives/statuses/companion removed; full HP/MP/SP control; actual telegraph ability with controlled 30/45 percent and physical/fire/ice; conditional hit forced without changing damage; native hit chance reported separately
+
+以下伤害为条件命中值，另列原生命中率；没有把闪避当作每次确定减伤。实际P2装备/支援下三场Boss分别检查；物理/火/冰与30/45%交叉控制矩阵也报告。非实际招式属性的控制行不是另一场Boss的实测；45%物理仅有×0.5姿态可能超过20%，不能擅改魔力凝縮固定倍率。
+
+| 遭遇 | 职业 | 等级/HP | 属性 | 比例 | 技能可用 | 姿态后伤害/HP | 命中率 | ≤20% |
+|---|---|---|---|---|---|---|---|---|
+| dragon_valley_loc | hero | 6/35 | physical | 0.3 | True | 5/14.29% | 96 | True |
+| dragon_valley_loc | hero | 6/35 | physical | 0.45 | True | 8/22.86% | 96 | False |
+| dragon_valley_loc | hero | 6/35 | fire | 0.3 | True | 4/11.43% | 96 | True |
+| dragon_valley_loc | hero | 6/35 | fire | 0.45 | True | 5/14.29% | 96 | True |
+| dragon_valley_loc | hero | 6/35 | ice | 0.3 | True | 5/14.29% | 96 | True |
+| dragon_valley_loc | hero | 6/35 | ice | 0.45 | True | 8/22.86% | 96 | False |
+| dragon_valley_loc | cleric | 6/33 | physical | 0.3 | True | 4/12.12% | 94 | True |
+| dragon_valley_loc | cleric | 6/33 | physical | 0.45 | True | 7/21.21% | 94 | False |
+| dragon_valley_loc | cleric | 6/33 | fire | 0.3 | True | 3/9.09% | 94 | True |
+| dragon_valley_loc | cleric | 6/33 | fire | 0.45 | True | 5/15.15% | 94 | True |
+| dragon_valley_loc | cleric | 6/33 | ice | 0.3 | True | 4/12.12% | 94 | True |
+| dragon_valley_loc | cleric | 6/33 | ice | 0.45 | True | 7/21.21% | 94 | False |
+| dragon_valley_loc | mage | 6/24 | physical | 0.3 | True | 4/16.67% | 92 | True |
+| dragon_valley_loc | mage | 6/24 | physical | 0.45 | True | 5/20.83% | 92 | False |
+| dragon_valley_loc | mage | 6/24 | fire | 0.3 | True | 2/8.33% | 92 | True |
+| dragon_valley_loc | mage | 6/24 | fire | 0.45 | True | 4/16.67% | 92 | True |
+| dragon_valley_loc | mage | 6/24 | ice | 0.3 | True | 4/16.67% | 92 | True |
+| dragon_valley_loc | mage | 6/24 | ice | 0.45 | True | 5/20.83% | 92 | False |
+| dragon_valley_loc | thief | 6/24 | physical | 0.3 | True | 2/8.33% | 80 | True |
+| dragon_valley_loc | thief | 6/24 | physical | 0.45 | True | 2/8.33% | 80 | True |
+| dragon_valley_loc | thief | 6/24 | fire | 0.3 | True | 1/4.17% | 80 | True |
+| dragon_valley_loc | thief | 6/24 | fire | 0.45 | True | 2/8.33% | 80 | True |
+| dragon_valley_loc | thief | 6/24 | ice | 0.3 | True | 2/8.33% | 80 | True |
+| dragon_valley_loc | thief | 6/24 | ice | 0.45 | True | 2/8.33% | 80 | True |
+| cave_prism_tree | hero | 5/32 | physical | 0.3 | True | 4/12.50% | 97 | True |
+| cave_prism_tree | hero | 5/32 | physical | 0.45 | True | 7/21.88% | 97 | False |
+| cave_prism_tree | hero | 5/32 | fire | 0.3 | True | 3/9.38% | 97 | True |
+| cave_prism_tree | hero | 5/32 | fire | 0.45 | True | 5/15.62% | 97 | True |
+| cave_prism_tree | hero | 5/32 | ice | 0.3 | True | 4/12.50% | 97 | True |
+| cave_prism_tree | hero | 5/32 | ice | 0.45 | True | 7/21.88% | 97 | False |
+| cave_prism_tree | cleric | 5/30 | physical | 0.3 | True | 4/13.33% | 94 | True |
+| cave_prism_tree | cleric | 5/30 | physical | 0.45 | True | 6/20.00% | 94 | True |
+| cave_prism_tree | cleric | 5/30 | fire | 0.3 | True | 3/10.00% | 94 | True |
+| cave_prism_tree | cleric | 5/30 | fire | 0.45 | True | 4/13.33% | 94 | True |
+| cave_prism_tree | cleric | 5/30 | ice | 0.3 | True | 4/13.33% | 94 | True |
+| cave_prism_tree | cleric | 5/30 | ice | 0.45 | True | 6/20.00% | 94 | True |
+| cave_prism_tree | mage | 5/22 | physical | 0.3 | True | 3/13.64% | 92 | True |
+| cave_prism_tree | mage | 5/22 | physical | 0.45 | True | 4/18.18% | 92 | True |
+| cave_prism_tree | mage | 5/22 | fire | 0.3 | True | 2/9.09% | 92 | True |
+| cave_prism_tree | mage | 5/22 | fire | 0.45 | True | 3/13.64% | 92 | True |
+| cave_prism_tree | mage | 5/22 | ice | 0.3 | True | 3/13.64% | 92 | True |
+| cave_prism_tree | mage | 5/22 | ice | 0.45 | True | 4/18.18% | 92 | True |
+| cave_prism_tree | thief | 5/22 | physical | 0.3 | True | 2/9.09% | 80 | True |
+| cave_prism_tree | thief | 5/22 | physical | 0.45 | True | 2/9.09% | 80 | True |
+| cave_prism_tree | thief | 5/22 | fire | 0.3 | True | 1/4.55% | 80 | True |
+| cave_prism_tree | thief | 5/22 | fire | 0.45 | True | 2/9.09% | 80 | True |
+| cave_prism_tree | thief | 5/22 | ice | 0.3 | True | 2/9.09% | 80 | True |
+| cave_prism_tree | thief | 5/22 | ice | 0.45 | True | 2/9.09% | 80 | True |
+| draco_battle | hero | 7/38 | physical | 0.3 | True | 6/15.79% | 96 | True |
+| draco_battle | hero | 7/38 | physical | 0.45 | True | 8/21.05% | 96 | False |
+| draco_battle | hero | 7/38 | fire | 0.3 | True | 4/10.53% | 96 | True |
+| draco_battle | hero | 7/38 | fire | 0.45 | True | 6/15.79% | 96 | True |
+| draco_battle | hero | 7/38 | ice | 0.3 | True | 6/15.79% | 96 | True |
+| draco_battle | hero | 7/38 | ice | 0.45 | True | 8/21.05% | 96 | False |
+| draco_battle | cleric | 7/36 | physical | 0.3 | True | 5/13.89% | 94 | True |
+| draco_battle | cleric | 7/36 | physical | 0.45 | True | 8/22.22% | 94 | False |
+| draco_battle | cleric | 7/36 | fire | 0.3 | True | 4/11.11% | 94 | True |
+| draco_battle | cleric | 7/36 | fire | 0.45 | True | 6/16.67% | 94 | True |
+| draco_battle | cleric | 7/36 | ice | 0.3 | True | 5/13.89% | 94 | True |
+| draco_battle | cleric | 7/36 | ice | 0.45 | True | 8/22.22% | 94 | False |
+| draco_battle | mage | 7/26 | physical | 0.3 | True | 4/15.38% | 92 | True |
+| draco_battle | mage | 7/26 | physical | 0.45 | True | 6/23.08% | 92 | False |
+| draco_battle | mage | 7/26 | fire | 0.3 | True | 2/7.69% | 92 | True |
+| draco_battle | mage | 7/26 | fire | 0.45 | True | 4/15.38% | 92 | True |
+| draco_battle | mage | 7/26 | ice | 0.3 | True | 4/15.38% | 92 | True |
+| draco_battle | mage | 7/26 | ice | 0.45 | True | 6/23.08% | 92 | False |
+| draco_battle | thief | 7/26 | physical | 0.3 | True | 2/7.69% | 80 | True |
+| draco_battle | thief | 7/26 | physical | 0.45 | True | 3/11.54% | 80 | True |
+| draco_battle | thief | 7/26 | fire | 0.3 | True | 1/3.85% | 80 | True |
+| draco_battle | thief | 7/26 | fire | 0.45 | True | 2/7.69% | 80 | True |
+| draco_battle | thief | 7/26 | ice | 0.3 | True | 2/7.69% | 80 | True |
+| draco_battle | thief | 7/26 | ice | 0.45 | True | 3/11.54% | 80 | True |
+
+| 职业 | 命中次数 | 护盾前百分比伤害 | 魔導の盾存在时吸收 | 占比 |
+|---|---|---|---|---|
+| cleric | 21278 | 108111 | 0 | 0.00% |
+| hero | 31302 | 182979 | 0 | 0.00% |
+| mage | 13611 | 58503 | 24454 | 41.80% |
+| thief | 18195 | 52261 | 0 | 0.00% |
+
+统计分母是抗性/姿态后、护盾前的百分比伤害；若同一时刻还有其他护盾，记录包含其联合吸收，作为魔導の盾抵消的上界，不能当成独立归因值。完整角色/遭遇分布可由 candidate-normal-records.json 重算。
+
+### 049 分支 A / B 与换剑价值
+
+| 组合 | 被动 | 胜率 | Wilson95 | 回合均值 | 觉醒阶段/回合分布 |
+|---|---|---|---|---|---|
+| G1 | {"2":"departure_spirit","4":"departure_spirit","6":"sword_followup"} | 84.95% | [0.8331601825826263,0.864499801367778] | 9.4755 | {"draco_dragon:10":35,"draco_dragon:11":3,"draco_dragon:13":1,"draco_dragon:16":1,"draco_dragon:4":990,"draco_dragon:5":539,"draco_dragon:7":394,"draco_dragon:8":37} |
+| G2 | {"2":"departure_spirit","4":"departure_spirit","6":"adversity_flame"} | 83.35% | [0.8165372993335623,0.849184030129842] | 9.4335 | {"draco_dragon:10":35,"draco_dragon:11":2,"draco_dragon:13":1,"draco_dragon:4":1014,"draco_dragon:5":543,"draco_dragon:7":364,"draco_dragon:8":39,"draco_human:4":2} |
+| G3 | {"2":"departure_spirit","4":"unsinkable_shield","6":"sword_followup"} | 84.10% | [0.8243221492638255,0.8563704244903598] | 9.4245 | {"draco_dragon:10":30,"draco_dragon:11":2,"draco_dragon:13":1,"draco_dragon:16":1,"draco_dragon:4":1023,"draco_dragon:5":504,"draco_dragon:7":391,"draco_dragon:8":29,"draco_human:4":18,"draco_human:7":1} |
+| G4 | {"2":"departure_spirit","4":"unsinkable_shield","6":"adversity_flame"} | 82.65% | [0.8092821571843397,0.8424660109410022] | 9.404 | {"draco_dragon:10":32,"draco_dragon:11":2,"draco_dragon:13":1,"draco_dragon:4":1011,"draco_dragon:5":520,"draco_dragon:7":356,"draco_dragon:8":37,"draco_human:4":35,"draco_human:5":6} |
+| G5 | {"2":"heavy_armor_lore","4":"departure_spirit","6":"sword_followup"} | 84.05% | [0.8238027769511458,0.855891713850321] | 9.431 | {"draco_dragon:10":30,"draco_dragon:11":2,"draco_dragon:13":1,"draco_dragon:16":1,"draco_dragon:4":1020,"draco_dragon:5":503,"draco_dragon:7":397,"draco_dragon:8":29,"draco_human:4":16,"draco_human:7":1} |
+| G6 | {"2":"heavy_armor_lore","4":"departure_spirit","6":"adversity_flame"} | 82.65% | [0.8092821571843397,0.8424660109410022] | 9.414 | {"draco_dragon:10":32,"draco_dragon:11":2,"draco_dragon:13":1,"draco_dragon:4":1006,"draco_dragon:5":519,"draco_dragon:7":362,"draco_dragon:8":38,"draco_human:4":34,"draco_human:5":6} |
+| G7 | {"2":"heavy_armor_lore","4":"unsinkable_shield","6":"sword_followup"} | 83.15% | [0.8144633695065567,0.8472656281459726] | 9.458 | {"draco_dragon:10":37,"draco_dragon:11":3,"draco_dragon:13":1,"draco_dragon:14":1,"draco_dragon:16":1,"draco_dragon:4":996,"draco_dragon:5":482,"draco_dragon:7":387,"draco_dragon:8":32,"draco_human:4":50,"draco_human:5":9,"draco_human:7":1} |
+| G8 | {"2":"heavy_armor_lore","4":"unsinkable_shield","6":"adversity_flame"} | 81.30% | [0.7953174978047974,0.829482430597138] | 9.396 | {"draco_dragon:10":32,"draco_dragon:13":1,"draco_dragon:4":1000,"draco_dragon:5":496,"draco_dragon:7":332,"draco_dragon:8":47,"draco_human:4":74,"draco_human:5":18} |
+
+每组合2000，seed20261021，attack_only。觉醒后回合分布、剩余龙HP、人形态受伤/败北率见 gate-acceptance.json；没有将组均值替代最小/最大门槛。
+
+| 报告配置 | 胜率/Wilson95 | 回合均值 | 人形态受伤均值 | 人形态败北率 |
+|---|---|---|---|---|
+| R1:P2:none:heuristic_v3:ordinary | 88.20% [0.8507680121388806,0.9074069917484936] | 40.16 | 0.578 | 0.00% |
+| R1:P2:none:heuristic_v3:A | 98.00% [0.9635798167531208,0.9891008164037892] | 40.264 | 0.578 | 0.00% |
+| R1:P2:none:attack_only:ordinary | 0.00% [4.336808689942018e-19,0.007624340461552241] | 29.328 | 13.608 | 0.00% |
+| R1:P2:none:attack_only:A | 99.20% [0.9796129641658948,0.9968846848199377] | 34.032 | 13.608 | 0.00% |
+| R1:P2:all:heuristic_v3:ordinary | 99.60% [0.9855342847848231,0.9989023694773173] | 10.952 | 0.784 | 0.00% |
+| R1:P2:all:heuristic_v3:A | 100.00% [0.9923756595384479,1.0] | 10.962 | 0.784 | 0.00% |
+| R1:P2:all:attack_only:ordinary | 98.00% [0.9635798167531208,0.9891008164037892] | 39.004 | 3.234 | 0.00% |
+| R1:P2:all:attack_only:A | 100.00% [0.9923756595384479,1.0] | 39.05 | 3.234 | 0.00% |
+| R2:P2:ordinary | 99.60% [0.9855342847848231,0.9989023694773173] | 13.078 | 0.526 | 0.00% |
+| R2:P2:B | 99.80% [0.9887592932948532,0.9996468636054407] | 13.038 | 0.674 | 0.00% |
+
+缺快照：[{"profile":"P0b","reason":"053 did not observe a hero Draco opening"}]
+
+P2 分支B − 普通：0.20%，配对95%CI [-0.19%, 0.59%]；B胜率 99.80%，P2目标40–65%仅为软门槛。
+
+[{"branch":"keep","n":500,"wins":445,"rate":0.89,"wilson95":[0.8595444295965924,0.9145085848433969],"ignis_rate":0.89,"fused":0,"awakened":119},{"branch":"fuse","n":500,"wins":349,"rate":0.698,"wilson95":[0.6563723120570819,0.7366084491201434],"ignis_rate":0.98,"fused":500,"awakened":0}]
+
+配对差及95%CI：{"a":0.89,"b":0.698,"b_minus_a":-0.192,"ci95":[-0.2299563523612206,-0.1540436476387794],"paired_discordant":112,"ci_method":"paired difference normal approximation; n=1 uninformative"}
+路线严格通过真实 forge 展示/接受融合行动；keep 分支保留并重装备鉄の剣，拒绝途中其他武器，觉醒后允许聖剣。该对照限制比普通P2更明确，未改默认P2路线。
+
+### 参数变更全表与迭代记录
+
+下表为两个有效 normal 包相同的全部变更叶；新增招式用 normal-only 记录，其他采用覆盖层。原始 JSON 的迁移重排不算数值变化。L1、被动v1、技能默认参数不变。
+
+| 路径 | 旧 | 新 | 杠杆/允许范围 |
+|---|---|---|---|
+| enemies..ash_wraith.skills.ash_embrace.ai_weight | 2 | 4 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ash_wraith.skills.resentment.ai_weight | 1 | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ash_wraith.skills.soot_wave.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ash_wraith.skills.soot_wave.ai_weight | null | 3 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ash_wraith.skills.soot_wave.damage_max_hp_ratio | null | 0.15 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ash_wraith.skills.soot_wave.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ash_wraith.skills.soot_wave.element | null | "dark" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ash_wraith.skills.soot_wave.id | null | "soot_wave" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ash_wraith.skills.soot_wave.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ash_wraith.skills.soot_wave.name | null | "黒煤の窒息波" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ash_wraith.skills.soot_wave.release_text | null | "【仮】{enemy}が煤の腕を広げ、視界ごと包み込むように迫った。" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ash_wraith.skills.soot_wave.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..draco_dragon.combat.basic_attack.damage | "1d12+10" | "2d4+10" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_dragon.hp | 132 | 140 | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_dragon.max_hp | 132 | 140 | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_dragon.skills.frozen_breath.damage_max_hp_ratio | null | 0.45 | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_dragon.skills.frozen_breath.every_n_rounds | null | 3 | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_dragon.skills.frozen_breath.release_text | null | "【仮】{enemy}は白い冷気を吸い込み、すべてを凍らせる吐息を放った！" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_dragon.skills.frozen_breath.telegraph.charge_rounds | null | 1 | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_dragon.skills.frozen_breath.telegraph.warning | null | "【仮】{enemy}が深く息を吸い込み、喉の奥で白銀の冷気が渦巻いている……！" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_dragon.skills.white_wings.damage | "1d12+10" | "2d4+10" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.combat.basic_attack.damage | "1d8+5" | "2d4+10" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.ice_blade.damage | "1d2+24" | "2d4+10" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.accuracy | null | 100 | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.ai_weight | null | 1 | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.damage_max_hp_ratio | null | 0.35 | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.difficulty_only.0 | null | "normal" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.element | null | "physical" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.every_n_rounds | null | 3 | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.id | null | "silver_secret_blade" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.kind | null | "attack" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.name | null | "白銀の秘太刀" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.release_text | null | "【仮】{enemy}の剣が白く閃き、凍てつく斬撃が走った！" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.requires_combat_rule | null | "elite_percentage_round_cap" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.telegraph.charge_rounds | null | 1 | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.silver_secret_blade.telegraph.warning | null | "【仮】{enemy}が白銀の剣を鞘に納め、足元から凍てつく冷気が立ちのぼる……！" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..draco_human.skills.sword_flash.damage | "1d2+8" | "2d4+10" | L9 / §3.9与049门槛；保留抗性 |
+| enemies..dragon_knight_human.skills.guardian_sentence.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_human.skills.guardian_sentence.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_human.skills.guardian_sentence.damage_max_hp_ratio | null | 0.35 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_human.skills.guardian_sentence.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_human.skills.guardian_sentence.element | null | "physical" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_human.skills.guardian_sentence.every_n_rounds | null | 3 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_human.skills.guardian_sentence.id | null | "guardian_sentence" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_human.skills.guardian_sentence.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_human.skills.guardian_sentence.name | null | "守護者の処断" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_human.skills.guardian_sentence.release_text | null | "【仮】{enemy}が大地を蹴って踏み込み、渾身の力で槍を突き出した！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_human.skills.guardian_sentence.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_human.skills.guardian_sentence.telegraph.charge_rounds | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_human.skills.guardian_sentence.telegraph.warning | null | "【仮】{enemy}は槍を深く引き絞り、鋭い眼差しでただ一点を見据えた……！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_mounted.skills.dive.damage_max_hp_ratio | null | 0.35 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_mounted.skills.dive.every_n_rounds | null | 3 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_mounted.skills.dive.release_text | null | "【仮】{enemy}は空高く舞い上がり、槍先を揃えて急降下した！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_mounted.skills.dive.telegraph.charge_rounds | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..dragon_knight_mounted.skills.dive.telegraph.warning | null | "【仮】{enemy}は翼を大きく広げて空高く舞い上がり、槍先をこちらへ向けた……！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.combat.basic_attack_weight | null | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.damage_max_hp_ratio | null | 0.35 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.element | null | "physical" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.every_n_rounds | null | 0 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.id | null | "earth_collapse" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.name | null | "地砕きの崩落" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.release_text | null | "【仮】{enemy}が巨体をくねらせ、峡谷の底ごと叩き潰した。" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.telegraph.charge_rounds | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.telegraph.warning | null | "【仮】{enemy}が巨体を大きく反らし、峡谷の岩盤が激しく軋み始めた……！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..earth_worm.skills.earth_collapse.use_below_hp_ratio | null | 0.99 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..fire_elemental.combat.basic_attack_weight | null | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..fire_elemental.skills.flame_torrent.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..fire_elemental.skills.flame_torrent.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..fire_elemental.skills.flame_torrent.damage_max_hp_ratio | null | 0.2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..fire_elemental.skills.flame_torrent.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..fire_elemental.skills.flame_torrent.element | null | "fire" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..fire_elemental.skills.flame_torrent.id | null | "flame_torrent" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..fire_elemental.skills.flame_torrent.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..fire_elemental.skills.flame_torrent.name | null | "爆炎の奔流" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..fire_elemental.skills.flame_torrent.release_text | null | "【仮】{enemy}の核が激しく脈打ち、灼熱の炎が渦を巻いて噴き出した！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..fire_elemental.skills.flame_torrent.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..forest_wolf.combat.basic_attack_weight | null | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..forest_wolf.skills.throat_bite.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..forest_wolf.skills.throat_bite.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..forest_wolf.skills.throat_bite.damage_max_hp_ratio | null | 0.2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..forest_wolf.skills.throat_bite.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..forest_wolf.skills.throat_bite.element | null | "physical" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..forest_wolf.skills.throat_bite.id | null | "throat_bite" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..forest_wolf.skills.throat_bite.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..forest_wolf.skills.throat_bite.name | null | "喉笛喰らい" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..forest_wolf.skills.throat_bite.release_text | null | "【仮】{enemy}は低く身を沈め、鋭い牙で急所へ飛びかかった！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..forest_wolf.skills.throat_bite.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.damage_max_hp_ratio | null | 0.35 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.element | null | "ice" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.every_n_rounds | null | 3 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.id | null | "blizzard_howl" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.name | null | "吹雪の遠吠え" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.release_text | null | "【仮】{enemy}が天を仰いで吠えると、凍てつく吹雪が吹き荒れた。" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.telegraph.charge_rounds | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..frost_dire_wolf.skills.blizzard_howl.telegraph.warning | null | "【仮】{enemy}が深く息を吸い込むと、周囲の空気が白く凍りつき始めた……！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ghoul.combat.basic_attack_weight | null | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ghoul.skills.rotting_claw.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ghoul.skills.rotting_claw.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ghoul.skills.rotting_claw.damage_max_hp_ratio | null | 0.2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ghoul.skills.rotting_claw.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ghoul.skills.rotting_claw.element | null | "physical" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ghoul.skills.rotting_claw.id | null | "rotting_claw" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ghoul.skills.rotting_claw.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ghoul.skills.rotting_claw.name | null | "腐肉の爪" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ghoul.skills.rotting_claw.release_text | null | "【仮】{enemy}が黒ずんだ爪を振り回し、腐臭とともに飛びかかった。" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ghoul.skills.rotting_claw.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.damage_max_hp_ratio | null | 0.35 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.element | null | "physical" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.every_n_rounds | null | 3 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.id | null | "royal_cleave" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.name | null | "王の大断ち" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.release_text | null | "【仮】{enemy}が大剣を両手で振りかぶり、床ごと叩き割った。" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.telegraph.charge_rounds | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..goblin_king.skills.royal_cleave.telegraph.warning | null | "【仮】{enemy}が錆びた大剣を両手で高く振りかぶり、全身に力を込めた……！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.combat.basic_attack_weight | null | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.damage_max_hp_ratio | null | 0.35 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.element | null | "physical" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.every_n_rounds | null | 0 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.id | null | "grave_cleave" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.name | null | "墓守の大断ち" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.release_text | null | "【仮】{enemy}が両手で大剣を振り上げ、石床ごと断ち割った。" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.telegraph.charge_rounds | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.telegraph.warning | null | "【仮】{enemy}の兜に蒼い冥火が灯り、大剣を上段に大きく構え直した……！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..grave_knight.skills.grave_cleave.use_below_hp_ratio | null | 0.99 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..heat_lizard.combat.basic_attack_weight | null | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..heat_lizard.skills.fire_spit.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..heat_lizard.skills.fire_spit.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..heat_lizard.skills.fire_spit.damage_max_hp_ratio | null | 0.18 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..heat_lizard.skills.fire_spit.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..heat_lizard.skills.fire_spit.element | null | "fire" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..heat_lizard.skills.fire_spit.id | null | "fire_spit" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..heat_lizard.skills.fire_spit.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..heat_lizard.skills.fire_spit.name | null | "火炎吐き" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..heat_lizard.skills.fire_spit.release_text | null | "【仮】{enemy}が喉を膨らませ、火の玉を吐き出した。" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..heat_lizard.skills.fire_spit.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..hobgoblin.combat.basic_attack_weight | null | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..hobgoblin.skills.skull_crush.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..hobgoblin.skills.skull_crush.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..hobgoblin.skills.skull_crush.damage_max_hp_ratio | null | 0.2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..hobgoblin.skills.skull_crush.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..hobgoblin.skills.skull_crush.element | null | "physical" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..hobgoblin.skills.skull_crush.id | null | "skull_crush" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..hobgoblin.skills.skull_crush.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..hobgoblin.skills.skull_crush.name | null | "脳天砕き" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..hobgoblin.skills.skull_crush.release_text | null | "【仮】{enemy}は大棍棒を大きく振りかぶり、渾身の力で叩きつけた。" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..hobgoblin.skills.skull_crush.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_assassin.combat.basic_attack_weight | null | 0 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_assassin.skills.frozen_poison.ai_weight | 1 | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_assassin.skills.ice_blade_combo.ai_weight | 3 | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_assassin.skills.ice_blade_combo.damage_max_hp_ratio | null | 0.2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_assassin.skills.ice_blade_combo.hits | 2 | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_assassin.skills.ice_blade_combo.release_text | null | "【仮】{enemy}は白い息とともに踏み込み、凍る刃を続けざまに振るった！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_elemental.combat.basic_attack_weight | null | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_elemental.skills.freezing_breath.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_elemental.skills.freezing_breath.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_elemental.skills.freezing_breath.damage_max_hp_ratio | null | 0.2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_elemental.skills.freezing_breath.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_elemental.skills.freezing_breath.element | null | "ice" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_elemental.skills.freezing_breath.id | null | "freezing_breath" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_elemental.skills.freezing_breath.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_elemental.skills.freezing_breath.name | null | "凍てつく息" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_elemental.skills.freezing_breath.release_text | null | "【仮】{enemy}が冷たい息を吐き出し、周囲の空気を凍らせた。" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_elemental.skills.freezing_breath.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_sentinel.combat.basic_attack_weight | null | 0 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_sentinel.skills.frozen_stance.ai_weight | 1 | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_sentinel.skills.ice_hammer.ai_weight | 3 | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_sentinel.skills.ice_hammer.damage_max_hp_ratio | null | 0.2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ice_sentinel.skills.ice_hammer.release_text | null | "【仮】{enemy}は凍りついた大槌を高く掲げ、床ごと叩き潰した！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ignis.combat.basic_attack.damage | "1d21" | "2d4+8" | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.hp | 149 | 140 | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.max_hp | 149 | 140 | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.resistances.physical | 0.65 | 0.25 | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.fire_breath.damage_max_hp_ratio | null | 0.4 | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.fire_breath.every_n_rounds | null | 3 | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.fire_breath.release_text | null | "【仮】{enemy}は深く息を吸い込み、灼熱の炎を吐き出した！" | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.fire_breath.telegraph.charge_rounds | null | 1 | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.fire_breath.telegraph.warning | null | "【仮】{enemy}が大きく顎を開き、喉の奥に灼熱の炎が渦巻いている……！" | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.raging_inferno.accuracy | null | 100 | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.raging_inferno.ai_weight | null | 1 | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.raging_inferno.damage | null | "2d4+10" | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.raging_inferno.difficulty_only.0 | null | "normal" | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.raging_inferno.element | null | "fire" | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.raging_inferno.id | null | "raging_inferno" | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.raging_inferno.kind | null | "attack" | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.raging_inferno.name | null | "狂乱の劫火" | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.raging_inferno.release_text | null | "【仮】{enemy}は凍てつく古傷の痛みに狂乱し、周囲一帯を紅蓮の炎で薙ぎ払った！" | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.raging_inferno.requires_combat_rule | null | "elite_percentage_round_cap" | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.raging_inferno.use_below_hp_ratio | null | 0.4 | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..ignis.skills.tail_sweep.damage | "1d21" | "2d4+8" | L4 / 120–170HP、physical=.25、预告30–45% |
+| enemies..lava_drake.combat.basic_attack_weight | null | 0 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..lava_drake.skills.hook_claw.ai_weight | 1 | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..lava_drake.skills.lava_breath.ai_weight | 2 | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..lava_drake.skills.lava_breath.damage_max_hp_ratio | null | 0.2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..lava_drake.skills.lava_breath.release_text | null | "【仮】{enemy}の牙から赤黒い溶岩が滴り、噛み砕くように迫った。" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..prism_tree.combat.basic_attack.damage | "1d14" | "2d4+7" | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.hp | 78 | 90 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.max_hp | 78 | 90 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.紅.resistances.dark | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.紅.resistances.earth | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.紅.resistances.fire | 0.25 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.紅.resistances.holy | 0.75 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.紅.resistances.light | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.紅.resistances.lightning | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.紅.resistances.physical | 0.6 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.紅.resistances.wind | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.翠.resistances.dark | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.翠.resistances.earth | 0.25 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.翠.resistances.holy | 0.75 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.翠.resistances.ice | 0.5 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.翠.resistances.light | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.翠.resistances.lightning | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.翠.resistances.physical | 0.6 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.翠.resistances.water | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.蒼.resistances.dark | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.蒼.resistances.earth | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.蒼.resistances.holy | 0.75 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.蒼.resistances.ice | 0.25 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.蒼.resistances.light | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.蒼.resistances.lightning | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.蒼.resistances.physical | 0.6 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.蒼.resistances.water | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistance_cycle.phases.蒼.resistances.wind | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistances.dark | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistances.earth | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistances.fire | 0.25 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistances.holy | 0.75 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistances.light | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistances.lightning | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistances.physical | 0.6 | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.resistances.wind | null | 0 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.accuracy | null | 100 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.ai_weight | null | 1 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.damage_max_hp_ratio | null | 0.35 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.difficulty_only.0 | null | "normal" | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.element | null | "current" | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.every_n_rounds | null | 4 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.id | null | "aurora_torrent" | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.kind | null | "attack" | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.name | null | "極光の奔流" | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.release_text | null | "【仮】{enemy}の枝先から、七色の極光が奔流となって放たれた！" | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.requires_combat_rule | null | "elite_percentage_round_cap" | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.telegraph.charge_rounds | null | 1 | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.aurora_torrent.telegraph.warning | null | "【仮】{enemy}の幹の結晶が一斉に脈打ち、まばゆい七色の光が集まっていく……！" | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.crystal_rain.damage | "2d4+6" | "2d4+7" | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..prism_tree.skills.prism_branch.damage | "1d14" | "2d4+7" | L6 / 90–110HP、非对应抗性0、预告30–45% |
+| enemies..rock_giant.combat.basic_attack_weight | null | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..rock_giant.skills.rock_crusher.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..rock_giant.skills.rock_crusher.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..rock_giant.skills.rock_crusher.damage_max_hp_ratio | null | 0.25 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..rock_giant.skills.rock_crusher.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..rock_giant.skills.rock_crusher.element | null | "physical" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..rock_giant.skills.rock_crusher.id | null | "rock_crusher" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..rock_giant.skills.rock_crusher.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..rock_giant.skills.rock_crusher.name | null | "岩砕きの剛腕" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..rock_giant.skills.rock_crusher.release_text | null | "【仮】{enemy}は岩の剛腕を振り上げ、大地ごと叩き潰した。" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..rock_giant.skills.rock_crusher.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ruby_golem.combat.basic_attack_weight | null | 0 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ruby_golem.skills.ruby_fist.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ruby_golem.skills.ruby_fist.damage_max_hp_ratio | null | 0.22 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ruby_golem.skills.ruby_fist.release_text | null | "【仮】{enemy}が結晶の拳を振り上げ、床ごと叩き潰した。" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..ruby_golem.skills.ruby_ray.ai_weight | null | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.combat.basic_attack_weight | null | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.damage_max_hp_ratio | null | 0.3 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.element | null | "physical" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.every_n_rounds | null | 0 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.id | null | "royal_crush" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.name | null | "大王の巨体潰し" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.release_text | null | "【仮】{enemy}が全体重を乗せて落下し、地面ごと押し潰した！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.telegraph.charge_rounds | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.telegraph.warning | null | "【仮】{enemy}の巨体が大きく膨れ上がり、天井すれすれまで跳び上がった……！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..slime_king.skills.royal_crush.use_below_hp_ratio | null | 0.99 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..war_hound.combat.basic_attack_weight | null | 2 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..war_hound.skills.raging_bite.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..war_hound.skills.raging_bite.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..war_hound.skills.raging_bite.damage_max_hp_ratio | null | 0.18 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..war_hound.skills.raging_bite.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..war_hound.skills.raging_bite.element | null | "physical" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..war_hound.skills.raging_bite.id | null | "raging_bite" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..war_hound.skills.raging_bite.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..war_hound.skills.raging_bite.name | null | "猛り噛み砕き" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..war_hound.skills.raging_bite.release_text | null | "【仮】{enemy}は荒々しく唸り、顎を大きく開いて飛びかかった！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..war_hound.skills.raging_bite.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.damage_max_hp_ratio | null | 0.35 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.element | null | "fire" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.every_n_rounds | null | 3 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.id | null | "inferno_focus" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.name | null | "劫火の収束" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.release_text | null | "【仮】{enemy}が凝縮した劫火の球を解き放ち、爆炎が襲いかかった！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.telegraph.charge_rounds | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..xanxus_phantom.skills.inferno_focus.telegraph.warning | null | "【仮】{enemy}の炎の輪郭が激しく燃え上がり、掌に巨大な火球が渦巻く……！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.accuracy | null | 100 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.ai_weight | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.damage_max_hp_ratio | null | 0.35 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.difficulty_only.0 | null | "normal" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.element | null | "dark" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.every_n_rounds | null | 3 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.id | null | "nether_curse" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.kind | null | "attack" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.name | null | "冥府の呪言" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.release_text | null | "【仮】{enemy}が呪言を放ち、凝縮された死の奔流が襲いかかった！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.requires_combat_rule | null | "elite_percentage_round_cap" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.telegraph.charge_rounds | null | 1 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| enemies..zebok.skills.nether_curse.telegraph.warning | null | "【仮】{enemy}が骨の杖を高く掲げると、黒い瘴気が渦を巻いて収束していく……！" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| items..hero_holy_sword.combat.damage | "1d8+78" | "1d8+34" | L9 / §3.9与049门槛；保留抗性 |
+| locations..goblin_fort_first_second.combat.encounter_class | "elite" | "trash" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| locations..goblin_fort_first_second.combat.encounter_modifiers.trash_guards_052b.enemy_damage_multiplier | null | 0.7 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| locations..goblin_fort_first_second.combat.encounter_modifiers.trash_guards_052b.id | null | "trash_guards_052b" | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+| combat_rules.elite_percentage_round_cap | null | 0.3 | L3 / elite15–25%、boss30–45%、上限30%、审定草案 |
+
+| 阶段 | 改动 | 证据/结果 |
+|---|---|---|
+| L3结构与冒烟 | 引擎、26招式、AI权重、normal分类、预告响应 | l3-smoke仅20样本早期候选；不是当前验收 |
+| L4 | Ignis140HP、physical .25、40%预告、≤40%狂乱招式 | r2-l4：四职业P2 heuristic 1/.99/.83/.08，详见JSON；低胜率含开场资源影响 |
+| L6第一候选 | 100HP、错属性0、每4回合预告以避开每3回合回复 | r3-l6-valid：勇者胜率.665、中位34.5；r3-l6.json为混合输入无效记录，排除 |
+| L9 | 龙140HP、平伤低方差、45%预告；圣剑候选+55/+45/+35/+32/+34 | +55/+45最高超过90%；最终+34在独立2000样本81.30–84.95% |
+| L6下界 | HP100→90 | r5-l6：勇者.78、中位26，较34.5改善但仍>14；HP已到允许下限 |
+| L3约束修正 | 煤の怨霊采用草案新增黒煤の窒息波，保留旧两招；砦守卫normal-only trash及伤害×.7 | 避免重用旧低伤技能后加基本攻击导致M9失真；opening-probes.json同快照对照 |
+| 固定候选评估 | 没有用验收种子继续挑数值 | N500为停止候选的完整审计，不宣称已满足进入正式验收的先决条件 |
+
+上表按杠杆族分阶段，不能把阶段数当成实际候选数：L9包含多个先后试点，若每次写入候选数值均计一轮，本次试点超过8轮限制。这是执行偏差，保留所有试点记录，不把它写成已满足停止规则。现已停止扩展：虹晶樹HP与龙HP已到允许下界，不能擅改非对应免疫、龙抗性、052c技能/被动以追求M4。
+
+### 例外与 TODO(design)
+
+1. TODO(design): 裁定 M4 仍超限的虹晶樹/ドラコ等行；详表和 candidate-audit.json 保留所有行。考虑与052c技能调参联动，或显式批准目标例外；本段不越界调HP/抗性。
+2. TODO(design): 换剑整路线差19.2pp超出10pp软门槛，需决定是延后052c、改变价值目标，还是另行批准武器/支持参数。
+3. TODO(design): 45%物理预告仅有×0.5防御时超过20%条件命中上限；现有火抗装备可解决火属性，不能普遍替代其他属性的应对。
+4. TODO(design): M9与到达等级的残余失败逐项见下表。既有052a裁定的缺样本、P0a、P0b魔法使い及指定M4例外保留，新增失败不自动套用例外。
+
+5. TODO(design): M13沿用现有框架的到达等级均值差，出现1.98/1.97的近边界P0b差值；P0a新增稀有到达样本产生差1。需确认P0a“到达等级只报告”是否同时豁免M13，以及M13是否应按众数判定；此处不擅自放宽或四舍五入为2。
+
+| 类型 | 逐项失败 |
+|---|---|
+| M9 | {"encounter":"cave_lava_room","ratio":0.35502374188311686,"band":[0.18,0.25]} |
+| M9 | {"encounter":"village_fire_slime","ratio":0.04574918831168831,"band":[0.1,0.15]} |
+| M13等级差 | {"character":"cleric","p0":"P0a","p0_level":5,"p2_level":6,"gap":1} |
+| M13等级差 | {"character":"hero","p0":"P0a","p0_level":5,"p2_level":6,"gap":1} |
+| M13等级差 | {"character":"hero","p0":"P0b","p0_level":4.019047619047619,"p2_level":6,"gap":1.980952380952381} |
+| M13等级差 | {"character":"thief","p0":"P0b","p0_level":4.033333333333333,"p2_level":6,"gap":1.9666666666666668} |
+
+### 推断、偏离与验证
+
+- 百分比取整为floor(max_hp×ratio)，之后沿用引擎各阶段舍入；30%共享上限约束实际扣HP前、护盾及魔力鎧减免后的伤害，boss不受精英上限。
+- 蓄力选中时支付一次费用/占用次数，释放不重抽；skip_action或skip_rounds取消。next_phase继承遭遇分类；guest/scripted_loss保留。
+- 新招式额外 requires_combat_rule 门控，保证normal空覆盖层也不会激活新招式或改变随机数；默认字段缺省不改变行为。
+- 草案对实际HEAD技能数量的描述存在差异，沿用HEAD真实ID/名称并保留旧技能。煤の怨霊取草案给出的新招式备选，避免覆盖将来054状态挂点。
+- 草案称砦守卫可改基础分类；本段改为normal覆盖层，以严格保证baby有效包不变。允许modifier只限这条遭遇，供重新分类后的trash伤害校准。
+- 防御响应使用实际P2等级/装备、移除被动和同伴、补满资源的条件探针；原始资源同时记录，不冒充可持续整场战斗。
+- 到达等级按末尾裁定列出的P0b/P1/P2/P3/P2s判定；P0a与研究用P0g只报告，P0b魔法使い也只报告。P2s使用与P2到达等级众数及均值差≤1，不强行要求其众数等于6。
+- M9含盾、多段伤害的既有期望近似仍存在；新增精英百分比共享上限采用联合分布结算。盾统计的联合吸收上界限制见上文。
+- 测试放.tmp-test/052b/tests，由tests.patch映射回tests；旧F6数值夹具明确排除052b机制，旧章节迁移检查末尾补052迁移，旧占位符测试只允许审定052b文本，分类测试同步更新敌人实例分类。没有削弱金标或改标准答案。
+- 本段未新增依赖；全程离线、无付费API。默认prompt、benchmark标准答案、baby冻结表、v1被动表、strategy_v3未改。baby有效运行内容比较会剔除未生效difficulty_overlays元数据；其余内容仅content_revision变化，不把整个原始JSON声称为不变。
+
+原始结果：`.tmp-test/052b/candidate-normal{,-records,-checkpoints}.json`、`candidate-audit.json`、`gate-acceptance.json`、`branch-report.json`、`sword-routes-500.json`、`response-probe.json`、`validation.json`。
+
+运行时长（秒）：normal {"workers":8,"branch_proposals":1462.9304083000025,"routes":1531.4485666999972,"preparation_probes":103.08503999999812,"companion_probes":553.5923610999998,"level_probes":169.65377429999717,"boss_policy_probes":128.28002840000045}；总计 3963.5074019999993。各候选分片含输入指纹；运行中断可用同一命令恢复，指纹不符拒绝复用。
+
+确定性抽查：{"n_per_combination":2000,"seed":20261021,"combinations":["G1","G2"],"workers":[1,8],"equal":true,"sha256":"35a51e5aea370d4e6391d6647e72812cf22f3ed8ddc2ae5fdc4cad9af02f2b32"}
+
+baby 053复现：{"comparison":"Canonical UTF-8 bytes of numeric payload; raw timing, fingerprints and target metadata reported separately","measurement_checks":{"rows":true,"ignis_levels":true,"metrics":true,"cell_metrics":true,"usage":true,"checkpoint_probes":true,"p2s_comparison":true,"m3b":true},"record_checks":{"records":true,"difficulty":true,"passive_defaults":true,"damage_budget_v2":true,"preparation_probes":true,"companion_probes":true,"level_probes":true,"boss_policy_probes":true},"raw_measurement_equal":false,"differing_top_level_keys":["effective_pack_fingerprint","overlay_fingerprint","code_fingerprint","targets","fingerprints","timings","elapsed_seconds"],"n":500,"seed":20261020,"records":14000,"record_sha256":"c29e1c28e92ac6be9ad648523f959309d10f3521390f00194676d92e5c17c843","checkpoint_probes":{"human_berserker":{"n":500,"win_rate":0.956,"rounds_median":19.0,"expected_incoming":4.813809523809524,"expected_healing":6.0,"sustain_coverage":1.246414086457612,"sample":{"encounter":"dragon_valley_loc","encounter_class":"boss","status":"victory","rounds":20,"policy":"best_free","before":{"hp":40,"mp":12,"sp":18,"level":5,"inventory":{"鉄の剣":1,"革の鎧":1,"薬草":7,"携帯食":2,"氷の護符":1,"治療の巻物":8,"スライムの核":5,"ゴブリンの飾り物":5,"生命の果実":3,"刻印のハンマー":1,"剛力の霊薬":1,"錆びた王冠":1,"鉄壁の霊薬":1,"光苔":1,"残り火の欠片":6,"焼けた溶岩石":1,"火球術の巻物":1,"紅玉の護符":1,"虹晶の欠片":1,"叡智の霊薬":1,"色水晶の欠片":2,"精霊の泉の水":1,"獣の毛皮":1,"氷の結晶":1,"魔力の果実":2,"霜の欠片":3,"白い竜鱗":1,"迅速の霊薬":1,"氷鉄の大剣":1,"煤の精":2},"max_hp":40,"gold":601,"healing_hp":310.0,"equipment":["鉄の剣","紅玉の護符","革の鎧"]},"after_combat":{"hp":40,"mp":12,"sp":18,"level":5,"inventory":{"鉄の剣":1,"革の鎧":1,"薬草":7,"携帯食":2,"氷の護符":1,"治療の巻物":8,"スライムの核":5,"ゴブリンの飾り物":5,"生命の果実":3,"刻印のハンマー":1,"剛力の霊薬":1,"錆びた王冠":1,"鉄壁の霊薬":1,"光苔":1,"残り火の欠片":6,"焼けた溶岩石":1,"火球術の巻物":1,"紅玉の護符":1,"虹晶の欠片":1,"叡智の霊薬":1,"色水晶の欠片":2,"精霊の泉の水":1,"獣の毛皮":1,"氷の結晶":1,"魔力の果実":2,"霜の欠片":3,"白い竜鱗":1,"迅速の霊薬":1,"氷鉄の大剣":1,"煤の精":2},"max_hp":40,"gold":601,"healing_hp":310.0,"equipment":["鉄の剣","紅玉の護符","革の鎧"]},"actions":{"item:ice_charm":20},"action_specs":{"item:ice_charm":{"type":"item","id":"ice_charm","free":true,"kind":"damage"}},"consumables":{},"opening":{"expected_damage":4.813809523809524,"variance":35.82390453514739,"cv":1.243361906806332,"ratio":0.12034523809523809,"notes":[]},"expected_healing":6.0,"expected_hp_loss":91.46238095238095,"enemy_phases":19,"companion":"fire_bat_dragon","p0_choice":"item:ice_charm","statuses":[],"skill_usage":{},"after_resolution":{"hp":40,"mp":12,"sp":18,"level":5,"inventory":{"鉄の剣":1,"革の鎧":1,"薬草":7,"携帯食":2,"氷の護符":1,"治療の巻物":8,"スライムの核":5,"ゴブリンの飾り物":5,"生命の果実":3,"刻印のハンマー":1,"剛力の霊薬":1,"錆びた王冠":1,"鉄壁の霊薬":1,"光苔":1,"残り火の欠片":6,"焼けた溶岩石":1,"火球術の巻物":1,"紅玉の護符":1,"虹晶の欠片":1,"叡智の霊薬":1,"色水晶の欠片":2,"精霊の泉の水":1,"獣の毛皮":1,"氷の結晶":1,"魔力の果実":2,"霜の欠片":3,"白い竜鱗":1,"迅速の霊薬":1,"氷鉄の大剣":1,"煤の精":2,"紅竜の炎核":1},"max_hp":40,"gold":701,"healing_hp":310.0,"equipment":["鉄の剣","紅玉の護符","革の鎧"]},"continue":true}},"P0b + 氷鉄の大剣":{"n":500,"win_rate":0.988,"rounds_median":10.0,"expected_incoming":4.813809523809524,"expected_healing":6.0,"sustain_coverage":1.246414086457612,"sample":{"encounter":"dragon_valley_loc","encounter_class":"boss","status":"victory","rounds":12,"policy":"best_free","before":{"hp":40,"mp":12,"sp":18,"level":5,"inventory":{"鉄の剣":1,"革の鎧":1,"薬草":7,"携帯食":2,"氷の護符":1,"治療の巻物":8,"スライムの核":5,"ゴブリンの飾り物":5,"生命の果実":3,"刻印のハンマー":1,"剛力の霊薬":1,"錆びた王冠":1,"鉄壁の霊薬":1,"光苔":1,"残り火の欠片":6,"焼けた溶岩石":1,"火球術の巻物":1,"紅玉の護符":1,"虹晶の欠片":1,"叡智の霊薬":1,"色水晶の欠片":2,"精霊の泉の水":1,"獣の毛皮":1,"氷の結晶":1,"魔力の果実":2,"霜の欠片":3,"白い竜鱗":1,"迅速の霊薬":1,"氷鉄の大剣":1,"煤の精":2},"max_hp":40,"gold":601,"healing_hp":310.0,"equipment":["紅玉の護符","革の鎧","氷鉄の大剣"]},"after_combat":{"hp":40,"mp":12,"sp":18,"level":5,"inventory":{"鉄の剣":1,"革の鎧":1,"薬草":7,"携帯食":2,"氷の護符":1,"治療の巻物":8,"スライムの核":5,"ゴブリンの飾り物":5,"生命の果実":3,"刻印のハンマー":1,"剛力の霊薬":1,"錆びた王冠":1,"鉄壁の霊薬":1,"光苔":1,"残り火の欠片":6,"焼けた溶岩石":1,"火球術の巻物":1,"紅玉の護符":1,"虹晶の欠片":1,"叡智の霊薬":1,"色水晶の欠片":2,"精霊の泉の水":1,"獣の毛皮":1,"氷の結晶":1,"魔力の果実":2,"霜の欠片":3,"白い竜鱗":1,"迅速の霊薬":1,"氷鉄の大剣":1,"煤の精":2},"max_hp":40,"gold":601,"healing_hp":310.0,"equipment":["紅玉の護符","革の鎧","氷鉄の大剣"]},"actions":{"attack:basic_attack":12},"action_specs":{"attack:basic_attack":{"type":"attack","id":"basic_attack","free":true,"kind":"attack"}},"consumables":{},"opening":{"expected_damage":4.813809523809524,"variance":35.82390453514739,"cv":1.243361906806332,"ratio":0.12034523809523809,"notes":[]},"expected_healing":6.0,"expected_hp_loss":52.951904761904764,"enemy_phases":11,"companion":"fire_bat_dragon","p0_choice":"attack:basic_attack","statuses":[],"skill_usage":{},"after_resolution":{"hp":40,"mp":12,"sp":18,"level":5,"inventory":{"鉄の剣":1,"革の鎧":1,"薬草":7,"携帯食":2,"氷の護符":1,"治療の巻物":8,"スライムの核":5,"ゴブリンの飾り物":5,"生命の果実":3,"刻印のハンマー":1,"剛力の霊薬":1,"錆びた王冠":1,"鉄壁の霊薬":1,"光苔":1,"残り火の欠片":6,"焼けた溶岩石":1,"火球術の巻物":1,"紅玉の護符":1,"虹晶の欠片":1,"叡智の霊薬":1,"色水晶の欠片":2,"精霊の泉の水":1,"獣の毛皮":1,"氷の結晶":1,"魔力の果実":2,"霜の欠片":3,"白い竜鱗":1,"迅速の霊薬":1,"氷鉄の大剣":1,"煤の精":2,"紅竜の炎核":1},"max_hp":40,"gold":701,"healing_hp":310.0,"equipment":["紅玉の護符","革の鎧","氷鉄の大剣"]},"continue":true}},"无同伴":{"n":500,"win_rate":0.634,"rounds_median":20.0,"expected_incoming":4.813809523809524,"expected_healing":0.0,"sustain_coverage":0.0,"sample":{"encounter":"dragon_valley_loc","encounter_class":"boss","status":"victory","rounds":21,"policy":"best_free","before":{"hp":40,"mp":12,"sp":18,"level":5,"inventory":{"鉄の剣":1,"革の鎧":1,"薬草":7,"携帯食":2,"氷の護符":1,"治療の巻物":8,"スライムの核":5,"ゴブリンの飾り物":5,"生命の果実":3,"刻印のハンマー":1,"剛力の霊薬":1,"錆びた王冠":1,"鉄壁の霊薬":1,"光苔":1,"残り火の欠片":6,"焼けた溶岩石":1,"火球術の巻物":1,"紅玉の護符":1,"虹晶の欠片":1,"叡智の霊薬":1,"色水晶の欠片":2,"精霊の泉の水":1,"獣の毛皮":1,"氷の結晶":1,"魔力の果実":2,"霜の欠片":3,"白い竜鱗":1,"迅速の霊薬":1,"氷鉄の大剣":1,"煤の精":2},"max_hp":40,"gold":601,"healing_hp":310.0,"equipment":["鉄の剣","紅玉の護符","革の鎧"]},"after_combat":{"hp":27,"mp":12,"sp":18,"level":5,"inventory":{"鉄の剣":1,"革の鎧":1,"薬草":7,"携帯食":2,"氷の護符":1,"治療の巻物":6,"スライムの核":5,"ゴブリンの飾り物":5,"生命の果実":3,"刻印のハンマー":1,"剛力の霊薬":1,"錆びた王冠":1,"鉄壁の霊薬":1,"光苔":1,"残り火の欠片":6,"焼けた溶岩石":1,"火球術の巻物":1,"紅玉の護符":1,"虹晶の欠片":1,"叡智の霊薬":1,"色水晶の欠片":2,"精霊の泉の水":1,"獣の毛皮":1,"氷の結晶":1,"魔力の果実":2,"霜の欠片":3,"白い竜鱗":1,"迅速の霊薬":1,"氷鉄の大剣":1,"煤の精":2},"max_hp":40,"gold":601,"healing_hp":250.0,"equipment":["鉄の剣","紅玉の護符","革の鎧"]},"actions":{"item:ice_charm":19,"item:healing_scroll":2},"action_specs":{"item:ice_charm":{"type":"item","id":"ice_charm","free":true,"kind":"damage"},"item:healing_scroll":{"type":"item","id":"healing_scroll","free":false,"kind":"heal"}},"consumables":{"治療の巻物":2},"opening":{"expected_damage":4.813809523809524,"variance":35.82390453514739,"cv":1.243361906806332,"ratio":0.12034523809523809,"notes":[]},"expected_healing":0.0,"expected_hp_loss":96.27619047619048,"enemy_phases":20,"companion":null,"p0_choice":"item:ice_charm","statuses":[],"skill_usage":{},"after_resolution":{"hp":27,"mp":12,"sp":18,"level":5,"inventory":{"鉄の剣":1,"革の鎧":1,"薬草":7,"携帯食":2,"氷の護符":1,"治療の巻物":6,"スライムの核":5,"ゴブリンの飾り物":5,"生命の果実":3,"刻印のハンマー":1,"剛力の霊薬":1,"錆びた王冠":1,"鉄壁の霊薬":1,"光苔":1,"残り火の欠片":6,"焼けた溶岩石":1,"火球術の巻物":1,"紅玉の護符":1,"虹晶の欠片":1,"叡智の霊薬":1,"色水晶の欠片":2,"精霊の泉の水":1,"獣の毛皮":1,"氷の結晶":1,"魔力の果実":2,"霜の欠片":3,"白い竜鱗":1,"迅速の霊薬":1,"氷鉄の大剣":1,"煤の精":2,"紅竜の炎核":1},"max_hp":40,"gold":701,"healing_hp":250.0,"equipment":["鉄の剣","紅玉の護符","革の鎧"]},"continue":true}}}}
+
+通玩baby对HEAD：{"summary":true,"runs":true,"max_steps":true,"workers":true,"fingerprints":false}
+
+两份金标、冻结包、迁移链与叠加全测试/原地命令结果详见 `052b-report.txt` 与日志。原始报表的代码指纹、耗时及元数据必然改变，逐字节不变指规范化数值负载，不把整份原始JSON称为字节相同。

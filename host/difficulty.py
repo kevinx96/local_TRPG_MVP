@@ -174,6 +174,7 @@ NUMERIC_FIELDS: dict[str, tuple[str, ...]] = {
         'combat.basic_attack.on_hit_status.accuracy_penalty',
         'combat.basic_attack.on_hit_status.damage',
         'combat.basic_attack.on_hit_status.remaining_rounds',
+        'combat.basic_attack_weight',
         'combat.defense',
         'combat.evade',
         'hp',
@@ -193,6 +194,8 @@ NUMERIC_FIELDS: dict[str, tuple[str, ...]] = {
         'skills.*.cost',
         'skills.*.damage',
         'skills.*.damage_multiplier',
+        'skills.*.damage_max_hp_ratio',
+        'skills.*.telegraph.charge_rounds',
         'skills.*.dice_type',
         'skills.*.duration',
         'skills.*.every_n_rounds',
@@ -309,11 +312,17 @@ NUMERIC_FIELDS["locations"] += (
     "actions.*.roll_bonuses.*.effects.*.gold_change",
 )
 MECHANIC_FIELDS: dict[str, dict[str, tuple[Any, ...]]] = {
+    "locations": {"combat.encounter_class": ("trash",), "combat.encounter_modifiers": ()},
     "combat_rules": {
         "evade_model": ("fixed", "dex"),
         "evade_formula": ({"base": 4, "per_dex": 1.5, "cap": 20},),
         "enemy_accuracy_override": (None, 100),
+        "elite_percentage_round_cap": (0.30,),
     },
+    "enemies": {"skills.*.damage_max_hp_ratio": (), "skills.*.telegraph": (),
+                "skills.*.release_text": (), "combat.basic_attack_weight": (),
+                "skills.*.every_n_rounds": (), "skills.*.ai_weight": (),
+                "resistances.*": (), "resistance_cycle.phases.*.resistances.*": ()},
     "characters": {"skills.*.cooldown": (1,)},
     "items": {"combat.requires_target_weakness": ("ice",)},
     "companions": {"round_start_effects.*.scale_from_damage": (
@@ -504,6 +513,9 @@ def _apply_overlays(pack: dict[str, Any]) -> None:
         value = entry[operation]
         mechanics = [values for allowed, values in MECHANIC_FIELDS.get(group, {}).items()
                      if _matches(pattern, allowed)]
+        if group == "enemies" and key in parent and (
+                _matches(pattern, "resistances.*") or _matches(pattern, "resistance_cycle.phases.*.resistances.*")):
+            mechanics = []
         if mechanics:
             valid = any(type(value) is type(candidate) and value == candidate
                         for values in mechanics for candidate in values)
@@ -516,6 +528,24 @@ def _apply_overlays(pack: dict[str, Any]) -> None:
                 valid = value is None or (type(value) is int and 0 <= value <= 100)
             elif group == "characters" and pattern == "skills.*.cooldown":
                 valid = type(value) is int and value >= 1
+            elif group == "locations" and pattern == "combat.encounter_modifiers":
+                valid = (identifier == "goblin_fort_first_second" and isinstance(value, list) and len(value) == 1
+                         and isinstance(value[0], dict) and set(value[0]) == {"id", "enemy_damage_multiplier"}
+                         and value[0]["id"] == "trash_guards_052b" and _number(value[0]["enemy_damage_multiplier"])
+                         and 0 <= value[0]["enemy_damage_multiplier"] <= 1)
+            elif group == "enemies":
+                if _matches(pattern, "resistances.*") or _matches(pattern, "resistance_cycle.phases.*.resistances.*"):
+                    valid = _number(value) and value >= 0
+                elif pattern == "skills.*.damage_max_hp_ratio":
+                    valid = _number(value) and 0 < value <= 1
+                elif pattern == "skills.*.telegraph":
+                    valid = (isinstance(value, dict) and set(value) == {"charge_rounds", "warning"}
+                             and type(value["charge_rounds"]) is int and value["charge_rounds"] >= 1
+                             and isinstance(value["warning"], str) and value["warning"].startswith("【仮】"))
+                elif pattern == "skills.*.release_text":
+                    valid = isinstance(value, str) and value.startswith("【仮】")
+                else:
+                    valid = type(value) is int and value >= 0
             elif group == "companions" and pattern == "round_start_effects.*.scale_from_damage":
                 valid = (isinstance(value, dict) and set(value) == {"source", "ratio"}
                          and value["source"] == "previous_damage_enemy"

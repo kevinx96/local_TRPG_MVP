@@ -132,6 +132,12 @@ def ensure_combat_started(session: dict[str, Any], intro_text: str = "") -> bool
             session["character"] = _runtime_player_character(player_template)
 
     enemies = [_runtime_enemy(enemy, index) for index, enemy in enumerate(enemy_templates)]
+    if _combat_rules(session).get("elite_percentage_round_cap") is not None:
+        if (encounter.get("encounter_class") == "boss" or not encounter.get("encounter_class")
+                and (encounter.get("boss") or any(e.get("boss") for e in enemies))):
+            encounter.update(encounter_class="boss", boss=True)
+        for enemy in enemies:
+            enemy.setdefault("encounter_class", encounter.get("encounter_class", "elite"))
     for change in (session.get("scene_changes") or {}).get(location_id, {}).values():
         if isinstance(change, dict):
             change.pop("distracted", None)
@@ -1023,15 +1029,31 @@ def _enemy_phase(session: dict[str, Any], rng: Any) -> None:
         if _enemy_is_defeated(enemy) or _safe_int(session["character"].get("hp"), 0) <= 0:
             continue
         if enemy.get("skip_rounds_remaining", 0) > 0:
+            enemy.pop("charging", None)
             enemy["skip_rounds_remaining"] -= 1
             if enemy["skip_rounds_remaining"] == 0 and enemy.get("skip_recovery_text"):
                 _log(session, enemy["id"], "status", enemy["skip_recovery_text"], target=enemy)
             status_effects.tick(session, enemy, rng)
             continue
         if not status_effects.skip_action(session, enemy, rng):
+            charging = enemy.get("charging")
+            if charging:
+                if combat["round"] >= charging["release_round"]:
+                    enemy.pop("charging")
+                    _execute_enemy_ability(session, enemy, charging["ability"], rng)
+                status_effects.tick(session, enemy, rng)
+                continue
             ability = _choose_enemy_ability(enemy, session, rng)
             _pay_cost(enemy, ability)
-            _execute_enemy_ability(session, enemy, ability, rng)
+            telegraph = ability.get("telegraph")
+            if telegraph:
+                enemy["charging"] = {"ability": ability, "release_round": combat["round"] + telegraph["charge_rounds"]}
+                _log(session, enemy["id"], "warning", telegraph["warning"].format(enemy=enemy["name"]),
+                     {"skill_id": ability.get("id"), "release_round": enemy["charging"]["release_round"]}, target=enemy)
+            else:
+                _execute_enemy_ability(session, enemy, ability, rng)
+        else:
+            enemy.pop("charging", None)
         status_effects.tick(session, enemy, rng)
         if session.get("game_over"):
             break
@@ -1045,6 +1067,9 @@ def _enemy_phase(session: dict[str, Any], rng: Any) -> None:
 
 def _execute_enemy_ability(session: dict[str, Any], enemy: dict[str, Any], ability: dict[str, Any], rng: Any) -> None:
     actor_id = str(enemy.get("id") or "enemy")
+    if ability.get("release_text"):
+        _log(session, actor_id, "status", ability["release_text"].format(enemy=enemy["name"]),
+             {"skill_id": ability.get("id")}, target=enemy)
     if ability.get("element") == "current":
         ability = {**ability, "element": _primary_element(enemy)}
     kind = _ability_kind(ability)
@@ -1224,7 +1249,12 @@ def _resolve_attack(
         return 0
 
     formula = str(ability.get("damage") or ability.get("dice_type") or "1d4")
-    raw_damage, detail = _roll_formula(formula, attacker, rng)
+    percentage = ability.get("damage_max_hp_ratio") if defender is session.get("character") else None
+    if percentage is not None:
+        raw_damage = int(defender["max_hp"] * percentage)
+        detail = {"damage_max_hp_ratio": percentage, "max_hp": defender["max_hp"]}
+    else:
+        raw_damage, detail = _roll_formula(formula, attacker, rng)
     snapshot = ability.get("_target_snapshot", defender)
     for bonus in ability.get("conditional_bonus", []):
         if _condition(session, bonus, snapshot):
@@ -1267,7 +1297,7 @@ def _resolve_attack(
             defense += passive["armor_bonus"]
     if defender is not session.get('character'):
         defense = max(0, defense + sum(int(m.get('enemy_defense', 0)) for m in _encounter_modifiers(session, defender)))
-    if ability.get("ignores_defense"):
+    if ability.get("ignores_defense") or percentage is not None:
         defense = 0
     damage = damage_after_defense(raw_damage, multiplier, defense, _combat_rules(session))
     if not isinstance(damage, int):
@@ -1286,7 +1316,7 @@ def _resolve_attack(
         # True damage always hits and ignores defense, resistances, guarding and damage modifiers.
         damage = raw_damage
     elif defender is session.get("character"):
-        damage = _modified_received_damage(session, damage, element, attacker, ability.get('name', ''), ability.get('id', ''))
+        damage = _modified_received_damage(session, damage, element, attacker, ability.get('name', ''), ability.get('id', ''), ignore_flat=percentage is not None)
         unguarded_damage = damage
         status = session["combat"].get("player_status") or {}
         guard = float(status.get("guard_multiplier", 1.0) or 1.0)
@@ -1302,8 +1332,10 @@ def _resolve_attack(
             damage = max(0, round(unguarded_damage * max(.25, guard * received)))
         else:
             damage = max(0, round(damage * received))
+        percentage_before_shield = damage
         had_shield = any(s.get("id") == "arcane_shield" for s in defender.get("statuses", []))
         damage = status_effects.absorb(defender, damage)
+        percentage_absorbed = percentage_before_shield - damage if had_shield else 0
         if defender is session.get("character"):
             if had_shield and not any(s.get("id") == "arcane_shield" for s in defender.get("statuses", [])) and progression.enabled(session):
                 session["combat"]["passive_state"]["shield_broken_round"] = session["combat"]["round"]
@@ -1311,6 +1343,14 @@ def _resolve_attack(
             if diverted:
                 defender["mp"] -= diverted
             damage -= diverted
+    if percentage is not None and attacker.get("encounter_class", session["combat"]["encounter"].get("encounter_class")) == "elite":
+        cap = _combat_rules(session).get("elite_percentage_round_cap")
+        if cap is not None:
+            ledger = session["combat"].setdefault("percentage_damage", {"round": session["combat"]["round"], "damage": 0})
+            if ledger["round"] != session["combat"]["round"]:
+                ledger.update(round=session["combat"]["round"], damage=0)
+            damage = min(damage, max(0, int(defender["max_hp"] * cap) - ledger["damage"]))
+            ledger["damage"] += damage
     before_hp = _safe_int(defender.get("hp"), 0)
     if _negative_undead(defender):
         if element.lower() in {"holy", "light"} or ability.get("heals_negative_undead"):
@@ -1330,7 +1370,9 @@ def _resolve_attack(
         "damage",
         f"{name}が{defender_name}に{damage}{'光属性' if element == 'holy' else ''}ダメージ{'（防御無視）' if true_damage else ''}。",
         {"damage": damage, "raw_damage": raw_damage, "formula": detail, "element": element, "hit_roll": hit_roll, "hit_chance": chance,
-         "weakness": multiplier > 1 or ability.get("element") == "weakness" or bool(ability.get("multi_elements"))},
+         "weakness": multiplier > 1 or ability.get("element") == "weakness" or bool(ability.get("multi_elements")),
+         **({"damage_max_hp_ratio": percentage, "before_shield": percentage_before_shield,
+             "arcane_shield_absorbed": percentage_absorbed} if percentage is not None and not true_damage else {})},
         target=defender,
     )
     status_spec = ability.get("on_hit_status")
@@ -1431,6 +1473,8 @@ def _check_victory_or_defeat(session: dict[str, Any]) -> None:
         if template is None:
             raise CombatError(f"Unknown next_phase: {enemy['next_phase']}")
         replacement = _runtime_enemy(template, index)
+        if _combat_rules(session).get("elite_percentage_round_cap") is not None:
+            replacement["encounter_class"] = enemy.get("encounter_class", combat["encounter"].get("encounter_class", "boss"))
         replacement["hp"] = replacement["max_hp"]
         combat.setdefault("completed_phases", []).append(deepcopy(enemy))
         enemies[index] = replacement
@@ -1732,7 +1776,7 @@ def _activate_encounter_modifiers(session: dict[str, Any]) -> None:
 
 
 def _modified_received_damage(session: dict[str, Any], damage: int, element: str,
-                              enemy: dict[str, Any], name: str, skill_id: str = '') -> int:
+                              enemy: dict[str, Any], name: str, skill_id: str = '', *, ignore_flat: bool = False) -> int:
     multiplier = progression.effects(session).get("taken_elements", {}).get(element, 1.0)
     for modifier in _encounter_modifiers(session, enemy):
         if modifier.get('received_element') == element:
@@ -1748,7 +1792,7 @@ def _modified_received_damage(session: dict[str, Any], damage: int, element: str
                 and (not conditional.get('location_ids') or current_location_id(session) in conditional['location_ids'])
                 and (not conditional.get('enemy_ids') or enemy.get('template_id') in conditional['enemy_ids'])):
             reduction += int(conditional.get('amount', 0))
-    damage = max(0, int(round(damage * multiplier)) - reduction)
+    damage = max(0, int(round(damage * multiplier)) - (0 if ignore_flat else reduction))
     return _round_received_damage(session, damage)
 
 
@@ -1955,6 +1999,8 @@ def _choose_enemy_ability(enemy: dict[str, Any], session: dict[str, Any], rng: A
     for skill in [*(enemy.get("skills") or []), *extra]:
         if not isinstance(skill, dict) or not _can_pay_cost(enemy, skill):
             continue
+        if skill.get("requires_combat_rule") and not _combat_rules(session).get(skill["requires_combat_rule"]):
+            continue
         if skill.get('id') in disabled or skill.get('name') in disabled:
             continue
         skill_key = str(skill.get("id") or skill.get("name") or "")
@@ -1983,6 +2029,10 @@ def _choose_enemy_ability(enemy: dict[str, Any], session: dict[str, Any], rng: A
         affordable.append(skill)
         weights.append(max(1, _safe_int(skill.get("ai_weight"), 1)))
     if affordable:
+        basic_weight = enemy.get("combat", {}).get("basic_attack_weight", 0)
+        if basic_weight:
+            affordable.append(_merge_dict(_combat_rules(session).get("enemy_basic_attack"), enemy.get("combat", {}).get("basic_attack")))
+            weights.append(basic_weight)
         if hasattr(rng, "choices"):
             chosen = rng.choices(affordable, weights=weights, k=1)[0]
         else:

@@ -7,7 +7,7 @@
     "hybrid_mode": "semi",
     "hybrid_source": "host\\prompt\\processed\\dragon_rpg.json",
     "hybrid_updated_at": "2026-06-08T14:00:00.000000+00:00",
-    "content_revision": "2026-10-23-tuning-052a",
+    "content_revision": "2026-10-23-tuning-052b",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -22244,6 +22244,21 @@
           "element": "physical",
           "cost": 0,
           "ai_weight": 3
+        },
+        {
+          "id": "raging_inferno",
+          "name": "狂乱の劫火",
+          "kind": "attack",
+          "difficulty_only": [
+            "normal"
+          ],
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "damage": "2d4+10",
+          "accuracy": 100,
+          "element": "fire",
+          "ai_weight": 1,
+          "use_below_hp_ratio": 0.4,
+          "release_text": "【仮】{enemy}は凍てつく古傷の痛みに狂乱し、周囲一帯を紅蓮の炎で薙ぎ払った！"
         }
       ],
       "image": "/static/images/enemy_ignis.png"
@@ -22363,7 +22378,22 @@
         ],
         "flags": []
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "skull_crush",
+          "name": "脳天砕き",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "physical",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.2,
+          "release_text": "【仮】{enemy}は大棍棒を大きく振りかぶり、渾身の力で叩きつけた。"
+        }
+      ],
       "image": "/static/images/enemy_hobgoblin.png",
       "loot": {
         "id": "goblin_trinket",
@@ -22398,7 +22428,22 @@
         "items": [],
         "flags": []
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "raging_bite",
+          "name": "猛り噛み砕き",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "physical",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.18,
+          "release_text": "【仮】{enemy}は荒々しく唸り、顎を大きく開いて飛びかかった！"
+        }
+      ],
       "image": "/static/images/enemy_war_hound.png",
       "loot": {
         "id": "wolf_pelt",
@@ -22433,7 +22478,22 @@
         "items": [],
         "flags": []
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "throat_bite",
+          "name": "喉笛喰らい",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "physical",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.2,
+          "release_text": "【仮】{enemy}は低く身を沈め、鋭い牙で急所へ飛びかかった！"
+        }
+      ],
       "image": "/static/images/enemy_forest_wolf.png",
       "loot": {
         "id": "wolf_pelt",
@@ -22478,7 +22538,28 @@
           "defeated_slime_king"
         ]
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "royal_crush",
+          "name": "大王の巨体潰し",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "physical",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.3,
+          "release_text": "【仮】{enemy}が全体重を乗せて落下し、地面ごと押し潰した！",
+          "telegraph": {
+            "charge_rounds": 1,
+            "warning": "【仮】{enemy}の巨体が大きく膨れ上がり、天井すれすれまで跳び上がった……！"
+          },
+          "every_n_rounds": 0,
+          "use_below_hp_ratio": 0.99
+        }
+      ],
       "image": "/static/images/enemy_slime_king.png",
       "loot": {
         "id": "slime_core",
@@ -22516,7 +22597,27 @@
           "defeated_goblin_king"
         ]
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "royal_cleave",
+          "name": "王の大断ち",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "physical",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.35,
+          "release_text": "【仮】{enemy}が大剣を両手で振りかぶり、床ごと叩き割った。",
+          "telegraph": {
+            "charge_rounds": 1,
+            "warning": "【仮】{enemy}が錆びた大剣を両手で高く振りかぶり、全身に力を込めた……！"
+          },
+          "every_n_rounds": 3
+        }
+      ],
       "image": "/static/images/enemy_goblin_king.png",
       "loot": {
         "id": "goblin_trinket",
@@ -22584,6 +22685,25 @@
           "accuracy": 80,
           "element": "dark",
           "ai_weight": 3
+        },
+        {
+          "id": "nether_curse",
+          "name": "冥府の呪言",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "dark",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.35,
+          "release_text": "【仮】{enemy}が呪言を放ち、凝縮された死の奔流が襲いかかった！",
+          "telegraph": {
+            "charge_rounds": 1,
+            "warning": "【仮】{enemy}が骨の杖を高く掲げると、黒い瘴気が渦を巻いて収束していく……！"
+          },
+          "every_n_rounds": 3
         }
       ],
       "image": "/static/images/enemy_zebok.png",
@@ -22670,7 +22790,22 @@
         "items": [],
         "flags": []
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "flame_torrent",
+          "name": "爆炎の奔流",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "fire",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.2,
+          "release_text": "【仮】{enemy}の核が激しく脈打ち、灼熱の炎が渦を巻いて噴き出した！"
+        }
+      ],
       "image": "/static/images/enemy_fire_elemental.png",
       "loot": {
         "id": "ember_shard",
@@ -22710,7 +22845,22 @@
         "items": [],
         "flags": []
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "freezing_breath",
+          "name": "凍てつく息",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "ice",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.2,
+          "release_text": "【仮】{enemy}が冷たい息を吐き出し、周囲の空気を凍らせた。"
+        }
+      ],
       "image": "/static/images/enemy_ice_elemental.png",
       "loot": {
         "id": "frost_shard",
@@ -22752,7 +22902,27 @@
           "defeated_frost_dire_wolf"
         ]
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "blizzard_howl",
+          "name": "吹雪の遠吠え",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "ice",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.35,
+          "release_text": "【仮】{enemy}が天を仰いで吠えると、凍てつく吹雪が吹き荒れた。",
+          "telegraph": {
+            "charge_rounds": 1,
+            "warning": "【仮】{enemy}が深く息を吸い込むと、周囲の空気が白く凍りつき始めた……！"
+          },
+          "every_n_rounds": 3
+        }
+      ],
       "image": "/static/images/enemy_frost_dire_wolf.png",
       "loot": {
         "id": "frost_shard",
@@ -22874,6 +23044,25 @@
           "guard_multiplier": 0.6,
           "duration": 2,
           "ai_weight": 1
+        },
+        {
+          "id": "silver_secret_blade",
+          "name": "白銀の秘太刀",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "physical",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.35,
+          "release_text": "【仮】{enemy}の剣が白く閃き、凍てつく斬撃が走った！",
+          "telegraph": {
+            "charge_rounds": 1,
+            "warning": "【仮】{enemy}が白銀の剣を鞘に納め、足元から凍てつく冷気が立ちのぼる……！"
+          },
+          "every_n_rounds": 3
         }
       ],
       "next_phase": "draco_dragon",
@@ -22995,7 +23184,22 @@
         "items": [],
         "flags": []
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "fire_spit",
+          "name": "火炎吐き",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "fire",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.18,
+          "release_text": "【仮】{enemy}が喉を膨らませ、火の玉を吐き出した。"
+        }
+      ],
       "loot": {
         "id": "ember_shard",
         "name": "残り火の欠片",
@@ -23252,6 +23456,25 @@
           "accuracy": 78,
           "element": "current",
           "target": "all"
+        },
+        {
+          "id": "aurora_torrent",
+          "name": "極光の奔流",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "current",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.35,
+          "release_text": "【仮】{enemy}の枝先から、七色の極光が奔流となって放たれた！",
+          "telegraph": {
+            "charge_rounds": 1,
+            "warning": "【仮】{enemy}の幹の結晶が一斉に脈打ち、まばゆい七色の光が集まっていく……！"
+          },
+          "every_n_rounds": 4
         }
       ],
       "resistance_cycle": {
@@ -23351,6 +23574,20 @@
           "accuracy": 26,
           "element": "dark",
           "ai_weight": 1
+        },
+        {
+          "id": "soot_wave",
+          "name": "黒煤の窒息波",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "dark",
+          "ai_weight": 3,
+          "damage_max_hp_ratio": 0.15,
+          "release_text": "【仮】{enemy}が煤の腕を広げ、視界ごと包み込むように迫った。"
         }
       ],
       "rewards": {
@@ -23474,6 +23711,25 @@
           "accuracy": 85,
           "element": "fire",
           "ai_weight": 3
+        },
+        {
+          "id": "inferno_focus",
+          "name": "劫火の収束",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "fire",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.35,
+          "release_text": "【仮】{enemy}が凝縮した劫火の球を解き放ち、爆炎が襲いかかった！",
+          "telegraph": {
+            "charge_rounds": 1,
+            "warning": "【仮】{enemy}の炎の輪郭が激しく燃え上がり、掌に巨大な火球が渦巻く……！"
+          },
+          "every_n_rounds": 3
         }
       ],
       "rewards": {
@@ -23672,7 +23928,22 @@
         "physical": 1,
         "ice": 1
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "rotting_claw",
+          "name": "腐肉の爪",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "physical",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.2,
+          "release_text": "【仮】{enemy}が黒ずんだ爪を振り回し、腐臭とともに飛びかかった。"
+        }
+      ],
       "combat": {
         "defense": 0,
         "evade": 0,
@@ -23750,7 +24021,28 @@
         "physical": 1,
         "ice": 1
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "grave_cleave",
+          "name": "墓守の大断ち",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "physical",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.35,
+          "release_text": "【仮】{enemy}が両手で大剣を振り上げ、石床ごと断ち割った。",
+          "telegraph": {
+            "charge_rounds": 1,
+            "warning": "【仮】{enemy}の兜に蒼い冥火が灯り、大剣を上段に大きく構え直した……！"
+          },
+          "every_n_rounds": 0,
+          "use_below_hp_ratio": 0.99
+        }
+      ],
       "combat": {
         "defense": 0,
         "evade": 0,
@@ -23867,7 +24159,22 @@
         "physical": 0.6,
         "water": 1.5
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "rock_crusher",
+          "name": "岩砕きの剛腕",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "physical",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.25,
+          "release_text": "【仮】{enemy}は岩の剛腕を振り上げ、大地ごと叩き潰した。"
+        }
+      ],
       "combat": {
         "defense": 0,
         "evade": 0,
@@ -23905,7 +24212,28 @@
         "physical": 0.6,
         "water": 1.5
       },
-      "skills": [],
+      "skills": [
+        {
+          "id": "earth_collapse",
+          "name": "地砕きの崩落",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "physical",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.35,
+          "release_text": "【仮】{enemy}が巨体をくねらせ、峡谷の底ごと叩き潰した。",
+          "telegraph": {
+            "charge_rounds": 1,
+            "warning": "【仮】{enemy}が巨体を大きく反らし、峡谷の岩盤が激しく軋み始めた……！"
+          },
+          "every_n_rounds": 0,
+          "use_below_hp_ratio": 0.99
+        }
+      ],
       "combat": {
         "defense": 0,
         "evade": 0,
@@ -24360,6 +24688,25 @@
           "id": "dragon_stance",
           "name": "竜騎士の構え",
           "kind": "defend"
+        },
+        {
+          "id": "guardian_sentence",
+          "name": "守護者の処断",
+          "kind": "attack",
+          "requires_combat_rule": "elite_percentage_round_cap",
+          "difficulty_only": [
+            "normal"
+          ],
+          "accuracy": 100,
+          "element": "physical",
+          "ai_weight": 1,
+          "damage_max_hp_ratio": 0.35,
+          "release_text": "【仮】{enemy}が大地を蹴って踏み込み、渾身の力で槍を突き出した！",
+          "telegraph": {
+            "charge_rounds": 1,
+            "warning": "【仮】{enemy}は槍を深く引き絞り、鋭い眼差しでただ一点を見据えた……！"
+          },
+          "every_n_rounds": 3
         }
       ],
       "resistances": {
@@ -29362,10 +29709,57 @@
   "difficulty_overlays": {
     "normal": [
       {
+        "entity": "characters",
+        "id": "hero",
+        "path": "skills.@id=divine_guard.cooldown",
+        "set": 1
+      },
+      {
+        "entity": "characters",
+        "id": "mage",
+        "path": "skills.@id=fireball.conditional_bonus",
+        "set": [
+          {
+            "if": "target_hp_full",
+            "damage": "1d6"
+          }
+        ]
+      },
+      {
+        "entity": "characters",
+        "id": "mage",
+        "path": "skills.@id=fireball.spell_tier",
+        "set": "basic"
+      },
+      {
+        "entity": "characters",
+        "id": "mage",
+        "path": "skills.@id=ice_arrow.conditional_bonus",
+        "set": [
+          {
+            "if": "target_hp_ratio_lte",
+            "ratio": 0.5,
+            "damage": "1d6"
+          }
+        ]
+      },
+      {
+        "entity": "characters",
+        "id": "mage",
+        "path": "skills.@id=ice_arrow.spell_tier",
+        "set": "basic"
+      },
+      {
         "entity": "combat_rules",
         "id": "$",
-        "path": "evade_model",
-        "set": "dex"
+        "path": "elite_percentage_round_cap",
+        "set": 0.3
+      },
+      {
+        "entity": "combat_rules",
+        "id": "$",
+        "path": "enemy_accuracy_override",
+        "set": 100
       },
       {
         "entity": "combat_rules",
@@ -29380,20 +29774,8 @@
       {
         "entity": "combat_rules",
         "id": "$",
-        "path": "enemy_accuracy_override",
-        "set": 100
-      },
-      {
-        "entity": "characters",
-        "id": "hero",
-        "path": "skills.@id=divine_guard.cooldown",
-        "set": 1
-      },
-      {
-        "entity": "items",
-        "id": "ice_charm",
-        "path": "combat.requires_target_weakness",
-        "set": "ice"
+        "path": "evade_model",
+        "set": "dex"
       },
       {
         "entity": "companions",
@@ -29414,30 +29796,822 @@
         }
       },
       {
-        "entity": "progression",
-        "id": "$",
-        "path": "level_model",
-        "set": "exp"
+        "entity": "enemies",
+        "id": "ash_wraith",
+        "path": "skills.@id=ash_embrace.ai_weight",
+        "set": 4
       },
       {
-        "entity": "progression",
-        "id": "$",
-        "path": "max_level",
-        "set": 8
+        "entity": "enemies",
+        "id": "ash_wraith",
+        "path": "skills.@id=ash_embrace.damage",
+        "set": "1"
       },
       {
-        "entity": "progression",
-        "id": "$",
-        "path": "exp_table",
+        "entity": "enemies",
+        "id": "ash_wraith",
+        "path": "skills.@id=resentment.ai_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "ash_wraith",
+        "path": "skills.@id=resentment.damage",
+        "set": "1d2+9"
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_dragon",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+10"
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_dragon",
+        "path": "hp",
+        "set": 140
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_dragon",
+        "path": "max_hp",
+        "set": 140
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_dragon",
+        "path": "skills.@id=frozen_breath.damage_max_hp_ratio",
+        "set": 0.45
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_dragon",
+        "path": "skills.@id=frozen_breath.every_n_rounds",
+        "set": 3
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_dragon",
+        "path": "skills.@id=frozen_breath.release_text",
+        "set": "【仮】{enemy}は白い冷気を吸い込み、すべてを凍らせる吐息を放った！"
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_dragon",
+        "path": "skills.@id=frozen_breath.telegraph",
         "set": {
-          "2": 20,
-          "3": 50,
-          "4": 54,
-          "5": 99,
-          "6": 171,
-          "7": 319,
-          "8": 679
+          "charge_rounds": 1,
+          "warning": "【仮】{enemy}が深く息を吸い込み、喉の奥で白銀の冷気が渦巻いている……！"
         }
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_dragon",
+        "path": "skills.@id=white_wings.damage",
+        "set": "2d4+10"
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_human",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+10"
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_human",
+        "path": "hp",
+        "set": 15
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_human",
+        "path": "max_hp",
+        "set": 15
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_human",
+        "path": "skills.@id=ice_blade.damage",
+        "set": "2d4+10"
+      },
+      {
+        "entity": "enemies",
+        "id": "draco_human",
+        "path": "skills.@id=sword_flash.damage",
+        "set": "2d4+10"
+      },
+      {
+        "entity": "enemies",
+        "id": "dragon_knight_mounted",
+        "path": "skills.@id=dive.damage_max_hp_ratio",
+        "set": 0.35
+      },
+      {
+        "entity": "enemies",
+        "id": "dragon_knight_mounted",
+        "path": "skills.@id=dive.every_n_rounds",
+        "set": 3
+      },
+      {
+        "entity": "enemies",
+        "id": "dragon_knight_mounted",
+        "path": "skills.@id=dive.release_text",
+        "set": "【仮】{enemy}は空高く舞い上がり、槍先を揃えて急降下した！"
+      },
+      {
+        "entity": "enemies",
+        "id": "dragon_knight_mounted",
+        "path": "skills.@id=dive.telegraph",
+        "set": {
+          "charge_rounds": 1,
+          "warning": "【仮】{enemy}は翼を大きく広げて空高く舞い上がり、槍先をこちらへ向けた……！"
+        }
+      },
+      {
+        "entity": "enemies",
+        "id": "earth_worm",
+        "path": "combat.basic_attack_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "emerald_spider",
+        "path": "combat.basic_attack.damage",
+        "set": "1"
+      },
+      {
+        "entity": "enemies",
+        "id": "fire_elemental",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+12"
+      },
+      {
+        "entity": "enemies",
+        "id": "fire_elemental",
+        "path": "combat.basic_attack_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "fire_slime",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+2"
+      },
+      {
+        "entity": "enemies",
+        "id": "forest_wolf",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+2"
+      },
+      {
+        "entity": "enemies",
+        "id": "forest_wolf",
+        "path": "combat.basic_attack_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "frost_dire_wolf",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+8"
+      },
+      {
+        "entity": "enemies",
+        "id": "frost_dire_wolf",
+        "path": "hp",
+        "set": 56
+      },
+      {
+        "entity": "enemies",
+        "id": "frost_dire_wolf",
+        "path": "max_hp",
+        "set": 56
+      },
+      {
+        "entity": "enemies",
+        "id": "ghoul",
+        "path": "combat.basic_attack_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "goblin",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+2"
+      },
+      {
+        "entity": "enemies",
+        "id": "goblin_archer",
+        "path": "combat.basic_attack.damage",
+        "set": "1"
+      },
+      {
+        "entity": "enemies",
+        "id": "goblin_king",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+4"
+      },
+      {
+        "entity": "enemies",
+        "id": "goblin_king",
+        "path": "hp",
+        "set": 51
+      },
+      {
+        "entity": "enemies",
+        "id": "goblin_king",
+        "path": "max_hp",
+        "set": 51
+      },
+      {
+        "entity": "enemies",
+        "id": "grave_knight",
+        "path": "combat.basic_attack_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "heat_lizard",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+2"
+      },
+      {
+        "entity": "enemies",
+        "id": "heat_lizard",
+        "path": "combat.basic_attack_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "hobgoblin",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+3"
+      },
+      {
+        "entity": "enemies",
+        "id": "hobgoblin",
+        "path": "combat.basic_attack_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_assassin",
+        "path": "combat.basic_attack_weight",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_assassin",
+        "path": "skills.@id=frozen_poison.ai_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_assassin",
+        "path": "skills.@id=ice_blade_combo.ai_weight",
+        "set": 1
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_assassin",
+        "path": "skills.@id=ice_blade_combo.damage_max_hp_ratio",
+        "set": 0.2
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_assassin",
+        "path": "skills.@id=ice_blade_combo.hits",
+        "set": 1
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_assassin",
+        "path": "skills.@id=ice_blade_combo.release_text",
+        "set": "【仮】{enemy}は白い息とともに踏み込み、凍る刃を続けざまに振るった！"
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_elemental",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+8"
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_elemental",
+        "path": "combat.basic_attack_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_sentinel",
+        "path": "combat.basic_attack_weight",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_sentinel",
+        "path": "skills.@id=frozen_stance.ai_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_sentinel",
+        "path": "skills.@id=ice_hammer.ai_weight",
+        "set": 1
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_sentinel",
+        "path": "skills.@id=ice_hammer.damage_max_hp_ratio",
+        "set": 0.2
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_sentinel",
+        "path": "skills.@id=ice_hammer.release_text",
+        "set": "【仮】{enemy}は凍りついた大槌を高く掲げ、床ごと叩き潰した！"
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+8"
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "hp",
+        "set": 140
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "max_hp",
+        "set": 140
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "resistances.physical",
+        "set": 0.25
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "skills.@id=fire_breath.damage",
+        "set": "2d4+17"
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "skills.@id=fire_breath.damage_max_hp_ratio",
+        "set": 0.4
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "skills.@id=fire_breath.every_n_rounds",
+        "set": 3
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "skills.@id=fire_breath.release_text",
+        "set": "【仮】{enemy}は深く息を吸い込み、灼熱の炎を吐き出した！"
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "skills.@id=fire_breath.telegraph",
+        "set": {
+          "charge_rounds": 1,
+          "warning": "【仮】{enemy}が大きく顎を開き、喉の奥に灼熱の炎が渦巻いている……！"
+        }
+      },
+      {
+        "entity": "enemies",
+        "id": "ignis",
+        "path": "skills.@id=tail_sweep.damage",
+        "set": "2d4+8"
+      },
+      {
+        "entity": "enemies",
+        "id": "lava_drake",
+        "path": "combat.basic_attack_weight",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "lava_drake",
+        "path": "skills.@id=hook_claw.ai_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "lava_drake",
+        "path": "skills.@id=lava_breath.ai_weight",
+        "set": 1
+      },
+      {
+        "entity": "enemies",
+        "id": "lava_drake",
+        "path": "skills.@id=lava_breath.damage_max_hp_ratio",
+        "set": 0.2
+      },
+      {
+        "entity": "enemies",
+        "id": "lava_drake",
+        "path": "skills.@id=lava_breath.release_text",
+        "set": "【仮】{enemy}の牙から赤黒い溶岩が滴り、噛み砕くように迫った。"
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+7"
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "combat.defense",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "hp",
+        "set": 90
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "max_hp",
+        "set": 90
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%B4%85.resistances.dark",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%B4%85.resistances.earth",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%B4%85.resistances.fire",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%B4%85.resistances.holy",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%B4%85.resistances.ice",
+        "set": 1.5
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%B4%85.resistances.light",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%B4%85.resistances.lightning",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%B4%85.resistances.physical",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%B4%85.resistances.water",
+        "set": 1.5
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%B4%85.resistances.wind",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%BF%A0.resistances.dark",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%BF%A0.resistances.earth",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%BF%A0.resistances.fire",
+        "set": 1.5
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%BF%A0.resistances.holy",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%BF%A0.resistances.ice",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%BF%A0.resistances.light",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%BF%A0.resistances.lightning",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%BF%A0.resistances.physical",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%BF%A0.resistances.water",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E7%BF%A0.resistances.wind",
+        "set": 1.5
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E8%92%BC.resistances.dark",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E8%92%BC.resistances.earth",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E8%92%BC.resistances.fire",
+        "set": 1.5
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E8%92%BC.resistances.holy",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E8%92%BC.resistances.ice",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E8%92%BC.resistances.light",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E8%92%BC.resistances.lightning",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E8%92%BC.resistances.physical",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E8%92%BC.resistances.water",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistance_cycle.phases.@name=%E8%92%BC.resistances.wind",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistances.dark",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistances.earth",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistances.fire",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistances.holy",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistances.ice",
+        "set": 1.5
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistances.light",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistances.lightning",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistances.physical",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistances.water",
+        "set": 1.5
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "resistances.wind",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "skills.@id=crystal_rain.damage",
+        "set": "2d4+7"
+      },
+      {
+        "entity": "enemies",
+        "id": "prism_tree",
+        "path": "skills.@id=prism_branch.damage",
+        "set": "2d4+7"
+      },
+      {
+        "entity": "enemies",
+        "id": "rock_giant",
+        "path": "combat.basic_attack_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "ruby_golem",
+        "path": "combat.basic_attack_weight",
+        "set": 0
+      },
+      {
+        "entity": "enemies",
+        "id": "ruby_golem",
+        "path": "skills.@id=ruby_fist.ai_weight",
+        "set": 1
+      },
+      {
+        "entity": "enemies",
+        "id": "ruby_golem",
+        "path": "skills.@id=ruby_fist.damage",
+        "set": "1d2+5"
+      },
+      {
+        "entity": "enemies",
+        "id": "ruby_golem",
+        "path": "skills.@id=ruby_fist.damage_max_hp_ratio",
+        "set": 0.22
+      },
+      {
+        "entity": "enemies",
+        "id": "ruby_golem",
+        "path": "skills.@id=ruby_fist.release_text",
+        "set": "【仮】{enemy}が結晶の拳を振り上げ、床ごと叩き潰した。"
+      },
+      {
+        "entity": "enemies",
+        "id": "ruby_golem",
+        "path": "skills.@id=ruby_ray.ai_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "sapphire_moth",
+        "path": "combat.basic_attack.damage",
+        "set": "1"
+      },
+      {
+        "entity": "enemies",
+        "id": "slime",
+        "path": "combat.basic_attack.damage",
+        "set": "4"
+      },
+      {
+        "entity": "enemies",
+        "id": "slime_king",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+5"
+      },
+      {
+        "entity": "enemies",
+        "id": "slime_king",
+        "path": "combat.basic_attack_weight",
+        "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "slime_king",
+        "path": "hp",
+        "set": 93
+      },
+      {
+        "entity": "enemies",
+        "id": "slime_king",
+        "path": "max_hp",
+        "set": 93
+      },
+      {
+        "entity": "enemies",
+        "id": "war_hound",
+        "path": "combat.basic_attack_weight",
+        "set": 2
+      },
+      {
+        "entity": "items",
+        "id": "hero_holy_sword",
+        "path": "combat.damage",
+        "set": "1d8+34"
+      },
+      {
+        "entity": "items",
+        "id": "ice_charm",
+        "path": "combat.requires_target_weakness",
+        "set": "ice"
+      },
+      {
+        "entity": "locations",
+        "id": "goblin_fort_first_second",
+        "path": "combat.encounter_class",
+        "set": "trash"
+      },
+      {
+        "entity": "locations",
+        "id": "goblin_fort_first_second",
+        "path": "combat.encounter_modifiers",
+        "set": [
+          {
+            "id": "trash_guards_052b",
+            "enemy_damage_multiplier": 0.7
+          }
+        ]
       },
       {
         "entity": "progression",
@@ -29451,6 +30625,20 @@
           "unclassified": 4,
           "scripted_loss": 0,
           "guest": 0
+        }
+      },
+      {
+        "entity": "progression",
+        "id": "$",
+        "path": "exp_table",
+        "set": {
+          "2": 20,
+          "3": 50,
+          "4": 54,
+          "5": 99,
+          "6": 171,
+          "7": 319,
+          "8": 679
         }
       },
       {
@@ -29535,255 +30723,16 @@
         }
       },
       {
-        "entity": "characters",
-        "id": "mage",
-        "path": "skills.@id=fireball.conditional_bonus",
-        "set": [
-          {
-            "if": "target_hp_full",
-            "damage": "1d6"
-          }
-        ]
+        "entity": "progression",
+        "id": "$",
+        "path": "level_model",
+        "set": "exp"
       },
       {
-        "entity": "characters",
-        "id": "mage",
-        "path": "skills.@id=fireball.spell_tier",
-        "set": "basic"
-      },
-      {
-        "entity": "characters",
-        "id": "mage",
-        "path": "skills.@id=ice_arrow.conditional_bonus",
-        "set": [
-          {
-            "if": "target_hp_ratio_lte",
-            "ratio": 0.5,
-            "damage": "1d6"
-          }
-        ]
-      },
-      {
-        "entity": "characters",
-        "id": "mage",
-        "path": "skills.@id=ice_arrow.spell_tier",
-        "set": "basic"
-      },
-      {
-        "entity": "enemies",
-        "id": "ash_wraith",
-        "path": "skills.@id=ash_embrace.damage",
-        "set": "1"
-      },
-      {
-        "entity": "enemies",
-        "id": "ash_wraith",
-        "path": "skills.@id=resentment.damage",
-        "set": "1d2+9"
-      },
-      {
-        "entity": "enemies",
-        "id": "draco_human",
-        "path": "skills.@id=ice_blade.damage",
-        "set": "1d2+24"
-      },
-      {
-        "entity": "enemies",
-        "id": "draco_human",
-        "path": "skills.@id=sword_flash.damage",
-        "set": "1d2+8"
-      },
-      {
-        "entity": "enemies",
-        "id": "draco_human",
-        "path": "hp",
-        "set": 15
-      },
-      {
-        "entity": "enemies",
-        "id": "draco_human",
-        "path": "max_hp",
-        "set": 15
-      },
-      {
-        "entity": "enemies",
-        "id": "emerald_spider",
-        "path": "combat.basic_attack.damage",
-        "set": "1"
-      },
-      {
-        "entity": "enemies",
-        "id": "fire_elemental",
-        "path": "combat.basic_attack.damage",
-        "set": "1d2+12"
-      },
-      {
-        "entity": "enemies",
-        "id": "fire_slime",
-        "path": "combat.basic_attack.damage",
-        "set": "1d2+2"
-      },
-      {
-        "entity": "enemies",
-        "id": "forest_wolf",
-        "path": "combat.basic_attack.damage",
-        "set": "2d4+2"
-      },
-      {
-        "entity": "enemies",
-        "id": "frost_dire_wolf",
-        "path": "combat.basic_attack.damage",
-        "set": "2d4+8"
-      },
-      {
-        "entity": "enemies",
-        "id": "frost_dire_wolf",
-        "path": "hp",
-        "set": 56
-      },
-      {
-        "entity": "enemies",
-        "id": "frost_dire_wolf",
-        "path": "max_hp",
-        "set": 56
-      },
-      {
-        "entity": "enemies",
-        "id": "goblin",
-        "path": "combat.basic_attack.damage",
-        "set": "1d2+2"
-      },
-      {
-        "entity": "enemies",
-        "id": "goblin_archer",
-        "path": "combat.basic_attack.damage",
-        "set": "1"
-      },
-      {
-        "entity": "enemies",
-        "id": "goblin_king",
-        "path": "combat.basic_attack.damage",
-        "set": "1d2+4"
-      },
-      {
-        "entity": "enemies",
-        "id": "goblin_king",
-        "path": "hp",
-        "set": 51
-      },
-      {
-        "entity": "enemies",
-        "id": "goblin_king",
-        "path": "max_hp",
-        "set": 51
-      },
-      {
-        "entity": "enemies",
-        "id": "heat_lizard",
-        "path": "combat.basic_attack.damage",
-        "set": "1d2+2"
-      },
-      {
-        "entity": "enemies",
-        "id": "hobgoblin",
-        "path": "combat.basic_attack.damage",
-        "set": "1d2+3"
-      },
-      {
-        "entity": "enemies",
-        "id": "ice_elemental",
-        "path": "combat.basic_attack.damage",
-        "set": "1d2+8"
-      },
-      {
-        "entity": "enemies",
-        "id": "ignis",
-        "path": "skills.@id=fire_breath.damage",
-        "set": "2d4+17"
-      },
-      {
-        "entity": "enemies",
-        "id": "ignis",
-        "path": "hp",
-        "set": 149
-      },
-      {
-        "entity": "enemies",
-        "id": "ignis",
-        "path": "max_hp",
-        "set": 149
-      },
-      {
-        "entity": "enemies",
-        "id": "prism_tree",
-        "path": "skills.@id=crystal_rain.damage",
-        "set": "2d4+6"
-      },
-      {
-        "entity": "enemies",
-        "id": "prism_tree",
-        "path": "hp",
-        "set": 78
-      },
-      {
-        "entity": "enemies",
-        "id": "prism_tree",
-        "path": "max_hp",
-        "set": 78
-      },
-      {
-        "entity": "enemies",
-        "id": "prism_tree",
-        "path": "combat.defense",
-        "set": 0
-      },
-      {
-        "entity": "enemies",
-        "id": "ruby_golem",
-        "path": "skills.@id=ruby_fist.damage",
-        "set": "1d2+5"
-      },
-      {
-        "entity": "enemies",
-        "id": "sapphire_moth",
-        "path": "combat.basic_attack.damage",
-        "set": "1"
-      },
-      {
-        "entity": "enemies",
-        "id": "slime",
-        "path": "combat.basic_attack.damage",
-        "set": "4"
-      },
-      {
-        "entity": "enemies",
-        "id": "slime_king",
-        "path": "combat.basic_attack.damage",
-        "set": "2d4+5"
-      },
-      {
-        "entity": "enemies",
-        "id": "slime_king",
-        "path": "hp",
-        "set": 93
-      },
-      {
-        "entity": "enemies",
-        "id": "slime_king",
-        "path": "max_hp",
-        "set": 93
-      },
-      {
-        "entity": "enemies",
-        "id": "draco_dragon",
-        "path": "hp",
-        "set": 132
-      },
-      {
-        "entity": "enemies",
-        "id": "draco_dragon",
-        "path": "max_hp",
-        "set": 132
+        "entity": "progression",
+        "id": "$",
+        "path": "max_level",
+        "set": 8
       }
     ]
   },

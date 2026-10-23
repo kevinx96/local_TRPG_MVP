@@ -1,10 +1,10 @@
 {
   "dragon_rpg.json": {
-    "content_revision": "2026-10-23-tuning-052a",
-    "overlay_sha256": "77609878b14617c2c5f35d3cf716fd2af57da7902086332ab8e70105bad9e68c"
+    "content_revision": "2026-10-23-tuning-052b",
+    "overlay_sha256": "d4b35731e8322403804532e598d16310dd8cc1618ee151a387c8d796da8856c3"
   },
   "dragon_rpg_hybrid.json": {
-    "content_revision": "2026-10-23-tuning-052a",
-    "overlay_sha256": "77609878b14617c2c5f35d3cf716fd2af57da7902086332ab8e70105bad9e68c"
+    "content_revision": "2026-10-23-tuning-052b",
+    "overlay_sha256": "d4b35731e8322403804532e598d16310dd8cc1618ee151a387c8d796da8856c3"
   }
 }

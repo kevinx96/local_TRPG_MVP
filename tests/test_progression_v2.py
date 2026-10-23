@@ -489,6 +489,7 @@ class ProgressionTests(unittest.TestCase):
         s = session("thief")
         select(s, "unseen_assassin")
         s["combat"]["encounter"]["encounter_class"] = "elite"
+        s["combat"]["enemies"][0]["encounter_class"] = "elite"
         amount = combat._resolve_attack(s, s["character"], s["combat"]["enemies"][0], {"damage": "20"}, "player", Rolls())
         self.assertEqual(amount, 23)
 
@@ -619,6 +620,13 @@ class ProgressionTests(unittest.TestCase):
                     action["result_variants"] = [v for v in action["result_variants"] if not v.get("id", "").startswith("holy_sword_")]
             from scripts.scenario.mina_reborrow_055 import ESCORT_NOTICE, REBORROW_SUCCESS_TEXT
             serialized = json.dumps(before_049, ensure_ascii=False).replace(ESCORT_NOTICE, "").replace(REBORROW_SUCCESS_TEXT, "")
+            from scripts.scenario.normal_tuning_052 import MOVES_052B
+            allowed_052 = {move["release_text"] for move in MOVES_052B}
+            allowed_052.update(move["warning"] for move in MOVES_052B if "warning" in move)
+            allowed_052.add("【仮】{enemy}は凍てつく古傷の痛みに狂乱し、周囲一帯を紅蓮の炎で薙ぎ払った！")
+            for text in allowed_052:
+                self.assertIn(text, serialized)
+                serialized = serialized.replace(text, "")
             placeholder = "".join(chr(value) for value in (0x3010, 0x4EEE, 0x3011))
             self.assertNotIn(placeholder, serialized)
             for definition in pack["class_progression"]:

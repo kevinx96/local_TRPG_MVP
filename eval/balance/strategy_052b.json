@@ -1,0 +1,5 @@
+{
+  "status": "engineering_policy",
+  "minimum_incoming_hp_ratio": 0.20,
+  "free_action_priority": 1.0
+}

@@ -386,6 +386,8 @@ class Chapter34Tests(unittest.TestCase):
             copy = deepcopy(s["scenario_pack"])
             upgrade_ch34.upgrade(copy)
             tune_ch34.tune(copy)
+            from scripts.scenario.normal_tuning_052 import migrate as tune_052
+            copy = tune_052(copy)
             self.assertEqual(copy, s["scenario_pack"])
             s["flags"]["riku_abandoned"] = True
             elder = next(n for n in select_scenario_context(s)["matched"]["npcs"] if n["id"] == "elder")

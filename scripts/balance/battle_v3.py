@@ -91,6 +91,7 @@ def fight(session: dict[str, Any], policy: str, rng: random.Random, *, purify: b
     incoming = healing = 0.0
     phases = 0
     extra_healing = 0.0
+    percentage = {"hits": 0, "before_shield": 0, "arcane_shield_absorbed": 0, "hp_damage": 0}
     action_max_hp = session["character"]["max_hp"]
     status_names = {s["name"]: s["id"] for s in session["scenario_pack"].get("status_defs", [])}
     original_start, original_phase = combat._apply_round_start_effects, combat._enemy_phase
@@ -130,6 +131,11 @@ def fight(session: dict[str, Any], policy: str, rng: random.Random, *, purify: b
     def measured_log(value, actor, kind, text, data=None, *, target=None):
         nonlocal extra_healing
         data = data or {}
+        if target is value["character"] and kind == "damage" and "damage_max_hp_ratio" in data:
+            percentage["hits"] += 1
+            percentage["before_shield"] += data.get("before_shield", 0)
+            percentage["arcane_shield_absorbed"] += data.get("arcane_shield_absorbed", 0)
+            percentage["hp_damage"] += data.get("damage", 0)
         side = "player" if target is value["character"] or target is None and actor == "player" else "enemy"
         status = data.get("status", {})
         if status.get("id"):
@@ -201,6 +207,8 @@ def fight(session: dict[str, Any], policy: str, rng: random.Random, *, purify: b
                "expected_hp_loss": incoming + status_loss, "direct_expected_hp_loss": incoming, "status_hp_loss": status_loss,
                "enemy_phases": phases, "companion": (session.get("companion") or {}).get("id"),
                "p0_choice": f"{free['type']}:{free['id']}" if free else None, "statuses": status_rows, "skill_usage": usage}
+    if combat._combat_rules(session).get("elite_percentage_round_cap") is not None:
+        summary["percentage_damage"] = percentage
     delta = combat.consume_combat_state_delta(session)
     summary["exp_award"] = {"amount": delta.get("_exp_reward", {}).get("amount", 0), "category": summary["encounter_class"]}
     state.apply_state_delta(session, delta, allow_world_transition=True)

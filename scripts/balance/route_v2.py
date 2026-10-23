@@ -250,11 +250,14 @@ class MeasurementRun(class_aware.Run):
 
     def equip_acquired(self) -> None:
         actor = self.session["character"]
+        keep_sword = self.session.get("difficulty") == "normal" and self.branches.get("sword") == "keep"
         if self.archetype.equipment_rule == "initial":
             actor["equipment"] = [name for name in self.initial_equipment if any(i["name"] == name for i in actor["inventory"])]
             state._synchronize_equipment(actor)
             return
         for item in list(actor["inventory"]):
+            if keep_sword and item.get("slot") == "weapon" and item.get("id") not in {"iron_sword", "hero_holy_sword"}:
+                continue
             if item.get("slot") and item["name"] not in self.seen_equipment:
                 # Acquisition order is the explicit P0 rule; no optimisation against hidden foes.
                 try:
@@ -262,6 +265,9 @@ class MeasurementRun(class_aware.Run):
                 except ValueError:
                     continue
         self.seen_equipment.update(i["name"] for i in actor["inventory"])
+        iron = next((i for i in actor["inventory"] if i.get("id") == "iron_sword"), None)
+        if keep_sword and iron and iron["name"] not in actor["equipment"]:
+            state._equip_inventory_item(self.session, "iron_sword")
 
     def act(self, action_id: str, *, settle: bool = True) -> None:
         before = resources(self.session)
@@ -651,6 +657,9 @@ class MeasurementRun(class_aware.Run):
                                    ("go_magic_shop", "return_castle_from_magic_shop", "magic_return" if returning else "magic")):
             self.act(enter)
             self.hook(phase)
+            if phase == "forge" and self.session.get("difficulty") == "normal" and self.branches.get("sword") == "fuse":
+                self.try_act("show_sword_to_blacksmith")
+                self.try_act("accept_sword_fusion")
             if phase == "forge" and "purification" in self.quests:
                 self.try_act("ask_blacksmith_weakness")
             self.shop_here()
@@ -743,6 +752,10 @@ class MeasurementRun(class_aware.Run):
         ending = self.session.get("game_over") or {}
         final = resources(self.session)
         return {"archetype": self.archetype.id, "character": self.session["character"]["character_id"],
+                **({"sword_branch": self.branches["sword"], "sword_audit": {
+                    "accepted_sword_fusion": bool(self.session["flags"].get("accepted_sword_fusion")),
+                    "holy_sword_awakened": bool(self.session["flags"].get("holy_sword_awakened"))}}
+                   if self.session.get("difficulty") == "normal" and self.branches.get("sword") else {}),
                 **({"escort_audit": self.escort_audit} if self.session.get("difficulty") == "normal" and self.branches.get("escort_order") else {}),
                 "completed": ending.get("title") == COMPLETION_TITLE,
                 "ignis_defeated": any(self.session["flags"].get(flag) for flag in IGNIS_FLAGS),

@@ -159,6 +159,18 @@ class Normal052Tests(unittest.TestCase):
     def test_f6_real_p3_seed_continues_after_mansion_loss(self):
         # Pin the pre-tuning numerical fixture for this historical F6 seed.
         pack = deepcopy(self.pack)
+        pack["combat_rules"].pop("elite_percentage_round_cap", None)
+        raw = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
+        originals = {e["id"]: e for e in raw["enemies"]}
+        for enemy in pack["enemies"]:
+            enemy["combat"].pop("basic_attack_weight", None)
+            enemy["skills"] = deepcopy(originals[enemy["id"]].get("skills", []))
+            if enemy["id"] == "prism_tree":
+                enemy["resistances"] = deepcopy(originals[enemy["id"]]["resistances"])
+                enemy["resistance_cycle"] = deepcopy(originals[enemy["id"]]["resistance_cycle"])
+        guards = next(l for l in pack["locations"] if l["id"] == "goblin_fort_first_second")["combat"]
+        guards["encounter_class"] = "elite"
+        guards.pop("encounter_modifiers", None)
         pack["progression"].update({'exp_table': {'2': 20, '3': 50, '4': 90, '5': 140, '6': 200, '7': 280, '8': 380},
          'exp_rewards': {'trash': 5,
                          'elite': 15,

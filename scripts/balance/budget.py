@@ -59,6 +59,8 @@ def attack_moments(ability: dict[str, Any], enemy: dict[str, Any],
 def phase_moments(session: dict[str, Any], *, damaging_only: bool = False) -> dict[str, Any]:
     """Current enemy phase, with exact AI availability and without consuming game RNG."""
     total, variance, notes = 0.0, 0.0, set()
+    cap = combat._combat_rules(session).get("elite_percentage_round_cap")
+    states = {0: (1.0, 0.0, 0.0)}
     for original in combat._alive_enemies(session["combat"]):
         if original.get("skip_rounds_remaining", 0) > 0:
             continue
@@ -76,7 +78,13 @@ def phase_moments(session: dict[str, Any], *, damaging_only: bool = False) -> di
                 choices.extend(zip(entries, weights))
                 return entries[:1]
 
-        chosen = combat._choose_enemy_ability(deepcopy(original), session, CaptureChoices())
+        charging = original.get("charging")
+        if charging:
+            if session["combat"]["round"] < charging["release_round"]:
+                continue
+            chosen = {k: v for k, v in charging["ability"].items() if k != "telegraph"}
+        else:
+            chosen = combat._choose_enemy_ability(deepcopy(original), session, CaptureChoices())
         choices = choices or [(chosen, 1)]
         if damaging_only:
             choices = [(ability, weight) for ability, weight in choices
@@ -85,17 +93,46 @@ def phase_moments(session: dict[str, Any], *, damaging_only: bool = False) -> di
             continue
         weight = sum(w for _, w in choices)
         mu, second = 0.0, 0.0
+        outcomes = []
         for ability, w in choices:
-            if combat._ability_kind(ability) in {"heal", "field", "status", "defend", "stance"}:
+            if ability.get("telegraph"):
+                notes.add("telegraph_charge")
+                am, av = 0.0, 0.0
+            elif combat._ability_kind(ability) in {"heal", "field", "status", "defend", "stance"}:
                 notes.add(combat._ability_kind(ability))
                 am, av = 0.0, 0.0
             else:
                 am, av = attack_moments(ability, original, session)
             mu += am * w / weight
             second += (av + am ** 2) * w / weight
+            if cap is not None:
+                percent = (ability.get("damage_max_hp_ratio") is not None and not ability.get("telegraph")
+                           and original.get("encounter_class", session["combat"]["encounter"].get("encounter_class")) == "elite")
+                chance = combat.attack_chance(session, original, session["character"], ability, original["id"]) / 100
+                if percent:
+                    outcomes.extend([(w/weight * (1-skip) * chance, round(am/chance), 0, True),
+                                     (w/weight * (1-skip) * (1-chance), 0, 0, True)])
+                else:
+                    outcomes.append((w/weight * (1-skip), am, av, False))
+        if cap is not None:
+            outcomes.append((skip, 0, 0, False))
+            updated = defaultdict(lambda: [0.0, 0.0, 0.0])
+            for spent, (probability, first, square) in states.items():
+                for chance, amount, var, percent in outcomes:
+                    if percent:
+                        amount = min(amount, max(0, int(session["character"]["max_hp"] * cap)-spent))
+                    key = spent + amount if percent else spent
+                    values = updated[key]
+                    values[0] += probability * chance
+                    values[1] += chance * (first + probability * amount)
+                    values[2] += chance * (square + 2*amount*first + probability*(var+amount*amount))
+            states = dict(updated)
         mu, second = mu*(1-skip), second*(1-skip)
         total += mu
         variance += max(0.0, second - mu ** 2)
+    if cap is not None:
+        total = sum(value[1] for value in states.values())
+        variance = max(0, sum(value[2] for value in states.values())-total*total)
     return {"expected_damage": total, "variance": variance,
             "cv": math.sqrt(variance) / total if total else None,
             "ratio": total / session["character"]["max_hp"], "notes": sorted(notes)}

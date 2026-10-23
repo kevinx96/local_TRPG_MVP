@@ -246,6 +246,12 @@ class SpringPostgameTests(unittest.TestCase):
             self.assertEqual({path for name, path, _ in rows if name == pack_name and path in paths_049}, set())
         placeholders_050 = [(name, path, text) for name, path, text in rows
                             if not is_048_placeholder(path) and path not in paths_049]
+        from scripts.scenario.normal_tuning_052 import MOVES_052B
+        allowed_052 = {move["release_text"] for move in MOVES_052B}
+        allowed_052.update(move["warning"] for move in MOVES_052B if "warning" in move)
+        allowed_052.add("【仮】{enemy}は凍てつく古傷の痛みに狂乱し、周囲一帯を紅蓮の炎で薙ぎ払った！")
+        self.assertEqual({text for _, _, text in placeholders_050 if text in allowed_052}, allowed_052)
+        placeholders_050 = [row for row in placeholders_050 if row[2] not in allowed_052]
         self.assertEqual(len(placeholders_050), 0)
         self.assertTrue(all(sum(name == pack_name for name, _, _ in placeholders_050) == 0 for pack_name in self.packs))
         self.assertTrue(all(path.startswith('/class_progression/') or path.startswith('/items/spellbook_')

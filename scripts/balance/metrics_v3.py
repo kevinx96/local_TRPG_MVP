@@ -65,6 +65,29 @@ def evaluate(data: dict[str, Any]) -> list[dict[str, Any]]:
                 metric["reason"] = "No applicable observed samples for this prototype/class/metric scope."
         return metrics
     metrics = [m12(data) if metric["id"] == "M12" else metric for metric in metrics]
+    if data.get("measurement_scope") == "052":
+        metric = next(m for m in metrics if m["id"] == "M9")
+        groups = defaultdict(list)
+        for row in data.get("damage_budget_v2", []):
+            groups[row["encounter"], row["encounter_class"]].append(row)
+        rows = []
+        for (encounter, category), samples in sorted(groups.items()):
+            band = data["targets"]["metrics_v2"]["M9"]["target"].get(category)
+            if band is None:
+                continue
+            complete = len({s["character"] for s in samples}) == 4
+            ratio = mean(s["ratio"] for s in samples)
+            exempt = encounter == "dark_forest_loc"
+            optional = encounter.startswith(("cave_", "goblin_fort")) and encounter != "goblin_fort_fourth"
+            rows.append({"encounter": encounter, "encounter_class": category, "characters": samples,
+                         "ratio": ratio, "band": band, "complete": complete,
+                         "status": "report" if exempt else "unverified" if not complete else
+                                   "pass" if band[0] <= ratio <= band[1] else
+                                   "optional_exception" if optional and band[1] < ratio <= band[1]+.05 else "fail"})
+        checks = [r["status"] != "fail" for r in rows if r["status"] in {"pass", "fail", "optional_exception"}]
+        metric.update(value=rows, meets_target=all(checks) if checks else None,
+                      status="pass" if checks and all(checks) else "fail" if checks else "not_applicable",
+                      reason="052 acceptance: arithmetic mean of four classes per encounter; incomplete snapshots unverified; tutorial report only.")
     m13 = next(metric for metric in metrics if metric["id"] == "M13")
     gaps = m13["value"]["current_arrival_level_gaps"]
     m13["value"]["p0_p2_arrival_level_gap"] = gaps

@@ -241,6 +241,8 @@ def main(argv=None):
     if args.tuning_052:
         metadata["measurement_scope"] = "052"
     bundle = {"records": records, "targets": targets, "difficulty": args.difficulty, "passive_defaults": defaults}
+    if args.tuning_052:
+        bundle["measurement_scope"] = "052"
     if args.difficulty == "normal":
         cp = probes_v3.export_checkpoints(records, metadata)
         args.checkpoint_output.parent.mkdir(parents=True, exist_ok=True)
@@ -314,11 +316,14 @@ def main(argv=None):
                  for t in records for b in t["battles"] if b["encounter_class"] == "boss"],
         "grinding": [dict(character=t["character"], seed=t["seed"], costs=t.get("level_costs", [])) for t in records if t["archetype"] == "P0b"],
         "samples": [t for t in records if "steps" in t], "fingerprints": fingerprints,
-        "limitations": ["No hazard or percentage-damage route handling; no such hazard in current pack.",
+        "limitations": ["052 percentage attacks and visible telegraphs use engine settlement; no new hazard content." if args.tuning_052 else "No hazard or percentage-damage route handling; no such hazard in current pack.",
                          "Opening expectations use current living foes; multi-hit kill truncation and sequential shield depletion are approximations in policy scoring, actual combat remains engine-exact.",
                          "No checkpoints fabricated for unobserved encounters/classes; proposed passive table and branches require design review.",
                          "P0g has no repeatable encounters; its paired outcomes equal P0b; resource cost is net resource_score change including rewards and level refill."],
         "timings": timings, "elapsed_seconds": time.perf_counter()-started}
+    if args.tuning_052:
+        from .policy_v3 import TELEGRAPH_PARAMETERS
+        result["telegraph_strategy_parameters"] = TELEGRAPH_PARAMETERS
     if input_fingerprints(args.scenario, args.save) != fingerprints:
         raise RuntimeError("Measurement inputs changed during run")
     if args.passive_table and hashlib.sha256(args.passive_table.read_bytes()).hexdigest() != passive_digest:

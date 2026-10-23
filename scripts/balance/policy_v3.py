@@ -12,6 +12,7 @@ from host import combat, progression, status_effects
 from .checkpoints import ROOT
 
 PARAMETERS = json.loads((ROOT / "eval/balance/strategy_v3.json").read_text(encoding="utf-8"))
+TELEGRAPH_PARAMETERS = json.loads((ROOT / "eval/balance/strategy_052b.json").read_text(encoding="utf-8"))
 
 
 @lru_cache(maxsize=4096)
@@ -58,7 +59,9 @@ def strike_moments(session: dict[str, Any], attacker: dict[str, Any], target: di
     rules = combat._combat_rules(session)
     passive = progression.effects(session)
     attributes = tuple(sorted(attacker.get("attributes", {}).items()))
-    distribution = _distribution(str(ability.get("damage") or ability.get("dice_type") or "1d4"), attributes)
+    percentage = ability.get("damage_max_hp_ratio") if target is session["character"] else None
+    distribution = ({int(target["max_hp"] * percentage): 1.0} if percentage is not None else
+                    _distribution(str(ability.get("damage") or ability.get("dice_type") or "1d4"), attributes))
     for bonus in ability.get("conditional_bonus", []):
         if combat._condition(session, bonus, target):
             extra = _distribution(bonus["damage"], attributes)
@@ -94,7 +97,7 @@ def strike_moments(session: dict[str, Any], attacker: dict[str, Any], target: di
         defense += passive["armor_bonus"]
     if target is not session["character"]:
         defense = max(0, defense + sum(int(m.get("enemy_defense", 0)) for m in combat._encounter_modifiers(session, target)))
-    if ability.get("ignores_defense"):
+    if ability.get("ignores_defense") or percentage is not None:
         defense = 0
     chance = combat.attack_chance(session, attacker, target, ability, actor_id) / 100
     mu = second = 0.0
@@ -110,11 +113,14 @@ def strike_moments(session: dict[str, Any], attacker: dict[str, Any], target: di
         if actor_id == "player":
             category = target.get("encounter_class", session["combat"]["encounter"].get("encounter_class"))
             damage = round(damage * passive.get("encounter_damage", {}).get(category, 1))
+        elif not ability.get("true_damage"):
+            for modifier in combat._encounter_modifiers(session, attacker):
+                damage = round(damage * float(modifier.get("enemy_damage_multiplier", 1)))
         damage = max(0, round(damage * status_effects.product(attacker, "damage_dealt_multiplier")))
         if ability.get("true_damage"):
             damage = raw
         elif target is session["character"]:
-            damage = combat._modified_received_damage(session, damage, element, attacker, ability.get("name", ""), ability.get("id", ""))
+            damage = combat._modified_received_damage(session, damage, element, attacker, ability.get("name", ""), ability.get("id", ""), ignore_flat=percentage is not None)
             status = session["combat"].get("player_status", {})
             guard = status.get("guard_multiplier", 1) if status.get("guard_disabled_round", 0) < session["combat"]["round"] else 1
             received = status_effects.product(target, "received_damage_multiplier")
@@ -221,6 +227,10 @@ def _choose(session: dict[str, Any], policy: str, *, purify: bool = True,
     specials = [(a, t) for a, t in pairs if a["type"] == "special" and a.get("outcome") == "purified"]
     if policy != "best_free" and purify and specials:
         return specials[0][0], specials[0][1]["id"]
+    if policy == "heuristic_v3":
+        response = telegraph_response(session, pairs)
+        if response:
+            return response
     healing = [(a, t) for a, t in pairs if a.get("kind") == "heal" and not (combat._equipped_effect(actor, "healing_harms_humans") and a["type"] == "skill")]
     threshold = PARAMETERS["p0_healing_threshold"] if policy == "best_free" else PARAMETERS["healing_threshold"]
     if policy == "best_free" and recovery_threshold is not None:
@@ -284,4 +294,38 @@ def _choose(session: dict[str, Any], policy: str, *, purify: bool = True,
             if value > 0:
                 scored.append((value, action, target))
     _, action, target = max(scored, key=lambda row: row[0])
+    return action, target["id"]
+
+
+def telegraph_response(session: dict[str, Any], pairs: list) -> Any:
+    """Respond only to visible charges due this phase, using server-legal actions."""
+    from . import budget
+    charges = [e for e in combat._alive_enemies(session["combat"])
+               if e.get("charging", {}).get("release_round", float("inf")) <= session["combat"]["round"]]
+    if not charges:
+        return None
+    incoming = budget.phase_moments(session)["expected_damage"]
+    if incoming < session["character"]["max_hp"] * TELEGRAPH_PARAMETERS["minimum_incoming_hp_ratio"]:
+        return None
+    candidates = []
+    for action, target in pairs:
+        reduction = 0.0
+        if action["type"] == "defend":
+            reduction = 1 - combat._combat_rules(session)["defend_multiplier"]
+        elif action["type"] == "skill":
+            ability = ability_for(session, action)
+            reduction = 1 - ability.get("guard_multiplier", 1)
+            raw = ability.get("self_status", [])
+            for spec in raw if isinstance(raw, list) else [raw]:
+                spec = {"id": spec} if isinstance(spec, str) else spec
+                definition = next((s for s in session["scenario_pack"].get("status_defs", []) if s["id"] == spec.get("id")), {})
+                mods = {**definition.get("modifiers", {}), **spec.get("modifiers", {})}
+                reduction = max(reduction, 1 - mods.get("received_damage_multiplier", 1), mods.get("evade_bonus", 0)/100)
+            if reduction > 0 and ability.get("free_action"):
+                reduction += TELEGRAPH_PARAMETERS["free_action_priority"]
+        if reduction > 0:
+            candidates.append((reduction, action, target))
+    if not candidates:
+        return None
+    _, action, target = max(candidates, key=lambda row: row[0])
     return action, target["id"]
