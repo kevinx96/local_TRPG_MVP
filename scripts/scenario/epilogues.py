@@ -4,6 +4,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from .holy_sword_049 import E1_TEXT, E2_TEXT
+
 ROOT = Path(__file__).resolve().parents[2]
 PACKS = ("dragon_rpg.json", "dragon_rpg_hybrid.json")
 GOOD = ["ignis_defeated", "ignis_purified", "draco_defeated", "draco_defeated_with_ignis"]
@@ -44,6 +46,11 @@ EPILOGUES = [
      "text": "紅竜の心臓を手にしたザンザスは、どこかで新たな企みを巡らせているという。"},
     {"id": "king_trust_only", "endings": ["ignis_defeated", "ignis_purified"], "requirements": {"flag": "king_trust"},
      "text": "国王は祝宴の席で、時おり将軍の横顔を静かに見つめていた。"},
+    {"id": "holy_sword_awakened_epilogue", "endings": TRUE_ENDINGS, "difficulty_only": ["normal"],
+     "requirements": {"flag": "holy_sword_awakened"}, "text": E1_TEXT},
+    {"id": "holy_sword_fusion_epilogue", "endings": TRUE_ENDINGS, "difficulty_only": ["normal"],
+     "requirements": {"all": [{"character_id": "hero"}, {"flag": "accepted_sword_fusion"}]},
+     "text": E2_TEXT},
 ]
 
 

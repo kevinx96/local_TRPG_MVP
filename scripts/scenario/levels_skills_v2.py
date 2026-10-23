@@ -216,8 +216,12 @@ def migrate(pack: dict[str, Any]) -> dict[str, Any]:
         for key, value in (("conditional_bonus", [condition]), ("spell_tier", "basic")):
             entries.append({"entity": "characters", "id": "mage", "path": f"skills.@id={identifier}.{key}", "set": value})
     existing = result["difficulty_overlays"]["normal"]
-    addresses = {(e["entity"], e["id"], e["path"]) for e in entries}
-    result["difficulty_overlays"]["normal"] = [e for e in existing if (e["entity"], e["id"], e["path"]) not in addresses] + entries
+    destinations = {(entry["entity"], entry["id"], entry["path"]): entry for entry in entries}
+    updated = []
+    for entry in existing:
+        key = entry["entity"], entry["id"], entry["path"]
+        updated.append(destinations.pop(key, entry))
+    result["difficulty_overlays"]["normal"] = updated + list(destinations.values())
     books = [
         ("spellbook_lightning", "雷撃の術式巻物", 60,
          skill("lightning", "雷撃", 5, kind="attack", damage="1d4+int/4", accuracy=90, element="lightning", all_targets=True, spell_tier="basic")),
@@ -236,7 +240,9 @@ def migrate(pack: dict[str, Any]) -> dict[str, Any]:
             {"item_id": identifier, "price": price, "stock": 1, "difficulty_only": ["normal"]}]
     mana_veil = next((status for status in result["status_defs"] if status["id"] == "mana_veil"), None)
     if mana_veil is None:
-        mana_veil = {"id": "mana_veil", "name": "凝縮の構え", "kind": "modifier", "duration": 1,
+        mana_veil = {"id": "mana_veil", "name": "凝縮の構え",
+                     "description": "次の敵フェーズ終了まで、被ダメージが0.5倍になる。",
+                     "kind": "modifier", "duration": 1,
                      "tags": ["buff"], "cleansable": False, "expires": "enemy_phase_end",
                      "modifiers": {"received_damage_multiplier": .5}}
         result["status_defs"].append(mana_veil)

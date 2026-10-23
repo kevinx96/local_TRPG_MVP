@@ -602,7 +602,13 @@ def apply_difficulty(pack: dict[str, Any], mode: str) -> dict[str, Any]:
             return [filtered(entry) for entry in value
                     if not isinstance(entry, dict) or mode in entry.get("difficulty_only", [mode])]
         if isinstance(value, dict):
-            return {key: filtered(child) for key, child in value.items()}
+            result = {}
+            for key, child in value.items():
+                filtered_child = filtered(child)
+                if key in {"phase_transition_events", "victory_events"} and isinstance(child, list) and not filtered_child:
+                    continue
+                result[key] = filtered_child
+            return result
         return value
 
     result = filtered(result)

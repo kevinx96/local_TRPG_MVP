@@ -63,7 +63,16 @@ def migrate(pack: dict[str, Any]) -> dict[str, Any]:
     result = deepcopy(pack)
     if "difficulty_overlays" not in result:
         raise ValueError("051 requires the 047 difficulty migration")
-    definitions = result.setdefault("status_defs", [])
+    if "status_defs" not in result:
+        rebuilt = {}
+        for key, value in result.items():
+            rebuilt[key] = value
+            if key == "difficulty_overlays":
+                rebuilt["status_defs"] = []
+        if "status_defs" not in rebuilt:
+            rebuilt["status_defs"] = []
+        result = rebuilt
+    definitions = result["status_defs"]
     for definition in status_definitions():
         existing = next((entry for entry in definitions if entry["id"] == definition["id"]), None)
         if existing is None:

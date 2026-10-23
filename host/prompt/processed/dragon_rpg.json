@@ -11075,6 +11075,22 @@
               "draco_dragon"
             ]
           }
+        ],
+        "victory_events": [
+          {
+            "id": "holy_sword_awakened_victory",
+            "difficulty_only": [
+              "normal"
+            ],
+            "requirements": {
+              "flag": "holy_sword_awakened"
+            },
+            "text": "盟約を乱す者を討った聖剣は、新たな誓いを見届けるように、澄んだ白光を放っていた。",
+            "game_over_endings": [
+              "draco_defeated",
+              "draco_defeated_with_ignis"
+            ]
+          }
         ]
       },
       "town_npc_combat": false
@@ -21112,7 +21128,26 @@
       ],
       "next_phase": "draco_dragon",
       "image": "/static/images/enemy_draco_human.png",
-      "phase_transition_text": "ドラコの体が裂け、白い光が王の間を満たす。天井を突き破って現れたのは、雪原のような翼を持つ巨竜だった。「我が名はヴァイス。盟約の番人にして、その終わりを告げる者」"
+      "phase_transition_text": "ドラコの体が裂け、白い光が王の間を満たす。天井を突き破って現れたのは、雪原のような翼を持つ巨竜だった。「我が名はヴァイス。盟約の番人にして、その終わりを告げる者」",
+      "phase_transition_events": [
+        {
+          "id": "holy_sword_fusion_phase_transition",
+          "difficulty_only": [
+            "normal"
+          ],
+          "requirements": {
+            "all": [
+              {
+                "character_id": "hero"
+              },
+              {
+                "flag": "accepted_sword_fusion"
+              }
+            ]
+          },
+          "text": "膝をついたドラコの手から、奪われた聖剣が滑り落ち、石床に澄んだ音を響かせた。"
+        }
+      ]
     },
     {
       "id": "draco_dragon",
@@ -26332,6 +26367,41 @@
         "flag": "defeated_xanxus"
       },
       "text": "燃える街道に、赤い法衣の灰だけが残された。白竜の企みを知る者が、一人この世から消えた。"
+    },
+    {
+      "id": "holy_sword_awakened_epilogue",
+      "endings": [
+        "draco_defeated",
+        "draco_defeated_with_ignis"
+      ],
+      "difficulty_only": [
+        "normal"
+      ],
+      "requirements": {
+        "flag": "holy_sword_awakened"
+      },
+      "text": "役目を終えた聖剣はまばゆい光を収め、再び質素な佇まいへと戻った。ただその刃には今も、確かな温もりが宿っている。"
+    },
+    {
+      "id": "holy_sword_fusion_epilogue",
+      "endings": [
+        "draco_defeated",
+        "draco_defeated_with_ignis"
+      ],
+      "difficulty_only": [
+        "normal"
+      ],
+      "requirements": {
+        "all": [
+          {
+            "character_id": "hero"
+          },
+          {
+            "flag": "accepted_sword_fusion"
+          }
+        ]
+      },
+      "text": "ドラコから取り戻された古びた剣は、異様な光を失い、見慣れた鉄の刃に戻った。今は鞘に収まり、静かに眠りについている。"
     }
   ],
   "npc_combat": {

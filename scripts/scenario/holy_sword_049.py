@@ -9,7 +9,7 @@ from typing import Any
 from host.difficulty import overlay_fingerprint, validate_difficulty
 
 ROOT = Path(__file__).resolve().parents[2]
-REVISION = "2026-10-21-sword-049"
+REVISION = "2026-10-23-sword-049c"
 HOLY_DAMAGE = "1d8+78"
 HOLY_ACCURACY = 95
 LOCK_TEXT = "致命の一撃――だが、剣の温もりがあなたを踏みとどまらせた。"
@@ -36,6 +36,10 @@ BLACKSMITH_HINT = (
     "手放すなら、よく考えてからにしな」"
 )
 STOLEN_SKILL_NAME = "簒奪の聖光斬"
+E1_TEXT = "役目を終えた聖剣はまばゆい光を収め、再び質素な佇まいへと戻った。ただその刃には今も、確かな温もりが宿っている。"
+E2_TEXT = "ドラコから取り戻された古びた剣は、異様な光を失い、見慣れた鉄の刃に戻った。今は鞘に収まり、静かに眠りについている。"
+V1_TEXT = "膝をついたドラコの手から、奪われた聖剣が滑り落ち、石床に澄んだ音を響かせた。"
+V2_TEXT = "盟約を乱す者を討った聖剣は、新たな誓いを見届けるように、澄んだ白光を放っていた。"
 
 
 def migrate(pack: dict[str, Any]) -> dict[str, Any]:
@@ -71,6 +75,32 @@ def migrate(pack: dict[str, Any]) -> dict[str, Any]:
     ]
     encounter["encounter_modifiers"] = [entry for entry in encounter["encounter_modifiers"]
                                          if entry["id"] not in {a["id"] for a in additions}] + additions
+
+    epilogues = result.setdefault("epilogues", [])
+    sword_epilogues = [
+        {"id": "holy_sword_awakened_epilogue", "endings": ["draco_defeated", "draco_defeated_with_ignis"],
+         **normal, "requirements": {"flag": "holy_sword_awakened"}, "text": E1_TEXT},
+        {"id": "holy_sword_fusion_epilogue", "endings": ["draco_defeated", "draco_defeated_with_ignis"],
+         **normal, "requirements": requirement_b, "text": E2_TEXT},
+    ]
+    epilogues[:] = [entry for entry in epilogues
+                    if entry.get("id") not in {item["id"] for item in sword_epilogues}]
+    epilogues.extend(sword_epilogues)
+
+    human = next(enemy for enemy in result["enemies"] if enemy["id"] == "draco_human")
+    phase_events = [event for event in human.get("phase_transition_events", [])
+                    if event.get("id") != "holy_sword_fusion_phase_transition"]
+    phase_events.append({"id": "holy_sword_fusion_phase_transition", **normal,
+                         "requirements": requirement_b, "text": V1_TEXT})
+    human["phase_transition_events"] = phase_events
+
+    victory_events = [event for event in encounter.get("victory_events", [])
+                      if event.get("id") != "holy_sword_awakened_victory"]
+    victory_events.append({"id": "holy_sword_awakened_victory", **normal,
+                           "requirements": {"flag": "holy_sword_awakened"}, "text": V2_TEXT,
+                           "game_over_endings": ["draco_defeated", "draco_defeated_with_ignis"]})
+    encounter["victory_events"] = victory_events
+
     report = next(a for a in locations["castle_report"]["actions"] if a["id"] == "report_with_evidence")
     originals = [v for v in report["result_variants"] if not v.get("id", "").startswith("holy_sword_")]
     diary_text = next(v["text"] for v in originals if v["requirements"] == {"has_item": "白竜の日誌"})

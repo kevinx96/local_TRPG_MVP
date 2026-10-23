@@ -17,6 +17,8 @@ from scripts.balance.holy_sword_049 import gate_session, run_jobs
 from scripts.scenario.holy_sword_049 import (
     AWAKEN_TEXT,
     BLACKSMITH_HINT,
+    E1_TEXT,
+    E2_TEXT,
     IRON_HINT,
     LOCK_TEXT,
     REVEAL_DIARY_TEXT,
@@ -25,6 +27,8 @@ from scripts.scenario.holy_sword_049 import (
     SWORD_EFFECT,
     START_TEXT,
     STOLEN_SKILL_NAME,
+    V1_TEXT,
+    V2_TEXT,
     migrate,
 )
 
@@ -390,6 +394,86 @@ class HolySwordTests(unittest.TestCase):
         self.assertTrue(value["combat"]["lethal_awakenings"][0]["used"])
         hit(value)
         self.assertEqual(sum(e["kind"] == "awakening" for e in value["combat"]["log"]), 1)
+
+    def test_hidden_endings_and_victory_text_follow_four_flag_combinations(self):
+        cases = (
+            ("awakened", "hero", {"defeated_ignis": True, "holy_sword_awakened": True},
+             {"e1": True, "e2": False, "v1": False, "v2": True}),
+            ("awakening_not_triggered", "hero", {},
+             {"e1": False, "e2": False, "v1": False, "v2": False}),
+            ("fusion_branch", "hero", {"defeated_ignis": True, "accepted_sword_fusion": True},
+             {"e1": False, "e2": True, "v1": True, "v2": False}),
+            ("non_hero", "mage", {"defeated_ignis": True, "accepted_sword_fusion": True},
+             {"e1": False, "e2": False, "v1": False, "v2": False}),
+        )
+        observed_sections = []
+        for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):
+            source = state.load_scenario_pack(ROOT / "host/prompt/processed" / filename)
+            pack = difficulty.apply_difficulty(source, "normal")
+            locations = {location["id"]: location for location in pack["locations"]}
+            human = next(enemy for enemy in pack["enemies"] if enemy["id"] == "draco_human")
+            events = locations["draco_battle"]["combat"]["victory_events"]
+            epilogues = {entry["id"]: entry for entry in pack["epilogues"]}
+            observed_sections.append((
+                [epilogues[key] for key in ("holy_sword_awakened_epilogue", "holy_sword_fusion_epilogue")],
+                human["phase_transition_events"], events,
+            ))
+            self.assertEqual(epilogues["holy_sword_awakened_epilogue"]["text"], E1_TEXT)
+            self.assertEqual(epilogues["holy_sword_fusion_epilogue"]["text"], E2_TEXT)
+            self.assertTrue(all(entry["difficulty_only"] == ["normal"] for entry in (
+                epilogues["holy_sword_awakened_epilogue"], epilogues["holy_sword_fusion_epilogue"],
+                human["phase_transition_events"][0], events[-1],
+            )))
+
+            baby = difficulty.apply_difficulty(source, "baby")
+            baby_location = next(location for location in baby["locations"] if location["id"] == "draco_battle")
+            baby_human = next(enemy for enemy in baby["enemies"] if enemy["id"] == "draco_human")
+            self.assertFalse(any(entry.get("id", "").startswith("holy_sword_")
+                                 for entry in baby.get("epilogues", [])))
+            self.assertFalse(any(event.get("id") == "holy_sword_fusion_phase_transition"
+                                 for event in baby_human.get("phase_transition_events", [])))
+            self.assertFalse(any(event.get("id") == "holy_sword_awakened_victory"
+                                 for event in baby_location["combat"].get("victory_events", [])))
+
+            for name, character_id, flags, expected in cases:
+                with self.subTest(pack=filename, case=name):
+                    value = gate_session(pack, CHOICES)
+                    value["flags"] = dict(flags)
+                    if character_id != "hero":
+                        mage = next(template for template in pack["characters"] if template["id"] == character_id)
+                        value["character"] = state._character_from_template(mage, pack)
+                    combat.ensure_combat_started(value)
+
+                    value["combat"]["enemies"][0]["hp"] = 0
+                    combat._check_victory_or_defeat(value)
+                    transition = next(entry for entry in value["combat"]["log"]
+                                      if entry["kind"] == "phase_transition")
+                    self.assertEqual(V1_TEXT in transition["text"], expected["v1"])
+
+                    value["combat"]["enemies"][0]["hp"] = 0
+                    combat._check_victory_or_defeat(value)
+                    result = value["combat"]["result"]
+                    self.assertEqual(V2_TEXT in result["prepared_text"], expected["v2"])
+                    reason = value["combat"]["pending_state_delta"]["game_over"]["reason"]
+                    self.assertEqual(V2_TEXT in reason, expected["v2"])
+                    reward_reason = result["rewards"]["game_over"]["reason"]
+                    self.assertEqual(V2_TEXT in reward_reason, expected["v2"])
+                    aftermath = state._epilogue_lines(value, {"ending": "draco_defeated"})
+                    self.assertEqual(E1_TEXT in aftermath, expected["e1"])
+                    self.assertEqual(E2_TEXT in aftermath, expected["e2"])
+        pack = difficulty.apply_difficulty(state.load_scenario_pack(
+            ROOT / "host/prompt/processed/dragon_rpg.json"), "normal")
+        value = gate_session(pack, CHOICES)
+        value["flags"] = {"defeated_ignis": True, "holy_sword_awakened": True, "ignis_ally": True}
+        combat.ensure_combat_started(value)
+        value["combat"]["enemies"][0]["hp"] = 0
+        combat._check_victory_or_defeat(value)
+        value["combat"]["enemies"][0]["hp"] = 0
+        combat._check_victory_or_defeat(value)
+        game_over = value["combat"]["pending_state_delta"]["game_over"]
+        self.assertEqual(game_over["ending"], "draco_defeated_with_ignis")
+        self.assertIn(V2_TEXT, game_over["reason"])
+        self.assertEqual(observed_sections[0], observed_sections[1])
 
     def test_baby_effective_diff_only_revision(self):
         for filename in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):

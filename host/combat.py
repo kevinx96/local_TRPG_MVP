@@ -1436,7 +1436,15 @@ def _check_victory_or_defeat(session: dict[str, Any]) -> None:
         enemies[index] = replacement
         combat.setdefault("phase_transitions", []).append(
             {"round": combat["round"], "from": enemy["template_id"], "to": replacement["template_id"]})
-        _log(session, "system", "phase_transition", str(enemy.get("phase_transition_text") or ""),
+        transition_texts = [str(enemy.get("phase_transition_text") or "")]
+        from .state import _session_requirement_passes
+
+        for event in enemy.get("phase_transition_events", []):
+            allowed = event.get("difficulty_only", ["baby", "normal"])
+            if (session.get("difficulty", "baby") in allowed
+                    and _session_requirement_passes(event.get("requirements"), session)):
+                transition_texts.append(str(event.get("text") or ""))
+        _log(session, "system", "phase_transition", "\n".join(text for text in transition_texts if text),
              {"from": enemy["template_id"], "to": replacement["template_id"],
               "from_id": enemy["id"], "replacement": deepcopy(replacement)}, target=replacement)
         _activate_phase_allies(session)
@@ -1479,15 +1487,27 @@ def _finish_combat(session: dict[str, Any], status: str, summary: str) -> None:
     if status == "victory":
         from .state import _session_requirement_passes
 
+        victory_events = []
         for event in (combat.get("encounter") or {}).get("victory_events", []):
-            if _session_requirement_passes(event.get("requirements"), session):
+            allowed = event.get("difficulty_only", ["baby", "normal"])
+            if (session.get("difficulty", "baby") in allowed
+                    and _session_requirement_passes(event.get("requirements"), session)):
+                victory_events.append(event)
                 result["prepared_text"] = "\n".join(filter(None, [result.get("prepared_text"), event["text"]]))
         defeated_phases = [*combat.get("completed_phases", []), *enemies]
         delta = _victory_delta(session, defeated_phases, combat.get("encounter") or {})
+        if isinstance(delta.get("game_over"), dict):
+            game_over = delta["game_over"]
+            ending = str(game_over.get("ending") or "")
+            for event in victory_events:
+                if ending in event.get("game_over_endings", []):
+                    game_over["reason"] = "\n".join(filter(None, [game_over.get("reason"), event["text"]]))
+            result["prepared_text"] = str(game_over.get("reason") or "")
+            for event in victory_events:
+                if event["text"] not in result["prepared_text"]:
+                    result["prepared_text"] = "\n".join(filter(None, [result["prepared_text"], event["text"]]))
         combat["pending_state_delta"] = delta
         result["rewards"] = deepcopy(delta)
-        if isinstance(delta.get("game_over"), dict):
-            result["prepared_text"] = delta["game_over"]["reason"]
         flags = session.setdefault("flags", {})
         for enemy in defeated_phases:
             template_id = str(enemy.get("template_id") or enemy.get("id") or "")
