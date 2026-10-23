@@ -149,8 +149,6 @@ def main(argv=None):
         parser.error("--passive-table and --skip-passive-enumeration must be used together")
     if args.difficulty != "normal" and (args.passive_table or args.tuning_052 or args.skip_passive_probes):
         parser.error("052 options apply only to normal")
-    if args.tuning_052 and not args.passive_table:
-        parser.error("052a/b require a frozen --passive-table")
     normal_output = args.output.parent if args.output else checkpoints.ROOT / ".tmp-test/052a"
     args.checkpoint_output = args.checkpoint_output or normal_output / "checkpoints-normal.json"
     args.passive_output = args.passive_output or normal_output / "passive-defaults.json"
@@ -202,7 +200,9 @@ def main(argv=None):
                     raise ValueError(f"Invalid frozen passive choices: {character}")
         else:
             enumeration = run_stage("passive_enumeration", [("enumerate_probes", args.scenario, c, args.passive_n, args.seed, {**settings, "choices": choices}) for c in CHARACTERS for choices in probes_v3.combinations(pack, c)])
-            defaults = probes_v3.choose_defaults(pack, enumeration)
+            defaults = probes_v3.choose_defaults(pack, enumeration, postgame=args.tuning_052)
+            if args.tuning_052:
+                defaults.update(seed=args.seed, enumeration_n=args.passive_n, validation_n=args.n)
             args.passive_output.parent.mkdir(parents=True, exist_ok=True)
             args.passive_output.write_text(json.dumps(defaults, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
         if args.tuning_052:
@@ -245,6 +245,9 @@ def main(argv=None):
         bundle["measurement_scope"] = "052"
     if args.difficulty == "normal":
         cp = probes_v3.export_checkpoints(records, metadata)
+        if args.tuning_052:
+            from .coverage_052c import supplement
+            cp["coverage"] = supplement(args, settings, defaults, run_stage, cp)
         args.checkpoint_output.parent.mkdir(parents=True, exist_ok=True)
         args.checkpoint_output.write_text(json.dumps(cp, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
         bundle["damage_budget_v2"] = []
@@ -271,13 +274,14 @@ def main(argv=None):
                         opening["first_three_rounds"] = first_three_rounds(pack, entry["snapshot"], args.seed, encounter)
                     bundle["damage_budget_v2"].append({"character": character, "encounter": encounter,
                         "encounter_class": session["combat"]["encounter"].get("encounter_class"), "level": session["character"]["level"],
-                        "source": "P2 observed median-level opening, before first round-start attacks", **opening})
+                        "source": entry.get("source", "P2 observed median-level opening, before first round-start attacks"), **opening})
         for kind in ("preparation_probes", "companion_probes", "level_probes", "boss_policy_probes", "passive_probes"):
             if kind == "passive_probes" and args.skip_passive_probes:
                 bundle[kind] = []
                 continue
             bundle[kind] = run_stage(kind, [("normal_"+kind, args.scenario, c, args.probe_n, args.seed,
-                {**settings, "checkpoint_path": str(args.checkpoint_output), "passive_table": defaults["characters"][c]["choices"], "encounter": encounter})
+                {**settings, "checkpoint_path": str(args.checkpoint_output), "passive_table": defaults["characters"][c]["choices"], "encounter": encounter,
+                 "postgame_passives": args.tuning_052})
                 for encounter, point in cp["encounters"].items() for c in CHARACTERS if c in point["characters"]])
         profiles = {}
     else:
@@ -316,9 +320,9 @@ def main(argv=None):
                  for t in records for b in t["battles"] if b["encounter_class"] == "boss"],
         "grinding": [dict(character=t["character"], seed=t["seed"], costs=t.get("level_costs", [])) for t in records if t["archetype"] == "P0b"],
         "samples": [t for t in records if "steps" in t], "fingerprints": fingerprints,
-        "limitations": ["052 percentage attacks and visible telegraphs use engine settlement; no new hazard content." if args.tuning_052 else "No hazard or percentage-damage route handling; no such hazard in current pack.",
+        "limitations": ["052c includes 054 cure items, telegraph tools, P2 cure shopping and optional hazards." if args.tuning_052 else "No hazard or percentage-damage route handling; no such hazard in current pack.",
                          "Opening expectations use current living foes; multi-hit kill truncation and sequential shield depletion are approximations in policy scoring, actual combat remains engine-exact.",
-                         "No checkpoints fabricated for unobserved encounters/classes; proposed passive table and branches require design review.",
+                         "No checkpoints fabricated for unobserved encounters/classes; supplemental P2-policy optional branches are labeled in checkpoints; proposed passive table and branches require design review.",
                          "P0g has no repeatable encounters; its paired outcomes equal P0b; resource cost is net resource_score change including rewards and level refill."],
         "timings": timings, "elapsed_seconds": time.perf_counter()-started}
     if args.tuning_052:

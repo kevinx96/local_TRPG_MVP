@@ -10,7 +10,7 @@ from urllib.parse import quote
 from host.difficulty import overlay_fingerprint, validate_difficulty
 
 ROOT = Path(__file__).resolve().parents[2]
-REVISION = "2026-10-23-tuning-052b"
+REVISION = "2026-10-24-tuning-052c3"
 
 # L1: bounded EXP search and approved integer / per-level growth.
 PROGRESSION: dict[str, Any] = {'level_gains': {'hero': {'max_hp': 3,
@@ -64,7 +64,7 @@ ENEMIES: dict[str, dict[str, Any]] = {'ash_wraith': {'skills.@id=ash_embrace.dam
                  'max_hp': 15},
  'emerald_spider': {'combat.basic_attack.damage': '1'},
  'fire_elemental': {'combat.basic_attack.damage': '1d2+12'},
- 'fire_slime': {'combat.basic_attack.damage': '1d2+2'},
+ 'fire_slime': {'combat.basic_attack.damage': '2d4+5'},
  'forest_wolf': {'combat.basic_attack.damage': '2d4+2'},
  'frost_dire_wolf': {'combat.basic_attack.damage': '2d4+8',
                      'hp': 56,
@@ -282,7 +282,7 @@ MOVES_052B = [{'enemy': 'forest_wolf',
   'id': 'frozen_breath',
   'reuse': True,
   'name': '凍てつく吐息',
-  'ratio': 0.45,
+  'ratio': 0.40,
   'release_text': '【仮】{enemy}は白い冷気を吸い込み、すべてを凍らせる吐息を放った！',
   'every_n_rounds': 3,
   'warning': '【仮】{enemy}が深く息を吸い込み、喉の奥で白銀の冷気が渦巻いている……！'}]
@@ -316,6 +316,14 @@ def migrate(pack: dict[str, Any]) -> dict[str, Any]:
                 entry["set"] = value
     _ignis_second_phase(result)
     entries.append({"entity": "items", "id": "hero_holy_sword", "path": "combat.damage", "set": "1d8+34"})
+    entries.extend(_economy_052c(result))
+    entries.extend(_skills_052c(result))
+    entries.append({"entity": "enemies", "id": "fire_wisp", "path": "combat.basic_attack.damage", "set": "2d2"})
+    entries.extend({"entity": "enemies", "id": "zebok", "path": path, "set": value}
+                   for path, value in {"hp": -58, "combat.basic_attack.damage": "2d4+9",
+                                       "skills.@id=zebok_bone_dragon.damage": "2d4+9",
+                                       "skills.@id=dark_feast.damage": "2d4+9"}.items())
+    entries.extend(_residuals_052c3(result))
     destinations = {(e["entity"], e["id"], e["path"]): e for e in entries}
     updated = []
     for entry in result["difficulty_overlays"]["normal"]:
@@ -326,6 +334,70 @@ def migrate(pack: dict[str, Any]) -> dict[str, Any]:
     result["meta"]["content_revision"] = max(result["meta"]["content_revision"], REVISION)
     validate_difficulty(result)
     return result
+
+
+def _residuals_052c3(pack: dict[str, Any]) -> list[dict[str, Any]]:
+    # The two drakes' ordinary claws bypass the percentage-only shared cap.
+    fields = {
+        "lava_drake": {"combat.basic_attack.damage": "2d4+1", "skills.@id=hook_claw.damage": "2d4+1"},
+        "skeleton_soldier": {"combat.basic_attack.damage": "1d2+3"},
+        "gravel_beetle": {"combat.basic_attack.damage": "1d2+3"},
+        "earth_worm": {"combat.basic_attack.damage": "2d4+8"},
+        "ice_assassin": {"combat.basic_attack.damage": "2d2+3", "skills.@id=frozen_poison.damage": "2d2+3"},
+    }
+    periodic_path = "skills.@id=gravel_spray.damage"
+    worm = next(e for e in pack["enemies"] if e["id"] == "earth_worm")
+    if any(s["id"] == "gravel_spray" for s in worm.get("skills", [])):
+        fields["earth_worm"][periodic_path] = "2d4+8"
+    else:
+        # Earlier content migrations replace this enemy before 054 restores its skill.
+        pack["difficulty_overlays"]["normal"] = [e for e in pack["difficulty_overlays"]["normal"]
+            if (e["entity"], e["id"], e["path"]) != ("enemies", "earth_worm", periodic_path)]
+    return [{"entity": "enemies", "id": identifier, "path": path, "set": value}
+            for identifier, values in fields.items() for path, value in values.items()] + [
+        {"entity": "locations", "id": "lost_goblin_crossroads", "path": "combat.encounter_modifiers",
+         "set": [{"id": "lost_goblin_052c3", "enemy_damage_multiplier": .8}]},
+    ]
+
+
+def _economy_052c(pack: dict[str, Any]) -> list[dict[str, Any]]:
+    entries = [{"entity": "shops", "id": "magic_shop",
+                "path": "items.@item_id=healing_scroll.price", "set": 30}]
+    for enemy in pack["enemies"]:
+        for item in enemy.get("rewards", {}).get("items", []):
+            if item.get("name") not in {"治療の巻物", "薬草"}:
+                continue
+            selector = "@id=" + item["id"] if item.get("id") else "@name=" + quote(item["name"], safe="")
+            entries.append({"entity": "enemies", "id": enemy["id"],
+                            "path": "rewards.items." + selector + ".quantity",
+                            "set": 1})
+    return entries
+
+
+def _skills_052c(pack: dict[str, Any]) -> list[dict[str, Any]]:
+    classes = {entry["id"]: entry for entry in pack["class_progression"]}
+    assert all(entry.get("difficulty_only") == ["normal"] for entry in classes.values())
+    hero = classes["hero"]
+    sweep = next(a["skill"] for a in hero["actives"] if a["skill"]["id"] == "sweep")
+    sweep["conditional_multipliers"][0]["x"] = 1.8
+    for passive in hero["passives"]:
+        effects = passive["tiers"][0]["effects"]
+        if passive["id"] == "adversity_flame":
+            effects["low_hp"]["damage_multiplier"] = 1.3
+        elif passive["id"] == "sword_saint":
+            effects["physical_penetration"] = .4
+    halo = next(p for p in classes["cleric"]["passives"] if p["id"] == "holy_halo")
+    halo["tiers"][0]["effects"]["round_attack"].update(hp_ratio_gt=.6, damage="1d4+wis/8")
+    cycle = next(p for p in classes["mage"]["passives"] if p["id"] == "mana_cycle")
+    for tier, amount, cap in zip(cycle["tiers"][:2], (2, 3), (.3, .4)):
+        tier["effects"]["mana_cycle"].update(amount=amount, cap_ratio=cap)
+    armor = next(p for p in classes["mage"]["passives"] if p["id"] == "mana_armor")
+    armor["tiers"][0]["effects"].update(mana_armor=.2, mana_armor_cap_ratio=.5)
+    return [
+        {"entity": "characters", "id": "thief", "path": "skills.@id=hide_in_shadow.cooldown", "set": 1},
+        {"entity": "shops", "id": "magic_shop", "path": "items.@item_id=spellbook_lightning.price", "set": 40},
+        {"entity": "shops", "id": "magic_shop", "path": "items.@item_id=spellbook_arcane_lance.price", "set": 35},
+    ]
 
 
 def _prism_resistances(pack: dict[str, Any]) -> list[dict[str, Any]]:

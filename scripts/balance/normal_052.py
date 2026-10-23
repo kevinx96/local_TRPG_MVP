@@ -8,7 +8,7 @@ from statistics import mean
 from typing import Any
 from unittest.mock import patch
 
-from host import combat, state
+from host import combat, state, status_effects
 from . import budget, route_v2, snapshots_v3
 from .archetypes import CHARACTERS
 
@@ -19,7 +19,7 @@ def opening_moments(session: dict[str, Any]) -> dict[str, Any]:
     """Opening threat without finite shields or the player's defensive stance."""
     if session.get("difficulty") != "normal":
         raise ValueError("052 M9 is normal-only")
-    baseline = budget.phase_moments(session)
+    baseline = with_current_dots(session)
     candidate = deepcopy(session)
     candidate["combat"].get("player_status", {}).pop("guard_multiplier", None)
     for status in candidate["character"].get("statuses", []):
@@ -27,9 +27,37 @@ def opening_moments(session: dict[str, Any]) -> dict[str, Any]:
         modifiers = status.get("modifiers", {})
         if modifiers.get("received_damage_multiplier", 1) < 1:
             modifiers.pop("received_damage_multiplier")
-    primary = budget.phase_moments(candidate)
+    primary = with_current_dots(candidate)
     return {**primary, "max_hp": candidate["character"]["max_hp"],
             "with_shields": baseline, "definition": "opening_without_shields_or_player_stance"}
+
+
+def with_current_dots(session: dict[str, Any]) -> dict[str, Any]:
+    direct = budget.phase_moments(session)
+    actor = session["character"]
+    damage = variance = 0.0
+    for status in actor.get("statuses", []):
+        tick = status.get("tick", {})
+        if not status_effects.modern(status) or not tick:
+            continue
+        distribution = budget.formula_distribution(str(tick.get("damage", "0")), status["source"])
+        values = []
+        for raw, probability in distribution.items():
+            raw *= status.get("stacks", 1)
+            element = tick.get("element", "physical")
+            resistance = combat._resistance_multiplier(actor, element)
+            amount = (max(0, round(raw * resistance)) if tick.get("ignore_defense", True) else
+                      combat.damage_after_defense(raw, resistance, combat._actor_defense(actor), combat._combat_rules(session)))
+            values.append((combat._round_received_damage(session, amount, element), probability))
+        mu = sum(v*p for v, p in values)
+        damage += mu
+        variance += sum(v*v*p for v, p in values)-mu*mu
+    total = direct["expected_damage"] + damage
+    if not damage:
+        return direct
+    return {**direct, "direct_expected_damage": direct["expected_damage"], "current_dot_damage": damage,
+            "expected_damage": total, "variance": direct["variance"]+variance,
+            "ratio": total/actor["max_hp"], "cv": (direct["variance"]+variance)**.5/total if total else None}
 
 
 def first_three_rounds(pack: dict[str, Any], snapshot: dict[str, Any], seed: int,

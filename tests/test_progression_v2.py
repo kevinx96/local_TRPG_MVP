@@ -373,13 +373,15 @@ class ProgressionTests(unittest.TestCase):
             self.assertEqual(s["character"]["hp"], 0)
 
     def test_mana_cycle_acrobat_caps_all_tiers(self):
-        for tier, cap in enumerate((20, 30, 40), 1):
+        for tier, cap in enumerate((30, 40, 40), 1):
             s = session("mage")
             select(s, "mana_cycle", tier)
             s["character"].update(mp=0, max_mp=100)
             for n in range(1, 101):
                 s["combat"]["round"] = n
                 combat._passive_round_start(s, Rolls())
+                if n == 1:
+                    self.assertEqual(s["character"]["mp"], (2, 3, 3)[tier - 1])
             self.assertEqual(s["character"]["mp"], cap)
         for tier, evade, cap in ((1, 5, 2), (2, 8, 3), (3, 10, 4)):
             s = session("thief")
@@ -411,14 +413,14 @@ class ProgressionTests(unittest.TestCase):
         actor = s["character"]
         before = actor["hp"]
         combat._resolve_attack(s, s["combat"]["enemies"][0], actor, {"damage": "6", "ignores_defense": True}, "enemy", Rolls())
-        self.assertEqual(before - actor["hp"], 4)
+        self.assertEqual(before - actor["hp"], 5)
         s = session("thief")
         select(s, "counter_sight")
         enemy = s["combat"]["enemies"][0]
         for _ in range(5):
             combat._enemy_reaction(s, enemy, Rolls(), missed=True)
         self.assertEqual(enemy["hp"], 995)
-        for hp, hit in ((70, False), (71, True)):
+        for hp, hit in ((60, False), (61, True)):
             s = session("cleric")
             select(s, "holy_halo")
             s["character"].update(max_hp=100, hp=hp)
@@ -474,7 +476,7 @@ class ProgressionTests(unittest.TestCase):
         enemy["combat"]["defense"] = 10
         enemy["resistances"]["physical"] = .5
         amount = combat._resolve_attack(s, s["character"], enemy, {"damage": "40", "element": "physical"}, "player", Rolls())
-        self.assertEqual(amount, 19)
+        self.assertEqual(amount, 22)
         s = session("mage")
         select(s, "omni_master")
         combat._player_attack(s, "", Rolls())

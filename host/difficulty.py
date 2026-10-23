@@ -370,7 +370,7 @@ NUMERIC_FIELDS["class_progression"] = (
         "regen_ratio", "overflow_ratio", "sp_for_mp.rate", "sp_for_mp.max_ratio", "round_attack.hp_ratio_gt",
         "round_attack.damage", "round_attack.accuracy", "mana_cycle.amount", "mana_cycle.cap_ratio",
         "shield_regain.every", "shield_regain.max", "shield_regain.status.modifiers.shield.max_hp_ratio",
-        "resonance.multiplier", "resonance.refund", "mana_armor", "weak_multiplier",
+        "resonance.multiplier", "resonance.refund", "mana_armor", "mana_armor_cap_ratio", "weak_multiplier",
         "evade_bonus", "miss_sp", "miss_sp_cap", "hit_status.stacks", "hit_status.max_stacks",
         "free_item_uses", "counter_attack.damage", "counter_attack.accuracy", "encounter_damage.*",
     )),
@@ -557,9 +557,11 @@ def _apply_overlays(pack: dict[str, Any]) -> None:
             elif group == "characters" and pattern == "skills.*.cooldown":
                 valid = type(value) is int and value >= 1
             elif group == "locations" and pattern == "combat.encounter_modifiers":
-                valid = (identifier == "goblin_fort_first_second" and isinstance(value, list) and len(value) == 1
+                modifier_ids = {"goblin_fort_first_second": "trash_guards_052b",
+                                "lost_goblin_crossroads": "lost_goblin_052c3"}
+                valid = (identifier in modifier_ids and isinstance(value, list) and len(value) == 1
                          and isinstance(value[0], dict) and set(value[0]) == {"id", "enemy_damage_multiplier"}
-                         and value[0]["id"] == "trash_guards_052b" and _number(value[0]["enemy_damage_multiplier"])
+                         and value[0]["id"] == modifier_ids[identifier] and _number(value[0]["enemy_damage_multiplier"])
                          and 0 <= value[0]["enemy_damage_multiplier"] <= 1)
             elif group == "enemies":
                 if pattern == "status_immunity":

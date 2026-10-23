@@ -210,6 +210,8 @@ class MeasurementRun(class_aware.Run):
         self.purchases: list[dict[str, Any]] = []
         self.quest_attempts: list[dict[str, Any]] = []
         self.check_probes: list[dict[str, Any]] = []
+        self.hazard_attempts: set[str] = set()
+        self.handling_hazards = False
         self.record_node()
 
     def record_node(self) -> None:
@@ -295,9 +297,32 @@ class MeasurementRun(class_aware.Run):
         self.record_node()
         if settle:
             self.settle()
+            self.hazards_here()
         if self.session["character"]["hp"] <= 0 or (self.session.get("game_over") and
                 self.session["game_over"].get("title") != COMPLETION_TITLE):
             raise class_aware.Defeat(source)
+
+    def hazards_here(self) -> None:
+        if (self.session.get("difficulty") != "normal" or self.handling_hazards
+                or class_aware.combat_pending(self.session) or self.session.get("game_over")):
+            return
+        location = state._current_location_record(self.session) or {}
+        if not any(a.get("hazard") and a["id"] not in self.hazard_attempts for a in location.get("actions", [])):
+            return
+        self.handling_hazards = True
+        try:
+            for identifier, action in list(class_aware.available_actions(self.session).items()):
+                if not action.get("hazard") or identifier in self.hazard_attempts:
+                    continue
+                dice, dc = state.action_dice_settings(action, session=self.session)
+                check = state.dice_check_info(self.session, dice, dc, roll=action.get("roll"))
+                if not self.archetype.id.startswith("P0") and check["advantage"] != "advantage":
+                    continue
+                self.hazard_attempts.add(identifier)
+                self.probe_check(action) if self.measure else None
+                self.act(identifier)
+        finally:
+            self.handling_hazards = False
 
     def probe_check(self, action: dict[str, Any]) -> None:
         """Paired ordinary branches through forced combat; never advance the route RNG."""
@@ -335,6 +360,12 @@ class MeasurementRun(class_aware.Run):
 
     def decide(self, node: str) -> None:
         preferences = dict(CHECK_PREFERENCES)
+        variant = self.branches.get("coverage_variant") if self.session.get("difficulty") == "normal" else None
+        if variant == "fort_alternatives":
+            preferences.update(goblin_fort_second_choice=("explore_fort_left",),
+                               goblin_fort_chest_choice=("steal_lost_goblin_box", "take_abandoned_goblin_box"))
+        if variant == "ledge":
+            preferences["valley_lava_bridge"] = ("take_ledge_path",)
         if "riku" not in self.quests:
             preferences["burning_house"] = ("leave_burning_house",)
         if self.archetype.avoid_battles:
@@ -445,6 +476,13 @@ class MeasurementRun(class_aware.Run):
                 if not any(p["shop"] == shop and p["item"] == item for p in self.purchases):
                     self.buy(shop, item)
         self.buy_scrolls()
+        if self.session.get("difficulty") == "normal" and self.archetype.id in {"P2", "P2s"}:
+            for shop in self.session["scenario_pack"].get("shops", []):
+                if shop["location_id"] != self.location:
+                    continue
+                for item in ("antidote_herb", "burn_salve", "smelling_salts"):
+                    if not any(p["item"] == item and p["shop"] == shop["id"] for p in self.purchases):
+                        self.buy(shop["id"], item)
 
     def buy_scrolls(self) -> None:
         if self.session.get("difficulty") != "normal" or self.session["character"]["character_id"] != "mage" or self.archetype.id not in {"P1", "P2", "P3", "P2s"} or self.location != "magic_shop":
@@ -517,6 +555,10 @@ class MeasurementRun(class_aware.Run):
     def start_forest(self) -> None:
         self.act("go_dark_forest")
         self.act("attack_slime")
+        if self.session.get("difficulty") == "normal" and self.branches.get("coverage_variant") == "lost_goblin":
+            self.act("ignore_lost_goblin")
+            self.decide("lost_goblin_crossroads")
+            return
         if "fort" in self.quests:
             self.act("help_lost_goblin")
             self.act("enter_goblin_fort")
@@ -600,6 +642,10 @@ class MeasurementRun(class_aware.Run):
         if "town_errands" in self.quests:
             self.town_shops(returning=True)
         self.visit_scroll_shop()
+        if self.session.get("difficulty") == "normal" and self.branches.get("coverage_variant") == "postgame_inn":
+            self.act("go_inn")
+            self.try_act("rest_at_inn")
+            self.act("return_castle_from_inn")
         self.act("go_report_hall")
         # Ordinary players do not automatically expose Draco just because a clue exists.
         if "purification" in self.quests and "report_with_evidence" in class_aware.available_actions(self.session):
@@ -645,7 +691,7 @@ class MeasurementRun(class_aware.Run):
             elif node == "goblin_fort_healing_circle":
                 self.act("use_fort_healing_circle")
             elif node == "goblin_fort_third_gate":
-                if not self.try_act("give_correct_password"):
+                if self.branches.get("coverage_variant") == "fort_alternatives" or not self.try_act("give_correct_password"):
                     self.act("admit_no_password")
             else:
                 raise ValueError(f"Unexpected fort location: {node}")
@@ -739,6 +785,9 @@ class MeasurementRun(class_aware.Run):
                            "camp_to_rockfall", "rockfall_to_cliff", "inspect_white_claw", "cliff_to_giant",
                            "fight_gorge_giant_path", "giant_to_worm", "fight_gorge_worm_lair", "worm_to_giant",
                            "giant_to_cliff", "cliff_to_rockfall", "rockfall_to_entrance", "gorge_to_wall", "oaksdawn_to_battlefield"):
+            if (self.session.get("difficulty") == "normal" and identifier == "fight_gorge_rockfall_path"
+                    and self.session["flags"].get("passed_gorge_rockfall_path")):
+                continue
             self.act(identifier)
 
     def grind_repeatable(self) -> None:
@@ -825,12 +874,20 @@ def _job(job: tuple) -> list[dict[str, Any]]:
     records = []
     candidates: dict[str, dict[int, dict[str, Any]]] = {}
     histograms: dict[str, Counter] = {}
+    prototype = ARCHETYPES[archetype]
+    if settings.get("coverage_variant"):
+        if difficulty != "normal":
+            raise ValueError("Supplemental coverage is normal-only")
+        from .coverage_052c import archetype as coverage_archetype
+        prototype = coverage_archetype(settings["coverage_variant"])
     for index in range(n):
-        record = trial(pack, character, sim.trial_seed(seed, "route_v2", character, index), ARCHETYPES[archetype],
+        record = trial(pack, character, sim.trial_seed(seed, "route_v2", character, index), prototype,
                        difficulty=difficulty, spring=spring, effective=True,
                        passive_table=settings.get("passive_table"), branches=settings.get("branches"), measure=settings.get("measure", True))
         if settings.get("branch_proposal"):
             record["branch_proposal"] = settings["branch_proposal"]
+        if settings.get("coverage_variant"):
+            record["coverage_variant"] = settings["coverage_variant"]
         for encounter, snapshot in record.pop("snapshots", {}).items():
             level = snapshot["character"]["level"]
             candidates.setdefault(encounter, {}).setdefault(level, {"snapshot": snapshot, "seed": record["seed"], "trial_index": index})

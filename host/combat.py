@@ -1231,6 +1231,16 @@ def _damage_player(session: dict[str, Any], damage: int, *, survive_at_one: bool
     return damage
 
 
+def _mana_armor_diversion(session: dict[str, Any], damage: int, passive: dict[str, Any]) -> int:
+    actor = session["character"]
+    diverted = min(actor.get("mp", 0), math.floor(damage * passive.get("mana_armor", 0) + .5))
+    if "mana_armor_cap_ratio" in passive:
+        used = session["combat"].get("passive_state", {}).get("mana_armor_absorbed", 0)
+        cap = math.floor(actor["max_hp"] * passive["mana_armor_cap_ratio"])
+        diverted = min(diverted, max(0, cap - used))
+    return diverted
+
+
 def _resolve_attack(
     session: dict[str, Any],
     attacker: dict[str, Any],
@@ -1342,9 +1352,12 @@ def _resolve_attack(
         if defender is session.get("character"):
             if had_shield and not any(s.get("id") == "arcane_shield" for s in defender.get("statuses", [])) and progression.enabled(session):
                 session["combat"]["passive_state"]["shield_broken_round"] = session["combat"]["round"]
-            diverted = min(defender.get("mp", 0), math.floor(damage * passive.get("mana_armor", 0) + .5))
+            diverted = _mana_armor_diversion(session, damage, passive)
             if diverted:
                 defender["mp"] -= diverted
+                if "mana_armor_cap_ratio" in passive:
+                    memory = session["combat"].setdefault("passive_state", {})
+                    memory["mana_armor_absorbed"] = memory.get("mana_armor_absorbed", 0) + diverted
             damage -= diverted
     if percentage is not None and attacker.get("encounter_class", session["combat"]["encounter"].get("encounter_class")) == "elite":
         cap = _combat_rules(session).get("elite_percentage_round_cap")

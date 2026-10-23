@@ -156,87 +156,23 @@ class Normal052Tests(unittest.TestCase):
                     if expected:
                         self.assertEqual(state.current_location_id(session), "festival_town")
 
-    def test_f6_real_p3_seed_continues_after_mansion_loss(self):
-        # Pin the pre-tuning numerical fixture for this historical F6 seed.
-        pack = deepcopy(self.pack)
-        pack["combat_rules"].pop("elite_percentage_round_cap", None)
-        raw = state.load_scenario_pack(checkpoints.DEFAULT_SCENARIO)
-        originals = {e["id"]: e for e in raw["enemies"]}
-        for enemy in pack["enemies"]:
-            enemy["combat"].pop("basic_attack_weight", None)
-            enemy["skills"] = deepcopy(originals[enemy["id"]].get("skills", []))
-            if enemy["id"] == "prism_tree":
-                enemy["resistances"] = deepcopy(originals[enemy["id"]]["resistances"])
-                enemy["resistance_cycle"] = deepcopy(originals[enemy["id"]]["resistance_cycle"])
-        guards = next(l for l in pack["locations"] if l["id"] == "goblin_fort_first_second")["combat"]
-        guards["encounter_class"] = "elite"
-        guards.pop("encounter_modifiers", None)
-        pack["progression"].update({'exp_table': {'2': 20, '3': 50, '4': 90, '5': 140, '6': 200, '7': 280, '8': 380},
-         'exp_rewards': {'trash': 5,
-                         'elite': 15,
-                         'boss': 40,
-                         'unclassified': 5,
-                         'quest': 10,
-                         'scripted_loss': 0,
-                         'guest': 0},
-         'level_gains': {'hero': {'max_hp': 5,
-                                  'max_mp': 1,
-                                  'max_sp': 2,
-                                  'attributes': {'str': 2, 'end': 1}},
-                         'cleric': {'max_hp': 5,
-                                    'max_mp': 2,
-                                    'max_sp': 1,
-                                    'attributes': {'wis': 2, 'int': 1}},
-                         'mage': {'max_hp': 3,
-                                  'max_mp': 3,
-                                  'max_sp': 1,
-                                  'attributes': {'int': 2, 'wis': 1}},
-                         'thief': {'max_hp': 4,
-                                   'max_mp': 1,
-                                   'max_sp': 2,
-                                   'attributes': {'dex': 2, 'str': 1}}}})
-        enemy_fields = {'slime': {'combat.basic_attack.damage': '1d6'},
-         'ignis': {'hp': 168, 'max_hp': 168, 'skills.@id=fire_breath.damage': '1d21'},
-         'goblin': {'combat.basic_attack.damage': '1d6'},
-         'goblin_archer': {'combat.basic_attack.damage': '1d6'},
-         'hobgoblin': {'combat.basic_attack.damage': '1d6'},
-         'forest_wolf': {'combat.basic_attack.damage': '1d12'},
-         'slime_king': {'hp': 80, 'max_hp': 80, 'combat.basic_attack.damage': '1d10'},
-         'goblin_king': {'hp': 56, 'max_hp': 56, 'combat.basic_attack.damage': '1d24'},
-         'fire_slime': {'combat.basic_attack.damage': '1d6'},
-         'fire_elemental': {'combat.basic_attack.damage': '2d10'},
-         'ice_elemental': {'combat.basic_attack.damage': '1d16'},
-         'frost_dire_wolf': {'hp': 48, 'max_hp': 48, 'combat.basic_attack.damage': '1d12'},
-         'draco_human': {'hp': 25,
-                         'max_hp': 25,
-                         'skills.@id=sword_flash.damage': '1d8+5',
-                         'skills.@id=ice_blade.damage': '1d8+4'},
-         'draco_dragon': {'hp': 220, 'max_hp': 220},
-         'heat_lizard': {'combat.basic_attack.damage': '2d5+1'},
-         'ruby_golem': {'skills.@id=ruby_fist.damage': '1d12'},
-         'sapphire_moth': {'combat.basic_attack.damage': '1d3'},
-         'emerald_spider': {'combat.basic_attack.damage': '1d3'},
-         'prism_tree': {'hp': 130,
-                        'max_hp': 130,
-                        'combat.defense': 2,
-                        'skills.@id=crystal_rain.damage': '1d14'},
-         'ash_wraith': {'skills.@id=ash_embrace.damage': '1d64', 'skills.@id=resentment.damage': '1d64'}}
-        for enemy in pack["enemies"]:
-            for path, value in enemy_fields.get(enemy["id"], {}).items():
-                parts = path.split(".")
-                node = enemy
-                for part in parts[:-1]:
-                    node = next(row for row in node if row["id"] == part[4:]) if part.startswith("@id=") else node[part]
-                node[parts[-1]] = value
-        result = route_v2.trial(pack, "hero", 4295220851872844824, archetypes.ARCHETYPES["P3"],
-                               difficulty="normal", effective=True, measure=False,
-                               passive_table=archetypes.default_passive_choices("hero"),
-                               branches={"fire_seed": "accept", "merchant": "pay"})
-        self.assertNotEqual(result["failed_at"], "mansion_corridor")
-        mansion = next(b for b in result["battles"] if b["encounter"] == "mansion_corridor")
-        self.assertEqual(mansion["status"], "defeat")
-        self.assertTrue(mansion["continue"])
-        self.assertEqual(result["battles"][-1]["encounter"], "draco_battle")
+    def test_f6_engine_defeat_returns_to_town_and_route_can_continue(self):
+        # Isolate the recoverable encounter from changing shopping and hazard RNG.
+        run = route_v2.MeasurementRun(deepcopy(self.pack), "hero", 20261022,
+                                     archetypes.ARCHETYPES["P3"], difficulty="normal", effective=True)
+        run.session["world_state"] = {"scene_id": "general_mansion", "location_id": "mansion_corridor"}
+        actor = run.session["character"]
+        actor.update(hp=1, max_hp=100, inventory=[], equipment=[], skills=[], statuses=[])
+        actor["attributes"]["dex"] = 0
+        run.session["companion"] = None
+        run.session["combat_start_requested"] = True
+        run.settle()
+        self.assertEqual(run.battles[-1]["status"], "defeat")
+        self.assertTrue(run.battles[-1]["continue"])
+        self.assertEqual(run.location, "festival_town")
+        self.assertEqual(run.session["character"]["hp"], 1)
+        self.assertFalse(run.session.get("game_over"))
+        self.assertTrue(route_v2.class_aware.available_actions(run.session))
 
 
 if __name__ == "__main__":

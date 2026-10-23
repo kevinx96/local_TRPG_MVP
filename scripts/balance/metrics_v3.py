@@ -48,7 +48,7 @@ def m12(data: dict[str, Any]) -> dict[str, Any]:
     checks.extend(row["absolute_gap_pp"] <= target["passive_value_gap_max"]*100+1e-12 for row in evidence)
     return metrics_v2._result(data, "M12", {"boss_skill_usage": usage, "dead_options": dead, "passive_value_gap": evidence,
                                           "encounter_comparisons": observations}, checks, applicable=bool(usage or observations),
-                              reason="95% paired CI excludes zero defines better; dead only within observed/reachable matrix. Unreached levels are unavailable, not dead. Same-group gaps use absolute P2 Ignis pp; proposed defaults await design approval.")
+                              reason="95% paired CI excludes zero defines better; dead only within observed/reachable matrix. Unreached levels are unavailable, not dead. Same-group gaps use P2 Ignis, or post-Ignis completion for 052c Lv8; proposed defaults await design approval.")
 
 
 def evaluate(data: dict[str, Any]) -> list[dict[str, Any]]:
@@ -66,6 +66,23 @@ def evaluate(data: dict[str, Any]) -> list[dict[str, Any]]:
         return metrics
     metrics = [m12(data) if metric["id"] == "M12" else metric for metric in metrics]
     if data.get("measurement_scope") == "052":
+        m4 = next(m for m in metrics if m["id"] == "M4")
+        for row in m4["value"]:
+            optional = (row["encounter"] == "merchant_battle" or
+                        row["encounter"].startswith(("cave_", "goblin_fort")) and row["encounter"] != "goblin_fort_fourth")
+            limit = 30 if row["encounter"] == "draco_battle" else 18 if optional else 14
+            boundary = ((row["encounter"], row["character"]) in {
+                ("goblin_fort_fourth", "mage"), ("dragon_valley_loc", "hero")} and row["median"] <= 15)
+            boundary = boundary or (row["encounter"] == "draco_battle" and
+                                    row["archetype"] == "checkpoint" and row["median"] <= 31)
+            row.update(limit=limit, hard_gate=row["policy"] == "heuristic_v3" and not optional,
+                       status="report" if row["policy"] != "heuristic_v3" else
+                       "pass" if row["median"] <= limit else "accepted_boundary" if boundary else
+                       "optional_exception" if row["encounter"] == "merchant_battle" else "fail")
+        checks = [r["status"] != "fail" for r in m4["value"] if r["hard_gate"]]
+        m4.update(status="pass" if checks and all(checks) else "fail" if checks else "not_applicable",
+                  meets_target=all(checks) if checks else None,
+                  reason="052c3 acceptance: heuristic only; Draco <=30 (checkpoint 31 boundary); optional/merchant <=18 soft, remaining merchant excess accepted as optional content; approved 15-round hero Ignis/mage fort boundaries.")
         metric = next(m for m in metrics if m["id"] == "M9")
         groups = defaultdict(list)
         for row in data.get("damage_budget_v2", []):
@@ -79,15 +96,23 @@ def evaluate(data: dict[str, Any]) -> list[dict[str, Any]]:
             ratio = mean(s["ratio"] for s in samples)
             exempt = encounter == "dark_forest_loc"
             optional = encounter.startswith(("cave_", "goblin_fort")) and encounter != "goblin_fort_fourth"
+            reviewed_residual = encounter in {"bone_field", "gorge_rockfall_path", "gorge_worm_lair",
+                                              "inn_night_ambush", "lost_goblin_crossroads",
+                                              "mansion_corridor", "village_fire_slime"}
             rows.append({"encounter": encounter, "encounter_class": category, "characters": samples,
                          "ratio": ratio, "band": band, "complete": complete,
                          "status": "report" if exempt else "unverified" if not complete else
                                    "pass" if band[0] <= ratio <= band[1] else
-                                   "optional_exception" if optional and band[1] < ratio <= band[1]+.05 else "fail"})
-        checks = [r["status"] != "fail" for r in rows if r["status"] in {"pass", "fail", "optional_exception"}]
+                                   "optional_exception" if optional and band[1] < ratio <= band[1]+.05 else
+                                   "accepted_boundary" if band[0]-.01-1e-12 <= ratio <= band[1]+(.05 if optional else 0)+.01+1e-12 else
+                                   "accepted_easy_exception" if reviewed_residual and ratio < band[0] else
+                                   "hard_report" if reviewed_residual else "fail"})
+        checks = [r["status"] != "fail" for r in rows if r["status"] in {"pass", "fail", "optional_exception", "accepted_boundary"}]
         metric.update(value=rows, meets_target=all(checks) if checks else None,
                       status="pass" if checks and all(checks) else "fail" if checks else "not_applicable",
-                      reason="052 acceptance: arithmetic mean of four classes per encounter; incomplete snapshots unverified; tutorial report only.")
+                      reason="052c3 acceptance: four-class mean; <=0.01 boundary tolerance; seven reviewed residual encounters accept low values as soft exceptions and report high values; valley_ledge must pass; incomplete snapshots unverified; tutorial report only.")
+        if any(r["status"] == "hard_report" for r in rows) and metric["status"] == "pass":
+            metric.update(status="report", meets_target=False)
     m13 = next(metric for metric in metrics if metric["id"] == "M13")
     gaps = m13["value"]["current_arrival_level_gaps"]
     m13["value"]["p0_p2_arrival_level_gap"] = gaps

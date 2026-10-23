@@ -396,7 +396,7 @@ class MeasurementV3Tests(unittest.TestCase):
         self.assertEqual(usage['hits'], 0)
 
     def test_scroll_purchase_learning_class_money_and_stock(self):
-        for character, gold, expected in [('mage', 105, 2), ('mage', 44, 0), ('mage', 59, 1), ('hero', 105, 0)]:
+        for character, gold, expected in [('mage', 75, 2), ('mage', 34, 0), ('mage', 39, 1), ('mage', 74, 1), ('hero', 75, 0)]:
             run = route_v2.MeasurementRun(self.pack, character, 2, archetypes.P1, difficulty='normal')
             run.session['world_state'] = {'scene_id': 'castle_town', 'location_id': 'magic_shop'}
             run.session['character']['gold'] = gold
@@ -504,8 +504,8 @@ class MeasurementV3Tests(unittest.TestCase):
         self.assertEqual(run.location, 'elf_spring')
         self.assertTrue(run.session['flags']['mina_rescued'])
         self.assertEqual(run.session['companion']['id'], 'mina')
-        self.assertEqual([step['action'] for step in run.steps[:4]],
-                         ['prism_back', 'crystal_back', 'cave_right', 'escort_mina'])
+        self.assertEqual([step['action'] for step in run.steps[:5]],
+                         ['prism_back', 'hazard_054_03', 'crystal_back', 'cave_right', 'escort_mina'])
         run.session['world_state'] = {'scene_id': 'magic_shop', 'location_id': 'magic_shop'}
         run.hook('magic_return')
         self.assertTrue(run.session['flags']['mina_quest_done'])

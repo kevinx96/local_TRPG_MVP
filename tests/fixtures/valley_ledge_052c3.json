@@ -1,0 +1,3259 @@
+{
+  "characters": {
+    "hero": {
+      "snapshot": {
+        "character": {
+          "name": "アルス",
+          "description": "王国に選ばれし若き冒険者。バランスの取れた能力を持つ。",
+          "character_id": "hero",
+          "hp": 32,
+          "max_hp": 38,
+          "mp": 4,
+          "max_mp": 14,
+          "sp": 6,
+          "max_sp": 19,
+          "gold": 504,
+          "attributes": {
+            "str": 24,
+            "dex": 7,
+            "int": 5,
+            "wis": 5,
+            "end": 16
+          },
+          "skills": [
+            {
+              "id": "power_slash",
+              "name": "渾身斬り",
+              "kind": "attack",
+              "description": "気合を込めた全力の一撃。",
+              "effect": "1d4+str判定ダメージ",
+              "damage": "1d10+str/2",
+              "dice_type": "1d10+str/2",
+              "accuracy": 85,
+              "element": "physical",
+              "cost": 3,
+              "cost_type": "sp"
+            },
+            {
+              "id": "divine_guard",
+              "name": "神聖の庇護",
+              "kind": "defend",
+              "description": "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。",
+              "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+              "guard_multiplier": 0.5,
+              "survive_at_one": true,
+              "cost": 0,
+              "cooldown": 1
+            },
+            {
+              "id": "holy_sword_art",
+              "name": "聖光の剣技",
+              "description": "敵単体に物理と聖属性の2連撃。次の敵フェーズ終了まで被ダメージが0.75倍になる。",
+              "cost": 2,
+              "cost_type": "mp",
+              "kind": "attack",
+              "damage": "1d6+str/4",
+              "accuracy": 92,
+              "multi_elements": [
+                "physical",
+                "holy"
+              ],
+              "hits_per_element": 1,
+              "self_status": "holy_blessing"
+            },
+            {
+              "id": "sweep",
+              "name": "薙ぎ払い",
+              "description": "敵全体に物理攻撃を行う。敵が1体のみの時はダメージが1.75倍になる。",
+              "cost": 3,
+              "cost_type": "sp",
+              "kind": "attack",
+              "damage": "1d6+str/4",
+              "accuracy": 90,
+              "element": "physical",
+              "all_targets": true,
+              "conditional_multipliers": [
+                {
+                  "if": "single_enemy",
+                  "x": 1.8
+                }
+              ]
+            },
+            {
+              "id": "dragon_slash",
+              "name": "竜断ちの一太刀",
+              "description": "防御と耐性を無視する必中の斬撃。竜・ボス・最大HP80以上の敵に威力1.35倍。",
+              "cost": 0,
+              "cost_type": "mp",
+              "costs": {
+                "sp": 7,
+                "mp": 5
+              },
+              "kind": "attack",
+              "damage": "2d10+str/2+5",
+              "accuracy": 100,
+              "element": "physical",
+              "ignores_defense": true,
+              "ignores_resistance": true,
+              "conditional_multipliers": [
+                {
+                  "if": "any",
+                  "conditions": [
+                    {
+                      "if": "target_boss"
+                    },
+                    {
+                      "if": "target_id_in",
+                      "ids": [
+                        "ignis",
+                        "draco_dragon",
+                        "dragon_knight_mounted",
+                        "lava_drake"
+                      ]
+                    },
+                    {
+                      "if": "target_max_hp_gte",
+                      "value": 80
+                    }
+                  ],
+                  "x": 1.35
+                }
+              ]
+            }
+          ],
+          "inventory": [
+            {
+              "name": "鉄の剣",
+              "description": "一見質素な一振りの剣……手に馴染むほど、なぜか手放してはならない気がしてくる。",
+              "effect": "通常攻撃 1d8+str/3ダメージ / 命中率90% / 物理属性",
+              "quantity": 1,
+              "id": "iron_sword",
+              "icon": "/static/images/icon_iron_sword.png",
+              "combat": {
+                "kind": "weapon",
+                "name": "鉄の剣",
+                "damage": "1d8+str/3",
+                "accuracy": 90,
+                "element": "physical"
+              },
+              "category": "key",
+              "key_item": true,
+              "slot": "weapon"
+            },
+            {
+              "name": "革の鎧",
+              "description": "なめした革で作られた軽量の鎧。",
+              "effect": "被ダメージを1軽減",
+              "quantity": 1,
+              "icon": "/static/images/icon_leather_armor.png",
+              "combat": {
+                "kind": "armor",
+                "defense": 1
+              },
+              "slot": "armor",
+              "category": "equipment"
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 6,
+              "id": "herb",
+              "icon": "/static/images/icon_herb.png",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "携帯食",
+              "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+              "effect": "",
+              "quantity": 2,
+              "id": "trail_ration",
+              "icon": "/static/images/icon_trail_ration.png",
+              "traits": [
+                "food"
+              ],
+              "category": "consumable"
+            },
+            {
+              "name": "氷の護符",
+              "description": "冷気の力を宿した護符。",
+              "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
+              "quantity": 1,
+              "id": "ice_charm",
+              "icon": "/static/images/icon_ice_charm.png",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d8+int/2",
+                "accuracy": 100,
+                "element": "ice",
+                "consumable": false,
+                "requires_target_weakness": "ice"
+              },
+              "category": "equipment"
+            },
+            {
+              "name": "旅の治療薬",
+              "description": "旅人が持ち歩く小瓶の治療薬。気づけば背嚢に入っていた。",
+              "effect": "HPを8回復 / 消耗品",
+              "quantity": 1,
+              "id": "travel_potion",
+              "icon": "/static/images/icon_travel_potion.png",
+              "combat": {
+                "kind": "heal",
+                "healing": "8",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 7,
+              "id": "healing_scroll",
+              "icon": "/static/images/icon_healing_scroll.png",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "スライムの核",
+              "description": "ぷるぷると震える半透明の核。薬の材料になる。",
+              "effect": "",
+              "quantity": 5,
+              "id": "slime_core",
+              "icon": "/static/images/icon_slime_core.png",
+              "category": "loot",
+              "sell_price": 3
+            },
+            {
+              "name": "ゴブリンの飾り物",
+              "description": "ゴブリンが身につけていた、安物の金属の飾り。",
+              "effect": "",
+              "quantity": 7,
+              "id": "goblin_trinket",
+              "icon": "/static/images/icon_goblin_trinket.png",
+              "category": "loot",
+              "sell_price": 5
+            },
+            {
+              "name": "生命の果実",
+              "description": "赤く熟した不思議な果実。",
+              "effect": "最大HPが永続的に3上がる / 消耗品",
+              "quantity": 3,
+              "id": "fruit_life",
+              "icon": "/static/images/icon_fruit_life.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 3,
+                "resource": "hp",
+                "label": "最大HP"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "刻印のハンマー",
+              "description": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
+              "effect": "",
+              "quantity": 1,
+              "id": "robert_hammer",
+              "icon": "/static/images/icon_robert_hammer.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "剛力の霊薬",
+              "description": "飲めば腕に力がみなぎる、古い霊薬。",
+              "effect": "筋力が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_str",
+              "icon": "/static/images/icon_elixir_str.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "str",
+                "label": "筋力"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "精霊の泉の水",
+              "description": "精霊の泉で汲んだ澄んだ水。ほのかに光を帯びている。",
+              "effect": "",
+              "quantity": 1,
+              "id": "spirit_spring_water",
+              "icon": "/static/images/icon_spirit_spring_water.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "火傷薬",
+              "description": "冷たい薬草を練り上げた軟膏。火傷を浄化する。",
+              "effect": "状態効果を付与 / 消耗品",
+              "quantity": 5,
+              "id": "burn_salve",
+              "combat": {
+                "kind": "cleanse",
+                "cleanse": {
+                  "tags": [
+                    "fire"
+                  ]
+                },
+                "cooldown": 0,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "光苔",
+              "description": "暗い場所で淡く光る苔。薬の材料になる。",
+              "effect": "",
+              "quantity": 1,
+              "id": "glowing_moss",
+              "icon": "/static/images/icon_glowing_moss.png",
+              "category": "material"
+            },
+            {
+              "name": "残り火の欠片",
+              "description": "いつまでも冷めない火を宿した、小さな欠片。",
+              "effect": "",
+              "quantity": 6,
+              "id": "ember_shard",
+              "icon": "/static/images/icon_ember_shard.png",
+              "category": "loot",
+              "sell_price": 10
+            },
+            {
+              "name": "紅玉の護符",
+              "description": "熱を帯びた赤い宝石の護符。",
+              "effect": "",
+              "quantity": 1,
+              "id": "ruby_charm",
+              "icon": "/static/images/icon_ruby_charm.png",
+              "combat": {
+                "kind": "equipment",
+                "requires_equipped": true,
+                "damage_taken_multipliers": {
+                  "fire": 0.7
+                }
+              },
+              "category": "equipment",
+              "slot": "accessory"
+            },
+            {
+              "name": "毒消し草",
+              "description": "苦みの強い薬草を煎じた丸薬。体内の毒をすべて浄化する。",
+              "effect": "状態効果を付与 / 消耗品",
+              "quantity": 5,
+              "id": "antidote_herb",
+              "combat": {
+                "kind": "cleanse",
+                "cleanse": {
+                  "count": "all",
+                  "tags": [
+                    "poison"
+                  ]
+                },
+                "cooldown": 0,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "色水晶の欠片",
+              "description": "光にかざすと色を変える水晶の欠片。",
+              "effect": "",
+              "quantity": 6,
+              "id": "crystal_fragment",
+              "icon": "/static/images/icon_crystal_fragment.png",
+              "category": "loot",
+              "sell_price": 12
+            },
+            {
+              "name": "虹晶の欠片",
+              "description": "色が絶えず移ろう水晶の欠片。強い魔力を秘めている。",
+              "effect": "魔法店で武器に加工できる",
+              "quantity": 1,
+              "id": "prism_shard",
+              "icon": "/static/images/icon_prism_shard.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "叡智の霊薬",
+              "description": "頭の芯まで澄みわたる、菫色の霊薬。",
+              "effect": "知力が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_int",
+              "icon": "/static/images/icon_elixir_int.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "int",
+                "label": "知力"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "錆びた王冠",
+              "description": "スライム王が身につけていた錆びた王冠。今のところ効果はない。",
+              "effect": "",
+              "quantity": 1,
+              "id": "rusted_crown",
+              "icon": "/static/images/icon_rusted_crown.png",
+              "category": "material"
+            },
+            {
+              "name": "鉄壁の霊薬",
+              "description": "体が岩のように頑丈になる。",
+              "effect": "耐久が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_end",
+              "icon": "/static/images/icon_elixir_end.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "end",
+                "label": "耐久"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "獣の毛皮",
+              "description": "厚く柔らかな獣の毛皮。",
+              "effect": "",
+              "quantity": 1,
+              "id": "wolf_pelt",
+              "icon": "/static/images/icon_wolf_pelt.png",
+              "category": "loot",
+              "sell_price": 8
+            },
+            {
+              "name": "気付け薬",
+              "description": "鋭い香りで意識を研ぎ澄ます薬。麻痺・弱体・目潰しを浄化する。",
+              "effect": "状態効果を付与 / 消耗品",
+              "quantity": 1,
+              "id": "smelling_salts",
+              "combat": {
+                "kind": "cleanse",
+                "cleanse": {
+                  "tags": [
+                    "paralysis",
+                    "weaken",
+                    "blind"
+                  ]
+                },
+                "cooldown": 0,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "アダマンタイトの鎧",
+              "description": "非常に硬い金属で作られた鎧。",
+              "effect": "被ダメージを3軽減",
+              "quantity": 1,
+              "id": "adamantite_armor",
+              "icon": "/static/images/icon_adamantite_armor.png",
+              "combat": {
+                "kind": "armor",
+                "defense": 3
+              },
+              "category": "equipment",
+              "slot": "armor"
+            },
+            {
+              "name": "魔力の果実",
+              "description": "青く光る不思議な果実。",
+              "effect": "最大MPが永続的に3上がる / 消耗品",
+              "quantity": 2,
+              "id": "fruit_mana",
+              "icon": "/static/images/icon_fruit_mana.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 3,
+                "resource": "mp",
+                "label": "最大MP"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "竜の秘薬",
+              "description": "村に代々伝わる秘薬。竜の鱗を煎じたものだという。",
+              "effect": "HPを最大値の50%回復 / 消耗品",
+              "quantity": 2,
+              "id": "dragon_elixir",
+              "icon": "/static/images/icon_dragon_elixir.png",
+              "combat": {
+                "kind": "heal",
+                "max_hp_ratio": 0.5,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "白い竜鱗",
+              "description": "雪のように白い竜の鱗。触れると指先が凍える。",
+              "effect": "証拠品（戦闘では使えない）",
+              "quantity": 2,
+              "id": "white_dragon_scale",
+              "icon": "/static/images/icon_white_dragon_scale.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "氷の結晶",
+              "description": "溶けることのない氷のかけら。",
+              "effect": "鍛冶屋で氷の護符に加工できる",
+              "quantity": 1,
+              "id": "ice_crystal",
+              "icon": "/static/images/icon_ice_crystal.png",
+              "category": "material"
+            },
+            {
+              "name": "霜の欠片",
+              "description": "握ると指先がしびれる、溶けない霜の欠片。",
+              "effect": "",
+              "quantity": 3,
+              "id": "frost_shard",
+              "icon": "/static/images/icon_frost_shard.png",
+              "category": "loot",
+              "sell_price": 10
+            },
+            {
+              "name": "迅速の霊薬",
+              "description": "身のこなしが風のように軽くなる。",
+              "effect": "敏捷が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_dex",
+              "icon": "/static/images/icon_elixir_dex.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "dex",
+                "label": "敏捷"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "氷鉄の大剣",
+              "description": "氷の護符と上質な剣を融合させた大剣。",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
+              "quantity": 1,
+              "id": "ice_iron_greatsword",
+              "icon": "/static/images/icon_ice_iron_greatsword.png",
+              "combat": {
+                "kind": "weapon",
+                "name": "氷鉄の大剣",
+                "damage": "1d10+str/3+int/4",
+                "accuracy": 88,
+                "element": "ice"
+              },
+              "category": "equipment",
+              "slot": "weapon"
+            },
+            {
+              "name": "煤の精",
+              "description": "亡霊が崩れた後に残る、黒い煤の塊。",
+              "effect": "",
+              "quantity": 2,
+              "id": "ash_essence",
+              "icon": "/static/images/icon_ash_essence.png",
+              "category": "loot",
+              "sell_price": 10
+            }
+          ],
+          "equipment": [
+            "紅玉の護符",
+            "アダマンタイトの鎧",
+            "氷鉄の大剣"
+          ],
+          "background_image": "/static/images/bg_burning_village.png",
+          "character_image": "/static/images/char_male_hero_v2.png",
+          "level": 7,
+          "combat": {
+            "basic_attack": {
+              "name": "氷鉄の大剣",
+              "damage": "1d10+str/3+int/4",
+              "accuracy": 88,
+              "element": "ice"
+            },
+            "defense": 0,
+            "evade": 0,
+            "base_attack": {
+              "name": "鉄の剣",
+              "damage": "1d8+str/3",
+              "accuracy": 90,
+              "element": "physical"
+            }
+          },
+          "exp": 336,
+          "passives": [
+            {
+              "id": "heavy_armor_lore",
+              "tier": 1
+            },
+            {
+              "id": "unsinkable_shield",
+              "tier": 1
+            },
+            {
+              "id": "adversity_flame",
+              "tier": 1
+            }
+          ],
+          "passive_history": {
+            "2": "heavy_armor_lore",
+            "4": "unsinkable_shield",
+            "6": "adversity_flame"
+          },
+          "exp_rewarded_quests": [
+            "side_robin",
+            "side_lost_goblin",
+            "side_riku",
+            "side_gald"
+          ],
+          "learned_spells": []
+        },
+        "world_state": {
+          "scene_id": "dragon_valley",
+          "location_id": "valley_ledge"
+        },
+        "flags": {
+          "heard_king_info": true,
+          "ask_king_ten_years_done": true,
+          "borrowed_fire_bat_dragon": true,
+          "asked_to_borrow_fire_bat_dragon": true,
+          "heard_blacksmith_advice": true,
+          "heard_treaty_lore": true,
+          "tutorial_potion_given": true,
+          "combat_defeated:dark_forest_loc:tutorial_slime": true,
+          "defeated_slime": true,
+          "forest_entrance_resolved": true,
+          "lost_goblin_quest": true,
+          "knows_fort_password": true,
+          "accepted_lost_goblin_quest": true,
+          "combat_defeated:goblin_fort:goblin": true,
+          "combat_defeated:goblin_fort_first_second:goblin": true,
+          "combat_defeated:goblin_fort_first_second:goblin_archer": true,
+          "reward_claimed:goblin_fort_first_second": true,
+          "elite_fruit_claimed:goblin_fort": true,
+          "combat_defeated:goblin_fort_second_right:hobgoblin": true,
+          "goblin_password_clue": true,
+          "combat_defeated:goblin_fort_fourth:goblin_king": true,
+          "combat_defeated:goblin_fort_fourth:goblin_archer": true,
+          "defeated_goblin_king": true,
+          "cleared_goblin_fort": true,
+          "reward_claimed:goblin_fort_fourth": true,
+          "returned_lost_goblin_box": true,
+          "resolved_lost_goblin_box": true,
+          "drew_spirit_spring_water": true,
+          "seen_cave_seal": true,
+          "cave_seal_broken": true,
+          "combat_defeated:cave_heat_corridor:heat_lizard": true,
+          "cleared_cave_heat_corridor": true,
+          "reward_claimed:cave_heat_corridor": true,
+          "elite_fruit_claimed:sealed_cave": true,
+          "combat_defeated:cave_lava_room:fire_wisp": true,
+          "cleared_cave_lava_room": true,
+          "opened_lava_chest": true,
+          "rested_hot_spring": true,
+          "combat_defeated:cave_crystal_corridor:ruby_golem": true,
+          "combat_defeated:cave_crystal_corridor:sapphire_moth": true,
+          "combat_defeated:cave_crystal_corridor:emerald_spider": true,
+          "cleared_cave_crystal_corridor": true,
+          "combat_defeated:cave_prism_tree:prism_tree": true,
+          "cleared_cave_prism_tree": true,
+          "fire_bat_empowered": true,
+          "reward_claimed:cave_prism_tree": true,
+          "rested_at_elf_spring": true,
+          "combat_defeated:slime_ambush_one:slime": true,
+          "combat_defeated:slime_ambush_two:slime": true,
+          "combat_defeated:slime_king_battle:slime_king": true,
+          "defeated_slime_king": true,
+          "reward_claimed:slime_king_battle": true,
+          "combat_defeated:forest_wolves:forest_wolf": true,
+          "passed_forest_wolves": true,
+          "saved_gald": true,
+          "reward_claimed:forest_wolves": true,
+          "elite_fruit_claimed:forest": true,
+          "returned_from_forest": true,
+          "bought_adamantite_armor": true,
+          "reached_village": true,
+          "combat_defeated:village_fire_elemental:fire_elemental": true,
+          "reward_claimed:village_fire_elemental": true,
+          "elite_fruit_claimed:burning_village": true,
+          "found_burning_house": true,
+          "riku_rescued": true,
+          "riku_returned": true,
+          "visited_gald_shop": true,
+          "frost_trace_seen": true,
+          "inspected_frost_core": true,
+          "combat_defeated:ice_elemental_encounter:ice_elemental": true,
+          "combat_defeated:frost_wolf_battle:frost_dire_wolf": true,
+          "defeated_frost_dire_wolf": true,
+          "reward_claimed:frost_wolf_battle": true,
+          "read_ian_grief_done": true,
+          "accepted_ian_request": true,
+          "entered_dragon_valley": true,
+          "combat_defeated:valley_entrance:ash_wraith": true,
+          "reward_claimed:valley_entrance": true,
+          "elite_fruit_claimed:dragon_valley": true
+        },
+        "companion": {
+          "id": "fire_bat_dragon",
+          "name": "火コウモリ竜",
+          "description": "サラが飼っている小さな火竜。毎ラウンド開始時に敵へ2d3の火属性ダメージを与え、プレイヤーのHPを3回復する（虹晶を食べると6回復）。",
+          "round_start_effects": [
+            {
+              "kind": "damage_enemy",
+              "name": "火炎の羽ばたき",
+              "damage": "2d3",
+              "element": "fire"
+            },
+            {
+              "kind": "heal_player",
+              "amount": "3",
+              "requirements": {
+                "not_flag": "fire_bat_empowered"
+              },
+              "scale_from_damage": {
+                "source": "previous_damage_enemy",
+                "ratio": 0.75
+              }
+            },
+            {
+              "kind": "heal_player",
+              "amount": "6",
+              "requirements": {
+                "flag": "fire_bat_empowered"
+              },
+              "scale_from_damage": {
+                "source": "previous_damage_enemy",
+                "ratio": 1.5
+              }
+            }
+          ],
+          "image": "/static/images/companion_fire_bat_dragon.png",
+          "check_assistance": {
+            "skills": [
+              "運動"
+            ],
+            "reason": "火コウモリ竜の助言"
+          },
+          "npc_id": "fire_bat_dragon",
+          "title": "火コウモリ竜",
+          "keywords": []
+        },
+        "progression_revision": "050",
+        "pending_passive_choices": [],
+        "shop_stock": {
+          "sarah_shop": {
+            "herb": 3,
+            "smoke_bomb": null,
+            "poison_dart": null,
+            "holy_water": null,
+            "ice_charm": null,
+            "fireball_scroll": null,
+            "antidote_herb": 3,
+            "burn_salve": 2,
+            "smelling_salts": 2,
+            "blinding_powder": 3,
+            "haze_ball": 2
+          },
+          "forge_shop": {
+            "adamantite_armor": 0,
+            "ice_charm": 1,
+            "oil_flask": 3,
+            "trap_probe": 1
+          },
+          "magic_shop": {
+            "earth_staff": 1,
+            "healing_scroll": null,
+            "fireball_scroll": null,
+            "spellbook_lightning": 1,
+            "spellbook_arcane_lance": 1,
+            "panacea": 2,
+            "purifying_bell": 1
+          },
+          "village_shop": {
+            "ice_charm": 1,
+            "herb": null,
+            "antidote_herb": 3,
+            "burn_salve": 3
+          },
+          "gald_shop": {
+            "herb": null,
+            "holy_water": null,
+            "ice_charm": 1,
+            "smoke_bomb": null,
+            "burn_salve": 2,
+            "blinding_powder": 3,
+            "haze_ball": 2
+          }
+        },
+        "_balance_exp_sources": {
+          "trash": 20,
+          "elite": 96,
+          "boss": 100,
+          "unclassified": 0,
+          "quest": 120
+        }
+      },
+      "seed": 4295220851872844824,
+      "trial_index": 0,
+      "median_level": 7.0,
+      "arrival_count": 486,
+      "level_histogram": {
+        "6": 143,
+        "7": 343
+      },
+      "source": "supplemental_P2_policy_route",
+      "coverage_variant": "ledge"
+    },
+    "cleric": {
+      "snapshot": {
+        "character": {
+          "name": "マリア",
+          "description": "神聖魔法を操る癒し手。HPとMPが高く、知力に優れる。",
+          "character_id": "cleric",
+          "hp": 36,
+          "max_hp": 36,
+          "mp": 26,
+          "max_mp": 26,
+          "sp": 14,
+          "max_sp": 14,
+          "gold": 478,
+          "attributes": {
+            "str": 6,
+            "dex": 8,
+            "int": 20,
+            "wis": 24,
+            "end": 15
+          },
+          "skills": [
+            {
+              "id": "healing_prayer",
+              "name": "治癒の祈り",
+              "kind": "heal",
+              "description": "聖なる祈りで傷を癒す。",
+              "effect": "HPを1d6+知力/4回復",
+              "healing": "1d6+int/4",
+              "dice_type": "1d6+int/4",
+              "cost": 4,
+              "cost_type": "mp"
+            },
+            {
+              "id": "holy_guard",
+              "name": "聖なる守護",
+              "kind": "defend",
+              "description": "聖光の盾で味方を守る。致死ダメージも耐え抜く。",
+              "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
+              "guard_multiplier": 0.5,
+              "survive_at_one": true,
+              "cost": 6,
+              "cost_type": "mp"
+            },
+            {
+              "id": "atonement_mark",
+              "name": "贖罪の印",
+              "description": "敵単体に3ラウンドの間「聖印」を刻み、毎ラウンドの聖属性ダメージと追撃を誘発する。",
+              "cost": 2,
+              "cost_type": "sp",
+              "kind": "attack",
+              "damage": "0",
+              "accuracy": 95,
+              "element": "holy",
+              "status_on_hit": true,
+              "on_hit_status": {
+                "id": "holy_mark",
+                "duration": 3
+              }
+            },
+            {
+              "id": "great_heal_cleanse",
+              "name": "大いなる癒し・浄化",
+              "description": "HPを大きく回復して弱体を全て浄化し、余剰回復分を最大HP25%までの障壁に変える。",
+              "cost": 14,
+              "cost_type": "mp",
+              "kind": "heal",
+              "healing": "2d6+wis/2",
+              "replaces": "大いなる癒し",
+              "cleanse": {
+                "tags": [
+                  "debuff"
+                ],
+                "count": "all"
+              },
+              "overflow_shield": {
+                "id": "holy_afterglow",
+                "max_hp_ratio": 0.25
+              }
+            },
+            {
+              "id": "seraphim_gospel",
+              "name": "セラフィムの福音",
+              "description": "1戦闘1回。3ラウンドの間、最大HPを2倍にして増加分を回復し、被弾時にHPを回復する。",
+              "cost": 12,
+              "cost_type": "mp",
+              "kind": "status",
+              "max_uses_per_battle": 1,
+              "self_status": {
+                "id": "gospel",
+                "duration": 3,
+                "modifiers": {
+                  "max_hp_multiplier": 2,
+                  "heal_after_attack_ratio": 0.08,
+                  "heal_limit_per_round": 2
+                }
+              }
+            }
+          ],
+          "inventory": [
+            {
+              "name": "聖なる杖",
+              "description": "神聖魔法を増幅する杖。",
+              "effect": "回復技能回復量+2",
+              "quantity": 1,
+              "icon": "/static/images/icon_holy_staff.png",
+              "combat": {
+                "kind": "equipment",
+                "skill_healing_bonus": 2,
+                "applies_to": [
+                  "heal"
+                ]
+              },
+              "slot": "accessory",
+              "category": "equipment"
+            },
+            {
+              "name": "ローブ",
+              "description": "僧侶の簡素な衣。",
+              "effect": "MP消費を1軽減",
+              "quantity": 1,
+              "icon": "/static/images/icon_robe.png",
+              "combat": {
+                "kind": "equipment",
+                "cost_reduction": {
+                  "mp": 1
+                },
+                "applies_to": [
+                  "heal"
+                ]
+              },
+              "slot": "armor",
+              "category": "equipment"
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 7,
+              "id": "herb",
+              "icon": "/static/images/icon_herb.png",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "携帯食",
+              "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+              "effect": "",
+              "quantity": 2,
+              "id": "trail_ration",
+              "icon": "/static/images/icon_trail_ration.png",
+              "traits": [
+                "food"
+              ],
+              "category": "consumable"
+            },
+            {
+              "name": "氷の護符",
+              "description": "冷気の力を宿した護符。",
+              "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
+              "quantity": 1,
+              "id": "ice_charm",
+              "icon": "/static/images/icon_ice_charm.png",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d8+int/2",
+                "accuracy": 100,
+                "element": "ice",
+                "consumable": false,
+                "requires_target_weakness": "ice"
+              },
+              "category": "equipment"
+            },
+            {
+              "name": "旅の治療薬",
+              "description": "旅人が持ち歩く小瓶の治療薬。気づけば背嚢に入っていた。",
+              "effect": "HPを8回復 / 消耗品",
+              "quantity": 1,
+              "id": "travel_potion",
+              "icon": "/static/images/icon_travel_potion.png",
+              "combat": {
+                "kind": "heal",
+                "healing": "8",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 4,
+              "id": "healing_scroll",
+              "icon": "/static/images/icon_healing_scroll.png",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "スライムの核",
+              "description": "ぷるぷると震える半透明の核。薬の材料になる。",
+              "effect": "",
+              "quantity": 5,
+              "id": "slime_core",
+              "icon": "/static/images/icon_slime_core.png",
+              "category": "loot",
+              "sell_price": 3
+            },
+            {
+              "name": "ゴブリンの飾り物",
+              "description": "ゴブリンが身につけていた、安物の金属の飾り。",
+              "effect": "",
+              "quantity": 5,
+              "id": "goblin_trinket",
+              "icon": "/static/images/icon_goblin_trinket.png",
+              "category": "loot",
+              "sell_price": 5
+            },
+            {
+              "name": "生命の果実",
+              "description": "赤く熟した不思議な果実。",
+              "effect": "最大HPが永続的に3上がる / 消耗品",
+              "quantity": 3,
+              "id": "fruit_life",
+              "icon": "/static/images/icon_fruit_life.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 3,
+                "resource": "hp",
+                "label": "最大HP"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "刻印のハンマー",
+              "description": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
+              "effect": "",
+              "quantity": 1,
+              "id": "robert_hammer",
+              "icon": "/static/images/icon_robert_hammer.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "剛力の霊薬",
+              "description": "飲めば腕に力がみなぎる、古い霊薬。",
+              "effect": "筋力が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_str",
+              "icon": "/static/images/icon_elixir_str.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "str",
+                "label": "筋力"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "精霊の泉の水",
+              "description": "精霊の泉で汲んだ澄んだ水。ほのかに光を帯びている。",
+              "effect": "",
+              "quantity": 1,
+              "id": "spirit_spring_water",
+              "icon": "/static/images/icon_spirit_spring_water.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "火傷薬",
+              "description": "冷たい薬草を練り上げた軟膏。火傷を浄化する。",
+              "effect": "状態効果を付与 / 消耗品",
+              "quantity": 5,
+              "id": "burn_salve",
+              "combat": {
+                "kind": "cleanse",
+                "cleanse": {
+                  "tags": [
+                    "fire"
+                  ]
+                },
+                "cooldown": 0,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "光苔",
+              "description": "暗い場所で淡く光る苔。薬の材料になる。",
+              "effect": "",
+              "quantity": 1,
+              "id": "glowing_moss",
+              "icon": "/static/images/icon_glowing_moss.png",
+              "category": "material"
+            },
+            {
+              "name": "残り火の欠片",
+              "description": "いつまでも冷めない火を宿した、小さな欠片。",
+              "effect": "",
+              "quantity": 6,
+              "id": "ember_shard",
+              "icon": "/static/images/icon_ember_shard.png",
+              "category": "loot",
+              "sell_price": 10
+            },
+            {
+              "name": "紅玉の護符",
+              "description": "熱を帯びた赤い宝石の護符。",
+              "effect": "",
+              "quantity": 1,
+              "id": "ruby_charm",
+              "icon": "/static/images/icon_ruby_charm.png",
+              "combat": {
+                "kind": "equipment",
+                "requires_equipped": true,
+                "damage_taken_multipliers": {
+                  "fire": 0.7
+                }
+              },
+              "category": "equipment",
+              "slot": "accessory"
+            },
+            {
+              "name": "毒消し草",
+              "description": "苦みの強い薬草を煎じた丸薬。体内の毒をすべて浄化する。",
+              "effect": "状態効果を付与 / 消耗品",
+              "quantity": 5,
+              "id": "antidote_herb",
+              "combat": {
+                "kind": "cleanse",
+                "cleanse": {
+                  "count": "all",
+                  "tags": [
+                    "poison"
+                  ]
+                },
+                "cooldown": 0,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "色水晶の欠片",
+              "description": "光にかざすと色を変える水晶の欠片。",
+              "effect": "",
+              "quantity": 6,
+              "id": "crystal_fragment",
+              "icon": "/static/images/icon_crystal_fragment.png",
+              "category": "loot",
+              "sell_price": 12
+            },
+            {
+              "name": "虹晶の欠片",
+              "description": "色が絶えず移ろう水晶の欠片。強い魔力を秘めている。",
+              "effect": "魔法店で武器に加工できる",
+              "quantity": 1,
+              "id": "prism_shard",
+              "icon": "/static/images/icon_prism_shard.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "叡智の霊薬",
+              "description": "頭の芯まで澄みわたる、菫色の霊薬。",
+              "effect": "知力が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_int",
+              "icon": "/static/images/icon_elixir_int.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "int",
+                "label": "知力"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "錆びた王冠",
+              "description": "スライム王が身につけていた錆びた王冠。今のところ効果はない。",
+              "effect": "",
+              "quantity": 1,
+              "id": "rusted_crown",
+              "icon": "/static/images/icon_rusted_crown.png",
+              "category": "material"
+            },
+            {
+              "name": "鉄壁の霊薬",
+              "description": "体が岩のように頑丈になる。",
+              "effect": "耐久が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_end",
+              "icon": "/static/images/icon_elixir_end.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "end",
+                "label": "耐久"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "獣の毛皮",
+              "description": "厚く柔らかな獣の毛皮。",
+              "effect": "",
+              "quantity": 1,
+              "id": "wolf_pelt",
+              "icon": "/static/images/icon_wolf_pelt.png",
+              "category": "loot",
+              "sell_price": 8
+            },
+            {
+              "name": "気付け薬",
+              "description": "鋭い香りで意識を研ぎ澄ます薬。麻痺・弱体・目潰しを浄化する。",
+              "effect": "状態効果を付与 / 消耗品",
+              "quantity": 1,
+              "id": "smelling_salts",
+              "combat": {
+                "kind": "cleanse",
+                "cleanse": {
+                  "tags": [
+                    "paralysis",
+                    "weaken",
+                    "blind"
+                  ]
+                },
+                "cooldown": 0,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "アダマンタイトの鎧",
+              "description": "非常に硬い金属で作られた鎧。",
+              "effect": "被ダメージを3軽減",
+              "quantity": 1,
+              "id": "adamantite_armor",
+              "icon": "/static/images/icon_adamantite_armor.png",
+              "combat": {
+                "kind": "armor",
+                "defense": 3
+              },
+              "category": "equipment",
+              "slot": "armor"
+            },
+            {
+              "name": "竜の秘薬",
+              "description": "村に代々伝わる秘薬。竜の鱗を煎じたものだという。",
+              "effect": "HPを最大値の50%回復 / 消耗品",
+              "quantity": 2,
+              "id": "dragon_elixir",
+              "icon": "/static/images/icon_dragon_elixir.png",
+              "combat": {
+                "kind": "heal",
+                "max_hp_ratio": 0.5,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "白い竜鱗",
+              "description": "雪のように白い竜の鱗。触れると指先が凍える。",
+              "effect": "証拠品（戦闘では使えない）",
+              "quantity": 2,
+              "id": "white_dragon_scale",
+              "icon": "/static/images/icon_white_dragon_scale.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "氷の結晶",
+              "description": "溶けることのない氷のかけら。",
+              "effect": "鍛冶屋で氷の護符に加工できる",
+              "quantity": 1,
+              "id": "ice_crystal",
+              "icon": "/static/images/icon_ice_crystal.png",
+              "category": "material"
+            },
+            {
+              "name": "魔力の果実",
+              "description": "青く光る不思議な果実。",
+              "effect": "最大MPが永続的に3上がる / 消耗品",
+              "quantity": 2,
+              "id": "fruit_mana",
+              "icon": "/static/images/icon_fruit_mana.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 3,
+                "resource": "mp",
+                "label": "最大MP"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "霜の欠片",
+              "description": "握ると指先がしびれる、溶けない霜の欠片。",
+              "effect": "",
+              "quantity": 3,
+              "id": "frost_shard",
+              "icon": "/static/images/icon_frost_shard.png",
+              "category": "loot",
+              "sell_price": 10
+            },
+            {
+              "name": "迅速の霊薬",
+              "description": "身のこなしが風のように軽くなる。",
+              "effect": "敏捷が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_dex",
+              "icon": "/static/images/icon_elixir_dex.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "dex",
+                "label": "敏捷"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "氷鉄の大剣",
+              "description": "氷の護符と上質な剣を融合させた大剣。",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
+              "quantity": 1,
+              "id": "ice_iron_greatsword",
+              "icon": "/static/images/icon_ice_iron_greatsword.png",
+              "combat": {
+                "kind": "weapon",
+                "name": "氷鉄の大剣",
+                "damage": "1d10+str/3+int/4",
+                "accuracy": 88,
+                "element": "ice"
+              },
+              "category": "equipment",
+              "slot": "weapon"
+            },
+            {
+              "name": "煤の精",
+              "description": "亡霊が崩れた後に残る、黒い煤の塊。",
+              "effect": "",
+              "quantity": 2,
+              "id": "ash_essence",
+              "icon": "/static/images/icon_ash_essence.png",
+              "category": "loot",
+              "sell_price": 10
+            }
+          ],
+          "equipment": [
+            "紅玉の護符",
+            "アダマンタイトの鎧",
+            "氷鉄の大剣"
+          ],
+          "background_image": "/static/images/bg_burning_village.png",
+          "character_image": "/static/images/char_cleric_v2.png",
+          "level": 7,
+          "combat": {
+            "basic_attack": {
+              "name": "氷鉄の大剣",
+              "damage": "1d10+str/3+int/4",
+              "accuracy": 88,
+              "element": "ice"
+            },
+            "defense": 0,
+            "evade": 0,
+            "base_attack": {
+              "name": "聖なる杖",
+              "damage": "1d8+wis/4",
+              "accuracy": 88,
+              "element": "holy"
+            }
+          },
+          "exp": 324,
+          "passives": [
+            {
+              "id": "overflow_mercy",
+              "tier": 1
+            },
+            {
+              "id": "pious_heart",
+              "tier": 1
+            },
+            {
+              "id": "holy_halo",
+              "tier": 1
+            }
+          ],
+          "passive_history": {
+            "2": "overflow_mercy",
+            "4": "pious_heart",
+            "6": "holy_halo"
+          },
+          "exp_rewarded_quests": [
+            "side_robin",
+            "side_lost_goblin",
+            "side_riku",
+            "side_gald"
+          ],
+          "learned_spells": []
+        },
+        "world_state": {
+          "scene_id": "dragon_valley",
+          "location_id": "valley_ledge"
+        },
+        "flags": {
+          "heard_king_info": true,
+          "ask_king_ten_years_done": true,
+          "borrowed_fire_bat_dragon": true,
+          "asked_to_borrow_fire_bat_dragon": true,
+          "heard_blacksmith_advice": true,
+          "heard_treaty_lore": true,
+          "tutorial_potion_given": true,
+          "combat_defeated:dark_forest_loc:tutorial_slime": true,
+          "defeated_slime": true,
+          "forest_entrance_resolved": true,
+          "lost_goblin_quest": true,
+          "knows_fort_password": true,
+          "accepted_lost_goblin_quest": true,
+          "combat_defeated:goblin_fort:goblin": true,
+          "reward_claimed:goblin_fort_first_second": true,
+          "elite_fruit_claimed:goblin_fort": true,
+          "combat_defeated:goblin_fort_second_right:hobgoblin": true,
+          "goblin_password_clue": true,
+          "combat_defeated:goblin_fort_fourth:goblin_king": true,
+          "combat_defeated:goblin_fort_fourth:goblin_archer": true,
+          "defeated_goblin_king": true,
+          "cleared_goblin_fort": true,
+          "reward_claimed:goblin_fort_fourth": true,
+          "returned_lost_goblin_box": true,
+          "resolved_lost_goblin_box": true,
+          "drew_spirit_spring_water": true,
+          "seen_cave_seal": true,
+          "cave_seal_broken": true,
+          "combat_defeated:cave_heat_corridor:heat_lizard": true,
+          "cleared_cave_heat_corridor": true,
+          "reward_claimed:cave_heat_corridor": true,
+          "elite_fruit_claimed:sealed_cave": true,
+          "combat_defeated:cave_lava_room:fire_wisp": true,
+          "cleared_cave_lava_room": true,
+          "opened_lava_chest": true,
+          "combat_defeated:cave_crystal_corridor:ruby_golem": true,
+          "combat_defeated:cave_crystal_corridor:sapphire_moth": true,
+          "combat_defeated:cave_crystal_corridor:emerald_spider": true,
+          "cleared_cave_crystal_corridor": true,
+          "combat_defeated:cave_prism_tree:prism_tree": true,
+          "cleared_cave_prism_tree": true,
+          "fire_bat_empowered": true,
+          "reward_claimed:cave_prism_tree": true,
+          "rested_at_elf_spring": true,
+          "combat_defeated:slime_ambush_one:slime": true,
+          "combat_defeated:slime_ambush_two:slime": true,
+          "combat_defeated:slime_king_battle:slime_king": true,
+          "defeated_slime_king": true,
+          "reward_claimed:slime_king_battle": true,
+          "combat_defeated:forest_wolves:forest_wolf": true,
+          "passed_forest_wolves": true,
+          "saved_gald": true,
+          "reward_claimed:forest_wolves": true,
+          "elite_fruit_claimed:forest": true,
+          "returned_from_forest": true,
+          "bought_adamantite_armor": true,
+          "reached_village": true,
+          "combat_defeated:village_fire_slime:fire_slime": true,
+          "found_burning_house": true,
+          "riku_rescued": true,
+          "riku_returned": true,
+          "visited_gald_shop": true,
+          "frost_trace_seen": true,
+          "inspected_frost_core": true,
+          "combat_defeated:ice_elemental_encounter:ice_elemental": true,
+          "reward_claimed:ice_elemental_encounter": true,
+          "elite_fruit_claimed:burning_village": true,
+          "combat_defeated:frost_wolf_battle:frost_dire_wolf": true,
+          "defeated_frost_dire_wolf": true,
+          "reward_claimed:frost_wolf_battle": true,
+          "read_ian_grief_done": true,
+          "accepted_ian_request": true,
+          "entered_dragon_valley": true,
+          "combat_defeated:valley_entrance:ash_wraith": true,
+          "reward_claimed:valley_entrance": true,
+          "elite_fruit_claimed:dragon_valley": true
+        },
+        "companion": {
+          "id": "fire_bat_dragon",
+          "name": "火コウモリ竜",
+          "description": "サラが飼っている小さな火竜。毎ラウンド開始時に敵へ2d3の火属性ダメージを与え、プレイヤーのHPを3回復する（虹晶を食べると6回復）。",
+          "round_start_effects": [
+            {
+              "kind": "damage_enemy",
+              "name": "火炎の羽ばたき",
+              "damage": "2d3",
+              "element": "fire"
+            },
+            {
+              "kind": "heal_player",
+              "amount": "3",
+              "requirements": {
+                "not_flag": "fire_bat_empowered"
+              },
+              "scale_from_damage": {
+                "source": "previous_damage_enemy",
+                "ratio": 0.75
+              }
+            },
+            {
+              "kind": "heal_player",
+              "amount": "6",
+              "requirements": {
+                "flag": "fire_bat_empowered"
+              },
+              "scale_from_damage": {
+                "source": "previous_damage_enemy",
+                "ratio": 1.5
+              }
+            }
+          ],
+          "image": "/static/images/companion_fire_bat_dragon.png",
+          "check_assistance": {
+            "skills": [
+              "運動"
+            ],
+            "reason": "火コウモリ竜の助言"
+          },
+          "npc_id": "fire_bat_dragon",
+          "title": "火コウモリ竜",
+          "keywords": []
+        },
+        "progression_revision": "050",
+        "pending_passive_choices": [],
+        "shop_stock": {
+          "sarah_shop": {
+            "herb": 3,
+            "smoke_bomb": null,
+            "poison_dart": null,
+            "holy_water": null,
+            "ice_charm": null,
+            "fireball_scroll": null,
+            "antidote_herb": 3,
+            "burn_salve": 2,
+            "smelling_salts": 2,
+            "blinding_powder": 3,
+            "haze_ball": 2
+          },
+          "forge_shop": {
+            "adamantite_armor": 0,
+            "ice_charm": 1,
+            "oil_flask": 3,
+            "trap_probe": 1
+          },
+          "magic_shop": {
+            "earth_staff": 1,
+            "healing_scroll": null,
+            "fireball_scroll": null,
+            "spellbook_lightning": 1,
+            "spellbook_arcane_lance": 1,
+            "panacea": 2,
+            "purifying_bell": 1
+          },
+          "village_shop": {
+            "ice_charm": 1,
+            "herb": null,
+            "antidote_herb": 3,
+            "burn_salve": 3
+          },
+          "gald_shop": {
+            "herb": null,
+            "holy_water": null,
+            "ice_charm": 1,
+            "smoke_bomb": null,
+            "burn_salve": 2,
+            "blinding_powder": 3,
+            "haze_ball": 2
+          }
+        },
+        "_balance_exp_sources": {
+          "trash": 20,
+          "elite": 84,
+          "boss": 100,
+          "unclassified": 0,
+          "quest": 120
+        }
+      },
+      "seed": 2391151072488770478,
+      "trial_index": 0,
+      "median_level": 7.0,
+      "arrival_count": 372,
+      "level_histogram": {
+        "6": 37,
+        "7": 335
+      },
+      "source": "supplemental_P2_policy_route",
+      "coverage_variant": "ledge"
+    },
+    "mage": {
+      "snapshot": {
+        "character": {
+          "name": "ゴウダン",
+          "description": "攻撃魔法を極めた学者。MPが非常に高く、知力に長ける。",
+          "character_id": "mage",
+          "hp": 26,
+          "max_hp": 26,
+          "mp": 38,
+          "max_mp": 38,
+          "sp": 12,
+          "max_sp": 12,
+          "gold": 468,
+          "attributes": {
+            "str": 4,
+            "dex": 9,
+            "int": 28,
+            "wis": 16,
+            "end": 6
+          },
+          "skills": [
+            {
+              "id": "fireball",
+              "name": "火球",
+              "kind": "attack",
+              "description": "灼熱の火球を放つ。",
+              "effect": "int判定ダメージ、ｈｐ１００％に対して、1d6追加ダメージを与える",
+              "damage": "1d6+int/2",
+              "dice_type": "1d6+int/2",
+              "accuracy": 90,
+              "element": "fire",
+              "cost": 5,
+              "cost_type": "mp",
+              "conditional_bonus": [
+                {
+                  "if": "target_hp_full",
+                  "damage": "1d6"
+                }
+              ],
+              "spell_tier": "basic"
+            },
+            {
+              "id": "ice_arrow",
+              "name": "氷の矢",
+              "kind": "attack",
+              "description": "冷気の矢を放つ。",
+              "effect": "int/2ダメージ，ｈｐ5０％以下に対して，1d6追加ダメージを与える",
+              "damage": "1d6+int/2",
+              "dice_type": "1d6+int/2",
+              "accuracy": 92,
+              "element": "ice",
+              "cost": 3,
+              "cost_type": "mp",
+              "conditional_bonus": [
+                {
+                  "if": "target_hp_ratio_lte",
+                  "ratio": 0.5,
+                  "damage": "1d6"
+                }
+              ],
+              "spell_tier": "basic"
+            },
+            {
+              "id": "mana_condense",
+              "name": "魔力凝縮",
+              "description": "MPを回復して次の攻撃魔法の威力を1.3倍にし、次の敵フェーズ終了まで被ダメージを半減する。",
+              "cost": 3,
+              "cost_type": "sp",
+              "kind": "restore",
+              "resource": "mp",
+              "amount": "int/3+2",
+              "self_status": [
+                {
+                  "id": "magic_focus",
+                  "modifiers": {
+                    "next_spell_damage_multiplier": 1.3
+                  }
+                },
+                {
+                  "id": "mana_veil",
+                  "modifiers": {
+                    "received_damage_multiplier": 0.5
+                  }
+                }
+              ]
+            },
+            {
+              "id": "twin_storm",
+              "name": "氷炎の双嵐",
+              "description": "敵単体に火と氷の2連撃。敵のHPが満タンなら火、50%以下なら氷の威力が2倍になる。",
+              "cost": 7,
+              "cost_type": "mp",
+              "kind": "attack",
+              "damage": "1d6+int/6",
+              "accuracy": 92,
+              "spell_tier": "advanced",
+              "multi_elements": [
+                "fire",
+                "ice"
+              ],
+              "hits_per_element": 1,
+              "conditional_multipliers": [
+                {
+                  "if": "target_hp_full",
+                  "element": "fire",
+                  "x": 2
+                },
+                {
+                  "if": "target_hp_ratio_lte",
+                  "ratio": 0.5,
+                  "element": "ice",
+                  "x": 2
+                }
+              ]
+            },
+            {
+              "id": "lightning",
+              "name": "雷撃",
+              "description": "雷光を走らせ、敵単体に雷属性の魔法攻撃を行う。",
+              "cost": 5,
+              "cost_type": "mp",
+              "kind": "attack",
+              "damage": "1d4+int/4",
+              "accuracy": 90,
+              "element": "lightning",
+              "all_targets": true,
+              "spell_tier": "basic"
+            },
+            {
+              "id": "arcane_lance",
+              "name": "魔力の槍",
+              "description": "防御力を無視する純粋魔力の槍で、敵単体に魔力属性の魔法攻撃を行う。",
+              "cost": 4,
+              "cost_type": "mp",
+              "kind": "attack",
+              "damage": "1d6+int/2",
+              "accuracy": 95,
+              "element": "arcane",
+              "ignores_defense": true,
+              "spell_tier": "basic"
+            },
+            {
+              "id": "elemental_collapse",
+              "name": "元素崩壊",
+              "description": "習得済みの基本属性魔法の力を解き放ち、敵単体に最大4連撃の属性魔法攻撃を行う。",
+              "cost": 18,
+              "cost_type": "mp",
+              "kind": "attack",
+              "damage": "1d4+int/5",
+              "accuracy": 95,
+              "spell_tier": "advanced",
+              "learned_elements": true,
+              "max_hits": 4,
+              "resonance_exempt": true
+            }
+          ],
+          "inventory": [
+            {
+              "name": "魔導書",
+              "description": "古代の魔法が記された書物。",
+              "effect": "攻撃技能ダメージ+3",
+              "quantity": 1,
+              "icon": "/static/images/icon_grimoire.png",
+              "combat": {
+                "kind": "equipment",
+                "skill_damage_bonus": 3,
+                "applies_to": [
+                  "attack"
+                ]
+              },
+              "slot": "accessory",
+              "category": "equipment"
+            },
+            {
+              "name": "魔法のローブ",
+              "description": "魔力を帯びた上質なローブ。",
+              "effect": "MP消費を1軽減",
+              "quantity": 1,
+              "icon": "/static/images/icon_magic_robe.png",
+              "combat": {
+                "kind": "equipment",
+                "cost_reduction": {
+                  "mp": 1
+                }
+              },
+              "slot": "armor",
+              "category": "equipment"
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 5,
+              "id": "herb",
+              "icon": "/static/images/icon_herb.png",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "携帯食",
+              "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+              "effect": "",
+              "quantity": 2,
+              "id": "trail_ration",
+              "icon": "/static/images/icon_trail_ration.png",
+              "traits": [
+                "food"
+              ],
+              "category": "consumable"
+            },
+            {
+              "name": "氷の護符",
+              "description": "冷気の力を宿した護符。",
+              "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
+              "quantity": 1,
+              "id": "ice_charm",
+              "icon": "/static/images/icon_ice_charm.png",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d8+int/2",
+                "accuracy": 100,
+                "element": "ice",
+                "consumable": false,
+                "requires_target_weakness": "ice"
+              },
+              "category": "equipment"
+            },
+            {
+              "name": "旅の治療薬",
+              "description": "旅人が持ち歩く小瓶の治療薬。気づけば背嚢に入っていた。",
+              "effect": "HPを8回復 / 消耗品",
+              "quantity": 1,
+              "id": "travel_potion",
+              "icon": "/static/images/icon_travel_potion.png",
+              "combat": {
+                "kind": "heal",
+                "healing": "8",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 2,
+              "id": "healing_scroll",
+              "icon": "/static/images/icon_healing_scroll.png",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "スライムの核",
+              "description": "ぷるぷると震える半透明の核。薬の材料になる。",
+              "effect": "",
+              "quantity": 5,
+              "id": "slime_core",
+              "icon": "/static/images/icon_slime_core.png",
+              "category": "loot",
+              "sell_price": 3
+            },
+            {
+              "name": "生命の果実",
+              "description": "赤く熟した不思議な果実。",
+              "effect": "最大HPが永続的に3上がる / 消耗品",
+              "quantity": 3,
+              "id": "fruit_life",
+              "icon": "/static/images/icon_fruit_life.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 3,
+                "resource": "hp",
+                "label": "最大HP"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "ゴブリンの飾り物",
+              "description": "ゴブリンが身につけていた、安物の金属の飾り。",
+              "effect": "",
+              "quantity": 6,
+              "id": "goblin_trinket",
+              "icon": "/static/images/icon_goblin_trinket.png",
+              "category": "loot",
+              "sell_price": 5
+            },
+            {
+              "name": "刻印のハンマー",
+              "description": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
+              "effect": "",
+              "quantity": 1,
+              "id": "robert_hammer",
+              "icon": "/static/images/icon_robert_hammer.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "剛力の霊薬",
+              "description": "飲めば腕に力がみなぎる、古い霊薬。",
+              "effect": "筋力が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_str",
+              "icon": "/static/images/icon_elixir_str.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "str",
+                "label": "筋力"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "精霊の泉の水",
+              "description": "精霊の泉で汲んだ澄んだ水。ほのかに光を帯びている。",
+              "effect": "",
+              "quantity": 1,
+              "id": "spirit_spring_water",
+              "icon": "/static/images/icon_spirit_spring_water.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "火傷薬",
+              "description": "冷たい薬草を練り上げた軟膏。火傷を浄化する。",
+              "effect": "状態効果を付与 / 消耗品",
+              "quantity": 5,
+              "id": "burn_salve",
+              "combat": {
+                "kind": "cleanse",
+                "cleanse": {
+                  "tags": [
+                    "fire"
+                  ]
+                },
+                "cooldown": 0,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "光苔",
+              "description": "暗い場所で淡く光る苔。薬の材料になる。",
+              "effect": "",
+              "quantity": 1,
+              "id": "glowing_moss",
+              "icon": "/static/images/icon_glowing_moss.png",
+              "category": "material"
+            },
+            {
+              "name": "残り火の欠片",
+              "description": "いつまでも冷めない火を宿した、小さな欠片。",
+              "effect": "",
+              "quantity": 6,
+              "id": "ember_shard",
+              "icon": "/static/images/icon_ember_shard.png",
+              "category": "loot",
+              "sell_price": 10
+            },
+            {
+              "name": "紅玉の護符",
+              "description": "熱を帯びた赤い宝石の護符。",
+              "effect": "",
+              "quantity": 1,
+              "id": "ruby_charm",
+              "icon": "/static/images/icon_ruby_charm.png",
+              "combat": {
+                "kind": "equipment",
+                "requires_equipped": true,
+                "damage_taken_multipliers": {
+                  "fire": 0.7
+                }
+              },
+              "category": "equipment",
+              "slot": "accessory"
+            },
+            {
+              "name": "毒消し草",
+              "description": "苦みの強い薬草を煎じた丸薬。体内の毒をすべて浄化する。",
+              "effect": "状態効果を付与 / 消耗品",
+              "quantity": 5,
+              "id": "antidote_herb",
+              "combat": {
+                "kind": "cleanse",
+                "cleanse": {
+                  "count": "all",
+                  "tags": [
+                    "poison"
+                  ]
+                },
+                "cooldown": 0,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "色水晶の欠片",
+              "description": "光にかざすと色を変える水晶の欠片。",
+              "effect": "",
+              "quantity": 6,
+              "id": "crystal_fragment",
+              "icon": "/static/images/icon_crystal_fragment.png",
+              "category": "loot",
+              "sell_price": 12
+            },
+            {
+              "name": "虹晶の欠片",
+              "description": "色が絶えず移ろう水晶の欠片。強い魔力を秘めている。",
+              "effect": "魔法店で武器に加工できる",
+              "quantity": 1,
+              "id": "prism_shard",
+              "icon": "/static/images/icon_prism_shard.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "叡智の霊薬",
+              "description": "頭の芯まで澄みわたる、菫色の霊薬。",
+              "effect": "知力が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_int",
+              "icon": "/static/images/icon_elixir_int.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "int",
+                "label": "知力"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "錆びた王冠",
+              "description": "スライム王が身につけていた錆びた王冠。今のところ効果はない。",
+              "effect": "",
+              "quantity": 1,
+              "id": "rusted_crown",
+              "icon": "/static/images/icon_rusted_crown.png",
+              "category": "material"
+            },
+            {
+              "name": "鉄壁の霊薬",
+              "description": "体が岩のように頑丈になる。",
+              "effect": "耐久が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_end",
+              "icon": "/static/images/icon_elixir_end.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "end",
+                "label": "耐久"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "獣の毛皮",
+              "description": "厚く柔らかな獣の毛皮。",
+              "effect": "",
+              "quantity": 1,
+              "id": "wolf_pelt",
+              "icon": "/static/images/icon_wolf_pelt.png",
+              "category": "loot",
+              "sell_price": 8
+            },
+            {
+              "name": "気付け薬",
+              "description": "鋭い香りで意識を研ぎ澄ます薬。麻痺・弱体・目潰しを浄化する。",
+              "effect": "状態効果を付与 / 消耗品",
+              "quantity": 1,
+              "id": "smelling_salts",
+              "combat": {
+                "kind": "cleanse",
+                "cleanse": {
+                  "tags": [
+                    "paralysis",
+                    "weaken",
+                    "blind"
+                  ]
+                },
+                "cooldown": 0,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "竜の秘薬",
+              "description": "村に代々伝わる秘薬。竜の鱗を煎じたものだという。",
+              "effect": "HPを最大値の50%回復 / 消耗品",
+              "quantity": 2,
+              "id": "dragon_elixir",
+              "icon": "/static/images/icon_dragon_elixir.png",
+              "combat": {
+                "kind": "heal",
+                "max_hp_ratio": 0.5,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "白い竜鱗",
+              "description": "雪のように白い竜の鱗。触れると指先が凍える。",
+              "effect": "証拠品（戦闘では使えない）",
+              "quantity": 2,
+              "id": "white_dragon_scale",
+              "icon": "/static/images/icon_white_dragon_scale.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "氷の結晶",
+              "description": "溶けることのない氷のかけら。",
+              "effect": "鍛冶屋で氷の護符に加工できる",
+              "quantity": 1,
+              "id": "ice_crystal",
+              "icon": "/static/images/icon_ice_crystal.png",
+              "category": "material"
+            },
+            {
+              "name": "魔力の果実",
+              "description": "青く光る不思議な果実。",
+              "effect": "最大MPが永続的に3上がる / 消耗品",
+              "quantity": 2,
+              "id": "fruit_mana",
+              "icon": "/static/images/icon_fruit_mana.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 3,
+                "resource": "mp",
+                "label": "最大MP"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "霜の欠片",
+              "description": "握ると指先がしびれる、溶けない霜の欠片。",
+              "effect": "",
+              "quantity": 3,
+              "id": "frost_shard",
+              "icon": "/static/images/icon_frost_shard.png",
+              "category": "loot",
+              "sell_price": 10
+            },
+            {
+              "name": "迅速の霊薬",
+              "description": "身のこなしが風のように軽くなる。",
+              "effect": "敏捷が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_dex",
+              "icon": "/static/images/icon_elixir_dex.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "dex",
+                "label": "敏捷"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "氷鉄の大剣",
+              "description": "氷の護符と上質な剣を融合させた大剣。",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
+              "quantity": 1,
+              "id": "ice_iron_greatsword",
+              "icon": "/static/images/icon_ice_iron_greatsword.png",
+              "combat": {
+                "kind": "weapon",
+                "name": "氷鉄の大剣",
+                "damage": "1d10+str/3+int/4",
+                "accuracy": 88,
+                "element": "ice"
+              },
+              "category": "equipment",
+              "slot": "weapon"
+            },
+            {
+              "name": "煤の精",
+              "description": "亡霊が崩れた後に残る、黒い煤の塊。",
+              "effect": "",
+              "quantity": 2,
+              "id": "ash_essence",
+              "icon": "/static/images/icon_ash_essence.png",
+              "category": "loot",
+              "sell_price": 10
+            }
+          ],
+          "equipment": [
+            "魔法のローブ",
+            "紅玉の護符",
+            "氷鉄の大剣"
+          ],
+          "background_image": "/static/images/bg_burning_village.png",
+          "character_image": "/static/images/char_mage_v2.png",
+          "level": 7,
+          "combat": {
+            "basic_attack": {
+              "name": "氷鉄の大剣",
+              "damage": "1d10+str/3+int/4",
+              "accuracy": 88,
+              "element": "ice"
+            },
+            "defense": 0,
+            "evade": 2,
+            "base_attack": {
+              "name": "魔力弾",
+              "damage": "1d4+int/4",
+              "accuracy": 90,
+              "element": "arcane"
+            }
+          },
+          "exp": 324,
+          "passives": [
+            {
+              "id": "arcane_guard",
+              "tier": 2
+            },
+            {
+              "id": "element_resonance",
+              "tier": 1
+            }
+          ],
+          "passive_history": {
+            "2": "arcane_guard",
+            "4": "element_resonance",
+            "6": "arcane_guard"
+          },
+          "exp_rewarded_quests": [
+            "side_robin",
+            "side_lost_goblin",
+            "side_riku",
+            "side_gald"
+          ],
+          "learned_spells": [
+            "fireball",
+            "ice_arrow",
+            "lightning",
+            "arcane_lance"
+          ]
+        },
+        "world_state": {
+          "scene_id": "dragon_valley",
+          "location_id": "valley_ledge"
+        },
+        "flags": {
+          "heard_king_info": true,
+          "ask_king_ten_years_done": true,
+          "fire_bat_dragon_dislikes_player": true,
+          "asked_to_borrow_fire_bat_dragon": true,
+          "heard_blacksmith_advice": true,
+          "heard_treaty_lore": true,
+          "tutorial_potion_given": true,
+          "combat_defeated:dark_forest_loc:tutorial_slime": true,
+          "defeated_slime": true,
+          "forest_entrance_resolved": true,
+          "lost_goblin_quest": true,
+          "knows_fort_password": true,
+          "accepted_lost_goblin_quest": true,
+          "combat_defeated:goblin_fort_first_second:goblin": true,
+          "combat_defeated:goblin_fort_first_second:goblin_archer": true,
+          "reward_claimed:goblin_fort_first_second": true,
+          "elite_fruit_claimed:goblin_fort": true,
+          "combat_defeated:goblin_fort_second_right:hobgoblin": true,
+          "goblin_password_clue": true,
+          "combat_defeated:goblin_fort_fourth:goblin_king": true,
+          "combat_defeated:goblin_fort_fourth:goblin_archer": true,
+          "defeated_goblin_king": true,
+          "cleared_goblin_fort": true,
+          "reward_claimed:goblin_fort_fourth": true,
+          "returned_lost_goblin_box": true,
+          "resolved_lost_goblin_box": true,
+          "drew_spirit_spring_water": true,
+          "seen_cave_seal": true,
+          "cave_seal_broken": true,
+          "combat_defeated:cave_heat_corridor:heat_lizard": true,
+          "cleared_cave_heat_corridor": true,
+          "reward_claimed:cave_heat_corridor": true,
+          "elite_fruit_claimed:sealed_cave": true,
+          "combat_defeated:cave_lava_room:fire_wisp": true,
+          "cleared_cave_lava_room": true,
+          "opened_lava_chest": true,
+          "combat_defeated:cave_crystal_corridor:ruby_golem": true,
+          "combat_defeated:cave_crystal_corridor:sapphire_moth": true,
+          "combat_defeated:cave_crystal_corridor:emerald_spider": true,
+          "cleared_cave_crystal_corridor": true,
+          "combat_defeated:cave_prism_tree:prism_tree": true,
+          "cleared_cave_prism_tree": true,
+          "reward_claimed:cave_prism_tree": true,
+          "rested_at_elf_spring": true,
+          "combat_defeated:slime_ambush_one:slime": true,
+          "combat_defeated:slime_ambush_two:slime": true,
+          "combat_defeated:slime_king_battle:slime_king": true,
+          "defeated_slime_king": true,
+          "reward_claimed:slime_king_battle": true,
+          "combat_defeated:forest_wolves:forest_wolf": true,
+          "passed_forest_wolves": true,
+          "saved_gald": true,
+          "reward_claimed:forest_wolves": true,
+          "elite_fruit_claimed:forest": true,
+          "returned_from_forest": true,
+          "reached_village": true,
+          "combat_defeated:village_fire_slime:fire_slime": true,
+          "found_burning_house": true,
+          "riku_rescued": true,
+          "riku_returned": true,
+          "visited_gald_shop": true,
+          "frost_trace_seen": true,
+          "inspected_frost_core": true,
+          "combat_defeated:ice_elemental_encounter:ice_elemental": true,
+          "reward_claimed:ice_elemental_encounter": true,
+          "elite_fruit_claimed:burning_village": true,
+          "combat_defeated:frost_wolf_battle:frost_dire_wolf": true,
+          "defeated_frost_dire_wolf": true,
+          "reward_claimed:frost_wolf_battle": true,
+          "read_ian_grief_done": true,
+          "accepted_ian_request": true,
+          "entered_dragon_valley": true,
+          "combat_defeated:valley_entrance:ash_wraith": true,
+          "reward_claimed:valley_entrance": true,
+          "elite_fruit_claimed:dragon_valley": true
+        },
+        "companion": null,
+        "progression_revision": "050",
+        "pending_passive_choices": [],
+        "shop_stock": {
+          "sarah_shop": {
+            "herb": 3,
+            "smoke_bomb": null,
+            "poison_dart": null,
+            "holy_water": null,
+            "ice_charm": null,
+            "fireball_scroll": null,
+            "antidote_herb": 3,
+            "burn_salve": 2,
+            "smelling_salts": 2,
+            "blinding_powder": 3,
+            "haze_ball": 2
+          },
+          "forge_shop": {
+            "adamantite_armor": 1,
+            "ice_charm": 1,
+            "oil_flask": 3,
+            "trap_probe": 1
+          },
+          "magic_shop": {
+            "earth_staff": 1,
+            "healing_scroll": null,
+            "fireball_scroll": null,
+            "spellbook_lightning": 0,
+            "spellbook_arcane_lance": 0,
+            "panacea": 2,
+            "purifying_bell": 1
+          },
+          "village_shop": {
+            "ice_charm": 1,
+            "herb": null,
+            "antidote_herb": 3,
+            "burn_salve": 3
+          },
+          "gald_shop": {
+            "herb": null,
+            "holy_water": null,
+            "ice_charm": 1,
+            "smoke_bomb": null,
+            "burn_salve": 2,
+            "blinding_powder": 3,
+            "haze_ball": 2
+          }
+        },
+        "_balance_exp_sources": {
+          "trash": 20,
+          "elite": 84,
+          "boss": 100,
+          "unclassified": 0,
+          "quest": 120
+        }
+      },
+      "seed": 6804992604247653507,
+      "trial_index": 3,
+      "median_level": 7.0,
+      "arrival_count": 382,
+      "level_histogram": {
+        "6": 130,
+        "7": 252
+      },
+      "source": "supplemental_P2_policy_route",
+      "coverage_variant": "ledge"
+    },
+    "thief": {
+      "snapshot": {
+        "character": {
+          "name": "ファング",
+          "description": "影に生きる敏捷の達人。素早さと器用さに優れる。",
+          "character_id": "thief",
+          "hp": 26,
+          "max_hp": 26,
+          "mp": 12,
+          "max_mp": 12,
+          "sp": 26,
+          "max_sp": 26,
+          "gold": 488,
+          "attributes": {
+            "str": 14,
+            "dex": 28,
+            "int": 10,
+            "wis": 6,
+            "end": 8
+          },
+          "skills": [
+            {
+              "id": "hide_in_shadow",
+              "name": "影隠れ",
+              "kind": "defend",
+              "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
+              "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
+              "guard_multiplier": 0.25,
+              "dice_type": "1d20+dex",
+              "cost": 2,
+              "cost_type": "sp",
+              "cooldown": 1
+            },
+            {
+              "id": "vital_strike",
+              "name": "急所突き",
+              "kind": "attack",
+              "description": "敵の急所を正確に狙う。",
+              "effect": "3d6判定ダメージ",
+              "damage": "3d6",
+              "dice_type": "3d6",
+              "accuracy": 82,
+              "element": "physical",
+              "cost": 4,
+              "cost_type": "sp"
+            },
+            {
+              "id": "blinding_throw",
+              "name": "目潰し投げ",
+              "description": "敵単体に物理攻撃を行い、2ラウンドの間「目潰し」を付与して命中率を下げる。",
+              "cost": 2,
+              "cost_type": "mp",
+              "kind": "attack",
+              "damage": "1d4+dex/4",
+              "accuracy": 95,
+              "element": "physical",
+              "on_hit_status": {
+                "id": "blind",
+                "duration": 2
+              }
+            },
+            {
+              "id": "blade_dance",
+              "name": "刃の乱舞",
+              "description": "敵全体に物理攻撃を行い、命中した敵それぞれに「毒」を1スタック付与する。",
+              "cost": 4,
+              "cost_type": "sp",
+              "kind": "attack",
+              "damage": "1d4+dex/4",
+              "accuracy": 95,
+              "element": "physical",
+              "all_targets": true,
+              "on_hit_status": {
+                "id": "poison",
+                "stacks": 1
+              }
+            },
+            {
+              "id": "shadow_haste",
+              "name": "神速の影分身",
+              "description": "3ラウンドの間「神速」状態になり、毎ラウンドの行動回数が+1される。",
+              "cost": 0,
+              "cost_type": "mp",
+              "costs": {
+                "sp": 8,
+                "mp": 4
+              },
+              "kind": "status",
+              "cooldown": 5,
+              "self_status": {
+                "id": "haste",
+                "duration": 3
+              }
+            }
+          ],
+          "inventory": [
+            {
+              "name": "ダガー",
+              "description": "軽量で扱いやすい短剣。",
+              "effect": "通常攻撃 1d6+dex/4ダメージ / 命中率95% / 物理属性",
+              "quantity": 1,
+              "icon": "/static/images/icon_dagger.png",
+              "combat": {
+                "kind": "weapon",
+                "name": "ダガー",
+                "damage": "1d6+dex/4",
+                "accuracy": 95,
+                "element": "physical"
+              },
+              "slot": "weapon",
+              "category": "equipment"
+            },
+            {
+              "name": "革の鎧",
+              "description": "動きやすさを重視した軽装鎧。",
+              "effect": "被ダメージを1軽減",
+              "quantity": 1,
+              "icon": "/static/images/icon_leather_armor.png",
+              "combat": {
+                "kind": "armor",
+                "defense": 1
+              },
+              "slot": "armor",
+              "category": "equipment"
+            },
+            {
+              "name": "盗賊道具",
+              "description": "鍵開けや罠解除に使う道具一式。",
+              "effect": "探索・解除判定+2",
+              "quantity": 1,
+              "icon": "/static/images/icon_thieves_tools.png"
+            },
+            {
+              "name": "携帯食",
+              "description": "旅用の干し肉と乾パン。匂いで小動物を誘える。",
+              "effect": "",
+              "quantity": 2,
+              "id": "trail_ration",
+              "icon": "/static/images/icon_trail_ration.png",
+              "traits": [
+                "food"
+              ],
+              "category": "consumable"
+            },
+            {
+              "name": "薬草",
+              "description": "傷を癒す薬草。",
+              "effect": "HPを10回復 / 消耗品",
+              "quantity": 5,
+              "id": "herb",
+              "icon": "/static/images/icon_herb.png",
+              "combat": {
+                "kind": "heal",
+                "healing": "10",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "氷の護符",
+              "description": "冷気の力を宿した護符。",
+              "effect": "1d8+int/2ダメージ / 命中率100% / 氷属性",
+              "quantity": 1,
+              "id": "ice_charm",
+              "icon": "/static/images/icon_ice_charm.png",
+              "combat": {
+                "kind": "damage",
+                "damage": "1d8+int/2",
+                "accuracy": 100,
+                "element": "ice",
+                "consumable": false,
+                "requires_target_weakness": "ice"
+              },
+              "category": "equipment"
+            },
+            {
+              "name": "旅の治療薬",
+              "description": "旅人が持ち歩く小瓶の治療薬。気づけば背嚢に入っていた。",
+              "effect": "HPを8回復 / 消耗品",
+              "quantity": 1,
+              "id": "travel_potion",
+              "icon": "/static/images/icon_travel_potion.png",
+              "combat": {
+                "kind": "heal",
+                "healing": "8",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "スライムの核",
+              "description": "ぷるぷると震える半透明の核。薬の材料になる。",
+              "effect": "",
+              "quantity": 5,
+              "id": "slime_core",
+              "icon": "/static/images/icon_slime_core.png",
+              "category": "loot",
+              "sell_price": 3
+            },
+            {
+              "name": "生命の果実",
+              "description": "赤く熟した不思議な果実。",
+              "effect": "最大HPが永続的に3上がる / 消耗品",
+              "quantity": 3,
+              "id": "fruit_life",
+              "icon": "/static/images/icon_fruit_life.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 3,
+                "resource": "hp",
+                "label": "最大HP"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "ゴブリンの飾り物",
+              "description": "ゴブリンが身につけていた、安物の金属の飾り。",
+              "effect": "",
+              "quantity": 4,
+              "id": "goblin_trinket",
+              "icon": "/static/images/icon_goblin_trinket.png",
+              "category": "loot",
+              "sell_price": 5
+            },
+            {
+              "name": "刻印のハンマー",
+              "description": "柄に「ローベルト」の名が刻まれた古い鍛冶ハンマー。",
+              "effect": "",
+              "quantity": 1,
+              "id": "robert_hammer",
+              "icon": "/static/images/icon_robert_hammer.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "剛力の霊薬",
+              "description": "飲めば腕に力がみなぎる、古い霊薬。",
+              "effect": "筋力が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_str",
+              "icon": "/static/images/icon_elixir_str.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "str",
+                "label": "筋力"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "精霊の泉の水",
+              "description": "精霊の泉で汲んだ澄んだ水。ほのかに光を帯びている。",
+              "effect": "",
+              "quantity": 1,
+              "id": "spirit_spring_water",
+              "icon": "/static/images/icon_spirit_spring_water.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "火傷薬",
+              "description": "冷たい薬草を練り上げた軟膏。火傷を浄化する。",
+              "effect": "状態効果を付与 / 消耗品",
+              "quantity": 8,
+              "id": "burn_salve",
+              "combat": {
+                "kind": "cleanse",
+                "cleanse": {
+                  "tags": [
+                    "fire"
+                  ]
+                },
+                "cooldown": 0,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "光苔",
+              "description": "暗い場所で淡く光る苔。薬の材料になる。",
+              "effect": "",
+              "quantity": 1,
+              "id": "glowing_moss",
+              "icon": "/static/images/icon_glowing_moss.png",
+              "category": "material"
+            },
+            {
+              "name": "残り火の欠片",
+              "description": "いつまでも冷めない火を宿した、小さな欠片。",
+              "effect": "",
+              "quantity": 6,
+              "id": "ember_shard",
+              "icon": "/static/images/icon_ember_shard.png",
+              "category": "loot",
+              "sell_price": 10
+            },
+            {
+              "name": "紅玉の護符",
+              "description": "熱を帯びた赤い宝石の護符。",
+              "effect": "",
+              "quantity": 1,
+              "id": "ruby_charm",
+              "icon": "/static/images/icon_ruby_charm.png",
+              "combat": {
+                "kind": "equipment",
+                "requires_equipped": true,
+                "damage_taken_multipliers": {
+                  "fire": 0.7
+                }
+              },
+              "category": "equipment",
+              "slot": "accessory"
+            },
+            {
+              "name": "毒消し草",
+              "description": "苦みの強い薬草を煎じた丸薬。体内の毒をすべて浄化する。",
+              "effect": "状態効果を付与 / 消耗品",
+              "quantity": 5,
+              "id": "antidote_herb",
+              "combat": {
+                "kind": "cleanse",
+                "cleanse": {
+                  "count": "all",
+                  "tags": [
+                    "poison"
+                  ]
+                },
+                "cooldown": 0,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "色水晶の欠片",
+              "description": "光にかざすと色を変える水晶の欠片。",
+              "effect": "",
+              "quantity": 6,
+              "id": "crystal_fragment",
+              "icon": "/static/images/icon_crystal_fragment.png",
+              "category": "loot",
+              "sell_price": 12
+            },
+            {
+              "name": "虹晶の欠片",
+              "description": "色が絶えず移ろう水晶の欠片。強い魔力を秘めている。",
+              "effect": "魔法店で武器に加工できる",
+              "quantity": 1,
+              "id": "prism_shard",
+              "icon": "/static/images/icon_prism_shard.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "叡智の霊薬",
+              "description": "頭の芯まで澄みわたる、菫色の霊薬。",
+              "effect": "知力が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_int",
+              "icon": "/static/images/icon_elixir_int.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "int",
+                "label": "知力"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "治療の巻物",
+              "description": "使用すると直ちにHPを30回復する。",
+              "effect": "HPを30回復 / 消耗品",
+              "quantity": 3,
+              "id": "healing_scroll",
+              "icon": "/static/images/icon_healing_scroll.png",
+              "combat": {
+                "kind": "heal",
+                "healing": "30",
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "錆びた王冠",
+              "description": "スライム王が身につけていた錆びた王冠。今のところ効果はない。",
+              "effect": "",
+              "quantity": 1,
+              "id": "rusted_crown",
+              "icon": "/static/images/icon_rusted_crown.png",
+              "category": "material"
+            },
+            {
+              "name": "鉄壁の霊薬",
+              "description": "体が岩のように頑丈になる。",
+              "effect": "耐久が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_end",
+              "icon": "/static/images/icon_elixir_end.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "end",
+                "label": "耐久"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "獣の毛皮",
+              "description": "厚く柔らかな獣の毛皮。",
+              "effect": "",
+              "quantity": 1,
+              "id": "wolf_pelt",
+              "icon": "/static/images/icon_wolf_pelt.png",
+              "category": "loot",
+              "sell_price": 8
+            },
+            {
+              "name": "気付け薬",
+              "description": "鋭い香りで意識を研ぎ澄ます薬。麻痺・弱体・目潰しを浄化する。",
+              "effect": "状態効果を付与 / 消耗品",
+              "quantity": 1,
+              "id": "smelling_salts",
+              "combat": {
+                "kind": "cleanse",
+                "cleanse": {
+                  "tags": [
+                    "paralysis",
+                    "weaken",
+                    "blind"
+                  ]
+                },
+                "cooldown": 0,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "アダマンタイトの鎧",
+              "description": "非常に硬い金属で作られた鎧。",
+              "effect": "被ダメージを3軽減",
+              "quantity": 1,
+              "id": "adamantite_armor",
+              "icon": "/static/images/icon_adamantite_armor.png",
+              "combat": {
+                "kind": "armor",
+                "defense": 3
+              },
+              "category": "equipment",
+              "slot": "armor"
+            },
+            {
+              "name": "竜の秘薬",
+              "description": "村に代々伝わる秘薬。竜の鱗を煎じたものだという。",
+              "effect": "HPを最大値の50%回復 / 消耗品",
+              "quantity": 2,
+              "id": "dragon_elixir",
+              "icon": "/static/images/icon_dragon_elixir.png",
+              "combat": {
+                "kind": "heal",
+                "max_hp_ratio": 0.5,
+                "consumable": true
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "氷の結晶",
+              "description": "溶けることのない氷のかけら。",
+              "effect": "鍛冶屋で氷の護符に加工できる",
+              "quantity": 1,
+              "id": "ice_crystal",
+              "icon": "/static/images/icon_ice_crystal.png",
+              "category": "material"
+            },
+            {
+              "name": "魔力の果実",
+              "description": "青く光る不思議な果実。",
+              "effect": "最大MPが永続的に3上がる / 消耗品",
+              "quantity": 2,
+              "id": "fruit_mana",
+              "icon": "/static/images/icon_fruit_mana.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 3,
+                "resource": "mp",
+                "label": "最大MP"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "霜の欠片",
+              "description": "握ると指先がしびれる、溶けない霜の欠片。",
+              "effect": "",
+              "quantity": 3,
+              "id": "frost_shard",
+              "icon": "/static/images/icon_frost_shard.png",
+              "category": "loot",
+              "sell_price": 10
+            },
+            {
+              "name": "白い竜鱗",
+              "description": "雪のように白い竜の鱗。触れると指先が凍える。",
+              "effect": "証拠品（戦闘では使えない）",
+              "quantity": 1,
+              "id": "white_dragon_scale",
+              "icon": "/static/images/icon_white_dragon_scale.png",
+              "category": "key",
+              "key_item": true
+            },
+            {
+              "name": "迅速の霊薬",
+              "description": "身のこなしが風のように軽くなる。",
+              "effect": "敏捷が永続的に2上がる / 消耗品",
+              "quantity": 1,
+              "id": "elixir_dex",
+              "icon": "/static/images/icon_elixir_dex.png",
+              "combat": {
+                "kind": "permanent",
+                "consumable": true,
+                "amount": 2,
+                "attribute": "dex",
+                "label": "敏捷"
+              },
+              "category": "consumable"
+            },
+            {
+              "name": "氷鉄の大剣",
+              "description": "氷の護符と上質な剣を融合させた大剣。",
+              "effect": "通常攻撃 1d10+str/3+int/4ダメージ / 命中率88% / 氷属性",
+              "quantity": 1,
+              "id": "ice_iron_greatsword",
+              "icon": "/static/images/icon_ice_iron_greatsword.png",
+              "combat": {
+                "kind": "weapon",
+                "name": "氷鉄の大剣",
+                "damage": "1d10+str/3+int/4",
+                "accuracy": 88,
+                "element": "ice"
+              },
+              "category": "equipment",
+              "slot": "weapon"
+            },
+            {
+              "name": "煤の精",
+              "description": "亡霊が崩れた後に残る、黒い煤の塊。",
+              "effect": "",
+              "quantity": 2,
+              "id": "ash_essence",
+              "icon": "/static/images/icon_ash_essence.png",
+              "category": "loot",
+              "sell_price": 10
+            }
+          ],
+          "equipment": [
+            "紅玉の護符",
+            "アダマンタイトの鎧",
+            "氷鉄の大剣"
+          ],
+          "background_image": "/static/images/bg_burning_village.png",
+          "character_image": "/static/images/char_thief_v2.png",
+          "level": 7,
+          "combat": {
+            "basic_attack": {
+              "name": "氷鉄の大剣",
+              "damage": "1d10+str/3+int/4",
+              "accuracy": 88,
+              "element": "ice"
+            },
+            "defense": 0,
+            "evade": 8,
+            "base_attack": {
+              "name": "ダガー",
+              "damage": "1d6+dex/4",
+              "accuracy": 95,
+              "element": "physical"
+            }
+          },
+          "exp": 320,
+          "passives": [
+            {
+              "id": "acrobatics",
+              "tier": 1
+            },
+            {
+              "id": "hidden_weapon_master",
+              "tier": 1
+            },
+            {
+              "id": "counter_sight",
+              "tier": 1
+            }
+          ],
+          "passive_history": {
+            "2": "acrobatics",
+            "4": "hidden_weapon_master",
+            "6": "counter_sight"
+          },
+          "exp_rewarded_quests": [
+            "side_robin",
+            "side_lost_goblin",
+            "side_riku",
+            "side_gald"
+          ],
+          "learned_spells": []
+        },
+        "world_state": {
+          "scene_id": "dragon_valley",
+          "location_id": "valley_ledge"
+        },
+        "flags": {
+          "heard_king_info": true,
+          "ask_king_ten_years_done": true,
+          "borrowed_fire_bat_dragon": true,
+          "asked_to_borrow_fire_bat_dragon": true,
+          "heard_blacksmith_advice": true,
+          "heard_treaty_lore": true,
+          "tutorial_potion_given": true,
+          "combat_defeated:dark_forest_loc:tutorial_slime": true,
+          "defeated_slime": true,
+          "forest_entrance_resolved": true,
+          "lost_goblin_quest": true,
+          "knows_fort_password": true,
+          "accepted_lost_goblin_quest": true,
+          "reward_claimed:goblin_fort_first_second": true,
+          "elite_fruit_claimed:goblin_fort": true,
+          "hazard_054_01_done": true,
+          "combat_defeated:goblin_fort_second_right:hobgoblin": true,
+          "goblin_password_clue": true,
+          "combat_defeated:goblin_fort_fourth:goblin_king": true,
+          "combat_defeated:goblin_fort_fourth:goblin_archer": true,
+          "defeated_goblin_king": true,
+          "cleared_goblin_fort": true,
+          "reward_claimed:goblin_fort_fourth": true,
+          "returned_lost_goblin_box": true,
+          "resolved_lost_goblin_box": true,
+          "drew_spirit_spring_water": true,
+          "seen_cave_seal": true,
+          "cave_seal_broken": true,
+          "hazard_054_02_done": true,
+          "combat_defeated:cave_heat_corridor:heat_lizard": true,
+          "cleared_cave_heat_corridor": true,
+          "reward_claimed:cave_heat_corridor": true,
+          "elite_fruit_claimed:sealed_cave": true,
+          "combat_defeated:cave_lava_room:fire_wisp": true,
+          "cleared_cave_lava_room": true,
+          "opened_lava_chest": true,
+          "combat_defeated:cave_crystal_corridor:ruby_golem": true,
+          "combat_defeated:cave_crystal_corridor:sapphire_moth": true,
+          "combat_defeated:cave_crystal_corridor:emerald_spider": true,
+          "cleared_cave_crystal_corridor": true,
+          "combat_defeated:cave_prism_tree:prism_tree": true,
+          "cleared_cave_prism_tree": true,
+          "fire_bat_empowered": true,
+          "reward_claimed:cave_prism_tree": true,
+          "rested_at_elf_spring": true,
+          "combat_defeated:slime_ambush_one:slime": true,
+          "combat_defeated:slime_ambush_two:slime": true,
+          "combat_defeated:slime_king_battle:slime_king": true,
+          "defeated_slime_king": true,
+          "reward_claimed:slime_king_battle": true,
+          "combat_defeated:forest_wolves:forest_wolf": true,
+          "passed_forest_wolves": true,
+          "saved_gald": true,
+          "reward_claimed:forest_wolves": true,
+          "elite_fruit_claimed:forest": true,
+          "returned_from_forest": true,
+          "bought_adamantite_armor": true,
+          "reached_village": true,
+          "combat_defeated:village_fire_slime:fire_slime": true,
+          "found_burning_house": true,
+          "hazard_054_04_done": true,
+          "riku_rescued": true,
+          "riku_returned": true,
+          "visited_gald_shop": true,
+          "frost_trace_seen": true,
+          "inspected_frost_core": true,
+          "combat_defeated:ice_elemental_encounter:ice_elemental": true,
+          "reward_claimed:ice_elemental_encounter": true,
+          "elite_fruit_claimed:burning_village": true,
+          "combat_defeated:frost_wolf_battle:frost_dire_wolf": true,
+          "defeated_frost_dire_wolf": true,
+          "reward_claimed:frost_wolf_battle": true,
+          "read_ian_grief_done": true,
+          "accepted_ian_request": true,
+          "entered_dragon_valley": true,
+          "combat_defeated:valley_entrance:ash_wraith": true,
+          "reward_claimed:valley_entrance": true,
+          "elite_fruit_claimed:dragon_valley": true
+        },
+        "companion": {
+          "id": "fire_bat_dragon",
+          "name": "火コウモリ竜",
+          "description": "サラが飼っている小さな火竜。毎ラウンド開始時に敵へ2d3の火属性ダメージを与え、プレイヤーのHPを3回復する（虹晶を食べると6回復）。",
+          "round_start_effects": [
+            {
+              "kind": "damage_enemy",
+              "name": "火炎の羽ばたき",
+              "damage": "2d3",
+              "element": "fire"
+            },
+            {
+              "kind": "heal_player",
+              "amount": "3",
+              "requirements": {
+                "not_flag": "fire_bat_empowered"
+              },
+              "scale_from_damage": {
+                "source": "previous_damage_enemy",
+                "ratio": 0.75
+              }
+            },
+            {
+              "kind": "heal_player",
+              "amount": "6",
+              "requirements": {
+                "flag": "fire_bat_empowered"
+              },
+              "scale_from_damage": {
+                "source": "previous_damage_enemy",
+                "ratio": 1.5
+              }
+            }
+          ],
+          "image": "/static/images/companion_fire_bat_dragon.png",
+          "check_assistance": {
+            "skills": [
+              "運動"
+            ],
+            "reason": "火コウモリ竜の助言"
+          },
+          "npc_id": "fire_bat_dragon",
+          "title": "火コウモリ竜",
+          "keywords": []
+        },
+        "progression_revision": "050",
+        "pending_passive_choices": [],
+        "shop_stock": {
+          "sarah_shop": {
+            "herb": 3,
+            "smoke_bomb": null,
+            "poison_dart": null,
+            "holy_water": null,
+            "ice_charm": null,
+            "fireball_scroll": null,
+            "antidote_herb": 3,
+            "burn_salve": 2,
+            "smelling_salts": 2,
+            "blinding_powder": 3,
+            "haze_ball": 2
+          },
+          "forge_shop": {
+            "adamantite_armor": 0,
+            "ice_charm": 1,
+            "oil_flask": 3,
+            "trap_probe": 1
+          },
+          "magic_shop": {
+            "earth_staff": 1,
+            "healing_scroll": null,
+            "fireball_scroll": null,
+            "spellbook_lightning": 1,
+            "spellbook_arcane_lance": 1,
+            "panacea": 2,
+            "purifying_bell": 1
+          },
+          "village_shop": {
+            "ice_charm": 1,
+            "herb": null,
+            "antidote_herb": 3,
+            "burn_salve": 3
+          },
+          "gald_shop": {
+            "herb": null,
+            "holy_water": null,
+            "ice_charm": 1,
+            "smoke_bomb": null,
+            "burn_salve": 2,
+            "blinding_powder": 3,
+            "haze_ball": 2
+          }
+        },
+        "_balance_exp_sources": {
+          "trash": 16,
+          "elite": 84,
+          "boss": 100,
+          "unclassified": 0,
+          "quest": 120
+        }
+      },
+      "seed": 4112158798293587379,
+      "trial_index": 1,
+      "median_level": 7.0,
+      "arrival_count": 308,
+      "level_histogram": {
+        "6": 105,
+        "7": 203
+      },
+      "source": "supplemental_P2_policy_route",
+      "coverage_variant": "ledge"
+    }
+  },
+  "choices": {
+    "hero": {
+      "2": "heavy_armor_lore",
+      "4": "unsinkable_shield",
+      "6": "adversity_flame",
+      "8": "sword_saint"
+    },
+    "cleric": {
+      "2": "overflow_mercy",
+      "4": "pious_heart",
+      "6": "holy_halo",
+      "8": "immortal_sanctuary"
+    },
+    "mage": {
+      "2": "arcane_guard",
+      "4": "element_resonance",
+      "6": "arcane_guard",
+      "8": "omni_master"
+    },
+    "thief": {
+      "2": "acrobatics",
+      "4": "hidden_weapon_master",
+      "6": "counter_sight",
+      "8": "unseen_assassin"
+    }
+  }
+}

@@ -25,6 +25,9 @@ def ability_for(session: dict[str, Any], action: dict[str, Any]) -> dict[str, An
     if action["type"] in {"skill", "item"}:
         result = combat._player_ability(session, action["type"], action["id"])
         result = {**result, "_skill_action": action["type"] == "skill"}
+        if action["type"] == "item" and result.get("consumable", True):
+            used = session["combat"].get("passive_state", {}).get("free_items_used", 0)
+            result["free_action"] = used < progression.effects(session).get("free_item_uses", 0)
     else:
         actor = session["character"]
         result = combat._merge_dict(combat._combat_rules(session)["basic_attack"], actor.get("combat", {}).get("basic_attack"))
@@ -128,7 +131,7 @@ def strike_moments(session: dict[str, Any], attacker: dict[str, Any], target: di
             # A separate clone for each support point keeps this estimator pure.
             if any("shield_remaining" in s for s in target.get("statuses", [])):
                 damage = status_effects.absorb(deepcopy(target), damage)
-            damage -= min(target.get("mp", 0), math.floor(damage * passive.get("mana_armor", 0) + .5))
+            damage -= combat._mana_armor_diversion(session, damage, passive)
         else:
             for status in target.get("statuses", []):
                 damage = max(0, round(damage * status.get("guard_multiplier", 1)))
@@ -212,6 +215,9 @@ def status_value(session: dict[str, Any], spec: Any, target: dict[str, Any], sur
     if target is session["character"] and modifiers.get("damage_dealt_multiplier", 1) < 1:
         enemy = combat._alive_enemies(session["combat"])[0]
         value += turns * damage(session, {"type": "attack", "id": "basic_attack"}, enemy) * (1/modifiers["damage_dealt_multiplier"]-1)
+    if target is session["character"] and modifiers.get("skip_chance"):
+        from . import budget
+        value += turns * budget.phase_moments(session)["expected_damage"] * modifiers["skip_chance"]
     return value * status.get("chance", 100) / 100
 
 
@@ -266,15 +272,22 @@ def _choose(session: dict[str, Any], policy: str, *, purify: bool = True,
                 value += incoming * .25
         scored.append((value, action, target))
     if policy != "best_free":
-        debuff_loss = sum(status_value(session, {**s, "duration": s.get("remaining_rounds", 1)}, actor,
-            s.get("remaining_rounds", 1), incremental=False) for s in actor.get("statuses", []) if s.get("cleansable"))
         for action, target in pairs:
-            if action["type"] != "skill" or action.get("kind") in {"attack", "damage"}:
+            if action["type"] not in {"skill", "item"} or action.get("kind") in {"attack", "damage"}:
                 continue
             ability = ability_for(session, action)
             value = 0.0
-            if ability.get("cleanse") and debuff_loss > actor["max_hp"] * PARAMETERS["cleanse_hp_ratio"]:
-                value += debuff_loss
+            cleanse = ability.get("cleanse")
+            if cleanse:
+                tags = set(cleanse.get("tags", ["debuff"]))
+                affected = [s for s in actor.get("statuses", []) if s.get("cleansable")
+                            and (not tags or tags.intersection(s.get("tags", ["debuff"])))]
+                if cleanse.get("count", "all") != "all":
+                    affected = affected[:int(cleanse["count"])]
+                debuff_loss = sum(status_value(session, {**s, "duration": s.get("remaining_rounds", 1)},
+                    actor, s.get("remaining_rounds", 1), incremental=False) for s in affected)
+                if debuff_loss > actor["max_hp"] * PARAMETERS["cleanse_hp_ratio"]:
+                    value += debuff_loss
             if action.get("kind") == "restore" and actor.get("mp", 0) < actor.get("max_mp", 0) * PARAMETERS["restore_mp_ratio"]:
                 value += min(actor["max_mp"]-actor["mp"], sim.formula_mean(str(ability.get("amount", "0")), actor))
             if high:
@@ -312,7 +325,7 @@ def telegraph_response(session: dict[str, Any], pairs: list) -> Any:
         reduction = 0.0
         if action["type"] == "defend":
             reduction = 1 - combat._combat_rules(session)["defend_multiplier"]
-        elif action["type"] == "skill":
+        elif action["type"] in {"skill", "item"}:
             ability = ability_for(session, action)
             reduction = 1 - ability.get("guard_multiplier", 1)
             raw = ability.get("self_status", [])
@@ -321,6 +334,13 @@ def telegraph_response(session: dict[str, Any], pairs: list) -> Any:
                 definition = next((s for s in session["scenario_pack"].get("status_defs", []) if s["id"] == spec.get("id")), {})
                 mods = {**definition.get("modifiers", {}), **spec.get("modifiers", {})}
                 reduction = max(reduction, 1 - mods.get("received_damage_multiplier", 1), mods.get("evade_bonus", 0)/100)
+            status = ability.get("on_hit_status") or {}
+            if isinstance(status, dict) and status.get("id") == "blind" and target in charges:
+                if not any(s.get("id") == "blind" for s in target.get("statuses", [])):
+                    definition = next(s for s in session["scenario_pack"]["status_defs"] if s["id"] == "blind")
+                    mods = definition.get("boss_modifiers" if status_effects.is_boss(session, target) else "modifiers", {})
+                    reduction = max(reduction, mods.get("accuracy_penalty", 0)/100 *
+                                    combat.attack_chance(session, session["character"], target, ability, "player")/100)
             if reduction > 0 and ability.get("free_action"):
                 reduction += TELEGRAPH_PARAMETERS["free_action_priority"]
         if reduction > 0:

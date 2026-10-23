@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-24-status-content-054",
+    "content_revision": "2026-10-24-tuning-052c3",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -23638,7 +23638,7 @@
           "every_n_rounds": 3,
           "accuracy": 70,
           "element": "physical",
-          "damage": "1d10+2",
+          "damage": "2d4+8",
           "on_hit_status": {
             "id": "blind",
             "chance": 100,
@@ -29309,6 +29309,12 @@
         "set": "basic"
       },
       {
+        "entity": "characters",
+        "id": "thief",
+        "path": "skills.@id=hide_in_shadow.cooldown",
+        "set": 1
+      },
+      {
         "entity": "combat_rules",
         "id": "$",
         "path": "elite_percentage_round_cap",
@@ -29430,7 +29436,7 @@
         "entity": "enemies",
         "id": "draco_dragon",
         "path": "skills.@id=frozen_breath.damage_max_hp_ratio",
-        "set": 0.45
+        "set": 0.4
       },
       {
         "entity": "enemies",
@@ -29519,8 +29525,20 @@
       {
         "entity": "enemies",
         "id": "earth_worm",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+8"
+      },
+      {
+        "entity": "enemies",
+        "id": "earth_worm",
         "path": "combat.basic_attack_weight",
         "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "earth_worm",
+        "path": "skills.@id=gravel_spray.damage",
+        "set": "2d4+8"
       },
       {
         "entity": "enemies",
@@ -29566,7 +29584,7 @@
         "entity": "enemies",
         "id": "fire_slime",
         "path": "combat.basic_attack.damage",
-        "set": "1d2+2"
+        "set": "2d4+5"
       },
       {
         "entity": "enemies",
@@ -29578,6 +29596,18 @@
           "stacks": 1,
           "duration": 2
         }
+      },
+      {
+        "entity": "enemies",
+        "id": "fire_slime",
+        "path": "rewards.items.@name=%E6%B2%BB%E7%99%82%E3%81%AE%E5%B7%BB%E7%89%A9.quantity",
+        "set": 1
+      },
+      {
+        "entity": "enemies",
+        "id": "fire_wisp",
+        "path": "combat.basic_attack.damage",
+        "set": "2d2"
       },
       {
         "entity": "enemies",
@@ -29642,9 +29672,21 @@
       },
       {
         "entity": "enemies",
+        "id": "goblin",
+        "path": "rewards.items.@name=%E6%B2%BB%E7%99%82%E3%81%AE%E5%B7%BB%E7%89%A9.quantity",
+        "set": 1
+      },
+      {
+        "entity": "enemies",
         "id": "goblin_archer",
         "path": "combat.basic_attack.damage",
         "set": "1"
+      },
+      {
+        "entity": "enemies",
+        "id": "goblin_archer",
+        "path": "rewards.items.@name=%E6%B2%BB%E7%99%82%E3%81%AE%E5%B7%BB%E7%89%A9.quantity",
+        "set": 1
       },
       {
         "entity": "enemies",
@@ -29677,6 +29719,12 @@
         "set": [
           "poison"
         ]
+      },
+      {
+        "entity": "enemies",
+        "id": "gravel_beetle",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+3"
       },
       {
         "entity": "enemies",
@@ -29727,6 +29775,12 @@
       {
         "entity": "enemies",
         "id": "hobgoblin",
+        "path": "rewards.items.@name=%E8%96%AC%E8%8D%89.quantity",
+        "set": 1
+      },
+      {
+        "entity": "enemies",
+        "id": "hobgoblin",
         "path": "skills.@id=skull_crush.on_hit_status",
         "set": {
           "id": "stun",
@@ -29734,6 +29788,12 @@
           "stacks": 1,
           "duration": 1
         }
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_assassin",
+        "path": "combat.basic_attack.damage",
+        "set": "2d2+3"
       },
       {
         "entity": "enemies",
@@ -29746,6 +29806,12 @@
         "id": "ice_assassin",
         "path": "skills.@id=frozen_poison.ai_weight",
         "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "ice_assassin",
+        "path": "skills.@id=frozen_poison.damage",
+        "set": "2d2+3"
       },
       {
         "entity": "enemies",
@@ -29923,6 +29989,12 @@
       {
         "entity": "enemies",
         "id": "lava_drake",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+1"
+      },
+      {
+        "entity": "enemies",
+        "id": "lava_drake",
         "path": "combat.basic_attack_weight",
         "set": 0
       },
@@ -29931,6 +30003,12 @@
         "id": "lava_drake",
         "path": "skills.@id=hook_claw.ai_weight",
         "set": 2
+      },
+      {
+        "entity": "enemies",
+        "id": "lava_drake",
+        "path": "skills.@id=hook_claw.damage",
+        "set": "2d4+1"
       },
       {
         "entity": "enemies",
@@ -30310,6 +30388,12 @@
       {
         "entity": "enemies",
         "id": "skeleton_soldier",
+        "path": "combat.basic_attack.damage",
+        "set": "1d2+3"
+      },
+      {
+        "entity": "enemies",
+        "id": "skeleton_soldier",
         "path": "status_immunity",
         "set": [
           "poison"
@@ -30320,6 +30404,18 @@
         "id": "slime",
         "path": "combat.basic_attack.damage",
         "set": "4"
+      },
+      {
+        "entity": "enemies",
+        "id": "slime",
+        "path": "rewards.items.@name=%E6%B2%BB%E7%99%82%E3%81%AE%E5%B7%BB%E7%89%A9.quantity",
+        "set": 1
+      },
+      {
+        "entity": "enemies",
+        "id": "slime",
+        "path": "rewards.items.@name=%E8%96%AC%E8%8D%89.quantity",
+        "set": 1
       },
       {
         "entity": "enemies",
@@ -30344,6 +30440,18 @@
         "id": "slime_king",
         "path": "max_hp",
         "set": 93
+      },
+      {
+        "entity": "enemies",
+        "id": "tutorial_slime",
+        "path": "rewards.items.@name=%E6%B2%BB%E7%99%82%E3%81%AE%E5%B7%BB%E7%89%A9.quantity",
+        "set": 1
+      },
+      {
+        "entity": "enemies",
+        "id": "tutorial_slime",
+        "path": "rewards.items.@name=%E8%96%AC%E8%8D%89.quantity",
+        "set": 1
       },
       {
         "entity": "enemies",
@@ -30380,6 +30488,30 @@
           "stacks": 1,
           "duration": 2
         }
+      },
+      {
+        "entity": "enemies",
+        "id": "zebok",
+        "path": "combat.basic_attack.damage",
+        "set": "2d4+9"
+      },
+      {
+        "entity": "enemies",
+        "id": "zebok",
+        "path": "hp",
+        "set": -58
+      },
+      {
+        "entity": "enemies",
+        "id": "zebok",
+        "path": "skills.@id=dark_feast.damage",
+        "set": "2d4+9"
+      },
+      {
+        "entity": "enemies",
+        "id": "zebok",
+        "path": "skills.@id=zebok_bone_dragon.damage",
+        "set": "2d4+9"
       },
       {
         "entity": "enemies",
@@ -30424,6 +30556,17 @@
           {
             "id": "trash_guards_052b",
             "enemy_damage_multiplier": 0.7
+          }
+        ]
+      },
+      {
+        "entity": "locations",
+        "id": "lost_goblin_crossroads",
+        "path": "combat.encounter_modifiers",
+        "set": [
+          {
+            "id": "lost_goblin_052c3",
+            "enemy_damage_multiplier": 0.8
           }
         ]
       },
@@ -30547,6 +30690,24 @@
         "id": "$",
         "path": "max_level",
         "set": 8
+      },
+      {
+        "entity": "shops",
+        "id": "magic_shop",
+        "path": "items.@item_id=healing_scroll.price",
+        "set": 30
+      },
+      {
+        "entity": "shops",
+        "id": "magic_shop",
+        "path": "items.@item_id=spellbook_arcane_lance.price",
+        "set": 35
+      },
+      {
+        "entity": "shops",
+        "id": "magic_shop",
+        "path": "items.@item_id=spellbook_lightning.price",
+        "set": 40
       }
     ]
   },
@@ -30933,7 +31094,7 @@
             "conditional_multipliers": [
               {
                 "if": "single_enemy",
-                "x": 1.75
+                "x": 1.8
               }
             ]
           }
@@ -31119,7 +31280,7 @@
                 "low_hp": {
                   "ratio": 0.5,
                   "cost_multiplier": 0.5,
-                  "damage_multiplier": 1.25
+                  "damage_multiplier": 1.3
                 }
               }
             }
@@ -31135,7 +31296,7 @@
               "tier": 1,
               "description": "物理攻撃時、敵の防御力と物理耐性による軽減をそれぞれ30%無視してダメージを与える。",
               "effects": {
-                "physical_penetration": 0.3
+                "physical_penetration": 0.4
               }
             }
           ]
@@ -31360,8 +31521,8 @@
               "effects": {
                 "round_attack": {
                   "name": "光輪の加護",
-                  "hp_ratio_gt": 0.7,
-                  "damage": "1d3+wis/8",
+                  "hp_ratio_gt": 0.6,
+                  "damage": "1d4+wis/8",
                   "element": "holy",
                   "accuracy": 100,
                   "target": "random_enemy"
@@ -31521,8 +31682,8 @@
               "description": "ラウンド開始時にMPを1回復する。1戦闘につき最大MPの20%まで回復できる。",
               "effects": {
                 "mana_cycle": {
-                  "amount": 1,
-                  "cap_ratio": 0.2
+                  "amount": 2,
+                  "cap_ratio": 0.3
                 }
               }
             },
@@ -31532,8 +31693,8 @@
               "description": "ラウンド開始時のMP回復量が2に増え、1戦闘の回復上限が最大MPの30%になる。",
               "effects": {
                 "mana_cycle": {
-                  "amount": 2,
-                  "cap_ratio": 0.3
+                  "amount": 3,
+                  "cap_ratio": 0.4
                 }
               }
             },
@@ -31618,7 +31779,8 @@
               "tier": 1,
               "description": "攻撃による被ダメージの25%を、HPではなくMPで肩代わりして受けるようになる。",
               "effects": {
-                "mana_armor": 0.25
+                "mana_armor": 0.2,
+                "mana_armor_cap_ratio": 0.5
               }
             }
           ]
