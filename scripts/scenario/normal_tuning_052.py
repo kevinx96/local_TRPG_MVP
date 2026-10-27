@@ -10,7 +10,7 @@ from urllib.parse import quote
 from host.difficulty import overlay_fingerprint, validate_difficulty
 
 ROOT = Path(__file__).resolve().parents[2]
-REVISION = "2026-10-24-tuning-052c3"
+REVISION = "2026-10-24-tuning-052d"
 
 # L1: bounded EXP search and approved integer / per-level growth.
 PROGRESSION: dict[str, Any] = {'level_gains': {'hero': {'max_hp': 3,
@@ -389,7 +389,7 @@ def _skills_052c(pack: dict[str, Any]) -> list[dict[str, Any]]:
     halo = next(p for p in classes["cleric"]["passives"] if p["id"] == "holy_halo")
     halo["tiers"][0]["effects"]["round_attack"].update(hp_ratio_gt=.6, damage="1d4+wis/8")
     cycle = next(p for p in classes["mage"]["passives"] if p["id"] == "mana_cycle")
-    for tier, amount, cap in zip(cycle["tiers"][:2], (2, 3), (.3, .4)):
+    for tier, amount, cap in zip(cycle["tiers"], (2, 3, 4), (.3, .4, .5)):
         tier["effects"]["mana_cycle"].update(amount=amount, cap_ratio=cap)
     armor = next(p for p in classes["mage"]["passives"] if p["id"] == "mana_armor")
     armor["tiers"][0]["effects"].update(mana_armor=.2, mana_armor_cap_ratio=.5)

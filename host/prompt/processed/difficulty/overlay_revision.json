@@ -1,10 +1,10 @@
 {
   "dragon_rpg.json": {
-    "content_revision": "2026-10-24-tuning-052c3",
+    "content_revision": "2026-10-24-tuning-052d",
     "overlay_sha256": "8aba57d002cab6b051cbe8ad4dcdf6bc2b74bc8859fb0d728d7ab828dc76561d"
   },
   "dragon_rpg_hybrid.json": {
-    "content_revision": "2026-10-24-tuning-052c3",
+    "content_revision": "2026-10-24-tuning-052d",
     "overlay_sha256": "8aba57d002cab6b051cbe8ad4dcdf6bc2b74bc8859fb0d728d7ab828dc76561d"
   }
 }

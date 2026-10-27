@@ -102,6 +102,26 @@ class BalanceTests(unittest.TestCase):
         expected = deepcopy(self.checkpoints)
         # 051 adds inert definitions and normal overlays; baby checkpoint payload stays frozen.
         expected["scenario_sha256"] = generated["scenario_sha256"]
+
+        def normalize_reviewed_shared_descriptions(value):
+            if isinstance(value, dict):
+                descriptions = {
+                    "divine_guard": ("被ダメージを半減し、致死ダメージもHP1で耐える。",
+                                     "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。"),
+                    "hide_in_shadow": ("影に溶けて身を隠し、被ダメージを0.25倍にする。致死ダメージもHP1で耐える。",
+                                       "影に溶けて気配を消す。2ターン敵の標的にならない。"),
+                }
+                if value.get("id") in descriptions and "description" in value:
+                    current, frozen = descriptions[value["id"]]
+                    self.assertEqual(value["description"], current)
+                    value["description"] = frozen
+                for child in value.values():
+                    normalize_reviewed_shared_descriptions(child)
+            elif isinstance(value, list):
+                for child in value:
+                    normalize_reviewed_shared_descriptions(child)
+
+        normalize_reviewed_shared_descriptions(generated)
         self.assertEqual(generated, expected)
         targets = json.loads(sim.TARGETS.read_text(encoding="utf-8"))
         for name in ("dragon_rpg.json", "dragon_rpg_hybrid.json"):

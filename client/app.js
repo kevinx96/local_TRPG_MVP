@@ -1968,6 +1968,7 @@ function abilityTagTexts(abilities, compact = false) {
     if (ability.accuracy !== undefined) tags.push(`命中 ${ability.accuracy}%`);
     if (ability.element) tags.push(elementLabel(ability.element));
     if (ability.all_targets) tags.push("全体");
+    if (ability.cooldown > 0) tags.push(`CT${ability.cooldown}`);
     if (ability.hits_per_element) tags.push(`${ability.hits_per_element}回×${(ability.multi_elements || []).length || 1}属性`);
     if (ability.check?.dc) tags.push(`判定 DC${ability.check.dc}`);
     for (const followup of ability.followups || []) {

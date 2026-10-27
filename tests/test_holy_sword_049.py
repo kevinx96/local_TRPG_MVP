@@ -506,6 +506,18 @@ class HolySwordTests(unittest.TestCase):
             for sid, definition in old_defs.items():
                 self.assertEqual(new_defs[sid], definition)
             before["status_defs"] = after["status_defs"]
+            for character_id, skill_id, description in (
+                ("hero", "divine_guard", "被ダメージを半減し、致死ダメージもHP1で耐える。"),
+                ("thief", "hide_in_shadow", "影に溶けて身を隠し、被ダメージを0.25倍にする。致死ダメージもHP1で耐える。"),
+            ):
+                current_character = next(character for character in after["characters"]
+                                         if character["id"] == character_id)
+                old_character = next(character for character in before["characters"]
+                                     if character["id"] == character_id)
+                current_skill = next(skill for skill in current_character["skills"] if skill["id"] == skill_id)
+                old_skill = next(skill for skill in old_character["skills"] if skill["id"] == skill_id)
+                self.assertEqual(current_skill["description"], description, filename)
+                current_skill["description"] = old_skill["description"]
             old_items = {item["id"]: item for item in before["items"]}
             new_items = {item["id"]: item for item in after["items"]}
             old_items["poison_dart"]["description"] = new_items["poison_dart"]["description"]

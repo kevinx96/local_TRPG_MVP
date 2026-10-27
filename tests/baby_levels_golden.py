@@ -17,6 +17,12 @@ OUT = ROOT / ".tmp-test/050"
 
 def stable(value):
     if isinstance(value, dict):
+        shared_skill_descriptions = {
+            "divine_guard": "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。",
+            "hide_in_shadow": "影に溶けて気配を消す。2ターン敵の標的にならない。",
+        }
+        if value.get("id") in shared_skill_descriptions and "description" in value:
+            value = {**value, "description": shared_skill_descriptions[value["id"]]}
         return {k: stable(v) for k, v in value.items()
                 if k not in {"at", "created_at", "updated_at", "timestamp", "id"}}
     if isinstance(value, list):

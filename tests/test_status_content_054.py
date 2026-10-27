@@ -51,7 +51,6 @@ class StatusContent054Tests(unittest.TestCase):
     def test_baby_active_content_matches_except_reviewed_shared_changes(self):
         frozen = json.loads((ROOT / "host/prompt/processed/difficulty/baby_numeric_freeze.json").read_text(encoding="utf-8"))
         def active(pack):
-            pack = difficulty.apply_difficulty(pack, "baby")
             pack.pop("status_defs", None)
             pack.pop("difficulty_overlays", None)
             pack["meta"].pop("content_revision", None)
@@ -67,7 +66,21 @@ class StatusContent054Tests(unittest.TestCase):
                 old_defs[sid]["tags"] = [sid, "debuff"]
             for sid, definition in old_defs.items():
                 self.assertEqual(new_defs[sid], definition)
-            self.assertEqual(active(raw), active(original), name)
+            current_baby = difficulty.apply_difficulty(raw, "baby")
+            original_baby = difficulty.apply_difficulty(original, "baby")
+            for character_id, skill_id, description in (
+                ("hero", "divine_guard", "被ダメージを半減し、致死ダメージもHP1で耐える。"),
+                ("thief", "hide_in_shadow", "影に溶けて身を隠し、被ダメージを0.25倍にする。致死ダメージもHP1で耐える。"),
+            ):
+                current_character = next(character for character in current_baby["characters"]
+                                         if character["id"] == character_id)
+                old_character = next(character for character in original_baby["characters"]
+                                     if character["id"] == character_id)
+                current_skill = next(skill for skill in current_character["skills"] if skill["id"] == skill_id)
+                old_skill = next(skill for skill in old_character["skills"] if skill["id"] == skill_id)
+                self.assertEqual(current_skill["description"], description, name)
+                current_skill["description"] = old_skill["description"]
+            self.assertEqual(active(current_baby), active(original_baby), name)
             self.assertEqual(difficulty.numeric_snapshot(difficulty.apply_difficulty(raw, "baby")), frozen[name])
 
     def test_all_enemy_placements_boss_limits_and_explicit_kind(self):

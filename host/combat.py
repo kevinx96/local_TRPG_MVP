@@ -822,7 +822,7 @@ def _player_special_action(session: dict[str, Any], action_id: str) -> None:
 def _combat_action_details(ability: dict[str, Any]) -> dict[str, Any]:
     fields = (
         "damage", "healing", "max_hp_ratio", "accuracy", "element", "all_targets", "check",
-        "guard_multiplier", "multi_elements", "hits_per_element",
+        "guard_multiplier", "multi_elements", "hits_per_element", "cooldown",
     )
     return {key: deepcopy(ability[key]) for key in fields if ability.get(key) not in (None, "", [], {})}
 

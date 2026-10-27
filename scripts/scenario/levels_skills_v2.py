@@ -15,7 +15,7 @@ REVISION = "2026-10-21-levels-skills-v2"
 
 SKILL_DESCRIPTIONS = {
     "holy_sword_art": "敵単体に物理と聖属性の2連撃。次の敵フェーズ終了まで被ダメージが0.75倍になる。",
-    "sweep": "敵全体に物理攻撃を行う。敵が1体のみの時はダメージが1.75倍になる。",
+    "sweep": "敵全体に物理攻撃を行う。敵が1体のみの時はダメージが1.8倍になる。",
     "dragon_slash": "防御と耐性を無視する必中の斬撃。竜・ボス・最大HP80以上の敵に威力1.35倍。",
     "atonement_mark": "敵単体に3ラウンドの間「聖印」を刻み、毎ラウンドの聖属性ダメージと追撃を誘発する。",
     "great_heal_cleanse": "HPを大きく回復して弱体を全て浄化し、余剰回復分を最大HP25%までの障壁に変える。",
@@ -26,7 +26,7 @@ SKILL_DESCRIPTIONS = {
     "blinding_throw": "敵単体に物理攻撃を行い、2ラウンドの間「目潰し」を付与して命中率を下げる。",
     "blade_dance": "敵全体に物理攻撃を行い、命中した敵それぞれに「毒」を1スタック付与する。",
     "shadow_haste": "3ラウンドの間「神速」状態になり、毎ラウンドの行動回数が+1される。",
-    "lightning": "雷光を走らせ、敵単体に雷属性の魔法攻撃を行う。",
+    "lightning": "雷光を走らせ、敵全体に雷属性の魔法攻撃を行う。",
     "arcane_lance": "防御力を無視する純粋魔力の槍で、敵単体に魔力属性の魔法攻撃を行う。",
 }
 
@@ -38,8 +38,8 @@ PASSIVE_DESCRIPTIONS = {
     "heavy_armor_lore": ("防御力1以上の鎧を装備している時、自身の防御力がさらに+1される。",),
     "unsinkable_shield": ("「神聖の庇護」が行動を消費せずに発動でき、クールダウンが2ラウンドになる。",),
     "sword_followup": ("通常攻撃や単体剣技が命中した時、1行動につき1回、必中の物理追撃を行う。",),
-    "adversity_flame": ("HPが最大HPの50%未満の時、スキルの消費が半減し、スキルダメージが1.25倍になる。",),
-    "sword_saint": ("物理攻撃時、敵の防御力と物理耐性による軽減をそれぞれ30%無視してダメージを与える。",),
+    "adversity_flame": ("HPが50%未満の時、スキルの消費が半減し、スキルダメージが1.3倍になる。",),
+    "sword_saint": ("物理攻撃時、敵の防御力と物理耐性の軽減をそれぞれ40%無視してダメージを与える。",),
     "dragon_destiny": ("火・氷・風・闇の被ダメージ0.8倍。弱点を持つ敵への攻撃命中時、弱点属性で追撃する。",),
     "pious_heart": (
         "ラウンド終了時、自身のHPを最大HPの3%回復する。",
@@ -51,19 +51,19 @@ PASSIVE_DESCRIPTIONS = {
         "余剰回復量から聖属性ダメージへの変換率が、75%から125%に上昇する。",
     ),
     "ascetic_wisdom": ("スキルの消費MPの最大50%までを、1MPにつき2SPで肩代わりして発動できる。",),
-    "holy_halo": ("ラウンド開始時にHPが70%を超えていれば、ランダムな敵1体に聖属性の追撃を行う。",),
+    "holy_halo": ("ラウンド開始時にHPが60%を超えていれば、ランダムな敵1体に聖属性で追撃する。",),
     "immortal_sanctuary": ("「治癒の祈り」の消費MPが0になる。使用回数の制限はない。",),
     "mana_cycle": (
-        "ラウンド開始時にMPを1回復する。1戦闘につき最大MPの20%まで回復できる。",
-        "ラウンド開始時のMP回復量が2に増え、1戦闘の回復上限が最大MPの30%になる。",
+        "ラウンド開始時にMPを2回復する。1戦闘につき最大MPの30%まで回復できる。",
         "ラウンド開始時のMP回復量が3に増え、1戦闘の回復上限が最大MPの40%になる。",
+        "ラウンド開始時のMP回復量が4に増え、1戦闘の回復上限が最大MPの50%になる。",
     ),
     "arcane_guard": (
         "戦闘開始時に「魔導の盾」を得て、最初に受ける1回分の攻撃ダメージを無効化する。",
         "盾が消えた3ラウンド後に最大HP20%までの盾を張り直す。1戦闘につき2回まで再展開する。",
     ),
     "element_resonance": ("直前の攻撃魔法と異なる属性の攻撃魔法を使うと、威力が1.15倍になりMPが1回復する。",),
-    "mana_armor": ("攻撃による被ダメージの25%を、HPではなくMPで肩代わりして受けるようになる。",),
+    "mana_armor": ("攻撃の被ダメージの20%をMPで肩代わりする。1戦闘につき最大HPの50%まで。",),
     "omni_master": ("通常攻撃が敵の弱点属性（なければ魔力属性）になり、弱点を突いた時は威力が1.25倍になる。",),
     "acrobatics": (
         "回避率+5%。敵の攻撃が空振りした時、SPを1回復する（1ラウンド最大2SPまで）。",
@@ -82,6 +82,11 @@ PASSIVE_DESCRIPTIONS = {
 SPELLBOOK_DESCRIPTIONS = {
     "spellbook_lightning": "蒼い電光の術式が記された古い羊皮紙。魔法使いにしか解読できない。解析すると「雷撃」を習得する。",
     "spellbook_arcane_lance": "純粋魔力を槍と化す秘術が刻まれた巻物。魔法使いにしか解読できない。解析すると「魔力の槍」を習得する。",
+}
+
+BASE_SKILL_DESCRIPTIONS = {
+    ("hero", "divine_guard"): "被ダメージを半減し、致死ダメージもHP1で耐える。",
+    ("thief", "hide_in_shadow"): "影に溶けて身を隠し、被ダメージを0.25倍にする。致死ダメージもHP1で耐える。",
 }
 
 
@@ -199,6 +204,10 @@ def migrate(pack: dict[str, Any]) -> dict[str, Any]:
     result = deepcopy(pack)
     result.setdefault("progression", {})
     result["class_progression"] = classes()
+    characters = {character["id"]: character for character in result["characters"]}
+    for (character_id, skill_id), description in BASE_SKILL_DESCRIPTIONS.items():
+        target = next(skill for skill in characters[character_id]["skills"] if skill["id"] == skill_id)
+        target["description"] = description
     # Use the existing Lv1 IDs for passive targets.
     templates = {c["id"]: c for c in result["characters"]}
     hero_attack = templates["hero"]["skills"][0]["id"]

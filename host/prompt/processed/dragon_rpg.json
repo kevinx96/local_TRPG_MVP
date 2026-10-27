@@ -4,7 +4,7 @@
     "summary": "若き冒険者が王国を脅かす邪竜イグニスを討つ短編ファンタジーTRPG。",
     "language": "ja",
     "initial_scene": "throne_room",
-    "content_revision": "2026-10-24-tuning-052c3",
+    "content_revision": "2026-10-24-tuning-052d",
     "forest_v3": true,
     "forest_sidequests": true,
     "chapter34_v4": true,
@@ -21175,7 +21175,7 @@
       "learn_skill": {
         "id": "lightning",
         "name": "雷撃",
-        "description": "雷光を走らせ、敵単体に雷属性の魔法攻撃を行う。",
+        "description": "雷光を走らせ、敵全体に雷属性の魔法攻撃を行う。",
         "cost": 5,
         "cost_type": "mp",
         "kind": "attack",
@@ -24425,7 +24425,7 @@
           "id": "divine_guard",
           "name": "神聖の庇護",
           "kind": "defend",
-          "description": "盾を構えて次の攻撃に備える。致死ダメージも耐え抜く。",
+          "description": "被ダメージを半減し、致死ダメージもHP1で耐える。",
           "effect": "次に受けるダメージを半減。致死ダメージを受けてもHP1で耐える",
           "guard_multiplier": 0.5,
           "survive_at_one": true,
@@ -24841,7 +24841,7 @@
           "id": "hide_in_shadow",
           "name": "影隠れ",
           "kind": "defend",
-          "description": "影に溶けて気配を消す。2ターン敵の標的にならない。",
+          "description": "影に溶けて身を隠し、被ダメージを0.25倍にする。致死ダメージもHP1で耐える。",
           "effect": "1d20+dex判定（DC25）。成功時2ターンの間、敵の単体攻撃の対象にならない（全体攻撃は受ける）",
           "guard_multiplier": 0.25,
           "dice_type": "1d20+dex",
@@ -31083,7 +31083,7 @@
           "skill": {
             "id": "sweep",
             "name": "薙ぎ払い",
-            "description": "敵全体に物理攻撃を行う。敵が1体のみの時はダメージが1.75倍になる。",
+            "description": "敵全体に物理攻撃を行う。敵が1体のみの時はダメージが1.8倍になる。",
             "cost": 3,
             "cost_type": "sp",
             "kind": "attack",
@@ -31275,7 +31275,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "HPが最大HPの50%未満の時、スキルの消費が半減し、スキルダメージが1.25倍になる。",
+              "description": "HPが50%未満の時、スキルの消費が半減し、スキルダメージが1.3倍になる。",
               "effects": {
                 "low_hp": {
                   "ratio": 0.5,
@@ -31294,7 +31294,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "物理攻撃時、敵の防御力と物理耐性による軽減をそれぞれ30%無視してダメージを与える。",
+              "description": "物理攻撃時、敵の防御力と物理耐性の軽減をそれぞれ40%無視してダメージを与える。",
               "effects": {
                 "physical_penetration": 0.4
               }
@@ -31517,7 +31517,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "ラウンド開始時にHPが70%を超えていれば、ランダムな敵1体に聖属性の追撃を行う。",
+              "description": "ラウンド開始時にHPが60%を超えていれば、ランダムな敵1体に聖属性で追撃する。",
               "effects": {
                 "round_attack": {
                   "name": "光輪の加護",
@@ -31679,7 +31679,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "ラウンド開始時にMPを1回復する。1戦闘につき最大MPの20%まで回復できる。",
+              "description": "ラウンド開始時にMPを2回復する。1戦闘につき最大MPの30%まで回復できる。",
               "effects": {
                 "mana_cycle": {
                   "amount": 2,
@@ -31690,7 +31690,7 @@
             {
               "id": "2",
               "tier": 2,
-              "description": "ラウンド開始時のMP回復量が2に増え、1戦闘の回復上限が最大MPの30%になる。",
+              "description": "ラウンド開始時のMP回復量が3に増え、1戦闘の回復上限が最大MPの40%になる。",
               "effects": {
                 "mana_cycle": {
                   "amount": 3,
@@ -31701,11 +31701,11 @@
             {
               "id": "3",
               "tier": 3,
-              "description": "ラウンド開始時のMP回復量が3に増え、1戦闘の回復上限が最大MPの40%になる。",
+              "description": "ラウンド開始時のMP回復量が4に増え、1戦闘の回復上限が最大MPの50%になる。",
               "effects": {
                 "mana_cycle": {
-                  "amount": 3,
-                  "cap_ratio": 0.4
+                  "amount": 4,
+                  "cap_ratio": 0.5
                 }
               }
             }
@@ -31777,7 +31777,7 @@
             {
               "id": "1",
               "tier": 1,
-              "description": "攻撃による被ダメージの25%を、HPではなくMPで肩代わりして受けるようになる。",
+              "description": "攻撃の被ダメージの20%をMPで肩代わりする。1戦闘につき最大HPの50%まで。",
               "effects": {
                 "mana_armor": 0.2,
                 "mana_armor_cap_ratio": 0.5

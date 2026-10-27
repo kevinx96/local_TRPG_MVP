@@ -373,7 +373,7 @@ class ProgressionTests(unittest.TestCase):
             self.assertEqual(s["character"]["hp"], 0)
 
     def test_mana_cycle_acrobat_caps_all_tiers(self):
-        for tier, cap in enumerate((30, 40, 40), 1):
+        for tier, cap in enumerate((30, 40, 50), 1):
             s = session("mage")
             select(s, "mana_cycle", tier)
             s["character"].update(mp=0, max_mp=100)
@@ -381,7 +381,7 @@ class ProgressionTests(unittest.TestCase):
                 s["combat"]["round"] = n
                 combat._passive_round_start(s, Rolls())
                 if n == 1:
-                    self.assertEqual(s["character"]["mp"], (2, 3, 3)[tier - 1])
+                    self.assertEqual(s["character"]["mp"], (2, 3, 4)[tier - 1])
             self.assertEqual(s["character"]["mp"], cap)
         for tier, evade, cap in ((1, 5, 2), (2, 8, 3), (3, 10, 4)):
             s = session("thief")
