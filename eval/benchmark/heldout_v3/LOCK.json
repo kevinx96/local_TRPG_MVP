@@ -1,0 +1,40 @@
+{
+  "created_utc": "2026-10-27T22:10:40.238950+00:00",
+  "design_approved": true,
+  "files": {
+    "preregistration.json": "71b09d8d6e7effbe8b12f019663af3b36305065f50e4d9c3f0c5201d29793f5e",
+    "PREREGISTRATION.md": "53fe450160841fcaff8bbdec8eccbe51c2585aaff398d23a719d469c8965e878",
+    "slots.jsonl": "3be51ff4f3f8437db138b6a6b011b3c46bb1558bed51879573bceedd9ce0026d",
+    "cases.jsonl": "320f4aa4e638ad9e74aec34d6b7e8c966635a382e473d7da8350402d12667eec"
+  },
+  "audit": {
+    "errors": [],
+    "similarity_violations": [],
+    "counts": {
+      "existing_exact": 3,
+      "existing_paraphrase": 3,
+      "negation": 8,
+      "conditional": 8,
+      "interact_observe": 3,
+      "interact_distract": 3,
+      "interact_sneak": 3,
+      "interact_prepare": 3,
+      "interact_use_item": 3,
+      "missing_item": 8,
+      "dialogue": 3,
+      "chitchat": 3,
+      "impossible": 8,
+      "declared_success": 8,
+      "injection": 8,
+      "colloquial": 3,
+      "language_mix": 3,
+      "context_followup": 3,
+      "deixis_unique": 3,
+      "deixis_multi": 3,
+      "sequential": 3,
+      "parallel": 3,
+      "excluded_means": 3
+    },
+    "total": 99
+  }
+}

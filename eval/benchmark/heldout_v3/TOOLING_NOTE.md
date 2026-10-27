@@ -35,3 +35,11 @@
 
 - 冻结清单包含 host/ 下被 git 跟踪的 Python 文件。以后任何 host/*.py 的提交（例如 052d 对 host/combat.py 的提交，已纳入本次登记）都会让登记校验失败；若发生在 E9 输入／标签／结果出现之前，可由设计负责人批准重新登记；之后不得再改。
 - 正式执行前跑 `python -m scripts.eval.heldout verify`（需先 lock），或用 `verify_registration` 检查登记。
+
+## 预先声明的敏感性分析（2026-10-28，锁定前写入，此时尚无任何 E9 模型结果）
+
+本节写于 cases.jsonl 审定之后、`lock` 和正式执行之前。写入时不存在 LOCK.json、formal/ 或 previews/，没有任何 held-out 模型输出。
+
+1. **主结果**：E9 的主结果仍然报告全部 99 条（S0+S1 比例、S3 比例），不因本节改变。
+2. **敏感性分析**：另外报告去掉 `v3-existing_exact-001` 和 `v3-existing_exact-003` 后 97 条的同一组指标。原因是这两条与 v2 不能做到语义家族隔离：它们的快照（v2_alley_after_thief、v2_alley_thief）各只有一个动作，其 UI 文本「城へ戻る」「城に戻る」就是 v2-existing_exact-008 和 v2-existing_exact-006 的输入，existing_exact 的任何写法都只能在同一文本外加包装。保留这两条是因为删除后 existing_exact 会低于预注册的每标签最少 3 条。97 条结果由正式运行的记录离线重算，不再调用模型。
+3. **已知局限**：alley_after 和 alley_thief 两个快照都只有一个“回城”动作，因此 existing_paraphrase、colloquial、language_mix 在这两个快照上的 6 条目标是同一个动作，动作多样性偏低。这不是隔离失败，但在解读这些标签的分数时应注意。
