@@ -1,0 +1,208 @@
+{
+  "seed": 20261027,
+  "v2_sha256": "11ea5d2fc670fcb50d933b3c80720013f932e2c6ac8c0c3e2ce3363bff9c0140",
+  "sample_sha256": "3c0a8a3828a47a8f79a70a8acd905013911f6bb7e5594a2825507e8652f88128",
+  "mapping": [
+    {
+      "id": "b001",
+      "case_id": "v2-existing_paraphrase-020"
+    },
+    {
+      "id": "b002",
+      "case_id": "v2-impossible-002"
+    },
+    {
+      "id": "b003",
+      "case_id": "v2-excluded_means-004"
+    },
+    {
+      "id": "b004",
+      "case_id": "v2-impossible-005"
+    },
+    {
+      "id": "b005",
+      "case_id": "v2-negation-008"
+    },
+    {
+      "id": "b006",
+      "case_id": "v2-deixis_multi-009"
+    },
+    {
+      "id": "b007",
+      "case_id": "v2-deixis_multi-018"
+    },
+    {
+      "id": "b008",
+      "case_id": "v2-excluded_means-001"
+    },
+    {
+      "id": "b009",
+      "case_id": "v2-impossible-017"
+    },
+    {
+      "id": "b010",
+      "case_id": "v2-injection-013"
+    },
+    {
+      "id": "b011",
+      "case_id": "v2-interact_distract-001"
+    },
+    {
+      "id": "b012",
+      "case_id": "v2-interact_observe-005"
+    },
+    {
+      "id": "b013",
+      "case_id": "v2-dialogue-003"
+    },
+    {
+      "id": "b014",
+      "case_id": "v2-interact_use_item-016"
+    },
+    {
+      "id": "b015",
+      "case_id": "v2-context_followup-006"
+    },
+    {
+      "id": "b016",
+      "case_id": "v2-missing_item-012"
+    },
+    {
+      "id": "b017",
+      "case_id": "v2-declared_success-011"
+    },
+    {
+      "id": "b018",
+      "case_id": "v2-existing_paraphrase-016"
+    },
+    {
+      "id": "b019",
+      "case_id": "v2-chitchat-014"
+    },
+    {
+      "id": "b020",
+      "case_id": "v2-dialogue-012"
+    },
+    {
+      "id": "b021",
+      "case_id": "v2-deixis_unique-010"
+    },
+    {
+      "id": "b022",
+      "case_id": "v2-interact_observe-019"
+    },
+    {
+      "id": "b023",
+      "case_id": "v2-existing_exact-004"
+    },
+    {
+      "id": "b024",
+      "case_id": "v2-interact_sneak-014"
+    },
+    {
+      "id": "b025",
+      "case_id": "v2-interact_sneak-010"
+    },
+    {
+      "id": "b026",
+      "case_id": "v2-colloquial-001"
+    },
+    {
+      "id": "b027",
+      "case_id": "v2-context_followup-008"
+    },
+    {
+      "id": "b028",
+      "case_id": "v2-missing_item-008"
+    },
+    {
+      "id": "b029",
+      "case_id": "v2-missing_item-019"
+    },
+    {
+      "id": "b030",
+      "case_id": "v2-conditional-013"
+    },
+    {
+      "id": "b031",
+      "case_id": "v2-injection-009"
+    },
+    {
+      "id": "b032",
+      "case_id": "v2-parallel-010"
+    },
+    {
+      "id": "b033",
+      "case_id": "v2-interact_use_item-019"
+    },
+    {
+      "id": "b034",
+      "case_id": "v2-interact_prepare-017"
+    },
+    {
+      "id": "b035",
+      "case_id": "v2-conditional-005"
+    },
+    {
+      "id": "b036",
+      "case_id": "v2-existing_exact-001"
+    },
+    {
+      "id": "b037",
+      "case_id": "v2-language_mix-019"
+    },
+    {
+      "id": "b038",
+      "case_id": "v2-declared_success-007"
+    },
+    {
+      "id": "b039",
+      "case_id": "v2-sequential-005"
+    },
+    {
+      "id": "b040",
+      "case_id": "v2-negation-014"
+    },
+    {
+      "id": "b041",
+      "case_id": "v2-parallel-005"
+    },
+    {
+      "id": "b042",
+      "case_id": "v2-language_mix-011"
+    },
+    {
+      "id": "b043",
+      "case_id": "v2-interact_prepare-018"
+    },
+    {
+      "id": "b044",
+      "case_id": "v2-interact_distract-007"
+    },
+    {
+      "id": "b045",
+      "case_id": "v2-colloquial-012"
+    },
+    {
+      "id": "b046",
+      "case_id": "v2-deixis_unique-005"
+    },
+    {
+      "id": "b047",
+      "case_id": "v2-existing_exact-006"
+    },
+    {
+      "id": "b048",
+      "case_id": "v2-sequential-007"
+    },
+    {
+      "id": "b049",
+      "case_id": "v2-chitchat-010"
+    },
+    {
+      "id": "b050",
+      "case_id": "v2-interact_observe-016"
+    }
+  ],
+  "sampling": "one random case per split x primary-tag stratum; remaining four random without replacement; shuffled"
+}
