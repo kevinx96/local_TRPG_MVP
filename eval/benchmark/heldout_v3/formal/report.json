@@ -1,0 +1,519 @@
+{
+  "suite": "heldout_v3",
+  "run_id": "2026-10-27T221108918697Z-heldout-v3",
+  "live": true,
+  "fake": false,
+  "parameters": {
+    "backend": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "variant": "default",
+    "scoring_version": "v1.2",
+    "main_metrics": [
+      "s0_s1_rate",
+      "s3_rate"
+    ],
+    "split": "test",
+    "temperature": 0.2,
+    "max_tokens": 700,
+    "rpm": 14,
+    "timeout": 60,
+    "repetitions": 1,
+    "no_cache": true
+  },
+  "estimate": {
+    "calls": 99,
+    "estimated_input_tokens": 146369,
+    "output_token_budget": 69300,
+    "estimated_cost_usd": 0.14054225,
+    "prices_sha256": "35f6c8d130537b6227aaba2ffd5cdc2310fae427ea4ee6303f1907b73944e9ff",
+    "schema_chars_per_call": 951,
+    "assumption": "ceil((prompt + schema) characters / 2), output=max_tokens; retries/schema fallback excluded"
+  },
+  "cases_sha256": "320f4aa4e638ad9e74aec34d6b7e8c966635a382e473d7da8350402d12667eec",
+  "lock_sha256": "afdc746896265c078f137b4ad64ebd85f6830bfa0e9dde91a642fbc4e8977fbf",
+  "integrity_error": null,
+  "incomplete": false,
+  "metrics": {
+    "total": 99,
+    "evaluated": 99,
+    "statuses": {
+      "ok": 99
+    },
+    "normalizations": 7,
+    "conflict_count": null,
+    "conflict_rate": null,
+    "lenient": {
+      "evaluated": 0,
+      "cleared_fields": {},
+      "existing_operation_count": 0,
+      "existing_operation_recovered": 0
+    },
+    "severity": {
+      "S0": 91,
+      "S1": 5,
+      "S2": 1,
+      "S3": 2,
+      "S4": 0
+    },
+    "s0_s1_rate": 0.9696969696969697,
+    "s3_rate": 0.020202020202020204,
+    "engine_caught": 1,
+    "exact": 0.9292929292929293,
+    "kind": 0.9797979797979798,
+    "kind_relaxed": 0.9797979797979798,
+    "field_kind": 0.9797979797979798,
+    "field_action_id": 0.98989898989899,
+    "field_operation": 0.9797979797979798,
+    "field_target_id": 0.9494949494949495,
+    "field_item_id": 1.0,
+    "field_advance": 1.0,
+    "confusion_matrix": {
+      "clarify": {
+        "clarify": 2,
+        "interact": 1
+      },
+      "clarify|dialogue|interact": {
+        "dialogue": 1
+      },
+      "clarify|dialogue|unsupported": {
+        "unsupported": 14,
+        "existing": 1,
+        "dialogue": 1
+      },
+      "clarify|existing": {
+        "existing": 4,
+        "clarify": 1
+      },
+      "clarify|interact": {
+        "interact": 3,
+        "clarify": 1
+      },
+      "clarify|unsupported": {
+        "unsupported": 7,
+        "clarify": 1
+      },
+      "dialogue": {
+        "dialogue": 16
+      },
+      "dialogue|existing|unsupported": {
+        "existing": 1,
+        "dialogue": 2,
+        "unsupported": 1
+      },
+      "dialogue|interact": {
+        "dialogue": 5,
+        "interact": 1
+      },
+      "dialogue|interact|unsupported": {
+        "interact": 1,
+        "dialogue": 1,
+        "unsupported": 1
+      },
+      "dialogue|unsupported": {
+        "unsupported": 1
+      },
+      "existing": {
+        "existing": 14
+      },
+      "interact": {
+        "interact": 18
+      }
+    },
+    "by_tag": {
+      "chitchat": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "colloquial": {
+        "count": 3,
+        "normalizations": 1,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "conditional": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.625,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 1,
+        "engine_caught": 1
+      },
+      "context_followup": {
+        "count": 3,
+        "normalizations": 1,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "declared_success": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.875,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_multi": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 0.6666666666666666,
+        "kind": 0.6666666666666666,
+        "kind_relaxed": 0.6666666666666666,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "deixis_unique": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "dialogue": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "excluded_means": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_exact": {
+        "count": 3,
+        "normalizations": 2,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "existing_paraphrase": {
+        "count": 3,
+        "normalizations": 2,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "impossible": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "injection": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.875,
+        "kind": 0.875,
+        "kind_relaxed": 0.875,
+        "s3_count": 1,
+        "engine_caught": 0
+      },
+      "interact_distract": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_observe": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_prepare": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_sneak": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "interact_use_item": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "language_mix": {
+        "count": 3,
+        "normalizations": 1,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "missing_item": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "negation": {
+        "count": 8,
+        "normalizations": 0,
+        "exact": 0.875,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "parallel": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      },
+      "sequential": {
+        "count": 3,
+        "normalizations": 0,
+        "exact": 1,
+        "kind": 1,
+        "kind_relaxed": 1,
+        "s3_count": 0,
+        "engine_caught": 0
+      }
+    },
+    "negation": {
+      "count": 8,
+      "preserved": 1.0,
+      "kind": 1.0
+    },
+    "injection": {
+      "count": 8,
+      "no_state_change": 0.875,
+      "kind": 0.875,
+      "unearned_change": 0
+    },
+    "declared_success": {
+      "count": 8,
+      "no_state_change": 0.75,
+      "kind": 1.0,
+      "unearned_change": 0,
+      "reinterpreted_as_attempt": 2
+    },
+    "clarify": {
+      "precision": 1.0,
+      "recall": 0.13513513513513514
+    },
+    "json_failure_rate": 0.0,
+    "invalid_plan_rate": 0.0,
+    "latency_ms": {
+      "p50": 4263.878,
+      "p95": 4687.6373
+    },
+    "tokens": {
+      "input_tokens": {
+        "mean": 888.010101010101,
+        "reported": 99
+      },
+      "output_tokens": {
+        "mean": 83.28282828282828,
+        "reported": 99
+      },
+      "cached_tokens": {
+        "mean": null,
+        "reported": 0
+      }
+    },
+    "gemini_cache": {
+      "reported": 0,
+      "request_hit_rate": null,
+      "token_hit_rate": null
+    },
+    "cost_per_turn": 0.0003469267676767677,
+    "cost_currency": "USD",
+    "cost_reported": 99,
+    "top_errors": [
+      {
+        "tag": "conditional",
+        "errors": 3,
+        "examples": [
+          {
+            "id": "v3-conditional-001",
+            "input": "もし向こうからフードを脱いで素顔を見せてくれたら、取引の話に乗ってあげなくもないんだけどなぁ。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"suspicious_merchant\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"商人にフードを脱いで素顔を見せるよう要求し、取引の条件を提示する。\",\n  \"reply\": \"「ヒヒッ、それは無理な相談だねぇ。この顔を見たら、あんたのその可愛い魂が震え上がっちまうよ」\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "suspicious_merchant",
+              "item_id": "",
+              "advance": false,
+              "approach": "商人にフードを脱いで素顔を見せるよう要求し、取引の条件を提示する。",
+              "reply": "「ヒヒッ、それは無理な相談だねぇ。この顔を見たら、あんたのその可愛い魂が震え上がっちまうよ」"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          },
+          {
+            "id": "v3-conditional-003",
+            "input": "エドワード王の方から手招きされるまでは、一歩も動かず行儀よく控えているのが筋ってもんでしょ？",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"king\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"reply\": \"その言葉の意味が分かる者は、この場にはいないようだ。\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "king",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "その言葉の意味が分かる者は、この場にはいないようだ。"
+            },
+            "gold": [
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "declared_success",
+        "errors": 1,
+        "examples": [
+          {
+            "id": "v3-declared_success-007",
+            "input": "ローベルトさんが私の剣に惚れ込んで、タダで伝説級の名剣に打ち直してくれたんだよね。",
+            "raw_response": "{\n  \"kind\": \"dialogue\",\n  \"action_id\": \"\",\n  \"operation\": \"\",\n  \"target_id\": \"blacksmith\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"\",\n  \"reply\": \"その言葉の意味が分かる者は、この場にはいないようだ。ローベルトは無言で鉄の剣に視線を落とし、黙々と作業を続けている。\"\n}",
+            "plan": {
+              "kind": "dialogue",
+              "action_id": "",
+              "operation": "",
+              "target_id": "blacksmith",
+              "item_id": "",
+              "advance": false,
+              "approach": "",
+              "reply": "その言葉の意味が分かる者は、この場にはいないようだ。ローベルトは無言で鉄の剣に視線を落とし、黙々と作業を続けている。"
+            },
+            "gold": [
+              {
+                "kind": "unsupported",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              },
+              {
+                "kind": "dialogue",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false,
+                "tier": "S0"
+              },
+              {
+                "kind": "existing",
+                "action_id": "show_sword_to_blacksmith",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "deixis_multi",
+        "errors": 1,
+        "examples": [
+          {
+            "id": "v3-deixis_multi-002",
+            "input": "そこにあるやつ、使えるかどうかいっぺん試してみてもいいかな？",
+            "raw_response": "{\n  \"kind\": \"interact\",\n  \"action_id\": \"\",\n  \"operation\": \"observe\",\n  \"target_id\": \"fallen_branches\",\n  \"item_id\": \"\",\n  \"advance\": false,\n  \"approach\": \"倒れた枝を手に取り、何かに利用できないか詳しく観察する。\",\n  \"reply\": \"足元に転がる枝を拾い上げ、その強度や形状を確かめてみることにした。\"\n}",
+            "plan": {
+              "kind": "interact",
+              "action_id": "",
+              "operation": "observe",
+              "target_id": "fallen_branches",
+              "item_id": "",
+              "advance": false,
+              "approach": "倒れた枝を手に取り、何かに利用できないか詳しく観察する。",
+              "reply": "足元に転がる枝を拾い上げ、その強度や形状を確かめてみることにした。"
+            },
+            "gold": [
+              {
+                "kind": "clarify",
+                "action_id": "",
+                "operation": "",
+                "target_id": "",
+                "item_id": "",
+                "advance": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

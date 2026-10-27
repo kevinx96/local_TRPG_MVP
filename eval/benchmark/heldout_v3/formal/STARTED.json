@@ -1,0 +1,23 @@
+{
+  "live": true,
+  "fake": false,
+  "lock_sha256": "afdc746896265c078f137b4ad64ebd85f6830bfa0e9dde91a642fbc4e8977fbf",
+  "parameters": {
+    "backend": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "variant": "default",
+    "scoring_version": "v1.2",
+    "main_metrics": [
+      "s0_s1_rate",
+      "s3_rate"
+    ],
+    "split": "test",
+    "temperature": 0.2,
+    "max_tokens": 700,
+    "rpm": 14,
+    "timeout": 60,
+    "repetitions": 1,
+    "no_cache": true
+  },
+  "created_utc": "2026-10-27T221108918697Z"
+}
