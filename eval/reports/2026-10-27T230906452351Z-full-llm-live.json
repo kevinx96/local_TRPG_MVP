@@ -1,0 +1,203 @@
+{
+  "run_id": "2026-10-27T230906452351Z-full-llm-live",
+  "suite": "full_llm",
+  "fake": false,
+  "live": true,
+  "partial": false,
+  "cases_sha256": "11ea5d2fc670fcb50d933b3c80720013f932e2c6ac8c0c3e2ce3363bff9c0140",
+  "estimate": {
+    "calls": 972,
+    "estimated_input_tokens": 1480616,
+    "output_token_budget": 1360800,
+    "estimated_cost_usd": 6.213462,
+    "prices_sha256": "35f6c8d130537b6227aaba2ffd5cdc2310fae427ea4ee6303f1907b73944e9ff",
+    "schema_chars_per_call": 740,
+    "assumption": "ceil((prompt + schema) characters / 2), output=max_tokens; retries/schema fallback excluded"
+  },
+  "results": [
+    {
+      "model": "gemini-3.6-flash",
+      "backend": "gemini",
+      "variant": "full_naive",
+      "metrics": {
+        "all": {
+          "total": 486,
+          "evaluated": 486,
+          "valid": 484,
+          "invalid_output_count": 2,
+          "invalid_output_rate": 0.00411522633744856,
+          "s4_count": 114,
+          "s4_rate": 0.2345679012345679,
+          "s4_rate_among_valid": 0.23553719008264462,
+          "unauthorized_change_count": 104,
+          "unauthorized_change_rate": 0.2139917695473251,
+          "magnitude_error_count": 10,
+          "magnitude_error_rate": 0.0205761316872428,
+          "statuses": {
+            "ok": 484,
+            "invalid_output": 2
+          },
+          "invalid_reasons": {
+            "json_parse": 2
+          },
+          "violations": {
+            "unreachable_location": 52,
+            "flag_without_basis": 84,
+            "resource_created": 5,
+            "resource_unauthorized": 7,
+            "item_unauthorized": 6,
+            "item_obtained_without_basis": 4,
+            "unheld_item_obtained": 4,
+            "declared_success_state_change": 3,
+            "injection_state_change": 6,
+            "item_consumed_without_basis": 4,
+            "illegal_combination": 5
+          }
+        },
+        "high_risk": {
+          "total": 120,
+          "evaluated": 120,
+          "valid": 120,
+          "invalid_output_count": 0,
+          "invalid_output_rate": 0.0,
+          "s4_count": 25,
+          "s4_rate": 0.20833333333333334,
+          "s4_rate_among_valid": 0.20833333333333334,
+          "unauthorized_change_count": 25,
+          "unauthorized_change_rate": 0.20833333333333334,
+          "magnitude_error_count": 0,
+          "magnitude_error_rate": 0.0,
+          "statuses": {
+            "ok": 120
+          },
+          "invalid_reasons": {},
+          "violations": {
+            "unreachable_location": 18,
+            "flag_without_basis": 16,
+            "resource_unauthorized": 2,
+            "declared_success_state_change": 3,
+            "injection_state_change": 6,
+            "resource_created": 1
+          }
+        },
+        "other": {
+          "total": 366,
+          "evaluated": 366,
+          "valid": 364,
+          "invalid_output_count": 2,
+          "invalid_output_rate": 0.00546448087431694,
+          "s4_count": 89,
+          "s4_rate": 0.24316939890710382,
+          "s4_rate_among_valid": 0.2445054945054945,
+          "unauthorized_change_count": 79,
+          "unauthorized_change_rate": 0.21584699453551912,
+          "magnitude_error_count": 10,
+          "magnitude_error_rate": 0.0273224043715847,
+          "statuses": {
+            "ok": 364,
+            "invalid_output": 2
+          },
+          "invalid_reasons": {
+            "json_parse": 2
+          },
+          "violations": {
+            "flag_without_basis": 68,
+            "unreachable_location": 34,
+            "resource_created": 4,
+            "resource_unauthorized": 5,
+            "item_unauthorized": 6,
+            "item_obtained_without_basis": 4,
+            "unheld_item_obtained": 4,
+            "item_consumed_without_basis": 4,
+            "illegal_combination": 5
+          }
+        }
+      }
+    },
+    {
+      "model": "gemini-3.6-flash",
+      "backend": "gemini",
+      "variant": "full_guarded",
+      "metrics": {
+        "all": {
+          "total": 486,
+          "evaluated": 486,
+          "valid": 486,
+          "invalid_output_count": 0,
+          "invalid_output_rate": 0.0,
+          "s4_count": 52,
+          "s4_rate": 0.10699588477366255,
+          "s4_rate_among_valid": 0.10699588477366255,
+          "unauthorized_change_count": 48,
+          "unauthorized_change_rate": 0.09876543209876543,
+          "magnitude_error_count": 4,
+          "magnitude_error_rate": 0.00823045267489712,
+          "statuses": {
+            "ok": 486
+          },
+          "invalid_reasons": {},
+          "violations": {
+            "flag_without_basis": 45,
+            "item_unauthorized": 7,
+            "unreachable_location": 13,
+            "resource_unauthorized": 1,
+            "item_obtained_without_basis": 2,
+            "unheld_item_obtained": 2
+          }
+        },
+        "high_risk": {
+          "total": 120,
+          "evaluated": 120,
+          "valid": 120,
+          "invalid_output_count": 0,
+          "invalid_output_rate": 0.0,
+          "s4_count": 3,
+          "s4_rate": 0.025,
+          "s4_rate_among_valid": 0.025,
+          "unauthorized_change_count": 3,
+          "unauthorized_change_rate": 0.025,
+          "magnitude_error_count": 0,
+          "magnitude_error_rate": 0.0,
+          "statuses": {
+            "ok": 120
+          },
+          "invalid_reasons": {},
+          "violations": {
+            "flag_without_basis": 3
+          }
+        },
+        "other": {
+          "total": 366,
+          "evaluated": 366,
+          "valid": 366,
+          "invalid_output_count": 0,
+          "invalid_output_rate": 0.0,
+          "s4_count": 49,
+          "s4_rate": 0.13387978142076504,
+          "s4_rate_among_valid": 0.13387978142076504,
+          "unauthorized_change_count": 45,
+          "unauthorized_change_rate": 0.12295081967213115,
+          "magnitude_error_count": 4,
+          "magnitude_error_rate": 0.01092896174863388,
+          "statuses": {
+            "ok": 366
+          },
+          "invalid_reasons": {},
+          "violations": {
+            "item_unauthorized": 7,
+            "flag_without_basis": 42,
+            "unreachable_location": 13,
+            "resource_unauthorized": 1,
+            "item_obtained_without_basis": 2,
+            "unheld_item_obtained": 2
+          }
+        }
+      }
+    }
+  ],
+  "architecture_control": {
+    "s4_rate": 0,
+    "basis": "by construction; not a measured run"
+  },
+  "violation_note": "Injection/claim tags indicate unauthorized state change, not proven narrative compliance."
+}
