@@ -304,11 +304,11 @@
     {
       "id": "b028",
       "plan": {
-        "kind": "interact",
+        "kind": "clarify",
         "action_id": "",
-        "operation": "use_item",
-        "target_id": "self",
-        "item_id": "trail_ration",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
         "advance": false
       }
     },
