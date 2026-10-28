@@ -1,0 +1,558 @@
+{
+  "schema_version": 1,
+  "sample_sha256": "3c0a8a3828a47a8f79a70a8acd905013911f6bb7e5594a2825507e8652f88128",
+  "annotator": "kevinx96",
+  "complete": true,
+  "answers": [
+    {
+      "id": "b001",
+      "plan": {
+        "kind": "existing",
+        "action_id": "defend_ignis_breath",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b002",
+      "plan": {
+        "kind": "unsupported",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b003",
+      "plan": {
+        "kind": "unsupported",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b004",
+      "plan": {
+        "kind": "unsupported",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b005",
+      "plan": {
+        "kind": "dialogue",
+        "action_id": "",
+        "operation": "",
+        "target_id": "sarah",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b006",
+      "plan": {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b007",
+      "plan": {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b008",
+      "plan": {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "sneak",
+        "target_id": "",
+        "item_id": "",
+        "advance": true
+      }
+    },
+    {
+      "id": "b009",
+      "plan": {
+        "kind": "unsupported",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b010",
+      "plan": {
+        "kind": "unsupported",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b011",
+      "plan": {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "distract",
+        "target_id": "forest_slime",
+        "item_id": "trail_ration",
+        "advance": false
+      }
+    },
+    {
+      "id": "b012",
+      "plan": {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "observe",
+        "target_id": "fallen_branches",
+        "item_id": "fallen_branches",
+        "advance": false
+      }
+    },
+    {
+      "id": "b013",
+      "plan": {
+        "kind": "dialogue",
+        "action_id": "",
+        "operation": "",
+        "target_id": "ian",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b014",
+      "plan": {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "use_item",
+        "target_id": "self",
+        "item_id": "herb",
+        "advance": false
+      }
+    },
+    {
+      "id": "b015",
+      "plan": {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b016",
+      "plan": {
+        "kind": "unsupported",
+        "action_id": "",
+        "operation": "",
+        "target_id": "self",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b017",
+      "plan": {
+        "kind": "unsupported",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b018",
+      "plan": {
+        "kind": "existing",
+        "action_id": "use_fort_healing_circle",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b019",
+      "plan": {
+        "kind": "dialogue",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b020",
+      "plan": {
+        "kind": "dialogue",
+        "action_id": "",
+        "operation": "",
+        "target_id": "general",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b021",
+      "plan": {
+        "kind": "existing",
+        "action_id": "bluff_xanxus",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b022",
+      "plan": {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "observe",
+        "target_id": "fallen_branches",
+        "item_id": "fallen_branches",
+        "advance": false
+      }
+    },
+    {
+      "id": "b023",
+      "plan": {
+        "kind": "existing",
+        "action_id": "invite_blue_mage",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b024",
+      "plan": {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "sneak",
+        "target_id": "",
+        "item_id": "",
+        "advance": true
+      }
+    },
+    {
+      "id": "b025",
+      "plan": {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "sneak",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b026",
+      "plan": {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b027",
+      "plan": {
+        "kind": "existing",
+        "action_id": "rest_at_elf_spring",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b028",
+      "plan": {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "use_item",
+        "target_id": "self",
+        "item_id": "trail_ration",
+        "advance": false
+      }
+    },
+    {
+      "id": "b029",
+      "plan": {
+        "kind": "unsupported",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b030",
+      "plan": {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b031",
+      "plan": {
+        "kind": "unsupported",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b032",
+      "plan": {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b033",
+      "plan": {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "use_item",
+        "target_id": "self",
+        "item_id": "herb",
+        "advance": false
+      }
+    },
+    {
+      "id": "b034",
+      "plan": {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "distract",
+        "target_id": "fallen_branches",
+        "item_id": "fallen_branches",
+        "advance": false
+      }
+    },
+    {
+      "id": "b035",
+      "plan": {
+        "kind": "dialogue",
+        "action_id": "",
+        "operation": "",
+        "target_id": "blacksmith",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b036",
+      "plan": {
+        "kind": "existing",
+        "action_id": "ask_king_info",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b037",
+      "plan": {
+        "kind": "existing",
+        "action_id": "ask_elder_weakness",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b038",
+      "plan": {
+        "kind": "unsupported",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b039",
+      "plan": {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b040",
+      "plan": {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b041",
+      "plan": {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b042",
+      "plan": {
+        "kind": "existing",
+        "action_id": "leave_forest_for_village",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b043",
+      "plan": {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "prepare",
+        "target_id": "fallen_branches",
+        "item_id": "fallen_branches",
+        "advance": false
+      }
+    },
+    {
+      "id": "b044",
+      "plan": {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b045",
+      "plan": {
+        "kind": "existing",
+        "action_id": "fight_fort_first_guard",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b046",
+      "plan": {
+        "kind": "existing",
+        "action_id": "fight_fort_second_guards",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b047",
+      "plan": {
+        "kind": "existing",
+        "action_id": "return_castle_from_alley",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b048",
+      "plan": {
+        "kind": "clarify",
+        "action_id": "",
+        "operation": "",
+        "target_id": "",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b049",
+      "plan": {
+        "kind": "dialogue",
+        "action_id": "",
+        "operation": "",
+        "target_id": "suspicious_merchant",
+        "item_id": "",
+        "advance": false
+      }
+    },
+    {
+      "id": "b050",
+      "plan": {
+        "kind": "interact",
+        "action_id": "",
+        "operation": "observe",
+        "target_id": "forest_slime",
+        "item_id": "",
+        "advance": false
+      }
+    }
+  ]
+}
