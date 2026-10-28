@@ -31,6 +31,9 @@ PROMPTS = {
         "会話で新しい情報、アイテム獲得、移動や成功を確定しない。"
     ),
 }
+# Added after the first two variants' results were seen (post-hoc); see docs/research/paper-review-notes.md item 9.
+PROMPTS["full_guarded_flags"] = (PROMPTS["full_guarded"] + "\n"
+                                 "flags には提示された効果に含まれるIDだけを設定する。状態の欄にない出来事（戦闘の開始、準備など）は reply にだけ書く。")
 OUTPUT_RULE = ('\nJSON一つだけを返す：{"reply": "日本語の短い返答", "state_after": '
                '{"hp": 整数, "sp": 整数, "inventory": [{"id": "物品ID", "quantity": 正の整数}], '
                '"flags": {"フラグID": 真偽値}, "location": "場所ID"}}。'
